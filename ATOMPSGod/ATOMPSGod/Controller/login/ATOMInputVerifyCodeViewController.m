@@ -73,8 +73,7 @@
         [_verifyTimer invalidate];
         _verifyTimer = nil;
         _inputVerifyView.sendVerifyCodeButton.userInteractionEnabled = YES;
-        NSDate * currentDate = [NSDate date];
-        NSString *verifyTitleString = [self.df stringFromDate:currentDate];
+        NSString *verifyTitleString = @"invalidTimer";
         [[NSUserDefaults standardUserDefaults] setObject:verifyTitleString forKey:@"verifyTimer"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
