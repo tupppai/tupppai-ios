@@ -10,4 +10,8 @@
 
 @interface ATOMHomePageRecentTableViewCell : UITableViewCell
 
+- (void)setViewModel;
+
++ (CGFloat)calculateCellHeight;
+
 @end

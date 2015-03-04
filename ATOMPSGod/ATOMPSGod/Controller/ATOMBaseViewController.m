@@ -18,6 +18,24 @@
     self.view.backgroundColor = [UIColor colorWithHex:0xededed];
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithHex:0x727272], NSForegroundColorAttributeName, nil];
     [self.navigationController.navigationBar setTitleTextAttributes:attributes];
+    
+    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    [backView addSubview:backButton];
+//    [backButton setBackgroundImage:[UIImage imageNamed:@"icon_back"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"icon_back"] forState:UIControlStateNormal];
+    [backButton setImageEdgeInsets:UIEdgeInsetsMake(6, 0, 6, 19)];
+    UIBarButtonItem *barBackButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backView];
+    [backButton addTarget:self action:@selector(popCurrentController) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = barBackButtonItem;
+    self.navigationItem.hidesBackButton = YES;
+    NSLog(@"%@ DidLoad!!!!!",[self class]);
 }
+
+- (void)popCurrentController {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 @end

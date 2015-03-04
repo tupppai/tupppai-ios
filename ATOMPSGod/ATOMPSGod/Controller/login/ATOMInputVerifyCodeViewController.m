@@ -48,8 +48,9 @@
     NSString *verifyTitleString = [[NSUserDefaults standardUserDefaults] objectForKey:@"verifyTimer"];
     if (verifyTitleString != nil && ![verifyTitleString isEqualToString:@""]) {
         NSDate *savedDate = [self.df dateFromString:verifyTitleString];
-        NSTimeInterval lastSecond = [currentDate timeIntervalSinceDate:savedDate];
-        if (lastSecond <= 0) {
+        NSTimeInterval lastSecond = 60 - [currentDate timeIntervalSinceDate:savedDate];
+        if ([verifyTitleString isEqualToString:@"invalidTimer"] || lastSecond >= 60 || lastSecond <= 0) {
+            lastSecond = 60;
             verifyTitleString = [self.df stringFromDate:currentDate];
             [[NSUserDefaults standardUserDefaults] setObject:verifyTitleString forKey:@"verifyTimer"];
             [[NSUserDefaults standardUserDefaults] synchronize];
@@ -92,10 +93,6 @@
     [super viewWillDisappear:animated];
     [_verifyTimer invalidate];
     _verifyTimer = nil;
-    NSDate *currentDate = [NSDate date];
-    NSString *verifyTitleString = [self.df stringFromDate:currentDate];
-    [[NSUserDefaults standardUserDefaults] setObject:verifyTitleString forKey:@"verifyTimer"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 

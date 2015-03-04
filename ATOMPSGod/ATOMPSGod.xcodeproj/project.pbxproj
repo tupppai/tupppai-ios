@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C4F5BCF1AA541DE00226F64 /* ATOMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BCE1AA541DE00226F64 /* ATOMLoginViewController.m */; };
+		5C4F5BD21AA5426700226F64 /* ATOMLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BD11AA5426700226F64 /* ATOMLoginView.m */; };
+		5C4F5BD51AA54FF600226F64 /* ATOMMainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BD41AA54FF600226F64 /* ATOMMainTabBarController.m */; };
+		5C4F5BDC1AA555F900226F64 /* ATOMHomepageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BDB1AA555F900226F64 /* ATOMHomepageViewController.m */; };
+		5C4F5BDF1AA556E600226F64 /* ATOMMyMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BDE1AA556E600226F64 /* ATOMMyMessageViewController.m */; };
+		5C4F5BE21AA5575300226F64 /* ATOMMyAttentionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BE11AA5575300226F64 /* ATOMMyAttentionViewController.m */; };
+		5C4F5BE51AA557AF00226F64 /* ATOMPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BE41AA557AF00226F64 /* ATOMPersonViewController.m */; };
+		5C4F5BEF1AA5893700226F64 /* UIActionSheet+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BEE1AA5893700226F64 /* UIActionSheet+Blocks.m */; };
+		5C4F5BF31AA593E200226F64 /* ATOMHomePageHotTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BF21AA593E200226F64 /* ATOMHomePageHotTableViewCell.m */; };
+		5C4F5BF61AA5BFEC00226F64 /* ATOMHomePageRecentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BF51AA5BFEC00226F64 /* ATOMHomePageRecentTableViewCell.m */; };
+		5C4F5BF91AA5E0B600226F64 /* ATOMHotDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BF81AA5E0B600226F64 /* ATOMHotDetailViewController.m */; };
+		5C4F5BFC1AA5E41900226F64 /* ATOMHotDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BFB1AA5E41900226F64 /* ATOMHotDetailTableViewCell.m */; };
 		5CDB05C71AA3FE520089121E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB05C61AA3FE520089121E /* main.m */; };
 		5CDB05CA1AA3FE520089121E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB05C91AA3FE520089121E /* AppDelegate.m */; };
 		5CDB05D21AA3FE520089121E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CDB05D11AA3FE520089121E /* Images.xcassets */; };
@@ -52,6 +64,30 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5C4F5BCD1AA541DE00226F64 /* ATOMLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMLoginViewController.h; sourceTree = "<group>"; };
+		5C4F5BCE1AA541DE00226F64 /* ATOMLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMLoginViewController.m; sourceTree = "<group>"; };
+		5C4F5BD01AA5426700226F64 /* ATOMLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMLoginView.h; sourceTree = "<group>"; };
+		5C4F5BD11AA5426700226F64 /* ATOMLoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMLoginView.m; sourceTree = "<group>"; };
+		5C4F5BD31AA54FF600226F64 /* ATOMMainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMMainTabBarController.h; sourceTree = "<group>"; };
+		5C4F5BD41AA54FF600226F64 /* ATOMMainTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMMainTabBarController.m; sourceTree = "<group>"; };
+		5C4F5BDA1AA555F900226F64 /* ATOMHomepageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMHomepageViewController.h; sourceTree = "<group>"; };
+		5C4F5BDB1AA555F900226F64 /* ATOMHomepageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMHomepageViewController.m; sourceTree = "<group>"; };
+		5C4F5BDD1AA556E600226F64 /* ATOMMyMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMMyMessageViewController.h; sourceTree = "<group>"; };
+		5C4F5BDE1AA556E600226F64 /* ATOMMyMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMMyMessageViewController.m; sourceTree = "<group>"; };
+		5C4F5BE01AA5575300226F64 /* ATOMMyAttentionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMMyAttentionViewController.h; sourceTree = "<group>"; };
+		5C4F5BE11AA5575300226F64 /* ATOMMyAttentionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMMyAttentionViewController.m; sourceTree = "<group>"; };
+		5C4F5BE31AA557AF00226F64 /* ATOMPersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMPersonViewController.h; sourceTree = "<group>"; };
+		5C4F5BE41AA557AF00226F64 /* ATOMPersonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMPersonViewController.m; sourceTree = "<group>"; };
+		5C4F5BED1AA5893700226F64 /* UIActionSheet+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActionSheet+Blocks.h"; sourceTree = "<group>"; };
+		5C4F5BEE1AA5893700226F64 /* UIActionSheet+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+Blocks.m"; sourceTree = "<group>"; };
+		5C4F5BF11AA593E200226F64 /* ATOMHomePageHotTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMHomePageHotTableViewCell.h; sourceTree = "<group>"; };
+		5C4F5BF21AA593E200226F64 /* ATOMHomePageHotTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMHomePageHotTableViewCell.m; sourceTree = "<group>"; };
+		5C4F5BF41AA5BFEC00226F64 /* ATOMHomePageRecentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMHomePageRecentTableViewCell.h; sourceTree = "<group>"; };
+		5C4F5BF51AA5BFEC00226F64 /* ATOMHomePageRecentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMHomePageRecentTableViewCell.m; sourceTree = "<group>"; };
+		5C4F5BF71AA5E0B600226F64 /* ATOMHotDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMHotDetailViewController.h; sourceTree = "<group>"; };
+		5C4F5BF81AA5E0B600226F64 /* ATOMHotDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMHotDetailViewController.m; sourceTree = "<group>"; };
+		5C4F5BFA1AA5E41900226F64 /* ATOMHotDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMHotDetailTableViewCell.h; sourceTree = "<group>"; };
+		5C4F5BFB1AA5E41900226F64 /* ATOMHotDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMHotDetailTableViewCell.m; sourceTree = "<group>"; };
 		5CDB05C11AA3FE520089121E /* ATOMPSGod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ATOMPSGod.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CDB05C51AA3FE520089121E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5CDB05C61AA3FE520089121E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -145,6 +181,78 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5C4F5BD61AA551BF00226F64 /* attention */ = {
+			isa = PBXGroup;
+			children = (
+				5C4F5BE01AA5575300226F64 /* ATOMMyAttentionViewController.h */,
+				5C4F5BE11AA5575300226F64 /* ATOMMyAttentionViewController.m */,
+			);
+			path = attention;
+			sourceTree = "<group>";
+		};
+		5C4F5BD71AA551BF00226F64 /* homepage */ = {
+			isa = PBXGroup;
+			children = (
+				5C4F5BDA1AA555F900226F64 /* ATOMHomepageViewController.h */,
+				5C4F5BDB1AA555F900226F64 /* ATOMHomepageViewController.m */,
+				5C4F5BF71AA5E0B600226F64 /* ATOMHotDetailViewController.h */,
+				5C4F5BF81AA5E0B600226F64 /* ATOMHotDetailViewController.m */,
+			);
+			path = homepage;
+			sourceTree = "<group>";
+		};
+		5C4F5BD81AA551BF00226F64 /* message */ = {
+			isa = PBXGroup;
+			children = (
+				5C4F5BDD1AA556E600226F64 /* ATOMMyMessageViewController.h */,
+				5C4F5BDE1AA556E600226F64 /* ATOMMyMessageViewController.m */,
+			);
+			path = message;
+			sourceTree = "<group>";
+		};
+		5C4F5BD91AA551BF00226F64 /* person */ = {
+			isa = PBXGroup;
+			children = (
+				5C4F5BE31AA557AF00226F64 /* ATOMPersonViewController.h */,
+				5C4F5BE41AA557AF00226F64 /* ATOMPersonViewController.m */,
+			);
+			path = person;
+			sourceTree = "<group>";
+		};
+		5C4F5BE61AA5752B00226F64 /* attention */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = attention;
+			sourceTree = "<group>";
+		};
+		5C4F5BE81AA5752B00226F64 /* message */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = message;
+			sourceTree = "<group>";
+		};
+		5C4F5BE91AA5752B00226F64 /* person */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = person;
+			sourceTree = "<group>";
+		};
+		5C4F5BF01AA593CD00226F64 /* homepage */ = {
+			isa = PBXGroup;
+			children = (
+				5C4F5BF11AA593E200226F64 /* ATOMHomePageHotTableViewCell.h */,
+				5C4F5BF21AA593E200226F64 /* ATOMHomePageHotTableViewCell.m */,
+				5C4F5BF41AA5BFEC00226F64 /* ATOMHomePageRecentTableViewCell.h */,
+				5C4F5BF51AA5BFEC00226F64 /* ATOMHomePageRecentTableViewCell.m */,
+				5C4F5BFA1AA5E41900226F64 /* ATOMHotDetailTableViewCell.h */,
+				5C4F5BFB1AA5E41900226F64 /* ATOMHotDetailTableViewCell.m */,
+			);
+			path = homepage;
+			sourceTree = "<group>";
+		};
 		5CDB05B81AA3FE520089121E = {
 			isa = PBXGroup;
 			children = (
@@ -210,9 +318,15 @@
 		5CDB05EA1AA400410089121E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				5C4F5BD61AA551BF00226F64 /* attention */,
+				5C4F5BD71AA551BF00226F64 /* homepage */,
+				5C4F5BD81AA551BF00226F64 /* message */,
+				5C4F5BD91AA551BF00226F64 /* person */,
 				5CDB065F1AA45C680089121E /* login */,
 				5CDB06091AA40D0E0089121E /* ATOMBaseViewController.h */,
 				5CDB060A1AA40D0E0089121E /* ATOMBaseViewController.m */,
+				5C4F5BD31AA54FF600226F64 /* ATOMMainTabBarController.h */,
+				5C4F5BD41AA54FF600226F64 /* ATOMMainTabBarController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -234,6 +348,8 @@
 		5CDB05ED1AA400410089121E /* Uitility */ = {
 			isa = PBXGroup;
 			children = (
+				5C4F5BED1AA5893700226F64 /* UIActionSheet+Blocks.h */,
+				5C4F5BEE1AA5893700226F64 /* UIActionSheet+Blocks.m */,
 				5CDB066C1AA46E6F0089121E /* UIAlertView+Blocks.h */,
 				5CDB066D1AA46E6F0089121E /* UIAlertView+Blocks.m */,
 				5CDB06161AA428BD0089121E /* Masonry */,
@@ -247,6 +363,10 @@
 		5CDB05EE1AA400410089121E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5C4F5BF01AA593CD00226F64 /* homepage */,
+				5C4F5BE61AA5752B00226F64 /* attention */,
+				5C4F5BE81AA5752B00226F64 /* message */,
+				5C4F5BE91AA5752B00226F64 /* person */,
 				5CDB06581AA45C4A0089121E /* login */,
 				5CDB060F1AA4215E0089121E /* ATOMBaseView.h */,
 				5CDB06101AA4215E0089121E /* ATOMBaseView.m */,
@@ -325,6 +445,8 @@
 				5CDB066A1AA45C920089121E /* ATOMMobileRegisterView.m */,
 				5CDB06721AA47EEC0089121E /* ATOMInputVerifyCodeView.h */,
 				5CDB06731AA47EEC0089121E /* ATOMInputVerifyCodeView.m */,
+				5C4F5BD01AA5426700226F64 /* ATOMLoginView.h */,
+				5C4F5BD11AA5426700226F64 /* ATOMLoginView.m */,
 			);
 			path = login;
 			sourceTree = "<group>";
@@ -340,6 +462,8 @@
 				5CDB06651AA45C680089121E /* ATOMMobileRegisterViewController.m */,
 				5CDB066F1AA47E760089121E /* ATOMInputVerifyCodeViewController.h */,
 				5CDB06701AA47E760089121E /* ATOMInputVerifyCodeViewController.m */,
+				5C4F5BCD1AA541DE00226F64 /* ATOMLoginViewController.h */,
+				5C4F5BCE1AA541DE00226F64 /* ATOMLoginViewController.m */,
 			);
 			path = login;
 			sourceTree = "<group>";
@@ -451,26 +575,38 @@
 				5CDB06711AA47E760089121E /* ATOMInputVerifyCodeViewController.m in Sources */,
 				5CDB06031AA405A40089121E /* UIColor+Hex.m in Sources */,
 				5CDB06361AA428BD0089121E /* View+MASAdditions.m in Sources */,
+				5C4F5BF31AA593E200226F64 /* ATOMHomePageHotTableViewCell.m in Sources */,
 				5CDB06111AA4215E0089121E /* ATOMBaseView.m in Sources */,
 				5CDB06321AA428BD0089121E /* MASViewAttribute.m in Sources */,
 				5CDB06301AA428BD0089121E /* MASConstraintMaker.m in Sources */,
+				5C4F5BCF1AA541DE00226F64 /* ATOMLoginViewController.m in Sources */,
 				5CDB06151AA424F50089121E /* MMPlaceHolder.m in Sources */,
 				5CDB066B1AA45C920089121E /* ATOMMobileRegisterView.m in Sources */,
 				5CDB06021AA405A40089121E /* UIColor+Crayola.m in Sources */,
 				5CDB05C71AA3FE520089121E /* main.m in Sources */,
+				5C4F5BE51AA557AF00226F64 /* ATOMPersonViewController.m in Sources */,
 				5CDB06341AA428BD0089121E /* NSArray+MASAdditions.m in Sources */,
 				5CDB06061AA405A40089121E /* UIColor+iOS7.m in Sources */,
 				5CDB06311AA428BD0089121E /* MASLayoutConstraint.m in Sources */,
+				5C4F5BDF1AA556E600226F64 /* ATOMMyMessageViewController.m in Sources */,
+				5C4F5BEF1AA5893700226F64 /* UIActionSheet+Blocks.m in Sources */,
 				5CDB062E1AA428BD0089121E /* MASCompositeConstraint.m in Sources */,
 				5CDB06671AA45C680089121E /* ATOMLaunchViewController.m in Sources */,
+				5C4F5BDC1AA555F900226F64 /* ATOMHomepageViewController.m in Sources */,
 				5CDB06041AA405A40089121E /* UIColor+HSB.m in Sources */,
 				5CDB06011AA405A40089121E /* UIColor+CIELAB.m in Sources */,
 				5CDB065D1AA45C4A0089121E /* ATOMCreateProfileView.m in Sources */,
 				5CDB06741AA47EEC0089121E /* ATOMInputVerifyCodeView.m in Sources */,
 				5CDB06051AA405A40089121E /* UIColor+HSL.m in Sources */,
+				5C4F5BE21AA5575300226F64 /* ATOMMyAttentionViewController.m in Sources */,
+				5C4F5BFC1AA5E41900226F64 /* ATOMHotDetailTableViewCell.m in Sources */,
 				5CDB065E1AA45C4A0089121E /* ATOMLaunchView.m in Sources */,
+				5C4F5BD51AA54FF600226F64 /* ATOMMainTabBarController.m in Sources */,
 				5CDB06661AA45C680089121E /* ATOMCreateProfileViewController.m in Sources */,
+				5C4F5BD21AA5426700226F64 /* ATOMLoginView.m in Sources */,
 				5CDB06681AA45C680089121E /* ATOMMobileRegisterViewController.m in Sources */,
+				5C4F5BF61AA5BFEC00226F64 /* ATOMHomePageRecentTableViewCell.m in Sources */,
+				5C4F5BF91AA5E0B600226F64 /* ATOMHotDetailViewController.m in Sources */,
 				5CDB062F1AA428BD0089121E /* MASConstraint.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

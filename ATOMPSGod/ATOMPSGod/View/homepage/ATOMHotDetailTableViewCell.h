@@ -10,4 +10,6 @@
 
 @interface ATOMHotDetailTableViewCell : UITableViewCell
 
++ (CGFloat)calculateCellHeight;
+
 @end

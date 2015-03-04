@@ -8,15 +8,17 @@
 
 #import "AppDelegate.h"
 #import "ATOMLaunchViewController.h"
+#import "ATOMMainTabBarController.h"
 
 @interface AppDelegate ()
-
-@property (nonatomic, strong) UINavigationController *baseNav;
 
 @end
 
 @implementation AppDelegate
 
++ (AppDelegate *)APP {
+    return [[UIApplication sharedApplication] delegate];
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -31,6 +33,13 @@
 
 - (void)setCommonNavigationStyle {
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHex:0xf8f8f8]];
+}
+
+- (UITabBarController *)mainTarBarController {
+    if (_mainTarBarController == nil) {
+        _mainTarBarController = [ATOMMainTabBarController new];
+    }
+    return _mainTarBarController;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

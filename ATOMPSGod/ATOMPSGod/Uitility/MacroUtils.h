@@ -12,6 +12,6 @@
 #define PATH_OF_APP_HOME    NSHomeDirectory()
 #define PATH_OF_TEMP        NSTemporaryDirectory()
 #define PATH_OF_DOCUMENT    [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]
-
+#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
 
 #endif

@@ -9,6 +9,7 @@
 #import "ATOMLaunchViewController.h"
 #import "ATOMLaunchView.h"
 #import "ATOMCreateProfileViewController.h"
+#import "ATOMLoginViewController.h"
 
 @interface ATOMLaunchViewController ()
 
@@ -45,12 +46,13 @@
 }
 
 - (void)clickOtherRegisterButton:(UIButton *)sender {
-    ATOMCreateProfileViewController *cpvc = [[ATOMCreateProfileViewController alloc] init];
+    ATOMCreateProfileViewController *cpvc = [ATOMCreateProfileViewController new];
     [self.navigationController pushViewController:cpvc animated:YES];
 }
 
 - (void)clickLoginButton:(UIButton *)sender {
-    
+    ATOMLoginViewController *lvc = [ATOMLoginViewController new];
+    [self.navigationController pushViewController:lvc animated:YES];
 }
 
 

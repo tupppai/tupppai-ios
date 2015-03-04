@@ -106,29 +106,33 @@
     [_nicknameView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
         make.top.equalTo(ws.topBackGroundImageView.mas_bottom).with.offset(74);
+        make.bottom.equalTo(ws.sexView.mas_top);
         make.width.equalTo(ws.mas_width);
-        make.height.equalTo(ws.sexView.mas_height);
+        make.height.equalTo(ws.sexView);
     }];
     
     [_sexView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
         make.top.equalTo(ws.nicknameView.mas_bottom);
+        make.bottom.equalTo(ws.areaView.mas_top);
         make.width.equalTo(ws.mas_width);
-        make.height.equalTo(ws.areaView.mas_height);
+        make.height.equalTo(ws.areaView);
     }];
     
     [_areaView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
         make.top.equalTo(ws.sexView.mas_bottom);
+        make.bottom.equalTo(ws.protocolView.mas_top);
         make.width.equalTo(ws.mas_width);
-        make.height.equalTo(@62.5);
+        make.height.equalTo(ws.sexView);
     }];
     
     [_protocolView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
-        make.top.equalTo(ws.areaView.mas_bottom);
         make.width.equalTo(ws.mas_width);
+        make.top.equalTo(ws.areaView.mas_bottom);
         make.bottom.equalTo(ws.mas_bottom);
+        make.height.equalTo(ws.nicknameView);
     }];
     
 }
