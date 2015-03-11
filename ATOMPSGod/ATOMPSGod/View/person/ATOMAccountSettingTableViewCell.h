@@ -8,6 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ATOMAccountTableViewCell : UITableViewCell
+@interface ATOMAccountSettingTableViewCell : UITableViewCell
+
+@property (nonatomic, strong) UILabel *themeLabel;
+@property (nonatomic, strong) UIImageView *rightImageView;
+@property (nonatomic, strong) UISwitch *offlineDownloadSwitch;
+@property (nonatomic, strong) UILabel *logoutLabel;
+
+- (void)addArrow;
+- (void)addSwitch;
+- (void)addLogout;
 
 @end

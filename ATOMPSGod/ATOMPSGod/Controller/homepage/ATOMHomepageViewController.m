@@ -9,6 +9,8 @@
 #import "ATOMHomepageViewController.h"
 #import "ATOMHomePageHotTableViewCell.h"
 #import "ATOMHomePageRecentTableViewCell.h"
+#import "ATOMHotDetailViewController.h"
+#import "ATOMUploadWorkViewController.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self;
 
@@ -24,6 +26,9 @@
 @property (nonatomic, strong) UIView *homepageRecentView;
 
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
+
+@property (nonatomic, strong) UITapGestureRecognizer *tapHomePageHotGesture;
+@property (nonatomic, strong) UITapGestureRecognizer *tapHomePageRecentGesture;
 
 @end
 
@@ -44,6 +49,8 @@
         _homepageHotTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _homepageHotTableView.delegate = self;
         _homepageHotTableView.dataSource = self;
+        _tapHomePageHotGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHomePageHotGesture:)];
+        [_homepageHotTableView addGestureRecognizer:_tapHomePageHotGesture];
     }
     return _homepageHotTableView;
 }
@@ -54,6 +61,8 @@
         _homepageRecentTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _homepageRecentTableView.delegate = self;
         _homepageRecentTableView.dataSource = self;
+        _tapHomePageRecentGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHomePageRecentGesture:)];
+        [_homepageRecentTableView addGestureRecognizer:_tapHomePageRecentGesture];
     }
     return _homepageRecentTableView;
 }
@@ -79,6 +88,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
 }
 
 - (void)createUI {
@@ -135,7 +152,7 @@
 #pragma mark - Click Event
 
 - (void)clickHotTitleButton:(UIButton *)sender {
-    NSLog(@"clickRecentTitleButton");
+    NSLog(@"clickHotTitleButton");
     _hotTitleButton.selected = YES;
     _recentTitleButton.selected = NO;
     [self changeUIAccording:@"热门"];
@@ -180,6 +197,58 @@
 }
 
 - (void)dealUploadWorks {
+    UIImagePickerControllerSourceType currentType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    BOOL ok = [UIImagePickerController isSourceTypeAvailable:currentType];
+    if (ok) {
+        self.imagePickerController.sourceType = currentType;
+        _imagePickerController.delegate = self;
+        [self presentViewController:_imagePickerController animated:YES completion:NULL];
+    } else {
+        
+    }
+}
+
+
+
+#pragma mark - Gesture Event
+
+- (void)tapHomePageHotGesture:(UITapGestureRecognizer *)gesture {
+    if (self.view == _homepageHotView) {
+        CGPoint location = [gesture locationInView:_homepageHotTableView];
+        NSIndexPath *indexPath = [_homepageHotTableView indexPathForRowAtPoint:location];
+        if (indexPath) {
+            ATOMHomePageHotTableViewCell *cell = (ATOMHomePageHotTableViewCell *)[_homepageHotTableView cellForRowAtIndexPath:indexPath];
+            CGPoint p = [gesture locationInView:cell];
+            //点击图片
+            if (CGRectContainsPoint([ATOMHomePageHotTableViewCell calculateHomePageHotImageViewRect:cell.userWorkImageView], p)) {
+                NSLog(@"Click userWorkImageView");
+                ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
+                NSLog(@"current row is %d",(int)indexPath.row);
+                [self pushViewController:hdvc animated:YES];
+            } else if (CGRectContainsPoint(cell.topView.frame, p)) {
+                p = [gesture locationInView:cell.topView];
+                if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
+                    NSLog(@"Click userHeaderButton");
+                }
+            } else {
+                p = [gesture locationInView:cell.thinCenterView];
+                if (CGRectContainsPoint(cell.praiseButton.frame, p)) {
+                    cell.praiseButton.selected = !cell.praiseButton.selected;
+                } else if (CGRectContainsPoint(cell.shareButton.frame, p)) {
+                    NSLog(@"Click shareButton");
+                }
+            }
+            
+        }
+    } else if (self.view == _homepageRecentView) {
+        
+    } else {
+        
+    }
+    
+}
+
+- (void)tapHomePageRecentGesture:(UITapGestureRecognizer *)gesture {
     
 }
 
@@ -190,7 +259,12 @@
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    
+    WS(ws);
+    [self dismissViewControllerAnimated:YES completion:^{
+        ATOMUploadWorkViewController *uwvc = [ATOMUploadWorkViewController new];
+        uwvc.originImage = info[UIImagePickerControllerOriginalImage];
+        [ws pushViewController:uwvc animated:YES];
+    }];
 }
 
 #pragma mark - UITableViewDataSource
@@ -200,19 +274,24 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"current section is %d and current row is %d", (int)indexPath.section, (int)indexPath.row);
     if (tableView == _homepageHotTableView) {
         static NSString *CellIdentifier1 = @"HomePageHotCell";
         ATOMHomePageHotTableViewCell *cell = [_homepageHotTableView dequeueReusableCellWithIdentifier:CellIdentifier1];
         if (!cell) {
             cell = [[ATOMHomePageHotTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier1];
+//            [cell.userHeaderButton addTarget:self action:@selector(clickUserHeaderButton:) forControlEvents:UIControlEventTouchUpInside];
         }
+        [cell layoutSubviews];
         return cell;
     } else if (tableView == _homepageRecentTableView) {
         static NSString *CellIdentifier2 = @"HomePageRecentCell";
         ATOMHomePageRecentTableViewCell *cell = [_homepageRecentTableView dequeueReusableCellWithIdentifier:CellIdentifier2];
         if (!cell) {
             cell = [[ATOMHomePageRecentTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier2];
+//            [cell.userHeaderButton addTarget:self action:@selector(clickUserHeaderButton:) forControlEvents:UIControlEventTouchUpInside];
         }
+        [cell layoutSubviews];
         return cell;
     } else {
         return nil;

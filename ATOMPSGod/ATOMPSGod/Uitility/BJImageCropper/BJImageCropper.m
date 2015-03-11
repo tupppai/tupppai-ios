@@ -9,24 +9,6 @@
 #import "BJImageCropper.h"
 #import <QuartzCore/QuartzCore.h>
 
-#define BORDER_WIDTH  [UIScreen mainScreen].bounds.size.width
-#define BORDER_HEIGHT  [UIScreen mainScreen].bounds.size.height - 64
-
-#ifndef CGWidth
-#define CGWidth(rect)                   rect.size.width
-#endif
-
-#ifndef CGHeight
-#define CGHeight(rect)                  rect.size.height
-#endif
-
-#ifndef CGOriginX
-#define CGOriginX(rect)                 rect.origin.x
-#endif
-
-#ifndef CGOriginY
-#define CGOriginY(rect)                 rect.origin.y
-#endif
 
 @interface BJImageCropper ()
 
@@ -186,17 +168,19 @@
         width = fminf(CGWidth(max), CGHeight(max));
         height = width;
     } else if (cropperViewType == ThreeFourType){
-        if (CGWidth(max) >= CGHeight(max)) {
-            height = CGHeight(max);
-            width =  height / 4 * 3;
+        height = CGHeight(max);
+        width =  height / 4 * 3;
+        if (width <= CGWidth(max) && height <= CGHeight(max)) {
+            
         } else {
             width = CGWidth(max);
-            height = width /3 * 4;
+            height = width / 3 * 4;
         }
     } else {
-        if (CGWidth(max) >= CGHeight(max)) {
-            height = CGHeight(max);
-            width =  height / 3 * 4;
+        height = CGHeight(max);
+        width =  height / 3 * 4;
+        if (width <= CGWidth(max) && height <= CGHeight(max)) {
+            
         } else {
             width = CGWidth(max);
             height = width / 4 * 3;
@@ -207,7 +191,7 @@
     CGFloat y      = (CGHeight(max) - height) / 2;
     
     UIView* cropView = [[UIView alloc] initWithFrame:CGRectMake(x, y, width, height)];
-    cropView.layer.borderColor = [[UIColor redColor] CGColor];
+    cropView.layer.borderColor = [[UIColor colorWithHex:0x00aeef] CGColor];
     cropView.layer.borderWidth = 2.0;
     cropView.backgroundColor = [UIColor clearColor];
     cropView.alpha = 0.4;   
@@ -250,7 +234,7 @@
     CGPoint location;
     // if it already fits, return that
     CGRect noScale = CGRectMake(0.0, 0.0, image.size.width, image.size.height);
-    if (CGWidth(noScale) <= maxSize.width && CGHeight(noScale) <= maxSize.height) {
+    if ((int)CGWidth(noScale) <= maxSize.width && (int)CGHeight(noScale) <= maxSize.height) {
         imageScale = 1.0;
         location.x = (maxSize.width - image.size.width) / 2;
         location.y = (maxSize.height - image.size.height) / 2;
@@ -263,7 +247,7 @@
     // first, try scaling the height to fit
     imageScale = maxSize.height / image.size.height;
     scaled = CGRectMake(0.0, 0.0, image.size.width * imageScale, image.size.height * imageScale);
-    if (CGWidth(scaled) <= maxSize.width && CGHeight(scaled) <= maxSize.height) {
+    if ((int)CGWidth(scaled) <= maxSize.width && (int)CGHeight(scaled) <= maxSize.height) {
         location.x = (maxSize.width - scaled.size.width) / 2;
         location.y = (maxSize.height - scaled.size.height) / 2;
         scaled.origin = location;
@@ -421,7 +405,6 @@
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     scaleDistance = 0;
     currentTouches = [[event allTouches] count];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ff" object:nil];
 }
 
 - (UIImage*) getCroppedImage {

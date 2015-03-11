@@ -26,9 +26,9 @@
     _otherRegisterButton = [UIButton new];
     _loginButton = [UIButton new];
     
-    [_wxRegisterButton showPlaceHolder];
-    [_otherRegisterButton showPlaceHolder];
-    [_loginButton showPlaceHolder];
+//    [_wxRegisterButton showPlaceHolder];
+//    [_otherRegisterButton showPlaceHolder];
+//    [_loginButton showPlaceHolder];
     
     [_wxRegisterButton setTitle:@"微信注册" forState:UIControlStateNormal];
     [_otherRegisterButton setTitle:@"其他方式注册" forState:UIControlStateNormal];

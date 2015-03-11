@@ -10,4 +10,7 @@
 
 @interface ATOMAccountBindingView : ATOMBaseView
 
+@property (nonatomic, strong) UILabel *topLabel;
+@property (nonatomic, strong) UITableView *accountBindingTableView;
+
 @end

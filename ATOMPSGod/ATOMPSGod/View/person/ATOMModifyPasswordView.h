@@ -8,6 +8,12 @@
 
 #import "ATOMBaseView.h"
 
-@interface ATOMModifyPasswordView : ATOMBaseView
+@interface ATOMModifyPasswordView : UIScrollView
+
+@property (nonatomic, strong) UITextField *oldPasswordTextField;
+@property (nonatomic, strong) UITextField *modifyPasswordTextField;
+@property (nonatomic, strong) UITextField *confirmPasswordTextField;
+@property (nonatomic, strong) UIButton *forgetPasswordButton;
+
 
 @end

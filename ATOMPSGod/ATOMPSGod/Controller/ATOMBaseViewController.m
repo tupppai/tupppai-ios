@@ -7,6 +7,10 @@
 //
 
 #import "ATOMBaseViewController.h"
+#import "ATOMHomepageViewController.h"
+#import "ATOMPersonViewController.h"
+#import "ATOMMyAttentionViewController.h"
+#import "ATOMMyMessageViewController.h"
 
 @implementation ATOMBaseViewController
 
@@ -23,7 +27,6 @@
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     [backView addSubview:backButton];
-//    [backButton setBackgroundImage:[UIImage imageNamed:@"icon_back"] forState:UIControlStateNormal];
     [backButton setImage:[UIImage imageNamed:@"icon_back"] forState:UIControlStateNormal];
     [backButton setImageEdgeInsets:UIEdgeInsetsMake(6, 0, 6, 19)];
     UIBarButtonItem *barBackButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backView];
@@ -32,6 +35,21 @@
     self.navigationItem.hidesBackButton = YES;
     NSLog(@"%@ DidLoad!!!!!",[self class]);
 }
+
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:viewController animated:animated];
+    if ([self isKindOfClass:[ATOMHomepageViewController class]]) {
+        self.hidesBottomBarWhenPushed = NO;
+    } else if ([self isKindOfClass:[ATOMPersonViewController class]]){
+        self.hidesBottomBarWhenPushed = NO;
+    } else if ([self isKindOfClass:[ATOMMyAttentionViewController class]]) {
+        self.hidesBottomBarWhenPushed = NO;
+    } else if ([self isKindOfClass:[ATOMMyMessageViewController class]]) {
+        self.hidesBottomBarWhenPushed = NO;
+    }
+}
+
 
 - (void)popCurrentController {
     [self.navigationController popViewControllerAnimated:YES];

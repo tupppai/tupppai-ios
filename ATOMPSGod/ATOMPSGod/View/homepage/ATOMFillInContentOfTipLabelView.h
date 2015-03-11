@@ -10,4 +10,6 @@
 
 @interface ATOMFillInContentOfTipLabelView : UIScrollView
 
+@property (nonatomic, strong) UITextField *tipLabelContentTextField;
+
 @end

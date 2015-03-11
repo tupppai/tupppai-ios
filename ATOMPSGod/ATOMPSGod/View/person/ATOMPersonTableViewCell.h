@@ -10,4 +10,8 @@
 
 @interface ATOMPersonTableViewCell : UITableViewCell
 
+@property (nonatomic, strong) UIImageView *themeImageView;
+@property (nonatomic, strong) UILabel *themeLabel;
+@property (nonatomic, strong) UIImageView *rightImageView;
+
 @end

@@ -10,4 +10,6 @@
 
 @interface ATOMBaseViewController : UIViewController
 
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated;
+
 @end

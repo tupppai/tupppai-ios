@@ -10,4 +10,16 @@
 
 @interface ATOMAddTipLabelToImageView : ATOMBaseView
 
+@property (nonatomic, strong) UIImageView *workImageView;
+@property (nonatomic, strong) UIView *bottomView;
+
+@property (nonatomic, strong) UIImage *workImage;
+
+@property (nonatomic, strong) UIButton *changeTipLabelDirectionButton;
+@property (nonatomic, strong) UIButton *deleteTipLabelButton;
+
+- (void)showOperationButton;
+- (void)hideOperationButton;
+- (BOOL)isOperationButtonShow;
+
 @end

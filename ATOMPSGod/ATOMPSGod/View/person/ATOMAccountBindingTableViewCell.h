@@ -8,6 +8,13 @@
 
 #import "ATOMBaseView.h"
 
-@interface ATOMAccountBindingTableViewCell : ATOMBaseView
+@interface ATOMAccountBindingTableViewCell : UITableViewCell
+
+@property (nonatomic, strong) UIImageView *themeImageView;
+@property (nonatomic, strong) UILabel *themeLabel;
+@property (nonatomic, strong) UIButton *rightButton;
+@property (nonatomic, strong) NSString *phoneNumber;
+
+- (void)setFootCell;
 
 @end

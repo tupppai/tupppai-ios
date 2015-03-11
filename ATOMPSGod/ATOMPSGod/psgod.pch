@@ -22,6 +22,7 @@
 #import "Masonry.h"
 #import "UIAlertView+Blocks.h"
 #import "UIActionSheet+Blocks.h"
+#import "KeyboardManager.h"
 
 #endif
 

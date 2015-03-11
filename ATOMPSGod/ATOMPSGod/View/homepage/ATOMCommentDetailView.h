@@ -10,4 +10,12 @@
 
 @interface ATOMCommentDetailView : UIScrollView
 
+@property (nonatomic, strong) UITableView *commentDetailTableView;
+
+@property (nonatomic, strong) UIButton *sendCommentButton;
+
+@property (nonatomic, strong) UITextView *sendCommentView;
+
+@property (nonatomic, strong) UIView *bottomView;
+
 @end

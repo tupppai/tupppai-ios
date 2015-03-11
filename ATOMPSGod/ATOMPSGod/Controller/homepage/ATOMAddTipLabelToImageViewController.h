@@ -10,4 +10,6 @@
 
 @interface ATOMAddTipLabelToImageViewController : ATOMBaseViewController
 
+@property (nonatomic, strong) UIImage *workImage;
+
 @end

@@ -10,7 +10,7 @@
 
 @interface ATOMHomePageHotTableViewCell : UITableViewCell
 
-@property (nonatomic, strong) UIButton *userHeaderButton;
+@property (nonatomic, strong) UIImageView *userHeaderButton;
 @property (nonatomic, strong) UILabel *userNameLabel;
 @property (nonatomic, strong) UILabel *userPublishTimeLabel;
 @property (nonatomic, strong) UIImageView *userSexImageView;
@@ -28,5 +28,6 @@
 
 - (void)setViewModel;
 + (CGFloat)calculateCellHeight;
++ (CGRect)calculateHomePageHotImageViewRect:(UIImageView *)imageView;
 
 @end

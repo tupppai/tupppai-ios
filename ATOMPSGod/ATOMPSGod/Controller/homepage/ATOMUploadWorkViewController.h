@@ -10,4 +10,7 @@
 
 @interface ATOMUploadWorkViewController : ATOMBaseViewController
 
+@property (nonatomic, strong) UIImage *originImage;
+@property (nonatomic, strong) UIImage *workImage;
+
 @end

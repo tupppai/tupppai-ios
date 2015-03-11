@@ -35,7 +35,10 @@
 - (void)createUI {
     _launchView = [ATOMLaunchView new];
     self.view = _launchView;
-    
+    UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    [backImageView setImage:[UIImage imageNamed:@"ps_bg"]];
+    [_launchView addSubview:backImageView];
+    [_launchView sendSubviewToBack:backImageView];
     [_launchView.wxRegisterButton addTarget:self action:@selector(clickWXRegisterButton:) forControlEvents:UIControlEventTouchUpInside];
     [_launchView.otherRegisterButton addTarget:self action:@selector(clickOtherRegisterButton:) forControlEvents:UIControlEventTouchUpInside];
     [_launchView.loginButton addTarget:self action:@selector(clickLoginButton:) forControlEvents:UIControlEventTouchUpInside];
