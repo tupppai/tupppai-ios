@@ -8,6 +8,8 @@
 
 #import "ATOMMyCollectionViewController.h"
 #import "ATOMMyCollectionCollectionViewCell.h"
+#import "ATOMHotDetailViewController.h"
+#import "ATOMOtherPersonViewController.h"
 
 @interface ATOMMyCollectionViewController () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -15,6 +17,8 @@
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSString *cellIdentifier;
+
+@property (nonatomic, strong) UITapGestureRecognizer *tapMyCollectionGesture;
 
 @end
 
@@ -57,6 +61,28 @@ static float cellWidth;
     _collectionView.delegate = self;
     _cellIdentifier = @"MyCollectionCell";
     [_collectionView registerClass:[ATOMMyCollectionCollectionViewCell class] forCellWithReuseIdentifier:_cellIdentifier];
+    _tapMyCollectionGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMyCollectionGesture:)];
+    [_collectionView addGestureRecognizer:_tapMyCollectionGesture];
+}
+
+#pragma mark - Gesture Event
+
+- (void)tapMyCollectionGesture:(UITapGestureRecognizer *)gesture {
+    CGPoint location = [gesture locationInView:_collectionView];
+    NSIndexPath *indexPath = [_collectionView indexPathForItemAtPoint:location];
+    if (indexPath) {
+        ATOMMyCollectionCollectionViewCell *cell = (ATOMMyCollectionCollectionViewCell *)[_collectionView cellForItemAtIndexPath:indexPath];
+        CGPoint p = [gesture locationInView:cell];
+        if (CGRectContainsPoint(cell.collectionImageView.frame, p)) {
+            ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
+            hdvc.pushType = ATOMMyCollectionType;
+            [self pushViewController:hdvc animated:YES];
+        } else if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
+            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+            [self pushViewController:opvc animated:YES];
+        }
+        
+    }
 }
 
 #pragma mark - UICollectionViewDataSource

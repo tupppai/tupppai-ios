@@ -44,6 +44,7 @@ static int collumnNumber = 2;
 - (UIButton *)userHeaderButton {
     if (!_userHeaderButton) {
         _userHeaderButton = [[UIButton alloc] initWithFrame:CGRectMake(padding10, padding10, 30, 30)];
+        _userHeaderButton.userInteractionEnabled = NO;
         _userHeaderButton.backgroundColor = [UIColor orangeColor];
         _userHeaderButton.layer.cornerRadius = 14.5;
         _userHeaderButton.layer.masksToBounds = YES;

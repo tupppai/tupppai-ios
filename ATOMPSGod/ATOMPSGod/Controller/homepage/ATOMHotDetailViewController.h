@@ -8,8 +8,18 @@
 
 #import "ATOMBaseViewController.h"
 
+typedef enum {
+    ATOMCommentMessageType = 0,
+    ATOMInviteMessageType,
+    ATOMTopicReplyMessageType,
+    ATOMMyUploadType,
+    ATOMMyWorkType,
+    ATOMProceedingType,
+    ATOMMyCollectionType
+} ATOMHotDetailPushType;
+
 @interface ATOMHotDetailViewController : ATOMBaseViewController
 
-
+@property (nonatomic, assign) ATOMHotDetailPushType pushType;
 
 @end

@@ -11,6 +11,9 @@
 #import "ATOMHomePageRecentTableViewCell.h"
 #import "ATOMHotDetailViewController.h"
 #import "ATOMUploadWorkViewController.h"
+#import "ATOMOtherPersonViewController.h"
+#import "ATOMCommentDetailViewController.h"
+
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self;
 
@@ -228,7 +231,8 @@
             } else if (CGRectContainsPoint(cell.topView.frame, p)) {
                 p = [gesture locationInView:cell.topView];
                 if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
-                    NSLog(@"Click userHeaderButton");
+                    ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+                    [self pushViewController:opvc animated:YES];
                 }
             } else {
                 p = [gesture locationInView:cell.thinCenterView];
@@ -236,20 +240,60 @@
                     cell.praiseButton.selected = !cell.praiseButton.selected;
                 } else if (CGRectContainsPoint(cell.shareButton.frame, p)) {
                     NSLog(@"Click shareButton");
+                } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
+                    ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
+                    [self pushViewController:cdvc animated:YES];
                 }
             }
             
         }
-    } else if (self.view == _homepageRecentView) {
-        
-    } else {
-        
     }
-    
 }
 
 - (void)tapHomePageRecentGesture:(UITapGestureRecognizer *)gesture {
-    
+    if (self.view == _homepageRecentView) {
+        CGPoint location = [gesture locationInView:_homepageRecentTableView];
+        NSIndexPath *indexPath = [_homepageRecentTableView indexPathForRowAtPoint:location];
+        if (indexPath) {
+            ATOMHomePageRecentTableViewCell *cell = (ATOMHomePageRecentTableViewCell *)[_homepageRecentTableView cellForRowAtIndexPath:indexPath];
+            CGPoint p = [gesture locationInView:cell];
+            //点击图片
+            if (CGRectContainsPoint([ATOMHomePageRecentTableViewCell calculateHomePageRecentImageViewRect:cell.userWorkImageView], p)) {
+                NSLog(@"Click userWorkImageView");
+                ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
+                NSLog(@"current row is %d",(int)indexPath.row);
+                [self pushViewController:hdvc animated:YES];
+            } else if (CGRectContainsPoint(cell.topView.frame, p)) {
+                p = [gesture locationInView:cell.topView];
+                if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
+                    ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+                    [self pushViewController:opvc animated:YES];
+                } else if (CGRectContainsPoint(cell.psButton.frame, p)) {
+                    [UIActionSheet showInView:self.view withTitle:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@[@"拍照", @"从手机相册选择", @"上传作品"] tapBlock:^(UIActionSheet *actionSheet, NSInteger buttonIndex) {
+                        NSString * tapTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+                        if ([tapTitle isEqualToString:@"拍照"]) {
+                            [self dealTakingPhoto];
+                        } else if ([tapTitle isEqualToString:@"从手机相册选择"]) {
+                            [self dealSelectingPhotoFromAlbum];
+                        } else if ([tapTitle isEqualToString:@"上传作品"]) {
+                            [self dealUploadWorks];
+                        }
+                    }];
+                }
+            } else {
+                p = [gesture locationInView:cell.thinCenterView];
+                if (CGRectContainsPoint(cell.praiseButton.frame, p)) {
+                    cell.praiseButton.selected = !cell.praiseButton.selected;
+                } else if (CGRectContainsPoint(cell.shareButton.frame, p)) {
+                    NSLog(@"Click shareButton");
+                } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
+                    ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
+                    [self pushViewController:cdvc animated:YES];
+                }
+            }
+            
+        }
+    }
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -280,7 +324,6 @@
         ATOMHomePageHotTableViewCell *cell = [_homepageHotTableView dequeueReusableCellWithIdentifier:CellIdentifier1];
         if (!cell) {
             cell = [[ATOMHomePageHotTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier1];
-//            [cell.userHeaderButton addTarget:self action:@selector(clickUserHeaderButton:) forControlEvents:UIControlEventTouchUpInside];
         }
         [cell layoutSubviews];
         return cell;
@@ -289,7 +332,6 @@
         ATOMHomePageRecentTableViewCell *cell = [_homepageRecentTableView dequeueReusableCellWithIdentifier:CellIdentifier2];
         if (!cell) {
             cell = [[ATOMHomePageRecentTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier2];
-//            [cell.userHeaderButton addTarget:self action:@selector(clickUserHeaderButton:) forControlEvents:UIControlEventTouchUpInside];
         }
         [cell layoutSubviews];
         return cell;

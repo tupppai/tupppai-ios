@@ -87,6 +87,7 @@ static int padding = 10;
     [self addSubview:_bottomView];
     
     _userHeaderButton = [UIButton new];
+    _userHeaderButton.userInteractionEnabled = NO;
     _userHeaderButton.backgroundColor = [UIColor brownColor];
     _userHeaderButton.layer.cornerRadius = 22.5;
     _userHeaderButton.layer.masksToBounds = YES;

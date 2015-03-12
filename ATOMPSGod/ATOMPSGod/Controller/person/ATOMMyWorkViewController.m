@@ -8,6 +8,7 @@
 
 #import "ATOMMyWorkViewController.h"
 #import "ATOMMyWorkCollectionViewCell.h"
+#import "ATOMHotDetailViewController.h"
 
 @interface ATOMMyWorkViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -75,7 +76,11 @@ static int collumnNumber = 3;
 
 #pragma mark - UICollectionViewDelegate
 
-
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
+    hdvc.pushType = ATOMMyWorkType;
+    [self pushViewController:hdvc animated:YES];
+}
 
 
 

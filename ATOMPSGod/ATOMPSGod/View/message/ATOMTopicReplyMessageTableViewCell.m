@@ -25,6 +25,7 @@ static int padding10 = 10;
 
 - (void)createSubView {
     _userHeaderButton = [UIButton new];
+    _userHeaderButton.userInteractionEnabled = NO;
     _userHeaderButton.backgroundColor = [UIColor redColor];
     _userHeaderButton.layer.cornerRadius = 22.5;
     _userHeaderButton.layer.masksToBounds = YES;

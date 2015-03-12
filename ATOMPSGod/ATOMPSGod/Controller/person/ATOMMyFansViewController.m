@@ -8,11 +8,13 @@
 
 #import "ATOMMyFansViewController.h"
 #import "ATOMMyFansTableViewCell.h"
+#import "ATOMOtherPersonViewController.h"
 
 @interface ATOMMyFansViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIView *myFansView;
+@property (nonatomic, strong) UITapGestureRecognizer *tapMyFansGesture;
 
 @end
 
@@ -35,6 +37,8 @@
     [_myFansView addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tapMyFansGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMyFansGesture:)];
+    [_tableView addGestureRecognizer:_tapMyFansGesture];
 }
 
 #pragma mark - Click Event
@@ -47,6 +51,22 @@
     } else {
         button.backgroundColor = [UIColor colorWithHex:0x00adef];
         [button setTitle:@"关注" forState:UIControlStateNormal];
+    }
+}
+
+#pragma mark - Gesture Event
+
+- (void)tapMyFansGesture:(UITapGestureRecognizer *)gesture {
+    CGPoint location = [gesture locationInView:_tableView];
+    NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:location];
+    if (indexPath) {
+        ATOMMyFansTableViewCell *cell = (ATOMMyFansTableViewCell *)[_tableView cellForRowAtIndexPath:indexPath];
+        CGPoint p = [gesture locationInView:cell];
+        if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
+            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+            [self pushViewController:opvc animated:YES];
+        }
+        
     }
 }
 

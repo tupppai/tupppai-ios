@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "ATOMLaunchViewController.h"
 #import "ATOMMainTabBarController.h"
+#import "ATOMCutstomNavigationController.h"
 
 @interface AppDelegate ()
 
@@ -25,7 +26,7 @@
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     ATOMLaunchViewController *lvc = [[ATOMLaunchViewController alloc] init];
-    self.baseNav = [[UINavigationController alloc] initWithRootViewController:lvc];
+    self.baseNav = [[ATOMCutstomNavigationController alloc] initWithRootViewController:lvc];
     self.window.rootViewController = self.baseNav;
     [self.window makeKeyAndVisible];
     return YES;

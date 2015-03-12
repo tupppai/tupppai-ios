@@ -10,6 +10,7 @@
 #import "ATOMAddTipLabelToImageView.h"
 #import "ATOMTipButton.h"
 #import "ATOMFillInContentOfTipLabelView.h"
+#import "ATOMInviteViewController.h"
 
 @interface ATOMAddTipLabelToImageViewController () <UITextFieldDelegate>
 
@@ -98,7 +99,8 @@
 #pragma mark - Click Event
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)sender {
-    
+    ATOMInviteViewController *ivc = [ATOMInviteViewController new];
+    [self pushViewController:ivc animated:YES];
 }
 
 - (void)clickCancelLeftBarButtonItem:(UIBarButtonItem *)sender {

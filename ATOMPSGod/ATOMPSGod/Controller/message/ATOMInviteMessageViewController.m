@@ -9,6 +9,9 @@
 #import "ATOMInviteMessageViewController.h"
 #import "ATOMInviteMessageTableViewCell.h"
 #import "ATOMNoDataView.h"
+#import "ATOMHotDetailViewController.h"
+#import "ATOMCommentDetailViewController.h"
+#import "ATOMOtherPersonViewController.h"
 
 @interface ATOMInviteMessageViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -16,6 +19,8 @@
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) ATOMNoDataView *noDataView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
+
+@property (nonatomic, strong) UITapGestureRecognizer *tapInviteMessageGesture;
 
 @end
 
@@ -54,6 +59,8 @@
     [_inviteMessageView addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tapInviteMessageGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapInviteMessageGesture:)];
+    [_tableView addGestureRecognizer:_tapInviteMessageGesture];
 }
 
 #pragma mark - Click Event
@@ -62,6 +69,28 @@
     [_dataSource removeAllObjects];
     if (_dataSource.count == 0) {
         self.view = self.noDataView;
+    }
+}
+
+#pragma mark - Gesture Event
+
+- (void)tapInviteMessageGesture:(UITapGestureRecognizer *)gesture {
+    CGPoint location = [gesture locationInView:_tableView];
+    NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:location];
+    if (indexPath) {
+        ATOMInviteMessageTableViewCell *cell = (ATOMInviteMessageTableViewCell *)[_tableView cellForRowAtIndexPath:indexPath];
+        CGPoint p = [gesture locationInView:cell];
+        //点击图片
+        if (CGRectContainsPoint(cell.workImageView.frame, p)) {
+            //            NSLog(@"Click userWorkImageView");
+            ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
+            hdvc.pushType = ATOMInviteMessageType;
+            [self pushViewController:hdvc animated:YES];
+        } else if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
+            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+            [self pushViewController:opvc animated:YES];
+        }
+        
     }
 }
 

@@ -24,6 +24,7 @@ static float commenWidth;
 
 - (void)createSubView {
     _userHeaderButton = [[UIButton alloc] initWithFrame:CGRectMake(padding10, 6, 45, 45)];
+    _userHeaderButton.userInteractionEnabled = NO;
     _userHeaderButton.backgroundColor = [UIColor greenColor];
     _userHeaderButton.layer.cornerRadius = 22.5;
     _userHeaderButton.layer.masksToBounds = YES;

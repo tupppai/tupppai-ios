@@ -9,6 +9,7 @@
 #import "ATOMConcernMessageViewController.h"
 #import "ATOMConcernMessageTableViewCell.h"
 #import "ATOMNoDataView.h"
+#import "ATOMOtherPersonViewController.h"
 
 @interface ATOMConcernMessageViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -16,6 +17,8 @@
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) ATOMNoDataView *noDataView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
+
+@property (nonatomic, strong) UITapGestureRecognizer *tapConcernMessageGesture;
 
 @end
 
@@ -53,6 +56,8 @@
     [_concernMessageView addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tapConcernMessageGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapConcernMessageGesture:)];
+    [_tableView addGestureRecognizer:_tapConcernMessageGesture];
 }
 
 #pragma mark - Click Event
@@ -61,6 +66,22 @@
     [_dataSource removeAllObjects];
     if (_dataSource.count == 0) {
         self.view = self.noDataView;
+    }
+}
+
+#pragma mark - Gesture Event
+
+- (void)tapConcernMessageGesture:(UITapGestureRecognizer *)gesture {
+    CGPoint location = [gesture locationInView:_tableView];
+    NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:location];
+    if (indexPath) {
+        ATOMConcernMessageTableViewCell *cell = (ATOMConcernMessageTableViewCell *)[_tableView cellForRowAtIndexPath:indexPath];
+        CGPoint p = [gesture locationInView:cell];
+        if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
+            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+            [self pushViewController:opvc animated:YES];
+        }
+        
     }
 }
 

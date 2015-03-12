@@ -28,5 +28,7 @@
 - (void)setViewModel;
 
 + (CGFloat)calculateCellHeight;
++ (CGRect)calculateHomePageRecentImageViewRect:(UIImageView *)imageView;
+
 
 @end

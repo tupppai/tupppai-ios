@@ -8,6 +8,7 @@
 
 #import "ATOMMyUploadViewController.h"
 #import "ATOMMyUploadCollectionViewCell.h"
+#import "ATOMHotDetailViewController.h"
 
 @interface ATOMMyUploadViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -74,5 +75,26 @@ static int collumnNumber = 3;
 }
 
 #pragma mark - UICollectionViewDelegate
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
+    hdvc.pushType = ATOMMyUploadType;
+    [self pushViewController:hdvc animated:YES];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @end

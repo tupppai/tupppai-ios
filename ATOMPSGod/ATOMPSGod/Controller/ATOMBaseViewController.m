@@ -12,6 +12,12 @@
 #import "ATOMMyAttentionViewController.h"
 #import "ATOMMyMessageViewController.h"
 
+#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self;
+
+@interface ATOMBaseViewController ()
+
+@end
+
 @implementation ATOMBaseViewController
 
 - (void)viewDidLoad {
@@ -32,11 +38,17 @@
     UIBarButtonItem *barBackButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backView];
     [backButton addTarget:self action:@selector(popCurrentController) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = barBackButtonItem;
-    self.navigationItem.hidesBackButton = YES;
+//    self.navigationItem.hidesBackButton = YES;
     NSLog(@"%@ DidLoad!!!!!",[self class]);
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:viewController animated:animated];
     if ([self isKindOfClass:[ATOMHomepageViewController class]]) {
@@ -50,8 +62,8 @@
     }
 }
 
-
 - (void)popCurrentController {
+    self.navigationItem.leftBarButtonItem.title = @"";
     [self.navigationController popViewControllerAnimated:YES];
 }
 

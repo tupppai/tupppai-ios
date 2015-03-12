@@ -19,13 +19,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ATOMPSGod/ATOMPSGod/Controller/homepage/ATOMAddTipLabelToImageViewController.m"
-            timestampString = "447770321.768"
+            filePath = "ATOMPSGod/ATOMPSGod/Controller/ATOMCutstomNavigationController.m"
+            timestampString = "447835875.87737"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "125"
-            endingLineNumber = "125"
-            landmarkName = "-clickChangeTipLabelDirectionButton:"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "-pushViewController:animated:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

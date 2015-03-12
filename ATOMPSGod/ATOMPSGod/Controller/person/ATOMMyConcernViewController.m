@@ -10,11 +10,13 @@
 #import "ATOMMyConcernTableViewCell.h"
 #import "ATOMMyConcernTableHeaderView.h"
 #import "ATOMMyConcernTableFooterView.h"
+#import "ATOMOtherPersonViewController.h"
 
 @interface ATOMMyConcernViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UIView *myConcernView;
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UITapGestureRecognizer *tapMyConcernGesutre;
 
 @end
 
@@ -37,6 +39,8 @@
     [_myConcernView addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tapMyConcernGesutre = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMyConcernGesutre:)];
+    [_tableView addGestureRecognizer:_tapMyConcernGesutre];
 }
 
 #pragma mark - Click Event
@@ -49,6 +53,22 @@
     } else {
         button.backgroundColor = [UIColor colorWithHex:0x00adef];
         [button setTitle:@"关注" forState:UIControlStateNormal];
+    }
+}
+
+#pragma mark - Gesture Event
+
+- (void)tapMyConcernGesutre:(UITapGestureRecognizer *)gesture {
+    CGPoint location = [gesture locationInView:_tableView];
+    NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:location];
+    if (indexPath) {
+        ATOMMyConcernTableViewCell *cell = (ATOMMyConcernTableViewCell *)[_tableView cellForRowAtIndexPath:indexPath];
+        CGPoint p = [gesture locationInView:cell];
+        if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
+            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+            [self pushViewController:opvc animated:YES];
+        }
+        
     }
 }
 

@@ -34,6 +34,10 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
 - (void)createUI {
     _personView = [ATOMPersonView new];
     self.view = _personView;

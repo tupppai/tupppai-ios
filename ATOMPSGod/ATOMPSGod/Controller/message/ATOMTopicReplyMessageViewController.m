@@ -9,6 +9,8 @@
 #import "ATOMTopicReplyMessageViewController.h"
 #import "ATOMNoDataView.h"
 #import "ATOMTopicReplyMessageTableViewCell.h"
+#import "ATOMHotDetailViewController.h"
+#import "ATOMOtherPersonViewController.h"
 
 @interface ATOMTopicReplyMessageViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -16,6 +18,7 @@
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) ATOMNoDataView *noDataView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
+@property (nonatomic, strong) UITapGestureRecognizer *tapTopicReplyMessageGesture;
 
 @end
 
@@ -54,6 +57,8 @@
     [_topicReplyMessageView addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tapTopicReplyMessageGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapTopicReplyMessageGesture:)];
+    [_tableView addGestureRecognizer:_tapTopicReplyMessageGesture];
 }
 
 #pragma mark - Click Event
@@ -62,6 +67,26 @@
     [_dataSource removeAllObjects];
     if (_dataSource.count == 0) {
         self.view = self.noDataView;
+    }
+}
+
+#pragma mark - Gesture Event
+
+- (void)tapTopicReplyMessageGesture:(UITapGestureRecognizer *)gesture {
+    CGPoint location = [gesture locationInView:_tableView];
+    NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:location];
+    if (indexPath) {
+        ATOMTopicReplyMessageTableViewCell *cell = (ATOMTopicReplyMessageTableViewCell *)[_tableView cellForRowAtIndexPath:indexPath];
+        CGPoint p = [gesture locationInView:cell];
+        if (CGRectContainsPoint(cell.workImageView.frame, p)) {
+            ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
+            hdvc.pushType = ATOMTopicReplyMessageType;
+            [self pushViewController:hdvc animated:YES];
+        } else if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
+            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+            [self pushViewController:opvc animated:YES];
+        }
+        
     }
 }
 

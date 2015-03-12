@@ -10,6 +10,9 @@
 #import "ATOMCommentMessageViewModel.h"
 #import "ATOMCommentMessageTableViewCell.h"
 #import "ATOMNoDataView.h"
+#import "ATOMHotDetailViewController.h"
+#import "ATOMCommentDetailViewController.h"
+#import "ATOMOtherPersonViewController.h"
 
 @interface ATOMCommentMessageViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -17,6 +20,7 @@
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) ATOMNoDataView *noDataView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
+@property (nonatomic, strong) UITapGestureRecognizer *tapCommentMessageGesture;
 
 @end
 
@@ -59,6 +63,8 @@
     [_commentMessageView addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tapCommentMessageGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCommentMessageGesture:)];
+    [_tableView addGestureRecognizer:_tapCommentMessageGesture];
 }
 
 #pragma mark - Click Event
@@ -67,6 +73,31 @@
     [_dataSource removeAllObjects];
     if (_dataSource.count == 0) {
         self.view = self.noDataView;
+    }
+}
+
+#pragma mark - Gesture Event
+
+- (void)tapCommentMessageGesture:(UITapGestureRecognizer *)gesture {
+    CGPoint location = [gesture locationInView:_tableView];
+    NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:location];
+    if (indexPath) {
+        ATOMCommentMessageTableViewCell *cell = (ATOMCommentMessageTableViewCell *)[_tableView cellForRowAtIndexPath:indexPath];
+        CGPoint p = [gesture locationInView:cell];
+        //点击图片
+        if (CGRectContainsPoint(cell.workImageView.frame, p)) {
+//            NSLog(@"Click userWorkImageView");
+            ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
+            hdvc.pushType = ATOMCommentMessageType;
+            [self pushViewController:hdvc animated:YES];
+        } else if (CGRectContainsPoint(cell.replyContentLabel.frame, p)) {
+            ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
+            [self pushViewController:cdvc animated:YES];
+        } else if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
+            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+            [self pushViewController:opvc animated:YES];
+        }
+        
     }
 }
 

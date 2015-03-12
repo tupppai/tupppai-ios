@@ -9,6 +9,8 @@
 #import "ATOMProceedingViewController.h"
 #import "ATOMProceedingTableViewCell.h"
 #import "ATOMUploadWorkViewController.h"
+#import "ATOMHotDetailViewController.h"
+#import "ATOMOtherPersonViewController.h"
 
 @interface ATOMProceedingViewController () <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -59,7 +61,14 @@
         //点击图片
         if (CGRectContainsPoint(cell.uploadButton.frame, p)) {
             [self dealUploadWork];
-        }        
+        } else if (CGRectContainsPoint(cell.userUploadImageView.frame, p)) {
+            ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
+            hdvc.pushType = ATOMProceedingType;
+            [self pushViewController:hdvc animated:YES];
+        } else if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
+            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+            [self pushViewController:opvc animated:YES];
+        }
     }
 }
 

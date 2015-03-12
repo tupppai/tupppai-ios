@@ -22,6 +22,7 @@ static int padding = 10;
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self createSubView];
     }
     return self;
@@ -68,6 +69,13 @@ static int padding = 10;
     return totalHeight;
 }
 
++ (CGRect)calculateHomePageRecentImageViewRect:(UIImageView *)imageView {
+    CGRect rect = imageView.frame;
+    //    NSLog(@"origin height = %f",rect.size.height);
+    rect.size.height -= 30;
+    return rect;
+}
+
 - (void)createSubView {
     _topView = [UIView new];
     _topView.backgroundColor = [UIColor whiteColor];
@@ -93,6 +101,7 @@ static int padding = 10;
     _userSexImageView = [UIImageView new];
     [_userSexImageView setImage:[UIImage imageNamed:@"man"]];
     _psButton = [UIButton new];
+    _psButton.userInteractionEnabled = NO;
     [_psButton setBackgroundImage:[UIImage imageNamed:@"btn_p_normal"] forState:UIControlStateNormal];
     [_psButton setBackgroundImage:[UIImage imageNamed:@"btn_p_pressed"] forState:UIControlStateHighlighted];
     

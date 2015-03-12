@@ -21,9 +21,8 @@ static int padding = 10;
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    self.selectionStyle = UITableViewCellSelectionStyleNone;
     if (self) {
-//        self.userInteractionEnabled = NO;
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self createSubView];
     }
     return self;

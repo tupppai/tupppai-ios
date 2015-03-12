@@ -11,13 +11,14 @@
 #import "ATOMMyMessageViewController.h"
 #import "ATOMMyAttentionViewController.h"
 #import "ATOMPersonViewController.h"
+#import "ATOMCutstomNavigationController.h"
 
 @interface ATOMMainTabBarController ()
 
-@property (nonatomic, strong) UINavigationController *nav1;
-@property (nonatomic, strong) UINavigationController *nav2;
-@property (nonatomic, strong) UINavigationController *nav3;
-@property (nonatomic, strong) UINavigationController *nav4;
+@property (nonatomic, strong) ATOMCutstomNavigationController *nav1;
+@property (nonatomic, strong) ATOMCutstomNavigationController *nav2;
+@property (nonatomic, strong) ATOMCutstomNavigationController *nav3;
+@property (nonatomic, strong) ATOMCutstomNavigationController *nav4;
 
 @end
 
@@ -37,10 +38,10 @@
     ATOMMyAttentionViewController *myAttentionViewController = [ATOMMyAttentionViewController new];
     ATOMMyMessageViewController *myMessageViewController = [ATOMMyMessageViewController new];
     ATOMPersonViewController *personViewController = [ATOMPersonViewController new];
-    _nav1 = [[UINavigationController alloc] initWithRootViewController:homePageViewController];
-    _nav2 = [[UINavigationController alloc] initWithRootViewController:myAttentionViewController];
-    _nav3 = [[UINavigationController alloc] initWithRootViewController:myMessageViewController];
-    _nav4 = [[UINavigationController alloc] initWithRootViewController:personViewController];
+    _nav1 = [[ATOMCutstomNavigationController alloc] initWithRootViewController:homePageViewController];
+    _nav2 = [[ATOMCutstomNavigationController alloc] initWithRootViewController:myAttentionViewController];
+    _nav3 = [[ATOMCutstomNavigationController alloc] initWithRootViewController:myMessageViewController];
+    _nav4 = [[ATOMCutstomNavigationController alloc] initWithRootViewController:personViewController];
     self.viewControllers = [NSArray arrayWithObjects:_nav1, _nav2, _nav3, _nav4, nil];
     _nav1.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"首页" image:[UIImage imageNamed:@"btn_index_normal"] selectedImage:[UIImage imageNamed:@"btn_index_pressed"]];
     _nav1.tabBarItem.imageInsets = UIEdgeInsetsMake(padding, 0, -padding, 0);

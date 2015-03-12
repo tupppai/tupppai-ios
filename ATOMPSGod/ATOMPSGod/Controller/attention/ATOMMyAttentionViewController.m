@@ -9,6 +9,8 @@
 #import "ATOMMyAttentionViewController.h"
 #import "ATOMMyAttentionTableViewCell.h"
 #import "ATOMCommentDetailViewController.h"
+#import "ATOMHotDetailViewController.h"
+#import "ATOMOtherPersonViewController.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self;
 
@@ -32,6 +34,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
 }
 
 - (void)createUI {
@@ -58,11 +64,15 @@
         CGPoint p = [gesture locationInView:cell];
         //点击图片
         if (CGRectContainsPoint(cell.userWorkImageView.frame, p)) {
-            NSLog(@"Click userWorkImageView");
+//            NSLog(@"Click userWorkImageView");
+            ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
+            [self pushViewController:hdvc animated:YES];
         } else if (CGRectContainsPoint(cell.topView.frame, p)) {
             p = [gesture locationInView:cell.topView];
             if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
-                NSLog(@"Click userHeaderButton");
+//                NSLog(@"Click userHeaderButton");
+                ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+                [self pushViewController:opvc animated:YES];
             }
         } else {
             p = [gesture locationInView:cell.thinCenterView];

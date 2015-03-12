@@ -61,6 +61,14 @@
     [self createUI];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+}
+
 - (void)createUI {
     WS(ws);
     self.title = @"详情";
@@ -85,6 +93,27 @@
         [self presentViewController:_imagePickerController animated:YES completion:NULL];
     } else {
         
+    }
+}
+
+- (void)popCurrentController {
+    if (_pushType == ATOMCommentMessageType) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else if (_pushType == ATOMInviteMessageType) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else if (_pushType == ATOMTopicReplyMessageType) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else if (_pushType == ATOMMyUploadType) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else if (_pushType == ATOMMyWorkType) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else if (_pushType == ATOMProceedingType) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else if (_pushType == ATOMMyCollectionType) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else {
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
 

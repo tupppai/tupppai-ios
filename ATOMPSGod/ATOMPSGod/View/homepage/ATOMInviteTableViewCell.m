@@ -1,14 +1,14 @@
 //
-//  ATOMMyConcernTableViewCell.m
+//  ATOMInviteTableViewCell.m
 //  ATOMPSGod
 //
-//  Created by atom on 15/3/10.
+//  Created by atom on 15/3/12.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMMyConcernTableViewCell.h"
+#import "ATOMInviteTableViewCell.h"
 
-@implementation ATOMMyConcernTableViewCell
+@implementation ATOMInviteTableViewCell
 
 static int padding10 = 10;
 static float commenWidth;
@@ -24,7 +24,6 @@ static float commenWidth;
 
 - (void)createSubView {
     _userHeaderButton = [[UIButton alloc] initWithFrame:CGRectMake(padding10, 6, 45, 45)];
-    _userHeaderButton.userInteractionEnabled = NO;
     _userHeaderButton.backgroundColor = [UIColor greenColor];
     _userHeaderButton.layer.cornerRadius = 22.5;
     _userHeaderButton.layer.masksToBounds = YES;
@@ -38,16 +37,16 @@ static float commenWidth;
     _userNameLabel.text = @"atom";
     [self addSubview:_userNameLabel];
     
-    _attentionButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - padding10 - 57, 11.5, 57, 30)];
-    _attentionButton.layer.cornerRadius = 5;
-    _attentionButton.layer.masksToBounds = YES;
-    _attentionButton.backgroundColor = [UIColor colorWithHex:0x838383];
-    [_attentionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_attentionButton setTitle:@"相互关注" forState:UIControlStateNormal];
-    _attentionButton.titleLabel.font = [UIFont systemFontOfSize:13.f];
-    [self addSubview:_attentionButton];
+    _inviteButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - padding10 - 57, 11.5, 57, 30)];
+    _inviteButton.layer.cornerRadius = 5;
+    _inviteButton.layer.masksToBounds = YES;
+    _inviteButton.backgroundColor = [UIColor colorWithHex:0x838383];
+    [_inviteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_inviteButton setTitle:@"已邀请" forState:UIControlStateNormal];
+    _inviteButton.titleLabel.font = [UIFont systemFontOfSize:13.f];
+    [self addSubview:_inviteButton];
     
-    commenWidth = (CGOriginX(_attentionButton.frame) - CGRectGetMaxX(_userHeaderButton.frame) - padding10 * 2) / 3;
+    commenWidth = (CGOriginX(_inviteButton.frame) - CGRectGetMaxX(_userHeaderButton.frame) - padding10 * 2) / 3;
     
     _fansNumberButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, CGRectGetMaxY(_userNameLabel.frame), commenWidth, 15)];
     [self setCommonButton:_fansNumberButton WithImage:[UIImage imageNamed:@"fans_num"]];
