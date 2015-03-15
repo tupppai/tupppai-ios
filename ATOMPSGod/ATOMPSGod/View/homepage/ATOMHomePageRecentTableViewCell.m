@@ -38,7 +38,7 @@ static int padding = 10;
     _userHeaderButton.frame = CGRectMake(padding, padding, 45, 45);
     _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding, padding, 80, 30);
     _userPublishTimeLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding, CGRectGetMaxY(_userNameLabel.frame), 80, 15);
-    _userSexImageView.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - 17, CGRectGetMaxY(_userHeaderButton.frame) - 17, 17, 17);
+    _userSexImageView.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - 16, CGRectGetMaxY(_userHeaderButton.frame) - 16, 17, 17);
     _psButton.frame = CGRectMake(SCREEN_WIDTH - padding - 46, 17.5, 46, 32);
     
     CGSize userWorkingImageViewSize = [self calculateWorkImageViewSize];
@@ -91,7 +91,7 @@ static int padding = 10;
     _userNameLabel = [UILabel new];
 //    _userNameLabel.backgroundColor = [UIColor orangeColor];
     _userNameLabel.text = @"宋祥伍";
-    _userNameLabel.font = [UIFont systemFontOfSize:20.f];
+    _userNameLabel.font = [UIFont systemFontOfSize:16.f];
     _userNameLabel.textColor = [UIColor colorWithHex:0x00adef];
     _userPublishTimeLabel = [UILabel new];
 //    _userPublishTimeLabel.backgroundColor = [UIColor greenColor];

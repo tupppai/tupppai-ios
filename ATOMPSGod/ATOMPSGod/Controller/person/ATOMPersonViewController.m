@@ -17,14 +17,29 @@
 #import "ATOMMyCollectionViewController.h"
 #import "ATOMProfileEditViewController.h"
 #import "ATOMProceedingViewController.h"
+#import "ATOMHeaderImageCropperViewController.h"
 
-@interface ATOMPersonViewController () <UITableViewDelegate, UITableViewDataSource>
+#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+
+@interface ATOMPersonViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ATOMCropHeaderImageCompleteProtocol>
 
 @property (nonatomic, strong) ATOMPersonView *personView;
+@property (nonatomic, strong) UIImagePickerController *imagePickerController;
+@property (nonatomic, assign) ATOMClickUserHeaderEventType clickUserHeaderEventType;
 
 @end
 
 @implementation ATOMPersonViewController
+
+#pragma mark - Lazy Initialize
+
+- (UIImagePickerController *)imagePickerController {
+    if (!_imagePickerController) {
+        _imagePickerController = [UIImagePickerController new];
+        _imagePickerController.delegate = self;
+    }
+    return _imagePickerController;
+}
 
 #pragma mark - UI
 
@@ -41,11 +56,11 @@
 - (void)createUI {
     _personView = [ATOMPersonView new];
     self.view = _personView;
+    [_personView.userHeaderButton addTarget:self action:@selector(clickUserHeaderButton:) forControlEvents:UIControlEventTouchUpInside];
     UITapGestureRecognizer *tapFansGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapFansGesture:)];
     [_personView.fansLabel addGestureRecognizer:tapFansGesture];
     _personView.personTableView.delegate = self;
     _personView.personTableView.dataSource = self;
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[[UIView alloc] initWithFrame:CGRectZero]];
     self.title = @"个人";
     self.navigationItem.title = @"宋祥伍";
 }
@@ -55,6 +70,63 @@
 - (void)tapFansGesture:(UITapGestureRecognizer *)gesture {
     ATOMMyFansViewController *mfvc = [ATOMMyFansViewController new];
     [self pushViewController:mfvc animated:YES];
+}
+
+#pragma mark - Click Event
+
+- (void)clickUserHeaderButton:(UIButton *)sender {
+    [UIActionSheet showInView:self.view withTitle:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@[@"更换头像", @"更换背景"] tapBlock:^(UIActionSheet *actionSheet, NSInteger buttonIndex) {
+        NSString *titleStr = [actionSheet buttonTitleAtIndex:buttonIndex];
+        if ([titleStr isEqualToString:@"更换头像"]) {
+            [self changingHeaderImage];
+        } else if ([titleStr isEqualToString:@"更换背景"]) {
+            [self changingBackGroundImage];
+        }
+    }];
+}
+
+- (void)dealTakingPhoto {
+    _clickUserHeaderEventType = ATOMTakingPhoto;
+    UIImagePickerControllerSourceType currentType = UIImagePickerControllerSourceTypeCamera;
+    BOOL ok = [UIImagePickerController isSourceTypeAvailable:currentType];
+    if (ok) {
+        self.imagePickerController.sourceType = currentType;
+        [self presentViewController:self.imagePickerController animated:YES completion:NULL];
+    } else {
+    }
+}
+
+- (void)changingHeaderImage {
+    _clickUserHeaderEventType = ATOMChangingHeaderImage;
+    self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    [self presentViewController:_imagePickerController animated:YES completion:NULL];
+}
+
+- (void)changingBackGroundImage {
+    _clickUserHeaderEventType = ATOMChangingBackGroundImage;
+    self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    [self presentViewController:_imagePickerController animated:YES completion:NULL];
+    
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+//    WS(ws);
+    [self dismissViewControllerAnimated:YES completion:^{
+        if (_clickUserHeaderEventType == ATOMChangingBackGroundImage) {
+            _personView.topBackGroundImageView.image = info[UIImagePickerControllerOriginalImage];
+        } else if (_clickUserHeaderEventType == ATOMChangingHeaderImage) {
+            ATOMHeaderImageCropperViewController *hicvc = [ATOMHeaderImageCropperViewController new];
+            hicvc.delegate = self;
+            hicvc.originImage = info[UIImagePickerControllerOriginalImage];
+            [self pushViewController:hicvc animated:NO];
+        }
+    }];
 }
 
 #pragma mark - UITableViewDataSource
@@ -153,7 +225,11 @@
     return cell;
 }
 
+#pragma ATOMCropHeaderImageCompleteProtocol
 
+- (void)cropHeaderImageCompleteWith:(UIImage *)image {
+    [_personView.userHeaderButton setBackgroundImage:image forState:UIControlStateNormal];
+}
 
 
 

@@ -8,6 +8,7 @@
 
 #import "BJImageCropper.h"
 #import <QuartzCore/QuartzCore.h>
+#import "ATOMCustomCopperView.h"
 
 
 @interface BJImageCropper ()
@@ -97,14 +98,14 @@
     CGFloat selfHeight = CGHeight(self.imageView.frame);
     
     //set 8 direction shadowView
-    topView.frame = CGRectMake(x, -1, width + 1, y);
+    topView.frame = CGRectMake(x, 0, width, y);
     bottomView.frame = CGRectMake(x, y + height, width, selfHeight - y - height);
-    leftView.frame = CGRectMake(-1, y, x + 1, height);
+    leftView.frame = CGRectMake(0, y, x, height);
     rightView.frame = CGRectMake(x + width, y, selfWidth - x - width, height);
     
-    topLeftView.frame = CGRectMake(-1, -1, x + 1, y + 1);
-    topRightView.frame = CGRectMake(x + width, -1, selfWidth - x - width, y + 1);
-    bottomLeftView.frame = CGRectMake(-1, y + height, x + 1, selfHeight - y - height);
+    topLeftView.frame = CGRectMake(0, 0, x, y);
+    topRightView.frame = CGRectMake(x + width, 0, selfWidth - x - width, y);
+    bottomLeftView.frame = CGRectMake(0, y + height, x, selfHeight - y - height);
     bottomRightView.frame = CGRectMake(x + width, y + height, selfWidth - x - width, selfHeight - y - height);
     
     [self didChangeValueForKey:@"crop"];    
@@ -139,7 +140,11 @@
 - (UIView*)newEdgeView {
     UIView *view = [[UIView alloc] init];
     view.backgroundColor = [UIColor blackColor];
-    view.alpha = 0.5;
+    if (_cropperViewType == CircleType) {
+        view.alpha = 0.7;
+    } else {
+        view.alpha = 0.5;
+    }
     
     [self.imageView addSubview:view];
     
@@ -149,15 +154,16 @@
 //topleft topright bottomleft bottomright with alpha 0.75
 - (UIView*)newCornerView {
     UIView *view = [self newEdgeView];
-    view.alpha = 0.75;
-    
+    if (_cropperViewType == CircleType) {
+        view.alpha = 0.7;
+    } else {
+        view.alpha = 0.75;
+    }
     return view;
 }
 
 
-//initialize cropView with 3/4 size of imageView
-+ (UIView *)initialCropViewForImageView:(UIImageView*)imageView WithCropperViewType:(ATOMCropperViewTYPE)cropperViewType{
-    // 3/4 the size, centered
++ (ATOMCustomCropperView *)initialCropViewForImageView:(UIImageView*)imageView WithCropperViewType:(ATOMCropperViewTYPE)cropperViewType{
     
     CGRect max = imageView.bounds;
     CGFloat width;
@@ -176,7 +182,7 @@
             width = CGWidth(max);
             height = width / 3 * 4;
         }
-    } else {
+    } else if (cropperViewType == FourThreeType){
         height = CGHeight(max);
         width =  height / 3 * 4;
         if (width <= CGWidth(max) && height <= CGHeight(max)) {
@@ -185,16 +191,21 @@
             width = CGWidth(max);
             height = width / 4 * 3;
         }
+    } else if (cropperViewType == CircleType) {
+        width = fmin(CGWidth(max), CGHeight(max));
+        height = width;
     }
     
-    CGFloat x      = (CGWidth(max) - width) / 2;
-    CGFloat y      = (CGHeight(max) - height) / 2;
+    CGFloat x = (CGWidth(max) - width) / 2;
+    CGFloat y = (CGHeight(max) - height) / 2;
     
-    UIView* cropView = [[UIView alloc] initWithFrame:CGRectMake(x, y, width, height)];
-    cropView.layer.borderColor = [[UIColor colorWithHex:0x00aeef] CGColor];
-    cropView.layer.borderWidth = 2.0;
+    ATOMCustomCropperView* cropView = [[ATOMCustomCropperView alloc] initWithFrame:CGRectMake(x, y, width, height)];
     cropView.backgroundColor = [UIColor clearColor];
-    cropView.alpha = 0.4;   
+    if (cropperViewType == CircleType) {
+        cropView.customCropperViewType = ATOMCustomCropperViewCircleType;
+    } else {
+        cropView.customCropperViewType = ATOMCustomCropperViewRegularType;
+    }
     
 #ifdef ARC
     return cropView;

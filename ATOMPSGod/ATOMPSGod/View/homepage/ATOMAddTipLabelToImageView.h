@@ -21,5 +21,7 @@
 - (void)showOperationButton;
 - (void)hideOperationButton;
 - (BOOL)isOperationButtonShow;
+- (void)addTemporaryPointAt:(CGPoint)point;
+- (void)removeTemporaryPoint;
 
 @end

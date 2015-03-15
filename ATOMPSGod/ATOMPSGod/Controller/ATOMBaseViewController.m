@@ -37,7 +37,13 @@
     [backButton setImageEdgeInsets:UIEdgeInsetsMake(6, 0, 6, 19)];
     UIBarButtonItem *barBackButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backView];
     [backButton addTarget:self action:@selector(popCurrentController) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = barBackButtonItem;
+    _negativeSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    _negativeSpacer.width = -5;
+    if (self.navigationController.viewControllers.count == 1) {
+        self.navigationItem.leftBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:[[UIView alloc] initWithFrame:CGRectZero]]];
+    } else {
+        self.navigationItem.leftBarButtonItems = @[_negativeSpacer, barBackButtonItem];
+    }
 //    self.navigationItem.hidesBackButton = YES;
     NSLog(@"%@ DidLoad!!!!!",[self class]);
     

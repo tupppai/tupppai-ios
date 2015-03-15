@@ -18,4 +18,6 @@
 @property (nonatomic, strong) UIButton *workNumberButton;
 @property (nonatomic, strong) UIButton *inviteButton;
 
+- (void)changeInviteButtonStatus;
+
 @end

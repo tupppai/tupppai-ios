@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+@class ATOMCustomCropperView;
 
 //#define IMAGE_CROPPER_OUTSIDE_STILL_TOUCHABLE 40.0f
 #define IMAGE_CROPPER_INSIDE_STILL_EDGE 20.0f
@@ -29,14 +30,16 @@
 typedef enum {
     ThreeFourType = 0,
     OneOneType,
-    FourThreeType
+    FourThreeType,
+    CircleType
 } ATOMCropperViewTYPE;
 
 @interface BJImageCropper : UIView {
     
     UIImageView *imageView;
     
-    UIView *cropView;
+//    UIView *cropView;
+    ATOMCustomCropperView *cropView;
     
     UIView *topView;
     UIView *bottomView;

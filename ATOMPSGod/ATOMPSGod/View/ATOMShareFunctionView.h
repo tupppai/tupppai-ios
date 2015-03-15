@@ -8,7 +8,7 @@
 
 #import "ATOMBaseView.h"
 
-@interface ATOMShareView : ATOMBaseView
+@interface ATOMShareFunctionView : ATOMBaseView
 
 @property (nonatomic, strong) UIButton *cancelButton;
 

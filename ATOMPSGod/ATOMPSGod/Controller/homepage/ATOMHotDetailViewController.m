@@ -10,8 +10,10 @@
 #import "ATOMHotDetailTableViewCell.h"
 #import "ATOMCommentDetailViewController.h"
 #import "ATOMUploadWorkViewController.h"
+#import "ATOMProceedingViewController.h"
+#import "ATOMOtherPersonViewController.h"
 
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self;
+#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMHotDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -50,6 +52,7 @@
 - (UIImagePickerController *)imagePickerController {
     if (_imagePickerController == nil) {
         _imagePickerController = [UIImagePickerController new];
+        _imagePickerController.delegate = self;
     }
     return _imagePickerController;
 }
@@ -85,15 +88,10 @@
 }
 
 - (void)dealUploadWork {
-    UIImagePickerControllerSourceType currentType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-    BOOL ok = [UIImagePickerController isSourceTypeAvailable:currentType];
-    if (ok) {
-        self.imagePickerController.sourceType = currentType;
-        _imagePickerController.delegate = self;
-        [self presentViewController:_imagePickerController animated:YES completion:NULL];
-    } else {
-        
-    }
+    [[NSUserDefaults standardUserDefaults] setObject:@"Uploading" forKey:@"UploadingOrSeekingHelp"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    [self presentViewController:_imagePickerController animated:YES completion:NULL];
 }
 
 - (void)popCurrentController {
@@ -131,7 +129,9 @@
         } else if (CGRectContainsPoint(cell.topView.frame, p)) {
             p = [gesture locationInView:cell.topView];
             if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
-                NSLog(@"Click userHeaderButton");
+//                NSLog(@"Click userHeaderButton");
+                ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+                [self pushViewController:opvc animated:YES];
             } else if (CGRectContainsPoint(cell.psButton.frame, p)) {
                 NSLog(@"Click psButton");
                 [UIActionSheet showInView:self.view withTitle:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@[@"下载素材",@"上传作品"] tapBlock:^(UIActionSheet *actionSheet, NSInteger buttonIndex) {
@@ -142,6 +142,9 @@
                         [self dealUploadWork];
                     }
                 }];
+            } else if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
+                ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+                [self pushViewController:opvc animated:YES];
             }
         } else {
             p = [gesture locationInView:cell.thinCenterView];

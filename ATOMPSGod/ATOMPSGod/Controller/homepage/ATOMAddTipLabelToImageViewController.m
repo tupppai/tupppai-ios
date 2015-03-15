@@ -11,15 +11,16 @@
 #import "ATOMTipButton.h"
 #import "ATOMFillInContentOfTipLabelView.h"
 #import "ATOMInviteViewController.h"
+#import "ATOMShareViewController.h"
 
-@interface ATOMAddTipLabelToImageViewController () <UITextFieldDelegate>
+@interface ATOMAddTipLabelToImageViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) ATOMAddTipLabelToImageView *addTipLabelToImageView;
-@property (nonatomic, strong) UITapGestureRecognizer *tapWorkImageViewGesture;
+@property (nonatomic, strong) UITapGestureRecognizer *tapAddTipLabelToImageViewGesture;
 
 @property (nonatomic, strong) ATOMFillInContentOfTipLabelView *fillInContentOfTipLabelView;
 
-@property (nonatomic, strong) UIBarButtonItem *originLeftBarButtonItem;
+@property (nonatomic, strong) NSArray *originLeftBarButtonItems;
 @property (nonatomic, strong) UIBarButtonItem *originRightBarButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *cancelLeftBarButtonItem;
 
@@ -36,11 +37,11 @@
 
 #pragma mark - Lazy Initialize
 
-- (UITapGestureRecognizer *)tapWorkImageViewGesture {
-    if (_tapWorkImageViewGesture == nil) {
-        _tapWorkImageViewGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapWorkImageViewGesture:)];
+- (UITapGestureRecognizer *)tapAddTipLabelToImageViewGesture {
+    if (_tapAddTipLabelToImageViewGesture == nil) {
+        _tapAddTipLabelToImageViewGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAddTipLabelToImageViewGesture:)];
     }
-    return _tapWorkImageViewGesture;
+    return _tapAddTipLabelToImageViewGesture;
 }
 
 - (NSMutableArray *)tipLabelArray {
@@ -62,24 +63,37 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
-    
+    [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.delegate = self;
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    
+    [super viewWillDisappear:animated];
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+    }
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    if (gestureRecognizer == self.navigationController.interactivePopGestureRecognizer) {
+        return NO;
+    } else {
+        return YES;
+    }
 }
 
 - (void)createUI {
-    self.title = @"上传图片";
+    self.title = @"添加标签";
     UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
     self.navigationItem.rightBarButtonItem = rightButtonItem;
-    _originLeftBarButtonItem = self.navigationItem.leftBarButtonItem;
+    _originLeftBarButtonItems = self.navigationItem.leftBarButtonItems;
     _originRightBarButtonItem = self.navigationItem.rightBarButtonItem;
     
     
@@ -90,7 +104,7 @@
     _fillInContentOfTipLabelView.tipLabelContentTextField.delegate = self;
     
     _addTipLabelToImageView.workImage = _workImage;
-    [_addTipLabelToImageView.workImageView addGestureRecognizer:self.tapWorkImageViewGesture];
+    [_addTipLabelToImageView addGestureRecognizer:self.tapAddTipLabelToImageViewGesture];
     [_addTipLabelToImageView.changeTipLabelDirectionButton addTarget:self action:@selector(clickChangeTipLabelDirectionButton:) forControlEvents:UIControlEventTouchUpInside];
     [_addTipLabelToImageView.deleteTipLabelButton addTarget:self action:@selector(clickDeleteTipLabelButton:) forControlEvents:UIControlEventTouchUpInside];
 }
@@ -99,8 +113,14 @@
 #pragma mark - Click Event
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)sender {
-    ATOMInviteViewController *ivc = [ATOMInviteViewController new];
-    [self pushViewController:ivc animated:YES];
+    NSString *pushTypeStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"UploadingOrSeekingHelp"];
+    if ([pushTypeStr isEqualToString:@"Uploading"]) {
+        ATOMShareViewController *svc = [ATOMShareViewController new];
+        [self pushViewController:svc animated:YES];
+    } else if ([pushTypeStr isEqualToString:@"SeekingHelp"]) {
+        ATOMInviteViewController *ivc = [ATOMInviteViewController new];
+        [self pushViewController:ivc animated:YES];
+    }
 }
 
 - (void)clickCancelLeftBarButtonItem:(UIBarButtonItem *)sender {
@@ -117,8 +137,9 @@
 
 - (void)changeViewToOrigin {
 //    self.view = _addTipLabelToImageView;
+    [_addTipLabelToImageView removeTemporaryPoint];
     [_fillInContentOfTipLabelView removeFromSuperview];
-    self.navigationItem.leftBarButtonItem = _originLeftBarButtonItem;
+    self.navigationItem.leftBarButtonItems = _originLeftBarButtonItems;
     self.navigationItem.rightBarButtonItem = _originRightBarButtonItem;
     _fillInContentOfTipLabelView.tipLabelContentTextField.text = @"";
 }
@@ -128,6 +149,7 @@
 }
 
 - (void)clickDeleteTipLabelButton:(UIButton *)sender {
+    [_addTipLabelToImageView hideOperationButton];
     [_lastAddButton removeFromSuperview];
     [_tipLabelArray removeObject:_lastAddButton];
     _lastAddButton = nil;
@@ -135,20 +157,28 @@
 
 #pragma mark - Gesture Event
 
-- (void)tapWorkImageViewGesture:(UITapGestureRecognizer *)gesture {
+- (void)tapAddTipLabelToImageViewGesture:(UITapGestureRecognizer *)gesture {
+    CGPoint location = [gesture locationInView:_addTipLabelToImageView];
     if ([_addTipLabelToImageView isOperationButtonShow]) {
-        [_addTipLabelToImageView hideOperationButton];
+        if (location.y <= CGHeight(_addTipLabelToImageView.frame) - 76) {
+            [_addTipLabelToImageView hideOperationButton];
+        }
     } else {
-        _currentLocation = [gesture locationInView:_addTipLabelToImageView.workImageView];
-        [self changeViewToFillInTipLabel];
+        if (_tipLabelArray.count < 3) {
+            if (CGRectContainsPoint(_addTipLabelToImageView.workImageView.frame, location)) {
+                _currentLocation = [gesture locationInView:_addTipLabelToImageView.workImageView];
+                [self changeViewToFillInTipLabel];
+            }
+        }
     }
 }
 
 - (void)changeViewToFillInTipLabel {
 //    self.view = _fillInContentOfTipLabelView;
+    [_addTipLabelToImageView addTemporaryPointAt:_currentLocation];
     [_addTipLabelToImageView addSubview:_fillInContentOfTipLabelView];
     [_fillInContentOfTipLabelView.tipLabelContentTextField becomeFirstResponder];
-    self.navigationItem.leftBarButtonItem = self.cancelLeftBarButtonItem;
+    self.navigationItem.leftBarButtonItems = @[self.cancelLeftBarButtonItem];
     self.navigationItem.rightBarButtonItem = nil;
 }
 
@@ -185,7 +215,7 @@
 #pragma mark - UITextFieldDelegate
 
 - (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    if (range.location >= 15) {
+    if (range.location >= 18) {
         return NO;
     }
     return YES;
@@ -193,10 +223,13 @@
 
 -(BOOL) textFieldShouldReturn:(UITextField *)textField {
     _currentTipLabelText = textField.text;
-    [textField resignFirstResponder];
-    [self changeViewToOrigin];
-    [self addTipLabelAtLocation];
-    return YES;
+    if (_currentTipLabelText.length) {
+        [textField resignFirstResponder];
+        [self changeViewToOrigin];
+        [self addTipLabelAtLocation];
+        return YES;
+    }
+    return NO;
 }
 
 

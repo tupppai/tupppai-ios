@@ -28,18 +28,6 @@ static int collumnNumber = 3;
     return _workImageView;
 }
 
-- (UILabel *)praiseLabel {
-    if (!_praiseLabel) {
-        _praiseLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 25, 15)];
-        _praiseLabel.backgroundColor = [UIColor blackColor];
-        _praiseLabel.alpha = 0.7;
-        _praiseLabel.textAlignment = NSTextAlignmentCenter;
-        _praiseLabel.textColor = [UIColor whiteColor];
-        [self.workImageView addSubview:_praiseLabel];
-    }
-    return _praiseLabel;
-}
-
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -50,11 +38,6 @@ static int collumnNumber = 3;
 - (void)setWorkImage:(UIImage *)workImage {
     _workImage = workImage;
     self.workImageView.image = _workImage;
-}
-
-- (void)setPraiseNumber:(NSInteger)praiseNumber {
-    _praiseNumber = praiseNumber;
-    self.praiseLabel.text = [NSString stringWithFormat:@"%d",(int)_praiseNumber];
 }
 
 

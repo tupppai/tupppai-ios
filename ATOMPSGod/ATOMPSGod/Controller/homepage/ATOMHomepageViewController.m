@@ -13,9 +13,10 @@
 #import "ATOMUploadWorkViewController.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMCommentDetailViewController.h"
+#import "ATOMProceedingViewController.h"
 
 
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self;
+#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMHomepageViewController() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -32,6 +33,8 @@
 
 @property (nonatomic, strong) UITapGestureRecognizer *tapHomePageHotGesture;
 @property (nonatomic, strong) UITapGestureRecognizer *tapHomePageRecentGesture;
+@property (nonatomic, strong) UISwipeGestureRecognizer *swipeRightRecognizer;
+@property (nonatomic, strong) UISwipeGestureRecognizer *swipeLeftRecognizer;
 
 @end
 
@@ -42,6 +45,7 @@
 - (UIImagePickerController *)imagePickerController {
     if (_imagePickerController == nil) {
         _imagePickerController = [UIImagePickerController new];
+        _imagePickerController.delegate = self;
     }
     return _imagePickerController;
 }
@@ -54,6 +58,10 @@
         _homepageHotTableView.dataSource = self;
         _tapHomePageHotGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHomePageHotGesture:)];
         [_homepageHotTableView addGestureRecognizer:_tapHomePageHotGesture];
+        _swipeRightRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeHomePageGesture:)];
+        _swipeRightRecognizer.numberOfTouchesRequired = 1;
+        _swipeRightRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+        [_homepageHotTableView addGestureRecognizer:_swipeRightRecognizer];
     }
     return _homepageHotTableView;
 }
@@ -66,6 +74,10 @@
         _homepageRecentTableView.dataSource = self;
         _tapHomePageRecentGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHomePageRecentGesture:)];
         [_homepageRecentTableView addGestureRecognizer:_tapHomePageRecentGesture];
+        _swipeLeftRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeHomePageGesture:)];
+        _swipeLeftRecognizer.numberOfTouchesRequired = 1;
+        _swipeLeftRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+        [_homepageRecentTableView addGestureRecognizer:_swipeLeftRecognizer];
     }
     return _homepageRecentTableView;
 }
@@ -123,7 +135,6 @@
 }
 
 - (void)createCustomNavigationBar {
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[[UIView alloc] initWithFrame:CGRectZero]];
     UIView *customTitleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
 //    customTitleView.backgroundColor = [UIColor orangeColor];
     self.navigationItem.titleView = customTitleView;
@@ -141,6 +152,8 @@
     [_hotTitleButton addTarget:self action:@selector(clickHotTitleButton:) forControlEvents:UIControlEventTouchUpInside];
     [_recentTitleButton addTarget:self action:@selector(clickRecentTitleButton:) forControlEvents:UIControlEventTouchUpInside];
     
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    negativeSpacer.width = -5;
     UIView *cameraView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     UIButton *cameraButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     [cameraButton setImage:[UIImage imageNamed:@"btn_psask_normal"] forState:UIControlStateNormal];
@@ -149,20 +162,20 @@
     [cameraButton addTarget:self action:@selector(clickCameraButton:) forControlEvents:UIControlEventTouchUpInside];
     [cameraView addSubview:cameraButton];
     UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cameraView];
-    self.navigationItem.rightBarButtonItem = rightButtonItem;
+    self.navigationItem.rightBarButtonItems = @[negativeSpacer, rightButtonItem];
 }
 
 #pragma mark - Click Event
 
 - (void)clickHotTitleButton:(UIButton *)sender {
-    NSLog(@"clickHotTitleButton");
+//    NSLog(@"clickHotTitleButton");
     _hotTitleButton.selected = YES;
     _recentTitleButton.selected = NO;
     [self changeUIAccording:@"热门"];
 }
 
 - (void)clickRecentTitleButton:(UIButton *)sender {
-    NSLog(@"clickRecentTitleButton");
+//    NSLog(@"clickRecentTitleButton");
     _hotTitleButton.selected = NO;
     _recentTitleButton.selected = YES;
     [self changeUIAccording:@"最新"];
@@ -182,11 +195,12 @@
 }
 
 - (void)dealTakingPhoto {
+    [[NSUserDefaults standardUserDefaults] setObject:@"SeekingHelp" forKey:@"UploadingOrSeekingHelp"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     UIImagePickerControllerSourceType currentType = UIImagePickerControllerSourceTypeCamera;
     BOOL ok = [UIImagePickerController isSourceTypeAvailable:currentType];
     if (ok) {
         self.imagePickerController.sourceType = currentType;
-        _imagePickerController.delegate = self;
         [self presentViewController:_imagePickerController animated:YES completion:NULL];
     } else {
         
@@ -195,22 +209,22 @@
 
 
 - (void)dealSelectingPhotoFromAlbum {
+    [[NSUserDefaults standardUserDefaults] setObject:@"SeekingHelp" forKey:@"UploadingOrSeekingHelp"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
     [self presentViewController:_imagePickerController animated:YES completion:NULL];
 }
 
 - (void)dealUploadWorks {
-    UIImagePickerControllerSourceType currentType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-    BOOL ok = [UIImagePickerController isSourceTypeAvailable:currentType];
-    if (ok) {
-        self.imagePickerController.sourceType = currentType;
-        _imagePickerController.delegate = self;
-        [self presentViewController:_imagePickerController animated:YES completion:NULL];
-    } else {
-        
-    }
+    [[NSUserDefaults standardUserDefaults] setObject:@"Uploading" forKey:@"UploadingOrSeekingHelp"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    ATOMProceedingViewController *pvc = [ATOMProceedingViewController new];
+    [self pushViewController:pvc animated:YES];
 }
 
+- (void)dealDownloadWork {
+    
+}
 
 
 #pragma mark - Gesture Event
@@ -231,6 +245,9 @@
             } else if (CGRectContainsPoint(cell.topView.frame, p)) {
                 p = [gesture locationInView:cell.topView];
                 if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
+                    ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+                    [self pushViewController:opvc animated:YES];
+                } else if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
                     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
                     [self pushViewController:opvc animated:YES];
                 }
@@ -269,16 +286,17 @@
                     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
                     [self pushViewController:opvc animated:YES];
                 } else if (CGRectContainsPoint(cell.psButton.frame, p)) {
-                    [UIActionSheet showInView:self.view withTitle:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@[@"拍照", @"从手机相册选择", @"上传作品"] tapBlock:^(UIActionSheet *actionSheet, NSInteger buttonIndex) {
+                    [UIActionSheet showInView:self.view withTitle:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@[@"下载素材", @"上传作品"] tapBlock:^(UIActionSheet *actionSheet, NSInteger buttonIndex) {
                         NSString * tapTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
-                        if ([tapTitle isEqualToString:@"拍照"]) {
-                            [self dealTakingPhoto];
-                        } else if ([tapTitle isEqualToString:@"从手机相册选择"]) {
-                            [self dealSelectingPhotoFromAlbum];
+                        if ([tapTitle isEqualToString:@"下载素材"]) {
+                            [self dealDownloadWork];
                         } else if ([tapTitle isEqualToString:@"上传作品"]) {
                             [self dealUploadWorks];
                         }
                     }];
+                } else if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
+                    ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+                    [self pushViewController:opvc animated:YES];
                 }
             } else {
                 p = [gesture locationInView:cell.thinCenterView];
@@ -293,6 +311,18 @@
             }
             
         }
+    }
+}
+
+- (void)swipeHomePageGesture:(UISwipeGestureRecognizer *)gesture {
+    if (gesture.direction == UISwipeGestureRecognizerDirectionRight) {
+        _hotTitleButton.selected = NO;
+        _recentTitleButton.selected = YES;
+        [self changeUIAccording:@"最新"];
+    } else if (gesture.direction == UISwipeGestureRecognizerDirectionLeft) {
+        _hotTitleButton.selected = YES;
+        _recentTitleButton.selected = NO;
+        [self changeUIAccording:@"热门"];
     }
 }
 

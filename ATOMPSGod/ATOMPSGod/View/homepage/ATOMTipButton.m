@@ -131,9 +131,28 @@
 
 - (void)constrainTipLabelToImageView {
     CGRect frame = self.frame;
-    BOOL change = NO;
+    BOOL change;
     do {
-        change = [self isOverBounds:frame];
+        change = NO;
+        if (CGOriginX(frame) < 0) {
+            frame.origin.x = 0;
+            change = YES;
+        }
+        
+        if (CGOriginX(frame) + CGWidth(frame) > CGWidth(self.superview.frame)) {
+            frame.origin.x = CGWidth(self.superview.frame) - CGWidth(frame);
+            change = YES;
+        }
+        
+        if (CGOriginY(frame) < 0) {
+            frame.origin.y = 0;
+            change = YES;
+        }
+        
+        if (CGOriginY(frame) + CGHeight(frame) > CGHeight(self.superview.frame)) {
+            frame.origin.y = CGHeight(self.superview.frame) - CGHeight(frame);
+            change = YES;
+        }
     } while (change);
     
     self.frame = frame;
@@ -143,10 +162,10 @@
     CGRect newFrame;
     ATOMTipButtonType newTipButtonType;
     if (_tipButtonType == ATOMLeftTipType) {
-        newFrame = CGRectMake(CGOriginX(self.frame) + CGWidth(self.frame), CGOriginY(self.frame), CGWidth(self.frame), CGHeight(self.frame));
+        newFrame = CGRectMake(CGOriginX(self.frame) - CGWidth(self.frame) + 15, CGOriginY(self.frame), CGWidth(self.frame), CGHeight(self.frame));
         newTipButtonType = ATOMRightTipType;
     } else {
-        newFrame = CGRectMake(CGOriginX(self.frame) - CGWidth(self.frame), CGOriginY(self.frame), CGWidth(self.frame), CGHeight(self.frame));
+        newFrame = CGRectMake(CGOriginX(self.frame) + CGWidth(self.frame) - 15, CGOriginY(self.frame), CGWidth(self.frame), CGHeight(self.frame));
         newTipButtonType = ATOMLeftTipType;
     }
     if ([self isOverBounds:newFrame]) {
@@ -164,7 +183,6 @@
         flag = YES;
     }
     
-    NSLog(@"%f %f",CGWidth(self.superview.frame),CGHeight(self.superview.frame));
     if (CGOriginX(frame) + CGWidth(frame) > CGWidth(self.superview.frame)) {
         frame.origin.x = CGWidth(self.superview.frame) - CGWidth(frame);
         flag = YES;

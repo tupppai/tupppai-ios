@@ -105,7 +105,6 @@
     } else {
         ATOMMyWorkCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:_WorkCellIdentifier forIndexPath:indexPath];
         cell.workImage = _dataSource[indexPath.row];
-        cell.praiseNumber = 10;
         return cell;
     }
 }

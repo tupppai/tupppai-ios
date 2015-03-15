@@ -35,7 +35,6 @@
 
 - (void)createUI {
     self.title = @"我的消息";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[[UIView alloc] initWithFrame:CGRectZero]];
     _myMessageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _myMessageView;
     _tableView = [[UITableView alloc] initWithFrame:_myMessageView.bounds];

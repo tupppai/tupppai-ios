@@ -80,6 +80,12 @@
         if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
             [self pushViewController:opvc animated:YES];
+        } else if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
+            p = [gesture locationInView:cell.userNameLabel];
+            if (p.x <= 16 * 5) {
+                ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+                [self pushViewController:opvc animated:YES];
+            }
         }
         
     }

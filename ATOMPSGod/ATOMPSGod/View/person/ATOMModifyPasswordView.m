@@ -21,6 +21,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        self.backgroundColor = [UIColor colorWithHex:0xededed];
         [self createSubView];
     }
     return self;
@@ -34,18 +35,21 @@
     UILabel *oldPasswordLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 81.5, 40)];
     oldPasswordLabel.text = @"旧密码";
     _oldPasswordTextField = [UITextField new];
+    _oldPasswordTextField.secureTextEntry = YES;
     _oldPasswordTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"输入你的旧密码" attributes:attributeDict];
     [self setCommonTextField:_oldPasswordTextField AndLabel:oldPasswordLabel];
     
     UILabel *modifyPasswordLabel= [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 81.5, 40)];
     modifyPasswordLabel.text = @"新密码";
     _modifyPasswordTextField = [UITextField new];
+    _modifyPasswordTextField.secureTextEntry = YES;
     _modifyPasswordTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"6-16位字符，区分大小写" attributes:attributeDict];
     [self setCommonTextField:_modifyPasswordTextField AndLabel:modifyPasswordLabel];
     
     UILabel *confirmPasswordLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 81.5, 40)];
     confirmPasswordLabel.text = @"确认密码";
     _confirmPasswordTextField = [UITextField new];
+    _confirmPasswordTextField.secureTextEntry = YES;
     _confirmPasswordTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"重复新密码" attributes:attributeDict];
     [self setCommonTextField:_confirmPasswordTextField AndLabel:confirmPasswordLabel];
     

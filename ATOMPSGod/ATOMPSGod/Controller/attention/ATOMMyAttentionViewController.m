@@ -12,7 +12,7 @@
 #import "ATOMHotDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
 
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self;
+#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMMyAttentionViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -42,8 +42,7 @@
 
 - (void)createUI {
     self.title = @"关注";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[[UIView alloc] initWithFrame:CGRectZero]];
-    _myAttentionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
+    _myAttentionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
     self.view = _myAttentionView;
     _tableView = [[UITableView alloc] initWithFrame:_myAttentionView.bounds];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -73,6 +72,12 @@
 //                NSLog(@"Click userHeaderButton");
                 ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
                 [self pushViewController:opvc animated:YES];
+            } else if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
+                p = [gesture locationInView:cell.userNameLabel];
+                if (p.x <= 16 * 3) {
+                    ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+                    [self pushViewController:opvc animated:YES];
+                }
             }
         } else {
             p = [gesture locationInView:cell.thinCenterView];

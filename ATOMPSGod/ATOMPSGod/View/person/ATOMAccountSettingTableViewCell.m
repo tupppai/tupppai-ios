@@ -40,7 +40,7 @@ static int padding13 = 13;
 - (void)addLogout {
     [_themeLabel removeFromSuperview];
     self.backgroundColor = [UIColor colorWithHex:0x00adef];
-    _logoutLabel = [[UILabel alloc] initWithFrame:self.bounds];
+    _logoutLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 45)];
     _logoutLabel.text = @"退出当前账号";
     _logoutLabel.textAlignment = NSTextAlignmentCenter;
     _logoutLabel.textColor = [UIColor whiteColor];

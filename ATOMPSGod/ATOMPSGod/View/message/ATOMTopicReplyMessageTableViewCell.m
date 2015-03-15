@@ -35,14 +35,15 @@ static int padding10 = 10;
     [self addSubview:_userSexImageView];
     
     _userNameLabel = [UILabel new];
+//    _userNameLabel.backgroundColor = [UIColor orangeColor];
     _userNameLabel.textColor = [UIColor colorWithHex:0x00adef];
-    _userNameLabel.font = [UIFont systemFontOfSize:20.f];
+    _userNameLabel.font = [UIFont systemFontOfSize:16.f];
     [self addSubview:_userNameLabel];
     
     _topicReplyContentLabel = [UILabel new];
     _topicReplyContentLabel.text = @"处理了你的图片";
     _topicReplyContentLabel.textColor = [UIColor colorWithHex:0x828282];
-    _topicReplyContentLabel.font = [UIFont systemFontOfSize:20.f];
+    _topicReplyContentLabel.font = [UIFont systemFontOfSize:16.f];
     [self addSubview:_topicReplyContentLabel];
     
     _topicReplyTimeLabel = [UILabel new];
@@ -61,10 +62,10 @@ static int padding10 = 10;
 - (void)layoutSubviews {
     [super layoutSubviews];
     _userHeaderButton.frame = CGRectMake(padding10, padding20, 45, 45);
-    _userSexImageView.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - 17, CGRectGetMaxY(_userHeaderButton.frame) - 17, 17, 17);
-    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, padding10, SCREEN_WIDTH - padding10 * 4 - 75 - 45, 30);
+    _userSexImageView.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - 16, CGRectGetMaxY(_userHeaderButton.frame) - 16, 17, 17);
+    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, padding20, SCREEN_WIDTH - padding10 * 4 - 75 - 45, 20);
     _topicReplyContentLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, CGRectGetMaxY(_userNameLabel.frame), SCREEN_WIDTH - padding10 * 4 - 75 - 45, 30);
-    _topicReplyContentLabel.backgroundColor = [UIColor yellowColor];
+//    _topicReplyContentLabel.backgroundColor = [UIColor yellowColor];
     _topicReplyTimeLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, CGRectGetMaxY(_topicReplyContentLabel.frame), 80, 15);
     _workImageView.frame = CGRectMake(SCREEN_WIDTH - padding10 - 75, padding10, 75, 75);
 }

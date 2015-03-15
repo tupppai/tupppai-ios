@@ -24,7 +24,8 @@ static int padding10 = 10;
 
 - (void)createSubView {
     _moreRecommend = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - padding10 - 80, 0, 80, 28.5)];
-    [_moreRecommend setTitle:@"更多推荐" forState:UIControlStateNormal];
+    _moreRecommend.titleLabel.font = [UIFont systemFontOfSize:16.f];
+    [_moreRecommend setTitle:@"更多推荐>" forState:UIControlStateNormal];
     [_moreRecommend setTitleColor:[UIColor colorWithHex:0x00aeed] forState:UIControlStateNormal];
     [self addSubview:_moreRecommend];
 }

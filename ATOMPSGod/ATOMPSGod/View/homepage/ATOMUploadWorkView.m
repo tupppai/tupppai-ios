@@ -42,9 +42,13 @@ static const int padding = 10;
 }
 
 - (void)createSubViewOfCenterView {
-    _ThreeFourButton = [[UIButton alloc] initWithFrame:CGRectMake(padding, 7.5, 60, 25)];
-    _OneOneButton = [[UIButton alloc] initWithFrame:CGRectMake(padding + CGRectGetMaxX(_ThreeFourButton.frame), 7.5, 60, 25)];
-    _FourThreeButton = [[UIButton alloc] initWithFrame:CGRectMake(padding + CGRectGetMaxX(_OneOneButton.frame), 7.5, 60, 25)];
+    
+    CGFloat buttonInteval = (SCREEN_WIDTH - 4 * 60) / 5;
+    
+    
+    _ThreeFourButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonInteval, 7.5, 60, 25)];
+    _OneOneButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonInteval + CGRectGetMaxX(_ThreeFourButton.frame), 7.5, 60, 25)];
+    _FourThreeButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonInteval + CGRectGetMaxX(_OneOneButton.frame), 7.5, 60, 25)];
     [_ThreeFourButton setTitle:@"3:4" forState:UIControlStateNormal];
     [_OneOneButton setTitle:@"1:1" forState:UIControlStateNormal];
     [_FourThreeButton setTitle:@"4:3" forState:UIControlStateNormal];
@@ -52,16 +56,23 @@ static const int padding = 10;
     [self setCommonButton:_OneOneButton WithNormalImage:[UIImage imageNamed:@"btn_11_normal"] AndClickImage:[UIImage imageNamed:@"btn_11_choosen"]];
     [self setCommonButton:_FourThreeButton WithNormalImage:[UIImage imageNamed:@"btn_43_normal"] AndClickImage:[UIImage imageNamed:@"btn_43_choosen"]];
     
-    _originButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 60, 7.5, 60, 25)];
+    _originButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonInteval + CGRectGetMaxX(_FourThreeButton.frame), 7.5, 60, 25)];
     [_originButton setTitle:@"原图" forState:UIControlStateNormal];
-    [_originButton setTitleColor:[UIColor colorWithHex:0x565656] forState:UIControlStateNormal];
-    [_originButton setTitleColor:[UIColor colorWithHex:0x00aeef] forState:UIControlStateSelected];
+//    [_originButton setTitleColor:[UIColor colorWithHex:0x565656] forState:UIControlStateNormal];
+//    [_originButton setTitleColor:[UIColor colorWithHex:0x00aeef] forState:UIControlStateSelected];
+    [self setCommonButton:_originButton WithNormalImage:nil AndClickImage:nil];
     [_centerView addSubview:_originButton];
     
 }
 
 - (void)setCommonButton:(UIButton *)button WithNormalImage:(UIImage *)image AndClickImage:(UIImage *)clickImage{
 //    button.backgroundColor = [UIColor orangeColor];
+    if (image != nil) {
+        [button setTitleEdgeInsets:UIEdgeInsetsMake(3.5, padding / 2.0, 3.5, 0)];
+        button.titleLabel.font = [UIFont systemFontOfSize:11.f];
+    } else {
+        button.titleLabel.font = [UIFont systemFontOfSize:14.f];
+    }
     button.layer.borderWidth = 1;
     button.layer.borderColor = [[UIColor colorWithHex:0xcdced0] CGColor];
     button.layer.cornerRadius = 5;
@@ -69,8 +80,6 @@ static const int padding = 10;
     [button setImage:image forState:UIControlStateNormal];
     [button setImage:clickImage forState:UIControlStateSelected];
     [button setImageEdgeInsets:UIEdgeInsetsMake(3.5, 0, 3.5, 0)];
-    [button setTitleEdgeInsets:UIEdgeInsetsMake(3.5, padding / 2.0, 3.5, 0)];
-    button.titleLabel.font = [UIFont systemFontOfSize:11.f];
     [button setTitleColor:[UIColor colorWithHex:0x565656] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor colorWithHex:0x00aeef] forState:UIControlStateSelected];
     [_centerView addSubview:button];

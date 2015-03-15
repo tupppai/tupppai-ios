@@ -10,8 +10,10 @@
 #import "ATOMCommentDetailTableViewCell.h"
 #import "ATOMCommentDetailViewModel.h"
 #import "ATOMCommentDetailView.h"
+#import "ATOMOtherPersonViewController.h"
+#import "ATOMMyConcernTableHeaderView.h"
 
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self;
+#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMCommentDetailViewController() <UITableViewDelegate, UITableViewDataSource>
 
@@ -39,12 +41,10 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
+    [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
     _dataArray = [NSMutableArray array];
     for (int i = 0; i < 10; i++) {
         ATOMCommentDetailViewModel *model = [ATOMCommentDetailViewModel new];
-        if (i == 0) {
-            model.isFirst = YES;
-        }
         if (i % 3 == 0) {
             model.userSex = @"man";
         }
@@ -61,6 +61,8 @@
     _commentDetailView.commentDetailTableView.delegate = self;
     _commentDetailView.commentDetailTableView.dataSource = self;
     [_commentDetailView.sendCommentButton addTarget:self action:@selector(clickSendCommentButton:) forControlEvents:UIControlEventTouchUpInside];
+    _tapCommentDetailGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCommentDetailGesture:)];
+    [_commentDetailView.commentDetailTableView addGestureRecognizer:_tapCommentDetailGesture];
 }
 
 #pragma mark - Click Event
@@ -71,47 +73,36 @@
     _commentDetailView.sendCommentView.text = @"";
     ATOMCommentDetailViewModel *model = [ATOMCommentDetailViewModel new];
     model.userCommentDetail = commentStr;
-    [_dataArray addObject:model];
+    [_dataArray insertObject:model atIndex:0];
     [_commentDetailView.commentDetailTableView reloadData];
+    [_commentDetailView.commentDetailTableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
 }
 
 #pragma mark - Gesture Event
 
-//- (void)tapCommentDetailGesture:(UITapGestureRecognizer *)gesture {
-//    CGPoint location = [gesture locationInView:_hotDetailTableView];
-//    NSIndexPath *indexPath = [_hotDetailTableView indexPathForRowAtPoint:location];
-//    if (indexPath) {
-//        ATOMHotDetailTableViewCell *cell = (ATOMHotDetailTableViewCell *)[_hotDetailTableView cellForRowAtIndexPath:indexPath];
-//        CGPoint p = [gesture locationInView:cell];
-//        //点击图片
-//        if (CGRectContainsPoint(cell.userWorkImageView.frame, p)) {
-//            NSLog(@"Click userWorkImageView");
-//        } else if (CGRectContainsPoint(cell.topView.frame, p)) {
-//            p = [gesture locationInView:cell.topView];
-//            if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
-//                NSLog(@"Click userHeaderButton");
-//            } else if (CGRectContainsPoint(cell.psButton.frame, p)) {
-//                NSLog(@"Click psButton");
-//                [UIActionSheet showInView:self.view withTitle:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@[@"下载素材",@"上传作品"] tapBlock:^(UIActionSheet *actionSheet, NSInteger buttonIndex) {
-//                    NSString *actionSheetTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
-//                    if ([actionSheetTitle isEqualToString:@"下载素材"]) {
-//                        [self dealDownloadWork];
-//                    } else if ([actionSheetTitle isEqualToString:@"上传作品"]) {
-//                        [self dealUploadWork];
-//                    }
-//                }];
-//            }
-//        } else {
-//            p = [gesture locationInView:cell.thinCenterView];
-//            if (CGRectContainsPoint(cell.praiseButton.frame, p)) {
-//                cell.praiseButton.selected = !cell.praiseButton.selected;
-//            } else if (CGRectContainsPoint(cell.shareButton.frame, p)) {
-//                NSLog(@"Click shareButton");
-//            }
-//        }
-//        
-//    }
-//}
+- (void)tapCommentDetailGesture:(UITapGestureRecognizer *)gesture {
+    CGPoint location = [gesture locationInView:_commentDetailView.commentDetailTableView];
+    NSIndexPath *indexPath = [_commentDetailView.commentDetailTableView indexPathForRowAtPoint:location];
+    if (indexPath) {
+        ATOMCommentDetailTableViewCell *cell = (ATOMCommentDetailTableViewCell *)[_commentDetailView.commentDetailTableView cellForRowAtIndexPath:indexPath];
+        CGPoint p = [gesture locationInView:cell];
+        if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
+            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+            [self pushViewController:opvc animated:YES];
+        } else if (CGRectContainsPoint(cell.praiseButton.frame, p)) {
+            p = [gesture locationInView:cell.praiseButton];
+            cell.praiseButton.selected = !cell.praiseButton.selected;
+        } else if (CGRectContainsPoint(cell.userCommentDetailLabel.frame, p)) {
+            if ([_commentDetailView.sendCommentView isFirstResponder]) {
+                [_commentDetailView.sendCommentView resignFirstResponder];
+            } else {
+                [_commentDetailView.sendCommentView becomeFirstResponder];
+                _commentDetailView.sendCommentView.text = @"@宋祥伍//";
+            }
+        }
+        
+    }
+}
 
 #pragma mark - UIImagePickerControllerDelegate
 
@@ -139,31 +130,33 @@
         cell = [[ATOMCommentDetailTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     NSLog(@"current section is %d and current row is %d", (int)indexPath.section, (int)indexPath.row);
-    if (indexPath.section == 0) {
-        cell.isViewRed = YES;
-        if (indexPath.row == 0) {
-            cell.isFirstCell = YES;
-        } else {
-            cell.isFirstCell = NO;
-        }
-    } else if (indexPath.section ==1) {
-        cell.isViewRed = NO;
-        if (indexPath.row == 0) {
-            cell.isFirstCell = YES;
-        } else {
-            cell.isFirstCell = NO;
-        }
-    }
     cell.viewModel = _dataArray[indexPath.row];
     return cell;
 }
-
 
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [ATOMCommentDetailTableViewCell calculateCellHeightWithModel:_dataArray[indexPath.row]];
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 28.5;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    ATOMMyConcernTableHeaderView *headerView = [ATOMMyConcernTableHeaderView new];
+    headerView.backgroundColor = [UIColor whiteColor];
+    if (section == 0) {
+        headerView.littleVerticalView.backgroundColor = [UIColor colorWithHex:0xf80630];
+        headerView.titleLabel.text = @"最热评论";
+    } else if (section == 1) {
+        headerView.littleVerticalView.backgroundColor = [UIColor colorWithHex:0x00adef];
+        headerView.titleLabel.text = @"最新评论";
+    }
+    return headerView;
+}
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     

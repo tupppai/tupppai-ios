@@ -24,20 +24,23 @@ static float commenWidth;
 
 - (void)createSubView {
     _userHeaderButton = [[UIButton alloc] initWithFrame:CGRectMake(padding10, 6, 45, 45)];
+    _userHeaderButton.userInteractionEnabled = NO;
     _userHeaderButton.backgroundColor = [UIColor greenColor];
     _userHeaderButton.layer.cornerRadius = 22.5;
     _userHeaderButton.layer.masksToBounds = YES;
     [self addSubview:_userHeaderButton];
     
-    _userSexImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - 17, CGRectGetMaxY(_userHeaderButton.frame) - 17, 17, 17)];
+    _userSexImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - 16, CGRectGetMaxY(_userHeaderButton.frame) - 16, 17, 17)];
     _userSexImageView.image = [UIImage imageNamed:@"woman"];
     [self addSubview:_userSexImageView];
     
-    _userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, padding10, 80, 30)];
+    _userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, 0, 80, 30)];
     _userNameLabel.text = @"atom";
+    _userNameLabel.font = [UIFont systemFontOfSize:16.f];
     [self addSubview:_userNameLabel];
     
     _inviteButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - padding10 - 57, 11.5, 57, 30)];
+    _inviteButton.userInteractionEnabled = NO;
     _inviteButton.layer.cornerRadius = 5;
     _inviteButton.layer.masksToBounds = YES;
     _inviteButton.backgroundColor = [UIColor colorWithHex:0x838383];
@@ -63,11 +66,37 @@ static float commenWidth;
     [button setImage:image forState:UIControlStateNormal];
     [button setImageEdgeInsets:UIEdgeInsetsMake(2, 0, 2, 0)];
     [button setTitle:@"1000" forState:UIControlStateNormal];
-    [button setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
-    button.titleLabel.font = [UIFont systemFontOfSize:11.f];
+    [button setTitleEdgeInsets:UIEdgeInsetsMake(2, 5, 3, 0)];
+    button.titleLabel.font = [UIFont systemFontOfSize:10.f];
     [button setTitleColor:[UIColor colorWithHex:0x7a7a7a] forState:UIControlStateNormal];
     [self addSubview:button];
 }
+
+- (void)changeInviteButtonStatus {
+    _inviteButton.selected = !_inviteButton.selected;
+    if (_inviteButton.selected) {
+        _inviteButton.backgroundColor = [UIColor colorWithHex:0x00adef];
+        [_inviteButton setTitle:@"邀请" forState:UIControlStateNormal];
+    } else {
+        _inviteButton.backgroundColor = [UIColor colorWithHex:0x838383];
+        [_inviteButton setTitle:@"已邀请" forState:UIControlStateNormal];
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @end

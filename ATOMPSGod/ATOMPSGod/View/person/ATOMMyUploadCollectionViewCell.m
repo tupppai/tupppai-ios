@@ -32,7 +32,8 @@ static int collumnNumber = 3;
     if (!_praiseLabel) {
         _praiseLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 25, 15)];
         _praiseLabel.backgroundColor = [UIColor blackColor];
-        _praiseLabel.alpha = 0.7;
+        _praiseLabel.font = [UIFont systemFontOfSize:12.f];
+        _praiseLabel.alpha = 0.5;
         _praiseLabel.textAlignment = NSTextAlignmentCenter;
         _praiseLabel.textColor = [UIColor whiteColor];
         [self.workImageView addSubview:_praiseLabel];

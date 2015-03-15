@@ -45,16 +45,7 @@
 
 #pragma mark - Click Event
 
-- (void)clickAttentionButton:(UIButton *)button {
-    button.selected = !button.selected;
-    if (button.selected) {
-        button.backgroundColor = [UIColor colorWithHex:0x838383];
-        [button setTitle:@"相互关注" forState:UIControlStateNormal];
-    } else {
-        button.backgroundColor = [UIColor colorWithHex:0x00adef];
-        [button setTitle:@"关注" forState:UIControlStateNormal];
-    }
-}
+
 
 #pragma mark - Gesture Event
 
@@ -67,6 +58,8 @@
         if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
             [self pushViewController:opvc animated:YES];
+        } else if (CGRectContainsPoint(cell.attentionButton.frame, p)) {
+            [cell changeAttentionButtonStatus];
         }
         
     }
@@ -134,7 +127,6 @@
     ATOMMyConcernTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[ATOMMyConcernTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        [cell.attentionButton addTarget:self action:@selector(clickAttentionButton:) forControlEvents:UIControlEventTouchUpInside];
     }
     return cell;
 }

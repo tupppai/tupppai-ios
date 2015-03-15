@@ -28,40 +28,11 @@ static int padding = 10;
     return self;
 }
 
-- (void)setViewModel {
-    
-}
-
 - (void)layoutSubviews {
     [super layoutSubviews];
-    if (_viewModel.isFirst) {
-        if (_isViewRed) {
-            _littleVerticalRedView.frame = CGRectMake(padding, padding, 2, padding * 2);
-            _hotCommentLabel.frame = CGRectMake(CGRectGetMaxX(_littleVerticalRedView.frame) + padding, padding, 80, padding *2);
-            _littleVerticalBlueView.frame = CGRectZero;
-            _recentCommentLabel.frame = CGRectZero;
-        } else {
-            _littleVerticalBlueView.frame = CGRectMake(padding, padding, 2, padding * 2);
-            _recentCommentLabel.frame = CGRectMake(CGRectGetMaxX(_littleVerticalBlueView.frame) + padding, padding, 80, padding *2);
-            _littleVerticalRedView.frame = CGRectZero;
-            _hotCommentLabel.frame = CGRectZero;
-        }
-    } else {
-        _littleVerticalRedView.frame = CGRectZero;
-        _littleVerticalBlueView.frame = CGRectZero;
-        _hotCommentLabel.frame = CGRectZero;
-        _recentCommentLabel.frame = CGRectZero;
-    }
-    
-    if (_isViewRed == YES) {
-        _userHeaderButton.frame = CGRectMake(padding, CGRectGetMaxY(_littleVerticalRedView.frame) + padding, 45, 45);
-        _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding, CGRectGetMaxY(_littleVerticalRedView.frame) + padding, 80, 30);
-        _praiseButton.frame = CGRectMake(SCREEN_WIDTH - 60 - padding, CGRectGetMaxY(_littleVerticalRedView.frame) + padding, 60, 25);
-    } else {
-        _userHeaderButton.frame = CGRectMake(padding, CGRectGetMaxY(_littleVerticalBlueView.frame) + padding, 45, 45);
-        _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding, CGRectGetMaxY(_littleVerticalBlueView.frame) + padding, 80, 30);
-        _praiseButton.frame = CGRectMake(SCREEN_WIDTH - 60 - padding, CGRectGetMaxY(_littleVerticalBlueView.frame) + padding, 60, 25);
-    }
+    _userHeaderButton.frame = CGRectMake(padding, padding, 45, 45);
+    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding, padding, 80, 30);
+    _praiseButton.frame = CGRectMake(SCREEN_WIDTH - 60 - padding, padding, 60, 25);
     _userSexImageView.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - 17, CGRectGetMaxY(_userHeaderButton.frame) - 17, 17, 17);
     CGSize commentDetailTextSize = [[self class] calculateCommentDeailTextSize:_viewModel.userCommentDetail];
     _userCommentDetailLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding, CGRectGetMaxY(_userNameLabel.frame), commentDetailTextSize.width, commentDetailTextSize.height);
@@ -75,47 +46,25 @@ static int padding = 10;
 }
 
 + (CGFloat)calculateCellHeightWithModel:(ATOMCommentDetailViewModel *)viewModel {
-    CGFloat extraHeight = viewModel.isFirst ? padding * 3 : 0;
-    CGFloat height1 = extraHeight + [[self class] calculateCommentDeailTextSize:viewModel.userCommentDetail].height + 30 + padding *2;
-    CGFloat height2 = extraHeight + 45 + padding * 2;
+    CGFloat height1 = [[self class] calculateCommentDeailTextSize:viewModel.userCommentDetail].height + 30 + padding *2;
+    CGFloat height2 = 45 + padding * 2;
     return fmaxf(height1, height2);
 }
 
 - (void)createSubView {
-    
-    _littleVerticalRedView = [UIView new];
-    _littleVerticalRedView.backgroundColor = [UIColor colorWithHex:0xf80630];
-    _littleVerticalBlueView = [UIView new];
-    _littleVerticalBlueView.backgroundColor = [UIColor colorWithHex:0x00adef];
-    _hotCommentLabel = [UILabel new];
-    _hotCommentLabel.text = @"最热评论";
-    _hotCommentLabel.textColor = [UIColor colorWithHex:0x6e6e70];
-    _recentCommentLabel = [UILabel new];
-    _recentCommentLabel.text = @"最新评论";
-    _recentCommentLabel.textColor = [UIColor colorWithHex:0x6e6e70];
-    
-    [self addSubview:_littleVerticalRedView];
-    [self addSubview:_littleVerticalBlueView];
-    [self addSubview:_hotCommentLabel];
-    [self addSubview:_recentCommentLabel];
-    
     _userHeaderButton = [UIButton new];
+    _userHeaderButton.userInteractionEnabled = NO;
     _userHeaderButton.backgroundColor = [UIColor brownColor];
     _userHeaderButton.layer.cornerRadius = 22.5;
     _userHeaderButton.layer.masksToBounds = YES;
     _userNameLabel = [UILabel new];
-    //    _userNameLabel.backgroundColor = [UIColor orangeColor];
-//    _userNameLabel.text = @"宋祥伍";
     _userNameLabel.font = [UIFont systemFontOfSize:20.f];
     _userNameLabel.textColor = [UIColor colorWithHex:0x00adef];
     _userCommentDetailLabel = [UILabel new];
     _userCommentDetailLabel.numberOfLines = 0;
     _userCommentDetailLabel.font = [UIFont systemFontOfSize:20.f];
-//        _userCommentDetailLabel.backgroundColor = [UIColor greenColor];
-//    _userCommentDetailLabel.text = @"灰色的技术的房价开始了对方就阿里快速的风景阿里可是对方就卡死的减肥尽快了解阿克苏登陆福建按快了点睡觉法拉克是点击付款 克拉大书法家阿斯顿两份简历看见阿斯顿发了卡上打饭卡里看见阿斯蒂芬徕卡就是的放假了安师大飞拉萨到付款记录";
     _userCommentDetailLabel.textColor = [UIColor blackColor];
     _userSexImageView = [UIImageView new];
-//    [_userSexImageView setImage:[UIImage imageNamed:@"man"]];
     
     [self addSubview:_userHeaderButton];
     [self addSubview:_userNameLabel];

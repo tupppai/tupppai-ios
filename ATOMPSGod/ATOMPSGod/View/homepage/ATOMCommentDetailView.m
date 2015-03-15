@@ -54,10 +54,16 @@ static int padding = 10;
     _lastContentSizeHeight = 30;
     _isContentSizeOrigin = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChange:) name:UITextViewTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidBegin:) name:UITextViewTextDidBeginEditingNotification object:nil];
 }
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextViewTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextViewTextDidBeginEditingNotification object:nil];
+}
+
+- (void)textDidBegin:(NSNotification *)notification {
+    NSLog(@"text did begin");
 }
 
 - (void)textDidChange:(NSNotification *)notification {

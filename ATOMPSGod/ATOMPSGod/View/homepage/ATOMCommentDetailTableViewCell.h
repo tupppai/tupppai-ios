@@ -11,13 +11,6 @@
 
 @interface ATOMCommentDetailTableViewCell : UITableViewCell
 
-@property (nonatomic, assign) BOOL isFirstCell;
-@property (nonatomic, assign) BOOL isViewRed;
-@property (nonatomic, strong) UIView *littleVerticalRedView;
-@property (nonatomic, strong) UIView *littleVerticalBlueView;
-@property (nonatomic, strong) UILabel *hotCommentLabel;
-@property (nonatomic, strong) UILabel *recentCommentLabel;
-
 @property (nonatomic, strong) UIButton *userHeaderButton;
 @property (nonatomic, strong) UILabel *userNameLabel;
 @property (nonatomic, strong) UIImageView *userSexImageView;

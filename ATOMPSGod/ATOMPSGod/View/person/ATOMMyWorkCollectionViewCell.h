@@ -12,7 +12,5 @@
 
 @property (nonatomic, strong) UIImageView *workImageView;
 @property (nonatomic, strong) UIImage *workImage;
-@property (nonatomic, strong) UILabel *praiseLabel;
-@property (nonatomic, assign) NSInteger praiseNumber;
 
 @end

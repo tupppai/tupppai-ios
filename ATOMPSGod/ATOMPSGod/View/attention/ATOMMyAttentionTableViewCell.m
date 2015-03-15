@@ -37,7 +37,7 @@ static int padding = 10;
     _userHeaderButton.frame = CGRectMake(padding, padding, 45, 45);
     _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding, padding, SCREEN_WIDTH - padding * 2- 45, 30);
     _userPublishTimeLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding, CGRectGetMaxY(_userNameLabel.frame), 80, 15);
-    _userSexImageView.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - 17, CGRectGetMaxY(_userHeaderButton.frame) - 17, 17, 17);
+    _userSexImageView.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - 16, CGRectGetMaxY(_userHeaderButton.frame) - 16, 17, 17);
     
     CGSize userWorkingImageViewSize = [self calculateWorkImageViewSize];
     _userWorkImageView.frame = CGRectMake(0, CGRectGetMaxY(_topView.frame), userWorkingImageViewSize.width, userWorkingImageViewSize.height);
@@ -93,7 +93,7 @@ static int padding = 10;
     _userHeaderButton.layer.masksToBounds = YES;
     
     _userNameLabel = [UILabel new];
-    NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:20.f], NSFontAttributeName, [UIColor colorWithHex:0x797979], NSForegroundColorAttributeName, nil];
+    NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:16.f], NSFontAttributeName, [UIColor colorWithHex:0x797979], NSForegroundColorAttributeName, nil];
     NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:@"宋祥伍发布了一个求助" attributes:attributeDict];
     NSRange range = {0,3};
     [attributeStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0x00adef] range:range];
@@ -142,6 +142,7 @@ static int padding = 10;
     [button setTitle:@"100" forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont systemFontOfSize:11.f];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor colorWithHex:0xf80630] forState:UIControlStateSelected];
 }
 
 

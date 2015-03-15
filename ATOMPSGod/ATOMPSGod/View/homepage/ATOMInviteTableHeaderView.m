@@ -40,7 +40,7 @@ static int padding10 = 10;
     
     _littleVerticalView = [[UIView alloc] initWithFrame:CGRectMake(padding10, 4.25, 2, padding10 * 2)];
     [self addSubview:_littleVerticalView];
-    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_littleVerticalView.frame) + padding10, 4.25, 80, padding10 * 2)];
+    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_littleVerticalView.frame) + padding10, 4.25, 120, padding10 * 2)];
     _titleLabel.textColor = [UIColor colorWithHex:0x6e6f73];
     [self addSubview:_titleLabel];
 }

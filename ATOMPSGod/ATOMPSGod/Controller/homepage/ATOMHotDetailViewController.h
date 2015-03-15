@@ -15,7 +15,8 @@ typedef enum {
     ATOMMyUploadType,
     ATOMMyWorkType,
     ATOMProceedingType,
-    ATOMMyCollectionType
+    ATOMMyCollectionType,
+    ATOMInviteType
 } ATOMHotDetailPushType;
 
 @interface ATOMHotDetailViewController : ATOMBaseViewController

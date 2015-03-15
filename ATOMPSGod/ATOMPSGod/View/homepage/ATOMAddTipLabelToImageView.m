@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) UILabel *bigLabel;
 @property (nonatomic, strong) UILabel *littleLabel;
+@property (nonatomic, strong) UIImageView *pointImageView;
 
 @end
 
@@ -33,6 +34,7 @@ static int padding10 = 10;
     _workImageView = [[UIImageView alloc] initWithFrame:[self calculateImageViewFrame]];
     _workImageView.userInteractionEnabled = YES;
     _workImageView.image = _workImage;
+    [self createTemporaryPoint];
     [self createOperationButton];
     [self addSubview:_workImageView];
 }
@@ -43,6 +45,12 @@ static int padding10 = 10;
     _bottomView.backgroundColor = [UIColor colorWithHex:0xf4f7f7];
     [self addSubview:_bottomView];
     [self createBottomView];
+}
+
+- (void)createTemporaryPoint {
+    _pointImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tag_point"]];
+    _pointImageView.hidden = YES;
+    [_workImageView addSubview:_pointImageView];
 }
 
 - (void)createBottomView {
@@ -125,8 +133,20 @@ static int padding10 = 10;
     return !_changeTipLabelDirectionButton.hidden;
 }
 
+- (void)addTemporaryPointAt:(CGPoint)point {
+    if (point.x <= CGWidth(_workImageView.frame) / 2) {
+        _pointImageView.frame = CGRectMake(point.x, point.y - 7.5, 15, 15);
+        _pointImageView.hidden = NO;
+    } else {
+        _pointImageView.frame = CGRectMake(point.x - 15, point.y - 7.5, 15, 15);
+        _pointImageView.hidden = NO;
+    }
 
+}
 
+- (void)removeTemporaryPoint {
+    _pointImageView.hidden = YES;
+}
 
 
 

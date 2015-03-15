@@ -39,7 +39,7 @@ static int padding10 = 10;
     [self addSubview:_userNameLabel];
     
     _replyContentLabel = [UILabel new];
-    _replyContentLabel.font = [UIFont systemFontOfSize:20.f];
+    _replyContentLabel.font = [UIFont systemFontOfSize:16.f];
     [self addSubview:_replyContentLabel];
     
     _replyTimeLabel = [UILabel new];
@@ -56,10 +56,10 @@ static int padding10 = 10;
 - (void)layoutSubviews {
     [super layoutSubviews];
     _userHeaderButton.frame = CGRectMake(padding10, padding20, 45, 45);
-    _userSexImageView.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - 17, CGRectGetMaxY(_userHeaderButton.frame) - 17, 17, 17);
-    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, padding10, SCREEN_WIDTH - padding10 * 4 - 75 - 45, 30);
+    _userSexImageView.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - 16, CGRectGetMaxY(_userHeaderButton.frame) - 16, 17, 17);
+    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, padding20, SCREEN_WIDTH - padding10 * 4 - 75 - 45, 20);
     _replyContentLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, CGRectGetMaxY(_userNameLabel.frame), SCREEN_WIDTH - padding10 * 4 - 75 - 45, 30);
-    _replyContentLabel.backgroundColor = [UIColor yellowColor];
+//    _replyContentLabel.backgroundColor = [UIColor yellowColor];
     _replyTimeLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, CGRectGetMaxY(_replyContentLabel.frame), 80, 15);
     _workImageView.frame = CGRectMake(SCREEN_WIDTH - padding10 - 75, padding10, 75, 75);
 }
@@ -72,7 +72,7 @@ static int padding10 = 10;
     _commentMessageViewModel = commentMessageViewModel;
     NSInteger nameLength = _commentMessageViewModel.userName.length;
     NSRange range = {0,nameLength};
-    NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:20.f], NSFontAttributeName, [UIColor colorWithHex:0x797979], NSForegroundColorAttributeName, nil];
+    NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:16.f], NSFontAttributeName, [UIColor colorWithHex:0x797979], NSForegroundColorAttributeName, nil];
     NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ 回复你",_commentMessageViewModel.userName] attributes:attributeDict];
     [attributeStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0x00adef] range:range];
     _userNameLabel.attributedText = attributeStr;

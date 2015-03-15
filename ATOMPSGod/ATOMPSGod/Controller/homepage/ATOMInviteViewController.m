@@ -11,10 +11,12 @@
 #import "ATOMInviteTableViewCell.h"
 #import "ATOMInviteTableHeaderView.h"
 #import "ATOMHotDetailViewController.h"
+#import "ATOMOtherPersonViewController.h"
 
 @interface ATOMInviteViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) ATOMInviteView *inviteView;
+@property (nonatomic, strong) UITapGestureRecognizer *tapInviteGesture;
 
 @end
 
@@ -43,23 +45,32 @@
     self.view = _inviteView;
     _inviteView.inviteTableView.delegate = self;
     _inviteView.inviteTableView.dataSource = self;
+    _tapInviteGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapInviteGesture:)];
+    [_inviteView.inviteTableView addGestureRecognizer:_tapInviteGesture];
+}
+
+#pragma mark - Gesture Event
+
+- (void)tapInviteGesture:(UITapGestureRecognizer *)gesture {
+    CGPoint location = [gesture locationInView:_inviteView.inviteTableView];
+    NSIndexPath *indexPath = [_inviteView.inviteTableView indexPathForRowAtPoint:location];
+    if (indexPath) {
+        ATOMInviteTableViewCell *cell = (ATOMInviteTableViewCell *)[_inviteView.inviteTableView cellForRowAtIndexPath:indexPath];
+        CGPoint p = [gesture locationInView:cell];
+        if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
+            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+            [self pushViewController:opvc animated:YES];
+        } else if (CGRectContainsPoint(cell.inviteButton.frame, p)) {
+            [cell changeInviteButtonStatus];
+        }
+    }
 }
 
 #pragma mark - Click Event
 
-- (void)clickInviteButton:(UIButton *)button {
-    button.selected = !button.selected;
-    if (button.selected) {
-        button.backgroundColor = [UIColor colorWithHex:0x00adef];
-        [button setTitle:@"邀请" forState:UIControlStateNormal];
-    } else {
-        button.backgroundColor = [UIColor colorWithHex:0x838383];
-        [button setTitle:@"已邀请" forState:UIControlStateNormal];
-    }
-}
-
 - (void)clickRightButtonItem:(UIBarButtonItem *)barButtonItem {
     ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
+    hdvc.pushType = ATOMInviteType;
     [self pushViewController:hdvc animated:YES];
 }
 
@@ -106,7 +117,6 @@
     ATOMInviteTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[ATOMInviteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        [cell.inviteButton addTarget:self action:@selector(clickInviteButton:) forControlEvents:UIControlEventTouchUpInside];
     }
     return cell;
 }

@@ -6,8 +6,8 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMShareView.h"
+#import "ATOMShareFunctionView.h"
 
-@implementation ATOMShareView
+@implementation ATOMShareFunctionView
 
 @end

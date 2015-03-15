@@ -14,6 +14,5 @@
 @property (nonatomic, copy) NSString *userSex;
 @property (nonatomic, copy) NSString *userCommentDetail;
 @property (nonatomic, copy) NSString *praiseNumber;
-@property (nonatomic, assign) BOOL isFirst;
 
 @end

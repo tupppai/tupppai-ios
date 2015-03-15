@@ -12,11 +12,14 @@
 #import "ATOMHotDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
 
+#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+
 @interface ATOMProceedingViewController () <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, strong) UIView *proceedingView;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapProceedingGesture;
+@property (nonatomic, strong) UIImagePickerController *imagePickerController;
 
 @end
 
@@ -29,6 +32,14 @@
         _tapProceedingGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapProceedingGesture:)];
     }
     return _tapProceedingGesture;
+}
+
+- (UIImagePickerController *)imagePickerController {
+    if (!_imagePickerController) {
+        _imagePickerController = [UIImagePickerController new];
+        _imagePickerController.delegate = self;
+    }
+    return _imagePickerController;
 }
 
 #pragma mark - UI
@@ -75,8 +86,23 @@
 #pragma mark - Click Event
 
 - (void)dealUploadWork {
-    ATOMUploadWorkViewController *uwvc = [ATOMUploadWorkViewController new];
-    [self pushViewController:uwvc animated:YES];
+    self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    [self presentViewController:_imagePickerController animated:YES completion:NULL];
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    WS(ws);
+    [self dismissViewControllerAnimated:YES completion:^{
+        ATOMUploadWorkViewController *uwvc = [ATOMUploadWorkViewController new];
+        uwvc.originImage = info[UIImagePickerControllerOriginalImage];
+        [ws pushViewController:uwvc animated:YES];
+    }];
 }
 
 #pragma mark - UITableViewDataSource

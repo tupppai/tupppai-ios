@@ -46,6 +46,7 @@ static int collumnNumber = 3;
 - (void)createUI {
     self.title = @"我的作品";
     _myWorkView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
+    _myWorkView.backgroundColor = [UIColor colorWithHex:0xededed];
     cellWidth = (SCREEN_WIDTH - (collumnNumber + 1) *padding6) / 3;
     self.view = _myWorkView;
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
@@ -70,7 +71,6 @@ static int collumnNumber = 3;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ATOMMyWorkCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:_cellIdentifier forIndexPath:indexPath];
     cell.workImage = _dataSource[indexPath.row];
-    cell.praiseNumber = 10;
     return cell;
 }
 

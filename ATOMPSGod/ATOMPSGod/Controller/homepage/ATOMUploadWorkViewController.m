@@ -11,7 +11,7 @@
 #import "BJImageCropper.h"
 #import "ATOMAddTipLabelToImageViewController.h"
 
-@interface ATOMUploadWorkViewController () <UIScrollViewDelegate>
+@interface ATOMUploadWorkViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) ATOMUploadWorkView *uploadWorkView;
 
@@ -31,10 +31,24 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.delegate = self;
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+    }
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    if (gestureRecognizer == self.navigationController.interactivePopGestureRecognizer) {
+        return NO;
+    } else {
+        return YES;
+    }
 }
 
 - (void)createUI {
