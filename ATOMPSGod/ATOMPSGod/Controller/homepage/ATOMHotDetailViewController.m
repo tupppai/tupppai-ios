@@ -12,6 +12,7 @@
 #import "ATOMUploadWorkViewController.h"
 #import "ATOMProceedingViewController.h"
 #import "ATOMOtherPersonViewController.h"
+#import "ATOMHomePageViewModel.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -20,8 +21,9 @@
 @property (nonatomic, strong) UIView *hotDetailView;
 @property (nonatomic, strong) UITableView *hotDetailTableView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
-
 @property (nonatomic, strong) UITapGestureRecognizer *tapHotDetailGesture;
+
+@property (nonatomic, strong) NSMutableArray *dataSource;
 
 @end
 
@@ -31,19 +33,20 @@
 
 - (UITableView *)hotDetailTableView {
     if (_hotDetailTableView == nil) {
-        _hotDetailTableView = [[UITableView alloc] init];
+        _hotDetailTableView = [[UITableView alloc] initWithFrame:_hotDetailView.bounds];
         _hotDetailTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _hotDetailTableView.delegate = self;
         _hotDetailTableView.dataSource = self;
         _tapHotDetailGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHotDetailGesture:)];
         [_hotDetailTableView addGestureRecognizer:_tapHotDetailGesture];
+        [self configHotDetailTableViewRefresh];
     }
     return _hotDetailTableView;
 }
 
 - (UIView *)hotDetailView {
     if (_hotDetailView == nil) {
-        _hotDetailView = [UIView new];
+        _hotDetailView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
         [_hotDetailView addSubview:self.hotDetailTableView];
     }
     return _hotDetailView;
@@ -57,6 +60,28 @@
     return _imagePickerController;
 }
 
+#pragma mark Refresh
+
+- (void)configHotDetailTableViewRefresh {
+    WS(ws);
+    [_hotDetailTableView addLegendHeaderWithRefreshingBlock:^{
+        [ws loadNewHotData];
+    }];
+    [_hotDetailTableView addLegendFooterWithRefreshingBlock:^{
+        [ws loadMoreHotData];
+    }];
+}
+
+- (void)loadNewHotData {
+    WS(ws);
+    [ws.hotDetailTableView.header endRefreshing];
+}
+
+- (void)loadMoreHotData {
+    WS(ws);
+    [ws.hotDetailTableView.footer endRefreshing];
+}
+
 #pragma mark - UI
 
 - (void)viewDidLoad {
@@ -66,6 +91,15 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    _dataSource = [NSMutableArray array];
+    for (int i = 0; i < 12; i++) {
+        NSString *imgName = [NSString stringWithFormat:@"%d.jpg",i];
+        UIImage *img = [UIImage imageNamed:imgName];
+        ATOMHomePageViewModel *viewModel = [ATOMHomePageViewModel new];
+        viewModel.userImage = img;
+        [_dataSource addObject:viewModel];
+    }
+    [_hotDetailTableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -73,12 +107,8 @@
 }
 
 - (void)createUI {
-    WS(ws);
     self.title = @"详情";
     self.view = self.hotDetailView;
-    [self.hotDetailTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(ws.view).with.insets(UIEdgeInsetsMake(0, 0, 0, 0));
-    }];
 }
 
 #pragma mark - Click Event
@@ -179,7 +209,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return _dataSource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -188,7 +218,7 @@
     if (!cell) {
         cell = [[ATOMHotDetailTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    [cell layoutSubviews];
+    cell.viewModel = _dataSource[indexPath.row];
     return cell;
 }
 
@@ -196,7 +226,7 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [ATOMHotDetailTableViewCell calculateCellHeight];
+    return [ATOMHotDetailTableViewCell calculateCellHeightWith:_dataSource[indexPath.row]];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

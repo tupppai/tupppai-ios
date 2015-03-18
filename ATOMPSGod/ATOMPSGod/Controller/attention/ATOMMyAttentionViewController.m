@@ -11,6 +11,7 @@
 #import "ATOMCommentDetailViewController.h"
 #import "ATOMHotDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
+#import "ATOMHomePageViewModel.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -19,8 +20,9 @@
 @property (nonatomic, strong) UIView *myAttentionView;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
-
 @property (nonatomic, strong) UITapGestureRecognizer *tapMyAttentionGesture;
+
+@property (nonatomic, strong) NSMutableArray *dataSource;
 
 @end
 
@@ -28,6 +30,27 @@
 
 #pragma mark - Lazy Initialize
 
+#pragma mark Refresh
+
+- (void)configTableViewRefresh {
+    WS(ws);
+    [_tableView addLegendHeaderWithRefreshingBlock:^{
+        [ws loadNewHotData];
+    }];
+    [_tableView addLegendFooterWithRefreshingBlock:^{
+        [ws loadMoreHotData];
+    }];
+}
+
+- (void)loadNewHotData {
+    WS(ws);
+    [ws.tableView.header endRefreshing];
+}
+
+- (void)loadMoreHotData {
+    WS(ws);
+    [ws.tableView.footer endRefreshing];
+}
 
 #pragma mark - UI
 
@@ -38,6 +61,14 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    _dataSource = [NSMutableArray array];
+    for (int i = 0; i < 12; i++) {
+        NSString *imgName = [NSString stringWithFormat:@"%d.jpg",i];
+        UIImage *img = [UIImage imageNamed:imgName];
+        ATOMHomePageViewModel *viewModel = [ATOMHomePageViewModel new];
+        viewModel.userImage = img;
+        [_dataSource addObject:viewModel];
+    }
 }
 
 - (void)createUI {
@@ -51,6 +82,7 @@
     [_myAttentionView addSubview:_tableView];
     _tapMyAttentionGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMyAttentionGesture:)];
     [_tableView addGestureRecognizer:_tapMyAttentionGesture];
+    [self configTableViewRefresh];
 }
 
 #pragma mark - Gesture Event
@@ -97,7 +129,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return _dataSource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -106,7 +138,7 @@
     if (!cell) {
         cell = [[ATOMMyAttentionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    [cell layoutSubviews];
+    cell.viewModel = _dataSource[indexPath.row];
     return cell;
 }
 
@@ -114,7 +146,7 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [ATOMMyAttentionTableViewCell calculateCellHeight];
+    return [ATOMMyAttentionTableViewCell calculateCellHeightWith:_dataSource[indexPath.row]];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

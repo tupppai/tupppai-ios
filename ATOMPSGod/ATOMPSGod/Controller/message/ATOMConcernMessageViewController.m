@@ -10,6 +10,7 @@
 #import "ATOMConcernMessageTableViewCell.h"
 #import "ATOMNoDataView.h"
 #import "ATOMOtherPersonViewController.h"
+#import "ATOMOtherMessageViewModel.h"
 
 @interface ATOMConcernMessageViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -43,6 +44,10 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     _dataSource = [NSMutableArray array];
+    for (int i = 0; i < 10; i++) {
+        ATOMOtherMessageViewModel *model = [[ATOMOtherMessageViewModel alloc] initWithStyle:ATOMConcernType];
+        [_dataSource addObject:model];
+    }
 }
 
 - (void)createUI {
@@ -94,7 +99,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return _dataSource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -103,6 +108,7 @@
     if (!cell) {
         cell = [[ATOMConcernMessageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
+    cell.viewModel = _dataSource[indexPath.row];
     return cell;
 }
 
@@ -111,6 +117,52 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 65;
 }
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return  YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        NSInteger row = indexPath.row;
+        [_dataSource removeObjectAtIndex:row];
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        if (_dataSource.count == 0) {
+            self.view = self.noDataView;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class ATOMOtherMessageViewModel;
 
 @interface ATOMConcernMessageTableViewCell : UITableViewCell
 
@@ -14,5 +15,6 @@
 @property (nonatomic, strong) UIImageView *userSexImageView;
 @property (nonatomic, strong) UILabel *userNameLabel;
 @property (nonatomic, strong) UILabel *concernTimeLabel;
+@property (nonatomic, strong) ATOMOtherMessageViewModel *viewModel;
 
 @end

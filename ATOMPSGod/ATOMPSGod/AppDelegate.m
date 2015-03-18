@@ -36,7 +36,7 @@
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHex:0xf8f8f8]];
 }
 
-- (UITabBarController *)mainTarBarController {
+- (ATOMMainTabBarController *)mainTarBarController {
     if (_mainTarBarController == nil) {
         _mainTarBarController = [ATOMMainTabBarController new];
     }

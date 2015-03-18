@@ -10,4 +10,6 @@
 
 @interface ATOMInputVerifyCodeViewController : ATOMBaseViewController
 
+@property (nonatomic, copy) NSString *verifyCode;
+
 @end

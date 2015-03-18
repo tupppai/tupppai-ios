@@ -29,7 +29,27 @@
 
 #pragma mark - Lazy Initialize
 
+#pragma mark Refresh
 
+- (void)configCommentDetailTableViewRefresh {
+    WS(ws);
+    [_commentDetailView.commentDetailTableView addLegendHeaderWithRefreshingBlock:^{
+        [ws loadNewHotData];
+    }];
+    [_commentDetailView.commentDetailTableView addLegendFooterWithRefreshingBlock:^{
+        [ws loadMoreHotData];
+    }];
+}
+
+- (void)loadNewHotData {
+    WS(ws);
+    [ws.commentDetailView.commentDetailTableView.header endRefreshing];
+}
+
+- (void)loadMoreHotData {
+    WS(ws);
+    [ws.commentDetailView.commentDetailTableView.footer endRefreshing];
+}
 
 #pragma mark - UI
 
@@ -58,6 +78,7 @@
     self.title = @"评论详情";
     _commentDetailView = [ATOMCommentDetailView new];
     self.view = _commentDetailView;
+    [self configCommentDetailTableViewRefresh];
     _commentDetailView.commentDetailTableView.delegate = self;
     _commentDetailView.commentDetailTableView.dataSource = self;
     [_commentDetailView.sendCommentButton addTarget:self action:@selector(clickSendCommentButton:) forControlEvents:UIControlEventTouchUpInside];

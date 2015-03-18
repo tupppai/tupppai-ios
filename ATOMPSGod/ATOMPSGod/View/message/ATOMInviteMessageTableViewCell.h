@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class ATOMOtherMessageViewModel;
 
 @interface ATOMInviteMessageTableViewCell : UITableViewCell
 
@@ -16,5 +17,6 @@
 @property (nonatomic, strong) UILabel *inviteContentLabel;
 @property (nonatomic, strong) UILabel *inviteTimeLabel;
 @property (nonatomic, strong) UIImageView *workImageView;
+@property (nonatomic, strong) ATOMOtherMessageViewModel *viewModel;
 
 @end

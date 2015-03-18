@@ -10,6 +10,8 @@
 #import "ATOMLoginView.h"
 #import "ATOMMainTabBarController.h"
 #import "AppDelegate.h"
+#import "ATOMLogin.h"
+#import "ATOMUser.h"
 
 @interface ATOMLoginViewController ()
 
@@ -36,6 +38,21 @@
 }
 
 - (void)clickLoginButton:(UIButton *)sender {
+//    ATOMLogin *login = [ATOMLogin new];
+//    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:_loginView.mobileTextField.text, @"phone", _loginView.passwordTextField.text, @"password", nil];
+//    [SVProgressHUD showWithStatus:@"正在登录中..."];
+//    [login Login:param AndType:@"mobile" withBlock:^(ATOMUser *user, NSError *error) {
+//        [SVProgressHUD dismiss];
+//        if (!error) {
+//            if (![login isExistUser:user]) {
+//                [login saveUserInDB:user];
+//            }
+//            [self.navigationController popViewControllerAnimated:NO];
+//            [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
+//        } else {
+//            NSLog(@"error");
+//        }
+//    }];
     [self.navigationController popViewControllerAnimated:NO];
     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
 }

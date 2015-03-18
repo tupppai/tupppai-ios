@@ -26,6 +26,8 @@
 
 @implementation ATOMCreateProfileView
 
+static int padding10 = 10;
+
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -42,89 +44,71 @@
     WS(ws);
     _topBackGroundImageView = [UIImageView new];
     _topBackGroundImageView.backgroundColor = [UIColor orangeColor];
-    [_topBackGroundImageView showPlaceHolder];
     [self addSubview:_topBackGroundImageView];
     
     _userHeaderButton = [UIButton new];
+    _userHeaderButton.backgroundColor = [UIColor redColor];
     _userHeaderButton.layer.cornerRadius = 36.25;
     _userHeaderButton.layer.masksToBounds = YES;
-    _userHeaderButton.backgroundColor = [UIColor redColor];
-    [_userHeaderButton showPlaceHolder];
     [self addSubview:_userHeaderButton];
     
     _changeHeaderLabel = [UILabel new];
-    _changeHeaderLabel.backgroundColor = [UIColor redColor];
+    _changeHeaderLabel.textColor = [UIColor colorWithHex:0x606060];
     _changeHeaderLabel.text = @"修改头像";
-    [_changeHeaderLabel showPlaceHolder];
     [self addSubview:_changeHeaderLabel];
     
     _nicknameView = [UIView new];
-    _nicknameView.layer.borderWidth = 1;
-    _nicknameView.backgroundColor = [UIColor colorWithHex:0xededed];
-    [_nicknameView showPlaceHolder];
-    [self addSubview:_nicknameView];
+    [self setCommonView:_nicknameView];
     
     _sexView = [UIView new];
-    _sexView.layer.borderWidth = 1;
-    _sexView.backgroundColor = [UIColor colorWithHex:0xededed];
-    [_sexView showPlaceHolder];
-    [self addSubview:_sexView];
+    [self setCommonView:_sexView];
     
     _areaView = [UIView new];
-    _areaView.layer.borderWidth = 1;
-    _areaView.backgroundColor = [UIColor colorWithHex:0xededed];
-    [_areaView showPlaceHolder];
-    [self addSubview:_areaView];
+    [self setCommonView:_areaView];
     
     _protocolView = [UIView new];
-    _protocolView.layer.borderWidth = 1;
-    _protocolView.backgroundColor = [UIColor colorWithHex:0xededed];
-    [_protocolView showPlaceHolder];
-    [self addSubview:_protocolView];
+    [self setCommonView:_protocolView];
     
     [_topBackGroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
         make.top.equalTo(ws.mas_top);
         make.width.equalTo(ws.mas_width);
-        make.height.equalTo(@156.5);
+        make.height.equalTo(@156);
     }];
     
     [_userHeaderButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
         make.centerY.equalTo(ws.topBackGroundImageView.mas_bottom);
-        make.width.equalTo(@72.5);
-        make.height.equalTo(@72.5);
+        make.width.equalTo(@72);
+        make.height.equalTo(@72);
     }];
     
     [_changeHeaderLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
         make.top.equalTo(ws.userHeaderButton.mas_bottom);
         make.bottom.equalTo(ws.nicknameView.mas_top);
-        make.width.equalTo(@72.5);
+        make.width.equalTo(@72);
     }];
     
     [_nicknameView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
         make.top.equalTo(ws.topBackGroundImageView.mas_bottom).with.offset(74);
-        make.bottom.equalTo(ws.sexView.mas_top);
         make.width.equalTo(ws.mas_width);
-        make.height.equalTo(ws.sexView);
+        make.height.equalTo(@60);
     }];
     
     [_sexView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
         make.top.equalTo(ws.nicknameView.mas_bottom);
-        make.bottom.equalTo(ws.areaView.mas_top);
         make.width.equalTo(ws.mas_width);
-        make.height.equalTo(ws.areaView);
+        make.height.equalTo(ws.nicknameView);
     }];
     
     [_areaView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
         make.top.equalTo(ws.sexView.mas_bottom);
-        make.bottom.equalTo(ws.protocolView.mas_top);
         make.width.equalTo(ws.mas_width);
-        make.height.equalTo(ws.sexView);
+        make.height.equalTo(ws.nicknameView);
     }];
     
     [_protocolView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -132,7 +116,6 @@
         make.width.equalTo(ws.mas_width);
         make.top.equalTo(ws.areaView.mas_bottom);
         make.bottom.equalTo(ws.mas_bottom);
-        make.height.equalTo(ws.nicknameView);
     }];
     
 }
@@ -141,7 +124,7 @@
     WS(ws);
     _nicknameLabel = [UILabel new];
     _nicknameLabel.text = @"昵称 :";
-    _nicknameLabel.backgroundColor = [UIColor yellowColor];
+    _nicknameLabel.textColor = [UIColor colorWithHex:0x606060];
     [_nicknameView addSubview:_nicknameLabel];
     
     [_nicknameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -151,13 +134,25 @@
         make.height.equalTo(ws.nicknameView.mas_height);
     }];
     
+    _nicknameTextField = [UITextField new];
+    _nicknameTextField.textColor = [UIColor colorWithHex:0x606060];
+    _nicknameTextField.returnKeyType = UIReturnKeyDone;
+    [_nicknameView addSubview:_nicknameTextField];
+    
+    [_nicknameTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(ws.nicknameLabel.mas_right);
+        make.top.equalTo(ws.nicknameView.mas_top);
+        make.bottom.equalTo(ws.nicknameView.mas_bottom);
+        make.right.equalTo(ws.nicknameView.mas_right).with.offset(-padding10);
+    }];
+    
 }
 
 - (void)createSexSubView {
     WS(ws);
     _sexLabel = [UILabel new];
     _sexLabel.text = @"性别 :";
-    _sexLabel.backgroundColor = [UIColor yellowColor];
+    _sexLabel.textColor = [UIColor colorWithHex:0x606060];
     [_sexView addSubview:_sexLabel];
     
     [_sexLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -166,13 +161,54 @@
         make.width.equalTo(@50);
         make.height.equalTo(ws.sexView.mas_height);
     }];
+    
+    _manButton = [UIButton new];
+    //默认是男
+    _manButton.selected = YES;
+    _manButton.titleLabel.font = [UIFont systemFontOfSize:18.f];
+    _manButton.contentVerticalAlignment = UIControlContentVerticalAlignmentTop;
+    _manButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [_manButton setTitle:@"男" forState:UIControlStateNormal];
+    [_manButton setTitleColor:[UIColor colorWithHex:0x606060] forState:UIControlStateNormal];
+    [_manButton setImage:[UIImage imageNamed:@"btn_choosen_normal"] forState:UIControlStateNormal];
+    [_manButton setImage:[UIImage imageNamed:@"btn_choosen_pressed"] forState:UIControlStateSelected];
+    [_manButton setImageEdgeInsets:UIEdgeInsetsMake(8.5, 0, 8.5, 5)];
+    [_manButton setTitleEdgeInsets:UIEdgeInsetsMake(5, 5, 7, 0)];
+    [_sexView addSubview:_manButton];
+    
+    [_manButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(ws.sexLabel.mas_right).with.offset(15);
+        make.centerY.equalTo(ws.sexLabel.mas_centerY);
+        make.height.equalTo(@30);
+        make.width.equalTo(@40);
+    }];
+    
+    _womanButton = [UIButton new];
+    _womanButton.titleLabel.font = [UIFont systemFontOfSize:18.f];
+    _womanButton.contentVerticalAlignment = UIControlContentVerticalAlignmentTop;
+    _womanButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [_womanButton setTitle:@"女" forState:UIControlStateNormal];
+    [_womanButton setTitleColor:[UIColor colorWithHex:0x606060] forState:UIControlStateNormal];
+    [_womanButton setImage:[UIImage imageNamed:@"btn_choosen_normal"] forState:UIControlStateNormal];
+    [_womanButton setImage:[UIImage imageNamed:@"btn_choosen_pressed"] forState:UIControlStateSelected];
+    [_womanButton setImageEdgeInsets:UIEdgeInsetsMake(8.5, 0, 8.5, 5)];
+    [_womanButton setTitleEdgeInsets:UIEdgeInsetsMake(5, 5, 7, 0)];
+    [_sexView addSubview:_womanButton];
+    
+    [_womanButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(ws.manButton.mas_right).with.offset(15);
+        make.centerY.equalTo(ws.sexLabel.mas_centerY);
+        make.height.equalTo(@30);
+        make.width.equalTo(@40);
+    }];
+    
 }
 
 - (void)createAreaSubView {
     WS(ws);
     _areaLabel = [UILabel new];
     _areaLabel.text = @"所在地 :";
-    _areaLabel.backgroundColor = [UIColor yellowColor];
+    _areaLabel.textColor = [UIColor colorWithHex:0x606060];
     [_areaView addSubview:_areaLabel];
     
     [_areaLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -182,6 +218,43 @@
         make.height.equalTo(ws.areaView.mas_height);
     }];
 }
+
+- (void)setCommonView:(UIView *)view {
+    view.backgroundColor = [UIColor colorWithHex:0xededed];
+    [self addSubview:view];
+    UIView *topView = [UIView new];
+    topView.backgroundColor = [UIColor colorWithWhite:0x000000 alpha:0.2];
+    [view addSubview:topView];
+    [topView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(view.mas_left);
+        make.right.equalTo(view.mas_right);
+        make.top.equalTo(view.mas_top);
+        make.height.equalTo(@0.5);
+    }];
+    
+    UIView *bottomView = [UIView new];
+    bottomView.backgroundColor = [UIColor colorWithWhite:0x000000 alpha:0.2];
+    [view addSubview:bottomView];
+    [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(view.mas_left);
+        make.right.equalTo(view.mas_right);
+        make.bottom.equalTo(view.mas_bottom);
+        make.height.equalTo(@0.5);
+    }];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

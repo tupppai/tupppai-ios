@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ATOMHomePageViewModel.h"
 
 @interface ATOMHomePageRecentTableViewCell : UITableViewCell
 
@@ -19,16 +20,13 @@
 @property (nonatomic, strong) UIButton *praiseButton;
 @property (nonatomic, strong) UIButton *shareButton;
 @property (nonatomic, strong) UIButton *commentButton;
-
 @property (nonatomic, strong) UIImage *userWorkImage;
-
 @property (nonatomic, strong) UIView *topView;
 @property (nonatomic, strong) UIView *thinCenterView;
+@property (nonatomic, strong) ATOMHomePageViewModel *viewModel;
 
-- (void)setViewModel;
-
-+ (CGFloat)calculateCellHeight;
-+ (CGRect)calculateHomePageRecentImageViewRect:(UIImageView *)imageView;
++ (CGFloat)calculateCellHeightWith:(ATOMHomePageViewModel *)viewModel;
++ (CGRect)calculateHomePageHotImageViewRectWith:(ATOMHomePageViewModel *)viewModel;
 
 
 @end

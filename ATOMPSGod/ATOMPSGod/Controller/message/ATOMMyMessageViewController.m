@@ -34,7 +34,7 @@
 }
 
 - (void)createUI {
-    self.title = @"我的消息";
+    self.navigationItem.title = @"我的消息";
     _myMessageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _myMessageView;
     _tableView = [[UITableView alloc] initWithFrame:_myMessageView.bounds];

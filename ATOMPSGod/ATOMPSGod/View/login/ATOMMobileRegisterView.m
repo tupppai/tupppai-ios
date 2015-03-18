@@ -40,6 +40,8 @@
     _mobileTextField.leftViewMode = UITextFieldViewModeAlways;
     _mobileTextField.placeholder = @"输入你的手机号";
     _mobileTextField.leftView = mobileLabel;
+    _mobileTextField.keyboardType = UIKeyboardTypeNumberPad;
+    _mobileTextField.returnKeyType = UIReturnKeyDone;
     [self addSubview:_mobileTextField];
     
     UILabel *passwordLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 81.5, 40)];

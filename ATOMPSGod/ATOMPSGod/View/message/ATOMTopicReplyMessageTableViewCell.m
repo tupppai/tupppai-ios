@@ -7,6 +7,7 @@
 //
 
 #import "ATOMTopicReplyMessageTableViewCell.h"
+#import "ATOMOtherMessageViewModel.h"
 
 @implementation ATOMTopicReplyMessageTableViewCell
 
@@ -41,7 +42,6 @@ static int padding10 = 10;
     [self addSubview:_userNameLabel];
     
     _topicReplyContentLabel = [UILabel new];
-    _topicReplyContentLabel.text = @"处理了你的图片";
     _topicReplyContentLabel.textColor = [UIColor colorWithHex:0x828282];
     _topicReplyContentLabel.font = [UIFont systemFontOfSize:16.f];
     [self addSubview:_topicReplyContentLabel];
@@ -54,8 +54,6 @@ static int padding10 = 10;
     _workImageView = [UIImageView new];
     _workImageView.backgroundColor = [UIColor orangeColor];
     [self addSubview:_workImageView];
-    
-    [self test];
     
 }
 
@@ -70,12 +68,30 @@ static int padding10 = 10;
     _workImageView.frame = CGRectMake(SCREEN_WIDTH - padding10 - 75, padding10, 75, 75);
 }
 
-- (void)test {
-    _userNameLabel.text = @"atom";
-    _topicReplyTimeLabel.text = @"10月12号 11:00";
-    _userSexImageView.image = [UIImage imageNamed:@"woman"];
-    [self setNeedsLayout];
+- (void)setViewModel:(ATOMOtherMessageViewModel *)viewModel {
+    _viewModel = viewModel;
+    _userNameLabel.text = viewModel.userName;
+    _topicReplyContentLabel.text = viewModel.contentContent;
+    _topicReplyTimeLabel.text = viewModel.contentTime;
+    _userSexImageView.image = [UIImage imageNamed:viewModel.userSex];
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @end

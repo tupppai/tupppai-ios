@@ -50,12 +50,12 @@
 
 - (void)clickOtherRegisterButton:(UIButton *)sender {
     ATOMCreateProfileViewController *cpvc = [ATOMCreateProfileViewController new];
-    [self.navigationController pushViewController:cpvc animated:YES];
+    [self pushViewController:cpvc animated:YES];
 }
 
 - (void)clickLoginButton:(UIButton *)sender {
     ATOMLoginViewController *lvc = [ATOMLoginViewController new];
-    [self.navigationController pushViewController:lvc animated:YES];
+    [self pushViewController:lvc animated:YES];
 }
 
 

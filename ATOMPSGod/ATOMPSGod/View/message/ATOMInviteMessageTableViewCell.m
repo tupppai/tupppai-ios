@@ -7,6 +7,7 @@
 //
 
 #import "ATOMInviteMessageTableViewCell.h"
+#import "ATOMOtherMessageViewModel.h"
 
 @implementation ATOMInviteMessageTableViewCell
 
@@ -41,7 +42,6 @@ static int padding10 = 10;
     [self addSubview:_userNameLabel];
     
     _inviteContentLabel = [UILabel new];
-    _inviteContentLabel.text = @"邀请你帮忙P图";
     _inviteContentLabel.textColor = [UIColor colorWithHex:0x828282];
     _inviteContentLabel.font = [UIFont systemFontOfSize:16.f];
     [self addSubview:_inviteContentLabel];
@@ -55,8 +55,6 @@ static int padding10 = 10;
     _workImageView.backgroundColor = [UIColor orangeColor];
     [self addSubview:_workImageView];
     
-    [self test];
-    
 }
 
 - (void)layoutSubviews {
@@ -69,12 +67,39 @@ static int padding10 = 10;
     _workImageView.frame = CGRectMake(SCREEN_WIDTH - padding10 - 75, padding10, 75, 75);
 }
 
-- (void)test {
-    _userNameLabel.text = @"atom";
-    _inviteTimeLabel.text = @"10月12号 11:00";
-    _userSexImageView.image = [UIImage imageNamed:@"woman"];
-    [self setNeedsLayout];
+- (void)setViewModel:(ATOMOtherMessageViewModel *)viewModel {
+    _viewModel = viewModel;
+    _userNameLabel.text = viewModel.userName;
+    _userSexImageView.image = [UIImage imageNamed:viewModel.userSex];
+    _inviteContentLabel.text = viewModel.contentContent;
+    _inviteTimeLabel.text = viewModel.contentTime;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

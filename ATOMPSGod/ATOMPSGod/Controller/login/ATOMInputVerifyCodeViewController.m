@@ -8,6 +8,9 @@
 
 #import "ATOMInputVerifyCodeViewController.h"
 #import "ATOMInputVerifyCodeView.h"
+#import "ATOMSubmitUserInfomation.h"
+#import "AppDelegate.h"
+#import "ATOMLoginViewController.h"
 
 @interface ATOMInputVerifyCodeViewController ()
 
@@ -86,7 +89,19 @@
 }
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)sender {
-    
+    if ([_inputVerifyView.verifyCodeTextField.text isEqualToString:_verifyCode]) {
+        NSMutableDictionary *param = [[ATOMCurrentUser currentUser] dictionaryFromModel];
+        ATOMSubmitUserInformation *submitUserInformation = [ATOMSubmitUserInformation new];
+        [submitUserInformation SubmitUserInformation:[param copy] AndType:@"mobile" withBlock:^(NSError *error) {
+            if (!error) {
+                [SVProgressHUD showSuccessWithStatus:@"注册成功..."];
+                ATOMLoginViewController *lvc = [ATOMLoginViewController new];
+                [self pushViewController:lvc animated:YES];
+            }
+        }];
+    } else {
+        [SVProgressHUD showErrorWithStatus:@"验证码有误..."];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

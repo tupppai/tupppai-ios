@@ -50,7 +50,7 @@
 - (void)createUI {
     self.title = @"头像裁剪";
     UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(clickLeftButtonItem:)];
-    self.navigationItem.leftBarButtonItem = leftButtonItem;
+    self.navigationItem.leftBarButtonItems = @[leftButtonItem];
     UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
     self.navigationItem.rightBarButtonItem = rightButtonItem;
     _headerImageCropperView = [ATOMHeaderImageCropperView new];

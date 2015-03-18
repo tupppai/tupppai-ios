@@ -13,20 +13,19 @@
 #import "ATOMMyFansViewController.h"
 #import "ATOMMyConcernViewController.h"
 #import "ATOMHotDetailViewController.h"
+#import "ATOMOtherPersonCollectionHeaderView.h"
 
 @interface ATOMOtherPersonViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) ATOMOtherPersonView *otherPersonView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
-@property (nonatomic, strong) NSString *UploadCellIdentifier;
-@property (nonatomic, strong) NSString *WorkCellIdentifier;
-
-@property (nonatomic, strong) UITapGestureRecognizer *tapFansGesture;
-@property (nonatomic, strong) UITapGestureRecognizer *tapConcernGesture;
 
 @end
 
 @implementation ATOMOtherPersonViewController
+
+static NSString *UploadCellIdentifier = @"OtherPersonUploadCell";
+static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
 
 #pragma mark - UI
 
@@ -53,29 +52,38 @@
     _otherPersonView.otherPersonUploadCollectionView.dataSource = self;
     _otherPersonView.otherPersonWorkCollectionView.delegate = self;
     _otherPersonView.otherPersonWorkCollectionView.dataSource = self;
-    _UploadCellIdentifier = @"OtherPersonUploadCell";
-    _WorkCellIdentifier = @"OtherPersonWorkCell";
-    [_otherPersonView.otherPersonUploadCollectionView registerClass:[ATOMMyUploadCollectionViewCell class] forCellWithReuseIdentifier:_UploadCellIdentifier];
-    [_otherPersonView.otherPersonWorkCollectionView registerClass:[ATOMMyWorkCollectionViewCell class] forCellWithReuseIdentifier:_WorkCellIdentifier];
-    [_otherPersonView.otherPersonUploadButton addTarget:self action:@selector(clickOtherPersonUploadButton:) forControlEvents:UIControlEventTouchUpInside];
-    [_otherPersonView.otherPersonWorkButton addTarget:self action:@selector(clickOtherPersonWorkButton:) forControlEvents:UIControlEventTouchUpInside];
-    [_otherPersonView changeBottomViewToUploadView];
+    [self registerCollection];
+    [self addTargetToOtherPersonView:_otherPersonView.uploadHeaderView];
+    [self addTargetToOtherPersonView:_otherPersonView.workHeaderView];
+
+    [_otherPersonView changeToUploadView];
+
+
+}
+
+- (void)addTargetToOtherPersonView:(ATOMOtherPersonCollectionHeaderView *)headerView {
+    [headerView.otherPersonUploadButton addTarget:self action:@selector(clickOtherPersonUploadButton:) forControlEvents:UIControlEventTouchUpInside];
+    [headerView.otherPersonWorkButton addTarget:self action:@selector(clickOtherPersonWorkButton:) forControlEvents:UIControlEventTouchUpInside];
+    UITapGestureRecognizer *tapConcernGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapConcernGesture:)];
+    [headerView.attentionLabel addGestureRecognizer:tapConcernGesture];
     
-    _tapConcernGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapConcernGesture:)];
-    [_otherPersonView.attentionLabel addGestureRecognizer:_tapConcernGesture];
-    
-    _tapFansGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapFansGesture:)];
-    [_otherPersonView.fansLabel addGestureRecognizer:_tapFansGesture];
+    UITapGestureRecognizer *tapFansGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapFansGesture:)];
+    [headerView.fansLabel addGestureRecognizer:tapFansGesture];
+}
+
+- (void)registerCollection {
+    [_otherPersonView.otherPersonUploadCollectionView registerClass:[ATOMMyUploadCollectionViewCell class] forCellWithReuseIdentifier:UploadCellIdentifier];
+    [_otherPersonView.otherPersonWorkCollectionView registerClass:[ATOMMyWorkCollectionViewCell class] forCellWithReuseIdentifier:WorkCellIdentifier];
 }
 
 #pragma mark - Click Event
 
 - (void)clickOtherPersonUploadButton:(UIButton *)sender {
-    [_otherPersonView changeBottomViewToUploadView];
+    [_otherPersonView changeToUploadView];
 }
 
 - (void)clickOtherPersonWorkButton:(UIButton *)sender {
-    [_otherPersonView changeBottomViewToWorkView];
+    [_otherPersonView changeToWorkView];
 }
 
 #pragma mark - Gesture Event
@@ -90,6 +98,37 @@
     [self pushViewController:mfvc animated:YES];
 }
 
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat sectionHeaderHeight = -44;
+    CGFloat originHeight = -200;
+    if (scrollView == _otherPersonView.otherPersonUploadCollectionView) {
+        CGRect frame = _otherPersonView.uploadHeaderView.frame;
+        if (scrollView.contentOffset.y >= originHeight && scrollView.contentOffset.y <= sectionHeaderHeight) {
+            frame.origin.y = originHeight - scrollView.contentOffset.y;
+            _otherPersonView.uploadHeaderView.frame = frame;
+            scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+        } else if (scrollView.contentOffset.y >= sectionHeaderHeight) {
+            scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
+            frame.origin.y = originHeight - sectionHeaderHeight;
+            _otherPersonView.uploadHeaderView.frame = frame;
+        }
+    } else if (scrollView == _otherPersonView.otherPersonWorkCollectionView) {
+        CGRect frame = _otherPersonView.workHeaderView.frame;
+        if (scrollView.contentOffset.y >= originHeight && scrollView.contentOffset.y <= sectionHeaderHeight) {
+            frame.origin.y = originHeight - scrollView.contentOffset.y;
+            _otherPersonView.workHeaderView.frame = frame;
+            scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+        } else if (scrollView.contentOffset.y >= sectionHeaderHeight) {
+            scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
+            frame.origin.y = originHeight - sectionHeaderHeight;
+            _otherPersonView.workHeaderView.frame = frame;
+        }
+    }
+
+}
+
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -98,12 +137,12 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (collectionView == _otherPersonView.otherPersonUploadCollectionView) {
-        ATOMMyUploadCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:_UploadCellIdentifier forIndexPath:indexPath];
+        ATOMMyUploadCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:UploadCellIdentifier forIndexPath:indexPath];
         cell.workImage = _dataSource[indexPath.row];
         cell.praiseNumber = 10;
         return cell;
     } else {
-        ATOMMyWorkCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:_WorkCellIdentifier forIndexPath:indexPath];
+        ATOMMyWorkCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:WorkCellIdentifier forIndexPath:indexPath];
         cell.workImage = _dataSource[indexPath.row];
         return cell;
     }
@@ -116,6 +155,30 @@
     hdvc.pushType = ATOMMyUploadType;
     [self pushViewController:hdvc animated:YES];
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @end
