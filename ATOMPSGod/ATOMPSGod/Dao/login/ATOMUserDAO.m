@@ -21,7 +21,7 @@
 - (void)insertUser:(ATOMUser *)user {
     dispatch_queue_t q = dispatch_queue_create("insert", NULL);
     dispatch_async(q, ^{
-        [self.fmQueue inDatabase:^(FMDatabase *db) {
+        [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
             NSString *stmt = [MTLFMDBAdapter insertStatementForModel:user];
             NSArray *param = [MTLFMDBAdapter columnValues:user];
             BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
@@ -36,7 +36,7 @@
 
 - (ATOMUser *)selectUserByUID:(NSString *)uid {
     __block ATOMUser *user;
-    [self.fmQueue inDatabase:^(FMDatabase *db) {
+    [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
         NSString *stmt = @"select * from ATOMUser where uid = ?";
         NSArray *param = @[uid];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
@@ -51,9 +51,9 @@
 
 - (BOOL)isExistUser:(ATOMUser *)user {
     __block BOOL flag;
-    [self.fmQueue inDatabase:^(FMDatabase *db) {
+    [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
         NSString *stmt = @"select * from ATOMUser where uid = ?";
-        NSArray *param = @[user.uid];
+        NSArray *param = @[@(user.uid)];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {
             ATOMUser *user = [MTLFMDBAdapter modelOfClass:[ATOMUser class] fromFMResultSet:rs error:NULL];

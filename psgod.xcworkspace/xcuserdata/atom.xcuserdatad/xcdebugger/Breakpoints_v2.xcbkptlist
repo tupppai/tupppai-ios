@@ -19,13 +19,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ATOMPSGod/ATOMPSGod/View/person/ATOMCustomCollectionFlowLayout.m"
-            timestampString = "448283923.998679"
+            filePath = "ATOMPSGod/ATOMPSGod/ViewModel/homepage/ATOMHomePageViewModel.m"
+            timestampString = "448796976.087861"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
-            landmarkName = "-layoutAttributesForSupplementaryViewOfKind:atIndexPath:"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "-setViewModelData:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -15,10 +15,11 @@
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMCreateProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, ATOMCropHeaderImageCompleteProtocol>
+@interface ATOMCreateProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, ATOMCropHeaderImageCompleteProtocol>
 
 @property (nonatomic, strong) ATOMCreateProfileView *createProfileView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
+@property (nonatomic, strong) UITapGestureRecognizer *tapSexViewGesture;
 
 @end
 
@@ -32,6 +33,13 @@
         _imagePickerController.delegate = self;
     }
     return _imagePickerController;
+}
+
+- (UITapGestureRecognizer *)tapSexViewGesture {
+    if (!_tapSexViewGesture) {
+        _tapSexViewGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapSexViewGesture:)];
+    }
+    return _tapSexViewGesture;
 }
 
 #pragma mark - UI
@@ -56,8 +64,11 @@
     self.view = _createProfileView;
     _createProfileView.nicknameTextField.delegate = self;
     [_createProfileView.userHeaderButton addTarget:self action:@selector(clickUserHeaderButton:) forControlEvents:UIControlEventTouchUpInside];
-    [_createProfileView.manButton addTarget:self action:@selector(clickManButton:) forControlEvents:UIControlEventTouchUpInside];
-    [_createProfileView.womanButton addTarget:self action:@selector(clickWomanButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_createProfileView.sexView addGestureRecognizer:self.tapSexViewGesture];
+    _createProfileView.sexPickerView.delegate = self;
+    _createProfileView.sexPickerView.dataSource = self;
+    [_createProfileView.cancelPickerButton addTarget:self action:@selector(clickCancelPickerButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_createProfileView.confirmPickerButton addTarget:self action:@selector(clickConfirmPickerButton:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark - Click Event
@@ -70,8 +81,11 @@
     } else if (str.length >= 6) {
         [SVProgressHUD showErrorWithStatus:@"昵称不能大于6位..."];
         return ;
+    } else if ([_createProfileView tagOfCurrentSex] == -1) {
+        [SVProgressHUD showErrorWithStatus:@"请选择性别..."];
+        return ;
     }
-    [ATOMCurrentUser currentUser].sex = _createProfileView.manButton.selected;
+    [ATOMCurrentUser currentUser].sex = [_createProfileView tagOfCurrentSex];
     [ATOMCurrentUser currentUser].nickname = str;
     ATOMMobileRegisterViewController *mrvc = [[ATOMMobileRegisterViewController alloc] init];
     [self pushViewController:mrvc animated:YES];
@@ -82,14 +96,18 @@
     [self presentViewController:_imagePickerController animated:YES completion:NULL];
 }
 
-- (void)clickManButton:(UIButton *)sender {
-    sender.selected = YES;
-    _createProfileView.womanButton.selected = NO;
+- (void)clickCancelPickerButton:(UIButton *)sender {
+    [_createProfileView hideSexPickerView];
 }
 
-- (void)clickWomanButton:(UIButton *)sender {
-    sender.selected = YES;
-    _createProfileView.manButton.selected = NO;
+- (void)clickConfirmPickerButton:(UIButton *)sender {
+    [_createProfileView hideSexPickerView];
+}
+
+#pragma mark - Gesture Event
+
+- (void)tapSexViewGesture:(UITapGestureRecognizer *)gesture {
+    [_createProfileView showSexPickerView];
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -111,15 +129,18 @@
 #pragma ATOMCropHeaderImageCompleteProtocol
 
 - (void)cropHeaderImageCompleteWith:(UIImage *)image {
+    CGFloat scale = SCREEN_WIDTH / CGWidth(_createProfileView.userHeaderButton.frame);
+    CGFloat ratio = 1;
+    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:@(SCREEN_WIDTH), @"width", @(scale), @"scale", @(ratio), @"ratio", nil];
     NSData *data = UIImageJPEGRepresentation(image, 0.2);
     [_createProfileView.userHeaderButton setBackgroundImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
     ATOMUploadImage *uploadImage = [ATOMUploadImage new];
-    [uploadImage UploadImage:data withBlock:^(ATOMImage *imageInformation, NSError *error) {
+    [uploadImage UploadImage:data withParam:param andBlock:^(ATOMImage *imageInformation, NSError *error) {
         if (error) {
             NSLog(@"%@", error);
             return ;
         }
-        NSLog(@"%lld", imageInformation.imageID);
+        NSLog(@"%d", (int)imageInformation.imageID);
     }];
     
 }
@@ -139,10 +160,38 @@
     return YES;
 }
 
+#pragma mark - UIPickerViewDataSource
 
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
 
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    return 3;
+}
 
+#pragma mark - UIPickerViewDelegate
 
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    if (row == 0) {
+        return @"请选择";
+    } else if (row == 1) {
+        return @"男";
+    } else if (row == 2) {
+        return @"女";
+    }
+    return nil;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    if (row == 0) {
+        _createProfileView.showSexLabel.text = @"";
+    } else if (row == 1) {
+        _createProfileView.showSexLabel.text = @"男";
+    } else if (row == 2) {
+        _createProfileView.showSexLabel.text = @"女";
+    }
+}
 
 
 

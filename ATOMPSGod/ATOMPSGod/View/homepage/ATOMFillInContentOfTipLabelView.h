@@ -11,5 +11,8 @@
 @interface ATOMFillInContentOfTipLabelView : UIScrollView
 
 @property (nonatomic, strong) UITextField *tipLabelContentTextField;
+@property (nonatomic, strong) UIButton *sendTipLabelTextButton;
+@property (nonatomic, strong) UILabel *showNumberLabel;
+@property (nonatomic, strong) UILabel *topWarnLabel;
 
 @end

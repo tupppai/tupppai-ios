@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ATOMHomePageViewModel;
+@class ATOMDetailImageViewModel;
 
 @interface ATOMHotDetailTableViewCell : UITableViewCell
 
@@ -22,11 +22,12 @@
 @property (nonatomic, strong) UIButton *commentButton;
 @property (nonatomic, strong) UIButton *moreShareButton;
 @property (nonatomic, strong) UIImage *userWorkImage;
+@property (nonatomic, strong) UIView *topThinView;
 @property (nonatomic, strong) UIView *topView;
 @property (nonatomic, strong) UIView *thinCenterView;
 @property (nonatomic, strong) UIView *bottomView;
-@property (nonatomic, strong) ATOMHomePageViewModel *viewModel;
+@property (nonatomic, strong) ATOMDetailImageViewModel *viewModel;
 
-+ (CGFloat)calculateCellHeightWith:(ATOMHomePageViewModel *)viewModel;
++ (CGFloat)calculateCellHeightWith:(ATOMDetailImageViewModel *)viewModel;
 
 @end

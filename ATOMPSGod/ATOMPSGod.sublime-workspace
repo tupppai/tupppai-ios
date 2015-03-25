@@ -1,0 +1,209 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/ios-project/xyh-sdk/ATOMXYH/ATOMXYH/DAO/ATOMDBMessage.m",
+		"/ios-project/xyh-sdk/ATOMXYH/ATOMXYH/DAO/ATOMDBMessage.h",
+		"/ios-project/xyh-sdk/ATOMXYH/ATOMXYH/DAO/ATOMBaseDB.m",
+		"/ios-project/xyh-sdk/ATOMXYH/ATOMXYH/DAO/ATOMBaseDB.h",
+		"/ios-project/xyh-sdk/ATOMXYH/ATOMXYH/DAO/CreateTable/ATOMCreateTable.m",
+		"/ios-project/xyh-sdk/ATOMXYH/ATOMXYH/DAO/CreateTable/ATOMCreateTable.h",
+		"/Users/atom/Downloads/opensource/tmpsource/AFNetworking-demo/AFNetworking-demo/model/User.m",
+		"/Users/atom/Downloads/opensource/tmpsource/AFN_Mantle_Demo/afn_mantle_overcoat/afn_mantle_overcoat/BBHTTPRequestOperationManager.h",
+		"/Users/atom/Downloads/opensource/tmpsource/AFN_Mantle_Demo/afn_mantle_overcoat/afn_mantle_overcoat/BBHTTPRequestOperationManager.m",
+		"/Users/atom/Downloads/opensource/tmpsource/AFNetworking-demo/AFNetworking-demo/model/User.h",
+		"/Users/atom/Downloads/opensource/tmpsource/AFN_Mantle_Demo/afn_mantle_overcoat/afn_mantle_overcoat/UserModel.m",
+		"/Users/atom/Downloads/opensource/tmpsource/AFNetworking-demo/AFNetworking-demo/common/APIClient.m",
+		"/Users/atom/Downloads/opensource/tmpsource/AFNetworking-demo/AFNetworking-demo/common/APIClient.h",
+		"/Users/atom/Downloads/opensource/source/ImgShow/ImgShow/MRImgShowView.m",
+		"/Users/atom/Downloads/opensource/source/ImgShow/ImgShow/MRImgShowView.h",
+		"/Users/atom/Downloads/opensource/source/ImgShow/ImgShow/ImgShowViewController.m",
+		"/Users/atom/Downloads/opensource/source/ImgShow/ImgShow/ImgShowViewController.h",
+		"/Users/atom/Downloads/opensource/source/ImgShow/ImgShow/ImgNewsViewController.m",
+		"/Users/atom/Downloads/opensource/source/ImgShow/ImgShow/ImgNewsViewController.h",
+		"/Users/atom/Downloads/CustomKeyboardDemo/CustomKeyboardDemo/ViewController.m",
+		"/Users/atom/Downloads/CustomKeyboardDemo/CustomKeyboardDemo/HcCustomKeyboard.h",
+		"/Users/atom/Downloads/CustomKeyboardDemo/CustomKeyboardDemo/HcCustomKeyboard.m",
+		"/Users/atom/Downloads/opensource/source/AGEmojiKeyboard/Example/AGEmojiKeyboardSample/AGViewController.m",
+		"/Users/atom/Downloads/opensource/source/IQKeyboardManager/KeyboardTextFieldDemo/KeyboardTextFieldDemo/TextFieldViewController.m",
+		"/Users/atom/Downloads/opensource/source/AFNetworking-master/Example/Classes/Views/PostTableViewCell.m",
+		"/Users/atom/Downloads/opensource/source/AFNetworking-master/Example/Classes/Views/PostTableViewCell.h",
+		"/ios-project/test/test/ATOMPostTableViewCell.m",
+		"/ios-project/test/test/ATOMPostTableViewCell.h",
+		"/ios-project/test/test/ViewController.m",
+		"/ios-project/test/test/ATOMBaseViewController.m",
+		"/ios-project/xyh-sdk/ATOMXYH/ATOMXYH/xyh-Prefix.pch",
+		"/ios-project/xyh-sdk/ATOMXYH/ATOMXYH/MacroUtils.h",
+		"/ios-project/test/test/AppDelegate.m",
+		"/Users/atom/Downloads/test/test/ATOMDownload.m",
+		"/Users/atom/Downloads/test/test/AppDelegate.m",
+		"/Users/atom/Downloads/test/test/AppDelegate.h",
+		"/Users/atom/Downloads/opensource/source/AFNetworking-master/Example/Classes/Models/Post.m",
+		"/Users/atom/Downloads/opensource/source/AFNetworking-master/Example/Classes/Models/Post.h",
+		"/Users/atom/Downloads/opensource/source/AFNetworking-master/Example/Classes/Controllers/GlobalTimelineViewController.m",
+		"/Users/atom/Downloads/opensource/source/AFNetworking-master/Example/Classes/Controllers/GlobalTimelineViewController.h",
+		"/Users/atom/Downloads/opensource/source/AFNetworking-master/Example/Classes/Models/User.m",
+		"/Users/atom/Downloads/opensource/source/AFNetworking-master/Example/Classes/Models/User.h",
+		"/Users/atom/Downloads/opensource/source/AFNetworking-master/Example/Classes/AFAppDotNetAPIClient.m",
+		"/Users/atom/Downloads/opensource/source/AFNetworking-master/Example/Classes/AFAppDotNetAPIClient.h"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"AFN_REQUEST_TIMEOUT"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "ATOMPSGod.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

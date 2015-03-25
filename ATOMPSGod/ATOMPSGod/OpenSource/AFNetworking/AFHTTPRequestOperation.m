@@ -64,7 +64,7 @@ static dispatch_group_t http_request_operation_completion_group() {
     if (!self) {
         return nil;
     }
-
+    //默认使用AFHTTPResponseSerilizer，只能解析错误信息
     self.responseSerializer = [AFHTTPResponseSerializer serializer];
 
     return self;
@@ -111,6 +111,7 @@ static dispatch_group_t http_request_operation_completion_group() {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-retain-cycles"
 #pragma clang diagnostic ignored "-Wgnu"
+    //父类的setCompletionBlock的实现里解决了循环引用问题，这里在block里直接用self也没问题
     self.completionBlock = ^{
         if (self.completionGroup) {
             dispatch_group_enter(self.completionGroup);
@@ -150,6 +151,7 @@ static dispatch_group_t http_request_operation_completion_group() {
 
 #pragma mark - AFURLRequestOperation
 
+//下载暂停时提供断点续传功能，修改请求的HTTP头部，记录当前下载的文件位置，下次可以从这个位置开始下载。
 - (void)pause {
     [super pause];
 
@@ -162,8 +164,11 @@ static dispatch_group_t http_request_operation_completion_group() {
 
     NSMutableURLRequest *mutableURLRequest = [self.request mutableCopy];
     if ([self.response respondsToSelector:@selector(allHeaderFields)] && [[self.response allHeaderFields] valueForKey:@"ETag"]) {
+        //若请求返回的头部有ETag，则续传时要带上这个ETag，ETag用于放置文件的唯一标识，比如MD5值
+        //续传时带上ETag服务端可以校验相对上次请求，文件有没有变化，若有变化返回200，回应新文件的全数据，若无变化则返回206续传。
         [mutableURLRequest setValue:[[self.response allHeaderFields] valueForKey:@"ETag"] forHTTPHeaderField:@"If-Range"];
     }
+    //给当前request加Range头部，下次请求带上头部，可以从offset位置继续下载
     [mutableURLRequest setValue:[NSString stringWithFormat:@"bytes=%llu-", offset] forHTTPHeaderField:@"Range"];
     self.request = mutableURLRequest;
 }

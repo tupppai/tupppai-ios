@@ -10,9 +10,8 @@
 
 @interface ATOMAddTipLabelToImageView ()
 
-@property (nonatomic, strong) UILabel *bigLabel;
-@property (nonatomic, strong) UILabel *littleLabel;
 @property (nonatomic, strong) UIImageView *pointImageView;
+@property (nonatomic, strong) UILabel *tipLabel;
 
 @end
 
@@ -54,21 +53,28 @@ static int padding10 = 10;
 }
 
 - (void)createBottomView {
-    _bigLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 13, SCREEN_WIDTH, 20)];
-    _bigLabel.text = @"点击图片";
-    _bigLabel.textColor = [UIColor colorWithHex:0xb3b3b3];
-    _bigLabel.textAlignment = NSTextAlignmentCenter;
-    _bigLabel.font = [UIFont systemFontOfSize:20.f];
+    CGFloat buttonInterval = 25;
+    CGFloat xlButtonLeftPadding = (SCREEN_WIDTH - 3 * buttonInterval - 4 * 28) / 2;
+    _xlButton = [[UIButton alloc] initWithFrame:CGRectMake(xlButtonLeftPadding, padding10, 28, 28)];
+    _wxButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_xlButton.frame) + buttonInterval, padding10, 28, 28)];
+    _qqButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_wxButton.frame) + buttonInterval, padding10, 28, 28)];
+    _qqzoneButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_qqButton.frame) + buttonInterval, padding10, 28, 28)];
+    [self setCommonButton:_xlButton WithImage:[UIImage imageNamed:@"weibo_grey"] AndSelectedImage:[UIImage imageNamed:@"weibo"]];
+    [self setCommonButton:_wxButton WithImage:[UIImage imageNamed:@"wechat_grey"] AndSelectedImage:[UIImage imageNamed:@"wechat"]];
+    [self setCommonButton:_qqButton WithImage:[UIImage imageNamed:@"qq_grey"] AndSelectedImage:[UIImage imageNamed:@"qq"]];
+    [self setCommonButton:_qqzoneButton WithImage:[UIImage imageNamed:@"qqzone_grey"] AndSelectedImage:[UIImage imageNamed:@"qqzone"]];
     
-    _littleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_bigLabel.frame) + 6, SCREEN_WIDTH, 15)];
-    _littleLabel.text = @"用标签告诉大神你要什么效果";
-    _littleLabel.textColor = [UIColor colorWithHex:0xb3b3b3];
-    _littleLabel.textAlignment = NSTextAlignmentCenter;
-    _littleLabel.font = [UIFont systemFontOfSize:15.f];
-    
-    [_bottomView addSubview:_bigLabel];
-    [_bottomView addSubview:_littleLabel];
-    
+    _tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, padding10, xlButtonLeftPadding, 28)];
+    _tipLabel.text = @"同步到：";
+    _tipLabel.textColor = [UIColor colorWithHex:0x666666];
+    _tipLabel.textAlignment = NSTextAlignmentCenter;
+    [_bottomView addSubview:_tipLabel];
+}
+
+- (void) setCommonButton:(UIButton *)button WithImage:(UIImage *)image AndSelectedImage:(UIImage *)simage {
+    [button setBackgroundImage:image forState:UIControlStateNormal];
+    [button setBackgroundImage:simage forState:UIControlStateSelected];
+    [_bottomView addSubview:button];
 }
 
 - (CGRect)calculateImageViewFrame {
@@ -147,6 +153,46 @@ static int padding10 = 10;
 - (void)removeTemporaryPoint {
     _pointImageView.hidden = YES;
 }
+
+- (void)changeStatusOfShareButton:(UIButton *)button {
+    if (button == _xlButton) {
+        _xlButton.selected = YES;
+        _wxButton.selected = NO;
+        _qqButton.selected = NO;
+        _qqzoneButton.selected = NO;
+    } else if (button == _wxButton) {
+        _xlButton.selected = NO;
+        _wxButton.selected = YES;
+        _qqButton.selected = NO;
+        _qqzoneButton.selected = NO;
+    } else if (button == _qqButton) {
+        _xlButton.selected = NO;
+        _wxButton.selected = NO;
+        _qqButton.selected = YES;
+        _qqzoneButton.selected = NO;
+    } else if (button == _qqzoneButton) {
+        _xlButton.selected = NO;
+        _wxButton.selected = NO;
+        _qqButton.selected = NO;
+        _qqzoneButton.selected = YES;
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -16,7 +16,7 @@
 
 - (AFHTTPRequestOperation *)SubmitUserInformation:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(NSError *))block {
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] POST:[NSString stringWithFormat:@"user/save?type=%@",type] parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [ATOMCurrentUser currentUser].uid = responseObject[@"data"][@"uid"];
+        [ATOMCurrentUser currentUser].uid = [responseObject[@"data"][@"uid"] integerValue];
         ATOMUser *user = [ATOMUser new];
         user.uid = [ATOMCurrentUser currentUser].uid;
         user.nickname = [ATOMCurrentUser currentUser].nickname;

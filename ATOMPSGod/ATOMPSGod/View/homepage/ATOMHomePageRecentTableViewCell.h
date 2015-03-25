@@ -11,7 +11,7 @@
 
 @interface ATOMHomePageRecentTableViewCell : UITableViewCell
 
-@property (nonatomic, strong) UIImageView *userHeaderButton;
+@property (nonatomic, strong) UIButton *userHeaderButton;
 @property (nonatomic, strong) UILabel *userNameLabel;
 @property (nonatomic, strong) UILabel *userPublishTimeLabel;
 @property (nonatomic, strong) UIImageView *userSexImageView;
@@ -20,13 +20,13 @@
 @property (nonatomic, strong) UIButton *praiseButton;
 @property (nonatomic, strong) UIButton *shareButton;
 @property (nonatomic, strong) UIButton *commentButton;
+@property (nonatomic, strong) UIButton *moreShareButton;
 @property (nonatomic, strong) UIImage *userWorkImage;
+@property (nonatomic, strong) UIView *topThinView;
 @property (nonatomic, strong) UIView *topView;
 @property (nonatomic, strong) UIView *thinCenterView;
 @property (nonatomic, strong) ATOMHomePageViewModel *viewModel;
 
 + (CGFloat)calculateCellHeightWith:(ATOMHomePageViewModel *)viewModel;
-+ (CGRect)calculateHomePageHotImageViewRectWith:(ATOMHomePageViewModel *)viewModel;
-
 
 @end

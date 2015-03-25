@@ -23,6 +23,7 @@
 #define CGHeight(rect)                  rect.size.height
 #define CGOriginX(rect)                 rect.origin.x
 #define CGOriginY(rect)                 rect.origin.y
+#define SEXRADIUS 15
 
 
 #endif

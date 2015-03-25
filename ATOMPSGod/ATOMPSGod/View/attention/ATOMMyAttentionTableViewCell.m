@@ -65,7 +65,7 @@ static int padding = 10;
     [_praiseButton setImage:[UIImage imageNamed:@"btn_comment_like_pressed"] forState:UIControlStateSelected];
     _shareButton = [UIButton new];
     _commentButton = [UIButton new];
-    [self setCommonButton:_praiseButton WithImage:[UIImage imageNamed:@"icon_like_normal"]];
+    [self setCommonButton:_praiseButton WithImage:[UIImage imageNamed:@"btn_comment_like_normal"]];
     [self setCommonButton:_shareButton WithImage:[UIImage imageNamed:@"icon_share_normal"]];
     [self setCommonButton:_commentButton WithImage:[UIImage imageNamed:@"icon_comment_normal"]];
     [_thinCenterView addSubview:_praiseButton];
@@ -99,7 +99,7 @@ static int padding = 10;
     _userHeaderButton.frame = CGRectMake(padding, padding, 45, 45);
     _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding, padding, SCREEN_WIDTH - padding * 2- 45, 30);
     _userPublishTimeLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding, CGRectGetMaxY(_userNameLabel.frame), 80, 15);
-    _userSexImageView.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - 16, CGRectGetMaxY(_userHeaderButton.frame) - 16, 17, 17);
+    _userSexImageView.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - SEXRADIUS, CGRectGetMaxY(_userHeaderButton.frame) - SEXRADIUS, SEXRADIUS, SEXRADIUS);
     
     CGSize workImageSize;
     if (_viewModel) {
@@ -117,11 +117,11 @@ static int padding = 10;
 }
 
 + (CGFloat)calculateCellHeightWith:(ATOMHomePageViewModel *)viewModel {
-    return 65 + viewModel.calculateImageViewSize.height + 40 + 61;
+    return 65 + viewModel.height + 40 + 61;
 }
 
 + (CGSize)calculateHomePageHotImageViewSizeWith:(ATOMHomePageViewModel *)viewModel {
-    return [viewModel calculateImageViewSize];
+    return CGSizeMake(viewModel.width, viewModel.height);
 }
 
 - (void)setViewModel:(ATOMHomePageViewModel *)viewModel {
@@ -132,7 +132,7 @@ static int padding = 10;
     [_shareButton setTitle:viewModel.shareNumber forState:UIControlStateNormal];
     [_praiseButton setTitle:viewModel.praiseNumber forState:UIControlStateNormal];
     [_commentButton setTitle:viewModel.commentNumber forState:UIControlStateNormal];
-    _userWorkImageView.image = viewModel.userImage;
+    [_userWorkImageView setImageWithURL:[NSURL URLWithString:viewModel.userImageURL]];
     
     NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:16.f], NSFontAttributeName, [UIColor colorWithHex:0x797979], NSForegroundColorAttributeName, nil];
     NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:@"宋祥伍发布了一个求助" attributes:attributeDict];

@@ -12,8 +12,8 @@
 
 @implementation ATOMUploadImage
 
-- (AFHTTPRequestOperation *)UploadImage:(NSData *)data withBlock:(void (^)(ATOMImage *imageInformation, NSError *error))block {
-    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] POST:@"image/upload" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+- (AFHTTPRequestOperation *)UploadImage:(NSData *)data withParam:(NSDictionary *)param andBlock:(void (^)(ATOMImage *, NSError *))block {
+    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] POST:@"image/upload" parameters:param constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         [formData appendPartWithFileData:data name:@"images" fileName:@"ATOMIMAGE" mimeType:@"image/png"];
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         ATOMImage *imageInfomation = [MTLJSONAdapter modelOfClass:[ATOMImage class] fromJSONDictionary:responseObject error:NULL];

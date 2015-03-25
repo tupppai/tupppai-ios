@@ -16,11 +16,11 @@
 @property (nonatomic, strong) UILabel *nicknameLabel;
 @property (nonatomic, strong) UILabel *sexLabel;
 @property (nonatomic, strong) UILabel *areaLabel;
-
 @property (nonatomic, strong) UIView *nicknameView;
-@property (nonatomic, strong) UIView *sexView;
 @property (nonatomic, strong) UIView *areaView;
 @property (nonatomic, strong) UIView *protocolView;
+@property (nonatomic, strong) UIView *sexPickerTopView;
+
 
 @end
 
@@ -36,6 +36,8 @@ static int padding10 = 10;
         [self createNicknameSubView];
         [self createSexSubView];
         [self createAreaSubView];
+        [self createSexPickerView];
+        [self hideSexPickerView];
     }
     return self;
 }
@@ -43,11 +45,11 @@ static int padding10 = 10;
 - (void)createSubView {
     WS(ws);
     _topBackGroundImageView = [UIImageView new];
-    _topBackGroundImageView.backgroundColor = [UIColor orangeColor];
+    _topBackGroundImageView.image = [UIImage imageNamed:@"header_bg"];
     [self addSubview:_topBackGroundImageView];
     
     _userHeaderButton = [UIButton new];
-    _userHeaderButton.backgroundColor = [UIColor redColor];
+    [_userHeaderButton setBackgroundImage:[UIImage imageNamed:@"head_portrait"] forState:UIControlStateNormal];
     _userHeaderButton.layer.cornerRadius = 36.25;
     _userHeaderButton.layer.masksToBounds = YES;
     [self addSubview:_userHeaderButton];
@@ -162,46 +164,17 @@ static int padding10 = 10;
         make.height.equalTo(ws.sexView.mas_height);
     }];
     
-    _manButton = [UIButton new];
-    //默认是男
-    _manButton.selected = YES;
-    _manButton.titleLabel.font = [UIFont systemFontOfSize:18.f];
-    _manButton.contentVerticalAlignment = UIControlContentVerticalAlignmentTop;
-    _manButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [_manButton setTitle:@"男" forState:UIControlStateNormal];
-    [_manButton setTitleColor:[UIColor colorWithHex:0x606060] forState:UIControlStateNormal];
-    [_manButton setImage:[UIImage imageNamed:@"btn_choosen_normal"] forState:UIControlStateNormal];
-    [_manButton setImage:[UIImage imageNamed:@"btn_choosen_pressed"] forState:UIControlStateSelected];
-    [_manButton setImageEdgeInsets:UIEdgeInsetsMake(8.5, 0, 8.5, 5)];
-    [_manButton setTitleEdgeInsets:UIEdgeInsetsMake(5, 5, 7, 0)];
-    [_sexView addSubview:_manButton];
+    _showSexLabel = [UILabel new];
+    _showSexLabel.text = @"";
+    _showSexLabel.textColor = [UIColor colorWithHex:0x606060];
+    [_sexView addSubview:_showSexLabel];
     
-    [_manButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(ws.sexLabel.mas_right).with.offset(15);
+    [_showSexLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(ws.sexLabel.mas_right);
         make.centerY.equalTo(ws.sexLabel.mas_centerY);
-        make.height.equalTo(@30);
-        make.width.equalTo(@40);
+        make.width.equalTo(ws.sexLabel.mas_width);
+        make.height.equalTo(ws.sexLabel.mas_height);
     }];
-    
-    _womanButton = [UIButton new];
-    _womanButton.titleLabel.font = [UIFont systemFontOfSize:18.f];
-    _womanButton.contentVerticalAlignment = UIControlContentVerticalAlignmentTop;
-    _womanButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [_womanButton setTitle:@"女" forState:UIControlStateNormal];
-    [_womanButton setTitleColor:[UIColor colorWithHex:0x606060] forState:UIControlStateNormal];
-    [_womanButton setImage:[UIImage imageNamed:@"btn_choosen_normal"] forState:UIControlStateNormal];
-    [_womanButton setImage:[UIImage imageNamed:@"btn_choosen_pressed"] forState:UIControlStateSelected];
-    [_womanButton setImageEdgeInsets:UIEdgeInsetsMake(8.5, 0, 8.5, 5)];
-    [_womanButton setTitleEdgeInsets:UIEdgeInsetsMake(5, 5, 7, 0)];
-    [_sexView addSubview:_womanButton];
-    
-    [_womanButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(ws.manButton.mas_right).with.offset(15);
-        make.centerY.equalTo(ws.sexLabel.mas_centerY);
-        make.height.equalTo(@30);
-        make.width.equalTo(@40);
-    }];
-    
 }
 
 - (void)createAreaSubView {
@@ -216,6 +189,56 @@ static int padding10 = 10;
         make.centerY.equalTo(ws.areaView.mas_centerY);
         make.width.equalTo(@70);
         make.height.equalTo(ws.areaView.mas_height);
+    }];
+}
+
+- (void)createSexPickerView {
+    WS(ws);
+    _sexPickerView = [UIPickerView new];
+//    _sexPickerView.showsSelectionIndicator = YES;
+    _sexPickerView.backgroundColor = [UIColor whiteColor];
+    [self addSubview:_sexPickerView];
+    
+    _sexPickerTopView = [UIView new];
+    _sexPickerTopView.backgroundColor = [UIColor whiteColor];
+    [self addSubview:_sexPickerTopView];
+    
+    _cancelPickerButton = [UIButton new];
+    [_cancelPickerButton setTitle:@"取消" forState:UIControlStateNormal];
+    [_cancelPickerButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    _confirmPickerButton = [UIButton new];
+    [_confirmPickerButton setTitle:@"完成" forState:UIControlStateNormal];
+    [_confirmPickerButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    
+    [_sexPickerTopView addSubview:_cancelPickerButton];
+    [_sexPickerTopView addSubview:_confirmPickerButton];
+    
+    [_sexPickerView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(ws);
+        make.right.equalTo(ws);
+        make.bottom.equalTo(ws);
+        make.height.equalTo(@90);
+    }];
+    
+    [_sexPickerTopView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(ws.sexPickerView);
+        make.right.equalTo(ws.sexPickerView);
+        make.bottom.equalTo(ws.sexPickerView.mas_top);
+        make.height.equalTo(@60);
+    }];
+    
+    [_cancelPickerButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(ws.sexPickerTopView.mas_left).with.offset(padding10);
+        make.width.equalTo(@50);
+        make.height.equalTo(@25);
+        make.top.equalTo(ws.sexPickerTopView.mas_top).with.offset(padding10);
+    }];
+    
+    [_confirmPickerButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(ws.sexPickerTopView.mas_right).with.offset(-padding10);
+        make.width.equalTo(@50);
+        make.height.equalTo(@25);
+        make.top.equalTo(ws.sexPickerTopView.mas_top).with.offset(padding10);
     }];
 }
 
@@ -243,10 +266,24 @@ static int padding10 = 10;
     }];
 }
 
+- (void)showSexPickerView {
+    _sexPickerView.hidden = NO;
+    _sexPickerTopView.hidden = NO;
+}
 
+- (void)hideSexPickerView {
+    _sexPickerView.hidden = YES;
+    _sexPickerTopView.hidden = YES;
+}
 
-
-
+- (NSInteger)tagOfCurrentSex {
+    if ([_showSexLabel.text isEqualToString:@"男"]) {
+        return 0;
+    } else if ([_showSexLabel.text isEqualToString:@"女"]) {
+        return 1;
+    }
+    return -1;
+}
 
 
 

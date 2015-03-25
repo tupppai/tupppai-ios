@@ -7,44 +7,78 @@
 //
 
 #import "ATOMHomePageViewModel.h"
+#import "ATOMHomeImage.h"
+#import "ATOMImageTipLabel.h"
+#import "ATOMImageTipLabelViewModel.h"
+
+@interface ATOMHomePageViewModel ()
+
+
+
+@end
 
 @implementation ATOMHomePageViewModel
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _userName = @"atom";
-        _userSex = @"woman";
-        _praiseNumber = @"1K";
-        _shareNumber = @"1K";
-        _commentNumber = @"1K";
-        _totalPSNumber = @"100";
-        _publishTime = @"3小时前";
+        _labelArray = [NSMutableArray new];
     }
     return self;
 }
 
-- (CGSize)calculateImageViewSize {
-
-    CGFloat maxWidth = SCREEN_WIDTH;
-    CGFloat maxHeight = SCREEN_HEIGHT - NAV_HEIGHT - 76;
-    CGFloat imageScale;
-    CGSize size = CGSizeMake(_userImage.size.width, _userImage.size.height);
-    if ((int)size.width <= maxWidth && (int)size.height <= maxHeight) {
-        return size;
+- (void)setViewModelData:(ATOMHomeImage *)homeImage {
+    _imageID = homeImage.imageID;
+    _userName = homeImage.nickname;
+    _userSex = (homeImage.sex == 1) ? @"man" : @"woman";
+    _userImageURL = homeImage.imageURL;
+    _avatarURL = homeImage.avatar;
+    NSDateFormatter *df = [NSDateFormatter new];
+    [df setDateFormat:@"yyyy年MM月dd日 HH时mm分"];
+    NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:homeImage.uploadTime];
+    _publishTime = [df stringFromDate:publishDate];
+    _praiseNumber = [NSString stringWithFormat:@"%d",(int)homeImage.totalPraiseNumber];
+    _shareNumber = [NSString stringWithFormat:@"%d",(int)homeImage.totalShareNumber];
+    _commentNumber = [NSString stringWithFormat:@"%d",(int)homeImage.totalCommentNumber];
+    _totalPSNumber = [NSString stringWithFormat:@"%d",(int)homeImage.totalWorkNumber];
+    _width = homeImage.imageWidth;
+    _height = homeImage.imageHeight;
+    for (ATOMImageTipLabel *tipLabel in homeImage.tipLabelArray) {
+        ATOMImageTipLabelViewModel *model = [ATOMImageTipLabelViewModel new];
+        [model setViewModelData:tipLabel];
+        [_labelArray addObject:model];
     }
-    
-    imageScale = maxWidth / size.width;
-    size = CGSizeMake(size.width * imageScale, size.height * imageScale);
-    if ((int)size.width <= maxWidth && (int)size.height <= maxHeight) {
-        return size;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *path = [[NSString stringWithFormat:@"%@/HomePage", PATH_OF_DOCUMENT] stringByAppendingPathComponent:[NSString stringWithFormat:@"ATOMIMAGE-%d.jpg", (int)homeImage.imageID]];
+    BOOL flag;
+    if ([fileManager fileExistsAtPath:path isDirectory:&flag]) {
+        _image = [UIImage imageWithContentsOfFile:path];
+    } else {
+        NSLog(@"image not exist in %@", path);
     }
-    
-    imageScale = maxHeight / size.height;
-    size = CGSizeMake(size.width * imageScale, size.height * imageScale);
-    return size;
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @end

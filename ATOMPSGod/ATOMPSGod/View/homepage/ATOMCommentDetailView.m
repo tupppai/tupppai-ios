@@ -42,7 +42,7 @@ static int padding = 10;
     [self addSubview:_bottomView];
     
     _sendCommentButton = [[UIButton alloc] initWithFrame:CGRectMake(CGWidth(self.frame) - padding - 32, 7, 32, 32)];
-    _sendCommentButton.backgroundColor = [UIColor blueColor];
+    [_sendCommentButton setBackgroundImage:[UIImage imageNamed:@"btn_check"] forState:UIControlStateNormal];
     [_bottomView addSubview:_sendCommentButton];
     
     _sendCommentView = [[UITextView alloc] initWithFrame:CGRectMake(46, 8, CGRectGetMinX(_sendCommentButton.frame) - padding - 46, 30)];

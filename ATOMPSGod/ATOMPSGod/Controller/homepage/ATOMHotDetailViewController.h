@@ -7,6 +7,7 @@
 //
 
 #import "ATOMBaseViewController.h"
+@class ATOMHomePageViewModel;
 
 typedef enum {
     ATOMCommentMessageType = 0,
@@ -22,5 +23,6 @@ typedef enum {
 @interface ATOMHotDetailViewController : ATOMBaseViewController
 
 @property (nonatomic, assign) ATOMHotDetailPushType pushType;
+@property (nonatomic, strong) ATOMHomePageViewModel *homePageViewModel;
 
 @end

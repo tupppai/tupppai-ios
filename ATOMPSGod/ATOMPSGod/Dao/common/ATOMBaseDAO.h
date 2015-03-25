@@ -10,7 +10,6 @@
 
 @interface ATOMBaseDAO : NSObject
 
-@property (nonatomic,copy) NSString *dbPath;
-@property (nonatomic,strong) FMDatabaseQueue *fmQueue;
++ (FMDatabaseQueue *)sharedFMQueue;
 
 @end

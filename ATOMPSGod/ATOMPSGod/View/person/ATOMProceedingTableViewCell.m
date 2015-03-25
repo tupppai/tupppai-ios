@@ -30,7 +30,7 @@ static int padding10 = 10;
     _userHeaderButton.layer.masksToBounds = YES;
     [self addSubview:_userHeaderButton];
     
-    _userSexImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - 17, CGRectGetMaxY(_userHeaderButton.frame) - 17, 17, 17)];
+    _userSexImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - SEXRADIUS, CGRectGetMaxY(_userHeaderButton.frame) - SEXRADIUS, SEXRADIUS, SEXRADIUS)];
     _userSexImageView.image = [UIImage imageNamed:@"man"];
     [self addSubview:_userSexImageView];
     
@@ -51,14 +51,9 @@ static int padding10 = 10;
     _userUploadImageView.backgroundColor = [UIColor orangeColor];
     [self addSubview:_userUploadImageView];
     
-    _uploadButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - padding10 - 57, 19, 57 , 31)];
+    _uploadButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - padding10 - 24, 17, 24 , 24)];
+    [_uploadButton setBackgroundImage:[UIImage imageNamed:@"btn_upload"] forState:UIControlStateNormal];
     _uploadButton.userInteractionEnabled = NO;
-    _uploadButton.backgroundColor = [UIColor colorWithHex:0x00adef];
-    _uploadButton.layer.cornerRadius = 5;
-    _uploadButton.layer.masksToBounds = YES;
-    _uploadButton.titleLabel.font = [UIFont systemFontOfSize:13.f];
-    [_uploadButton setTitle:@"上传作品" forState:UIControlStateNormal];
-    [_uploadButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self addSubview:_uploadButton];
     
     _deleteButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - padding10 - 30, CGRectGetMaxY(_userUploadImageView.frame) - 20, 30, 20)];

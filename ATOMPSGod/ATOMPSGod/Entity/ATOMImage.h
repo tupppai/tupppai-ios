@@ -10,7 +10,7 @@
 
 @interface ATOMImage : ATOMBaseModel
 
-@property (nonatomic, assign) long long imageID;
+@property (nonatomic, assign) NSInteger imageID;
 @property (nonatomic, copy) NSString *imageURL;
 @property (nonatomic, copy) NSString *imageName;
 

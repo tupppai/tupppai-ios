@@ -43,17 +43,6 @@
 
 #pragma mark - Click Event
 
-- (void)clickCellAttentionButton:(UIButton *)button {
-    button.selected = !button.selected;
-    if (button.selected) {
-        button.backgroundColor = [UIColor colorWithHex:0x838383];
-        [button setTitle:@"相互关注" forState:UIControlStateNormal];
-    } else {
-        button.backgroundColor = [UIColor colorWithHex:0x00adef];
-        [button setTitle:@"关注" forState:UIControlStateNormal];
-    }
-}
-
 #pragma mark - Gesture Event
 
 - (void)tapMyFansGesture:(UITapGestureRecognizer *)gesture {
@@ -65,6 +54,8 @@
         if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
             [self pushViewController:opvc animated:YES];
+        } else if (CGRectContainsPoint(cell.attentionButton.frame, p)) {
+            cell.attentionButton.selected = !cell.attentionButton.selected;
         }
         
     }
@@ -92,7 +83,6 @@
     ATOMMyFansTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[ATOMMyFansTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        [cell.attentionButton addTarget:self action:@selector(clickCellAttentionButton:) forControlEvents:UIControlEventTouchUpInside];
     }
     return cell;
     

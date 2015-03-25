@@ -10,7 +10,9 @@
 
 @interface ATOMHomePageRecentTableViewCell ()
 
-
+@property (nonatomic, strong) UIView *littleVerticalView1;
+@property (nonatomic, strong) UIView *littleVerticalView2;
+@property (nonatomic, strong) UIView *littleVerticalView3;
 
 @end
 
@@ -28,15 +30,19 @@ static int padding = 10;
 }
 
 - (void)createSubView {
+    _topThinView = [UIView new];
+    _topThinView.backgroundColor = [UIColor colorWithHex:0xededed];
     _topView = [UIView new];
     _topView.backgroundColor = [UIColor whiteColor];
     _userWorkImageView = [UIImageView new];
-    _userWorkImageView.backgroundColor = [UIColor yellowColor];
+    _thinCenterView = [UIView new];
+    [self addSubview:_topThinView];
     [self addSubview:_topView];
     [self addSubview:_userWorkImageView];
+    [self addSubview:_thinCenterView];
     
-    _userHeaderButton = [UIImageView new];
-    _userHeaderButton.backgroundColor = [UIColor brownColor];
+    _userHeaderButton = [UIButton new];
+    _userHeaderButton.userInteractionEnabled = NO;
     _userHeaderButton.layer.cornerRadius = 22.5;
     _userHeaderButton.layer.masksToBounds = YES;
     _userNameLabel = [UILabel new];
@@ -59,84 +65,96 @@ static int padding = 10;
     [_topView addSubview:_userSexImageView];
     [_topView addSubview:_psButton];
     
-    _thinCenterView = [UIView new];
-    _thinCenterView.backgroundColor = [UIColor blackColor];
-    _thinCenterView.alpha = 0.5;
-    [_userWorkImageView addSubview:_thinCenterView];
-    
     _praiseButton = [UIButton new];
-    [_praiseButton setImage:[UIImage imageNamed:@"btn_comment_like_normal"] forState:UIControlStateNormal];
-    [_praiseButton setImage:[UIImage imageNamed:@"btn_comment_like_pressed"] forState:UIControlStateSelected];
-    [_praiseButton setImageEdgeInsets:UIEdgeInsetsMake(7, 0, 7, 5)];
-    [_praiseButton setTitleEdgeInsets:UIEdgeInsetsMake(7, 5, 7, 0)];
-    [_praiseButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_praiseButton setTitleColor:[UIColor colorWithHex:0xf80630] forState:UIControlStateSelected];
-    _praiseButton.titleLabel.font = [UIFont systemFontOfSize:11.f];
-    _shareButton = [UIButton new];
-    [_shareButton setImage:[UIImage imageNamed:@"btn_newshare"] forState:UIControlStateNormal];
-    [_shareButton setImageEdgeInsets:UIEdgeInsetsMake(7, 0, 7, 5)];
-    [_shareButton setTitleEdgeInsets:UIEdgeInsetsMake(7, 5, 7, 0)];
-    [_shareButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    _shareButton.titleLabel.font = [UIFont systemFontOfSize:11.f];
-    _commentButton = [UIButton new];
-    [_commentButton setImage:[UIImage imageNamed:@"btn_newcomment"] forState:UIControlStateNormal];
-    [_commentButton setImageEdgeInsets:UIEdgeInsetsMake(7, 0, 7, 5)];
-    [_commentButton setTitleEdgeInsets:UIEdgeInsetsMake(7, 5, 7, 0)];
-    [_commentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    _commentButton.titleLabel.font = [UIFont systemFontOfSize:11.f];
     [_thinCenterView addSubview:_praiseButton];
+    _shareButton = [UIButton new];
     [_thinCenterView addSubview:_shareButton];
+    _commentButton = [UIButton new];
     [_thinCenterView addSubview:_commentButton];
+    _moreShareButton = [UIButton new];
+    [_thinCenterView addSubview:_moreShareButton];
     
+    [self setCommonButton:_praiseButton WithImage:[UIImage imageNamed:@"btn_comment_like_normal"]];
+    [_praiseButton setImage:[UIImage imageNamed:@"btn_comment_like_pressed"] forState:UIControlStateSelected];
+    [self setCommonButton:_shareButton WithImage:[UIImage imageNamed:@"icon_share_normal"]];
+    [self setCommonButton:_commentButton WithImage:[UIImage imageNamed:@"icon_comment_normal"]];
+    [_moreShareButton setImage:[UIImage imageNamed:@"icon_others_normal"] forState:UIControlStateNormal];
+    [_moreShareButton setImage:[UIImage imageNamed:@"icon_others_pressed"] forState:UIControlStateHighlighted];
+    
+    _littleVerticalView1 = [UIView new];
+    _littleVerticalView2 = [UIView new];
+    _littleVerticalView3 = [UIView new];
+    [self setLittleVerticalView:_littleVerticalView1];
+    [self setLittleVerticalView:_littleVerticalView2];
+    [self setLittleVerticalView:_littleVerticalView3];
+}
+
+- (void)setLittleVerticalView:(UIView *)view {
+    view.backgroundColor = [UIColor colorWithHex:0xededed];
+    [_thinCenterView addSubview:view];
+}
+
+- (void)setCommonButton:(UIButton *)button WithImage:(UIImage *)image{
+    button.userInteractionEnabled = NO;
+    [button setImage:image forState:UIControlStateNormal];
+    [button setImageEdgeInsets:UIEdgeInsetsMake(3.5, 0, 3.5, 0)];
+    [button setTitleEdgeInsets:UIEdgeInsetsMake(3.5, padding / 2.0, 3.5, 0)];
+    button.titleLabel.font = [UIFont systemFontOfSize:11.f];
+    [button setTitleColor:[UIColor colorWithHex:0x888888] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor colorWithHex:0x00adef] forState:UIControlStateSelected];
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    _topView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 65);
+    _topThinView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 6);
+    _topView.frame = CGRectMake(0, CGRectGetMaxY(_topThinView.frame), SCREEN_WIDTH, 65);
     _userHeaderButton.frame = CGRectMake(padding, padding, 45, 45);
-    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding, padding, 80, 30);
-    _userPublishTimeLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding, CGRectGetMaxY(_userNameLabel.frame), 80, 15);
-    _userSexImageView.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - 16, CGRectGetMaxY(_userHeaderButton.frame) - 16, 17, 17);
-    _psButton.frame = CGRectMake(SCREEN_WIDTH - padding - 46, 17.5, 46, 32);
+    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding, padding, 150, 30);
+    _userPublishTimeLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding, CGRectGetMaxY(_userNameLabel.frame), 150, 15);
+    _userSexImageView.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - SEXRADIUS, CGRectGetMaxY(_userHeaderButton.frame) - SEXRADIUS, SEXRADIUS, SEXRADIUS);
+    _psButton.frame = CGRectMake(SCREEN_WIDTH - padding - 28, 17.5, 28, 28);
     
     CGSize workImageSize;
     if (_viewModel) {
         workImageSize = [[self class] calculateHomePageHotImageViewSizeWith:_viewModel];
     }
     _userWorkImageView.frame = CGRectMake((SCREEN_WIDTH - workImageSize.width) / 2, CGRectGetMaxY(_topView.frame), workImageSize.width, workImageSize.height);
-    if (_viewModel) {
-        _thinCenterView.frame = CGRectMake(0, workImageSize.height-30, CGWidth(_userWorkImageView.frame), 30);
-    }
-    _praiseButton.frame = CGRectMake(padding, 0, 60, 30);
-    _shareButton.frame = CGRectMake(CGRectGetMaxX(_praiseButton.frame), 0, 60, 30);
-    _commentButton.frame = CGRectMake(CGWidth(_userWorkImageView.frame) - 60, 0, 60, 30);
+    
+    _thinCenterView.frame = CGRectMake(0, CGRectGetMaxY(_userWorkImageView.frame), SCREEN_WIDTH, 40);
+    CGFloat buttonInterval = (SCREEN_WIDTH - 4 * 60) / 5;
+    _shareButton.frame = CGRectMake(buttonInterval, 7.5, 60, 25);
+    _praiseButton.frame = CGRectMake(CGRectGetMaxX(_shareButton.frame) + buttonInterval, 7.5, 60, 25);
+    _commentButton.frame = CGRectMake(CGRectGetMaxX(_praiseButton.frame) + buttonInterval, 7.5, 60, 25);
+    _moreShareButton.frame = CGRectMake(CGRectGetMaxX(_commentButton.frame) + buttonInterval, 7.5, 60, 25);
+    
+    CGFloat verticalViewInterval = SCREEN_WIDTH / 4;
+    _littleVerticalView1.frame = CGRectMake(verticalViewInterval - 0.25, 7.5, 0.5, 25);
+    _littleVerticalView2.frame = CGRectMake(verticalViewInterval * 2 - 0.25, 7.5, 0.5, 25);
+    _littleVerticalView3.frame = CGRectMake(verticalViewInterval * 3 - 0.25, 7.5, 0.5, 25);
 }
 
 + (CGFloat)calculateCellHeightWith:(ATOMHomePageViewModel *)viewModel {
-    return 65 + viewModel.calculateImageViewSize.height;
-}
-
-+ (CGRect)calculateHomePageHotImageViewRectWith:(ATOMHomePageViewModel *)viewModel {
-    CGSize size = [viewModel calculateImageViewSize];
-    CGRect rect = CGRectMake((SCREEN_WIDTH - size.width) / 2, 65, size.width, size.height);
-    //    NSLog(@"origin height = %f",rect.size.height);
-    rect.size.height -= 30;
-    return rect;
+    return 6 + 65 + viewModel.height + 40;
 }
 
 + (CGSize)calculateHomePageHotImageViewSizeWith:(ATOMHomePageViewModel *)viewModel {
-    return [viewModel calculateImageViewSize];
+    return CGSizeMake(viewModel.width, viewModel.height);
 }
 
 - (void)setViewModel:(ATOMHomePageViewModel *)viewModel {
     _viewModel = viewModel;
     _userNameLabel.text = viewModel.userName;
+    [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     _userSexImageView.image = [UIImage imageNamed:viewModel.userSex];
     _userPublishTimeLabel.text = viewModel.publishTime;
     [_shareButton setTitle:viewModel.shareNumber forState:UIControlStateNormal];
     [_praiseButton setTitle:viewModel.praiseNumber forState:UIControlStateNormal];
     [_commentButton setTitle:viewModel.commentNumber forState:UIControlStateNormal];
-    _userWorkImageView.image = viewModel.userImage;
+    if (viewModel.image) {
+        _userWorkImageView.image = viewModel.image;
+    } else {
+        [_userWorkImageView setImageWithURL:[NSURL URLWithString:viewModel.userImageURL]];
+    }
     [self setNeedsLayout];
 }
 

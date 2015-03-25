@@ -14,10 +14,10 @@
 /**
  *  用户唯一ID
  */
-@property (nonatomic, copy) NSString *uid;
+@property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, copy) NSString *mobile;
 @property (nonatomic, copy) NSString *password;
-@property (nonatomic, assign) long long locationID;
+@property (nonatomic, assign) NSInteger locationID;
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *avatar;
 /**
@@ -61,7 +61,7 @@
  */
 @property (nonatomic, assign) NSInteger attentionWorkNumber;
 
-@property (nonatomic, assign) long long avatarID;
+@property (nonatomic, assign) NSInteger avatarID;
 
 + (ATOMCurrentUser *)currentUser;
 

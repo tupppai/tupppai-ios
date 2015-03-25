@@ -13,6 +13,12 @@
 #import "ATOMProceedingViewController.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMHomePageViewModel.h"
+#import "ATOMDetailImageViewModel.h"
+#import "ATOMCommentViewModel.h"
+#import "ATOMDetailImage.h"
+#import "ATOMComment.h"
+#import "ATOMShowDetailOfHomePage.h"
+#import "ATOMHomePageViewModel.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -22,8 +28,8 @@
 @property (nonatomic, strong) UITableView *hotDetailTableView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) UITapGestureRecognizer *tapHotDetailGesture;
-
 @property (nonatomic, strong) NSMutableArray *dataSource;
+@property (nonatomic, assign) NSInteger currentPage;
 
 @end
 
@@ -64,22 +70,90 @@
 
 - (void)configHotDetailTableViewRefresh {
     WS(ws);
-    [_hotDetailTableView addLegendHeaderWithRefreshingBlock:^{
-        [ws loadNewHotData];
-    }];
     [_hotDetailTableView addLegendFooterWithRefreshingBlock:^{
         [ws loadMoreHotData];
     }];
 }
 
-- (void)loadNewHotData {
-    WS(ws);
-    [ws.hotDetailTableView.header endRefreshing];
-}
-
 - (void)loadMoreHotData {
     WS(ws);
-    [ws.hotDetailTableView.footer endRefreshing];
+    [ws getMoreDataSource];
+}
+
+#pragma mark - GetDataSource
+
+- (void)firstGetDataSource {
+    ATOMShowDetailOfHomePage *showDetailOfHomePage = [ATOMShowDetailOfHomePage new];
+    NSArray *detailImageArray = [showDetailOfHomePage getDetalImagesByImageID:_homePageViewModel.imageID];
+    if (!detailImageArray || detailImageArray.count == 0) { //读服务器
+        [self getDataSource];
+    } else { //读数据库
+        _dataSource = nil;
+        _dataSource = [NSMutableArray array];
+        //第一张图片为首页点击的图片，剩下的图片为回复图片
+        ATOMDetailImageViewModel *model = [ATOMDetailImageViewModel new];
+        [model setViewModelDataWithHomeImage:_homePageViewModel];
+        [_dataSource addObject:model];
+        for (ATOMDetailImage *detailImage in detailImageArray) {
+            ATOMDetailImageViewModel *model = [ATOMDetailImageViewModel new];
+            [model setViewModelDataWithDetailImage:detailImage];
+            model.labelArray = [_homePageViewModel.labelArray mutableCopy];
+            [_dataSource addObject:model];
+        }
+        [_hotDetailTableView reloadData];
+    }
+}
+
+- (void)getDataSource {
+    WS(ws);
+    ws.dataSource = nil;
+    ws.dataSource = [NSMutableArray array];
+    ws.currentPage = 1;
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(ws.currentPage) forKey:@"page"];
+    [param setObject:@(5) forKey:@"size"];
+    ATOMShowDetailOfHomePage *showDetailOfHomePage = [ATOMShowDetailOfHomePage new];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    NSLog(@"%d", (int)ws.homePageViewModel.imageID);
+    [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.homePageViewModel.imageID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
+        [SVProgressHUD dismiss];
+        //第一张图片为首页点击的图片，剩下的图片为回复图片
+        ATOMDetailImageViewModel *model = [ATOMDetailImageViewModel new];
+        [model setViewModelDataWithHomeImage:ws.homePageViewModel];
+        [ws.dataSource addObject:model];
+        for (ATOMDetailImage *detailImage in detailOfHomePageArray) {
+            ATOMDetailImageViewModel *model = [ATOMDetailImageViewModel new];
+            [model setViewModelDataWithDetailImage:detailImage];
+            model.labelArray = [ws.homePageViewModel.labelArray mutableCopy];
+            [ws.dataSource addObject:model];
+        }
+        [showDetailOfHomePage saveDetailImagesInDB:detailOfHomePageArray];
+        [ws.hotDetailTableView reloadData];
+        [ws.hotDetailTableView.header endRefreshing];
+    }];
+}
+
+- (void)getMoreDataSource {
+    WS(ws);
+    ws.currentPage++;
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(ws.currentPage) forKey:@"page"];
+    [param setObject:@(10) forKey:@"size"];
+    ATOMShowDetailOfHomePage *showDetailOfHomePage = [ATOMShowDetailOfHomePage new];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.homePageViewModel.imageID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
+        [SVProgressHUD dismiss];
+        for (ATOMDetailImage *detailImage in detailOfHomePageArray) {
+            ATOMDetailImageViewModel *model = [ATOMDetailImageViewModel new];
+            [model setViewModelDataWithDetailImage:detailImage];
+            model.labelArray = [ws.homePageViewModel.labelArray mutableCopy];
+            [ws.dataSource addObject:model];
+        }
+        [ws.hotDetailTableView reloadData];
+        [ws.hotDetailTableView.footer endRefreshing];
+    }];
 }
 
 #pragma mark - UI
@@ -87,19 +161,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
+    [self firstGetDataSource];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    _dataSource = [NSMutableArray array];
-    for (int i = 0; i < 12; i++) {
-        NSString *imgName = [NSString stringWithFormat:@"%d.jpg",i];
-        UIImage *img = [UIImage imageNamed:imgName];
-        ATOMHomePageViewModel *viewModel = [ATOMHomePageViewModel new];
-        viewModel.userImage = img;
-        [_dataSource addObject:viewModel];
-    }
-    [_hotDetailTableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -159,7 +225,6 @@
         } else if (CGRectContainsPoint(cell.topView.frame, p)) {
             p = [gesture locationInView:cell.topView];
             if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
-//                NSLog(@"Click userHeaderButton");
                 ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
                 [self pushViewController:opvc animated:YES];
             } else if (CGRectContainsPoint(cell.psButton.frame, p)) {
@@ -229,9 +294,6 @@
     return [ATOMHotDetailTableViewCell calculateCellHeightWith:_dataSource[indexPath.row]];
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-}
 
 
 

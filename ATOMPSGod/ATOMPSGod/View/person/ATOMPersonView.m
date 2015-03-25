@@ -24,16 +24,16 @@ static int padding = 10;
 - (void)createSubView {
     _topBackGroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 156)];
     _topBackGroundImageView.userInteractionEnabled = YES;
-    _topBackGroundImageView.backgroundColor = [UIColor orangeColor];
+    _topBackGroundImageView.image = [UIImage imageNamed:@"header_bg"];
     [self addSubview:_topBackGroundImageView];
     
     _userHeaderButton = [[UIButton alloc] initWithFrame:CGRectMake((SCREEN_WIDTH - 72) / 2, padding, 72, 72)];
-    _userHeaderButton.backgroundColor = [UIColor greenColor];
+    [_userHeaderButton setBackgroundImage:[UIImage imageNamed:@"head_portrait"] forState:UIControlStateNormal];
     _userHeaderButton.layer.cornerRadius = 36;
     _userHeaderButton.layer.masksToBounds = YES;
     [_topBackGroundImageView addSubview:_userHeaderButton];
     
-    _userSexImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - 17, CGRectGetMaxY(_userHeaderButton.frame) - 17, 17, 17)];
+    _userSexImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - SEXRADIUS, CGRectGetMaxY(_userHeaderButton.frame) - SEXRADIUS, SEXRADIUS, SEXRADIUS)];
     _userSexImageView.image = [UIImage imageNamed:@"woman"];
     _userSexImageView.layer.cornerRadius = 8.5;
     _userSexImageView.layer.masksToBounds = YES;

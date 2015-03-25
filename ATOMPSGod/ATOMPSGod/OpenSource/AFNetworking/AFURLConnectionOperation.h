@@ -173,6 +173,7 @@
 
  This property acts as a proxy to the `HTTPBodyStream` property of `request`.
  */
+//输入流，用于读请求数据
 @property (nonatomic, strong) NSInputStream *inputStream;
 
 /**
@@ -180,6 +181,7 @@
 
  By default, data is accumulated into a buffer that is stored into `responseData` upon completion of the request, with the intermediary `outputStream` property set to `nil`. When `outputStream` is set, the data will not be accumulated into an internal buffer, and as a result, the `responseData` property of the completed request will be `nil`. The output stream will be scheduled in the network thread runloop upon being set.
  */
+//输出流，用来写网络请求返回的数据
 @property (nonatomic, strong) NSOutputStream *outputStream;
 
 ///---------------------------------

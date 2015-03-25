@@ -12,23 +12,25 @@
 #import "ATOMFillInContentOfTipLabelView.h"
 #import "ATOMInviteViewController.h"
 #import "ATOMShareViewController.h"
+#import "ATOMSubmitImageWithLabel.h"
+#import "ATOMUploadImage.h"
+#import "ATOMImage.h"
+#import "ATOMImageTipLabel.h"
+#import "AppDelegate.h"
+
+#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMAddTipLabelToImageViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) ATOMAddTipLabelToImageView *addTipLabelToImageView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapAddTipLabelToImageViewGesture;
-
 @property (nonatomic, strong) ATOMFillInContentOfTipLabelView *fillInContentOfTipLabelView;
-
 @property (nonatomic, strong) NSArray *originLeftBarButtonItems;
 @property (nonatomic, strong) UIBarButtonItem *originRightBarButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *cancelLeftBarButtonItem;
-
 @property (nonatomic, strong) NSMutableArray *tipLabelArray;
-
 @property (nonatomic, strong) NSString *currentTipLabelText;
 @property (nonatomic, assign) CGPoint currentLocation;
-
 @property (nonatomic, strong) ATOMTipButton *lastAddButton;
 
 @end
@@ -63,6 +65,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
+    [self addClickEventToShareButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -102,6 +105,8 @@
     
     _fillInContentOfTipLabelView = [ATOMFillInContentOfTipLabelView new];
     _fillInContentOfTipLabelView.tipLabelContentTextField.delegate = self;
+    [_fillInContentOfTipLabelView.tipLabelContentTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    [_fillInContentOfTipLabelView.sendTipLabelTextButton addTarget:self action:@selector(clickSendTipLabelTextButton:) forControlEvents:UIControlEventTouchUpInside];
     
     _addTipLabelToImageView.workImage = _workImage;
     [_addTipLabelToImageView addGestureRecognizer:self.tapAddTipLabelToImageViewGesture];
@@ -109,17 +114,27 @@
     [_addTipLabelToImageView.deleteTipLabelButton addTarget:self action:@selector(clickDeleteTipLabelButton:) forControlEvents:UIControlEventTouchUpInside];
 }
 
+- (void)addClickEventToShareButton {
+    [_addTipLabelToImageView.xlButton addTarget:self action:@selector(clickShareButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_addTipLabelToImageView.wxButton addTarget:self action:@selector(clickShareButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_addTipLabelToImageView.qqButton addTarget:self action:@selector(clickShareButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_addTipLabelToImageView.qqzoneButton addTarget:self action:@selector(clickShareButton:) forControlEvents:UIControlEventTouchUpInside];
+}
 
 #pragma mark - Click Event
+
+- (void)clickShareButton:(UIButton *)button {
+    [_addTipLabelToImageView changeStatusOfShareButton:button];
+}
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)sender {
     NSString *pushTypeStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"UploadingOrSeekingHelp"];
     if ([pushTypeStr isEqualToString:@"Uploading"]) {
+        [self dealSubmitWorkWithLabel];
         ATOMShareViewController *svc = [ATOMShareViewController new];
         [self pushViewController:svc animated:YES];
     } else if ([pushTypeStr isEqualToString:@"SeekingHelp"]) {
-        ATOMInviteViewController *ivc = [ATOMInviteViewController new];
-        [self pushViewController:ivc animated:YES];
+        [self dealSubmitUploadWithLabel];
     }
 }
 
@@ -142,6 +157,7 @@
     self.navigationItem.leftBarButtonItems = _originLeftBarButtonItems;
     self.navigationItem.rightBarButtonItem = _originRightBarButtonItem;
     _fillInContentOfTipLabelView.tipLabelContentTextField.text = @"";
+    [_fillInContentOfTipLabelView.topWarnLabel removeFromSuperview];
 }
 
 - (void)clickChangeTipLabelDirectionButton:(UIButton *)sender {
@@ -153,6 +169,81 @@
     [_lastAddButton removeFromSuperview];
     [_tipLabelArray removeObject:_lastAddButton];
     _lastAddButton = nil;
+}
+
+- (void)dealSubmitWorkWithLabel {
+    
+}
+
+- (void)dealSubmitUploadWithLabel {
+    WS(ws);
+    CGFloat scale = SCREEN_WIDTH / CGWidth(_addTipLabelToImageView.workImageView.frame);
+    CGFloat ratio = CGHeight(_addTipLabelToImageView.workImageView.frame) / CGWidth(_addTipLabelToImageView.workImageView.frame);
+    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:@(SCREEN_WIDTH), @"width", @(scale), @"scale", @(ratio), @"ratio", nil];
+    NSData *data = UIImageJPEGRepresentation(_workImage, 0.2);
+    ATOMUploadImage *uploadImage = [ATOMUploadImage new];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
+    
+    [uploadImage UploadImage:data withParam:param andBlock:^(ATOMImage *imageInformation, NSError *error) {
+        if (error) {
+            [SVProgressHUD showErrorWithStatus:@"提交作品失败..."];
+            return ;
+        }
+        [ws dealSubmitUploadWithLabelBy:imageInformation.imageID];
+    }];
+}
+
+- (void)dealSubmitUploadWithLabelBy:(long long)imageID {
+    WS(ws);
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    NSMutableArray *paramLabelArray = [NSMutableArray array];
+    for (ATOMTipButton *tipButton in ws.tipLabelArray) {
+        //标签左上角相对图片的百分比
+        CGFloat x = CGOriginX(tipButton.frame) / CGWidth(ws.addTipLabelToImageView.workImageView.frame);
+        CGFloat y = CGOriginY(tipButton.frame) / CGHeight(ws.addTipLabelToImageView.workImageView.frame);
+        NSInteger labelDirection;
+        if (tipButton.tipButtonType ==ATOMLeftTipType) {
+            labelDirection = 0;
+        } else {
+            labelDirection = 1;
+        }
+        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@(x), @"x", @(y), @"y", tipButton.buttonText, @"content", @(labelDirection), @"direction", @(tipButton.tag), @"vid", nil];
+        [paramLabelArray addObject:dict];
+    }
+    [param setObject:@(imageID) forKey:@"upload_id"];
+    [param setObject:[paramLabelArray JSONString] forKey:@"labels"];
+    ATOMSubmitImageWithLabel *submitImageWithLabel = [ATOMSubmitImageWithLabel new];
+    [submitImageWithLabel SubmitImageWithLabel:param withBlock:^(NSMutableArray *labelArray, NSError *error) {
+        if (error) {
+            [SVProgressHUD showErrorWithStatus:@"提交作品失败..."];
+            return ;
+        }
+        [SVProgressHUD showSuccessWithStatus:@"提交作品成功..."];
+        if (labelArray.count) {
+            for (ATOMImageTipLabel *tipLabel in labelArray) {
+                [submitImageWithLabel saveTipLabelInDB:tipLabel];
+            }
+        }
+        ATOMInviteViewController *ivc = [ATOMInviteViewController new];
+        [self pushViewController:ivc animated:YES];
+    }];
+}
+
+- (void)clickSendTipLabelTextButton:(UIButton *)sender {
+    _currentTipLabelText = _fillInContentOfTipLabelView.tipLabelContentTextField.text;
+    if (_currentTipLabelText.length) {
+        [_fillInContentOfTipLabelView.tipLabelContentTextField resignFirstResponder];
+        [self changeViewToOrigin];
+        [self addTipLabelAtLocation];
+    }
+}
+
+- (void)textFieldDidChange:(UITextField *)textField {
+    if (textField.text.length > 18) {
+        textField.text = [textField.text substringToIndex:18];
+    } else {
+        _fillInContentOfTipLabelView.showNumberLabel.text = [NSString stringWithFormat:@"%d/18", (int)textField.text.length];
+    }
 }
 
 #pragma mark - Gesture Event
@@ -180,6 +271,7 @@
     [_fillInContentOfTipLabelView.tipLabelContentTextField becomeFirstResponder];
     self.navigationItem.leftBarButtonItems = @[self.cancelLeftBarButtonItem];
     self.navigationItem.rightBarButtonItem = nil;
+    [[AppDelegate APP].window addSubview:_fillInContentOfTipLabelView.topWarnLabel];
 }
 
 - (void)panTipLabelGesture:(UIPanGestureRecognizer *)gesture {
@@ -213,13 +305,6 @@
 }
 
 #pragma mark - UITextFieldDelegate
-
-- (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    if (range.location >= 18) {
-        return NO;
-    }
-    return YES;
-}
 
 -(BOOL) textFieldShouldReturn:(UITextField *)textField {
     _currentTipLabelText = textField.text;

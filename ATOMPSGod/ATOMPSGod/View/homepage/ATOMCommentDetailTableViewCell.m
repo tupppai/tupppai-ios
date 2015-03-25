@@ -33,7 +33,7 @@ static int padding = 10;
     _userHeaderButton.frame = CGRectMake(padding, padding, 45, 45);
     _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding, padding, 80, 30);
     _praiseButton.frame = CGRectMake(SCREEN_WIDTH - 60 - padding, padding, 60, 25);
-    _userSexImageView.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - 17, CGRectGetMaxY(_userHeaderButton.frame) - 17, 17, 17);
+    _userSexImageView.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - SEXRADIUS, CGRectGetMaxY(_userHeaderButton.frame) - SEXRADIUS, SEXRADIUS, SEXRADIUS);
     CGSize commentDetailTextSize = [[self class] calculateCommentDeailTextSize:_viewModel.userCommentDetail];
     _userCommentDetailLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding, CGRectGetMaxY(_userNameLabel.frame), commentDetailTextSize.width, commentDetailTextSize.height);
     
@@ -73,13 +73,13 @@ static int padding = 10;
     
     _praiseButton = [UIButton new];
 //    _praiseButton.backgroundColor = [UIColor orangeColor];
-    [_praiseButton setImage:[UIImage imageNamed:@"icon_like_normal"] forState:UIControlStateNormal];
+    [_praiseButton setImage:[UIImage imageNamed:@"btn_comment_like_normal"] forState:UIControlStateNormal];
     [_praiseButton setImage:[UIImage imageNamed:@"btn_comment_like_pressed"] forState:UIControlStateSelected];
     [_praiseButton setImageEdgeInsets:UIEdgeInsetsMake(4, 0, 4, 5)];
 //    [_praiseButton setTitle:@"10" forState:UIControlStateNormal];
     [_praiseButton setTitleEdgeInsets:UIEdgeInsetsMake(4, 5, 4, 0)];
     [_praiseButton setTitleColor:[UIColor colorWithHex:0x6e6e70] forState:UIControlStateNormal];
-    [_praiseButton setTitleColor:[UIColor colorWithHex:0xf80630] forState:UIControlStateSelected];
+    [_praiseButton setTitleColor:[UIColor colorWithHex:0x00adef] forState:UIControlStateSelected];
     _praiseButton.titleLabel.font = [UIFont systemFontOfSize:11.f];
     [self addSubview:_praiseButton];
     

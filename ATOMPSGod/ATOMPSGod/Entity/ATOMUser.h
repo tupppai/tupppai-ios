@@ -13,9 +13,9 @@
 /**
  *  用户唯一ID
  */
-@property (nonatomic, copy) NSString *uid;
+@property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, copy) NSString *mobile;
-@property (nonatomic, assign) long long locationID;
+@property (nonatomic, assign) NSInteger locationID;
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *avatar;
 /**

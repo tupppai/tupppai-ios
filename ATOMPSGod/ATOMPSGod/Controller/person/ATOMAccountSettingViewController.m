@@ -11,6 +11,7 @@
 #import "ATOMModifyPasswordViewController.h"
 #import "ATOMAccountBindingViewController.h"
 #import "ATOMMessageRemindViewController.h"
+#import "ATOMUserFeedbackViewController.h"
 
 @interface ATOMAccountSettingViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -32,6 +33,7 @@
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     _tableView.backgroundColor = [UIColor colorWithHex:0xededed];
     _tableView.tableFooterView = [UIView new];
+    _tableView.scrollEnabled = NO;
     [self.view addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -49,7 +51,7 @@
     if (section == 0) {
         return 3;
     } else if (section == 1) {
-        return 5;
+        return 6;
     } else if (section ==2) {
         return 1;
     }
@@ -104,8 +106,10 @@
         } else if (row == 2) {
             cell.themeLabel.text = @"推荐应用给好友";
         } else if (row == 3) {
-            cell.themeLabel.text = @"关于我们";
+            cell.themeLabel.text = @"用户反馈";
         } else if (row == 4) {
+            cell.themeLabel.text = @"关于我们";
+        } else if (row == 5) {
             cell.themeLabel.text = @"给应用评分";
         }
     } else if (section == 2) {
@@ -135,7 +139,10 @@
         } else if (row == 1) {
         } else if (row == 2) {
         } else if (row == 3) {
+            ATOMUserFeedbackViewController *ufvc = [ATOMUserFeedbackViewController new];
+            [self pushViewController:ufvc animated:YES];
         } else if (row == 4) {
+        } else if (row == 5) {
         }
     } else if (section == 2) {
     }

@@ -62,13 +62,13 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     _dataSource = [NSMutableArray array];
-    for (int i = 0; i < 12; i++) {
-        NSString *imgName = [NSString stringWithFormat:@"%d.jpg",i];
-        UIImage *img = [UIImage imageNamed:imgName];
-        ATOMHomePageViewModel *viewModel = [ATOMHomePageViewModel new];
-        viewModel.userImage = img;
-        [_dataSource addObject:viewModel];
-    }
+//    for (int i = 0; i < 12; i++) {
+//        NSString *imgName = [NSString stringWithFormat:@"%d.jpg",i];
+//        UIImage *img = [UIImage imageNamed:imgName];
+//        ATOMHomePageViewModel *viewModel = [ATOMHomePageViewModel new];
+//        viewModel.userImage = img;
+//        [_dataSource addObject:viewModel];
+//    }
 }
 
 - (void)createUI {

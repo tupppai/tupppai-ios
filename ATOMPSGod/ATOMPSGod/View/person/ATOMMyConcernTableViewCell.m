@@ -30,7 +30,7 @@ static float commenWidth;
     _userHeaderButton.layer.masksToBounds = YES;
     [self addSubview:_userHeaderButton];
     
-    _userSexImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - 16, CGRectGetMaxY(_userHeaderButton.frame) - 16, 17, 17)];
+    _userSexImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - SEXRADIUS, CGRectGetMaxY(_userHeaderButton.frame) - SEXRADIUS, SEXRADIUS, SEXRADIUS)];
     _userSexImageView.image = [UIImage imageNamed:@"woman"];
     [self addSubview:_userSexImageView];
     
@@ -39,14 +39,10 @@ static float commenWidth;
     _userNameLabel.text = @"atom";
     [self addSubview:_userNameLabel];
     
-    _attentionButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - padding10 - 57, 11.5, 57, 30)];
+    _attentionButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - padding10 - 22, 17, 22, 23)];
     _attentionButton.userInteractionEnabled = NO;
-    _attentionButton.layer.cornerRadius = 5;
-    _attentionButton.layer.masksToBounds = YES;
-    _attentionButton.backgroundColor = [UIColor colorWithHex:0x838383];
-    [_attentionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_attentionButton setTitle:@"相互关注" forState:UIControlStateNormal];
-    _attentionButton.titleLabel.font = [UIFont systemFontOfSize:13.f];
+    [_attentionButton setBackgroundImage:[UIImage imageNamed:@"btn_mutualattention"] forState:UIControlStateNormal];
+    [_attentionButton setBackgroundImage:[UIImage imageNamed:@"btn_addattention"] forState:UIControlStateSelected];
     [self addSubview:_attentionButton];
     
     commenWidth = (CGOriginX(_attentionButton.frame) - CGRectGetMaxX(_userHeaderButton.frame) - padding10 * 2) / 3;
@@ -74,13 +70,6 @@ static float commenWidth;
 
 - (void)changeAttentionButtonStatus {
     _attentionButton.selected = !_attentionButton.selected;
-    if (_attentionButton.selected) {
-        _attentionButton.backgroundColor = [UIColor colorWithHex:0x00adef];
-        [_attentionButton setTitle:@"关注" forState:UIControlStateNormal];
-    } else {
-        _attentionButton.backgroundColor = [UIColor colorWithHex:0x838383];
-        [_attentionButton setTitle:@"相互关注" forState:UIControlStateNormal];
-    }
 }
 
 

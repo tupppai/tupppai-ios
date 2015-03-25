@@ -13,7 +13,14 @@
 @property (nonatomic, strong) UIImageView *topBackGroundImageView;
 @property (nonatomic, strong) UIButton *userHeaderButton;
 @property (nonatomic, strong) UITextField *nicknameTextField;
-@property (nonatomic, strong) UIButton *manButton;
-@property (nonatomic, strong) UIButton *womanButton;
+@property (nonatomic, strong) UIView *sexView;
+@property (nonatomic, strong) UIPickerView *sexPickerView;
+@property (nonatomic, strong) UIButton *cancelPickerButton;
+@property (nonatomic, strong) UIButton *confirmPickerButton;
+@property (nonatomic, strong) UILabel *showSexLabel;
+
+- (void)showSexPickerView;
+- (void)hideSexPickerView;
+- (NSInteger)tagOfCurrentSex;
 
 @end

@@ -27,9 +27,9 @@ static ATOMCurrentUser *_currentUser;
     [dict setObject:_nickname forKey:@"nickname"];
     [dict setObject:_mobile forKey:@"mobile"];
     [dict setObject:_password forKey:@"password"];
-    [dict setObject:[NSString stringWithFormat:@"%lld",_locationID] forKey:@"location"];
-    [dict setObject:[NSString stringWithFormat:@"%d",(int)_sex] forKey:@"sex"];
-    [dict setObject:[NSString stringWithFormat:@"%lld",_avatarID] forKey:@"avatar"];
+    [dict setObject:[NSString stringWithFormat:@"%d", (int)_locationID] forKey:@"location"];
+    [dict setObject:[NSString stringWithFormat:@"%d", (int)_sex] forKey:@"sex"];
+    [dict setObject:[NSString stringWithFormat:@"%d", (int)_avatarID] forKey:@"avatar"];
     return [dict mutableCopy];
 }
 
