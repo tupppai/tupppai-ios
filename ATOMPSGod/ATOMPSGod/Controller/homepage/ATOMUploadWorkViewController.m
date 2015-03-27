@@ -8,8 +8,8 @@
 
 #import "ATOMUploadWorkViewController.h"
 #import "ATOMUploadWorkView.h"
-#import "BJImageCropper.h"
 #import "ATOMAddTipLabelToImageViewController.h"
+#import "ATOMImageCropper.h"
 
 @interface ATOMUploadWorkViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
@@ -90,8 +90,10 @@
     ATOMAddTipLabelToImageViewController *atltivc = [ATOMAddTipLabelToImageViewController new];
     if (_uploadWorkView.imageOriginView) {
         atltivc.workImage = _uploadWorkView.originImage;
+        NSLog(@"workImage size (%f,%f)", atltivc.workImage.size.width, atltivc.workImage.size.height);
     } else {
         atltivc.workImage = [_uploadWorkView.imageCropperView getCroppedImage];
+        NSLog(@"workImage size (%f,%f)", atltivc.workImage.size.width, atltivc.workImage.size.height);
     }
     
     NSLog(@"%f %f", atltivc.workImage.size.width, atltivc.workImage.size.height);

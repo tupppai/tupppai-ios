@@ -24,7 +24,7 @@ typedef enum {
 @property (nonatomic, assign) CGRect cropperRect;
 @property (nonatomic, assign) CGRect originalImageRect;
 
-- (instancetype)initWithImage:(UIImage *)image AndFrameSize:(CGRect)frame AndImageCropperType:(ATOMImageCropperType)cropperType;
+- (instancetype)initWithImage:(UIImage *)image AndFrame:(CGRect)frame AndImageCropperType:(ATOMImageCropperType)cropperType;
 - (UIImage *)getCroppedImage;
 
 @end

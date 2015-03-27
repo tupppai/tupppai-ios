@@ -18,9 +18,11 @@
 
 @implementation ATOMImageCropper
 
-- (instancetype)initWithImage:(UIImage *)image AndFrameSize:(CGRect)frame AndImageCropperType:(ATOMImageCropperType)cropperType {
+- (instancetype)initWithImage:(UIImage *)image AndFrame:(CGRect)frame AndImageCropperType:(ATOMImageCropperType)cropperType {
     self = [super init];
     if (self) {
+        _imageCropperType = cropperType;
+        _image = image;
         _translateX = 0;
         _translateY = 0;
         self.frame = frame;
@@ -42,7 +44,7 @@
         _cropperView.layer.borderWidth = 1;
         
         CGSize imageViewSize = [self calclulateFrameWithImage:image InMaxSize:_cropperView.frame.size];
-        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake((CGWidth(_cropperRect) - imageViewSize.width) / 2, (CGHeight(_cropperRect) - imageViewSize.height) / 2, imageViewSize.width, imageViewSize.height)];
+        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake((CGWidth(frame) - imageViewSize.width) / 2, (CGHeight(frame) - imageViewSize.height) / 2, imageViewSize.width, imageViewSize.height)];
         _originalImageRect = _imageView.frame;
         _imageView.image = image;
         
@@ -225,6 +227,7 @@
     CGFloat originY = CGOriginY(_cropperRect) - CGOriginY(_imageView.frame);
     CGFloat width = CGWidth(_cropperRect);
     CGFloat height = CGHeight(_cropperRect);
+    
     if (CGWidth(_imageView.frame) < CGWidth(_cropperRect)) {
         originX = 0;
         width = CGWidth(_imageView.frame);
@@ -233,12 +236,13 @@
         originY = 0;
         height = CGHeight(_imageView.frame);
     }
+    
     CGRect rect = CGRectMake(originX / zoomScale / _imageScale, originY / zoomScale / _imageScale, width / zoomScale / _imageScale, height / zoomScale / _imageScale);
     UIGraphicsBeginImageContext(rect.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
-    CGRect drawRect = CGRectMake(-rect.origin.x, -rect.origin.y, _image.size.width, _image.size.height);
+    CGRect drawRect = CGRectMake(-rect.origin.x, -rect.origin.y, self.image.size.width, self.image.size.height);
     CGContextClipToRect(context, CGRectMake(0, 0, rect.size.width, rect.size.height));
-    [_image drawInRect:drawRect];
+    [self.image drawInRect:drawRect];
     UIImage *croppedImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return croppedImage;

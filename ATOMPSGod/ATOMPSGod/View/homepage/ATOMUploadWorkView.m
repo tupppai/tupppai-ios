@@ -7,7 +7,7 @@
 //
 
 #import "ATOMUploadWorkView.h"
-#import "BJImageCropper.h"
+#import "ATOMImageCropper.h"
 
 @interface ATOMUploadWorkView ()
 
@@ -87,7 +87,7 @@ static const int padding = 10;
 
 - (void)changeModeByOrder:(NSString *)order {
     
-    CGFloat maxWith = SCREEN_WIDTH;
+    CGFloat maxWidth = SCREEN_WIDTH;
     CGFloat maxHeight = SCREEN_HEIGHT - BOTTOMHEIGHT - CENTERHEIGHT - NAV_HEIGHT;
     
     if ([order isEqualToString:@"3:4"]) {
@@ -100,7 +100,7 @@ static const int padding = 10;
         _FourThreeButton.userInteractionEnabled = YES;
         _originButton.userInteractionEnabled = YES;
         [self clearCropperViewAndOriginView];
-        _imageCropperView = [[BJImageCropper alloc] initWithImage:_originImage andMaxSize:CGSizeMake(maxWith, maxHeight) andCropperType:ThreeFourType];
+        _imageCropperView = [[ATOMImageCropper alloc] initWithImage:_originImage AndFrame:CGRectMake(0, 0, maxWidth, maxHeight) AndImageCropperType:ThreeFourImageCropper];
         [self addSubview:_imageCropperView];
         
         
@@ -114,7 +114,7 @@ static const int padding = 10;
         _FourThreeButton.userInteractionEnabled = YES;
         _originButton.userInteractionEnabled = YES;
         [self clearCropperViewAndOriginView];
-        _imageCropperView = [[BJImageCropper alloc] initWithImage:_originImage andMaxSize:CGSizeMake(maxWith, maxHeight) andCropperType:OneOneType];
+        _imageCropperView = [[ATOMImageCropper alloc] initWithImage:_originImage AndFrame:CGRectMake(0, 0, maxWidth, maxHeight) AndImageCropperType:OneOneImageCropper];
         [self addSubview:_imageCropperView];
     } else if ([order isEqualToString:@"4:3"]) {
         _ThreeFourButton.selected = NO;
@@ -126,7 +126,7 @@ static const int padding = 10;
         _FourThreeButton.userInteractionEnabled = NO;
         _originButton.userInteractionEnabled = YES;
         [self clearCropperViewAndOriginView];
-        _imageCropperView = [[BJImageCropper alloc] initWithImage:_originImage andMaxSize:CGSizeMake(maxWith, maxHeight) andCropperType:FourThreeType];
+        _imageCropperView = [[ATOMImageCropper alloc] initWithImage:_originImage AndFrame:CGRectMake(0, 0, maxWidth, maxHeight) AndImageCropperType:FourThreeImageCropper];
         [self addSubview:_imageCropperView];
     } else if ([order isEqualToString:@"origin"]) {
         _ThreeFourButton.selected = NO;
