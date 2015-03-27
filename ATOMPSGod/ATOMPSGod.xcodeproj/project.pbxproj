@@ -170,6 +170,7 @@
 		5C67FB271AB2B41F004EFF05 /* ATOMHeaderImageCropperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C67FB261AB2B41F004EFF05 /* ATOMHeaderImageCropperViewController.m */; };
 		5C67FB2A1AB2B634004EFF05 /* ATOMHeaderImageCropperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C67FB291AB2B634004EFF05 /* ATOMHeaderImageCropperView.m */; };
 		5C67FB2D1AB2C509004EFF05 /* ATOMCustomCopperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C67FB2C1AB2C509004EFF05 /* ATOMCustomCopperView.m */; };
+		5C70715F1AC52656004B3A6A /* ATOMImageCropper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C70715E1AC52656004B3A6A /* ATOMImageCropper.m */; };
 		5C7861161AAF4C9400E87C77 /* ATOMMyWorkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7861151AAF4C9400E87C77 /* ATOMMyWorkViewController.m */; };
 		5C7861251AAF4DD200E87C77 /* 0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C7861181AAF4DD200E87C77 /* 0.jpg */; };
 		5C7861261AAF4DD200E87C77 /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C7861191AAF4DD200E87C77 /* 1.jpg */; };
@@ -632,6 +633,8 @@
 		5C67FB291AB2B634004EFF05 /* ATOMHeaderImageCropperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMHeaderImageCropperView.m; sourceTree = "<group>"; };
 		5C67FB2B1AB2C509004EFF05 /* ATOMCustomCopperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMCustomCopperView.h; sourceTree = "<group>"; };
 		5C67FB2C1AB2C509004EFF05 /* ATOMCustomCopperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMCustomCopperView.m; sourceTree = "<group>"; };
+		5C70715D1AC52656004B3A6A /* ATOMImageCropper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMImageCropper.h; sourceTree = "<group>"; };
+		5C70715E1AC52656004B3A6A /* ATOMImageCropper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMImageCropper.m; sourceTree = "<group>"; };
 		5C7861141AAF4C9400E87C77 /* ATOMMyWorkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMMyWorkViewController.h; sourceTree = "<group>"; };
 		5C7861151AAF4C9400E87C77 /* ATOMMyWorkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMMyWorkViewController.m; sourceTree = "<group>"; };
 		5C7861181AAF4DD200E87C77 /* 0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 0.jpg; sourceTree = "<group>"; };
@@ -1661,6 +1664,8 @@
 				5C653B9A1AA96C820025814B /* BJImageCropper.m */,
 				5C67FB2B1AB2C509004EFF05 /* ATOMCustomCopperView.h */,
 				5C67FB2C1AB2C509004EFF05 /* ATOMCustomCopperView.m */,
+				5C70715D1AC52656004B3A6A /* ATOMImageCropper.h */,
+				5C70715E1AC52656004B3A6A /* ATOMImageCropper.m */,
 			);
 			path = BJImageCropper;
 			sourceTree = "<group>";
@@ -2280,6 +2285,7 @@
 				5C561A2E1AB7C31A0052D4D5 /* FMResultSet.m in Sources */,
 				5C9BDA391AA8515800715698 /* UIScrollView+Screenshot.m in Sources */,
 				5C9BDA3B1AA8515800715698 /* NYXProgressiveImageView.m in Sources */,
+				5C70715F1AC52656004B3A6A /* ATOMImageCropper.m in Sources */,
 				5C4C70601AB68F0300358989 /* AFURLConnectionOperation.m in Sources */,
 				5C4F884A1AB56F180042E9BA /* ATOMShareView.m in Sources */,
 				5C561A721AB7C8C30052D4D5 /* MJRefreshGifFooter.m in Sources */,

@@ -10,6 +10,12 @@
 #import "ATOMLaunchViewController.h"
 #import "ATOMMainTabBarController.h"
 #import "ATOMCutstomNavigationController.h"
+#import "WXApi.h"
+#import "WeiboSDK.h"
+#import "WXApi.h"
+#import <TencentOpenAPI/QQApi.h>
+#import <TencentOpenAPI/QQApiInterface.h>
+
 
 @interface AppDelegate ()
 
