@@ -7,18 +7,34 @@
 //
 
 #import "ATOMCommentMessageViewModel.h"
+#import "ATOMCommentMessage.h"
+#import "ATOMHomeImage.h"
+#import "ATOMHomePageViewModel.h"
 
 @implementation ATOMCommentMessageViewModel
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _userName = @"宋祥伍";
-        _userSex = @"man";
-        _repplyContent = @"灰色的技术的房价开始了对方就阿里快速的风景阿里可是对方就卡死的减肥尽快了解阿克苏登陆福建按快了点睡觉法拉克是点击付款 克拉大书法家阿斯顿两份简历看见阿斯顿发了卡上打饭卡里看见阿斯蒂芬徕卡就是的放假了安师大飞拉萨到付款记录";
-        _repplyTime = @"08:56";
+        _homepageViewModel = [ATOMHomePageViewModel new];
     }
     return self;
+}
+
+- (void)setViewModelData:(ATOMCommentMessage *)commentMessage {
+    _uid = commentMessage.uid;
+    _userName = commentMessage.nickname;
+    _theme = (commentMessage.type == 0) ? @"评论你" : @"回复你";
+    _avatarURL = commentMessage.avatar;
+    _userSex = commentMessage.sex ? @"man" : @"woman";
+    _content = commentMessage.content;
+    _imageURL = commentMessage.homeImage.imageURL;
+    _type = (commentMessage.commentType == 1) ? @"ask" : @"reply";
+    NSDateFormatter *df = [NSDateFormatter new];
+    [df setDateFormat:@"yyyy年MM月dd日 HH时mm分"];
+    NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:commentMessage.createTime];
+    _publishTime = [df stringFromDate:publishDate];
+    [_homepageViewModel setViewModelData:commentMessage.homeImage];
 }
 
 @end

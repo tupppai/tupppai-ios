@@ -120,7 +120,6 @@
 
     if (frame.origin.y <= 0)
         frame.origin.y = 0;
-
     
     return CGRectMake(frame.origin.x / imageScale, frame.origin.y / imageScale, frame.size.width / imageScale, frame.size.height / imageScale);;
 }
@@ -420,25 +419,18 @@
 
 - (UIImage*) getCroppedImage {
     CGRect rect = self.crop;
-    
     UIGraphicsBeginImageContext(rect.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
-    
     // translated rectangle for drawing sub image 
     CGRect drawRect = CGRectMake(-rect.origin.x, -rect.origin.y, self.image.size.width, self.image.size.height);
-    
     // clip to the bounds of the image context
     // not strictly necessary as it will get clipped anyway?
     CGContextClipToRect(context, CGRectMake(0, 0, rect.size.width, rect.size.height));
-    
     // draw image
     [self.image drawInRect:drawRect];
-    
     // grab image
     UIImage* croppedImage = UIGraphicsGetImageFromCurrentImageContext();
-    
     UIGraphicsEndImageContext();
-    
     return croppedImage;
 }
 

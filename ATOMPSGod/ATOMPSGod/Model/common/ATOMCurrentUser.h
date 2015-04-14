@@ -60,7 +60,6 @@
  *  关注作品数
  */
 @property (nonatomic, assign) NSInteger attentionWorkNumber;
-
 @property (nonatomic, assign) NSInteger avatarID;
 
 + (ATOMCurrentUser *)currentUser;

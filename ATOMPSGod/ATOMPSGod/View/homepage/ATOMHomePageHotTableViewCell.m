@@ -85,16 +85,17 @@ static int padding = 10;
     _totalPSButton = [UIButton new];
     _totalPSButton.layer.cornerRadius = 15;
     _totalPSButton.layer.masksToBounds = YES;
+    _totalPSButton.titleLabel.font = [UIFont systemFontOfSize:11.f];
     _totalPSButton.backgroundColor = [UIColor colorWithHex:0x00adef];
     [_totalPSButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_bottomView addSubview:_totalPSButton];
     
-    _littleVerticalView1 = [UIView new];
-    _littleVerticalView2 = [UIView new];
-    _littleVerticalView3 = [UIView new];
-    [self setLittleVerticalView:_littleVerticalView1];
-    [self setLittleVerticalView:_littleVerticalView2];
-    [self setLittleVerticalView:_littleVerticalView3];
+//    _littleVerticalView1 = [UIView new];
+//    _littleVerticalView2 = [UIView new];
+//    _littleVerticalView3 = [UIView new];
+//    [self setLittleVerticalView:_littleVerticalView1];
+//    [self setLittleVerticalView:_littleVerticalView2];
+//    [self setLittleVerticalView:_littleVerticalView3];
     
 }
 
@@ -104,11 +105,15 @@ static int padding = 10;
 }
 
 - (void)setCommonButton:(UIButton *)button WithImage:(UIImage *)image{
+    button.layer.borderColor = [[UIColor colorWithHex:0xededed] CGColor];
+    button.layer.borderWidth = 0.5;
+    button.layer.cornerRadius = 5;
+    button.layer.masksToBounds = YES;
     button.userInteractionEnabled = NO;
     [button setImage:image forState:UIControlStateNormal];
     [button setImageEdgeInsets:UIEdgeInsetsMake(3.5, 0, 3.5, 0)];
-    [button setTitleEdgeInsets:UIEdgeInsetsMake(3.5, padding / 2.0, 3.5, 0)];
-    button.titleLabel.font = [UIFont systemFontOfSize:11.f];
+    [button setTitleEdgeInsets:UIEdgeInsetsMake(3.5, padding, 3.5, 0)];
+    button.titleLabel.font = [UIFont systemFontOfSize:12.f];
     [button setTitleColor:[UIColor colorWithHex:0x888888] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor colorWithHex:0x00adef] forState:UIControlStateSelected];
 }
@@ -129,16 +134,16 @@ static int padding = 10;
     _userWorkImageView.frame = CGRectMake((SCREEN_WIDTH - workImageSize.width) / 2, CGRectGetMaxY(_topView.frame), workImageSize.width, workImageSize.height);
     
     _thinCenterView.frame = CGRectMake(0, CGRectGetMaxY(_userWorkImageView.frame), SCREEN_WIDTH, 40);
-    CGFloat buttonInterval = (SCREEN_WIDTH - 4 * 60) / 5;
-    _shareButton.frame = CGRectMake(buttonInterval, 7.5, 60, 25);
+    CGFloat buttonInterval = (SCREEN_WIDTH - 4 * 60 - 2 * padding) / 3;
+    _shareButton.frame = CGRectMake(padding, 7.5, 60, 25);
     _praiseButton.frame = CGRectMake(CGRectGetMaxX(_shareButton.frame) + buttonInterval, 7.5, 60, 25);
     _commentButton.frame = CGRectMake(CGRectGetMaxX(_praiseButton.frame) + buttonInterval, 7.5, 60, 25);
     _moreShareButton.frame = CGRectMake(CGRectGetMaxX(_commentButton.frame) + buttonInterval, 7.5, 60, 25);
     
-    CGFloat verticalViewInterval = SCREEN_WIDTH / 4;
-    _littleVerticalView1.frame = CGRectMake(verticalViewInterval - 0.25, 7.5, 0.5, 25);
-    _littleVerticalView2.frame = CGRectMake(verticalViewInterval * 2 - 0.25, 7.5, 0.5, 25);
-    _littleVerticalView3.frame = CGRectMake(verticalViewInterval * 3 - 0.25, 7.5, 0.5, 25);
+//    CGFloat verticalViewInterval = SCREEN_WIDTH / 4;
+//    _littleVerticalView1.frame = CGRectMake(verticalViewInterval - 0.25, 7.5, 0.5, 25);
+//    _littleVerticalView2.frame = CGRectMake(verticalViewInterval * 2 - 0.25, 7.5, 0.5, 25);
+//    _littleVerticalView3.frame = CGRectMake(verticalViewInterval * 3 - 0.25, 7.5, 0.5, 25);
     
     _bottomView.frame = CGRectMake(0, CGRectGetMaxY(_thinCenterView.frame), SCREEN_WIDTH, 60);
     _totalPSButton.frame = CGRectMake(SCREEN_WIDTH - padding - 30, (CGHeight(_bottomView.frame) - 30) / 2, 30, 30);

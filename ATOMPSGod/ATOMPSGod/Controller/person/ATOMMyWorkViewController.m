@@ -9,13 +9,22 @@
 #import "ATOMMyWorkViewController.h"
 #import "ATOMMyWorkCollectionViewCell.h"
 #import "ATOMHotDetailViewController.h"
+#import "ATOMShowAskOrReply.h"
+#import "ATOMHomeImage.h"
+#import "ATOMHomePageViewModel.h"
+#import "ATOMReplyViewModel.h"
+
+#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMMyWorkViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) UIView *myWorkView;
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
+@property (nonatomic, strong) NSMutableArray *homeImageDataSource;
 @property (nonatomic, strong) NSString *cellIdentifier;
+@property (nonatomic, assign) BOOL canRefreshFooter;
+@property (nonatomic, assign) NSInteger currentPage;
 
 @end
 
@@ -26,21 +35,94 @@ static float cellWidth;
 static float cellHeight = 150;
 static int collumnNumber = 3;
 
+#pragma mark - Refresh
+
+- (void)configCollectionViewRefresh {
+    [_collectionView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+}
+
+- (void)loadMoreData {
+    if (_canRefreshFooter) {
+        [self getMoreDataSource];
+    } else {
+        [_collectionView.footer endRefreshing];
+    }
+    
+}
+
+#pragma mark - GetDataSource
+
+- (void)getDataSource {
+    WS(ws);
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    _dataSource = nil;
+    _dataSource = [NSMutableArray array];
+    _homeImageDataSource = nil;
+    _homeImageDataSource = [NSMutableArray array];
+    _currentPage = 1;
+    [param setObject:@(_currentPage) forKey:@"page"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@"hot" forKey:@"type"];
+    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@"time" forKey:@"sort"];
+    [param setObject:@"desc" forKey:@"order"];
+    [param setObject:@(15) forKey:@"size"];
+    ATOMShowAskOrReply *showAskOrReply = [ATOMShowAskOrReply new];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    [showAskOrReply ShowAskOrReply:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
+        [SVProgressHUD dismiss];
+        for (ATOMHomeImage *homeImage in resultArray) {
+            ATOMHomePageViewModel *homepageViewModel = [ATOMHomePageViewModel new];
+            [homepageViewModel setViewModelData:homeImage];
+            ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];
+            replyViewModel.imageURL = homeImage.imageURL;
+            [ws.dataSource addObject:replyViewModel];
+            [ws.homeImageDataSource addObject:homepageViewModel];
+        }
+        [ws.collectionView reloadData];
+    }];
+}
+
+- (void)getMoreDataSource {
+    WS(ws);
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    long long timestamp = [[NSDate date] timeIntervalSince1970];
+    ws.currentPage++;
+    [param setObject:@(ws.currentPage) forKey:@"page"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@"hot" forKey:@"type"];
+    [param setObject:@(timestamp) forKey:@"last_updated"];
+    [param setObject:@"time" forKey:@"sort"];
+    [param setObject:@"desc" forKey:@"order"];
+    [param setObject:@(15) forKey:@"size"];
+    ATOMShowAskOrReply *showAskOrReply = [ATOMShowAskOrReply new];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    [showAskOrReply ShowAskOrReply:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
+        [SVProgressHUD dismiss];
+        for (ATOMHomeImage *homeImage in resultArray) {
+            ATOMHomePageViewModel *homepageViewModel = [ATOMHomePageViewModel new];
+            [homepageViewModel setViewModelData:homeImage];
+            ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];
+            [replyViewModel setViewModelData:homeImage];
+            [ws.dataSource addObject:replyViewModel];
+            [ws.homeImageDataSource addObject:homepageViewModel];
+        }
+        if (resultArray.count == 0) {
+            ws.canRefreshFooter = NO;
+        } else {
+            ws.canRefreshFooter = YES;
+        }
+        [ws.collectionView.footer endRefreshing];
+        [ws.collectionView reloadData];
+    }];
+}
+
 #pragma mark - UI
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    _dataSource = [NSMutableArray array];
-    for (int i = 0; i < 12; i++) {
-        NSString *imgName = [NSString stringWithFormat:@"%d.jpg",i];
-        UIImage *img = [UIImage imageNamed:imgName];
-        [_dataSource addObject:img];
-    }
 }
 
 - (void)createUI {
@@ -60,6 +142,9 @@ static int collumnNumber = 3;
     _collectionView.delegate = self;
     _cellIdentifier = @"MyWorkCell";
     [_collectionView registerClass:[ATOMMyWorkCollectionViewCell class] forCellWithReuseIdentifier:_cellIdentifier];
+    [self configCollectionViewRefresh];
+    _canRefreshFooter = YES;
+    [self getDataSource];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -70,7 +155,8 @@ static int collumnNumber = 3;
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ATOMMyWorkCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:_cellIdentifier forIndexPath:indexPath];
-    cell.workImage = _dataSource[indexPath.row];
+    ATOMReplyViewModel *model = _dataSource[indexPath.row];
+    [cell.workImageView setImageWithURL:[NSURL URLWithString:model.imageURL]];
     return cell;
 }
 
@@ -78,7 +164,7 @@ static int collumnNumber = 3;
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
-    hdvc.pushType = ATOMMyWorkType;
+    hdvc.homePageViewModel = _homeImageDataSource[indexPath.row];
     [self pushViewController:hdvc animated:YES];
 }
 

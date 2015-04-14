@@ -38,7 +38,7 @@ static ATOMHTTPRequestOperationManager *_sharedRequestOperationManager = nil;
         [_sharedRequestOperationManager.reachabilityManager startMonitoring];
 //        _sharedRequestOperationManager.requestSerializer = [AFJSONRequestSerializer serializer];
         [_sharedRequestOperationManager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
-        [_sharedRequestOperationManager.requestSerializer setTimeoutInterval:30];
+        [_sharedRequestOperationManager.requestSerializer setTimeoutInterval:25];
         [_sharedRequestOperationManager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
         _sharedRequestOperationManager.responseSerializer = [AFJSONResponseSerializer serializer];
     });

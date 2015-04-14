@@ -80,12 +80,12 @@ static int padding = 10;
     [_moreShareButton setImage:[UIImage imageNamed:@"icon_others_normal"] forState:UIControlStateNormal];
     [_moreShareButton setImage:[UIImage imageNamed:@"icon_others_pressed"] forState:UIControlStateHighlighted];
     
-    _littleVerticalView1 = [UIView new];
-    _littleVerticalView2 = [UIView new];
-    _littleVerticalView3 = [UIView new];
-    [self setLittleVerticalView:_littleVerticalView1];
-    [self setLittleVerticalView:_littleVerticalView2];
-    [self setLittleVerticalView:_littleVerticalView3];
+//    _littleVerticalView1 = [UIView new];
+//    _littleVerticalView2 = [UIView new];
+//    _littleVerticalView3 = [UIView new];
+//    [self setLittleVerticalView:_littleVerticalView1];
+//    [self setLittleVerticalView:_littleVerticalView2];
+//    [self setLittleVerticalView:_littleVerticalView3];
     
 }
 
@@ -95,9 +95,13 @@ static int padding = 10;
 }
 
 - (void)setCommonButton:(UIButton *)button WithImage:(UIImage *)image{
+    button.layer.borderColor = [[UIColor colorWithHex:0xededed] CGColor];
+    button.layer.borderWidth = 0.5;
+    button.layer.cornerRadius = 5;
+    button.layer.masksToBounds = YES;
     [button setImage:image forState:UIControlStateNormal];
     [button setImageEdgeInsets:UIEdgeInsetsMake(3.5, 0, 3.5, 0)];
-    [button setTitleEdgeInsets:UIEdgeInsetsMake(3.5, padding / 2.0, 3.5, 0)];
+    [button setTitleEdgeInsets:UIEdgeInsetsMake(3.5, padding, 3.5, 0)];
     button.titleLabel.font = [UIFont systemFontOfSize:11.f];
     [button setTitleColor:[UIColor colorWithHex:0x888888] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor colorWithHex:0x00adef] forState:UIControlStateSelected];
@@ -118,17 +122,17 @@ static int padding = 10;
     }
     _userWorkImageView.frame = CGRectMake((SCREEN_WIDTH - workImageSize.width) / 2, CGRectGetMaxY(_topView.frame), workImageSize.width, workImageSize.height);
     
-    CGFloat buttonInterval = (SCREEN_WIDTH - 4 * 60) / 5;
+    CGFloat buttonInterval = (SCREEN_WIDTH - 4 * 60 - 2 * padding) / 3;
     _thinCenterView.frame = CGRectMake(0, CGRectGetMaxY(_userWorkImageView.frame), SCREEN_WIDTH, 40);
-    _shareButton.frame = CGRectMake(buttonInterval, 7.5, 60, 25);
+    _shareButton.frame = CGRectMake(padding, 7.5, 60, 25);
     _praiseButton.frame = CGRectMake(CGRectGetMaxX(_shareButton.frame) + buttonInterval, 7.5, 60, 25);
     _commentButton.frame = CGRectMake(CGRectGetMaxX(_praiseButton.frame) + buttonInterval, 7.5, 60, 25);
     _moreShareButton.frame = CGRectMake(CGRectGetMaxX(_commentButton.frame) + buttonInterval, 7.5, 60, 25);
     
-    CGFloat verticalViewInterval = SCREEN_WIDTH / 4;
-    _littleVerticalView1.frame = CGRectMake(verticalViewInterval - 0.25, 7.5, 0.5, 25);
-    _littleVerticalView2.frame = CGRectMake(verticalViewInterval * 2 - 0.25, 7.5, 0.5, 25);
-    _littleVerticalView3.frame = CGRectMake(verticalViewInterval * 3 - 0.25, 7.5, 0.5, 25);
+//    CGFloat verticalViewInterval = SCREEN_WIDTH / 4;
+//    _littleVerticalView1.frame = CGRectMake(verticalViewInterval - 0.25, 7.5, 0.5, 25);
+//    _littleVerticalView2.frame = CGRectMake(verticalViewInterval * 2 - 0.25, 7.5, 0.5, 25);
+//    _littleVerticalView3.frame = CGRectMake(verticalViewInterval * 3 - 0.25, 7.5, 0.5, 25);
     
 }
 
@@ -143,7 +147,7 @@ static int padding = 10;
 - (void)setViewModel:(ATOMHomePageViewModel *)viewModel {
     _viewModel = viewModel;
     _userNameLabel.text = viewModel.userName;
-    [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL]];
+    [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     _userSexImageView.image = [UIImage imageNamed:viewModel.userSex];
     _userPublishTimeLabel.text = viewModel.publishTime;
     if (viewModel.image) {

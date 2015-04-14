@@ -28,17 +28,16 @@ static int collumnNumber = 3;
     return _workImageView;
 }
 
-- (UILabel *)praiseLabel {
-    if (!_praiseLabel) {
-        _praiseLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 25, 15)];
-        _praiseLabel.backgroundColor = [UIColor blackColor];
-        _praiseLabel.font = [UIFont systemFontOfSize:12.f];
-        _praiseLabel.alpha = 0.5;
-        _praiseLabel.textAlignment = NSTextAlignmentCenter;
-        _praiseLabel.textColor = [UIColor whiteColor];
-        [self.workImageView addSubview:_praiseLabel];
+- (UILabel *)psLabel {
+    if (!_psLabel) {
+        _psLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 25, 15)];
+        _psLabel.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
+        _psLabel.font = [UIFont systemFontOfSize:12.f];
+        _psLabel.textAlignment = NSTextAlignmentCenter;
+        _psLabel.textColor = [UIColor whiteColor];
+        [self.workImageView addSubview:_psLabel];
     }
-    return _praiseLabel;
+    return _psLabel;
 }
 
 - (instancetype)init {
@@ -48,15 +47,9 @@ static int collumnNumber = 3;
     return self;
 }
 
-- (void)setWorkImage:(UIImage *)workImage {
-    _workImage = workImage;
-    self.workImageView.image = _workImage;
+- (void)setTotalPSNumber:(NSString *)totalPSNumber {
+    _totalPSNumber = totalPSNumber;
+    self.psLabel.text = totalPSNumber;
 }
-
-- (void)setPraiseNumber:(NSInteger)praiseNumber {
-    _praiseNumber = praiseNumber;
-    self.praiseLabel.text = [NSString stringWithFormat:@"%d",(int)_praiseNumber];
-}
-
 
 @end

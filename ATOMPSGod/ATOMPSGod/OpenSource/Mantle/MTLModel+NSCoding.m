@@ -26,6 +26,7 @@ static BOOL coderRequiresSecureCoding(NSCoder *coder) {
 	// iOS 6+).
 	if (![coder respondsToSelector:requiresSecureCodingSelector]) return NO;
 
+    //methodForSelector(获得一个指向方法实现的指针)
 	BOOL (*requiresSecureCodingIMP)(NSCoder *, SEL) = (__typeof__(requiresSecureCodingIMP))[coder methodForSelector:requiresSecureCodingSelector];
 	if (requiresSecureCodingIMP == NULL) return NO;
 
@@ -75,7 +76,7 @@ static void verifyAllowedClassesByPropertyKey(Class modelClass) {
 		@onExit {
 			free(attributes);
 		};
-
+        //当属性为weak时，默认设置为MTLModelEncodingBehaviorConditional，否则默认为MTLModelEncodingBehaviorUnconditional，设置完后，将其封装在NSNumber中并
 		MTLModelEncodingBehavior behavior = (attributes->weak ? MTLModelEncodingBehaviorConditional : MTLModelEncodingBehaviorUnconditional);
 		behaviors[key] = @(behavior);
 	}
@@ -126,8 +127,8 @@ static void verifyAllowedClassesByPropertyKey(Class modelClass) {
 - (id)decodeValueForKey:(NSString *)key withCoder:(NSCoder *)coder modelVersion:(NSUInteger)modelVersion {
 	NSParameterAssert(key != nil);
 	NSParameterAssert(coder != nil);
-
 	SEL selector = MTLSelectorWithCapitalizedKeyPattern("decode", key, "WithCoder:modelVersion:");
+    //如果自定义了-decode<Key>WithCoder:modelVersion:方法，则通过NSInvocation来调用方法
 	if ([self respondsToSelector:selector]) {
 		NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[self methodSignatureForSelector:selector]];
 		invocation.target = self;
@@ -142,12 +143,18 @@ static void verifyAllowedClassesByPropertyKey(Class modelClass) {
 	}
 
 	@try {
+        //如果没有找到自定义的-decode<Key>WithCoder:modelVersion:方法，则走以下流程。
 		if (coderRequiresSecureCoding(coder)) {
+            //如果coder要求安全编码，则会从需要安全编码的字典中取出属性所对应的类型，然后根据指定类型来对属性进行解码操作。
+            //为此，MTLModel提供了类方法allowSecureCodingClassesByPropertyKey，来获取类对象包含的所有需要安全码的属性及其对应的类的字典。
+            //该方法首先会查看是否已有缓存字典，如果没有则遍历类的所有属性。首先过滤那些不需要编码的属性，然后遍历剩下的属性，如果是非对象类型或类类型，
+            //则其对应的类型设定为NSValue，如果是这两者，则对应的类型即为相应的类型。
 			NSArray *allowedClasses = self.class.allowedSecureCodingClassesByPropertyKey[key];
 			NSAssert(allowedClasses != nil, @"No allowed classes specified for securely decoding key \"%@\" on %@", key, self.class);
 			
 			return [coder decodeObjectOfClasses:[NSSet setWithArray:allowedClasses] forKey:key];
 		} else {
+            //不需要安全编码
 			return [coder decodeObjectForKey:key];
 		}
 	} @catch (NSException *ex) {

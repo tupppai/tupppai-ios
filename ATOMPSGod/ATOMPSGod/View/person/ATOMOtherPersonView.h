@@ -9,6 +9,11 @@
 #import "ATOMBaseView.h"
 @class ATOMOtherPersonCollectionHeaderView;
 
+typedef enum {
+    ATOMUploadType = 0,
+    ATOMWorkType
+}ATOMOtherPersonCollectionViewType;
+
 @interface ATOMOtherPersonView : ATOMBaseView
 
 @property (nonatomic, strong) ATOMOtherPersonCollectionHeaderView *uploadHeaderView;
@@ -19,5 +24,7 @@
 
 - (void)changeToUploadView;
 - (void)changeToWorkView;
+- (ATOMOtherPersonCollectionViewType)typeOfCurrentCollectionView;
+
 
 @end

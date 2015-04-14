@@ -11,8 +11,7 @@
 @interface ATOMMyUploadCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic, strong) UIImageView *workImageView;
-@property (nonatomic, strong) UIImage *workImage;
-@property (nonatomic, strong) UILabel *praiseLabel;
-@property (nonatomic, assign) NSInteger praiseNumber;
+@property (nonatomic, strong) UILabel *psLabel;
+@property (nonatomic, copy) NSString *totalPSNumber;
 
 @end

@@ -10,15 +10,23 @@
 #import "ATOMMyCollectionCollectionViewCell.h"
 #import "ATOMHotDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
+#import "ATOMHomeImage.h"
+#import "ATOMHomePageViewModel.h"
+#import "ATOMCollectionViewModel.h"
+#import "ATOMShowCollection.h"
+
+#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMMyCollectionViewController () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic, strong) UIView *myWorkView;
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
+@property (nonatomic, strong) NSMutableArray *homeImageDataSource;
 @property (nonatomic, strong) NSString *cellIdentifier;
-
 @property (nonatomic, strong) UITapGestureRecognizer *tapMyCollectionGesture;
+@property (nonatomic, assign) NSInteger currentPage;
+@property (nonatomic, assign) BOOL canRefreshFooter;
 
 @end
 
@@ -29,19 +37,93 @@ static float cellHeight;
 static int collumnNumber = 2;
 static float cellWidth;
 
+#pragma mark - Refresh
+
+- (void)configCollectionViewRefresh {
+    [_collectionView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+}
+
+- (void)loadMoreData {
+    if (_canRefreshFooter) {
+        [self getMoreDataSource];
+    } else {
+        [_collectionView.footer endRefreshing];
+    }
+}
+
+#pragma mark - GetDataSource
+
+- (void)getDataSource {
+    WS(ws);
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    _dataSource = nil;
+    _dataSource = [NSMutableArray array];
+    _homeImageDataSource = nil;
+    _homeImageDataSource = [NSMutableArray array];
+    _currentPage = 1;
+    [param setObject:@(_currentPage) forKey:@"page"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@"new" forKey:@"type"];
+    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@"time" forKey:@"sort"];
+    [param setObject:@"desc" forKey:@"order"];
+    [param setObject:@(15) forKey:@"size"];
+    ATOMShowCollection *showCollection = [ATOMShowCollection new];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    [showCollection ShowCollection:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
+        [SVProgressHUD dismiss];
+        for (ATOMHomeImage *homeImage in resultArray) {
+            ATOMHomePageViewModel *homepageViewModel = [ATOMHomePageViewModel new];
+            [homepageViewModel setViewModelData:homeImage];
+            [ws.homeImageDataSource addObject:homepageViewModel];
+            ATOMCollectionViewModel *collectionViewModel = [ATOMCollectionViewModel new];
+            [collectionViewModel setViewModelData:homeImage];
+            [ws.dataSource addObject:collectionViewModel];
+        }
+        [ws.collectionView reloadData];
+    }];
+}
+
+- (void)getMoreDataSource {
+    WS(ws);
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    long long timestamp = [[NSDate date] timeIntervalSince1970];
+    ws.currentPage++;
+    [param setObject:@(ws.currentPage) forKey:@"page"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@"new" forKey:@"type"];
+    [param setObject:@(timestamp) forKey:@"last_updated"];
+    [param setObject:@"time" forKey:@"sort"];
+    [param setObject:@"desc" forKey:@"order"];
+    [param setObject:@(15) forKey:@"size"];
+    ATOMShowCollection *showCollection = [ATOMShowCollection new];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    [showCollection ShowCollection:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
+        [SVProgressHUD dismiss];
+        for (ATOMHomeImage *homeImage in resultArray) {
+            ATOMHomePageViewModel *homepageViewModel = [ATOMHomePageViewModel new];
+            [homepageViewModel setViewModelData:homeImage];
+            [ws.homeImageDataSource addObject:homepageViewModel];
+            ATOMCollectionViewModel *collectionViewModel = [ATOMCollectionViewModel new];
+            [collectionViewModel setViewModelData:homeImage];
+            [ws.dataSource addObject:collectionViewModel];
+        }
+        if (resultArray.count == 0) {
+            ws.canRefreshFooter = NO;
+        } else {
+            ws.canRefreshFooter = YES;
+        }
+        [ws.collectionView.footer endRefreshing];
+        [ws.collectionView reloadData];
+    }];
+}
+
+#pragma mark - UI
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    _dataSource = [NSMutableArray array];
-    for (int i = 0; i < 12; i++) {
-        NSString *imgName = [NSString stringWithFormat:@"%d.jpg",i];
-        UIImage *img = [UIImage imageNamed:imgName];
-        [_dataSource addObject:img];
-    }
 }
 
 - (void)createUI {
@@ -63,6 +145,9 @@ static float cellWidth;
     [_collectionView registerClass:[ATOMMyCollectionCollectionViewCell class] forCellWithReuseIdentifier:_cellIdentifier];
     _tapMyCollectionGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMyCollectionGesture:)];
     [_collectionView addGestureRecognizer:_tapMyCollectionGesture];
+    [self configCollectionViewRefresh];
+    _canRefreshFooter = YES;
+    [self getDataSource];
 }
 
 #pragma mark - Gesture Event
@@ -75,7 +160,7 @@ static float cellWidth;
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.collectionImageView.frame, p)) {
             ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
-            hdvc.pushType = ATOMMyCollectionType;
+            hdvc.homePageViewModel = _homeImageDataSource[indexPath.row];
             [self pushViewController:hdvc animated:YES];
         } else if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
@@ -94,8 +179,7 @@ static float cellWidth;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ATOMMyCollectionCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:_cellIdentifier forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
-    cell.collectionImage = _dataSource[indexPath.row];
-    cell.userName = @"atom";
+    cell.viewModel = _dataSource[indexPath.row];
     return cell;
 }
 

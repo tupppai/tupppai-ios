@@ -11,6 +11,7 @@
 
 @interface ATOMUploadImage : NSObject
 
-- (AFHTTPRequestOperation *)UploadImage:(NSData *)data withParam:(NSDictionary *)param andBlock:(void (^)(ATOMImage *imageInformation, NSError *error))block;
+//- (AFHTTPRequestOperation *)UploadImage:(NSData *)data withParam:(NSDictionary *)param andBlock:(void (^)(ATOMImage *imageInformation, NSError *error))block;
+- (AFHTTPRequestOperation *)UploadImage:(NSData *)data WithBlock:(void (^)(ATOMImage *imageInformation, NSError *error))block;
 
 @end

@@ -44,7 +44,7 @@ static int padding = 10;
     _thinCenterView = [UIView new];
     _thinCenterView.backgroundColor = [UIColor whiteColor];
     _bottomView = [UIView new];
-    _bottomView.backgroundColor = [UIColor colorWithHex:0xededed];
+    _bottomView.backgroundColor = [UIColor whiteColor];
     
     [self addSubview:_topThinView];
     [self addSubview:_topView];
@@ -93,12 +93,12 @@ static int padding = 10;
     [_bottomView addSubview:_commentLabel1];
     [_bottomView addSubview:_commentLabel2];
     
-    _littleVerticalView1 = [UIView new];
-    _littleVerticalView2 = [UIView new];
-    _littleVerticalView3 = [UIView new];
-    [self setLittleVerticalView:_littleVerticalView1];
-    [self setLittleVerticalView:_littleVerticalView2];
-    [self setLittleVerticalView:_littleVerticalView3];
+//    _littleVerticalView1 = [UIView new];
+//    _littleVerticalView2 = [UIView new];
+//    _littleVerticalView3 = [UIView new];
+//    [self setLittleVerticalView:_littleVerticalView1];
+//    [self setLittleVerticalView:_littleVerticalView2];
+//    [self setLittleVerticalView:_littleVerticalView3];
     
 }
 
@@ -108,9 +108,13 @@ static int padding = 10;
 }
 
 - (void)setCommonButton:(UIButton *)button WithImage:(UIImage *)image{
+    button.layer.borderColor = [[UIColor colorWithHex:0xededed] CGColor];
+    button.layer.borderWidth = 0.5;
+    button.layer.cornerRadius = 5;
+    button.layer.masksToBounds = YES;
     [button setImage:image forState:UIControlStateNormal];
     [button setImageEdgeInsets:UIEdgeInsetsMake(3.5, 0, 3.5, 0)];
-    [button setTitleEdgeInsets:UIEdgeInsetsMake(3.5, padding / 2.0, 3.5, 0)];
+    [button setTitleEdgeInsets:UIEdgeInsetsMake(3.5, padding, 3.5, 0)];
     button.titleLabel.font = [UIFont systemFontOfSize:11.f];
     [button setTitleColor:[UIColor colorWithHex:0x888888] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor colorWithHex:0x00adef] forState:UIControlStateSelected];
@@ -132,17 +136,17 @@ static int padding = 10;
     }
     _userWorkImageView.frame = CGRectMake((SCREEN_WIDTH - workImageSize.width) / 2, CGRectGetMaxY(_topView.frame), workImageSize.width, workImageSize.height);
     
-    CGFloat buttonInterval = (SCREEN_WIDTH - 4 * 60) / 5;
+    CGFloat buttonInterval = (SCREEN_WIDTH - 4 * 60 - 2 * padding) / 3;
     _thinCenterView.frame = CGRectMake(0, CGRectGetMaxY(_userWorkImageView.frame), SCREEN_WIDTH, 40);
-    _shareButton.frame = CGRectMake(buttonInterval, 7.5, 60, 25);
+    _shareButton.frame = CGRectMake(padding, 7.5, 60, 25);
     _praiseButton.frame = CGRectMake(CGRectGetMaxX(_shareButton.frame) + buttonInterval, 7.5, 60, 25);
     _commentButton.frame = CGRectMake(CGRectGetMaxX(_praiseButton.frame) + buttonInterval, 7.5, 60, 25);
     _moreShareButton.frame = CGRectMake(CGRectGetMaxX(_commentButton.frame) + buttonInterval, 7.5, 60, 25);
     
-    CGFloat verticalViewInterval = SCREEN_WIDTH / 4;
-    _littleVerticalView1.frame = CGRectMake(verticalViewInterval - 0.25, 7.5, 0.5, 25);
-    _littleVerticalView2.frame = CGRectMake(verticalViewInterval * 2 - 0.25, 7.5, 0.5, 25);
-    _littleVerticalView3.frame = CGRectMake(verticalViewInterval * 3 - 0.25, 7.5, 0.5, 25);
+//    CGFloat verticalViewInterval = SCREEN_WIDTH / 4;
+//    _littleVerticalView1.frame = CGRectMake(verticalViewInterval - 0.25, 7.5, 0.5, 25);
+//    _littleVerticalView2.frame = CGRectMake(verticalViewInterval * 2 - 0.25, 7.5, 0.5, 25);
+//    _littleVerticalView3.frame = CGRectMake(verticalViewInterval * 3 - 0.25, 7.5, 0.5, 25);
     
     if (_viewModel) {
         NSInteger commentCount = (_viewModel.commentArray.count > 2) ? 2 : _viewModel.commentArray.count;
@@ -151,19 +155,19 @@ static int padding = 10;
             _commentLabel1.frame = CGRectZero;
             _commentLabel2.frame = CGRectZero;
         } else if (commentCount == 1) {
-            _bottomView.frame = CGRectMake(0, CGRectGetMaxY(_thinCenterView.frame), SCREEN_WIDTH, 30);
-            _commentLabel1.frame = CGRectMake(padding, 0, CGWidth(_bottomView.frame) - 2 * padding, 30);
+            _bottomView.frame = CGRectMake(0, CGRectGetMaxY(_thinCenterView.frame), SCREEN_WIDTH, 20);
+            _commentLabel1.frame = CGRectMake(padding, 0, CGWidth(_bottomView.frame) - 2 * padding, 20);
             _commentLabel2.frame = CGRectZero;
         } else if (commentCount == 2) {
-            _bottomView.frame = CGRectMake(0, CGRectGetMaxY(_thinCenterView.frame), SCREEN_WIDTH, 60);
-            _commentLabel1.frame = CGRectMake(padding, 0, CGWidth(_bottomView.frame) - 2 * padding, 30);
-            _commentLabel2.frame = CGRectMake(padding, CGRectGetMaxY(_commentLabel1.frame), CGWidth(_bottomView.frame) - 2 * padding, 30);
+            _bottomView.frame = CGRectMake(0, CGRectGetMaxY(_thinCenterView.frame), SCREEN_WIDTH, 40);
+            _commentLabel1.frame = CGRectMake(padding, 0, CGWidth(_bottomView.frame) - 2 * padding, 20);
+            _commentLabel2.frame = CGRectMake(padding, CGRectGetMaxY(_commentLabel1.frame), CGWidth(_bottomView.frame) - 2 * padding, 20);
         }
     }
 }
 
 + (CGFloat)calculateCellHeightWith:(ATOMDetailImageViewModel *)viewModel {
-    return 6 + 65 + viewModel.height + 40 + ((viewModel.commentArray.count > 2) ? 2 : viewModel.commentArray.count) * 30;
+    return 6 + 65 + viewModel.height + 40 + ((viewModel.commentArray.count > 2) ? 2 : viewModel.commentArray.count) * 20;
 }
 
 + (CGSize)calculateHomePageHotImageViewSizeWith:(ATOMDetailImageViewModel *)viewModel {
@@ -179,7 +183,7 @@ static int padding = 10;
         ATOMCommentViewModel *commentViewModel = viewModel.commentArray[i];
         NSInteger commentNameLength = commentViewModel.nickname.length;
         NSRange range = {0, commentNameLength + 1};
-        NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:16.f], NSFontAttributeName, [UIColor colorWithHex:0x797979], NSForegroundColorAttributeName, nil];
+        NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.f], NSFontAttributeName, [UIColor colorWithHex:0x797979], NSForegroundColorAttributeName, nil];
         NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@： %@",commentViewModel.nickname, commentViewModel.content] attributes:attributeDict];
         [attributeStr addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:range];
         if (i == 0) {

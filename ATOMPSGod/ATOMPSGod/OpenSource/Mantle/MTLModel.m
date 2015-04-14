@@ -97,10 +97,11 @@ static BOOL MTLValidateAndSetValue(id obj, NSString *key, id value, BOOL forceUp
 		// Mark this as being autoreleased, because validateValue may return
 		// a new object to be stored in this variable (and we don't want ARC to
 		// double-free or leak the old or new values).
+        //将value标记为__autoreleasing，这是因为在MTValidateAndSetValue函数中，会返回一个新的对象存在在该变量中
 		__autoreleasing id value = [dictionary objectForKey:key];
 	
 		if ([value isEqual:NSNull.null]) value = nil;
-
+        //MTValidateAndSetValue函数利用KVC机制来验证value的值对于key是否有效，如果无效，则使用默认值来设置key的值。
 		BOOL success = MTLValidateAndSetValue(self, key, value, YES, error);
 		if (!success) return nil;
 	}
@@ -133,11 +134,15 @@ static BOOL MTLValidateAndSetValue(id obj, NSString *key, id value, BOOL forceUp
 }
 
 + (NSSet *)propertyKeys {
+    //若果对象中已有缓存的属性名的集合，则直接返回缓存。该缓存是放在一个关联对象中。
 	NSSet *cachedKeys = objc_getAssociatedObject(self, MTLModelCachedPropertyKeysKey);
 	if (cachedKeys != nil) return cachedKeys;
 
 	NSMutableSet *keys = [NSMutableSet set];
 
+    //遍历该对象的所有属性
+    //enumeratePropertiesUserBlock方法会沿着superclass链一直向上遍历到MTLModel
+    //查找当前model所对应类的继承体系中所有的属性（不包括MTLModel），并对该属性执行block中的操作。
 	[self enumeratePropertiesUsingBlock:^(objc_property_t property, BOOL *stop) {
 		mtl_propertyAttributes *attributes = mtl_copyPropertyAttributes(property);
 		@onExit {
@@ -158,6 +163,7 @@ static BOOL MTLValidateAndSetValue(id obj, NSString *key, id value, BOOL forceUp
 }
 
 - (NSDictionary *)dictionaryValue {
+//    NSDictionary *dict = [self dictionaryWithValuesForKeys:self.class.propertyKeys.allObjects];
 	return [self dictionaryWithValuesForKeys:self.class.propertyKeys.allObjects];
 }
 
@@ -166,6 +172,8 @@ static BOOL MTLValidateAndSetValue(id obj, NSString *key, id value, BOOL forceUp
 - (void)mergeValueForKey:(NSString *)key fromModel:(MTLModel *)model {
 	NSParameterAssert(key != nil);
 
+    //根据传入的key拼接"merge<Key>FromModel:"字符串，并从该字符串中获取到对应的selector
+    //如果当前对象没有实现-merge<Key>FromModel:方法，且model不为nil，则用model的属性替代当前对象的属性值
 	SEL selector = MTLSelectorWithCapitalizedKeyPattern("merge", key, "FromModel:");
 	if (![self respondsToSelector:selector]) {
 		if (model != nil) {
@@ -174,7 +182,7 @@ static BOOL MTLValidateAndSetValue(id obj, NSString *key, id value, BOOL forceUp
 
 		return;
 	}
-
+    //通过NSInvocation方式来调用对应的-merge<Key>FromModel:方法
 	NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[self methodSignatureForSelector:selector]];
 	invocation.target = self;
 	invocation.selector = selector;

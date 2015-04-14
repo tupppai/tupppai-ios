@@ -13,7 +13,6 @@
 @interface ATOMRecentDetailView ()
 
 @property (nonatomic, assign) int lastContentSizeHeight;
-@property (nonatomic, assign) BOOL isContentSizeOrigin;
 
 @end
 
@@ -62,12 +61,13 @@ static int padding = 10;
 
 - (void)addNotificationToRecentDetailView {
     _lastContentSizeHeight = 30;
-    _isContentSizeOrigin = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChange:) name:UITextViewTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidEnd:) name:UITextViewTextDidEndEditingNotification object:nil];
 }
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextViewTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextViewTextDidEndEditingNotification object:nil];
 }
 
 - (void)textDidChange:(NSNotification *)notification {
@@ -85,9 +85,11 @@ static int padding = 10;
     _lastContentSizeHeight = contentSize.height;
 }
 
-
-
-
+- (void)textDidEnd:(NSNotification *)notification {
+    _bottomView.frame = CGRectMake(0, CGHeight(self.frame) - 46, SCREEN_WIDTH, 46);
+    _sendCommentView.frame = CGRectMake(46, 8, CGRectGetMinX(_sendCommentButton.frame) - padding - 46, 30);
+    _lastContentSizeHeight = 30;
+}
 
 
 

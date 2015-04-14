@@ -8,11 +8,11 @@
 
 #import "ATOMImageCropper.h"
 #import <UIKit/UIGestureRecognizerSubclass.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface ATOMImageCropper () <UIGestureRecognizerDelegate>
 
-@property (nonatomic, assign) CGFloat translateX;
-@property (nonatomic, assign) CGFloat translateY;
+@property (nonatomic, assign) BOOL firstOverLimit;
 
 @end
 
@@ -23,8 +23,6 @@
     if (self) {
         _imageCropperType = cropperType;
         _image = image;
-        _translateX = 0;
-        _translateY = 0;
         self.frame = frame;
         
         CGFloat cropperWidth = SCREEN_WIDTH, cropperHeigth;
@@ -126,13 +124,22 @@
                 }];
             }
         } else { //图片已居中
-            if (lastScale - factor <= 0) {
+            if (lastScale - factor < 0) {
                 CGAffineTransform transform = CGAffineTransformScale(self.imageView.transform, newScale, newScale);
                 self.imageView.transform = transform;
             } else {
                 if (![self isImageViewInCropperView:imageViewFame]) {
                     CGAffineTransform transform = CGAffineTransformScale(self.imageView.transform, newScale, newScale);
                     self.imageView.transform = transform;
+                } else {
+                    if ([gesture state] == UIGestureRecognizerStateChanged) {
+                        CGAffineTransform transform = CGAffineTransformScale(self.imageView.transform, newScale, newScale);
+                        self.imageView.transform = transform;
+                    } else if ([gesture state] == UIGestureRecognizerStateEnded){
+                        [UIView animateWithDuration:0.5f animations:^{
+                            self.imageView.frame = _originalImageRect;
+                        }];
+                    }
                 }
             }
         }
@@ -147,11 +154,12 @@
         preLocation = location;
     }
     if (gesture.state == UIGestureRecognizerStateChanged || gesture.state == UIGestureRecognizerStateEnded) {
-        _translateX = location.x - preLocation.x;
-        _translateY = location.y - preLocation.y;
+        CGFloat translateX = location.x - preLocation.x;
+        CGFloat translateY = location.y - preLocation.y;
+        NSLog(@"translate (x = %f , y = %f)", translateX, translateY);
         CGPoint center = self.imageView.center;
-        center.x += _translateX;
-        center.y += _translateY;
+        center.x += translateX;
+        center.y += translateY;
         CGFloat imageViewMinX = center.x - CGWidth(_imageView.frame) / 2;
         CGFloat imageViewMaxX = center.x + CGWidth(_imageView.frame) / 2;
         CGFloat imageViewMinY = center.y - CGHeight(_imageView.frame) / 2;
@@ -162,28 +170,59 @@
         //如果图片视图的宽度小于裁剪区域的宽度，不能左右移动
         if (CGWidth(_imageView.frame) <= CGWidth(_cropperRect)) {
             flagWidth = YES;
-            center.x = _cropperView.center.x;
+            if (!_firstOverLimit && gesture.state == UIGestureRecognizerStateChanged) {
+                _firstOverLimit = YES;
+            }
+            if (gesture.state == UIGestureRecognizerStateEnded) {
+                _firstOverLimit = NO;
+                center.x = _cropperView.center.x;
+            }
         }
         //如果图片视图的高度小于裁剪区域的高度，不能上下移动
         if (CGHeight(_imageView.frame) <= CGHeight(_cropperRect)) {
             flagHeight = YES;
-            center.y = _cropperView.center.y;
+            if (!_firstOverLimit && gesture.state == UIGestureRecognizerStateChanged) {
+                _firstOverLimit = YES;
+            }
+            if (gesture.state == UIGestureRecognizerStateEnded) {
+                center.y = _cropperView.center.y;
+            }
         }
         //如果图片视图的宽度大于裁剪区域的宽度，且图片视图向右移动，则图片视图的左边界不能超过裁剪区域的左边界
         if (imageViewMinX > CGOriginX(_cropperRect) && !flagWidth) {
-            imageViewFrame.origin.x = CGOriginX(_cropperRect);
+            if (!_firstOverLimit && gesture.state == UIGestureRecognizerStateChanged) {
+                _firstOverLimit = YES;
+            }
+            if (gesture.state == UIGestureRecognizerStateEnded) {
+                imageViewFrame.origin.x = CGOriginX(_cropperRect);
+            }
         }
         //如果图片视图的高度大于裁剪区域的高度，且图片视图向下移动，则图片视图的上边界不能超过裁剪区域的上边界
         if (imageViewMinY > CGOriginY(_cropperRect) && !flagHeight) {
-            imageViewFrame.origin.y = CGOriginY(_cropperRect);
+            if (!_firstOverLimit && gesture.state == UIGestureRecognizerStateChanged) {
+                _firstOverLimit = YES;
+            }
+            if (gesture.state == UIGestureRecognizerStateEnded) {
+                imageViewFrame.origin.y = CGOriginY(_cropperRect);
+            }
         }
         //如果图片视图的宽度大于裁剪区域的宽度，且图片视图向左移动，则图片视图的右边界不能超过裁剪区域的右边界
         if (imageViewMaxX < CGRectGetMaxX(_cropperRect) && !flagWidth) {
-            imageViewFrame.origin.x = CGRectGetMaxX(_cropperRect) - CGWidth(_imageView.frame);
+            if (!_firstOverLimit && gesture.state == UIGestureRecognizerStateChanged) {
+                _firstOverLimit = YES;
+            }
+            if (gesture.state == UIGestureRecognizerStateEnded) {
+                imageViewFrame.origin.x = CGRectGetMaxX(_cropperRect) - CGWidth(_imageView.frame);
+            }
         }
         //如果图片视图的高度大于裁剪区域的高度，且图片视图向上移动，则图片视图的下边界不能超过裁剪区域的下边界
         if (imageViewMaxY < CGRectGetMaxY(_cropperRect) && !flagHeight) {
-            imageViewFrame.origin.y = CGRectGetMaxY(_cropperRect) - CGHeight(_imageView.frame);
+            if (!_firstOverLimit && gesture.state == UIGestureRecognizerStateChanged) {
+                _firstOverLimit = YES;
+            }
+            if (gesture.state == UIGestureRecognizerStateEnded) {
+                imageViewFrame.origin.y = CGRectGetMaxY(_cropperRect) - CGHeight(_imageView.frame);
+            }
         }
         //如果图片视图的宽高都大于裁剪区域的宽高，更新center
         if (!flagWidth && !flagHeight) {
@@ -199,7 +238,15 @@
             center.x = CGOriginX(imageViewFrame) + CGWidth(imageViewFrame) / 2;
         }
         //更新图片视图的位置
-        self.imageView.center = center;
+        if (_firstOverLimit && [gesture state] == UIGestureRecognizerStateEnded) {
+            _firstOverLimit = NO;
+            [UIView animateWithDuration:0.2 animations:^{
+                self.imageView.center = center;
+            }];
+            
+        } else {
+            self.imageView.center = center;
+        }
         preLocation = location;
     }
 }
@@ -247,8 +294,6 @@
     UIGraphicsEndImageContext();
     return croppedImage;
 }
-
-
 
 
 

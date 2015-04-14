@@ -11,8 +11,8 @@
 
 @interface ATOMSubmitImageWithLabel : NSObject
 
-- (AFHTTPRequestOperation *)SubmitImageWithLabel:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *labelArray, NSError *error))block;
-- (void)saveTipLabelInDB:(ATOMImageTipLabel *)tipLabel;
+- (AFHTTPRequestOperation *)SubmitImageWithLabel:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *labelArray, NSInteger newImageID, NSError *error))block;
+- (AFHTTPRequestOperation *)SubmitWorkWithLabel:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *labelArray, NSError *error))block;
 
 
 @end

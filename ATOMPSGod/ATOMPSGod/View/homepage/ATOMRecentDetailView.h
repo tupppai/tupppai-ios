@@ -18,5 +18,6 @@
 @property (nonatomic, strong) UITextView *sendCommentView;
 @property (nonatomic, strong) UIView *bottomView;
 @property (nonatomic, strong) ATOMHomePageViewModel *viewModel;
+@property (nonatomic, copy) NSString *textViewPlaceholder;
 
 @end

@@ -114,7 +114,7 @@ static NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapter
 		}
 		return nil;
 	}
-
+    
 	if ([modelClass respondsToSelector:@selector(classForParsingJSONDictionary:)]) {
 		modelClass = [modelClass classForParsingJSONDictionary:JSONDictionary];
 		if (modelClass == nil) {
@@ -144,14 +144,16 @@ static NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapter
 
 	NSSet *propertyKeys = [self.modelClass propertyKeys];
 
+    //检验model的+JSONKeyPathByPropertyKey中字典key-value对的有效性
 	for (NSString *mappedPropertyKey in self.JSONKeyPathsByPropertyKey) {
+        //如果model对象的属性不包含+JSONKeyPathByPropertyKey返回的字典中的某个属性键值，则返回nil。即+JSONKeyPathByPropertyKey中指定的属性键必须是model对象所包含的属性.
 		if (![propertyKeys containsObject:mappedPropertyKey]) {
 			NSAssert(NO, @"%@ is not a property of %@.", mappedPropertyKey, modelClass);
 			return nil;
 		}
 
 		id value = self.JSONKeyPathsByPropertyKey[mappedPropertyKey];
-
+        //如果属性不是映射到一个JSON关键路径或是NSNull，也返回nil
 		if (![value isKindOfClass:NSString.class] && value != NSNull.null) {
 			NSAssert(NO, @"%@ must either map to a JSON key path or NSNull, got: %@.",mappedPropertyKey, value);
 			return nil;
@@ -182,6 +184,7 @@ static NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapter
 		if (value == nil) continue;
 
 		@try {
+            //获取一个转换器，JSONTransformerForKey:会先去查看是否有+JSONTransformer方法，如果有则会使用这个具体的方法，如果没有，则调用相应的+JSONTransformerForKey:方法
 			NSValueTransformer *transformer = [self JSONTransformerForKey:propertyKey];
 			if (transformer != nil) {
 				// Map NSNull -> nil for the transformer, and then back for the
@@ -241,7 +244,7 @@ static NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapter
 	[dictionaryValue enumerateKeysAndObjectsUsingBlock:^(NSString *propertyKey, id value, BOOL *stop) {
 		NSString *JSONKeyPath = [self JSONKeyPathForPropertyKey:propertyKey];
 		if (JSONKeyPath == nil) return;
-
+        //获取属性的值
 		NSValueTransformer *transformer = [self JSONTransformerForKey:propertyKey];
 		if ([transformer.class allowsReverseTransformation]) {
 			// Map NSNull -> nil for the transformer, and then back for the
@@ -249,9 +252,9 @@ static NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapter
 			if ([value isEqual:NSNull.null]) value = nil;
 			value = [transformer reverseTransformedValue:value] ?: NSNull.null;
 		}
-
 		NSArray *keyPathComponents = [JSONKeyPath componentsSeparatedByString:@"."];
-
+        //对于嵌套属性值的设置，会先从keypath中获取每一层属性，若果当前层级的obj中没有该属性，则为其设置一个空字典，然后进入下一层级，以此类推，最后设置如下形式的字典：
+        //@{@"nested:" @{@"name" : @"foo"}}
 		// Set up dictionaries at each step of the key path.
 		id obj = JSONDictionary;
 		for (NSString *component in keyPathComponents) {
@@ -260,7 +263,6 @@ static NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapter
 				// can set the whole key path afterward.
 				[obj setValue:[NSMutableDictionary dictionary] forKey:component];
 			}
-
 			obj = [obj valueForKey:component];
 		}
 

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class ATOMProceedingViewModel;
 
 @interface ATOMProceedingTableViewCell : UITableViewCell
 
@@ -17,6 +18,7 @@
 @property (nonatomic, strong) UIImageView *userUploadImageView;
 @property (nonatomic, strong) UIButton *uploadButton;
 @property (nonatomic, strong) UIButton *deleteButton;
+@property (nonatomic, strong) ATOMProceedingViewModel *viewModel;
 
 + (CGFloat)calculateCellHeight;
 

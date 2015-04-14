@@ -34,6 +34,8 @@
 #import "JSONKit.h"
 #import "UIImageView+AFNetworking.h"
 #import "UIButton+AFNetworking.h"
+#import "POP.h"
+#import "UIViewController+ATOMTracking.h"
 
 #endif
 

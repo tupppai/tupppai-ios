@@ -20,6 +20,18 @@ typedef enum {
     ATOMTakePhotoType
 }ATOMPSEventType;
 
+typedef enum {
+    ATOMCommentMessageType = 0,
+    ATOMInviteMessageType,
+    ATOMTopicReplyMessageType,
+    ATOMMyUploadType,
+    ATOMMyWorkType,
+    ATOMProceedingType,
+    ATOMMyCollectionType,
+    ATOMInviteType,
+    ATOMShareType
+} ATOMDetailPushType;
+
 @interface ATOMBaseViewController : UIViewController
 
 @property (nonatomic, strong) UIBarButtonItem *negativeSpacer;

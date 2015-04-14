@@ -13,7 +13,6 @@
 
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *content;
-
 - (void)setViewModelData:(ATOMComment *)comment;
 
 @end

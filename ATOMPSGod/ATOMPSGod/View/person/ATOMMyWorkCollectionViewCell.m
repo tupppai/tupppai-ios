@@ -35,11 +35,6 @@ static int collumnNumber = 3;
     return self;
 }
 
-- (void)setWorkImage:(UIImage *)workImage {
-    _workImage = workImage;
-    self.workImageView.image = _workImage;
-}
-
 
 
 

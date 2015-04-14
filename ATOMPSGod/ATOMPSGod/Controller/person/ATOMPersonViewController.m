@@ -18,6 +18,8 @@
 #import "ATOMProfileEditViewController.h"
 #import "ATOMProceedingViewController.h"
 #import "ATOMHeaderImageCropperViewController.h"
+#import "ATOMUploadImage.h"
+#import "ATOMImage.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -62,7 +64,7 @@
     _personView.personTableView.delegate = self;
     _personView.personTableView.dataSource = self;
     self.title = @"个人";
-    self.navigationItem.title = @"宋祥伍";
+    self.navigationItem.title = [ATOMCurrentUser currentUser].nickname;
 }
 
 #pragma mark - Gesture Event
@@ -241,7 +243,16 @@
 #pragma ATOMCropHeaderImageCompleteProtocol
 
 - (void)cropHeaderImageCompleteWith:(UIImage *)image {
-    [_personView.userHeaderButton setBackgroundImage:image forState:UIControlStateNormal];
+    NSData *data = UIImageJPEGRepresentation(image, 0.2);
+    [_personView.userHeaderButton setBackgroundImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
+    ATOMUploadImage *uploadImage = [ATOMUploadImage new];
+    [uploadImage UploadImage:data WithBlock:^(ATOMImage *imageInformation, NSError *error) {
+        if (error) {
+            NSLog(@"%@", error);
+            return ;
+        }
+        [ATOMCurrentUser currentUser].avatar = imageInformation.imageURL;
+    }];
 }
 
 

@@ -52,7 +52,7 @@
             if (hotCommentDataArray.count) {
                 for (int j = 0; j < hotCommentDataArray.count; j++) {
                     ATOMComment *comment = [MTLJSONAdapter modelOfClass:[ATOMComment class] fromJSONDictionary:hotCommentDataArray[j] error:NULL];
-                    comment.commentType = 2;
+                    comment.commentType = 1;
                     comment.detailID = detailImage.detailID;
                     [detailImage.hotCommentArray addObject:comment];
                 }

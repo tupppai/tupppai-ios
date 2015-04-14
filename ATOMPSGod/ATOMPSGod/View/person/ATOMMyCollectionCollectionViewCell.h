@@ -7,14 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+@class ATOMCollectionViewModel;
 
 @interface ATOMMyCollectionCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic, strong) UIButton *userHeaderButton;
 @property (nonatomic, strong) UILabel *userNameLabel;
 @property (nonatomic, strong) UIImageView *collectionImageView;
-@property (nonatomic, strong) UIImage *collectionImage;
-
-@property (nonatomic, strong) NSString *userName;
+@property (nonatomic, strong) ATOMCollectionViewModel *viewModel;
 
 @end

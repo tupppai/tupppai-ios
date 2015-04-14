@@ -22,4 +22,5 @@
 
 + (CGFloat)calculateCellHeightWithModel:(ATOMCommentMessageViewModel *)viewModel;
 
+
 @end

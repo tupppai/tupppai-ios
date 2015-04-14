@@ -35,7 +35,8 @@
              @"avatar" : @"avatar",
              @"content" : @"content",
              @"commentTime" : @"commentTime",
-             @"praiseNumber" : @"praiseNumber"
+             @"praiseNumber" : @"praiseNumber",
+             @"atCommentArray" : @"atCommentArray"
              };
 }
 

@@ -7,9 +7,11 @@
 //
 
 #import "ATOMBaseViewController.h"
+@class ATOMHomePageViewModel;
 
 @interface ATOMAddTipLabelToImageViewController : ATOMBaseViewController
 
+@property (nonatomic, strong) ATOMHomePageViewModel *homePageViewModel;
 @property (nonatomic, strong) UIImage *workImage;
 
 @end

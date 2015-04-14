@@ -45,7 +45,7 @@ static float commenWidth;
     [_attentionButton setBackgroundImage:[UIImage imageNamed:@"btn_addattention"] forState:UIControlStateSelected];
     [self addSubview:_attentionButton];
     
-    commenWidth = (CGOriginX(_attentionButton.frame) - CGRectGetMaxX(_userHeaderButton.frame) - padding10 * 2) / 3;
+    commenWidth = (CGOriginX(_attentionButton.frame) - CGRectGetMaxX(_userHeaderButton.frame) - padding10 * 2 - padding10 * 3) / 3;
     
     _fansNumberButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, CGRectGetMaxY(_userNameLabel.frame), commenWidth, 15)];
     [self setCommonButton:_fansNumberButton WithImage:[UIImage imageNamed:@"fans_num"]];

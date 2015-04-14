@@ -8,6 +8,7 @@
 
 #import "ATOMCommentMessageTableViewCell.h"
 #import "ATOMCommentMessageViewModel.h"
+#import "ATOMHomePageViewModel.h"
 
 @implementation ATOMCommentMessageTableViewCell
 
@@ -27,7 +28,6 @@ static int padding10 = 10;
 - (void)createSubView {
     _userHeaderButton = [UIButton new];
     _userHeaderButton.userInteractionEnabled = NO;
-    _userHeaderButton.backgroundColor = [UIColor redColor];
     _userHeaderButton.layer.cornerRadius = 22.5;
     _userHeaderButton.layer.masksToBounds = YES;
     [self addSubview:_userHeaderButton];
@@ -48,7 +48,7 @@ static int padding10 = 10;
     [self addSubview:_replyTimeLabel];
     
     _workImageView = [UIImageView new];
-    _workImageView.backgroundColor = [UIColor orangeColor];
+    _workImageView.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:_workImageView];
     
 }
@@ -59,7 +59,7 @@ static int padding10 = 10;
     _userSexImageView.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - SEXRADIUS, CGRectGetMaxY(_userHeaderButton.frame) - SEXRADIUS, SEXRADIUS, SEXRADIUS);
     _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, padding20, SCREEN_WIDTH - padding10 * 4 - 75 - 45, 20);
     _replyContentLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, CGRectGetMaxY(_userNameLabel.frame), SCREEN_WIDTH - padding10 * 4 - 75 - 45, 30);
-    _replyTimeLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, CGRectGetMaxY(_replyContentLabel.frame), 80, 15);
+    _replyTimeLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, CGRectGetMaxY(_replyContentLabel.frame), 150, 15);
     _workImageView.frame = CGRectMake(SCREEN_WIDTH - padding10 - 75, padding10, 75, 75);
 }
 
@@ -72,12 +72,14 @@ static int padding10 = 10;
     NSInteger nameLength = _commentMessageViewModel.userName.length;
     NSRange range = {0,nameLength};
     NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:16.f], NSFontAttributeName, [UIColor colorWithHex:0x797979], NSForegroundColorAttributeName, nil];
-    NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ 回复你",_commentMessageViewModel.userName] attributes:attributeDict];
+    NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@",_commentMessageViewModel.userName, _commentMessageViewModel.theme] attributes:attributeDict];
     [attributeStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0x00adef] range:range];
     _userNameLabel.attributedText = attributeStr;
-    _replyContentLabel.text = _commentMessageViewModel.repplyContent;
-    _replyTimeLabel.text = _commentMessageViewModel.repplyTime;
+    _replyContentLabel.text = _commentMessageViewModel.content;
+    _replyTimeLabel.text = _commentMessageViewModel.publishTime;
     _userSexImageView.image = [UIImage imageNamed:_commentMessageViewModel.userSex];
+    [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:commentMessageViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
+    [_workImageView setImageWithURL:[NSURL URLWithString:commentMessageViewModel.homepageViewModel.userImageURL]];
     [self setNeedsLayout];
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import "ATOMMyCollectionCollectionViewCell.h"
+#import "ATOMCollectionViewModel.h"
 
 @interface ATOMMyCollectionCollectionViewCell ()
 
@@ -62,14 +63,35 @@ static int collumnNumber = 2;
     return _userNameLabel;
 }
 
-- (void)setUserName:(NSString *)userName {
-    _userName = userName;
-    self.userNameLabel.text = _userName;
+- (void)setViewModel:(ATOMCollectionViewModel *)viewModel {
+    _viewModel = viewModel;
+    self.userNameLabel.text = viewModel.userName;
+    [self.userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
+    [self.collectionImageView setImageWithURL:[NSURL URLWithString:viewModel.imageURL]];
 }
 
-- (void)setCollectionImage:(UIImage *)collectionImage {
-    _collectionImage = collectionImage;
-    self.collectionImageView.image = _collectionImage;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @end

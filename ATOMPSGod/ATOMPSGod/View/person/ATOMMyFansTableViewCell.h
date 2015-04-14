@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class ATOMFansViewModel;
 
 @interface ATOMMyFansTableViewCell : UITableViewCell
 
@@ -17,5 +18,6 @@
 @property (nonatomic, strong) UIButton *uploadNumberButton;
 @property (nonatomic, strong) UIButton *workNumberButton;
 @property (nonatomic, strong) UIButton *attentionButton;
+@property (nonatomic, strong) ATOMFansViewModel *viewModel;
 
 @end

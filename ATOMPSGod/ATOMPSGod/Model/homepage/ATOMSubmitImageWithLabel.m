@@ -13,21 +13,35 @@
 
 @interface ATOMSubmitImageWithLabel ()
 
-@property (nonatomic, strong) ATOMImageTipLabelDAO *tipLabelDAO;
+
 
 @end
 
 @implementation ATOMSubmitImageWithLabel
 
-- (ATOMImageTipLabelDAO *)tipLabelDAO {
-    if (!_tipLabelDAO) {
-        _tipLabelDAO = [ATOMImageTipLabelDAO new];
-    }
-    return _tipLabelDAO;
+- (AFHTTPRequestOperation *)SubmitImageWithLabel:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSInteger, NSError *))block {
+    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] POST:@"ask/save" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSMutableArray *labelArray = [NSMutableArray array];
+        NSArray *dictArray = responseObject[@"data"][@"labels"];
+        for (int i = 0; i < dictArray.count; i++) {
+            ATOMImageTipLabel *imageTipLabel = [ATOMImageTipLabel new];
+            imageTipLabel.labelID = [dictArray[i][@"id"] integerValue];
+            imageTipLabel.imageID = [responseObject[@"data"][@"ask_id"] integerValue];
+            [labelArray addObject:imageTipLabel];
+        }
+        NSInteger newImageID = [responseObject[@"data"][@"ask_id"] integerValue];
+        if (block) {
+            block(labelArray, newImageID, nil);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (block) {
+            block(nil, 0, error);
+        }
+    }];
 }
 
-- (AFHTTPRequestOperation *)SubmitImageWithLabel:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
-    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] POST:@"ask/save" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+- (AFHTTPRequestOperation *)SubmitWorkWithLabel:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
+    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] POST:@"reply/save" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *labelArray = [NSMutableArray array];
         NSArray *dictArray = responseObject[@"data"][@"labels"];
         for (int i = 0; i < dictArray.count; i++) {
@@ -44,10 +58,6 @@
             block(nil, error);
         }
     }];
-}
-
-- (void)saveTipLabelInDB:(ATOMImageTipLabel *)tipLabel {
-    [self.tipLabelDAO insertTipLabel:tipLabel];
 }
 
 

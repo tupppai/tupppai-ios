@@ -7,7 +7,7 @@
 //
 
 #import "ATOMTopicReplyMessageTableViewCell.h"
-#import "ATOMOtherMessageViewModel.h"
+#import "ATOMReplyMessageViewModel.h"
 
 @implementation ATOMTopicReplyMessageTableViewCell
 
@@ -27,7 +27,6 @@ static int padding10 = 10;
 - (void)createSubView {
     _userHeaderButton = [UIButton new];
     _userHeaderButton.userInteractionEnabled = NO;
-    _userHeaderButton.backgroundColor = [UIColor redColor];
     _userHeaderButton.layer.cornerRadius = 22.5;
     _userHeaderButton.layer.masksToBounds = YES;
     [self addSubview:_userHeaderButton];
@@ -36,7 +35,6 @@ static int padding10 = 10;
     [self addSubview:_userSexImageView];
     
     _userNameLabel = [UILabel new];
-//    _userNameLabel.backgroundColor = [UIColor orangeColor];
     _userNameLabel.textColor = [UIColor colorWithHex:0x00adef];
     _userNameLabel.font = [UIFont systemFontOfSize:16.f];
     [self addSubview:_userNameLabel];
@@ -52,7 +50,7 @@ static int padding10 = 10;
     [self addSubview:_topicReplyTimeLabel];
     
     _workImageView = [UIImageView new];
-    _workImageView.backgroundColor = [UIColor orangeColor];
+    _workImageView.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:_workImageView];
     
 }
@@ -63,20 +61,19 @@ static int padding10 = 10;
     _userSexImageView.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - SEXRADIUS, CGRectGetMaxY(_userHeaderButton.frame) - SEXRADIUS, SEXRADIUS, SEXRADIUS);
     _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, padding20, SCREEN_WIDTH - padding10 * 4 - 75 - 45, 20);
     _topicReplyContentLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, CGRectGetMaxY(_userNameLabel.frame), SCREEN_WIDTH - padding10 * 4 - 75 - 45, 30);
-//    _topicReplyContentLabel.backgroundColor = [UIColor yellowColor];
-    _topicReplyTimeLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, CGRectGetMaxY(_topicReplyContentLabel.frame), 80, 15);
+    _topicReplyTimeLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, CGRectGetMaxY(_topicReplyContentLabel.frame), 150, 15);
     _workImageView.frame = CGRectMake(SCREEN_WIDTH - padding10 - 75, padding10, 75, 75);
 }
 
-- (void)setViewModel:(ATOMOtherMessageViewModel *)viewModel {
+- (void)setViewModel:(ATOMReplyMessageViewModel *)viewModel {
     _viewModel = viewModel;
+    [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     _userNameLabel.text = viewModel.userName;
-    _topicReplyContentLabel.text = viewModel.contentContent;
-    _topicReplyTimeLabel.text = viewModel.contentTime;
+    _topicReplyContentLabel.text = viewModel.theme;
+    _topicReplyTimeLabel.text = viewModel.publishTime;
     _userSexImageView.image = [UIImage imageNamed:viewModel.userSex];
+    [_workImageView setImageWithURL:[NSURL URLWithString:viewModel.imageURL]];
 }
-
-
 
 
 

@@ -10,4 +10,7 @@
 
 @interface ATOMCommentDetailViewController : ATOMBaseViewController
 
+@property (nonatomic, copy) NSString *type;
+@property (nonatomic, assign) NSInteger ID;
+
 @end

@@ -11,6 +11,10 @@
 #import "ATOMUploadWorkViewController.h"
 #import "ATOMHotDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
+#import "ATOMHomeImage.h"
+#import "ATOMHomePageViewModel.h"
+#import "ATOMProceedingViewModel.h"
+#import "ATOMShowProceeding.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -20,6 +24,10 @@
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapProceedingGesture;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
+@property (nonatomic, strong) NSMutableArray *dataSource;
+@property (nonatomic, strong) NSMutableArray *homeImageDataSource;
+@property (nonatomic, assign) NSInteger currentPage;
+@property (nonatomic, assign) BOOL canRefreshFooter;
 
 @end
 
@@ -42,6 +50,89 @@
     return _imagePickerController;
 }
 
+#pragma mark - Refresh
+
+- (void)configCollectionViewRefresh {
+    [_tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+}
+
+- (void)loadMoreData {
+    if (_canRefreshFooter) {
+        [self getMoreDataSource];
+    } else {
+        [_tableView.footer endRefreshing];
+    }
+    
+}
+
+#pragma mark - GetDataSource
+
+- (void)getDataSource {
+    WS(ws);
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    _dataSource = nil;
+    _dataSource = [NSMutableArray array];
+    _homeImageDataSource = nil;
+    _homeImageDataSource = [NSMutableArray array];
+    _currentPage = 1;
+    [param setObject:@(_currentPage) forKey:@"page"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@"new" forKey:@"type"];
+    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@"time" forKey:@"sort"];
+    [param setObject:@"desc" forKey:@"order"];
+    [param setObject:@(15) forKey:@"size"];
+    ATOMShowProceeding *showProceeding = [ATOMShowProceeding new];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    [showProceeding ShowProceeding:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
+        [SVProgressHUD dismiss];
+        for (ATOMHomeImage *homeImage in resultArray) {
+            ATOMHomePageViewModel *homepageViewModel = [ATOMHomePageViewModel new];
+            [homepageViewModel setViewModelData:homeImage];
+            [ws.homeImageDataSource addObject:homepageViewModel];
+            ATOMProceedingViewModel *proceedingViewModel = [ATOMProceedingViewModel new];
+            [proceedingViewModel setViewModelData:homeImage];
+            [ws.dataSource addObject:proceedingViewModel];
+        }
+        [ws.tableView reloadData];
+    }];
+}
+
+- (void)getMoreDataSource {
+    WS(ws);
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    long long timestamp = [[NSDate date] timeIntervalSince1970];
+    ws.currentPage++;
+    [param setObject:@(ws.currentPage) forKey:@"page"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@"new" forKey:@"type"];
+    [param setObject:@(timestamp) forKey:@"last_updated"];
+    [param setObject:@"time" forKey:@"sort"];
+    [param setObject:@"desc" forKey:@"order"];
+    [param setObject:@(15) forKey:@"size"];
+    ATOMShowProceeding *showProceeding = [ATOMShowProceeding new];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    [showProceeding ShowProceeding:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
+        [SVProgressHUD dismiss];
+        for (ATOMHomeImage *homeImage in resultArray) {
+            ATOMHomePageViewModel *homepageViewModel = [ATOMHomePageViewModel new];
+            [homepageViewModel setViewModelData:homeImage];
+            [ws.homeImageDataSource addObject:homepageViewModel];
+            ATOMProceedingViewModel *proceedingViewModel = [ATOMProceedingViewModel new];
+            [proceedingViewModel setViewModelData:homeImage];
+            [ws.dataSource addObject:proceedingViewModel];
+        }
+        if (resultArray.count == 0) {
+            ws.canRefreshFooter = NO;
+        } else {
+            ws.canRefreshFooter = YES;
+        }
+        [ws.tableView.footer endRefreshing];
+        [ws.tableView reloadData];
+    }];
+}
+
 #pragma mark - UI
 
 - (void)viewDidLoad {
@@ -59,6 +150,9 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [_tableView addGestureRecognizer:self.tapProceedingGesture];
+    [self configCollectionViewRefresh];
+    _canRefreshFooter = YES;
+    [self getDataSource];
 }
 
 #pragma mark - Gesture Event
@@ -74,7 +168,7 @@
             [self dealUploadWork];
         } else if (CGRectContainsPoint(cell.userUploadImageView.frame, p)) {
             ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
-            hdvc.pushType = ATOMProceedingType;
+            hdvc.homePageViewModel = _homeImageDataSource[indexPath.row];
             [self pushViewController:hdvc animated:YES];
         } else if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
@@ -108,7 +202,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return _dataSource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -117,6 +211,7 @@
     if (!cell) {
         cell = [[ATOMProceedingTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
+    cell.viewModel = _dataSource[indexPath.row];
     return cell;
 }
 

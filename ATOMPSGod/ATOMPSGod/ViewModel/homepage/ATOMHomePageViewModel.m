@@ -22,6 +22,19 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        _imageID = 0;
+        _userID = [ATOMCurrentUser currentUser].uid;
+        _userName = [ATOMCurrentUser currentUser].nickname;
+        _userSex = ([ATOMCurrentUser currentUser].sex == 0) ? @"woman" : @"man";
+        _avatarURL = [ATOMCurrentUser currentUser].avatar;
+        NSDateFormatter *df = [NSDateFormatter new];
+        [df setDateFormat:@"yyyy年MM月dd日 HH时mm分"];
+        NSDate *publishDate = [NSDate date];
+        _publishTime = [df stringFromDate:publishDate];
+        _praiseNumber = @"0";
+        _shareNumber = @"0";
+        _commentNumber = @"0";
+        _totalPSNumber = @"0";
         _labelArray = [NSMutableArray new];
     }
     return self;
@@ -29,6 +42,7 @@
 
 - (void)setViewModelData:(ATOMHomeImage *)homeImage {
     _imageID = homeImage.imageID;
+    _userID = homeImage.uid;
     _userName = homeImage.nickname;
     _userSex = (homeImage.sex == 1) ? @"man" : @"woman";
     _userImageURL = homeImage.imageURL;
@@ -58,7 +72,6 @@
     }
     
 }
-
 
 
 

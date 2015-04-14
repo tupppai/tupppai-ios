@@ -11,6 +11,5 @@
 @interface ATOMMyWorkCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic, strong) UIImageView *workImageView;
-@property (nonatomic, strong) UIImage *workImage;
 
 @end

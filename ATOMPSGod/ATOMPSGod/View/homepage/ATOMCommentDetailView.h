@@ -11,11 +11,17 @@
 @interface ATOMCommentDetailView : UIScrollView
 
 @property (nonatomic, strong) UITableView *commentDetailTableView;
-
 @property (nonatomic, strong) UIButton *sendCommentButton;
-
 @property (nonatomic, strong) UITextView *sendCommentView;
-
+@property (nonatomic, strong) UIButton *faceButton;
 @property (nonatomic, strong) UIView *bottomView;
+@property (nonatomic, copy) NSString *textViewPlaceholder;
+/**
+ *  表情滚动视图
+ */
+@property (nonatomic, strong) UIScrollView *faceView;
+
+- (void)hideCommentView;
+- (BOOL)isEditingCommentView;
 
 @end

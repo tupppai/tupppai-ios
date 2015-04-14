@@ -7,7 +7,10 @@
 //
 
 #import "ATOMBaseViewController.h"
+@class ATOMHomePageViewModel;
 
 @interface ATOMShareViewController : ATOMBaseViewController
+
+@property (nonatomic, strong) ATOMHomePageViewModel *homePageViewModel;
 
 @end

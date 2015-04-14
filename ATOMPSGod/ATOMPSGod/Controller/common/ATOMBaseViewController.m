@@ -45,7 +45,6 @@
         self.navigationItem.leftBarButtonItems = @[_negativeSpacer, barBackButtonItem];
     }
 //    self.navigationItem.hidesBackButton = YES;
-    NSLog(@"%@ DidLoad!!!!!",[self class]);
     
 }
 

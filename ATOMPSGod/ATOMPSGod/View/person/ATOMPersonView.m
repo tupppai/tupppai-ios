@@ -28,13 +28,14 @@ static int padding = 10;
     [self addSubview:_topBackGroundImageView];
     
     _userHeaderButton = [[UIButton alloc] initWithFrame:CGRectMake((SCREEN_WIDTH - 72) / 2, padding, 72, 72)];
-    [_userHeaderButton setBackgroundImage:[UIImage imageNamed:@"head_portrait"] forState:UIControlStateNormal];
+    [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[ATOMCurrentUser currentUser].avatar] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     _userHeaderButton.layer.cornerRadius = 36;
     _userHeaderButton.layer.masksToBounds = YES;
     [_topBackGroundImageView addSubview:_userHeaderButton];
     
     _userSexImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - SEXRADIUS, CGRectGetMaxY(_userHeaderButton.frame) - SEXRADIUS, SEXRADIUS, SEXRADIUS)];
-    _userSexImageView.image = [UIImage imageNamed:@"woman"];
+    NSString *userSex = ([ATOMCurrentUser currentUser].sex == 1) ? @"man" : @"woman";
+    _userSexImageView.image = [UIImage imageNamed:userSex];
     _userSexImageView.layer.cornerRadius = 8.5;
     _userSexImageView.layer.masksToBounds = YES;
     [_topBackGroundImageView addSubview:_userSexImageView];
@@ -47,14 +48,14 @@ static int padding = 10;
     _fansLabel = [[UILabel alloc] initWithFrame:CGRectMake(centerX - buttonWidth, CGRectGetMaxY(_userHeaderButton.frame) + padding, buttonWidth, 40)];
     _fansLabel.userInteractionEnabled = YES;
     _fansLabel.numberOfLines = 0;
-    NSAttributedString *fansLabelText = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"粉丝\n123"] attributes:attributeDict];
+    NSAttributedString *fansLabelText = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"粉丝\n%d", (int)[ATOMCurrentUser currentUser].fansNumber] attributes:attributeDict];
     _fansLabel.attributedText = fansLabelText;
     _fansLabel.textAlignment = NSTextAlignmentCenter;
     [_topBackGroundImageView addSubview:_fansLabel];
     
     _praiseLabel = [[UILabel alloc] initWithFrame:CGRectMake(centerX, CGRectGetMaxY(_userHeaderButton.frame) + padding, buttonWidth, 40)];
     _praiseLabel.numberOfLines = 0;
-    NSAttributedString *praiseLabelText = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"赞\n123"] attributes:attributeDict];
+    NSAttributedString *praiseLabelText = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"赞\n%d", (int)[ATOMCurrentUser currentUser].praiseNumber] attributes:attributeDict];
     _praiseLabel.attributedText = praiseLabelText;
     _praiseLabel.textAlignment = NSTextAlignmentCenter;
     [_topBackGroundImageView addSubview:_praiseLabel];
@@ -63,6 +64,7 @@ static int padding = 10;
     _personTableView.backgroundColor = [UIColor colorWithHex:0xededed];
     _personTableView.tableFooterView = [UIView new];
     _personTableView.rowHeight = 45.f;
+    _personTableView.scrollEnabled = NO;
     [self addSubview:_personTableView];
     
 }

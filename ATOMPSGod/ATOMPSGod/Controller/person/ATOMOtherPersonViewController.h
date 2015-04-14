@@ -10,4 +10,6 @@
 
 @interface ATOMOtherPersonViewController : ATOMBaseViewController
 
+@property (nonatomic, assign) NSInteger userID;
+
 @end

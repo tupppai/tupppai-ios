@@ -7,12 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
+@class ATOMComment;
 
 @interface ATOMCommentDetailViewModel : NSObject
 
-@property (nonatomic, copy) NSString *userName;
-@property (nonatomic, copy) NSString *userSex;
-@property (nonatomic, copy) NSString *userCommentDetail;
+@property (nonatomic, copy) NSString *nickname;
+@property (nonatomic, copy) NSString *content;
 @property (nonatomic, copy) NSString *praiseNumber;
+@property (nonatomic, assign) NSInteger comment_id;
+@property (nonatomic, copy) NSString *userSex;
+@property (nonatomic, copy) NSString *avatar;
+@property (nonatomic, assign) BOOL isPraise;
+
+- (void)setViewModelData:(ATOMComment *)comment;
+- (void)setDataWithAtModel:(ATOMCommentDetailViewModel *)viewModel andContent:(NSString *)content;
+- (void)increasePraiseNumber;
 
 @end

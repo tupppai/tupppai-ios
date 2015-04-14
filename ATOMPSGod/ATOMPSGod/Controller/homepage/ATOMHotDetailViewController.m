@@ -190,27 +190,6 @@
     [self presentViewController:_imagePickerController animated:YES completion:NULL];
 }
 
-- (void)popCurrentController {
-    if (_pushType == ATOMCommentMessageType) {
-        [self.navigationController popViewControllerAnimated:YES];
-    } else if (_pushType == ATOMInviteMessageType) {
-        [self.navigationController popViewControllerAnimated:YES];
-    } else if (_pushType == ATOMTopicReplyMessageType) {
-        [self.navigationController popViewControllerAnimated:YES];
-    } else if (_pushType == ATOMMyUploadType) {
-        [self.navigationController popViewControllerAnimated:YES];
-    } else if (_pushType == ATOMMyWorkType) {
-        [self.navigationController popViewControllerAnimated:YES];
-    } else if (_pushType == ATOMProceedingType) {
-        [self.navigationController popViewControllerAnimated:YES];
-    } else if (_pushType == ATOMMyCollectionType) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-    else {
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    }
-}
-
 #pragma mark - Gesture Event
 
 - (void)tapHotDetailGesture:(UITapGestureRecognizer *)gesture {
@@ -249,6 +228,10 @@
                 NSLog(@"Click shareButton");
             } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
                 ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
+                NSInteger row = indexPath.row;
+                ATOMDetailImageViewModel *model = _dataSource[row];
+                cdvc.ID = model.ID;
+                cdvc.type = (row == 0) ? @"ask" : @"reply";
                 [self pushViewController:cdvc animated:YES];
             }
         }
@@ -267,6 +250,7 @@
     [self dismissViewControllerAnimated:YES completion:^{
         ATOMUploadWorkViewController *uwvc = [ATOMUploadWorkViewController new];
         uwvc.originImage = info[UIImagePickerControllerOriginalImage];
+        uwvc.homePageViewModel = ws.homePageViewModel;
         [ws pushViewController:uwvc animated:YES];
     }];
 }

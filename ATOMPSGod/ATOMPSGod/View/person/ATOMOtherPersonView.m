@@ -11,6 +11,8 @@
 
 @interface ATOMOtherPersonView ()
 
+@property (nonatomic, assign) ATOMOtherPersonCollectionViewType currentType;
+
 @end
 
 @implementation ATOMOtherPersonView
@@ -64,6 +66,7 @@ static int collumnNumber = 3;
         [self addSubview:_otherPersonUploadCollectionView];
         [self addSubview:_uploadHeaderView];
         [self bringSubviewToFront:_uploadHeaderView];
+        _currentType = ATOMUploadType;
     }
 }
 
@@ -79,12 +82,13 @@ static int collumnNumber = 3;
         [self addSubview:_otherPersonWorkCollectionView];
         [self addSubview:_workHeaderView];
         [self bringSubviewToFront:_workHeaderView];
+        _currentType = ATOMWorkType;
     }
 }
 
-
-
-
+- (ATOMOtherPersonCollectionViewType)typeOfCurrentCollectionView {
+    return _currentType;
+}
 
 
 

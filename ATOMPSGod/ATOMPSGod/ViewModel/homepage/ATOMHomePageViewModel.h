@@ -12,6 +12,7 @@
 @interface ATOMHomePageViewModel : NSObject
 
 @property (nonatomic, assign) NSInteger imageID;
+@property (nonatomic, assign) NSInteger userID;
 @property (nonatomic, copy) NSString *userName;
 @property (nonatomic, copy) NSString *userSex;
 @property (nonatomic, copy) NSString *avatarURL;
@@ -26,6 +27,5 @@
 @property (nonatomic, strong) NSMutableArray *labelArray;
 @property (nonatomic, strong) UIImage *image;
 - (void)setViewModelData:(ATOMHomeImage *)homeImage;
-
 
 @end

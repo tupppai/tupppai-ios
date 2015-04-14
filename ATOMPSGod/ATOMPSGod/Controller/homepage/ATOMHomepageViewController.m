@@ -41,6 +41,7 @@
 @property (nonatomic, assign) BOOL canRefreshHotFooter;
 @property (nonatomic, assign) BOOL canRefreshRecentFooter;
 @property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
+@property (nonatomic, strong) ATOMHomePageViewModel *selectedHomePageViewModel;
 
 @end
 
@@ -147,14 +148,14 @@
     NSMutableDictionary *param = [NSMutableDictionary new];
     double timeStamp = [[NSDate date] timeIntervalSince1970];
     if ([homeType isEqualToString:@"new"]) {
-        ws.dataSourceOfRecentTableView = nil;
-        ws.dataSourceOfRecentTableView = [NSMutableArray array];
-        ws.currentRecentPage = 1;
+        _dataSourceOfRecentTableView = nil;
+        _dataSourceOfRecentTableView = [NSMutableArray array];
+        _currentRecentPage = 1;
         [param setObject:@(ws.currentRecentPage) forKey:@"page"];
     } else if ([homeType isEqualToString:@"hot"]) {
-        ws.dataSourceOfHotTableView = nil;
-        ws.dataSourceOfHotTableView = [NSMutableArray array];
-        ws.currentHotPage = 1;
+        _dataSourceOfHotTableView = nil;
+        _dataSourceOfHotTableView = [NSMutableArray array];
+        _currentHotPage = 1;
         [param setObject:@(ws.currentHotPage) forKey:@"page"];
     }
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
@@ -323,31 +324,15 @@
 }
 
 - (void)clickCameraButton:(UIBarButtonItem *)sender {
-    [UIActionSheet showInView:self.view withTitle:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@[@"拍照", @"从手机相册选择", @"上传作品"] tapBlock:^(UIActionSheet *actionSheet, NSInteger buttonIndex) {
+    [UIActionSheet showInView:self.view withTitle:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@[@"求助上传", @"作品上传"] tapBlock:^(UIActionSheet *actionSheet, NSInteger buttonIndex) {
         NSString * tapTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
-        if ([tapTitle isEqualToString:@"拍照"]) {
-            [self dealTakingPhoto];
-        } else if ([tapTitle isEqualToString:@"从手机相册选择"]) {
+        if ([tapTitle isEqualToString:@"求助上传"]) {
             [self dealSelectingPhotoFromAlbum];
-        } else if ([tapTitle isEqualToString:@"上传作品"]) {
-            [self dealUploadWorks];
+        } else if ([tapTitle isEqualToString:@"作品上传"]) {
+            [self dealUploadWorksWithTag:0];
         }
     }];
 }
-
-- (void)dealTakingPhoto {
-    [[NSUserDefaults standardUserDefaults] setObject:@"SeekingHelp" forKey:@"UploadingOrSeekingHelp"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    UIImagePickerControllerSourceType currentType = UIImagePickerControllerSourceTypeCamera;
-    BOOL ok = [UIImagePickerController isSourceTypeAvailable:currentType];
-    if (ok) {
-        self.imagePickerController.sourceType = currentType;
-        [self presentViewController:_imagePickerController animated:YES completion:NULL];
-    } else {
-        
-    }
-}
-
 
 - (void)dealSelectingPhotoFromAlbum {
     [[NSUserDefaults standardUserDefaults] setObject:@"SeekingHelp" forKey:@"UploadingOrSeekingHelp"];
@@ -356,11 +341,22 @@
     [self presentViewController:_imagePickerController animated:YES completion:NULL];
 }
 
-- (void)dealUploadWorks {
+/**
+ *  上传作品
+ *
+ *  @param tag 0:->进行中  1:->选择相册图片
+ */
+- (void)dealUploadWorksWithTag:(NSInteger)tag {
     [[NSUserDefaults standardUserDefaults] setObject:@"Uploading" forKey:@"UploadingOrSeekingHelp"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    ATOMProceedingViewController *pvc = [ATOMProceedingViewController new];
-    [self pushViewController:pvc animated:YES];
+    if (tag == 0) {
+        ATOMProceedingViewController *pvc = [ATOMProceedingViewController new];
+        [self pushViewController:pvc animated:YES];
+    } else {
+        self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+        [self presentViewController:_imagePickerController animated:YES completion:NULL];
+    }
+
 }
 
 - (void)dealDownloadWork {
@@ -385,9 +381,13 @@
                 p = [gesture locationInView:cell.topView];
                 if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
                     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+                    ATOMHomePageViewModel *model = _dataSourceOfHotTableView[indexPath.row];
+                    opvc.userID = model.userID;
                     [self pushViewController:opvc animated:YES];
                 } else if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
                     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+                    ATOMHomePageViewModel *model = _dataSourceOfHotTableView[indexPath.row];
+                    opvc.userID = model.userID;
                     [self pushViewController:opvc animated:YES];
                 }
             } else if (CGRectContainsPoint(cell.thinCenterView.frame, p)){
@@ -398,6 +398,9 @@
                     
                 } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
                     ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
+                    ATOMHomePageViewModel *model = _dataSourceOfHotTableView[indexPath.row];
+                    cdvc.ID = model.imageID;
+                    cdvc.type = @"ask";
                     [self pushViewController:cdvc animated:YES];
                 } else if (CGRectContainsPoint(cell.moreShareButton.frame, p)) {
                     [[AppDelegate APP].window addSubview:self.shareFunctionView];
@@ -423,6 +426,8 @@
                 p = [gesture locationInView:cell.topView];
                 if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
                     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+                    ATOMHomePageViewModel *model = _dataSourceOfRecentTableView[indexPath.row];
+                    opvc.userID = model.userID;
                     [self pushViewController:opvc animated:YES];
                 } else if (CGRectContainsPoint(cell.psButton.frame, p)) {
                     [UIActionSheet showInView:self.view withTitle:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@[@"下载素材", @"上传作品"] tapBlock:^(UIActionSheet *actionSheet, NSInteger buttonIndex) {
@@ -430,11 +435,14 @@
                         if ([tapTitle isEqualToString:@"下载素材"]) {
                             [self dealDownloadWork];
                         } else if ([tapTitle isEqualToString:@"上传作品"]) {
-                            [self dealUploadWorks];
+                            _selectedHomePageViewModel = _dataSourceOfRecentTableView[indexPath.row];
+                            [self dealUploadWorksWithTag:1];
                         }
                     }];
                 } else if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
                     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+                    ATOMHomePageViewModel *model = _dataSourceOfHotTableView[indexPath.row];
+                    opvc.userID = model.userID;
                     [self pushViewController:opvc animated:YES];
                 }
             } else if (CGRectContainsPoint(cell.thinCenterView.frame, p)){
@@ -445,6 +453,9 @@
                     NSLog(@"Click shareButton");
                 } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
                     ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
+                    ATOMHomePageViewModel *model = _dataSourceOfHotTableView[indexPath.row];
+                    cdvc.ID = model.imageID;
+                    cdvc.type = @"ask";
                     [self pushViewController:cdvc animated:YES];
                 }
             }
@@ -464,6 +475,7 @@
     [self dismissViewControllerAnimated:YES completion:^{
         ATOMUploadWorkViewController *uwvc = [ATOMUploadWorkViewController new];
         uwvc.originImage = info[UIImagePickerControllerOriginalImage];
+        uwvc.homePageViewModel = ws.selectedHomePageViewModel;
         [ws pushViewController:uwvc animated:YES];
     }];
 }

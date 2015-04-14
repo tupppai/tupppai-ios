@@ -17,6 +17,8 @@
 #import "ATOMImage.h"
 #import "ATOMImageTipLabel.h"
 #import "AppDelegate.h"
+#import "ATOMHomePageViewModel.h"
+#import "ATOMImageTipLabelViewModel.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -32,6 +34,7 @@
 @property (nonatomic, strong) NSString *currentTipLabelText;
 @property (nonatomic, assign) CGPoint currentLocation;
 @property (nonatomic, strong) ATOMTipButton *lastAddButton;
+@property (nonatomic, strong) ATOMHomePageViewModel *newHomePageViewModel;
 
 @end
 
@@ -58,6 +61,13 @@
         _cancelLeftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(clickCancelLeftBarButtonItem:)];
     }
     return _cancelLeftBarButtonItem;
+}
+
+- (ATOMHomePageViewModel *)newHomePageViewModel {
+    if (!_newHomePageViewModel) {
+        _newHomePageViewModel = [ATOMHomePageViewModel new];
+    }
+    return _newHomePageViewModel;
 }
 
 #pragma mark - UI
@@ -171,29 +181,7 @@
     _lastAddButton = nil;
 }
 
-- (void)dealSubmitWorkWithLabel {
-    
-}
-
-- (void)dealSubmitUploadWithLabel {
-    WS(ws);
-    CGFloat scale = SCREEN_WIDTH / CGWidth(_addTipLabelToImageView.workImageView.frame);
-    CGFloat ratio = CGHeight(_addTipLabelToImageView.workImageView.frame) / CGWidth(_addTipLabelToImageView.workImageView.frame);
-    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:@(SCREEN_WIDTH), @"width", @(scale), @"scale", @(ratio), @"ratio", nil];
-    NSData *data = UIImageJPEGRepresentation(_workImage, 0.2);
-    ATOMUploadImage *uploadImage = [ATOMUploadImage new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
-    
-    [uploadImage UploadImage:data withParam:param andBlock:^(ATOMImage *imageInformation, NSError *error) {
-        if (error) {
-            [SVProgressHUD showErrorWithStatus:@"提交作品失败..."];
-            return ;
-        }
-        [ws dealSubmitUploadWithLabelBy:imageInformation.imageID];
-    }];
-}
-
-- (void)dealSubmitUploadWithLabelBy:(long long)imageID {
+- (NSDictionary *)getParamWithImageID:(NSInteger)imageID AndAskID:(NSInteger)askID{
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary new];
     NSMutableArray *paramLabelArray = [NSMutableArray array];
@@ -207,25 +195,88 @@
         } else {
             labelDirection = 1;
         }
+        if (askID == -1) {
+            ATOMImageTipLabelViewModel *label = [ATOMImageTipLabelViewModel new];
+            label.x = x;
+            label.y = y;
+            label.labelDirection = labelDirection;
+            label.content = tipButton.buttonText;
+            [ws.newHomePageViewModel.labelArray addObject:label];
+        }
         NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@(x), @"x", @(y), @"y", tipButton.buttonText, @"content", @(labelDirection), @"direction", @(tipButton.tag), @"vid", nil];
         [paramLabelArray addObject:dict];
     }
     [param setObject:@(imageID) forKey:@"upload_id"];
     [param setObject:[paramLabelArray JSONString] forKey:@"labels"];
-    ATOMSubmitImageWithLabel *submitImageWithLabel = [ATOMSubmitImageWithLabel new];
-    [submitImageWithLabel SubmitImageWithLabel:param withBlock:^(NSMutableArray *labelArray, NSError *error) {
+    CGFloat scale = SCREEN_WIDTH / CGWidth(ws.addTipLabelToImageView.workImageView.frame);
+    CGFloat ratio = CGHeight(ws.addTipLabelToImageView.workImageView.frame) / CGWidth(ws.addTipLabelToImageView.workImageView.frame);
+    [param setObject:@(scale) forKey:@"scale"];
+    [param setObject:@(ratio) forKey:@"ratio"];
+    if (askID != -1) {
+        [param setObject:@(askID) forKey:@"ask_id"];
+    }
+    return [param copy];
+}
+
+- (void)dealSubmitWorkWithLabel {
+    WS(ws);
+    NSData *data = UIImageJPEGRepresentation(_workImage, 0.2);
+    ATOMUploadImage *uploadWork = [ATOMUploadImage new];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
+    [uploadWork UploadImage:data WithBlock:^(ATOMImage *imageInformation, NSError *error) {
+        if (error) {
+            [SVProgressHUD showErrorWithStatus:@"提交作品失败..."];
+            return ;
+        }
+        [ws dealSubmitWorkWithLabelBy:imageInformation.imageID];
+    }];
+}
+
+- (void)dealSubmitWorkWithLabelBy:(NSInteger)imageID {
+    WS(ws);
+    ATOMSubmitImageWithLabel *submitWorkWithLabel = [ATOMSubmitImageWithLabel new];
+    [submitWorkWithLabel SubmitWorkWithLabel:[ws getParamWithImageID:ws.homePageViewModel.imageID AndAskID:ws.homePageViewModel.imageID] withBlock:^(NSMutableArray *labelArray, NSError *error) {
         if (error) {
             [SVProgressHUD showErrorWithStatus:@"提交作品失败..."];
             return ;
         }
         [SVProgressHUD showSuccessWithStatus:@"提交作品成功..."];
-        if (labelArray.count) {
-            for (ATOMImageTipLabel *tipLabel in labelArray) {
-                [submitImageWithLabel saveTipLabelInDB:tipLabel];
-            }
+        ATOMShareViewController *svc = [ATOMShareViewController new];
+        svc.homePageViewModel = ws.homePageViewModel;
+        [ws pushViewController:svc animated:YES];
+    }];
+}
+
+- (void)dealSubmitUploadWithLabel {
+    WS(ws);
+    NSData *data = UIImageJPEGRepresentation(_workImage, 0.2);
+    self.newHomePageViewModel.image = [UIImage imageWithData:data];
+    self.newHomePageViewModel.width = CGWidth(_addTipLabelToImageView.workImageView.frame);
+    self.newHomePageViewModel.height = CGHeight(_addTipLabelToImageView.workImageView.frame);
+    ATOMUploadImage *uploadImage = [ATOMUploadImage new];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
+    [uploadImage UploadImage:data WithBlock:^(ATOMImage *imageInformation, NSError *error) {
+        if (error) {
+            [SVProgressHUD showErrorWithStatus:@"提交作品失败..."];
+            return ;
         }
+        [ws dealSubmitUploadWithLabelBy:imageInformation.imageID];
+    }];
+}
+
+- (void)dealSubmitUploadWithLabelBy:(NSInteger)imageID {
+    WS(ws);
+    ATOMSubmitImageWithLabel *submitImageWithLabel = [ATOMSubmitImageWithLabel new];
+    [submitImageWithLabel SubmitImageWithLabel:[ws getParamWithImageID:imageID AndAskID:-1] withBlock:^(NSMutableArray *labelArray, NSInteger newImageID, NSError *error) {
+        if (error) {
+            [SVProgressHUD showErrorWithStatus:@"提交作品失败..."];
+            return ;
+        }
+        [SVProgressHUD showSuccessWithStatus:@"提交作品成功..."];
         ATOMInviteViewController *ivc = [ATOMInviteViewController new];
-        [self pushViewController:ivc animated:YES];
+        ws.homePageViewModel.imageID = newImageID;
+        ivc.homePageViewModel = ws.newHomePageViewModel;
+        [ws pushViewController:ivc animated:YES];
     }];
 }
 

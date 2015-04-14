@@ -95,7 +95,7 @@
         atltivc.workImage = [_uploadWorkView.imageCropperView getCroppedImage];
         NSLog(@"workImage size (%f,%f)", atltivc.workImage.size.width, atltivc.workImage.size.height);
     }
-    
+    atltivc.homePageViewModel = _homePageViewModel;
     NSLog(@"%f %f", atltivc.workImage.size.width, atltivc.workImage.size.height);
     [self pushViewController:atltivc animated:YES];
 }

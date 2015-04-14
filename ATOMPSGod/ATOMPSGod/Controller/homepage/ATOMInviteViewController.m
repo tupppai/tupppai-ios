@@ -10,8 +10,10 @@
 #import "ATOMInviteView.h"
 #import "ATOMInviteTableViewCell.h"
 #import "ATOMInviteTableHeaderView.h"
-#import "ATOMHotDetailViewController.h"
+#import "ATOMRecentDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
+#import "ATOMHomePageViewModel.h"
+#import "ATOMHomepageViewController.h"
 
 @interface ATOMInviteViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -69,9 +71,11 @@
 #pragma mark - Click Event
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)barButtonItem {
-    ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
-    hdvc.pushType = ATOMInviteType;
-    [self pushViewController:hdvc animated:YES];
+    ATOMRecentDetailViewController *rdvc = [ATOMRecentDetailViewController new];
+    rdvc.homePageViewModel = _homePageViewModel;
+    ATOMHomepageViewController *hvc = self.navigationController.viewControllers[0];
+    [self pushViewController:rdvc animated:YES];
+    [self.navigationController setViewControllers:@[hvc, rdvc]];
 }
 
 #pragma mark - UITableViewDelegate

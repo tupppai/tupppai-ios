@@ -129,13 +129,10 @@
 #pragma ATOMCropHeaderImageCompleteProtocol
 
 - (void)cropHeaderImageCompleteWith:(UIImage *)image {
-    CGFloat scale = SCREEN_WIDTH / CGWidth(_createProfileView.userHeaderButton.frame);
-    CGFloat ratio = 1;
-    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:@(SCREEN_WIDTH), @"width", @(scale), @"scale", @(ratio), @"ratio", nil];
     NSData *data = UIImageJPEGRepresentation(image, 0.2);
     [_createProfileView.userHeaderButton setBackgroundImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
     ATOMUploadImage *uploadImage = [ATOMUploadImage new];
-    [uploadImage UploadImage:data withParam:param andBlock:^(ATOMImage *imageInformation, NSError *error) {
+    [uploadImage UploadImage:data WithBlock:^(ATOMImage *imageInformation, NSError *error) {
         if (error) {
             NSLog(@"%@", error);
             return ;

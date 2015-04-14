@@ -18,9 +18,9 @@
 //                                         This should only be used for object
 //                                         properties.
 typedef enum : NSUInteger {
-    MTLModelEncodingBehaviorExcluded = 0,
-    MTLModelEncodingBehaviorUnconditional,
-    MTLModelEncodingBehaviorConditional,
+    MTLModelEncodingBehaviorExcluded = 0, //属性绝不应该被编码
+    MTLModelEncodingBehaviorUnconditional, //属性总是应该被编码
+    MTLModelEncodingBehaviorConditional, //对象只有在其它地方被无条件编码时才应该被编码。这只适用于对象属性
 } MTLModelEncodingBehavior;
 
 // Implements default archiving and unarchiving behaviors for MTLModel.

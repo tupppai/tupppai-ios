@@ -35,7 +35,7 @@
  */
 @property (nonatomic, assign) NSInteger praiseNumber;
 /**
- *  评论类型 0：首页热门 1：首页最新 2：详情热门 3：详情最新
+ *  评论类型 0：ask 1：reply
  */
 @property (nonatomic, assign) NSInteger commentType;
 /**
@@ -45,5 +45,9 @@
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *avatar;
 @property (nonatomic, assign) NSInteger sex;
+/**
+ *  @数组
+ */
+@property (nonatomic, strong) NSMutableArray *atCommentArray;
 
 @end

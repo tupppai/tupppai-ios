@@ -7,6 +7,7 @@
 //
 
 #import "ATOMMyFansTableViewCell.h"
+#import "ATOMFansViewModel.h"
 
 @implementation ATOMMyFansTableViewCell
 
@@ -25,26 +26,23 @@ static float commenWidth;
 - (void)createSubView {
     _userHeaderButton = [[UIButton alloc] initWithFrame:CGRectMake(padding10, 6, 45, 45)];
     _userHeaderButton.userInteractionEnabled = NO;
-    _userHeaderButton.backgroundColor = [UIColor greenColor];
     _userHeaderButton.layer.cornerRadius = 22.5;
     _userHeaderButton.layer.masksToBounds = YES;
     [self addSubview:_userHeaderButton];
     
     _userSexImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - SEXRADIUS, CGRectGetMaxY(_userHeaderButton.frame) - SEXRADIUS, SEXRADIUS, SEXRADIUS)];
-    _userSexImageView.image = [UIImage imageNamed:@"woman"];
     [self addSubview:_userSexImageView];
     
     _userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, 0, 80, 30)];
-    _userNameLabel.text = @"atom";
     [self addSubview:_userNameLabel];
     
     _attentionButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - padding10 - 22, 17, 22, 23)];
     _attentionButton.userInteractionEnabled = NO;
-    [_attentionButton setBackgroundImage:[UIImage imageNamed:@"btn_attention"] forState:UIControlStateNormal];
+    [_attentionButton setBackgroundImage:[UIImage imageNamed:@"btn_mutualattention"] forState:UIControlStateNormal];
     [_attentionButton setBackgroundImage:[UIImage imageNamed:@"btn_addattention"] forState:UIControlStateSelected];
     [self addSubview:_attentionButton];
     
-    commenWidth = (CGOriginX(_attentionButton.frame) - CGRectGetMaxX(_userHeaderButton.frame) - padding10 * 2) / 3;
+    commenWidth = (CGOriginX(_attentionButton.frame) - CGRectGetMaxX(_userHeaderButton.frame) - padding10 * 2 - padding10 * 3) / 3;
     
     _fansNumberButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, CGRectGetMaxY(_userNameLabel.frame), commenWidth, 15)];
     [self setCommonButton:_fansNumberButton WithImage:[UIImage imageNamed:@"fans_num"]];
@@ -59,15 +57,28 @@ static float commenWidth;
     button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     button.contentVerticalAlignment = UIControlContentVerticalAlignmentTop;
     [button setImage:image forState:UIControlStateNormal];
-    [button setImageEdgeInsets:UIEdgeInsetsMake(2, 0, 2, 0)];
-    [button setTitle:@"1000" forState:UIControlStateNormal];
-    [button setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+    [button setImageEdgeInsets:UIEdgeInsetsMake(2, 0, 2, 5)];
+    [button setTitleEdgeInsets:UIEdgeInsetsMake(1, 5, 3, 0)];
     button.titleLabel.font = [UIFont systemFontOfSize:11.f];
     [button setTitleColor:[UIColor colorWithHex:0x7a7a7a] forState:UIControlStateNormal];
     [self addSubview:button];
 }
 
-
+- (void)setViewModel:(ATOMFansViewModel *)viewModel {
+    _viewModel = viewModel;
+    _userNameLabel.text = viewModel.userName;
+    _userSexImageView.image = [UIImage imageNamed:viewModel.userSex];
+    [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
+    [_fansNumberButton setTitle:viewModel.totalFansNumber forState:UIControlStateNormal];
+    [_uploadNumberButton setTitle:viewModel.totalAskNumber forState:UIControlStateNormal];
+    [_workNumberButton setTitle:viewModel.totalReplyNumber forState:UIControlStateNormal];
+    if (viewModel.isFellow) {
+        //已关注
+        _attentionButton.selected = YES;
+    } else  {
+        _attentionButton.selected = NO;
+    }
+}
 
 
 

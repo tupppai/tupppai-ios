@@ -74,7 +74,7 @@ static int padding3 = 3;
     [_topBackGroundImageView addSubview:_praiseLabel];
     
     _attentionButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 45, CGRectGetMaxY(_userHeaderButton.frame) - 20, 45, 20)];
-    _attentionButton.backgroundColor = [UIColor greenColor];
+    _attentionButton.backgroundColor = [UIColor colorWithHex:0xfcc64a];
     [_attentionButton setTitle:@"关注" forState:UIControlStateNormal];
     [_attentionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_topBackGroundImageView addSubview:_attentionButton];

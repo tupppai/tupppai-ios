@@ -10,7 +10,11 @@
 #import "ATOMConcernMessageTableViewCell.h"
 #import "ATOMNoDataView.h"
 #import "ATOMOtherPersonViewController.h"
-#import "ATOMOtherMessageViewModel.h"
+#import "ATOMConcernMessage.h"
+#import "ATOMConcernMessageViewModel.h"
+#import "ATOMShowConcernMessage.h"
+
+#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMConcernMessageViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -18,8 +22,9 @@
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) ATOMNoDataView *noDataView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
-
 @property (nonatomic, strong) UITapGestureRecognizer *tapConcernMessageGesture;
+@property (nonatomic, assign) NSInteger currentPage;
+@property (nonatomic, assign) NSInteger canRefreshFooter;
 
 @end
 
@@ -34,20 +39,77 @@
     return _noDataView;
 }
 
+#pragma mark - Refresh
+
+- (void)configTableViewRefresh {
+    [_tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+}
+
+- (void)loadMoreData {
+    if (_canRefreshFooter) {
+        [self getMoreDataSource];
+    } else {
+        [_tableView.footer endRefreshing];
+    }
+}
+
+#pragma mark - GetDataSource
+
+- (void)getDataSource {
+    WS(ws);
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    _dataSource = nil;
+    _dataSource = [NSMutableArray array];
+    _currentPage = 1;
+    [param setObject:@(_currentPage) forKey:@"page"];
+    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(15) forKey:@"size"];
+    ATOMShowConcernMessage *showConcernMessage = [ATOMShowConcernMessage new];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    [showConcernMessage ShowConcernMessage:param withBlock:^(NSMutableArray *concernMessageArray, NSError *error) {
+        [SVProgressHUD dismiss];
+        for (ATOMConcernMessage *concernMessage in concernMessageArray) {
+            ATOMConcernMessageViewModel *concernMessageViewModel = [ATOMConcernMessageViewModel new];
+            [concernMessageViewModel setViewModelData:concernMessage];
+            [ws.dataSource addObject:concernMessageViewModel];
+        }
+        [ws.tableView reloadData];
+    }];
+}
+
+- (void)getMoreDataSource {
+    WS(ws);
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    long long timestamp = [[NSDate date] timeIntervalSince1970];
+    ws.currentPage++;
+    [param setObject:@(ws.currentPage) forKey:@"page"];
+    [param setObject:@(timestamp) forKey:@"last_updated"];
+    [param setObject:@(15) forKey:@"size"];
+    ATOMShowConcernMessage *showConcernMessage = [ATOMShowConcernMessage new];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    [showConcernMessage ShowConcernMessage:param withBlock:^(NSMutableArray *concernMessageArray, NSError *error) {
+        [SVProgressHUD dismiss];
+        for (ATOMConcernMessage *concernMessage in concernMessageArray) {
+            ATOMConcernMessageViewModel *concernMessageViewModel = [ATOMConcernMessageViewModel new];
+            [concernMessageViewModel setViewModelData:concernMessage];
+            [ws.dataSource addObject:concernMessageViewModel];
+        }
+        if (concernMessageArray.count == 0) {
+            ws.canRefreshFooter = NO;
+        } else {
+            ws.canRefreshFooter = YES;
+        }
+        [ws.tableView.footer endRefreshing];
+        [ws.tableView reloadData];
+    }];
+}
+
 #pragma mark - UI
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    _dataSource = [NSMutableArray array];
-    for (int i = 0; i < 10; i++) {
-        ATOMOtherMessageViewModel *model = [[ATOMOtherMessageViewModel alloc] initWithStyle:ATOMConcernType];
-        [_dataSource addObject:model];
-    }
 }
 
 - (void)createUI {
@@ -63,6 +125,9 @@
     _tableView.dataSource = self;
     _tapConcernMessageGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapConcernMessageGesture:)];
     [_tableView addGestureRecognizer:_tapConcernMessageGesture];
+    [self configTableViewRefresh];
+    _canRefreshFooter = YES;
+    [self getDataSource];
 }
 
 #pragma mark - Click Event
@@ -80,15 +145,18 @@
     CGPoint location = [gesture locationInView:_tableView];
     NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:location];
     if (indexPath) {
+        ATOMConcernMessageViewModel *viewModel = _dataSource[indexPath.row];
         ATOMConcernMessageTableViewCell *cell = (ATOMConcernMessageTableViewCell *)[_tableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+            opvc.userID = viewModel.uid;
             [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
             p = [gesture locationInView:cell.userNameLabel];
-            if (p.x <= 16 * 5) {
+            if (p.x <= 16 * viewModel.userName.length) {
                 ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+                opvc.userID = viewModel.uid;
                 [self pushViewController:opvc animated:YES];
             }
         }

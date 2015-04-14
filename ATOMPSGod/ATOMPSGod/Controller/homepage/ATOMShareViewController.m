@@ -8,6 +8,9 @@
 
 #import "ATOMShareViewController.h"
 #import "ATOMShareView.h"
+#import "ATOMHotDetailViewController.h"
+#import "ATOMHomePageViewModel.h"
+#import "ATOMHomepageViewController.h"
 
 @interface ATOMShareViewController ()
 
@@ -17,6 +20,8 @@
 
 @implementation ATOMShareViewController
 
+#pragma mark - UI
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
@@ -24,12 +29,21 @@
 
 - (void)createUI {
     self.title = @"分享";
+    UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
+    self.navigationItem.rightBarButtonItem = rightButtonItem;
     _shareView = [ATOMShareView new];
     self.view = _shareView;
-    
 }
 
+#pragma mark - Click Event
 
+- (void)clickRightButtonItem:(UIBarButtonItem *)barButtonItem {
+    ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
+    hdvc.homePageViewModel = _homePageViewModel;
+    ATOMHomepageViewController *hvc = self.navigationController.viewControllers[0];
+    [self pushViewController:hdvc animated:YES];
+    [self.navigationController setViewControllers:@[hvc, hdvc]];
+}
 
 
 

@@ -42,6 +42,7 @@
     _tableView.tableFooterView = [UIView new];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.scrollEnabled = NO;
     [_myMessageView addSubview:_tableView];
 }
 

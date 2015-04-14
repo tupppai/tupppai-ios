@@ -7,18 +7,64 @@
 //
 
 #import "ATOMCommentDetailViewModel.h"
+#import "ATOMComment.h"
+#import "ATOMAtComment.h"
 
 @implementation ATOMCommentDetailViewModel
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _userName = @"宋祥伍";
-        _userSex = @"woman";
-        _userCommentDetail = @"灰色的技术的房价开始了对方就阿里快速的风景阿里可是对方就卡死的减肥尽快了解阿克苏登陆福建按快了点睡觉法拉克是点击付款 克拉大书法家阿斯顿两份简历看见阿斯顿发了卡上打饭卡里看见阿斯蒂芬徕卡就是的放假了安师大飞拉萨到付款记录";
-        _praiseNumber = @"10K";
     }
     return self;
 }
+
+- (void)setViewModelData:(ATOMComment *)comment {
+    _nickname = comment.nickname;
+    
+    _comment_id = comment.cid;
+    _userSex = (comment.sex == 1) ? @"man" : @"woman";
+    _praiseNumber = [NSString stringWithFormat:@"%d", (int)comment.praiseNumber];
+    _avatar = comment.avatar;
+    if (comment.atCommentArray && comment.atCommentArray.count > 0) {
+        NSString *content = comment.content;
+        for (ATOMAtComment *atComment in comment.atCommentArray) {
+            content = [NSString stringWithFormat:@"%@//@%@:%@", content, atComment.nick, atComment.content];
+        }
+        _content = content;
+    } else {
+        _content = comment.content;
+    }
+    _isPraise = NO;
+}
+
+- (void)setDataWithAtModel:(ATOMCommentDetailViewModel *)viewModel andContent:(NSString *)content{
+    _nickname = [ATOMCurrentUser currentUser].nickname;
+    _userSex = ([ATOMCurrentUser currentUser].sex == 1) ? @"man" : @"woman";
+    _praiseNumber = @"0";
+    _avatar = [ATOMCurrentUser currentUser].avatar;
+    if (viewModel) {
+        _content = [NSString stringWithFormat:@"%@//@%@:%@", content, viewModel.nickname, viewModel.content];
+    } else {
+        _content = content;
+    }
+    _isPraise = NO;
+}
+
+- (void)increasePraiseNumber {
+    _isPraise = YES;
+    NSInteger praiseNumber = [_praiseNumber integerValue];
+    praiseNumber++;
+    _praiseNumber = [NSString stringWithFormat:@"%d", (int)praiseNumber];
+}
+
+
+
+
+
+
+
+
+
 
 @end
