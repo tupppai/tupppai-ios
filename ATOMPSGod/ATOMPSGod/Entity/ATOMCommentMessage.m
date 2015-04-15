@@ -14,7 +14,7 @@
     return @{
              @"ID" : @"id",
              @"uid" : @"uid",
-             @"nickname" : @"nick",
+             @"nickname" : @"nickname",
              @"avatar" : @"avatar",
              @"sex" : @"sex",
              @"createTime" : @"create_time",
