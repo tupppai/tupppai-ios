@@ -16,6 +16,7 @@ static ATOMHTTPRequestOperationManager *_sharedRequestOperationManager = nil;
 + (instancetype)sharedRequestOperationManager {
     dispatch_once(&onceToken, ^{
         NSString *baseURL = @"http://android.loiter.us/v1/";
+//        NSString *baseURL = @"http://android.qiupsdashen.com/v1/";
         _sharedRequestOperationManager = [[ATOMHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:baseURL]];
         [_sharedRequestOperationManager.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
             switch (status) {

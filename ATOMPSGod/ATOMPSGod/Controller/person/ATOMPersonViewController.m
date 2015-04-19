@@ -63,7 +63,6 @@
     [_personView.fansLabel addGestureRecognizer:tapFansGesture];
     _personView.personTableView.delegate = self;
     _personView.personTableView.dataSource = self;
-    self.title = @"个人";
     self.navigationItem.title = [ATOMCurrentUser currentUser].nickname;
 }
 

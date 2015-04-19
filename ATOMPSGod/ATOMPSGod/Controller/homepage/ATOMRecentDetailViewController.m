@@ -67,8 +67,8 @@
     _recentCommentDataSource = [NSMutableArray array];
     _currentPage = 1;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@(_homePageViewModel.imageID) forKey:@"id"];
-    [param setObject:@"ask" forKey:@"type"];
+    [param setObject:@(_homePageViewModel.imageID) forKey:@"target_id"];
+    [param setObject:@(1) forKey:@"type"];
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
@@ -93,8 +93,8 @@
     WS(ws);
     _currentPage++;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@(_homePageViewModel.imageID) forKey:@"id"];
-    [param setObject:@"ask" forKey:@"type"];
+    [param setObject:@(_homePageViewModel.imageID) forKey:@"target_id"];
+    [param setObject:@(1) forKey:@"type"];
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
@@ -189,7 +189,7 @@
 - (void)clickCommentButton:(UIButton *)sender {
     ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
     cdvc.ID = _homePageViewModel.imageID;
-    cdvc.type = @"ask";
+    cdvc.type = 1;
     [self pushViewController:cdvc animated:YES];
 }
 

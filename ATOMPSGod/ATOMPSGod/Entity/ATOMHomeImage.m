@@ -14,7 +14,7 @@
     return @{
              @"imageID" : @"id",
              @"uid" : @"uid",
-             @"nickname" : @"nick",
+             @"nickname" : @"nickname",
              @"avatar" : @"avatar",
              @"sex" : @"sex",
              @"uploadTime" : @"ask_created",
@@ -49,7 +49,8 @@
              @"totalWorkNumber" : @"totalWorkNumber",
              @"imageWidth" : @"imageWidth",
              @"imageHeight" : @"imageHeight",
-             @"tipLabelArray" :@"tipLabelArray"
+             @"tipLabelArray" :@"tipLabelArray",
+             @"replierArray" : @"replierArray"
              };
 }
 

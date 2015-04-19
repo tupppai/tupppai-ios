@@ -62,7 +62,11 @@
 }
 
 - (void)clickWXLoginButton:(UIButton *)sender {
-    
+    [ShareSDK getUserInfoWithType:ShareTypeWeixiSession authOptions:nil result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error) {
+        if (result) {
+//            PFQuery *query = [PFQuery querywith]
+        }
+    }];
 }
 
 - (void)clickQQLoginButton:(UIButton *)sender {

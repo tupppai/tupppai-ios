@@ -36,24 +36,14 @@
         NSArray *recentCommentDataArray = responseObject[@"data"][@"new_comments"];
         for (int i = 0; i < hotCommentDataArray.count; i++) {
             ATOMComment *comment = [MTLJSONAdapter modelOfClass:[ATOMComment class] fromJSONDictionary:hotCommentDataArray[i] error:NULL];
-            if ([param[@"type"] isEqualToString:@"ask"]) {
-                comment.commentType = 0;
-                comment.imageID = [param[@"id"] integerValue];
-            } else if ([param[@"type"] isEqualToString:@"reply"]){
-                comment.commentType = 1;
-                comment.detailID = [param[@"id"] integerValue];
-            }
+            comment.commentType = [param[@"type"] integerValue];
+            comment.imageID = [param[@"target_id"] integerValue];
             [hotCommentArray addObject:comment];
         }
         for (int i = 0; i < recentCommentDataArray.count; i++) {
             ATOMComment *comment = [MTLJSONAdapter modelOfClass:[ATOMComment class] fromJSONDictionary:recentCommentDataArray[i] error:NULL];
-            if ([param[@"type"] isEqualToString:@"ask"]) {
-                comment.commentType = 0;
-                comment.imageID = [param[@"id"] integerValue];
-            } else if ([param[@"type"] isEqualToString:@"reply"]){
-                comment.commentType = 1;
-                comment.detailID = [param[@"id"] integerValue];
-            }
+            comment.commentType = [param[@"type"] integerValue];
+            comment.imageID = [param[@"target_id"] integerValue];
             comment.atCommentArray = [NSMutableArray array];
             NSArray *atCommentArray = recentCommentDataArray[i][@"at_comments"];
             for (int j = 0; j < atCommentArray.count; j++) {

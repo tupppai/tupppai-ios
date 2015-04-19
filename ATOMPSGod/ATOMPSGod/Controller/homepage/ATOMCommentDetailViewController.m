@@ -67,8 +67,8 @@
     _recentCommentDataSource = [NSMutableArray array];
     _currentPage = 1;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@(_ID) forKey:@"id"];
-    [param setObject:_type forKey:@"type"];
+    [param setObject:@(195) forKey:@"target_id"];
+    [param setObject:@(_type) forKey:@"type"];
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
@@ -94,8 +94,8 @@
     WS(ws);
     _currentPage++;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@(_ID) forKey:@"id"];
-    [param setObject:_type forKey:@"type"];
+    [param setObject:@(_ID) forKey:@"target_id"];
+    [param setObject:@(_type) forKey:@"type"];
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
@@ -159,7 +159,8 @@
     [_commentDetailView.commentDetailTableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:commentStr forKey:@"content"];
-    [param setObject:_type forKey:@"comment_type"];
+#warning fix
+//    [param setObject:_type forKey:@"comment_type"];
     [param setObject:@(_ID) forKey:@"comment_target_id"];
     if (_atModel) {
         [param setObject:@(_atModel.comment_id) forKey:@"comment_reply_to"];
@@ -183,16 +184,21 @@
     CGPoint location = [gesture locationInView:_commentDetailView.commentDetailTableView];
     NSIndexPath *indexPath = [_commentDetailView.commentDetailTableView indexPathForRowAtPoint:location];
     if (indexPath) {
+        ATOMCommentDetailViewModel *model = (indexPath.section == 0) ? _hotCommentDataSource[indexPath.row] : _recentCommentDataSource[indexPath.row];
         ATOMCommentDetailTableViewCell *cell = (ATOMCommentDetailTableViewCell *)[_commentDetailView.commentDetailTableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+            opvc.userID = model.uid;
+            opvc.userName = model.nickname;
+            [self pushViewController:opvc animated:YES];
+        } else if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
+            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+            opvc.userID = model.uid;
+            opvc.userName = model.nickname;
             [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.praiseButton.frame, p)) {
             p = [gesture locationInView:cell.praiseButton];
-            NSInteger section = indexPath.section;
-            NSInteger row = indexPath.row;
-            ATOMCommentDetailViewModel *model = (section == 0) ? _hotCommentDataSource[row] : _recentCommentDataSource[row];
             if (!model.isPraise) {
                 cell.praiseButton.selected = !cell.praiseButton.selected;
                 [model increasePraiseNumber];
@@ -208,13 +214,7 @@
             [_commentDetailView.commentDetailTableView reloadData];
         } else if (CGRectContainsPoint(cell.userCommentDetailLabel.frame, p)) {
             [_commentDetailView.sendCommentView becomeFirstResponder];
-            NSInteger section = indexPath.section;
-            NSInteger row = indexPath.row;
-            if (section == 0) {
-                _atModel = _hotCommentDataSource[row];
-            } else if (section == 1) {
-                _atModel = _recentCommentDataSource[row];
-            }
+            _atModel = model;
             _commentDetailView.textViewPlaceholder = [NSString stringWithFormat:@"//@%@:", _atModel.nickname];
             _commentDetailView.sendCommentView.text = _commentDetailView.textViewPlaceholder;
         }

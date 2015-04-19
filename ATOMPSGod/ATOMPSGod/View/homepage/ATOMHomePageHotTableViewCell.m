@@ -10,18 +10,21 @@
 #import "ATOMHomePageViewModel.h"
 #import "ATOMTipButton.h"
 #import "ATOMImageTipLabelViewModel.h"
+#import "ATOMReplierViewModel.h"
 
 @interface ATOMHomePageHotTableViewCell ()
 
 @property (nonatomic, strong) UIView *littleVerticalView1;
 @property (nonatomic, strong) UIView *littleVerticalView2;
 @property (nonatomic, strong) UIView *littleVerticalView3;
+@property (nonatomic, strong) NSMutableArray *replierAvatars;
 
 @end
 
 @implementation ATOMHomePageHotTableViewCell
 
 static int padding = 10;
+static int defaultAvatarCount = 7;
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -90,6 +93,15 @@ static int padding = 10;
     [_totalPSButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_bottomView addSubview:_totalPSButton];
     
+    _replierAvatars = [NSMutableArray array];
+    for (int i = 0; i < defaultAvatarCount; i++) {
+        UIImageView *imageView = [UIImageView new];
+        imageView.layer.cornerRadius = 15;
+        imageView.layer.masksToBounds = YES;
+        [_bottomView addSubview:imageView];
+        [_replierAvatars addObject:imageView];
+    }
+    
 //    _littleVerticalView1 = [UIView new];
 //    _littleVerticalView2 = [UIView new];
 //    _littleVerticalView3 = [UIView new];
@@ -147,6 +159,10 @@ static int padding = 10;
     
     _bottomView.frame = CGRectMake(0, CGRectGetMaxY(_thinCenterView.frame), SCREEN_WIDTH, 60);
     _totalPSButton.frame = CGRectMake(SCREEN_WIDTH - padding - 30, (CGHeight(_bottomView.frame) - 30) / 2, 30, 30);
+    for (int i = 0; i < defaultAvatarCount; i++) {
+        UIImageView *imageView = _replierAvatars[i];
+        imageView.frame = CGRectMake(padding * (i + 1) + 30 * i, CGRectGetMinY(_totalPSButton.frame), 30, 30);
+    }
     
 }
 
@@ -174,6 +190,7 @@ static int padding = 10;
         [_userWorkImageView setImageWithURL:[NSURL URLWithString:viewModel.userImageURL]];
     }
     [self addTipLabelToImageView];
+    [self addReplier];
     [self setNeedsLayout];
 }
 
@@ -199,7 +216,18 @@ static int padding = 10;
     }
 }
 
-
+- (void)addReplier {
+    for (int i = 0; i < defaultAvatarCount; i++) {
+        UIImageView *imageView = _replierAvatars[i];
+        imageView.hidden = YES;
+    }
+    for (int i = 0; i < _viewModel.replierArray.count; i++) {
+        ATOMReplierViewModel *replierViewModel = _viewModel.replierArray[i];
+        UIImageView *imageView = _replierAvatars[i];
+        imageView.hidden = NO;
+        [imageView setImageWithURL:[NSURL URLWithString:replierViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
+    }
+}
 
 
 

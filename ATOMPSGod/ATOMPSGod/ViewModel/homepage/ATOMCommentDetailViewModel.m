@@ -20,8 +20,8 @@
 }
 
 - (void)setViewModelData:(ATOMComment *)comment {
+    _uid = comment.uid;
     _nickname = comment.nickname;
-    
     _comment_id = comment.cid;
     _userSex = (comment.sex == 1) ? @"man" : @"woman";
     _praiseNumber = [NSString stringWithFormat:@"%d", (int)comment.praiseNumber];

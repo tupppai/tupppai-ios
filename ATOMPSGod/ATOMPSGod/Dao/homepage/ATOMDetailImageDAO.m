@@ -11,6 +11,13 @@
 
 @implementation ATOMDetailImageDAO
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+    }
+    return self;
+}
+
 - (void)insertDetailImage:(ATOMDetailImage *)detailImage {
     dispatch_queue_t q = dispatch_queue_create("insert", NULL);
     dispatch_async(q, ^{

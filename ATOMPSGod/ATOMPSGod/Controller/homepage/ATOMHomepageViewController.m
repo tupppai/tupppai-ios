@@ -151,12 +151,12 @@
         _dataSourceOfRecentTableView = nil;
         _dataSourceOfRecentTableView = [NSMutableArray array];
         _currentRecentPage = 1;
-        [param setObject:@(ws.currentRecentPage) forKey:@"page"];
+        [param setObject:@(_currentRecentPage) forKey:@"page"];
     } else if ([homeType isEqualToString:@"hot"]) {
         _dataSourceOfHotTableView = nil;
         _dataSourceOfHotTableView = [NSMutableArray array];
         _currentHotPage = 1;
-        [param setObject:@(ws.currentHotPage) forKey:@"page"];
+        [param setObject:@(_currentHotPage) forKey:@"page"];
     }
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:homeType forKey:@"type"];
@@ -383,11 +383,13 @@
                     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
                     ATOMHomePageViewModel *model = _dataSourceOfHotTableView[indexPath.row];
                     opvc.userID = model.userID;
+                    opvc.userName = model.userName;
                     [self pushViewController:opvc animated:YES];
                 } else if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
                     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
                     ATOMHomePageViewModel *model = _dataSourceOfHotTableView[indexPath.row];
                     opvc.userID = model.userID;
+                    opvc.userName = model.userName;
                     [self pushViewController:opvc animated:YES];
                 }
             } else if (CGRectContainsPoint(cell.thinCenterView.frame, p)){
@@ -395,12 +397,33 @@
                 if (CGRectContainsPoint(cell.praiseButton.frame, p)) {
                     cell.praiseButton.selected = !cell.praiseButton.selected;
                 } else if (CGRectContainsPoint(cell.shareButton.frame, p)) {
-                    
+                    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"0" ofType:@"jpg"];
+                    id<ISSContent> publishContent = [ShareSDK content:@"分享内容"
+                                                       defaultContent:@"测试一下"
+                                                                image:[ShareSDK imageWithPath:imagePath]
+                                                                title:@"ShareSDK"
+                                                                  url:@"http://www.mob.com"
+                                                          description:@"这是一条测试信息"
+                                                            mediaType:SSPublishContentMediaTypeNews];
+                    [ShareSDK clientShareContent:publishContent //内容对象
+                                            type:ShareTypeWeixiTimeline //平台类型
+                                   statusBarTips:YES
+                                          result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {//返回事件
+                                              
+                                              if (state == SSPublishContentStateSuccess)
+                                              {
+                                                  NSLog(NSLocalizedString(@"TEXT_SHARE_SUC", @"分享成功!"));
+                                              }
+                                              else if (state == SSPublishContentStateFail)
+                                              {
+                                                  NSLog(NSLocalizedString(@"TEXT_SHARE_FAI", @"分享失败!"), [error errorCode], [error errorDescription]);
+                                              }
+                                          }];
                 } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
                     ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
                     ATOMHomePageViewModel *model = _dataSourceOfHotTableView[indexPath.row];
                     cdvc.ID = model.imageID;
-                    cdvc.type = @"ask";
+                    cdvc.type = 1;
                     [self pushViewController:cdvc animated:YES];
                 } else if (CGRectContainsPoint(cell.moreShareButton.frame, p)) {
                     [[AppDelegate APP].window addSubview:self.shareFunctionView];
@@ -428,6 +451,7 @@
                     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
                     ATOMHomePageViewModel *model = _dataSourceOfRecentTableView[indexPath.row];
                     opvc.userID = model.userID;
+                    opvc.userName = model.userName;
                     [self pushViewController:opvc animated:YES];
                 } else if (CGRectContainsPoint(cell.psButton.frame, p)) {
                     [UIActionSheet showInView:self.view withTitle:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@[@"下载素材", @"上传作品"] tapBlock:^(UIActionSheet *actionSheet, NSInteger buttonIndex) {
@@ -443,6 +467,7 @@
                     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
                     ATOMHomePageViewModel *model = _dataSourceOfHotTableView[indexPath.row];
                     opvc.userID = model.userID;
+                    opvc.userName = model.userName;
                     [self pushViewController:opvc animated:YES];
                 }
             } else if (CGRectContainsPoint(cell.thinCenterView.frame, p)){
@@ -455,7 +480,7 @@
                     ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
                     ATOMHomePageViewModel *model = _dataSourceOfHotTableView[indexPath.row];
                     cdvc.ID = model.imageID;
-                    cdvc.type = @"ask";
+                    cdvc.type = 1;
                     [self pushViewController:cdvc animated:YES];
                 }
             }
@@ -507,6 +532,7 @@
     if ([_scrollView typeOfCurrentHomepageView] == ATOMHomepageHotType) {
         return _dataSourceOfHotTableView.count;
     } else if ([_scrollView typeOfCurrentHomepageView] == ATOMHomepageRecentType) {
+        NSLog(@"recent count = %d", (int)_dataSourceOfRecentTableView.count);
         return _dataSourceOfRecentTableView.count;
     }
     return 0;
@@ -527,6 +553,7 @@
         if (!cell) {
             cell = [[ATOMHomePageRecentTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier2];
         }
+        NSLog(@"recent row = %d and recentarraycount = %d", (int)indexPath.row, (int)_dataSourceOfRecentTableView.count);
         cell.viewModel = _dataSourceOfRecentTableView[indexPath.row];
         return cell;
     } else {

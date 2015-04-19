@@ -11,6 +11,13 @@
 
 @implementation ATOMCommentDAO
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+    }
+    return self;
+}
+
 - (void)insertComment:(ATOMComment *)comment {
     dispatch_queue_t q = dispatch_queue_create("insert", NULL);
     dispatch_async(q, ^{

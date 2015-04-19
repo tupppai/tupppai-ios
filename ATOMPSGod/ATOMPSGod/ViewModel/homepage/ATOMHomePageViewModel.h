@@ -25,6 +25,7 @@
 @property (nonatomic, assign) CGFloat width;
 @property (nonatomic, assign) CGFloat height;
 @property (nonatomic, strong) NSMutableArray *labelArray;
+@property (nonatomic, strong) NSMutableArray *replierArray;
 @property (nonatomic, strong) UIImage *image;
 - (void)setViewModelData:(ATOMHomeImage *)homeImage;
 

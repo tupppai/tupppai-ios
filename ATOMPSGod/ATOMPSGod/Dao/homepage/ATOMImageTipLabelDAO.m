@@ -39,7 +39,8 @@
     dispatch_async(q, ^{
         [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
             NSString *stmt = [MTLFMDBAdapter updateStatementForModel:tipLabel];
-            NSArray *param = [MTLFMDBAdapter columnValues:tipLabel];
+            NSMutableArray *param = [[MTLFMDBAdapter columnValues:tipLabel] mutableCopy];
+            [param addObject:@(tipLabel.labelID)];
             BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
             if (flag) {
                 NSLog(@"update imageTipLabel success");

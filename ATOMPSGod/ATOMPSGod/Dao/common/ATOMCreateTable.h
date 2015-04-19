@@ -12,6 +12,7 @@
 
 + (NSString *)createUser;
 + (NSString *)createImageTipLabel;
++ (NSString *)createReplier;
 + (NSString *)createHomeImage;
 + (NSString *)createComment;
 + (NSString *)createDetailImage;

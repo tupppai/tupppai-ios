@@ -20,7 +20,10 @@
 @property (nonatomic, copy) NSString *content;
 @property (nonatomic, copy) NSString *publishTime;
 @property (nonatomic, copy) NSString *imageURL;
-@property (nonatomic, copy) NSString *type;
+/**
+ *  1(ask) 2(reply)
+ */
+@property (nonatomic, assign) NSInteger type;
 @property (nonatomic, strong) ATOMHomePageViewModel *homepageViewModel;
 
 - (void)setViewModelData:(ATOMCommentMessage *)commentMessage;

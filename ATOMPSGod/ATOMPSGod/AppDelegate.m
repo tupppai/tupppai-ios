@@ -17,6 +17,7 @@
 #import <TencentOpenAPI/QQApiInterface.h>
 
 
+
 @interface AppDelegate ()
 
 @end
@@ -35,6 +36,7 @@
     self.baseNav = [[ATOMCutstomNavigationController alloc] initWithRootViewController:lvc];
     self.window.rootViewController = self.baseNav;
     [self.window makeKeyAndVisible];
+    [self setupShareSDK];
     return YES;
 }
 
@@ -47,6 +49,33 @@
         _mainTarBarController = [ATOMMainTabBarController new];
     }
     return _mainTarBarController;
+}
+
+#pragma mark - Share
+
+- (void)setupShareSDK {
+    [ShareSDK registerApp:@"65b1ce491325"];
+    [ShareSDK connectWeChatWithAppId:@"wx86ff6f67a2b9b4b8"   //微信APPID
+                           appSecret:@"c2da31fda3acf1c09c40ee25772b6ca5"  //微信APPSecret
+                           wechatCls:[WXApi class]];
+}
+
+- (BOOL)application:(UIApplication *)application
+      handleOpenURL:(NSURL *)url
+{
+    return [ShareSDK handleOpenURL:url
+                        wxDelegate:self];
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
+{
+    return [ShareSDK handleOpenURL:url
+                 sourceApplication:sourceApplication
+                        annotation:annotation
+                        wxDelegate:self];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

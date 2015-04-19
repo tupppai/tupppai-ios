@@ -10,4 +10,7 @@
 
 @interface ATOMMyConcernViewController : ATOMBaseViewController
 
+@property (nonatomic, assign) NSInteger uid;
+@property (nonatomic, copy) NSString *userName;
+
 @end

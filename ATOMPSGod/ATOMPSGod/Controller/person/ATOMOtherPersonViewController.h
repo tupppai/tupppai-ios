@@ -11,5 +11,6 @@
 @interface ATOMOtherPersonViewController : ATOMBaseViewController
 
 @property (nonatomic, assign) NSInteger userID;
+@property (nonatomic, copy) NSString *userName;
 
 @end

@@ -27,6 +27,7 @@
 
 - (void)setViewModelDataWithHomeImage:(ATOMHomePageViewModel *)homePageViewModel {
     _ID = homePageViewModel.imageID;
+    _uid = homePageViewModel.userID;
     _userName = homePageViewModel.userName;
     _userSex = homePageViewModel.userSex;
     _userImageURL = homePageViewModel.userImageURL;
@@ -50,6 +51,7 @@
 
 - (void)setViewModelDataWithDetailImage:(ATOMDetailImage *)detailImage {
     _ID = detailImage.detailID;
+    _uid = detailImage.uid;
     _userName = detailImage.nickname;
     _userSex = (detailImage.sex == 1) ? @"man" : @"woman";
     _userImageURL = detailImage.imageURL;

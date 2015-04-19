@@ -37,8 +37,8 @@
  */
 @property (nonatomic, assign) NSInteger totalReplyNumber;
 /**
- *  自身是否已经关注了该用户
+ *  关注状态，0（未关注）1（已关注）2（相互关注）
  */
-@property (nonatomic, assign) BOOL isFellow;
+@property (nonatomic, assign) NSInteger concernStatus;
 
 @end

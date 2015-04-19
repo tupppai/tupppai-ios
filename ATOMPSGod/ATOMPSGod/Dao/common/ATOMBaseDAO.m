@@ -63,6 +63,12 @@ static FMDatabaseQueue *_fmQueue = nil;
         } else {
             NSLog(@"create ImageTipLabel fail");
         }
+        flag = [db executeUpdate:[ATOMCreateTable createReplier]];
+        if (flag) {
+            NSLog(@"create Replier success");
+        } else {
+            NSLog(@"create Replier fail");
+        }
         flag = [db executeUpdate:[ATOMCreateTable createHomeImage]];
         if (flag) {
             NSLog(@"create HomeImage success");

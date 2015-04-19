@@ -11,7 +11,7 @@
 #import "ATOMMyWorkCollectionViewCell.h"
 #import "ATOMMyUploadCollectionViewCell.h"
 #import "ATOMMyFansViewController.h"
-#import "ATOMMyConcernViewController.h"
+#import "ATOMOtherPersonConcernViewController.h"
 #import "ATOMHotDetailViewController.h"
 #import "ATOMOtherPersonCollectionHeaderView.h"
 #import "ATOMShowAskOrReply.h"
@@ -190,7 +190,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
 }
 
 - (void)createUI {
-    self.title = @"atom";
+    self.title = _userName;
     _otherPersonView = [ATOMOtherPersonView new];
     self.view = _otherPersonView;
     _otherPersonView.otherPersonUploadCollectionView.delegate = self;
@@ -241,12 +241,16 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
 #pragma mark - Gesture Event
 
 - (void)tapConcernGesture:(UITapGestureRecognizer *)gesture {
-    ATOMMyConcernViewController *mfvc = [ATOMMyConcernViewController new];
-    [self pushViewController:mfvc animated:YES];
+    ATOMOtherPersonConcernViewController *opvcv = [ATOMOtherPersonConcernViewController new];
+    opvcv.uid = _userID;
+    opvcv.userName = _userName;
+    [self pushViewController:opvcv animated:YES];
 }
 
 - (void)tapFansGesture:(UITapGestureRecognizer *)gesture {
     ATOMMyFansViewController *mfvc = [ATOMMyFansViewController new];
+    mfvc.uid = _userID;
+    mfvc.userName = _userName;
     [self pushViewController:mfvc animated:YES];
 }
 

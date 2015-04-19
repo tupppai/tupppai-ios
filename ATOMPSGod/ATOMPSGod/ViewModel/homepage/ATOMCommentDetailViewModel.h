@@ -11,6 +11,7 @@
 
 @interface ATOMCommentDetailViewModel : NSObject
 
+@property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *content;
 @property (nonatomic, copy) NSString *praiseNumber;

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class ATOMConcernViewModel;
 
 @interface ATOMMyConcernTableViewCell : UITableViewCell
 
@@ -17,6 +18,7 @@
 @property (nonatomic, strong) UIButton *uploadNumberButton;
 @property (nonatomic, strong) UIButton *workNumberButton;
 @property (nonatomic, strong) UIButton *attentionButton;
+@property (nonatomic, strong) ATOMConcernViewModel *viewModel;
 
 - (void)changeAttentionButtonStatus;
 

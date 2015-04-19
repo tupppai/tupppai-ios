@@ -10,9 +10,11 @@
 #import "ATOMHTTPRequestOperationManager.h"
 #import "ATOMHomeImage.h"
 #import "ATOMImageTipLabel.h"
+#import "ATOMReplier.h"
 #import "ATOMHomePageViewModel.h"
 #import "ATOMHomeImageDAO.h"
 #import "ATOMImageTipLabelDAO.h"
+#import "ATOMReplierDAO.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -20,6 +22,7 @@
 
 @property (nonatomic, strong) ATOMHomeImageDAO *homeImageDAO;
 @property (nonatomic, strong) ATOMImageTipLabelDAO *imageTipLabelDAO;
+@property (nonatomic, strong) ATOMReplierDAO *replierDAO;
 
 @end
 
@@ -47,9 +50,16 @@
     return _imageTipLabelDAO;
 }
 
+- (ATOMReplierDAO *)replierDAO {
+    if (!_replierDAO) {
+        _replierDAO = [ATOMReplierDAO new];
+    }
+    return _replierDAO;
+}
+
 - (AFHTTPRequestOperation *)ShowHomepage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
     NSLog(@"%@ %ld", param[@"type"], [param[@"page"] longValue]);
-    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:@"index/index" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:@"ask/index" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *homepageArray = [NSMutableArray array];
         NSArray *imageDataArray = responseObject[@"data"];
         for (int i = 0; i < imageDataArray.count; i++) {
@@ -61,6 +71,15 @@
                     ATOMImageTipLabel *tipLabel = [MTLJSONAdapter modelOfClass:[ATOMImageTipLabel class] fromJSONDictionary:labelDataArray[j] error:NULL];
                     tipLabel.imageID = homeImage.imageID;
                     [homeImage.tipLabelArray addObject:tipLabel];
+                }
+            }
+            homeImage.replierArray = [NSMutableArray array];
+            NSArray *replierArray = imageDataArray[i][@"replyer"];
+            if (replierArray.count) {
+                for (int j = 0; j < replierArray.count; j++) {
+                    ATOMReplier *replier = [MTLJSONAdapter modelOfClass:[ATOMReplier class] fromJSONDictionary:replierArray[j] error:NULL];
+                    replier.imageID = homeImage.imageID;
+                    [homeImage.replierArray addObject:replier];
                 }
             }
             [homepageArray addObject:homeImage];
@@ -121,6 +140,15 @@
                 [self.imageTipLabelDAO insertTipLabel:label];
             }
         }
+        //插入replier
+        NSArray *repliers = homeImage.replierArray;
+        for (ATOMReplier *replier in repliers) {
+            if ([self.replierDAO isExistReplier:replier]) {
+                [self.replierDAO updateReplier:replier];
+            } else {
+                [self.replierDAO insertReplier:replier];
+            }
+        }
     }
 }
 
@@ -128,6 +156,7 @@
     NSArray *array = [self.homeImageDAO selectHomeImages];
     for (ATOMHomeImage *homeImage in array) {
         homeImage.tipLabelArray = [self.imageTipLabelDAO selectTipLabelsByImageID:homeImage.imageID];
+        homeImage.replierArray = [self.replierDAO selectReplierByImageID:homeImage.imageID];
     }
     return array;
 }
@@ -136,6 +165,8 @@
     [self.homeImageDAO clearHomeImages];
     //清空标签数据库
     [self.imageTipLabelDAO clearTipLabels];
+    //清空ATOMReplier数据库
+    [self.replierDAO clearReplier];
     //删除沙盒中HomePage文件夹
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *directory = [NSString stringWithFormat:@"%@/HomePage", PATH_OF_DOCUMENT];

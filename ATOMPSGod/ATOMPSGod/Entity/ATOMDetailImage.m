@@ -14,7 +14,7 @@
     return @{
              @"detailID" : @"id",
              @"uid" : @"uid",
-             @"nickname" : @"nick",
+             @"nickname" : @"nickname",
              @"avatar" : @"avatar",
              @"sex" : @"sex",
              @"replyTime" : @"reply_created",

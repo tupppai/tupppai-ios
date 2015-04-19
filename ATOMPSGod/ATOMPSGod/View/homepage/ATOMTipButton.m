@@ -11,14 +11,27 @@
 @interface ATOMTipButton ()
 
 @property (nonatomic, strong) NSDictionary *attributeDic;
+@property (nonatomic, strong) UIImageView *tagImageView;
+@property (nonatomic, strong) CADisplayLink *displayLink;
+@property (nonatomic, strong) UIView *blackView;
+@property (nonatomic, assign) NSInteger count;
 
 @end
 
 @implementation ATOMTipButton
 
-- (instancetype)init {
-    self = [super init];
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
     if (self) {
+        _tagImageView = [UIImageView new];
+        _tagImageView.image = [UIImage imageNamed:@"tag_point"];
+        _blackView = [UIView new];
+        _blackView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
+        _blackView.layer.cornerRadius = 2.5;
+        [self addSubview:_blackView];
+        _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(step)];
+        [_displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
+        [self addSubview:_tagImageView];
     }
     return self;
 }
@@ -35,9 +48,8 @@
     [color set];
     UIBezierPath * path = [UIBezierPath bezierPath];
     
-    UIImage *tagImage = [UIImage imageNamed:@"tag_point"];
-    
-    CGPoint imageOriginPoint;
+//    UIImage *tagImage = [UIImage imageNamed:@"tag_point"];
+//    CGPoint imageOriginPoint;
     CGPoint centerControlPoint;
     CGPoint topLeftControlPoint;
     CGPoint topRightControlPoint;
@@ -49,8 +61,8 @@
     
     if (_tipButtonType == ATOMLeftTipType) {
         
-        imageOriginPoint = CGPointMake(0, 7.5);
-        [tagImage drawInRect:CGRectMake(imageOriginPoint.x, imageOriginPoint.y, 15, 15)];
+//        imageOriginPoint = CGPointMake(0, 7.5);
+//        [tagImage drawInRect:CGRectMake(imageOriginPoint.x, imageOriginPoint.y, 15, 15)];
         centerControlPoint = CGPointMake(16, CGRectGetMidY(rect));
         topLeftControlPoint = CGPointMake(30, 0);
         topRightControlPoint = CGPointMake(CGRectGetMaxX(rect), 0);
@@ -84,8 +96,8 @@
         [_buttonText drawInRect:CGRectMake(topLeftControlPoint.x, 9, CGWidth(rect) - topLeftControlPoint.y, CGHeight(rect)) withAttributes:self.attributeDic];
     } else {
         
-        imageOriginPoint = CGPointMake(CGRectGetMaxX(rect) - 15, 7.5);
-        [tagImage drawInRect:CGRectMake(imageOriginPoint.x, imageOriginPoint.y, 15, 15)];
+//        imageOriginPoint = CGPointMake(CGRectGetMaxX(rect) - 15, 7.5);
+//        [tagImage drawInRect:CGRectMake(imageOriginPoint.x, imageOriginPoint.y, 15, 15)];
         centerControlPoint = CGPointMake(CGRectGetMaxX(rect) - 16, CGRectGetMidY(rect));
         topLeftControlPoint = CGPointMake(0, 0);
         topRightControlPoint = CGPointMake(CGRectGetMaxX(rect) - 30, 0);
@@ -126,6 +138,12 @@
 
 - (void)setTipButtonType:(ATOMTipButtonType)tipButtonType {
     _tipButtonType = tipButtonType;
+    if (tipButtonType == ATOMLeftTipType) {
+        _tagImageView.frame = CGRectMake(0, 7.5, 15, 15);
+    } else {
+        _tagImageView.frame = CGRectMake(CGRectGetWidth(self.frame) - 15, 7.5, 15, 15);
+    }
+    _blackView.frame = CGRectMake(_tagImageView.center.x - 2.5, _tagImageView.center.y - 2.5, 5, 5);
     [self setNeedsDisplay];
 }
 
@@ -200,7 +218,32 @@
     return flag;
 }
 
-
+- (void)step {
+    if (_count++ % 180 == 0) {
+        CABasicAnimation *animation1 = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+        animation1.duration = 0.5;
+        animation1.repeatCount = 1;
+        animation1.autoreverses = YES;
+        animation1.fromValue = [NSNumber numberWithFloat:1.0];
+        animation1.toValue = [NSNumber numberWithFloat:1.5];
+        [_tagImageView.layer addAnimation:animation1 forKey:@"tag_scale"];
+    
+        CABasicAnimation *animation2 = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+        animation2.beginTime = CACurrentMediaTime() + 1;
+        animation2.duration = 0.5;
+        animation2.repeatCount = 2;
+        animation2.autoreverses = NO;
+        animation2.fromValue = [NSNumber numberWithFloat:1.0];
+        animation2.toValue = [NSNumber numberWithFloat:8];
+        [_blackView.layer addAnimation:animation2 forKey:@"black_scale"];
+        
+        [UIView animateWithDuration:0.5 delay:1 options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionAllowUserInteraction animations:^{
+            _blackView.alpha = 0;
+        } completion:^(BOOL finished) {
+            _blackView.alpha = 0.5;
+        }];
+    }
+}
 
 
 

@@ -106,10 +106,7 @@
     ws.currentPage++;
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-    [param setObject:@"new" forKey:@"type"];
     [param setObject:@(timestamp) forKey:@"last_updated"];
-    [param setObject:@"time" forKey:@"sort"];
-    [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     ATOMShowProceeding *showProceeding = [ATOMShowProceeding new];
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];

@@ -10,6 +10,8 @@
 #import "ATOMHomeImage.h"
 #import "ATOMImageTipLabel.h"
 #import "ATOMImageTipLabelViewModel.h"
+#import "ATOMReplier.h"
+#import "ATOMReplierViewModel.h"
 
 @interface ATOMHomePageViewModel ()
 
@@ -36,6 +38,7 @@
         _commentNumber = @"0";
         _totalPSNumber = @"0";
         _labelArray = [NSMutableArray new];
+        _replierArray = [NSMutableArray new];
     }
     return self;
 }
@@ -61,6 +64,11 @@
         ATOMImageTipLabelViewModel *model = [ATOMImageTipLabelViewModel new];
         [model setViewModelData:tipLabel];
         [_labelArray addObject:model];
+    }
+    for (ATOMReplier *replier in homeImage.replierArray) {
+        ATOMReplierViewModel *model = [ATOMReplierViewModel new];
+        [model setViewModelData:replier];
+        [_replierArray addObject:model];
     }
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *path = [[NSString stringWithFormat:@"%@/HomePage", PATH_OF_DOCUMENT] stringByAppendingPathComponent:[NSString stringWithFormat:@"ATOMIMAGE-%d.jpg", (int)homeImage.imageID]];

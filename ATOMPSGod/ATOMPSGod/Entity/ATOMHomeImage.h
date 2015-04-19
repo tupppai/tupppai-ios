@@ -66,6 +66,10 @@
  *  作品的标签数组
  */
 @property (nonatomic, strong) NSMutableArray *tipLabelArray;
+/**
+ *  回复人数组
+ */
+@property (nonatomic, strong) NSMutableArray *replierArray;
 
 
 

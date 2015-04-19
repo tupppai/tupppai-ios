@@ -18,8 +18,12 @@
     return @"create table ATOMImageTipLabel (imageID integer, labelID integer, content text, x real, y real, labelDirection integer)";
 }
 
++ (NSString *)createReplier {
+    return @"create table ATOMReplier (replierID integer, imageID integer, uid integer, nickname integer, avatar text)";
+}
+
 + (NSString *)createHomeImage {
-    return @"create table ATOMHomeImage (imageID integer, uid integer, nickname integer, avatar text, sex integer, uploadTime bigint, imageURL text, userDescription text, isDownload integer, totalPraiseNumber integer, totalCommentNumber integer, totalShareNumber integer, totalWXShareNumber integer, totalWorkNumber integer, imageWidth real, imageHeight real, tipLabelArray null)";
+    return @"create table ATOMHomeImage (imageID integer, uid integer, nickname integer, avatar text, sex integer, uploadTime bigint, imageURL text, userDescription text, isDownload integer, totalPraiseNumber integer, totalCommentNumber integer, totalShareNumber integer, totalWXShareNumber integer, totalWorkNumber integer, imageWidth real, imageHeight real, tipLabelArray null, replierArray null)";
 }
 
 + (NSString *)createComment {

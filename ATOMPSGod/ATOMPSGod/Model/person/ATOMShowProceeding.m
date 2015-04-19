@@ -14,7 +14,7 @@
 @implementation ATOMShowProceeding
 
 - (AFHTTPRequestOperation *)ShowProceeding:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
-    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:@"index/index" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:@"user/my_proceeding" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *resultArray = [NSMutableArray array];
         NSArray *imageDataArray = responseObject[@"data"];
         for (int i = 0; i < imageDataArray.count; i++) {

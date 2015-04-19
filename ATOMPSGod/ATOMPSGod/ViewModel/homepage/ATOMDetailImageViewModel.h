@@ -13,6 +13,7 @@
 @interface ATOMDetailImageViewModel : NSObject
 
 @property (nonatomic, assign) NSInteger ID;
+@property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, copy) NSString *userName;
 @property (nonatomic, copy) NSString *userSex;
 @property (nonatomic, copy) NSString *avatarURL;

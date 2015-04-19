@@ -29,7 +29,7 @@
     _userSex = commentMessage.sex ? @"man" : @"woman";
     _content = commentMessage.content;
     _imageURL = commentMessage.homeImage.imageURL;
-    _type = (commentMessage.commentType == 1) ? @"ask" : @"reply";
+    _type = commentMessage.commentType;
     NSDateFormatter *df = [NSDateFormatter new];
     [df setDateFormat:@"yyyy年MM月dd日 HH时mm分"];
     NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:commentMessage.createTime];

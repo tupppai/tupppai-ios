@@ -30,6 +30,7 @@
 @property (nonatomic, strong) UITapGestureRecognizer *tapHotDetailGesture;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, assign) NSInteger currentPage;
+@property (nonatomic, assign) BOOL canRefreshFooter;
 
 @end
 
@@ -69,15 +70,15 @@
 #pragma mark Refresh
 
 - (void)configHotDetailTableViewRefresh {
-    WS(ws);
-    [_hotDetailTableView addLegendFooterWithRefreshingBlock:^{
-        [ws loadMoreHotData];
-    }];
+    [_hotDetailTableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreHotData)];
 }
 
 - (void)loadMoreHotData {
-    WS(ws);
-    [ws getMoreDataSource];
+    if (_canRefreshFooter) {
+        [self getMoreDataSource];
+    } else {
+        [_hotDetailTableView.footer endRefreshing];
+    }
 }
 
 #pragma mark - GetDataSource
@@ -128,6 +129,9 @@
             model.labelArray = [ws.homePageViewModel.labelArray mutableCopy];
             [ws.dataSource addObject:model];
         }
+        if (detailOfHomePageArray.count == 0) {
+            _canRefreshFooter = NO;
+        }
         [showDetailOfHomePage saveDetailImagesInDB:detailOfHomePageArray];
         [ws.hotDetailTableView reloadData];
         [ws.hotDetailTableView.header endRefreshing];
@@ -175,6 +179,7 @@
 - (void)createUI {
     self.title = @"详情";
     self.view = self.hotDetailView;
+    _canRefreshFooter = YES;
 }
 
 #pragma mark - Click Event
@@ -196,6 +201,7 @@
     CGPoint location = [gesture locationInView:_hotDetailTableView];
     NSIndexPath *indexPath = [_hotDetailTableView indexPathForRowAtPoint:location];
     if (indexPath) {
+        ATOMDetailImageViewModel *model = _dataSource[indexPath.row];
         ATOMHotDetailTableViewCell *cell = (ATOMHotDetailTableViewCell *)[_hotDetailTableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
         //点击图片
@@ -205,6 +211,8 @@
             p = [gesture locationInView:cell.topView];
             if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
                 ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+                opvc.userID = model.uid;
+                opvc.userName = model.userName;
                 [self pushViewController:opvc animated:YES];
             } else if (CGRectContainsPoint(cell.psButton.frame, p)) {
                 NSLog(@"Click psButton");
@@ -218,6 +226,8 @@
                 }];
             } else if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
                 ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+                opvc.userID = model.uid;
+                opvc.userName = model.userName;
                 [self pushViewController:opvc animated:YES];
             }
         } else {
@@ -228,10 +238,8 @@
                 NSLog(@"Click shareButton");
             } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
                 ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
-                NSInteger row = indexPath.row;
-                ATOMDetailImageViewModel *model = _dataSource[row];
                 cdvc.ID = model.ID;
-                cdvc.type = (row == 0) ? @"ask" : @"reply";
+                cdvc.type = (indexPath.row == 0) ? 1 : 2;
                 [self pushViewController:cdvc animated:YES];
             }
         }

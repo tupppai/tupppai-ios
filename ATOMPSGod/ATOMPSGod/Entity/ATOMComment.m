@@ -14,7 +14,7 @@
     return @{
              @"cid" : @"comment_id",
              @"uid" : @"uid",
-             @"nickname" : @"nick",
+             @"nickname" : @"nickname",
              @"sex" : @"sex",
              @"avatar" : @"avatar",
              @"content" : @"content",

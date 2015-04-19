@@ -1,36 +1,37 @@
 //
-//  ATOMMyFansViewController.m
+//  ATOMOtherPersonConcernViewController.m
 //  ATOMPSGod
 //
-//  Created by atom on 15/3/10.
+//  Created by atom on 15/4/15.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMMyFansViewController.h"
-#import "ATOMMyFansTableViewCell.h"
+#import "ATOMOtherPersonConcernViewController.h"
+#import "ATOMMyConcernTableViewCell.h"
 #import "ATOMOtherPersonViewController.h"
-#import "ATOMShowFans.h"
-#import "ATOMFans.h"
-#import "ATOMFansViewModel.h"
+#import "ATOMShowConcern.h"
+#import "ATOMConcern.h"
+#import "ATOMConcernViewModel.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMMyFansViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface ATOMOtherPersonConcernViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) UIView *myFansView;
-@property (nonatomic, strong) UITapGestureRecognizer *tapMyFansGesture;
+@property (nonatomic, strong) UIView *concernView;
+@property (nonatomic, strong) UITapGestureRecognizer *tapConcernGesture;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL canRefreshFooter;
 
 @end
 
-@implementation ATOMMyFansViewController
+@implementation ATOMOtherPersonConcernViewController
 
 #pragma mark - Refresh
 
 - (void)configTableViewRefresh {
+    [_tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(getDataSource)];
     [_tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
 }
 
@@ -51,19 +52,21 @@
     _dataSource = nil;
     _dataSource = [NSMutableArray array];
     _currentPage = 1;
+    //    [param setObject:@(_uid) forKeyedSubscript:@""]
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(_uid) forKeyedSubscript:@"uid"];
-    ATOMShowFans *showFans = [ATOMShowFans new];
+    ATOMShowConcern *showConcern = [ATOMShowConcern new];
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-    [showFans ShowFans:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
+    [showConcern ShowOtherConcern:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         [SVProgressHUD dismiss];
-        for (ATOMFans *fans in resultArray) {
-            ATOMFansViewModel *fansViewModel = [ATOMFansViewModel new];
-            [fansViewModel setViewModelData:fans];
-            [ws.dataSource addObject:fansViewModel];
+        for (ATOMConcern *concern in resultArray) {
+            ATOMConcernViewModel *concernViewModel = [ATOMConcernViewModel new];
+            [concernViewModel setViewModelData:concern];
+            [ws.dataSource addObject:concernViewModel];
         }
+        [ws.tableView.header endRefreshing];
         [ws.tableView reloadData];
     }];
 }
@@ -73,17 +76,18 @@
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timestamp = [[NSDate date] timeIntervalSince1970];
     ws.currentPage++;
+    [param setObject:@(_uid) forKey:@"uid"];
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(timestamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    ATOMShowFans *showFans = [ATOMShowFans new];
+    ATOMShowConcern *showConcern = [ATOMShowConcern new];
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-    [showFans ShowFans:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
+    [showConcern ShowOtherConcern:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         [SVProgressHUD dismiss];
-        for (ATOMFans *fans in resultArray) {
-            ATOMFansViewModel *fansViewModel = [ATOMFansViewModel new];
-            [fansViewModel setViewModelData:fans];
-            [ws.dataSource addObject:fansViewModel];
+        for (ATOMConcern *concern in resultArray) {
+            ATOMConcernViewModel *concernViewModel = [ATOMConcernViewModel new];
+            [concernViewModel setViewModelData:concern];
+            [ws.dataSource addObject:concernViewModel];
         }
         if (resultArray.count == 0) {
             ws.canRefreshFooter = NO;
@@ -103,17 +107,17 @@
 }
 
 - (void)createUI {
-    self.title = [NSString stringWithFormat:@"%@的粉丝", _uid ? _userName : @"我"];
-    _myFansView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
-    self.view = _myFansView;
-    _tableView = [[UITableView alloc] initWithFrame:_myFansView.bounds];
+    self.title = [NSString stringWithFormat:@"%@的关注", _userName];
+    _concernView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
+    self.view = _concernView;
+    _tableView = [[UITableView alloc] initWithFrame:_concernView.bounds];
     _tableView.backgroundColor = [UIColor colorWithHex:0xededed];
     _tableView.tableFooterView = [UIView new];
-    [_myFansView addSubview:_tableView];
+    [_concernView addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    _tapMyFansGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMyFansGesture:)];
-    [_tableView addGestureRecognizer:_tapMyFansGesture];
+    _tapConcernGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapConcernGesture:)];
+    [_tableView addGestureRecognizer:_tapConcernGesture];
     [self configTableViewRefresh];
     _canRefreshFooter = YES;
     [self getDataSource];
@@ -123,12 +127,12 @@
 
 #pragma mark - Gesture Event
 
-- (void)tapMyFansGesture:(UITapGestureRecognizer *)gesture {
+- (void)tapConcernGesture:(UITapGestureRecognizer *)gesture {
     CGPoint location = [gesture locationInView:_tableView];
     NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:location];
     if (indexPath) {
-        ATOMFansViewModel *viewModel = _dataSource[indexPath.row];
-        ATOMMyFansTableViewCell *cell = (ATOMMyFansTableViewCell *)[_tableView cellForRowAtIndexPath:indexPath];
+        ATOMConcernViewModel *viewModel = _dataSource[indexPath.row];
+        ATOMMyConcernTableViewCell *cell = (ATOMMyConcernTableViewCell *)[_tableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
@@ -160,10 +164,10 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"MyFansCell";
-    ATOMMyFansTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *CellIdentifier = @"ConcernCell";
+    ATOMMyConcernTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
-        cell = [[ATOMMyFansTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[ATOMMyConcernTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     cell.viewModel = _dataSource[indexPath.row];
     return cell;
@@ -173,3 +177,4 @@
 
 
 @end
+
