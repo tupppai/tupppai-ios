@@ -192,6 +192,13 @@
 		5C67FB2A1AB2B634004EFF05 /* ATOMHeaderImageCropperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C67FB291AB2B634004EFF05 /* ATOMHeaderImageCropperView.m */; };
 		5C67FB2D1AB2C509004EFF05 /* ATOMCustomCopperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C67FB2C1AB2C509004EFF05 /* ATOMCustomCopperView.m */; };
 		5C6CE6B91ADBE8A10035F522 /* EmojisList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5C6CE6B81ADBE8A10035F522 /* EmojisList.plist */; };
+		5C6E53211AE4CACE00D64114 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6E53201AE4CACE00D64114 /* Parse.framework */; };
+		5C6E53231AE4CB0100D64114 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6E53221AE4CB0100D64114 /* StoreKit.framework */; };
+		5C6E53251AE4CB1D00D64114 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6E53241AE4CB1D00D64114 /* MobileCoreServices.framework */; };
+		5C6E53271AE4CB3400D64114 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6E53261AE4CB3400D64114 /* CoreLocation.framework */; };
+		5C6E53291AE4CB4300D64114 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6E53281AE4CB4300D64114 /* AudioToolbox.framework */; };
+		5C6E532B1AE4CB5000D64114 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6E532A1AE4CB5000D64114 /* CFNetwork.framework */; };
+		5C6E532D1AE4CC0D00D64114 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6E532C1AE4CC0D00D64114 /* Bolts.framework */; };
 		5C70715F1AC52656004B3A6A /* ATOMImageCropper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C70715E1AC52656004B3A6A /* ATOMImageCropper.m */; };
 		5C7861161AAF4C9400E87C77 /* ATOMMyWorkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7861151AAF4C9400E87C77 /* ATOMMyWorkViewController.m */; };
 		5C7861251AAF4DD200E87C77 /* 0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C7861181AAF4DD200E87C77 /* 0.jpg */; };
@@ -727,6 +734,13 @@
 		5C67FB2C1AB2C509004EFF05 /* ATOMCustomCopperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMCustomCopperView.m; sourceTree = "<group>"; };
 		5C6CE6B51ADBE2210035F522 /* ATOMFaceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMFaceView.h; sourceTree = "<group>"; };
 		5C6CE6B81ADBE8A10035F522 /* EmojisList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = EmojisList.plist; sourceTree = "<group>"; };
+		5C6E53201AE4CACE00D64114 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		5C6E53221AE4CB0100D64114 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		5C6E53241AE4CB1D00D64114 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		5C6E53261AE4CB3400D64114 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		5C6E53281AE4CB4300D64114 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		5C6E532A1AE4CB5000D64114 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		5C6E532C1AE4CC0D00D64114 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		5C70715D1AC52656004B3A6A /* ATOMImageCropper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMImageCropper.h; sourceTree = "<group>"; };
 		5C70715E1AC52656004B3A6A /* ATOMImageCropper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMImageCropper.m; sourceTree = "<group>"; };
 		5C7861141AAF4C9400E87C77 /* ATOMMyWorkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMMyWorkViewController.h; sourceTree = "<group>"; };
@@ -1005,16 +1019,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CDF82401AC2BEEA00321694 /* SystemConfiguration.framework in Frameworks */,
+				5C6E532B1AE4CB5000D64114 /* CFNetwork.framework in Frameworks */,
+				5C6E53291AE4CB4300D64114 /* AudioToolbox.framework in Frameworks */,
+				5C6E53271AE4CB3400D64114 /* CoreLocation.framework in Frameworks */,
+				5C6E53251AE4CB1D00D64114 /* MobileCoreServices.framework in Frameworks */,
+				5C6E53231AE4CB0100D64114 /* StoreKit.framework in Frameworks */,
 				5CCE44361AD7C56500FEDDB3 /* Social.framework in Frameworks */,
 				5CCE44341AD7C51600FEDDB3 /* Accounts.framework in Frameworks */,
 				5CDF82511AC2C05F00321694 /* MessageUI.framework in Frameworks */,
 				5CDF824E1AC2BFAB00321694 /* libstdc++.dylib in Frameworks */,
+				5C6E53211AE4CACE00D64114 /* Parse.framework in Frameworks */,
 				5CDF824C1AC2BF8E00321694 /* Security.framework in Frameworks */,
 				5CDF824B1AC2BF8400321694 /* libz.1.2.5.dylib in Frameworks */,
 				5CDF82461AC2BF1F00321694 /* libicucore.dylib in Frameworks */,
 				5CDF82441AC2BF0200321694 /* CoreTelephony.framework in Frameworks */,
+				5C6E532D1AE4CC0D00D64114 /* Bolts.framework in Frameworks */,
 				5CDF82421AC2BEF900321694 /* QuartzCore.framework in Frameworks */,
-				5CDF82401AC2BEEA00321694 /* SystemConfiguration.framework in Frameworks */,
 				5CDF82301AC2BE5E00321694 /* WeChatConnection.framework in Frameworks */,
 				5CDF823E1AC2BE5E00321694 /* ShareSDKShareActionSheet.framework in Frameworks */,
 				5CDF823A1AC2BE5E00321694 /* libWeChatSDK.a in Frameworks */,
@@ -1348,6 +1369,11 @@
 		5C51B2521AB9088700F442A6 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				5C6E532A1AE4CB5000D64114 /* CFNetwork.framework */,
+				5C6E53281AE4CB4300D64114 /* AudioToolbox.framework */,
+				5C6E53261AE4CB3400D64114 /* CoreLocation.framework */,
+				5C6E53241AE4CB1D00D64114 /* MobileCoreServices.framework */,
+				5C6E53221AE4CB0100D64114 /* StoreKit.framework */,
 				5CCE44351AD7C56500FEDDB3 /* Social.framework */,
 				5CCE44331AD7C51600FEDDB3 /* Accounts.framework */,
 				5CCE44311AD7C44D00FEDDB3 /* Reveal.framework */,
@@ -2226,6 +2252,8 @@
 		5CDF81FF1AC2BE5E00321694 /* ShareSDK */ = {
 			isa = PBXGroup;
 			children = (
+				5C6E532C1AE4CC0D00D64114 /* Bolts.framework */,
+				5C6E53201AE4CACE00D64114 /* Parse.framework */,
 				5CDF82001AC2BE5E00321694 /* Connection */,
 				5CDF820B1AC2BE5E00321694 /* Core */,
 				5CDF82121AC2BE5E00321694 /* Extend */,
@@ -2367,7 +2395,7 @@
 		5CDB05B91AA3FE520089121E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = ATOM;
 				TargetAttributes = {
 					5CDB05C01AA3FE520089121E = {
@@ -2809,6 +2837,7 @@
 				PROVISIONING_PROFILE = "5aeefb23-e966-4e05-8591-7708db4ecd92";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 armv7s arm64";
 			};
 			name = Debug;
 		};
@@ -2844,10 +2873,12 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				PROVISIONING_PROFILE = "62edcdd7-7b70-4d0e-8a71-6ae66a5aa960";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = NO;
+				VALID_ARCHS = "armv7 armv7s arm64";
 			};
 			name = Release;
 		};
@@ -2887,6 +2918,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "5aeefb23-e966-4e05-8591-7708db4ecd92";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 armv7s arm64";
 			};
 			name = Debug;
 		};
@@ -2926,6 +2958,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "62edcdd7-7b70-4d0e-8a71-6ae66a5aa960";
 				VALIDATE_PRODUCT = NO;
+				VALID_ARCHS = "armv7 armv7s arm64";
 			};
 			name = Release;
 		};

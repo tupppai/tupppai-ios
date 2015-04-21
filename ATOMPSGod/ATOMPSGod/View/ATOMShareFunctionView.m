@@ -11,10 +11,6 @@
 @interface ATOMShareFunctionView ()
 
 @property (nonatomic, strong) UIButton *cancelButton;
-@property (nonatomic, strong) UIButton *wxButton;
-@property (nonatomic, strong) UIButton *xlButton;
-@property (nonatomic, strong) UIButton *qqButton;
-@property (nonatomic, strong) UIButton *qqzoneButton;
 @property (nonatomic, strong) UILabel *xlLabel;
 @property (nonatomic, strong) UILabel *wxLabel;
 @property (nonatomic, strong) UILabel *qqLabel;
@@ -137,9 +133,6 @@ static CGFloat BOTTOMHEIGHT = 273;
 - (void)clickCancelButton:(UIButton *)sender {
     [self removeFromSuperview];
 }
-
-
-
 
 
 

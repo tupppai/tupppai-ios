@@ -58,6 +58,7 @@
     [ShareSDK connectWeChatWithAppId:@"wx86ff6f67a2b9b4b8"   //微信APPID
                            appSecret:@"c2da31fda3acf1c09c40ee25772b6ca5"  //微信APPSecret
                            wechatCls:[WXApi class]];
+    [Parse setApplicationId:@"AYUYFYJp0h3xDkaSyChJdj7GdlUH2U2foI3fPLtX" clientKey:@"p9OuLNWB94ZVkFop3n5PTz3zNpFZLLlVHPrTjZas"];
 }
 
 - (BOOL)application:(UIApplication *)application

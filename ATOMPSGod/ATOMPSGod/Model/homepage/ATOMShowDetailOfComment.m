@@ -38,7 +38,9 @@
             ATOMComment *comment = [MTLJSONAdapter modelOfClass:[ATOMComment class] fromJSONDictionary:hotCommentDataArray[i] error:NULL];
             comment.commentType = [param[@"type"] integerValue];
             comment.imageID = [param[@"target_id"] integerValue];
-            [hotCommentArray addObject:comment];
+            if (comment) {
+                [hotCommentArray addObject:comment];
+            }
         }
         for (int i = 0; i < recentCommentDataArray.count; i++) {
             ATOMComment *comment = [MTLJSONAdapter modelOfClass:[ATOMComment class] fromJSONDictionary:recentCommentDataArray[i] error:NULL];
@@ -48,7 +50,9 @@
             NSArray *atCommentArray = recentCommentDataArray[i][@"at_comments"];
             for (int j = 0; j < atCommentArray.count; j++) {
                 ATOMAtComment *atComment = [MTLJSONAdapter modelOfClass:[ATOMAtComment class] fromJSONDictionary:atCommentArray[j] error:NULL];
-                [comment.atCommentArray addObject:atComment];
+                if (atComment) {
+                    [comment.atCommentArray addObject:atComment];
+                }
             }
             [recentCommentArray addObject:comment];
         }

@@ -159,11 +159,10 @@
     [_commentDetailView.commentDetailTableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:commentStr forKey:@"content"];
-#warning fix
-//    [param setObject:_type forKey:@"comment_type"];
-    [param setObject:@(_ID) forKey:@"comment_target_id"];
+    [param setObject:@(_type) forKey:@"type"];
+    [param setObject:@(_ID) forKey:@"target_id"];
     if (_atModel) {
-        [param setObject:@(_atModel.comment_id) forKey:@"comment_reply_to"];
+        [param setObject:@(_atModel.comment_id) forKey:@"reply_to"];
     }
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
     [showDetailOfComment SendComment:param withBlock:^(NSInteger comment_id, NSError *error) {

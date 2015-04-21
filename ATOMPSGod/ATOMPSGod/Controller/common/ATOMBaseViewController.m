@@ -72,5 +72,75 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)wxShare {
+    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"0" ofType:@"jpg"];
+    id<ISSContent> publishContent = [ShareSDK content:@"分享内容"
+                                       defaultContent:@"测试一下"
+                                                image:[ShareSDK imageWithPath:imagePath]
+                                                title:@"ShareSDK"
+                                                  url:@"http://www.mob.com"
+                                          description:@"这是一条测试信息"
+                                            mediaType:SSPublishContentMediaTypeNews];
+    [ShareSDK clientShareContent:publishContent //内容对象
+                            type:ShareTypeWeixiTimeline //平台类型
+                   statusBarTips:YES
+                          result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {//返回事件
+                              
+                              if (state == SSPublishContentStateSuccess)
+                              {
+                                  NSLog(NSLocalizedString(@"TEXT_SHARE_SUC", @"分享成功!"));
+                              }
+                              else if (state == SSPublishContentStateFail)
+                              {
+                                  NSLog(NSLocalizedString(@"TEXT_SHARE_FAI", @"分享失败!"), [error errorCode], [error errorDescription]);
+                              }
+                          }];
+}
+
+- (void)wxFriendShare {
+    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"0" ofType:@"jpg"];
+    id<ISSContent> publishContent = [ShareSDK content:@"分享内容"
+                                       defaultContent:@"测试一下"
+                                                image:[ShareSDK imageWithPath:imagePath]
+                                                title:@"ShareSDK"
+                                                  url:@"http://www.mob.com"
+                                          description:@"这是一条测试信息"
+                                            mediaType:SSPublishContentMediaTypeNews];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
+    [ShareSDK clientShareContent:publishContent //内容对象
+                            type:ShareTypeWeixiSession //平台类型
+                   statusBarTips:YES
+                          result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {//返回事件
+                              [SVProgressHUD dismiss];
+                              if (state == SSPublishContentStateSuccess)
+                              {
+                                  NSLog(NSLocalizedString(@"TEXT_SHARE_SUC", @"分享成功!"));
+                              }
+                              else if (state == SSPublishContentStateFail)
+                              {
+                                  NSLog(NSLocalizedString(@"TEXT_SHARE_FAI", @"分享失败!"), [error errorCode], [error errorDescription]);
+                              }
+                          }];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @end

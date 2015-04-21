@@ -62,9 +62,27 @@
 }
 
 - (void)clickWXLoginButton:(UIButton *)sender {
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [ShareSDK getUserInfoWithType:ShareTypeWeixiSession authOptions:nil result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error) {
         if (result) {
-//            PFQuery *query = [PFQuery querywith]
+            PFQuery *query = [PFQuery queryWithClassName:@"UserInfo"];
+            [query whereKey:@"uid" equalTo:[userInfo uid]];
+            [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                if ([objects count] == 0) {
+                    PFObject *newUser = [PFObject objectWithClassName:@"UserInfo"];
+                    [newUser setObject:[userInfo uid] forKey:@"uid"];
+                    [newUser setObject:[userInfo nickname] forKey:@"name"];
+                    [newUser setObject:[userInfo profileImage] forKey:@"icon"];
+                    [newUser saveInBackground];
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Hello" message:@"欢迎注册" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+                    [alertView show];
+                } else {
+                    [SVProgressHUD showWithStatus:@"微信登陆成功" maskType:SVProgressHUDMaskTypeNone];
+                    [self.navigationController popViewControllerAnimated:NO];
+                    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
+                    [SVProgressHUD dismiss];
+                }
+            }];
         }
     }];
 }

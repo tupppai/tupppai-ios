@@ -37,5 +37,7 @@ typedef enum {
 @property (nonatomic, strong) UIBarButtonItem *negativeSpacer;
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated;
 - (void)popCurrentController;
+- (void)wxShare;
+- (void)wxFriendShare;
 
 @end

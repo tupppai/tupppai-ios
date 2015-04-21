@@ -67,6 +67,7 @@
 - (ATOMShareFunctionView *)shareFunctionView {
     if (!_shareFunctionView) {
         _shareFunctionView = [ATOMShareFunctionView new];
+        [_shareFunctionView.wxButton addTarget:self action:@selector(clickWXButton:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _shareFunctionView;
 }
@@ -363,6 +364,10 @@
     
 }
 
+- (void)clickWXButton:(UIButton *)sender {
+    [self wxFriendShare];
+}
+
 #pragma mark - Gesture Event
 
 - (void)tapHomePageHotGesture:(UITapGestureRecognizer *)gesture {
@@ -397,28 +402,7 @@
                 if (CGRectContainsPoint(cell.praiseButton.frame, p)) {
                     cell.praiseButton.selected = !cell.praiseButton.selected;
                 } else if (CGRectContainsPoint(cell.shareButton.frame, p)) {
-                    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"0" ofType:@"jpg"];
-                    id<ISSContent> publishContent = [ShareSDK content:@"分享内容"
-                                                       defaultContent:@"测试一下"
-                                                                image:[ShareSDK imageWithPath:imagePath]
-                                                                title:@"ShareSDK"
-                                                                  url:@"http://www.mob.com"
-                                                          description:@"这是一条测试信息"
-                                                            mediaType:SSPublishContentMediaTypeNews];
-                    [ShareSDK clientShareContent:publishContent //内容对象
-                                            type:ShareTypeWeixiTimeline //平台类型
-                                   statusBarTips:YES
-                                          result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {//返回事件
-                                              
-                                              if (state == SSPublishContentStateSuccess)
-                                              {
-                                                  NSLog(NSLocalizedString(@"TEXT_SHARE_SUC", @"分享成功!"));
-                                              }
-                                              else if (state == SSPublishContentStateFail)
-                                              {
-                                                  NSLog(NSLocalizedString(@"TEXT_SHARE_FAI", @"分享失败!"), [error errorCode], [error errorDescription]);
-                                              }
-                                          }];
+                    [self wxShare];
                 } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
                     ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
                     ATOMHomePageViewModel *model = _dataSourceOfHotTableView[indexPath.row];
@@ -475,13 +459,15 @@
                 if (CGRectContainsPoint(cell.praiseButton.frame, p)) {
                     cell.praiseButton.selected = !cell.praiseButton.selected;
                 } else if (CGRectContainsPoint(cell.shareButton.frame, p)) {
-                    NSLog(@"Click shareButton");
+                    [self wxShare];
                 } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
                     ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
                     ATOMHomePageViewModel *model = _dataSourceOfHotTableView[indexPath.row];
                     cdvc.ID = model.imageID;
                     cdvc.type = 1;
                     [self pushViewController:cdvc animated:YES];
+                } else if (CGRectContainsPoint(cell.moreShareButton.frame, p)) {
+                    [[AppDelegate APP].window addSubview:self.shareFunctionView];
                 }
             }
             

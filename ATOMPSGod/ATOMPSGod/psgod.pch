@@ -37,7 +37,7 @@
 #import "POP.h"
 #import "UIViewController+ATOMTracking.h"
 #import <ShareSDK/ShareSDK.h>
-//#import <Parse/Parse.h>
+#import <Parse/Parse.h>
 
 #endif
 

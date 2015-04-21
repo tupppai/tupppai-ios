@@ -80,6 +80,7 @@ static int padding = 10;
     [_praiseButton setImage:[UIImage imageNamed:@"btn_comment_like_pressed"] forState:UIControlStateSelected];
     [self setCommonButton:_shareButton WithImage:[UIImage imageNamed:@"icon_share_normal"]];
     [self setCommonButton:_commentButton WithImage:[UIImage imageNamed:@"icon_comment_normal"]];
+    _moreShareButton.userInteractionEnabled = NO;
     [_moreShareButton setImage:[UIImage imageNamed:@"icon_others_normal"] forState:UIControlStateNormal];
     [_moreShareButton setImage:[UIImage imageNamed:@"icon_others_pressed"] forState:UIControlStateHighlighted];
     

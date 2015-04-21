@@ -12,6 +12,8 @@
 
 @property (nonatomic, strong) UIImageView *pointImageView;
 @property (nonatomic, strong) UILabel *tipLabel;
+@property (nonatomic, strong) UILabel *bigLabel;
+@property (nonatomic, strong) UILabel *smallLabel;
 
 @end
 
@@ -53,22 +55,38 @@ static int padding10 = 10;
 }
 
 - (void)createBottomView {
-    CGFloat buttonInterval = 25;
-    CGFloat xlButtonLeftPadding = (SCREEN_WIDTH - 3 * buttonInterval - 4 * 28) / 2;
-    _xlButton = [[UIButton alloc] initWithFrame:CGRectMake(xlButtonLeftPadding, padding10, 28, 28)];
-    _wxButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_xlButton.frame) + buttonInterval, padding10, 28, 28)];
-    _qqButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_wxButton.frame) + buttonInterval, padding10, 28, 28)];
-    _qqzoneButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_qqButton.frame) + buttonInterval, padding10, 28, 28)];
-    [self setCommonButton:_xlButton WithImage:[UIImage imageNamed:@"weibo_grey"] AndSelectedImage:[UIImage imageNamed:@"weibo"]];
-    [self setCommonButton:_wxButton WithImage:[UIImage imageNamed:@"wechat_grey"] AndSelectedImage:[UIImage imageNamed:@"wechat"]];
-    [self setCommonButton:_qqButton WithImage:[UIImage imageNamed:@"qq_grey"] AndSelectedImage:[UIImage imageNamed:@"qq"]];
-    [self setCommonButton:_qqzoneButton WithImage:[UIImage imageNamed:@"qqzone_grey"] AndSelectedImage:[UIImage imageNamed:@"qqzone"]];
-    
-    _tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, padding10, xlButtonLeftPadding, 28)];
-    _tipLabel.text = @"同步到：";
-    _tipLabel.textColor = [UIColor colorWithHex:0x666666];
-    _tipLabel.textAlignment = NSTextAlignmentCenter;
-    [_bottomView addSubview:_tipLabel];
+    NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:@"UploadingOrSeekingHelp"];
+    if ([str isEqualToString:@"Uploading"]) {
+        CGFloat buttonInterval = 25;
+        CGFloat xlButtonLeftPadding = (SCREEN_WIDTH - 3 * buttonInterval - 4 * 28) / 2;
+        _xlButton = [[UIButton alloc] initWithFrame:CGRectMake(xlButtonLeftPadding, padding10, 28, 28)];
+        _wxButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_xlButton.frame) + buttonInterval, padding10, 28, 28)];
+        _qqButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_wxButton.frame) + buttonInterval, padding10, 28, 28)];
+        _qqzoneButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_qqButton.frame) + buttonInterval, padding10, 28, 28)];
+        [self setCommonButton:_xlButton WithImage:[UIImage imageNamed:@"weibo_grey"] AndSelectedImage:[UIImage imageNamed:@"weibo"]];
+        [self setCommonButton:_wxButton WithImage:[UIImage imageNamed:@"wechat_grey"] AndSelectedImage:[UIImage imageNamed:@"wechat"]];
+        [self setCommonButton:_qqButton WithImage:[UIImage imageNamed:@"qq_grey"] AndSelectedImage:[UIImage imageNamed:@"qq"]];
+        [self setCommonButton:_qqzoneButton WithImage:[UIImage imageNamed:@"qqzone_grey"] AndSelectedImage:[UIImage imageNamed:@"qqzone"]];
+        
+        _tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, padding10, xlButtonLeftPadding, 28)];
+        _tipLabel.text = @"同步到：";
+        _tipLabel.textColor = [UIColor colorWithHex:0x666666];
+        _tipLabel.textAlignment = NSTextAlignmentCenter;
+        [_bottomView addSubview:_tipLabel];
+    } else if ([str isEqualToString:@"SeekingHelp"]) {
+        _bigLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 13, SCREEN_WIDTH, 15)];
+        _bigLabel.text = @"点击图片";
+        _bigLabel.textColor = [UIColor colorWithHex:0xb3b3b3];
+        _bigLabel.font = [UIFont systemFontOfSize:15.f];
+        _bigLabel.textAlignment = NSTextAlignmentCenter;
+        [_bottomView addSubview:_bigLabel];
+        _smallLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_bigLabel.frame) + 6, SCREEN_WIDTH, 12)];
+        _smallLabel.text = @"用标签告诉大神你要什么效果";
+        _smallLabel.textColor = [UIColor colorWithHex:0xb3b3b3];
+        _smallLabel.font = [UIFont systemFontOfSize:12.f];
+        _smallLabel.textAlignment = NSTextAlignmentCenter;
+        [_bottomView addSubview:_smallLabel];
+    }
 }
 
 - (void) setCommonButton:(UIButton *)button WithImage:(UIImage *)image AndSelectedImage:(UIImage *)simage {
