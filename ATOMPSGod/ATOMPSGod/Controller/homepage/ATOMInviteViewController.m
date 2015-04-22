@@ -45,6 +45,8 @@
     self.navigationItem.rightBarButtonItem = rightButtonItem;
     _inviteView = [ATOMInviteView new];
     self.view = _inviteView;
+    [_inviteView.wxFriendCircleInviteButton addTarget:self action:@selector(clickWXFriendCircleButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_inviteView.wxFriendInviteButton addTarget:self action:@selector(clickWXFriendInviteButton:) forControlEvents:UIControlEventTouchUpInside];
     _inviteView.inviteTableView.delegate = self;
     _inviteView.inviteTableView.dataSource = self;
     _tapInviteGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapInviteGesture:)];
@@ -76,6 +78,14 @@
     ATOMHomepageViewController *hvc = self.navigationController.viewControllers[0];
     [self pushViewController:rdvc animated:YES];
     [self.navigationController setViewControllers:@[hvc, rdvc]];
+}
+
+- (void)clickWXFriendCircleButton:(UIButton *)sender {
+    [self wxShare];
+}
+
+- (void)clickWXFriendInviteButton:(UIButton *)sender {
+    [self wxFriendShare];
 }
 
 #pragma mark - UITableViewDelegate

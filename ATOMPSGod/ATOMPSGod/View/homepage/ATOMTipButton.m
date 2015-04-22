@@ -234,7 +234,7 @@
         animation2.repeatCount = 2;
         animation2.autoreverses = NO;
         animation2.fromValue = [NSNumber numberWithFloat:1.0];
-        animation2.toValue = [NSNumber numberWithFloat:8];
+        animation2.toValue = [NSNumber numberWithFloat:6];
         [_blackView.layer addAnimation:animation2 forKey:@"black_scale"];
         
         [UIView animateWithDuration:0.5 delay:1 options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionAllowUserInteraction animations:^{

@@ -6,6 +6,7 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
+#import "AppDelegate.h"
 #import "ATOMHotDetailViewController.h"
 #import "ATOMHotDetailTableViewCell.h"
 #import "ATOMCommentDetailViewController.h"
@@ -19,11 +20,13 @@
 #import "ATOMComment.h"
 #import "ATOMShowDetailOfHomePage.h"
 #import "ATOMHomePageViewModel.h"
+#import "ATOMShareFunctionView.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMHotDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
+@property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
 @property (nonatomic, strong) UIView *hotDetailView;
 @property (nonatomic, strong) UITableView *hotDetailTableView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
@@ -37,6 +40,14 @@
 @implementation ATOMHotDetailViewController
 
 #pragma mark - Lazy Initialize
+
+- (ATOMShareFunctionView *)shareFunctionView {
+    if (!_shareFunctionView) {
+        _shareFunctionView = [ATOMShareFunctionView new];
+        [_shareFunctionView.wxButton addTarget:self action:@selector(clickWXButton:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _shareFunctionView;
+}
 
 - (UITableView *)hotDetailTableView {
     if (_hotDetailTableView == nil) {
@@ -155,6 +166,11 @@
             model.labelArray = [ws.homePageViewModel.labelArray mutableCopy];
             [ws.dataSource addObject:model];
         }
+        if (detailOfHomePageArray.count == 0) {
+            _canRefreshFooter = NO;
+        } else {
+            _canRefreshFooter = YES;
+        }
         [ws.hotDetailTableView reloadData];
         [ws.hotDetailTableView.footer endRefreshing];
     }];
@@ -195,6 +211,10 @@
     [self presentViewController:_imagePickerController animated:YES completion:NULL];
 }
 
+- (void)clickWXButton:(UIButton *)sender {
+    [self wxFriendShare];
+}
+
 #pragma mark - Gesture Event
 
 - (void)tapHotDetailGesture:(UITapGestureRecognizer *)gesture {
@@ -206,7 +226,6 @@
         CGPoint p = [gesture locationInView:cell];
         //点击图片
         if (CGRectContainsPoint(cell.userWorkImageView.frame, p)) {
-            NSLog(@"Click userWorkImageView");
         } else if (CGRectContainsPoint(cell.topView.frame, p)) {
             p = [gesture locationInView:cell.topView];
             if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
@@ -215,7 +234,6 @@
                 opvc.userName = model.userName;
                 [self pushViewController:opvc animated:YES];
             } else if (CGRectContainsPoint(cell.psButton.frame, p)) {
-                NSLog(@"Click psButton");
                 [UIActionSheet showInView:self.view withTitle:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@[@"下载素材",@"上传作品"] tapBlock:^(UIActionSheet *actionSheet, NSInteger buttonIndex) {
                     NSString *actionSheetTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
                     if ([actionSheetTitle isEqualToString:@"下载素材"]) {
@@ -235,12 +253,14 @@
             if (CGRectContainsPoint(cell.praiseButton.frame, p)) {
                 cell.praiseButton.selected = !cell.praiseButton.selected;
             } else if (CGRectContainsPoint(cell.shareButton.frame, p)) {
-                NSLog(@"Click shareButton");
+                [self wxShare];
             } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
                 ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
                 cdvc.ID = model.ID;
                 cdvc.type = (indexPath.row == 0) ? 1 : 2;
                 [self pushViewController:cdvc animated:YES];
+            } else if (CGRectContainsPoint(cell.moreShareButton.frame, p)) {
+                [[AppDelegate APP].window addSubview:self.shareFunctionView];
             }
         }
         

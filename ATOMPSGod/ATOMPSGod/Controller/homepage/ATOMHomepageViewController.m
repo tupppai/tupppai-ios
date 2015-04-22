@@ -167,7 +167,7 @@
     [param setObject:@(10) forKey:@"size"];
     ATOMShowHomepage *showHomepage = [ATOMShowHomepage new];
     [showHomepage clearHomeImages];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
     [showHomepage ShowHomepage:param withBlock:^(NSMutableArray *homepageArray, NSError *error) {
         [SVProgressHUD dismiss];
         for (ATOMHomeImage *homeImage in homepageArray) {
@@ -208,7 +208,7 @@
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(10) forKey:@"size"];
     ATOMShowHomepage *showHomepage = [ATOMShowHomepage new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
     [showHomepage ShowHomepage:param withBlock:^(NSMutableArray *homepageArray, NSError *error) {
         [SVProgressHUD dismiss];
         for (ATOMHomeImage *homeImage in homepageArray) {

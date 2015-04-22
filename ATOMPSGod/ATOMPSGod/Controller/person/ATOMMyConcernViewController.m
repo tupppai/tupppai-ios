@@ -26,6 +26,7 @@
 @property (nonatomic, strong) NSMutableArray *myDataSource;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL canRefreshFooter;
+@property (nonatomic, assign) BOOL isRefreshingHeader;
 
 @end
 
@@ -49,13 +50,13 @@
 #pragma mark - GetDataSource
 
 - (void)getDataSource {
+    if (_isRefreshingHeader) {
+        return ;
+    }
+    _isRefreshingHeader = YES;
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
-    _recommendDataSource = nil;
-    _recommendDataSource = [NSMutableArray array];
-    _myDataSource = nil;
-    _myDataSource = [NSMutableArray array];
     _currentPage = 1;
     [param setObject:@(_uid) forKeyedSubscript:@"uid"];
     [param setObject:@(_currentPage) forKey:@"page"];
@@ -65,6 +66,8 @@
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showConcern ShowMyConcern:param withBlock:^(NSMutableArray *recommendConcernArray, NSMutableArray *myConcernArray, NSError *error) {
         [SVProgressHUD dismiss];
+        [ws.recommendDataSource removeAllObjects];
+        [ws.myDataSource removeAllObjects];
         for (ATOMConcern *concern in recommendConcernArray) {
             ATOMConcernViewModel *concernViewModel = [ATOMConcernViewModel new];
             [concernViewModel setViewModelData:concern];
@@ -77,6 +80,7 @@
         }
         [ws.tableView.header endRefreshing];
         [ws.tableView reloadData];
+        ws.isRefreshingHeader = NO;
     }];
 }
 
@@ -88,7 +92,7 @@
     [param setObject:@(_uid) forKeyedSubscript:@"uid"];
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(timestamp) forKey:@"last_updated"];
-    [param setObject:@(15) forKey:@"size"];
+    [param setObject:@(10) forKey:@"size"];
     ATOMShowConcern *showConcern = [ATOMShowConcern new];
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showConcern ShowMyConcern:param withBlock:^(NSMutableArray *recommendConcernArray, NSMutableArray *myConcernArray, NSError *error) {
@@ -128,6 +132,8 @@
     _tapMyConcernGesutre = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMyConcernGesutre:)];
     [_tableView addGestureRecognizer:_tapMyConcernGesutre];
     [self configTableViewRefresh];
+    _recommendDataSource = [NSMutableArray array];
+    _myDataSource = [NSMutableArray array];
     _canRefreshFooter = YES;
     [self getDataSource];
 }
@@ -207,6 +213,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
+        NSLog(@"recommendDataSource count = %d", (int)_recommendDataSource.count);
         return _recommendDataSource.count;
     } else if (section == 1) {
         return _myDataSource.count;
@@ -221,6 +228,7 @@
         cell = [[ATOMMyConcernTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     if (indexPath.section == 0) {
+        NSLog(@"indexPath.row = %d", (int)indexPath.row);
         cell.viewModel = _recommendDataSource[indexPath.row];
     } else {
         cell.viewModel = _myDataSource[indexPath.row];

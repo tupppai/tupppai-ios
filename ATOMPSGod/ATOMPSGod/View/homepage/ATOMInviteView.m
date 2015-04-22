@@ -11,7 +11,7 @@
 
 @implementation ATOMInviteView
 
-static int padding1 = 1;
+static int padding11 = 11;
 
 - (instancetype)init {
     self = [super init];
@@ -23,7 +23,7 @@ static int padding1 = 1;
 }
 
 - (void)createSubView {
-    _topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 85.5)];
+    _topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 105.5)];
     _topView.backgroundColor = [UIColor colorWithHex:0xededed];
     [self addSubview:_topView];
     
@@ -33,11 +33,11 @@ static int padding1 = 1;
     [_topView addSubview:_inviteFriendView];
     
     CGFloat centerX = SCREEN_WIDTH / 2;
-    _wxFriendCircleInviteButton = [[UIButton alloc] initWithFrame:CGRectMake(centerX - 30 - 55, padding1 + CGRectGetMaxY(_inviteFriendView.frame), 55, 55)];
+    _wxFriendCircleInviteButton = [[UIButton alloc] initWithFrame:CGRectMake(centerX - 30 - 55, padding11 + CGRectGetMaxY(_inviteFriendView.frame), 55, 55)];
     [_wxFriendCircleInviteButton setBackgroundImage:[UIImage imageNamed:@"wechat_friend"] forState:UIControlStateNormal];
     [_topView addSubview:_wxFriendCircleInviteButton];
     
-    _wxFriendInviteButton = [[UIButton alloc] initWithFrame:CGRectMake(centerX + 30, padding1 + CGRectGetMaxY(_inviteFriendView.frame), 55, 55)];
+    _wxFriendInviteButton = [[UIButton alloc] initWithFrame:CGRectMake(centerX + 30, padding11 + CGRectGetMaxY(_inviteFriendView.frame), 55, 55)];
     [_wxFriendInviteButton setBackgroundImage:[UIImage imageNamed:@"wechat_logo2"] forState:UIControlStateNormal];
     [_topView addSubview:_wxFriendInviteButton];
     

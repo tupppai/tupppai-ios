@@ -275,13 +275,16 @@
     CGFloat width = CGWidth(_cropperRect);
     CGFloat height = CGHeight(_cropperRect);
     
-    if (CGWidth(_imageView.frame) < CGWidth(_cropperRect)) {
+    if (CGWidth(_imageView.frame) <= CGWidth(_cropperRect)) {
         originX = 0;
         width = CGWidth(_imageView.frame);
     }
-    if (CGHeight(_imageView.frame) < CGHeight(_cropperRect)) {
+    if (CGHeight(_imageView.frame) <= CGHeight(_cropperRect)) {
         originY = 0;
         height = CGHeight(_imageView.frame);
+    }
+    if (CGWidth(_imageView.frame) <= CGWidth(_cropperRect) && CGHeight(_imageView.frame) <= CGHeight(_cropperRect)) {
+        zoomScale = 1;
     }
     
     CGRect rect = CGRectMake(originX / zoomScale / _imageScale, originY / zoomScale / _imageScale, width / zoomScale / _imageScale, height / zoomScale / _imageScale);

@@ -72,6 +72,7 @@
 }
 
 - (void)createUI {
+    self.navigationItem.title = @"关注";
     _myAttentionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
     self.view = _myAttentionView;
     _tableView = [[UITableView alloc] initWithFrame:_myAttentionView.bounds];

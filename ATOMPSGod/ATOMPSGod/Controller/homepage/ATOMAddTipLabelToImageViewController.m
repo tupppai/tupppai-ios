@@ -138,6 +138,10 @@
 }
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)sender {
+    if (_tipLabelArray.count == 0) {
+        [SVProgressHUD showErrorWithStatus:@"请先添加标签"];
+        return ;
+    }
     NSString *pushTypeStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"UploadingOrSeekingHelp"];
     if ([pushTypeStr isEqualToString:@"Uploading"]) {
         [self dealSubmitWorkWithLabel];
@@ -167,7 +171,7 @@
     self.navigationItem.leftBarButtonItems = _originLeftBarButtonItems;
     self.navigationItem.rightBarButtonItem = _originRightBarButtonItem;
     _fillInContentOfTipLabelView.tipLabelContentTextField.text = @"";
-    [_fillInContentOfTipLabelView.topWarnLabel removeFromSuperview];
+//    [_fillInContentOfTipLabelView.topWarnLabel removeFromSuperview];
 }
 
 - (void)clickChangeTipLabelDirectionButton:(UIButton *)sender {
@@ -316,13 +320,23 @@
 }
 
 - (void)changeViewToFillInTipLabel {
+    WS(ws);
 //    self.view = _fillInContentOfTipLabelView;
     [_addTipLabelToImageView addTemporaryPointAt:_currentLocation];
     [_addTipLabelToImageView addSubview:_fillInContentOfTipLabelView];
     [_fillInContentOfTipLabelView.tipLabelContentTextField becomeFirstResponder];
     self.navigationItem.leftBarButtonItems = @[self.cancelLeftBarButtonItem];
     self.navigationItem.rightBarButtonItem = nil;
+    [UIApplication sharedApplication].statusBarHidden = YES;
     [[AppDelegate APP].window addSubview:_fillInContentOfTipLabelView.topWarnLabel];
+    [UIView animateWithDuration:2 animations:^{
+        ws.fillInContentOfTipLabelView.topWarnLabel.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        [UIApplication sharedApplication].statusBarHidden = NO;
+        ws.fillInContentOfTipLabelView.topWarnLabel.alpha = 1.0;
+        [ws.fillInContentOfTipLabelView.topWarnLabel removeFromSuperview];
+    }];
+    
 }
 
 - (void)panTipLabelGesture:(UIPanGestureRecognizer *)gesture {

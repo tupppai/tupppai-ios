@@ -13,7 +13,7 @@
 #import "ATOMPersonViewController.h"
 #import "ATOMCutstomNavigationController.h"
 
-#define  BUTTON_INTERVAL (SCREEN_WIDTH - 30 * 2 - 18 * 4) / 3
+#define  BUTTON_INTERVAL (SCREEN_WIDTH - 30 * 2 - 49 * 4) / 3
 
 @interface ATOMMainTabBarController ()
 
@@ -32,9 +32,12 @@
 @implementation ATOMMainTabBarController
 
 static int h_padding = 30;
-static int v_padding = 13;
-static int btn_width = 18;
-static int btn_height = 23;
+//static int v_padding = 13;
+//static int btn_width = 18;
+//static int btn_height = 23;
+static int v_padding = 0;
+static int btn_width = 49;
+static int btn_height = 49;
 
 #pragma mark - Lazy Initialize
 
@@ -54,8 +57,8 @@ static int btn_height = 23;
     if (!_btn1) {
         _btn1 = [[UIButton alloc] initWithFrame:CGRectMake(h_padding, v_padding, btn_width, btn_height)];
         _btn1.tag = 1;
-        [_btn1 setBackgroundImage:[UIImage imageNamed:@"btn_index_normal"] forState:UIControlStateNormal];
-        [_btn1 setBackgroundImage:[UIImage imageNamed:@"btn_index_pressed"] forState:UIControlStateSelected];
+        [_btn1 setImage:[UIImage imageNamed:@"btn_index_normal"] forState:UIControlStateNormal];
+        [_btn1 setImage:[UIImage imageNamed:@"btn_index_pressed"] forState:UIControlStateSelected];
         [_btn1 addTarget:self action:@selector(clickTab:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _btn1;
@@ -65,8 +68,8 @@ static int btn_height = 23;
     if (!_btn2) {
         _btn2 = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_btn1.frame) + BUTTON_INTERVAL, v_padding, btn_width, btn_height)];
         _btn2.tag = 2;
-        [_btn2 setBackgroundImage:[UIImage imageNamed:@"btn_look_normal"] forState:UIControlStateNormal];
-        [_btn2 setBackgroundImage:[UIImage imageNamed:@"btn_look_pressed"] forState:UIControlStateSelected];
+        [_btn2 setImage:[UIImage imageNamed:@"btn_look_normal"] forState:UIControlStateNormal];
+        [_btn2 setImage:[UIImage imageNamed:@"btn_look_pressed"] forState:UIControlStateSelected];
         [_btn2 addTarget:self action:@selector(clickTab:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _btn2;
@@ -76,8 +79,8 @@ static int btn_height = 23;
     if (!_btn3) {
         _btn3 = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_btn2.frame) + BUTTON_INTERVAL, v_padding, btn_width, btn_height)];
         _btn3.tag = 3;
-        [_btn3 setBackgroundImage:[UIImage imageNamed:@"btn_info_normal"] forState:UIControlStateNormal];
-        [_btn3 setBackgroundImage:[UIImage imageNamed:@"btn_info_pressed"] forState:UIControlStateSelected];
+        [_btn3 setImage:[UIImage imageNamed:@"btn_info_normal"] forState:UIControlStateNormal];
+        [_btn3 setImage:[UIImage imageNamed:@"btn_info_pressed"] forState:UIControlStateSelected];
         [_btn3 addTarget:self action:@selector(clickTab:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _btn3;
@@ -87,8 +90,8 @@ static int btn_height = 23;
     if (!_btn4) {
         _btn4 = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_btn3.frame) + BUTTON_INTERVAL, v_padding, btn_width, btn_height)];
         _btn4.tag = 4;
-        [_btn4 setBackgroundImage:[UIImage imageNamed:@"btn_user_normal"] forState:UIControlStateNormal];
-        [_btn4 setBackgroundImage:[UIImage imageNamed:@"btn_user_pressed"] forState:UIControlStateSelected];
+        [_btn4 setImage:[UIImage imageNamed:@"btn_user_normal"] forState:UIControlStateNormal];
+        [_btn4 setImage:[UIImage imageNamed:@"btn_user_pressed"] forState:UIControlStateSelected];
         [_btn4 addTarget:self action:@selector(clickTab:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _btn4;

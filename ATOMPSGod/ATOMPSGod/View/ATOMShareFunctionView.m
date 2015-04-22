@@ -99,6 +99,7 @@ static CGFloat BOTTOMHEIGHT = 273;
     
     _collectButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_reportButton.frame) + buttonInterval, buttonOriginY, buttonWidth, buttonWidth)];
     [_collectButton setBackgroundImage:[UIImage imageNamed:@"icon_docollect_"] forState:UIControlStateNormal];
+    [_collectButton setBackgroundImage:[UIImage imageNamed:@"icon_docollect_pressed"] forState:UIControlStateSelected];
     [_bottomView addSubview:_collectButton];
     
     _inviteLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_inviteButton.frame) - padding10, CGRectGetMaxY(_inviteButton.frame), labelWidth, labelHeight)];
