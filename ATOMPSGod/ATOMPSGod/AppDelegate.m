@@ -37,11 +37,12 @@
     self.window.rootViewController = self.baseNav;
     [self.window makeKeyAndVisible];
     [self setupShareSDK];
+    [self setCommonNavigationStyle];
     return YES;
 }
 
 - (void)setCommonNavigationStyle {
-    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHex:0xf8f8f8]];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHex:0x74c3ff]];
 }
 
 - (ATOMMainTabBarController *)mainTarBarController {

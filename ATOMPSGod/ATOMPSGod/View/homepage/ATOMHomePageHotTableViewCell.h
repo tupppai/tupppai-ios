@@ -20,7 +20,6 @@
 @property (nonatomic, strong) UIButton *shareButton;
 @property (nonatomic, strong) UIButton *commentButton;
 @property (nonatomic, strong) UIButton *moreShareButton;
-@property (nonatomic, strong) UIButton *totalPSButton;
 @property (nonatomic, strong) UIView *topThinView;
 @property (nonatomic, strong) UIView *topView;
 @property (nonatomic, strong) UIView *bottomView;

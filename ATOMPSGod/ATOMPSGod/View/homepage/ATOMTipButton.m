@@ -63,12 +63,18 @@
         
 //        imageOriginPoint = CGPointMake(0, 7.5);
 //        [tagImage drawInRect:CGRectMake(imageOriginPoint.x, imageOriginPoint.y, 15, 15)];
+        
+//        [path moveToPoint:CGPointMake(16, 30)];
+//        [path addCurveToPoint:CGPointMake(26, 0) controlPoint1:CGPointMake(26, 28) controlPoint2:CGPointMake(21, 0)];
+//        [path addLineToPoint:CGPointMake(CGRectGetMaxX(rect) - 15, 0)];
+//        [path addArcWithCenter:CGPointMake(CGRectGetMaxX(rect) - 15, 15) radius:15 startAngle:-M_PI_2 endAngle:M_PI_2 clockwise:YES];
+//        [path closePath];
+        
         centerControlPoint = CGPointMake(16, CGRectGetMidY(rect));
         topLeftControlPoint = CGPointMake(30, 0);
         topRightControlPoint = CGPointMake(CGRectGetMaxX(rect), 0);
         bottomRightControlPoint = CGPointMake(CGRectGetMaxX(rect), CGHeight(rect));
         bottomLeftControlPoint = CGPointMake(30, CGHeight(rect));
-        
         [path moveToPoint:CGPointMake(centerControlPoint.x + INTERVAL2, centerControlPoint.y - INTERVAL2)];
         [path addLineToPoint:CGPointMake(topLeftControlPoint.x - INTERVAL2, topLeftControlPoint.y + INTERVAL2)];
         //设置左上方圆角

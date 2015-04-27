@@ -42,6 +42,7 @@
 @property (nonatomic, assign) BOOL canRefreshRecentFooter;
 @property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
 @property (nonatomic, strong) ATOMHomePageViewModel *selectedHomePageViewModel;
+@property (nonatomic, strong) UIView *thineNavigationView;
 
 @end
 
@@ -89,7 +90,6 @@
     } else {
         [_scrollView.homepageHotTableView.footer endRefreshing];
     }
-    
 }
 
 - (void)configHomepageRecentTableViewRefresh {
@@ -249,10 +249,12 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    _thineNavigationView.hidden = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    _thineNavigationView.hidden = YES;
 }
 
 - (void)createUI {
@@ -304,19 +306,22 @@
     [cameraView addSubview:cameraButton];
     UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cameraView];
     self.navigationItem.rightBarButtonItems = @[negativeSpacer, rightButtonItem];
+    
+    _thineNavigationView = [UIView new];
+    _thineNavigationView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2];
+    _thineNavigationView.frame = CGRectMake(CGRectGetMinX(self.navigationItem.titleView.frame) + 20, 40, 50, 4);
+    [self.navigationController.navigationBar addSubview:_thineNavigationView];
 }
 
 #pragma mark - Click Event
 
 - (void)clickHotTitleButton:(UIButton *)sender {
-    sender.selected = YES;
-    _customTitleView.recentTitleButton.selected = NO;
+    [self changeNavigationBarAccordingTo:@"hot"];
     [_scrollView changeUIAccording:@"热门"];
 }
 
 - (void)clickRecentTitleButton:(UIButton *)sender {
-    sender.selected = YES;
-    _customTitleView.hotTitleButton.selected = NO;
+    [self changeNavigationBarAccordingTo:@"new"];
     [_scrollView changeUIAccording:@"最新"];
     if (_isfirstEnterHomepageRecentView) {
         _isfirstEnterHomepageRecentView = NO;
@@ -366,6 +371,14 @@
 
 - (void)clickWXButton:(UIButton *)sender {
     [self wxFriendShare];
+}
+
+- (void)changeNavigationBarAccordingTo:(NSString *)type {
+    if ([type isEqualToString:@"hot"]) {
+        _thineNavigationView.frame = CGRectMake(CGRectGetMinX(self.navigationItem.titleView.frame) + 20, 40, 50, 4);
+    } else if ([type isEqualToString:@"new"]) {
+        _thineNavigationView.frame = CGRectMake(CGRectGetMinX(self.navigationItem.titleView.frame) + 130, 40, 50, 4);
+    }
 }
 
 #pragma mark - Gesture Event
@@ -497,12 +510,10 @@
     if (scrollView == _scrollView) {
         int currentPage = (_scrollView.contentOffset.x + CGWidth(_scrollView.frame) * 0.5) / CGWidth(_scrollView.frame);
         if (currentPage == 0) {
-            _customTitleView.hotTitleButton.selected = YES;
-            _customTitleView.recentTitleButton.selected = NO;
+            [self changeNavigationBarAccordingTo:@"hot"];
             [_scrollView changeUIAccording:@"热门"];
         } else if (currentPage == 1) {
-            _customTitleView.hotTitleButton.selected = NO;
-            _customTitleView.recentTitleButton.selected = YES;
+            [self changeNavigationBarAccordingTo:@"new"];
             [_scrollView changeUIAccording:@"最新"];
             if (_isfirstEnterHomepageRecentView) {
                 _isfirstEnterHomepageRecentView = NO;

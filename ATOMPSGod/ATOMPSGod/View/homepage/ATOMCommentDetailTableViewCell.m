@@ -40,7 +40,7 @@ static int padding = 10;
 }
 
 + (CGSize)calculateCommentDeailTextSize:(NSString *)commentDetailStr {
-    NSDictionary * attributeDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:20.f], NSFontAttributeName, nil];
+    NSDictionary * attributeDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:16.f], NSFontAttributeName, nil];
     CGSize actualSize = [commentDetailStr boundingRectWithSize:CGSizeMake(SCREEN_WIDTH - padding * 2 - 55, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attributeDic context:NULL].size;
     return actualSize;
 }
@@ -57,11 +57,11 @@ static int padding = 10;
     _userHeaderButton.layer.cornerRadius = 22.5;
     _userHeaderButton.layer.masksToBounds = YES;
     _userNameLabel = [UILabel new];
-    _userNameLabel.font = [UIFont systemFontOfSize:20.f];
+    _userNameLabel.font = [UIFont systemFontOfSize:16.f];
     _userNameLabel.textColor = [UIColor colorWithHex:0x00adef];
     _userCommentDetailLabel = [UILabel new];
     _userCommentDetailLabel.numberOfLines = 0;
-    _userCommentDetailLabel.font = [UIFont systemFontOfSize:20.f];
+    _userCommentDetailLabel.font = [UIFont systemFontOfSize:16.f];
     _userCommentDetailLabel.textColor = [UIColor blackColor];
     _userSexImageView = [UIImageView new];
     

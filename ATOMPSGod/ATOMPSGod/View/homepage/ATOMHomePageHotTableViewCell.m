@@ -18,13 +18,17 @@
 @property (nonatomic, strong) UIView *littleVerticalView2;
 @property (nonatomic, strong) UIView *littleVerticalView3;
 @property (nonatomic, strong) NSMutableArray *replierAvatars;
+@property (nonatomic, strong) UIView *lineView;
+@property (nonatomic, strong) UILabel *totalPSLabel;
 
 @end
 
 @implementation ATOMHomePageHotTableViewCell
 
 static int padding = 10;
+static int padding5 = 5;
 static int defaultAvatarCount = 7;
+static int padding20 = 20;
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -57,16 +61,16 @@ static int defaultAvatarCount = 7;
     _userHeaderButton.layer.masksToBounds = YES;
     _userNameLabel = [UILabel new];
     _userNameLabel.font = [UIFont systemFontOfSize:16.f];
-    _userNameLabel.textColor = [UIColor colorWithHex:0x00adef];
+    _userNameLabel.textColor = [UIColor blackColor];
     _userPublishTimeLabel = [UILabel new];
-    _userPublishTimeLabel.font = [UIFont systemFontOfSize:10.f];
+    _userPublishTimeLabel.font = [UIFont systemFontOfSize:16.f];
     _userPublishTimeLabel.textColor = [UIColor colorWithHex:0x9c9c9c];
-    _userSexImageView = [UIImageView new];
+//    _userSexImageView = [UIImageView new];
     
     [_topView addSubview:_userHeaderButton];
     [_topView addSubview:_userNameLabel];
     [_topView addSubview:_userPublishTimeLabel];
-    [_topView addSubview:_userSexImageView];
+//    [_topView addSubview:_userSexImageView];
     
     _praiseButton = [UIButton new];
     [_thinCenterView addSubview:_praiseButton];
@@ -82,16 +86,18 @@ static int defaultAvatarCount = 7;
     [self setCommonButton:_shareButton WithImage:[UIImage imageNamed:@"icon_share_normal"]];
     [self setCommonButton:_commentButton WithImage:[UIImage imageNamed:@"icon_comment_normal"]];
     _moreShareButton.userInteractionEnabled = NO;
+    [_moreShareButton setImageEdgeInsets:UIEdgeInsetsMake(9.5, 0, 9.5, 34)];
     [_moreShareButton setImage:[UIImage imageNamed:@"icon_others_normal"] forState:UIControlStateNormal];
     [_moreShareButton setImage:[UIImage imageNamed:@"icon_others_pressed"] forState:UIControlStateHighlighted];
     
-    _totalPSButton = [UIButton new];
-    _totalPSButton.layer.cornerRadius = 15;
-    _totalPSButton.layer.masksToBounds = YES;
-    _totalPSButton.titleLabel.font = [UIFont systemFontOfSize:11.f];
-    _totalPSButton.backgroundColor = [UIColor colorWithHex:0x00adef];
-    [_totalPSButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_bottomView addSubview:_totalPSButton];
+    _lineView = [UIView new];
+    _lineView.backgroundColor = [UIColor colorWithHex:0xededed];
+    [_thinCenterView addSubview:_lineView];
+    
+    _totalPSLabel = [UILabel new];
+    _totalPSLabel.textColor = [UIColor blackColor];
+    _totalPSLabel.font = [UIFont systemFontOfSize:16.f];
+    [_bottomView addSubview:_totalPSLabel];
     
     _replierAvatars = [NSMutableArray array];
     for (int i = 0; i < defaultAvatarCount; i++) {
@@ -117,17 +123,21 @@ static int defaultAvatarCount = 7;
 }
 
 - (void)setCommonButton:(UIButton *)button WithImage:(UIImage *)image{
-    button.layer.borderColor = [[UIColor colorWithHex:0xededed] CGColor];
-    button.layer.borderWidth = 0.5;
-    button.layer.cornerRadius = 5;
-    button.layer.masksToBounds = YES;
+//    button.layer.borderColor = [[UIColor colorWithHex:0xededed] CGColor];
+//    button.layer.borderWidth = 0.5;
+//    button.layer.cornerRadius = 5;
+//    button.layer.masksToBounds = YES;
+    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    button.contentVerticalAlignment = UIControlContentHorizontalAlignmentCenter;
+//    button.backgroundColor = [UIColor orangeColor];
+    
     button.userInteractionEnabled = NO;
     [button setImage:image forState:UIControlStateNormal];
-    [button setImageEdgeInsets:UIEdgeInsetsMake(3.5, 0, 3.5, 0)];
-    [button setTitleEdgeInsets:UIEdgeInsetsMake(3.5, padding, 3.5, 0)];
+    [button setImageEdgeInsets:UIEdgeInsetsMake(2.5, 0, 2.5, padding5)];
+    [button setTitleEdgeInsets:UIEdgeInsetsMake(6.5, padding5, 7.5, 0)];
     button.titleLabel.font = [UIFont systemFontOfSize:12.f];
     [button setTitleColor:[UIColor colorWithHex:0x888888] forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor colorWithHex:0x00adef] forState:UIControlStateSelected];
+    [button setTitleColor:[UIColor colorWithHex:0xfe8282] forState:UIControlStateSelected];
 }
 
 - (void)layoutSubviews {
@@ -135,9 +145,10 @@ static int defaultAvatarCount = 7;
     _topThinView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 6);
     _topView.frame = CGRectMake(0, CGRectGetMaxY(_topThinView.frame), SCREEN_WIDTH, 65);
     _userHeaderButton.frame = CGRectMake(padding, padding, 45, 45);
-    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding, padding, 150, 30);
-    _userPublishTimeLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding, CGRectGetMaxY(_userNameLabel.frame), 150, 15);
-    _userSexImageView.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - SEXRADIUS, CGRectGetMaxY(_userHeaderButton.frame) - SEXRADIUS, SEXRADIUS, SEXRADIUS);
+    CGFloat labelOriginY = 7.5;
+    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding, CGRectGetMinY(_userHeaderButton.frame) + labelOriginY, 150, 30);
+    _userPublishTimeLabel.frame = CGRectMake(SCREEN_WIDTH - padding - 150, CGRectGetMinY(_userNameLabel.frame), 150, 30);
+//    _userSexImageView.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - SEXRADIUS, CGRectGetMaxY(_userHeaderButton.frame) - SEXRADIUS, SEXRADIUS, SEXRADIUS);
     
     CGSize workImageSize;
     if (_viewModel) {
@@ -146,24 +157,22 @@ static int defaultAvatarCount = 7;
     _userWorkImageView.frame = CGRectMake((SCREEN_WIDTH - workImageSize.width) / 2, CGRectGetMaxY(_topView.frame), workImageSize.width, workImageSize.height);
     
     _thinCenterView.frame = CGRectMake(0, CGRectGetMaxY(_userWorkImageView.frame), SCREEN_WIDTH, 40);
-    CGFloat buttonInterval = (SCREEN_WIDTH - 4 * 60 - 2 * padding) / 3;
-    _shareButton.frame = CGRectMake(padding, 7.5, 60, 25);
-    _praiseButton.frame = CGRectMake(CGRectGetMaxX(_shareButton.frame) + buttonInterval, 7.5, 60, 25);
-    _commentButton.frame = CGRectMake(CGRectGetMaxX(_praiseButton.frame) + buttonInterval, 7.5, 60, 25);
-    _moreShareButton.frame = CGRectMake(CGRectGetMaxX(_commentButton.frame) + buttonInterval, 7.5, 60, 25);
-    
-//    CGFloat verticalViewInterval = SCREEN_WIDTH / 4;
-//    _littleVerticalView1.frame = CGRectMake(verticalViewInterval - 0.25, 7.5, 0.5, 25);
-//    _littleVerticalView2.frame = CGRectMake(verticalViewInterval * 2 - 0.25, 7.5, 0.5, 25);
-//    _littleVerticalView3.frame = CGRectMake(verticalViewInterval * 3 - 0.25, 7.5, 0.5, 25);
+    CGFloat buttonWidth = 60, buttonHeight = 25, buttonOriginY = 7.5;
+    _moreShareButton.frame = CGRectMake(padding, buttonOriginY, buttonWidth, buttonHeight);
+    _commentButton.frame = CGRectMake(SCREEN_WIDTH - padding - buttonWidth, buttonOriginY, buttonWidth, buttonHeight);
+    _praiseButton.frame = CGRectMake(CGRectGetMinX(_commentButton.frame) - padding20 - buttonWidth, buttonOriginY, buttonWidth, buttonHeight);
+    _shareButton.frame = CGRectMake(CGRectGetMinX(_praiseButton.frame) - padding20 - buttonWidth, buttonOriginY, buttonWidth, buttonHeight);
+    _lineView.frame = CGRectMake(0, CGHeight(_thinCenterView.frame) - 1, SCREEN_WIDTH, 1);
     
     _bottomView.frame = CGRectMake(0, CGRectGetMaxY(_thinCenterView.frame), SCREEN_WIDTH, 60);
-    _totalPSButton.frame = CGRectMake(SCREEN_WIDTH - padding - 30, (CGHeight(_bottomView.frame) - 30) / 2, 30, 30);
+//    _totalPSButton.frame = CGRectMake(SCREEN_WIDTH - padding - 30, (CGHeight(_bottomView.frame) - 30) / 2, 30, 30);
+    CGFloat originX = SCREEN_WIDTH - defaultAvatarCount * (padding + 30) - padding;
     for (int i = 0; i < defaultAvatarCount; i++) {
         UIImageView *imageView = _replierAvatars[i];
-        imageView.frame = CGRectMake(padding * (i + 1) + 30 * i, CGRectGetMinY(_totalPSButton.frame), 30, 30);
+        imageView.frame = CGRectMake(padding * (i + 1) + 30 * i + originX, (CGHeight(_bottomView.frame) - 30) / 2, 30, 30);
     }
-    
+    UIImageView *firstImageView = [_replierAvatars firstObject];
+    _totalPSLabel.frame = CGRectMake(padding, (CGHeight(_bottomView.frame) - 30) / 2, CGRectGetMinX(firstImageView.frame), 30);
 }
 
 + (CGFloat)calculateCellHeightWith:(ATOMHomePageViewModel *)viewModel {
@@ -183,7 +192,7 @@ static int defaultAvatarCount = 7;
     [_shareButton setTitle:viewModel.shareNumber forState:UIControlStateNormal];
     [_praiseButton setTitle:viewModel.praiseNumber forState:UIControlStateNormal];
     [_commentButton setTitle:viewModel.commentNumber forState:UIControlStateNormal];
-    [_totalPSButton setTitle:viewModel.totalPSNumber forState:UIControlStateNormal];
+    _totalPSLabel.text = [NSString stringWithFormat:@"%@人·P过", viewModel.totalPSNumber];
     if (viewModel.image) {
         _userWorkImageView.image = viewModel.image;
     } else {
@@ -221,9 +230,9 @@ static int defaultAvatarCount = 7;
         UIImageView *imageView = _replierAvatars[i];
         imageView.hidden = YES;
     }
-    for (int i = 0; i < _viewModel.replierArray.count; i++) {
+    for (int i = 0; i < MIN(_viewModel.replierArray.count, defaultAvatarCount); i++) {
         ATOMReplierViewModel *replierViewModel = _viewModel.replierArray[i];
-        UIImageView *imageView = _replierAvatars[i];
+        UIImageView *imageView = _replierAvatars[defaultAvatarCount - MIN(_viewModel.replierArray.count, defaultAvatarCount) + i];
         imageView.hidden = NO;
         [imageView setImageWithURL:[NSURL URLWithString:replierViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     }

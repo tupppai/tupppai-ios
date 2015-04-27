@@ -72,7 +72,7 @@
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
     [showDetailOfComment ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
         [SVProgressHUD dismiss];
         for (ATOMComment *comment in hotCommentArray) {
@@ -99,7 +99,7 @@
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
     [showDetailOfComment ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
         [SVProgressHUD dismiss];
         for (ATOMComment *comment in recentCommentArray) {

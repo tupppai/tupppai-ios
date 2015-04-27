@@ -6,6 +6,7 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
+#import "AppDelegate.h"
 #import "ATOMRecentDetailViewController.h"
 #import "ATOMRecentDetailView.h"
 #import "ATOMCommentDetailViewModel.h"
@@ -18,6 +19,7 @@
 #import "ATOMComment.h"
 #import "ATOMCommentDetailViewModel.h"
 #import "ATOMShowDetailOfComment.h"
+#import "ATOMShareFunctionView.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -32,12 +34,21 @@
 @property (nonatomic, strong) UITapGestureRecognizer *tapCommentDetailGesture;
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, strong) ATOMCommentDetailViewModel *atModel;
+@property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
 
 @end
 
 @implementation ATOMRecentDetailViewController
 
 #pragma mark - Lazy Initialize
+
+- (ATOMShareFunctionView *)shareFunctionView {
+    if (!_shareFunctionView) {
+        _shareFunctionView = [ATOMShareFunctionView new];
+        [_shareFunctionView.wxButton addTarget:self action:@selector(clickWXButton:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _shareFunctionView;
+}
 
 - (UIImagePickerController *)imagePickerController {
     if (_imagePickerController == nil) {
@@ -54,7 +65,11 @@
 }
 
 - (void)loadMoreData {
-    [self getMoreDataSource];
+    if (_canRefreshFooter) {
+        [self getMoreDataSource];
+    } else {
+        [_recentDetailView.recentDetailTableView.footer endRefreshing];
+    }
 }
 
 #pragma mark - GetDataSource
@@ -67,12 +82,12 @@
     _recentCommentDataSource = [NSMutableArray array];
     _currentPage = 1;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@(_homePageViewModel.imageID) forKey:@"target_id"];
+    [param setObject:@(195) forKey:@"target_id"];
     [param setObject:@(1) forKey:@"type"];
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
     [showDetailOfComment ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
         [SVProgressHUD dismiss];
         for (ATOMComment *comment in hotCommentArray) {
@@ -98,7 +113,7 @@
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
     [showDetailOfComment ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
         [SVProgressHUD dismiss];
         for (ATOMComment *comment in recentCommentArray) {
@@ -150,6 +165,8 @@
 }
 
 - (void)addClickEventToRecentDetailView {
+    [_recentDetailView.headerView.shareButton addTarget:self action:@selector(clickShareButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_recentDetailView.headerView.moreShareButton addTarget:self action:@selector(clickMoreShareButton:) forControlEvents:UIControlEventTouchUpInside];
     [_recentDetailView.headerView.userHeaderButton addTarget:self action:@selector(clickUserHeaderButton:) forControlEvents:UIControlEventTouchUpInside];
     [_recentDetailView.headerView.psButton addTarget:self action:@selector(clickPSButton:) forControlEvents:UIControlEventTouchUpInside];
     [_recentDetailView.headerView.praiseButton addTarget:self action:@selector(clickPraiseButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -165,6 +182,14 @@
 }
 
 #pragma mark - Click Event
+
+- (void)clickShareButton:(UIButton *)sender {
+    [self wxShare];
+}
+
+- (void)clickMoreShareButton:(UIButton *)sender {
+    [[AppDelegate APP].window addSubview:self.shareFunctionView];
+}
 
 - (void)clickUserHeaderButton:(UIButton *)sender {
     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
@@ -225,6 +250,10 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
     [self presentViewController:_imagePickerController animated:YES completion:NULL];
+}
+
+- (void)clickWXButton:(UIButton *)sender {
+    [self wxFriendShare];
 }
 
 #pragma mark - Gesture Event

@@ -26,9 +26,9 @@
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     self.view.backgroundColor = [UIColor colorWithHex:0xededed];
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithHex:0x727272], NSForegroundColorAttributeName, nil];
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil];
     [self.navigationController.navigationBar setTitleTextAttributes:attributes];
-    
+    self.navigationController.navigationBar.backgroundColor = [UIColor colorWithHex:0x74c3ff];
     UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
