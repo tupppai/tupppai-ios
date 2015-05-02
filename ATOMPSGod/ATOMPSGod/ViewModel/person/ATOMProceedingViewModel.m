@@ -20,6 +20,8 @@
     NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:homeImage.uploadTime];
     _publishTime = [df stringFromDate:publishDate];
     _imageURL = homeImage.imageURL;
+    _width = homeImage.imageWidth;
+    _height = homeImage.imageHeight;
 }
 
 @end

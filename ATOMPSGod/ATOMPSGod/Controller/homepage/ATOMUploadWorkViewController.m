@@ -10,6 +10,7 @@
 #import "ATOMUploadWorkView.h"
 #import "ATOMAddTipLabelToImageViewController.h"
 #import "ATOMImageCropper.h"
+#import "BJImageCropper.h"
 
 @interface ATOMUploadWorkViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
@@ -34,6 +35,8 @@
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.delegate = self;
     }
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    self.navigationController.navigationBarHidden = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -41,6 +44,8 @@
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.delegate = nil;
     }
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    self.navigationController.navigationBarHidden = NO;
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
@@ -53,8 +58,6 @@
 
 - (void)createUI {
     self.title = @"上传图片";
-    UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
-    self.navigationItem.rightBarButtonItem = rightButtonItem;
     
     _uploadWorkView = [ATOMUploadWorkView new];
     _uploadWorkView.originImage = _originImage;
@@ -65,6 +68,8 @@
     [_uploadWorkView.FourThreeButton addTarget:self action:@selector(clickFourThreeButton:) forControlEvents:UIControlEventTouchUpInside];
     [_uploadWorkView.originButton addTarget:self action:@selector(clickOriginButton:) forControlEvents:UIControlEventTouchUpInside];
     [_uploadWorkView changeModeByOrder:@"origin"];
+    [_uploadWorkView.cancelButton addTarget:self action:@selector(clickCancelButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_uploadWorkView.confirmButton addTarget:self action:@selector(clickConfirmButton:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark - Click Event
@@ -85,18 +90,18 @@
     [_uploadWorkView changeModeByOrder:@"origin"];
 }
 
+- (void)clickCancelButton:(UIButton *)sender {
+    [self popCurrentController];
+}
 
-- (void)clickRightButtonItem:(UIBarButtonItem *)sender {
+- (void)clickConfirmButton:(UIButton *)sender {
     ATOMAddTipLabelToImageViewController *atltivc = [ATOMAddTipLabelToImageViewController new];
     if (_uploadWorkView.imageOriginView) {
         atltivc.workImage = _uploadWorkView.originImage;
-        NSLog(@"workImage size (%f,%f)", atltivc.workImage.size.width, atltivc.workImage.size.height);
     } else {
         atltivc.workImage = [_uploadWorkView.imageCropperView getCroppedImage];
-        NSLog(@"workImage size (%f,%f)", atltivc.workImage.size.width, atltivc.workImage.size.height);
     }
     atltivc.homePageViewModel = _homePageViewModel;
-    NSLog(@"%f %f", atltivc.workImage.size.width, atltivc.workImage.size.height);
     [self pushViewController:atltivc animated:YES];
 }
 

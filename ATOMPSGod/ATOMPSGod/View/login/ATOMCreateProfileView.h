@@ -10,7 +10,7 @@
 
 @interface ATOMCreateProfileView : UIScrollView
 
-@property (nonatomic, strong) UIImageView *topBackGroundImageView;
+@property (nonatomic, strong) UIView *topView;
 @property (nonatomic, strong) UIButton *userHeaderButton;
 @property (nonatomic, strong) UITextField *nicknameTextField;
 @property (nonatomic, strong) UIView *sexView;
@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UIButton *cancelPickerButton;
 @property (nonatomic, strong) UIButton *confirmPickerButton;
 @property (nonatomic, strong) UILabel *showSexLabel;
+@property (nonatomic, strong) UILabel *protocolLabel;
 
 - (void)showSexPickerView;
 - (void)hideSexPickerView;

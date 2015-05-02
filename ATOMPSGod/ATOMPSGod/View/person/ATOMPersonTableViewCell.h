@@ -13,5 +13,7 @@
 @property (nonatomic, strong) UIImageView *themeImageView;
 @property (nonatomic, strong) UILabel *themeLabel;
 @property (nonatomic, strong) UIImageView *rightImageView;
+@property (nonatomic, strong) UIImageView *arrowImageView;
+@property (nonatomic, strong) UIView *bottomLine;
 
 @end

@@ -58,6 +58,7 @@
 - (void)createUI {
     self.title = @"创建个人资料";
     UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
+    rightButtonItem.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightButtonItem;
     
     _createProfileView = [ATOMCreateProfileView new];

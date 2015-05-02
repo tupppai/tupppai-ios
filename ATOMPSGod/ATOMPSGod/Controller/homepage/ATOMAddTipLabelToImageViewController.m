@@ -59,6 +59,7 @@
 - (UIBarButtonItem *)cancelLeftBarButtonItem {
     if (_cancelLeftBarButtonItem == nil) {
         _cancelLeftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(clickCancelLeftBarButtonItem:)];
+        _cancelLeftBarButtonItem.tintColor = [UIColor whiteColor];
     }
     return _cancelLeftBarButtonItem;
 }
@@ -103,8 +104,9 @@
 }
 
 - (void)createUI {
-    self.title = @"添加标签";
+    self.title = @"填写标签内容";
     UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
+    rightButtonItem.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightButtonItem;
     _originLeftBarButtonItems = self.navigationItem.leftBarButtonItems;
     _originRightBarButtonItem = self.navigationItem.rightBarButtonItem;
@@ -325,6 +327,7 @@
     [_addTipLabelToImageView addTemporaryPointAt:_currentLocation];
     [_addTipLabelToImageView addSubview:_fillInContentOfTipLabelView];
     [_fillInContentOfTipLabelView.tipLabelContentTextField becomeFirstResponder];
+    _fillInContentOfTipLabelView.showNumberLabel.text = @"0/18";
     self.navigationItem.leftBarButtonItems = @[self.cancelLeftBarButtonItem];
     self.navigationItem.rightBarButtonItem = nil;
     [UIApplication sharedApplication].statusBarHidden = YES;

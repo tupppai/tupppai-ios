@@ -165,8 +165,8 @@
 + (ATOMCustomCropperView *)initialCropViewForImageView:(UIImageView*)imageView WithCropperViewType:(ATOMCropperViewTYPE)cropperViewType{
     
     CGRect max = imageView.bounds;
-    CGFloat width;
-    CGFloat height;
+    CGFloat width = 0;
+    CGFloat height = 0;
 
     // atom new add
     if (cropperViewType == OneOneType) {

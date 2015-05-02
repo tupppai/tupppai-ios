@@ -54,6 +54,11 @@
 
 - (void)configCollectionViewRefresh {
     [_tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    [_tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(loadData)];
+}
+
+- (void)loadData {
+    [self getDataSource];
 }
 
 - (void)loadMoreData {
@@ -71,13 +76,9 @@
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
-    _dataSource = nil;
-    _dataSource = [NSMutableArray array];
-    _homeImageDataSource = nil;
-    _homeImageDataSource = [NSMutableArray array];
     _currentPage = 1;
     [param setObject:@(_currentPage) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
     [param setObject:@"new" forKey:@"type"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@"time" forKey:@"sort"];
@@ -87,6 +88,10 @@
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showProceeding ShowProceeding:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         [SVProgressHUD dismiss];
+        if (resultArray.count) {
+            [_dataSource removeAllObjects];
+            [_homeImageDataSource removeAllObjects];
+        }
         for (ATOMHomeImage *homeImage in resultArray) {
             ATOMHomePageViewModel *homepageViewModel = [ATOMHomePageViewModel new];
             [homepageViewModel setViewModelData:homeImage];
@@ -95,6 +100,7 @@
             [proceedingViewModel setViewModelData:homeImage];
             [ws.dataSource addObject:proceedingViewModel];
         }
+        [ws.tableView.header endRefreshing];
         [ws.tableView reloadData];
     }];
 }
@@ -105,7 +111,7 @@
     long long timestamp = [[NSDate date] timeIntervalSince1970];
     ws.currentPage++;
     [param setObject:@(ws.currentPage) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
     [param setObject:@(timestamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     ATOMShowProceeding *showProceeding = [ATOMShowProceeding new];
@@ -149,6 +155,10 @@
     [_tableView addGestureRecognizer:self.tapProceedingGesture];
     [self configCollectionViewRefresh];
     _canRefreshFooter = YES;
+    _dataSource = nil;
+    _dataSource = [NSMutableArray array];
+    _homeImageDataSource = nil;
+    _homeImageDataSource = [NSMutableArray array];
     [self getDataSource];
 }
 
@@ -215,7 +225,7 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [ATOMProceedingTableViewCell calculateCellHeight];
+    return [ATOMProceedingTableViewCell calculateCellHeight:_dataSource[indexPath.row]];
 }
 
 

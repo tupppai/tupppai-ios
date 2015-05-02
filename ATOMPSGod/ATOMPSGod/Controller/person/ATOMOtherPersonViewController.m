@@ -258,7 +258,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat sectionHeaderHeight = -44;
-    CGFloat originHeight = -200;
+    CGFloat originHeight = -300;
     if (scrollView == _otherPersonView.otherPersonUploadCollectionView) {
         CGRect frame = _otherPersonView.uploadHeaderView.frame;
         if (scrollView.contentOffset.y >= originHeight && scrollView.contentOffset.y < sectionHeaderHeight) {
@@ -311,6 +311,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
         ATOMAskViewModel *model = _uploadDataSource[indexPath.row];
         [cell.workImageView setImageWithURL:[NSURL URLWithString:model.imageURL]];
         cell.totalPSNumber = model.totalPSNumber;
+        cell.colorType = 0;
         return cell;
     } else {
         ATOMMyWorkCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:WorkCellIdentifier forIndexPath:indexPath];

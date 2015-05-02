@@ -8,15 +8,19 @@
 
 #import "ATOMOtherPersonCollectionHeaderView.h"
 
-@implementation ATOMOtherPersonCollectionHeaderView
+@interface ATOMOtherPersonCollectionHeaderView ()
 
-static int padding = 10;
-static int padding3 = 3;
+@property (nonatomic, strong) UIView *thinVerticalView1;
+@property (nonatomic, strong) UIView *thinVerticalView2;
+
+@end
+
+@implementation ATOMOtherPersonCollectionHeaderView
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.frame = CGRectMake(0, 0, SCREEN_WIDTH, 200);
+        self.frame = CGRectMake(0, 0, SCREEN_WIDTH, 300);
         [self createSubView];
     }
     return self;
@@ -28,76 +32,90 @@ static int padding3 = 3;
 }
 
 - (void)createTopBackGroundImageView {
-    _topBackGroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 156)];
-    _topBackGroundImageView.userInteractionEnabled = YES;
-    _topBackGroundImageView.image = [UIImage imageNamed:@"header_bg"];
-    [self addSubview:_topBackGroundImageView];
+    _topView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 256)];
+//    [_topView showPlaceHolder];
+    _topView.userInteractionEnabled = YES;
+    _topView.backgroundColor = [UIColor whiteColor];
+    [self addSubview:_topView];
     
-    _userHeaderButton = [[UIButton alloc] initWithFrame:CGRectMake((SCREEN_WIDTH - 72) / 2, padding, 72, 72)];
-    [_userHeaderButton setBackgroundImage:[UIImage imageNamed:@"head_portrait"] forState:UIControlStateNormal];
-    _userHeaderButton.layer.cornerRadius = 36;
+    _userHeaderButton = [[UIButton alloc] initWithFrame:CGRectMake((SCREEN_WIDTH - 94) / 2, kPadding15, 94, 94)];
+    _userHeaderButton.layer.cornerRadius = 94 / 2;
     _userHeaderButton.layer.masksToBounds = YES;
-    [_topBackGroundImageView addSubview:_userHeaderButton];
+    _userHeaderButton.layer.borderColor = [UIColor colorWithHex:0x74c3ff].CGColor;
+    _userHeaderButton.layer.borderWidth = 4;
+    [_userHeaderButton setBackgroundImage:[UIImage imageNamed:@"head_portrait"] forState:UIControlStateNormal];
+    [_topView addSubview:_userHeaderButton];
     
-    _userSexImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - SEXRADIUS, CGRectGetMaxY(_userHeaderButton.frame) - SEXRADIUS, SEXRADIUS, SEXRADIUS)];
-    _userSexImageView.image = [UIImage imageNamed:@"woman"];
-    _userSexImageView.layer.cornerRadius = 8.5;
-    _userSexImageView.layer.masksToBounds = YES;
-    [_topBackGroundImageView addSubview:_userSexImageView];
+    _userSexImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - 27 / 2, _userHeaderButton.center.y - 27 / 2, 27, 27)];
+    _userSexImageView.image = [UIImage imageNamed:@"gender_female"];
+    [_topView addSubview:_userSexImageView];
     
+    NSString *str = @"123";
     NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
     paragraphStyle.lineSpacing = 6;
-    NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.f], NSFontAttributeName, [UIColor whiteColor], NSForegroundColorAttributeName, paragraphStyle, NSParagraphStyleAttributeName, nil];
-    CGFloat buttonWidth = 72;
-    
-    _attentionLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_userHeaderButton.frame) - buttonWidth, CGRectGetMaxY(_userHeaderButton.frame) + padding, buttonWidth, 40)];
+    NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:kFont14], NSFontAttributeName, [UIColor colorWithHex:0x74c3ff], NSForegroundColorAttributeName, paragraphStyle, NSParagraphStyleAttributeName, nil];
+    CGFloat buttonWidth = 60;
+    CGFloat buttonHeight = 40;
+    CGFloat buttonInterval = (94 - buttonWidth) / 2;
+    CGFloat buttonOriginY = CGRectGetMaxY(_userHeaderButton.frame) + kPadding15;
+    _attentionLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_userHeaderButton.frame) - buttonInterval - buttonWidth, buttonOriginY, buttonWidth, buttonHeight)];
+//    _attentionLabel.backgroundColor = [UIColor orangeColor];
     _attentionLabel.userInteractionEnabled = YES;
     _attentionLabel.numberOfLines = 0;
-    NSAttributedString *attentionLabelText = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"关注\n123"] attributes:attributeDict];
-    _attentionLabel.attributedText = attentionLabelText;
+    NSMutableAttributedString *attentionStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%d\n关注", 123] attributes:attributeDict];
+    [attentionStr addAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, [UIColor colorWithHex:0xc3cbd2], NSForegroundColorAttributeName, nil] range:NSMakeRange(str.length + 1, 2)];
+    _attentionLabel.attributedText = attentionStr;
     _attentionLabel.textAlignment = NSTextAlignmentCenter;
-    [_topBackGroundImageView addSubview:_attentionLabel];
+    [_topView addSubview:_attentionLabel];
     
-    _fansLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_userHeaderButton.frame), CGRectGetMaxY(_userHeaderButton.frame) + padding, buttonWidth, 40)];
+    _fansLabel = [[UILabel alloc] initWithFrame:CGRectMake(_userHeaderButton.center.x - buttonWidth / 2, buttonOriginY, buttonWidth, buttonHeight)];
     _fansLabel.userInteractionEnabled = YES;
     _fansLabel.numberOfLines = 0;
-    NSAttributedString *fansLabelText = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"粉丝\n123"] attributes:attributeDict];
-    _fansLabel.attributedText = fansLabelText;
+    NSMutableAttributedString *fansStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%d\n粉丝", 123] attributes:attributeDict];
+    [fansStr addAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, [UIColor colorWithHex:0xc3cbd2], NSForegroundColorAttributeName, nil] range:NSMakeRange(str.length + 1, 2)];
+    _fansLabel.attributedText = fansStr;
     _fansLabel.textAlignment = NSTextAlignmentCenter;
-    [_topBackGroundImageView addSubview:_fansLabel];
+    [_topView addSubview:_fansLabel];
     
-    _praiseLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame), CGRectGetMaxY(_userHeaderButton.frame) + padding, buttonWidth, 40)];
+    _praiseLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + buttonInterval, buttonOriginY, buttonWidth, buttonHeight)];
+    _praiseLabel.userInteractionEnabled = YES;
     _praiseLabel.numberOfLines = 0;
-    NSAttributedString *praiseLabelText = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"赞\n123"] attributes:attributeDict];
-    _praiseLabel.attributedText = praiseLabelText;
+    NSMutableAttributedString *praiseStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%d\n赞", 123] attributes:attributeDict];
+    [praiseStr addAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, [UIColor colorWithHex:0xc3cbd2], NSForegroundColorAttributeName, nil] range:NSMakeRange(str.length + 1, 1)];
+    _praiseLabel.attributedText = praiseStr;
     _praiseLabel.textAlignment = NSTextAlignmentCenter;
-    [_topBackGroundImageView addSubview:_praiseLabel];
+    [_topView addSubview:_praiseLabel];
     
-    _attentionButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 45, CGRectGetMaxY(_userHeaderButton.frame) - 20, 45, 20)];
-    _attentionButton.backgroundColor = [UIColor colorWithHex:0xfcc64a];
-    [_attentionButton setTitle:@"关注" forState:UIControlStateNormal];
-    [_attentionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_topBackGroundImageView addSubview:_attentionButton];
+    _attentionButton = [[UIButton alloc] initWithFrame:CGRectMake(_userHeaderButton.center.x - 50, CGRectGetMaxY(_fansLabel.frame) + kPadding15, 100, kPadding30)];
+    [_attentionButton setBackgroundImage:[UIImage imageNamed:@"btn_add_focus"] forState:UIControlStateNormal];
+    [_attentionButton setBackgroundImage:[UIImage imageNamed:@"btn_focus"] forState:UIControlStateSelected];
+    [_topView addSubview:_attentionButton];
 }
 
 - (void)createCenterView {
-    _centerView = [[UIView alloc] initWithFrame:CGRectMake(0, 156, SCREEN_WIDTH, 44)];
+    _centerView = [[UIView alloc] initWithFrame:CGRectMake(0, 256, SCREEN_WIDTH, 44)];
     _centerView.backgroundColor = [UIColor whiteColor];
     [self addSubview:_centerView];
-    
-    _otherPersonUploadButton = [[UIButton alloc] initWithFrame:CGRectMake(padding, padding3 * 2, SCREEN_WIDTH / 2 - 2 * padding, 44 - padding3 * 4)];
-    [_otherPersonUploadButton setImage:[UIImage imageNamed:@"btn_psask_normal"] forState:UIControlStateNormal];
-    [_otherPersonUploadButton setImage:[UIImage imageNamed:@"btn_psask_pressed"] forState:UIControlStateSelected];
+
+    _otherPersonUploadButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH / 2, 44 - kPadding5)];
+    [_otherPersonUploadButton setTitle:@"求P（5）" forState:UIControlStateNormal];
+    [_otherPersonUploadButton setTitleColor:[UIColor colorWithHex:0xacbbc1] forState:UIControlStateNormal];
+    [_otherPersonUploadButton setTitleColor:[UIColor colorWithHex:0x74c3ff] forState:UIControlStateSelected];
     [_centerView addSubview:_otherPersonUploadButton];
     
-    _otherPersonWorkButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH / 2 + padding, padding3 * 2, CGWidth(_otherPersonUploadButton.frame), CGHeight(_otherPersonUploadButton.frame))];
-    [_otherPersonWorkButton setImage:[UIImage imageNamed:@"btn_pswork_normal"] forState:UIControlStateNormal];
-    [_otherPersonWorkButton setImage:[UIImage imageNamed:@"btn_pswork_pressed"] forState:UIControlStateSelected];
+    _otherPersonWorkButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2, 44 - kPadding5)];
+    [_otherPersonWorkButton setTitle:@"作品（5）" forState:UIControlStateNormal];
+    [_otherPersonWorkButton setTitleColor:[UIColor colorWithHex:0xacbbc1] forState:UIControlStateNormal];
+    [_otherPersonWorkButton setTitleColor:[UIColor colorWithHex:0x74c3ff] forState:UIControlStateSelected];
     [_centerView addSubview:_otherPersonWorkButton];
     
     _blueThinView = [UIView new];
-    _blueThinView.backgroundColor = [UIColor colorWithHex:0x00adef];
+    _blueThinView.backgroundColor = [UIColor colorWithHex:0x74c3ff];
     [_centerView addSubview:_blueThinView];
+    
+    _grayThinView = [UIView new];
+    _grayThinView.backgroundColor = [UIColor colorWithHex:0xacbbc1];
+    [_centerView addSubview:_grayThinView];
     
 }
 

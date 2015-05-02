@@ -10,7 +10,7 @@
 
 @interface ATOMOtherPersonCollectionHeaderView : UICollectionReusableView
 
-@property (nonatomic, strong) UIImageView *topBackGroundImageView;
+@property (nonatomic, strong) UIView *topView;
 @property (nonatomic, strong) UIButton *userHeaderButton;
 @property (nonatomic, strong) UIImageView *userSexImageView;
 @property (nonatomic, strong) UILabel *attentionLabel;
@@ -23,5 +23,6 @@
 @property (nonatomic, strong) UIButton *otherPersonWorkButton;
 
 @property (nonatomic, strong) UIView *blueThinView;
+@property (nonatomic, strong) UIView *grayThinView;
 
 @end

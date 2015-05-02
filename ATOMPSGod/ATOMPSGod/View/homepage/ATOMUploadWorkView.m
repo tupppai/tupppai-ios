@@ -8,6 +8,7 @@
 
 #import "ATOMUploadWorkView.h"
 #import "ATOMImageCropper.h"
+#import "BJImageCropper.h"
 
 @interface ATOMUploadWorkView ()
 
@@ -15,9 +16,8 @@
 
 @implementation ATOMUploadWorkView
 
-static const int BOTTOMHEIGHT = 36;
-static const int CENTERHEIGHT = 40;
-static const int padding = 10;
+static CGFloat BottomHeight = 110;
+static CGFloat buttonWidth = 30;
 
 - (instancetype)init {
     self = [super init];
@@ -29,66 +29,56 @@ static const int padding = 10;
 
 - (void)createSubView {
     self.backgroundColor = [UIColor whiteColor];
-    _centerView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - BOTTOMHEIGHT - CENTERHEIGHT - NAV_HEIGHT, SCREEN_WIDTH, CENTERHEIGHT)];
-    _centerView.backgroundColor = [UIColor colorWithHex:0xf5f6f8];
-    [self createSubViewOfCenterView];
-    _bottomLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_centerView.frame), SCREEN_WIDTH, BOTTOMHEIGHT)];
-    _bottomLabel.backgroundColor = [UIColor whiteColor];
-    _bottomLabel.text = @"点击以上按钮，调整到合适的尺寸";
-    _bottomLabel.textAlignment = NSTextAlignmentCenter;
-    _bottomLabel.textColor = [UIColor colorWithHex:0xb4b4b4];
+    _topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
+    _topView.backgroundColor = [UIColor colorWithHex:0xededed];
+    [self addSubview:_topView];
+    
+    _cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(36, kPadding20, 22, 22)];
+    [_cancelButton setBackgroundImage:[UIImage imageNamed:@"icon_cancel"] forState:UIControlStateNormal];
+    [_topView addSubview:_cancelButton];
+    
+    _confirmButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 36 - 22, kPadding20, 22, 22)];
+    [_confirmButton setBackgroundImage:[UIImage imageNamed:@"icon_next"] forState:UIControlStateNormal];
+    [_topView addSubview:_confirmButton];
+    
+    _centerView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_topView.frame), SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - BottomHeight)];
     [self addSubview:_centerView];
-    [self addSubview:_bottomLabel];
+    
+    _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - BottomHeight, SCREEN_WIDTH, BottomHeight)];
+    _bottomView.backgroundColor = [UIColor colorWithHex:0xededed];
+    [self addSubview:_bottomView];
+    [self createSubViewOfBottomView];
 }
 
-- (void)createSubViewOfCenterView {
-    
-    CGFloat buttonInteval = (SCREEN_WIDTH - 4 * 60) / 5;
-    
-    
-    _ThreeFourButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonInteval, 7.5, 60, 25)];
-    _OneOneButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonInteval + CGRectGetMaxX(_ThreeFourButton.frame), 7.5, 60, 25)];
-    _FourThreeButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonInteval + CGRectGetMaxX(_OneOneButton.frame), 7.5, 60, 25)];
-    [_ThreeFourButton setTitle:@"3:4" forState:UIControlStateNormal];
-    [_OneOneButton setTitle:@"1:1" forState:UIControlStateNormal];
-    [_FourThreeButton setTitle:@"4:3" forState:UIControlStateNormal];
-    [self setCommonButton:_ThreeFourButton WithNormalImage:[UIImage imageNamed:@"_scale34_choose_normal"] AndClickImage:[UIImage imageNamed:@"_scale34_choosen_pressed"]];
-    [self setCommonButton:_OneOneButton WithNormalImage:[UIImage imageNamed:@"btn_11_normal"] AndClickImage:[UIImage imageNamed:@"btn_11_choosen"]];
-    [self setCommonButton:_FourThreeButton WithNormalImage:[UIImage imageNamed:@"btn_43_normal"] AndClickImage:[UIImage imageNamed:@"btn_43_choosen"]];
-    
-    _originButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonInteval + CGRectGetMaxX(_FourThreeButton.frame), 7.5, 60, 25)];
-    [_originButton setTitle:@"原图" forState:UIControlStateNormal];
-//    [_originButton setTitleColor:[UIColor colorWithHex:0x565656] forState:UIControlStateNormal];
-//    [_originButton setTitleColor:[UIColor colorWithHex:0x00aeef] forState:UIControlStateSelected];
-    [self setCommonButton:_originButton WithNormalImage:nil AndClickImage:nil];
-    [_centerView addSubview:_originButton];
-    
+- (void)createSubViewOfBottomView {
+    CGFloat interval = (SCREEN_WIDTH - 2 * buttonWidth - 2 * buttonWidth / 3 * 4 - 2 * kPadding30) / 3;
+    _ThreeFourButton = [[UIButton alloc] initWithFrame:CGRectMake(kPadding30, kPadding30, buttonWidth, buttonWidth / 3 * 4)];
+    [self setCommonButton:_ThreeFourButton WithTitle:@"3:4"];
+    _OneOneButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_ThreeFourButton.frame) + interval, kPadding30, buttonWidth, buttonWidth)];
+    _OneOneButton.center = CGPointMake(_OneOneButton.center.x, _ThreeFourButton.center.y);
+    [self setCommonButton:_OneOneButton WithTitle:@"1:1"];
+    _FourThreeButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_OneOneButton.frame) + interval, kPadding30, buttonWidth / 3 * 4, buttonWidth)];
+    _FourThreeButton.center = CGPointMake(_FourThreeButton.center.x, _ThreeFourButton.center.y);
+    [self setCommonButton:_FourThreeButton WithTitle:@"4:3"];
+    _originButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_FourThreeButton.frame) + interval, kPadding30, buttonWidth / 3 * 4, buttonWidth)];
+    _originButton.center = CGPointMake(_originButton.center.x, _ThreeFourButton.center.y);
+    [self setCommonButton:_originButton WithTitle:@"原图"];
 }
 
-- (void)setCommonButton:(UIButton *)button WithNormalImage:(UIImage *)image AndClickImage:(UIImage *)clickImage{
-//    button.backgroundColor = [UIColor orangeColor];
-    if (image != nil) {
-        [button setTitleEdgeInsets:UIEdgeInsetsMake(3.5, padding / 2.0, 3.5, 0)];
-        button.titleLabel.font = [UIFont systemFontOfSize:11.f];
-    } else {
-        button.titleLabel.font = [UIFont systemFontOfSize:14.f];
-    }
-    button.layer.borderWidth = 1;
-    button.layer.borderColor = [[UIColor colorWithHex:0xcdced0] CGColor];
-    button.layer.cornerRadius = 5;
-    button.layer.masksToBounds = YES;
-    [button setImage:image forState:UIControlStateNormal];
-    [button setImage:clickImage forState:UIControlStateSelected];
-    [button setImageEdgeInsets:UIEdgeInsetsMake(3.5, 0, 3.5, 0)];
-    [button setTitleColor:[UIColor colorWithHex:0x565656] forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor colorWithHex:0x00aeef] forState:UIControlStateSelected];
-    [_centerView addSubview:button];
+- (void)setCommonButton:(UIButton *)button WithTitle:(NSString *)title {
+    button.layer.borderWidth = 3;
+    button.layer.borderColor = [UIColor colorWithHex:0xa1adb6].CGColor;
+    [button setTitle:title forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont systemFontOfSize:kFont14];
+    [button setTitleColor:[UIColor colorWithHex:0xa1adb6] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor colorWithHex:0x74c3ff] forState:UIControlStateSelected];
+    [_bottomView addSubview:button];
 }
 
 - (void)changeModeByOrder:(NSString *)order {
     
     CGFloat maxWidth = SCREEN_WIDTH;
-    CGFloat maxHeight = SCREEN_HEIGHT - BOTTOMHEIGHT - CENTERHEIGHT - NAV_HEIGHT;
+    CGFloat maxHeight = SCREEN_HEIGHT - BottomHeight - NAV_HEIGHT;
     
     if ([order isEqualToString:@"3:4"]) {
         _ThreeFourButton.selected = YES;
@@ -99,9 +89,13 @@ static const int padding = 10;
         _OneOneButton.userInteractionEnabled = YES;
         _FourThreeButton.userInteractionEnabled = YES;
         _originButton.userInteractionEnabled = YES;
+        _ThreeFourButton.layer.borderColor = [UIColor colorWithHex:0x74c3ff].CGColor;
+        _OneOneButton.layer.borderColor = [UIColor colorWithHex:0xa1adb6].CGColor;
+        _FourThreeButton.layer.borderColor = [UIColor colorWithHex:0xa1adb6].CGColor;
+        _originButton.layer.borderColor = [UIColor colorWithHex:0xa1adb6].CGColor;
         [self clearCropperViewAndOriginView];
-        _imageCropperView = [[ATOMImageCropper alloc] initWithImage:_originImage AndFrame:CGRectMake(0, 0, maxWidth, maxHeight) AndImageCropperType:ThreeFourImageCropper];
-        [self addSubview:_imageCropperView];
+        _imageCropperView = [[BJImageCropper alloc] initWithImage:_originImage andMaxSize:CGSizeMake(maxWidth, maxHeight) andCropperType:ThreeFourType];
+        [_centerView addSubview:_imageCropperView];
         
         
     } else if ([order isEqualToString:@"1:1"]) {
@@ -113,9 +107,13 @@ static const int padding = 10;
         _OneOneButton.userInteractionEnabled = NO;
         _FourThreeButton.userInteractionEnabled = YES;
         _originButton.userInteractionEnabled = YES;
+        _ThreeFourButton.layer.borderColor = [UIColor colorWithHex:0xa1adb6].CGColor;
+        _OneOneButton.layer.borderColor = [UIColor colorWithHex:0x74c3ff].CGColor;
+        _FourThreeButton.layer.borderColor = [UIColor colorWithHex:0xa1adb6].CGColor;
+        _originButton.layer.borderColor = [UIColor colorWithHex:0xa1adb6].CGColor;
         [self clearCropperViewAndOriginView];
-        _imageCropperView = [[ATOMImageCropper alloc] initWithImage:_originImage AndFrame:CGRectMake(0, 0, maxWidth, maxHeight) AndImageCropperType:OneOneImageCropper];
-        [self addSubview:_imageCropperView];
+        _imageCropperView = [[BJImageCropper alloc] initWithImage:_originImage andMaxSize:CGSizeMake(maxWidth, maxHeight) andCropperType:OneOneType];
+        [_centerView addSubview:_imageCropperView];
     } else if ([order isEqualToString:@"4:3"]) {
         _ThreeFourButton.selected = NO;
         _OneOneButton.selected = NO;
@@ -125,9 +123,13 @@ static const int padding = 10;
         _OneOneButton.userInteractionEnabled = YES;
         _FourThreeButton.userInteractionEnabled = NO;
         _originButton.userInteractionEnabled = YES;
+        _ThreeFourButton.layer.borderColor = [UIColor colorWithHex:0xa1adb6].CGColor;
+        _OneOneButton.layer.borderColor = [UIColor colorWithHex:0xa1adb6].CGColor;
+        _FourThreeButton.layer.borderColor = [UIColor colorWithHex:0x74c3ff].CGColor;
+        _originButton.layer.borderColor = [UIColor colorWithHex:0xa1adb6].CGColor;
         [self clearCropperViewAndOriginView];
-        _imageCropperView = [[ATOMImageCropper alloc] initWithImage:_originImage AndFrame:CGRectMake(0, 0, maxWidth, maxHeight) AndImageCropperType:FourThreeImageCropper];
-        [self addSubview:_imageCropperView];
+        _imageCropperView = [[BJImageCropper alloc] initWithImage:_originImage andMaxSize:CGSizeMake(maxWidth, maxHeight) andCropperType:FourThreeType];
+        [_centerView addSubview:_imageCropperView];
     } else if ([order isEqualToString:@"origin"]) {
         _ThreeFourButton.selected = NO;
         _OneOneButton.selected = NO;
@@ -137,10 +139,14 @@ static const int padding = 10;
         _OneOneButton.userInteractionEnabled = YES;
         _FourThreeButton.userInteractionEnabled = YES;
         _originButton.userInteractionEnabled = NO;
+        _ThreeFourButton.layer.borderColor = [UIColor colorWithHex:0xa1adb6].CGColor;
+        _OneOneButton.layer.borderColor = [UIColor colorWithHex:0xa1adb6].CGColor;
+        _FourThreeButton.layer.borderColor = [UIColor colorWithHex:0xa1adb6].CGColor;
+        _originButton.layer.borderColor = [UIColor colorWithHex:0x74c3ff].CGColor;
         [self clearCropperViewAndOriginView];
         _imageOriginView = [[UIImageView alloc] initWithFrame:[self calculateImageViewFrame]];
         _imageOriginView.image = _originImage;
-        [self addSubview:_imageOriginView];
+        [_centerView addSubview:_imageOriginView];
     }
 }
 
@@ -158,7 +164,7 @@ static const int padding = 10;
 - (CGRect)calculateImageViewFrame {
     
     CGFloat maxWith = SCREEN_WIDTH;
-    CGFloat maxHeight = SCREEN_HEIGHT - BOTTOMHEIGHT - CENTERHEIGHT - NAV_HEIGHT;
+    CGFloat maxHeight = SCREEN_HEIGHT - BottomHeight - NAV_HEIGHT;
     CGFloat imageScale;
     CGPoint location;
     

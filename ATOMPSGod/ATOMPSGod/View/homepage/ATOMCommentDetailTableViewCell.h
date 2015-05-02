@@ -8,14 +8,14 @@
 
 #import <UIKit/UIKit.h>
 @class ATOMCommentDetailViewModel;
+@class ATOMPraiseButton;
 
 @interface ATOMCommentDetailTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) UIButton *userHeaderButton;
 @property (nonatomic, strong) UILabel *userNameLabel;
-@property (nonatomic, strong) UIImageView *userSexImageView;
+@property (nonatomic, strong) ATOMPraiseButton *praiseButton;
 @property (nonatomic, strong) UILabel *userCommentDetailLabel;
-@property (nonatomic, strong) UIButton *praiseButton;
 @property (nonatomic, strong) ATOMCommentDetailViewModel *viewModel;
 
 + (CGFloat)calculateCellHeightWithModel:(ATOMCommentDetailViewModel *)viewModel;

@@ -19,5 +19,13 @@
 @property (nonatomic, strong) UIView *bottomView;
 @property (nonatomic, strong) ATOMHomePageViewModel *viewModel;
 @property (nonatomic, copy) NSString *textViewPlaceholder;
+@property (nonatomic, strong) UIButton *faceButton;
+/**
+ *  表情滚动视图
+ */
+@property (nonatomic, strong) UIScrollView *faceView;
+
+- (void)hideCommentView;
+- (BOOL)isEditingCommentView;
 
 @end

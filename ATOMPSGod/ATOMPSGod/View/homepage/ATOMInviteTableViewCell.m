@@ -8,10 +8,16 @@
 
 #import "ATOMInviteTableViewCell.h"
 
+@interface ATOMInviteTableViewCell ()
+
+@property (nonatomic, strong) UIView *view1;
+@property (nonatomic, strong) UIView *view2;
+
+@end
+
 @implementation ATOMInviteTableViewCell
 
-static int padding10 = 10;
-static float commenWidth;
+static CGFloat cellHeight = 70;
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -23,62 +29,70 @@ static float commenWidth;
 }
 
 - (void)createSubView {
-    _userHeaderButton = [[UIButton alloc] initWithFrame:CGRectMake(padding10, 6, 45, 45)];
+    _userHeaderButton = [[UIButton alloc] initWithFrame:CGRectMake(kPadding15, (cellHeight - kUserHeaderButtonWidth) / 2, kUserHeaderButtonWidth, kUserHeaderButtonWidth)];
     _userHeaderButton.userInteractionEnabled = NO;
-    _userHeaderButton.backgroundColor = [UIColor greenColor];
-    _userHeaderButton.layer.cornerRadius = 22.5;
+    _userHeaderButton.layer.cornerRadius = kUserHeaderButtonWidth / 2;
     _userHeaderButton.layer.masksToBounds = YES;
+    [_userHeaderButton setBackgroundImage:[UIImage imageNamed:@"head_portrait"] forState:UIControlStateNormal];
     [self addSubview:_userHeaderButton];
     
-    _userSexImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - SEXRADIUS, CGRectGetMaxY(_userHeaderButton.frame) - SEXRADIUS, SEXRADIUS, SEXRADIUS)];
-    _userSexImageView.image = [UIImage imageNamed:@"woman"];
-    [self addSubview:_userSexImageView];
-    
-    _userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, 0, 80, 30)];
+    _userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, CGRectGetMinY(_userHeaderButton.frame), kUserNameLabelWidth, kFont14)];
     _userNameLabel.text = @"atom";
-    _userNameLabel.font = [UIFont systemFontOfSize:16.f];
+    _userNameLabel.font = [UIFont systemFontOfSize:kFont14];
     [self addSubview:_userNameLabel];
     
-    _inviteButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - padding10 - 57, 11.5, 57, 30)];
+    _inviteButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - kPadding15 - 55, 20, 55, 30)];
     _inviteButton.userInteractionEnabled = NO;
     _inviteButton.layer.cornerRadius = 5;
-    _inviteButton.layer.masksToBounds = YES;
-    _inviteButton.backgroundColor = [UIColor colorWithHex:0x838383];
+    _inviteButton.backgroundColor = [UIColor colorWithHex:0x74c3ff];
     [_inviteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_inviteButton setTitle:@"已邀请" forState:UIControlStateNormal];
     _inviteButton.titleLabel.font = [UIFont systemFontOfSize:13.f];
     [self addSubview:_inviteButton];
     
-    commenWidth = (CGOriginX(_inviteButton.frame) - CGRectGetMaxX(_userHeaderButton.frame) - padding10 * 2) / 3;
+    CGFloat labelOriginY = CGRectGetMaxY(_userNameLabel.frame) + kPadding5;
+    _fansNumberLabel = [UILabel new];
+    _fansNumberLabel.textColor = [UIColor colorWithHex:0xc5cdd3];
+    _fansNumberLabel.font = [UIFont systemFontOfSize:kFont10];
+    [self addSubview:_fansNumberLabel];
+    _view1 = [self littleCircleView];
+    [self addSubview:_view1];
+    _uploadNumberLabel = [UILabel new];
+    _uploadNumberLabel.textColor = [UIColor colorWithHex:0xc5cdd3];
+    _uploadNumberLabel.font = [UIFont systemFontOfSize:kFont10];
+    [self addSubview:_uploadNumberLabel];
+    _view2 = [self littleCircleView];
+    [self addSubview:_view2];
+    _workNumberLabel = [UILabel new];
+    _workNumberLabel.textColor = [UIColor colorWithHex:0xc5cdd3];
+    _workNumberLabel.font = [UIFont systemFontOfSize:kFont10];
+    [self addSubview:_workNumberLabel];
     
-    _fansNumberButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, CGRectGetMaxY(_userNameLabel.frame), commenWidth, 15)];
-    [self setCommonButton:_fansNumberButton WithImage:[UIImage imageNamed:@"fans_num"]];
-    _uploadNumberButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_fansNumberButton.frame), CGRectGetMaxY(_userNameLabel.frame), commenWidth, 15)];
-    [self setCommonButton:_uploadNumberButton WithImage:[UIImage imageNamed:@"psask_num"]];
-    _workNumberButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_uploadNumberButton.frame), CGRectGetMaxY(_userNameLabel.frame), commenWidth, 15)];
-    [self setCommonButton:_workNumberButton WithImage:[UIImage imageNamed:@"pswork_num"]];
+    _fansNumberLabel.text = @"1000粉丝";
+    _uploadNumberLabel.text = @"1000求P";
+    _workNumberLabel.text = @"1000作品";
     
+    _fansNumberLabel.frame = CGRectMake(kPadding15 + CGRectGetMaxX(_userHeaderButton.frame), labelOriginY, kFont10 * (_fansNumberLabel.text.length - 1.5), kFont10);
+    _view1.frame = CGRectMake(CGRectGetMaxX(_fansNumberLabel.frame) + kPadding5, labelOriginY + 2.5, 5, 5);
+    _uploadNumberLabel.frame = CGRectMake(CGRectGetMaxX(_view1.frame) + kPadding5, labelOriginY, kFont10 * (_uploadNumberLabel.text.length - 1.5), kFont10);
+    _view2.frame = CGRectMake(CGRectGetMaxX(_uploadNumberLabel.frame) + kPadding5, labelOriginY + 2.5, 5, 5);
+    _workNumberLabel.frame = CGRectMake(CGRectGetMaxX(_view2.frame) + kPadding5, labelOriginY, kFont10 * (_workNumberLabel.text.length - 1.5), kFont10);
 }
 
-- (void)setCommonButton:(UIButton *)button WithImage:(UIImage *)image {
-    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    button.contentVerticalAlignment = UIControlContentVerticalAlignmentTop;
-    [button setImage:image forState:UIControlStateNormal];
-    [button setImageEdgeInsets:UIEdgeInsetsMake(2, 0, 2, 0)];
-    [button setTitle:@"1000" forState:UIControlStateNormal];
-    [button setTitleEdgeInsets:UIEdgeInsetsMake(2, 5, 3, 0)];
-    button.titleLabel.font = [UIFont systemFontOfSize:10.f];
-    [button setTitleColor:[UIColor colorWithHex:0x7a7a7a] forState:UIControlStateNormal];
-    [self addSubview:button];
+- (UIView *)littleCircleView {
+    UIView *view = [UIView new];
+    view.backgroundColor = [UIColor colorWithHex:0xc5cdd3];
+    view.layer.cornerRadius = 2.5;
+    return view;
 }
 
 - (void)changeInviteButtonStatus {
     _inviteButton.selected = !_inviteButton.selected;
     if (_inviteButton.selected) {
-        _inviteButton.backgroundColor = [UIColor colorWithHex:0x00adef];
+        _inviteButton.backgroundColor = [UIColor colorWithHex:0xc5cdd3];
         [_inviteButton setTitle:@"邀请" forState:UIControlStateNormal];
     } else {
-        _inviteButton.backgroundColor = [UIColor colorWithHex:0x838383];
+        _inviteButton.backgroundColor = [UIColor colorWithHex:0x74c3ff];
         [_inviteButton setTitle:@"已邀请" forState:UIControlStateNormal];
     }
 }

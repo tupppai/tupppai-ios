@@ -21,6 +21,7 @@
 #import "ATOMShowDetailOfHomePage.h"
 #import "ATOMHomePageViewModel.h"
 #import "ATOMShareFunctionView.h"
+#import "ATOMBottomCommonButton.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -122,7 +123,7 @@
     ws.dataSource = [NSMutableArray array];
     ws.currentPage = 1;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(5) forKey:@"size"];
     ATOMShowDetailOfHomePage *showDetailOfHomePage = [ATOMShowDetailOfHomePage new];
@@ -153,7 +154,7 @@
     WS(ws);
     ws.currentPage++;
     NSMutableDictionary *param = [NSMutableDictionary new];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
     ATOMShowDetailOfHomePage *showDetailOfHomePage = [ATOMShowDetailOfHomePage new];

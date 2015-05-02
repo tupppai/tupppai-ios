@@ -9,10 +9,16 @@
 #import "ATOMMyConcernTableViewCell.h"
 #import "ATOMConcernViewModel.h"
 
+@interface ATOMMyConcernTableViewCell ()
+
+@property (nonatomic, strong) UIView *view1;
+@property (nonatomic, strong) UIView *view2;
+
+@end
+
 @implementation ATOMMyConcernTableViewCell
 
-static int padding10 = 10;
-static float commenWidth;
+static CGFloat cellHeight = 70;
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -24,44 +30,60 @@ static float commenWidth;
 }
 
 - (void)createSubView {
-    _userHeaderButton = [[UIButton alloc] initWithFrame:CGRectMake(padding10, 6, 45, 45)];
+    _userHeaderButton = [UIButton new];
     _userHeaderButton.userInteractionEnabled = NO;
-    _userHeaderButton.layer.cornerRadius = 22.5;
+    _userHeaderButton.layer.cornerRadius = kUserHeaderButtonWidth / 2;
     _userHeaderButton.layer.masksToBounds = YES;
+    [_userHeaderButton setBackgroundImage:[UIImage imageNamed:@"head_portrait"] forState:UIControlStateNormal];
     [self addSubview:_userHeaderButton];
     
-    _userSexImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - SEXRADIUS, CGRectGetMaxY(_userHeaderButton.frame) - SEXRADIUS, SEXRADIUS, SEXRADIUS)];
-    [self addSubview:_userSexImageView];
-    
-    _userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, 0, 80, 30)];
-    _userNameLabel.font = [UIFont systemFontOfSize:16.f];
+    _userNameLabel = [UILabel new];
+    _userNameLabel.text = @"atom";
+    _userNameLabel.font = [UIFont systemFontOfSize:kFont14];
     [self addSubview:_userNameLabel];
     
-    _attentionButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - padding10 - 22, 17, 22, 23)];
+    _attentionButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - kPadding15 - 24, 18, 24, 24)];
     _attentionButton.userInteractionEnabled = NO;
-    [_attentionButton setBackgroundImage:[UIImage imageNamed:@"btn_addattention"] forState:UIControlStateSelected];
     [self addSubview:_attentionButton];
     
-    commenWidth = (CGOriginX(_attentionButton.frame) - CGRectGetMaxX(_userHeaderButton.frame) - padding10 * 2 - padding10 * 3) / 3;
-    
-    _fansNumberButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, CGRectGetMaxY(_userNameLabel.frame), commenWidth, 15)];
-    [self setCommonButton:_fansNumberButton WithImage:[UIImage imageNamed:@"fans_num"]];
-    _uploadNumberButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_fansNumberButton.frame), CGRectGetMaxY(_userNameLabel.frame), commenWidth, 15)];
-    [self setCommonButton:_uploadNumberButton WithImage:[UIImage imageNamed:@"psask_num"]];
-    _workNumberButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_uploadNumberButton.frame), CGRectGetMaxY(_userNameLabel.frame), commenWidth, 15)];
-    [self setCommonButton:_workNumberButton WithImage:[UIImage imageNamed:@"pswork_num"]];
-    
+    _fansNumberLabel = [UILabel new];
+    _fansNumberLabel.textColor = [UIColor colorWithHex:0xc5cdd3];
+    _fansNumberLabel.font = [UIFont systemFontOfSize:kFont10];
+    [self addSubview:_fansNumberLabel];
+    _view1 = [self littleCircleView];
+    [self addSubview:_view1];
+    _uploadNumberLabel = [UILabel new];
+    _uploadNumberLabel.textColor = [UIColor colorWithHex:0xc5cdd3];
+    _uploadNumberLabel.font = [UIFont systemFontOfSize:kFont10];
+    [self addSubview:_uploadNumberLabel];
+    _view2 = [self littleCircleView];
+    [self addSubview:_view2];
+    _workNumberLabel = [UILabel new];
+    _workNumberLabel.textColor = [UIColor colorWithHex:0xc5cdd3];
+    _workNumberLabel.font = [UIFont systemFontOfSize:kFont10];
+    [self addSubview:_workNumberLabel];
 }
 
-- (void)setCommonButton:(UIButton *)button WithImage:(UIImage *)image {
-    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    button.contentVerticalAlignment = UIControlContentVerticalAlignmentTop;
-    [button setImage:image forState:UIControlStateNormal];
-    [button setImageEdgeInsets:UIEdgeInsetsMake(2, 0, 2, 0)];
-    [button setTitleEdgeInsets:UIEdgeInsetsMake(2, 5, 3, 0)];
-    button.titleLabel.font = [UIFont systemFontOfSize:10.f];
-    [button setTitleColor:[UIColor colorWithHex:0x7a7a7a] forState:UIControlStateNormal];
-    [self addSubview:button];
+- (UIView *)littleCircleView {
+    UIView *view = [UIView new];
+    view.backgroundColor = [UIColor colorWithHex:0xc5cdd3];
+    view.layer.cornerRadius = 2.5;
+    return view;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    CGSize fansSize = [_fansNumberLabel.text boundingRectWithSize:CGSizeMake(MAXFLOAT, kFont10) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
+    CGSize uploadSize = [_uploadNumberLabel.text boundingRectWithSize:CGSizeMake(MAXFLOAT, kFont10) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
+    CGSize workSize = [_workNumberLabel.text boundingRectWithSize:CGSizeMake(MAXFLOAT, kFont10) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
+    _userHeaderButton.frame = CGRectMake(kPadding15, (cellHeight - kUserHeaderButtonWidth) / 2, kUserHeaderButtonWidth, kUserHeaderButtonWidth);
+    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, CGRectGetMinY(_userHeaderButton.frame), kUserNameLabelWidth, kFont14);
+    CGFloat labelOriginY = CGRectGetMaxY(_userNameLabel.frame) + kPadding5;
+    _fansNumberLabel.frame = CGRectMake(kPadding15 + CGRectGetMaxX(_userHeaderButton.frame), labelOriginY, fansSize.width, kFont10);
+    _view1.frame = CGRectMake(CGRectGetMaxX(_fansNumberLabel.frame) + kPadding5, labelOriginY + 2.5, 5, 5);
+    _uploadNumberLabel.frame = CGRectMake(CGRectGetMaxX(_view1.frame) + kPadding5, labelOriginY, uploadSize.width, kFont10);
+    _view2.frame = CGRectMake(CGRectGetMaxX(_uploadNumberLabel.frame) + kPadding5, labelOriginY + 2.5, 5, 5);
+    _workNumberLabel.frame = CGRectMake(CGRectGetMaxX(_view2.frame) + kPadding5, labelOriginY, workSize.width, kFont10);
 }
 
 - (void)changeAttentionButtonStatus {
@@ -69,12 +91,12 @@ static float commenWidth;
 }
 
 - (void)setViewModel:(ATOMConcernViewModel *)viewModel {
+    _viewModel = viewModel;
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     _userNameLabel.text = viewModel.userName;
-    _userSexImageView.image = [UIImage imageNamed:viewModel.userSex];
-    [_fansNumberButton setTitle:viewModel.totalFansNumber forState:UIControlStateNormal];
-    [_uploadNumberButton setTitle:viewModel.totalAskNumber forState:UIControlStateNormal];
-    [_workNumberButton setTitle:viewModel.totalReplyNumber forState:UIControlStateNormal];
+    _fansNumberLabel.text = [NSString stringWithFormat:@"%@粉丝", viewModel.totalFansNumber];
+    _uploadNumberLabel.text = [NSString stringWithFormat:@"%@求p", viewModel.totalAskNumber];
+    _workNumberLabel.text = [NSString stringWithFormat:@"%@求p", viewModel.totalReplyNumber];
     if (viewModel.concernStatus == 0) {
         [_attentionButton setBackgroundImage:[UIImage imageNamed:@"btn_addattention"] forState:UIControlStateNormal];
     } else if (viewModel.concernStatus == 1) {
@@ -82,6 +104,7 @@ static float commenWidth;
     } else if (viewModel.concernStatus == 2) {
         [_attentionButton setBackgroundImage:[UIImage imageNamed:@"btn_mutualattention"] forState:UIControlStateNormal];
     }
+    [self setNeedsLayout];
 }
 
 

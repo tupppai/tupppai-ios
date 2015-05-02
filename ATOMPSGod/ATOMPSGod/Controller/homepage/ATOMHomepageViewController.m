@@ -22,11 +22,13 @@
 #import "ATOMImageTipLabel.h"
 #import "ATOMShowHomepage.h"
 #import "ATOMShareFunctionView.h"
+#import "ATOMPSView.h"
 #import "AppDelegate.h"
+#import "ATOMBottomCommonButton.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMHomepageViewController() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface ATOMHomepageViewController() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, ATOMPSViewDelegate>
 
 @property (nonatomic, strong) ATOMHomepageCustomTitleView *customTitleView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
@@ -41,6 +43,7 @@
 @property (nonatomic, assign) BOOL canRefreshHotFooter;
 @property (nonatomic, assign) BOOL canRefreshRecentFooter;
 @property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
+@property (nonatomic, strong) ATOMPSView *psView;
 @property (nonatomic, strong) ATOMHomePageViewModel *selectedHomePageViewModel;
 @property (nonatomic, strong) UIView *thineNavigationView;
 
@@ -69,8 +72,17 @@
     if (!_shareFunctionView) {
         _shareFunctionView = [ATOMShareFunctionView new];
         [_shareFunctionView.wxButton addTarget:self action:@selector(clickWXButton:) forControlEvents:UIControlEventTouchUpInside];
+        [_shareFunctionView.wxFriendCircleButton addTarget:self action:@selector(clickWXFriendCircleButton:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _shareFunctionView;
+}
+
+- (ATOMPSView *)psView {
+    if (!_psView) {
+        _psView = [ATOMPSView new];
+        _psView.delegate = self;
+    }
+    return _psView;
 }
 
 #pragma mark - Refresh
@@ -159,7 +171,7 @@
         _currentHotPage = 1;
         [param setObject:@(_currentHotPage) forKey:@"page"];
     }
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
     [param setObject:homeType forKey:@"type"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@"time" forKey:@"sort"];
@@ -201,7 +213,7 @@
         ws.currentHotPage++;
         [param setObject:@(ws.currentHotPage) forKey:@"page"];
     }
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH - kPadding15 * 2) forKey:@"width"];
     [param setObject:homeType forKey:@"type"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@"time" forKey:@"sort"];
@@ -373,6 +385,10 @@
     [self wxFriendShare];
 }
 
+- (void)clickWXFriendCircleButton:(UIButton *)sender {
+    [self wxShare];
+}
+
 - (void)changeNavigationBarAccordingTo:(NSString *)type {
     if ([type isEqualToString:@"hot"]) {
         _thineNavigationView.frame = CGRectMake(CGRectGetMinX(self.navigationItem.titleView.frame) + 20, 40, 50, 4);
@@ -451,15 +467,7 @@
                     opvc.userName = model.userName;
                     [self pushViewController:opvc animated:YES];
                 } else if (CGRectContainsPoint(cell.psButton.frame, p)) {
-                    [UIActionSheet showInView:self.view withTitle:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@[@"下载素材", @"上传作品"] tapBlock:^(UIActionSheet *actionSheet, NSInteger buttonIndex) {
-                        NSString * tapTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
-                        if ([tapTitle isEqualToString:@"下载素材"]) {
-                            [self dealDownloadWork];
-                        } else if ([tapTitle isEqualToString:@"上传作品"]) {
-                            _selectedHomePageViewModel = _dataSourceOfRecentTableView[indexPath.row];
-                            [self dealUploadWorksWithTag:1];
-                        }
-                    }];
+                    [[AppDelegate APP].window addSubview:self.psView];
                 } else if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
                     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
                     ATOMHomePageViewModel *model = _dataSourceOfHotTableView[indexPath.row];
@@ -529,7 +537,6 @@
     if ([_scrollView typeOfCurrentHomepageView] == ATOMHomepageHotType) {
         return _dataSourceOfHotTableView.count;
     } else if ([_scrollView typeOfCurrentHomepageView] == ATOMHomepageRecentType) {
-        NSLog(@"recent count = %d", (int)_dataSourceOfRecentTableView.count);
         return _dataSourceOfRecentTableView.count;
     }
     return 0;
@@ -570,8 +577,15 @@
     }
 }
 
+#pragma mark - ATOMPSViewDelegate
 
-
+- (void)dealImageWithCommand:(NSString *)command {
+    if ([command isEqualToString:@"upload"]) {
+        [self dealUploadWorksWithTag:1];
+    } else if ([command isEqualToString:@"download"]) {
+        [self dealDownloadWork];
+    }
+}
 
 
 

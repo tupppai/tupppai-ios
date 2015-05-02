@@ -13,13 +13,13 @@
 
 @property (nonatomic, strong) UIButton *userHeaderButton;
 @property (nonatomic, strong) UILabel *userNameLabel;
-@property (nonatomic, strong) UIImageView *userSexImageView;
 @property (nonatomic, strong) UILabel *userPublishTimeLabel;
 @property (nonatomic, strong) UIImageView *userUploadImageView;
 @property (nonatomic, strong) UIButton *uploadButton;
 @property (nonatomic, strong) UIButton *deleteButton;
+@property (nonatomic, strong) UIImageView *timeImageView;
 @property (nonatomic, strong) ATOMProceedingViewModel *viewModel;
 
-+ (CGFloat)calculateCellHeight;
++ (CGFloat)calculateCellHeight:(ATOMProceedingViewModel *)viewModel;
 
 @end

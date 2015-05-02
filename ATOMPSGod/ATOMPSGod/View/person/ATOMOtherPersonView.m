@@ -17,8 +17,6 @@
 
 @implementation ATOMOtherPersonView
 
-static int padding3 = 3;
-static int padding6 = 6;
 static float cellWidth;
 static float cellHeight = 150;
 static int collumnNumber = 3;
@@ -35,8 +33,8 @@ static int collumnNumber = 3;
 - (UICollectionViewFlowLayout *)customFlowLayout {
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.itemSize =CGSizeMake(cellWidth, cellHeight);
-    flowLayout.minimumInteritemSpacing = padding6;
-    flowLayout.minimumLineSpacing = padding6;
+    flowLayout.minimumInteritemSpacing = kPadding5;
+    flowLayout.minimumLineSpacing = kPadding5;
     return flowLayout;
 }
 
@@ -44,19 +42,20 @@ static int collumnNumber = 3;
     _uploadHeaderView = [ATOMOtherPersonCollectionHeaderView new];
     _workHeaderView = [ATOMOtherPersonCollectionHeaderView new];
     
-    cellWidth = (SCREEN_WIDTH - (collumnNumber - 1) *padding6) / 3;
+    cellWidth = (SCREEN_WIDTH - (collumnNumber - 1) *kPadding5) / 3;
     
     _otherPersonUploadCollectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:[self customFlowLayout]];
     _otherPersonUploadCollectionView.backgroundColor = [UIColor whiteColor];
     _otherPersonWorkCollectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:[self customFlowLayout]];
     _otherPersonWorkCollectionView.backgroundColor = [UIColor whiteColor];
-    _otherPersonUploadCollectionView.contentInset = UIEdgeInsetsMake(200, 0, 0, 0);
-    _otherPersonWorkCollectionView.contentInset = UIEdgeInsetsMake(200, 0, 0, 0);
+    _otherPersonUploadCollectionView.contentInset = UIEdgeInsetsMake(300, 0, 0, 0);
+    _otherPersonWorkCollectionView.contentInset = UIEdgeInsetsMake(300, 0, 0, 0);
 }
 
 - (void)changeToUploadView {
     if (!_uploadHeaderView.otherPersonUploadButton.selected) {
-        _uploadHeaderView.blueThinView.frame = CGRectMake(CGRectGetMinX(_uploadHeaderView.otherPersonUploadButton.frame), CGRectGetMaxY(_uploadHeaderView.otherPersonUploadButton.frame), CGWidth(_uploadHeaderView.otherPersonUploadButton.frame), padding3);
+        _uploadHeaderView.blueThinView.frame = CGRectMake(0, CGRectGetMaxY(_uploadHeaderView.otherPersonUploadButton.frame), SCREEN_WIDTH / 2, kPadding5);
+        _uploadHeaderView.grayThinView.frame = CGRectMake(SCREEN_WIDTH / 2, CGRectGetMaxY(_uploadHeaderView.otherPersonUploadButton.frame) + 3, SCREEN_WIDTH / 2, kPadding5 / 2);
         _uploadHeaderView.otherPersonUploadButton.selected = YES;
         _uploadHeaderView.otherPersonWorkButton.selected = NO;
         _workHeaderView.otherPersonUploadButton.selected = YES;
@@ -72,7 +71,8 @@ static int collumnNumber = 3;
 
 - (void)changeToWorkView {
     if (!_workHeaderView.otherPersonWorkButton.selected) {
-        _workHeaderView.blueThinView.frame = CGRectMake(CGRectGetMinX(_workHeaderView.otherPersonWorkButton.frame), CGRectGetMaxY(_workHeaderView.otherPersonWorkButton.frame), CGWidth(_workHeaderView.otherPersonWorkButton.frame), padding3);
+        _workHeaderView.blueThinView.frame = CGRectMake(SCREEN_WIDTH / 2, CGRectGetMaxY(_uploadHeaderView.otherPersonWorkButton.frame), SCREEN_WIDTH / 2, kPadding5);
+        _workHeaderView.grayThinView.frame = CGRectMake(0, CGRectGetMaxY(_uploadHeaderView.otherPersonWorkButton.frame) + 3, SCREEN_WIDTH / 2, kPadding5 / 2);
         _workHeaderView.otherPersonUploadButton.selected = NO;
         _workHeaderView.otherPersonWorkButton.selected = YES;
         _uploadHeaderView.otherPersonUploadButton.selected = NO;

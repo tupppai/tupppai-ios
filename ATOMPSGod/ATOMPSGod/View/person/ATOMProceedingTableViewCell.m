@@ -11,9 +11,6 @@
 
 @implementation ATOMProceedingTableViewCell
 
-static int padding10 = 10;
-
-
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
@@ -24,52 +21,64 @@ static int padding10 = 10;
 }
 
 - (void)createSubView {
-    _userHeaderButton = [[UIButton alloc] initWithFrame:CGRectMake(padding10, padding10, 45, 45)];
+    _userHeaderButton = [UIButton new];
     _userHeaderButton.userInteractionEnabled = NO;
-    _userHeaderButton.layer.cornerRadius = 22.5;
+    _userHeaderButton.layer.cornerRadius = kUserHeaderButtonWidth / 2;
     _userHeaderButton.layer.masksToBounds = YES;
     [self addSubview:_userHeaderButton];
     
-    _userSexImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - SEXRADIUS, CGRectGetMaxY(_userHeaderButton.frame) - SEXRADIUS, SEXRADIUS, SEXRADIUS)];
-    _userSexImageView.contentMode = UIViewContentModeScaleAspectFit;
-    [self addSubview:_userSexImageView];
-    
-    _userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, padding10, 120, 30)];
-    _userNameLabel.textColor = [UIColor colorWithHex:0x00aff0];
-    _userNameLabel.font = [UIFont systemFontOfSize:20.f];
+    _userNameLabel = [UILabel new];
+    _userNameLabel.font = [UIFont systemFontOfSize:kFont14];
     [self addSubview:_userNameLabel];
     
-    _userPublishTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, CGRectGetMaxY(_userNameLabel.frame), 120, 15)];
-    _userPublishTimeLabel.textColor = [UIColor colorWithHex:0xadadad];
-    _userPublishTimeLabel.font = [UIFont systemFontOfSize:10.f];
-    [self addSubview:_userPublishTimeLabel];
-    
-    _userUploadImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, CGRectGetMaxY(_userHeaderButton.frame) + padding10, 112.5, 112.5)];
-    [self addSubview:_userUploadImageView];
-    
-    _uploadButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - padding10 - 24, 17, 24 , 24)];
-    [_uploadButton setBackgroundImage:[UIImage imageNamed:@"btn_upload"] forState:UIControlStateNormal];
+    _uploadButton = [UIButton new];
     _uploadButton.userInteractionEnabled = NO;
+    [_uploadButton setBackgroundImage:[UIImage imageNamed:@"icon_upload"] forState:UIControlStateNormal];
     [self addSubview:_uploadButton];
     
-    _deleteButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - padding10 - 30, CGRectGetMaxY(_userUploadImageView.frame) - 20, 30, 20)];
-    [_deleteButton setTitle:@"删除" forState:UIControlStateNormal];
-    _deleteButton.titleLabel.font = [UIFont systemFontOfSize:13.f];
-    [_deleteButton setTitleColor:[UIColor colorWithHex:0x797979] forState:UIControlStateNormal];
+    _userUploadImageView = [UIImageView new];
+    [self addSubview:_userUploadImageView];
+    
+    _timeImageView = [UIImageView new];
+    _timeImageView.image = [UIImage imageNamed:@"icon_clock"];
+    [self addSubview:_timeImageView];
+    
+    _userPublishTimeLabel = [UILabel new];
+    _userPublishTimeLabel.font = [UIFont systemFontOfSize:kFont14];
+    [self addSubview:_userPublishTimeLabel];
+    
+    _deleteButton = [UIButton new];
+    _deleteButton.userInteractionEnabled = NO;
+    [_deleteButton setBackgroundImage:[UIImage imageNamed:@"icon_delete"] forState:UIControlStateNormal];
     [self addSubview:_deleteButton];
 }
 
-+ (CGFloat)calculateCellHeight {
-    return 187.5;
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    _userHeaderButton.frame = CGRectMake(kPadding15, (60 - kUserHeaderButtonWidth) / 2, kUserHeaderButtonWidth, kUserHeaderButtonWidth);
+    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, (60 - kFont14) / 2, kUserNameLabelWidth, kFont14);
+    _uploadButton.frame = CGRectMake(SCREEN_WIDTH - kPadding15 - 27, 16.5, 27, 27);
+    CGSize imageSize = CGSizeZero;
+    if (_viewModel) {
+        imageSize = CGSizeMake(_viewModel.width, _viewModel.height);
+    }
+    _userUploadImageView.frame = CGRectMake((SCREEN_WIDTH - imageSize.width) / 2, 60, imageSize.width, imageSize.height);
+    _timeImageView.frame = CGRectMake(kPadding15, (50 - 14) / 2 + CGRectGetMaxY(_userUploadImageView.frame), 14, 14);
+    _userPublishTimeLabel.frame = CGRectMake(CGRectGetMaxX(_timeImageView.frame) + kPadding15, (50 - kFont14) / 2 + CGRectGetMaxY(_userUploadImageView.frame), kUserNameLabelWidth, kFont14);
+    _deleteButton.frame = CGRectMake(SCREEN_WIDTH - kPadding15 - 27, (50 - 27) / 2 + CGRectGetMaxY(_userUploadImageView.frame), 27, 27);
+}
+
++ (CGFloat)calculateCellHeight:(ATOMProceedingViewModel *)viewModel {
+    return 60 + viewModel.height + 50;
 }
 
 - (void)setViewModel:(ATOMProceedingViewModel *)viewModel {
     _viewModel = viewModel;
     _userNameLabel.text = viewModel.userName;
-    _userSexImageView.image = [UIImage imageNamed:viewModel.userSex];
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     [_userUploadImageView setImageWithURL:[NSURL URLWithString:viewModel.imageURL]];
     _userPublishTimeLabel.text = viewModel.publishTime;
+    [self setNeedsLayout];
 }
 
 

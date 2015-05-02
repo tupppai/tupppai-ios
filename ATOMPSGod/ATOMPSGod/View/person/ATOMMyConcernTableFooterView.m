@@ -10,23 +10,21 @@
 
 @implementation ATOMMyConcernTableFooterView
 
-static int padding10 = 10;
-
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.backgroundColor = [UIColor colorWithHex:0xededed];
-        self.frame = CGRectMake(0, 0, SCREEN_WIDTH, 28.5);
+        self.backgroundColor = [UIColor whiteColor];
+        self.frame = CGRectMake(0, 0, SCREEN_WIDTH, 50);
         [self createSubView];
     }
     return self;
 }
 
 - (void)createSubView {
-    _moreRecommend = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - padding10 - 80, 0, 80, 28.5)];
-    _moreRecommend.titleLabel.font = [UIFont systemFontOfSize:16.f];
-    [_moreRecommend setTitle:@"更多推荐>" forState:UIControlStateNormal];
-    [_moreRecommend setTitleColor:[UIColor colorWithHex:0x00aeed] forState:UIControlStateNormal];
+    _moreRecommend = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH / 2 - 50, 0, 100, 50)];
+    _moreRecommend.titleLabel.font = [UIFont systemFontOfSize:kFont14];
+    [_moreRecommend setTitle:@"更多推荐" forState:UIControlStateNormal];
+    [_moreRecommend setTitleColor:[UIColor colorWithHex:0x74c3ff] forState:UIControlStateNormal];
     [self addSubview:_moreRecommend];
 }
 

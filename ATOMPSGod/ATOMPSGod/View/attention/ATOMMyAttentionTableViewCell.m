@@ -101,7 +101,7 @@ static int padding = 10;
     _userPublishTimeLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding, CGRectGetMaxY(_userNameLabel.frame), 80, 15);
     _userSexImageView.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - SEXRADIUS, CGRectGetMaxY(_userHeaderButton.frame) - SEXRADIUS, SEXRADIUS, SEXRADIUS);
     
-    CGSize workImageSize;
+    CGSize workImageSize = CGSizeZero;
     if (_viewModel) {
         workImageSize = [[self class] calculateHomePageHotImageViewSizeWith:_viewModel];
     }

@@ -24,13 +24,13 @@
 
 @implementation ATOMCommentDetailView
 
-static int padding = 10;
 static CGFloat faceViewHeight = 200;
 static CGFloat pageControlWidth = 150;
 
 - (instancetype)init {
     self = [super init];
     if (self) {
+        _textViewPlaceholder = @"发表你的神回复...";
         self.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT);
         self.scrollEnabled = NO;
         self.contentSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT);
@@ -63,22 +63,28 @@ static CGFloat pageControlWidth = 150;
     _commentDetailTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - 46)];
     _commentDetailTableView.tableFooterView = [UIView new];
     _commentDetailTableView.rowHeight = 70;
+    _commentDetailTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self addSubview:_commentDetailTableView];
     
     _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, CGHeight(self.frame) - 46, SCREEN_WIDTH, 46)];
     _bottomView.backgroundColor = [UIColor colorWithHex:0xefefef];
     [self addSubview:_bottomView];
     
-    _sendCommentButton = [[UIButton alloc] initWithFrame:CGRectMake(CGWidth(self.frame) - padding - 32, 7, 32, 32)];
-    [_sendCommentButton setBackgroundImage:[UIImage imageNamed:@"btn_check"] forState:UIControlStateNormal];
+    _sendCommentButton = [[UIButton alloc] initWithFrame:CGRectMake(CGWidth(self.frame) - kPadding15 - 32, 7, 32, 32)];
+//    _sendCommentButton.backgroundColor = [UIColor orangeColor];
+    _sendCommentButton.titleLabel.font = [UIFont systemFontOfSize:kFont14];
+    [_sendCommentButton setTitle:@"发送" forState:UIControlStateNormal];
+    [_sendCommentButton setTitleColor:[UIColor colorWithHex:0xcbcbcb] forState:UIControlStateNormal];
     [_bottomView addSubview:_sendCommentButton];
     
-    _faceButton = [[UIButton alloc] initWithFrame:CGRectMake(9.5, 9.5, 27, 27)];
-    [_faceButton setBackgroundImage:[UIImage imageNamed:@"smile"] forState:UIControlStateNormal];
+    _faceButton = [[UIButton alloc] initWithFrame:CGRectMake(kPadding15, 9.5, 21, 27)];
+    [_faceButton setBackgroundImage:[UIImage imageNamed:@"comment_write"] forState:UIControlStateNormal];
     [_faceButton addTarget:self action:@selector(showFaceView) forControlEvents:UIControlEventTouchUpInside];
     [_bottomView addSubview:_faceButton];
     
-    _sendCommentView = [[UITextView alloc] initWithFrame:CGRectMake(46, 8, CGRectGetMinX(_sendCommentButton.frame) - padding - 46, 30)];
+    _sendCommentView = [[UITextView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_faceButton.frame) + 26, 8, CGRectGetMinX(_sendCommentButton.frame) - 26 * 2 - CGRectGetMaxX(_faceButton.frame), 30)];
+    _sendCommentView.text = _textViewPlaceholder;
+    _sendCommentView.textColor = [UIColor colorWithHex:0xcbcbcb];
     _sendCommentView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     [_bottomView addSubview:_sendCommentView];
     
@@ -107,7 +113,7 @@ static CGFloat pageControlWidth = 150;
 
 - (void)setupFaceView {
     for (int i = 0; i < 9; i++) {
-        ATOMFaceView *fView = [[ATOMFaceView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH * i, padding * 2, SCREEN_WIDTH, faceViewHeight)];
+        ATOMFaceView *fView = [[ATOMFaceView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH * i, kPadding10 * 2, SCREEN_WIDTH, faceViewHeight)];
         [fView loadFaceView:i Size:CGSizeMake(30, 40) Faces:_facesArray];
         fView.delegate = self;
         [_faceView addSubview:fView];
@@ -189,7 +195,7 @@ static CGFloat pageControlWidth = 150;
 - (void)restoreBottomView {
     _lastContentSizeHeight = 30;
     _bottomView.frame = CGRectMake(0, CGHeight(self.frame) - 46, SCREEN_WIDTH, 46);
-    _sendCommentView.frame = CGRectMake(46, 8, CGRectGetMinX(_sendCommentButton.frame) - padding - 46, 30);
+    _sendCommentView.frame = CGRectMake(CGRectGetMaxX(_faceButton.frame) + 26, 8, CGRectGetMinX(_sendCommentButton.frame) - 26 * 2 - CGRectGetMaxX(_faceButton.frame), 30);
 }
 
 - (void)showFaceView {

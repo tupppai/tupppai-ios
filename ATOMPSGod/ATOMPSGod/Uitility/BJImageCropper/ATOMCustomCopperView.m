@@ -57,20 +57,38 @@
         
         UIBezierPath *path5 = [UIBezierPath bezierPath];
         path5.lineWidth = 3;
-        [[UIColor colorWithHex:0x00aeef] setStroke];
+        [[UIColor colorWithHex:0x74c3ff] setStroke];
         [path5 moveToPoint:CGPointMake(0, centerY)];
         [path5 addArcWithCenter:center radius:radius - 1.5 startAngle:M_PI endAngle:-M_PI clockwise:NO];
         [path5 stroke];
     } else {
         UIBezierPath *path = [UIBezierPath bezierPath];
-        path.lineWidth = 3;
-        [[UIColor colorWithHex:0x00aeef] setStroke];
-        [path moveToPoint:CGPointZero];
+        path.lineWidth = 6;
+        [[UIColor colorWithHex:0x74c3ff] setStroke];
+        [path moveToPoint:CGPointMake(0, 0)];
         [path addLineToPoint:CGPointMake(CGWidth(rect), 0)];
         [path addLineToPoint:CGPointMake(CGWidth(rect), CGHeight(rect))];
         [path addLineToPoint:CGPointMake(0, CGHeight(rect))];
         [path closePath];
         [path stroke];
+        
+        CGFloat littleWidth = CGWidth(rect) / 3;
+        CGFloat littleHeight = CGHeight(rect) / 3;
+        UIBezierPath *linePath = [UIBezierPath bezierPath];
+        linePath.lineWidth = 1;
+        [[UIColor colorWithHex:0x74c3ff] setStroke];
+        [linePath moveToPoint:CGPointMake(0, littleHeight)];
+        [linePath addLineToPoint:CGPointMake(CGWidth(rect), littleHeight)];
+        [linePath moveToPoint:CGPointMake(0, littleHeight * 2)];
+        [linePath addLineToPoint:CGPointMake(CGWidth(rect), littleHeight * 2)];
+        [linePath moveToPoint:CGPointMake(littleWidth, 0)];
+        [linePath addLineToPoint:CGPointMake(littleWidth, CGHeight(rect))];
+        [linePath moveToPoint:CGPointMake(littleWidth * 2, 0)];
+        [linePath addLineToPoint:CGPointMake(littleWidth * 2, CGHeight(rect))];
+        [linePath stroke];
+        
+        
+        
     }
 }
 

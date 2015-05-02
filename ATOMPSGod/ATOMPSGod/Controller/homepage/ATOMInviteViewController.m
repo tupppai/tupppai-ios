@@ -14,6 +14,7 @@
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMHomePageViewModel.h"
 #import "ATOMHomepageViewController.h"
+#import "ATOMMyConcernTableHeaderView.h"
 
 @interface ATOMInviteViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -40,8 +41,9 @@
 }
 
 - (void)createUI {
-    self.title = @"邀请页面";
+    self.title = @"邀请";
     UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
+    rightButtonItem.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightButtonItem;
     _inviteView = [ATOMInviteView new];
     self.view = _inviteView;
@@ -91,21 +93,19 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 28.5;
+    return kCommentTableViewHeaderHeight;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 57;
+    return 70;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    ATOMInviteTableHeaderView *headerView = [ATOMInviteTableHeaderView new];
+    ATOMMyConcernTableHeaderView *headerView = [ATOMMyConcernTableHeaderView new];
     if (section == 0) {
-        headerView.littleVerticalView.backgroundColor = [UIColor colorWithHex:0x00adef];
-        headerView.titleLabel.text = @"邀请大神";
+        headerView.titleLabel.text = @"推荐大神";
     } else if (section == 1) {
-        headerView.littleVerticalView.backgroundColor = [UIColor colorWithHex:0x00adef];
-        headerView.titleLabel.text = @"邀请好友";
+        headerView.titleLabel.text = @"推荐好友";
     }
     return headerView;
 }

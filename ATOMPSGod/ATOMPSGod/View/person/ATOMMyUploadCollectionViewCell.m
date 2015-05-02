@@ -7,18 +7,18 @@
 //
 
 #import "ATOMMyUploadCollectionViewCell.h"
+#import "ATOMCollectionViewLabel.h"
 
 @implementation ATOMMyUploadCollectionViewCell
 
 static float cellWidth;
 static float cellHeight = 150;
-static int padding6 = 6;
 static int collumnNumber = 3;
 
 - (UIImageView *)workImageView {
     if (!_workImageView) {
-        cellWidth = (SCREEN_WIDTH - (collumnNumber + 1) *padding6) / 3;
-        _workImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cellWidth, cellHeight)];
+        cellWidth = (SCREEN_WIDTH - (collumnNumber + 1) *kPadding5) / 3;
+        _workImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cellWidth, cellHeight - 25)];
         _workImageView.layer.borderWidth = 1;
         _workImageView.layer.borderColor = [[UIColor colorWithHex:0xededed] CGColor];
         _workImageView.backgroundColor = [UIColor colorWithHex:0xf9ffff];
@@ -28,14 +28,11 @@ static int collumnNumber = 3;
     return _workImageView;
 }
 
-- (UILabel *)psLabel {
+- (ATOMCollectionViewLabel *)psLabel {
     if (!_psLabel) {
-        _psLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 25, 15)];
-        _psLabel.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
-        _psLabel.font = [UIFont systemFontOfSize:12.f];
-        _psLabel.textAlignment = NSTextAlignmentCenter;
-        _psLabel.textColor = [UIColor whiteColor];
-        [self.workImageView addSubview:_psLabel];
+        cellWidth = (SCREEN_WIDTH - (collumnNumber + 1) *kPadding5) / 3;
+        _psLabel = [[ATOMCollectionViewLabel alloc] initWithFrame:CGRectMake(0, cellHeight - 25, cellWidth, 25)];
+        [self addSubview:_psLabel];
     }
     return _psLabel;
 }
@@ -49,7 +46,12 @@ static int collumnNumber = 3;
 
 - (void)setTotalPSNumber:(NSString *)totalPSNumber {
     _totalPSNumber = totalPSNumber;
-    self.psLabel.text = totalPSNumber;
+    self.psLabel.number = totalPSNumber;
+}
+
+- (void)setColorType:(NSInteger)colorType {
+    _colorType = colorType;
+    self.psLabel.colorType = colorType;
 }
 
 @end

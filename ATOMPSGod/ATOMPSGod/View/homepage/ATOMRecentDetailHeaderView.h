@@ -8,18 +8,17 @@
 
 #import "ATOMBaseView.h"
 #import "ATOMHomePageViewModel.h"
+@class ATOMBottomCommonButton;
 
 @interface ATOMRecentDetailHeaderView : ATOMBaseView
 
 @property (nonatomic, strong) UIButton *userHeaderButton;
 @property (nonatomic, strong) UILabel *userNameLabel;
-@property (nonatomic, strong) UILabel *userPublishTimeLabel;
-@property (nonatomic, strong) UIImageView *userSexImageView;
 @property (nonatomic, strong) UIButton *psButton;
 @property (nonatomic, strong) UIImageView *userWorkImageView;
-@property (nonatomic, strong) UIButton *praiseButton;
-@property (nonatomic, strong) UIButton *shareButton;
-@property (nonatomic, strong) UIButton *commentButton;
+@property (nonatomic, strong) ATOMBottomCommonButton *praiseButton;
+@property (nonatomic, strong) ATOMBottomCommonButton *shareButton;
+@property (nonatomic, strong) ATOMBottomCommonButton *commentButton;
 @property (nonatomic, strong) UIButton *moreShareButton;
 @property (nonatomic, strong) UIView *topView;
 @property (nonatomic, strong) UIImage *userWorkImage;

@@ -166,16 +166,16 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 28.5;
+    return kCommentTableViewHeaderHeight;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 57;
+    return 70;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     if (section == 0) {
-        return 28.5;
+        return 50;
     } else if (section == 1) {
         return 0;
     }
@@ -195,10 +195,8 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     ATOMMyConcernTableHeaderView *headerView = [ATOMMyConcernTableHeaderView new];
     if (section == 0) {
-        headerView.littleVerticalView.backgroundColor = [UIColor colorWithHex:0xf80630];
         headerView.titleLabel.text = @"推荐关注";
     } else if (section == 1) {
-        headerView.littleVerticalView.backgroundColor = [UIColor colorWithHex:0x00adef];
         headerView.titleLabel.text = @"我的关注";
     }
     return headerView;

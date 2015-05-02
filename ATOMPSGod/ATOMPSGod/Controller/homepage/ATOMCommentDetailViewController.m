@@ -15,6 +15,7 @@
 #import "ATOMShowDetailOfComment.h"
 #import "ATOMCommentDetailViewModel.h"
 #import "ATOMComment.h"
+#import "ATOMPraiseButton.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -197,7 +198,6 @@
             opvc.userName = model.nickname;
             [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.praiseButton.frame, p)) {
-            p = [gesture locationInView:cell.praiseButton];
             if (!model.isPraise) {
                 cell.praiseButton.selected = !cell.praiseButton.selected;
                 [model increasePraiseNumber];
@@ -267,17 +267,14 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 28.5;
+    return kCommentTableViewHeaderHeight;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     ATOMMyConcernTableHeaderView *headerView = [ATOMMyConcernTableHeaderView new];
-    headerView.backgroundColor = [UIColor whiteColor];
     if (section == 0) {
-        headerView.littleVerticalView.backgroundColor = [UIColor colorWithHex:0xf80630];
         headerView.titleLabel.text = @"最热评论";
     } else if (section == 1) {
-        headerView.littleVerticalView.backgroundColor = [UIColor colorWithHex:0x00adef];
         headerView.titleLabel.text = @"最新评论";
     }
     return headerView;
@@ -301,10 +298,14 @@
     if (textView.text.length == 0) {
         if (_atModel) {
             textView.text = _commentDetailView.textViewPlaceholder;
+        } else {
+            textView.text = @"发表你的神回复...";
         }
     } else {
         if (_atModel && [str hasPrefix:[NSString stringWithFormat:@"//@%@:", _atModel.nickname]]) {
             textView.text = [str substringFromIndex:(_atModel.nickname.length + 4)];
+        } else if (!_atModel && [str hasPrefix:_commentDetailView.textViewPlaceholder]) {
+            textView.text = [str substringFromIndex:10];
         }
     }
 }

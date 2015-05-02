@@ -36,6 +36,7 @@ static int padding10 = 10;
         [self createNicknameSubView];
         [self createSexSubView];
         [self createAreaSubView];
+        [self createProtocolSubView];
         [self createSexPickerView];
         [self hideSexPickerView];
     }
@@ -44,20 +45,22 @@ static int padding10 = 10;
 
 - (void)createSubView {
     WS(ws);
-    _topBackGroundImageView = [UIImageView new];
-    _topBackGroundImageView.image = [UIImage imageNamed:@"header_bg"];
-    [self addSubview:_topBackGroundImageView];
+    _topView = [UIView new];
+    _topView.backgroundColor = [UIColor whiteColor];
+    [self addSubview:_topView];
     
     _userHeaderButton = [UIButton new];
     [_userHeaderButton setBackgroundImage:[UIImage imageNamed:@"head_portrait"] forState:UIControlStateNormal];
-    _userHeaderButton.layer.cornerRadius = 36.25;
+    _userHeaderButton.layer.cornerRadius = kUserBigHeaderButtonWidth / 2;
     _userHeaderButton.layer.masksToBounds = YES;
-    [self addSubview:_userHeaderButton];
+    [_topView addSubview:_userHeaderButton];
     
     _changeHeaderLabel = [UILabel new];
-    _changeHeaderLabel.textColor = [UIColor colorWithHex:0x606060];
+    _changeHeaderLabel.textColor = [UIColor colorWithHex:0x7fc7ff];
     _changeHeaderLabel.text = @"修改头像";
-    [self addSubview:_changeHeaderLabel];
+    _changeHeaderLabel.font = [UIFont systemFontOfSize:kFont14];
+    _changeHeaderLabel.textAlignment = NSTextAlignmentCenter;
+    [_topView addSubview:_changeHeaderLabel];
     
     _nicknameView = [UIView new];
     [self setCommonView:_nicknameView];
@@ -71,51 +74,51 @@ static int padding10 = 10;
     _protocolView = [UIView new];
     [self setCommonView:_protocolView];
     
-    [_topBackGroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_topView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
         make.top.equalTo(ws.mas_top);
         make.width.equalTo(ws.mas_width);
-        make.height.equalTo(@156);
+        make.height.equalTo(@150);
     }];
     
     [_userHeaderButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
-        make.centerY.equalTo(ws.topBackGroundImageView.mas_bottom);
-        make.width.equalTo(@72);
-        make.height.equalTo(@72);
+        make.top.equalTo(ws.topView.mas_top).with.offset(kPadding30);
+        make.width.equalTo(@74);
+        make.height.equalTo(@74);
     }];
     
     [_changeHeaderLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
-        make.top.equalTo(ws.userHeaderButton.mas_bottom);
-        make.bottom.equalTo(ws.nicknameView.mas_top);
-        make.width.equalTo(@72);
+        make.top.equalTo(ws.userHeaderButton.mas_bottom).with.offset(kPadding10);
+        make.width.equalTo(@74);
+        make.height.equalTo(@14);
     }];
     
     [_nicknameView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(ws.mas_centerX);
-        make.top.equalTo(ws.topBackGroundImageView.mas_bottom).with.offset(74);
-        make.width.equalTo(ws.mas_width);
+        make.top.equalTo(ws.topView.mas_bottom);
+        make.left.equalTo(ws.mas_left).with.offset(kPadding30);
+        make.right.equalTo(ws.mas_right).with.offset(-kPadding30);
         make.height.equalTo(@60);
     }];
     
     [_sexView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
         make.top.equalTo(ws.nicknameView.mas_bottom);
-        make.width.equalTo(ws.mas_width);
+        make.width.equalTo(ws.nicknameView);
         make.height.equalTo(ws.nicknameView);
     }];
     
     [_areaView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
         make.top.equalTo(ws.sexView.mas_bottom);
-        make.width.equalTo(ws.mas_width);
+        make.width.equalTo(ws.nicknameView);
         make.height.equalTo(ws.nicknameView);
     }];
     
     [_protocolView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
-        make.width.equalTo(ws.mas_width);
+        make.width.equalTo(ws.nicknameView);
         make.top.equalTo(ws.areaView.mas_bottom);
         make.bottom.equalTo(ws.mas_bottom);
     }];
@@ -130,7 +133,7 @@ static int padding10 = 10;
     [_nicknameView addSubview:_nicknameLabel];
     
     [_nicknameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(ws.nicknameView.mas_left).with.offset(30);
+        make.left.equalTo(ws.nicknameView.mas_left);
         make.centerY.equalTo(ws.nicknameView.mas_centerY);
         make.width.equalTo(@50);
         make.height.equalTo(ws.nicknameView.mas_height);
@@ -158,7 +161,7 @@ static int padding10 = 10;
     [_sexView addSubview:_sexLabel];
     
     [_sexLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(ws.sexView.mas_left).with.offset(30);
+        make.left.equalTo(ws.sexView.mas_left);
         make.centerY.equalTo(ws.sexView.mas_centerY);
         make.width.equalTo(@50);
         make.height.equalTo(ws.sexView.mas_height);
@@ -185,10 +188,28 @@ static int padding10 = 10;
     [_areaView addSubview:_areaLabel];
     
     [_areaLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(ws.areaView.mas_left).with.offset(30);
+        make.left.equalTo(ws.areaView.mas_left);
         make.centerY.equalTo(ws.areaView.mas_centerY);
         make.width.equalTo(@70);
         make.height.equalTo(ws.areaView.mas_height);
+    }];
+}
+
+- (void)createProtocolSubView {
+    NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont14], NSFontAttributeName, [UIColor colorWithHex:0x74c3ff], NSForegroundColorAttributeName, nil];
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:@"点击下一步表示同意用户协议" attributes:attributeDict];
+    [str addAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont14], NSFontAttributeName, [UIColor colorWithHex:0xacbbc1], NSForegroundColorAttributeName, nil] range:NSMakeRange(0, 9)];
+    WS(ws);
+    _protocolLabel = [UILabel new];
+    _protocolLabel.attributedText = str;
+    _protocolLabel.textAlignment = NSTextAlignmentCenter;
+    [_protocolView addSubview:_protocolLabel];
+    
+    [_protocolLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(ws.protocolView.mas_bottom).with.offset(kPadding30);
+        make.centerX.equalTo(ws.protocolView.mas_centerX);
+        make.height.equalTo(@14);
+        make.width.equalTo(ws.protocolView);
     }];
 }
 
@@ -243,7 +264,7 @@ static int padding10 = 10;
 }
 
 - (void)setCommonView:(UIView *)view {
-    view.backgroundColor = [UIColor colorWithHex:0xededed];
+    view.backgroundColor = [UIColor whiteColor];
     [self addSubview:view];
     UIView *topView = [UIView new];
     topView.backgroundColor = [UIColor colorWithWhite:0x000000 alpha:0.2];
@@ -252,16 +273,6 @@ static int padding10 = 10;
         make.left.equalTo(view.mas_left);
         make.right.equalTo(view.mas_right);
         make.top.equalTo(view.mas_top);
-        make.height.equalTo(@0.5);
-    }];
-    
-    UIView *bottomView = [UIView new];
-    bottomView.backgroundColor = [UIColor colorWithWhite:0x000000 alpha:0.2];
-    [view addSubview:bottomView];
-    [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(view.mas_left);
-        make.right.equalTo(view.mas_right);
-        make.bottom.equalTo(view.mas_bottom);
         make.height.equalTo(@0.5);
     }];
 }

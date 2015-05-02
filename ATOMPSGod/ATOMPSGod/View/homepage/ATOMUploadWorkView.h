@@ -7,13 +7,16 @@
 //
 
 #import "ATOMBaseView.h"
-@class ATOMImageCropper;
+@class BJImageCropper;
 
 @interface ATOMUploadWorkView : ATOMBaseView
 
-@property (nonatomic, strong) ATOMImageCropper *imageCropperView;
+@property (nonatomic, strong) BJImageCropper *imageCropperView;
+@property (nonatomic, strong) UIView *topView;
 @property (nonatomic, strong) UIView *centerView;
-@property (nonatomic, strong) UILabel *bottomLabel;
+@property (nonatomic, strong) UIView *bottomView;
+@property (nonatomic, strong) UIButton *cancelButton;
+@property (nonatomic, strong) UIButton *confirmButton;
 
 @property (nonatomic, strong) UIButton *ThreeFourButton;
 @property (nonatomic, strong) UIButton *OneOneButton;

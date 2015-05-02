@@ -41,7 +41,6 @@
 		5C436A841AB03BF100D14608 /* ATOMCommentMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C436A831AB03BF100D14608 /* ATOMCommentMessageViewController.m */; };
 		5C436A871AB03E5900D14608 /* ATOMCommentMessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C436A861AB03E5900D14608 /* ATOMCommentMessageTableViewCell.m */; };
 		5C436A8A1AB03FA800D14608 /* ATOMCommentMessageViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C436A891AB03FA800D14608 /* ATOMCommentMessageViewModel.m */; };
-		5C436A8D1AB0593E00D14608 /* ATOMNoDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C436A8C1AB0593E00D14608 /* ATOMNoDataView.m */; };
 		5C436A901AB0723700D14608 /* ATOMInviteMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C436A8F1AB0723700D14608 /* ATOMInviteMessageViewController.m */; };
 		5C436A931AB074EF00D14608 /* ATOMInviteMessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C436A921AB074EF00D14608 /* ATOMInviteMessageTableViewCell.m */; };
 		5C436A961AB0799900D14608 /* ATOMConcernMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C436A951AB0799900D14608 /* ATOMConcernMessageViewController.m */; };
@@ -104,6 +103,10 @@
 		5C520BAB1ADBA1B000C7C2A5 /* UIProgressView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C520B981ADBA1B000C7C2A5 /* UIProgressView+AFNetworking.m */; };
 		5C520BAC1ADBA1B000C7C2A5 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C520B9A1ADBA1B000C7C2A5 /* UIRefreshControl+AFNetworking.m */; };
 		5C520BAD1ADBA1B000C7C2A5 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C520B9C1ADBA1B000C7C2A5 /* UIWebView+AFNetworking.m */; };
+		5C535CB51AF1FC8A00BF30D1 /* ATOMBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C535CB01AF1FC8A00BF30D1 /* ATOMBaseView.m */; };
+		5C535CB61AF1FC8A00BF30D1 /* ATOMNoDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C535CB21AF1FC8A00BF30D1 /* ATOMNoDataView.m */; };
+		5C535CB71AF1FC8A00BF30D1 /* ATOMShareFunctionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C535CB41AF1FC8A00BF30D1 /* ATOMShareFunctionView.m */; };
+		5C535CBA1AF1FCEC00BF30D1 /* ATOMPSView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C535CB91AF1FCEC00BF30D1 /* ATOMPSView.m */; };
 		5C54DF161AB9529200BDE34D /* ATOMHomepageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C54DF151AB9529200BDE34D /* ATOMHomepageScrollView.m */; };
 		5C54DF1E1AB9738E00BDE34D /* ATOMBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C54DF191AB9738E00BDE34D /* ATOMBaseViewController.m */; };
 		5C54DF1F1AB9738E00BDE34D /* ATOMCutstomNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C54DF1B1AB9738E00BDE34D /* ATOMCutstomNavigationController.m */; };
@@ -118,7 +121,6 @@
 		5C559B3A1AB138C3000C5B50 /* ATOMInviteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C559B391AB138C3000C5B50 /* ATOMInviteView.m */; };
 		5C559B3D1AB1394C000C5B50 /* ATOMInviteTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C559B3C1AB1394C000C5B50 /* ATOMInviteTableHeaderView.m */; };
 		5C559B401AB13B8F000C5B50 /* ATOMInviteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C559B3F1AB13B8F000C5B50 /* ATOMInviteTableViewCell.m */; };
-		5C559B461AB13D52000C5B50 /* ATOMShareFunctionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C559B451AB13D52000C5B50 /* ATOMShareFunctionView.m */; };
 		5C559B4C1AB168F7000C5B50 /* ATOMRecentDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C559B4B1AB168F7000C5B50 /* ATOMRecentDetailViewController.m */; };
 		5C561A061AB7BF6F0052D4D5 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A011AB7BF6F0052D4D5 /* SVIndefiniteAnimatedView.m */; };
 		5C561A071AB7BF6F0052D4D5 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5C561A031AB7BF6F0052D4D5 /* SVProgressHUD.bundle */; };
@@ -192,6 +194,8 @@
 		5C67FB2A1AB2B634004EFF05 /* ATOMHeaderImageCropperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C67FB291AB2B634004EFF05 /* ATOMHeaderImageCropperView.m */; };
 		5C67FB2D1AB2C509004EFF05 /* ATOMCustomCopperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C67FB2C1AB2C509004EFF05 /* ATOMCustomCopperView.m */; };
 		5C6CE6B91ADBE8A10035F522 /* EmojisList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5C6CE6B81ADBE8A10035F522 /* EmojisList.plist */; };
+		5C6CEF2A1AF18BA800F06213 /* ATOMConstant.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C6CEF291AF18BA800F06213 /* ATOMConstant.m */; };
+		5C6CEF2D1AF1971400F06213 /* ATOMPraiseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C6CEF2C1AF1971300F06213 /* ATOMPraiseButton.m */; };
 		5C6E53211AE4CACE00D64114 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6E53201AE4CACE00D64114 /* Parse.framework */; };
 		5C6E53231AE4CB0100D64114 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6E53221AE4CB0100D64114 /* StoreKit.framework */; };
 		5C6E53251AE4CB1D00D64114 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6E53241AE4CB1D00D64114 /* MobileCoreServices.framework */; };
@@ -214,6 +218,8 @@
 		5C78612F1AAF4DD200E87C77 /* 8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C7861221AAF4DD200E87C77 /* 8.jpg */; };
 		5C7861301AAF4DD200E87C77 /* 9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C7861231AAF4DD200E87C77 /* 9.jpg */; };
 		5C7861311AAF4DD200E87C77 /* bg_main@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C7861241AAF4DD200E87C77 /* bg_main@2x.png */; };
+		5C8084F91AF2603D0062421C /* ATOMBottomCommonButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8084F81AF2603D0062421C /* ATOMBottomCommonButton.m */; };
+		5C8084FC1AF27BD30062421C /* ATOMTotalPSView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8084FB1AF27BD30062421C /* ATOMTotalPSView.m */; };
 		5C819C921AA71C1D00CDDB5B /* ATOMCommentDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C819C911AA71C1D00CDDB5B /* ATOMCommentDetailViewController.m */; };
 		5C819C951AA71FCD00CDDB5B /* ATOMCommentDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C819C941AA71FCD00CDDB5B /* ATOMCommentDetailTableViewCell.m */; };
 		5C83A8861AC66F910071A024 /* POPAnimatableProperty.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5C83A8531AC66F910071A024 /* POPAnimatableProperty.mm */; };
@@ -239,6 +245,7 @@
 		5C8406321ABA762900068F35 /* ATOMShowHomepage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8406311ABA762900068F35 /* ATOMShowHomepage.m */; };
 		5C8406381ABABEC500068F35 /* ATOMImageTipLabelViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8406371ABABEC500068F35 /* ATOMImageTipLabelViewModel.m */; };
 		5C84063B1ABADA8B00068F35 /* ATOMHomeImageDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C84063A1ABADA8B00068F35 /* ATOMHomeImageDAO.m */; };
+		5C8502351AF39B7500724AC6 /* ATOMCollectionViewLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8502341AF39B7500724AC6 /* ATOMCollectionViewLabel.m */; };
 		5C8A2A181AAF1CE20064EB1C /* ATOMMyConcernViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8A2A171AAF1CE20064EB1C /* ATOMMyConcernViewController.m */; };
 		5C8A2A1B1AAF21820064EB1C /* ATOMMyConcernTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8A2A1A1AAF21820064EB1C /* ATOMMyConcernTableViewCell.m */; };
 		5C8A2A211AAF26570064EB1C /* ATOMMyConcernTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8A2A201AAF26570064EB1C /* ATOMMyConcernTableHeaderView.m */; };
@@ -289,7 +296,6 @@
 		5CDB06041AA405A40089121E /* UIColor+HSB.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB05FC1AA405A40089121E /* UIColor+HSB.m */; };
 		5CDB06051AA405A40089121E /* UIColor+HSL.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB05FE1AA405A40089121E /* UIColor+HSL.m */; };
 		5CDB06061AA405A40089121E /* UIColor+iOS7.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB06001AA405A40089121E /* UIColor+iOS7.m */; };
-		5CDB06111AA4215E0089121E /* ATOMBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB06101AA4215E0089121E /* ATOMBaseView.m */; };
 		5CDB06151AA424F50089121E /* MMPlaceHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB06141AA424F50089121E /* MMPlaceHolder.m */; };
 		5CDB062E1AA428BD0089121E /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB06181AA428BD0089121E /* MASCompositeConstraint.m */; };
 		5CDB062F1AA428BD0089121E /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB061B1AA428BD0089121E /* MASConstraint.m */; };
@@ -426,8 +432,6 @@
 		5C436A861AB03E5900D14608 /* ATOMCommentMessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMCommentMessageTableViewCell.m; sourceTree = "<group>"; };
 		5C436A881AB03FA800D14608 /* ATOMCommentMessageViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMCommentMessageViewModel.h; sourceTree = "<group>"; };
 		5C436A891AB03FA800D14608 /* ATOMCommentMessageViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMCommentMessageViewModel.m; sourceTree = "<group>"; };
-		5C436A8B1AB0593E00D14608 /* ATOMNoDataView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMNoDataView.h; sourceTree = "<group>"; };
-		5C436A8C1AB0593E00D14608 /* ATOMNoDataView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMNoDataView.m; sourceTree = "<group>"; };
 		5C436A8E1AB0723700D14608 /* ATOMInviteMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMInviteMessageViewController.h; sourceTree = "<group>"; };
 		5C436A8F1AB0723700D14608 /* ATOMInviteMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMInviteMessageViewController.m; sourceTree = "<group>"; };
 		5C436A911AB074EF00D14608 /* ATOMInviteMessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMInviteMessageTableViewCell.h; sourceTree = "<group>"; };
@@ -555,6 +559,14 @@
 		5C520B9A1ADBA1B000C7C2A5 /* UIRefreshControl+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIRefreshControl+AFNetworking.m"; sourceTree = "<group>"; };
 		5C520B9B1ADBA1B000C7C2A5 /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
 		5C520B9C1ADBA1B000C7C2A5 /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
+		5C535CAF1AF1FC8A00BF30D1 /* ATOMBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMBaseView.h; sourceTree = "<group>"; };
+		5C535CB01AF1FC8A00BF30D1 /* ATOMBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMBaseView.m; sourceTree = "<group>"; };
+		5C535CB11AF1FC8A00BF30D1 /* ATOMNoDataView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMNoDataView.h; sourceTree = "<group>"; };
+		5C535CB21AF1FC8A00BF30D1 /* ATOMNoDataView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMNoDataView.m; sourceTree = "<group>"; };
+		5C535CB31AF1FC8A00BF30D1 /* ATOMShareFunctionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShareFunctionView.h; sourceTree = "<group>"; };
+		5C535CB41AF1FC8A00BF30D1 /* ATOMShareFunctionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShareFunctionView.m; sourceTree = "<group>"; };
+		5C535CB81AF1FCEC00BF30D1 /* ATOMPSView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMPSView.h; sourceTree = "<group>"; };
+		5C535CB91AF1FCEC00BF30D1 /* ATOMPSView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMPSView.m; sourceTree = "<group>"; };
 		5C54DF141AB9529200BDE34D /* ATOMHomepageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMHomepageScrollView.h; sourceTree = "<group>"; };
 		5C54DF151AB9529200BDE34D /* ATOMHomepageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMHomepageScrollView.m; sourceTree = "<group>"; };
 		5C54DF181AB9738E00BDE34D /* ATOMBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMBaseViewController.h; sourceTree = "<group>"; };
@@ -583,8 +595,6 @@
 		5C559B3C1AB1394C000C5B50 /* ATOMInviteTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMInviteTableHeaderView.m; sourceTree = "<group>"; };
 		5C559B3E1AB13B8F000C5B50 /* ATOMInviteTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMInviteTableViewCell.h; sourceTree = "<group>"; };
 		5C559B3F1AB13B8F000C5B50 /* ATOMInviteTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMInviteTableViewCell.m; sourceTree = "<group>"; };
-		5C559B441AB13D52000C5B50 /* ATOMShareFunctionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShareFunctionView.h; sourceTree = "<group>"; };
-		5C559B451AB13D52000C5B50 /* ATOMShareFunctionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShareFunctionView.m; sourceTree = "<group>"; };
 		5C559B4A1AB168F7000C5B50 /* ATOMRecentDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMRecentDetailViewController.h; sourceTree = "<group>"; };
 		5C559B4B1AB168F7000C5B50 /* ATOMRecentDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMRecentDetailViewController.m; sourceTree = "<group>"; };
 		5C561A001AB7BF6F0052D4D5 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
@@ -734,6 +744,10 @@
 		5C67FB2C1AB2C509004EFF05 /* ATOMCustomCopperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMCustomCopperView.m; sourceTree = "<group>"; };
 		5C6CE6B51ADBE2210035F522 /* ATOMFaceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMFaceView.h; sourceTree = "<group>"; };
 		5C6CE6B81ADBE8A10035F522 /* EmojisList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = EmojisList.plist; sourceTree = "<group>"; };
+		5C6CEF281AF18BA800F06213 /* ATOMConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMConstant.h; sourceTree = "<group>"; };
+		5C6CEF291AF18BA800F06213 /* ATOMConstant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMConstant.m; sourceTree = "<group>"; };
+		5C6CEF2B1AF1971300F06213 /* ATOMPraiseButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMPraiseButton.h; sourceTree = "<group>"; };
+		5C6CEF2C1AF1971300F06213 /* ATOMPraiseButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMPraiseButton.m; sourceTree = "<group>"; };
 		5C6E53201AE4CACE00D64114 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		5C6E53221AE4CB0100D64114 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		5C6E53241AE4CB1D00D64114 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -758,6 +772,10 @@
 		5C7861221AAF4DD200E87C77 /* 8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 8.jpg; sourceTree = "<group>"; };
 		5C7861231AAF4DD200E87C77 /* 9.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 9.jpg; sourceTree = "<group>"; };
 		5C7861241AAF4DD200E87C77 /* bg_main@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_main@2x.png"; sourceTree = "<group>"; };
+		5C8084F71AF2603D0062421C /* ATOMBottomCommonButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMBottomCommonButton.h; sourceTree = "<group>"; };
+		5C8084F81AF2603D0062421C /* ATOMBottomCommonButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMBottomCommonButton.m; sourceTree = "<group>"; };
+		5C8084FA1AF27BD30062421C /* ATOMTotalPSView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMTotalPSView.h; sourceTree = "<group>"; };
+		5C8084FB1AF27BD30062421C /* ATOMTotalPSView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMTotalPSView.m; sourceTree = "<group>"; };
 		5C819C901AA71C1D00CDDB5B /* ATOMCommentDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMCommentDetailViewController.h; sourceTree = "<group>"; };
 		5C819C911AA71C1D00CDDB5B /* ATOMCommentDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMCommentDetailViewController.m; sourceTree = "<group>"; };
 		5C819C931AA71FCD00CDDB5B /* ATOMCommentDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMCommentDetailTableViewCell.h; sourceTree = "<group>"; };
@@ -823,6 +841,8 @@
 		5C8406371ABABEC500068F35 /* ATOMImageTipLabelViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMImageTipLabelViewModel.m; sourceTree = "<group>"; };
 		5C8406391ABADA8B00068F35 /* ATOMHomeImageDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMHomeImageDAO.h; sourceTree = "<group>"; };
 		5C84063A1ABADA8B00068F35 /* ATOMHomeImageDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMHomeImageDAO.m; sourceTree = "<group>"; };
+		5C8502331AF39B7500724AC6 /* ATOMCollectionViewLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMCollectionViewLabel.h; sourceTree = "<group>"; };
+		5C8502341AF39B7500724AC6 /* ATOMCollectionViewLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMCollectionViewLabel.m; sourceTree = "<group>"; };
 		5C8A2A161AAF1CE20064EB1C /* ATOMMyConcernViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMMyConcernViewController.h; sourceTree = "<group>"; };
 		5C8A2A171AAF1CE20064EB1C /* ATOMMyConcernViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMMyConcernViewController.m; sourceTree = "<group>"; };
 		5C8A2A191AAF21820064EB1C /* ATOMMyConcernTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMMyConcernTableViewCell.h; sourceTree = "<group>"; };
@@ -919,8 +939,6 @@
 		5CDB06001AA405A40089121E /* UIColor+iOS7.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+iOS7.m"; sourceTree = "<group>"; };
 		5CDB06071AA4065C0089121E /* psgod.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = psgod.pch; sourceTree = "<group>"; };
 		5CDB06081AA4078E0089121E /* MacroUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacroUtils.h; sourceTree = "<group>"; };
-		5CDB060F1AA4215E0089121E /* ATOMBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMBaseView.h; sourceTree = "<group>"; };
-		5CDB06101AA4215E0089121E /* ATOMBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMBaseView.m; sourceTree = "<group>"; };
 		5CDB06131AA424F50089121E /* MMPlaceHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMPlaceHolder.h; sourceTree = "<group>"; };
 		5CDB06141AA424F50089121E /* MMPlaceHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMPlaceHolder.m; sourceTree = "<group>"; };
 		5CDB06171AA428BD0089121E /* MASCompositeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASCompositeConstraint.h; sourceTree = "<group>"; };
@@ -1315,6 +1333,8 @@
 				5C561A841AB80F400052D4D5 /* ATOMOtherPersonCollectionHeaderView.m */,
 				5CDF81FC1AC25B3000321694 /* ATOMUserFeedbackView.h */,
 				5CDF81FD1AC25B3000321694 /* ATOMUserFeedbackView.m */,
+				5C8502331AF39B7500724AC6 /* ATOMCollectionViewLabel.h */,
+				5C8502341AF39B7500724AC6 /* ATOMCollectionViewLabel.m */,
 			);
 			path = person;
 			sourceTree = "<group>";
@@ -1362,6 +1382,12 @@
 				5C3E0CE41ABEB052006C9175 /* ATOMRecentDetailHeaderView.m */,
 				5C5A7A811ABFA8BB004A00C5 /* ATOMRecentDetailTableViewCell.h */,
 				5C5A7A821ABFA8BB004A00C5 /* ATOMRecentDetailTableViewCell.m */,
+				5C6CEF2B1AF1971300F06213 /* ATOMPraiseButton.h */,
+				5C6CEF2C1AF1971300F06213 /* ATOMPraiseButton.m */,
+				5C8084F71AF2603D0062421C /* ATOMBottomCommonButton.h */,
+				5C8084F81AF2603D0062421C /* ATOMBottomCommonButton.m */,
+				5C8084FA1AF27BD30062421C /* ATOMTotalPSView.h */,
+				5C8084FB1AF27BD30062421C /* ATOMTotalPSView.m */,
 			);
 			path = homepage;
 			sourceTree = "<group>";
@@ -1440,6 +1466,21 @@
 			path = "UIKit+AFNetworking";
 			sourceTree = "<group>";
 		};
+		5C535CAE1AF1FC8A00BF30D1 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				5C535CAF1AF1FC8A00BF30D1 /* ATOMBaseView.h */,
+				5C535CB01AF1FC8A00BF30D1 /* ATOMBaseView.m */,
+				5C535CB11AF1FC8A00BF30D1 /* ATOMNoDataView.h */,
+				5C535CB21AF1FC8A00BF30D1 /* ATOMNoDataView.m */,
+				5C535CB31AF1FC8A00BF30D1 /* ATOMShareFunctionView.h */,
+				5C535CB41AF1FC8A00BF30D1 /* ATOMShareFunctionView.m */,
+				5C535CB81AF1FCEC00BF30D1 /* ATOMPSView.h */,
+				5C535CB91AF1FCEC00BF30D1 /* ATOMPSView.m */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
 		5C54DF171AB9738E00BDE34D /* common */ = {
 			isa = PBXGroup;
 			children = (
@@ -1451,6 +1492,8 @@
 				5C54DF1D1AB9738E00BDE34D /* ATOMMainTabBarController.m */,
 				5CE4082D1ACE94D600A56E4B /* UIViewController+ATOMTracking.h */,
 				5CE4082E1ACE94D600A56E4B /* UIViewController+ATOMTracking.m */,
+				5C6CEF281AF18BA800F06213 /* ATOMConstant.h */,
+				5C6CEF291AF18BA800F06213 /* ATOMConstant.m */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -2140,17 +2183,12 @@
 		5CDB05EE1AA400410089121E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5C535CAE1AF1FC8A00BF30D1 /* common */,
 				5C4F5BF01AA593CD00226F64 /* homepage */,
 				5C4F5BE61AA5752B00226F64 /* attention */,
 				5C4F5BE81AA5752B00226F64 /* message */,
 				5C4F5BE91AA5752B00226F64 /* person */,
 				5CDB06581AA45C4A0089121E /* login */,
-				5CDB060F1AA4215E0089121E /* ATOMBaseView.h */,
-				5CDB06101AA4215E0089121E /* ATOMBaseView.m */,
-				5C436A8B1AB0593E00D14608 /* ATOMNoDataView.h */,
-				5C436A8C1AB0593E00D14608 /* ATOMNoDataView.m */,
-				5C559B441AB13D52000C5B50 /* ATOMShareFunctionView.h */,
-				5C559B451AB13D52000C5B50 /* ATOMShareFunctionView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2485,7 +2523,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5CDB05CA1AA3FE520089121E /* AppDelegate.m in Sources */,
-				5C436A8D1AB0593E00D14608 /* ATOMNoDataView.m in Sources */,
 				5C83A8961AC66F910071A024 /* POPVector.mm in Sources */,
 				5C83A8921AC66F910071A024 /* POPLayerExtras.mm in Sources */,
 				5CDB06351AA428BD0089121E /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
@@ -2501,6 +2538,7 @@
 				5CDB066E1AA46E6F0089121E /* UIAlertView+Blocks.m in Sources */,
 				5C6776A61AAC09C400320522 /* IQUIView+Hierarchy.m in Sources */,
 				5C31017E1AAE852F00EF529B /* ATOMAccountSettingTableViewCell.m in Sources */,
+				5C535CB51AF1FC8A00BF30D1 /* ATOMBaseView.m in Sources */,
 				5C5A7A891ABFF1A7004A00C5 /* ATOMCommentDAO.m in Sources */,
 				5C67FB2D1AB2C509004EFF05 /* ATOMCustomCopperView.m in Sources */,
 				5C83A8861AC66F910071A024 /* POPAnimatableProperty.mm in Sources */,
@@ -2537,7 +2575,6 @@
 				5C4F5BF31AA593E200226F64 /* ATOMHomePageHotTableViewCell.m in Sources */,
 				5C83A88F1AC66F910071A024 /* POPCustomAnimation.mm in Sources */,
 				5C7861161AAF4C9400E87C77 /* ATOMMyWorkViewController.m in Sources */,
-				5C559B461AB13D52000C5B50 /* ATOMShareFunctionView.m in Sources */,
 				5C54DF231AB9772000BDE34D /* ATOMHomeImage.m in Sources */,
 				5C4C70D91AB6FD5700358989 /* ATOMGetMoblieCode.m in Sources */,
 				5C6776AD1AAC09C400320522 /* IQTitleBarButtonItem.m in Sources */,
@@ -2548,11 +2585,11 @@
 				5C0F04F71ADD033D002003AE /* ATOMFansViewModel.m in Sources */,
 				5C3101901AAEC8F900EF529B /* ATOMMessageRemindViewController.m in Sources */,
 				5C54DF201AB9738E00BDE34D /* ATOMMainTabBarController.m in Sources */,
+				5C535CB71AF1FC8A00BF30D1 /* ATOMShareFunctionView.m in Sources */,
 				5C3101781AAE751100EF529B /* ATOMPersonTableViewCell.m in Sources */,
 				5C561A061AB7BF6F0052D4D5 /* SVIndefiniteAnimatedView.m in Sources */,
 				5C0F04E81ADCF508002003AE /* ATOMConcernMessageViewModel.m in Sources */,
 				5C561A781AB7C8C30052D4D5 /* UIScrollView+MJRefresh.m in Sources */,
-				5CDB06111AA4215E0089121E /* ATOMBaseView.m in Sources */,
 				5C561A751AB7C8C30052D4D5 /* MJRefreshLegendFooter.m in Sources */,
 				5C559B2B1AB10C93000C5B50 /* ATOMOtherPersonViewController.m in Sources */,
 				5C4F88471AB56E760042E9BA /* ATOMShareViewController.m in Sources */,
@@ -2602,6 +2639,7 @@
 				5C3101811AAE8D4300EF529B /* ATOMModifyPasswordViewController.m in Sources */,
 				5C83A88D1AC66F910071A024 /* POPBasicAnimation.mm in Sources */,
 				5CDB06061AA405A40089121E /* UIColor+iOS7.m in Sources */,
+				5C8084FC1AF27BD30062421C /* ATOMTotalPSView.m in Sources */,
 				5CDB06311AA428BD0089121E /* MASLayoutConstraint.m in Sources */,
 				5C4C70DA1AB6FD5700358989 /* ATOMSubmitUserInfomation.m in Sources */,
 				5C0F04EB1ADCF6D9002003AE /* ATOMShowConcernMessage.m in Sources */,
@@ -2635,6 +2673,7 @@
 				5C561A7F1AB7CAA90052D4D5 /* ATOMCreateTable.m in Sources */,
 				5C4AE3EF1AAED6520020E102 /* ATOMMyFansTableViewCell.m in Sources */,
 				5C9BD9F41AA82F3500715698 /* ATOMOriginCropperView.m in Sources */,
+				5C535CB61AF1FC8A00BF30D1 /* ATOMNoDataView.m in Sources */,
 				5CDB06011AA405A40089121E /* UIColor+CIELAB.m in Sources */,
 				5CAB05A51ADC144000BCF24B /* ATOMFaceView.m in Sources */,
 				5C0F04FA1ADD04CC002003AE /* ATOMShowFans.m in Sources */,
@@ -2674,14 +2713,17 @@
 				5C520BA91ADBA1B000C7C2A5 /* UIButton+AFNetworking.m in Sources */,
 				5C83A88E1AC66F910071A024 /* POPCGUtils.mm in Sources */,
 				5CDB06741AA47EEC0089121E /* ATOMInputVerifyCodeView.m in Sources */,
+				5C8084F91AF2603D0062421C /* ATOMBottomCommonButton.m in Sources */,
 				5C4C70C51AB6BC5200358989 /* ATOMBaseRequest.m in Sources */,
 				5C4C70A31AB694D500358989 /* MTLJSONAdapter.m in Sources */,
 				5CDB06051AA405A40089121E /* UIColor+HSL.m in Sources */,
+				5C535CBA1AF1FCEC00BF30D1 /* ATOMPSView.m in Sources */,
 				5C8A2A241AAF31B30064EB1C /* ATOMMyConcernTableFooterView.m in Sources */,
 				5C84062C1ABA67CC00068F35 /* JSONKit.m in Sources */,
 				5C6697B61AAFED63001FCF8A /* ATOMProceedingViewController.m in Sources */,
 				5C9BDA3C1AA8515800715698 /* NYXImagesHelper.m in Sources */,
 				5C9BDA351AA8515800715698 /* UIImage+Reflection.m in Sources */,
+				5C6CEF2A1AF18BA800F06213 /* ATOMConstant.m in Sources */,
 				5C436A811AB02E7300D14608 /* ATOMMyMessageTableViewCell.m in Sources */,
 				5C0F04D51ADCAD31002003AE /* ATOMCommentMessage.m in Sources */,
 				5C819C951AA71FCD00CDDB5B /* ATOMCommentDetailTableViewCell.m in Sources */,
@@ -2691,6 +2733,7 @@
 				5C0F04DC1ADCE70C002003AE /* ATOMReplyMessage.m in Sources */,
 				5C9BD9EE1AA8293400715698 /* ATOMUploadWorkViewController.m in Sources */,
 				5C9BDA321AA8515800715698 /* UIImage+Enhancing.m in Sources */,
+				5C6CEF2D1AF1971400F06213 /* ATOMPraiseButton.m in Sources */,
 				5C4F5BFC1AA5E41900226F64 /* ATOMHotDetailTableViewCell.m in Sources */,
 				5C6697B01AAFE025001FCF8A /* ATOMProfileEditViewController.m in Sources */,
 				5C83A88C1AC66F910071A024 /* POPAnimator.mm in Sources */,
@@ -2725,6 +2768,7 @@
 				5C8A2A211AAF26570064EB1C /* ATOMMyConcernTableHeaderView.m in Sources */,
 				5C8A2A1B1AAF21820064EB1C /* ATOMMyConcernTableViewCell.m in Sources */,
 				5C9BDA361AA8515800715698 /* UIImage+Resizing.m in Sources */,
+				5C8502351AF39B7500724AC6 /* ATOMCollectionViewLabel.m in Sources */,
 				5CDB06681AA45C680089121E /* ATOMMobileRegisterViewController.m in Sources */,
 				5C561A701AB7C8C30052D4D5 /* MJRefreshConst.m in Sources */,
 				5C67FB271AB2B41F004EFF05 /* ATOMHeaderImageCropperViewController.m in Sources */,

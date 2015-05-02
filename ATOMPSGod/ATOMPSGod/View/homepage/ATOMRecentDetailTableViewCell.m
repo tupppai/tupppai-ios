@@ -8,10 +8,9 @@
 
 #import "ATOMRecentDetailTableViewCell.h"
 #import "ATOMCommentDetailViewModel.h"
+#import "ATOMPraiseButton.h"
 
 @implementation ATOMRecentDetailTableViewCell
-
-static int padding10 = 10;
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -25,54 +24,45 @@ static int padding10 = 10;
 - (void)createSubView {
     _userHeaderButton = [UIButton new];
     _userHeaderButton.userInteractionEnabled = NO;
-    _userHeaderButton.layer.cornerRadius = 22.5;
+    _userHeaderButton.layer.cornerRadius = kUserHeaderButtonWidth / 2;
     _userHeaderButton.layer.masksToBounds = YES;
     [self addSubview:_userHeaderButton];
     
-    _userSexImageView = [UIImageView new];
-    [self addSubview:_userSexImageView];
-    
     _userNameLabel = [UILabel new];
-    _userNameLabel.font = [UIFont systemFontOfSize:16.f];
-    _userNameLabel.textColor = [UIColor colorWithHex:0x00adef];
+    _userNameLabel.textColor = [UIColor blackColor];
+    _userNameLabel.font = [UIFont systemFontOfSize:kFont14];
     [self addSubview:_userNameLabel];
     
     _userCommentDetailLabel = [UILabel new];
     _userCommentDetailLabel.numberOfLines = 0;
-    _userCommentDetailLabel.font = [UIFont systemFontOfSize:16.f];
-    _userCommentDetailLabel.textColor = [UIColor blackColor];
+    _userCommentDetailLabel.font = [UIFont systemFontOfSize:kFont14];
+    _userCommentDetailLabel.textColor = [UIColor colorWithHex:0x969696];
     [self addSubview:_userCommentDetailLabel];
     
-    _praiseButton = [UIButton new];
-    [_praiseButton setImage:[UIImage imageNamed:@"btn_comment_like_normal"] forState:UIControlStateNormal];
-    [_praiseButton setImage:[UIImage imageNamed:@"btn_comment_like_pressed"] forState:UIControlStateSelected];
-    _praiseButton.titleLabel.font = [UIFont systemFontOfSize:10.f];
-    [_praiseButton setImageEdgeInsets:UIEdgeInsetsMake(2, 0, 2, 5)];
-    [_praiseButton setTitleEdgeInsets:UIEdgeInsetsMake(2, 5, 2, 0)];
-    [_praiseButton setTitleColor:[UIColor colorWithHex:0x6e6e70] forState:UIControlStateNormal];
-    [_praiseButton setTitleColor:[UIColor colorWithHex:0x00adef] forState:UIControlStateSelected];
+    _praiseButton = [ATOMPraiseButton new];
     [self addSubview:_praiseButton];
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    _userHeaderButton.frame = CGRectMake(padding10, padding10, 45, 45);
-    _userSexImageView.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - SEXRADIUS, CGRectGetMaxY(_userHeaderButton.frame) - SEXRADIUS, SEXRADIUS, SEXRADIUS);
-    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, padding10, SCREEN_WIDTH - padding10 * 4 - 75 - 45, 20);
-    _praiseButton.frame = CGRectMake(SCREEN_WIDTH - 60 - padding10, padding10, 60, 20);
+    _userHeaderButton.frame = CGRectMake(kPadding15, kPadding15, kUserHeaderButtonWidth, kUserHeaderButtonWidth);
+    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, kPadding15, kUserNameLabelWidth, kFont14);
     CGSize commentDetailTextSize = [[self class] calculateCommentDeailTextSize:_viewModel.content];
-    _userCommentDetailLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, CGRectGetMaxY(_userNameLabel.frame), commentDetailTextSize.width, commentDetailTextSize.height);
+    _userCommentDetailLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, CGRectGetMaxY(_userNameLabel.frame) + kPadding10, commentDetailTextSize.width, commentDetailTextSize.   height);
+    CGSize size = [_viewModel.praiseNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, 13) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
+    size.width += 14 + kPadding5 * 2 + 2;;
+    _praiseButton.frame = CGRectMake(SCREEN_WIDTH - kPadding15 - size.width - kPadding5, kPadding15, size.width, 13);
 }
 
 + (CGSize)calculateCommentDeailTextSize:(NSString *)commentDetailStr {
-    NSDictionary * attributeDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:16.f], NSFontAttributeName, nil];
-    CGSize actualSize = [commentDetailStr boundingRectWithSize:CGSizeMake(SCREEN_WIDTH - padding10 * 2 - 55, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attributeDic context:NULL].size;
+    NSDictionary * attributeDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont14], NSFontAttributeName, nil];
+    CGSize actualSize = [commentDetailStr boundingRectWithSize:CGSizeMake(SCREEN_WIDTH - kPadding15 * 3 - kUserHeaderButtonWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin |                 NSStringDrawingUsesFontLeading attributes:attributeDic context:NULL].size;
     return actualSize;
 }
 
 + (CGFloat)calculateCellHeightWithModel:(ATOMCommentDetailViewModel *)viewModel {
-    CGFloat height1 = [[self class] calculateCommentDeailTextSize:viewModel.content].height + 30 + padding10 *2;
-    CGFloat height2 = 45 + padding10 * 2;
+    CGFloat height1 = [[self class] calculateCommentDeailTextSize:viewModel.content].height + kFont14 + kPadding10 + kPadding15 * 2;
+    CGFloat height2 = kPadding15 * 2 + kUserHeaderButtonWidth;
     return fmaxf(height1, height2);
 }
 
@@ -80,9 +70,8 @@ static int padding10 = 10;
     _viewModel = viewModel;
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatar] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     _userNameLabel.text = viewModel.nickname;
-    _userSexImageView.image = [UIImage imageNamed:viewModel.userSex];
     _userCommentDetailLabel.text = viewModel.content;
-    [_praiseButton setTitle:viewModel.praiseNumber forState:UIControlStateNormal];
+    _praiseButton.praiseNumber = _viewModel.praiseNumber;
     [self setNeedsLayout];
 }
 

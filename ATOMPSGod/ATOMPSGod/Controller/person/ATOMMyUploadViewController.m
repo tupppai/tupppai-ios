@@ -159,6 +159,7 @@ static int collumnNumber = 3;
     ATOMAskViewModel *model = _dataSource[indexPath.row];
     [cell.workImageView setImageWithURL:[NSURL URLWithString:model.imageURL]];
     cell.totalPSNumber = model.totalPSNumber;
+    cell.colorType = 1;
     return cell;
 }
 

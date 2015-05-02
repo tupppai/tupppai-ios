@@ -20,10 +20,13 @@
 #import "ATOMCommentDetailViewModel.h"
 #import "ATOMShowDetailOfComment.h"
 #import "ATOMShareFunctionView.h"
+#import "ATOMBottomCommonButton.h"
+#import "ATOMPSView.h"
+#import "ATOMPraiseButton.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMRecentDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate>
+@interface ATOMRecentDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, ATOMPSViewDelegate>
 
 @property (nonatomic, strong) ATOMRecentDetailView *recentDetailView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
@@ -35,6 +38,7 @@
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, strong) ATOMCommentDetailViewModel *atModel;
 @property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
+@property (nonatomic, strong) ATOMPSView *psView;
 
 @end
 
@@ -56,6 +60,14 @@
         _imagePickerController.delegate = self;
     }
     return _imagePickerController;
+}
+
+- (ATOMPSView *)psView {
+    if (!_psView) {
+        _psView = [ATOMPSView new];
+        _psView.delegate = self;
+    }
+    return _psView;
 }
 
 #pragma mark Refresh
@@ -165,12 +177,18 @@
 }
 
 - (void)addClickEventToRecentDetailView {
-    [_recentDetailView.headerView.shareButton addTarget:self action:@selector(clickShareButton:) forControlEvents:UIControlEventTouchUpInside];
-    [_recentDetailView.headerView.moreShareButton addTarget:self action:@selector(clickMoreShareButton:) forControlEvents:UIControlEventTouchUpInside];
+    UITapGestureRecognizer *g1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickShareButton:)];
+    [_recentDetailView.headerView.shareButton addGestureRecognizer:g1];
+    UITapGestureRecognizer *g2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickMoreShareButton:)];
+    [_recentDetailView.headerView.moreShareButton addGestureRecognizer:g2];
+    UITapGestureRecognizer *g3 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickPraiseButton:)];
+    [_recentDetailView.headerView.praiseButton addGestureRecognizer:g3];
+    UITapGestureRecognizer *g4 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickCommentButton:)];
+    [_recentDetailView.headerView.commentButton addGestureRecognizer:g4];
+    
+    
     [_recentDetailView.headerView.userHeaderButton addTarget:self action:@selector(clickUserHeaderButton:) forControlEvents:UIControlEventTouchUpInside];
     [_recentDetailView.headerView.psButton addTarget:self action:@selector(clickPSButton:) forControlEvents:UIControlEventTouchUpInside];
-    [_recentDetailView.headerView.praiseButton addTarget:self action:@selector(clickPraiseButton:) forControlEvents:UIControlEventTouchUpInside];
-    [_recentDetailView.headerView.commentButton addTarget:self action:@selector(clickCommentButton:) forControlEvents:UIControlEventTouchUpInside];
     [_recentDetailView.sendCommentButton addTarget:self action:@selector(clickSendCommentButton:) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -183,11 +201,11 @@
 
 #pragma mark - Click Event
 
-- (void)clickShareButton:(UIButton *)sender {
+- (void)clickShareButton:(UITapGestureRecognizer *)sender {
     [self wxShare];
 }
 
-- (void)clickMoreShareButton:(UIButton *)sender {
+- (void)clickMoreShareButton:(UITapGestureRecognizer *)sender {
     [[AppDelegate APP].window addSubview:self.shareFunctionView];
 }
 
@@ -197,21 +215,14 @@
 }
 
 - (void)clickPSButton:(UIButton *)sender {
-    [UIActionSheet showInView:self.view withTitle:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@[@"下载素材",@"上传作品"] tapBlock:^(UIActionSheet *actionSheet, NSInteger buttonIndex) {
-        NSString *actionSheetTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
-        if ([actionSheetTitle isEqualToString:@"下载素材"]) {
-            [self dealDownloadWork];
-        } else if ([actionSheetTitle isEqualToString:@"上传作品"]) {
-            [self dealUploadWork];
-        }
-    }];
+    [[AppDelegate APP].window addSubview:self.psView];
 }
 
-- (void)clickPraiseButton:(UIButton *)sender {
-    sender.selected = !sender.selected;
+- (void)clickPraiseButton:(UITapGestureRecognizer *)sender {
+    _recentDetailView.headerView.praiseButton.selected = !_recentDetailView.headerView.praiseButton.selected;
 }
 
-- (void)clickCommentButton:(UIButton *)sender {
+- (void)clickCommentButton:(UITapGestureRecognizer *)sender {
     ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
     cdvc.ID = _homePageViewModel.imageID;
     cdvc.type = 1;
@@ -259,8 +270,8 @@
 #pragma mark - Gesture Event
 
 - (void)tapCommentDetailGesture:(UITapGestureRecognizer *)gesture {
-    if ([_recentDetailView.sendCommentView isFirstResponder]) {
-        [_recentDetailView.sendCommentView resignFirstResponder];
+    if ([_recentDetailView isEditingCommentView]) {
+        [_recentDetailView hideCommentView];
         _recentDetailView.sendCommentView.text = @"";
         _atModel = nil;
         return ;
@@ -277,7 +288,6 @@
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
             [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.praiseButton.frame, p)) {
-            p = [gesture locationInView:cell.praiseButton];
             NSInteger section = indexPath.section;
             NSInteger row = indexPath.row;
             ATOMCommentDetailViewModel *model = (section == 0) ? _hotCommentDataSource[row] : _recentCommentDataSource[row];
@@ -364,7 +374,7 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 28.5;
+    return kCommentTableViewHeaderHeight;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -380,10 +390,8 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     ATOMMyConcernTableHeaderView *headerView = [ATOMMyConcernTableHeaderView new];
     if (section == 0) {
-        headerView.littleVerticalView.backgroundColor = [UIColor colorWithHex:0xf80630];
         headerView.titleLabel.text = @"最热评论";
     } else if (section == 1) {
-        headerView.littleVerticalView.backgroundColor = [UIColor colorWithHex:0x00adef];
         headerView.titleLabel.text = @"最新评论";
     }
     return headerView;
@@ -398,19 +406,32 @@
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
-    NSString *str = textView.text;
-    if (str.length == 0) {
+    NSString *str= textView.text;
+    if (textView.text.length == 0) {
         if (_atModel) {
             textView.text = _recentDetailView.textViewPlaceholder;
+        } else {
+            textView.text = @"发表你的神回复...";
         }
     } else {
         if (_atModel && [str hasPrefix:[NSString stringWithFormat:@"//@%@:", _atModel.nickname]]) {
             textView.text = [str substringFromIndex:(_atModel.nickname.length + 4)];
+        } else if (!_atModel && [str hasPrefix:_recentDetailView.textViewPlaceholder]) {
+            textView.text = [str substringFromIndex:10];
         }
     }
 }
 
 
+#pragma mark - ATOMPSViewDelegate
+
+- (void)dealImageWithCommand:(NSString *)command {
+    if ([command isEqualToString:@"upload"]) {
+        [self dealUploadWork];
+    } else if ([command isEqualToString:@"download"]) {
+        [self dealDownloadWork];
+    }
+}
 
 
 

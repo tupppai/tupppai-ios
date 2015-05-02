@@ -153,7 +153,7 @@
     if (section == 0) {
         return 4;
     } else if (section == 1) {
-        return 3;
+        return 2;
     }
     return 0;
 }
@@ -180,9 +180,6 @@
             ATOMMyConcernViewController *mcvc = [ATOMMyConcernViewController new];
             [self pushViewController:mcvc animated:YES];
         } else if (row == 1) {
-            ATOMProfileEditViewController *pevc = [ATOMProfileEditViewController new];
-            [self pushViewController:pevc animated:YES];
-        } else if (row == 2) {
             ATOMAccountSettingViewController *asvc = [ATOMAccountSettingViewController new];
             [self pushViewController:asvc animated:YES];
         }
@@ -193,11 +190,15 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 15;
+    if (section == 0) {
+        return 0;
+    } else {
+        return 8;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 45;
+    return 60;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -210,28 +211,31 @@
     NSInteger row = indexPath.row;
     if (section == 0) {
         if (row == 0) {
-            cell.themeImageView.image = [UIImage imageNamed:@"icon_user_psask"];
-            cell.themeLabel.text = @"我的求P(100)";
+            cell.themeImageView.image = [UIImage imageNamed:@"ic_my_ask"];
+            cell.themeLabel.text = @"我的求P";
         } else if (row == 1) {
-            cell.themeImageView.image = [UIImage imageNamed:@"icon_user_pswork"];
-            cell.themeLabel.text = @"我的作品(100)";
+            cell.themeImageView.image = [UIImage imageNamed:@"ic_my_reply"];
+            cell.themeLabel.text = @"我的作品";
         } else if (row == 2) {
-            cell.themeImageView.image = [UIImage imageNamed:@"icon_progress"];
-            cell.themeLabel.text = @"进行中(100)";
+            cell.themeImageView.image = [UIImage imageNamed:@"ic_my_proceed"];
+            cell.themeLabel.text = @"进行中";
         } else if (row == 3) {
-            cell.themeImageView.image = [UIImage imageNamed:@"icon_collect"];
+            cell.themeImageView.image = [UIImage imageNamed:@"ic_my_fav"];
             cell.themeLabel.text = @"我的收藏";
+            cell.bottomLine = [[UIView alloc] initWithFrame:CGRectMake(kPadding30, 59.5, SCREEN_WIDTH - 2 * kPadding30, 0.5)];
+            cell.bottomLine.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2];
+            [cell addSubview:cell.bottomLine];
         }
     } else if (section == 1) {
         if (row == 0) {
-            cell.themeImageView.image = [UIImage imageNamed:@"bt_myfollow"];
+            cell.themeImageView.image = [UIImage imageNamed:@"ic_my_focus"];
             cell.themeLabel.text = @"我的关注";
         } else if (row == 1) {
-            cell.themeImageView.image = [UIImage imageNamed:@"btn_user_edit"];
-            cell.themeLabel.text = @"编辑资料";
-        } else if (row == 2) {
-            cell.themeImageView.image = [UIImage imageNamed:@"icon_user_config"];
+            cell.themeImageView.image = [UIImage imageNamed:@"ic_my_setting"];
             cell.themeLabel.text = @"用户设置";
+            cell.bottomLine = [[UIView alloc] initWithFrame:CGRectMake(kPadding30, 59.5, SCREEN_WIDTH - 2 * kPadding30, 0.5)];
+            cell.bottomLine.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2];
+            [cell addSubview:cell.bottomLine];
         }
     }
 

@@ -10,7 +10,6 @@
 
 @interface ATOMMyConcernTableHeaderView : ATOMBaseView
 
-@property (nonatomic, strong) UIView *littleVerticalView;
 @property (nonatomic, strong) UILabel *titleLabel;
 
 @end
