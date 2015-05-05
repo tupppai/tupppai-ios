@@ -30,7 +30,7 @@ extern CGFloat const kFont10;
 extern CGFloat const kFont14;
 
 
-
+#define kBlueColor [UIColor colorWithHex:0x74c3ff]
 
 
 
