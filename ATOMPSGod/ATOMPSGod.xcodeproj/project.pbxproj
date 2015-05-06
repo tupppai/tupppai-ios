@@ -218,6 +218,9 @@
 		5C78612F1AAF4DD200E87C77 /* 8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C7861221AAF4DD200E87C77 /* 8.jpg */; };
 		5C7861301AAF4DD200E87C77 /* 9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C7861231AAF4DD200E87C77 /* 9.jpg */; };
 		5C7861311AAF4DD200E87C77 /* bg_main@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C7861241AAF4DD200E87C77 /* bg_main@2x.png */; };
+		5C7B8AB01AFA535D00F448CD /* ATOMCommonImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7B8AAF1AFA535D00F448CD /* ATOMCommonImage.m */; };
+		5C7B8AB31AFA549D00F448CD /* ATOMCommonImageViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7B8AB21AFA549D00F448CD /* ATOMCommonImageViewModel.m */; };
+		5C7B8AB71AFA5AB700F448CD /* ATOMShowAttention.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7B8AB61AFA5AB700F448CD /* ATOMShowAttention.m */; };
 		5C8084F91AF2603D0062421C /* ATOMBottomCommonButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8084F81AF2603D0062421C /* ATOMBottomCommonButton.m */; };
 		5C8084FC1AF27BD30062421C /* ATOMTotalPSView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8084FB1AF27BD30062421C /* ATOMTotalPSView.m */; };
 		5C819C921AA71C1D00CDDB5B /* ATOMCommentDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C819C911AA71C1D00CDDB5B /* ATOMCommentDetailViewController.m */; };
@@ -772,6 +775,12 @@
 		5C7861221AAF4DD200E87C77 /* 8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 8.jpg; sourceTree = "<group>"; };
 		5C7861231AAF4DD200E87C77 /* 9.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 9.jpg; sourceTree = "<group>"; };
 		5C7861241AAF4DD200E87C77 /* bg_main@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_main@2x.png"; sourceTree = "<group>"; };
+		5C7B8AAE1AFA535D00F448CD /* ATOMCommonImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMCommonImage.h; sourceTree = "<group>"; };
+		5C7B8AAF1AFA535D00F448CD /* ATOMCommonImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMCommonImage.m; sourceTree = "<group>"; };
+		5C7B8AB11AFA549D00F448CD /* ATOMCommonImageViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMCommonImageViewModel.h; sourceTree = "<group>"; };
+		5C7B8AB21AFA549D00F448CD /* ATOMCommonImageViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMCommonImageViewModel.m; sourceTree = "<group>"; };
+		5C7B8AB51AFA5AB700F448CD /* ATOMShowAttention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShowAttention.h; sourceTree = "<group>"; };
+		5C7B8AB61AFA5AB700F448CD /* ATOMShowAttention.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShowAttention.m; sourceTree = "<group>"; };
 		5C8084F71AF2603D0062421C /* ATOMBottomCommonButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMBottomCommonButton.h; sourceTree = "<group>"; };
 		5C8084F81AF2603D0062421C /* ATOMBottomCommonButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMBottomCommonButton.m; sourceTree = "<group>"; };
 		5C8084FA1AF27BD30062421C /* ATOMTotalPSView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMTotalPSView.h; sourceTree = "<group>"; };
@@ -1657,6 +1666,8 @@
 				5C0F04E41ADCF457002003AE /* ATOMConcernMessage.m */,
 				5C0F04EC1ADCFB18002003AE /* ATOMInviteMessage.h */,
 				5C0F04ED1ADCFB18002003AE /* ATOMInviteMessage.m */,
+				5C7B8AAE1AFA535D00F448CD /* ATOMCommonImage.h */,
+				5C7B8AAF1AFA535D00F448CD /* ATOMCommonImage.m */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -1810,6 +1821,15 @@
 			path = Img;
 			sourceTree = "<group>";
 		};
+		5C7B8AB41AFA5A9B00F448CD /* attention */ = {
+			isa = PBXGroup;
+			children = (
+				5C7B8AB51AFA5AB700F448CD /* ATOMShowAttention.h */,
+				5C7B8AB61AFA5AB700F448CD /* ATOMShowAttention.m */,
+			);
+			path = attention;
+			sourceTree = "<group>";
+		};
 		5C83A84B1AC66F910071A024 /* pop */ = {
 			isa = PBXGroup;
 			children = (
@@ -1891,6 +1911,8 @@
 		5C9BDA011AA84CF800715698 /* attention */ = {
 			isa = PBXGroup;
 			children = (
+				5C7B8AB11AFA549D00F448CD /* ATOMCommonImageViewModel.h */,
+				5C7B8AB21AFA549D00F448CD /* ATOMCommonImageViewModel.m */,
 			);
 			path = attention;
 			sourceTree = "<group>";
@@ -2133,6 +2155,7 @@
 		5CDB05EB1AA400410089121E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5C7B8AB41AFA5A9B00F448CD /* attention */,
 				5C0F04D61ADCB021002003AE /* message */,
 				5C5DDBC81AD3D0C200F4B845 /* person */,
 				5C54DF2A1AB99F0900BDE34D /* homepage */,
@@ -2596,6 +2619,7 @@
 				5C9BDA331AA8515800715698 /* UIImage+Filtering.m in Sources */,
 				5C4AE3EC1AAED60A0020E102 /* ATOMMyFansViewController.m in Sources */,
 				5C520BA11ADBA1B000C7C2A5 /* AFSecurityPolicy.m in Sources */,
+				5C7B8AB31AFA549D00F448CD /* ATOMCommonImageViewModel.m in Sources */,
 				5C653BA11AA98B870025814B /* ATOMAddTipLabelToImageView.m in Sources */,
 				5C3101871AAE9B0F00EF529B /* ATOMAccountBindingViewController.m in Sources */,
 				5C561A711AB7C8C30052D4D5 /* MJRefreshFooter.m in Sources */,
@@ -2618,6 +2642,7 @@
 				5CE4082F1ACE94D600A56E4B /* UIViewController+ATOMTracking.m in Sources */,
 				5C4F5BCF1AA541DE00226F64 /* ATOMLoginViewController.m in Sources */,
 				5C4C70461AB665F500358989 /* ATOMHomePageViewModel.m in Sources */,
+				5C7B8AB01AFA535D00F448CD /* ATOMCommonImage.m in Sources */,
 				5C83A8911AC66F910071A024 /* POPGeometry.mm in Sources */,
 				5C436A9C1AB07E5C00D14608 /* ATOMTopicReplyMessageViewController.m in Sources */,
 				5CDB06151AA424F50089121E /* MMPlaceHolder.m in Sources */,
@@ -2752,6 +2777,7 @@
 				5C561A731AB7C8C30052D4D5 /* MJRefreshGifHeader.m in Sources */,
 				5CDB06661AA45C680089121E /* ATOMCreateProfileViewController.m in Sources */,
 				5C6776AF1AAC09C400320522 /* IQUIView+IQKeyboardToolbar.m in Sources */,
+				5C7B8AB71AFA5AB700F448CD /* ATOMShowAttention.m in Sources */,
 				5C653B9B1AA96C820025814B /* BJImageCropper.m in Sources */,
 				5C83A88B1AC66F910071A024 /* POPAnimationTracer.mm in Sources */,
 				5C6697A71AAFD242001FCF8A /* ATOMMyUploadCollectionViewCell.m in Sources */,

@@ -12,6 +12,10 @@
 #import "ATOMHotDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMHomePageViewModel.h"
+#import "ATOMShowAttention.h"
+#import "ATOMCommonImage.h"
+#import "ATOMCommonImageViewModel.h"
+#import "ATOMBottomCommonButton.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -23,6 +27,8 @@
 @property (nonatomic, strong) UITapGestureRecognizer *tapMyAttentionGesture;
 
 @property (nonatomic, strong) NSMutableArray *dataSource;
+@property (nonatomic, assign) NSInteger currentPage;
+@property (nonatomic, assign) NSInteger canRefreshFooter;
 
 @end
 
@@ -33,23 +39,74 @@
 #pragma mark Refresh
 
 - (void)configTableViewRefresh {
-    WS(ws);
-    [_tableView addLegendHeaderWithRefreshingBlock:^{
-        [ws loadNewHotData];
-    }];
-    [_tableView addLegendFooterWithRefreshingBlock:^{
-        [ws loadMoreHotData];
-    }];
+    [_tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(loadNewHotData)];
+    [_tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreHotData)];
 }
 
 - (void)loadNewHotData {
-    WS(ws);
-    [ws.tableView.header endRefreshing];
+    [_tableView.header endRefreshing];
 }
 
 - (void)loadMoreHotData {
-    WS(ws);
-    [ws.tableView.footer endRefreshing];
+    if (_canRefreshFooter) {
+        [self getMoreDataSource];
+    } else {
+        [_tableView.footer endRefreshing];
+    }
+}
+
+#pragma mark - GetDataSource
+
+- (void)getDataSource {
+    _currentPage = 1;
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
+    [param setObject:@(_currentPage) forKey:@"page"];
+    [param setObject:@(10) forKey:@"size"];
+    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    ATOMShowAttention *showAttention = [ATOMShowAttention new];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
+    [showAttention ShowAttention:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
+        [SVProgressHUD dismiss];
+        if (resultArray.count) {
+            [_dataSource removeAllObjects];
+        }
+        for (ATOMCommonImage *commonImage in resultArray) {
+            ATOMCommonImageViewModel * viewModel = [ATOMCommonImageViewModel new];
+            [viewModel setViewModelData:commonImage];
+            [_dataSource addObject:viewModel];
+        }
+        [_tableView reloadData];
+        [_tableView.header endRefreshing];
+    }];
+}
+
+- (void)getMoreDataSource {
+    _currentPage++;
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
+    [param setObject:@(_currentPage) forKey:@"page"];
+    [param setObject:@(10) forKey:@"size"];
+    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    ATOMShowAttention *showAttention = [ATOMShowAttention new];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
+    [showAttention ShowAttention:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
+        [SVProgressHUD dismiss];
+        for (ATOMCommonImage *commonImage in resultArray) {
+            ATOMCommonImageViewModel * viewModel = [ATOMCommonImageViewModel new];
+            [viewModel setViewModelData:commonImage];
+            [_dataSource addObject:viewModel];
+        }
+        if (resultArray.count == 0) {
+            _canRefreshFooter = NO;
+        } else {
+            _canRefreshFooter = YES;
+        }
+        [_tableView reloadData];
+        [_tableView.footer endRefreshing];
+    }];
 }
 
 #pragma mark - UI
@@ -61,14 +118,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    _dataSource = [NSMutableArray array];
-//    for (int i = 0; i < 12; i++) {
-//        NSString *imgName = [NSString stringWithFormat:@"%d.jpg",i];
-//        UIImage *img = [UIImage imageNamed:imgName];
-//        ATOMHomePageViewModel *viewModel = [ATOMHomePageViewModel new];
-//        viewModel.userImage = img;
-//        [_dataSource addObject:viewModel];
-//    }
 }
 
 - (void)createUI {
@@ -83,6 +132,9 @@
     _tapMyAttentionGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMyAttentionGesture:)];
     [_tableView addGestureRecognizer:_tapMyAttentionGesture];
     [self configTableViewRefresh];
+    _canRefreshFooter = YES;
+    _dataSource = [NSMutableArray array];
+    [self getDataSource];
 }
 
 #pragma mark - Gesture Event
