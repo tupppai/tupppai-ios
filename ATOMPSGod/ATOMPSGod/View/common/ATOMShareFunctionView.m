@@ -26,7 +26,7 @@
 
 @implementation ATOMShareFunctionView
 
-static CGFloat BOTTOMHEIGHT = 323;
+static CGFloat BOTTOMHEIGHT = 286;
 
 
 - (instancetype)init {
@@ -50,7 +50,7 @@ static CGFloat BOTTOMHEIGHT = 323;
     
     CGFloat buttonInterval = (CGWidth(_bottomView.frame) - 2 * kShareButtonWidth) / 3;
 
-    _wxButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonInterval, 16, kShareButtonWidth, kShareButtonWidth)];
+    _wxButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonInterval, kPadding10, kShareButtonWidth, kShareButtonWidth)];
     [_wxButton setBackgroundImage:[UIImage imageNamed:@"wechat_big"] forState:UIControlStateNormal];
     [_bottomView addSubview:_wxButton];
     
@@ -65,7 +65,7 @@ static CGFloat BOTTOMHEIGHT = 323;
     [self configCommonLabel:_wxFriendCircleLabel WithText:@"微信朋友圈" AndTextColor:[UIColor colorWithHex:0xacb8c1]];
     
     
-    _lineView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_wxFriendCircleLabel.frame) + 13, CGWidth(_bottomView.frame), 0.5)];
+    _lineView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_wxFriendCircleLabel.frame) + kPadding5, CGWidth(_bottomView.frame), 0.5)];
     _lineView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2];
     [_bottomView addSubview:_lineView];
     

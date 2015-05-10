@@ -308,7 +308,7 @@
     [_customTitleView.recentTitleButton addTarget:self action:@selector(clickRecentTitleButton:) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    negativeSpacer.width = -5;
+    negativeSpacer.width = 0;
     UIView *cameraView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     UIButton *cameraButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     [cameraButton setImage:[UIImage imageNamed:@"btn_psask_normal"] forState:UIControlStateNormal];
@@ -321,7 +321,7 @@
     
     _thineNavigationView = [UIView new];
     _thineNavigationView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2];
-    _thineNavigationView.frame = CGRectMake(CGRectGetMinX(self.navigationItem.titleView.frame) + 20, 40, 50, 4);
+    _thineNavigationView.frame = CGRectMake(CGRectGetMinX(self.navigationItem.titleView.frame) + 10, 40, 60, 4);
     [self.navigationController.navigationBar addSubview:_thineNavigationView];
 }
 
@@ -391,9 +391,9 @@
 
 - (void)changeNavigationBarAccordingTo:(NSString *)type {
     if ([type isEqualToString:@"hot"]) {
-        _thineNavigationView.frame = CGRectMake(CGRectGetMinX(self.navigationItem.titleView.frame) + 20, 40, 50, 4);
+        _thineNavigationView.frame = CGRectMake(CGRectGetMinX(self.navigationItem.titleView.frame) + 10, 40, 60, 4);
     } else if ([type isEqualToString:@"new"]) {
-        _thineNavigationView.frame = CGRectMake(CGRectGetMinX(self.navigationItem.titleView.frame) + 130, 40, 50, 4);
+        _thineNavigationView.frame = CGRectMake(CGRectGetMinX(self.navigationItem.titleView.frame) + 130, 40, 60, 4);
     }
 }
 

@@ -10,4 +10,6 @@
 
 @interface ATOMBaseView : UIView
 
++ (double)scaleInView;
+
 @end

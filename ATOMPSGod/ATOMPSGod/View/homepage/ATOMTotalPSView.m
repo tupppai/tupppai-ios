@@ -44,7 +44,7 @@
 
 - (void)drawRect:(CGRect)rect {
     [_number drawInRect:CGRectMake(0, 0, _number.length * kFont14, kFont14) withAttributes:self.attributeDict];
-    UIBezierPath *circlePath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(_number.length * kFont14, 4, 6, 6)];
+    UIBezierPath *circlePath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(_number.length * kFont14, 5, 6, 6)];
     [[UIColor colorWithHex:0xc5cdd3] set];
     [circlePath fill];
     NSString *str = @"P过";

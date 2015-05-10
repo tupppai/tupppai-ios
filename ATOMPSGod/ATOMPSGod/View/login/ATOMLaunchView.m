@@ -48,30 +48,32 @@
     [self addSubview:_otherRegisterButton];
     
     [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(ws.mas_left).with.offset(142);
-        make.right.equalTo(ws.mas_right).with.offset(-142);
-        make.top.equalTo(ws.mas_top).with.offset(120);
-        make.bottom.equalTo(ws.wxRegisterButton.mas_top).with.offset(-300);
+        make.centerX.equalTo(self);
+        make.width.equalTo(@90);
+        make.height.equalTo(@90);
+        make.top.equalTo(self).with.offset(120);
     }];
     
     [_wxRegisterButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(ws.mas_left).with.offset(97);
-        make.right.equalTo(ws.mas_right).with.offset(-97);
-        make.top.equalTo(ws.imageView.mas_bottom).with.offset(300);
+        make.centerX.equalTo(self);
+        make.width.equalTo(@180);
+        make.bottom.equalTo(self.loginButton.mas_top).with.offset(-7);
         make.height.equalTo(@42);
     }];
     
     [_loginButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(ws.wxRegisterButton.mas_left);
-        make.right.equalTo(ws.wxRegisterButton.mas_right);
-        make.top.equalTo(ws.wxRegisterButton.mas_bottom).with.offset(7);
-        make.height.equalTo(ws.wxRegisterButton.mas_height);
+        make.centerX.equalTo(self);
+        make.width.equalTo(@180);
+        make.top.equalTo(self.wxRegisterButton.mas_bottom).with.offset(7);
+        make.height.equalTo(self.wxRegisterButton.mas_height);
+        make.bottom.equalTo(self.otherRegisterButton.mas_top).with.offset(-kPadding10);
     }];
     
     [_otherRegisterButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
         make.width.equalTo(@100);
         make.top.equalTo(ws.loginButton.mas_bottom).with.offset(kPadding10);
+        make.height.equalTo(@20);
         make.bottom.equalTo(ws.mas_bottom).with.offset(-kPadding25);
     }];
 }

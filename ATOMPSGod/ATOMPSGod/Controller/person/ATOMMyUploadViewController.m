@@ -129,7 +129,7 @@ static int collumnNumber = 3;
 - (void)createUI {
     self.title = @"我的求P";
     _myUploadView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
-    _myUploadView.backgroundColor = [UIColor colorWithHex:0xededed];
+    _myUploadView.backgroundColor = [UIColor whiteColor];
     cellWidth = (SCREEN_WIDTH - (collumnNumber + 1) *padding6) / 3;
     self.view = _myUploadView;
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];

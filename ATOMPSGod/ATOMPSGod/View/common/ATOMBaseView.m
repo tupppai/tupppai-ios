@@ -19,5 +19,20 @@
     return self;
 }
 
++ (double)scaleInView {
+    const double wid = [[UIScreen mainScreen] bounds].size.width;
+    const double hid = [[UIScreen mainScreen] bounds].size.height;
+    
+    if (hid < 568) {
+        return 0.8;
+    } else if ( wid <= 320 ) {
+        return 0.8;
+    } else if (wid <= 375){
+        return 1;
+    } else {
+        return 1.06;
+    }
+}
+
 
 @end

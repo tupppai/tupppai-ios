@@ -19,9 +19,7 @@ static int collumnNumber = 3;
     if (!_workImageView) {
         cellWidth = (SCREEN_WIDTH - (collumnNumber + 1) *kPadding5) / 3;
         _workImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cellWidth, cellHeight - 25)];
-        _workImageView.layer.borderWidth = 1;
-        _workImageView.layer.borderColor = [[UIColor colorWithHex:0xededed] CGColor];
-        _workImageView.backgroundColor = [UIColor colorWithHex:0xf9ffff];
+        _workImageView.backgroundColor = [UIColor colorWithHex:0xe0e9f0];
         _workImageView.contentMode = UIViewContentModeScaleAspectFit;
         [self.contentView addSubview:_workImageView];
     }

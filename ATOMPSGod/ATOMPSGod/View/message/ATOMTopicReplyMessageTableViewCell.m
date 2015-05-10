@@ -11,9 +11,6 @@
 
 @implementation ATOMTopicReplyMessageTableViewCell
 
-static int padding20 = 20;
-static int padding10 = 10;
-
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -27,7 +24,7 @@ static int padding10 = 10;
 - (void)createSubView {
     _userHeaderButton = [UIButton new];
     _userHeaderButton.userInteractionEnabled = NO;
-    _userHeaderButton.layer.cornerRadius = 22.5;
+    _userHeaderButton.layer.cornerRadius = kUserHeaderButtonWidth2 / 2;
     _userHeaderButton.layer.masksToBounds = YES;
     [self addSubview:_userHeaderButton];
     
@@ -35,18 +32,18 @@ static int padding10 = 10;
     [self addSubview:_userSexImageView];
     
     _userNameLabel = [UILabel new];
-    _userNameLabel.textColor = [UIColor colorWithHex:0x00adef];
-    _userNameLabel.font = [UIFont systemFontOfSize:16.f];
+    _userNameLabel.textColor = [UIColor colorWithHex:0x000000];
+    _userNameLabel.font = [UIFont systemFontOfSize:kFont15];
     [self addSubview:_userNameLabel];
     
     _topicReplyContentLabel = [UILabel new];
-    _topicReplyContentLabel.textColor = [UIColor colorWithHex:0x828282];
-    _topicReplyContentLabel.font = [UIFont systemFontOfSize:16.f];
+    _topicReplyContentLabel.textColor = [UIColor colorWithHex:0x585858];
+    _topicReplyContentLabel.font = [UIFont systemFontOfSize:kFont14];
     [self addSubview:_topicReplyContentLabel];
     
     _topicReplyTimeLabel = [UILabel new];
-    _topicReplyTimeLabel.font = [UIFont systemFontOfSize:10.f];
-    _topicReplyTimeLabel.textColor = [UIColor colorWithHex:0x797979];
+    _topicReplyTimeLabel.font = [UIFont systemFontOfSize:kFont10];
+    _topicReplyTimeLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.4];
     [self addSubview:_topicReplyTimeLabel];
     
     _workImageView = [UIImageView new];
@@ -57,12 +54,11 @@ static int padding10 = 10;
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    _userHeaderButton.frame = CGRectMake(padding10, padding20, 45, 45);
-    _userSexImageView.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) - SEXRADIUS, CGRectGetMaxY(_userHeaderButton.frame) - SEXRADIUS, SEXRADIUS, SEXRADIUS);
-    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, padding20, SCREEN_WIDTH - padding10 * 4 - 75 - 45, 20);
-    _topicReplyContentLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, CGRectGetMaxY(_userNameLabel.frame), SCREEN_WIDTH - padding10 * 4 - 75 - 45, 30);
-    _topicReplyTimeLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + padding10, CGRectGetMaxY(_topicReplyContentLabel.frame), 150, 15);
-    _workImageView.frame = CGRectMake(SCREEN_WIDTH - padding10 - 75, padding10, 75, 75);
+    _userHeaderButton.frame = CGRectMake(kPadding15, kPadding20, kUserHeaderButtonWidth2, kUserHeaderButtonWidth2);
+    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding20, kPadding20, kUserNameLabelWidth, kFont15);
+    _topicReplyContentLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding20, CGRectGetMaxY(_userHeaderButton.frame) - kFont14, kUserNameLabelWidth, kFont14);
+    _topicReplyTimeLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding20, 100 - kPadding15 - kFont10, kUserNameLabelWidth, kFont10);
+    _workImageView.frame = CGRectMake(SCREEN_WIDTH - kPadding15 - 65, kPadding20, 65, 65);
 }
 
 - (void)setViewModel:(ATOMReplyMessageViewModel *)viewModel {

@@ -25,5 +25,7 @@
 #define CGOriginY(rect)                 rect.origin.y
 #define SEXRADIUS 15
 
+#define _S(number) (number*[ATOMBaseView scaleInView])
+
 
 #endif

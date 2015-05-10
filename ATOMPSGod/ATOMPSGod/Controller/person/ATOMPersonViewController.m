@@ -198,7 +198,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 60;
+    return _S(60);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -213,29 +213,30 @@
         if (row == 0) {
             cell.themeImageView.image = [UIImage imageNamed:@"ic_my_ask"];
             cell.themeLabel.text = @"我的求P";
+            [cell addTopLine];
         } else if (row == 1) {
             cell.themeImageView.image = [UIImage imageNamed:@"ic_my_reply"];
             cell.themeLabel.text = @"我的作品";
+            [cell addTopLine];
         } else if (row == 2) {
             cell.themeImageView.image = [UIImage imageNamed:@"ic_my_proceed"];
             cell.themeLabel.text = @"进行中";
+            [cell addTopLine];
         } else if (row == 3) {
             cell.themeImageView.image = [UIImage imageNamed:@"ic_my_fav"];
             cell.themeLabel.text = @"我的收藏";
-            cell.bottomLine = [[UIView alloc] initWithFrame:CGRectMake(kPadding30, 59.5, SCREEN_WIDTH - 2 * kPadding30, 0.5)];
-            cell.bottomLine.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2];
-            [cell addSubview:cell.bottomLine];
+            [cell addTopLine];
         }
     } else if (section == 1) {
         if (row == 0) {
             cell.themeImageView.image = [UIImage imageNamed:@"ic_my_focus"];
             cell.themeLabel.text = @"我的关注";
+            [cell addBottomLine];
         } else if (row == 1) {
             cell.themeImageView.image = [UIImage imageNamed:@"ic_my_setting"];
             cell.themeLabel.text = @"用户设置";
-            cell.bottomLine = [[UIView alloc] initWithFrame:CGRectMake(kPadding30, 59.5, SCREEN_WIDTH - 2 * kPadding30, 0.5)];
-            cell.bottomLine.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2];
-            [cell addSubview:cell.bottomLine];
+            [cell addBottomLine];
+            
         }
     }
 

@@ -37,11 +37,27 @@ static CGFloat BottomHeight = 215;
 }
 
 - (void)createSubView {
+    CGFloat buttonHeight = 45;
     
-    _tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(43, 216, CGWidth(self.frame) - 43 * 2, 90)];
+    _bottomView = [[UIView alloc] initWithFrame:CGRectMake(kPadding5, CGHeight(self.frame) - BottomHeight, SCREEN_WIDTH - 2 * kPadding5, BottomHeight)];
+    _bottomView.backgroundColor = [UIColor colorWithHex:0xededed];
+    _bottomView.layer.cornerRadius = 5;
+    [self addSubview:_bottomView];
+    
+    _downloadButton = [[UIButton alloc] initWithFrame:CGRectMake(kPadding10, kPadding25, CGWidth(_bottomView.frame) - 2 * kPadding10, buttonHeight)];
+    [self setCommonButton:_downloadButton WithTitle:@"下载素材" AndBackgroundColor:[UIColor colorWithHex:0x74c3ff]];
+    [_downloadButton addTarget:self action:@selector(clickDownloadButton:) forControlEvents:UIControlEventTouchUpInside];
+    _uploadButton = [[UIButton alloc] initWithFrame:CGRectMake(CGOriginX(_downloadButton.frame), CGRectGetMaxY(_downloadButton.frame) + kPadding15, CGRectGetWidth(_downloadButton.frame), buttonHeight)];
+    [self setCommonButton:_uploadButton WithTitle:@"上传作品" AndBackgroundColor:[UIColor colorWithHex:0x74c3ff]];
+    [_uploadButton addTarget:self action:@selector(clickUploadButton:) forControlEvents:UIControlEventTouchUpInside];
+    _cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(CGOriginX(_downloadButton.frame), CGRectGetMaxY(_uploadButton.frame) + kPadding15, CGRectGetWidth(_downloadButton.frame), buttonHeight)];
+    [self setCommonButton:_cancelButton WithTitle:@"取消" AndBackgroundColor:[UIColor colorWithHex:0xb5c0c8]];
+    [_cancelButton addTarget:self action:@selector(clickCancelButton:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    _tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(43, SCREEN_HEIGHT / 4, CGWidth(self.frame) - 43 * 2, 60)];
     _tipLabel.numberOfLines = 0;
     _tipLabel.textColor = [UIColor whiteColor];
-//    _tipLabel.textAlignment = NSTextAlignmentCenter;
     _tipLabel.text = @"亲爱的大神，下载素材后可以使用以下app处理哦";
     [self addSubview:_tipLabel];
     
@@ -49,7 +65,6 @@ static CGFloat BottomHeight = 215;
     CGFloat labelHeight = 30;
     CGFloat buttonInterval = (SCREEN_WIDTH - 3 * kShareButtonWidth) / 4;
     CGFloat originY = CGRectGetMaxY(_tipLabel.frame) + kPadding25;
-    
     _btn1 = [[UIButton alloc] initWithFrame:CGRectMake(buttonInterval, originY, kShareButtonWidth, kShareButtonWidth)];
     _btn1.backgroundColor = [UIColor whiteColor];
     [self addSubview:_btn1];
@@ -76,23 +91,6 @@ static CGFloat BottomHeight = 215;
     _label3.textAlignment = NSTextAlignmentCenter;
     _label3.text = @"美图秀秀";
     [self addSubview:_label3];
-    
-    CGFloat buttonHeight = 45;
-    
-    _bottomView = [[UIView alloc] initWithFrame:CGRectMake(kPadding5, CGHeight(self.frame) - BottomHeight, SCREEN_WIDTH - 2 * kPadding5, BottomHeight)];
-    _bottomView.backgroundColor = [UIColor colorWithHex:0xededed];
-    _bottomView.layer.cornerRadius = 5;
-    [self addSubview:_bottomView];
-    
-    _downloadButton = [[UIButton alloc] initWithFrame:CGRectMake(kPadding10, kPadding25, CGWidth(_bottomView.frame) - 2 * kPadding10, buttonHeight)];
-    [self setCommonButton:_downloadButton WithTitle:@"下载素材" AndBackgroundColor:[UIColor colorWithHex:0x74c3ff]];
-    [_downloadButton addTarget:self action:@selector(clickDownloadButton:) forControlEvents:UIControlEventTouchUpInside];
-    _uploadButton = [[UIButton alloc] initWithFrame:CGRectMake(CGOriginX(_downloadButton.frame), CGRectGetMaxY(_downloadButton.frame) + kPadding15, CGRectGetWidth(_downloadButton.frame), buttonHeight)];
-    [self setCommonButton:_uploadButton WithTitle:@"上传作品" AndBackgroundColor:[UIColor colorWithHex:0x74c3ff]];
-    [_uploadButton addTarget:self action:@selector(clickUploadButton:) forControlEvents:UIControlEventTouchUpInside];
-    _cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(CGOriginX(_downloadButton.frame), CGRectGetMaxY(_uploadButton.frame) + kPadding15, CGRectGetWidth(_downloadButton.frame), buttonHeight)];
-    [self setCommonButton:_cancelButton WithTitle:@"取消" AndBackgroundColor:[UIColor colorWithHex:0xb5c0c8]];
-    [_cancelButton addTarget:self action:@selector(clickCancelButton:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)setCommonButton:(UIButton *)button WithTitle:(NSString *)title AndBackgroundColor:(UIColor *)color {

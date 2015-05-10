@@ -12,6 +12,7 @@
 
 extern CGFloat const kCommentTableViewHeaderHeight;
 extern CGFloat const kUserHeaderButtonWidth;
+extern CGFloat const kUserHeaderButtonWidth2;
 extern CGFloat const kUserBigHeaderButtonWidth;
 extern CGFloat const kShareButtonWidth;
 extern CGFloat const kUserNameLabelWidth;
@@ -28,6 +29,7 @@ extern NSInteger const kPadding30;
 
 extern CGFloat const kFont10;
 extern CGFloat const kFont14;
+extern CGFloat const kFont15;
 
 
 #define kBlueColor [UIColor colorWithHex:0x74c3ff]
