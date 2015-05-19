@@ -12,5 +12,6 @@
 
 @property (nonatomic, strong) UIButton *wxButton;
 @property (nonatomic, strong) UIButton *wxFriendCircleButton;
+@property (nonatomic, strong) UIButton *weiboButton;
 
 @end

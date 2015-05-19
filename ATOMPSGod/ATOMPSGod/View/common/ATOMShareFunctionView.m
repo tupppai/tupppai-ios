@@ -13,6 +13,7 @@
 @property (nonatomic, strong) UIButton *cancelButton;
 @property (nonatomic, strong) UILabel *wxFriendCircleLabel;
 @property (nonatomic, strong) UILabel *wxLabel;
+@property (nonatomic, strong) UILabel *weiboLabel;
 @property (nonatomic, strong) UIView *lineView;
 @property (nonatomic, strong) UIButton *inviteButton;
 @property (nonatomic, strong) UIButton *reportButton;
@@ -48,7 +49,7 @@ static CGFloat BOTTOMHEIGHT = 286;
     _bottomView.backgroundColor = [UIColor colorWithHex:0xededed];
     [self addSubview:_bottomView];
     
-    CGFloat buttonInterval = (CGWidth(_bottomView.frame) - 2 * kShareButtonWidth) / 3;
+    CGFloat buttonInterval = (CGWidth(_bottomView.frame) - 3 * kShareButtonWidth) / 4;
 
     _wxButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonInterval, kPadding10, kShareButtonWidth, kShareButtonWidth)];
     [_wxButton setBackgroundImage:[UIImage imageNamed:@"wechat_big"] forState:UIControlStateNormal];
@@ -58,11 +59,18 @@ static CGFloat BOTTOMHEIGHT = 286;
     [_wxFriendCircleButton setBackgroundImage:[UIImage imageNamed:@"moment_big"] forState:UIControlStateNormal];
     [_bottomView addSubview:_wxFriendCircleButton];
     
+    _weiboButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonInterval + CGRectGetMaxX(_wxFriendCircleButton.frame), CGOriginY(_wxButton.frame), kShareButtonWidth, kShareButtonWidth)];
+    [_weiboButton setBackgroundImage:[UIImage imageNamed:@"weibo_big"] forState:UIControlStateNormal];
+    [_bottomView addSubview:_weiboButton];
+    
     _wxLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_wxButton.frame) - kPadding10, CGRectGetMaxY(_wxButton.frame), labelWidth, labelHeight)];
     [self configCommonLabel:_wxLabel WithText:@"微信好友" AndTextColor:[UIColor colorWithHex:0xacb8c1]];
     
     _wxFriendCircleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_wxFriendCircleButton.frame) - kPadding10, CGRectGetMaxY(_wxFriendCircleButton.frame), labelWidth, labelHeight)];
     [self configCommonLabel:_wxFriendCircleLabel WithText:@"微信朋友圈" AndTextColor:[UIColor colorWithHex:0xacb8c1]];
+    
+    _weiboLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_weiboButton.frame) - kPadding10, CGRectGetMaxY(_weiboButton.frame), labelWidth, labelHeight)];
+    [self configCommonLabel:_weiboLabel WithText:@"新浪微博" AndTextColor:[UIColor colorWithHex:0xacb8c1]];
     
     
     _lineView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_wxFriendCircleLabel.frame) + kPadding5, CGWidth(_bottomView.frame), 0.5)];
@@ -77,6 +85,7 @@ static CGFloat BOTTOMHEIGHT = 286;
     
     _collectButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_inviteButton.frame) + buttonInterval, buttonOriginY, kShareButtonWidth, kShareButtonWidth)];
     [_collectButton setBackgroundImage:[UIImage imageNamed:@"fav"] forState:UIControlStateNormal];
+    [_collectButton setBackgroundImage:[UIImage imageNamed:@"fv_select"] forState:UIControlStateSelected];
     [_collectButton addTarget:self action:@selector(clickCollectionButton:) forControlEvents:UIControlEventTouchUpInside];
     [_bottomView addSubview:_collectButton];
     

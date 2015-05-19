@@ -25,6 +25,7 @@
     if (self) {
         _tagImageView = [UIImageView new];
         _tagImageView.image = [UIImage imageNamed:@"tag_point"];
+        _tagImageView.contentMode = UIViewContentModeCenter;
         _blackView = [UIView new];
         _blackView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
         _blackView.layer.cornerRadius = 2.5;
@@ -231,7 +232,7 @@
         animation1.repeatCount = 1;
         animation1.autoreverses = YES;
         animation1.fromValue = [NSNumber numberWithFloat:1.0];
-        animation1.toValue = [NSNumber numberWithFloat:1.5];
+        animation1.toValue = [NSNumber numberWithFloat:2.0];
         [_tagImageView.layer addAnimation:animation1 forKey:@"tag_scale"];
     
         CABasicAnimation *animation2 = [CABasicAnimation animationWithKeyPath:@"transform.scale"];

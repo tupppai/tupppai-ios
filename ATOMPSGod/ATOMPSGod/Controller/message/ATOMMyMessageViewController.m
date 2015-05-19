@@ -64,19 +64,19 @@
     }
     NSInteger row = indexPath.row;
     if (row == 0) {
-        cell.themeImageView.image = [UIImage imageNamed:@"icon_comment1"];
+        cell.themeImageView.image = [UIImage imageNamed:@"ic_news_comment"];
         cell.themeLabel.text = @"评论";
     } else if (row == 1) {
-        cell.themeImageView.image = [UIImage imageNamed:@"icon_reply"];
+        cell.themeImageView.image = [UIImage imageNamed:@"ic_news_draft"];
         cell.themeLabel.text = @"帖子回复";
     } else if (row == 2) {
-        cell.themeImageView.image = [UIImage imageNamed:@"bt_myfollow"];
+        cell.themeImageView.image = [UIImage imageNamed:@"ic_news_follow"];
         cell.themeLabel.text = @"关注通知";
     } else if (row == 3) {
-        cell.themeImageView.image = [UIImage imageNamed:@"icon_invite"];
+        cell.themeImageView.image = [UIImage imageNamed:@"ic_news_invite"];
         cell.themeLabel.text = @"邀请通知";
     } else if (row == 4) {
-        cell.themeImageView.image = [UIImage imageNamed:@"icon_notice"];
+        cell.themeImageView.image = [UIImage imageNamed:@"ic_news_setting"];
         cell.themeLabel.text = @"系统通知";
     }
     return cell;

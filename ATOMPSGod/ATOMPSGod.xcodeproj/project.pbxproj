@@ -152,6 +152,7 @@
 		5C561A821AB7FC0B0052D4D5 /* ATOMHomepageCustomTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A811AB7FC0B0052D4D5 /* ATOMHomepageCustomTitleView.m */; };
 		5C561A851AB80F400052D4D5 /* ATOMOtherPersonCollectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A841AB80F400052D4D5 /* ATOMOtherPersonCollectionHeaderView.m */; };
 		5C561A8B1AB857870052D4D5 /* NSString+ATOMValidate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A8A1AB857870052D4D5 /* NSString+ATOMValidate.m */; };
+		5C589A8A1B04F2AC003D828A /* ATOMCameraView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C589A891B04F2AC003D828A /* ATOMCameraView.m */; };
 		5C5A7A831ABFA8BB004A00C5 /* ATOMRecentDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A7A821ABFA8BB004A00C5 /* ATOMRecentDetailTableViewCell.m */; };
 		5C5A7A861ABFF18F004A00C5 /* ATOMDetailImageDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A7A851ABFF18F004A00C5 /* ATOMDetailImageDAO.m */; };
 		5C5A7A891ABFF1A7004A00C5 /* ATOMCommentDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A7A881ABFF1A7004A00C5 /* ATOMCommentDAO.m */; };
@@ -661,6 +662,8 @@
 		5C561A841AB80F400052D4D5 /* ATOMOtherPersonCollectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMOtherPersonCollectionHeaderView.m; sourceTree = "<group>"; };
 		5C561A891AB857870052D4D5 /* NSString+ATOMValidate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ATOMValidate.h"; sourceTree = "<group>"; };
 		5C561A8A1AB857870052D4D5 /* NSString+ATOMValidate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ATOMValidate.m"; sourceTree = "<group>"; };
+		5C589A881B04F2AC003D828A /* ATOMCameraView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMCameraView.h; sourceTree = "<group>"; };
+		5C589A891B04F2AC003D828A /* ATOMCameraView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMCameraView.m; sourceTree = "<group>"; };
 		5C5A7A811ABFA8BB004A00C5 /* ATOMRecentDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMRecentDetailTableViewCell.h; sourceTree = "<group>"; };
 		5C5A7A821ABFA8BB004A00C5 /* ATOMRecentDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMRecentDetailTableViewCell.m; sourceTree = "<group>"; };
 		5C5A7A841ABFF18F004A00C5 /* ATOMDetailImageDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMDetailImageDAO.h; sourceTree = "<group>"; };
@@ -1486,6 +1489,8 @@
 				5C535CB41AF1FC8A00BF30D1 /* ATOMShareFunctionView.m */,
 				5C535CB81AF1FCEC00BF30D1 /* ATOMPSView.h */,
 				5C535CB91AF1FCEC00BF30D1 /* ATOMPSView.m */,
+				5C589A881B04F2AC003D828A /* ATOMCameraView.h */,
+				5C589A891B04F2AC003D828A /* ATOMCameraView.m */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -2643,6 +2648,7 @@
 				5C4F5BCF1AA541DE00226F64 /* ATOMLoginViewController.m in Sources */,
 				5C4C70461AB665F500358989 /* ATOMHomePageViewModel.m in Sources */,
 				5C7B8AB01AFA535D00F448CD /* ATOMCommonImage.m in Sources */,
+				5C589A8A1B04F2AC003D828A /* ATOMCameraView.m in Sources */,
 				5C83A8911AC66F910071A024 /* POPGeometry.mm in Sources */,
 				5C436A9C1AB07E5C00D14608 /* ATOMTopicReplyMessageViewController.m in Sources */,
 				5CDB06151AA424F50089121E /* MMPlaceHolder.m in Sources */,

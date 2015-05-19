@@ -33,7 +33,7 @@
 
 static int padding6 = 6;
 static float cellWidth;
-static float cellHeight = 150;
+static float cellHeight;
 static int collumnNumber = 3;
 
 #pragma mark - Refresh
@@ -131,6 +131,7 @@ static int collumnNumber = 3;
     _myUploadView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     _myUploadView.backgroundColor = [UIColor whiteColor];
     cellWidth = (SCREEN_WIDTH - (collumnNumber + 1) *padding6) / 3;
+    cellHeight = cellWidth;
     self.view = _myUploadView;
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.itemSize =CGSizeMake(cellWidth, cellHeight);

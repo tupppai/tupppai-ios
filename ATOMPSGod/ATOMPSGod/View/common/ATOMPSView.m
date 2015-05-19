@@ -30,7 +30,7 @@ static CGFloat BottomHeight = 215;
     self = [super init];
     if (self) {
         self.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-        self.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
+        self.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
         [self createSubView];
     }
     return self;

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ATOMCollectionViewLabel : UIView
+@interface ATOMCollectionViewLabel : UIImageView
 
 @property (nonatomic, copy) NSString *number;
 /**

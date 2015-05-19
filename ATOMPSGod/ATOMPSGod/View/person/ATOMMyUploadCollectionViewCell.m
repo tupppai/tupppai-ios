@@ -12,13 +12,14 @@
 @implementation ATOMMyUploadCollectionViewCell
 
 static float cellWidth;
-static float cellHeight = 150;
+static float cellHeight;
 static int collumnNumber = 3;
 
 - (UIImageView *)workImageView {
     if (!_workImageView) {
-        cellWidth = (SCREEN_WIDTH - (collumnNumber + 1) *kPadding5) / 3;
-        _workImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cellWidth, cellHeight - 25)];
+        cellWidth = (SCREEN_WIDTH - (collumnNumber + 1) * 6) / 3;
+        cellHeight = cellWidth;
+        _workImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cellWidth, cellHeight)];
         _workImageView.backgroundColor = [UIColor colorWithHex:0xe0e9f0];
         _workImageView.contentMode = UIViewContentModeScaleAspectFit;
         [self.contentView addSubview:_workImageView];
@@ -28,9 +29,10 @@ static int collumnNumber = 3;
 
 - (ATOMCollectionViewLabel *)psLabel {
     if (!_psLabel) {
-        cellWidth = (SCREEN_WIDTH - (collumnNumber + 1) *kPadding5) / 3;
-        _psLabel = [[ATOMCollectionViewLabel alloc] initWithFrame:CGRectMake(0, cellHeight - 25, cellWidth, 25)];
-        [self addSubview:_psLabel];
+        cellWidth = (SCREEN_WIDTH - (collumnNumber + 1) * 6) / 3;
+        cellHeight = cellWidth;
+        _psLabel = [[ATOMCollectionViewLabel alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(_workImageView.frame) - 23, cellWidth, 23)];
+        [_workImageView addSubview:_psLabel];
     }
     return _psLabel;
 }

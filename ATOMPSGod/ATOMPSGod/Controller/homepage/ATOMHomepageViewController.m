@@ -25,10 +25,11 @@
 #import "ATOMPSView.h"
 #import "AppDelegate.h"
 #import "ATOMBottomCommonButton.h"
+#import "ATOMCameraView.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMHomepageViewController() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, ATOMPSViewDelegate>
+@interface ATOMHomepageViewController() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, ATOMPSViewDelegate, ATOMCameraViewDelegate>
 
 @property (nonatomic, strong) ATOMHomepageCustomTitleView *customTitleView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
@@ -44,6 +45,7 @@
 @property (nonatomic, assign) BOOL canRefreshRecentFooter;
 @property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
 @property (nonatomic, strong) ATOMPSView *psView;
+@property (nonatomic, strong) ATOMCameraView *cameraView;
 @property (nonatomic, strong) ATOMHomePageViewModel *selectedHomePageViewModel;
 @property (nonatomic, strong) UIView *thineNavigationView;
 
@@ -83,6 +85,14 @@
         _psView.delegate = self;
     }
     return _psView;
+}
+
+- (ATOMCameraView *)cameraView {
+    if (!_cameraView) {
+        _cameraView = [ATOMCameraView new];
+        _cameraView.delegate = self;
+    }
+    return _cameraView;
 }
 
 #pragma mark - Refresh
@@ -342,14 +352,7 @@
 }
 
 - (void)clickCameraButton:(UIBarButtonItem *)sender {
-    [UIActionSheet showInView:self.view withTitle:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@[@"求助上传", @"作品上传"] tapBlock:^(UIActionSheet *actionSheet, NSInteger buttonIndex) {
-        NSString * tapTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
-        if ([tapTitle isEqualToString:@"求助上传"]) {
-            [self dealSelectingPhotoFromAlbum];
-        } else if ([tapTitle isEqualToString:@"作品上传"]) {
-            [self dealUploadWorksWithTag:0];
-        }
-    }];
+    [[AppDelegate APP].window addSubview:self.cameraView];
 }
 
 - (void)dealSelectingPhotoFromAlbum {
@@ -587,6 +590,23 @@
     }
 }
 
+#pragma mark - ATOMCameraViewDelegate
+
+- (void)dealWithCommand:(NSString *)command {
+//    [UIActionSheet showInView:self.view withTitle:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@[@"求助上传", @"作品上传"] tapBlock:^(UIActionSheet *actionSheet, NSInteger buttonIndex) {
+//        NSString * tapTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+//        if ([tapTitle isEqualToString:@"求助上传"]) {
+//            [self dealSelectingPhotoFromAlbum];
+//        } else if ([tapTitle isEqualToString:@"作品上传"]) {
+//            [self dealUploadWorksWithTag:0];
+//        }
+//    }];
+    if ([command isEqualToString:@"help"]) {
+        [self dealSelectingPhotoFromAlbum];
+    } else if ([command isEqualToString:@"work"]) {
+        [self dealUploadWorksWithTag:0];
+    }
+}
 
 
 
