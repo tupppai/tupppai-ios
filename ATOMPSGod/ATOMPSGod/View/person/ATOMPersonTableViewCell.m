@@ -10,6 +10,13 @@
 
 @interface ATOMPersonTableViewCell ()
 
+@property (nonatomic, strong) UIImageView *themeImageView;
+@property (nonatomic, strong) UILabel *themeLabel;
+@property (nonatomic, strong) UIImageView *rightImageView;
+@property (nonatomic, strong) UIImageView *arrowImageView;
+@property (nonatomic, strong) UIView *topLine;
+@property (nonatomic, strong) UIView *bottomLine;
+
 @end
 
 @implementation ATOMPersonTableViewCell
@@ -18,43 +25,128 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        [self createSubView];
+        [self addSubview:self.themeImageView];
+        [self addSubview:self.themeLabel];
+        [self addSubview:self.arrowImageView];
+        [self addSubview:self.topLine];
+        [self addSubview:self.bottomLine];
+        [self configLayout];
     }
     return self;
 }
 
-- (void)createSubView {
-    _themeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kPadding30, (CGHeight(self.frame) - 24) / 2, 24, 24)];
-    _themeImageView.contentMode = UIViewContentModeCenter;
-    [self addSubview:_themeImageView];
-    
-    _themeLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_themeImageView.frame) + kPadding20, (CGHeight(self.frame) - kFont14) / 2, kUserNameLabelWidth, kFont14)];
-    _themeLabel.font = [UIFont systemFontOfSize:kFont14];
-    [self addSubview:_themeLabel];
-    
-    _arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - kPadding30 - 11, (CGHeight(self.frame) - 24) / 2, 11, 24)];
-    _arrowImageView.contentMode = UIViewContentModeCenter;
-    _arrowImageView.image = [UIImage imageNamed:@"ic_right-arrow"];
-    [self addSubview:_arrowImageView];
-    
-    _topLine = [[UIView alloc] initWithFrame:CGRectMake(kPadding30, 0, SCREEN_WIDTH - 2 * kPadding30, 0.5f)];
-    _topLine.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2];
-    _topLine.hidden = YES;
-    [self addSubview:_topLine];
-    
-    _bottomLine = [[UIView alloc] initWithFrame:CGRectMake(kPadding30, CGRectGetHeight(self.frame) - 0.5f, SCREEN_WIDTH - 2 * kPadding30, 0.5)];
-    _bottomLine.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2];
-    _bottomLine.hidden = YES;
-    [self addSubview:_bottomLine];
+#pragma mark - Layout
+
+- (void)configLayout {
+    [self.themeImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self).with.offset(kPadding30);
+        make.centerY.equalTo(self);
+        make.size.mas_equalTo(CGSizeMake(24, 24));
+    }];
+    [self.themeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_themeImageView.mas_right).with.offset(kPadding20);
+        make.centerY.equalTo(self);
+    }];
+    [self.arrowImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self).with.offset(-kPadding30);
+        make.centerY.equalTo(self);
+        make.size.mas_equalTo(CGSizeMake(11, 24));
+    }];
+    [self.topLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self).with.offset(kPadding30);
+        make.right.equalTo(self).with.offset(-kPadding30);
+        make.top.equalTo(self);
+        make.height.equalTo(@0.5);
+    }];
+    [self.bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self).with.offset(kPadding30);
+        make.right.equalTo(self).with.offset(-kPadding30);
+        make.bottom.equalTo(self);
+        make.height.equalTo(@0.5);
+    }];
 }
 
-- (void)addTopLine {
-    _topLine.hidden = NO;
+#pragma mark - Public Method
+
+- (void)addTopLine:(BOOL)flag {
+    _topLine.hidden = !flag;
 }
 
-- (void)addBottomLine {
-    _bottomLine.hidden = NO;
+- (void)addBottomLine:(BOOL)flag {
+    _bottomLine.hidden = !flag;
 }
+
+- (void)configThemeImageWith:(UIImage *)image {
+    self.themeImageView.image = image;
+}
+
+- (void)configThemeLabelWith:(NSString *)str {
+    self.themeLabel.text = str;
+}
+
+#pragma mark - Getter & Setter
+
+- (UIImageView *)themeImageView {
+    if (!_themeImageView) {
+        _themeImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+        _themeImageView.contentMode = UIViewContentModeCenter;
+    }
+    return _themeImageView;
+}
+
+- (UILabel *)themeLabel {
+    if (!_themeLabel) {
+        _themeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        _themeLabel.font = [UIFont systemFontOfSize:kFont14];
+    }
+    return _themeLabel;
+}
+
+- (UIImageView *)arrowImageView {
+    if (!_arrowImageView) {
+        _arrowImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+        _arrowImageView.contentMode = UIViewContentModeCenter;
+        _arrowImageView.image = [UIImage imageNamed:@"ic_right-arrow"];
+    }
+    return _arrowImageView;
+}
+
+- (UIView *)topLine {
+    if (!_topLine) {
+        _topLine = [[UIView alloc] initWithFrame:CGRectZero];
+        _topLine.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2];
+    }
+    return _topLine;
+}
+
+- (UIView *)bottomLine {
+    if (!_bottomLine) {
+        _bottomLine = [[UIView alloc] initWithFrame:CGRectZero];
+        _bottomLine.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2];
+    }
+    return _bottomLine;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

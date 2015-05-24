@@ -10,14 +10,9 @@
 
 @interface ATOMPersonTableViewCell : UITableViewCell
 
-@property (nonatomic, strong) UIImageView *themeImageView;
-@property (nonatomic, strong) UILabel *themeLabel;
-@property (nonatomic, strong) UIImageView *rightImageView;
-@property (nonatomic, strong) UIImageView *arrowImageView;
-@property (nonatomic, strong) UIView *topLine;
-@property (nonatomic, strong) UIView *bottomLine;
-
-- (void)addTopLine;
-- (void)addBottomLine;
+- (void)addTopLine:(BOOL)flag;
+- (void)addBottomLine:(BOOL)flag;
+- (void)configThemeLabelWith:(NSString *)str;
+- (void)configThemeImageWith:(UIImage *)image;
 
 @end

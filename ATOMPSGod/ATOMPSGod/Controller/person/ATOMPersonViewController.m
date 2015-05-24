@@ -211,31 +211,37 @@
     NSInteger row = indexPath.row;
     if (section == 0) {
         if (row == 0) {
-            cell.themeImageView.image = [UIImage imageNamed:@"ic_my_ask"];
-            cell.themeLabel.text = @"我的求P";
-            [cell addTopLine];
+            [cell configThemeLabelWith:@"我的求P"];
+            [cell configThemeImageWith:[UIImage imageNamed:@"ic_my_ask"]];
+            [cell addTopLine:YES];
+            [cell addBottomLine:NO];
         } else if (row == 1) {
-            cell.themeImageView.image = [UIImage imageNamed:@"ic_my_reply"];
-            cell.themeLabel.text = @"我的作品";
-            [cell addTopLine];
+            [cell configThemeLabelWith:@"我的作品"];
+            [cell configThemeImageWith:[UIImage imageNamed:@"ic_my_reply"]];
+            [cell addTopLine:YES];
+            [cell addBottomLine:NO];
         } else if (row == 2) {
-            cell.themeImageView.image = [UIImage imageNamed:@"ic_my_proceed"];
-            cell.themeLabel.text = @"进行中";
-            [cell addTopLine];
+            [cell configThemeLabelWith:@"进行中"];
+            [cell configThemeImageWith:[UIImage imageNamed:@"ic_my_proceed"]];
+            [cell addTopLine:YES];
+            [cell addBottomLine:NO];
         } else if (row == 3) {
-            cell.themeImageView.image = [UIImage imageNamed:@"ic_my_fav"];
-            cell.themeLabel.text = @"我的收藏";
-            [cell addTopLine];
+            [cell configThemeLabelWith:@"我的收藏"];
+            [cell configThemeImageWith:[UIImage imageNamed:@"ic_my_fav"]];
+            [cell addTopLine:YES];
+            [cell addBottomLine:YES];
         }
     } else if (section == 1) {
         if (row == 0) {
-            cell.themeImageView.image = [UIImage imageNamed:@"ic_my_focus"];
-            cell.themeLabel.text = @"我的关注";
-            [cell addBottomLine];
+            [cell configThemeLabelWith:@"我的关注"];
+            [cell configThemeImageWith:[UIImage imageNamed:@"ic_my_focus"]];
+            [cell addTopLine:YES];
+            [cell addBottomLine:NO];
         } else if (row == 1) {
-            cell.themeImageView.image = [UIImage imageNamed:@"ic_my_setting"];
-            cell.themeLabel.text = @"用户设置";
-            [cell addBottomLine];
+            [cell configThemeLabelWith:@"用户设置"];
+            [cell configThemeImageWith:[UIImage imageNamed:@"ic_my_setting"]];
+            [cell addTopLine:YES];
+            [cell addBottomLine:YES];
             
         }
     }
