@@ -30,7 +30,7 @@
     [_hotTitleButton setTitleEdgeInsets:UIEdgeInsetsMake(8, 11, 8, 0)];
     [self addSubview:_hotTitleButton];
     _recentTitleButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_hotTitleButton.frame) +60 , 0, 60, 30)];
-    [_recentTitleButton setTitle:@"最新" forState:UIControlStateNormal];
+    [_recentTitleButton setTitle:@"求P" forState:UIControlStateNormal];
     [_recentTitleButton setImage:[UIImage imageNamed:@"btn_home_new"] forState:UIControlStateNormal];
     [_recentTitleButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _recentTitleButton.titleLabel.font = [UIFont systemFontOfSize:14.f];

@@ -28,6 +28,8 @@ extern NSInteger const kPadding25;
 extern NSInteger const kPadding30;
 
 extern CGFloat const kFont10;
+extern CGFloat const kFont13;
+
 extern CGFloat const kFont14;
 extern CGFloat const kFont15;
 

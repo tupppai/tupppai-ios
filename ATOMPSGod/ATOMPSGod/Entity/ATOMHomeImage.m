@@ -17,7 +17,7 @@
              @"nickname" : @"nickname",
              @"avatar" : @"avatar",
              @"sex" : @"sex",
-             @"uploadTime" : @"ask_created",
+             @"uploadTime" : @"create_time",
              @"imageURL" : @"image_url",
              @"userDescription" : @"desc",
              @"isDownload" : @"is_download",
@@ -27,7 +27,7 @@
              @"totalWXShareNumber" : @"weixin_share_count",
              @"totalWorkNumber" : @"reply_count",
              @"imageWidth" : @"image_width",
-             @"imageHeight" : @"image_height"
+             @"imageHeight" : @"image_height",
              };
 }
 
@@ -50,7 +50,8 @@
              @"imageWidth" : @"imageWidth",
              @"imageHeight" : @"imageHeight",
              @"tipLabelArray" :@"tipLabelArray",
-             @"replierArray" : @"replierArray"
+             @"replierArray" : @"replierArray",
+             @"homePageType":  @"homePageType"
              };
 }
 

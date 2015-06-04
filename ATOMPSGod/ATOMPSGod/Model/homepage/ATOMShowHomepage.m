@@ -58,12 +58,16 @@
 }
 
 - (AFHTTPRequestOperation *)ShowHomepage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
-    NSLog(@"%@ %ld", param[@"type"], [param[@"page"] longValue]);
+    NSLog(@"param type and page %@ %ld", param[@"type"], [param[@"page"] longValue]);
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:@"ask/index" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *homepageArray = [NSMutableArray array];
         NSArray *imageDataArray = responseObject[@"data"];
+        NSLog(@"imageDataArray from server%@",imageDataArray);
         for (int i = 0; i < imageDataArray.count; i++) {
             ATOMHomeImage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMHomeImage class] fromJSONDictionary:imageDataArray[i] error:NULL];
+            homeImage.homePageType = (NSString*)[param[@"type"] copy];
+            NSLog(@"homeImage %@",homeImage);
+            
             homeImage.tipLabelArray = [NSMutableArray array];
             NSArray *labelDataArray = imageDataArray[i][@"labels"];
             if (labelDataArray.count) {
@@ -124,6 +128,7 @@
                 NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
                 UIImage *image = [UIImage imageWithData:imageData];
                 NSString *path = [homePageDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"ATOMIMAGE-%d.jpg", (int)homeImage.imageID]];
+                NSLog(@"path %@",path);
                 if ([UIImageJPEGRepresentation(image, 1) writeToFile:path atomically:YES]) {
                     NSLog(@"write ATOMIMAGE-%d success", (int)homeImage.imageID);
                 } else {
@@ -161,8 +166,38 @@
     return array;
 }
 
-- (void)clearHomeImages {
+- (NSArray *)getHomeImagesWithHomeType:(NSString *)homeType {
+    NSArray *array = [self.homeImageDAO selectHomeImagesWithHomeType:homeType];
+    for (ATOMHomeImage *homeImage in array) {
+        homeImage.tipLabelArray = [self.imageTipLabelDAO selectTipLabelsByImageID:homeImage.imageID];
+        homeImage.replierArray = [self.replierDAO selectReplierByImageID:homeImage.imageID];
+    }
+    return array;
+}
+
+- (void)clearHomePages {
     [self.homeImageDAO clearHomeImages];
+    //清空标签数据库
+    [self.imageTipLabelDAO clearTipLabels];
+    //清空ATOMReplier数据库
+    [self.replierDAO clearReplier];
+    //删除沙盒中HomePage文件夹
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *directory = [NSString stringWithFormat:@"%@/HomePage", PATH_OF_DOCUMENT];
+    NSArray *fileContents = [fileManager contentsOfDirectoryAtPath:directory error:NULL];
+    NSEnumerator *e =[fileContents objectEnumerator];
+    NSString *filename;
+    while (filename = [e nextObject]) {
+        BOOL bo = [fileManager removeItemAtPath:[directory stringByAppendingPathComponent:filename] error:NULL];
+        if (bo) {
+            NSLog(@"remove HomePageImage success");
+        } else {
+            NSLog(@"remove HomePageImage fail");
+        }
+    }
+}
+- (void)clearHomePagesWithHomeType:(NSString *)homeType {
+    [self.homeImageDAO clearHomeImagesWithHomeType:homeType];
     //清空标签数据库
     [self.imageTipLabelDAO clearTipLabels];
     //清空ATOMReplier数据库

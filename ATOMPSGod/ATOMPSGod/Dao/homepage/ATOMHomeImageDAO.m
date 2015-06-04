@@ -66,9 +66,25 @@
     return homeImage;
 }
 
+- (NSArray *)selectHomeImagesWithHomeType:(NSString *)homeType {
+    __block NSMutableArray *muArray = [NSMutableArray array];
+    [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
+        
+        NSString *stmt = @"select * from ATOMHomeImage where homePageType = ?";
+        NSArray *param = @[homeType];
+        FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
+        while ([rs next]) {
+            ATOMHomeImage *homeImage = [MTLFMDBAdapter modelOfClass:[ATOMHomeImage class] fromFMResultSet:rs error:NULL];
+            [muArray addObject:homeImage];
+        }
+        [rs close];
+    }];
+    return [muArray copy];
+}
 - (NSArray *)selectHomeImages {
     __block NSMutableArray *muArray = [NSMutableArray array];
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
+        
         NSString *stmt = @"select * from ATOMHomeImage";
         FMResultSet *rs = [db executeQuery:stmt];
         while ([rs next]) {
@@ -99,11 +115,24 @@
     }];
     return flag;
 }
-
 - (void)clearHomeImages {
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
+        
         NSString *stmt = @"delete from ATOMHomeImage";
         BOOL flag = [db executeUpdate:stmt];
+        if (flag) {
+            NSLog(@"delete homeImage success");
+        } else {
+            NSLog(@"delete homeImage fail");
+        }
+    }];
+}
+- (void)clearHomeImagesWithHomeType:(NSString *)homeType {
+    [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
+
+        NSString *stmt = @"delete from ATOMHomeImage where homePageType = ?";
+        NSArray *param = @[homeType];
+        BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
         if (flag) {
             NSLog(@"delete homeImage success");
         } else {

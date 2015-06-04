@@ -18,7 +18,7 @@
              @"nickname" : @"nickname",
              @"avatar" : @"avatar",
              @"sex" : @"sex",
-             @"uploadTime" : @"ask_created",
+             @"uploadTime" : @"create_time",
              @"imageURL" : @"image_url",
              @"userDescription" : @"desc",
              @"isDownload" : @"is_download",

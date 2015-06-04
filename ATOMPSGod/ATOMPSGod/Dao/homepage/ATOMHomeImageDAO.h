@@ -15,7 +15,9 @@
 - (void)updateHomeImage:(ATOMHomeImage *)homeImage;
 - (ATOMHomeImage *)selectHomeImageByImageID:(NSInteger)imageID;
 - (NSArray *)selectHomeImages;
+- (NSArray *)selectHomeImagesWithHomeType:(NSString *)homeType;
 - (BOOL)isExistHomeImage:(ATOMHomeImage *)homeImage;
 - (void)clearHomeImages;
+- (void)clearHomeImagesWithHomeType:(NSString *)homeType;
 
 @end

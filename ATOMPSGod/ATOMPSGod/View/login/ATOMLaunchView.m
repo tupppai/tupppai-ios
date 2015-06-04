@@ -57,14 +57,14 @@
     [_wxRegisterButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self);
         make.width.equalTo(@180);
-        make.bottom.equalTo(self.loginButton.mas_top).with.offset(-7);
         make.height.equalTo(@42);
+        make.bottom.equalTo(self.loginButton.mas_top).with.offset(-7);
     }];
     
     [_loginButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self);
         make.width.equalTo(@180);
-        make.top.equalTo(self.wxRegisterButton.mas_bottom).with.offset(7);
+//        make.top.equalTo(self.wxRegisterButton.mas_bottom).with.offset(7);
         make.height.equalTo(self.wxRegisterButton.mas_height);
         make.bottom.equalTo(self.otherRegisterButton.mas_top).with.offset(-kPadding10);
     }];
@@ -72,8 +72,8 @@
     [_otherRegisterButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
         make.width.equalTo(@100);
-        make.top.equalTo(ws.loginButton.mas_bottom).with.offset(kPadding10);
         make.height.equalTo(@20);
+//        make.top.equalTo(ws.loginButton.mas_bottom).with.offset(kPadding10);
         make.bottom.equalTo(ws.mas_bottom).with.offset(-kPadding25);
     }];
 }

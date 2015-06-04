@@ -14,6 +14,8 @@
 - (AFHTTPRequestOperation *)ShowHomepage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *homepageArray, NSError *error))block;
 - (void)saveHomeImagesInDB:(NSMutableArray *)homeImages;
 - (NSArray *)getHomeImages;
-- (void)clearHomeImages;
+- (NSArray *)getHomeImagesWithHomeType:(NSString *)homeType;
 
+- (void)clearHomePages;
+- (void)clearHomePagesWithHomeType:(NSString *)homeType;
 @end

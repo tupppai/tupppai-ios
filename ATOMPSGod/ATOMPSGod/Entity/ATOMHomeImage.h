@@ -15,6 +15,12 @@
  *  作品ID
  */
 @property (nonatomic, assign) NSInteger imageID;
+
+/**
+ *  类型：hot ,recent
+ */
+@property (nonatomic, copy) NSString *homePageType;
+
 /**
  *  求P人 ID
  */

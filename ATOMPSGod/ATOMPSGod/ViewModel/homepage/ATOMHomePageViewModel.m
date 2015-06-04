@@ -30,7 +30,7 @@
         _userSex = ([ATOMCurrentUser currentUser].sex == 0) ? @"woman" : @"man";
         _avatarURL = [ATOMCurrentUser currentUser].avatar;
         NSDateFormatter *df = [NSDateFormatter new];
-        [df setDateFormat:@"yyyy年MM月dd日 HH时mm分"];
+        [df setDateFormat:@"MM月dd日 HH时mm分"];
         NSDate *publishDate = [NSDate date];
         _publishTime = [df stringFromDate:publishDate];
         _praiseNumber = @"0";
@@ -50,10 +50,8 @@
     _userSex = (homeImage.sex == 1) ? @"man" : @"woman";
     _userImageURL = homeImage.imageURL;
     _avatarURL = homeImage.avatar;
-    NSDateFormatter *df = [NSDateFormatter new];
-    [df setDateFormat:@"yyyy年MM月dd日 HH时mm分"];
     NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:homeImage.uploadTime];
-    _publishTime = [df stringFromDate:publishDate];
+    [self updatePublishTime:publishDate];
     _praiseNumber = [NSString stringWithFormat:@"%d",(int)homeImage.totalPraiseNumber];
     _shareNumber = [NSString stringWithFormat:@"%d",(int)homeImage.totalShareNumber];
     _commentNumber = [NSString stringWithFormat:@"%d",(int)homeImage.totalCommentNumber];
@@ -82,7 +80,30 @@
 }
 
 
-
+-(void)updatePublishTime:(NSDate*)date {
+    
+    NSDateFormatter *df = [NSDateFormatter new];
+    NSTimeInterval timeInterval = - ([date timeIntervalSinceNow]);
+    float dayDif = timeInterval/3600/24;
+    int result = 0;
+    if (dayDif > 7) {
+        [df setDateFormat:@"MM月dd日 HH:mm"];
+        _publishTime = [df stringFromDate:date];
+    } else if (dayDif <= 7) {
+        result = (int)roundf(dayDif);
+        _publishTime = [NSString stringWithFormat:@"%d天前",result];
+    } else if (dayDif < 1) {
+        if (dayDif >= 1/24.0) {
+            result = (int)roundf(dayDif*24.0);
+            _publishTime = [NSString stringWithFormat:@"%d小时前",result];
+        } else {
+            result = (int)roundf(dayDif*24.0*60);
+            _publishTime = [NSString stringWithFormat:@"%d分前",result];
+        }
+    }
+    
+//    NSLog(@"时间间隔%f,天%f",dif,dif2);
+}
 
 
 

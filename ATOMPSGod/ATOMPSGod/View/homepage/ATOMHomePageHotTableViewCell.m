@@ -60,10 +60,10 @@ static CGFloat replierWidth = 25;
     _userHeaderButton.layer.cornerRadius = kUserHeaderButtonWidth / 2;
     _userHeaderButton.layer.masksToBounds = YES;
     _userNameLabel = [UILabel new];
-    _userNameLabel.font = [UIFont systemFontOfSize:kFont14];
+    _userNameLabel.font = [UIFont fontWithName:@"Helvetica Light" size:kFont14];
     _userNameLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
     _userPublishTimeLabel = [UILabel new];
-    _userPublishTimeLabel.font = [UIFont systemFontOfSize:kFont14];
+    _userPublishTimeLabel.font = [UIFont fontWithName:@"Hiragino Sans GB W3" size:kFont13];
     _userPublishTimeLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
     
     [_topView addSubview:_userHeaderButton];
@@ -108,9 +108,9 @@ static CGFloat replierWidth = 25;
     CGFloat topViewHeight = 60;
     _topView.frame = CGRectMake(0, 0, SCREEN_WIDTH, topViewHeight);
     _userHeaderButton.frame = CGRectMake(kPadding15, (topViewHeight - kUserHeaderButtonWidth) / 2, kUserHeaderButtonWidth, kUserHeaderButtonWidth);
-    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, (topViewHeight - kFont14) / 2, kUserNameLabelWidth, kFont14);
-    _userPublishTimeLabel.frame = CGRectMake(SCREEN_WIDTH - kPadding15 - 80, (topViewHeight - kFont14) / 2, 80, kFont14);
-    
+    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, (topViewHeight - kFont14) / 2, kUserNameLabelWidth, kFont14+1);
+    _userPublishTimeLabel.frame = CGRectMake(SCREEN_WIDTH - kPadding15 - 130, (topViewHeight - kFont14) / 2, 130, kFont14);
+    _userPublishTimeLabel.textAlignment = NSTextAlignmentRight;
     CGSize workImageSize = CGSizeZero;
     CGSize commentSize, shareSize, praiseSize;
     if (_viewModel) {
