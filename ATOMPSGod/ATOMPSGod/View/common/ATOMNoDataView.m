@@ -29,7 +29,7 @@ static int padding20 = 20;
 }
 
 - (void)createSubView {
-    _imageView = [[UIImageView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH - 101) / 2, 31, 101, 101)];
+    _imageView = [[UIImageView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH - 101) / 2, SCREEN_HEIGHT/2-NAV_HEIGHT-101, 101, 101)];
     _imageView.image = [UIImage imageNamed:@"countenance_nothing"];
     [self addSubview:_imageView];
     

@@ -62,12 +62,10 @@
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:@"ask/index" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *homepageArray = [NSMutableArray array];
         NSArray *imageDataArray = responseObject[@"data"];
-        NSLog(@"imageDataArray from server%@",imageDataArray);
+        NSLog(@"imageDataArray%@",imageDataArray);
         for (int i = 0; i < imageDataArray.count; i++) {
             ATOMHomeImage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMHomeImage class] fromJSONDictionary:imageDataArray[i] error:NULL];
             homeImage.homePageType = (NSString*)[param[@"type"] copy];
-            NSLog(@"homeImage %@",homeImage);
-            
             homeImage.tipLabelArray = [NSMutableArray array];
             NSArray *labelDataArray = imageDataArray[i][@"labels"];
             if (labelDataArray.count) {

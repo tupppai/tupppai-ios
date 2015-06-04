@@ -80,7 +80,7 @@
 		5C4F5BE51AA557AF00226F64 /* ATOMPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BE41AA557AF00226F64 /* ATOMPersonViewController.m */; };
 		5C4F5BEF1AA5893700226F64 /* UIActionSheet+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BEE1AA5893700226F64 /* UIActionSheet+Blocks.m */; };
 		5C4F5BF31AA593E200226F64 /* ATOMHomePageHotTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BF21AA593E200226F64 /* ATOMHomePageHotTableViewCell.m */; };
-		5C4F5BF61AA5BFEC00226F64 /* ATOMHomePageRecentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BF51AA5BFEC00226F64 /* ATOMHomePageRecentTableViewCell.m */; };
+		5C4F5BF61AA5BFEC00226F64 /* ATOMHomePageSeekHelpTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BF51AA5BFEC00226F64 /* ATOMHomePageSeekHelpTableViewCell.m */; };
 		5C4F5BF91AA5E0B600226F64 /* ATOMHotDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BF81AA5E0B600226F64 /* ATOMHotDetailViewController.m */; };
 		5C4F5BFC1AA5E41900226F64 /* ATOMHotDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BFB1AA5E41900226F64 /* ATOMHotDetailTableViewCell.m */; };
 		5C4F88471AB56E760042E9BA /* ATOMShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F88461AB56E760042E9BA /* ATOMShareViewController.m */; };
@@ -342,6 +342,8 @@
 		5CE4082F1ACE94D600A56E4B /* UIViewController+ATOMTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CE4082E1ACE94D600A56E4B /* UIViewController+ATOMTracking.m */; };
 		5CEAC0301AD4D7750058037C /* ATOMCollectionViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CEAC02F1AD4D7750058037C /* ATOMCollectionViewModel.m */; };
 		5CEAC0331AD4F9540058037C /* ATOMShowCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CEAC0321AD4F9540058037C /* ATOMShowCollection.m */; };
+		E90C7C5D1B20726400CF0E6A /* PSMascotAnimationImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E90C7C5C1B20726400CF0E6A /* PSMascotAnimationImageView.m */; };
+		E90C7C601B20A0FC00CF0E6A /* KShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E90C7C5F1B20A0FC00CF0E6A /* KShareManager.m */; };
 		E99D2F541B1C7E8D000D7784 /* UIImage+Blurring.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D2F3A1B1C7E8D000D7784 /* UIImage+Blurring.m */; };
 		E99D2F551B1C7E8D000D7784 /* UIImage+Enhancing.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D2F3C1B1C7E8D000D7784 /* UIImage+Enhancing.m */; };
 		E99D2F561B1C7E8D000D7784 /* UIImage+Filtering.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D2F3E1B1C7E8D000D7784 /* UIImage+Filtering.m */; };
@@ -517,8 +519,8 @@
 		5C4F5BEE1AA5893700226F64 /* UIActionSheet+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+Blocks.m"; sourceTree = "<group>"; };
 		5C4F5BF11AA593E200226F64 /* ATOMHomePageHotTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMHomePageHotTableViewCell.h; sourceTree = "<group>"; };
 		5C4F5BF21AA593E200226F64 /* ATOMHomePageHotTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMHomePageHotTableViewCell.m; sourceTree = "<group>"; };
-		5C4F5BF41AA5BFEC00226F64 /* ATOMHomePageRecentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMHomePageRecentTableViewCell.h; sourceTree = "<group>"; };
-		5C4F5BF51AA5BFEC00226F64 /* ATOMHomePageRecentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMHomePageRecentTableViewCell.m; sourceTree = "<group>"; };
+		5C4F5BF41AA5BFEC00226F64 /* ATOMHomePageSeekHelpTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMHomePageSeekHelpTableViewCell.h; sourceTree = "<group>"; };
+		5C4F5BF51AA5BFEC00226F64 /* ATOMHomePageSeekHelpTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMHomePageSeekHelpTableViewCell.m; sourceTree = "<group>"; };
 		5C4F5BF71AA5E0B600226F64 /* ATOMHotDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMHotDetailViewController.h; sourceTree = "<group>"; };
 		5C4F5BF81AA5E0B600226F64 /* ATOMHotDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMHotDetailViewController.m; sourceTree = "<group>"; };
 		5C4F5BFA1AA5E41900226F64 /* ATOMHotDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMHotDetailTableViewCell.h; sourceTree = "<group>"; };
@@ -1016,6 +1018,10 @@
 		5CEAC02F1AD4D7750058037C /* ATOMCollectionViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMCollectionViewModel.m; sourceTree = "<group>"; };
 		5CEAC0311AD4F9540058037C /* ATOMShowCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShowCollection.h; sourceTree = "<group>"; };
 		5CEAC0321AD4F9540058037C /* ATOMShowCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShowCollection.m; sourceTree = "<group>"; };
+		E90C7C5B1B20726400CF0E6A /* PSMascotAnimationImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSMascotAnimationImageView.h; sourceTree = "<group>"; };
+		E90C7C5C1B20726400CF0E6A /* PSMascotAnimationImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSMascotAnimationImageView.m; sourceTree = "<group>"; };
+		E90C7C5E1B20A0FC00CF0E6A /* KShareManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KShareManager.h; sourceTree = "<group>"; };
+		E90C7C5F1B20A0FC00CF0E6A /* KShareManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KShareManager.m; sourceTree = "<group>"; };
 		E99D2F391B1C7E8D000D7784 /* UIImage+Blurring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Blurring.h"; sourceTree = "<group>"; };
 		E99D2F3A1B1C7E8D000D7784 /* UIImage+Blurring.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Blurring.m"; sourceTree = "<group>"; };
 		E99D2F3B1B1C7E8D000D7784 /* UIImage+Enhancing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Enhancing.h"; sourceTree = "<group>"; };
@@ -1360,8 +1366,8 @@
 				5C54DF151AB9529200BDE34D /* ATOMHomepageScrollView.m */,
 				5C4F5BF11AA593E200226F64 /* ATOMHomePageHotTableViewCell.h */,
 				5C4F5BF21AA593E200226F64 /* ATOMHomePageHotTableViewCell.m */,
-				5C4F5BF41AA5BFEC00226F64 /* ATOMHomePageRecentTableViewCell.h */,
-				5C4F5BF51AA5BFEC00226F64 /* ATOMHomePageRecentTableViewCell.m */,
+				5C4F5BF41AA5BFEC00226F64 /* ATOMHomePageSeekHelpTableViewCell.h */,
+				5C4F5BF51AA5BFEC00226F64 /* ATOMHomePageSeekHelpTableViewCell.m */,
 				5C4F5BFA1AA5E41900226F64 /* ATOMHotDetailTableViewCell.h */,
 				5C4F5BFB1AA5E41900226F64 /* ATOMHotDetailTableViewCell.m */,
 				5C819C931AA71FCD00CDDB5B /* ATOMCommentDetailTableViewCell.h */,
@@ -1495,6 +1501,8 @@
 				5C589A891B04F2AC003D828A /* ATOMCameraView.m */,
 				E9D1F88A1B203A4F0072242B /* PSUITableView.h */,
 				E9D1F88B1B203A4F0072242B /* PSUITableView.m */,
+				E90C7C5B1B20726400CF0E6A /* PSMascotAnimationImageView.h */,
+				E90C7C5C1B20726400CF0E6A /* PSMascotAnimationImageView.m */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -2143,6 +2151,8 @@
 				5C561A8A1AB857870052D4D5 /* NSString+ATOMValidate.m */,
 				5C84062A1ABA67CC00068F35 /* JSONKit.h */,
 				5C84062B1ABA67CC00068F35 /* JSONKit.m */,
+				E90C7C5E1B20A0FC00CF0E6A /* KShareManager.h */,
+				E90C7C5F1B20A0FC00CF0E6A /* KShareManager.m */,
 			);
 			path = Uitility;
 			sourceTree = "<group>";
@@ -2744,6 +2754,7 @@
 				5C83A88E1AC66F910071A024 /* POPCGUtils.mm in Sources */,
 				5CDB06741AA47EEC0089121E /* ATOMInputVerifyCodeView.m in Sources */,
 				5C8084F91AF2603D0062421C /* ATOMBottomCommonButton.m in Sources */,
+				E90C7C5D1B20726400CF0E6A /* PSMascotAnimationImageView.m in Sources */,
 				5C4C70C51AB6BC5200358989 /* ATOMBaseRequest.m in Sources */,
 				5C4C70A31AB694D500358989 /* MTLJSONAdapter.m in Sources */,
 				5CDB06051AA405A40089121E /* UIColor+HSL.m in Sources */,
@@ -2759,6 +2770,7 @@
 				5C4F5BE21AA5575300226F64 /* ATOMMyAttentionViewController.m in Sources */,
 				5C653B9E1AA973630025814B /* ATOMAddTipLabelToImageViewController.m in Sources */,
 				5C0F04DC1ADCE70C002003AE /* ATOMReplyMessage.m in Sources */,
+				E90C7C601B20A0FC00CF0E6A /* KShareManager.m in Sources */,
 				5C9BD9EE1AA8293400715698 /* ATOMUploadWorkViewController.m in Sources */,
 				5C6CEF2D1AF1971400F06213 /* ATOMPraiseButton.m in Sources */,
 				5C4F5BFC1AA5E41900226F64 /* ATOMHotDetailTableViewCell.m in Sources */,
@@ -2805,7 +2817,7 @@
 				5CADF3EE1AAC8A3100FF8015 /* ATOMPersonView.m in Sources */,
 				E99D2F5D1B1C7E8D000D7784 /* UIView+Screenshot.m in Sources */,
 				5C9BDA001AA8303700715698 /* ATOMUploadWorkView.m in Sources */,
-				5C4F5BF61AA5BFEC00226F64 /* ATOMHomePageRecentTableViewCell.m in Sources */,
+				5C4F5BF61AA5BFEC00226F64 /* ATOMHomePageSeekHelpTableViewCell.m in Sources */,
 				5C6776AA1AAC09C400320522 /* IQSegmentedNextPrevious.m in Sources */,
 				5C0D28301ACA83C400491452 /* ATOMAtComment.m in Sources */,
 				5C6776AE1AAC09C400320522 /* IQToolbar.m in Sources */,

@@ -16,7 +16,7 @@
 #import "ATOMCommonImage.h"
 #import "ATOMCommonImageViewModel.h"
 #import "ATOMBottomCommonButton.h"
-
+#import "ATOMNoDataView.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMMyAttentionViewController () <UITableViewDelegate, UITableViewDataSource>

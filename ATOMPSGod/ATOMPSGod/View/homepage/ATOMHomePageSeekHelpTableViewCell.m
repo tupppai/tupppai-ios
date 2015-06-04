@@ -1,21 +1,21 @@
 //
-//  ATOMHomePageRecentTableViewCell.m
+//  ATOMhomepageSeekHelpTableViewCell.m
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/3.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMHomePageRecentTableViewCell.h"
+#import "ATOMhomepageSeekHelpTableViewCell.h"
 #import "ATOMTipButton.h"
 #import "ATOMImageTipLabelViewModel.h"
 #import "ATOMBottomCommonButton.h"
 
-@interface ATOMHomePageRecentTableViewCell ()
+@interface ATOMhomepageSeekHelpTableViewCell ()
 
 @end
 
-@implementation ATOMHomePageRecentTableViewCell
+@implementation ATOMhomepageSeekHelpTableViewCell
 
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {

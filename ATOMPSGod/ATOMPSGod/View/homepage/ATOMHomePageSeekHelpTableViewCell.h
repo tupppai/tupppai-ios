@@ -1,5 +1,5 @@
 //
-//  ATOMHomePageRecentTableViewCell.h
+//  ATOMhomepageSeekHelpTableViewCell.h
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/3.
@@ -10,7 +10,7 @@
 #import "ATOMHomePageViewModel.h"
 @class ATOMBottomCommonButton;
 
-@interface ATOMHomePageRecentTableViewCell : UITableViewCell
+@interface ATOMhomepageSeekHelpTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) UIButton *userHeaderButton;
 @property (nonatomic, strong) UILabel *userNameLabel;

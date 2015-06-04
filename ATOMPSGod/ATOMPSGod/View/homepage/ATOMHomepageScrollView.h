@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PSUITableView.h"
+#import "ATOMNoDataView.h"
 
 typedef enum {
     ATOMHomepageHotType = 0,
@@ -15,15 +16,11 @@ typedef enum {
 }ATOMHomepageViewType;
 
 @interface ATOMHomepageScrollView : UIScrollView
-
 @property (nonatomic, strong) PSUITableView *homepageHotTableView;
-@property (nonatomic, strong) PSUITableView *homepageRecentTableView;
+@property (nonatomic, strong) PSUITableView *homepageSeekHelpTableView;
 @property (nonatomic, strong) UIView *homepageHotView;
 @property (nonatomic, strong) UIView *homepageRecentView;
 @property (nonatomic, assign) ATOMHomepageViewType currentHomepageType;
-
 - (void)changeUIAccording:(NSString *)buttonTitle;
 - (NSInteger)typeOfCurrentHomepageView;
-
-
 @end

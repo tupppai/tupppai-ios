@@ -29,6 +29,10 @@
         [self.gifHeader setImages:animatedImages forState:MJRefreshHeaderStateRefreshing];
         self.gifFooter.refreshingImages = animatedImages;
         self.footer.stateHidden = YES;
+        
+        _noDataView = [ATOMNoDataView new];
+        [self insertSubview:_noDataView atIndex:1];
+        _noDataView.hidden = true;
     }
     return self;
 }
@@ -42,5 +46,15 @@
         [_psDelegate didPullRefreshUp:self];
     }}
 
+-(void)reloadData {
+        [super reloadData];
+    if (self) {
+        if ([self numberOfRowsInSection:0] <= 0) {
+            _noDataView.hidden = false;
+        } else {
+            _noDataView.hidden = true;
+        }
+    }
+}
 
 @end
