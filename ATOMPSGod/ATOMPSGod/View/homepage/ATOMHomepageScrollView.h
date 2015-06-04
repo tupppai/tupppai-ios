@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PSUITableView.h"
 
 typedef enum {
     ATOMHomepageHotType = 0,
@@ -15,8 +16,8 @@ typedef enum {
 
 @interface ATOMHomepageScrollView : UIScrollView
 
-@property (nonatomic, strong) UITableView *homepageHotTableView;
-@property (nonatomic, strong) UITableView *homepageRecentTableView;
+@property (nonatomic, strong) PSUITableView *homepageHotTableView;
+@property (nonatomic, strong) PSUITableView *homepageRecentTableView;
 @property (nonatomic, strong) UIView *homepageHotView;
 @property (nonatomic, strong) UIView *homepageRecentView;
 @property (nonatomic, assign) ATOMHomepageViewType currentHomepageType;

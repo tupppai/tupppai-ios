@@ -29,7 +29,7 @@
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMHomepageViewController() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, ATOMPSViewDelegate, ATOMCameraViewDelegate>
+@interface ATOMHomepageViewController() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, ATOMPSViewDelegate, ATOMCameraViewDelegate,PSUITableViewDelegate>
 
 @property (nonatomic, strong) ATOMHomepageCustomTitleView *customTitleView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
@@ -97,11 +97,6 @@
 
 #pragma mark - Refresh
 
-- (void)configHomepageHotTableViewRefresh {
-    [_scrollView.homepageHotTableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(loadNewHotData)];
-    [_scrollView.homepageHotTableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreHotData)];
-}
-
 - (void)loadNewHotData {
     [self getDataSourceOfTableViewWithHomeType:@"hot"];
 }
@@ -114,10 +109,6 @@
     }
 }
 
-- (void)configHomepageRecentTableViewRefresh {
-    [_scrollView.homepageRecentTableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(loadNewRecentData)];
-    [_scrollView.homepageRecentTableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreRecentData)];
-}
 
 - (void)loadNewRecentData {
     [self getDataSourceOfTableViewWithHomeType:@"new"];
@@ -131,6 +122,25 @@
     }
     
 }
+
+#pragma mark - PSUITableViewDelegate
+
+-(void)didPullRefreshUp:(UITableView *)tableView {
+    if (tableView == _scrollView.homepageHotTableView) {
+        [self loadMoreHotData];
+    } else if(tableView == _scrollView.homepageRecentTableView) {
+        [self loadMoreRecentData];
+    }
+}
+
+-(void)didPullRefreshDown:(UITableView *)tableView{
+    if (tableView == _scrollView.homepageHotTableView) {
+        [self loadNewHotData];
+    } else if(tableView == _scrollView.homepageRecentTableView) {
+        [self loadNewRecentData];
+    }
+}
+
 
 #pragma mark - GetDataSource
 //初始数据
@@ -304,17 +314,17 @@
 - (void)configHomepageHotTableView {
     _scrollView.homepageHotTableView.delegate = self;
     _scrollView.homepageHotTableView.dataSource = self;
+    _scrollView.homepageHotTableView.psDelegate = self;
     _tapHomePageHotGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHomePageHotGesture:)];
     [_scrollView.homepageHotTableView addGestureRecognizer:_tapHomePageHotGesture];
-    [self configHomepageHotTableViewRefresh];
 }
-
 - (void)configHomepageRecentTableView {
     _scrollView.homepageRecentTableView.delegate = self;
     _scrollView.homepageRecentTableView.dataSource = self;
+    _scrollView.homepageRecentTableView.psDelegate = self;
+
     _tapHomePageRecentGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHomePageRecentGesture:)];
     [_scrollView.homepageRecentTableView addGestureRecognizer:_tapHomePageRecentGesture];
-    [self configHomepageRecentTableViewRefresh];
 }
 
 - (void)createCustomNavigationBar {

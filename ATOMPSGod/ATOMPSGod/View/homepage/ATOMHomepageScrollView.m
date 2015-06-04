@@ -42,7 +42,7 @@
 - (void)createHomepageHotView {
     _homepageHotView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
     [self addSubview:_homepageHotView];
-    _homepageHotTableView = [[UITableView alloc] initWithFrame:_homepageHotView.bounds];
+    _homepageHotTableView = [[PSUITableView alloc] initWithFrame:_homepageHotView.bounds];
     _homepageHotTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [_homepageHotView addSubview:_homepageHotTableView];
     
@@ -51,7 +51,7 @@
 - (void)createHomepageRecentView {
     _homepageRecentView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
     [self addSubview:_homepageRecentView];
-    _homepageRecentTableView = [[UITableView alloc] initWithFrame:_homepageRecentView.bounds];
+    _homepageRecentTableView = [[PSUITableView alloc] initWithFrame:_homepageRecentView.bounds];
     _homepageRecentTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [_homepageRecentView addSubview:_homepageRecentTableView];
 }

@@ -354,6 +354,7 @@
 		E99D2F5D1B1C7E8D000D7784 /* UIView+Screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D2F4C1B1C7E8D000D7784 /* UIView+Screenshot.m */; };
 		E99D2F5E1B1C7E8D000D7784 /* NYXProgressiveImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D2F4F1B1C7E8D000D7784 /* NYXProgressiveImageView.m */; };
 		E99D2F5F1B1C7E8D000D7784 /* NYXImagesHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D2F521B1C7E8D000D7784 /* NYXImagesHelper.m */; };
+		E9D1F88C1B203A4F0072242B /* PSUITableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9D1F88B1B203A4F0072242B /* PSUITableView.m */; };
 		E9EB0C8A1B2023B100AB9B16 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9EB0C891B2023B100AB9B16 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -1040,6 +1041,8 @@
 		E99D2F511B1C7E8D000D7784 /* NYXImagesHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NYXImagesHelper.h; sourceTree = "<group>"; };
 		E99D2F521B1C7E8D000D7784 /* NYXImagesHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NYXImagesHelper.m; sourceTree = "<group>"; };
 		E99D2F531B1C7E8D000D7784 /* NYXImagesKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NYXImagesKit.h; sourceTree = "<group>"; };
+		E9D1F88A1B203A4F0072242B /* PSUITableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSUITableView.h; sourceTree = "<group>"; };
+		E9D1F88B1B203A4F0072242B /* PSUITableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSUITableView.m; sourceTree = "<group>"; };
 		E9EB0C891B2023B100AB9B16 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1490,6 +1493,8 @@
 				5C535CB91AF1FCEC00BF30D1 /* ATOMPSView.m */,
 				5C589A881B04F2AC003D828A /* ATOMCameraView.h */,
 				5C589A891B04F2AC003D828A /* ATOMCameraView.m */,
+				E9D1F88A1B203A4F0072242B /* PSUITableView.h */,
+				E9D1F88B1B203A4F0072242B /* PSUITableView.m */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -2808,6 +2813,7 @@
 				5C4F5BF91AA5E0B600226F64 /* ATOMHotDetailViewController.m in Sources */,
 				E99D2F591B1C7E8D000D7784 /* UIImage+Resizing.m in Sources */,
 				5C0F04F11ADCFC11002003AE /* ATOMInviteMessageViewModel.m in Sources */,
+				E9D1F88C1B203A4F0072242B /* PSUITableView.m in Sources */,
 				5CDB062F1AA428BD0089121E /* MASConstraint.m in Sources */,
 				5C520BA41ADBA1B000C7C2A5 /* AFURLResponseSerialization.m in Sources */,
 				5C561A791AB7C8C30052D4D5 /* UIView+MJExtension.m in Sources */,

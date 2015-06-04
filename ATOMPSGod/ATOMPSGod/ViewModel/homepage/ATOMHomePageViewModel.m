@@ -89,20 +89,16 @@
     if (dayDif > 7) {
         [df setDateFormat:@"MM月dd日 HH:mm"];
         _publishTime = [df stringFromDate:date];
-    } else if (dayDif <= 7) {
+    } else if (dayDif >= 1) {
         result = (int)roundf(dayDif);
         _publishTime = [NSString stringWithFormat:@"%d天前",result];
-    } else if (dayDif < 1) {
-        if (dayDif >= 1/24.0) {
-            result = (int)roundf(dayDif*24.0);
-            _publishTime = [NSString stringWithFormat:@"%d小时前",result];
-        } else {
+    } else if (dayDif >= 1/24.0) {
+        result = (int)roundf(dayDif*24.0);
+        _publishTime = [NSString stringWithFormat:@"%d小时前",result];
+    } else {
             result = (int)roundf(dayDif*24.0*60);
             _publishTime = [NSString stringWithFormat:@"%d分前",result];
         }
-    }
-    
-//    NSLog(@"时间间隔%f,天%f",dif,dif2);
 }
 
 
