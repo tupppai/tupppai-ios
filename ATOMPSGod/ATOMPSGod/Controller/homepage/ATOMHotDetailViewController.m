@@ -158,9 +158,7 @@
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
     ATOMShowDetailOfHomePage *showDetailOfHomePage = [ATOMShowDetailOfHomePage new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.homePageViewModel.imageID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
-        [SVProgressHUD dismiss];
         for (ATOMDetailImage *detailImage in detailOfHomePageArray) {
             ATOMDetailImageViewModel *model = [ATOMDetailImageViewModel new];
             [model setViewModelDataWithDetailImage:detailImage];

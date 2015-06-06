@@ -53,39 +53,39 @@ static FMDatabaseQueue *_fmQueue = nil;
         
         flag = [db executeUpdate:[ATOMCreateTable createUser]];
         if (flag) {
-            NSLog(@"create User success");
+            NSLog(@"create Table User success");
         } else {
-            NSLog(@"create User fail");
+            NSLog(@"create Table User fail");
         }
         flag = [db executeUpdate:[ATOMCreateTable createImageTipLabel]];
         if (flag) {
-            NSLog(@"create ImageTipLabel success");
+            NSLog(@"create Table ImageTipLabel success");
         } else {
-            NSLog(@"create ImageTipLabel fail");
+            NSLog(@"create Table ImageTipLabel fail");
         }
         flag = [db executeUpdate:[ATOMCreateTable createReplier]];
         if (flag) {
-            NSLog(@"create Replier success");
+            NSLog(@"create Table Replier success");
         } else {
-            NSLog(@"create Replier fail");
+            NSLog(@"create Table Replier fail");
         }
         flag = [db executeUpdate:[ATOMCreateTable createHomeImage]];
         if (flag) {
-            NSLog(@"create HomeImage success");
+            NSLog(@"create Table HomeImage success");
         } else {
-            NSLog(@"create HomeImage fail");
+            NSLog(@"create Table HomeImage fail");
         }
         flag = [db executeUpdate:[ATOMCreateTable createDetailImage]];
         if (flag) {
-            NSLog(@"create DetailImage success");
+            NSLog(@"create Table DetailImage success");
         } else {
-            NSLog(@"create DetailImage fail");
+            NSLog(@"create Table DetailImage fail");
         }
         flag = [db executeUpdate:[ATOMCreateTable createComment]];
         if (flag) {
-            NSLog(@"create Comment success");
+            NSLog(@"create Table Comment success");
         } else {
-            NSLog(@"create Comment fail");
+            NSLog(@"create Table Comment fail");
         }
     }];
 }

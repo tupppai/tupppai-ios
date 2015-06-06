@@ -28,6 +28,8 @@
              @"totalWorkNumber" : @"reply_count",
              @"imageWidth" : @"image_width",
              @"imageHeight" : @"image_height",
+             @"liked" :@"uped",
+//             @"collected":@"collected",
              };
 }
 
@@ -51,7 +53,8 @@
              @"imageHeight" : @"imageHeight",
              @"tipLabelArray" :@"tipLabelArray",
              @"replierArray" : @"replierArray",
-             @"homePageType":  @"homePageType"
+             @"homePageType":  @"homePageType",
+             @"liked" :@"liked",
              };
 }
 

@@ -57,12 +57,31 @@
     return _replierDAO;
 }
 
+- (AFHTTPRequestOperation *)toggleLike:(NSDictionary *)param withID:(NSInteger)imageID  withBlock:(void (^)(NSString *, NSError *))block {
+    NSString* url = [NSString stringWithFormat:@"ask/upask/%ld",(long)imageID];
+    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
+        if (ret == 1) {
+            if (block) {
+                block(@"success", nil);
+            }
+        } else {
+            block(@"fail", nil);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (block) {
+            block(@"fail", error);
+        }
+    }];
+}
+
 - (AFHTTPRequestOperation *)ShowHomepage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
-    NSLog(@"param type and page %@ %ld", param[@"type"], [param[@"page"] longValue]);
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:@"ask/index" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"ShowHomepage responseObject%@",responseObject);
+        
         NSMutableArray *homepageArray = [NSMutableArray array];
         NSArray *imageDataArray = responseObject[@"data"];
-        NSLog(@"imageDataArray%@",imageDataArray);
         for (int i = 0; i < imageDataArray.count; i++) {
             ATOMHomeImage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMHomeImage class] fromJSONDictionary:imageDataArray[i] error:NULL];
             homeImage.homePageType = (NSString*)[param[@"type"] copy];
@@ -84,12 +103,14 @@
                     [homeImage.replierArray addObject:replier];
                 }
             }
+            NSLog(@"homeImage %@ ",homeImage);
             [homepageArray addObject:homeImage];
         }
         if (block) {
             block(homepageArray, nil);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [SVProgressHUD showErrorWithStatus:@"出现错误,请检查你的网络"];
         if (block) {
             block(nil, error);
         }

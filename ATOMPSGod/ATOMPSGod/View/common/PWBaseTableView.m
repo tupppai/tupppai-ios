@@ -1,14 +1,14 @@
 //
-//  PSUITableView.m
+//  PWBaseTableView.m
 //  ATOMPSGod
 //
 //  Created by Peiwei Chen on 6/4/15.
 //  Copyright (c) 2015 ATOM. All rights reserved.
 //
 
-#import "PSUITableView.h"
+#import "PWBaseTableView.h"
 
-@implementation PSUITableView
+@implementation PWBaseTableView
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -29,13 +29,18 @@
         [self.gifHeader setImages:animatedImages forState:MJRefreshHeaderStateRefreshing];
         self.gifFooter.refreshingImages = animatedImages;
         self.footer.stateHidden = YES;
-        
-        _noDataView = [ATOMNoDataView new];
-        [self insertSubview:_noDataView atIndex:1];
-        _noDataView.hidden = true;
     }
     return self;
 }
+#pragma mark lazy initilize
+- (ATOMNoDataView *)noDataView {
+    if (!_noDataView) {
+        _noDataView = [ATOMNoDataView new];
+        [self addSubview:_noDataView];
+    }
+    return _noDataView;
+}
+
 -(void) loadNewHotData {
     if (_psDelegate && [_psDelegate respondsToSelector:@selector(didPullRefreshDown:)]) {
         [_psDelegate didPullRefreshDown:self];
@@ -47,14 +52,20 @@
     }}
 
 -(void)reloadData {
-        [super reloadData];
+    [super reloadData];
     if (self) {
-        if ([self numberOfRowsInSection:0] <= 0) {
-            _noDataView.hidden = false;
-        } else {
-            _noDataView.hidden = true;
+        for (int i = 0; i < [self numberOfSections]; i++) {
+            if ([self numberOfRowsInSection:i] > 0) {
+                self.noDataView.hidden = true;
+                break;
+            }
+            self.noDataView.hidden = false;
         }
     }
+}
+
+-(void)reloadDataCustom {
+    [super reloadData];
 }
 
 @end

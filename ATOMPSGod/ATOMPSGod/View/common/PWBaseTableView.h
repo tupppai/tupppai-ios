@@ -1,5 +1,5 @@
 //
-//  PSUITableView.h
+//  PWBaseTableView.h
 //  ATOMPSGod
 //
 //  Created by Peiwei Chen on 6/4/15.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ATOMNoDataView.h"
-@protocol PSUITableViewDelegate <NSObject>
+@protocol PWBaseTableViewDelegate <NSObject>
 /**
  * 向下拉tableView触发
 **/
@@ -17,7 +17,8 @@
  * 拉到tableView底部时，继续向上拉触发
  **/-(void) didPullRefreshUp:(UITableView*)tableView;
 @end
-@interface PSUITableView : UITableView
-@property (nonatomic, weak) id<PSUITableViewDelegate> psDelegate;
+@interface PWBaseTableView : UITableView
+@property (nonatomic, weak) id<PWBaseTableViewDelegate> psDelegate;
 @property (nonatomic, strong) ATOMNoDataView *noDataView;
+-(void)reloadDataCustom;
 @end

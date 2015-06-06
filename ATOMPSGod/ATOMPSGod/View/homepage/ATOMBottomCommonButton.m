@@ -7,13 +7,12 @@
 //
 
 #import "ATOMBottomCommonButton.h"
-
+#import "ATOMShowHomepage.h"
 @interface ATOMBottomCommonButton ()
 
 @property (nonatomic, strong) UIColor *currentColor;
 @property (nonatomic, assign) CGFloat extralWidth;
 @property (nonatomic, strong) NSDictionary *attributeDict;
-
 @end
 
 @implementation ATOMBottomCommonButton
@@ -50,6 +49,36 @@
         _currentColor = [UIColor colorWithHex:0xfe8282];
     }
     [self setNeedsDisplay];
+    
+}
+- (void)toggleLike:(BOOL)selected {
+    //call setSelected and change color
+    self.selected = selected;
+    if (!selected) {
+        [self.delegate untapLikeButton:self];
+    } else {
+        [self.delegate tapLikeButton:self];
+    }
+}
+
+- (void)toggleLike:(BOOL)selected withID:(NSInteger)id {
+    
+    //call setSelected() and change color
+    self.selected = selected;
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    NSInteger status = !selected? 0:1;
+    NSInteger likeNumber = !selected? -1:1;
+    [param setValue:@(status) forKey:@"status"];
+    ATOMShowHomepage * showHomepage = [ATOMShowHomepage new];
+    [showHomepage toggleLike:param withID:id withBlock:^(NSString *msg, NSError *error) {
+            if (!error) {
+                NSLog(@"Server成功toggle like");
+                NSInteger number = [_number integerValue]+likeNumber;
+                [self setNumber:[NSString stringWithFormat:@"%ld",(long)number]];
+            } else {
+                NSLog(@"Server失败 toggle like");
+            }
+        }];
 }
 
 - (void)setImage:(UIImage *)image {

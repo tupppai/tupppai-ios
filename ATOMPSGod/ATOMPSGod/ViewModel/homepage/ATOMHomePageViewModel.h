@@ -27,6 +27,9 @@
 @property (nonatomic, strong) NSMutableArray *labelArray;
 @property (nonatomic, strong) NSMutableArray *replierArray;
 @property (nonatomic, strong) UIImage *image;
+@property (nonatomic, assign) BOOL liked;
+@property (nonatomic, assign) BOOL collected;
+
 - (void)setViewModelData:(ATOMHomeImage *)homeImage;
 
 @end

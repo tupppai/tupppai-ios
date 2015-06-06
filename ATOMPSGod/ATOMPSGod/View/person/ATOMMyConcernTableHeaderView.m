@@ -29,7 +29,6 @@
 - (void)createSubView {
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(kPadding15, kCommentTableViewHeaderHeight - kPadding10 - kFont14, SCREEN_WIDTH - kPadding15, kFont14)];
     _titleLabel.font = [UIFont systemFontOfSize:kFont14];
-//    _titleLabel.backgroundColor = [UIColor orangeColor];
     _titleLabel.textColor = [UIColor colorWithHex:0x637685];
     [self addSubview:_titleLabel];
 }

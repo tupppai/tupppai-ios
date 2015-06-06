@@ -17,7 +17,7 @@
         for (int i = 1; i <= animationImageCount; i++) {
             [images addObject:[UIImage imageNamed:[NSString stringWithFormat:@"loading_center%d", i]]];
         }
-        self.frame = CGRectMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - NAV_HEIGHT, 40, 65);
+        self.frame = CGRectMake(SCREEN_WIDTH/2 - 20, SCREEN_HEIGHT/2 - NAV_HEIGHT, 40, 65);
         self.animationImages = images;
         self.animationDuration = 1;
         self.animationRepeatCount = INFINITY;

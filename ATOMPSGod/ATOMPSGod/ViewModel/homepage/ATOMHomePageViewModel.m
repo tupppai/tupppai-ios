@@ -16,7 +16,6 @@
 @interface ATOMHomePageViewModel ()
 
 
-
 @end
 
 @implementation ATOMHomePageViewModel
@@ -39,6 +38,8 @@
         _totalPSNumber = @"0";
         _labelArray = [NSMutableArray new];
         _replierArray = [NSMutableArray new];
+        _liked = NO;
+        _collected = NO;
     }
     return self;
 }
@@ -53,6 +54,8 @@
     NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:homeImage.uploadTime];
     [self updatePublishTime:publishDate];
     _praiseNumber = [NSString stringWithFormat:@"%d",(int)homeImage.totalPraiseNumber];
+    _liked = homeImage.liked;
+//    _collected = homeImage.collected;
     _shareNumber = [NSString stringWithFormat:@"%d",(int)homeImage.totalShareNumber];
     _commentNumber = [NSString stringWithFormat:@"%d",(int)homeImage.totalCommentNumber];
     _totalPSNumber = [NSString stringWithFormat:@"%d",(int)homeImage.totalWorkNumber];
@@ -97,26 +100,8 @@
         _publishTime = [NSString stringWithFormat:@"%d小时前",result];
     } else {
             result = (int)roundf(dayDif*24.0*60);
-            _publishTime = [NSString stringWithFormat:@"%d分前",result];
+            _publishTime = [NSString stringWithFormat:@"%d分钟前",result];
         }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @end

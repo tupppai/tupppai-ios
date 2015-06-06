@@ -7,11 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol ATOMBottomCommonButtonDelegate <NSObject>
+-(void) tapLikeButton:(UIView*)buttonView;
+-(void) untapLikeButton:(UIView*)buttonView;
+@end
 
 @interface ATOMBottomCommonButton : UIView
-
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, copy) NSString *number;
 @property (nonatomic, assign) BOOL selected;
-
+@property (nonatomic, weak) id<ATOMBottomCommonButtonDelegate> delegate;
+- (void)toggleLike:(BOOL)selected;
+- (void)toggleLike:(BOOL)selected withID:(NSInteger)id;
 @end

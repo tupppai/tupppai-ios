@@ -127,7 +127,7 @@ static CGFloat replierWidth = 25;
     CGFloat thinViewHeight = 60;
     CGFloat bottomButtonOriginY = (thinViewHeight - kBottomCommonButtonWidth) / 2;
     _thinCenterView.frame = CGRectMake(0, CGRectGetMaxY(_userWorkImageView.frame), SCREEN_WIDTH, thinViewHeight);
-    _moreShareButton.frame = CGRectMake(kPadding15, (thinViewHeight - kBottomCommonButtonWidth) / 2, 26, kBottomCommonButtonWidth);
+    _moreShareButton.frame = CGRectMake(kPadding15+1, (thinViewHeight - kBottomCommonButtonWidth) / 2, 26, kBottomCommonButtonWidth);
     
     _commentButton.frame = CGRectMake(SCREEN_WIDTH - kPadding15 - commentSize.width, bottomButtonOriginY, commentSize.width, kBottomCommonButtonWidth);
     _shareButton.frame = CGRectMake(CGRectGetMinX(_commentButton.frame) - kPadding20 - shareSize.width, bottomButtonOriginY, shareSize.width, kBottomCommonButtonWidth);
@@ -159,6 +159,7 @@ static CGFloat replierWidth = 25;
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     _userPublishTimeLabel.text = viewModel.publishTime;
     _praiseButton.number = viewModel.praiseNumber;
+    _praiseButton.selected = viewModel.liked;
     _shareButton.number = viewModel.shareNumber;
     _commentButton.number = viewModel.commentNumber;
     _totalPSLabel.number = viewModel.totalPSNumber;
@@ -166,6 +167,8 @@ static CGFloat replierWidth = 25;
         _userWorkImageView.image = viewModel.image;
     } else {
         [_userWorkImageView setImageWithURL:[NSURL URLWithString:viewModel.userImageURL]];
+        [_userWorkImageView setImageWithURL:[NSURL URLWithString:viewModel.userImageURL] placeholderImage:[UIImage imageNamed:@""]];
+
     }
     [self addTipLabelToImageView];
     [self addReplier];
@@ -195,14 +198,14 @@ static CGFloat replierWidth = 25;
 }
 
 - (void)addReplier {
-    for (int i = 0; i < defaultAvatarCount; i++) {
-        UIImageView *imageView = _replierAvatars[i];
-        imageView.hidden = YES;
-    }
+//    for (int i = 0; i < defaultAvatarCount; i++) {
+//        UIImageView *imageView = _replierAvatars[i];
+//        imageView.hidden = YES;
+//    }
     for (int i = 0; i < MIN(_viewModel.replierArray.count, defaultAvatarCount); i++) {
         ATOMReplierViewModel *replierViewModel = _viewModel.replierArray[i];
         UIImageView *imageView = _replierAvatars[defaultAvatarCount - MIN(_viewModel.replierArray.count, defaultAvatarCount) + i];
-        imageView.hidden = NO;
+//        imageView.hidden = NO;
         [imageView setImageWithURL:[NSURL URLWithString:replierViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     }
 }

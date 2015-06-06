@@ -12,6 +12,8 @@
 @interface ATOMShowHomepage : NSObject
 
 - (AFHTTPRequestOperation *)ShowHomepage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *homepageArray, NSError *error))block;
+- (AFHTTPRequestOperation *)toggleLike:(NSDictionary *)param withID:(NSInteger)imageID  withBlock:(void (^)(NSString *, NSError *))block;
+
 - (void)saveHomeImagesInDB:(NSMutableArray *)homeImages;
 - (NSArray *)getHomeImages;
 - (NSArray *)getHomeImagesWithHomeType:(NSString *)homeType;
