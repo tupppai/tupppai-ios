@@ -19,7 +19,7 @@
 #import "ATOMHomePageViewModel.h"
 #import "ATOMAskViewModel.h"
 #import "ATOMReplyViewModel.h"
-#import "ATOMRecentDetailViewController.h"
+#import "ATOMAskDetailViewController.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -328,7 +328,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
         ATOMAskViewModel *askViewModel = _uploadDataSource[indexPath.row];
         ATOMHomePageViewModel *homepageViewModel = _uploadHomeImageDataSource[indexPath.row];
         if ([askViewModel.totalPSNumber integerValue] == 0) {
-            ATOMRecentDetailViewController *rdvc = [ATOMRecentDetailViewController new];
+            ATOMAskDetailViewController *rdvc = [ATOMAskDetailViewController new];
             rdvc.homePageViewModel = homepageViewModel;
             [self pushViewController:rdvc animated:YES];
         } else {

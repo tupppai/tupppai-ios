@@ -14,14 +14,15 @@
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *content;
-@property (nonatomic, copy) NSString *praiseNumber;
+@property (nonatomic, copy) NSString *likeNumber;
 @property (nonatomic, assign) NSInteger comment_id;
 @property (nonatomic, copy) NSString *userSex;
 @property (nonatomic, copy) NSString *avatar;
-@property (nonatomic, assign) BOOL isPraise;
+@property (nonatomic, assign) BOOL liked;
 
 - (void)setViewModelData:(ATOMComment *)comment;
 - (void)setDataWithAtModel:(ATOMCommentDetailViewModel *)viewModel andContent:(NSString *)content;
 - (void)increasePraiseNumber;
+- (void)toggleLike;
 
 @end

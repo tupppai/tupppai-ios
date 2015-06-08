@@ -9,11 +9,11 @@
 #import "KShareManager.h"
 @implementation KShareManager
 static dispatch_once_t onceToken;
-static PSMascotAnimationImageView *mascotAnimator;
+static PWMascotAnimationView *mascotAnimator;
 
-+ (PSMascotAnimationImageView *)mascotAnimator {
++ (PWMascotAnimationView *)mascotAnimator {
     dispatch_once(&onceToken, ^{
-        mascotAnimator = [PSMascotAnimationImageView new];
+        mascotAnimator = [PWMascotAnimationView new];
     });
     return mascotAnimator;
 }

@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PSMascotAnimationImageView.h"
+#import "PWMascotAnimationImageView.h"
 
 @interface KShareManager : NSObject
-+ (PSMascotAnimationImageView *)mascotAnimator;
++ (PWMascotAnimationView *)mascotAnimator;
 @end

@@ -15,8 +15,6 @@
 
 @interface ATOMShowDetailOfComment ()
 
-
-
 @end
 
 @implementation ATOMShowDetailOfComment
@@ -97,14 +95,20 @@
     }];
 }
 
-- (AFHTTPRequestOperation *)PraiseComment:(NSDictionary *)param withBlock:(void (^)(NSError *))block {
-    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] POST:@"comment/praise" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+- (AFHTTPRequestOperation *)toggleLike:(NSDictionary *)param withID:(NSInteger)commentID withBlock:(void (^)(NSError *))block {
+    NSString* url = [NSString stringWithFormat:@"comment/upComment/%ld",(long)commentID];
+    NSLog(@"param %@ , url %@",param,url);
+    
+    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"toggleLike success");
         if (block) {
             block(nil);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (block) {
+            NSLog(@"%@",error);
             block(error);
+            NSLog(@"toggleLike failure");
         }
     }];
 }

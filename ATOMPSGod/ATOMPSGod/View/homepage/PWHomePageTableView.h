@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 ATOM. All rights reserved.
 //
 
-#import "PWBaseTableView.h"
+#import "PWRefreshBaseTableView.h"
 
-@interface PWHomePageTableView : PWBaseTableView
+@interface PWHomePageTableView : PWRefreshBaseTableView
 @property (nonatomic, strong) ATOMNoDataView *noDataViewCustom;
 @end

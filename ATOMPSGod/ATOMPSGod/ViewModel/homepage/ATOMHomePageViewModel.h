@@ -33,3 +33,4 @@
 - (void)setViewModelData:(ATOMHomeImage *)homeImage;
 
 @end
+

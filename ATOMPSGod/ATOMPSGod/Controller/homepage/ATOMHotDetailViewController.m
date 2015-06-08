@@ -82,7 +82,15 @@
 #pragma mark Refresh
 
 - (void)configHotDetailTableViewRefresh {
-    [_hotDetailTableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreHotData)];
+    NSMutableArray *animatedImages = [NSMutableArray array];
+    for (int i = 1; i<=3; i++) {
+        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"loading_%ddot", i]];
+        [animatedImages addObject:image];
+    }
+    [_hotDetailTableView addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreHotData)];
+    _hotDetailTableView.gifFooter.refreshingImages = animatedImages;
+    _hotDetailTableView.footer.stateHidden = YES;
+    
 }
 
 - (void)loadMoreHotData {

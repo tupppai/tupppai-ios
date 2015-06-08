@@ -43,37 +43,40 @@
 
 - (void)setSelected:(BOOL)selected {
     _selected = selected;
-    if (!selected) {
+    if (!_selected) {
         _currentColor = [UIColor colorWithHex:0xcdcdcd];
+        NSLog(@"toggle color 1");
     } else {
         _currentColor = [UIColor colorWithHex:0xfe8282];
+        NSLog(@"toggle color 2");
     }
     [self setNeedsDisplay];
     
 }
-- (void)toggleLike:(BOOL)selected {
-    //call setSelected and change color
-    self.selected = selected;
-    if (!selected) {
-        [self.delegate untapLikeButton:self];
-    } else {
-        [self.delegate tapLikeButton:self];
-    }
-}
 
-- (void)toggleLike:(BOOL)selected withID:(NSInteger)id {
+//- (void)toggleLike:(BOOL)selected {
+//    //call setSelected and change color
+//    self.selected = selected;
+//    if (!selected) {
+//        [self.delegate untapLikeButton:self];
+//    } else {
+//        [self.delegate tapLikeButton:self];
+//    }
+//}
+//
+- (void)toggleLike:(NSInteger)id{
     
     //call setSelected() and change color
-    self.selected = selected;
+    self.selected = !self.selected;
     NSMutableDictionary *param = [NSMutableDictionary new];
-    NSInteger status = !selected? 0:1;
-    NSInteger likeNumber = !selected? -1:1;
+    NSInteger status = !_selected? 0:1;
+    NSInteger one = !_selected? -1:1;
     [param setValue:@(status) forKey:@"status"];
     ATOMShowHomepage * showHomepage = [ATOMShowHomepage new];
     [showHomepage toggleLike:param withID:id withBlock:^(NSString *msg, NSError *error) {
             if (!error) {
                 NSLog(@"Server成功toggle like");
-                NSInteger number = [_number integerValue]+likeNumber;
+                NSInteger number = [_number integerValue]+one;
                 [self setNumber:[NSString stringWithFormat:@"%ld",(long)number]];
             } else {
                 NSLog(@"Server失败 toggle like");

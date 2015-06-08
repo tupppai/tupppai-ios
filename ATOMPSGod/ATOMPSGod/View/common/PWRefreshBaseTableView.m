@@ -1,22 +1,20 @@
 //
-//  PWBaseTableView.m
+//  PWRefreshBaseTableView.m
 //  ATOMPSGod
 //
 //  Created by Peiwei Chen on 6/4/15.
 //  Copyright (c) 2015 ATOM. All rights reserved.
 //
 
-#import "PWBaseTableView.h"
+#import "PWRefreshBaseTableView.h"
 
-@implementation PWBaseTableView
+@implementation PWRefreshBaseTableView
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         [self addGifHeaderWithRefreshingTarget:self refreshingAction:@selector(loadNewHotData)];
         [self addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreHotData)];
-        self.header.updatedTimeHidden = YES;
-        self.header.stateHidden = YES;
         NSMutableArray *animatedImages = [NSMutableArray array];
         for (int i = 1; i<=3; i++) {
             UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"loading_%ddot", i]];
@@ -25,8 +23,15 @@
         UIImageView* mascotImageView = [[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/2 + 30, -30, 40, 30)];
         mascotImageView.image = [UIImage imageNamed:@"loading_mascot"];
         [self addSubview:mascotImageView];
+        
+        UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, -1, SCREEN_WIDTH, 1)];
+        line.backgroundColor = [UIColor lightGrayColor];
+        [self addSubview:line];
+        
         [self.gifHeader setImages:animatedImages forState:MJRefreshHeaderStateIdle];
         [self.gifHeader setImages:animatedImages forState:MJRefreshHeaderStateRefreshing];
+        self.header.updatedTimeHidden = YES;
+        self.header.stateHidden = YES;
         self.gifFooter.refreshingImages = animatedImages;
         self.footer.stateHidden = YES;
     }

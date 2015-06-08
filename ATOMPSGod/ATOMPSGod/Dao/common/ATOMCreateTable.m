@@ -27,7 +27,7 @@
 }
 
 + (NSString *)createComment {
-    return @"create table ATOMComment (cid integer, imageID integer, detailID integer, commentType integer, uid integer, nickname text, avatar text, sex integer, content text, commentTime bigint, praiseNumber integer, atCommentArray null)";
+    return @"create table ATOMComment (cid integer, imageID integer, detailID integer, commentType integer, uid integer, nickname text, avatar text, sex integer, content text, commentTime bigint, praiseNumber integer, atCommentArray null,liked bool)";
 }
 
 + (NSString *)createDetailImage {

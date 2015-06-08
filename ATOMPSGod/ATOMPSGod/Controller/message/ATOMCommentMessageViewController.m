@@ -18,7 +18,7 @@
 #import "ATOMCommentMessageViewModel.h"
 #import "ATOMHomeImage.h"
 #import "ATOMHomePageViewModel.h"
-#import "ATOMRecentDetailViewController.h"
+#import "ATOMAskDetailViewController.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -164,7 +164,7 @@
         if (CGRectContainsPoint(cell.workImageView.frame, p)) {
             if ([viewModel.homepageViewModel.totalPSNumber integerValue] == 0) {
                 //进入最新详情
-                ATOMRecentDetailViewController *rdvc = [ATOMRecentDetailViewController new];
+                ATOMAskDetailViewController *rdvc = [ATOMAskDetailViewController new];
                 rdvc.homePageViewModel = viewModel.homepageViewModel;
                 [self pushViewController:rdvc animated:YES];
             } else {

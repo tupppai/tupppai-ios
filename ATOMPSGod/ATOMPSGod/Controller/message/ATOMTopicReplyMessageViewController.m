@@ -11,7 +11,7 @@
 #import "ATOMTopicReplyMessageTableViewCell.h"
 #import "ATOMHotDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
-#import "ATOMRecentDetailViewController.h"
+#import "ATOMAskDetailViewController.h"
 #import "ATOMReplyMessage.h"
 #import "ATOMReplyMessageViewModel.h"
 #import "ATOMHomeImage.h"
@@ -161,7 +161,7 @@
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.workImageView.frame, p)) {
             if ([viewModel.homepageViewModel.totalPSNumber integerValue] == 0) {
-                ATOMRecentDetailViewController *rdvc = [ATOMRecentDetailViewController new];
+                ATOMAskDetailViewController *rdvc = [ATOMAskDetailViewController new];
                 rdvc.homePageViewModel = viewModel.homepageViewModel;
                 [self pushViewController:rdvc animated:YES];
             } else {

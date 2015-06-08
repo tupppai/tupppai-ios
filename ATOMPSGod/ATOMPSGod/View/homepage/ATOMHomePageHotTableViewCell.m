@@ -166,9 +166,7 @@ static CGFloat replierWidth = 25;
     if (viewModel.image) {
         _userWorkImageView.image = viewModel.image;
     } else {
-        [_userWorkImageView setImageWithURL:[NSURL URLWithString:viewModel.userImageURL]];
-        [_userWorkImageView setImageWithURL:[NSURL URLWithString:viewModel.userImageURL] placeholderImage:[UIImage imageNamed:@""]];
-
+        [_userWorkImageView setImageWithURL:[NSURL URLWithString:viewModel.userImageURL] placeholderImage:[UIImage imageNamed:@"homePage_Default"]];
     }
     [self addTipLabelToImageView];
     [self addReplier];

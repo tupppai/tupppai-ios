@@ -19,7 +19,6 @@
 @property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic, assign) CGRect currentBottomViewFrame;
 @property (nonatomic, strong) NSMutableArray *facesArray;
-
 @end
 
 @implementation ATOMCommentDetailView
@@ -30,7 +29,6 @@ static CGFloat pageControlWidth = 150;
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _textViewPlaceholder = @"发表你的神回复...";
         self.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT);
         self.scrollEnabled = NO;
         self.contentSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT);
@@ -60,34 +58,47 @@ static CGFloat pageControlWidth = 150;
 }
 
 - (void)createSubView {
+    NSLog(@"createSubView");
     _commentDetailTableView = [[PWCommentDetailTableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - 46)];
     _commentDetailTableView.tableFooterView = [UIView new];
     _commentDetailTableView.rowHeight = 70;
     _commentDetailTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _commentDetailTableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag|UIScrollViewKeyboardDismissModeInteractive;
     [self addSubview:_commentDetailTableView];
     
     _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, CGHeight(self.frame) - 46, SCREEN_WIDTH, 46)];
-    _bottomView.backgroundColor = [UIColor colorWithHex:0xefefef];
+    _bottomView.backgroundColor = [UIColor whiteColor];
     [self addSubview:_bottomView];
     
+    CALayer *TopBorder = [CALayer layer];
+    TopBorder.frame = CGRectMake(0.0f, 0.0f, _bottomView.frame.size.width, 1.0f);
+    TopBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
+    [_bottomView.layer addSublayer:TopBorder];
+    
     _sendCommentButton = [[UIButton alloc] initWithFrame:CGRectMake(CGWidth(self.frame) - kPadding15 - 32, 7, 32, 32)];
-//    _sendCommentButton.backgroundColor = [UIColor orangeColor];
-    _sendCommentButton.titleLabel.font = [UIFont systemFontOfSize:kFont14];
+    _sendCommentButton.titleLabel.font = [UIFont systemFontOfSize:kFont15];
     [_sendCommentButton setTitle:@"发送" forState:UIControlStateNormal];
     [_sendCommentButton setTitleColor:[UIColor colorWithHex:0xcbcbcb] forState:UIControlStateNormal];
     [_bottomView addSubview:_sendCommentButton];
-    
+    [_sendCommentButton addTarget:self action:@selector(tapSendCommentButton) forControlEvents:UIControlEventTouchUpInside];
     _faceButton = [[UIButton alloc] initWithFrame:CGRectMake(kPadding15, 9.5, 21, 27)];
     [_faceButton setBackgroundImage:[UIImage imageNamed:@"comment_write"] forState:UIControlStateNormal];
     [_faceButton addTarget:self action:@selector(showFaceView) forControlEvents:UIControlEventTouchUpInside];
     [_bottomView addSubview:_faceButton];
     
-    _sendCommentView = [[UITextView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_faceButton.frame) + 26, 8, CGRectGetMinX(_sendCommentButton.frame) - 26 * 2 - CGRectGetMaxX(_faceButton.frame), 30)];
-    _sendCommentView.text = _textViewPlaceholder;
-    _sendCommentView.textColor = [UIColor colorWithHex:0xcbcbcb];
-    _sendCommentView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-    [_bottomView addSubview:_sendCommentView];
+    _commentTextView = [[UITextView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_faceButton.frame) + 26, 8, CGRectGetMinX(_sendCommentButton.frame) - 26 * 2 - CGRectGetMaxX(_faceButton.frame), 30)];
+    _commentTextView.textColor = [UIColor blackColor];
+    _commentTextView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    [_bottomView addSubview:_commentTextView];
+    _commentText = @"";
     
+    _placeholderString = @"发表你的神回复..";
+    _placeHolderLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, 0, 150, 30)];
+    _placeHolderLabel.text = _placeholderString;
+    _placeHolderLabel.textColor = [UIColor colorWithHex:0xcbcbcb];
+    [_commentTextView addSubview:_placeHolderLabel];
+    _placeHolderLabel.font = [UIFont systemFontOfSize:kFont14];
+
     _faceView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, CGHeight(self.frame) - faceViewHeight - 40, SCREEN_WIDTH, faceViewHeight)];
     _faceView.backgroundColor = [UIColor whiteColor];
     [_faceView setShowsVerticalScrollIndicator:NO];
@@ -109,6 +120,13 @@ static CGFloat pageControlWidth = 150;
     [self addSubview:_pageControl];
     _pageControl.hidden = YES;
     
+}
+
+-(void)tapSendCommentButton {
+    NSLog(@"tapSendCommentButton");
+    _commentText = _commentTextView.text;
+    _commentTextView.text = @"";
+    [self toggleSendCommentButton];
 }
 
 - (void)setupFaceView {
@@ -134,6 +152,18 @@ static CGFloat pageControlWidth = 150;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
 }
+-(void)toggleSendCommentButton {
+    NSLog(@"toggleSendCommentButton");
+    if ([_commentTextView.text isEqualToString:@""]) {
+        _sendCommentButton.enabled = NO;
+        _placeHolderLabel.hidden = NO;
+        [_sendCommentButton setTitleColor:[UIColor colorWithHex:0xcbcbcb] forState:UIControlStateNormal];
+    } else {
+        _sendCommentButton.enabled = YES;
+        _placeHolderLabel.hidden = YES;
+        [_sendCommentButton setTitleColor:[UIColor colorWithHex:0x000000] forState:UIControlStateNormal];
+    }
+}
 
 #pragma mark - ClickEvent
 
@@ -152,15 +182,15 @@ static CGFloat pageControlWidth = 150;
 #pragma mark - ATOMFaceViewDelegate
 
 - (void)selectFaceView:(NSString *)str {
-    NSString *newStr = [NSString stringWithFormat:@"%@%@", _sendCommentView.text, str];
-    _sendCommentView.text = newStr;
+    NSString *newStr = [NSString stringWithFormat:@"%@%@", _commentTextView.text, str];
+    _commentTextView.text = newStr;
     [self textDidChange:nil];
 }
 
 #pragma mark - NSNotification
 
 - (void)textDidChange:(NSNotification *)notification {
-    CGSize contentSize = _sendCommentView.contentSize;
+    CGSize contentSize = _commentTextView.contentSize;
     if (contentSize.height >= 30 + 14 * 10) {
         return ;
     }
@@ -173,9 +203,12 @@ static CGFloat pageControlWidth = 150;
     _currentBottomViewFrame = bottomViewFrame;
     _bottomView.frame = bottomViewFrame;
     _lastContentSizeHeight = contentSize.height;
+    
+    [self toggleSendCommentButton];
 }
 
 - (void)textDidEnd:(NSNotification *)notification {
+
     if (_isFaceViewVisible == NO) {
         [self restoreBottomView];
     }
@@ -188,6 +221,7 @@ static CGFloat pageControlWidth = 150;
 
 - (void)keyboardDidHide:(NSNotification *)notification {
     _isKeyboardVisible = NO;
+    NSLog(@"_commentTextView.text %@",_commentTextView.text);
 }
 
 #pragma mark - *********************************
@@ -195,14 +229,14 @@ static CGFloat pageControlWidth = 150;
 - (void)restoreBottomView {
     _lastContentSizeHeight = 30;
     _bottomView.frame = CGRectMake(0, CGHeight(self.frame) - 46, SCREEN_WIDTH, 46);
-    _sendCommentView.frame = CGRectMake(CGRectGetMaxX(_faceButton.frame) + 26, 8, CGRectGetMinX(_sendCommentButton.frame) - 26 * 2 - CGRectGetMaxX(_faceButton.frame), 30);
+    _commentTextView.frame = CGRectMake(CGRectGetMaxX(_faceButton.frame) + 26, 8, CGRectGetMinX(_sendCommentButton.frame) - 26 * 2 - CGRectGetMaxX(_faceButton.frame), 30);
 }
 
 - (void)showFaceView {
     WS(ws);
     _isFaceViewVisible = YES;
     if (_isKeyboardVisible) {
-        [_sendCommentView resignFirstResponder];
+        [_commentTextView resignFirstResponder];
     } else {
     }
     
@@ -239,7 +273,7 @@ static CGFloat pageControlWidth = 150;
 
 - (void)hideCommentView {
     if (_isKeyboardVisible) {
-        [_sendCommentView resignFirstResponder];
+        [_commentTextView resignFirstResponder];
     } else if (_isFaceViewVisible) {
         [self hideFaceView];
     }

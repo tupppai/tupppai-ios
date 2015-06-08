@@ -1,5 +1,5 @@
 //
-//  ATOMRecentDetailViewController.h
+//  ATOMAskDetailViewController.h
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/12.
@@ -9,7 +9,7 @@
 #import "ATOMBaseViewController.h"
 @class ATOMHomePageViewModel;
 
-@interface ATOMRecentDetailViewController : ATOMBaseViewController
+@interface ATOMAskDetailViewController : ATOMBaseViewController
 
 @property (nonatomic, strong) ATOMHomePageViewModel *homePageViewModel;
 

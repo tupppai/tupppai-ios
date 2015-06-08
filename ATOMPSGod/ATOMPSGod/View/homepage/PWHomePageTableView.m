@@ -38,6 +38,8 @@
                 self.noDataViewCustom.hidden = true;
                 break;
             }
+            
+            NSLog(@"PWHomePageTableView.h reloadData hidden = false");
             self.noDataViewCustom.hidden = false;
         }
     }

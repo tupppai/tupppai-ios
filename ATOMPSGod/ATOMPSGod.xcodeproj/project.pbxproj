@@ -106,7 +106,7 @@
 		5C559B3A1AB138C3000C5B50 /* ATOMInviteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C559B391AB138C3000C5B50 /* ATOMInviteView.m */; };
 		5C559B3D1AB1394C000C5B50 /* ATOMInviteTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C559B3C1AB1394C000C5B50 /* ATOMInviteTableHeaderView.m */; };
 		5C559B401AB13B8F000C5B50 /* ATOMInviteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C559B3F1AB13B8F000C5B50 /* ATOMInviteTableViewCell.m */; };
-		5C559B4C1AB168F7000C5B50 /* ATOMRecentDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C559B4B1AB168F7000C5B50 /* ATOMRecentDetailViewController.m */; };
+		5C559B4C1AB168F7000C5B50 /* ATOMAskDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C559B4B1AB168F7000C5B50 /* ATOMAskDetailViewController.m */; };
 		5C561A061AB7BF6F0052D4D5 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A011AB7BF6F0052D4D5 /* SVIndefiniteAnimatedView.m */; };
 		5C561A071AB7BF6F0052D4D5 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5C561A031AB7BF6F0052D4D5 /* SVProgressHUD.bundle */; };
 		5C561A081AB7BF6F0052D4D5 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A051AB7BF6F0052D4D5 /* SVProgressHUD.m */; };
@@ -327,7 +327,7 @@
 		5CE4082F1ACE94D600A56E4B /* UIViewController+ATOMTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CE4082E1ACE94D600A56E4B /* UIViewController+ATOMTracking.m */; };
 		5CEAC0301AD4D7750058037C /* ATOMCollectionViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CEAC02F1AD4D7750058037C /* ATOMCollectionViewModel.m */; };
 		5CEAC0331AD4F9540058037C /* ATOMShowCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CEAC0321AD4F9540058037C /* ATOMShowCollection.m */; };
-		E90C7C5D1B20726400CF0E6A /* PSMascotAnimationImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E90C7C5C1B20726400CF0E6A /* PSMascotAnimationImageView.m */; };
+		E90C7C5D1B20726400CF0E6A /* PWMascotAnimationImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E90C7C5C1B20726400CF0E6A /* PWMascotAnimationImageView.m */; };
 		E90C7C601B20A0FC00CF0E6A /* KShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E90C7C5F1B20A0FC00CF0E6A /* KShareManager.m */; };
 		E90C7C631B2141B800CF0E6A /* PWHomePageTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E90C7C621B2141B800CF0E6A /* PWHomePageTableView.m */; };
 		E90C7C661B21431000CF0E6A /* PWCommentDetailTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E90C7C651B21431000CF0E6A /* PWCommentDetailTableView.m */; };
@@ -346,6 +346,7 @@
 		E95691B61B22E88300DA84BB /* NSObject+MTLComparisonAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E95691A51B22E88300DA84BB /* NSObject+MTLComparisonAdditions.m */; };
 		E95691B71B22E88300DA84BB /* NSValueTransformer+MTLInversionAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E95691A71B22E88300DA84BB /* NSValueTransformer+MTLInversionAdditions.m */; };
 		E95691B81B22E88300DA84BB /* NSValueTransformer+MTLPredefinedTransformerAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E95691A91B22E88300DA84BB /* NSValueTransformer+MTLPredefinedTransformerAdditions.m */; };
+		E95691BA1B23DADC00DA84BB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E95691B91B23DADC00DA84BB /* Images.xcassets */; };
 		E99D2F541B1C7E8D000D7784 /* UIImage+Blurring.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D2F3A1B1C7E8D000D7784 /* UIImage+Blurring.m */; };
 		E99D2F551B1C7E8D000D7784 /* UIImage+Enhancing.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D2F3C1B1C7E8D000D7784 /* UIImage+Enhancing.m */; };
 		E99D2F561B1C7E8D000D7784 /* UIImage+Filtering.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D2F3E1B1C7E8D000D7784 /* UIImage+Filtering.m */; };
@@ -358,8 +359,7 @@
 		E99D2F5D1B1C7E8D000D7784 /* UIView+Screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D2F4C1B1C7E8D000D7784 /* UIView+Screenshot.m */; };
 		E99D2F5E1B1C7E8D000D7784 /* NYXProgressiveImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D2F4F1B1C7E8D000D7784 /* NYXProgressiveImageView.m */; };
 		E99D2F5F1B1C7E8D000D7784 /* NYXImagesHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D2F521B1C7E8D000D7784 /* NYXImagesHelper.m */; };
-		E9D1F88C1B203A4F0072242B /* PWBaseTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9D1F88B1B203A4F0072242B /* PWBaseTableView.m */; };
-		E9EB0C8A1B2023B100AB9B16 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9EB0C891B2023B100AB9B16 /* Images.xcassets */; };
+		E9D1F88C1B203A4F0072242B /* PWRefreshBaseTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9D1F88B1B203A4F0072242B /* PWRefreshBaseTableView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -572,8 +572,8 @@
 		5C559B3C1AB1394C000C5B50 /* ATOMInviteTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMInviteTableHeaderView.m; sourceTree = "<group>"; };
 		5C559B3E1AB13B8F000C5B50 /* ATOMInviteTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMInviteTableViewCell.h; sourceTree = "<group>"; };
 		5C559B3F1AB13B8F000C5B50 /* ATOMInviteTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMInviteTableViewCell.m; sourceTree = "<group>"; };
-		5C559B4A1AB168F7000C5B50 /* ATOMRecentDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMRecentDetailViewController.h; sourceTree = "<group>"; };
-		5C559B4B1AB168F7000C5B50 /* ATOMRecentDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMRecentDetailViewController.m; sourceTree = "<group>"; };
+		5C559B4A1AB168F7000C5B50 /* ATOMAskDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMAskDetailViewController.h; sourceTree = "<group>"; };
+		5C559B4B1AB168F7000C5B50 /* ATOMAskDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMAskDetailViewController.m; sourceTree = "<group>"; };
 		5C561A001AB7BF6F0052D4D5 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
 		5C561A011AB7BF6F0052D4D5 /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
 		5C561A021AB7BF6F0052D4D5 /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
@@ -988,8 +988,8 @@
 		5CEAC02F1AD4D7750058037C /* ATOMCollectionViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMCollectionViewModel.m; sourceTree = "<group>"; };
 		5CEAC0311AD4F9540058037C /* ATOMShowCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShowCollection.h; sourceTree = "<group>"; };
 		5CEAC0321AD4F9540058037C /* ATOMShowCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShowCollection.m; sourceTree = "<group>"; };
-		E90C7C5B1B20726400CF0E6A /* PSMascotAnimationImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSMascotAnimationImageView.h; sourceTree = "<group>"; };
-		E90C7C5C1B20726400CF0E6A /* PSMascotAnimationImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSMascotAnimationImageView.m; sourceTree = "<group>"; };
+		E90C7C5B1B20726400CF0E6A /* PWMascotAnimationImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWMascotAnimationImageView.h; sourceTree = "<group>"; };
+		E90C7C5C1B20726400CF0E6A /* PWMascotAnimationImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWMascotAnimationImageView.m; sourceTree = "<group>"; };
 		E90C7C5E1B20A0FC00CF0E6A /* KShareManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KShareManager.h; sourceTree = "<group>"; };
 		E90C7C5F1B20A0FC00CF0E6A /* KShareManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KShareManager.m; sourceTree = "<group>"; };
 		E90C7C611B2141B800CF0E6A /* PWHomePageTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWHomePageTableView.h; sourceTree = "<group>"; };
@@ -1028,6 +1028,7 @@
 		E95691A71B22E88300DA84BB /* NSValueTransformer+MTLInversionAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSValueTransformer+MTLInversionAdditions.m"; sourceTree = "<group>"; };
 		E95691A81B22E88300DA84BB /* NSValueTransformer+MTLPredefinedTransformerAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSValueTransformer+MTLPredefinedTransformerAdditions.h"; sourceTree = "<group>"; };
 		E95691A91B22E88300DA84BB /* NSValueTransformer+MTLPredefinedTransformerAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSValueTransformer+MTLPredefinedTransformerAdditions.m"; sourceTree = "<group>"; };
+		E95691B91B23DADC00DA84BB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ATOMPSGod/Images.xcassets; sourceTree = "<group>"; };
 		E99D2F391B1C7E8D000D7784 /* UIImage+Blurring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Blurring.h"; sourceTree = "<group>"; };
 		E99D2F3A1B1C7E8D000D7784 /* UIImage+Blurring.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Blurring.m"; sourceTree = "<group>"; };
 		E99D2F3B1B1C7E8D000D7784 /* UIImage+Enhancing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Enhancing.h"; sourceTree = "<group>"; };
@@ -1053,9 +1054,8 @@
 		E99D2F511B1C7E8D000D7784 /* NYXImagesHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NYXImagesHelper.h; sourceTree = "<group>"; };
 		E99D2F521B1C7E8D000D7784 /* NYXImagesHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NYXImagesHelper.m; sourceTree = "<group>"; };
 		E99D2F531B1C7E8D000D7784 /* NYXImagesKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NYXImagesKit.h; sourceTree = "<group>"; };
-		E9D1F88A1B203A4F0072242B /* PWBaseTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWBaseTableView.h; sourceTree = "<group>"; };
-		E9D1F88B1B203A4F0072242B /* PWBaseTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWBaseTableView.m; sourceTree = "<group>"; };
-		E9EB0C891B2023B100AB9B16 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		E9D1F88A1B203A4F0072242B /* PWRefreshBaseTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWRefreshBaseTableView.h; sourceTree = "<group>"; };
+		E9D1F88B1B203A4F0072242B /* PWRefreshBaseTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWRefreshBaseTableView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1171,8 +1171,8 @@
 				5C4F5BDB1AA555F900226F64 /* ATOMHomepageViewController.m */,
 				5C4F5BF71AA5E0B600226F64 /* ATOMHotDetailViewController.h */,
 				5C4F5BF81AA5E0B600226F64 /* ATOMHotDetailViewController.m */,
-				5C559B4A1AB168F7000C5B50 /* ATOMRecentDetailViewController.h */,
-				5C559B4B1AB168F7000C5B50 /* ATOMRecentDetailViewController.m */,
+				5C559B4A1AB168F7000C5B50 /* ATOMAskDetailViewController.h */,
+				5C559B4B1AB168F7000C5B50 /* ATOMAskDetailViewController.m */,
 				5C819C901AA71C1D00CDDB5B /* ATOMCommentDetailViewController.h */,
 				5C819C911AA71C1D00CDDB5B /* ATOMCommentDetailViewController.m */,
 				5C9BD9EC1AA8293400715698 /* ATOMUploadWorkViewController.h */,
@@ -1459,10 +1459,10 @@
 				5C535CB91AF1FCEC00BF30D1 /* ATOMPSView.m */,
 				5C589A881B04F2AC003D828A /* ATOMCameraView.h */,
 				5C589A891B04F2AC003D828A /* ATOMCameraView.m */,
-				E9D1F88A1B203A4F0072242B /* PWBaseTableView.h */,
-				E9D1F88B1B203A4F0072242B /* PWBaseTableView.m */,
-				E90C7C5B1B20726400CF0E6A /* PSMascotAnimationImageView.h */,
-				E90C7C5C1B20726400CF0E6A /* PSMascotAnimationImageView.m */,
+				E9D1F88A1B203A4F0072242B /* PWRefreshBaseTableView.h */,
+				E9D1F88B1B203A4F0072242B /* PWRefreshBaseTableView.m */,
+				E90C7C5B1B20726400CF0E6A /* PWMascotAnimationImageView.h */,
+				E90C7C5C1B20726400CF0E6A /* PWMascotAnimationImageView.m */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -1986,6 +1986,7 @@
 			isa = PBXGroup;
 			children = (
 				5CDB05C31AA3FE520089121E /* ATOMPSGod */,
+				E95691B91B23DADC00DA84BB /* Images.xcassets */,
 				5CDB05DD1AA3FE520089121E /* ATOMPSGodTests */,
 				5CDB05C21AA3FE520089121E /* Products */,
 			);
@@ -2016,7 +2017,6 @@
 				5CDB05C91AA3FE520089121E /* AppDelegate.m */,
 				5C6CE6B81ADBE8A10035F522 /* EmojisList.plist */,
 				5CDB05D31AA3FE520089121E /* LaunchScreen.xib */,
-				E9EB0C891B2023B100AB9B16 /* Images.xcassets */,
 				5CDB05C41AA3FE520089121E /* Supporting Files */,
 			);
 			path = ATOMPSGod;
@@ -2538,8 +2538,8 @@
 				5C6776B01AAC09C400320522 /* IQKeyboardManager.bundle in Resources */,
 				5C7861311AAF4DD200E87C77 /* bg_main@2x.png in Resources */,
 				5C9BDA4C1AA85E5600715698 /* box-shadow.png in Resources */,
+				E95691BA1B23DADC00DA84BB /* Images.xcassets in Resources */,
 				5C78612B1AAF4DD200E87C77 /* 4.jpg in Resources */,
-				E9EB0C8A1B2023B100AB9B16 /* Images.xcassets in Resources */,
 				5CDF823C1AC2BE5E00321694 /* ShareSDKFlatShareViewUI.bundle in Resources */,
 				5C78612A1AAF4DD200E87C77 /* 3.jpg in Resources */,
 				5C7861291AAF4DD200E87C77 /* 2.jpg in Resources */,
@@ -2717,7 +2717,7 @@
 				5C436A931AB074EF00D14608 /* ATOMInviteMessageTableViewCell.m in Sources */,
 				5C520B9F1ADBA1B000C7C2A5 /* AFHTTPSessionManager.m in Sources */,
 				5C520BA31ADBA1B000C7C2A5 /* AFURLRequestSerialization.m in Sources */,
-				5C559B4C1AB168F7000C5B50 /* ATOMRecentDetailViewController.m in Sources */,
+				5C559B4C1AB168F7000C5B50 /* ATOMAskDetailViewController.m in Sources */,
 				5C559B3A1AB138C3000C5B50 /* ATOMInviteView.m in Sources */,
 				5CDB06041AA405A40089121E /* UIColor+HSB.m in Sources */,
 				5C561A7F1AB7CAA90052D4D5 /* ATOMCreateTable.m in Sources */,
@@ -2768,7 +2768,7 @@
 				5C83A88E1AC66F910071A024 /* POPCGUtils.mm in Sources */,
 				5CDB06741AA47EEC0089121E /* ATOMInputVerifyCodeView.m in Sources */,
 				5C8084F91AF2603D0062421C /* ATOMBottomCommonButton.m in Sources */,
-				E90C7C5D1B20726400CF0E6A /* PSMascotAnimationImageView.m in Sources */,
+				E90C7C5D1B20726400CF0E6A /* PWMascotAnimationImageView.m in Sources */,
 				5C4C70C51AB6BC5200358989 /* ATOMBaseRequest.m in Sources */,
 				5CDB06051AA405A40089121E /* UIColor+HSL.m in Sources */,
 				5C535CBA1AF1FCEC00BF30D1 /* ATOMPSView.m in Sources */,
@@ -2843,7 +2843,7 @@
 				E99D2F591B1C7E8D000D7784 /* UIImage+Resizing.m in Sources */,
 				5C0F04F11ADCFC11002003AE /* ATOMInviteMessageViewModel.m in Sources */,
 				E95691B21B22E88300DA84BB /* MTLValueTransformer.m in Sources */,
-				E9D1F88C1B203A4F0072242B /* PWBaseTableView.m in Sources */,
+				E9D1F88C1B203A4F0072242B /* PWRefreshBaseTableView.m in Sources */,
 				5CDB062F1AA428BD0089121E /* MASConstraint.m in Sources */,
 				5C520BA41ADBA1B000C7C2A5 /* AFURLResponseSerialization.m in Sources */,
 				5C561A791AB7C8C30052D4D5 /* UIView+MJExtension.m in Sources */,

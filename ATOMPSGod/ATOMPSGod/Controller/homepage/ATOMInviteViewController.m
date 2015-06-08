@@ -10,7 +10,7 @@
 #import "ATOMInviteView.h"
 #import "ATOMInviteTableViewCell.h"
 #import "ATOMInviteTableHeaderView.h"
-#import "ATOMRecentDetailViewController.h"
+#import "ATOMAskDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMHomePageViewModel.h"
 #import "ATOMHomepageViewController.h"
@@ -75,7 +75,7 @@
 #pragma mark - Click Event
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)barButtonItem {
-    ATOMRecentDetailViewController *rdvc = [ATOMRecentDetailViewController new];
+    ATOMAskDetailViewController *rdvc = [ATOMAskDetailViewController new];
     rdvc.homePageViewModel = _homePageViewModel;
     ATOMHomepageViewController *hvc = self.navigationController.viewControllers[0];
     [self pushViewController:rdvc animated:YES];

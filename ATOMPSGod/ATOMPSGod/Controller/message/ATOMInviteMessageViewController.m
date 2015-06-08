@@ -10,7 +10,7 @@
 #import "ATOMInviteMessageTableViewCell.h"
 #import "ATOMNoDataView.h"
 #import "ATOMHotDetailViewController.h"
-#import "ATOMRecentDetailViewController.h"
+#import "ATOMAskDetailViewController.h"
 #import "ATOMCommentDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMShowInviteMessage.h"
@@ -162,7 +162,7 @@
         //点击图片
         if (CGRectContainsPoint(cell.workImageView.frame, p)) {
             if ([viewModel.homepageViewModel.totalPSNumber integerValue] == 0) {
-                ATOMRecentDetailViewController *rdvc = [ATOMRecentDetailViewController new];
+                ATOMAskDetailViewController *rdvc = [ATOMAskDetailViewController new];
                 rdvc.homePageViewModel = viewModel.homepageViewModel;
                 [self pushViewController:rdvc animated:YES];
             } else {

@@ -19,7 +19,8 @@
              @"avatar" : @"avatar",
              @"content" : @"content",
              @"commentTime" : @"created",
-             @"praiseNumber" : @"up_count"
+             @"praiseNumber" : @"up_count",
+             @"liked": @"uped"
              };
 }
 
@@ -36,7 +37,8 @@
              @"content" : @"content",
              @"commentTime" : @"commentTime",
              @"praiseNumber" : @"praiseNumber",
-             @"atCommentArray" : @"atCommentArray"
+             @"atCommentArray" : @"atCommentArray",
+             @"liked": @"liked"
              };
 }
 

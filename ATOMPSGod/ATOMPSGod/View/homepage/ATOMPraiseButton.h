@@ -10,6 +10,7 @@
 
 @interface ATOMPraiseButton : UIButton
 
-@property (nonatomic, copy) NSString *praiseNumber;
-
+@property (nonatomic, copy) NSString *likeNumber;
+-(void)toggleNumber;
+-(void)toggleApperance;
 @end

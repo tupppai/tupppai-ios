@@ -1,5 +1,5 @@
 //
-//  ATOMRecentDetailViewController.m
+//  ATOMAskDetailViewController.m
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/12.
@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "ATOMRecentDetailViewController.h"
+#import "ATOMAskDetailViewController.h"
 #import "ATOMRecentDetailView.h"
 #import "ATOMCommentDetailViewModel.h"
 #import "ATOMUploadWorkViewController.h"
@@ -26,7 +26,7 @@
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMRecentDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, ATOMPSViewDelegate>
+@interface ATOMAskDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, ATOMPSViewDelegate>
 
 @property (nonatomic, strong) ATOMRecentDetailView *recentDetailView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
@@ -42,7 +42,7 @@
 
 @end
 
-@implementation ATOMRecentDetailViewController
+@implementation ATOMAskDetailViewController
 
 #pragma mark - Lazy Initialize
 
@@ -291,17 +291,17 @@
             NSInteger section = indexPath.section;
             NSInteger row = indexPath.row;
             ATOMCommentDetailViewModel *model = (section == 0) ? _hotCommentDataSource[row] : _recentCommentDataSource[row];
-            if (!model.isPraise) {
+            if (!model.liked) {
                 cell.praiseButton.selected = !cell.praiseButton.selected;
                 [model increasePraiseNumber];
                 ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
                 NSMutableDictionary *param = [NSMutableDictionary dictionary];
                 [param setObject:@(model.comment_id) forKey:@"cid"];
-                [showDetailOfComment PraiseComment:param withBlock:^(NSError *error) {
-                    if (!error) {
-                        NSLog(@"praise");
-                    }
-                }];
+//                [showDetailOfComment PraiseComment:param withBlock:^(NSError *error) {
+//                    if (!error) {
+//                        NSLog(@"praise");
+//                    }
+//                }];
             }
             [_recentDetailView.recentDetailTableView reloadData];
         } else if (CGRectContainsPoint(cell.userCommentDetailLabel.frame, p)) {
@@ -374,7 +374,11 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return kCommentTableViewHeaderHeight;
+    if ([tableView.dataSource tableView:tableView numberOfRowsInSection:section] == 0) {
+        return 0;
+    } else {
+        return kCommentTableViewHeaderHeight;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -399,28 +403,28 @@
 
 #pragma mark - UITextViewDelegate
 
-- (void)textViewDidBeginEditing:(UITextView *)textView {
-    if ([textView.text isEqualToString:_recentDetailView.textViewPlaceholder]) {
-        textView.text = @"";
-    }
-}
-
-- (void)textViewDidChange:(UITextView *)textView {
-    NSString *str= textView.text;
-    if (textView.text.length == 0) {
-        if (_atModel) {
-            textView.text = _recentDetailView.textViewPlaceholder;
-        } else {
-            textView.text = @"发表你的神回复...";
-        }
-    } else {
-        if (_atModel && [str hasPrefix:[NSString stringWithFormat:@"//@%@:", _atModel.nickname]]) {
-            textView.text = [str substringFromIndex:(_atModel.nickname.length + 4)];
-        } else if (!_atModel && [str hasPrefix:_recentDetailView.textViewPlaceholder]) {
-            textView.text = [str substringFromIndex:10];
-        }
-    }
-}
+//- (void)textViewDidBeginEditing:(UITextView *)textView {
+//    if ([textView.text isEqualToString:_recentDetailView.textViewPlaceholder]) {
+//        textView.text = @"";
+//    }
+//}
+//
+//- (void)textViewDidChange:(UITextView *)textView {
+//    NSString *str= textView.text;
+//    if (textView.text.length == 0) {
+//        if (_atModel) {
+//            textView.text = _recentDetailView.textViewPlaceholder;
+//        } else {
+//            textView.text = @"发表你的神回复...";
+//        }
+//    } else {
+//        if (_atModel && [str hasPrefix:[NSString stringWithFormat:@"//@%@:", _atModel.nickname]]) {
+//            textView.text = [str substringFromIndex:(_atModel.nickname.length + 4)];
+//        } else if (!_atModel && [str hasPrefix:_recentDetailView.textViewPlaceholder]) {
+//            textView.text = [str substringFromIndex:10];
+//        }
+//    }
+//}
 
 
 #pragma mark - ATOMPSViewDelegate

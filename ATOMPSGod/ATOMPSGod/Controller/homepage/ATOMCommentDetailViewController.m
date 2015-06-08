@@ -19,7 +19,7 @@
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMCommentDetailViewController() <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate,PWBaseTableViewDelegate>
+@interface ATOMCommentDetailViewController() <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate,PWRefreshBaseTableViewDelegate>
 
 @property (nonatomic, strong) ATOMCommentDetailView *commentDetailView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapCommentDetailGesture;
@@ -33,7 +33,7 @@
 
 @implementation ATOMCommentDetailViewController
 
-#pragma mark PWBaseTableViewDelegate
+#pragma mark PWRefreshBaseTableViewDelegate
 
 -(void)didPullRefreshDown:(UITableView *)tableView {
     [self loadNewData];
@@ -135,7 +135,7 @@
     _commentDetailView.commentDetailTableView.psDelegate = self;
     _commentDetailView.commentDetailTableView.delegate = self;
     _commentDetailView.commentDetailTableView.dataSource = self;
-    _commentDetailView.sendCommentView.delegate = self;
+    _commentDetailView.commentTextView.delegate = self;
     [_commentDetailView.sendCommentButton addTarget:self action:@selector(clickSendCommentButton:) forControlEvents:UIControlEventTouchUpInside];
     _tapCommentDetailGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCommentDetailGesture:)];
     [_commentDetailView.commentDetailTableView addGestureRecognizer:_tapCommentDetailGesture];
@@ -147,16 +147,15 @@
 
 - (void)clickSendCommentButton:(UIButton *)sender {
     [_commentDetailView hideCommentView];
-    NSString *commentStr = _commentDetailView.sendCommentView.text;
+    NSString *commentStr = _commentDetailView.commentText;
     NSString* typeStr = [NSString stringWithFormat:@"%ld",(long)_type];
     NSString* IDStr = [NSString stringWithFormat:@"%ld",(long)_ID];
-
-    _commentDetailView.sendCommentView.text = @"";
     ATOMCommentDetailViewModel *model = [ATOMCommentDetailViewModel new];
     [model setDataWithAtModel:_atModel andContent:commentStr];
     [_recentCommentDataSource insertObject:model atIndex:0];
     [_commentDetailView.commentDetailTableView reloadData];
     [_commentDetailView.commentDetailTableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+    
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:commentStr forKey:@"content"];
     [param setObject:typeStr forKey:@"type"];
@@ -181,7 +180,7 @@
 - (void)tapCommentDetailGesture:(UITapGestureRecognizer *)gesture {
     if ([_commentDetailView isEditingCommentView]) {
         [_commentDetailView hideCommentView];
-        _commentDetailView.sendCommentView.text = @"";
+//        _commentDetailView.commentTextView.text = @"";
         _atModel = nil;
         return ;
     }
@@ -202,24 +201,14 @@
             opvc.userName = model.nickname;
             [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.praiseButton.frame, p)) {
-            if (!model.isPraise) {
-                cell.praiseButton.selected = !cell.praiseButton.selected;
-                [model increasePraiseNumber];
-                ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
-                NSMutableDictionary *param = [NSMutableDictionary dictionary];
-                [param setObject:@(model.comment_id) forKey:@"cid"];
-                [showDetailOfComment PraiseComment:param withBlock:^(NSError *error) {
-                    if (!error) {
-                        NSLog(@"praise");
-                    }
-                }];
-            }
-            [_commentDetailView.commentDetailTableView reloadData];
+            //UI 颜色和数字
+            [cell.praiseButton toggleApperance];
+            //Network,点赞，取消赞
+            [model toggleLike];
         } else if (CGRectContainsPoint(cell.userCommentDetailLabel.frame, p)) {
-            [_commentDetailView.sendCommentView becomeFirstResponder];
             _atModel = model;
-            _commentDetailView.textViewPlaceholder = [NSString stringWithFormat:@"//@%@:", _atModel.nickname];
-            _commentDetailView.sendCommentView.text = _commentDetailView.textViewPlaceholder;
+//            _commentDetailView.textViewPlaceholder = [NSString stringWithFormat:@"//@%@:", _atModel.nickname];
+//            _commentDetailView.commentTextView.text = _commentDetailView.textViewPlaceholder;
         }
         
     }
@@ -289,37 +278,48 @@
     return headerView;
 }
 
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
 }
 
 #pragma mark - UITextViewDelegate
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
-    if ([textView.text isEqualToString:_commentDetailView.textViewPlaceholder]) {
-        textView.text = @"";
-    }
+//    if ([textView.text isEqualToString:_commentDetailView.textViewPlaceholder]) {
+//        textView.text = @"";
+//    }
 }
-
+-(void)textViewDidEndEditing:(UITextView *)textView {
+}
 - (void)textViewDidChange:(UITextView *)textView {
-    NSString *str= textView.text;
-    if (textView.text.length == 0) {
-        if (_atModel) {
-            textView.text = _commentDetailView.textViewPlaceholder;
-        } else {
-            textView.text = @"发表你的神回复...";
-        }
-    } else {
-        if (_atModel && [str hasPrefix:[NSString stringWithFormat:@"//@%@:", _atModel.nickname]]) {
-            textView.text = [str substringFromIndex:(_atModel.nickname.length + 4)];
-        } else if (!_atModel && [str hasPrefix:_commentDetailView.textViewPlaceholder]) {
-            textView.text = [str substringFromIndex:10];
-        }
-    }
+//    NSString *str= textView.text;
+//    if (textView.text.length == 0) {
+//        if (_atModel) {
+//            textView.text = _commentDetailView.textViewPlaceholder;
+//        } else {
+//            textView.text = @"发表你的神回复...";
+//        }
+//    } else {
+//        if (_atModel && [str hasPrefix:[NSString stringWithFormat:@"//@%@:", _atModel.nickname]]) {
+//            textView.text = [str substringFromIndex:(_atModel.nickname.length + 4)];
+//        } else if (!_atModel && [str hasPrefix:_commentDetailView.textViewPlaceholder]) {
+//            textView.text = [str substringFromIndex:10];
+//        }
+//    }
 }
 
-
+//限制 kCommentTextViewMaxLength字数
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if (textView == _commentDetailView.commentTextView) {
+        NSString *newText = [ textView.text stringByReplacingCharactersInRange: range withString: text ];
+        if( [newText length]<= kCommentTextViewMaxLength ){
+            return YES;
+        }
+        // case where text length > MAX_LENGTH
+        textView.text = [ newText substringToIndex: kCommentTextViewMaxLength ];
+        return NO;
+    }
+    return YES;
+}
 
 
 

@@ -1,5 +1,5 @@
 //
-//  PWBaseTableView.h
+//  PWRefreshBaseTableView.h
 //  ATOMPSGod
 //
 //  Created by Peiwei Chen on 6/4/15.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ATOMNoDataView.h"
-@protocol PWBaseTableViewDelegate <NSObject>
+@protocol PWRefreshBaseTableViewDelegate <NSObject>
 /**
  * 向下拉tableView触发
 **/
@@ -17,8 +17,8 @@
  * 拉到tableView底部时，继续向上拉触发
  **/-(void) didPullRefreshUp:(UITableView*)tableView;
 @end
-@interface PWBaseTableView : UITableView
-@property (nonatomic, weak) id<PWBaseTableViewDelegate> psDelegate;
+@interface PWRefreshBaseTableView : UITableView
+@property (nonatomic, weak) id<PWRefreshBaseTableViewDelegate> psDelegate;
 @property (nonatomic, strong) ATOMNoDataView *noDataView;
 -(void)reloadDataCustom;
 @end

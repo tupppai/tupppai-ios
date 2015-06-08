@@ -30,11 +30,11 @@ static int padding20 = 20;
 
 - (void)createSubView {
     _imageView = [[UIImageView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH - 101) / 2, SCREEN_HEIGHT/2-NAV_HEIGHT-101, 101, 101)];
-    _imageView.image = [UIImage imageNamed:@"countenance_nothing"];
+    _imageView.image = [UIImage imageNamed:@"ic_cry"];
     [self addSubview:_imageView];
     
     _label = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_imageView.frame) - padding20, CGRectGetMaxY(_imageView.frame), 101 + 2 * padding20, 80)];
-    _label.text = @"这里空空如也!";
+    _label.text = @"这里空空如也...";
     _label.textAlignment = NSTextAlignmentCenter;
     _label.font = [UIFont systemFontOfSize:20.f];
     _label.textColor = [UIColor colorWithHex:0xadadad];

@@ -32,7 +32,7 @@ extern CGFloat const kFont13;
 
 extern CGFloat const kFont14;
 extern CGFloat const kFont15;
-
+extern NSUInteger const kCommentTextViewMaxLength;
 
 #define kBlueColor [UIColor colorWithHex:0x74c3ff]
 

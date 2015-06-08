@@ -30,10 +30,10 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     _userHeaderButton.frame = CGRectMake(kPadding15, kPadding15, kUserHeaderButtonWidth, kUserHeaderButtonWidth);
-    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, kPadding15, kUserNameLabelWidth, kFont14);
+    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, kPadding15, kUserNameLabelWidth, kFont14+1);
     CGSize commentDetailTextSize = [[self class] calculateCommentDeailTextSize:_viewModel.content];
     _userCommentDetailLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, CGRectGetMaxY(_userNameLabel.frame) + kPadding10, commentDetailTextSize.width, commentDetailTextSize.height);
-    CGSize size = [_viewModel.praiseNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, 13) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
+    CGSize size = [_viewModel.likeNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, 13) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
     size.width += 14 + kPadding5 * 2 + 2;;
     _praiseButton.frame = CGRectMake(SCREEN_WIDTH - kPadding15 - size.width - kPadding5, kPadding15, size.width, 13);
     
@@ -71,16 +71,15 @@
     
     _praiseButton = [ATOMPraiseButton new];
     [self addSubview:_praiseButton];
-    
 }
 
 - (void)setViewModel:(ATOMCommentDetailViewModel *)viewModel {
     _viewModel = viewModel;
     _userNameLabel.text = viewModel.nickname;
-//    _userNameLabel.text = @"宋祥伍";
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatar] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     _userCommentDetailLabel.text = viewModel.content;
-    _praiseButton.praiseNumber = _viewModel.praiseNumber;
+    _praiseButton.likeNumber = _viewModel.likeNumber;
+    _praiseButton.selected = _viewModel.liked;
     [self setNeedsLayout];
 }
 
