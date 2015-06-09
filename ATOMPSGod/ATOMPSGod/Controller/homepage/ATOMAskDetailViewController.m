@@ -8,12 +8,12 @@
 
 #import "AppDelegate.h"
 #import "ATOMAskDetailViewController.h"
-#import "ATOMRecentDetailView.h"
+#import "ATOMAskDetailView.h"
 #import "ATOMCommentDetailViewModel.h"
 #import "ATOMUploadWorkViewController.h"
-#import "ATOMRecentDetailTableViewCell.h"
+#import "ATOMAskDetailTableViewCell.h"
 #import "ATOMMyConcernTableHeaderView.h"
-#import "ATOMRecentDetailHeaderView.h"
+#import "ATOMAskDetailHeaderView.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMCommentDetailViewController.h"
 #import "ATOMComment.h"
@@ -28,11 +28,13 @@
 
 @interface ATOMAskDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, ATOMPSViewDelegate>
 
-@property (nonatomic, strong) ATOMRecentDetailView *recentDetailView;
+@property (nonatomic, strong) ATOMAskDetailView *askDetailView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) NSMutableArray *hotCommentDataSource;
 @property (nonatomic, strong) NSMutableArray *recentCommentDataSource;
 @property (nonatomic, assign) NSInteger currentPage;
+@property (nonatomic, assign) NSInteger ID;
+@property (nonatomic, assign) NSInteger type;
 @property (nonatomic, strong) UITapGestureRecognizer *tapUserNameLabelGesture;
 @property (nonatomic, strong) UITapGestureRecognizer *tapCommentDetailGesture;
 @property (nonatomic, assign) BOOL canRefreshFooter;
@@ -73,14 +75,14 @@
 #pragma mark Refresh
 
 - (void)configRecentDetailTableViewRefresh {
-    [_recentDetailView.recentDetailTableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    [_askDetailView.recentDetailTableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
 }
 
 - (void)loadMoreData {
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [_recentDetailView.recentDetailTableView.footer endRefreshing];
+        [_askDetailView.recentDetailTableView.footer endRefreshing];
     }
 }
 
@@ -93,15 +95,15 @@
     _recentCommentDataSource = nil;
     _recentCommentDataSource = [NSMutableArray array];
     _currentPage = 1;
+
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@(195) forKey:@"target_id"];
-    [param setObject:@(1) forKey:@"type"];
+    [param setObject:@(_ID) forKey:@"target_id"];
+    [param setObject:@(_type) forKey:@"type"];
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
+    NSLog(@"%@ param",param);
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
     [showDetailOfComment ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
-        [SVProgressHUD dismiss];
         for (ATOMComment *comment in hotCommentArray) {
             ATOMCommentDetailViewModel *model = [ATOMCommentDetailViewModel new];
             [model setViewModelData:comment];
@@ -112,22 +114,23 @@
             [model setViewModelData:comment];
             [ws.recentCommentDataSource addObject:model];
         }
-        [ws.recentDetailView.recentDetailTableView reloadData];
+        [ws.askDetailView.recentDetailTableView reloadData];
     }];
 }
 
 - (void)getMoreDataSource {
     WS(ws);
     _currentPage++;
+    NSInteger type = _homePageViewModel!=nil? 1:2;
+    NSInteger ID = _homePageViewModel!=nil? _homePageViewModel.imageID:_detailImageViewModel.ID;
+    
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@(_homePageViewModel.imageID) forKey:@"target_id"];
-    [param setObject:@(1) forKey:@"type"];
+    [param setObject:@(ID) forKey:@"target_id"];
+    [param setObject:@(type) forKey:@"type"];
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
     [showDetailOfComment ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
-        [SVProgressHUD dismiss];
         for (ATOMComment *comment in recentCommentArray) {
             ATOMCommentDetailViewModel *model = [ATOMCommentDetailViewModel new];
             [model setViewModelData:comment];
@@ -138,8 +141,8 @@
         } else {
             ws.canRefreshFooter = YES;
         }
-        [ws.recentDetailView.recentDetailTableView reloadData];
-        [ws.recentDetailView.recentDetailTableView.footer endRefreshing];
+        [ws.askDetailView.recentDetailTableView reloadData];
+        [ws.askDetailView.recentDetailTableView.footer endRefreshing];
     }];
 }
 
@@ -163,40 +166,48 @@
 
 - (void)createUI {
     self.title = @"详情";
-    _recentDetailView = [ATOMRecentDetailView new];
-    self.view = _recentDetailView;
-    _recentDetailView.viewModel = _homePageViewModel;
-    _recentDetailView.sendCommentView.delegate = self;
-    _recentDetailView.recentDetailTableView.delegate = self;
-    _recentDetailView.recentDetailTableView.dataSource = self;
-    [self addClickEventToRecentDetailView];
-    [self addGestureEventToRecentDetailView];
+    _askDetailView = [ATOMAskDetailView new];
+    self.view = _askDetailView;
+    if (_homePageViewModel) {
+        _type = 1;
+        _ID = _homePageViewModel.imageID;
+        _askDetailView.viewModel = _homePageViewModel;
+    } else if (_detailImageViewModel) {
+        _askDetailView.detailImageViewModel = _detailImageViewModel;
+        _type = 2;
+        _ID = _detailImageViewModel.ID;
+    }
+    _askDetailView.commentTextView.delegate = self;
+    _askDetailView.recentDetailTableView.delegate = self;
+    _askDetailView.recentDetailTableView.dataSource = self;
+    [self addClickEventToAskDetailView];
+    [self addGestureEventToAskDetailView];
     [self configRecentDetailTableViewRefresh];
     _canRefreshFooter = YES;
+    _askDetailView.headerView.praiseButton.selected = _homePageViewModel.liked;
     [self getDataSource];
 }
 
-- (void)addClickEventToRecentDetailView {
+- (void)addClickEventToAskDetailView {
     UITapGestureRecognizer *g1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickShareButton:)];
-    [_recentDetailView.headerView.shareButton addGestureRecognizer:g1];
+    [_askDetailView.headerView.shareButton addGestureRecognizer:g1];
     UITapGestureRecognizer *g2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickMoreShareButton:)];
-    [_recentDetailView.headerView.moreShareButton addGestureRecognizer:g2];
+    [_askDetailView.headerView.moreShareButton addGestureRecognizer:g2];
     UITapGestureRecognizer *g3 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickPraiseButton:)];
-    [_recentDetailView.headerView.praiseButton addGestureRecognizer:g3];
-    UITapGestureRecognizer *g4 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickCommentButton:)];
-    [_recentDetailView.headerView.commentButton addGestureRecognizer:g4];
+    [_askDetailView.headerView.praiseButton addGestureRecognizer:g3];
+//    UITapGestureRecognizer *g4 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickCommentButton:)];
+//    [_askDetailView.headerView.commentButton addGestureRecognizer:g4];
     
-    
-    [_recentDetailView.headerView.userHeaderButton addTarget:self action:@selector(clickUserHeaderButton:) forControlEvents:UIControlEventTouchUpInside];
-    [_recentDetailView.headerView.psButton addTarget:self action:@selector(clickPSButton:) forControlEvents:UIControlEventTouchUpInside];
-    [_recentDetailView.sendCommentButton addTarget:self action:@selector(clickSendCommentButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_askDetailView.headerView.userHeaderButton addTarget:self action:@selector(clickUserHeaderButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_askDetailView.headerView.psButton addTarget:self action:@selector(clickPSButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_askDetailView.sendCommentButton addTarget:self action:@selector(clickSendCommentButton:) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)addGestureEventToRecentDetailView {
+- (void)addGestureEventToAskDetailView {
     _tapCommentDetailGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCommentDetailGesture:)];
-    [_recentDetailView.recentDetailTableView addGestureRecognizer:_tapCommentDetailGesture];
+    [_askDetailView.recentDetailTableView addGestureRecognizer:_tapCommentDetailGesture];
     _tapUserNameLabelGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapUserNameLabelGesture:)];
-    [_recentDetailView.headerView.userNameLabel addGestureRecognizer:_tapUserNameLabelGesture];
+    [_askDetailView.headerView.userNameLabel addGestureRecognizer:_tapUserNameLabelGesture];
 }
 
 #pragma mark - Click Event
@@ -219,37 +230,44 @@
 }
 
 - (void)clickPraiseButton:(UITapGestureRecognizer *)sender {
-    _recentDetailView.headerView.praiseButton.selected = !_recentDetailView.headerView.praiseButton.selected;
+    [_askDetailView.headerView.praiseButton toggleApperance];
+    if (_homePageViewModel) {
+        [_homePageViewModel toggleLike];
+    } else {
+        [_detailImageViewModel toggleLike];
+    }
 }
 
-- (void)clickCommentButton:(UITapGestureRecognizer *)sender {
-    ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
-    cdvc.ID = _homePageViewModel.imageID;
-    cdvc.type = 1;
-    [self pushViewController:cdvc animated:YES];
-}
+//- (void)clickCommentButton:(UITapGestureRecognizer *)sender {
+//    ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
+//    cdvc.ID = _homePageViewModel.imageID;
+//    cdvc.type = 1;
+//    [self pushViewController:cdvc animated:YES];
+//}
 
 - (void)clickSendCommentButton:(UIButton *)sender {
-    [_recentDetailView.sendCommentView resignFirstResponder];
-    NSString *commentStr = _recentDetailView.sendCommentView.text;
-    _recentDetailView.sendCommentView.text = @"";
+//    [_askDetailView.commentTextView resignFirstResponder];
+    NSString *commentStr = _askDetailView.commentTextView.text;
+    _askDetailView.commentTextView.text = @"";
+    [_askDetailView toggleSendCommentView];
     ATOMCommentDetailViewModel *model = [ATOMCommentDetailViewModel new];
     [model setDataWithAtModel:_atModel andContent:commentStr];
     [_recentCommentDataSource insertObject:model atIndex:0];
-    [_recentDetailView.recentDetailTableView reloadData];
-    [_recentDetailView.recentDetailTableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+    [_askDetailView.recentDetailTableView reloadData];
+    [_askDetailView.recentDetailTableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:commentStr forKey:@"content"];
-    [param setObject:@"ask" forKey:@"comment_type"];
-    [param setObject:@(_homePageViewModel.imageID) forKey:@"comment_target_id"];
-    if (_atModel) {
-        [param setObject:@(_atModel.comment_id) forKey:@"comment_reply_to"];
-    }
+    [param setObject:@(_type) forKey:@"type"];
+    [param setObject:@(_ID) forKey:@"target_id"];
+    [param setObject:@(0) forKey:@"for_comment"];
+//    if (_atModel) {
+//        [param setObject:@(_atModel.comment_id) forKey:@"comment_reply_to"];
+//    }
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
     [showDetailOfComment SendComment:param withBlock:^(NSInteger comment_id, NSError *error) {
         model.comment_id = comment_id;
     }];
-    _atModel = nil;
+//    _atModel = nil;
 }
 
 - (void)dealDownloadWork {
@@ -270,16 +288,16 @@
 #pragma mark - Gesture Event
 
 - (void)tapCommentDetailGesture:(UITapGestureRecognizer *)gesture {
-    if ([_recentDetailView isEditingCommentView]) {
-        [_recentDetailView hideCommentView];
-        _recentDetailView.sendCommentView.text = @"";
-        _atModel = nil;
+    if ([_askDetailView isEditingCommentView]) {
+        [_askDetailView hideCommentView];
+//        _askDetailView.commentTextView.text = @"";
+//        _atModel = nil;
         return ;
     }
-    CGPoint location = [gesture locationInView:_recentDetailView.recentDetailTableView];
-    NSIndexPath *indexPath = [_recentDetailView.recentDetailTableView indexPathForRowAtPoint:location];
+    CGPoint location = [gesture locationInView:_askDetailView.recentDetailTableView];
+    NSIndexPath *indexPath = [_askDetailView.recentDetailTableView indexPathForRowAtPoint:location];
     if (indexPath) {
-        ATOMRecentDetailTableViewCell *cell = (ATOMRecentDetailTableViewCell *)[_recentDetailView.recentDetailTableView cellForRowAtIndexPath:indexPath];
+        ATOMAskDetailTableViewCell *cell = (ATOMAskDetailTableViewCell *)[_askDetailView.recentDetailTableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
@@ -291,30 +309,34 @@
             NSInteger section = indexPath.section;
             NSInteger row = indexPath.row;
             ATOMCommentDetailViewModel *model = (section == 0) ? _hotCommentDataSource[row] : _recentCommentDataSource[row];
-            if (!model.liked) {
-                cell.praiseButton.selected = !cell.praiseButton.selected;
-                [model increasePraiseNumber];
-                ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
-                NSMutableDictionary *param = [NSMutableDictionary dictionary];
-                [param setObject:@(model.comment_id) forKey:@"cid"];
-//                [showDetailOfComment PraiseComment:param withBlock:^(NSError *error) {
-//                    if (!error) {
-//                        NSLog(@"praise");
-//                    }
-//                }];
-            }
-            [_recentDetailView.recentDetailTableView reloadData];
+//            if (!model.liked) {
+////                cell.praiseButton.selected = !cell.praiseButton.selected;
+//                ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
+//                NSMutableDictionary *param = [NSMutableDictionary dictionary];
+//                [param setObject:@(model.comment_id) forKey:@"cid"];
+////                [showDetailOfComment PraiseComment:param withBlock:^(NSError *error) {
+////                    if (!error) {
+////                        NSLog(@"praise");
+////                    }
+////                }];
+//            }
+            //UI 颜色和数字
+            [cell.praiseButton toggleApperance];
+            //Network,点赞，取消赞
+            [model toggleLike];
+
+//            [_askDetailView.recentDetailTableView reloadData];
         } else if (CGRectContainsPoint(cell.userCommentDetailLabel.frame, p)) {
-            [_recentDetailView.sendCommentView becomeFirstResponder];
-            NSInteger section = indexPath.section;
-            NSInteger row = indexPath.row;
-            if (section == 0) {
-                _atModel = _hotCommentDataSource[row];
-            } else if (section == 1) {
-                _atModel = _recentCommentDataSource[row];
-            }
-            _recentDetailView.textViewPlaceholder = [NSString stringWithFormat:@"//@%@:", _atModel.nickname];
-            _recentDetailView.sendCommentView.text = _recentDetailView.textViewPlaceholder;
+//            [_askDetailView.commentTextView becomeFirstResponder];
+//            NSInteger section = indexPath.section;
+//            NSInteger row = indexPath.row;
+//            if (section == 0) {
+//                _atModel = _hotCommentDataSource[row];
+//            } else if (section == 1) {
+//                _atModel = _recentCommentDataSource[row];
+//            }
+//            _askDetailView.textViewPlaceholder = [NSString stringWithFormat:@"//@%@:", _atModel.nickname];
+//            _askDetailView.commentTextView.text = _askDetailView.textViewPlaceholder;
         }
     }
 }
@@ -358,9 +380,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"RecentDetailCell";
-    ATOMRecentDetailTableViewCell *cell = [_recentDetailView.recentDetailTableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    ATOMAskDetailTableViewCell *cell = [_askDetailView.recentDetailTableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
-        cell = [[ATOMRecentDetailTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[ATOMAskDetailTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     if (indexPath.section == 0) {
         cell.viewModel = _hotCommentDataSource[indexPath.row];
@@ -384,9 +406,9 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger section = indexPath.section;
     if (section == 0) {
-        return [ATOMRecentDetailTableViewCell calculateCellHeightWithModel:_hotCommentDataSource[indexPath.row]];
+        return [ATOMAskDetailTableViewCell calculateCellHeightWithModel:_hotCommentDataSource[indexPath.row]];
     } else if (section == 1) {
-        return [ATOMRecentDetailTableViewCell calculateCellHeightWithModel:_recentCommentDataSource[indexPath.row]];
+        return [ATOMAskDetailTableViewCell calculateCellHeightWithModel:_recentCommentDataSource[indexPath.row]];
     }
     return 0;
 }
@@ -404,7 +426,7 @@
 #pragma mark - UITextViewDelegate
 
 //- (void)textViewDidBeginEditing:(UITextView *)textView {
-//    if ([textView.text isEqualToString:_recentDetailView.textViewPlaceholder]) {
+//    if ([textView.text isEqualToString:_askDetailView.textViewPlaceholder]) {
 //        textView.text = @"";
 //    }
 //}
@@ -413,14 +435,14 @@
 //    NSString *str= textView.text;
 //    if (textView.text.length == 0) {
 //        if (_atModel) {
-//            textView.text = _recentDetailView.textViewPlaceholder;
+//            textView.text = _askDetailView.textViewPlaceholder;
 //        } else {
 //            textView.text = @"发表你的神回复...";
 //        }
 //    } else {
 //        if (_atModel && [str hasPrefix:[NSString stringWithFormat:@"//@%@:", _atModel.nickname]]) {
 //            textView.text = [str substringFromIndex:(_atModel.nickname.length + 4)];
-//        } else if (!_atModel && [str hasPrefix:_recentDetailView.textViewPlaceholder]) {
+//        } else if (!_atModel && [str hasPrefix:_askDetailView.textViewPlaceholder]) {
 //            textView.text = [str substringFromIndex:10];
 //        }
 //    }

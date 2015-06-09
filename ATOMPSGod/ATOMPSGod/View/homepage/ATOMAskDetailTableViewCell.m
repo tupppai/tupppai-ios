@@ -1,16 +1,16 @@
 //
-//  ATOMRecentDetailTableViewCell.m
+//  ATOMAskDetailTableViewCell.m
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/23.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMRecentDetailTableViewCell.h"
+#import "ATOMAskDetailTableViewCell.h"
 #import "ATOMCommentDetailViewModel.h"
 #import "ATOMPraiseButton.h"
 
-@implementation ATOMRecentDetailTableViewCell
+@implementation ATOMAskDetailTableViewCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];

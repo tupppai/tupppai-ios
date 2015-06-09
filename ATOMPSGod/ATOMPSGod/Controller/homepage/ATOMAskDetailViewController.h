@@ -7,10 +7,12 @@
 //
 
 #import "ATOMBaseViewController.h"
+#import "ATOMDetailImageViewModel.h"
 @class ATOMHomePageViewModel;
 
 @interface ATOMAskDetailViewController : ATOMBaseViewController
 
 @property (nonatomic, strong) ATOMHomePageViewModel *homePageViewModel;
+@property (nonatomic, strong) ATOMDetailImageViewModel *detailImageViewModel;
 
 @end

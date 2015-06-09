@@ -18,7 +18,7 @@
 @property (nonatomic, copy) NSString *avatarURL;
 @property (nonatomic, copy) NSString *publishTime;
 @property (nonatomic, strong) NSString *userImageURL;
-@property (nonatomic, copy) NSString *praiseNumber;
+@property (nonatomic, copy) NSString *likeNumber;
 @property (nonatomic, copy) NSString *shareNumber;
 @property (nonatomic, copy) NSString *commentNumber;
 @property (nonatomic, copy) NSString *totalPSNumber;
@@ -31,6 +31,6 @@
 @property (nonatomic, assign) BOOL collected;
 
 - (void)setViewModelData:(ATOMHomeImage *)homeImage;
-
+- (void)toggleLike;
 @end
 

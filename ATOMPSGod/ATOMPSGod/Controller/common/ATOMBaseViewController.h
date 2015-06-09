@@ -16,7 +16,7 @@ typedef enum {
 
 typedef enum {
     ATOMUploadWorType = 0,
-    ATOMSeekHelpType,
+    ATOMAskType,
     ATOMTakePhotoType
 }ATOMPSEventType;
 

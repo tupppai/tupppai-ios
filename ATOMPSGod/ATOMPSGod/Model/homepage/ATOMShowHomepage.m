@@ -59,6 +59,7 @@
 
 - (AFHTTPRequestOperation *)toggleLike:(NSDictionary *)param withID:(NSInteger)imageID  withBlock:(void (^)(NSString *, NSError *))block {
     NSString* url = [NSString stringWithFormat:@"ask/upask/%ld",(long)imageID];
+    NSLog(@"param %@, url %@",param,url);
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
         if (ret == 1) {
@@ -77,37 +78,41 @@
 
 - (AFHTTPRequestOperation *)ShowHomepage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:@"ask/index" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
+
         NSLog(@"ShowHomepage responseObject%@",responseObject);
-        
-        NSMutableArray *homepageArray = [NSMutableArray array];
-        NSArray *imageDataArray = responseObject[@"data"];
-        for (int i = 0; i < imageDataArray.count; i++) {
-            ATOMHomeImage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMHomeImage class] fromJSONDictionary:imageDataArray[i] error:NULL];
-            homeImage.homePageType = (NSString*)[param[@"type"] copy];
-            homeImage.tipLabelArray = [NSMutableArray array];
-            NSArray *labelDataArray = imageDataArray[i][@"labels"];
-            if (labelDataArray.count) {
-                for (int j = 0; j < labelDataArray.count; j++) {
-                    ATOMImageTipLabel *tipLabel = [MTLJSONAdapter modelOfClass:[ATOMImageTipLabel class] fromJSONDictionary:labelDataArray[j] error:NULL];
-                    tipLabel.imageID = homeImage.imageID;
-                    [homeImage.tipLabelArray addObject:tipLabel];
+        NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
+        if (ret != 1) {
+            block(nil, nil);
+        } else {
+            NSMutableArray *homepageArray = [NSMutableArray array];
+            NSArray *imageDataArray = responseObject[@"data"];
+            for (int i = 0; i < imageDataArray.count; i++) {
+                ATOMHomeImage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMHomeImage class] fromJSONDictionary:imageDataArray[i] error:NULL];
+                homeImage.homePageType = (NSString*)[param[@"type"] copy];
+                homeImage.tipLabelArray = [NSMutableArray array];
+                NSArray *labelDataArray = imageDataArray[i][@"labels"];
+                if (labelDataArray.count) {
+                    for (int j = 0; j < labelDataArray.count; j++) {
+                        ATOMImageTipLabel *tipLabel = [MTLJSONAdapter modelOfClass:[ATOMImageTipLabel class] fromJSONDictionary:labelDataArray[j] error:NULL];
+                        tipLabel.imageID = homeImage.imageID;
+                        [homeImage.tipLabelArray addObject:tipLabel];
+                    }
                 }
-            }
-            homeImage.replierArray = [NSMutableArray array];
-            NSArray *replierArray = imageDataArray[i][@"replyer"];
-            if (replierArray.count) {
-                for (int j = 0; j < replierArray.count; j++) {
-                    ATOMReplier *replier = [MTLJSONAdapter modelOfClass:[ATOMReplier class] fromJSONDictionary:replierArray[j] error:NULL];
-                    replier.imageID = homeImage.imageID;
-                    [homeImage.replierArray addObject:replier];
+                homeImage.replierArray = [NSMutableArray array];
+                NSArray *replierArray = imageDataArray[i][@"replyer"];
+                if (replierArray.count) {
+                    for (int j = 0; j < replierArray.count; j++) {
+                        ATOMReplier *replier = [MTLJSONAdapter modelOfClass:[ATOMReplier class] fromJSONDictionary:replierArray[j] error:NULL];
+                        replier.imageID = homeImage.imageID;
+                        [homeImage.replierArray addObject:replier];
+                    }
                 }
+                NSLog(@"homeImage %@ ",homeImage);
+                [homepageArray addObject:homeImage];
             }
-            NSLog(@"homeImage %@ ",homeImage);
-            [homepageArray addObject:homeImage];
-        }
-        if (block) {
-            block(homepageArray, nil);
+            if (block) {
+                block(homepageArray, nil);
+            }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [SVProgressHUD showErrorWithStatus:@"出现错误,请检查你的网络"];
@@ -115,6 +120,7 @@
             block(nil, error);
         }
     }];
+            
 }
 
 - (void)saveHomeImagesInDB:(NSMutableArray *)homeImages {

@@ -1,5 +1,5 @@
 //
-//  ATOMRecentDetailTableViewCell.h
+//  ATOMAskDetailTableViewCell.h
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/23.
@@ -10,7 +10,7 @@
 @class ATOMCommentDetailViewModel;
 @class ATOMPraiseButton;
 
-@interface ATOMRecentDetailTableViewCell : UITableViewCell
+@interface ATOMAskDetailTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) UIButton *userHeaderButton;
 @property (nonatomic, strong) UILabel *userNameLabel;

@@ -17,5 +17,6 @@
 @property (nonatomic, copy) NSString *number;
 @property (nonatomic, assign) BOOL selected;
 @property (nonatomic, weak) id<ATOMBottomCommonButtonDelegate> delegate;
-- (void)toggleLike:(NSInteger)id;
+//- (void)toggleLike:(NSInteger)id;
+-(void)toggleApperance;
 @end

@@ -12,6 +12,7 @@
 #import "ATOMImageTipLabelViewModel.h"
 #import "ATOMReplier.h"
 #import "ATOMReplierViewModel.h"
+#import "ATOMBaseRequest.h"
 
 @interface ATOMHomePageViewModel ()
 
@@ -32,7 +33,7 @@
         [df setDateFormat:@"MM月dd日 HH时mm分"];
         NSDate *publishDate = [NSDate date];
         _publishTime = [df stringFromDate:publishDate];
-        _praiseNumber = @"0";
+        _likeNumber = @"0";
         _shareNumber = @"0";
         _commentNumber = @"0";
         _totalPSNumber = @"0";
@@ -53,7 +54,7 @@
     _avatarURL = homeImage.avatar;
     NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:homeImage.uploadTime];
     [self updatePublishTime:publishDate];
-    _praiseNumber = [NSString stringWithFormat:@"%d",(int)homeImage.totalPraiseNumber];
+    _likeNumber = [NSString stringWithFormat:@"%d",(int)homeImage.totalPraiseNumber];
     _liked = homeImage.liked;
 //    _collected = homeImage.collected;
     _shareNumber = [NSString stringWithFormat:@"%d",(int)homeImage.totalShareNumber];
@@ -103,5 +104,26 @@
             _publishTime = [NSString stringWithFormat:@"%d分钟前",result];
         }
 }
+
+- (void)toggleLike{
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    NSInteger status = _liked? 0:1;
+    NSInteger one = _liked? -1:1;
+    _liked = !_liked;
+    [param setValue:@(status) forKey:@"status"];
+    ATOMBaseRequest* baseRequest = [ATOMBaseRequest new];
+    [baseRequest toggleLike:param withUrl:@"ask/upask" withID:_imageID withBlock:^(NSError *error) {
+        if (!error) {
+            NSLog(@"Server成功toggle like");
+            NSInteger number = [_likeNumber integerValue]+one;
+            [self setLikeNumber:[NSString stringWithFormat:@"%ld",(long)number]];            } else {
+                NSLog(@"Server失败 toggle like");
+            }
+    }];
+}
+
+
+
+
 
 @end

@@ -9,7 +9,6 @@
 #import "ATOMBaseViewController.h"
 
 @interface ATOMCommentDetailViewController : ATOMBaseViewController
-
 /**
  *  1(ask) 2(reply)
  */

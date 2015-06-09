@@ -50,9 +50,9 @@
 - (void)createHomepageRecentView {
     _homepageRecentView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
     [self addSubview:_homepageRecentView];
-    _homepageSeekHelpTableView = [[PWHomePageTableView alloc] initWithFrame:_homepageRecentView.bounds];
-    _homepageSeekHelpTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [_homepageRecentView addSubview:_homepageSeekHelpTableView];
+    _homepageAskTableView = [[PWHomePageTableView alloc] initWithFrame:_homepageRecentView.bounds];
+    _homepageAskTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [_homepageRecentView addSubview:_homepageAskTableView];
 }
 
 - (void)changeUIAccording:(NSString *)buttonTitle {
@@ -63,7 +63,7 @@
     } else if ([buttonTitle isEqualToString:@"最新"]) {
         _currentHomepageType = ATOMHomepageRecentType;
         self.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
-        [_homepageSeekHelpTableView reloadData];
+        [_homepageAskTableView reloadData];
     }
 }
 

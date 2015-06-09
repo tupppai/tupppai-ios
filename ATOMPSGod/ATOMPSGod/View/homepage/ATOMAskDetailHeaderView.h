@@ -1,16 +1,18 @@
 //
-//  ATOMhomepageSeekHelpTableViewCell.h
+//  ATOMAskDetailHeaderView.h
 //  ATOMPSGod
 //
-//  Created by atom on 15/3/3.
+//  Created by atom on 15/3/22.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "ATOMBaseView.h"
 #import "ATOMHomePageViewModel.h"
+#import "ATOMDetailImageViewModel.h"
+
 @class ATOMBottomCommonButton;
 
-@interface ATOMhomepageSeekHelpTableViewCell : UITableViewCell
+@interface ATOMAskDetailHeaderView : ATOMBaseView
 
 @property (nonatomic, strong) UIButton *userHeaderButton;
 @property (nonatomic, strong) UILabel *userNameLabel;
@@ -20,12 +22,13 @@
 @property (nonatomic, strong) ATOMBottomCommonButton *shareButton;
 @property (nonatomic, strong) ATOMBottomCommonButton *commentButton;
 @property (nonatomic, strong) UIButton *moreShareButton;
-@property (nonatomic, strong) UIImage *userWorkImage;
 @property (nonatomic, strong) UIView *topView;
+@property (nonatomic, strong) UIImage *userWorkImage;
 @property (nonatomic, strong) UIView *thinCenterView;
-@property (nonatomic, strong) UIView *bottomThinView;
 @property (nonatomic, strong) ATOMHomePageViewModel *viewModel;
+@property (nonatomic, strong) ATOMDetailImageViewModel *replyViewModel;
 
-+ (CGFloat)calculateCellHeightWith:(ATOMHomePageViewModel *)viewModel;
++ (CGFloat)calculateHeaderViewHeightWith:(ATOMHomePageViewModel *)viewModel;
++ (CGFloat)calculateHeaderViewHeightWithReply:(ATOMDetailImageViewModel *)viewModel;
 
 @end

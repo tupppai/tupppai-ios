@@ -26,7 +26,8 @@
              @"totalShareNumber" : @"share_count",
              @"totalWXShareNumber" : @"weixin_share_count",
              @"imageWidth" : @"image_width",
-             @"imageHeight" : @"image_height"
+             @"imageHeight" : @"image_height",
+             @"liked" : @"uped"
              };
 }
 
@@ -49,7 +50,8 @@
              @"imageWidth" : @"imageWidth",
              @"imageHeight" : @"imageHeight",
              @"clickTime" : @"clickTime",
-             @"hotCommentArray" : @"hotCommentArray"
+             @"hotCommentArray" : @"hotCommentArray",
+             @"liked" : @"liked"
              };
 }
 

@@ -22,14 +22,15 @@
 #import "ATOMHomePageViewModel.h"
 #import "ATOMShareFunctionView.h"
 #import "ATOMBottomCommonButton.h"
-
+#import "PWRefreshBaseTableView.h"
+#import "ATOMAskDetailViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMHotDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface ATOMHotDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,PWRefreshBaseTableViewDelegate>
 
 @property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
 @property (nonatomic, strong) UIView *hotDetailView;
-@property (nonatomic, strong) UITableView *hotDetailTableView;
+@property (nonatomic, strong) PWRefreshBaseTableView *hotDetailTableView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) UITapGestureRecognizer *tapHotDetailGesture;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -52,8 +53,9 @@
 
 - (UITableView *)hotDetailTableView {
     if (_hotDetailTableView == nil) {
-        _hotDetailTableView = [[UITableView alloc] initWithFrame:_hotDetailView.bounds];
+        _hotDetailTableView = [[PWRefreshBaseTableView alloc] initWithFrame:_hotDetailView.bounds];
         _hotDetailTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _hotDetailTableView.psDelegate = self;
         _hotDetailTableView.delegate = self;
         _hotDetailTableView.dataSource = self;
         _tapHotDetailGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHotDetailGesture:)];
@@ -127,19 +129,17 @@
 
 - (void)getDataSource {
     WS(ws);
-    ws.dataSource = nil;
-    ws.dataSource = [NSMutableArray array];
     ws.currentPage = 1;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(5) forKey:@"size"];
     ATOMShowDetailOfHomePage *showDetailOfHomePage = [ATOMShowDetailOfHomePage new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     NSLog(@"%d", (int)ws.homePageViewModel.imageID);
     [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.homePageViewModel.imageID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
-        [SVProgressHUD dismiss];
         //第一张图片为首页点击的图片，剩下的图片为回复图片
+        ws.dataSource = nil;
+        ws.dataSource = [NSMutableArray array];
         ATOMDetailImageViewModel *model = [ATOMDetailImageViewModel new];
         [model setViewModelDataWithHomeImage:ws.homePageViewModel];
         [ws.dataSource addObject:model];
@@ -233,6 +233,15 @@
         CGPoint p = [gesture locationInView:cell];
         //点击图片
         if (CGRectContainsPoint(cell.userWorkImageView.frame, p)) {
+            ATOMAskDetailViewController *rdvc = [ATOMAskDetailViewController new];
+            if (indexPath.row != 0) {
+                NSLog(@"rdvc.detailImageViewModel");
+                rdvc.detailImageViewModel = _dataSource[indexPath.row];
+            } else {
+                rdvc.homePageViewModel = _homePageViewModel;
+            }
+            
+            [self pushViewController:rdvc animated:YES];
         } else if (CGRectContainsPoint(cell.topView.frame, p)) {
             p = [gesture locationInView:cell.topView];
             if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
@@ -258,7 +267,12 @@
         } else {
             p = [gesture locationInView:cell.thinCenterView];
             if (CGRectContainsPoint(cell.praiseButton.frame, p)) {
-                cell.praiseButton.selected = !cell.praiseButton.selected;
+                [cell.praiseButton toggleApperance];
+                if (indexPath.row != 0 ) {
+                    [model toggleLike];
+                } else {
+                    [_homePageViewModel toggleLike];
+                }
             } else if (CGRectContainsPoint(cell.shareButton.frame, p)) {
                 [self wxShare];
             } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
@@ -270,7 +284,6 @@
                 [[AppDelegate APP].window addSubview:self.shareFunctionView];
             }
         }
-        
     }
 }
 
@@ -314,6 +327,11 @@
 }
 
 
-
+-(void)didPullRefreshDown:(UITableView *)tableView {
+    [self getDataSource];
+}
+-(void)didPullRefreshUp:(UITableView *)tableView {
+    [self getMoreDataSource];
+}
 
 @end

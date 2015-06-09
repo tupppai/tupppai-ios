@@ -40,6 +40,7 @@
 - (AFHTTPRequestOperation *)ShowDetailOfHomePage:(NSDictionary *)param withImageID:(NSInteger)imageID withBlock:(void (^)(NSMutableArray *, NSError *))block {
     NSLog(@"%@ %ld", param[@"type"], [param[@"page"] longValue]);
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:[NSString stringWithFormat:@"ask/show/%d", (int)imageID] parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"ask/show/%ld,responseObject%@",(long)imageID,responseObject);
         NSMutableArray *detailOfHomePageArray = [NSMutableArray array];
         NSArray *imageDataArray = responseObject[@"data"][@"replies"];
         NSDate *clickTime = [NSDate date];

@@ -8,7 +8,7 @@
 
 #import "ATOMHomepageViewController.h"
 #import "ATOMHomePageHotTableViewCell.h"
-#import "ATOMhomepageSeekHelpTableViewCell.h"
+#import "ATOMhomepageAskTableViewCell.h"
 #import "ATOMHotDetailViewController.h"
 #import "ATOMAskDetailViewController.h"
 #import "ATOMUploadWorkViewController.h"
@@ -54,7 +54,7 @@
 
 @property (nonatomic, strong) NSIndexPath* seletedIndexPath;
 @property (nonatomic, strong) ATOMHomePageHotTableViewCell *selectedHotCell;
-@property (nonatomic, strong) ATOMhomepageSeekHelpTableViewCell *selectedSeekHelpCell;
+@property (nonatomic, strong) ATOMhomepageAskTableViewCell *selectedAskCell;
 
 @property (nonatomic, strong) ATOMHomePageViewModel *selectedHomePageViewModel;
 
@@ -127,7 +127,7 @@
     if (_canRefreshRecentFooter) {
        [self getMoreDataSourceOfTableViewWithHomeType:@"new"];
     } else {
-        [_scrollView.homepageSeekHelpTableView.footer endRefreshing];
+        [_scrollView.homepageAskTableView.footer endRefreshing];
     }
     
 }
@@ -137,7 +137,7 @@
 -(void)didPullRefreshDown:(UITableView *)tableView{
     if (tableView == _scrollView.homepageHotTableView) {
         [self loadNewHotData];
-    } else if(tableView == _scrollView.homepageSeekHelpTableView) {
+    } else if(tableView == _scrollView.homepageAskTableView) {
         [self loadNewRecentData];
     }
 }
@@ -145,7 +145,7 @@
 -(void)didPullRefreshUp:(UITableView *)tableView {
     if (tableView == _scrollView.homepageHotTableView) {
         [self loadMoreHotData];
-    } else if(tableView == _scrollView.homepageSeekHelpTableView) {
+    } else if(tableView == _scrollView.homepageAskTableView) {
         [self loadMoreRecentData];
     }
 }
@@ -175,7 +175,7 @@
         //数据库有“求P”数据
         else {
             [[KShareManager mascotAnimator]dismiss];
-            [_scrollView.homepageSeekHelpTableView.header beginRefreshing];
+            [_scrollView.homepageAskTableView.header beginRefreshing];
         }
     }
 }
@@ -239,11 +239,13 @@
                 [ws.scrollView.homepageHotTableView reloadData];
                 [ws.scrollView.homepageHotTableView.header endRefreshing];
             } else if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageRecentType) {
-                [ws.scrollView.homepageSeekHelpTableView reloadData];
-                [ws.scrollView.homepageSeekHelpTableView.header endRefreshing];
+                [ws.scrollView.homepageAskTableView reloadData];
+                [ws.scrollView.homepageAskTableView.header endRefreshing];
             }
         } else {
-            [SVProgressHUD showErrorWithStatus:@"出现错误,请检查你的网络"];
+            [SVProgressHUD showErrorWithStatus:@"出现未知错误"];
+            [ws.scrollView.homepageHotTableView.header endRefreshing];
+            [ws.scrollView.homepageAskTableView.header endRefreshing];
         }
         [[KShareManager mascotAnimator] dismiss];
             
@@ -270,32 +272,37 @@
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(10) forKey:@"size"];
     ATOMShowHomepage *showHomepage = [ATOMShowHomepage new];
-    [showHomepage ShowHomepage:param withBlock:^(NSMutableArray *homepageArray, NSError *error) {
-        for (ATOMHomeImage *homeImage in homepageArray) {
-            ATOMHomePageViewModel *model = [ATOMHomePageViewModel new];
-            [model setViewModelData:homeImage];
+    [showHomepage ShowHomepage:param withBlock:^(NSMutableArray *homepageArray,     NSError *error) {
+        if (homepageArray && error == nil) {
+
+            for (ATOMHomeImage *homeImage in homepageArray) {
+                ATOMHomePageViewModel *model = [ATOMHomePageViewModel new];
+                [model setViewModelData:homeImage];
+                if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageHotType) {
+                    [ws.dataSourceOfHotTableView addObject:model];
+                } else if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageRecentType) {
+                    [ws.dataSourceOfRecentTableView addObject:model];
+                }
+            }
             if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageHotType) {
-                [ws.dataSourceOfHotTableView addObject:model];
+                [ws.scrollView.homepageHotTableView reloadData];
+                [ws.scrollView.homepageHotTableView.footer endRefreshing];
+                if (homepageArray.count == 0) {
+                    ws.canRefreshHotFooter = NO;
+                } else {
+                    ws.canRefreshHotFooter = YES;
+                }
             } else if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageRecentType) {
-                [ws.dataSourceOfRecentTableView addObject:model];
+                [ws.scrollView.homepageAskTableView reloadData];
+                [ws.scrollView.homepageAskTableView.footer endRefreshing];
+                if (homepageArray.count == 0) {
+                    ws.canRefreshRecentFooter = NO;
+                } else {
+                    ws.canRefreshRecentFooter = YES;
+                }
             }
-        }
-        if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageHotType) {
-            [ws.scrollView.homepageHotTableView reloadData];
-            [ws.scrollView.homepageHotTableView.footer endRefreshing];
-            if (homepageArray.count == 0) {
-                ws.canRefreshHotFooter = NO;
-            } else {
-                ws.canRefreshHotFooter = YES;
-            }
-        } else if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageRecentType) {
-            [ws.scrollView.homepageSeekHelpTableView reloadData];
-            [ws.scrollView.homepageSeekHelpTableView.footer endRefreshing];
-            if (homepageArray.count == 0) {
-                ws.canRefreshRecentFooter = NO;
-            } else {
-                ws.canRefreshRecentFooter = YES;
-            }
+        } else {
+            [SVProgressHUD showErrorWithStatus:@"出现未知错误"];
         }
     }];
 }
@@ -323,7 +330,7 @@
     _scrollView.delegate =self;
     self.view = _scrollView;
     [self configHomepageHotTableView];
-    [self confighomepageSeekHelpTableView];
+    [self confighomepageAskTableView];
 //    [_scrollView changeUIAccording:@"热门"];
 //    _customTitleView.hotTitleButton.selected = YES;
     _isfirstEnterHomepageRecentView = YES;
@@ -339,13 +346,13 @@
     _tapHomePageHotGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHomePageHotGesture:)];
     [_scrollView.homepageHotTableView addGestureRecognizer:_tapHomePageHotGesture];
 }
-- (void)confighomepageSeekHelpTableView {
-    _scrollView.homepageSeekHelpTableView.delegate = self;
-    _scrollView.homepageSeekHelpTableView.dataSource = self;
-    _scrollView.homepageSeekHelpTableView.psDelegate = self;
+- (void)confighomepageAskTableView {
+    _scrollView.homepageAskTableView.delegate = self;
+    _scrollView.homepageAskTableView.dataSource = self;
+    _scrollView.homepageAskTableView.psDelegate = self;
 
     _tapHomePageRecentGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHomePageRecentGesture:)];
-    [_scrollView.homepageSeekHelpTableView addGestureRecognizer:_tapHomePageRecentGesture];
+    [_scrollView.homepageAskTableView addGestureRecognizer:_tapHomePageRecentGesture];
 }
 
 - (void)createCustomNavigationBar {
@@ -471,15 +478,15 @@
             } else if (CGRectContainsPoint(_selectedHotCell.thinCenterView.frame, p)){
                 p = [gesture locationInView:_selectedHotCell.thinCenterView];
                 if (CGRectContainsPoint(_selectedHotCell.praiseButton.frame, p)) {
-//                    [_selectedHotCell.praiseButton toggleLike:!_selectedHotCell.praiseButton.selected withID:_selectedHomePageViewModel.imageID];
-                    [_selectedHotCell.praiseButton toggleLike:_selectedHomePageViewModel.imageID];
+                    [_selectedHotCell.praiseButton toggleApperance];
+                    [_selectedHomePageViewModel toggleLike];
                 } else if (CGRectContainsPoint(_selectedHotCell.shareButton.frame, p)) {
                     [self wxShare];
                 } else if (CGRectContainsPoint(_selectedHotCell.commentButton.frame, p)) {
-                    ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
-                    cdvc.ID = _selectedHomePageViewModel.imageID;
-                    cdvc.type = 1;
-                    [self pushViewController:cdvc animated:YES];
+//                    ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
+//                    cdvc.ID = _selectedHomePageViewModel.imageID;
+//                    cdvc.type = 1;
+//                    [self pushViewController:cdvc animated:YES];
                 } else if (CGRectContainsPoint(_selectedHotCell.moreShareButton.frame, p)) {
                     [[AppDelegate APP].window addSubview:self.shareFunctionView];
                 }
@@ -490,48 +497,46 @@
 
 - (void)tapHomePageRecentGesture:(UITapGestureRecognizer *)gesture {
     if ([_scrollView typeOfCurrentHomepageView] == ATOMHomepageRecentType) {
-        CGPoint location = [gesture locationInView:_scrollView.homepageSeekHelpTableView];
-        NSIndexPath *indexPath = [_scrollView.homepageSeekHelpTableView indexPathForRowAtPoint:location];
+        CGPoint location = [gesture locationInView:_scrollView.homepageAskTableView];
+        NSIndexPath *indexPath = [_scrollView.homepageAskTableView indexPathForRowAtPoint:location];
         if (indexPath) {
-            
             _seletedIndexPath = indexPath;
-            _selectedSeekHelpCell = (ATOMhomepageSeekHelpTableViewCell *)[_scrollView.homepageSeekHelpTableView cellForRowAtIndexPath:indexPath];
-            CGPoint p = [gesture locationInView:_selectedSeekHelpCell];
+            _selectedAskCell = (ATOMhomepageAskTableViewCell *)[_scrollView.homepageAskTableView cellForRowAtIndexPath:indexPath];
+            CGPoint p = [gesture locationInView:_selectedAskCell];
             _selectedHomePageViewModel = _dataSourceOfRecentTableView[indexPath.row];
-
-            if (CGRectContainsPoint(_selectedSeekHelpCell.userWorkImageView.frame, p)) {
+            if (CGRectContainsPoint(_selectedAskCell.userWorkImageView.frame, p)) {
                 //进入最新详情
                 ATOMAskDetailViewController *rdvc = [ATOMAskDetailViewController new];
                 rdvc.homePageViewModel = _dataSourceOfRecentTableView[indexPath.row];
                 [self pushViewController:rdvc animated:YES];
-            } else if (CGRectContainsPoint(_selectedSeekHelpCell.topView.frame, p)) {
-                p = [gesture locationInView:_selectedSeekHelpCell.topView];
-                if (CGRectContainsPoint(_selectedSeekHelpCell.userHeaderButton.frame, p)) {
+            } else if (CGRectContainsPoint(_selectedAskCell.topView.frame, p)) {
+                p = [gesture locationInView:_selectedAskCell.topView];
+                if (CGRectContainsPoint(_selectedAskCell.userHeaderButton.frame, p)) {
                     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
                     opvc.userID = _selectedHomePageViewModel.userID;
                     opvc.userName = _selectedHomePageViewModel.userName;
                     [self pushViewController:opvc animated:YES];
-                } else if (CGRectContainsPoint(_selectedSeekHelpCell.psButton.frame, p)) {
+                } else if (CGRectContainsPoint(_selectedAskCell.psButton.frame, p)) {
                     [[AppDelegate APP].window addSubview:self.psView];
-                } else if (CGRectContainsPoint(_selectedSeekHelpCell.userNameLabel.frame, p)) {
+                } else if (CGRectContainsPoint(_selectedAskCell.userNameLabel.frame, p)) {
                     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
                     opvc.userID = _selectedHomePageViewModel.userID;
                     opvc.userName = _selectedHomePageViewModel.userName;
                     [self pushViewController:opvc animated:YES];
                 }
-            } else if (CGRectContainsPoint(_selectedSeekHelpCell.thinCenterView.frame, p)){
-                p = [gesture locationInView:_selectedSeekHelpCell.thinCenterView];
-                if (CGRectContainsPoint(_selectedSeekHelpCell.praiseButton.frame, p)) {
-                    [_selectedSeekHelpCell.praiseButton toggleLike:_selectedHomePageViewModel.imageID];
-
-                } else if (CGRectContainsPoint(_selectedSeekHelpCell.shareButton.frame, p)) {
+            } else if (CGRectContainsPoint(_selectedAskCell.thinCenterView.frame, p)){
+                p = [gesture locationInView:_selectedAskCell.thinCenterView];
+                if (CGRectContainsPoint(_selectedAskCell.praiseButton.frame, p)) {
+                    [_selectedAskCell.praiseButton toggleApperance];
+                    [_selectedHomePageViewModel toggleLike];
+                } else if (CGRectContainsPoint(_selectedAskCell.shareButton.frame, p)) {
                     [self wxShare];
-                } else if (CGRectContainsPoint(_selectedSeekHelpCell.commentButton.frame, p)) {
-                    ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
-                    cdvc.ID = _selectedHomePageViewModel.imageID;
-                    cdvc.type = 1;
-                    [self pushViewController:cdvc animated:YES];
-                } else if (CGRectContainsPoint(_selectedSeekHelpCell.moreShareButton.frame, p)) {
+                } else if (CGRectContainsPoint(_selectedAskCell.commentButton.frame, p)) {
+//                    ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
+//                    cdvc.ID = _selectedHomePageViewModel.imageID;
+//                    cdvc.type = 1;
+//                    [self pushViewController:cdvc animated:YES];
+                } else if (CGRectContainsPoint(_selectedAskCell.moreShareButton.frame, p)) {
                     [[AppDelegate APP].window addSubview:self.shareFunctionView];
                 }
             }
@@ -579,7 +584,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (_scrollView.homepageHotTableView == tableView) {
         return _dataSourceOfHotTableView.count;
-    } else if (_scrollView.homepageSeekHelpTableView == tableView) {
+    } else if (_scrollView.homepageAskTableView == tableView) {
         return _dataSourceOfRecentTableView.count;
     }
     return 0;
@@ -594,11 +599,11 @@
         }
         cell.viewModel = _dataSourceOfHotTableView[indexPath.row];
         return cell;
-    } else if (_scrollView.homepageSeekHelpTableView == tableView) {
+    } else if (_scrollView.homepageAskTableView == tableView) {
         static NSString *CellIdentifier2 = @"HomePageRecentCell";
-        ATOMhomepageSeekHelpTableViewCell *cell = [_scrollView.homepageSeekHelpTableView dequeueReusableCellWithIdentifier:CellIdentifier2];
+        ATOMhomepageAskTableViewCell *cell = [_scrollView.homepageAskTableView dequeueReusableCellWithIdentifier:CellIdentifier2];
         if (!cell) {
-            cell = [[ATOMhomepageSeekHelpTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier2];
+            cell = [[ATOMhomepageAskTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier2];
         }
         cell.viewModel = _dataSourceOfRecentTableView[indexPath.row];
         return cell;
@@ -612,8 +617,8 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_scrollView.homepageHotTableView == tableView) {
         return [ATOMHomePageHotTableViewCell calculateCellHeightWith:_dataSourceOfHotTableView[indexPath.row]];
-    } else if (_scrollView.homepageSeekHelpTableView == tableView) {
-        return [ATOMhomepageSeekHelpTableViewCell calculateCellHeightWith:_dataSourceOfRecentTableView[indexPath.row]];
+    } else if (_scrollView.homepageAskTableView == tableView) {
+        return [ATOMhomepageAskTableViewCell calculateCellHeightWith:_dataSourceOfRecentTableView[indexPath.row]];
     } else {
         return 0;
     }

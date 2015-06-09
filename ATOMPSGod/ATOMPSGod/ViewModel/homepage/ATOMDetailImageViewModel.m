@@ -13,7 +13,7 @@
 #import "ATOMImageTipLabelViewModel.h"
 #import "ATOMComment.h"
 #import "ATOMCommentViewModel.h"
-
+#import "ATOMBaseRequest.h"
 @implementation ATOMDetailImageViewModel
 
 - (instancetype)init {
@@ -33,12 +33,13 @@
     _userImageURL = homePageViewModel.userImageURL;
     _avatarURL = homePageViewModel.avatarURL;
     _publishTime = homePageViewModel.publishTime;
-    _praiseNumber = homePageViewModel.praiseNumber;
+    _likeNumber = homePageViewModel.likeNumber;
     _shareNumber = homePageViewModel.shareNumber;
     _commentNumber = homePageViewModel.commentNumber;
     _width = homePageViewModel.width;
     _height = homePageViewModel.height;
     _labelArray = [homePageViewModel.labelArray mutableCopy];
+    _liked = homePageViewModel.liked;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *path = [[NSString stringWithFormat:@"%@/HomePage", PATH_OF_DOCUMENT] stringByAppendingPathComponent:[NSString stringWithFormat:@"ATOMIMAGE-%d.jpg", (int)homePageViewModel.imageID]];
     BOOL flag;
@@ -60,9 +61,10 @@
     [df setDateFormat:@"yyyy年MM月dd日 HH时mm分"];
     NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:detailImage.replyTime];
     _publishTime = [df stringFromDate:publishDate];
-    _praiseNumber = [NSString stringWithFormat:@"%d",(int)detailImage.totalPraiseNumber];
+    _likeNumber = [NSString stringWithFormat:@"%d",(int)detailImage.totalPraiseNumber];
     _shareNumber = [NSString stringWithFormat:@"%d",(int)detailImage.totalShareNumber];
     _commentNumber = [NSString stringWithFormat:@"%d",(int)detailImage.totalCommentNumber];
+    _liked = detailImage.liked;
     _width = detailImage.imageWidth;
     _height = detailImage.imageHeight;
     for (ATOMComment *comment in detailImage.hotCommentArray) {
@@ -72,28 +74,23 @@
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- (void)toggleLike {
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    NSInteger status = _liked? 0:1;
+    NSInteger one = _liked? -1:1;
+    _liked = !_liked;
+    [param setValue:@(status) forKey:@"status"];
+    ATOMBaseRequest* baseRequest = [ATOMBaseRequest new];
+    //每一页的第一张图是HomePage
+    NSString* url = @"reply/upreply";
+    [baseRequest toggleLike:param withUrl:url withID:_ID withBlock:^(NSError *error) {
+        if (!error) {
+            NSLog(@"Server成功toggle like");
+            NSInteger number = [_likeNumber integerValue]+one;
+            [self setLikeNumber:[NSString stringWithFormat:@"%ld",(long)number]];            } else {
+                NSLog(@"Server失败 toggle like");
+            }
+    }];
+}
 
 @end

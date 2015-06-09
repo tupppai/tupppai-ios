@@ -16,10 +16,10 @@
 @property (nonatomic, strong) UIButton *faceButton;
 @property (nonatomic, strong) UIView *bottomView;
 @property (nonatomic, strong) UILabel *placeHolderLabel;
+@property (nonatomic, copy) NSString *placeholderString;
 
 @property (nonatomic, copy) NSString *commentText;
 
-@property (nonatomic, copy) NSString *placeholderString;
 /**
  *  表情滚动视图
  */

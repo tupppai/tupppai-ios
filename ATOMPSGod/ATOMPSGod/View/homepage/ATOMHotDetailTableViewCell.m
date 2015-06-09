@@ -171,7 +171,9 @@
     }
 
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
-    _praiseButton.number = viewModel.praiseNumber;
+    _praiseButton.number = viewModel.likeNumber;
+    NSLog(@"_praiseButton number %@,selected%d,ID%ld",viewModel.likeNumber,viewModel.liked,(long)viewModel.ID);
+    _praiseButton.selected = viewModel.liked;
     _shareButton.number = viewModel.shareNumber;
     _commentButton.number = viewModel.commentNumber;
     [_userWorkImageView setImageWithURL:[NSURL URLWithString:viewModel.userImageURL]];

@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface ATOMBaseRequest : NSObject
-
+- (AFHTTPRequestOperation *)toggleLike:(NSDictionary *)param withUrl:(NSString*)fUrl withID:(NSInteger)imageID  withBlock:(void (^)(NSError *))block;
 @end

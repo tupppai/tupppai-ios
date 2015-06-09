@@ -17,7 +17,7 @@ typedef enum {
 
 @interface ATOMHomepageScrollView : UIScrollView
 @property (nonatomic, strong) PWHomePageTableView *homepageHotTableView;
-@property (nonatomic, strong) PWHomePageTableView *homepageSeekHelpTableView;
+@property (nonatomic, strong) PWHomePageTableView *homepageAskTableView;
 @property (nonatomic, strong) UIView *homepageHotView;
 @property (nonatomic, strong) UIView *homepageRecentView;
 @property (nonatomic, assign) ATOMHomepageViewType currentHomepageType;

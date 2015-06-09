@@ -36,52 +36,71 @@
     return _attributeDict;
 }
 
-- (void)setNumber:(NSString *)number {
+- (void)setNumber:(NSString *)number{
     _number = number;
     [self setNeedsDisplay];
 }
+//
+//- (void)setSelected:(BOOL)selected {
+//    _selected = selected;
+//    if (!_selected) {
+//        _currentColor = [UIColor colorWithHex:0xcdcdcd];
+//        NSLog(@"toggle color 1");
+//    } else {
+//        _currentColor = [UIColor colorWithHex:0xfe8282];
+//        NSLog(@"toggle color 2");
+//    }
+//    [self setNeedsDisplay];
+//    
+//}
+//
+//
+//- (void)toggleLike:(NSInteger)id{
+//    
+//    //call setSelected() and change color
+//    self.selected = !self.selected;
+//    NSMutableDictionary *param = [NSMutableDictionary new];
+//    NSInteger status = !_selected? 0:1;
+//    NSInteger one = !_selected? -1:1;
+//    [param setValue:@(status) forKey:@"status"];
+//    ATOMShowHomepage * showHomepage = [ATOMShowHomepage new];
+//    [showHomepage toggleLike:param withID:id withBlock:^(NSString *msg, NSError *error) {
+//            if (!error) {
+//                NSLog(@"Server成功toggle like");
+//                NSInteger number = [_number integerValue]+one;
+//                [self setNumber:[NSString stringWithFormat:@"%ld",(long)number]];
+//            } else {
+//                NSLog(@"Server失败 toggle like");
+//            }
+//        }];
+//}
+//
 
 - (void)setSelected:(BOOL)selected {
     _selected = selected;
-    if (!_selected) {
-        _currentColor = [UIColor colorWithHex:0xcdcdcd];
-        NSLog(@"toggle color 1");
-    } else {
+    [self toggleColor];
+    [self setNeedsDisplay];
+}
+-(void)toggleColor {
+    if (self.selected) {
         _currentColor = [UIColor colorWithHex:0xfe8282];
-        NSLog(@"toggle color 2");
+    } else {
+        _currentColor = [UIColor colorWithHex:0xb2b2b2];
+    }
+}
+-(void)toggleNumber {
+    if (self.selected) {
+        self.number =  [NSString stringWithFormat:@"%ld",[_number integerValue] + 1 ];
+    } else {
+        self.number =  [NSString stringWithFormat:@"%ld",[_number integerValue] - 1 ];
     }
     [self setNeedsDisplay];
-    
 }
 
-//- (void)toggleLike:(BOOL)selected {
-//    //call setSelected and change color
-//    self.selected = selected;
-//    if (!selected) {
-//        [self.delegate untapLikeButton:self];
-//    } else {
-//        [self.delegate tapLikeButton:self];
-//    }
-//}
-//
-- (void)toggleLike:(NSInteger)id{
-    
-    //call setSelected() and change color
+-(void)toggleApperance {
     self.selected = !self.selected;
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    NSInteger status = !_selected? 0:1;
-    NSInteger one = !_selected? -1:1;
-    [param setValue:@(status) forKey:@"status"];
-    ATOMShowHomepage * showHomepage = [ATOMShowHomepage new];
-    [showHomepage toggleLike:param withID:id withBlock:^(NSString *msg, NSError *error) {
-            if (!error) {
-                NSLog(@"Server成功toggle like");
-                NSInteger number = [_number integerValue]+one;
-                [self setNumber:[NSString stringWithFormat:@"%ld",(long)number]];
-            } else {
-                NSLog(@"Server失败 toggle like");
-            }
-        }];
+    [self toggleColor];
+    [self toggleNumber];
 }
 
 - (void)setImage:(UIImage *)image {

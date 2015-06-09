@@ -148,8 +148,6 @@
 - (void)clickSendCommentButton:(UIButton *)sender {
     [_commentDetailView hideCommentView];
     NSString *commentStr = _commentDetailView.commentText;
-    NSString* typeStr = [NSString stringWithFormat:@"%ld",(long)_type];
-    NSString* IDStr = [NSString stringWithFormat:@"%ld",(long)_ID];
     ATOMCommentDetailViewModel *model = [ATOMCommentDetailViewModel new];
     [model setDataWithAtModel:_atModel andContent:commentStr];
     [_recentCommentDataSource insertObject:model atIndex:0];
@@ -158,8 +156,8 @@
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:commentStr forKey:@"content"];
-    [param setObject:typeStr forKey:@"type"];
-    [param setObject:IDStr forKey:@"target_id"];
+    [param setObject:@(_type) forKey:@"type"];
+    [param setObject:@(_ID) forKey:@"target_id"];
     [param setObject:@(0) forKey:@"for_comment"];
 
     NSLog(@"content%@,type%ld,target_id%ld \n param %@",commentStr,(long)_type,(long)_ID,param);

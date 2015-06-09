@@ -58,7 +58,6 @@ static CGFloat pageControlWidth = 150;
 }
 
 - (void)createSubView {
-    NSLog(@"createSubView");
     _commentDetailTableView = [[PWCommentDetailTableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - 46)];
     _commentDetailTableView.tableFooterView = [UIView new];
     _commentDetailTableView.rowHeight = 70;
@@ -123,10 +122,9 @@ static CGFloat pageControlWidth = 150;
 }
 
 -(void)tapSendCommentButton {
-    NSLog(@"tapSendCommentButton");
     _commentText = _commentTextView.text;
     _commentTextView.text = @"";
-    [self toggleSendCommentButton];
+    [self toggleSendCommentView];
 }
 
 - (void)setupFaceView {
@@ -152,8 +150,7 @@ static CGFloat pageControlWidth = 150;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
 }
--(void)toggleSendCommentButton {
-    NSLog(@"toggleSendCommentButton");
+-(void)toggleSendCommentView {
     if ([_commentTextView.text isEqualToString:@""]) {
         _sendCommentButton.enabled = NO;
         _placeHolderLabel.hidden = NO;
@@ -204,7 +201,7 @@ static CGFloat pageControlWidth = 150;
     _bottomView.frame = bottomViewFrame;
     _lastContentSizeHeight = contentSize.height;
     
-    [self toggleSendCommentButton];
+    [self toggleSendCommentView];
 }
 
 - (void)textDidEnd:(NSNotification *)notification {

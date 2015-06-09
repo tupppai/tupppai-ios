@@ -158,7 +158,7 @@ static CGFloat replierWidth = 25;
     _userNameLabel.text = viewModel.userName;
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     _userPublishTimeLabel.text = viewModel.publishTime;
-    _praiseButton.number = viewModel.praiseNumber;
+    _praiseButton.number = viewModel.likeNumber;
     _praiseButton.selected = viewModel.liked;
     _shareButton.number = viewModel.shareNumber;
     _commentButton.number = viewModel.commentNumber;
