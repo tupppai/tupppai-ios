@@ -39,10 +39,10 @@ static CGFloat BottomHeight = 215;
     
     _helpButton = [[UIButton alloc] initWithFrame:CGRectMake(kPadding10, kPadding25, CGWidth(_bottomView.frame) - 2 * kPadding10, buttonHeight)];
     [self setCommonButton:_helpButton WithTitle:@"求助上传" AndBackgroundColor:[UIColor colorWithHex:0x74c3ff]];
-    [_helpButton addTarget:self action:@selector(clickHelpButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_helpButton addTarget:self action:@selector(clickSeekHelpButton:) forControlEvents:UIControlEventTouchUpInside];
     _workButton = [[UIButton alloc] initWithFrame:CGRectMake(CGOriginX(_helpButton.frame), CGRectGetMaxY(_helpButton.frame) + kPadding15, CGRectGetWidth(_helpButton.frame), buttonHeight)];
     [self setCommonButton:_workButton WithTitle:@"作品上传" AndBackgroundColor:[UIColor colorWithHex:0x74c3ff]];
-    [_workButton addTarget:self action:@selector(clickWorkButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_workButton addTarget:self action:@selector(clickUploadWorkButton:) forControlEvents:UIControlEventTouchUpInside];
     _cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(CGOriginX(_helpButton.frame), CGRectGetMaxY(_workButton.frame) + kPadding15, CGRectGetWidth(_helpButton.frame), buttonHeight)];
     [self setCommonButton:_cancelButton WithTitle:@"取消" AndBackgroundColor:[UIColor colorWithHex:0xb5c0c8]];
     [_cancelButton addTarget:self action:@selector(clickCancelButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -57,14 +57,14 @@ static CGFloat BottomHeight = 215;
     [_bottomView addSubview:button];
 }
 
-- (void)clickHelpButton:(UIButton *)sender {
+- (void)clickSeekHelpButton:(UIButton *)sender {
     [self removeFromSuperview];
     if (_delegate && [_delegate respondsToSelector:@selector(dealWithCommand:)]) {
         [_delegate dealWithCommand:@"help"];
     }
 }
 
-- (void)clickWorkButton:(UIButton *)sender {
+- (void)clickUploadWorkButton:(UIButton *)sender {
     [self removeFromSuperview];
     if (_delegate && [_delegate respondsToSelector:@selector(dealWithCommand:)]) {
         [_delegate dealWithCommand:@"work"];

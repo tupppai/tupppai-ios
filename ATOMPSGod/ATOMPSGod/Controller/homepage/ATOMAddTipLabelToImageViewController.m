@@ -147,8 +147,8 @@
     NSString *pushTypeStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"UploadingOrSeekingHelp"];
     if ([pushTypeStr isEqualToString:@"Uploading"]) {
         [self dealSubmitWorkWithLabel];
-        ATOMShareViewController *svc = [ATOMShareViewController new];
-        [self pushViewController:svc animated:YES];
+//        ATOMShareViewController *svc = [ATOMShareViewController new];
+//        [self pushViewController:svc animated:YES];
     } else if ([pushTypeStr isEqualToString:@"SeekingHelp"]) {
         [self dealSubmitUploadWithLabel];
     }
@@ -280,7 +280,7 @@
         }
         [SVProgressHUD showSuccessWithStatus:@"提交作品成功..."];
         ATOMInviteViewController *ivc = [ATOMInviteViewController new];
-        ws.askPageViewModel.imageID = newImageID;
+        ws.newAskPageViewModel.imageID = newImageID;
         ivc.askPageViewModel = ws.newAskPageViewModel;
         [ws pushViewController:ivc animated:YES];
     }];

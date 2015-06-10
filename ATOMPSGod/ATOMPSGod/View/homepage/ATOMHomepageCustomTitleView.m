@@ -13,7 +13,6 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-//        self.backgroundColor = [UIColor redColor];
         self.frame = CGRectMake(0, 0, 200, 30);
         [self createSubView];
     }
@@ -22,7 +21,6 @@
 
 - (void)createSubView {
     _hotTitleButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 0, 60, 30)];
-//    _hotTitleButton.backgroundColor = [UIColor orangeColor];
     [_hotTitleButton setTitle:@"热门" forState:UIControlStateNormal];
     [_hotTitleButton setImage:[UIImage imageNamed:@"btn_home_hot"] forState:UIControlStateNormal];
     [_hotTitleButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

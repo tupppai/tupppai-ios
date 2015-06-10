@@ -360,7 +360,6 @@
 		E99D2F5E1B1C7E8D000D7784 /* NYXProgressiveImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D2F4F1B1C7E8D000D7784 /* NYXProgressiveImageView.m */; };
 		E99D2F5F1B1C7E8D000D7784 /* NYXImagesHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D2F521B1C7E8D000D7784 /* NYXImagesHelper.m */; };
 		E9D1F88C1B203A4F0072242B /* PWRefreshBaseTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9D1F88B1B203A4F0072242B /* PWRefreshBaseTableView.m */; };
-		E9F62D971B28384D00C65DA2 /* ATOMTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9F62D961B28384D00C65DA2 /* ATOMTestViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1058,8 +1057,6 @@
 		E9D1F88A1B203A4F0072242B /* PWRefreshBaseTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWRefreshBaseTableView.h; sourceTree = "<group>"; };
 		E9D1F88B1B203A4F0072242B /* PWRefreshBaseTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWRefreshBaseTableView.m; sourceTree = "<group>"; };
 		E9F62D921B28118F00C65DA2 /* ATOMViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMViewControllerDelegate.h; sourceTree = "<group>"; };
-		E9F62D951B28384D00C65DA2 /* ATOMTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMTestViewController.h; sourceTree = "<group>"; };
-		E9F62D961B28384D00C65DA2 /* ATOMTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMTestViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1177,8 +1174,6 @@
 				5C4F5BF81AA5E0B600226F64 /* ATOMHotDetailViewController.m */,
 				5C559B4A1AB168F7000C5B50 /* ATOMPageDetailViewController.h */,
 				5C559B4B1AB168F7000C5B50 /* ATOMPageDetailViewController.m */,
-				E9F62D951B28384D00C65DA2 /* ATOMTestViewController.h */,
-				E9F62D961B28384D00C65DA2 /* ATOMTestViewController.m */,
 				E9F62D921B28118F00C65DA2 /* ATOMViewControllerDelegate.h */,
 				5C819C901AA71C1D00CDDB5B /* ATOMCommentDetailViewController.h */,
 				5C819C911AA71C1D00CDDB5B /* ATOMCommentDetailViewController.m */,
@@ -2779,7 +2774,6 @@
 				5C4C70C51AB6BC5200358989 /* ATOMBaseRequest.m in Sources */,
 				5CDB06051AA405A40089121E /* UIColor+HSL.m in Sources */,
 				5C535CBA1AF1FCEC00BF30D1 /* ATOMPSView.m in Sources */,
-				E9F62D971B28384D00C65DA2 /* ATOMTestViewController.m in Sources */,
 				5C8A2A241AAF31B30064EB1C /* ATOMMyConcernTableFooterView.m in Sources */,
 				5C84062C1ABA67CC00068F35 /* JSONKit.m in Sources */,
 				5C6697B61AAFED63001FCF8A /* ATOMProceedingViewController.m in Sources */,

@@ -75,6 +75,8 @@
 #pragma mark Refresh
 
 - (void)configRecentDetailTableViewRefresh {
+//        [_askDetailView.recentDetailTableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    
     WS(ws);
     [ws.askDetailView.recentDetailTableView addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     NSMutableArray *animatedImages = [NSMutableArray array];
@@ -87,18 +89,16 @@
 }
 
 - (void)loadMoreData {
-//    if (_canRefreshFooter) {
+    if (_canRefreshFooter) {
         [self getMoreDataSource];
-//    } else {
-//        [_askDetailView.recentDetailTableView.footer endRefreshing];
-//    }
+    } else {
+        [_askDetailView.recentDetailTableView.footer endRefreshing];
+    }
 }
 
 #pragma mark - GetDataSource
 
 - (void)getDataSource {
-    NSLog(@"getDataSource");
-
     WS(ws);
     _hotCommentDataSource = nil;
     _hotCommentDataSource = [NSMutableArray array];
@@ -114,25 +114,21 @@
     
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
     [showDetailOfComment ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
-        [_askDetailView.recentDetailTableView.footer endRefreshing];
         for (ATOMComment *comment in hotCommentArray) {
             ATOMCommentDetailViewModel *model = [ATOMCommentDetailViewModel new];
             [model setViewModelData:comment];
             [ws.hotCommentDataSource addObject:model];
         }
         for (ATOMComment *comment in recentCommentArray) {
-            NSLog(@"for recentCommentArray");
             ATOMCommentDetailViewModel *model = [ATOMCommentDetailViewModel new];
             [model setViewModelData:comment];
             [ws.recentCommentDataSource addObject:model];
-            NSLog(@" recentCommentDataSource %ld",_recentCommentDataSource.count);
         }
         [ws.askDetailView.recentDetailTableView reloadData];
     }];
 }
 
 - (void)getMoreDataSource {
-    NSLog(@"getMoreDataSource");
     WS(ws);
     _currentPage++;
     NSInteger type = _askPageViewModel!=nil? 1:2;
@@ -151,24 +147,22 @@
             [ws.recentCommentDataSource addObject:model];
         }
         [ws.askDetailView.recentDetailTableView reloadData];
-//        if (recentCommentArray.count == 0) {
-//            ws.canRefreshFooter = NO;
-//        } else {
-//            ws.canRefreshFooter = YES;
-//        }
+        if (recentCommentArray.count == 0) {
+            ws.canRefreshFooter = NO;
+        } else {
+            ws.canRefreshFooter = YES;
+        }
     }];
 }
 
 #pragma mark - UI
 
 - (void)viewDidLoad {
-    NSLog(@"viewDidLoad");
     [super viewDidLoad];
     [self createUI];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    NSLog(@"viewWillAppear");
     [super viewWillAppear:animated];
     [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
     [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
@@ -180,23 +174,20 @@
 
     [super viewWillDisappear:animated];
     
-//    if (_askPageViewModel && (self.isMovingFromParentViewController || self.isBeingDismissed)) {
-//        if(_delegate && [_delegate respondsToSelector:@selector(ATOMViewControllerDismissWithLiked:)])
-//        {
-//            [_delegate ATOMViewControllerDismissWithLiked:_askDetailView.headerView.praiseButton.selected];
-//        }
-//    }
+    if ((self.isMovingFromParentViewController || self.isBeingDismissed)) {
+        if(_delegate && [_delegate respondsToSelector:@selector(ATOMViewControllerDismissWithLiked:)])
+        {
+            [_delegate ATOMViewControllerDismissWithLiked:_askDetailView.headerView.praiseButton.selected];
+        }
+    }
 }
 
 - (void)createUI {
-    NSLog(@"createUI");
-
     self.title = @"详情";
-    self.view = _askDetailView;
+    //fucking _askDetailView should be alloc and init before assigned to self.view
     _askDetailView = [ATOMAskDetailView new];
-    _askDetailView.recentDetailTableView.delegate = self;
-    _askDetailView.recentDetailTableView.dataSource = self;
-    _askDetailView.commentTextView.delegate = self;
+    [self configRecentDetailTableViewRefresh];
+    self.view = _askDetailView;
 
     if (_askPageViewModel) {
         _type = 1;
@@ -207,13 +198,14 @@
         _ID = _productPageViewModel.ID;
         _askDetailView.productPageViewModel = _productPageViewModel;
     }
-    
+    _askDetailView.recentDetailTableView.delegate = self;
+    _askDetailView.recentDetailTableView.dataSource = self;
+    _askDetailView.commentTextView.delegate = self;
     [self addClickEventToAskDetailView];
     [self addGestureEventToAskDetailView];
-    [self configRecentDetailTableViewRefresh];
-//    _canRefreshFooter = YES;
     _askDetailView.headerView.praiseButton.selected = _askPageViewModel.liked;
     [self getDataSource];
+    _canRefreshFooter = YES;
 }
 
 - (void)addClickEventToAskDetailView {

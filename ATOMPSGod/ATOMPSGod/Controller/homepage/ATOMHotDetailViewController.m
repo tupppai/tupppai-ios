@@ -36,6 +36,7 @@
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL canRefreshFooter;
+@property (nonatomic, assign) NSIndexPath* selectedIndexPath;
 
 @end
 
@@ -198,13 +199,13 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-//    if (_askPageViewModel && (self.isMovingFromParentViewController || self.isBeingDismissed)) {
-//        if(_delegate && [_delegate respondsToSelector:@selector(ATOMViewControllerDismissWithLiked:)])
-//        {
-//            ATOMHotDetailTableViewCell *cell = (ATOMHotDetailTableViewCell *)[_hotDetailTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-//            [_delegate ATOMViewControllerDismissWithLiked:cell.praiseButton.selected];
-//        }
-//    }
+    if (_askPageViewModel && (self.isMovingFromParentViewController || self.isBeingDismissed)) {
+        if(_delegate && [_delegate respondsToSelector:@selector(ATOMViewControllerDismissWithLiked:)])
+        {
+            ATOMHotDetailTableViewCell *cell = (ATOMHotDetailTableViewCell *)[_hotDetailTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+            [_delegate ATOMViewControllerDismissWithLiked:cell.praiseButton.selected];
+        }
+    }
 }
 
 - (void)createUI {
@@ -234,16 +235,17 @@
 
 - (void)tapHotDetailGesture:(UITapGestureRecognizer *)gesture {
     CGPoint location = [gesture locationInView:_hotDetailTableView];
-    NSIndexPath *indexPath = [_hotDetailTableView indexPathForRowAtPoint:location];
-    if (indexPath) {
-        ATOMProductPageViewModel *model = _dataSource[indexPath.row];
-        ATOMHotDetailTableViewCell *cell = (ATOMHotDetailTableViewCell *)[_hotDetailTableView cellForRowAtIndexPath:indexPath];
+    _selectedIndexPath = [_hotDetailTableView indexPathForRowAtPoint:location];
+    NSLog(@"_selectedIndexPath row %ld",_selectedIndexPath.row);
+    if (_selectedIndexPath) {
+        ATOMProductPageViewModel *model = _dataSource[_selectedIndexPath.row];
+        ATOMHotDetailTableViewCell *cell = (ATOMHotDetailTableViewCell *)[_hotDetailTableView cellForRowAtIndexPath:_selectedIndexPath];
         CGPoint p = [gesture locationInView:cell];
         //点击图片
         if (CGRectContainsPoint(cell.userWorkImageView.frame, p)) {
             NSLog(@"cell.userWorkImageView");
             ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
-            if (indexPath.row != 0) {
+            if (_selectedIndexPath.row != 0) {
                 rdvc.productPageViewModel = model;
             } else {
                 rdvc.askPageViewModel = _askPageViewModel;
@@ -276,7 +278,7 @@
             p = [gesture locationInView:cell.thinCenterView];
             if (CGRectContainsPoint(cell.praiseButton.frame, p)) {
                 [cell.praiseButton toggleLike];
-                if (indexPath.row != 0 ) {
+                if (_selectedIndexPath.row != 0 ) {
                     [model toggleLike];
                 } else {
                     [_askPageViewModel toggleLike];
@@ -285,9 +287,9 @@
                 [self wxShare];
             } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
                 ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
-                if (indexPath.row != 0) {
+                if (_selectedIndexPath.row != 0) {
                     NSLog(@"rdvc.detailImageViewModel");
-                    rdvc.productPageViewModel = _dataSource[indexPath.row];
+                    rdvc.productPageViewModel = _dataSource[_selectedIndexPath.row];
                 } else {
                     rdvc.askPageViewModel = _askPageViewModel;
                 }
@@ -346,10 +348,12 @@
     [self getMoreDataSource];
 }
 
-//#pragma mark - ATOMViewControllerDelegate
-//-(void)ATOMViewControllerDismissWithLiked:(BOOL)liked {
-//    ATOMHotDetailTableViewCell *cell = (ATOMHotDetailTableViewCell *)[_hotDetailTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-//    [cell.praiseButton toggleLikeWhenSelectedChanged:liked];
-//}
+#pragma mark - ATOMViewControllerDelegate
+-(void)ATOMViewControllerDismissWithLiked:(BOOL)liked {
+    NSLog(@"ATOMViewControllerDismissWithLiked  %d",liked);
+
+    ATOMHotDetailTableViewCell *cell = (ATOMHotDetailTableViewCell *)[_hotDetailTableView cellForRowAtIndexPath:_selectedIndexPath];
+    [cell.praiseButton toggleLikeWhenSelectedChanged:liked];
+}
 
 @end

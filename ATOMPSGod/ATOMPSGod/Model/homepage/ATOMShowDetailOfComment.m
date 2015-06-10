@@ -31,35 +31,39 @@
         NSLog(@"param %@,responseObject%@",param,responseObject);
         NSMutableArray *hotCommentArray = [NSMutableArray array];
         NSMutableArray *recentCommentArray = [NSMutableArray array];
-        NSArray *hotCommentDataArray = responseObject[@"data"][@"hot_comments"];
-        NSArray *recentCommentDataArray = responseObject[@"data"][@"new_comments"];
-        for (int i = 0; i < hotCommentDataArray.count; i++) {
-            ATOMComment *comment = [MTLJSONAdapter modelOfClass:[ATOMComment class] fromJSONDictionary:hotCommentDataArray[i] error:NULL];
-            comment.commentType = [param[@"type"] integerValue];
-            comment.imageID = [param[@"target_id"] integerValue];
-            if (comment) {
-                [hotCommentArray addObject:comment];
+        NSArray* data = responseObject[@"data"];
+        if (data.count != 0) {
+            NSArray *hotCommentDataArray = responseObject[@"data"][@"hot_comments"];
+            NSArray *recentCommentDataArray = responseObject[@"data"][@"new_comments"];
+            for (int i = 0; i < hotCommentDataArray.count; i++) {
+                ATOMComment *comment = [MTLJSONAdapter modelOfClass:[ATOMComment class] fromJSONDictionary:hotCommentDataArray[i] error:NULL];
+                comment.commentType = [param[@"type"] integerValue];
+                comment.imageID = [param[@"target_id"] integerValue];
+                if (comment) {
+                    [hotCommentArray addObject:comment];
+                }
+            }
+            for (int i = 0; i < recentCommentDataArray.count; i++) {
+                ATOMComment *comment = [MTLJSONAdapter modelOfClass:[ATOMComment class] fromJSONDictionary:recentCommentDataArray[i] error:NULL];
+                comment.commentType = [param[@"type"] integerValue];
+                comment.imageID = [param[@"target_id"] integerValue];
+    //            comment.atCommentArray = [NSMutableArray array];
+    //            NSArray *atCommentArray = recentCommentDataArray[i][@"at_comments"];
+    //            for (int j = 0; j < atCommentArray.count; j++) {
+    //                ATOMAtComment *atComment = [MTLJSONAdapter modelOfClass:[ATOMAtComment class] fromJSONDictionary:atCommentArray[j] error:NULL];
+    //                if (atComment) {
+    //                    [comment.atCommentArray addObject:atComment];
+    //                }
+    //            }
+                if (comment) {
+                    [recentCommentArray addObject:comment];
+                }
+            }
+            if (block) {
+                block(hotCommentArray, recentCommentArray, nil);
             }
         }
-        for (int i = 0; i < recentCommentDataArray.count; i++) {
-            ATOMComment *comment = [MTLJSONAdapter modelOfClass:[ATOMComment class] fromJSONDictionary:recentCommentDataArray[i] error:NULL];
-            comment.commentType = [param[@"type"] integerValue];
-            comment.imageID = [param[@"target_id"] integerValue];
-//            comment.atCommentArray = [NSMutableArray array];
-//            NSArray *atCommentArray = recentCommentDataArray[i][@"at_comments"];
-//            for (int j = 0; j < atCommentArray.count; j++) {
-//                ATOMAtComment *atComment = [MTLJSONAdapter modelOfClass:[ATOMAtComment class] fromJSONDictionary:atCommentArray[j] error:NULL];
-//                if (atComment) {
-//                    [comment.atCommentArray addObject:atComment];
-//                }
-//            }
-            if (comment) {
-                [recentCommentArray addObject:comment];
-            }
-        }
-        if (block) {
-            block(hotCommentArray, recentCommentArray, nil);
-        }
+
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (block) {
             block(nil, nil, error);
@@ -70,7 +74,7 @@
 - (AFHTTPRequestOperation *)SendComment:(NSDictionary *)param withBlock:(void (^)(NSInteger, NSError *))block {
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] POST:@"comment/send_comment" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-        NSLog(@"responseObject %@",responseObject);
+        NSLog(@"param %@,responseObject%@",param,responseObject);
         NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
         if (ret == 1) {
             NSLog(@"发送评论成功");

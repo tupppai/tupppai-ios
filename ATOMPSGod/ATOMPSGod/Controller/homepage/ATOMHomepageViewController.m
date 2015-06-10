@@ -484,14 +484,14 @@
                 } else if (CGRectContainsPoint(_selectedHotCell.shareButton.frame, p)) {
                     [self wxShare];
                 } else if (CGRectContainsPoint(_selectedHotCell.commentButton.frame, p)) {
-//                    ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
-//                    rdvc.delegate = self;
-//                    rdvc.askPageViewModel = _selectedAskPageViewModel;
-//                    [self pushViewController:rdvc animated:YES];
-                    ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
-                    cdvc.ID = _selectedAskPageViewModel.imageID;
-                    cdvc.type = 1;
-                    [self pushViewController:cdvc animated:YES];
+                    ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
+                    rdvc.delegate = self;
+                    rdvc.askPageViewModel = _selectedAskPageViewModel;
+                    [self pushViewController:rdvc animated:YES];
+//                    ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
+//                    cdvc.ID = _selectedAskPageViewModel.imageID;
+//                    cdvc.type = 1;
+//                    [self pushViewController:cdvc animated:YES];
                 } else if (CGRectContainsPoint(_selectedHotCell.moreShareButton.frame, p)) {
                     [[AppDelegate APP].window addSubview:self.shareFunctionView];
                 }
@@ -501,7 +501,6 @@
 }
 
 - (void)tapHomePageRecentGesture:(UITapGestureRecognizer *)gesture {
-    WS(ws);
     if ([_scrollView typeOfCurrentHomepageView] == ATOMHomepageRecentType) {
         CGPoint location = [gesture locationInView:_scrollView.homepageAskTableView];
         NSIndexPath *indexPath = [_scrollView.homepageAskTableView indexPathForRowAtPoint:location];
@@ -513,7 +512,7 @@
             if (CGRectContainsPoint(_selectedAskCell.userWorkImageView.frame, p)) {
                 //进入最新详情
                 ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
-//                rdvc.delegate = ws;
+                rdvc.delegate = self;
                 rdvc.askPageViewModel = _dataSourceOfRecentTableView[indexPath.row];
                 [self pushViewController:rdvc animated:YES];
             } else if (CGRectContainsPoint(_selectedAskCell.topView.frame, p)) {
