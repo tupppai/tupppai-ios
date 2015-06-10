@@ -7,7 +7,7 @@
 //
 
 #import "ATOMHomePageHotTableViewCell.h"
-#import "ATOMHomePageViewModel.h"
+#import "ATOMAskPageViewModel.h"
 #import "ATOMTipButton.h"
 #import "ATOMImageTipLabelViewModel.h"
 #import "ATOMReplierViewModel.h"
@@ -145,15 +145,15 @@ static CGFloat replierWidth = 25;
     _bottomThinView.frame = CGRectMake(0, CGRectGetMaxY(_bottomView.frame), SCREEN_WIDTH, 8);
 }
 
-+ (CGFloat)calculateCellHeightWith:(ATOMHomePageViewModel *)viewModel {
++ (CGFloat)calculateCellHeightWith:(ATOMAskPageViewModel *)viewModel {
     return 60 + viewModel.height + 60 + 60 + 8;
 }
 
-+ (CGSize)calculateHomePageHotImageViewSizeWith:(ATOMHomePageViewModel *)viewModel {
++ (CGSize)calculateHomePageHotImageViewSizeWith:(ATOMAskPageViewModel *)viewModel {
     return CGSizeMake(viewModel.width, viewModel.height);
 }
 
-- (void)setViewModel:(ATOMHomePageViewModel *)viewModel {
+- (void)setViewModel:(ATOMAskPageViewModel *)viewModel {
     _viewModel = viewModel;
     _userNameLabel.text = viewModel.userName;
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
@@ -163,6 +163,7 @@ static CGFloat replierWidth = 25;
     _shareButton.number = viewModel.shareNumber;
     _commentButton.number = viewModel.commentNumber;
     _totalPSLabel.number = viewModel.totalPSNumber;
+    _userWorkImageView.contentMode = UIViewContentModeScaleAspectFit;
     if (viewModel.image) {
         _userWorkImageView.image = viewModel.image;
     } else {
@@ -181,7 +182,6 @@ static CGFloat replierWidth = 25;
             [button removeFromSuperview];
         }
     }
-    
     for (ATOMImageTipLabelViewModel *labelViewModel in _viewModel.labelArray) {
         CGRect labelFrame = [labelViewModel imageTipLabelFrameByImageSize:CGSizeMake(_viewModel.width, _viewModel.height)];
         ATOMTipButton * button = [[ATOMTipButton alloc] initWithFrame:labelFrame];

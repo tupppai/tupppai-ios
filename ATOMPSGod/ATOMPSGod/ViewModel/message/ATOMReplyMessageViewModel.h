@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class ATOMHomePageViewModel;
+@class ATOMAskPageViewModel;
 @class ATOMReplyMessage;
 
 @interface ATOMReplyMessageViewModel : NSObject
@@ -19,7 +19,7 @@
 @property (nonatomic, copy) NSString *theme;
 @property (nonatomic, copy) NSString *publishTime;
 @property (nonatomic, copy) NSString *imageURL;
-@property (nonatomic, strong) ATOMHomePageViewModel *homepageViewModel;
+@property (nonatomic, strong) ATOMAskPageViewModel *homepageViewModel;
 
 - (void)setViewModelData:(ATOMReplyMessage *)replyMessage;
 

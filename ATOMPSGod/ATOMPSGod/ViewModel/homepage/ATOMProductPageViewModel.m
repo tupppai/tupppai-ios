@@ -1,20 +1,20 @@
 //
-//  ATOMDetailImageViewModel.m
+//  ATOMProductPageViewModel.m
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/20.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMDetailImageViewModel.h"
-#import "ATOMHomePageViewModel.h"
+#import "ATOMProductPageViewModel.h"
+#import "ATOMAskPageViewModel.h"
 #import "ATOMDetailImage.h"
 #import "ATOMImageTipLabel.h"
 #import "ATOMImageTipLabelViewModel.h"
 #import "ATOMComment.h"
 #import "ATOMCommentViewModel.h"
 #import "ATOMBaseRequest.h"
-@implementation ATOMDetailImageViewModel
+@implementation ATOMProductPageViewModel
 
 - (instancetype)init {
     self = [super init];
@@ -25,23 +25,23 @@
     return self;
 }
 
-- (void)setViewModelDataWithHomeImage:(ATOMHomePageViewModel *)homePageViewModel {
-    _ID = homePageViewModel.imageID;
-    _uid = homePageViewModel.userID;
-    _userName = homePageViewModel.userName;
-    _userSex = homePageViewModel.userSex;
-    _userImageURL = homePageViewModel.userImageURL;
-    _avatarURL = homePageViewModel.avatarURL;
-    _publishTime = homePageViewModel.publishTime;
-    _likeNumber = homePageViewModel.likeNumber;
-    _shareNumber = homePageViewModel.shareNumber;
-    _commentNumber = homePageViewModel.commentNumber;
-    _width = homePageViewModel.width;
-    _height = homePageViewModel.height;
-    _labelArray = [homePageViewModel.labelArray mutableCopy];
-    _liked = homePageViewModel.liked;
+- (void)setViewModelDataWithHomeImage:(ATOMAskPageViewModel *)askPageViewModel {
+    _ID = askPageViewModel.imageID;
+    _uid = askPageViewModel.userID;
+    _userName = askPageViewModel.userName;
+    _userSex = askPageViewModel.userSex;
+    _userImageURL = askPageViewModel.userImageURL;
+    _avatarURL = askPageViewModel.avatarURL;
+    _publishTime = askPageViewModel.publishTime;
+    _likeNumber = askPageViewModel.likeNumber;
+    _shareNumber = askPageViewModel.shareNumber;
+    _commentNumber = askPageViewModel.commentNumber;
+    _width = askPageViewModel.width;
+    _height = askPageViewModel.height;
+    _labelArray = [askPageViewModel.labelArray mutableCopy];
+    _liked = askPageViewModel.liked;
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *path = [[NSString stringWithFormat:@"%@/HomePage", PATH_OF_DOCUMENT] stringByAppendingPathComponent:[NSString stringWithFormat:@"ATOMIMAGE-%d.jpg", (int)homePageViewModel.imageID]];
+    NSString *path = [[NSString stringWithFormat:@"%@/HomePage", PATH_OF_DOCUMENT] stringByAppendingPathComponent:[NSString stringWithFormat:@"ATOMIMAGE-%d.jpg", (int)askPageViewModel.imageID]];
     BOOL flag;
     if ([fileManager fileExistsAtPath:path isDirectory:&flag]) {
         _image = [UIImage imageWithContentsOfFile:path];

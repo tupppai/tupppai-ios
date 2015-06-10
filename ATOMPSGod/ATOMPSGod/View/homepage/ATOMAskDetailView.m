@@ -7,10 +7,10 @@
 //
 
 #import "ATOMAskDetailView.h"
-#import "ATOMHomePageViewModel.h"
+#import "ATOMAskPageViewModel.h"
 #import "ATOMAskDetailHeaderView.h"
 #import "ATOMFaceView.h"
-#import "ATOMDetailImageViewModel.h"
+#import "ATOMProductPageViewModel.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMAskDetailView () <UIScrollViewDelegate, ATOMFaceViewDelegate>
@@ -136,16 +136,15 @@ static CGFloat pageControlWidth = 150;
     }
 }
 
-- (void)setViewModel:(ATOMHomePageViewModel *)viewModel {
-//    _viewModel = viewModel;
-    _headerView.viewModel = viewModel;
-    CGFloat headerHeight = [ATOMAskDetailHeaderView calculateHeaderViewHeightWith:viewModel];
+- (void)setAskPageViewModel:(ATOMAskPageViewModel *)askPageViewModel {
+    _headerView.askPageViewModel = askPageViewModel;
+    CGFloat headerHeight = [ATOMAskDetailHeaderView calculateHeaderViewHeightWithAsk:askPageViewModel];
     _headerView.frame = CGRectMake(0, 0, SCREEN_WIDTH, headerHeight);
     _recentDetailTableView.tableHeaderView = _headerView;
 }
--(void)setDetailImageViewModel:(ATOMDetailImageViewModel *)detailImageViewModel {
-    _headerView.replyViewModel = detailImageViewModel;
-    CGFloat headerHeight = [ATOMAskDetailHeaderView calculateHeaderViewHeightWithReply:detailImageViewModel];
+-(void)setProductPageViewModel:(ATOMProductPageViewModel *)productPageViewModel{
+    _headerView.productPageViewModel = productPageViewModel;
+    CGFloat headerHeight = [ATOMAskDetailHeaderView calculateHeaderViewHeightWithProduct:productPageViewModel];
     _headerView.frame = CGRectMake(0, 0, SCREEN_WIDTH, headerHeight);
     _recentDetailTableView.tableHeaderView = _headerView;
 }

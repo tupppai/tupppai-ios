@@ -7,11 +7,11 @@
 //
 
 #import "ATOMBaseViewController.h"
-@class ATOMHomePageViewModel;
+@class ATOMAskPageViewModel;
 
 @interface ATOMUploadWorkViewController : ATOMBaseViewController
 
-@property (nonatomic, strong) ATOMHomePageViewModel *homePageViewModel;
+@property (nonatomic, strong) ATOMAskPageViewModel *askPageViewModel;
 @property (nonatomic, strong) UIImage *originImage;
 @property (nonatomic, strong) UIImage *workImage;
 

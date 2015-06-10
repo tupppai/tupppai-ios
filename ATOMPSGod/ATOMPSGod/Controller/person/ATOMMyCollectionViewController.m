@@ -11,7 +11,7 @@
 #import "ATOMHotDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMHomeImage.h"
-#import "ATOMHomePageViewModel.h"
+#import "ATOMAskPageViewModel.h"
 #import "ATOMCollectionViewModel.h"
 #import "ATOMShowCollection.h"
 
@@ -74,7 +74,7 @@ static float cellWidth;
     [showCollection ShowCollection:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         [SVProgressHUD dismiss];
         for (ATOMHomeImage *homeImage in resultArray) {
-            ATOMHomePageViewModel *homepageViewModel = [ATOMHomePageViewModel new];
+            ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
             [homepageViewModel setViewModelData:homeImage];
             [ws.homeImageDataSource addObject:homepageViewModel];
             ATOMCollectionViewModel *collectionViewModel = [ATOMCollectionViewModel new];
@@ -102,7 +102,7 @@ static float cellWidth;
     [showCollection ShowCollection:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         [SVProgressHUD dismiss];
         for (ATOMHomeImage *homeImage in resultArray) {
-            ATOMHomePageViewModel *homepageViewModel = [ATOMHomePageViewModel new];
+            ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
             [homepageViewModel setViewModelData:homeImage];
             [ws.homeImageDataSource addObject:homepageViewModel];
             ATOMCollectionViewModel *collectionViewModel = [ATOMCollectionViewModel new];
@@ -160,7 +160,7 @@ static float cellWidth;
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.collectionImageView.frame, p)) {
             ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
-            hdvc.homePageViewModel = _homeImageDataSource[indexPath.row];
+            hdvc.askPageViewModel = _homeImageDataSource[indexPath.row];
             [self pushViewController:hdvc animated:YES];
         } else if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];

@@ -11,7 +11,7 @@
 #import "ATOMCommentDetailViewController.h"
 #import "ATOMHotDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
-#import "ATOMHomePageViewModel.h"
+#import "ATOMAskPageViewModel.h"
 #import "ATOMShowAttention.h"
 #import "ATOMCommonImage.h"
 #import "ATOMCommonImageViewModel.h"

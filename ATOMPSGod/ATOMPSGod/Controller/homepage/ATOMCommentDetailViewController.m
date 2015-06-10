@@ -200,7 +200,7 @@
             [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.praiseButton.frame, p)) {
             //UI 颜色和数字
-            [cell.praiseButton toggleApperance];
+            [cell.praiseButton toggleLike];
             //Network,点赞，取消赞
             [model toggleLike];
         } else if (CGRectContainsPoint(cell.userCommentDetailLabel.frame, p)) {

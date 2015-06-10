@@ -7,7 +7,7 @@
 //
 
 #import "ATOMMyAttentionTableViewCell.h"
-#import "ATOMHomePageViewModel.h"
+#import "ATOMAskPageViewModel.h"
 #import "ATOMBottomCommonButton.h"
 #import "ATOMTotalPSView.h"
 #import "ATOMCommonImageViewModel.h"

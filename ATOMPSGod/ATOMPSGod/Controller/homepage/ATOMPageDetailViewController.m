@@ -1,5 +1,5 @@
 //
-//  ATOMAskDetailViewController.m
+//  ATOMPageDetailViewController.m
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/12.
@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "ATOMAskDetailViewController.h"
+#import "ATOMPageDetailViewController.h"
 #import "ATOMAskDetailView.h"
 #import "ATOMCommentDetailViewModel.h"
 #import "ATOMUploadWorkViewController.h"
@@ -26,7 +26,7 @@
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMAskDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, ATOMPSViewDelegate>
+@interface ATOMPageDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, ATOMPSViewDelegate>
 
 @property (nonatomic, strong) ATOMAskDetailView *askDetailView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
@@ -44,7 +44,7 @@
 
 @end
 
-@implementation ATOMAskDetailViewController
+@implementation ATOMPageDetailViewController
 
 #pragma mark - Lazy Initialize
 
@@ -75,20 +75,30 @@
 #pragma mark Refresh
 
 - (void)configRecentDetailTableViewRefresh {
-    [_askDetailView.recentDetailTableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    WS(ws);
+    [ws.askDetailView.recentDetailTableView addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    NSMutableArray *animatedImages = [NSMutableArray array];
+    for (int i = 1; i<=3; i++) {
+        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"loading_%ddot", i]];
+        [animatedImages addObject:image];
+    }
+    ws.askDetailView.recentDetailTableView.gifFooter.refreshingImages = animatedImages;
+    ws.askDetailView.recentDetailTableView.footer.stateHidden = YES;
 }
 
 - (void)loadMoreData {
-    if (_canRefreshFooter) {
+//    if (_canRefreshFooter) {
         [self getMoreDataSource];
-    } else {
-        [_askDetailView.recentDetailTableView.footer endRefreshing];
-    }
+//    } else {
+//        [_askDetailView.recentDetailTableView.footer endRefreshing];
+//    }
 }
 
 #pragma mark - GetDataSource
 
 - (void)getDataSource {
+    NSLog(@"getDataSource");
+
     WS(ws);
     _hotCommentDataSource = nil;
     _hotCommentDataSource = [NSMutableArray array];
@@ -101,29 +111,32 @@
     [param setObject:@(_type) forKey:@"type"];
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
-    NSLog(@"%@ param",param);
+    
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
     [showDetailOfComment ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
+        [_askDetailView.recentDetailTableView.footer endRefreshing];
         for (ATOMComment *comment in hotCommentArray) {
             ATOMCommentDetailViewModel *model = [ATOMCommentDetailViewModel new];
             [model setViewModelData:comment];
             [ws.hotCommentDataSource addObject:model];
         }
         for (ATOMComment *comment in recentCommentArray) {
+            NSLog(@"for recentCommentArray");
             ATOMCommentDetailViewModel *model = [ATOMCommentDetailViewModel new];
             [model setViewModelData:comment];
             [ws.recentCommentDataSource addObject:model];
+            NSLog(@" recentCommentDataSource %ld",_recentCommentDataSource.count);
         }
         [ws.askDetailView.recentDetailTableView reloadData];
     }];
 }
 
 - (void)getMoreDataSource {
+    NSLog(@"getMoreDataSource");
     WS(ws);
     _currentPage++;
-    NSInteger type = _homePageViewModel!=nil? 1:2;
-    NSInteger ID = _homePageViewModel!=nil? _homePageViewModel.imageID:_detailImageViewModel.ID;
-    
+    NSInteger type = _askPageViewModel!=nil? 1:2;
+    NSInteger ID = _askPageViewModel!=nil? _askPageViewModel.imageID:_productPageViewModel.ID;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(ID) forKey:@"target_id"];
     [param setObject:@(type) forKey:@"type"];
@@ -131,29 +144,31 @@
     [param setObject:@(10) forKey:@"size"];
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
     [showDetailOfComment ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
+        [_askDetailView.recentDetailTableView.footer endRefreshing];
         for (ATOMComment *comment in recentCommentArray) {
             ATOMCommentDetailViewModel *model = [ATOMCommentDetailViewModel new];
             [model setViewModelData:comment];
             [ws.recentCommentDataSource addObject:model];
         }
-        if (recentCommentArray.count == 0) {
-            ws.canRefreshFooter = NO;
-        } else {
-            ws.canRefreshFooter = YES;
-        }
         [ws.askDetailView.recentDetailTableView reloadData];
-        [ws.askDetailView.recentDetailTableView.footer endRefreshing];
+//        if (recentCommentArray.count == 0) {
+//            ws.canRefreshFooter = NO;
+//        } else {
+//            ws.canRefreshFooter = YES;
+//        }
     }];
 }
 
 #pragma mark - UI
 
 - (void)viewDidLoad {
+    NSLog(@"viewDidLoad");
     [super viewDidLoad];
     [self createUI];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    NSLog(@"viewWillAppear");
     [super viewWillAppear:animated];
     [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
     [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
@@ -161,30 +176,43 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    NSLog(@"viewWillDisappear");
+
     [super viewWillDisappear:animated];
+    
+//    if (_askPageViewModel && (self.isMovingFromParentViewController || self.isBeingDismissed)) {
+//        if(_delegate && [_delegate respondsToSelector:@selector(ATOMViewControllerDismissWithLiked:)])
+//        {
+//            [_delegate ATOMViewControllerDismissWithLiked:_askDetailView.headerView.praiseButton.selected];
+//        }
+//    }
 }
 
 - (void)createUI {
+    NSLog(@"createUI");
+
     self.title = @"详情";
-    _askDetailView = [ATOMAskDetailView new];
     self.view = _askDetailView;
-    if (_homePageViewModel) {
-        _type = 1;
-        _ID = _homePageViewModel.imageID;
-        _askDetailView.viewModel = _homePageViewModel;
-    } else if (_detailImageViewModel) {
-        _askDetailView.detailImageViewModel = _detailImageViewModel;
-        _type = 2;
-        _ID = _detailImageViewModel.ID;
-    }
-    _askDetailView.commentTextView.delegate = self;
+    _askDetailView = [ATOMAskDetailView new];
     _askDetailView.recentDetailTableView.delegate = self;
     _askDetailView.recentDetailTableView.dataSource = self;
+    _askDetailView.commentTextView.delegate = self;
+
+    if (_askPageViewModel) {
+        _type = 1;
+        _ID = _askPageViewModel.imageID;
+        _askDetailView.askPageViewModel = _askPageViewModel;
+    } else if (_productPageViewModel) {
+        _type = 2;
+        _ID = _productPageViewModel.ID;
+        _askDetailView.productPageViewModel = _productPageViewModel;
+    }
+    
     [self addClickEventToAskDetailView];
     [self addGestureEventToAskDetailView];
     [self configRecentDetailTableViewRefresh];
-    _canRefreshFooter = YES;
-    _askDetailView.headerView.praiseButton.selected = _homePageViewModel.liked;
+//    _canRefreshFooter = YES;
+    _askDetailView.headerView.praiseButton.selected = _askPageViewModel.liked;
     [self getDataSource];
 }
 
@@ -230,17 +258,17 @@
 }
 
 - (void)clickPraiseButton:(UITapGestureRecognizer *)sender {
-    [_askDetailView.headerView.praiseButton toggleApperance];
-    if (_homePageViewModel) {
-        [_homePageViewModel toggleLike];
+    [_askDetailView.headerView.praiseButton toggleLike];
+    if (_askPageViewModel) {
+        [_askPageViewModel toggleLike];
     } else {
-        [_detailImageViewModel toggleLike];
+        [_productPageViewModel toggleLike];
     }
 }
 
 //- (void)clickCommentButton:(UITapGestureRecognizer *)sender {
 //    ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
-//    cdvc.ID = _homePageViewModel.imageID;
+//    cdvc.ID = _askPageViewModel.imageID;
 //    cdvc.type = 1;
 //    [self pushViewController:cdvc animated:YES];
 //}
@@ -321,7 +349,7 @@
 ////                }];
 //            }
             //UI 颜色和数字
-            [cell.praiseButton toggleApperance];
+            [cell.praiseButton toggleLike];
             //Network,点赞，取消赞
             [model toggleLike];
 
@@ -357,7 +385,7 @@
     [self dismissViewControllerAnimated:YES completion:^{
         ATOMUploadWorkViewController *uwvc = [ATOMUploadWorkViewController new];
         uwvc.originImage = info[UIImagePickerControllerOriginalImage];
-        uwvc.homePageViewModel = ws.homePageViewModel;
+        uwvc.askPageViewModel = ws.askPageViewModel;
         [ws pushViewController:uwvc animated:YES];
     }];
 }
@@ -369,9 +397,11 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSLog(@"numberOfRowsInSection");
     if (section == 0) {
         return _hotCommentDataSource.count;
     } else if (section == 1) {
+        NSLog(@"_recentCommentDataSource.count %ld", _recentCommentDataSource.count);
         return _recentCommentDataSource.count;
     } else {
         return 0;
@@ -379,23 +409,30 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"cellForRowAtIndexPath");
+
+    if (_askDetailView.recentDetailTableView == tableView) {
     static NSString *CellIdentifier = @"RecentDetailCell";
-    ATOMAskDetailTableViewCell *cell = [_askDetailView.recentDetailTableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    ATOMAskDetailTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[ATOMAskDetailTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     if (indexPath.section == 0) {
         cell.viewModel = _hotCommentDataSource[indexPath.row];
     } else if (indexPath.section ==1) {
+        NSLog(@"cellForRowAtIndexPath %@",_recentCommentDataSource[indexPath.row]);
         cell.viewModel = _recentCommentDataSource[indexPath.row];
     }
+        
     return cell;
+    }
+    return nil;
 }
-
 
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    NSLog(@"heightForHeaderInSection");
     if ([tableView.dataSource tableView:tableView numberOfRowsInSection:section] == 0) {
         return 0;
     } else {
@@ -404,6 +441,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"heightForRowAtIndexPath");
     NSInteger section = indexPath.section;
     if (section == 0) {
         return [ATOMAskDetailTableViewCell calculateCellHeightWithModel:_hotCommentDataSource[indexPath.row]];
@@ -458,42 +496,6 @@
         [self dealDownloadWork];
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

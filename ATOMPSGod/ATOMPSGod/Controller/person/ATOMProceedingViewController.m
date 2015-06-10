@@ -12,7 +12,7 @@
 #import "ATOMHotDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMHomeImage.h"
-#import "ATOMHomePageViewModel.h"
+#import "ATOMAskPageViewModel.h"
 #import "ATOMProceedingViewModel.h"
 #import "ATOMShowProceeding.h"
 
@@ -93,7 +93,7 @@
             [_homeImageDataSource removeAllObjects];
         }
         for (ATOMHomeImage *homeImage in resultArray) {
-            ATOMHomePageViewModel *homepageViewModel = [ATOMHomePageViewModel new];
+            ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
             [homepageViewModel setViewModelData:homeImage];
             [ws.homeImageDataSource addObject:homepageViewModel];
             ATOMProceedingViewModel *proceedingViewModel = [ATOMProceedingViewModel new];
@@ -119,7 +119,7 @@
     [showProceeding ShowProceeding:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         [SVProgressHUD dismiss];
         for (ATOMHomeImage *homeImage in resultArray) {
-            ATOMHomePageViewModel *homepageViewModel = [ATOMHomePageViewModel new];
+            ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
             [homepageViewModel setViewModelData:homeImage];
             [ws.homeImageDataSource addObject:homepageViewModel];
             ATOMProceedingViewModel *proceedingViewModel = [ATOMProceedingViewModel new];
@@ -175,7 +175,7 @@
             [self dealUploadWork];
         } else if (CGRectContainsPoint(cell.userUploadImageView.frame, p)) {
             ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
-            hdvc.homePageViewModel = _homeImageDataSource[indexPath.row];
+            hdvc.askPageViewModel = _homeImageDataSource[indexPath.row];
             [self pushViewController:hdvc animated:YES];
         } else if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];

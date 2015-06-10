@@ -7,10 +7,10 @@
 //
 
 #import "ATOMBaseViewController.h"
-#import "ATOMHomePageViewModel.h"
+#import "ATOMAskPageViewModel.h"
 
 @interface ATOMInviteViewController : ATOMBaseViewController
 
-@property (nonatomic, strong) ATOMHomePageViewModel *homePageViewModel;
+@property (nonatomic, strong) ATOMAskPageViewModel *askPageViewModel;
 
 @end

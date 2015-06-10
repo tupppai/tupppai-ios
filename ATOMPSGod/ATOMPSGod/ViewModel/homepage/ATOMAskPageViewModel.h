@@ -1,5 +1,5 @@
 //
-//  ATOMHomePageViewModel.h
+//  ATOMAskPageViewModel.h
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/16.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 @class ATOMHomeImage;
 
-@interface ATOMHomePageViewModel : NSObject
+@interface ATOMAskPageViewModel : NSObject
 
 @property (nonatomic, assign) NSInteger imageID;
 @property (nonatomic, assign) NSInteger userID;

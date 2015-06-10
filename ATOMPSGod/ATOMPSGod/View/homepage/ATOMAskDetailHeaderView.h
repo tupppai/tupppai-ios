@@ -7,8 +7,8 @@
 //
 
 #import "ATOMBaseView.h"
-#import "ATOMHomePageViewModel.h"
-#import "ATOMDetailImageViewModel.h"
+#import "ATOMAskPageViewModel.h"
+#import "ATOMProductPageViewModel.h"
 
 @class ATOMBottomCommonButton;
 
@@ -25,10 +25,10 @@
 @property (nonatomic, strong) UIView *topView;
 @property (nonatomic, strong) UIImage *userWorkImage;
 @property (nonatomic, strong) UIView *thinCenterView;
-@property (nonatomic, strong) ATOMHomePageViewModel *viewModel;
-@property (nonatomic, strong) ATOMDetailImageViewModel *replyViewModel;
+@property (nonatomic, strong) ATOMAskPageViewModel *askPageViewModel;
+@property (nonatomic, strong) ATOMProductPageViewModel *productPageViewModel;
 
-+ (CGFloat)calculateHeaderViewHeightWith:(ATOMHomePageViewModel *)viewModel;
-+ (CGFloat)calculateHeaderViewHeightWithReply:(ATOMDetailImageViewModel *)viewModel;
++ (CGFloat)calculateHeaderViewHeightWithAsk:(ATOMAskPageViewModel *)viewModel;
++ (CGFloat)calculateHeaderViewHeightWithProduct:(ATOMProductPageViewModel *)viewModel;
 
 @end

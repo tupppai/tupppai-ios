@@ -11,11 +11,11 @@
 #import "ATOMTopicReplyMessageTableViewCell.h"
 #import "ATOMHotDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
-#import "ATOMAskDetailViewController.h"
+#import "ATOMPageDetailViewController.h"
 #import "ATOMReplyMessage.h"
 #import "ATOMReplyMessageViewModel.h"
 #import "ATOMHomeImage.h"
-#import "ATOMHomePageViewModel.h"
+#import "ATOMAskPageViewModel.h"
 #import "ATOMShowReplyMessage.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
@@ -161,12 +161,12 @@
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.workImageView.frame, p)) {
             if ([viewModel.homepageViewModel.totalPSNumber integerValue] == 0) {
-                ATOMAskDetailViewController *rdvc = [ATOMAskDetailViewController new];
-                rdvc.homePageViewModel = viewModel.homepageViewModel;
+                ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
+                rdvc.askPageViewModel = viewModel.homepageViewModel;
                 [self pushViewController:rdvc animated:YES];
             } else {
                 ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
-                hdvc.homePageViewModel = viewModel.homepageViewModel;
+                hdvc.askPageViewModel = viewModel.homepageViewModel;
                 [self pushViewController:hdvc animated:YES];
             }
         } else if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {

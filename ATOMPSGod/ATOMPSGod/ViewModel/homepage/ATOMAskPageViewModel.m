@@ -1,12 +1,12 @@
 //
-//  ATOMHomePageViewModel.m
+//  ATOMAskPageViewModel.m
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/16.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMHomePageViewModel.h"
+#import "ATOMAskPageViewModel.h"
 #import "ATOMHomeImage.h"
 #import "ATOMImageTipLabel.h"
 #import "ATOMImageTipLabelViewModel.h"
@@ -14,12 +14,12 @@
 #import "ATOMReplierViewModel.h"
 #import "ATOMBaseRequest.h"
 
-@interface ATOMHomePageViewModel ()
+@interface ATOMAskPageViewModel ()
 
 
 @end
 
-@implementation ATOMHomePageViewModel
+@implementation ATOMAskPageViewModel
 
 - (instancetype)init {
     self = [super init];

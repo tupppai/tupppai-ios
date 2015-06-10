@@ -7,7 +7,7 @@
 //
 
 #import "ATOMAskDetailHeaderView.h"
-#import "ATOMHomePageViewModel.h"
+#import "ATOMAskPageViewModel.h"
 #import "ATOMBottomCommonButton.h"
 
 @interface ATOMAskDetailHeaderView ()
@@ -77,21 +77,21 @@
     
     CGSize workImageSize = CGSizeZero;
     CGSize commentSize, shareSize, praiseSize;
-    if (_viewModel) {
-        workImageSize = [[self class] calculateImageViewSizeWith:_viewModel.width height:_viewModel.height];
-        commentSize = [_viewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                         NSStringDrawingUsesFontLeading          attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
+    if (_askPageViewModel) {
+        workImageSize = [[self class] calculateImageViewSizeWith:_askPageViewModel.width height:_askPageViewModel.height];
+        commentSize = [_askPageViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                         NSStringDrawingUsesFontLeading          attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
         commentSize.width += kBottomCommonButtonWidth + kPadding15;
-        shareSize = [_viewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                           NSStringDrawingUsesFontLeading            attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
+        shareSize = [_askPageViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                           NSStringDrawingUsesFontLeading            attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
         shareSize.width += kBottomCommonButtonWidth + kPadding15;
-        praiseSize = [_viewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                          NSStringDrawingUsesFontLeading           attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
+        praiseSize = [_askPageViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                          NSStringDrawingUsesFontLeading           attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
         praiseSize.width += kBottomCommonButtonWidth + kPadding15;
-    } else if (_replyViewModel) {
-        workImageSize = [[self class] calculateImageViewSizeWith:_replyViewModel.width height:_replyViewModel.height];
-        commentSize = [_replyViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                         NSStringDrawingUsesFontLeading          attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
+    } else if (_productPageViewModel) {
+        workImageSize = [[self class] calculateImageViewSizeWith:_productPageViewModel.width height:_productPageViewModel.height];
+        commentSize = [_productPageViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                         NSStringDrawingUsesFontLeading          attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
         commentSize.width += kBottomCommonButtonWidth + kPadding15;
-        shareSize = [_replyViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                           NSStringDrawingUsesFontLeading            attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
+        shareSize = [_productPageViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                           NSStringDrawingUsesFontLeading            attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
         shareSize.width += kBottomCommonButtonWidth + kPadding15;
-        praiseSize = [_replyViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                          NSStringDrawingUsesFontLeading           attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
+        praiseSize = [_productPageViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                          NSStringDrawingUsesFontLeading           attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
         praiseSize.width += kBottomCommonButtonWidth + kPadding15;
     }
     
@@ -109,43 +109,40 @@
 + (CGSize)calculateImageViewSizeWith:(CGFloat)width height:(CGFloat)height {
     return CGSizeMake(width, height);
 }
-//+ (CGSize)calculateImageViewSizeWith:(ATOMDetailImageViewModel *)viewModel {
-//    return CGSizeMake(viewModel.width, viewModel.height);
-//}
-+ (CGFloat)calculateHeaderViewHeightWith:(ATOMHomePageViewModel *)viewModel {
++ (CGFloat)calculateHeaderViewHeightWithAsk:(ATOMAskPageViewModel *)viewModel {
     return 60 + viewModel.height + 60;
 }
-+ (CGFloat)calculateHeaderViewHeightWithReply:(ATOMDetailImageViewModel *)viewModel {
++ (CGFloat)calculateHeaderViewHeightWithProduct:(ATOMProductPageViewModel *)viewModel {
     return 60 + viewModel.height + 60;
 }
 
-- (void)setViewModel:(ATOMHomePageViewModel *)viewModel {
-    _viewModel = viewModel;
-    _userNameLabel.text = viewModel.userName;
-    [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
-    if (viewModel.image) {
-        _userWorkImageView.image = viewModel.image;
+- (void)setAskPageViewModel:(ATOMAskPageViewModel *)askPageViewModel {
+    _askPageViewModel = askPageViewModel;
+    _userNameLabel.text = askPageViewModel.userName;
+    [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:askPageViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
+    if (askPageViewModel.image) {
+        _userWorkImageView.image = askPageViewModel.image;
     } else {
-        [_userWorkImageView setImageWithURL:[NSURL URLWithString:viewModel.userImageURL]];
+        [_userWorkImageView setImageWithURL:[NSURL URLWithString:askPageViewModel.userImageURL]];
     }
-    _praiseButton.number = viewModel.likeNumber;
-    _shareButton.number = viewModel.shareNumber;
-    _commentButton.number = viewModel.commentNumber;
+    _praiseButton.number = askPageViewModel.likeNumber;
+    _shareButton.number = askPageViewModel.shareNumber;
+    _commentButton.number = askPageViewModel.commentNumber;
     [self setNeedsLayout];
 }
 
--(void)setReplyViewModel:(ATOMDetailImageViewModel *)viewModel {
-    _replyViewModel = viewModel;
-    _userNameLabel.text = viewModel.userName;
-    [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
-    if (viewModel.image) {
-        _userWorkImageView.image = viewModel.image;
+-(void)setProductPageViewModel:(ATOMProductPageViewModel *)productPageViewModel {
+    _productPageViewModel = productPageViewModel;
+    _userNameLabel.text = productPageViewModel.userName;
+    [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:productPageViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
+    if (productPageViewModel.image) {
+        _userWorkImageView.image = productPageViewModel.image;
     } else {
-        [_userWorkImageView setImageWithURL:[NSURL URLWithString:viewModel.userImageURL]];
+        [_userWorkImageView setImageWithURL:[NSURL URLWithString:productPageViewModel.userImageURL]];
     }
-    _praiseButton.number = viewModel.likeNumber;
-    _shareButton.number = viewModel.shareNumber;
-    _commentButton.number = viewModel.commentNumber;
+    _praiseButton.number = productPageViewModel.likeNumber;
+    _shareButton.number = productPageViewModel.shareNumber;
+    _commentButton.number = productPageViewModel.commentNumber;
     [self setNeedsLayout];
 }
 

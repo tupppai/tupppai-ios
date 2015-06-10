@@ -11,7 +11,7 @@
 #import "ATOMHotDetailViewController.h"
 #import "ATOMShowAskOrReply.h"
 #import "ATOMHomeImage.h"
-#import "ATOMHomePageViewModel.h"
+#import "ATOMAskPageViewModel.h"
 #import "ATOMReplyViewModel.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
@@ -73,7 +73,7 @@ static int collumnNumber = 3;
     [showAskOrReply ShowAskOrReply:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         [SVProgressHUD dismiss];
         for (ATOMHomeImage *homeImage in resultArray) {
-            ATOMHomePageViewModel *homepageViewModel = [ATOMHomePageViewModel new];
+            ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
             [homepageViewModel setViewModelData:homeImage];
             ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];
             replyViewModel.imageURL = homeImage.imageURL;
@@ -101,7 +101,7 @@ static int collumnNumber = 3;
     [showAskOrReply ShowAskOrReply:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         [SVProgressHUD dismiss];
         for (ATOMHomeImage *homeImage in resultArray) {
-            ATOMHomePageViewModel *homepageViewModel = [ATOMHomePageViewModel new];
+            ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
             [homepageViewModel setViewModelData:homeImage];
             ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];
             [replyViewModel setViewModelData:homeImage];
@@ -164,7 +164,7 @@ static int collumnNumber = 3;
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
-    hdvc.homePageViewModel = _homeImageDataSource[indexPath.row];
+    hdvc.askPageViewModel = _homeImageDataSource[indexPath.row];
     [self pushViewController:hdvc animated:YES];
 }
 

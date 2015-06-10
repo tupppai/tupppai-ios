@@ -10,12 +10,12 @@
 #import "ATOMHomePageHotTableViewCell.h"
 #import "ATOMhomepageAskTableViewCell.h"
 #import "ATOMHotDetailViewController.h"
-#import "ATOMAskDetailViewController.h"
+#import "ATOMPageDetailViewController.h"
 #import "ATOMUploadWorkViewController.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMCommentDetailViewController.h"
 #import "ATOMProceedingViewController.h"
-#import "ATOMHomePageViewModel.h"
+#import "ATOMAskPageViewModel.h"
 #import "ATOMHomepageCustomTitleView.h"
 #import "ATOMHomepageScrollView.h"
 #import "ATOMHomeImage.h"
@@ -32,7 +32,7 @@
 #import "ATOMHomeImageDAO.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMHomepageViewController() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, ATOMPSViewDelegate, ATOMCameraViewDelegate,PWRefreshBaseTableViewDelegate>
+@interface ATOMHomepageViewController() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, ATOMPSViewDelegate, ATOMCameraViewDelegate,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate>
 
 @property (nonatomic, strong) ATOMHomepageCustomTitleView *customTitleView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
@@ -56,7 +56,7 @@
 @property (nonatomic, strong) ATOMHomePageHotTableViewCell *selectedHotCell;
 @property (nonatomic, strong) ATOMhomepageAskTableViewCell *selectedAskCell;
 
-@property (nonatomic, strong) ATOMHomePageViewModel *selectedHomePageViewModel;
+@property (nonatomic, strong) ATOMAskPageViewModel *selectedAskPageViewModel;
 
 @end
 
@@ -185,7 +185,7 @@
     NSArray * homepageArray = [[showHomepage getHomeImagesWithHomeType:homeType] mutableCopy];
    NSMutableArray* tableViewDataSource = [NSMutableArray array];
     for (ATOMHomeImage *homeImage in homepageArray) {
-        ATOMHomePageViewModel *model = [ATOMHomePageViewModel new];
+        ATOMAskPageViewModel *model = [ATOMAskPageViewModel new];
         [model setViewModelData:homeImage];
         [tableViewDataSource addObject:model];
     }
@@ -225,7 +225,7 @@
             }
             
             for (ATOMHomeImage *homeImage in homepageArray) {
-                ATOMHomePageViewModel *model = [ATOMHomePageViewModel new];
+                ATOMAskPageViewModel *model = [ATOMAskPageViewModel new];
                 [model setViewModelData:homeImage];
                 if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageHotType) {
                     [ws.dataSourceOfHotTableView addObject:model];
@@ -276,7 +276,7 @@
         if (homepageArray && error == nil) {
 
             for (ATOMHomeImage *homeImage in homepageArray) {
-                ATOMHomePageViewModel *model = [ATOMHomePageViewModel new];
+                ATOMAskPageViewModel *model = [ATOMAskPageViewModel new];
                 [model setViewModelData:homeImage];
                 if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageHotType) {
                     [ws.dataSourceOfHotTableView addObject:model];
@@ -455,38 +455,43 @@
             _seletedIndexPath = indexPath;
             _selectedHotCell = (ATOMHomePageHotTableViewCell *)[_scrollView.homepageHotTableView cellForRowAtIndexPath:indexPath];
             CGPoint p = [gesture locationInView:_selectedHotCell];
-            _selectedHomePageViewModel = _dataSourceOfHotTableView[indexPath.row];
+            _selectedAskPageViewModel = _dataSourceOfHotTableView[indexPath.row];
             
             if (CGRectContainsPoint(_selectedHotCell.userWorkImageView.frame, p)) {
                 //进入热门详情
                 ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
-                hdvc.homePageViewModel = _dataSourceOfHotTableView[indexPath.row];
+                hdvc.delegate = self;
+                hdvc.askPageViewModel = _dataSourceOfHotTableView[indexPath.row];
                 [self pushViewController:hdvc animated:YES];
             } else if (CGRectContainsPoint(_selectedHotCell.topView.frame, p)) {
                 p = [gesture locationInView:_selectedHotCell.topView];
                 if (CGRectContainsPoint(_selectedHotCell.userHeaderButton.frame, p)) {
                     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-                    opvc.userID = _selectedHomePageViewModel.userID;
-                    opvc.userName = _selectedHomePageViewModel.userName;
+                    opvc.userID = _selectedAskPageViewModel.userID;
+                    opvc.userName = _selectedAskPageViewModel.userName;
                     [self pushViewController:opvc animated:YES];
                 } else if (CGRectContainsPoint(_selectedHotCell.userNameLabel.frame, p)) {
                     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-                    opvc.userID = _selectedHomePageViewModel.userID;
-                    opvc.userName = _selectedHomePageViewModel.userName;
+                    opvc.userID = _selectedAskPageViewModel.userID;
+                    opvc.userName = _selectedAskPageViewModel.userName;
                     [self pushViewController:opvc animated:YES];
                 }
             } else if (CGRectContainsPoint(_selectedHotCell.thinCenterView.frame, p)){
                 p = [gesture locationInView:_selectedHotCell.thinCenterView];
                 if (CGRectContainsPoint(_selectedHotCell.praiseButton.frame, p)) {
-                    [_selectedHotCell.praiseButton toggleApperance];
-                    [_selectedHomePageViewModel toggleLike];
+                    [_selectedHotCell.praiseButton toggleLike];
+                    [_selectedAskPageViewModel toggleLike];
                 } else if (CGRectContainsPoint(_selectedHotCell.shareButton.frame, p)) {
                     [self wxShare];
                 } else if (CGRectContainsPoint(_selectedHotCell.commentButton.frame, p)) {
-//                    ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
-//                    cdvc.ID = _selectedHomePageViewModel.imageID;
-//                    cdvc.type = 1;
-//                    [self pushViewController:cdvc animated:YES];
+//                    ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
+//                    rdvc.delegate = self;
+//                    rdvc.askPageViewModel = _selectedAskPageViewModel;
+//                    [self pushViewController:rdvc animated:YES];
+                    ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
+                    cdvc.ID = _selectedAskPageViewModel.imageID;
+                    cdvc.type = 1;
+                    [self pushViewController:cdvc animated:YES];
                 } else if (CGRectContainsPoint(_selectedHotCell.moreShareButton.frame, p)) {
                     [[AppDelegate APP].window addSubview:self.shareFunctionView];
                 }
@@ -496,6 +501,7 @@
 }
 
 - (void)tapHomePageRecentGesture:(UITapGestureRecognizer *)gesture {
+    WS(ws);
     if ([_scrollView typeOfCurrentHomepageView] == ATOMHomepageRecentType) {
         CGPoint location = [gesture locationInView:_scrollView.homepageAskTableView];
         NSIndexPath *indexPath = [_scrollView.homepageAskTableView indexPathForRowAtPoint:location];
@@ -503,39 +509,40 @@
             _seletedIndexPath = indexPath;
             _selectedAskCell = (ATOMhomepageAskTableViewCell *)[_scrollView.homepageAskTableView cellForRowAtIndexPath:indexPath];
             CGPoint p = [gesture locationInView:_selectedAskCell];
-            _selectedHomePageViewModel = _dataSourceOfRecentTableView[indexPath.row];
+            _selectedAskPageViewModel = _dataSourceOfRecentTableView[indexPath.row];
             if (CGRectContainsPoint(_selectedAskCell.userWorkImageView.frame, p)) {
                 //进入最新详情
-                ATOMAskDetailViewController *rdvc = [ATOMAskDetailViewController new];
-                rdvc.homePageViewModel = _dataSourceOfRecentTableView[indexPath.row];
+                ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
+//                rdvc.delegate = ws;
+                rdvc.askPageViewModel = _dataSourceOfRecentTableView[indexPath.row];
                 [self pushViewController:rdvc animated:YES];
             } else if (CGRectContainsPoint(_selectedAskCell.topView.frame, p)) {
                 p = [gesture locationInView:_selectedAskCell.topView];
                 if (CGRectContainsPoint(_selectedAskCell.userHeaderButton.frame, p)) {
                     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-                    opvc.userID = _selectedHomePageViewModel.userID;
-                    opvc.userName = _selectedHomePageViewModel.userName;
+                    opvc.userID = _selectedAskPageViewModel.userID;
+                    opvc.userName = _selectedAskPageViewModel.userName;
                     [self pushViewController:opvc animated:YES];
                 } else if (CGRectContainsPoint(_selectedAskCell.psButton.frame, p)) {
                     [[AppDelegate APP].window addSubview:self.psView];
                 } else if (CGRectContainsPoint(_selectedAskCell.userNameLabel.frame, p)) {
                     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-                    opvc.userID = _selectedHomePageViewModel.userID;
-                    opvc.userName = _selectedHomePageViewModel.userName;
+                    opvc.userID = _selectedAskPageViewModel.userID;
+                    opvc.userName = _selectedAskPageViewModel.userName;
                     [self pushViewController:opvc animated:YES];
                 }
             } else if (CGRectContainsPoint(_selectedAskCell.thinCenterView.frame, p)){
                 p = [gesture locationInView:_selectedAskCell.thinCenterView];
                 if (CGRectContainsPoint(_selectedAskCell.praiseButton.frame, p)) {
-                    [_selectedAskCell.praiseButton toggleApperance];
-                    [_selectedHomePageViewModel toggleLike];
+                    [_selectedAskCell.praiseButton toggleLike];
+                    [_selectedAskPageViewModel toggleLike];
                 } else if (CGRectContainsPoint(_selectedAskCell.shareButton.frame, p)) {
                     [self wxShare];
                 } else if (CGRectContainsPoint(_selectedAskCell.commentButton.frame, p)) {
-//                    ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
-//                    cdvc.ID = _selectedHomePageViewModel.imageID;
-//                    cdvc.type = 1;
-//                    [self pushViewController:cdvc animated:YES];
+                    ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
+                    rdvc.delegate = self;
+                    rdvc.askPageViewModel = _dataSourceOfRecentTableView[indexPath.row];
+                    [self pushViewController:rdvc animated:YES];
                 } else if (CGRectContainsPoint(_selectedAskCell.moreShareButton.frame, p)) {
                     [[AppDelegate APP].window addSubview:self.shareFunctionView];
                 }
@@ -556,7 +563,7 @@
     [self dismissViewControllerAnimated:YES completion:^{
         ATOMUploadWorkViewController *uwvc = [ATOMUploadWorkViewController new];
         uwvc.originImage = info[UIImagePickerControllerOriginalImage];
-        uwvc.homePageViewModel = ws.selectedHomePageViewModel;
+        uwvc.askPageViewModel = ws.selectedAskPageViewModel;
         [ws pushViewController:uwvc animated:YES];
     }];
 }
@@ -652,11 +659,14 @@
     }
 }
 
-
-
-
-
-
+#pragma mark - ATOMViewControllerDelegate
+-(void)ATOMViewControllerDismissWithLiked:(BOOL)liked {
+    if (_scrollView.typeOfCurrentHomepageView == ATOMHomepageHotType) {
+        [_selectedHotCell.praiseButton toggleLikeWhenSelectedChanged:liked];
+    } else if (_scrollView.typeOfCurrentHomepageView == ATOMHomepageRecentType) {
+        [_selectedAskCell.praiseButton toggleLikeWhenSelectedChanged:liked];
+    }
+}
 
 
 

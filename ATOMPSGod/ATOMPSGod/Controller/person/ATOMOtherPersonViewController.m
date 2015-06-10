@@ -16,10 +16,10 @@
 #import "ATOMOtherPersonCollectionHeaderView.h"
 #import "ATOMShowAskOrReply.h"
 #import "ATOMHomeImage.h"
-#import "ATOMHomePageViewModel.h"
+#import "ATOMAskPageViewModel.h"
 #import "ATOMAskViewModel.h"
 #import "ATOMReplyViewModel.h"
-#import "ATOMAskDetailViewController.h"
+#import "ATOMPageDetailViewController.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -102,7 +102,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
     [showAskOrReply ShowAskOrReply:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         [SVProgressHUD dismiss];
         for (ATOMHomeImage *homeImage in resultArray) {
-            ATOMHomePageViewModel *homepageViewModel = [ATOMHomePageViewModel new];
+            ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
             [homepageViewModel setViewModelData:homeImage];
             if ([ws.otherPersonView typeOfCurrentCollectionView] == ATOMUploadType) {
                 ATOMAskViewModel *askViewModel = [ATOMAskViewModel new];
@@ -148,7 +148,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
     [showAskOrReply ShowAskOrReply:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         [SVProgressHUD dismiss];
         for (ATOMHomeImage *homeImage in resultArray) {
-            ATOMHomePageViewModel *homepageViewModel = [ATOMHomePageViewModel new];
+            ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
             [homepageViewModel setViewModelData:homeImage];
             if ([ws.otherPersonView typeOfCurrentCollectionView] == ATOMUploadType) {
                 ATOMAskViewModel *askViewModel = [ATOMAskViewModel new];
@@ -326,20 +326,20 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (collectionView == _otherPersonView.otherPersonUploadCollectionView) {
         ATOMAskViewModel *askViewModel = _uploadDataSource[indexPath.row];
-        ATOMHomePageViewModel *homepageViewModel = _uploadHomeImageDataSource[indexPath.row];
+        ATOMAskPageViewModel *homepageViewModel = _uploadHomeImageDataSource[indexPath.row];
         if ([askViewModel.totalPSNumber integerValue] == 0) {
-            ATOMAskDetailViewController *rdvc = [ATOMAskDetailViewController new];
-            rdvc.homePageViewModel = homepageViewModel;
+            ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
+            rdvc.askPageViewModel = homepageViewModel;
             [self pushViewController:rdvc animated:YES];
         } else {
             ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
-            hdvc.homePageViewModel = homepageViewModel;
+            hdvc.askPageViewModel = homepageViewModel;
             [self pushViewController:hdvc animated:YES];
         }
     } else {
-        ATOMHomePageViewModel *homepageViewModel = _workHomeImageDataSource[indexPath.row];
+        ATOMAskPageViewModel *homepageViewModel = _workHomeImageDataSource[indexPath.row];
         ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
-        hdvc.homePageViewModel = homepageViewModel;
+        hdvc.askPageViewModel = homepageViewModel;
         [self pushViewController:hdvc animated:YES];
     }
 

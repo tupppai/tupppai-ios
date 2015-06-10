@@ -101,7 +101,7 @@
     } else {
         atltivc.workImage = [_uploadWorkView.imageCropperView getCroppedImage];
     }
-    atltivc.homePageViewModel = _homePageViewModel;
+    atltivc.askPageViewModel = _askPageViewModel;
     [self pushViewController:atltivc animated:YES];
 }
 

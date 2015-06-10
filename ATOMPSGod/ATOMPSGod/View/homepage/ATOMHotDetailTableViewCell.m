@@ -8,7 +8,7 @@
 
 #import "ATOMHotDetailTableViewCell.h"
 #import "ATOMCommentViewModel.h"
-#import "ATOMDetailImageViewModel.h"
+#import "ATOMProductPageViewModel.h"
 #import "ATOMTipButton.h"
 #import "ATOMImageTipLabelViewModel.h"
 #import "ATOMBottomCommonButton.h"
@@ -145,15 +145,15 @@
     }
 }
 
-+ (CGFloat)calculateCellHeightWith:(ATOMDetailImageViewModel *)viewModel {
++ (CGFloat)calculateCellHeightWith:(ATOMProductPageViewModel *)viewModel {
     return 60 + viewModel.height + 60 + ((viewModel.commentArray.count > 2) ? 2 : viewModel.commentArray.count) * 20 + 40;
 }
 
-+ (CGSize)calculateHomePageHotImageViewSizeWith:(ATOMDetailImageViewModel *)viewModel {
++ (CGSize)calculateHomePageHotImageViewSizeWith:(ATOMProductPageViewModel *)viewModel {
     return CGSizeMake(viewModel.width, viewModel.height);
 }
 
-- (void)setViewModel:(ATOMDetailImageViewModel *)viewModel {
+- (void)setViewModel:(ATOMProductPageViewModel *)viewModel {
     _viewModel = viewModel;
     _userNameLabel.text = viewModel.userName;
     for (int i = 0; i < viewModel.commentArray.count; i++) {
@@ -176,7 +176,8 @@
     _praiseButton.selected = viewModel.liked;
     _shareButton.number = viewModel.shareNumber;
     _commentButton.number = viewModel.commentNumber;
-    [_userWorkImageView setImageWithURL:[NSURL URLWithString:viewModel.userImageURL]];
+    _userWorkImageView.contentMode = UIViewContentModeScaleAspectFit;
+    [_userWorkImageView setImageWithURL:[NSURL URLWithString:viewModel.userImageURL] placeholderImage:[UIImage imageNamed:@"homePage_Default"]];
     [self addTipLabelToImageView];
     [self setNeedsLayout];
 }

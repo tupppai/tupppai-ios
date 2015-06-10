@@ -9,14 +9,14 @@
 #import "ATOMReplyMessageViewModel.h"
 #import "ATOMReplyMessage.h"
 #import "ATOMHomeImage.h"
-#import "ATOMHomePageViewModel.h"
+#import "ATOMAskPageViewModel.h"
 
 @implementation ATOMReplyMessageViewModel
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _homepageViewModel = [ATOMHomePageViewModel new];
+        _homepageViewModel = [ATOMAskPageViewModel new];
     }
     return self;
 }

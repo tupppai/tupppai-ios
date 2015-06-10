@@ -8,7 +8,7 @@
 
 #import "ATOMInviteMessageViewModel.h"
 #import "ATOMInviteMessage.h"
-#import "ATOMHomePageViewModel.h"
+#import "ATOMAskPageViewModel.h"
 #import "ATOMHomeImage.h"
 
 @implementation ATOMInviteMessageViewModel
@@ -16,7 +16,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _homepageViewModel = [ATOMHomePageViewModel new];
+        _homepageViewModel = [ATOMAskPageViewModel new];
     }
     return self;
 }

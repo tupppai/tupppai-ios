@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ATOMHomePageViewModel;
+@class ATOMAskPageViewModel;
 @class ATOMBottomCommonButton;
 
 @interface ATOMHomePageHotTableViewCell : UITableViewCell
@@ -24,8 +24,8 @@
 @property (nonatomic, strong) UIView *bottomView;
 @property (nonatomic, strong) UIView *thinCenterView;
 @property (nonatomic, strong) UIView *bottomThinView;
-@property (nonatomic, strong) ATOMHomePageViewModel *viewModel;
+@property (nonatomic, strong) ATOMAskPageViewModel *viewModel;
 
-+ (CGFloat)calculateCellHeightWith:(ATOMHomePageViewModel *)viewModel;
++ (CGFloat)calculateCellHeightWith:(ATOMAskPageViewModel *)viewModel;
 
 @end

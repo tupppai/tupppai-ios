@@ -1,5 +1,5 @@
 //
-//  ATOMDetailImageViewModel.h
+//  ATOMProductPageViewModel.h
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/20.
@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 @class ATOMDetailImage;
-@class ATOMHomePageViewModel;
+@class ATOMAskPageViewModel;
 
-@interface ATOMDetailImageViewModel : NSObject
+@interface ATOMProductPageViewModel : NSObject
 
 @property (nonatomic, assign) NSInteger ID;
 @property (nonatomic, assign) NSInteger uid;
@@ -29,7 +29,7 @@
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, assign) BOOL liked;
 
-- (void)setViewModelDataWithHomeImage:(ATOMHomePageViewModel *)homePageViewModel;
+- (void)setViewModelDataWithHomeImage:(ATOMAskPageViewModel *)askPageViewModel;
 - (void)setViewModelDataWithDetailImage:(ATOMDetailImage *)detailImage;
 - (void)toggleLike;
 @end

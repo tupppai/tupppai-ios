@@ -41,12 +41,17 @@
     _likeNumber = likeNumber;
     [self setNeedsDisplay];
 }
-//
+//toggle Color and Number
+-(void)toggleLike {
+    [self toggleSelected];
+    [self toggleNumber];
+}
 - (void)setSelected:(BOOL)selected {
     super.selected = selected;
     [self toggleColor];
     [self setNeedsDisplay];
 }
+//toggle Color
 -(void)toggleColor {
     if (self.selected) {
         _currentColor = [UIColor colorWithHex:0xfe8282];
@@ -54,6 +59,7 @@
         _currentColor = [UIColor colorWithHex:0xb2b2b2];
     }
 }
+//toggle Number
 -(void)toggleNumber {
     if (self.selected) {
         self.likeNumber =  [NSString stringWithFormat:@"%ld",[_likeNumber integerValue] + 1 ];
@@ -62,34 +68,12 @@
     }
     [self setNeedsDisplay];
 }
-
--(void)toggleApperance {
+//toggle Selected andColor  
+-(void)toggleSelected {
     self.selected = !self.selected;
-    [self toggleColor];
-    [self toggleNumber];
 }
 
-//- (void)toggleLike:(NSInteger)commentID {
-//    //call setSelected() and change color
-//    self.selected = !self.selected;
-//    NSMutableDictionary *param = [NSMutableDictionary new];
-//    NSInteger status = !self.selected? 0:1;
-//    NSInteger likeNumber = !self.selected? -1:1;
-//    [param setValue:@(status) forKey:@"status"];
-//    
-//    ATOMShowDetailOfComment * showCommentDetail = [ATOMShowDetailOfComment new];
-//    [showCommentDetail toggleLike:param withID:commentID withBlock:^(NSError *error) {
-//        if (!error) {
-//            NSLog(@"Server成功toggle like");
-//            NSInteger number = [_praiseNumber integerValue]+likeNumber;
-//            [self setPraiseNumber:[NSString stringWithFormat:@"%ld",(long)number]];
-//        } else {
-//            NSLog(@"Server失败 toggle like");
-//        }
-//
-//    }];
-// 
-//}
+
 
 - (void)drawRect:(CGRect)rect {
     NSLog(@"like number in drawRect %@",_likeNumber);

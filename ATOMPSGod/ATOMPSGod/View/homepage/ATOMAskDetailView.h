@@ -7,9 +7,9 @@
 //
 
 #import "ATOMBaseView.h"
-@class ATOMHomePageViewModel;
+@class ATOMAskPageViewModel;
 @class ATOMAskDetailHeaderView;
-@class ATOMDetailImageViewModel;
+@class ATOMProductPageViewModel;
 @interface ATOMAskDetailView : UIScrollView;
 
 @property (nonatomic, strong) ATOMAskDetailHeaderView *headerView;
@@ -18,8 +18,8 @@
 @property (nonatomic, strong) UITextView *commentTextView;
 @property (nonatomic, strong) UILabel *placeHolderLabel;
 @property (nonatomic, strong) UIView *bottomView;
-@property (nonatomic, strong) ATOMHomePageViewModel *viewModel;
-@property (nonatomic, strong) ATOMDetailImageViewModel *detailImageViewModel;
+@property (nonatomic, strong) ATOMAskPageViewModel *askPageViewModel;
+@property (nonatomic, strong) ATOMProductPageViewModel *productPageViewModel;
 
 //@property (nonatomic, copy) NSString *textViewPlaceholder;
 @property (nonatomic, copy) NSString *placeholderString;

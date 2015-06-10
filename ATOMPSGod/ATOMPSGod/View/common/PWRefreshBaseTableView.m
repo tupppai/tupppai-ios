@@ -27,7 +27,6 @@
         UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, -1, SCREEN_WIDTH, 1)];
         line.backgroundColor = [UIColor lightGrayColor];
         [self addSubview:line];
-        
         [self.gifHeader setImages:animatedImages forState:MJRefreshHeaderStateIdle];
         [self.gifHeader setImages:animatedImages forState:MJRefreshHeaderStateRefreshing];
         self.header.updatedTimeHidden = YES;

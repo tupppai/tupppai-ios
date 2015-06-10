@@ -27,5 +27,5 @@
 
 - (void)hideCommentView;
 - (BOOL)isEditingCommentView;
-- (void)toggleSendCommentButton;
+//- (void)toggleSendCommentButton;
 @end

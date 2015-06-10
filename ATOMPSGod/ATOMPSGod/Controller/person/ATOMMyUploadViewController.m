@@ -9,10 +9,10 @@
 #import "ATOMMyUploadViewController.h"
 #import "ATOMMyUploadCollectionViewCell.h"
 #import "ATOMHotDetailViewController.h"
-#import "ATOMAskDetailViewController.h"
+#import "ATOMPageDetailViewController.h"
 #import "ATOMShowAskOrReply.h"
 #import "ATOMHomeImage.h"
-#import "ATOMHomePageViewModel.h"
+#import "ATOMAskPageViewModel.h"
 #import "ATOMAskViewModel.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
@@ -74,7 +74,7 @@ static int collumnNumber = 3;
     [showAskOrReply ShowAskOrReply:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         [SVProgressHUD dismiss];
         for (ATOMHomeImage *homeImage in resultArray) {
-            ATOMHomePageViewModel *homepageViewModel = [ATOMHomePageViewModel new];
+            ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
             [homepageViewModel setViewModelData:homeImage];
             ATOMAskViewModel *askViewModel = [ATOMAskViewModel new];
             [askViewModel setViewModelData:homeImage];
@@ -102,7 +102,7 @@ static int collumnNumber = 3;
     [showAskOrReply ShowAskOrReply:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         [SVProgressHUD dismiss];
         for (ATOMHomeImage *homeImage in resultArray) {
-            ATOMHomePageViewModel *homepageViewModel = [ATOMHomePageViewModel new];
+            ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
             [homepageViewModel setViewModelData:homeImage];
             ATOMAskViewModel *askViewModel = [ATOMAskViewModel new];
             [askViewModel setViewModelData:homeImage];
@@ -169,14 +169,14 @@ static int collumnNumber = 3;
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
     ATOMAskViewModel *askViewModel = _dataSource[indexPath.row];
-    ATOMHomePageViewModel *homepageViewModel = _homeImageDataSource[indexPath.row];
+    ATOMAskPageViewModel *homepageViewModel = _homeImageDataSource[indexPath.row];
     if ([askViewModel.totalPSNumber integerValue] == 0) {
-        ATOMAskDetailViewController *rdvc = [ATOMAskDetailViewController new];
-        rdvc.homePageViewModel = homepageViewModel;
+        ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
+        rdvc.askPageViewModel = homepageViewModel;
         [self pushViewController:rdvc animated:YES];
     } else {
         ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
-        hdvc.homePageViewModel = homepageViewModel;
+        hdvc.askPageViewModel = homepageViewModel;
         [self pushViewController:hdvc animated:YES];
     }
 }

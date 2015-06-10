@@ -106,15 +106,15 @@
     
 }
 
-+ (CGFloat)calculateCellHeightWith:(ATOMHomePageViewModel *)viewModel {
++ (CGFloat)calculateCellHeightWith:(ATOMAskPageViewModel *)viewModel {
     return 60 + viewModel.height + 60 + 8;
 }
 
-+ (CGSize)calculateHomePageHotImageViewSizeWith:(ATOMHomePageViewModel *)viewModel {
++ (CGSize)calculateHomePageHotImageViewSizeWith:(ATOMAskPageViewModel *)viewModel {
     return CGSizeMake(viewModel.width, viewModel.height);
 }
 
-- (void)setViewModel:(ATOMHomePageViewModel *)viewModel {
+- (void)setViewModel:(ATOMAskPageViewModel *)viewModel {
     _viewModel = viewModel;
     _userNameLabel.text = viewModel.userName;
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
@@ -122,6 +122,7 @@
     _praiseButton.selected = viewModel.liked;
     _shareButton.number = viewModel.shareNumber;
     _commentButton.number = viewModel.commentNumber;
+    _userWorkImageView.contentMode = UIViewContentModeScaleAspectFit;
     if (viewModel.image) {
         _userWorkImageView.image = viewModel.image;
     } else {

@@ -28,7 +28,7 @@
 
 - (AFHTTPRequestOperation *)ShowDetailOfComment:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSMutableArray *, NSError *))block {
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:@"comment/index" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"responseObject%@",responseObject);
+        NSLog(@"param %@,responseObject%@",param,responseObject);
         NSMutableArray *hotCommentArray = [NSMutableArray array];
         NSMutableArray *recentCommentArray = [NSMutableArray array];
         NSArray *hotCommentDataArray = responseObject[@"data"][@"hot_comments"];

@@ -12,5 +12,7 @@
 
 @property (nonatomic, copy) NSString *likeNumber;
 -(void)toggleNumber;
--(void)toggleApperance;
+-(void)toggleLike;
+-(void)toggleSelected;
+-(void)toggleColor;
 @end

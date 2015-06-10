@@ -17,7 +17,7 @@
 #import "ATOMImage.h"
 #import "ATOMImageTipLabel.h"
 #import "AppDelegate.h"
-#import "ATOMHomePageViewModel.h"
+#import "ATOMAskPageViewModel.h"
 #import "ATOMImageTipLabelViewModel.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
@@ -34,7 +34,7 @@
 @property (nonatomic, strong) NSString *currentTipLabelText;
 @property (nonatomic, assign) CGPoint currentLocation;
 @property (nonatomic, strong) ATOMTipButton *lastAddButton;
-@property (nonatomic, strong) ATOMHomePageViewModel *newHomePageViewModel;
+@property (nonatomic, strong) ATOMAskPageViewModel *newAskPageViewModel;
 
 @end
 
@@ -64,11 +64,11 @@
     return _cancelLeftBarButtonItem;
 }
 
-- (ATOMHomePageViewModel *)newHomePageViewModel {
-    if (!_newHomePageViewModel) {
-        _newHomePageViewModel = [ATOMHomePageViewModel new];
+- (ATOMAskPageViewModel *)newAskPageViewModel {
+    if (!_newAskPageViewModel) {
+        _newAskPageViewModel = [ATOMAskPageViewModel new];
     }
-    return _newHomePageViewModel;
+    return _newAskPageViewModel;
 }
 
 #pragma mark - UI
@@ -207,7 +207,7 @@
             label.y = y;
             label.labelDirection = labelDirection;
             label.content = tipButton.buttonText;
-            [ws.newHomePageViewModel.labelArray addObject:label];
+            [ws.newAskPageViewModel.labelArray addObject:label];
         }
         NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@(x), @"x", @(y), @"y", tipButton.buttonText, @"content", @(labelDirection), @"direction", @(tipButton.tag), @"vid", nil];
         [paramLabelArray addObject:dict];
@@ -241,14 +241,14 @@
 - (void)dealSubmitWorkWithLabelBy:(NSInteger)imageID {
     WS(ws);
     ATOMSubmitImageWithLabel *submitWorkWithLabel = [ATOMSubmitImageWithLabel new];
-    [submitWorkWithLabel SubmitWorkWithLabel:[ws getParamWithImageID:ws.homePageViewModel.imageID AndAskID:ws.homePageViewModel.imageID] withBlock:^(NSMutableArray *labelArray, NSError *error) {
+    [submitWorkWithLabel SubmitWorkWithLabel:[ws getParamWithImageID:ws.askPageViewModel.imageID AndAskID:ws.askPageViewModel.imageID] withBlock:^(NSMutableArray *labelArray, NSError *error) {
         if (error) {
             [SVProgressHUD showErrorWithStatus:@"提交作品失败..."];
             return ;
         }
         [SVProgressHUD showSuccessWithStatus:@"提交作品成功..."];
         ATOMShareViewController *svc = [ATOMShareViewController new];
-        svc.homePageViewModel = ws.homePageViewModel;
+        svc.askPageViewModel = ws.askPageViewModel;
         [ws pushViewController:svc animated:YES];
     }];
 }
@@ -256,9 +256,9 @@
 - (void)dealSubmitUploadWithLabel {
     WS(ws);
     NSData *data = UIImageJPEGRepresentation(_workImage, 0.2);
-    self.newHomePageViewModel.image = [UIImage imageWithData:data];
-    self.newHomePageViewModel.width = CGWidth(_addTipLabelToImageView.workImageView.frame);
-    self.newHomePageViewModel.height = CGHeight(_addTipLabelToImageView.workImageView.frame);
+    self.newAskPageViewModel.image = [UIImage imageWithData:data];
+    self.newAskPageViewModel.width = CGWidth(_addTipLabelToImageView.workImageView.frame);
+    self.newAskPageViewModel.height = CGHeight(_addTipLabelToImageView.workImageView.frame);
     ATOMUploadImage *uploadImage = [ATOMUploadImage new];
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
     [uploadImage UploadImage:data WithBlock:^(ATOMImage *imageInformation, NSError *error) {
@@ -280,8 +280,8 @@
         }
         [SVProgressHUD showSuccessWithStatus:@"提交作品成功..."];
         ATOMInviteViewController *ivc = [ATOMInviteViewController new];
-        ws.homePageViewModel.imageID = newImageID;
-        ivc.homePageViewModel = ws.newHomePageViewModel;
+        ws.askPageViewModel.imageID = newImageID;
+        ivc.askPageViewModel = ws.newAskPageViewModel;
         [ws pushViewController:ivc animated:YES];
     }];
 }

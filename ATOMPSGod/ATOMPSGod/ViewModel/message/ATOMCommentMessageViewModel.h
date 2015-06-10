@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 @class ATOMCommentMessage;
-@class ATOMHomePageViewModel;
+@class ATOMAskPageViewModel;
 
 @interface ATOMCommentMessageViewModel : NSObject
 
@@ -24,7 +24,7 @@
  *  1(ask) 2(reply)
  */
 @property (nonatomic, assign) NSInteger type;
-@property (nonatomic, strong) ATOMHomePageViewModel *homepageViewModel;
+@property (nonatomic, strong) ATOMAskPageViewModel *homepageViewModel;
 
 - (void)setViewModelData:(ATOMCommentMessage *)commentMessage;
 

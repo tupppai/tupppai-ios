@@ -13,20 +13,20 @@
 #import "ATOMUploadWorkViewController.h"
 #import "ATOMProceedingViewController.h"
 #import "ATOMOtherPersonViewController.h"
-#import "ATOMHomePageViewModel.h"
-#import "ATOMDetailImageViewModel.h"
+#import "ATOMAskPageViewModel.h"
+#import "ATOMProductPageViewModel.h"
 #import "ATOMCommentViewModel.h"
 #import "ATOMDetailImage.h"
 #import "ATOMComment.h"
 #import "ATOMShowDetailOfHomePage.h"
-#import "ATOMHomePageViewModel.h"
+#import "ATOMAskPageViewModel.h"
 #import "ATOMShareFunctionView.h"
 #import "ATOMBottomCommonButton.h"
 #import "PWRefreshBaseTableView.h"
-#import "ATOMAskDetailViewController.h"
+#import "ATOMPageDetailViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMHotDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,PWRefreshBaseTableViewDelegate>
+@interface ATOMHotDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate>
 
 @property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
 @property (nonatomic, strong) UIView *hotDetailView;
@@ -107,20 +107,20 @@
 
 - (void)firstGetDataSource {
     ATOMShowDetailOfHomePage *showDetailOfHomePage = [ATOMShowDetailOfHomePage new];
-    NSArray *detailImageArray = [showDetailOfHomePage getDetalImagesByImageID:_homePageViewModel.imageID];
+    NSArray *detailImageArray = [showDetailOfHomePage getDetalImagesByImageID:_askPageViewModel.imageID];
     if (!detailImageArray || detailImageArray.count == 0) { //读服务器
         [self getDataSource];
     } else { //读数据库
         _dataSource = nil;
         _dataSource = [NSMutableArray array];
         //第一张图片为首页点击的图片，剩下的图片为回复图片
-        ATOMDetailImageViewModel *model = [ATOMDetailImageViewModel new];
-        [model setViewModelDataWithHomeImage:_homePageViewModel];
+        ATOMProductPageViewModel *model = [ATOMProductPageViewModel new];
+        [model setViewModelDataWithHomeImage:_askPageViewModel];
         [_dataSource addObject:model];
         for (ATOMDetailImage *detailImage in detailImageArray) {
-            ATOMDetailImageViewModel *model = [ATOMDetailImageViewModel new];
+            ATOMProductPageViewModel *model = [ATOMProductPageViewModel new];
             [model setViewModelDataWithDetailImage:detailImage];
-            model.labelArray = [_homePageViewModel.labelArray mutableCopy];
+            model.labelArray = [_askPageViewModel.labelArray mutableCopy];
             [_dataSource addObject:model];
         }
         [_hotDetailTableView reloadData];
@@ -135,18 +135,18 @@
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(5) forKey:@"size"];
     ATOMShowDetailOfHomePage *showDetailOfHomePage = [ATOMShowDetailOfHomePage new];
-    NSLog(@"%d", (int)ws.homePageViewModel.imageID);
-    [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.homePageViewModel.imageID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
+    NSLog(@"%d", (int)ws.askPageViewModel.imageID);
+    [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.askPageViewModel.imageID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
         //第一张图片为首页点击的图片，剩下的图片为回复图片
         ws.dataSource = nil;
         ws.dataSource = [NSMutableArray array];
-        ATOMDetailImageViewModel *model = [ATOMDetailImageViewModel new];
-        [model setViewModelDataWithHomeImage:ws.homePageViewModel];
+        ATOMProductPageViewModel *model = [ATOMProductPageViewModel new];
+        [model setViewModelDataWithHomeImage:ws.askPageViewModel];
         [ws.dataSource addObject:model];
         for (ATOMDetailImage *detailImage in detailOfHomePageArray) {
-            ATOMDetailImageViewModel *model = [ATOMDetailImageViewModel new];
+            ATOMProductPageViewModel *model = [ATOMProductPageViewModel new];
             [model setViewModelDataWithDetailImage:detailImage];
-            model.labelArray = [ws.homePageViewModel.labelArray mutableCopy];
+            model.labelArray = [ws.askPageViewModel.labelArray mutableCopy];
             [ws.dataSource addObject:model];
         }
         if (detailOfHomePageArray.count == 0) {
@@ -166,11 +166,11 @@
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
     ATOMShowDetailOfHomePage *showDetailOfHomePage = [ATOMShowDetailOfHomePage new];
-    [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.homePageViewModel.imageID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
+    [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.askPageViewModel.imageID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
         for (ATOMDetailImage *detailImage in detailOfHomePageArray) {
-            ATOMDetailImageViewModel *model = [ATOMDetailImageViewModel new];
+            ATOMProductPageViewModel *model = [ATOMProductPageViewModel new];
             [model setViewModelDataWithDetailImage:detailImage];
-            model.labelArray = [ws.homePageViewModel.labelArray mutableCopy];
+            model.labelArray = [ws.askPageViewModel.labelArray mutableCopy];
             [ws.dataSource addObject:model];
         }
         if (detailOfHomePageArray.count == 0) {
@@ -186,6 +186,7 @@
 #pragma mark - UI
 
 - (void)viewDidLoad {
+    NSLog(@"ATOMHotDetailViewController");
     [super viewDidLoad];
     [self createUI];
     [self firstGetDataSource];
@@ -197,6 +198,13 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+//    if (_askPageViewModel && (self.isMovingFromParentViewController || self.isBeingDismissed)) {
+//        if(_delegate && [_delegate respondsToSelector:@selector(ATOMViewControllerDismissWithLiked:)])
+//        {
+//            ATOMHotDetailTableViewCell *cell = (ATOMHotDetailTableViewCell *)[_hotDetailTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+//            [_delegate ATOMViewControllerDismissWithLiked:cell.praiseButton.selected];
+//        }
+//    }
 }
 
 - (void)createUI {
@@ -228,19 +236,19 @@
     CGPoint location = [gesture locationInView:_hotDetailTableView];
     NSIndexPath *indexPath = [_hotDetailTableView indexPathForRowAtPoint:location];
     if (indexPath) {
-        ATOMDetailImageViewModel *model = _dataSource[indexPath.row];
+        ATOMProductPageViewModel *model = _dataSource[indexPath.row];
         ATOMHotDetailTableViewCell *cell = (ATOMHotDetailTableViewCell *)[_hotDetailTableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
         //点击图片
         if (CGRectContainsPoint(cell.userWorkImageView.frame, p)) {
-            ATOMAskDetailViewController *rdvc = [ATOMAskDetailViewController new];
+            NSLog(@"cell.userWorkImageView");
+            ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
             if (indexPath.row != 0) {
-                NSLog(@"rdvc.detailImageViewModel");
-                rdvc.detailImageViewModel = _dataSource[indexPath.row];
+                rdvc.productPageViewModel = model;
             } else {
-                rdvc.homePageViewModel = _homePageViewModel;
+                rdvc.askPageViewModel = _askPageViewModel;
             }
-            
+            rdvc.delegate = self;
             [self pushViewController:rdvc animated:YES];
         } else if (CGRectContainsPoint(cell.topView.frame, p)) {
             p = [gesture locationInView:cell.topView];
@@ -267,19 +275,23 @@
         } else {
             p = [gesture locationInView:cell.thinCenterView];
             if (CGRectContainsPoint(cell.praiseButton.frame, p)) {
-                [cell.praiseButton toggleApperance];
+                [cell.praiseButton toggleLike];
                 if (indexPath.row != 0 ) {
                     [model toggleLike];
                 } else {
-                    [_homePageViewModel toggleLike];
+                    [_askPageViewModel toggleLike];
                 }
             } else if (CGRectContainsPoint(cell.shareButton.frame, p)) {
                 [self wxShare];
             } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
-                ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
-                cdvc.ID = model.ID;
-                cdvc.type = (indexPath.row == 0) ? 1 : 2;
-                [self pushViewController:cdvc animated:YES];
+                ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
+                if (indexPath.row != 0) {
+                    NSLog(@"rdvc.detailImageViewModel");
+                    rdvc.productPageViewModel = _dataSource[indexPath.row];
+                } else {
+                    rdvc.askPageViewModel = _askPageViewModel;
+                }
+                [self pushViewController:rdvc animated:YES];
             } else if (CGRectContainsPoint(cell.moreShareButton.frame, p)) {
                 [[AppDelegate APP].window addSubview:self.shareFunctionView];
             }
@@ -298,7 +310,7 @@
     [self dismissViewControllerAnimated:YES completion:^{
         ATOMUploadWorkViewController *uwvc = [ATOMUploadWorkViewController new];
         uwvc.originImage = info[UIImagePickerControllerOriginalImage];
-        uwvc.homePageViewModel = ws.homePageViewModel;
+        uwvc.askPageViewModel = ws.askPageViewModel;
         [ws pushViewController:uwvc animated:YES];
     }];
 }
@@ -333,5 +345,11 @@
 -(void)didPullRefreshUp:(UITableView *)tableView {
     [self getMoreDataSource];
 }
+
+//#pragma mark - ATOMViewControllerDelegate
+//-(void)ATOMViewControllerDismissWithLiked:(BOOL)liked {
+//    ATOMHotDetailTableViewCell *cell = (ATOMHotDetailTableViewCell *)[_hotDetailTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+//    [cell.praiseButton toggleLikeWhenSelectedChanged:liked];
+//}
 
 @end

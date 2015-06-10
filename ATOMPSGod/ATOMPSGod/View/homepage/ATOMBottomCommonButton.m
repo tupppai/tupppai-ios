@@ -77,9 +77,18 @@
 //
 
 - (void)setSelected:(BOOL)selected {
-    _selected = selected;
+    if (_selected != selected) {
+        _selected = selected;
+    }
     [self toggleColor];
     [self setNeedsDisplay];
+}
+-(void)toggleLikeWhenSelectedChanged:(BOOL)selected {
+    if (_selected != selected) {
+        //call setSelected (set _selected and toggle color)
+        self.selected = selected;
+        [self toggleNumber];
+    }
 }
 -(void)toggleColor {
     if (self.selected) {
@@ -96,10 +105,11 @@
     }
     [self setNeedsDisplay];
 }
-
--(void)toggleApperance {
+-(void)toggleSeleted {
     self.selected = !self.selected;
-    [self toggleColor];
+}
+-(void)toggleLike {
+    [self toggleSeleted];
     [self toggleNumber];
 }
 
