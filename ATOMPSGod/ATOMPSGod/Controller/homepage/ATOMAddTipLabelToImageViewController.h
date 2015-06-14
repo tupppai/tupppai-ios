@@ -7,10 +7,9 @@
 //
 
 #import "ATOMBaseViewController.h"
-@class ATOMAskPageViewModel;
-
+#import "ATOMAskPageViewModel.h"
+#import "PWPageDetailViewModel.h"
 @interface ATOMAddTipLabelToImageViewController : ATOMBaseViewController
-
 @property (nonatomic, strong) ATOMAskPageViewModel *askPageViewModel;
 @property (nonatomic, strong) UIImage *workImage;
 

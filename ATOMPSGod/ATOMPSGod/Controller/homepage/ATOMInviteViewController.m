@@ -76,7 +76,7 @@
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)barButtonItem {
     ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
-    rdvc.askPageViewModel = _askPageViewModel;
+    rdvc.pageDetailViewModel = [_askPageViewModel generatepageDetailViewModel];
     ATOMHomepageViewController *hvc = self.navigationController.viewControllers[0];
     [self pushViewController:rdvc animated:YES];
     [self.navigationController setViewControllers:@[hvc, rdvc]];

@@ -31,9 +31,8 @@
     _loginView = [ATOMLoginView new];
     self.view = _loginView;
     [_loginView.loginButton addTarget:self action:@selector(clickLoginButton:) forControlEvents:UIControlEventTouchUpInside];
-    [_loginView.xlLoginButton addTarget:self action:@selector(clickXLLoginButton:) forControlEvents:UIControlEventTouchUpInside];
-    [_loginView.wxLoginButton addTarget:self action:@selector(clickWXLoginButton:) forControlEvents:UIControlEventTouchUpInside];
-    [_loginView.qqLoginButton addTarget:self action:@selector(clickQQLoginButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_loginView.weiboLoginButton addTarget:self action:@selector(clickweiboLoginButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_loginView.wechatLoginButton addTarget:self action:@selector(clickwechatLoginButton:) forControlEvents:UIControlEventTouchUpInside];
     [_loginView.forgetPasswordButton addTarget:self action:@selector(clickForgetPasswordButton:) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -57,11 +56,11 @@
     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
 }
 
-- (void)clickXLLoginButton:(UIButton *)sender {
+- (void)clickweiboLoginButton:(UIButton *)sender {
     
 }
 
-- (void)clickWXLoginButton:(UIButton *)sender {
+- (void)clickwechatLoginButton:(UIButton *)sender {
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [ShareSDK getUserInfoWithType:ShareTypeWeixiSession authOptions:nil result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error) {
         if (result) {

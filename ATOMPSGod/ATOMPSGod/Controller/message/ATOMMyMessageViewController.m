@@ -38,8 +38,8 @@
     _myMessageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _myMessageView;
     _tableView = [[UITableView alloc] initWithFrame:_myMessageView.bounds];
-    _tableView.backgroundColor = [UIColor colorWithHex:0xededed];
     _tableView.tableFooterView = [UIView new];
+    _tableView.separatorStyle = UITableViewCellAccessoryDisclosureIndicator;
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.scrollEnabled = NO;
@@ -64,7 +64,7 @@
     }
     NSInteger row = indexPath.row;
     if (row == 0) {
-        cell.themeImageView.image = [UIImage imageNamed:@"ic_news_comment"];
+        cell.imageView.image = [UIImage imageNamed:@"ic_news_comment"];
         cell.themeLabel.text = @"评论";
     } else if (row == 1) {
         cell.themeImageView.image = [UIImage imageNamed:@"ic_news_draft"];
@@ -86,11 +86,11 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 45;
+    return 60;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 20;
+    return 0;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -108,7 +108,7 @@
         ATOMInviteMessageViewController *imvc = [ATOMInviteMessageViewController new];
         [self pushViewController:imvc animated:YES];
     } else if (row == 4) {
-
+        
     }
 }
 

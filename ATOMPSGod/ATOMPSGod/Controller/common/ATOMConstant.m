@@ -24,6 +24,7 @@ NSInteger const kPadding15 = 15;
 NSInteger const kPadding20 = 20;
 NSInteger const kPadding25 = 25;
 NSInteger const kPadding30 = 30;
+NSInteger const kPadding35 = 35;
 
 CGFloat const kFont10 = 10.f;
 CGFloat const kFont13 = 13.f;

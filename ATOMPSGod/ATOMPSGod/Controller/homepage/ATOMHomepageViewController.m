@@ -30,6 +30,8 @@
 #import "ATOMNoDataView.h"
 #import "KShareManager.h"
 #import "ATOMHomeImageDAO.h"
+#import "PWPageDetailViewModel.h"
+
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMHomepageViewController() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, ATOMPSViewDelegate, ATOMCameraViewDelegate,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate>
@@ -426,7 +428,16 @@
 }
 
 - (void)dealDownloadWork {
-    
+    UIImageWriteToSavedPhotosAlbum(_selectedAskCell.userWorkImageView.image
+                                   ,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+}
+- (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error
+  contextInfo: (void *) contextInfo {
+    if(error != NULL){
+        [SVProgressHUD showErrorWithStatus:@"保存失败"];
+    }else{
+        [SVProgressHUD showSuccessWithStatus:@"保存成功"];
+    }
 }
 
 - (void)clickWXButton:(UIButton *)sender {
@@ -486,7 +497,9 @@
                 } else if (CGRectContainsPoint(_selectedHotCell.commentButton.frame, p)) {
                     ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
                     rdvc.delegate = self;
-                    rdvc.askPageViewModel = _selectedAskPageViewModel;
+                    PWPageDetailViewModel* pageDetailViewModel = [PWPageDetailViewModel new];
+                    [pageDetailViewModel setCommonViewModelWithAsk:_selectedAskPageViewModel];
+                    rdvc.pageDetailViewModel = pageDetailViewModel;
                     [self pushViewController:rdvc animated:YES];
 //                    ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
 //                    cdvc.ID = _selectedAskPageViewModel.imageID;
@@ -510,10 +523,11 @@
             CGPoint p = [gesture locationInView:_selectedAskCell];
             _selectedAskPageViewModel = _dataSourceOfRecentTableView[indexPath.row];
             if (CGRectContainsPoint(_selectedAskCell.userWorkImageView.frame, p)) {
-                //进入最新详情
                 ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
                 rdvc.delegate = self;
-                rdvc.askPageViewModel = _dataSourceOfRecentTableView[indexPath.row];
+                PWPageDetailViewModel* pageDetailViewModel = [PWPageDetailViewModel new];
+                [pageDetailViewModel setCommonViewModelWithAsk:_selectedAskPageViewModel];
+                rdvc.pageDetailViewModel = pageDetailViewModel;
                 [self pushViewController:rdvc animated:YES];
             } else if (CGRectContainsPoint(_selectedAskCell.topView.frame, p)) {
                 p = [gesture locationInView:_selectedAskCell.topView];
@@ -540,7 +554,9 @@
                 } else if (CGRectContainsPoint(_selectedAskCell.commentButton.frame, p)) {
                     ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
                     rdvc.delegate = self;
-                    rdvc.askPageViewModel = _dataSourceOfRecentTableView[indexPath.row];
+                    PWPageDetailViewModel* pageDetailViewModel = [PWPageDetailViewModel new];
+                    [pageDetailViewModel setCommonViewModelWithAsk:_selectedAskPageViewModel];
+                    rdvc.pageDetailViewModel = pageDetailViewModel;
                     [self pushViewController:rdvc animated:YES];
                 } else if (CGRectContainsPoint(_selectedAskCell.moreShareButton.frame, p)) {
                     [[AppDelegate APP].window addSubview:self.shareFunctionView];

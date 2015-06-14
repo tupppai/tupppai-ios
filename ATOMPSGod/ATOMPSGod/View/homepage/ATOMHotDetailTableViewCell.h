@@ -20,7 +20,7 @@
 @property (nonatomic, strong) ATOMBottomCommonButton *shareButton;
 @property (nonatomic, strong) ATOMBottomCommonButton *commentButton;
 @property (nonatomic, strong) UIButton *moreShareButton;
-@property (nonatomic, strong) UIImage *userWorkImage;
+//@property (nonatomic, strong) UIImage *userWorkImage;
 @property (nonatomic, strong) UIView *topView;
 @property (nonatomic, strong) UIView *thinCenterView;
 @property (nonatomic, strong) UIView *bottomView;

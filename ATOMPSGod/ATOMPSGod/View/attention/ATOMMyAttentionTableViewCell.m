@@ -10,7 +10,7 @@
 #import "ATOMAskPageViewModel.h"
 #import "ATOMBottomCommonButton.h"
 #import "ATOMTotalPSView.h"
-#import "ATOMCommonImageViewModel.h"
+#import "ATOMFollowPageViewModel.h"
 #import "ATOMTipButton.h"
 #import "ATOMImageTipLabelViewModel.h"
 #import "ATOMReplierViewModel.h"
@@ -44,6 +44,7 @@ static CGFloat replierWidth = 25;
     _topView = [UIView new];
     _topView.backgroundColor = [UIColor whiteColor];
     _userWorkImageView = [UIImageView new];
+    _userWorkImageView.contentMode = UIViewContentModeScaleAspectFit;
     _thinCenterView = [UIView new];
     _thinCenterView.backgroundColor = [UIColor whiteColor];
     _bottomView = [UIView new];
@@ -151,7 +152,7 @@ static CGFloat replierWidth = 25;
     
 }
 
-+ (CGFloat)calculateCellHeightWith:(ATOMCommonImageViewModel *)viewModel {
++ (CGFloat)calculateCellHeightWith:(ATOMFollowPageViewModel *)viewModel {
     if (viewModel.type == 1) {
         return 60 + viewModel.height + 60 + 60 + 8;
     } else {
@@ -159,7 +160,7 @@ static CGFloat replierWidth = 25;
     }
 }
 
-- (void)setViewModel:(ATOMCommonImageViewModel *)viewModel {
+- (void)setViewModel:(ATOMFollowPageViewModel *)viewModel {
     _viewModel = viewModel;
     if (viewModel.type == 1) {
         _userNameLabel.text = [NSString stringWithFormat:@"%@ 发布了一个求P", viewModel.userName];
@@ -168,14 +169,16 @@ static CGFloat replierWidth = 25;
     }
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     _userPublishTimeLabel.text = viewModel.publishTime;
-    _praiseButton.number = viewModel.praiseNumber;
+    _praiseButton.number = viewModel.likeNumber;
+    _praiseButton.selected = viewModel.liked;
     _shareButton.number = viewModel.shareNumber;
     _commentButton.number = viewModel.commentNumber;
     _totalPSLabel.number = viewModel.totalPSNumber;
+
     if (viewModel.image) {
         _userWorkImageView.image = viewModel.image;
     } else {
-        [_userWorkImageView setImageWithURL:[NSURL URLWithString:viewModel.userImageURL]];
+        [_userWorkImageView setImageWithURL:[NSURL URLWithString:viewModel.pageImageURL] placeholderImage:[UIImage imageNamed:@"homePage_Default"]];
     }
     if (viewModel.type == 1) {
         _lineView.hidden = NO;

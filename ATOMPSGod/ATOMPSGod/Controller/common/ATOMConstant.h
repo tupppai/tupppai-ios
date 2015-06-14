@@ -26,6 +26,7 @@ extern NSInteger const kPadding15;
 extern NSInteger const kPadding20;
 extern NSInteger const kPadding25;
 extern NSInteger const kPadding30;
+extern NSInteger const kPadding35;
 
 extern CGFloat const kFont10;
 extern CGFloat const kFont13;
@@ -35,6 +36,7 @@ extern CGFloat const kFont15;
 extern NSUInteger const kCommentTextViewMaxLength;
 
 #define kBlueColor [UIColor colorWithHex:0x74c3ff]
+#define kLoginSignUpBackgroundColor [UIColor colorWithHex:0x74c3ff]
 
 
 

@@ -13,7 +13,6 @@
 #import "ATOMReplier.h"
 #import "ATOMReplierViewModel.h"
 #import "ATOMBaseRequest.h"
-
 @interface ATOMAskPageViewModel ()
 
 
@@ -103,6 +102,34 @@
             result = (int)roundf(dayDif*24.0*60);
             _publishTime = [NSString stringWithFormat:@"%d分钟前",result];
         }
+}
+
+-(PWPageDetailViewModel*)generatepageDetailViewModel {
+    PWPageDetailViewModel* commonViewModel = [PWPageDetailViewModel new];
+    commonViewModel.pageID = _imageID;
+    commonViewModel.pageImageURL = _userImageURL;
+    commonViewModel.pageImage = _image;
+    commonViewModel.avatarURL = _avatarURL;
+    commonViewModel.likeNumber = _likeNumber;
+    commonViewModel.shareNumber = _shareNumber;
+    commonViewModel.commentNumber = _commentNumber;
+    commonViewModel.width = _width;
+    commonViewModel.height = _height;
+    commonViewModel.userName = _userName;
+    return commonViewModel;
+}
+
+-(void)setViewModelWithCommon:(PWPageDetailViewModel*)commonViewModel {
+    _imageID = commonViewModel.pageID;
+    _userImageURL = commonViewModel.pageImageURL;
+    _image = commonViewModel.pageImage;
+    _avatarURL = commonViewModel.avatarURL;
+    _likeNumber = commonViewModel.likeNumber;
+    _shareNumber = commonViewModel.shareNumber;
+    _commentNumber = commonViewModel.commentNumber;
+    _width = commonViewModel.width;
+    _height = commonViewModel.height;
+    _userName = commonViewModel.userName;
 }
 
 - (void)toggleLike{

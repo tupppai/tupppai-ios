@@ -43,15 +43,18 @@
 - (AFHTTPRequestOperation *)SubmitWorkWithLabel:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] POST:@"reply/save" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *labelArray = [NSMutableArray array];
-        NSArray *dictArray = responseObject[@"data"][@"labels"];
-        for (int i = 0; i < dictArray.count; i++) {
-            ATOMImageTipLabel *imageTipLabel = [ATOMImageTipLabel new];
-            imageTipLabel.labelID = [dictArray[i][@"id"] integerValue];
-            imageTipLabel.imageID = [responseObject[@"data"][@"ask_id"] integerValue];
-            [labelArray addObject:imageTipLabel];
-        }
-        if (block) {
-            block(labelArray, nil);
+        NSArray* data = responseObject[@"data"];
+        if (data.count > 0) {
+            NSArray *dictArray = responseObject[@"data"][@"labels"];
+            for (int i = 0; i < dictArray.count; i++) {
+                ATOMImageTipLabel *imageTipLabel = [ATOMImageTipLabel new];
+                imageTipLabel.labelID = [dictArray[i][@"id"] integerValue];
+                imageTipLabel.imageID = [responseObject[@"data"][@"ask_id"] integerValue];
+                [labelArray addObject:imageTipLabel];
+            }
+            if (block) {
+                block(labelArray, nil);
+            }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (block) {

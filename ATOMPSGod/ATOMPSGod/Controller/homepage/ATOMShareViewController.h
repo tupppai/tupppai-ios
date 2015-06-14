@@ -7,6 +7,7 @@
 //
 
 #import "ATOMBaseViewController.h"
+#import "PWPageDetailViewModel.h"
 @class ATOMAskPageViewModel;
 
 @interface ATOMShareViewController : ATOMBaseViewController

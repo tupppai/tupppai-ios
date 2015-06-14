@@ -162,7 +162,7 @@
         if (CGRectContainsPoint(cell.workImageView.frame, p)) {
             if ([viewModel.homepageViewModel.totalPSNumber integerValue] == 0) {
                 ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
-                rdvc.askPageViewModel = viewModel.homepageViewModel;
+                rdvc.pageDetailViewModel = [viewModel.homepageViewModel generatepageDetailViewModel];
                 [self pushViewController:rdvc animated:YES];
             } else {
                 ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];

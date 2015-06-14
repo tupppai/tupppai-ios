@@ -45,27 +45,36 @@
     
     _tipLabelContentTextField = [UITextField new];
     NSDictionary *placeholderDict = [NSDictionary dictionaryWithObjectsAndKeys:NSForegroundColorAttributeName, [UIColor colorWithHex:0xededed], nil];
-    _tipLabelContentTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"在此处输入你要的效果" attributes:placeholderDict];
+    _tipLabelContentTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"在这里输入你要的效果" attributes:placeholderDict];
 //    _tipLabelContentTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     [_topView addSubview:_tipLabelContentTextField];
-    _tipLabelContentTextField.returnKeyType = UIReturnKeySend;
-    _tipLabelContentTextField.frame = CGRectMake(kPadding15, CGRectGetMaxY(_showNumberLabel.frame) + kPadding10, CGWidth(_topView.frame) - 2 * kPadding15 - kPadding30 - kPadding10, kFont14);
-    _tipLabelContentTextField.font = [UIFont systemFontOfSize:kFont14];
+    _tipLabelContentTextField.returnKeyType = UIReturnKeyDone;
+    _tipLabelContentTextField.frame = CGRectMake(kPadding15, CGRectGetMaxY(_showNumberLabel.frame) + kPadding10, CGWidth(_topView.frame) - 2 * kPadding15 - kPadding30 - kPadding10, kFont15+1);
+    _tipLabelContentTextField.font = [UIFont systemFontOfSize:kFont15];
     
-    _sendTipLabelTextButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - kPadding15 - kPadding30, (60 - kPadding30) / 2, kPadding30, kPadding30)];
+    _sendTipLabelTextButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - kPadding15 - kPadding30, (60 - kPadding30) / 2, kPadding30, kPadding35)];
     _sendTipLabelTextButton.backgroundColor = [UIColor colorWithHex:0xfe8282];
-    _sendTipLabelTextButton.layer.cornerRadius = kPadding30 / 2;
+    _sendTipLabelTextButton.layer.cornerRadius = kPadding35 / 2;
     [_sendTipLabelTextButton setTitle:@"添加" forState:UIControlStateNormal];
-    _sendTipLabelTextButton.titleLabel.font = [UIFont boldSystemFontOfSize:10.f];
+    _sendTipLabelTextButton.titleLabel.font = [UIFont boldSystemFontOfSize:11.f];
     [_sendTipLabelTextButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_topView addSubview:_sendTipLabelTextButton];
 
-    _topWarnLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 25)];
+    _topWarnLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
     _topWarnLabel.backgroundColor = [UIColor colorWithHex:0xe86a51 andAlpha:0.9];
-    _topWarnLabel.text = @"标签内容不能为空";
+    _topWarnLabel.text = [NSString stringWithFormat:@"你还没告诉大神你想要的效果,"];
+    _topWarnLabel.numberOfLines = 0;
     _topWarnLabel.textAlignment = NSTextAlignmentCenter;
     _topWarnLabel.textColor = [UIColor whiteColor];
+    
+    _topWarnLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 40, SCREEN_WIDTH, 40)];
+    _topWarnLabel2.backgroundColor = [UIColor colorWithHex:0xFE8282 andAlpha:1.0];
+    _topWarnLabel2.text = [NSString stringWithFormat:@"请点击图片填写效果"];
+    _topWarnLabel2.numberOfLines = 0;
+    _topWarnLabel2.textAlignment = NSTextAlignmentCenter;
+    _topWarnLabel2.textColor = [UIColor whiteColor];
 }
+
 
 
 

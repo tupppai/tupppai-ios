@@ -13,6 +13,7 @@
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
              @"imageID" : @"id",
+             @"askID" : @"ask_id",
              @"type" : @"type",
              @"uid" : @"uid",
              @"nickname" : @"nickname",
@@ -28,7 +29,8 @@
              @"totalWXShareNumber" : @"weixin_share_count",
              @"totalWorkNumber" : @"reply_count",
              @"imageWidth" : @"image_width",
-             @"imageHeight" : @"image_height"
+             @"imageHeight" : @"image_height",
+             @"liked" : @"uped"
              };
 }
 
@@ -53,7 +55,8 @@
              @"imageHeight" : @"imageHeight",
              @"tipLabelArray" :@"tipLabelArray",
              @"replierArray" : @"replierArray",
-             @"hotCommentArray" : @"hotCommentArray"
+             @"hotCommentArray" : @"hotCommentArray",
+             @"liked" : @"liked"
              };
 }
 

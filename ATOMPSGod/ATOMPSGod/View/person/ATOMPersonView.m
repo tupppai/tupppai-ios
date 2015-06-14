@@ -22,6 +22,7 @@
 - (void)createSubView {
     _topBackGroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 150)];
     _topBackGroundImageView.userInteractionEnabled = YES;
+    _topBackGroundImageView.contentMode = UIViewContentModeScaleAspectFill;
     _topBackGroundImageView.backgroundColor = [UIColor whiteColor];
     [self addSubview:_topBackGroundImageView];
     
@@ -34,25 +35,27 @@
     NSString *str = [NSString stringWithFormat:@"%d", (int)[ATOMCurrentUser currentUser].fansNumber];
     NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
     paragraphStyle.lineSpacing = 6;
-    NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:kFont14], NSFontAttributeName, [UIColor colorWithHex:0x74c3ff], NSForegroundColorAttributeName, paragraphStyle, NSParagraphStyleAttributeName, nil];
+    NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:kFont15], NSFontAttributeName, [UIColor colorWithHex:0x74c3ff], NSForegroundColorAttributeName, paragraphStyle, NSParagraphStyleAttributeName, nil];
     CGFloat buttonWidth = 60;
     CGFloat buttonPadding = (CGRectGetMinX(_userHeaderButton.frame) - buttonWidth) / 2;
     _fansLabel = [[UILabel alloc] initWithFrame:CGRectMake(buttonPadding, 0, buttonWidth, 80)];
     _fansLabel.center = CGPointMake(_fansLabel.center.x, _userHeaderButton.center.y);
     _fansLabel.userInteractionEnabled = YES;
     _fansLabel.numberOfLines = 0;
-    NSMutableAttributedString *fansLabelText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%d\n粉丝", (int)[ATOMCurrentUser currentUser].fansNumber] attributes:attributeDict];
-    [fansLabelText addAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, [UIColor colorWithHex:0xc3cbd2], NSForegroundColorAttributeName, nil] range:NSMakeRange(str.length + 1, 2)];
+    NSMutableAttributedString *fansLabelText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld\n粉丝", (NSInteger)[ATOMCurrentUser currentUser].fansNumber] attributes:attributeDict];
+//    [fansLabelText addAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont15], NSFontAttributeName, [UIColor colorWithHex:0xc3cbd2], NSForegroundColorAttributeName, nil] range:NSMakeRange(str.length + 1, 2)];
     _fansLabel.attributedText = fansLabelText;
+    _fansLabel.minimumScaleFactor = 0.7;
     _fansLabel.textAlignment = NSTextAlignmentCenter;
     [_topBackGroundImageView addSubview:_fansLabel];
     
     _praiseLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + buttonPadding, 0, buttonWidth, 80)];
     _praiseLabel.center = CGPointMake(_praiseLabel.center.x, _userHeaderButton.center.y);
+    _praiseLabel.minimumScaleFactor = 0.7;
     _praiseLabel.numberOfLines = 0;
     NSMutableAttributedString *praiseLabelText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%d\n赞", (int)[ATOMCurrentUser currentUser].praiseNumber] attributes:attributeDict];
     str = [NSString stringWithFormat:@"%d", (int)[ATOMCurrentUser currentUser].praiseNumber];
-    [praiseLabelText addAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, [UIColor colorWithHex:0xc3cbd2], NSForegroundColorAttributeName, nil] range:NSMakeRange(str.length + 1, 1)];
+//    [praiseLabelText addAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont15], NSFontAttributeName, [UIColor colorWithHex:0xc3cbd2], NSForegroundColorAttributeName, nil] range:NSMakeRange(str.length + 1, 1)];
     _praiseLabel.attributedText = praiseLabelText;
     _praiseLabel.textAlignment = NSTextAlignmentCenter;
     [_topBackGroundImageView addSubview:_praiseLabel];
@@ -64,7 +67,6 @@
     _personTableView.scrollEnabled = NO;
     _personTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self addSubview:_personTableView];
-    
 }
 
 

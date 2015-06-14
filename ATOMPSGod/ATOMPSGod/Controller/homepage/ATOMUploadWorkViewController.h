@@ -8,7 +8,7 @@
 
 #import "ATOMBaseViewController.h"
 @class ATOMAskPageViewModel;
-
+@class PWPageDetailViewModel;
 @interface ATOMUploadWorkViewController : ATOMBaseViewController
 
 @property (nonatomic, strong) ATOMAskPageViewModel *askPageViewModel;

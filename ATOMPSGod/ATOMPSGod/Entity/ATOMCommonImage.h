@@ -15,6 +15,11 @@
  */
 @property (nonatomic, assign) NSInteger imageID;
 /**
+ *  作品对应的求PID
+ */
+@property (nonatomic, assign) NSInteger askID;
+
+/**
  *  1:ask 2:reply
  */
 @property (nonatomic, assign) NSInteger type;
@@ -77,5 +82,6 @@
  *  热门评论数组
  */
 @property (nonatomic, strong) NSMutableArray *hotCommentArray;
+@property (nonatomic, assign) BOOL liked;
 
 @end

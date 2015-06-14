@@ -24,6 +24,7 @@
 
 - (AFHTTPRequestOperation *)ShowAttention:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:@"user/fellowsDynamic" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"ShowAttention responseObject %@",responseObject);
         NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
         if (ret != 1) {
             block(nil, nil);

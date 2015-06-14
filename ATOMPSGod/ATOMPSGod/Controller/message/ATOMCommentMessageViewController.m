@@ -165,7 +165,7 @@
             if ([viewModel.homepageViewModel.totalPSNumber integerValue] == 0) {
                 //进入最新详情
                 ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
-                rdvc.askPageViewModel = viewModel.homepageViewModel;
+                rdvc.pageDetailViewModel= [viewModel.homepageViewModel generatepageDetailViewModel];
                 [self pushViewController:rdvc animated:YES];
             } else {
                 //进入热门详情

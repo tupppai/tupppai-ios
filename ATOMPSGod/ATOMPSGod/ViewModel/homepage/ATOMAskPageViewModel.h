@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PWPageDetailViewModel.h"
 @class ATOMHomeImage;
-
+@class PWPageDetailViewModel;
 @interface ATOMAskPageViewModel : NSObject
 
 @property (nonatomic, assign) NSInteger imageID;
@@ -31,6 +32,8 @@
 @property (nonatomic, assign) BOOL collected;
 
 - (void)setViewModelData:(ATOMHomeImage *)homeImage;
+-(void)setViewModelWithCommon:(PWPageDetailViewModel*)commonViewModel;
 - (void)toggleLike;
+-(PWPageDetailViewModel*)generatepageDetailViewModel;
 @end
 

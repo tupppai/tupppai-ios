@@ -1,12 +1,12 @@
 //
-//  ATOMCommonImageViewModel.m
+//  ATOMFollowPageViewModel.h.m
 //  ATOMPSGod
 //
 //  Created by atom on 15/5/6.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMCommonImageViewModel.h"
+#import "ATOMFollowPageViewModel.h"
 #import "ATOMCommonImage.h"
 #import "ATOMImageTipLabel.h"
 #import "ATOMImageTipLabelViewModel.h"
@@ -14,8 +14,8 @@
 #import "ATOMReplierViewModel.h"
 #import "ATOMComment.h"
 #import "ATOMCommentViewModel.h"
-
-@implementation ATOMCommonImageViewModel
+#import "ATOMBaseRequest.h"
+@implementation ATOMFollowPageViewModel
 
 - (instancetype)init {
     self = [super init];
@@ -29,7 +29,7 @@
         [df setDateFormat:@"yyyy年MM月dd日 HH时mm分"];
         NSDate *publishDate = [NSDate date];
         _publishTime = [df stringFromDate:publishDate];
-        _praiseNumber = @"0";
+        _likeNumber = @"0";
         _shareNumber = @"0";
         _commentNumber = @"0";
         _totalPSNumber = @"0";
@@ -41,22 +41,24 @@
 
 - (void)setViewModelData:(ATOMCommonImage *)commonImage {
     _imageID = commonImage.imageID;
+    _askID = commonImage.askID;
     _type = commonImage.type;
     _userID = commonImage.uid;
     _userName = commonImage.nickname;
     _userSex = (commonImage.sex == 1) ? @"man" : @"woman";
-    _userImageURL = commonImage.imageURL;
+    _pageImageURL = commonImage.imageURL;
     _avatarURL = commonImage.avatar;
     NSDateFormatter *df = [NSDateFormatter new];
     [df setDateFormat:@"yyyy年MM月dd日 HH时mm分"];
     NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:commonImage.uploadTime];
     _publishTime = [df stringFromDate:publishDate];
-    _praiseNumber = [NSString stringWithFormat:@"%d",(int)commonImage.totalPraiseNumber];
+    _likeNumber = [NSString stringWithFormat:@"%d",(int)commonImage.totalPraiseNumber];
     _shareNumber = [NSString stringWithFormat:@"%d",(int)commonImage.totalShareNumber];
     _commentNumber = [NSString stringWithFormat:@"%d",(int)commonImage.totalCommentNumber];
     _totalPSNumber = [NSString stringWithFormat:@"%d",(int)commonImage.totalWorkNumber];
     _width = commonImage.imageWidth;
     _height = commonImage.imageHeight;
+    _liked = commonImage.liked;
     for (ATOMImageTipLabel *tipLabel in commonImage.tipLabelArray) {
         ATOMImageTipLabelViewModel *model = [ATOMImageTipLabelViewModel new];
         [model setViewModelData:tipLabel];
@@ -80,7 +82,22 @@
     } else {
         NSLog(@"image not exist in %@", path);
     }
-    
 }
-
+- (void)toggleLike{
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    NSInteger status = _liked? 0:1;
+    NSInteger one = _liked? -1:1;
+    _liked = !_liked;
+    [param setValue:@(status) forKey:@"status"];
+    NSString* url = _type == 1? @"ask/upask": @"reply/upreply";
+    ATOMBaseRequest* baseRequest = [ATOMBaseRequest new];
+    [baseRequest toggleLike:param withUrl:url withID:_imageID withBlock:^(NSError *error) {
+        if (!error) {
+            NSLog(@"Server成功toggle like");
+            NSInteger number = [_likeNumber integerValue]+one;
+            [self setLikeNumber:[NSString stringWithFormat:@"%ld",(long)number]];            } else {
+                NSLog(@"Server失败 toggle like");
+            }
+    }];
+}
 @end

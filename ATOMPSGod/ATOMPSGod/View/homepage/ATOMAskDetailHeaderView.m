@@ -77,26 +77,36 @@
     
     CGSize workImageSize = CGSizeZero;
     CGSize commentSize, shareSize, praiseSize;
-    if (_askPageViewModel) {
-        workImageSize = [[self class] calculateImageViewSizeWith:_askPageViewModel.width height:_askPageViewModel.height];
-        commentSize = [_askPageViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                         NSStringDrawingUsesFontLeading          attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
+//    if (_askPageViewModel) {
+//        workImageSize = [[self class] calculateImageViewSizeWith:_askPageViewModel.width height:_askPageViewModel.height];
+//        commentSize = [_askPageViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                         NSStringDrawingUsesFontLeading          attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
+//        commentSize.width += kBottomCommonButtonWidth + kPadding15;
+//        shareSize = [_askPageViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                           NSStringDrawingUsesFontLeading            attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
+//        shareSize.width += kBottomCommonButtonWidth + kPadding15;
+//        praiseSize = [_askPageViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                          NSStringDrawingUsesFontLeading           attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
+//        praiseSize.width += kBottomCommonButtonWidth + kPadding15;
+//    } else if (_productPageViewModel) {
+//        workImageSize = [[self class] calculateImageViewSizeWith:_productPageViewModel.width height:_productPageViewModel.height];
+//        commentSize = [_productPageViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                         NSStringDrawingUsesFontLeading          attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
+//        commentSize.width += kBottomCommonButtonWidth + kPadding15;
+//        shareSize = [_productPageViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                           NSStringDrawingUsesFontLeading            attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
+//        shareSize.width += kBottomCommonButtonWidth + kPadding15;
+//        praiseSize = [_productPageViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                          NSStringDrawingUsesFontLeading           attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
+//        praiseSize.width += kBottomCommonButtonWidth + kPadding15;
+//    }
+    
+    if (_pageDetailViewModel) {
+        workImageSize = [[self class] calculateImageViewSizeWith:_pageDetailViewModel.width height:_pageDetailViewModel.height];
+        commentSize = [_pageDetailViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                         NSStringDrawingUsesFontLeading          attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
         commentSize.width += kBottomCommonButtonWidth + kPadding15;
-        shareSize = [_askPageViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                           NSStringDrawingUsesFontLeading            attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
+        shareSize = [_pageDetailViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                           NSStringDrawingUsesFontLeading            attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
         shareSize.width += kBottomCommonButtonWidth + kPadding15;
-        praiseSize = [_askPageViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                          NSStringDrawingUsesFontLeading           attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
-        praiseSize.width += kBottomCommonButtonWidth + kPadding15;
-    } else if (_productPageViewModel) {
-        workImageSize = [[self class] calculateImageViewSizeWith:_productPageViewModel.width height:_productPageViewModel.height];
-        commentSize = [_productPageViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                         NSStringDrawingUsesFontLeading          attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
-        commentSize.width += kBottomCommonButtonWidth + kPadding15;
-        shareSize = [_productPageViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                           NSStringDrawingUsesFontLeading            attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
-        shareSize.width += kBottomCommonButtonWidth + kPadding15;
-        praiseSize = [_productPageViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                          NSStringDrawingUsesFontLeading           attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
+        praiseSize = [_pageDetailViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                          NSStringDrawingUsesFontLeading           attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
         praiseSize.width += kBottomCommonButtonWidth + kPadding15;
     }
     
     _userWorkImageView.frame = CGRectMake((SCREEN_WIDTH - workImageSize.width) / 2, CGRectGetMaxY(_topView.frame), workImageSize.width, workImageSize.height);
-    
+    _userWorkImageView.contentMode = UIViewContentModeScaleAspectFit;
     CGFloat thinViewHeight = 60;
     CGFloat bottomButtonOriginY = (thinViewHeight - kBottomCommonButtonWidth) / 2;
     _thinCenterView.frame = CGRectMake(0, CGRectGetMaxY(_userWorkImageView.frame), SCREEN_WIDTH, thinViewHeight);
@@ -109,15 +119,11 @@
 + (CGSize)calculateImageViewSizeWith:(CGFloat)width height:(CGFloat)height {
     return CGSizeMake(width, height);
 }
-+ (CGFloat)calculateHeaderViewHeightWithAsk:(ATOMAskPageViewModel *)viewModel {
++ (CGFloat)calculateHeaderViewHeight:(PWPageDetailViewModel *)viewModel {
+    NSLog(@"calculateHeaderViewHeight %f",60 + viewModel.height + 60);
     return 60 + viewModel.height + 60;
 }
-+ (CGFloat)calculateHeaderViewHeightWithProduct:(ATOMProductPageViewModel *)viewModel {
-    return 60 + viewModel.height + 60;
-}
-
 - (void)setAskPageViewModel:(ATOMAskPageViewModel *)askPageViewModel {
-    _askPageViewModel = askPageViewModel;
     _userNameLabel.text = askPageViewModel.userName;
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:askPageViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     if (askPageViewModel.image) {
@@ -125,6 +131,8 @@
     } else {
         [_userWorkImageView setImageWithURL:[NSURL URLWithString:askPageViewModel.userImageURL]];
     }
+    
+    _praiseButton.selected = askPageViewModel.liked;
     _praiseButton.number = askPageViewModel.likeNumber;
     _shareButton.number = askPageViewModel.shareNumber;
     _commentButton.number = askPageViewModel.commentNumber;
@@ -132,7 +140,6 @@
 }
 
 -(void)setProductPageViewModel:(ATOMProductPageViewModel *)productPageViewModel {
-    _productPageViewModel = productPageViewModel;
     _userNameLabel.text = productPageViewModel.userName;
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:productPageViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     if (productPageViewModel.image) {
@@ -140,14 +147,28 @@
     } else {
         [_userWorkImageView setImageWithURL:[NSURL URLWithString:productPageViewModel.userImageURL]];
     }
+    _praiseButton.selected = productPageViewModel.liked;
     _praiseButton.number = productPageViewModel.likeNumber;
     _shareButton.number = productPageViewModel.shareNumber;
     _commentButton.number = productPageViewModel.commentNumber;
     [self setNeedsLayout];
 }
 
-
-
+-(void)setPageDetailViewModel:(PWPageDetailViewModel *)pageDetailViewModel {
+    _pageDetailViewModel = pageDetailViewModel;
+    _userNameLabel.text = pageDetailViewModel.userName;
+    [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pageDetailViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
+    if (pageDetailViewModel.pageImage) {
+        _userWorkImageView.image = pageDetailViewModel.pageImage;
+    } else {
+        [_userWorkImageView setImageWithURL:[NSURL URLWithString:pageDetailViewModel.pageImageURL]];
+    }
+    _praiseButton.selected = pageDetailViewModel.liked;
+    _praiseButton.number = pageDetailViewModel.likeNumber;
+    _shareButton.number = pageDetailViewModel.shareNumber;
+    _commentButton.number = pageDetailViewModel.commentNumber;
+    [self setNeedsLayout];
+}
 
 
 

@@ -17,7 +17,6 @@
 #import "ATOMImage.h"
 #import "ATOMImageTipLabel.h"
 #import "AppDelegate.h"
-#import "ATOMAskPageViewModel.h"
 #import "ATOMImageTipLabelViewModel.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
@@ -141,7 +140,8 @@
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)sender {
     if (_tipLabelArray.count == 0) {
-        [SVProgressHUD showErrorWithStatus:@"请先添加标签"];
+//        [SVProgressHUD showErrorWithStatus:@"请先添加标签"];
+        [self showWarnLabel];
         return ;
     }
     NSString *pushTypeStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"UploadingOrSeekingHelp"];
@@ -223,10 +223,11 @@
     }
     return [param copy];
 }
-
+//上传作品
 - (void)dealSubmitWorkWithLabel {
+    NSLog(@"上传作品中");
     WS(ws);
-    NSData *data = UIImageJPEGRepresentation(_workImage, 0.2);
+    NSData *data = UIImageJPEGRepresentation(_workImage, 0.4);
     ATOMUploadImage *uploadWork = [ATOMUploadImage new];
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
     [uploadWork UploadImage:data WithBlock:^(ATOMImage *imageInformation, NSError *error) {
@@ -241,7 +242,7 @@
 - (void)dealSubmitWorkWithLabelBy:(NSInteger)imageID {
     WS(ws);
     ATOMSubmitImageWithLabel *submitWorkWithLabel = [ATOMSubmitImageWithLabel new];
-    [submitWorkWithLabel SubmitWorkWithLabel:[ws getParamWithImageID:ws.askPageViewModel.imageID AndAskID:ws.askPageViewModel.imageID] withBlock:^(NSMutableArray *labelArray, NSError *error) {
+    [submitWorkWithLabel SubmitWorkWithLabel:[ws getParamWithImageID:imageID AndAskID:ws.askPageViewModel.imageID] withBlock:^(NSMutableArray *labelArray, NSError *error) {
         if (error) {
             [SVProgressHUD showErrorWithStatus:@"提交作品失败..."];
             return ;
@@ -253,9 +254,21 @@
     }];
 }
 
+//上传求助
 - (void)dealSubmitUploadWithLabel {
     WS(ws);
-    NSData *data = UIImageJPEGRepresentation(_workImage, 0.2);
+    NSData *data = UIImageJPEGRepresentation(_workImage, 0.4);
+//    NSData *data2 = UIImageJPEGRepresentation(_workImage, 0.2);
+//    NSData *data3 = UIImageJPEGRepresentation(_workImage, 0.6);
+//    NSData *data4 = UIImageJPEGRepresentation(_workImage, 0.8);
+//    NSData *data5 = UIImageJPEGRepresentation(_workImage, 1.0);
+//
+//    NSLog(@"压缩了6成上传的图片大小 = %f",[data length]/1024.0);
+//    NSLog(@"压缩了8成上传的图片大小 = %f",[data2 length]/1024.0);
+//    NSLog(@"压缩了4成上传的图片大小 = %f",[data3 length]/1024.0);
+//    NSLog(@"压缩了2成上传的图片大小 = %f",[data4 length]/1024.0);
+//    NSLog(@"原图上传的图片大小 = %f",[data5 length]/1024.0);
+
     self.newAskPageViewModel.image = [UIImage imageWithData:data];
     self.newAskPageViewModel.width = CGWidth(_addTipLabelToImageView.workImageView.frame);
     self.newAskPageViewModel.height = CGHeight(_addTipLabelToImageView.workImageView.frame);
@@ -322,7 +335,7 @@
 }
 
 - (void)changeViewToFillInTipLabel {
-    WS(ws);
+//    WS(ws);
 //    self.view = _fillInContentOfTipLabelView;
     [_addTipLabelToImageView addTemporaryPointAt:_currentLocation];
     [_addTipLabelToImageView addSubview:_fillInContentOfTipLabelView];
@@ -330,18 +343,23 @@
     _fillInContentOfTipLabelView.showNumberLabel.text = @"0/18";
     self.navigationItem.leftBarButtonItems = @[self.cancelLeftBarButtonItem];
     self.navigationItem.rightBarButtonItem = nil;
-    [UIApplication sharedApplication].statusBarHidden = YES;
+}
+
+-(void)showWarnLabel {
+    WS(ws);
     [[AppDelegate APP].window addSubview:_fillInContentOfTipLabelView.topWarnLabel];
-    [UIView animateWithDuration:2 animations:^{
+    [[AppDelegate APP].window addSubview:_fillInContentOfTipLabelView.topWarnLabel2];
+    [UIView animateWithDuration:4 animations:^{
         ws.fillInContentOfTipLabelView.topWarnLabel.alpha = 0.0;
+        ws.fillInContentOfTipLabelView.topWarnLabel2.alpha = 0.0;
     } completion:^(BOOL finished) {
         [UIApplication sharedApplication].statusBarHidden = NO;
         ws.fillInContentOfTipLabelView.topWarnLabel.alpha = 1.0;
         [ws.fillInContentOfTipLabelView.topWarnLabel removeFromSuperview];
+        ws.fillInContentOfTipLabelView.topWarnLabel2.alpha = 1.0;
+        [ws.fillInContentOfTipLabelView.topWarnLabel2 removeFromSuperview];
     }];
-    
 }
-
 - (void)panTipLabelGesture:(UIPanGestureRecognizer *)gesture {
     CGPoint location = [gesture translationInView:_addTipLabelToImageView.workImageView];
     CGFloat x = gesture.view.center.x + location.x;

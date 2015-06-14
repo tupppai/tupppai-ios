@@ -136,19 +136,13 @@ static CGFloat pageControlWidth = 150;
     }
 }
 
-- (void)setAskPageViewModel:(ATOMAskPageViewModel *)askPageViewModel {
-    _headerView.askPageViewModel = askPageViewModel;
-    CGFloat headerHeight = [ATOMAskDetailHeaderView calculateHeaderViewHeightWithAsk:askPageViewModel];
-    _headerView.frame = CGRectMake(0, 0, SCREEN_WIDTH, headerHeight);
-    _recentDetailTableView.tableHeaderView = _headerView;
-}
--(void)setProductPageViewModel:(ATOMProductPageViewModel *)productPageViewModel{
-    _headerView.productPageViewModel = productPageViewModel;
-    CGFloat headerHeight = [ATOMAskDetailHeaderView calculateHeaderViewHeightWithProduct:productPageViewModel];
-    _headerView.frame = CGRectMake(0, 0, SCREEN_WIDTH, headerHeight);
-    _recentDetailTableView.tableHeaderView = _headerView;
-}
 
+-(void)setPageDetailViewModel:(PWPageDetailViewModel *)pageDetailViewModel {
+    _headerView.pageDetailViewModel = pageDetailViewModel;
+    CGFloat headerHeight = [ATOMAskDetailHeaderView calculateHeaderViewHeight:pageDetailViewModel];
+    _headerView.frame = CGRectMake(0, 0, SCREEN_WIDTH, headerHeight);
+    _recentDetailTableView.tableHeaderView = _headerView;
+}
 #pragma mark - ClickEvent
 
 - (void)changePage:(id)sender {

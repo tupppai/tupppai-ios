@@ -9,9 +9,8 @@
 #import "ATOMBaseView.h"
 #import "ATOMAskPageViewModel.h"
 #import "ATOMProductPageViewModel.h"
-
+#import "PWPageDetailViewModel.h"
 @class ATOMBottomCommonButton;
-
 @interface ATOMAskDetailHeaderView : ATOMBaseView
 
 @property (nonatomic, strong) UIButton *userHeaderButton;
@@ -23,12 +22,9 @@
 @property (nonatomic, strong) ATOMBottomCommonButton *commentButton;
 @property (nonatomic, strong) UIButton *moreShareButton;
 @property (nonatomic, strong) UIView *topView;
-@property (nonatomic, strong) UIImage *userWorkImage;
 @property (nonatomic, strong) UIView *thinCenterView;
-@property (nonatomic, strong) ATOMAskPageViewModel *askPageViewModel;
-@property (nonatomic, strong) ATOMProductPageViewModel *productPageViewModel;
+@property (nonatomic, strong) PWPageDetailViewModel *pageDetailViewModel;
 
-+ (CGFloat)calculateHeaderViewHeightWithAsk:(ATOMAskPageViewModel *)viewModel;
-+ (CGFloat)calculateHeaderViewHeightWithProduct:(ATOMProductPageViewModel *)viewModel;
++ (CGFloat)calculateHeaderViewHeight:(PWPageDetailViewModel *)viewModel;
 
 @end

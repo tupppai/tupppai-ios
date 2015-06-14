@@ -15,8 +15,7 @@
 @property (nonatomic, strong) UIButton *loginButton;
 @property (nonatomic, strong) UIButton *forgetPasswordButton;
 
-@property (nonatomic, strong) UIButton *xlLoginButton;
-@property (nonatomic, strong) UIButton *wxLoginButton;
-@property (nonatomic, strong) UIButton *qqLoginButton;
+@property (nonatomic, strong) UIButton *weiboLoginButton;
+@property (nonatomic, strong) UIButton *wechatLoginButton;
 
 @end

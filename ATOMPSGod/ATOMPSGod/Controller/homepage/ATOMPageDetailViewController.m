@@ -131,21 +131,19 @@
 - (void)getMoreDataSource {
     WS(ws);
     _currentPage++;
-    NSInteger type = _askPageViewModel!=nil? 1:2;
-    NSInteger ID = _askPageViewModel!=nil? _askPageViewModel.imageID:_productPageViewModel.ID;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@(ID) forKey:@"target_id"];
-    [param setObject:@(type) forKey:@"type"];
+    [param setObject:@(_ID) forKey:@"target_id"];
+    [param setObject:@(_type) forKey:@"type"];
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
     [showDetailOfComment ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
-        [_askDetailView.recentDetailTableView.footer endRefreshing];
         for (ATOMComment *comment in recentCommentArray) {
             ATOMCommentDetailViewModel *model = [ATOMCommentDetailViewModel new];
             [model setViewModelData:comment];
             [ws.recentCommentDataSource addObject:model];
         }
+        [_askDetailView.recentDetailTableView.footer endRefreshing];
         [ws.askDetailView.recentDetailTableView reloadData];
         if (recentCommentArray.count == 0) {
             ws.canRefreshFooter = NO;
@@ -189,21 +187,26 @@
     [self configRecentDetailTableViewRefresh];
     self.view = _askDetailView;
 
-    if (_askPageViewModel) {
-        _type = 1;
-        _ID = _askPageViewModel.imageID;
-        _askDetailView.askPageViewModel = _askPageViewModel;
-    } else if (_productPageViewModel) {
-        _type = 2;
-        _ID = _productPageViewModel.ID;
-        _askDetailView.productPageViewModel = _productPageViewModel;
-    }
+//    if (_askPageViewModel) {
+//        _type = 1;
+//        _ID = _askPageViewModel.imageID;
+//        _askDetailView.askPageViewModel = _askPageViewModel;
+//    } else if (_productPageViewModel) {
+//        _type = 2;
+//        _ID = _productPageViewModel.ID;
+//        _askDetailView.productPageViewModel = _productPageViewModel;
+//    }
+    NSLog(@"_commonPageViewMode%@",_pageDetailViewModel);
+    _type = _pageDetailViewModel.type;
+    _ID = _pageDetailViewModel.pageID;
+    _askDetailView.pageDetailViewModel = _pageDetailViewModel;
+//    _askDetailView.headerView.praiseButton.selected = _pageDetailViewModel.liked;
+    
     _askDetailView.recentDetailTableView.delegate = self;
     _askDetailView.recentDetailTableView.dataSource = self;
     _askDetailView.commentTextView.delegate = self;
     [self addClickEventToAskDetailView];
     [self addGestureEventToAskDetailView];
-    _askDetailView.headerView.praiseButton.selected = _askPageViewModel.liked;
     [self getDataSource];
     _canRefreshFooter = YES;
 }
@@ -251,11 +254,7 @@
 
 - (void)clickPraiseButton:(UITapGestureRecognizer *)sender {
     [_askDetailView.headerView.praiseButton toggleLike];
-    if (_askPageViewModel) {
-        [_askPageViewModel toggleLike];
-    } else {
-        [_productPageViewModel toggleLike];
-    }
+    [_pageDetailViewModel toggleLike];
 }
 
 //- (void)clickCommentButton:(UITapGestureRecognizer *)sender {
@@ -291,7 +290,16 @@
 }
 
 - (void)dealDownloadWork {
-    
+    UIImageWriteToSavedPhotosAlbum(_askDetailView.headerView.userWorkImageView.image
+,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+}
+- (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error
+  contextInfo: (void *) contextInfo {
+    if(error != NULL){
+        [SVProgressHUD showErrorWithStatus:@"保存失败"];
+    }else{
+        [SVProgressHUD showSuccessWithStatus:@"保存到相册成功"];
+    }
 }
 
 - (void)dealUploadWork {
@@ -377,7 +385,7 @@
     [self dismissViewControllerAnimated:YES completion:^{
         ATOMUploadWorkViewController *uwvc = [ATOMUploadWorkViewController new];
         uwvc.originImage = info[UIImagePickerControllerOriginalImage];
-        uwvc.askPageViewModel = ws.askPageViewModel;
+        uwvc.askPageViewModel = [ws.pageDetailViewModel generateAskPageViewModel];
         [ws pushViewController:uwvc animated:YES];
     }];
 }
@@ -393,7 +401,6 @@
     if (section == 0) {
         return _hotCommentDataSource.count;
     } else if (section == 1) {
-        NSLog(@"_recentCommentDataSource.count %ld", _recentCommentDataSource.count);
         return _recentCommentDataSource.count;
     } else {
         return 0;
@@ -412,7 +419,6 @@
     if (indexPath.section == 0) {
         cell.viewModel = _hotCommentDataSource[indexPath.row];
     } else if (indexPath.section ==1) {
-        NSLog(@"cellForRowAtIndexPath %@",_recentCommentDataSource[indexPath.row]);
         cell.viewModel = _recentCommentDataSource[indexPath.row];
     }
         

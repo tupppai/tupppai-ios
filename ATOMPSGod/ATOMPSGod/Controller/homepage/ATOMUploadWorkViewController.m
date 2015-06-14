@@ -58,11 +58,9 @@
 
 - (void)createUI {
     self.title = @"上传图片";
-    
     _uploadWorkView = [ATOMUploadWorkView new];
     _uploadWorkView.originImage = _originImage;
     self.view = _uploadWorkView;
-    
     [_uploadWorkView.ThreeFourButton addTarget:self action:@selector(clickThreeFourButton:) forControlEvents:UIControlEventTouchUpInside];
     [_uploadWorkView.OneOneButton addTarget:self action:@selector(clickOneOneButton:) forControlEvents:UIControlEventTouchUpInside];
     [_uploadWorkView.FourThreeButton addTarget:self action:@selector(clickFourThreeButton:) forControlEvents:UIControlEventTouchUpInside];

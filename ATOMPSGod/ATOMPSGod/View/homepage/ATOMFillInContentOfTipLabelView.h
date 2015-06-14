@@ -14,5 +14,5 @@
 @property (nonatomic, strong) UIButton *sendTipLabelTextButton;
 @property (nonatomic, strong) UILabel *showNumberLabel;
 @property (nonatomic, strong) UILabel *topWarnLabel;
-
+@property (nonatomic, strong) UILabel *topWarnLabel2;
 @end

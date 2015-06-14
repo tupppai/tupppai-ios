@@ -172,7 +172,7 @@ static int collumnNumber = 3;
     ATOMAskPageViewModel *homepageViewModel = _homeImageDataSource[indexPath.row];
     if ([askViewModel.totalPSNumber integerValue] == 0) {
         ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
-        rdvc.askPageViewModel = homepageViewModel;
+        rdvc.pageDetailViewModel = [homepageViewModel generatepageDetailViewModel];
         [self pushViewController:rdvc animated:YES];
     } else {
         ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];

@@ -97,7 +97,8 @@
 - (UILabel *)themeLabel {
     if (!_themeLabel) {
         _themeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        _themeLabel.font = [UIFont systemFontOfSize:kFont14];
+        _themeLabel.font =  [UIFont fontWithName:@"Hiragino Sans GB W3" size:kFont14];
+        _themeLabel.textColor = [UIColor darkGrayColor];
     }
     return _themeLabel;
 }

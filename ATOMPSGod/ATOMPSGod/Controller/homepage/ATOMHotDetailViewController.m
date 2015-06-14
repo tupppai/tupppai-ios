@@ -13,7 +13,6 @@
 #import "ATOMUploadWorkViewController.h"
 #import "ATOMProceedingViewController.h"
 #import "ATOMOtherPersonViewController.h"
-#import "ATOMAskPageViewModel.h"
 #import "ATOMProductPageViewModel.h"
 #import "ATOMCommentViewModel.h"
 #import "ATOMDetailImage.h"
@@ -37,7 +36,7 @@
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, assign) NSIndexPath* selectedIndexPath;
-
+@property (nonatomic, assign) ATOMHotDetailTableViewCell* selectedHotDetailCell;
 @end
 
 @implementation ATOMHotDetailViewController
@@ -217,9 +216,17 @@
 #pragma mark - Click Event
 
 - (void)dealDownloadWork {
-    
+    ATOMHotDetailTableViewCell *cell = (ATOMHotDetailTableViewCell *)[_hotDetailTableView cellForRowAtIndexPath:_selectedIndexPath];
+    UIImageWriteToSavedPhotosAlbum(cell.userWorkImageView.image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
 }
-
+- (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error
+                 contextInfo: (void *) contextInfo {
+    if(error != NULL){
+        [SVProgressHUD showErrorWithStatus:@"保存失败"];
+    }else{
+        [SVProgressHUD showSuccessWithStatus:@"保存成功"];
+    }
+}
 - (void)dealUploadWork {
     [[NSUserDefaults standardUserDefaults] setObject:@"Uploading" forKey:@"UploadingOrSeekingHelp"];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -236,30 +243,31 @@
 - (void)tapHotDetailGesture:(UITapGestureRecognizer *)gesture {
     CGPoint location = [gesture locationInView:_hotDetailTableView];
     _selectedIndexPath = [_hotDetailTableView indexPathForRowAtPoint:location];
-    NSLog(@"_selectedIndexPath row %ld",_selectedIndexPath.row);
     if (_selectedIndexPath) {
         ATOMProductPageViewModel *model = _dataSource[_selectedIndexPath.row];
-        ATOMHotDetailTableViewCell *cell = (ATOMHotDetailTableViewCell *)[_hotDetailTableView cellForRowAtIndexPath:_selectedIndexPath];
-        CGPoint p = [gesture locationInView:cell];
+        _selectedHotDetailCell = (ATOMHotDetailTableViewCell *)[_hotDetailTableView cellForRowAtIndexPath:_selectedIndexPath];
+        
+        CGPoint p = [gesture locationInView:_selectedHotDetailCell];
         //点击图片
-        if (CGRectContainsPoint(cell.userWorkImageView.frame, p)) {
-            NSLog(@"cell.userWorkImageView");
-            ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
+        if (CGRectContainsPoint(_selectedHotDetailCell.userWorkImageView.frame, p)) {
+            PWPageDetailViewModel* pageDetailViewModel = [PWPageDetailViewModel new];
             if (_selectedIndexPath.row != 0) {
-                rdvc.productPageViewModel = model;
+                [pageDetailViewModel setCommonViewModelWithProduct:model];
             } else {
-                rdvc.askPageViewModel = _askPageViewModel;
+                [pageDetailViewModel setCommonViewModelWithAsk:_askPageViewModel];
             }
+            ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
+            rdvc.pageDetailViewModel = pageDetailViewModel;
             rdvc.delegate = self;
             [self pushViewController:rdvc animated:YES];
-        } else if (CGRectContainsPoint(cell.topView.frame, p)) {
-            p = [gesture locationInView:cell.topView];
-            if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
+        } else if (CGRectContainsPoint(_selectedHotDetailCell.topView.frame, p)) {
+            p = [gesture locationInView:_selectedHotDetailCell.topView];
+            if (CGRectContainsPoint(_selectedHotDetailCell.userHeaderButton.frame, p)) {
                 ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
                 opvc.userID = model.uid;
                 opvc.userName = model.userName;
                 [self pushViewController:opvc animated:YES];
-            } else if (CGRectContainsPoint(cell.psButton.frame, p)) {
+            } else if (CGRectContainsPoint(_selectedHotDetailCell.psButton.frame, p)) {
                 [UIActionSheet showInView:self.view withTitle:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@[@"下载素材",@"上传作品"] tapBlock:^(UIActionSheet *actionSheet, NSInteger buttonIndex) {
                     NSString *actionSheetTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
                     if ([actionSheetTitle isEqualToString:@"下载素材"]) {
@@ -268,33 +276,35 @@
                         [self dealUploadWork];
                     }
                 }];
-            } else if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
+            } else if (CGRectContainsPoint(_selectedHotDetailCell.userNameLabel.frame, p)) {
                 ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
                 opvc.userID = model.uid;
                 opvc.userName = model.userName;
                 [self pushViewController:opvc animated:YES];
             }
         } else {
-            p = [gesture locationInView:cell.thinCenterView];
-            if (CGRectContainsPoint(cell.praiseButton.frame, p)) {
-                [cell.praiseButton toggleLike];
+            p = [gesture locationInView:_selectedHotDetailCell.thinCenterView];
+            if (CGRectContainsPoint(_selectedHotDetailCell.praiseButton.frame, p)) {
+                [_selectedHotDetailCell.praiseButton toggleLike];
                 if (_selectedIndexPath.row != 0 ) {
                     [model toggleLike];
                 } else {
                     [_askPageViewModel toggleLike];
                 }
-            } else if (CGRectContainsPoint(cell.shareButton.frame, p)) {
+            } else if (CGRectContainsPoint(_selectedHotDetailCell.shareButton.frame, p)) {
                 [self wxShare];
-            } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
+            } else if (CGRectContainsPoint(_selectedHotDetailCell.commentButton.frame, p)) {
                 ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
+                PWPageDetailViewModel* pageDetailViewModel = [PWPageDetailViewModel new];
                 if (_selectedIndexPath.row != 0) {
-                    NSLog(@"rdvc.detailImageViewModel");
-                    rdvc.productPageViewModel = _dataSource[_selectedIndexPath.row];
+                    [pageDetailViewModel setCommonViewModelWithProduct:model];
                 } else {
-                    rdvc.askPageViewModel = _askPageViewModel;
+                    [pageDetailViewModel setCommonViewModelWithAsk:_askPageViewModel];
                 }
+                rdvc.pageDetailViewModel = pageDetailViewModel;
+                rdvc.delegate = self;
                 [self pushViewController:rdvc animated:YES];
-            } else if (CGRectContainsPoint(cell.moreShareButton.frame, p)) {
+            } else if (CGRectContainsPoint(_selectedHotDetailCell.moreShareButton.frame, p)) {
                 [[AppDelegate APP].window addSubview:self.shareFunctionView];
             }
         }
@@ -323,7 +333,7 @@
     return _dataSource.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"HotDetailCell";
     ATOMHotDetailTableViewCell *cell = [_hotDetailTableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
@@ -350,10 +360,7 @@
 
 #pragma mark - ATOMViewControllerDelegate
 -(void)ATOMViewControllerDismissWithLiked:(BOOL)liked {
-    NSLog(@"ATOMViewControllerDismissWithLiked  %d",liked);
-
-    ATOMHotDetailTableViewCell *cell = (ATOMHotDetailTableViewCell *)[_hotDetailTableView cellForRowAtIndexPath:_selectedIndexPath];
-    [cell.praiseButton toggleLikeWhenSelectedChanged:liked];
+    [_selectedHotDetailCell.praiseButton toggleLikeWhenSelectedChanged:liked];
 }
 
 @end
