@@ -12,6 +12,8 @@
 #import "AppDelegate.h"
 #import "ATOMLogin.h"
 #import "ATOMUser.h"
+#import "ATOMUserProfileViewModel.h"
+#import "ATOMCreateProfileViewController.h"
 
 @interface ATOMLoginViewController ()
 
@@ -56,34 +58,93 @@
     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
 }
 
+
 - (void)clickweiboLoginButton:(UIButton *)sender {
     
-}
+//    [ATOMCurrentUser currentUser].signUpType = ATOMSignUpWeibo;
+//    [ATOMCurrentUser currentUser].sourceData = sourceData;
+    NSLog(@"clickweiboLoginButton");
+    [ShareSDK getUserInfoWithType:ShareTypeTencentWeibo
+                      authOptions:nil
+                           result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error)
+     {
+         
+         NSLog(@"result %d, userInfo %@,error %@",result,userInfo,error);
 
+         if (result)
+         {
+             PFQuery *query = [PFQuery queryWithClassName:@"UserInfo"];
+             [query whereKey:@"uid" equalTo:[userInfo uid]];
+             [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+              {
+
+                  if ([objects count] == 0)
+                  {
+                      PFObject *newUser = [PFObject objectWithClassName:@"UserInfo"];
+                      [newUser setObject:[userInfo uid] forKey:@"uid"];
+                      [newUser setObject:[userInfo nickname] forKey:@"name"];
+                      [newUser setObject:[userInfo profileImage] forKey:@"icon"];
+                      [newUser saveInBackground];
+                      UIAlertView *alertView = [[UIAlertView alloc]
+                                                initWithTitle:@"Hello"
+                                                message:@"欢迎注册"
+                                                delegate:nil
+                                                cancelButtonTitle:@"知道了"
+                                                otherButtonTitles: nil];
+                      [alertView show];
+                  }
+                  else
+                  {
+                      UIAlertView *alertView = [[UIAlertView alloc]                                 initWithTitle:@"Hello"
+                                                                                                          message:@"欢迎回来"
+                                                                                                         delegate:nil
+                                                                                                cancelButtonTitle:@"知道了"
+                                                                                                otherButtonTitles:nil];
+                      [alertView show];
+                  }
+              }];
+             
+             
+         }
+         
+     }];
+}
+    
 - (void)clickwechatLoginButton:(UIButton *)sender {
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-    [ShareSDK getUserInfoWithType:ShareTypeWeixiSession authOptions:nil result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error) {
-        if (result) {
-            PFQuery *query = [PFQuery queryWithClassName:@"UserInfo"];
-            [query whereKey:@"uid" equalTo:[userInfo uid]];
-            [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-                if ([objects count] == 0) {
-                    PFObject *newUser = [PFObject objectWithClassName:@"UserInfo"];
-                    [newUser setObject:[userInfo uid] forKey:@"uid"];
-                    [newUser setObject:[userInfo nickname] forKey:@"name"];
-                    [newUser setObject:[userInfo profileImage] forKey:@"icon"];
-                    [newUser saveInBackground];
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Hello" message:@"欢迎注册" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
-                    [alertView show];
-                } else {
-                    [SVProgressHUD showWithStatus:@"微信登陆成功" maskType:SVProgressHUDMaskTypeNone];
-                    [self.navigationController popViewControllerAnimated:NO];
-                    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
-                    [SVProgressHUD dismiss];
-                }
-            }];
-        } else {
-            [SVProgressHUD dismiss];
+    ATOMLogin *loginModel = [ATOMLogin new];
+    [loginModel thirdPartyAuth:ShareTypeWeixiTimeline withBlock:^(NSDictionary *sourceData) {
+        if (sourceData) {
+            NSString* openid = sourceData[@"openid"];
+            NSMutableDictionary* param = [NSMutableDictionary new];
+            [param setObject:openid forKey:@"openid"];
+           [loginModel openIDAuth:param AndType:@"weixin" withBlock:^(bool isRegister, NSDictionary *userObejctFromServer, NSError *error) {
+
+               if (isRegister && userObejctFromServer) {
+                   NSLog(@"已经注册微信账号");
+               } else if (isRegister == NO) {
+                   NSLog(@"未注册微信账号");
+                   
+                   [ATOMCurrentUser currentUser].signUpType = ATOMSignUpWeixin;
+                   [ATOMCurrentUser currentUser].sourceData = sourceData;
+
+                   ATOMUserProfileViewModel* ipvm = [ATOMUserProfileViewModel new];
+                   ipvm.nickName = sourceData[@"nickname"];
+                   ipvm.province = sourceData[@"province"];
+                   ipvm.city = sourceData[@"city"];
+                   ipvm.avatarURL = sourceData[@"headimgurl"];
+                   if ((BOOL)sourceData[@"sex"] == YES) {
+                       ipvm.gender = @"男";
+                   } else {
+                       ipvm.gender = @"女";
+                   }
+                   ATOMCreateProfileViewController *cpvc = [ATOMCreateProfileViewController new];
+                   cpvc.userProfileViewModel = ipvm;
+                   [self pushViewController:cpvc animated:YES];
+               }
+           }];
+        }
+        else {
+            NSLog(@"获取不到第三平台的数据");
         }
     }];
 }

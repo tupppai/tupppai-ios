@@ -29,54 +29,42 @@
 
 - (void)createSubView {
     WS(ws);
-    UILabel *verifyCodeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 81.5, 40)];
-    verifyCodeLabel.backgroundColor = [UIColor colorWithHex:0xb0b0b0];
-    verifyCodeLabel.text = @"验证码";
-    verifyCodeLabel.textAlignment = NSTextAlignmentCenter;
-    verifyCodeLabel.textColor = [UIColor whiteColor];
-    verifyCodeLabel.layer.cornerRadius = 5;
-    verifyCodeLabel.layer.masksToBounds = YES;
     _verifyCodeTextField = [UITextField new];
-    _verifyCodeTextField.borderStyle = UITextBorderStyleRoundedRect;
-    _verifyCodeTextField.leftViewMode = UITextFieldViewModeAlways;
-    _verifyCodeTextField.placeholder = @"输入你的验证码";
-    _verifyCodeTextField.leftView = verifyCodeLabel;
+    _verifyCodeTextField.placeholder = @"输入验证码";
+    _verifyCodeTextField.textAlignment = NSTextAlignmentCenter;
+    _verifyCodeTextField.keyboardType = UIKeyboardTypeNumberPad;
+    _verifyCodeTextField.font = [UIFont systemFontOfSize:19];
     [self addSubview:_verifyCodeTextField];
     
-    _tipLabel = [UILabel new];
-    _tipLabel.text = @"未收到请点击重新发送验证码";
-    _tipLabel.font = [UIFont systemFontOfSize:14.f];
-    _tipLabel.textColor = [UIColor colorWithHex:0x838383];
-    [self addSubview:_tipLabel];
-    
     _sendVerifyCodeButton = [UIButton new];
-    _sendVerifyCodeButton.backgroundColor = [UIColor colorWithHex:0xb0b0b0];
-
-    _buttonTitleStr = [NSString stringWithFormat:@"点击重新发送( %d )",(int)self.lastSecond];
+    _buttonTitleStr = [NSString stringWithFormat:@"%d秒后点此可重发验证码",(int)self.lastSecond];
     [_sendVerifyCodeButton setTitle:_buttonTitleStr forState:UIControlStateNormal];
-    [_sendVerifyCodeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    _sendVerifyCodeButton.layer.cornerRadius = 5;
-    _sendVerifyCodeButton.layer.masksToBounds = YES;
+    [_sendVerifyCodeButton setTitleColor:[UIColor colorWithHex:0xBDC7CE] forState:UIControlStateNormal];
     [self addSubview:_sendVerifyCodeButton];
+    
+    UIView * BottomLine = [UIView new];
+    BottomLine.backgroundColor = [UIColor colorWithWhite:0x000000 alpha:0.2];
+    [self addSubview:BottomLine];
+
     
     [_verifyCodeTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(ws.mas_left).with.offset(10);
         make.right.equalTo(ws.mas_right).with.offset(-10);
-        make.top.equalTo(ws.mas_top).with.offset(15);
+        make.top.equalTo(ws.mas_top).with.offset(50);
         make.height.equalTo(@40);
     }];
     
-    [_tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(ws.verifyCodeTextField.mas_left);
-        make.right.equalTo(ws.verifyCodeTextField.mas_right);
-        make.top.equalTo(ws.verifyCodeTextField.mas_bottom);
-        make.height.equalTo(ws.verifyCodeTextField);
+    [BottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(ws.mas_centerX);
+        make.top.equalTo(_verifyCodeTextField.mas_bottom).with.offset(10);
+        make.width.equalTo(@(kLineWidth));
+        make.height.equalTo(@0.5);
     }];
     
     [_sendVerifyCodeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(ws.verifyCodeTextField.mas_bottom).with.offset(10);
         make.left.equalTo(ws.verifyCodeTextField.mas_left);
         make.right.equalTo(ws.verifyCodeTextField.mas_right);
-        make.top.equalTo(ws.tipLabel.mas_bottom);
         make.height.equalTo(ws.verifyCodeTextField);
     }];
     
@@ -85,21 +73,20 @@
 
 - (void)setLastSecond:(NSInteger)lastSecond {
     _lastSecond = lastSecond;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        _buttonTitleStr = [NSString stringWithFormat:@"点击重新发送( %d )",(int)_lastSecond];
-        [_sendVerifyCodeButton setTitle:_buttonTitleStr forState:UIControlStateNormal];
-    });
+    if (_lastSecond <= 0) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            _buttonTitleStr = @"重发验证码";
+            [_sendVerifyCodeButton setTitle:_buttonTitleStr forState:UIControlStateNormal];
+            [_sendVerifyCodeButton setTitleColor:[UIColor colorWithHex:0x74c3ff] forState:UIControlStateNormal];
+        });
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            _buttonTitleStr = [NSString stringWithFormat:@"%d秒后点此可重发验证码",(int)_lastSecond];
+            [_sendVerifyCodeButton setTitle:_buttonTitleStr forState:UIControlStateNormal];
+            [_sendVerifyCodeButton setTitleColor:[UIColor colorWithHex:0xBDC7CE] forState:UIControlStateNormal];
+        });
+    }
+
 }   
-
-
-
-
-
-
-
-
-
-
-
 
 @end

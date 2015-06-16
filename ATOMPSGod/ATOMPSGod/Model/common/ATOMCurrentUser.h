@@ -7,10 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ATOMLaunchViewController.h"
 @class ATOMUser;
 
 @interface ATOMCurrentUser : NSObject
 
+/**
+ *  通过第三方平台可能获取到的数据
+ */
+@property (nonatomic, strong) NSDictionary *sourceData;
+/**
+ *  注册类型 weixin = 0 ,weibo = 1 ,mobile = 3
+ */
+@property (nonatomic, assign) ATOMSignUpType signUpType;
 /**
  *  用户唯一ID
  */

@@ -10,6 +10,15 @@
 
 @interface ATOMUser : ATOMBaseModel <MTLFMDBSerializing>
 
+//@"collectionCount" : @"data.collection_count",
+//@"boundPhone" : @"data.is_bound_mobile",
+//@"boundWeibo" : @"data.is_bound_weibo",
+//@"boundWechat" : @"data.is_bound_weixin",
+//@"locationID" : @"data.location",
+//@"cityID" : @"data.city",
+//@"provinceID" : @"data.province",
+
+
 /**
  *  用户唯一ID
  */

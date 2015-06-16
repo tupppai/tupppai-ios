@@ -15,7 +15,6 @@ static dispatch_once_t onceToken;
 static ATOMCurrentUser *_currentUser;
 
 + (ATOMCurrentUser *)currentUser {
-    
     dispatch_once(&onceToken, ^{
         _currentUser = [ATOMCurrentUser new];
     });
@@ -29,7 +28,7 @@ static ATOMCurrentUser *_currentUser;
     [dict setObject:_password forKey:@"password"];
     [dict setObject:[NSString stringWithFormat:@"%d", (int)_locationID] forKey:@"location"];
     [dict setObject:[NSString stringWithFormat:@"%d", (int)_sex] forKey:@"sex"];
-    [dict setObject:[NSString stringWithFormat:@"%d", (int)_avatarID] forKey:@"avatar"];
+    [dict setObject:[NSString stringWithFormat:@"%@", _avatar] forKey:@"avatar"];
     return [dict mutableCopy];
 }
 
@@ -51,31 +50,5 @@ static ATOMCurrentUser *_currentUser;
     _attentionUploadNumber = user.attentionUploadNumber;
     _attentionWorkNumber = user.attentionWorkNumber;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @end

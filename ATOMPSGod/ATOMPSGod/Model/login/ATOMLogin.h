@@ -11,9 +11,9 @@
 
 @interface ATOMLogin : NSObject
 
-- (AFHTTPRequestOperation *)Login:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(ATOMUser *user, NSError *error))block;
+- (AFHTTPRequestOperation *)openIDAuth:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(bool isRegister,NSDictionary* userObejctFromServer, NSError *))block;
 - (void)saveUserInDB:(ATOMUser *)user;
 - (ATOMUser *)getUserBy:(NSString *)uid;
 - (BOOL)isExistUser:(ATOMUser *)user;
-
+- (void)thirdPartyAuth:(ShareType)type withBlock:(void (^)(NSDictionary* sourceData))block;
 @end

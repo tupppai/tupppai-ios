@@ -33,11 +33,12 @@
     _mobileTextField.placeholder = @"手机号";
     _mobileTextField.textColor = [UIColor colorWithHex:0x637685];
     _mobileTextField.font = [UIFont systemFontOfSize:18];
-    _mobileTextField.keyboardType = UIKeyboardTypeNumberPad;
+    _mobileTextField.keyboardType = UIKeyboardTypePhonePad;
+    _mobileTextField.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_mobileTextField];
     
     UIView * mobileBottomLine = [UIView new];
-    mobileBottomLine.backgroundColor = [UIColor colorWithHex:0x637685 andAlpha:0.6];
+    mobileBottomLine.backgroundColor = [UIColor colorWithWhite:0x000000 alpha:0.2];
     [self addSubview:mobileBottomLine];
     
     _passwordTextField = [UITextField new];
@@ -45,10 +46,11 @@
     _passwordTextField.placeholder = @"密码";
     _passwordTextField.textColor = [UIColor colorWithHex:0x637685];
     _passwordTextField.font = [UIFont systemFontOfSize:18];
+    _passwordTextField.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_passwordTextField];
     
     UIView * passwordBottomLine = [UIView new];
-    passwordBottomLine.backgroundColor = [UIColor colorWithHex:0x637685 andAlpha:0.6];
+    passwordBottomLine.backgroundColor = [UIColor colorWithWhite:0x000000 alpha:0.2];
     [self addSubview:passwordBottomLine];
     
     _loginButton = [UIButton new];
@@ -66,7 +68,7 @@
     [self addSubview:_forgetPasswordButton];
     
     _lineView = [UIView new];
-    _lineView.backgroundColor = [UIColor colorWithHex:0xB5C0C8];
+    _lineView.backgroundColor = [UIColor colorWithWhite:0x000000 alpha:0.2];
     [self addSubview:_lineView];
     
     _tipLabel1 = [UILabel new];
@@ -97,7 +99,7 @@
     
     [_mobileTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
-        make.top.equalTo(ws.mas_top).with.offset(61 );
+        make.top.equalTo(ws.mas_top).with.offset(20);
         make.left.equalTo(ws.mas_left).with.offset(50);
         make.right.equalTo(ws.mas_right).with.offset(-50);
         make.height.equalTo(@40);
@@ -105,28 +107,29 @@
     
     [mobileBottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
-        make.top.equalTo(_mobileTextField.mas_bottom).with.offset(17);
-        make.width.equalTo(ws.mobileTextField);
-        make.height.equalTo(@1);
+        make.top.equalTo(_mobileTextField.mas_bottom).with.offset(2
+                                                                  );
+        make.width.equalTo(@(kLineWidth));
+        make.height.equalTo(@0.5);
     }];
     
     [_passwordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
-        make.top.equalTo(ws.mobileTextField.mas_bottom).with.offset(40);
+        make.top.equalTo(ws.mobileTextField.mas_bottom).with.offset(30);
         make.width.equalTo(ws.mobileTextField);
         make.height.equalTo(ws.mobileTextField);
     }];
     
     [passwordBottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
-        make.top.equalTo(_passwordTextField.mas_bottom).with.offset(17);
-        make.width.equalTo(ws.passwordTextField);
-        make.height.equalTo(@1);
+        make.top.equalTo(_passwordTextField.mas_bottom).with.offset(2);
+        make.width.equalTo(@(kLineWidth));
+        make.height.equalTo(@0.5);
     }];
     
     [_loginButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
-        make.top.equalTo(ws.passwordTextField.mas_bottom).with.offset(54);
+        make.top.equalTo(ws.passwordTextField.mas_bottom).with.offset(50);
         make.width.equalTo(@166);
         make.height.equalTo(@44);
     }];
@@ -140,7 +143,7 @@
     
     [_lineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
-        make.top.equalTo(ws.loginButton.mas_bottom).with.offset(75);
+        make.top.equalTo(ws.loginButton.mas_bottom).with.offset(40);
         make.width.equalTo(@240);
         make.height.equalTo(@1);
     }];
@@ -154,7 +157,7 @@
     
     [_wechatLoginButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(ws.lineView.mas_leading);
-        make.top.equalTo(ws.tipLabel1.mas_bottom).with.offset(51);
+        make.top.equalTo(ws.tipLabel1.mas_bottom).with.offset(20);
         make.width.equalTo(@116);
         make.height.equalTo(@44);
     }];

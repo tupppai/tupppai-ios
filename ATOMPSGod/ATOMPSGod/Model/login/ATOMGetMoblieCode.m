@@ -13,17 +13,18 @@
 
 - (AFHTTPRequestOperation *)GetMobileCode:(NSDictionary *)param withBlock:(void (^)(NSString *, NSError *))block {
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:@"user/get_mobile_code" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSInteger status = [responseObject[@"status"] integerValue];
-        NSString *verifyCode = responseObject[@"data"];
+        NSInteger ret = [responseObject[@"ret"] integerValue];
+        NSString *verifyCode = responseObject[@"data"][@"code"];
+        NSLog(@"GetMobileCode param %@,response data %@",param,responseObject);
         if (block) {
-            if (status == 0) {
+            if (ret == 1) {
                 block(verifyCode, nil);
             } else {
-                block(@"AlreadyRegister", nil);
+                block(@"peiweiSoHandsome", nil);
             }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+        block(@"peiweiSoHandsome", error);
     }];
 }
 

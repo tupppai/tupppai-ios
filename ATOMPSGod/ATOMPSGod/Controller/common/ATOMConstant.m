@@ -32,6 +32,7 @@ CGFloat const kFont14 = 14.f;
 CGFloat const kFont15 = 15.f;
 
 NSUInteger const kCommentTextViewMaxLength = 300;
+NSInteger const kLineWidth = 260;
 
 
 

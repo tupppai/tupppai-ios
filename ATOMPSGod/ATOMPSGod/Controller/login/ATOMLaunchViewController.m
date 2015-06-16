@@ -10,6 +10,7 @@
 #import "ATOMLaunchView.h"
 #import "ATOMCreateProfileViewController.h"
 #import "ATOMLoginViewController.h"
+#import "ATOMLogin.h"
 
 @interface ATOMLaunchViewController ()
 
@@ -43,10 +44,43 @@
 }
 
 - (void)clickWXRegisterButton:(UIButton *)sender {
-    
+    ATOMLogin *loginModel = [ATOMLogin new];
+    [loginModel thirdPartyAuth:ShareTypeWeixiTimeline withBlock:^(NSDictionary *sourceData) {
+        if (sourceData) {
+            NSString* openid = sourceData[@"openid"];
+            NSMutableDictionary* param = [NSMutableDictionary new];
+            [param setObject:openid forKey:@"openid"];
+            [loginModel openIDAuth:param AndType:@"weixin" withBlock:^(bool isRegister, NSDictionary *userObejctFromServer, NSError *error) {
+                if (isRegister && userObejctFromServer) {
+                    NSLog(@"已经注册微信账号");
+                } else if (isRegister == NO) {
+                    NSLog(@"未注册微信账号");
+                    [ATOMCurrentUser currentUser].signUpType = ATOMSignUpWeixin;
+                    [ATOMCurrentUser currentUser].sourceData = sourceData;
+                    ATOMUserProfileViewModel* ipvm = [ATOMUserProfileViewModel new];
+                    ipvm.nickName = sourceData[@"nickname"];
+                    ipvm.province = sourceData[@"province"];
+                    ipvm.city = sourceData[@"city"];
+                    ipvm.avatarURL = sourceData[@"headimgurl"];
+                    if ((BOOL)sourceData[@"sex"] == YES) {
+                        ipvm.gender = @"男";
+                    } else {
+                        ipvm.gender = @"女";
+                    }
+                    ATOMCreateProfileViewController *cpvc = [ATOMCreateProfileViewController new];
+                    cpvc.userProfileViewModel = ipvm;
+                    [self pushViewController:cpvc animated:YES];
+                }
+            }];
+        }
+        else {
+            NSLog(@"获取不到第三平台的数据");
+        }
+    }];
 }
 
 - (void)clickOtherRegisterButton:(UIButton *)sender {
+    [ATOMCurrentUser currentUser].signUpType = ATOMSignUpMobile;
     ATOMCreateProfileViewController *cpvc = [ATOMCreateProfileViewController new];
     [self pushViewController:cpvc animated:YES];
 }

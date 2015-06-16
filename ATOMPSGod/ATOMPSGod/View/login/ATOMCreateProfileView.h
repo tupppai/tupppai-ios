@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UIButton *cancelPickerButton;
 @property (nonatomic, strong) UIButton *confirmPickerButton;
 @property (nonatomic, strong) UILabel *showSexLabel;
+@property (nonatomic, strong) UILabel *showAreaLabel;
 @property (nonatomic, strong) UILabel *protocolLabel;
 
 - (void)showSexPickerView;

@@ -70,6 +70,14 @@
     _createProfileView.sexPickerView.dataSource = self;
     [_createProfileView.cancelPickerButton addTarget:self action:@selector(clickCancelPickerButton:) forControlEvents:UIControlEventTouchUpInside];
     [_createProfileView.confirmPickerButton addTarget:self action:@selector(clickConfirmPickerButton:) forControlEvents:UIControlEventTouchUpInside];
+    
+    if (_userProfileViewModel) {
+        _createProfileView.showSexLabel.text = _userProfileViewModel.gender;
+        [_createProfileView.userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString: _userProfileViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
+        _createProfileView.nicknameTextField.text = _userProfileViewModel.nickName;
+        _createProfileView.showAreaLabel.text = [NSString stringWithFormat:@"%@,%@",_userProfileViewModel.city,_userProfileViewModel.province];
+        [ATOMCurrentUser currentUser].avatar = _userProfileViewModel.avatarURL;
+    }
 }
 
 #pragma mark - Click Event
@@ -77,13 +85,13 @@
 - (void)clickRightButtonItem:(UIBarButtonItem *)sender {
     NSString *str = _createProfileView.nicknameTextField.text;
     if (str.length == 0) {
-        [SVProgressHUD showErrorWithStatus:@"昵称不能为空..."];
+        [SVProgressHUD showErrorWithStatus:@"昵称不能为空"];
         return ;
-    } else if (str.length >= 6) {
-        [SVProgressHUD showErrorWithStatus:@"昵称不能大于6位..."];
+    } else if (str.length > 6) {
+        [SVProgressHUD showErrorWithStatus:@"昵称不能大于6位"];
         return ;
     } else if ([_createProfileView tagOfCurrentSex] == -1) {
-        [SVProgressHUD showErrorWithStatus:@"请选择性别..."];
+        [SVProgressHUD showErrorWithStatus:@"请选择性别"];
         return ;
     }
     [ATOMCurrentUser currentUser].sex = [_createProfileView tagOfCurrentSex];
@@ -133,12 +141,13 @@
     NSData *data = UIImageJPEGRepresentation(image, 0.2);
     [_createProfileView.userHeaderButton setBackgroundImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
     ATOMUploadImage *uploadImage = [ATOMUploadImage new];
-    [uploadImage UploadImage:data WithBlock:^(ATOMImage *imageInformation, NSError *error) {
+    [uploadImage UploadImage:data WithBlock:^(ATOMImage *imageInfomation, NSError *error) {
         if (error) {
             NSLog(@"%@", error);
             return ;
         }
-        NSLog(@"%d", (int)imageInformation.imageID);
+        [ATOMCurrentUser currentUser].avatar = imageInfomation.imageURL;
+        [ATOMCurrentUser currentUser].avatarID = imageInfomation.imageID;
     }];
     
 }

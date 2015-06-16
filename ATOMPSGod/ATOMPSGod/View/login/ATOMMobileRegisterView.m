@@ -28,65 +28,57 @@
 
 - (void)createSubView {
     WS(ws);
-    UILabel *mobileLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 81.5, 40)];
-    mobileLabel.backgroundColor = [UIColor colorWithHex:0x32bef3];
-    mobileLabel.text = @"+86";
-    mobileLabel.textAlignment = NSTextAlignmentCenter;
-    mobileLabel.textColor = [UIColor whiteColor];
-    mobileLabel.layer.cornerRadius = 5;
-    mobileLabel.layer.masksToBounds = YES;
     _mobileTextField = [UITextField new];
-    _mobileTextField.borderStyle = UITextBorderStyleRoundedRect;
-    _mobileTextField.leftViewMode = UITextFieldViewModeAlways;
-    _mobileTextField.placeholder = @"输入你的手机号";
-    _mobileTextField.leftView = mobileLabel;
+    _mobileTextField.placeholder = @"输入手机号";
+    _mobileTextField.textAlignment = NSTextAlignmentCenter;
     _mobileTextField.keyboardType = UIKeyboardTypeNumberPad;
     _mobileTextField.returnKeyType = UIReturnKeyDone;
+    _mobileTextField.font = [UIFont systemFontOfSize:19];
     [self addSubview:_mobileTextField];
-    
-    UILabel *passwordLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 81.5, 40)];
-    passwordLabel.backgroundColor = [UIColor colorWithHex:0x9c9c9c];
-    passwordLabel.text = @"密码";
-    passwordLabel.textAlignment = NSTextAlignmentCenter;
-    passwordLabel.textColor = [UIColor whiteColor];
-    passwordLabel.layer.cornerRadius = 5;
-    passwordLabel.layer.masksToBounds = YES;
+
     _passwordTextField = [UITextField new];
-    _passwordTextField.borderStyle = UITextBorderStyleRoundedRect;
-    _passwordTextField.leftViewMode = UITextFieldViewModeAlways;
+    _passwordTextField.textAlignment = NSTextAlignmentCenter;
     _passwordTextField.secureTextEntry = YES;
-    _passwordTextField.placeholder = @"设置你的密码";
-    _passwordTextField.leftView = passwordLabel;
+    _passwordTextField.placeholder = @"设置密码";
+    _passwordTextField.font = [UIFont systemFontOfSize:19];
     [self addSubview:_passwordTextField];
-    
-    _tipLabel = [UILabel new];
-    _tipLabel.text=@"请设置登陆求PS大神的手机号码和密码";
-    _tipLabel.font = [UIFont systemFontOfSize:14.f];
-    _tipLabel.textColor = [UIColor colorWithHex:0x9c9c9c];
-    [self addSubview:_tipLabel];
     
     [_mobileTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
-        make.top.equalTo(ws.mas_top).with.offset(15);
+        make.top.equalTo(ws.mas_top).with.offset(40);
         make.left.equalTo(ws.mas_left).with.offset(20);
         make.right.equalTo(ws.mas_right).with.offset(-20);
-        make.height.equalTo(@40);
+        make.height.equalTo(@50);
     }];
     
     [_passwordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
-        make.top.equalTo(ws.mobileTextField.mas_bottom).with.offset(10);
+        make.top.equalTo(ws.mobileTextField.mas_bottom).with.offset(20);
         make.width.equalTo(ws.mobileTextField);
         make.height.equalTo(ws.mobileTextField);
     }];
     
-    [_tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(ws.mas_centerX);
-        make.top.equalTo(ws.passwordTextField.mas_bottom);
-        make.width.equalTo(ws.passwordTextField);
-        make.height.equalTo(@48);
-    }];
     
+    UIView * mobileBottomLine = [UIView new];
+    mobileBottomLine.backgroundColor = [UIColor colorWithWhite:0x000000 alpha:0.2];
+    [self addSubview:mobileBottomLine];
+    
+    UIView * passwordBottomLine = [UIView new];
+    passwordBottomLine.backgroundColor = [UIColor colorWithWhite:0x000000 alpha:0.2];
+    [self addSubview:passwordBottomLine];
+    
+    [mobileBottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(ws.mas_centerX);
+        make.top.equalTo(_mobileTextField.mas_bottom).with.offset(2);
+        make.width.equalTo(@(kLineWidth));
+        make.height.equalTo(@0.5);
+    }];
+    [passwordBottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(ws.mas_centerX);
+        make.top.equalTo(_passwordTextField.mas_bottom).with.offset(2);
+        make.width.equalTo(@(kLineWidth));
+        make.height.equalTo(@0.5);
+    }];
 }
 
 

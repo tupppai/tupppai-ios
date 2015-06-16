@@ -13,8 +13,6 @@
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
              @"uid" : @"data.uid",
-             @"mobile" : @"data.is_bound_mobile",
-//             @"locationID" : @"data.location",r
              @"nickname" : @"data.nickname",
              @"avatar" : @"data.avatar",
              @"sex" : @"data.sex",
@@ -26,7 +24,16 @@
              @"replyNumber" : @"data.reply_count",
              @"proceedingNumber" : @"data.inprogress_count",
              @"attentionUploadNumber" : @"data.focus_count",
-             @"attentionWorkNumber" : @"data.collection_count"
+             @"attentionWorkNumber" : @"data.collection_count",
+             
+             
+             @"collectionCount" : @"data.collection_count",
+             @"boundPhone" : @"data.is_bound_mobile",
+             @"boundWeibo" : @"data.is_bound_weibo",
+             @"boundWechat" : @"data.is_bound_weixin",
+             @"locationID" : @"data.location",
+             @"cityID" : @"data.city",
+             @"provinceID" : @"data.province",
              };
 }
 
@@ -46,9 +53,32 @@
              @"replyNumber" : @"replyNumber",
              @"proceedingNumber" : @"proceedingNumber",
              @"attentionUploadNumber" : @"attentionUploadNumber",
-             @"attentionWorkNumber" : @"attentionWorkNumber"
+ 
+
              };
 }
+
+//"ask_count" = 0;
+//avatar = "http://wx.qlogo.cn/mmopen/YSF36exBKicMRicuqbXfx5aNONDPOfOickooia1Ah3DCLsBqbzkGQicdt0by5Zeej5n4FO8J4KRgRzA9R3oXannxtRxNL38rAOSvN/0";
+//city = 10;
+//"collection_count" = 0;
+//"fans_count" = 0;
+//"fellow_count" = 0;
+//"inprogress_count" = 0;
+//"is_bound_mobile" = 13128981404;
+//"is_bound_qq" = 0;
+//"is_bound_weibo" = 0;
+//"is_bound_weixin" = 1;
+//location = 0;
+//nickname = peiwei;
+//phone = 13128981404;
+//province = 32;
+//"reply_count" = 0;
+//sex = 1;
+//status = 1;
+//uid = 232;
+//"uped_count" = 0;
+
 
 + (NSArray *)FMDBPrimaryKeys {
     return @[@"uid"];

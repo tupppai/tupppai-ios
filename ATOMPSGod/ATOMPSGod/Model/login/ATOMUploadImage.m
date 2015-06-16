@@ -36,8 +36,6 @@
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"responseObject %@",responseObject);
         ATOMImage *imageInfomation = [MTLJSONAdapter modelOfClass:[ATOMImage class] fromJSONDictionary:responseObject error:NULL];
-        [ATOMCurrentUser currentUser].avatar = imageInfomation.imageURL;
-        [ATOMCurrentUser currentUser].avatarID = imageInfomation.imageID;
         if (block) {
             block(imageInfomation, nil);
         }

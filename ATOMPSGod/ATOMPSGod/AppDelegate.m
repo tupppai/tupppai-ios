@@ -13,11 +13,6 @@
 #import "WXApi.h"
 #import "WeiboSDK.h"
 #import "WXApi.h"
-#import <TencentOpenAPI/QQApi.h>
-#import <TencentOpenAPI/QQApiInterface.h>
-
-
-
 @interface AppDelegate ()
 
 @end
@@ -73,7 +68,14 @@
     [ShareSDK connectWeChatWithAppId:@"wx86ff6f67a2b9b4b8"   //微信APPID
                            appSecret:@"c2da31fda3acf1c09c40ee25772b6ca5"  //微信APPSecret
                            wechatCls:[WXApi class]];
-    [Parse setApplicationId:@"AYUYFYJp0h3xDkaSyChJdj7GdlUH2U2foI3fPLtX" clientKey:@"p9OuLNWB94ZVkFop3n5PTz3zNpFZLLlVHPrTjZas"];
+    
+
+    [ShareSDK connectSinaWeiboWithAppKey:@"1251119895"
+                               appSecret:@"454f67c8e6d29b770d701e9272bc5ee7"
+                             redirectUri:@"https://api.weibo.com/oauth2/default.html"];
+    
+    [Parse setApplicationId:@"SgknH6DsznpSXdBqqJlYMInkLviSPwltw0StP9es" clientKey:@"2zfmu9kMFLtpeDLgfszprClkGYrDGpqzUd3IpUT2"];
+    
 }
 
 - (BOOL)application:(UIApplication *)application
@@ -120,14 +122,21 @@
     NSString *devicetokenString = [[[deviceToken description]
                                     stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]]
                                    stringByReplacingOccurrencesOfString:@" " withString:@""];
-    NSLog(@"%@", devicetokenString);
+    NSLog(@"devicetokenString%@", devicetokenString);
+    
+    // Store the deviceToken in the current installation and save it to Parse.
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation setDeviceTokenFromData:deviceToken];
+    currentInstallation.channels = @[ @"global" ];
+    [currentInstallation saveInBackground];
+    
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
     // 处理推送消息
     NSLog(@"userinfo:%@",userInfo);
-    
     NSLog(@"收到推送消息:%@",[[userInfo objectForKey:@"aps"] objectForKey:@"alert"]);
+    [PFPush handlePush:userInfo];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {

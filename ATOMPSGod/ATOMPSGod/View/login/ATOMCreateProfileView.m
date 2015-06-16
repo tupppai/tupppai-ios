@@ -21,7 +21,6 @@
 @property (nonatomic, strong) UIView *protocolView;
 @property (nonatomic, strong) UIView *sexPickerTopView;
 
-
 @end
 
 @implementation ATOMCreateProfileView
@@ -193,6 +192,18 @@ static int padding10 = 10;
         make.width.equalTo(@70);
         make.height.equalTo(ws.areaView.mas_height);
     }];
+    
+    _showAreaLabel = [UILabel new];
+    _showAreaLabel.text = @"";
+    _showAreaLabel.textColor = [UIColor colorWithHex:0x606060];
+    [_areaView addSubview:_showAreaLabel];
+    
+    [_showAreaLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(ws.areaLabel.mas_right);
+        make.centerY.equalTo(ws.areaLabel.mas_centerY);
+        make.width.equalTo(ws.areaLabel.mas_width).offset(50);
+        make.height.equalTo(ws.areaLabel.mas_height);
+    }];
 }
 
 - (void)createProtocolSubView {
@@ -238,7 +249,7 @@ static int padding10 = 10;
         make.left.equalTo(ws);
         make.right.equalTo(ws);
         make.bottom.equalTo(ws);
-        make.height.equalTo(@90);
+        make.height.equalTo(@150);
     }];
     
     [_sexPickerTopView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -251,14 +262,14 @@ static int padding10 = 10;
     [_cancelPickerButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(ws.sexPickerTopView.mas_left).with.offset(padding10);
         make.width.equalTo(@50);
-        make.height.equalTo(@25);
+        make.height.equalTo(@40);
         make.top.equalTo(ws.sexPickerTopView.mas_top).with.offset(padding10);
     }];
     
     [_confirmPickerButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(ws.sexPickerTopView.mas_right).with.offset(-padding10);
         make.width.equalTo(@50);
-        make.height.equalTo(@25);
+        make.height.equalTo(@40);
         make.top.equalTo(ws.sexPickerTopView.mas_top).with.offset(padding10);
     }];
 }
@@ -289,9 +300,9 @@ static int padding10 = 10;
 
 - (NSInteger)tagOfCurrentSex {
     if ([_showSexLabel.text isEqualToString:@"男"]) {
-        return 0;
-    } else if ([_showSexLabel.text isEqualToString:@"女"]) {
         return 1;
+    } else if ([_showSexLabel.text isEqualToString:@"女"]) {
+        return 0;
     }
     return -1;
 }
