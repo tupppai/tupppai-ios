@@ -12,7 +12,9 @@
 #import "ATOMAccountBindingViewController.h"
 #import "ATOMMessageRemindViewController.h"
 #import "ATOMUserFeedbackViewController.h"
-
+#import "ATOMUserDAO.h"
+#import "ATOMCutstomNavigationController.h"
+#import "AppDelegate.h"
 @interface ATOMAccountSettingViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -145,6 +147,11 @@
         } else if (row == 5) {
         }
     } else if (section == 2) {
+        [ATOMUserDAO clearUsers];
+        ATOMLaunchViewController *lvc = [[ATOMLaunchViewController alloc] init];
+        [AppDelegate APP].window.rootViewController = [[ATOMCutstomNavigationController alloc] initWithRootViewController:lvc];
+        [[AppDelegate APP].window makeKeyAndVisible];
+        [[ATOMCurrentUser currentUser]wipe];
     }
 }
 

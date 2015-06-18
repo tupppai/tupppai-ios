@@ -11,7 +11,7 @@
 @implementation ATOMCreateTable
 
 + (NSString *)createUser {
-    return @"create table ATOMUser (uid integer, mobile text, locationID integer, nickname text, avatar text, sex integer, backgroundImage text, attentionNumber integer, fansNumber integer, praiseNumber integer, uploadNumber integer, replyNumber integer, proceedingNumber integer, attentionUploadNumber integer, attentionWorkNumber integer)";
+    return @"create table ATOMUser (uid integer, mobile text, locationID integer, nickname text, avatar text, sex integer, backgroundImage text, attentionNumber integer, fansNumber integer, praiseNumber integer, uploadNumber integer, replyNumber integer, proceedingNumber integer, attentionUploadNumber integer, attentionWorkNumber integer,boundWeibo bool,boundWechat bool,cityID integer,provinceID integer)";
 }
 
 + (NSString *)createImageTipLabel {

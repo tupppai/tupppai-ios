@@ -13,6 +13,7 @@
 #import "WXApi.h"
 #import "WeiboSDK.h"
 #import "WXApi.h"
+#import "ATOMBaseDAO.h"
 @interface AppDelegate ()
 
 @end
@@ -22,18 +23,29 @@
 + (AppDelegate *)APP {
     return [[UIApplication sharedApplication] delegate];
 }
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
     self.window.backgroundColor = [UIColor whiteColor];
-    ATOMLaunchViewController *lvc = [[ATOMLaunchViewController alloc] init];
-    self.baseNav = [[ATOMCutstomNavigationController alloc] initWithRootViewController:lvc];
-    self.window.rootViewController = self.baseNav;
-    [self.window makeKeyAndVisible];
+    [self initializeDatabase];
+    [[ATOMCurrentUser currentUser]fetchCurrentUserInDB:^(BOOL hasCurrentUser) {
+        if (hasCurrentUser) {
+            NSLog(@"hasCurrentUser");
+            self.window.rootViewController = self.mainTarBarController;
+        } else {
+            NSLog(@"hasCurrentUser == false");
+            ATOMLaunchViewController *lvc = [[ATOMLaunchViewController alloc] init];
+            self.baseNav = [[ATOMCutstomNavigationController alloc] initWithRootViewController:lvc];
+            self.window.rootViewController = self.baseNav;
+        }
+        [self.window makeKeyAndVisible];
+    }];
     [self setupShareSDK];
     [self setCommonNavigationStyle];
-    
+    [self setupNotification];
+    return YES;
+}
+-(void)setupNotification {
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
     {
         [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
@@ -44,11 +56,10 @@
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
          (UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert)];
     }
-    
-    
-    return YES;
 }
-
+-(void)initializeDatabase {
+    [ATOMBaseDAO new];
+}
 - (void)setCommonNavigationStyle {
     [[UINavigationBar appearance] setBarTintColor:kBlueColor];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];

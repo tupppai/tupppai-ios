@@ -80,12 +80,12 @@
                                                   url:@"http://www.mob.com"
                                           description:@"这是一条测试信息"
                                             mediaType:SSPublishContentMediaTypeNews];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
+//    //[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
     [ShareSDK clientShareContent:publishContent //内容对象
                             type:ShareTypeWeixiTimeline //平台类型
                    statusBarTips:YES
                           result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {//返回事件
-                              [SVProgressHUD dismiss];
+//                              ////[SVProgressHUD dismiss];
                               if (state == SSPublishContentStateSuccess)
                               {
                                   NSLog(NSLocalizedString(@"TEXT_SHARE_SUC", @"分享成功!"));
@@ -106,12 +106,12 @@
                                                   url:@"http://www.mob.com"
                                           description:@"这是一条测试信息"
                                             mediaType:SSPublishContentMediaTypeNews];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
+//    //[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
     [ShareSDK clientShareContent:publishContent //内容对象
                             type:ShareTypeWeixiSession //平台类型
                    statusBarTips:YES
                           result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {//返回事件
-                              [SVProgressHUD dismiss];
+//                              ////[SVProgressHUD dismiss];
                               if (state == SSPublishContentStateSuccess)
                               {
                                   NSLog(NSLocalizedString(@"TEXT_SHARE_SUC", @"分享成功!"));

@@ -85,9 +85,9 @@
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     ATOMShowProceeding *showProceeding = [ATOMShowProceeding new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showProceeding ShowProceeding:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        [SVProgressHUD dismiss];
+        ////[SVProgressHUD dismiss];
         if (resultArray.count) {
             [_dataSource removeAllObjects];
             [_homeImageDataSource removeAllObjects];
@@ -115,9 +115,9 @@
     [param setObject:@(timestamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     ATOMShowProceeding *showProceeding = [ATOMShowProceeding new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showProceeding ShowProceeding:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        [SVProgressHUD dismiss];
+        ////[SVProgressHUD dismiss];
         for (ATOMHomeImage *homeImage in resultArray) {
             ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
             [homepageViewModel setViewModelData:homeImage];

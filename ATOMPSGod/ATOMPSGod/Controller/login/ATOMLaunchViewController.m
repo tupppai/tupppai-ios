@@ -11,7 +11,7 @@
 #import "ATOMCreateProfileViewController.h"
 #import "ATOMLoginViewController.h"
 #import "ATOMLogin.h"
-
+#import "AppDelegate.h"
 @interface ATOMLaunchViewController ()
 
 @property (nonatomic, strong) ATOMLaunchView *launchView;
@@ -24,17 +24,14 @@
     [super viewDidLoad];
     [self createUI];
 }
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
 }
-
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = NO;
 }
-
 - (void)createUI {
     _launchView = [ATOMLaunchView new];
     self.view = _launchView;
@@ -42,7 +39,6 @@
     [_launchView.otherRegisterButton addTarget:self action:@selector(clickOtherRegisterButton:) forControlEvents:UIControlEventTouchUpInside];
     [_launchView.loginButton addTarget:self action:@selector(clickLoginButton:) forControlEvents:UIControlEventTouchUpInside];
 }
-
 - (void)clickWXRegisterButton:(UIButton *)sender {
     ATOMLogin *loginModel = [ATOMLogin new];
     [loginModel thirdPartyAuth:ShareTypeWeixiTimeline withBlock:^(NSDictionary *sourceData) {
@@ -50,9 +46,11 @@
             NSString* openid = sourceData[@"openid"];
             NSMutableDictionary* param = [NSMutableDictionary new];
             [param setObject:openid forKey:@"openid"];
-            [loginModel openIDAuth:param AndType:@"weixin" withBlock:^(bool isRegister, NSDictionary *userObejctFromServer, NSError *error) {
-                if (isRegister && userObejctFromServer) {
+            [loginModel openIDAuth:param AndType:@"weixin" withBlock:^(bool isRegister, NSString *info, NSError *error) {
+                if (isRegister) {
                     NSLog(@"已经注册微信账号");
+                    [self.navigationController setViewControllers:nil];
+                    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
                 } else if (isRegister == NO) {
                     NSLog(@"未注册微信账号");
                     [ATOMCurrentUser currentUser].signUpType = ATOMSignUpWeixin;
@@ -89,10 +87,4 @@
     ATOMLoginViewController *lvc = [ATOMLoginViewController new];
     [self pushViewController:lvc animated:YES];
 }
-
-
-
-
-
-
 @end

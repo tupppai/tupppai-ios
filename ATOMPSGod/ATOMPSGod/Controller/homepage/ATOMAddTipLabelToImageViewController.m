@@ -140,7 +140,7 @@
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)sender {
     if (_tipLabelArray.count == 0) {
-//        [SVProgressHUD showErrorWithStatus:@"请先添加标签"];
+//        [Util TextHud:@"请先添加标签"];
         [self showWarnLabel];
         return ;
     }
@@ -229,10 +229,9 @@
     WS(ws);
     NSData *data = UIImageJPEGRepresentation(_workImage, 0.4);
     ATOMUploadImage *uploadWork = [ATOMUploadImage new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
     [uploadWork UploadImage:data WithBlock:^(ATOMImage *imageInformation, NSError *error) {
         if (error) {
-            [SVProgressHUD showErrorWithStatus:@"提交作品失败..."];
+            [Util TextHud:@"提交作品失败"];
             return ;
         }
         [ws dealSubmitWorkWithLabelBy:imageInformation.imageID];
@@ -244,10 +243,10 @@
     ATOMSubmitImageWithLabel *submitWorkWithLabel = [ATOMSubmitImageWithLabel new];
     [submitWorkWithLabel SubmitWorkWithLabel:[ws getParamWithImageID:imageID AndAskID:ws.askPageViewModel.imageID] withBlock:^(NSMutableArray *labelArray, NSError *error) {
         if (error) {
-            [SVProgressHUD showErrorWithStatus:@"提交作品失败..."];
+            [Util TextHud:@"提交作品失败"];
             return ;
         }
-        [SVProgressHUD showSuccessWithStatus:@"提交作品成功..."];
+        [Util TextHud:@"提交作品成功"];
         ATOMShareViewController *svc = [ATOMShareViewController new];
         svc.askPageViewModel = ws.askPageViewModel;
         [ws pushViewController:svc animated:YES];
@@ -273,10 +272,10 @@
     self.newAskPageViewModel.width = CGWidth(_addTipLabelToImageView.workImageView.frame);
     self.newAskPageViewModel.height = CGHeight(_addTipLabelToImageView.workImageView.frame);
     ATOMUploadImage *uploadImage = [ATOMUploadImage new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
+//    //[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
     [uploadImage UploadImage:data WithBlock:^(ATOMImage *imageInformation, NSError *error) {
         if (error) {
-            [SVProgressHUD showErrorWithStatus:@"提交作品失败..."];
+            [Util TextHud:@"提交作品失败"];
             return ;
         }
         [ws dealSubmitUploadWithLabelBy:imageInformation.imageID];
@@ -288,10 +287,10 @@
     ATOMSubmitImageWithLabel *submitImageWithLabel = [ATOMSubmitImageWithLabel new];
     [submitImageWithLabel SubmitImageWithLabel:[ws getParamWithImageID:imageID AndAskID:-1] withBlock:^(NSMutableArray *labelArray, NSInteger newImageID, NSError *error) {
         if (error) {
-            [SVProgressHUD showErrorWithStatus:@"提交作品失败..."];
+            [Util TextHud:@"提交作品失败"];
             return ;
         }
-        [SVProgressHUD showSuccessWithStatus:@"提交作品成功..."];
+        [Util TextHud:@"提交作品成功"];
         ATOMInviteViewController *ivc = [ATOMInviteViewController new];
         ws.newAskPageViewModel.imageID = newImageID;
         ivc.askPageViewModel = ws.newAskPageViewModel;

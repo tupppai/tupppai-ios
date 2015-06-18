@@ -115,7 +115,7 @@
             }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"出现错误,请检查你的网络"];
+        [Util TextHud:@"出现错误,请检查你的网络"];
         if (block) {
             block(nil, error);
         }

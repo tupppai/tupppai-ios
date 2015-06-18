@@ -70,9 +70,9 @@ static float cellWidth;
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     ATOMShowCollection *showCollection = [ATOMShowCollection new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showCollection ShowCollection:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        [SVProgressHUD dismiss];
+        ////[SVProgressHUD dismiss];
         for (ATOMHomeImage *homeImage in resultArray) {
             ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
             [homepageViewModel setViewModelData:homeImage];
@@ -98,9 +98,9 @@ static float cellWidth;
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     ATOMShowCollection *showCollection = [ATOMShowCollection new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showCollection ShowCollection:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        [SVProgressHUD dismiss];
+        ////[SVProgressHUD dismiss];
         for (ATOMHomeImage *homeImage in resultArray) {
             ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
             [homepageViewModel setViewModelData:homeImage];

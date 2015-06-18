@@ -75,9 +75,9 @@
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     ATOMShowCommentMessage *showCommentMessage = [ATOMShowCommentMessage new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showCommentMessage ShowCommentMessage:param withBlock:^(NSMutableArray *commentMessageArray, NSError *error) {
-        [SVProgressHUD dismiss];
+        ////[SVProgressHUD dismiss];
         for (ATOMCommentMessage *commentMessage in commentMessageArray) {
             ATOMCommentMessageViewModel *commentMessageViewModel = [ATOMCommentMessageViewModel new];
             [commentMessageViewModel setViewModelData:commentMessage];
@@ -99,9 +99,9 @@
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     ATOMShowCommentMessage *showCommentMessage = [ATOMShowCommentMessage new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showCommentMessage ShowCommentMessage:param withBlock:^(NSMutableArray *commentMessageArray, NSError *error) {
-        [SVProgressHUD dismiss];
+        ////[SVProgressHUD dismiss];
         for (ATOMCommentMessage *commentMessage in commentMessageArray) {
             ATOMCommentMessageViewModel *commentMessageViewModel = [ATOMCommentMessageViewModel new];
             [commentMessageViewModel setViewModelData:commentMessage];

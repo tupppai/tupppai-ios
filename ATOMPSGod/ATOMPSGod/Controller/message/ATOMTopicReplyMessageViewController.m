@@ -73,9 +73,9 @@
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     ATOMShowReplyMessage *showReplyMessage = [ATOMShowReplyMessage new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showReplyMessage ShowReplyMessage:param withBlock:^(NSMutableArray *replyMessageArray, NSError *error) {
-        [SVProgressHUD dismiss];
+        ////[SVProgressHUD dismiss];
         for (ATOMReplyMessage *replyMessage in replyMessageArray) {
             ATOMReplyMessageViewModel *replyMessageViewModel = [ATOMReplyMessageViewModel new];
             [replyMessageViewModel setViewModelData:replyMessage];
@@ -97,9 +97,9 @@
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     ATOMShowReplyMessage *showReplyMessage = [ATOMShowReplyMessage new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showReplyMessage ShowReplyMessage:param withBlock:^(NSMutableArray *replyMessageArray, NSError *error) {
-        [SVProgressHUD dismiss];
+        ////[SVProgressHUD dismiss];
         for (ATOMReplyMessage *replyMessage in replyMessageArray) {
             ATOMReplyMessageViewModel *replyMessageViewModel = [ATOMReplyMessageViewModel new];
             [replyMessageViewModel setViewModelData:replyMessage];

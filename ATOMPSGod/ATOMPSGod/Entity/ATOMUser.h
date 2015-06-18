@@ -9,32 +9,28 @@
 #import "ATOMBaseModel.h"
 
 @interface ATOMUser : ATOMBaseModel <MTLFMDBSerializing>
-
-//@"collectionCount" : @"data.collection_count",
-//@"boundPhone" : @"data.is_bound_mobile",
-//@"boundWeibo" : @"data.is_bound_weibo",
-//@"boundWechat" : @"data.is_bound_weixin",
-//@"locationID" : @"data.location",
-//@"cityID" : @"data.city",
-//@"provinceID" : @"data.province",
-
-
 /**
  *  用户唯一ID
  */
 @property (nonatomic, assign) NSInteger uid;
-@property (nonatomic, copy) NSString *mobile;
+@property (nonatomic, assign) BOOL boundWeibo;
+@property (nonatomic, assign) BOOL boundWechat;
+@property (nonatomic, assign) NSInteger cityID;
+@property (nonatomic, assign) NSInteger provinceID;
 @property (nonatomic, assign) NSInteger locationID;
+
+@property (nonatomic, copy) NSString *mobile;
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *avatar;
-/**
- *  man:1 woman:0
- */
-@property (nonatomic, assign) NSInteger sex;
 /**
  *  背景图url
  */
 @property (nonatomic, copy) NSString *backgroundImage;
+/**
+ *  man:1 woman:0
+ */
+@property (nonatomic, assign) NSInteger sex;
+
 /**
  *  被关注注数
  */
@@ -68,27 +64,7 @@
  */
 @property (nonatomic, assign) NSInteger attentionWorkNumber;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-(void)NSLogSelf;
 
 
 

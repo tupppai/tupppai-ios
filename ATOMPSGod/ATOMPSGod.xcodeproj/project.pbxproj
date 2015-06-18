@@ -106,9 +106,6 @@
 		5C559B3D1AB1394C000C5B50 /* ATOMInviteTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C559B3C1AB1394C000C5B50 /* ATOMInviteTableHeaderView.m */; };
 		5C559B401AB13B8F000C5B50 /* ATOMInviteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C559B3F1AB13B8F000C5B50 /* ATOMInviteTableViewCell.m */; };
 		5C559B4C1AB168F7000C5B50 /* ATOMPageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C559B4B1AB168F7000C5B50 /* ATOMPageDetailViewController.m */; };
-		5C561A061AB7BF6F0052D4D5 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A011AB7BF6F0052D4D5 /* SVIndefiniteAnimatedView.m */; };
-		5C561A071AB7BF6F0052D4D5 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5C561A031AB7BF6F0052D4D5 /* SVProgressHUD.bundle */; };
-		5C561A081AB7BF6F0052D4D5 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A051AB7BF6F0052D4D5 /* SVProgressHUD.m */; };
 		5C561A2A1AB7C31A0052D4D5 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A201AB7C31A0052D4D5 /* FMDatabase.m */; };
 		5C561A2B1AB7C31A0052D4D5 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A221AB7C31A0052D4D5 /* FMDatabaseAdditions.m */; };
 		5C561A2C1AB7C31A0052D4D5 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A241AB7C31A0052D4D5 /* FMDatabasePool.m */; };
@@ -297,6 +294,8 @@
 		5CE4082F1ACE94D600A56E4B /* UIViewController+ATOMTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CE4082E1ACE94D600A56E4B /* UIViewController+ATOMTracking.m */; };
 		5CEAC0301AD4D7750058037C /* ATOMCollectionViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CEAC02F1AD4D7750058037C /* ATOMCollectionViewModel.m */; };
 		5CEAC0331AD4F9540058037C /* ATOMShowCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CEAC0321AD4F9540058037C /* ATOMShowCollection.m */; };
+		E90197351B32D2F800F46B78 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E90197341B32D2F800F46B78 /* MBProgressHUD.m */; };
+		E90197381B32D3C100F46B78 /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = E90197371B32D3C100F46B78 /* Util.m */; };
 		E90C7C5D1B20726400CF0E6A /* PWMascotAnimationImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E90C7C5C1B20726400CF0E6A /* PWMascotAnimationImageView.m */; };
 		E90C7C601B20A0FC00CF0E6A /* KShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E90C7C5F1B20A0FC00CF0E6A /* KShareManager.m */; };
 		E90C7C631B2141B800CF0E6A /* PWHomePageTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E90C7C621B2141B800CF0E6A /* PWHomePageTableView.m */; };
@@ -562,12 +561,6 @@
 		5C559B3F1AB13B8F000C5B50 /* ATOMInviteTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMInviteTableViewCell.m; sourceTree = "<group>"; };
 		5C559B4A1AB168F7000C5B50 /* ATOMPageDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMPageDetailViewController.h; sourceTree = "<group>"; };
 		5C559B4B1AB168F7000C5B50 /* ATOMPageDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMPageDetailViewController.m; sourceTree = "<group>"; };
-		5C561A001AB7BF6F0052D4D5 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
-		5C561A011AB7BF6F0052D4D5 /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
-		5C561A021AB7BF6F0052D4D5 /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
-		5C561A031AB7BF6F0052D4D5 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
-		5C561A041AB7BF6F0052D4D5 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
-		5C561A051AB7BF6F0052D4D5 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		5C561A1F1AB7C31A0052D4D5 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		5C561A201AB7C31A0052D4D5 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		5C561A211AB7C31A0052D4D5 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -944,6 +937,11 @@
 		5CEAC02F1AD4D7750058037C /* ATOMCollectionViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMCollectionViewModel.m; sourceTree = "<group>"; };
 		5CEAC0311AD4F9540058037C /* ATOMShowCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShowCollection.h; sourceTree = "<group>"; };
 		5CEAC0321AD4F9540058037C /* ATOMShowCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShowCollection.m; sourceTree = "<group>"; };
+		E90197321B32D2F800F46B78 /* MBProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
+		E90197331B32D2F800F46B78 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		E90197341B32D2F800F46B78 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		E90197361B32D3C100F46B78 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
+		E90197371B32D3C100F46B78 /* Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Util.m; sourceTree = "<group>"; };
 		E90C7C5B1B20726400CF0E6A /* PWMascotAnimationImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWMascotAnimationImageView.h; sourceTree = "<group>"; };
 		E90C7C5C1B20726400CF0E6A /* PWMascotAnimationImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWMascotAnimationImageView.m; sourceTree = "<group>"; };
 		E90C7C5E1B20A0FC00CF0E6A /* KShareManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KShareManager.h; sourceTree = "<group>"; };
@@ -1527,19 +1525,6 @@
 			path = person;
 			sourceTree = "<group>";
 		};
-		5C5619FF1AB7BF6F0052D4D5 /* SVProgressHUD */ = {
-			isa = PBXGroup;
-			children = (
-				5C561A001AB7BF6F0052D4D5 /* SVIndefiniteAnimatedView.h */,
-				5C561A011AB7BF6F0052D4D5 /* SVIndefiniteAnimatedView.m */,
-				5C561A021AB7BF6F0052D4D5 /* SVProgressHUD-Prefix.pch */,
-				5C561A031AB7BF6F0052D4D5 /* SVProgressHUD.bundle */,
-				5C561A041AB7BF6F0052D4D5 /* SVProgressHUD.h */,
-				5C561A051AB7BF6F0052D4D5 /* SVProgressHUD.m */,
-			);
-			path = SVProgressHUD;
-			sourceTree = "<group>";
-		};
 		5C561A1E1AB7C31A0052D4D5 /* fmdb */ = {
 			isa = PBXGroup;
 			children = (
@@ -2054,6 +2039,9 @@
 		5CDB05EC1AA400410089121E /* OpenSource */ = {
 			isa = PBXGroup;
 			children = (
+				E90197321B32D2F800F46B78 /* MBProgressHUD-Prefix.pch */,
+				E90197331B32D2F800F46B78 /* MBProgressHUD.h */,
+				E90197341B32D2F800F46B78 /* MBProgressHUD.m */,
 				E9ECD5901B2D71A700173F49 /* ShareSDK */,
 				E95691881B22E88300DA84BB /* Mantle */,
 				5C520B771ADBA1B000C7C2A5 /* AFNetworking */,
@@ -2061,7 +2049,6 @@
 				5C83A84B1AC66F910071A024 /* pop */,
 				5C561A551AB7C8C30052D4D5 /* MJRefresh */,
 				5C561A1E1AB7C31A0052D4D5 /* fmdb */,
-				5C5619FF1AB7BF6F0052D4D5 /* SVProgressHUD */,
 			);
 			path = OpenSource;
 			sourceTree = "<group>";
@@ -2087,6 +2074,8 @@
 				5C84062B1ABA67CC00068F35 /* JSONKit.m */,
 				E90C7C5E1B20A0FC00CF0E6A /* KShareManager.h */,
 				E90C7C5F1B20A0FC00CF0E6A /* KShareManager.m */,
+				E90197361B32D3C100F46B78 /* Util.h */,
+				E90197371B32D3C100F46B78 /* Util.m */,
 			);
 			path = Uitility;
 			sourceTree = "<group>";
@@ -2503,7 +2492,6 @@
 				5C9BDA4D1AA85E5600715698 /* breathe.gif in Resources */,
 				5C78612D1AAF4DD200E87C77 /* 6.jpg in Resources */,
 				5C78612C1AAF4DD200E87C77 /* 5.jpg in Resources */,
-				5C561A071AB7BF6F0052D4D5 /* SVProgressHUD.bundle in Resources */,
 				5C9BDA501AA85E5600715698 /* hot.png in Resources */,
 				5C9BDA4B1AA85E5600715698 /* back.png in Resources */,
 				5C9BDA4F1AA85E5600715698 /* font.png in Resources */,
@@ -2585,7 +2573,6 @@
 				5C54DF201AB9738E00BDE34D /* ATOMMainTabBarController.m in Sources */,
 				5C535CB71AF1FC8A00BF30D1 /* ATOMShareFunctionView.m in Sources */,
 				5C3101781AAE751100EF529B /* ATOMPersonTableViewCell.m in Sources */,
-				5C561A061AB7BF6F0052D4D5 /* SVIndefiniteAnimatedView.m in Sources */,
 				5C0F04E81ADCF508002003AE /* ATOMConcernMessageViewModel.m in Sources */,
 				5C561A781AB7C8C30052D4D5 /* UIScrollView+MJRefresh.m in Sources */,
 				5C561A751AB7C8C30052D4D5 /* MJRefreshLegendFooter.m in Sources */,
@@ -2655,7 +2642,6 @@
 				5C559B401AB13B8F000C5B50 /* ATOMInviteTableViewCell.m in Sources */,
 				5C4C70DB1AB6FD5700358989 /* ATOMUploadImage.m in Sources */,
 				5C4F5BEF1AA5893700226F64 /* UIActionSheet+Blocks.m in Sources */,
-				5C561A081AB7BF6F0052D4D5 /* SVProgressHUD.m in Sources */,
 				5CDB062E1AA428BD0089121E /* MASCompositeConstraint.m in Sources */,
 				5C561A741AB7C8C30052D4D5 /* MJRefreshHeader.m in Sources */,
 				5C4C70C81AB6E20800358989 /* ATOMCurrentUser.m in Sources */,
@@ -2771,6 +2757,7 @@
 				5C520BA21ADBA1B000C7C2A5 /* AFURLConnectionOperation.m in Sources */,
 				5C6776A51AAC09C400320522 /* IQNSArray+Sort.m in Sources */,
 				5C83A8881AC66F910071A024 /* POPAnimationEvent.mm in Sources */,
+				E90197381B32D3C100F46B78 /* Util.m in Sources */,
 				5C8A2A211AAF26570064EB1C /* ATOMMyConcernTableHeaderView.m in Sources */,
 				5C8A2A1B1AAF21820064EB1C /* ATOMMyConcernTableViewCell.m in Sources */,
 				5C8502351AF39B7500724AC6 /* ATOMCollectionViewLabel.m in Sources */,
@@ -2785,6 +2772,7 @@
 				5C0F04F41ADCFCBB002003AE /* ATOMShowInviteMessage.m in Sources */,
 				5C561A6F1AB7C8C30052D4D5 /* MJRefreshComponent.m in Sources */,
 				5CADF3EE1AAC8A3100FF8015 /* ATOMPersonView.m in Sources */,
+				E90197351B32D2F800F46B78 /* MBProgressHUD.m in Sources */,
 				E99D2F5D1B1C7E8D000D7784 /* UIView+Screenshot.m in Sources */,
 				5C9BDA001AA8303700715698 /* ATOMUploadWorkView.m in Sources */,
 				5C4F5BF61AA5BFEC00226F64 /* ATOMHomePageAskTableViewCell.m in Sources */,

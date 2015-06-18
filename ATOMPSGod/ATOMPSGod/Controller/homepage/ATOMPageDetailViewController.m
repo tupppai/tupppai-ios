@@ -296,9 +296,9 @@
 - (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error
   contextInfo: (void *) contextInfo {
     if(error != NULL){
-        [SVProgressHUD showErrorWithStatus:@"保存失败"];
+        [Util TextHud:@"保存失败"];
     }else{
-        [SVProgressHUD showSuccessWithStatus:@"保存到相册成功"];
+        [Util TextHud:@"保存到相册成功"];
     }
 }
 

@@ -58,9 +58,9 @@
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(_uid) forKeyedSubscript:@"uid"];
     ATOMShowConcern *showConcern = [ATOMShowConcern new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showConcern ShowOtherConcern:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        [SVProgressHUD dismiss];
+        ////[SVProgressHUD dismiss];
         for (ATOMConcern *concern in resultArray) {
             ATOMConcernViewModel *concernViewModel = [ATOMConcernViewModel new];
             [concernViewModel setViewModelData:concern];
@@ -81,9 +81,9 @@
     [param setObject:@(timestamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     ATOMShowConcern *showConcern = [ATOMShowConcern new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showConcern ShowOtherConcern:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        [SVProgressHUD dismiss];
+        ////[SVProgressHUD dismiss];
         for (ATOMConcern *concern in resultArray) {
             ATOMConcernViewModel *concernViewModel = [ATOMConcernViewModel new];
             [concernViewModel setViewModelData:concern];

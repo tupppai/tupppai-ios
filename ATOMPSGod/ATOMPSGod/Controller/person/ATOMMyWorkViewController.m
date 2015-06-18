@@ -69,9 +69,9 @@ static int collumnNumber = 3;
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     ATOMShowAskOrReply *showAskOrReply = [ATOMShowAskOrReply new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showAskOrReply ShowAskOrReply:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        [SVProgressHUD dismiss];
+        ////[SVProgressHUD dismiss];
         for (ATOMHomeImage *homeImage in resultArray) {
             ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
             [homepageViewModel setViewModelData:homeImage];
@@ -97,9 +97,9 @@ static int collumnNumber = 3;
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     ATOMShowAskOrReply *showAskOrReply = [ATOMShowAskOrReply new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showAskOrReply ShowAskOrReply:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        [SVProgressHUD dismiss];
+        ////[SVProgressHUD dismiss];
         for (ATOMHomeImage *homeImage in resultArray) {
             ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
             [homepageViewModel setViewModelData:homeImage];

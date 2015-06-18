@@ -56,9 +56,9 @@
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(_uid) forKeyedSubscript:@"uid"];
     ATOMShowFans *showFans = [ATOMShowFans new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showFans ShowFans:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        [SVProgressHUD dismiss];
+        ////[SVProgressHUD dismiss];
         for (ATOMFans *fans in resultArray) {
             ATOMFansViewModel *fansViewModel = [ATOMFansViewModel new];
             [fansViewModel setViewModelData:fans];
@@ -77,9 +77,9 @@
     [param setObject:@(timestamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     ATOMShowFans *showFans = [ATOMShowFans new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showFans ShowFans:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        [SVProgressHUD dismiss];
+        ////[SVProgressHUD dismiss];
         for (ATOMFans *fans in resultArray) {
             ATOMFansViewModel *fansViewModel = [ATOMFansViewModel new];
             [fansViewModel setViewModelData:fans];

@@ -120,12 +120,13 @@
             
         [submitUserInformation SubmitUserInformation:[param copy] AndType:signUpType withBlock:^(NSError *error) {
             if (!error) {
-                [SVProgressHUD showSuccessWithStatus:@"注册成功"];
+                [Util TextHud:@"注册成功"];
+                [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
                 //保存user,调到首页
             }
         }];
     } else {
-        [SVProgressHUD showErrorWithStatus:@"验证码有误"];
+        [Util TextHud:@"验证码有误"];
     }
 }
 

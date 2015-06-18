@@ -8,7 +8,7 @@
 
 #import "ATOMCurrentUser.h"
 #import "ATOMUser.h"
-
+#import "ATOMUserDao.h"
 @implementation ATOMCurrentUser
 
 static dispatch_once_t onceToken;
@@ -33,6 +33,7 @@ static ATOMCurrentUser *_currentUser;
 }
 
 - (void)setCurrentUser:(ATOMUser *)user {
+    NSLog(@"setCurrentUser");
     _uid = user.uid;
     _mobile = user.mobile;
     _password = @"";
@@ -51,4 +52,42 @@ static ATOMCurrentUser *_currentUser;
     _attentionWorkNumber = user.attentionWorkNumber;
 }
 
+-(void)tellMeEveryThingAboutYou {
+    NSLog(@"%@,%@,%@,_praiseNumber%ld",_nickname,_mobile,_avatar,(long)_praiseNumber);
+}
+- (void)saveAndUpdateUser:(ATOMUser *)user {
+    if ([ATOMUserDAO isExistUser:user]) {
+        [ATOMUserDAO updateUser:user];
+        [self setCurrentUser:[ATOMUserDAO  selectUserByUID:[NSString stringWithFormat:@"%ld",user.uid]]];
+    } else {
+        [ATOMUserDAO insertUser:user];
+        [self setCurrentUser:user];
+    }
+    [self tellMeEveryThingAboutYou];
+}
+-(void)wipe {
+    self.sourceData = nil;
+    self.uid = 0;
+    self.nickname = @"游客";
+    self.mobile = @"-1";
+    self.locationID = 0;
+    self.avatar = @"";
+    self.avatarID = 0;
+    self.backgroundImage = @"";
+}
+-(void)fetchCurrentUserInDB:(void (^)(BOOL))block {
+  [ATOMUserDAO fetchUser:^(ATOMUser *user) {
+      if (user) {
+          [user NSLogSelf];
+          [self setCurrentUser:user];
+          if (block) {
+              block(YES);
+          }
+      } else {
+          if (block) {
+              block(NO);
+          }
+      }
+   }];
+}
 @end

@@ -15,20 +15,16 @@
 @implementation ATOMSubmitUserInformation
 
 - (AFHTTPRequestOperation *)SubmitUserInformation:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(NSError *))block {
-    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] POST:[NSString stringWithFormat:@"user/save?type=%@",type] parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
+    NSLog(@"type%@",type);
+    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] POST:@"user/save" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"SubmitUserInformation param%@",param);
         NSLog(@"SubmitUserInformation responseObject %@ ,\n info %@",responseObject,responseObject[@"info"]);
-        ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:responseObject error:NULL];
-        [[ATOMCurrentUser currentUser] setCurrentUser:user];
-//        [ATOMCurrentUser currentUser].uid = [responseObject[@"data"][@"uid"] integerValue];
-//        ATOMUser *user = [ATOMUser new];
-//        user.uid = [ATOMCurrentUser currentUser].uid;
-//        user.nickname = [ATOMCurrentUser currentUser].nickname;
-//        user.mobile = [ATOMCurrentUser currentUser].mobile;
-//        user.sex = [ATOMCurrentUser currentUser].sex;
-//        user.avatar = [ATOMCurrentUser currentUser].avatar;
-//        user.locationID = [ATOMCurrentUser currentUser].locationID;
+        if (responseObject[@"data"]) {
+            ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:responseObject[@"data"] error:NULL];
+            [[ATOMCurrentUser currentUser]saveAndUpdateUser:user];
+        } else {
+            NSLog(@"返回的数据为空");
+        }
         if (block) {
             block(nil);
         }

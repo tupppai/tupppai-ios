@@ -39,11 +39,22 @@
 }
 
 - (void)clickLoginButton:(UIButton *)sender {
-//    ATOMLogin *login = [ATOMLogin new];
-//    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:_loginView.mobileTextField.text, @"phone", _loginView.passwordTextField.text, @"password", nil];
-//    [SVProgressHUD showWithStatus:@"正在登录中..."];
+    if (![_loginView.mobileTextField.text isMobileNumber]) {
+        [Util TextHud:@"手机格式不正确"];
+        NSLog(@"请输入正确的手机格式");
+    }
+    if (![_loginView.passwordTextField.text isPassword]) {
+        NSLog(@"密码不能包含特殊字符");
+    }
+    
+    ATOMLogin *loginModel = [ATOMLogin new];
+    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:_loginView.mobileTextField.text, @"phone", _loginView.passwordTextField.text, @"password",nil];
+    [loginModel Login:param withBlock:^(NSDictionary *sourceData) {
+        
+    }];
+//    //[SVProgressHUD showWithStatus:@"正在登录中..."];
 //    [login Login:param AndType:@"mobile" withBlock:^(ATOMUser *user, NSError *error) {
-//        [SVProgressHUD dismiss];
+//        ////[SVProgressHUD dismiss];
 //        if (!error) {
 //            if (![login isExistUser:user]) {
 //                [login saveUserInDB:user];
@@ -54,8 +65,8 @@
 //            NSLog(@"error");
 //        }
 //    }];
-    [self.navigationController popViewControllerAnimated:NO];
-    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
+//    [self.navigationController popViewControllerAnimated:NO];
+//    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
 }
 
 
@@ -68,7 +79,6 @@
                       authOptions:nil
                            result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error)
      {
-         
          NSLog(@"result %d, userInfo %@,error %@",result,userInfo,error);
 
          if (result)
@@ -109,7 +119,6 @@
          
      }];
 }
-    
 - (void)clickwechatLoginButton:(UIButton *)sender {
     ATOMLogin *loginModel = [ATOMLogin new];
     [loginModel thirdPartyAuth:ShareTypeWeixiTimeline withBlock:^(NSDictionary *sourceData) {
@@ -117,31 +126,29 @@
             NSString* openid = sourceData[@"openid"];
             NSMutableDictionary* param = [NSMutableDictionary new];
             [param setObject:openid forKey:@"openid"];
-           [loginModel openIDAuth:param AndType:@"weixin" withBlock:^(bool isRegister, NSDictionary *userObejctFromServer, NSError *error) {
-
-               if (isRegister && userObejctFromServer) {
-                   NSLog(@"已经注册微信账号");
-               } else if (isRegister == NO) {
-                   NSLog(@"未注册微信账号");
-                   
-                   [ATOMCurrentUser currentUser].signUpType = ATOMSignUpWeixin;
-                   [ATOMCurrentUser currentUser].sourceData = sourceData;
-
-                   ATOMUserProfileViewModel* ipvm = [ATOMUserProfileViewModel new];
-                   ipvm.nickName = sourceData[@"nickname"];
-                   ipvm.province = sourceData[@"province"];
-                   ipvm.city = sourceData[@"city"];
-                   ipvm.avatarURL = sourceData[@"headimgurl"];
-                   if ((BOOL)sourceData[@"sex"] == YES) {
-                       ipvm.gender = @"男";
-                   } else {
-                       ipvm.gender = @"女";
-                   }
-                   ATOMCreateProfileViewController *cpvc = [ATOMCreateProfileViewController new];
-                   cpvc.userProfileViewModel = ipvm;
-                   [self pushViewController:cpvc animated:YES];
-               }
-           }];
+            [loginModel openIDAuth:param AndType:@"weixin" withBlock:^(bool isRegister, NSString *info, NSError *error) {
+                if (isRegister) {
+                    NSLog(@"登录成功");
+                    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
+                } else if (isRegister == NO) {
+                    NSLog(@"未注册微信账号");
+                    [ATOMCurrentUser currentUser].signUpType = ATOMSignUpWeixin;
+                    [ATOMCurrentUser currentUser].sourceData = sourceData;
+                    ATOMUserProfileViewModel* ipvm = [ATOMUserProfileViewModel new];
+                    ipvm.nickName = sourceData[@"nickname"];
+                    ipvm.province = sourceData[@"province"];
+                    ipvm.city = sourceData[@"city"];
+                    ipvm.avatarURL = sourceData[@"headimgurl"];
+                    if ((BOOL)sourceData[@"sex"] == YES) {
+                        ipvm.gender = @"男";
+                    } else {
+                        ipvm.gender = @"女";
+                    }
+                    ATOMCreateProfileViewController *cpvc = [ATOMCreateProfileViewController new];
+                    cpvc.userProfileViewModel = ipvm;
+                    [self pushViewController:cpvc animated:YES];
+                }
+            }];
         }
         else {
             NSLog(@"获取不到第三平台的数据");

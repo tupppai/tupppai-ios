@@ -84,7 +84,7 @@
             }
         } else if (ret == 0) {
             NSLog(@"发送评论失败");
-            [SVProgressHUD showErrorWithStatus:@"评论失败了,请重试"];
+            [Util TextHud:@"评论失败了,请重试"];
             if (block) {
                 block(-1, nil);
             }
@@ -92,7 +92,7 @@
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"发送评论失败");
-        [SVProgressHUD showErrorWithStatus:@"评论失败了,请重试"];
+        [Util TextHud:@"评论失败了,请重试"];
         if (block) {
             block(-1, error);
         }

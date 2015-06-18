@@ -43,10 +43,6 @@
     if (![self checkInputMessageSuccess]) {
         return ;
     }
-//    [UIAlertView showWithTitle:nil message:@"确认手机号码\n我们将发验证码到此号码" cancelButtonTitle:@"取消" otherButtonTitles:@[@"确定"] tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex) {
-//        if (buttonIndex == [alertView cancelButtonIndex]) {
-//            NSLog(@"Cancelled");
-//        } else if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"确定"]) {
             ATOMGetMoblieCode *getMobileCode = [ATOMGetMoblieCode new];
             NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:_mobileRegisterView.mobileTextField.text, @"phone", nil];
             [getMobileCode GetMobileCode:param withBlock:^(NSString *verifyCode, NSError *error) {
@@ -58,12 +54,9 @@
                     ivcvc.verifyCode = verifyCode;
                     [self.navigationController pushViewController:ivcvc animated:YES];
                 } else {
-                    [SVProgressHUD showErrorWithStatus:@"出现未知错误" maskType:SVProgressHUDMaskTypeNone];
+                    [Util TextHud:@"出现未知错误"];
                 }
             }];
-
-//        }
-//    }];
 }
 
 - (BOOL)checkInputMessageSuccess {
@@ -72,9 +65,9 @@
     NSString *passwordStr = _mobileRegisterView.passwordTextField.text;
     if (![mobileStr isMobileNumber]) {
         flag = NO;
-        [SVProgressHUD showErrorWithStatus:@"请输入正确的手机号" maskType:SVProgressHUDMaskTypeNone];
+        [Util TextHud:@"请输入正确的手机号"];
     } else if (![passwordStr isPassword]) {
-        [SVProgressHUD showErrorWithStatus:@"请输入正确的密码" maskType:SVProgressHUDMaskTypeNone];
+        [Util TextHud:@"请输入正确的密码"];
         flag = NO;
     }
     return flag;

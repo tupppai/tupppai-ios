@@ -48,6 +48,7 @@ static FMDatabaseQueue *_fmQueue = nil;
 }
 
 - (void)createTable {
+    NSLog(@"FMDB createTable");
     [[[self class] sharedFMQueue] inTransaction:^(FMDatabase *db, BOOL *rollback) {
         BOOL flag;
         

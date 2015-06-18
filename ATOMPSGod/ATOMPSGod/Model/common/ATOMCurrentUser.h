@@ -76,5 +76,8 @@
 - (NSMutableDictionary *)dictionaryFromModel;
 
 - (void)setCurrentUser:(ATOMUser *)user;
-
+-(void)tellMeEveryThingAboutYou;
+- (void)saveAndUpdateUser:(ATOMUser *)user;
+-(void)fetchCurrentUserInDB:(void (^)(BOOL))block;
+-(void)wipe;
 @end

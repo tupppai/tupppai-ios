@@ -66,9 +66,9 @@
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     ATOMShowConcernMessage *showConcernMessage = [ATOMShowConcernMessage new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showConcernMessage ShowConcernMessage:param withBlock:^(NSMutableArray *concernMessageArray, NSError *error) {
-        [SVProgressHUD dismiss];
+        ////[SVProgressHUD dismiss];
         for (ATOMConcernMessage *concernMessage in concernMessageArray) {
             ATOMConcernMessageViewModel *concernMessageViewModel = [ATOMConcernMessageViewModel new];
             [concernMessageViewModel setViewModelData:concernMessage];
@@ -87,9 +87,9 @@
     [param setObject:@(timestamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     ATOMShowConcernMessage *showConcernMessage = [ATOMShowConcernMessage new];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showConcernMessage ShowConcernMessage:param withBlock:^(NSMutableArray *concernMessageArray, NSError *error) {
-        [SVProgressHUD dismiss];
+        ////[SVProgressHUD dismiss];
         for (ATOMConcernMessage *concernMessage in concernMessageArray) {
             ATOMConcernMessageViewModel *concernMessageViewModel = [ATOMConcernMessageViewModel new];
             [concernMessageViewModel setViewModelData:concernMessage];

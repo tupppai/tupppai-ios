@@ -85,13 +85,13 @@
 - (void)clickRightButtonItem:(UIBarButtonItem *)sender {
     NSString *str = _createProfileView.nicknameTextField.text;
     if (str.length == 0) {
-        [SVProgressHUD showErrorWithStatus:@"昵称不能为空"];
+        [Util TextHud:@"昵称不能为空"];
         return ;
     } else if (str.length > 6) {
-        [SVProgressHUD showErrorWithStatus:@"昵称不能大于6位"];
+        [Util TextHud:@"昵称不能大于6位"];
         return ;
     } else if ([_createProfileView tagOfCurrentSex] == -1) {
-        [SVProgressHUD showErrorWithStatus:@"请选择性别"];
+        [Util TextHud:@"请选择性别"];
         return ;
     }
     [ATOMCurrentUser currentUser].sex = [_createProfileView tagOfCurrentSex];
@@ -157,10 +157,10 @@
 -(BOOL) textFieldShouldReturn:(UITextField *)textField {
     NSString *str = textField.text;
     if (str.length == 0) {
-        [SVProgressHUD showErrorWithStatus:@"昵称不能为空..."];
+        [Util TextHud:@"昵称不能为空..."];
         return NO;
     } else if (str.length >= 6) {
-        [SVProgressHUD showErrorWithStatus:@"昵称不能大于6位..."];
+        [Util TextHud:@"昵称不能大于6位..."];
         return NO;
     }
     [_createProfileView.nicknameTextField resignFirstResponder];

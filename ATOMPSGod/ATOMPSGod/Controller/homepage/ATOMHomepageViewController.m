@@ -245,7 +245,7 @@
                 [ws.scrollView.homepageAskTableView.header endRefreshing];
             }
         } else {
-            [SVProgressHUD showErrorWithStatus:@"出现未知错误"];
+            [Util TextHud:@"出现未知错误"];
             [ws.scrollView.homepageHotTableView.header endRefreshing];
             [ws.scrollView.homepageAskTableView.header endRefreshing];
         }
@@ -304,7 +304,7 @@
                 }
             }
         } else {
-            [SVProgressHUD showErrorWithStatus:@"出现未知错误"];
+            [Util TextHud:@"出现未知错误"];
         }
     }];
 }
@@ -434,9 +434,9 @@
 - (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error
   contextInfo: (void *) contextInfo {
     if(error != NULL){
-        [SVProgressHUD showErrorWithStatus:@"保存失败"];
+        [Util TextHud:@"保存失败"];
     }else{
-        [SVProgressHUD showSuccessWithStatus:@"保存成功"];
+        [Util TextHud:@"保存成功"];
     }
 }
 
