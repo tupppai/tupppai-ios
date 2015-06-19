@@ -8,19 +8,18 @@
 
 #import "ATOMConcernMessageViewController.h"
 #import "ATOMConcernMessageTableViewCell.h"
-#import "ATOMNoDataView.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMConcernMessage.h"
 #import "ATOMConcernMessageViewModel.h"
 #import "ATOMShowConcernMessage.h"
+#import "PWRefreshFooterTableView.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMConcernMessageViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface ATOMConcernMessageViewController () <UITableViewDataSource, UITableViewDelegate,PWRefreshBaseTableViewDelegate>
 
 @property (nonatomic, strong) UIView *concernMessageView;
-@property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) ATOMNoDataView *noDataView;
+@property (nonatomic, strong) PWRefreshFooterTableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) UITapGestureRecognizer *tapConcernMessageGesture;
 @property (nonatomic, assign) NSInteger currentPage;
@@ -30,19 +29,12 @@
 
 @implementation ATOMConcernMessageViewController
 
-#pragma mark - Lazy Initialize
-
-- (ATOMNoDataView *)noDataView {
-    if (!_noDataView) {
-        _noDataView = [ATOMNoDataView new];
-    }
-    return _noDataView;
-}
 
 #pragma mark - Refresh
 
-- (void)configTableViewRefresh {
-    [_tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+
+-(void)didPullRefreshUp:(UITableView *)tableView {
+    [self loadMoreData];
 }
 
 - (void)loadMoreData {
@@ -118,14 +110,13 @@
     self.navigationItem.rightBarButtonItem = rightButtonItem;
     _concernMessageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _concernMessageView;
-    _tableView = [[UITableView alloc] initWithFrame:_concernMessageView.bounds];
-    _tableView.tableFooterView = [UIView new];
+    _tableView = [[PWRefreshFooterTableView alloc] initWithFrame:_concernMessageView.bounds];
     [_concernMessageView addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.psDelegate = self;
     _tapConcernMessageGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapConcernMessageGesture:)];
     [_tableView addGestureRecognizer:_tapConcernMessageGesture];
-    [self configTableViewRefresh];
     _canRefreshFooter = YES;
     [self getDataSource];
 }
@@ -134,9 +125,6 @@
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)sender {
     [_dataSource removeAllObjects];
-    if (_dataSource.count == 0) {
-        self.view = self.noDataView;
-    }
 }
 
 #pragma mark - Gesture Event
@@ -195,42 +183,7 @@
         NSInteger row = indexPath.row;
         [_dataSource removeObjectAtIndex:row];
         [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        if (_dataSource.count == 0) {
-            self.view = self.noDataView;
-        }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @end

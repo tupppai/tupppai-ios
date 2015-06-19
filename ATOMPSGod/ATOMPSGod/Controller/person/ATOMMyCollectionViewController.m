@@ -14,13 +14,13 @@
 #import "ATOMAskPageViewModel.h"
 #import "ATOMCollectionViewModel.h"
 #import "ATOMShowCollection.h"
-
+#import "PWRefreshFooterCollectionView.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMMyCollectionViewController () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate>
+@interface ATOMMyCollectionViewController () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate,PWRefreshBaseCollectionViewDelegate>
 
 @property (nonatomic, strong) UIView *myWorkView;
-@property (nonatomic, strong) UICollectionView *collectionView;
+@property (nonatomic, strong) PWRefreshFooterCollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *homeImageDataSource;
 @property (nonatomic, strong) NSString *cellIdentifier;
@@ -38,11 +38,9 @@ static int collumnNumber = 2;
 static float cellWidth;
 
 #pragma mark - Refresh
-
-- (void)configCollectionViewRefresh {
-    [_collectionView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+-(void)didPullUpCollectionViewBottom {
+    [self loadMoreData];
 }
-
 - (void)loadMoreData {
     if (_canRefreshFooter) {
         [self getMoreDataSource];
@@ -136,16 +134,16 @@ static float cellWidth;
     flowLayout.itemSize =CGSizeMake(cellWidth, cellHeight);
     flowLayout.minimumInteritemSpacing = padding6;
     flowLayout.minimumLineSpacing = padding6;
-    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectInset(_myWorkView.frame, 0, 0) collectionViewLayout:flowLayout];
+    _collectionView = [[PWRefreshFooterCollectionView alloc] initWithFrame:CGRectInset(_myWorkView.frame, 0, 0) collectionViewLayout:flowLayout];
     _collectionView.backgroundColor = [UIColor colorWithHex:0xededed];
     [_myWorkView addSubview:_collectionView];
     _collectionView.dataSource = self;
     _collectionView.delegate = self;
+    _collectionView.psDelegate = self;
     _cellIdentifier = @"MyCollectionCell";
     [_collectionView registerClass:[ATOMMyCollectionCollectionViewCell class] forCellWithReuseIdentifier:_cellIdentifier];
     _tapMyCollectionGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMyCollectionGesture:)];
     [_collectionView addGestureRecognizer:_tapMyCollectionGesture];
-    [self configCollectionViewRefresh];
     _canRefreshFooter = YES;
     [self getDataSource];
 }

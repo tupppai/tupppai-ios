@@ -20,13 +20,6 @@
 
 @implementation ATOMLogin
 
-//- (ATOMUserDAO *)userDAO {
-//    if (!_userDAO) {
-//        _userDAO = [ATOMUserDAO new];
-//    }
-//    return _userDAO;
-//}
-
 - (AFHTTPRequestOperation *)openIDAuth:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(bool isRegister,NSString* info, NSError *error))block {
     NSLog(@"判断第三平台获取的openid是否已经注册");
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] POST:[NSString stringWithFormat:@"auth/%@",type] parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {

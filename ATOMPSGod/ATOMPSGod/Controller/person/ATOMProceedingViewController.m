@@ -15,13 +15,13 @@
 #import "ATOMAskPageViewModel.h"
 #import "ATOMProceedingViewModel.h"
 #import "ATOMShowProceeding.h"
-
+#import "PWRefreshBaseTableView.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMProceedingViewController () <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface ATOMProceedingViewController () <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,PWRefreshBaseTableViewDelegate>
 
 @property (nonatomic, strong) UIView *proceedingView;
-@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) PWRefreshBaseTableView *tableView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapProceedingGesture;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -51,10 +51,11 @@
 }
 
 #pragma mark - Refresh
-
-- (void)configCollectionViewRefresh {
-    [_tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
-    [_tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(loadData)];
+-(void)didPullRefreshDown:(UITableView *)tableView{
+    [self loadData];
+}
+-(void)didPullRefreshUp:(UITableView *)tableView{
+    [self loadMoreData];
 }
 
 - (void)loadData {
@@ -147,13 +148,13 @@
     self.title = @"进行中";
     _proceedingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _proceedingView;
-    _tableView = [[UITableView alloc] initWithFrame:_proceedingView.bounds style:UITableViewStylePlain];
+    _tableView = [[PWRefreshBaseTableView alloc] initWithFrame:_proceedingView.bounds style:UITableViewStylePlain];
     _tableView.backgroundColor = [UIColor whiteColor];
     [_proceedingView addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.psDelegate = self;
     [_tableView addGestureRecognizer:self.tapProceedingGesture];
-    [self configCollectionViewRefresh];
     _canRefreshFooter = YES;
     _dataSource = nil;
     _dataSource = [NSMutableArray array];

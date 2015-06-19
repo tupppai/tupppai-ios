@@ -14,31 +14,31 @@
 #import "ATOMConcern.h"
 #import "ATOMConcernViewModel.h"
 #import "ATOMShowConcern.h"
-
+#import "PWRefreshBaseTableView.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMMyConcernViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface ATOMMyConcernViewController () <UITableViewDataSource, UITableViewDelegate,PWRefreshBaseTableViewDelegate>
 
 @property (nonatomic, strong) UIView *myConcernView;
-@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) PWRefreshBaseTableView *tableView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapMyConcernGesutre;
 @property (nonatomic, strong) NSMutableArray *recommendDataSource;
 @property (nonatomic, strong) NSMutableArray *myDataSource;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, assign) BOOL isRefreshingHeader;
-
 @end
 
 @implementation ATOMMyConcernViewController
 
 #pragma mark - Refresh
 
-- (void)configTableViewRefresh {
-    [_tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(getDataSource)];
-    [_tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+-(void)didPullRefreshDown:(UITableView *)tableView {
+    [self getDataSource];
 }
-
+-(void)didPullRefreshUp:(UITableView *)tableView {
+    [self loadMoreData];
+}
 - (void)loadMoreData {
     if (_canRefreshFooter) {
         [self getMoreDataSource];
@@ -123,15 +123,14 @@
     self.title = [NSString stringWithFormat:@"%@的关注", _uid ? _userName : @"我"];
     _myConcernView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _myConcernView;
-    _tableView = [[UITableView alloc] initWithFrame:_myConcernView.bounds];
+    _tableView = [[PWRefreshBaseTableView alloc] initWithFrame:_myConcernView.bounds];
     _tableView.backgroundColor = [UIColor colorWithHex:0xededed];
-    _tableView.tableFooterView = [UIView new];
     [_myConcernView addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.psDelegate = self;
     _tapMyConcernGesutre = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMyConcernGesutre:)];
     [_tableView addGestureRecognizer:_tapMyConcernGesutre];
-    [self configTableViewRefresh];
     _recommendDataSource = [NSMutableArray array];
     _myDataSource = [NSMutableArray array];
     _canRefreshFooter = YES;
@@ -211,7 +210,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        NSLog(@"recommendDataSource count = %d", (int)_recommendDataSource.count);
         return _recommendDataSource.count;
     } else if (section == 1) {
         return _myDataSource.count;
@@ -226,7 +224,6 @@
         cell = [[ATOMMyConcernTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     if (indexPath.section == 0) {
-        NSLog(@"indexPath.row = %d", (int)indexPath.row);
         cell.viewModel = _recommendDataSource[indexPath.row];
     } else {
         cell.viewModel = _myDataSource[indexPath.row];

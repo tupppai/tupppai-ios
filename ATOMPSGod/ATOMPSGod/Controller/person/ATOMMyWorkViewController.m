@@ -13,13 +13,14 @@
 #import "ATOMHomeImage.h"
 #import "ATOMAskPageViewModel.h"
 #import "ATOMReplyViewModel.h"
+#import "PWRefreshFooterCollectionView.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMMyWorkViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface ATOMMyWorkViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate>
 
 @property (nonatomic, strong) UIView *myWorkView;
-@property (nonatomic, strong) UICollectionView *collectionView;
+@property (nonatomic, strong) PWRefreshFooterCollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *homeImageDataSource;
 @property (nonatomic, strong) NSString *cellIdentifier;
@@ -36,11 +37,9 @@ static float cellHeight = 150;
 static int collumnNumber = 3;
 
 #pragma mark - Refresh
-
-- (void)configCollectionViewRefresh {
-    [_collectionView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+-(void)didPullUpCollectionViewBottom {
+    [self loadMoreData];
 }
-
 - (void)loadMoreData {
     if (_canRefreshFooter) {
         [self getMoreDataSource];
@@ -135,14 +134,14 @@ static int collumnNumber = 3;
     flowLayout.itemSize =CGSizeMake(cellWidth, cellHeight);
     flowLayout.minimumInteritemSpacing = padding6;
     flowLayout.minimumLineSpacing = padding6;
-    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectInset(_myWorkView.frame, padding6, padding6) collectionViewLayout:flowLayout];
+    _collectionView = [[PWRefreshFooterCollectionView alloc] initWithFrame:CGRectInset(_myWorkView.frame, padding6, padding6) collectionViewLayout:flowLayout];
     _collectionView.backgroundColor = [UIColor whiteColor];
     [_myWorkView addSubview:_collectionView];
     _collectionView.dataSource = self;
     _collectionView.delegate = self;
+    _collectionView.psDelegate = self;
     _cellIdentifier = @"MyWorkCell";
     [_collectionView registerClass:[ATOMMyWorkCollectionViewCell class] forCellWithReuseIdentifier:_cellIdentifier];
-    [self configCollectionViewRefresh];
     _canRefreshFooter = YES;
     [self getDataSource];
 }

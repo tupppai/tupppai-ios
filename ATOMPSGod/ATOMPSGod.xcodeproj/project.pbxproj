@@ -296,6 +296,8 @@
 		5CEAC0331AD4F9540058037C /* ATOMShowCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CEAC0321AD4F9540058037C /* ATOMShowCollection.m */; };
 		E90197351B32D2F800F46B78 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E90197341B32D2F800F46B78 /* MBProgressHUD.m */; };
 		E90197381B32D3C100F46B78 /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = E90197371B32D3C100F46B78 /* Util.m */; };
+		E901973B1B33C98600F46B78 /* PWRefreshFooterTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E901973A1B33C98600F46B78 /* PWRefreshFooterTableView.m */; };
+		E901973E1B33F60500F46B78 /* PWRefreshFooterCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = E901973D1B33F60500F46B78 /* PWRefreshFooterCollectionView.m */; };
 		E90C7C5D1B20726400CF0E6A /* PWMascotAnimationImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E90C7C5C1B20726400CF0E6A /* PWMascotAnimationImageView.m */; };
 		E90C7C601B20A0FC00CF0E6A /* KShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E90C7C5F1B20A0FC00CF0E6A /* KShareManager.m */; };
 		E90C7C631B2141B800CF0E6A /* PWHomePageTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E90C7C621B2141B800CF0E6A /* PWHomePageTableView.m */; };
@@ -942,6 +944,11 @@
 		E90197341B32D2F800F46B78 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		E90197361B32D3C100F46B78 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
 		E90197371B32D3C100F46B78 /* Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Util.m; sourceTree = "<group>"; };
+		E90197391B33C98600F46B78 /* PWRefreshFooterTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWRefreshFooterTableView.h; sourceTree = "<group>"; };
+		E901973A1B33C98600F46B78 /* PWRefreshFooterTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWRefreshFooterTableView.m; sourceTree = "<group>"; };
+		E901973C1B33F60500F46B78 /* PWRefreshFooterCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWRefreshFooterCollectionView.h; sourceTree = "<group>"; };
+		E901973D1B33F60500F46B78 /* PWRefreshFooterCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWRefreshFooterCollectionView.m; sourceTree = "<group>"; };
+		E901973F1B33F73C00F46B78 /* CommonProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonProtocol.h; sourceTree = "<group>"; };
 		E90C7C5B1B20726400CF0E6A /* PWMascotAnimationImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWMascotAnimationImageView.h; sourceTree = "<group>"; };
 		E90C7C5C1B20726400CF0E6A /* PWMascotAnimationImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWMascotAnimationImageView.m; sourceTree = "<group>"; };
 		E90C7C5E1B20A0FC00CF0E6A /* KShareManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KShareManager.h; sourceTree = "<group>"; };
@@ -1427,6 +1434,10 @@
 				5C589A891B04F2AC003D828A /* ATOMCameraView.m */,
 				E9D1F88A1B203A4F0072242B /* PWRefreshBaseTableView.h */,
 				E9D1F88B1B203A4F0072242B /* PWRefreshBaseTableView.m */,
+				E90197391B33C98600F46B78 /* PWRefreshFooterTableView.h */,
+				E901973A1B33C98600F46B78 /* PWRefreshFooterTableView.m */,
+				E901973C1B33F60500F46B78 /* PWRefreshFooterCollectionView.h */,
+				E901973D1B33F60500F46B78 /* PWRefreshFooterCollectionView.m */,
 				E90C7C5B1B20726400CF0E6A /* PWMascotAnimationImageView.h */,
 				E90C7C5C1B20726400CF0E6A /* PWMascotAnimationImageView.m */,
 			);
@@ -2076,6 +2087,7 @@
 				E90C7C5F1B20A0FC00CF0E6A /* KShareManager.m */,
 				E90197361B32D3C100F46B78 /* Util.h */,
 				E90197371B32D3C100F46B78 /* Util.m */,
+				E901973F1B33F73C00F46B78 /* CommonProtocol.h */,
 			);
 			path = Uitility;
 			sourceTree = "<group>";
@@ -2573,6 +2585,7 @@
 				5C54DF201AB9738E00BDE34D /* ATOMMainTabBarController.m in Sources */,
 				5C535CB71AF1FC8A00BF30D1 /* ATOMShareFunctionView.m in Sources */,
 				5C3101781AAE751100EF529B /* ATOMPersonTableViewCell.m in Sources */,
+				E901973B1B33C98600F46B78 /* PWRefreshFooterTableView.m in Sources */,
 				5C0F04E81ADCF508002003AE /* ATOMConcernMessageViewModel.m in Sources */,
 				5C561A781AB7C8C30052D4D5 /* UIScrollView+MJRefresh.m in Sources */,
 				5C561A751AB7C8C30052D4D5 /* MJRefreshLegendFooter.m in Sources */,
@@ -2609,6 +2622,7 @@
 				5C7B8AB01AFA535D00F448CD /* ATOMCommonImage.m in Sources */,
 				5C589A8A1B04F2AC003D828A /* ATOMCameraView.m in Sources */,
 				5C83A8911AC66F910071A024 /* POPGeometry.mm in Sources */,
+				E901973E1B33F60500F46B78 /* PWRefreshFooterCollectionView.m in Sources */,
 				5C436A9C1AB07E5C00D14608 /* ATOMTopicReplyMessageViewController.m in Sources */,
 				5CDB06151AA424F50089121E /* MMPlaceHolder.m in Sources */,
 				5CDB066B1AA45C920089121E /* ATOMMobileRegisterView.m in Sources */,

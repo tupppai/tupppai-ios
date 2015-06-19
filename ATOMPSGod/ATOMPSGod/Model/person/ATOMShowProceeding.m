@@ -15,6 +15,8 @@
 
 - (AFHTTPRequestOperation *)ShowProceeding:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:@"user/my_proceeding" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        int ret = [(NSString*)responseObject[@"ret"] intValue];
+        if (ret == 1) {
         NSMutableArray *resultArray = [NSMutableArray array];
         NSArray *imageDataArray = responseObject[@"data"];
         for (int i = 0; i < imageDataArray.count; i++) {
@@ -33,6 +35,12 @@
         if (block) {
             block(resultArray, nil);
         }
+        } else {
+            if (block) {
+                block(nil, nil);
+            }
+        }
+
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (block) {
             block(nil, error);

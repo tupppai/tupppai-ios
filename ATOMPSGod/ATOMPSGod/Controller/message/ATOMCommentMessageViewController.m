@@ -9,7 +9,6 @@
 #import "ATOMCommentMessageViewController.h"
 #import "ATOMCommentMessageViewModel.h"
 #import "ATOMCommentMessageTableViewCell.h"
-#import "ATOMNoDataView.h"
 #import "ATOMHotDetailViewController.h"
 #import "ATOMCommentDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
@@ -19,14 +18,13 @@
 #import "ATOMHomeImage.h"
 #import "ATOMAskPageViewModel.h"
 #import "ATOMPageDetailViewController.h"
-
+#import "PWRefreshFooterTableView.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMCommentMessageViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface ATOMCommentMessageViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate>
 
 @property (nonatomic, strong) UIView *commentMessageView;
-@property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) ATOMNoDataView *noDataView;
+@property (nonatomic, strong)  PWRefreshFooterTableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) UITapGestureRecognizer *tapCommentMessageGesture;
 @property (nonatomic, assign) NSInteger currentPage;
@@ -36,21 +34,12 @@
 
 @implementation ATOMCommentMessageViewController
 
-#pragma mark - Lazy Initialize
-
-- (ATOMNoDataView *)noDataView {
-    if (!_noDataView) {
-        _noDataView = [ATOMNoDataView new];
-    }
-    return _noDataView;
-}
 
 #pragma mark - Refresh
 
-- (void)configTableViewRefresh {
-    [_tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+-(void)didPullRefreshUp:(UITableView *)tableView {
+    [self loadMoreData];
 }
-
 - (void)loadMoreData {
     if (_canRefreshFooter) {
         [self getMoreDataSource];
@@ -130,14 +119,14 @@
     self.navigationItem.rightBarButtonItem = rightButtonItem;
     _commentMessageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _commentMessageView;
-    _tableView = [[UITableView alloc] initWithFrame:_commentMessageView.bounds];
-    _tableView.tableFooterView = [UIView new];
+    _tableView = [[PWRefreshFooterTableView alloc] initWithFrame:_commentMessageView.bounds];
     [_commentMessageView addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.psDelegate = self;
     _tapCommentMessageGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCommentMessageGesture:)];
     [_tableView addGestureRecognizer:_tapCommentMessageGesture];
-    [self configTableViewRefresh];
+//    [self configTableViewRefresh];
     _canRefreshFooter = YES;
     [self getDataSource];
 }
@@ -146,9 +135,9 @@
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)sender {
     [_dataSource removeAllObjects];
-    if (_dataSource.count == 0) {
-        self.view = self.noDataView;
-    }
+//    if (_dataSource.count == 0) {
+//        self.view = self.noDataView;
+//    }
 }
 
 #pragma mark - Gesture Event

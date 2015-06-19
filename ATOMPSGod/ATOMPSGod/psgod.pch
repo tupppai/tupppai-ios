@@ -41,6 +41,7 @@
 #import <Parse/Parse.h>
 #import "MMPlaceHolder.h"
 #import "Util.h"
+#import "CommonProtocol.h"
 #endif
 
 

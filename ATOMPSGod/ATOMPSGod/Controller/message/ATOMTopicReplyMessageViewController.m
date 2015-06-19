@@ -17,14 +17,13 @@
 #import "ATOMHomeImage.h"
 #import "ATOMAskPageViewModel.h"
 #import "ATOMShowReplyMessage.h"
-
+#import "PWRefreshFooterTableView.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMTopicReplyMessageViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface ATOMTopicReplyMessageViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate>
 
 @property (nonatomic, strong) UIView *topicReplyMessageView;
-@property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) ATOMNoDataView *noDataView;
+@property (nonatomic, strong) PWRefreshFooterTableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) UITapGestureRecognizer *tapTopicReplyMessageGesture;
 @property (nonatomic, assign) NSInteger currentPage;
@@ -34,19 +33,11 @@
 
 @implementation ATOMTopicReplyMessageViewController
 
-#pragma mark - Lazy Initialize
-
-- (ATOMNoDataView *)noDataView {
-    if (!_noDataView) {
-        _noDataView = [ATOMNoDataView new];
-    }
-    return _noDataView;
-}
 
 #pragma mark - Refresh
 
-- (void)configTableViewRefresh {
-    [_tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+-(void)didPullRefreshUp:(UITableView *)tableView {
+    [self loadMoreData];
 }
 
 - (void)loadMoreData {
@@ -129,14 +120,13 @@
     self.navigationItem.rightBarButtonItem = rightButtonItem;
     _topicReplyMessageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _topicReplyMessageView;
-    _tableView = [[UITableView alloc] initWithFrame:_topicReplyMessageView.bounds];
-    _tableView.tableFooterView = [UIView new];
+    _tableView = [[PWRefreshFooterTableView alloc] initWithFrame:_topicReplyMessageView.bounds];
     [_topicReplyMessageView addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.psDelegate = self;
     _tapTopicReplyMessageGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapTopicReplyMessageGesture:)];
     [_tableView addGestureRecognizer:_tapTopicReplyMessageGesture];
-    [self configTableViewRefresh];
     _canRefreshFooter = YES;
     [self getDataSource];
 }
@@ -145,9 +135,7 @@
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)sender {
     [_dataSource removeAllObjects];
-    if (_dataSource.count == 0) {
-        self.view = self.noDataView;
-    }
+
 }
 
 #pragma mark - Gesture Event
@@ -196,9 +184,7 @@
     cell.viewModel = _dataSource[indexPath.row];
     return cell;
 }
-
 #pragma mark - UITableViewDelegate
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 100;
 }
@@ -212,33 +198,6 @@
         NSInteger row = indexPath.row;
         [_dataSource removeObjectAtIndex:row];
         [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        if (_dataSource.count == 0) {
-            self.view = self.noDataView;
-        }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @end

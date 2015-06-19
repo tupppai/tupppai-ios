@@ -16,12 +16,17 @@
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:@"message/follow" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *concernMessageArray = [NSMutableArray array];
         NSArray *dataArray = responseObject[@"data"];
-        for (int i = 0; i < dataArray.count; i++) {
-            ATOMConcernMessage *concernMessage = [MTLJSONAdapter modelOfClass:[ATOMConcernMessage class] fromJSONDictionary:dataArray[i] error:NULL];
-            [concernMessageArray addObject:concernMessage];
-        }
-        if (block) {
-            block(concernMessageArray, nil);
+        int ret = [(NSString*)responseObject[@"ret"] intValue];
+        if (ret == 1) {
+            for (int i = 0; i < dataArray.count; i++) {
+                ATOMConcernMessage *concernMessage = [MTLJSONAdapter modelOfClass:[ATOMConcernMessage class] fromJSONDictionary:dataArray[i] error:NULL];
+                [concernMessageArray addObject:concernMessage];
+            }
+            if (block) {
+                block(concernMessageArray, nil);
+            }
+        } else {
+            block(nil, nil);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (block) {

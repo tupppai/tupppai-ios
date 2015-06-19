@@ -245,7 +245,7 @@
                 [ws.scrollView.homepageAskTableView.header endRefreshing];
             }
         } else {
-            [Util TextHud:@"出现未知错误"];
+//            [Util TextHud:@"出现未知错误"];
             [ws.scrollView.homepageHotTableView.header endRefreshing];
             [ws.scrollView.homepageAskTableView.header endRefreshing];
         }
@@ -304,7 +304,7 @@
                 }
             }
         } else {
-            [Util TextHud:@"出现未知错误"];
+//            [Util TextHud:@"出现未知错误"];
         }
     }];
 }

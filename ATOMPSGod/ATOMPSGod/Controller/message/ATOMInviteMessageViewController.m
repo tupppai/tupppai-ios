@@ -8,7 +8,6 @@
 
 #import "ATOMInviteMessageViewController.h"
 #import "ATOMInviteMessageTableViewCell.h"
-#import "ATOMNoDataView.h"
 #import "ATOMHotDetailViewController.h"
 #import "ATOMPageDetailViewController.h"
 #import "ATOMCommentDetailViewController.h"
@@ -18,14 +17,13 @@
 #import "ATOMInviteMessageViewModel.h"
 #import "ATOMHomeImage.h"
 #import "ATOMAskPageViewModel.h"
-
+#import "PWRefreshFooterTableView.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMInviteMessageViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface ATOMInviteMessageViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate>
 
 @property (nonatomic, strong) UIView *inviteMessageView;
-@property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) ATOMNoDataView *noDataView;
+@property (nonatomic, strong) PWRefreshFooterTableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) UITapGestureRecognizer *tapInviteMessageGesture;
 @property (nonatomic, assign) NSInteger currentPage;
@@ -35,20 +33,13 @@
 
 @implementation ATOMInviteMessageViewController
 
-#pragma mark - Lazy Initialize
-
-- (ATOMNoDataView *)noDataView {
-    if (!_noDataView) {
-        _noDataView = [ATOMNoDataView new];
-    }
-    return _noDataView;
-}
 
 #pragma mark - Refresh
 
-- (void)configTableViewRefresh {
-    [_tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+-(void)didPullRefreshUp:(UITableView *)tableView {
+    [self loadMoreData];
 }
+
 
 - (void)loadMoreData {
     if (_canRefreshFooter) {
@@ -129,14 +120,13 @@
     self.navigationItem.rightBarButtonItem = rightButtonItem;
     _inviteMessageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _inviteMessageView;
-    _tableView = [[UITableView alloc] initWithFrame:_inviteMessageView.bounds];
-    _tableView.tableFooterView = [UIView new];
+    _tableView = [[PWRefreshFooterTableView alloc] initWithFrame:_inviteMessageView.bounds];
     [_inviteMessageView addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.psDelegate = self;
     _tapInviteMessageGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapInviteMessageGesture:)];
     [_tableView addGestureRecognizer:_tapInviteMessageGesture];
-    [self configTableViewRefresh];
     _canRefreshFooter = YES;
     [self getDataSource];
 }
@@ -145,9 +135,6 @@
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)sender {
     [_dataSource removeAllObjects];
-    if (_dataSource.count == 0) {
-        self.view = self.noDataView;
-    }
 }
 
 #pragma mark - Gesture Event
@@ -218,9 +205,9 @@
         NSInteger row = indexPath.row;
         [_dataSource removeObjectAtIndex:row];
         [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        if (_dataSource.count == 0) {
-            self.view = self.noDataView;
-        }
+//        if (_dataSource.count == 0) {
+//            self.view = self.noDataView;
+//        }
     }
 }
 

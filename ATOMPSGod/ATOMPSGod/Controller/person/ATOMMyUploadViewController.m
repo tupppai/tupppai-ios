@@ -14,19 +14,18 @@
 #import "ATOMHomeImage.h"
 #import "ATOMAskPageViewModel.h"
 #import "ATOMAskViewModel.h"
-
+#import "PWRefreshFooterCollectionView.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMMyUploadViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface ATOMMyUploadViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate>
 
 @property (nonatomic, strong) UIView *myUploadView;
-@property (nonatomic, strong) UICollectionView *collectionView;
+@property (nonatomic, strong) PWRefreshFooterCollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *homeImageDataSource;
 @property (nonatomic, strong) NSString *cellIdentifier;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL canRefreshFooter;
-
 @end
 
 @implementation ATOMMyUploadViewController
@@ -37,11 +36,9 @@ static float cellHeight;
 static int collumnNumber = 3;
 
 #pragma mark - Refresh
-
-- (void)configTableViewRefresh {
-    [_collectionView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+-(void)didPullUpCollectionViewBottom {
+    [self loadMoreData];
 }
-
 - (void)loadMoreData {
     if (_canRefreshFooter) {
         [self getMoreDataSource];
@@ -137,14 +134,14 @@ static int collumnNumber = 3;
     flowLayout.itemSize =CGSizeMake(cellWidth, cellHeight);
     flowLayout.minimumInteritemSpacing = padding6;
     flowLayout.minimumLineSpacing = padding6;
-    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectInset(_myUploadView.frame, padding6, padding6) collectionViewLayout:flowLayout];
+    _collectionView = [[PWRefreshFooterCollectionView alloc] initWithFrame:CGRectInset(_myUploadView.frame, padding6, padding6) collectionViewLayout:flowLayout];
     _collectionView.backgroundColor = [UIColor whiteColor];
     [_myUploadView addSubview:_collectionView];
     _collectionView.dataSource = self;
     _collectionView.delegate = self;
+    _collectionView.psDelegate = self;
     _cellIdentifier = @"MyUploadCell";
     [_collectionView registerClass:[ATOMMyUploadCollectionViewCell class] forCellWithReuseIdentifier:_cellIdentifier];
-    [self configTableViewRefresh];
     _canRefreshFooter = YES;
     [self getDataSource];
 }
@@ -180,20 +177,6 @@ static int collumnNumber = 3;
         [self pushViewController:hdvc animated:YES];
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 @end
