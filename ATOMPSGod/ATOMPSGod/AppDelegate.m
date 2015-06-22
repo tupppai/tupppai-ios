@@ -79,11 +79,14 @@
     [ShareSDK connectWeChatWithAppId:@"wx86ff6f67a2b9b4b8"   //微信APPID
                            appSecret:@"c2da31fda3acf1c09c40ee25772b6ca5"  //微信APPSecret
                            wechatCls:[WXApi class]];
-    
-
-    [ShareSDK connectSinaWeiboWithAppKey:@"1251119895"
+ 
+    [ShareSDK connectSinaWeiboWithAppKey:@"882276088"
                                appSecret:@"454f67c8e6d29b770d701e9272bc5ee7"
                              redirectUri:@"https://api.weibo.com/oauth2/default.html"];
+//    [ShareSDK  connectSinaWeiboWithAppKey:@"882276088"
+//                                appSecret:@"454f67c8e6d29b770d701e9272bc5ee7"
+//                              redirectUri:@"https://api.weibo.com/oauth2/default.html"
+//                              weiboSDKCls:[WeiboSDK class]];
     
     [Parse setApplicationId:@"SgknH6DsznpSXdBqqJlYMInkLviSPwltw0StP9es" clientKey:@"2zfmu9kMFLtpeDLgfszprClkGYrDGpqzUd3IpUT2"];
     

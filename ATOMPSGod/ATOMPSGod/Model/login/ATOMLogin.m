@@ -53,6 +53,7 @@
         NSLog(@"user info%@ userUid %@ ,name %@,image %@",[userInfo description],[userInfo uid],[userInfo nickname],[userInfo profileImage]);
         if (result) {
             NSDictionary* sourceData = [userInfo sourceData];
+            NSLog(@"sourceData %@",sourceData);
             block(sourceData);
         } else {
             block(nil);
@@ -61,32 +62,51 @@
 }
 
 
-- (AFHTTPRequestOperation* )Login:(NSDictionary*)param withBlock:(void (^)(NSDictionary* sourceData))block{
+- (AFHTTPRequestOperation* )Login:(NSDictionary*)param withBlock:(void (^)(BOOL succeed))block{
     NSLog(@"Login param %@",param);
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] POST:@"user/login" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
-        NSLog(@"Login responseObject %@",responseObject);
         NSInteger ret = [(NSString*)responseObject[@"ret"]integerValue];
         NSString* info = responseObject[@"info"];
-        NSLog(@"%@",info);
-        if (responseObject[@"data"]) {
-            //        data: { status: 1,正常  2，密码错误 3，未注册 }
-            NSInteger status = (NSInteger)responseObject[@"data"][@"status"];
-            if(status == 1) {
-                NSLog(@"登录成功");
-            } else if (status == 2) {
-                NSLog(@"密码错误");
-            } else if (status == 3) {
-                NSLog(@"未注册 ");
+        NSLog(@"Login responseObject %@ \n info %@",responseObject,info);
+        if (ret == 1) {
+            if (responseObject[@"data"]) {
+                //        data: { status: 1,正常  2，密码错误 3，未注册 }
+                NSInteger status = [(NSString*)responseObject[@"data"][@"status"] integerValue];
+                if(status == 1) {
+                    [Util TextHud:@"登录成功"];
+                    NSError* error;
+                    ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:responseObject[@"data"] error:&error];
+                    if (error) {
+                        NSLog(@"Login error %@",error);
+                    }
+                    //保存更新数据库的user,并更新currentUser
+                    [[ATOMCurrentUser currentUser]saveAndUpdateUser:user];
+                    if (block) {
+                        block(YES);
+                    }
+                } else if (status == 2) {
+                    [Util TextHud:@"密码错误"];
+                    if (block) {
+                        block(NO);
+                    }
+                } else if (status == 3) {
+                    [Util TextHud:@"此手机号未注册"];
+                    if (block) {
+                        block(NO);
+                    }
+                }
+            }
+        } else {
+            [Util TextHud:@"出现未知错误"];
+            if (block) {
+                block(NO);
             }
         }
-        if (ret == 1) {
-            NSLog(@"登录成功");
-        } else {
-            NSLog(@"出现未知错误");
-        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"出现未知错误");
+        [Util TextHud:@"出现未知错误"];
+        if (block) {
+            block(NO);
+        }
     }];
 }
 

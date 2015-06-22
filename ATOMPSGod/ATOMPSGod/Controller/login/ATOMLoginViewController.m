@@ -40,33 +40,19 @@
 
 - (void)clickLoginButton:(UIButton *)sender {
     if (![_loginView.mobileTextField.text isMobileNumber]) {
-        [Util TextHud:@"手机格式不正确"];
-        NSLog(@"请输入正确的手机格式");
+        [Util TextHud:@"手机格式有误"];
+    } else if (![_loginView.passwordTextField.text isPassword]) {
+        [Util TextHud:@"密码格式有误"];
+    } else {
+        ATOMLogin *loginModel = [ATOMLogin new];
+        NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:_loginView.mobileTextField.text, @"phone", _loginView.passwordTextField.text, @"password",nil];
+        [loginModel Login:param withBlock:^(BOOL succeed) {
+            if (succeed) {
+                [self.navigationController popViewControllerAnimated:NO];
+                [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
+            }
+        }];
     }
-    if (![_loginView.passwordTextField.text isPassword]) {
-        NSLog(@"密码不能包含特殊字符");
-    }
-    
-    ATOMLogin *loginModel = [ATOMLogin new];
-    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:_loginView.mobileTextField.text, @"phone", _loginView.passwordTextField.text, @"password",nil];
-    [loginModel Login:param withBlock:^(NSDictionary *sourceData) {
-        
-    }];
-//    //[SVProgressHUD showWithStatus:@"正在登录中..."];
-//    [login Login:param AndType:@"mobile" withBlock:^(ATOMUser *user, NSError *error) {
-//        ////[SVProgressHUD dismiss];
-//        if (!error) {
-//            if (![login isExistUser:user]) {
-//                [login saveUserInDB:user];
-//            }
-//            [self.navigationController popViewControllerAnimated:NO];
-//            [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
-//        } else {
-//            NSLog(@"error");
-//        }
-//    }];
-//    [self.navigationController popViewControllerAnimated:NO];
-//    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
 }
 
 
@@ -75,49 +61,42 @@
 //    [ATOMCurrentUser currentUser].signUpType = ATOMSignUpWeibo;
 //    [ATOMCurrentUser currentUser].sourceData = sourceData;
     NSLog(@"clickweiboLoginButton");
-    [ShareSDK getUserInfoWithType:ShareTypeTencentWeibo
-                      authOptions:nil
-                           result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error)
-     {
-         NSLog(@"result %d, userInfo %@,error %@",result,userInfo,error);
+    
+    ATOMLogin *loginModel = [ATOMLogin new];
+    [loginModel thirdPartyAuth:SSCShareTypeSinaWeibo withBlock:^(NSDictionary *sourceData) {
+        if (sourceData) {
+            NSString* id = sourceData[@"idstr"];
+            NSMutableDictionary* param = [NSMutableDictionary new];
+            [param setObject:id forKey:@"openid"];
+            [loginModel openIDAuth:param AndType:@"weibo" withBlock:^(bool isRegister, NSString *info, NSError *error) {
+                if (isRegister) {
+                    NSLog(@"微博登录成功");
+                    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
+                } else if (isRegister == NO) {
+                    NSLog(@"未注册微博账号");
+                    [ATOMCurrentUser currentUser].signUpType = ATOMSignUpWeibo;
+                    [ATOMCurrentUser currentUser].sourceData = sourceData;
+                    ATOMUserProfileViewModel* ipvm = [ATOMUserProfileViewModel new];
+                    ipvm.nickName = sourceData[@"name"];
+                    ipvm.province = sourceData[@"province"];
+                    ipvm.city = sourceData[@"city"];
+                    ipvm.avatarURL = sourceData[@"avatar_large"];
+                    if ([(NSString*)sourceData[@"gender"] isEqualToString:@"m"]) {
+                        ipvm.gender = @"男";
+                    } else {
+                        ipvm.gender = @"女";
+                    }
+                    ATOMCreateProfileViewController *cpvc = [ATOMCreateProfileViewController new];
+                    cpvc.userProfileViewModel = ipvm;
+                    [self pushViewController:cpvc animated:YES];
+                }
+            }];
+        }
+        else {
+            NSLog(@"获取不到第三平台的数据");
+        }
+    }];
 
-         if (result)
-         {
-             PFQuery *query = [PFQuery queryWithClassName:@"UserInfo"];
-             [query whereKey:@"uid" equalTo:[userInfo uid]];
-             [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-              {
-
-                  if ([objects count] == 0)
-                  {
-                      PFObject *newUser = [PFObject objectWithClassName:@"UserInfo"];
-                      [newUser setObject:[userInfo uid] forKey:@"uid"];
-                      [newUser setObject:[userInfo nickname] forKey:@"name"];
-                      [newUser setObject:[userInfo profileImage] forKey:@"icon"];
-                      [newUser saveInBackground];
-                      UIAlertView *alertView = [[UIAlertView alloc]
-                                                initWithTitle:@"Hello"
-                                                message:@"欢迎注册"
-                                                delegate:nil
-                                                cancelButtonTitle:@"知道了"
-                                                otherButtonTitles: nil];
-                      [alertView show];
-                  }
-                  else
-                  {
-                      UIAlertView *alertView = [[UIAlertView alloc]                                 initWithTitle:@"Hello"
-                                                                                                          message:@"欢迎回来"
-                                                                                                         delegate:nil
-                                                                                                cancelButtonTitle:@"知道了"
-                                                                                                otherButtonTitles:nil];
-                      [alertView show];
-                  }
-              }];
-             
-             
-         }
-         
-     }];
 }
 - (void)clickwechatLoginButton:(UIButton *)sender {
     ATOMLogin *loginModel = [ATOMLogin new];
@@ -128,7 +107,7 @@
             [param setObject:openid forKey:@"openid"];
             [loginModel openIDAuth:param AndType:@"weixin" withBlock:^(bool isRegister, NSString *info, NSError *error) {
                 if (isRegister) {
-                    NSLog(@"登录成功");
+                    NSLog(@"微信登录成功");
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
                 } else if (isRegister == NO) {
                     NSLog(@"未注册微信账号");

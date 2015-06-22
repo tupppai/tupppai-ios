@@ -147,11 +147,15 @@
         } else if (row == 5) {
         }
     } else if (section == 2) {
+        //清空数据库
         [ATOMUserDAO clearUsers];
+        //清空当前用户
+        [[ATOMCurrentUser currentUser]wipe];
+        [self.navigationController popViewControllerAnimated:NO];
+        self.tabBarController.selectedIndex = 3;
         ATOMLaunchViewController *lvc = [[ATOMLaunchViewController alloc] init];
         [AppDelegate APP].window.rootViewController = [[ATOMCutstomNavigationController alloc] initWithRootViewController:lvc];
-        [[AppDelegate APP].window makeKeyAndVisible];
-        [[ATOMCurrentUser currentUser]wipe];
+//        [[AppDelegate APP].window makeKeyAndVisible];
     }
 }
 

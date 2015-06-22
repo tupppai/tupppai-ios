@@ -294,6 +294,7 @@
 		5CE4082F1ACE94D600A56E4B /* UIViewController+ATOMTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CE4082E1ACE94D600A56E4B /* UIViewController+ATOMTracking.m */; };
 		5CEAC0301AD4D7750058037C /* ATOMCollectionViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CEAC02F1AD4D7750058037C /* ATOMCollectionViewModel.m */; };
 		5CEAC0331AD4F9540058037C /* ATOMShowCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CEAC0321AD4F9540058037C /* ATOMShowCollection.m */; };
+		E90193721B37EE1E00E91555 /* region.csv in Resources */ = {isa = PBXBuildFile; fileRef = E90193711B37EE1E00E91555 /* region.csv */; };
 		E90197351B32D2F800F46B78 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E90197341B32D2F800F46B78 /* MBProgressHUD.m */; };
 		E90197381B32D3C100F46B78 /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = E90197371B32D3C100F46B78 /* Util.m */; };
 		E901973B1B33C98600F46B78 /* PWRefreshFooterTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E901973A1B33C98600F46B78 /* PWRefreshFooterTableView.m */; };
@@ -331,6 +332,7 @@
 		E99D2F5E1B1C7E8D000D7784 /* NYXProgressiveImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D2F4F1B1C7E8D000D7784 /* NYXProgressiveImageView.m */; };
 		E99D2F5F1B1C7E8D000D7784 /* NYXImagesHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D2F521B1C7E8D000D7784 /* NYXImagesHelper.m */; };
 		E9D1F88C1B203A4F0072242B /* PWRefreshBaseTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9D1F88B1B203A4F0072242B /* PWRefreshBaseTableView.m */; };
+		E9E19D701B37BC72004B9910 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9E19D6F1B37BC72004B9910 /* ImageIO.framework */; };
 		E9ECD58F1B2D6D0300173F49 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C51B2551AB908D200F442A6 /* libsqlite3.dylib */; };
 		E9ECD5A91B2D71A700173F49 /* SinaWeiboConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9ECD5921B2D71A700173F49 /* SinaWeiboConnection.framework */; };
 		E9ECD5AB1B2D71A700173F49 /* AGCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9ECD5951B2D71A700173F49 /* AGCommon.framework */; };
@@ -939,6 +941,7 @@
 		5CEAC02F1AD4D7750058037C /* ATOMCollectionViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMCollectionViewModel.m; sourceTree = "<group>"; };
 		5CEAC0311AD4F9540058037C /* ATOMShowCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShowCollection.h; sourceTree = "<group>"; };
 		5CEAC0321AD4F9540058037C /* ATOMShowCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShowCollection.m; sourceTree = "<group>"; };
+		E90193711B37EE1E00E91555 /* region.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = region.csv; sourceTree = "<group>"; };
 		E90197321B32D2F800F46B78 /* MBProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
 		E90197331B32D2F800F46B78 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		E90197341B32D2F800F46B78 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
@@ -1017,6 +1020,7 @@
 		E99D2F531B1C7E8D000D7784 /* NYXImagesKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NYXImagesKit.h; sourceTree = "<group>"; };
 		E9D1F88A1B203A4F0072242B /* PWRefreshBaseTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWRefreshBaseTableView.h; sourceTree = "<group>"; };
 		E9D1F88B1B203A4F0072242B /* PWRefreshBaseTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWRefreshBaseTableView.m; sourceTree = "<group>"; };
+		E9E19D6F1B37BC72004B9910 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		E9ECD5921B2D71A700173F49 /* SinaWeiboConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SinaWeiboConnection.framework; sourceTree = "<group>"; };
 		E9ECD5931B2D71A700173F49 /* WeChatConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WeChatConnection.framework; sourceTree = "<group>"; };
 		E9ECD5951B2D71A700173F49 /* AGCommon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AGCommon.framework; sourceTree = "<group>"; };
@@ -1048,6 +1052,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9E19D701B37BC72004B9910 /* ImageIO.framework in Frameworks */,
 				E9ECD5BD1B2E83B200173F49 /* WeChatConnection.framework in Frameworks */,
 				E9ECD5BC1B2E7CCD00173F49 /* Accounts.framework in Frameworks */,
 				E9ECD5BB1B2E7C8D00173F49 /* Social.framework in Frameworks */,
@@ -1955,6 +1960,7 @@
 		5CDB05B81AA3FE520089121E = {
 			isa = PBXGroup;
 			children = (
+				E9E19D6F1B37BC72004B9910 /* ImageIO.framework */,
 				5CDB05C31AA3FE520089121E /* ATOMPSGod */,
 				E95691B91B23DADC00DA84BB /* Images.xcassets */,
 				5CDB05DD1AA3FE520089121E /* ATOMPSGodTests */,
@@ -1995,6 +2001,7 @@
 		5CDB05C41AA3FE520089121E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E90193711B37EE1E00E91555 /* region.csv */,
 				5C7861171AAF4DD200E87C77 /* Img */,
 				5C9BDA431AA85E3A00715698 /* testImage */,
 				5CDB06071AA4065C0089121E /* psgod.pch */,
@@ -2050,9 +2057,7 @@
 		5CDB05EC1AA400410089121E /* OpenSource */ = {
 			isa = PBXGroup;
 			children = (
-				E90197321B32D2F800F46B78 /* MBProgressHUD-Prefix.pch */,
-				E90197331B32D2F800F46B78 /* MBProgressHUD.h */,
-				E90197341B32D2F800F46B78 /* MBProgressHUD.m */,
+				E9E19D711B37E1DF004B9910 /* MBProgressHUD */,
 				E9ECD5901B2D71A700173F49 /* ShareSDK */,
 				E95691881B22E88300DA84BB /* Mantle */,
 				5C520B771ADBA1B000C7C2A5 /* AFNetworking */,
@@ -2313,6 +2318,16 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
+		E9E19D711B37E1DF004B9910 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				E90197321B32D2F800F46B78 /* MBProgressHUD-Prefix.pch */,
+				E90197331B32D2F800F46B78 /* MBProgressHUD.h */,
+				E90197341B32D2F800F46B78 /* MBProgressHUD.m */,
+			);
+			name = MBProgressHUD;
+			sourceTree = "<group>";
+		};
 		E9ECD5901B2D71A700173F49 /* ShareSDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -2484,6 +2499,7 @@
 				5C7861281AAF4DD200E87C77 /* 11.jpg in Resources */,
 				5C7861251AAF4DD200E87C77 /* 0.jpg in Resources */,
 				5C7861261AAF4DD200E87C77 /* 1.jpg in Resources */,
+				E90193721B37EE1E00E91555 /* region.csv in Resources */,
 				E95691AC1B22E88300DA84BB /* Info.plist in Resources */,
 				5C78612E1AAF4DD200E87C77 /* 7.jpg in Resources */,
 				E9ECD5AD1B2D71A700173F49 /* Resource.bundle in Resources */,

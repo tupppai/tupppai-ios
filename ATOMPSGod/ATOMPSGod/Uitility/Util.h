@@ -10,4 +10,7 @@
 
 @interface Util : NSObject
 +(void)TextHud:(NSString*)message;
++(void)loadingHud:(NSString*)message;
++(void)dismissHud;
+
 @end

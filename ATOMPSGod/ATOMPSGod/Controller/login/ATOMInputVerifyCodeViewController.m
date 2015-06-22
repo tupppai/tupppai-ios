@@ -105,6 +105,8 @@
                 [param setObject:[ATOMCurrentUser currentUser].sourceData[@"headimgurl"] forKey:@"avatar_url"];
                 break;
             case ATOMSignUpWeibo:
+                [param setObject:[ATOMCurrentUser currentUser].sourceData[@"idstr"] forKey:@"openid"];
+                [param setObject:[ATOMCurrentUser currentUser].sourceData[@"avatar_hd"] forKey:@"avatar_url"];
                 NSLog(@"ATOMSignUpWeibo");
                 signUpType = @"weibo";
                 break;

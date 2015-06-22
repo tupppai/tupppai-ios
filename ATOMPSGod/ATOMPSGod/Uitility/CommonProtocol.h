@@ -8,8 +8,6 @@
 
 #ifndef ATOMPSGod_CommonProtocol_h
 #define ATOMPSGod_CommonProtocol_h
-
-
 #endif
 @protocol PWRefreshBaseTableViewDelegate <NSObject>
 @optional

@@ -11,5 +11,4 @@
 @interface ATOMBaseModel : MTLModel <MTLJSONSerializing>
 
 
-
 @end
