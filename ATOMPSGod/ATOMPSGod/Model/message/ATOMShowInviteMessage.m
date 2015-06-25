@@ -15,7 +15,10 @@
 @implementation ATOMShowInviteMessage
 
 - (AFHTTPRequestOperation *)ShowInviteMessage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
+    [[KShareManager mascotAnimator]show];
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:@"message/invite" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[KShareManager mascotAnimator]dismiss];
+        NSLog(@"ShowInviteMessage responseObject%@",responseObject);
         NSMutableArray *inviteMessageArray = [NSMutableArray array];
         NSArray *dataArray = responseObject[@"data"];
         int ret = [(NSString*)responseObject[@"ret"] intValue];
@@ -44,6 +47,7 @@
             }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [[KShareManager mascotAnimator]dismiss];
         if (block) {
             block(nil, error);
         }

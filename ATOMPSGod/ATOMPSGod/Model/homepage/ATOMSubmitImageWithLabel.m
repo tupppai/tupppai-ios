@@ -20,7 +20,10 @@
 @implementation ATOMSubmitImageWithLabel
 
 - (AFHTTPRequestOperation *)SubmitImageWithLabel:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSInteger, NSError *))block {
+    [[KShareManager mascotAnimator]show];
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] POST:@"ask/save" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[KShareManager mascotAnimator]dismiss];
+        NSLog(@"SubmitImageWithLabel responseObject %@",responseObject);
         NSMutableArray *labelArray = [NSMutableArray array];
         NSArray *dictArray = responseObject[@"data"][@"labels"];
         for (int i = 0; i < dictArray.count; i++) {
@@ -34,6 +37,7 @@
             block(labelArray, newImageID, nil);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [[KShareManager mascotAnimator]dismiss];
         if (block) {
             block(nil, 0, error);
         }
@@ -41,7 +45,9 @@
 }
 
 - (AFHTTPRequestOperation *)SubmitWorkWithLabel:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
+    [[KShareManager mascotAnimator]show];
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] POST:@"reply/save" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[KShareManager mascotAnimator]dismiss];
         NSMutableArray *labelArray = [NSMutableArray array];
         NSArray* data = responseObject[@"data"];
         if (data.count > 0) {
@@ -57,6 +63,7 @@
             }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [[KShareManager mascotAnimator]dismiss];
         if (block) {
             block(nil, error);
         }

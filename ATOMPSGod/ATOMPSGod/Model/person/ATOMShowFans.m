@@ -13,7 +13,10 @@
 @implementation ATOMShowFans
 
 - (AFHTTPRequestOperation *)ShowFans:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
+    [[KShareManager mascotAnimator]show];
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:@"user/myfans" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[KShareManager mascotAnimator]dismiss];
+        NSLog(@"ShowFans responseObject %@",responseObject);
         int ret = [(NSString*)responseObject[@"ret"] intValue];
         if (ret == 1) {
             NSMutableArray *resultArray = [NSMutableArray array];
@@ -32,6 +35,7 @@
         }
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [[KShareManager mascotAnimator]dismiss];
         if (block) {
             block(nil, error);
         }

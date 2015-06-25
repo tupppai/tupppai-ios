@@ -15,7 +15,7 @@
 #import "ATOMAskPageViewModel.h"
 #import "ATOMHomepageViewController.h"
 #import "ATOMMyConcernTableHeaderView.h"
-
+#import "AtomInviteModel.h"
 @interface ATOMInviteViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) ATOMInviteView *inviteView;
@@ -30,6 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
+    [self getMasterDataSource];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -71,7 +72,15 @@
         }
     }
 }
+-(void)getMasterDataSource {
+    AtomInviteModel* inviteModel = [AtomInviteModel new];
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [param setObject:@(1) forKey:@"page"];
+    [param setObject:@(3) forKey:@"size"];
 
+    [inviteModel showMasters:param withBlock:^(NSMutableArray *masterArray, NSError *error) {
+    }];
+}
 #pragma mark - Click Event
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)barButtonItem {
@@ -93,7 +102,11 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if ([tableView.dataSource tableView:tableView numberOfRowsInSection:section] == 0) {
+        return 0;
+    } else {
     return kCommentTableViewHeaderHeight;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

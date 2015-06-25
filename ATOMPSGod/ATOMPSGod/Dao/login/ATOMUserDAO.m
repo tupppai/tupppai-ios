@@ -25,7 +25,7 @@
             NSString *stmt = [MTLFMDBAdapter insertStatementForModel:user];
             NSArray *param = [MTLFMDBAdapter columnValues:user];
             BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
-            if (!flag) {
+            if (flag) {
                 NSLog(@"insert user into DB succeed");
             } else {
                 NSLog(@"insert user into DB fail");
@@ -113,6 +113,7 @@
 }
 
 +(void)clearUsers {
+    NSLog(@"clear all Users in DB");
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
         NSString *stmt = @"delete from ATOMUser";
         [db executeUpdate:stmt];

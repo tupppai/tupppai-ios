@@ -8,7 +8,6 @@
 
 #import "ATOMBaseRequest.h"
 #import "ATOMHTTPRequestOperationManager.h"
-
 @implementation ATOMBaseRequest
 - (AFHTTPRequestOperation *)toggleLike:(NSDictionary *)param withUrl:(NSString*)fUrl withID:(NSInteger)imageID  withBlock:(void (^)(NSError *))block {
     NSString* url = [NSString stringWithFormat:@"%@/%ld",fUrl,(long)imageID];

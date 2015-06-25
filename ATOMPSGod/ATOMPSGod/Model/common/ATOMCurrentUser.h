@@ -12,6 +12,11 @@
 
 @interface ATOMCurrentUser : NSObject
 
+
+/**
+ *  省份provinceName,provinceID,城市cityName,cityID
+ */
+@property (nonatomic, strong) NSMutableDictionary *region;
 /**
  *  通过第三方平台可能获取到的数据
  */

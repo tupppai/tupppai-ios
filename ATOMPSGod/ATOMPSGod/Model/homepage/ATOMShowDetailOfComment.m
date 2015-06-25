@@ -28,7 +28,7 @@
 
 - (AFHTTPRequestOperation *)ShowDetailOfComment:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSMutableArray *, NSError *))block {
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:@"comment/index" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"param %@,responseObject%@",param,responseObject);
+        NSLog(@"ShowDetailOfComment param %@,responseObject%@",param,responseObject);
         NSMutableArray *hotCommentArray = [NSMutableArray array];
         NSMutableArray *recentCommentArray = [NSMutableArray array];
         NSArray* data = responseObject[@"data"];
@@ -74,7 +74,7 @@
 - (AFHTTPRequestOperation *)SendComment:(NSDictionary *)param withBlock:(void (^)(NSInteger, NSError *))block {
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] POST:@"comment/send_comment" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-        NSLog(@"param %@,responseObject%@",param,responseObject);
+        NSLog(@"SendComment %@,responseObject%@",param,responseObject);
         NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
         if (ret == 1) {
             NSLog(@"发送评论成功");

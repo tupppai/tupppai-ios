@@ -79,7 +79,7 @@
 - (AFHTTPRequestOperation *)ShowHomepage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:@"ask/index" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-        NSLog(@"ShowHomepage responseObject%@",responseObject);
+//        NSLog(@"ShowHomepage responseObject%@",responseObject);
         NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
         if (ret != 1) {
             block(nil, nil);

@@ -17,9 +17,9 @@
 @property (nonatomic, strong) UILabel *sexLabel;
 @property (nonatomic, strong) UILabel *areaLabel;
 @property (nonatomic, strong) UIView *nicknameView;
-@property (nonatomic, strong) UIView *areaView;
 @property (nonatomic, strong) UIView *protocolView;
 @property (nonatomic, strong) UIView *sexPickerTopView;
+@property (nonatomic, strong) UIView *regionPickerTopView;
 
 @end
 
@@ -38,6 +38,8 @@ static int padding10 = 10;
         [self createProtocolSubView];
         [self createSexPickerView];
         [self hideSexPickerView];
+        [self createRegionPickerView];
+        [self hideRegionPickerView];
     }
     return self;
 }
@@ -226,6 +228,7 @@ static int padding10 = 10;
 
 - (void)createSexPickerView {
     WS(ws);
+    _sexPickerView.tag = 111;
     _sexPickerView = [UIPickerView new];
 //    _sexPickerView.showsSelectionIndicator = YES;
     _sexPickerView.backgroundColor = [UIColor whiteColor];
@@ -274,6 +277,56 @@ static int padding10 = 10;
     }];
 }
 
+- (void)createRegionPickerView {
+    WS(ws);
+    _regionPickerView.tag = 222;
+    _regionPickerView = [UIPickerView new];
+    _regionPickerView.backgroundColor = [UIColor whiteColor];
+    [self addSubview:_regionPickerView];
+    
+    _regionPickerTopView = [UIView new];
+    _regionPickerTopView.backgroundColor = [UIColor whiteColor];
+    [self addSubview:_regionPickerTopView];
+    
+    _cancelRegionPickerButton = [UIButton new];
+    [_cancelRegionPickerButton setTitle:@"取消" forState:UIControlStateNormal];
+    [_cancelRegionPickerButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    _confirmRegionPickerButton = [UIButton new];
+    [_confirmRegionPickerButton setTitle:@"完成" forState:UIControlStateNormal];
+    [_confirmRegionPickerButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    
+    [_regionPickerTopView addSubview:_cancelRegionPickerButton];
+    [_regionPickerTopView addSubview:_confirmRegionPickerButton];
+    
+    [_regionPickerView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(ws);
+        make.left.equalTo(ws);
+        make.right.equalTo(ws);
+        make.height.equalTo(@200);
+    }];
+    
+    [_regionPickerTopView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(ws.regionPickerView);
+        make.right.equalTo(ws.regionPickerView);
+        make.bottom.equalTo(ws.regionPickerView.mas_top);
+        make.height.equalTo(@60);
+    }];
+    
+    [_cancelRegionPickerButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(ws.regionPickerTopView.mas_left).with.offset(padding10);
+        make.width.equalTo(@50);
+        make.height.equalTo(@40);
+        make.top.equalTo(ws.regionPickerTopView.mas_top).with.offset(padding10);
+    }];
+    
+    [_confirmRegionPickerButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(ws.regionPickerTopView.mas_right).with.offset(-padding10);
+        make.width.equalTo(@50);
+        make.height.equalTo(@40);
+        make.top.equalTo(ws.regionPickerTopView.mas_top).with.offset(padding10);
+    }];
+}
+
 - (void)setCommonView:(UIView *)view {
     view.backgroundColor = [UIColor whiteColor];
     [self addSubview:view];
@@ -296,6 +349,16 @@ static int padding10 = 10;
 - (void)hideSexPickerView {
     _sexPickerView.hidden = YES;
     _sexPickerTopView.hidden = YES;
+}
+
+- (void)showRegionPickerView {
+    _regionPickerTopView.hidden = NO;
+    _regionPickerView.hidden = NO;
+}
+
+- (void)hideRegionPickerView {
+    _regionPickerTopView.hidden = YES;
+    _regionPickerView.hidden = YES;
 }
 
 - (NSInteger)tagOfCurrentSex {

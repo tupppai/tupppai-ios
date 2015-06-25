@@ -46,7 +46,7 @@ static CGFloat cellHeight = 70;
     _inviteButton.layer.cornerRadius = 5;
     _inviteButton.backgroundColor = [UIColor colorWithHex:0x74c3ff];
     [_inviteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_inviteButton setTitle:@"已邀请" forState:UIControlStateNormal];
+    [_inviteButton setTitle:@"邀请" forState:UIControlStateNormal];
     _inviteButton.titleLabel.font = [UIFont systemFontOfSize:13.f];
     [self addSubview:_inviteButton];
     
@@ -89,10 +89,10 @@ static CGFloat cellHeight = 70;
 - (void)changeInviteButtonStatus {
     _inviteButton.selected = !_inviteButton.selected;
     if (_inviteButton.selected) {
-        _inviteButton.backgroundColor = [UIColor colorWithHex:0xc5cdd3];
+        _inviteButton.backgroundColor = [UIColor colorWithHex:0x74c3ff];
         [_inviteButton setTitle:@"邀请" forState:UIControlStateNormal];
     } else {
-        _inviteButton.backgroundColor = [UIColor colorWithHex:0x74c3ff];
+        _inviteButton.backgroundColor = [UIColor colorWithHex:0xc5cdd3];
         [_inviteButton setTitle:@"已邀请" forState:UIControlStateNormal];
     }
 }

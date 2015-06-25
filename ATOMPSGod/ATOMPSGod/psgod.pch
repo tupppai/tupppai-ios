@@ -42,6 +42,7 @@
 #import "MMPlaceHolder.h"
 #import "Util.h"
 #import "CommonProtocol.h"
+#import "KShareManager.h"
 #endif
 
 

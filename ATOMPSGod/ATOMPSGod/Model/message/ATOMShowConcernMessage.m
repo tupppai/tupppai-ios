@@ -13,7 +13,10 @@
 @implementation ATOMShowConcernMessage
 
 - (AFHTTPRequestOperation *)ShowConcernMessage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
+    [[KShareManager mascotAnimator]show];
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:@"message/follow" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[KShareManager mascotAnimator]dismiss];
+        NSLog(@"ShowConcernMessage responseObject%@",responseObject);
         NSMutableArray *concernMessageArray = [NSMutableArray array];
         NSArray *dataArray = responseObject[@"data"];
         int ret = [(NSString*)responseObject[@"ret"] intValue];
@@ -29,6 +32,7 @@
             block(nil, nil);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [[KShareManager mascotAnimator]dismiss];
         if (block) {
             block(nil, error);
         }

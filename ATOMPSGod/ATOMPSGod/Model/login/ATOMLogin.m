@@ -22,9 +22,11 @@
 
 - (AFHTTPRequestOperation *)openIDAuth:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(bool isRegister,NSString* info, NSError *error))block {
     NSLog(@"判断第三平台获取的openid是否已经注册");
+    [[KShareManager mascotAnimator]show];
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] POST:[NSString stringWithFormat:@"auth/%@",type] parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        NSLog(@"thirdPartyLogin param %@",param);
-//        NSLog(@"responseObject %@",responseObject);
+        [[KShareManager mascotAnimator]dismiss];
+        NSLog(@"openIDAuth param %@",param);
+        NSLog(@"openIDAuth responseObject%@",responseObject);
         NSInteger isRegistered = [responseObject[@"data"][@"is_register"] integerValue];
         if (isRegistered == 1) {
             ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:responseObject[@"data"][@"user_obj"] error:NULL];
@@ -37,6 +39,7 @@
             }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [[KShareManager mascotAnimator]dismiss];
         NSLog(@"openIDAuth 服务器出错");
         if (block) {
             block(nil,nil,error);
@@ -47,7 +50,7 @@
 
 //shareSDK 获取 用户手机的第三方平台的信息
 - (void)thirdPartyAuth:(ShareType)type withBlock:(void (^)(NSDictionary* sourceData))block{
-    NSLog(@"thirdPartyAuth");
+    NSLog(@"查看Iphone是否有登录的（微博，微信）客户端，并索取数据");
     [ShareSDK getUserInfoWithType:type authOptions:nil result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error) {
         NSLog(@"result %d, userInfo %@,error %@",result,userInfo,error);
         NSLog(@"user info%@ userUid %@ ,name %@,image %@",[userInfo description],[userInfo uid],[userInfo nickname],[userInfo profileImage]);
@@ -63,10 +66,12 @@
 
 
 - (AFHTTPRequestOperation* )Login:(NSDictionary*)param withBlock:(void (^)(BOOL succeed))block{
-    NSLog(@"Login param %@",param);
+    [[KShareManager mascotAnimator] show];
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] POST:@"user/login" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[KShareManager mascotAnimator] dismiss];
         NSInteger ret = [(NSString*)responseObject[@"ret"]integerValue];
         NSString* info = responseObject[@"info"];
+        NSLog(@"Login param %@",param);
         NSLog(@"Login responseObject %@ \n info %@",responseObject,info);
         if (ret == 1) {
             if (responseObject[@"data"]) {

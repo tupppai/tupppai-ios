@@ -96,31 +96,8 @@
     if ([_inputVerifyView.verifyCodeTextField.text isEqualToString:_verifyCode]) {
         NSMutableDictionary *param = [[ATOMCurrentUser currentUser] dictionaryFromModel];
         ATOMSubmitUserInformation *submitUserInformation = [ATOMSubmitUserInformation new];
-        NSString* signUpType;
-        switch ([ATOMCurrentUser currentUser].signUpType) {
-            case ATOMSignUpWeixin:
-                NSLog(@"ATOMSignUpWeixin");
-                signUpType = @"weixin";
-                [param setObject:[ATOMCurrentUser currentUser].sourceData[@"openid"] forKey:@"openid"];
-                [param setObject:[ATOMCurrentUser currentUser].sourceData[@"headimgurl"] forKey:@"avatar_url"];
-                break;
-            case ATOMSignUpWeibo:
-                [param setObject:[ATOMCurrentUser currentUser].sourceData[@"idstr"] forKey:@"openid"];
-                [param setObject:[ATOMCurrentUser currentUser].sourceData[@"avatar_hd"] forKey:@"avatar_url"];
-                NSLog(@"ATOMSignUpWeibo");
-                signUpType = @"weibo";
-                break;
-            case ATOMSignUpMobile:
-                NSLog(@"ATOMSignUpMobile");
-                signUpType = @"mobile";
-                break;
-            default:
-                NSLog(@"case default");
-                signUpType = @"weixin";
-                break;
-        }
-            
-        [submitUserInformation SubmitUserInformation:[param copy] AndType:signUpType withBlock:^(NSError *error) {
+        
+        [submitUserInformation SubmitUserInformation:[param copy] withBlock:^(NSError *error) {
             if (!error) {
                 [Util TextHud:@"注册成功"];
                 [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];

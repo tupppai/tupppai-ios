@@ -15,8 +15,10 @@
 @implementation ATOMShowCommentMessage
 
 - (AFHTTPRequestOperation *)ShowCommentMessage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
+    [[KShareManager mascotAnimator]show];
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:@"message/comment" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"responseObject%@",responseObject);
+        [[KShareManager mascotAnimator]dismiss];
+        NSLog(@"ShowCommentMessage responseObject%@",responseObject);
         NSMutableArray *commentMessageArray = [NSMutableArray array];
         NSArray *dataArray = responseObject[@"data"];
         int ret = [(NSString*)responseObject[@"ret"] intValue];
@@ -46,6 +48,7 @@
             }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [[KShareManager mascotAnimator]dismiss];
         [Util TextHud:@"出现未知错误"];
         if (block) {
             block(nil, error);

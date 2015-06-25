@@ -21,6 +21,15 @@ static ATOMCurrentUser *_currentUser;
     return _currentUser;
 }
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _region = [NSMutableDictionary new];
+    }
+    return self;
+}
+
 - (NSMutableDictionary *)dictionaryFromModel {
     NSMutableDictionary *dict = [NSMutableDictionary new];
     [dict setObject:_nickname forKey:@"nickname"];
@@ -29,6 +38,29 @@ static ATOMCurrentUser *_currentUser;
     [dict setObject:[NSString stringWithFormat:@"%d", (int)_locationID] forKey:@"location"];
     [dict setObject:[NSString stringWithFormat:@"%d", (int)_sex] forKey:@"sex"];
     [dict setObject:[NSString stringWithFormat:@"%@", _avatar] forKey:@"avatar"];
+
+    switch (_signUpType) {
+        case ATOMSignUpWeixin:
+            [dict setObject:_sourceData[@"openid"] forKey:@"openid"];
+            [dict setObject:_sourceData[@"headimgurl"] forKey:@"avatar_url"];
+            [dict setObject:@"weixin" forKey:@"type"];
+            break;
+        case ATOMSignUpWeibo:
+            [dict setObject:_sourceData[@"idstr"] forKey:@"openid"];
+            [dict setObject:_sourceData[@"avatar_hd"] forKey:@"avatar_url"];
+            [dict setObject:_sourceData[@"province"] forKey:@"province"];
+            [dict setObject:_sourceData[@"city"] forKey:@"city"];
+            [dict setObject:@"weibo" forKey:@"type"];
+            break;
+        case ATOMSignUpMobile:
+            [dict setObject:[NSString stringWithFormat:@"%@", _region[@"cityID"]] forKey:@"city"];
+            [dict setObject:[NSString stringWithFormat:@"%@", _region[@"provinceID"]] forKey:@"province"];
+            [dict setObject:@"mobile" forKey:@"type"];
+            break;
+        default:
+            break;
+    }
+    
     return [dict mutableCopy];
 }
 

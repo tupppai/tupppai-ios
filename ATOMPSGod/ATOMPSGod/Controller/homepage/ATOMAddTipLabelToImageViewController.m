@@ -18,6 +18,8 @@
 #import "ATOMImageTipLabel.h"
 #import "AppDelegate.h"
 #import "ATOMImageTipLabelViewModel.h"
+#import "ATOMHotDetailViewController.h"
+#import "ATOMHomepageViewController.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -110,7 +112,6 @@
     _originLeftBarButtonItems = self.navigationItem.leftBarButtonItems;
     _originRightBarButtonItem = self.navigationItem.rightBarButtonItem;
     
-    
     _addTipLabelToImageView = [ATOMAddTipLabelToImageView new];
     self.view = _addTipLabelToImageView;
     
@@ -144,6 +145,8 @@
         [self showWarnLabel];
         return ;
     }
+    
+    self.navigationItem.rightBarButtonItem.enabled = NO;
     NSString *pushTypeStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"UploadingOrSeekingHelp"];
     if ([pushTypeStr isEqualToString:@"Uploading"]) {
         [self dealSubmitWorkWithLabel];
@@ -225,13 +228,15 @@
 }
 //上传作品
 - (void)dealSubmitWorkWithLabel {
-    NSLog(@"上传作品中");
+    [Util loadingHud:@"正在上传你的作品"];
     WS(ws);
     NSData *data = UIImageJPEGRepresentation(_workImage, 0.4);
     ATOMUploadImage *uploadWork = [ATOMUploadImage new];
     [uploadWork UploadImage:data WithBlock:^(ATOMImage *imageInformation, NSError *error) {
         if (error) {
+            [Util dismissHud];
             [Util TextHud:@"提交作品失败"];
+            self.navigationItem.rightBarButtonItem.enabled = YES;
             return ;
         }
         [ws dealSubmitWorkWithLabelBy:imageInformation.imageID];
@@ -242,20 +247,30 @@
     WS(ws);
     ATOMSubmitImageWithLabel *submitWorkWithLabel = [ATOMSubmitImageWithLabel new];
     [submitWorkWithLabel SubmitWorkWithLabel:[ws getParamWithImageID:imageID AndAskID:ws.askPageViewModel.imageID] withBlock:^(NSMutableArray *labelArray, NSError *error) {
+        [Util dismissHud];
         if (error) {
             [Util TextHud:@"提交作品失败"];
             return ;
         }
         [Util TextHud:@"提交作品成功"];
-        ATOMShareViewController *svc = [ATOMShareViewController new];
-        svc.askPageViewModel = ws.askPageViewModel;
-        [ws pushViewController:svc animated:YES];
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+        
+//        ATOMShareViewController *svc = [ATOMShareViewController new];
+//        svc.askPageViewModel = ws.askPageViewModel;
+//        [ws pushViewController:svc animated:YES];
+        
+        ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
+        hdvc.askPageViewModel = ws.askPageViewModel;
+        ATOMHomepageViewController *hvc = self.navigationController.viewControllers[0];
+        [self pushViewController:hdvc animated:YES];
+        [self.navigationController setViewControllers:@[hvc, hdvc]];
     }];
 }
 
 //上传求助
 - (void)dealSubmitUploadWithLabel {
     WS(ws);
+    [Util loadingHud:@"正在上传你的求P"];
     NSData *data = UIImageJPEGRepresentation(_workImage, 0.4);
 //    NSData *data2 = UIImageJPEGRepresentation(_workImage, 0.2);
 //    NSData *data3 = UIImageJPEGRepresentation(_workImage, 0.6);
@@ -275,7 +290,9 @@
 //    //[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
     [uploadImage UploadImage:data WithBlock:^(ATOMImage *imageInformation, NSError *error) {
         if (error) {
-            [Util TextHud:@"提交作品失败"];
+            [Util dismissHud];
+            [Util TextHud:@"提交求P失败"];
+            self.navigationItem.rightBarButtonItem.enabled = YES;
             return ;
         }
         [ws dealSubmitUploadWithLabelBy:imageInformation.imageID];
@@ -286,11 +303,13 @@
     WS(ws);
     ATOMSubmitImageWithLabel *submitImageWithLabel = [ATOMSubmitImageWithLabel new];
     [submitImageWithLabel SubmitImageWithLabel:[ws getParamWithImageID:imageID AndAskID:-1] withBlock:^(NSMutableArray *labelArray, NSInteger newImageID, NSError *error) {
+        [Util dismissHud];
         if (error) {
-            [Util TextHud:@"提交作品失败"];
+            [Util TextHud:@"提交求P失败"];
             return ;
         }
-        [Util TextHud:@"提交作品成功"];
+        [Util TextHud:@"提交求P成功"];
+        self.navigationItem.rightBarButtonItem.enabled = YES;
         ATOMInviteViewController *ivc = [ATOMInviteViewController new];
         ws.newAskPageViewModel.imageID = newImageID;
         ivc.askPageViewModel = ws.newAskPageViewModel;
@@ -346,6 +365,10 @@
 
 -(void)showWarnLabel {
     WS(ws);
+    NSString *pushTypeStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"UploadingOrSeekingHelp"];
+    if ([pushTypeStr isEqualToString:@"Uploading"]) {
+        _fillInContentOfTipLabelView.topWarnLabel.text = @"大神，你还没有说你巨作的效果";
+    }
     [[AppDelegate APP].window addSubview:_fillInContentOfTipLabelView.topWarnLabel];
     [[AppDelegate APP].window addSubview:_fillInContentOfTipLabelView.topWarnLabel2];
     [UIView animateWithDuration:4 animations:^{

@@ -14,9 +14,10 @@
 
 @implementation ATOMSubmitUserInformation
 
-- (AFHTTPRequestOperation *)SubmitUserInformation:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(NSError *))block {
-    NSLog(@"type%@",type);
+- (AFHTTPRequestOperation *)SubmitUserInformation:(NSDictionary *)param withBlock:(void (^)(NSError *))block {
+    [[KShareManager mascotAnimator]show];
     return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] POST:@"user/save" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[KShareManager mascotAnimator]dismiss];
         NSLog(@"SubmitUserInformation param%@",param);
         NSLog(@"SubmitUserInformation responseObject %@ ,\n info %@",responseObject,responseObject[@"info"]);
         if (responseObject[@"data"]) {
@@ -29,6 +30,7 @@
             block(nil);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [[KShareManager mascotAnimator]dismiss];
         if (block) {
             block(error);
         }
