@@ -23,6 +23,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        _type = 1;
         _imageID = 0;
         _userID = [ATOMCurrentUser currentUser].uid;
         _userName = [ATOMCurrentUser currentUser].nickname;

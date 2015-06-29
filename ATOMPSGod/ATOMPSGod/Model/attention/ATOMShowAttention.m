@@ -15,16 +15,16 @@
 
 @implementation ATOMShowAttention
 
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-    }
-    return self;
-}
+//- (instancetype)init {
+//    self = [super init];
+//    if (self) {
+//    }
+//    return self;
+//}
 
-- (AFHTTPRequestOperation *)ShowAttention:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
+- (NSURLSessionDataTask *)ShowAttention:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
     [[KShareManager mascotAnimator]show];
-    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:@"user/fellowsDynamic" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/fellowsDynamic" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         [[KShareManager mascotAnimator]dismiss];
         NSLog(@"ShowAttention responseObject %@",responseObject);
         NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
@@ -70,7 +70,7 @@
                 block(resultArray, nil);
             }
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         if (block) {
             block(nil, error);
         }

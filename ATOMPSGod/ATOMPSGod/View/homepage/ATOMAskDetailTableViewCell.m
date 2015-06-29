@@ -46,7 +46,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     _userHeaderButton.frame = CGRectMake(kPadding15, kPadding15, kUserHeaderButtonWidth, kUserHeaderButtonWidth);
-    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, kPadding15, kUserNameLabelWidth, kFont14);
+    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, kPadding15, kUserNameLabelWidth, kFont14+5);
     CGSize commentDetailTextSize = [[self class] calculateCommentDeailTextSize:_viewModel.content];
     _userCommentDetailLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, CGRectGetMaxY(_userNameLabel.frame) + kPadding10, commentDetailTextSize.width, commentDetailTextSize.   height);
     CGSize size = [_viewModel.likeNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, 13) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;

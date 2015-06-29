@@ -13,7 +13,7 @@
 @property (nonatomic, strong) UIButton *cancelButton;
 @property (nonatomic, strong) UILabel *wxFriendCircleLabel;
 @property (nonatomic, strong) UILabel *wxLabel;
-@property (nonatomic, strong) UILabel *weiboLabel;
+@property (nonatomic, strong) UILabel *sinaWeiboLabel;
 @property (nonatomic, strong) UIView *lineView;
 @property (nonatomic, strong) UIButton *inviteButton;
 @property (nonatomic, strong) UIButton *reportButton;
@@ -36,6 +36,7 @@ static CGFloat BOTTOMHEIGHT = 286;
         self.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
         self.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
         [self createSubView];
+        [self configClickEvent];
     }
     return self;
 }
@@ -59,9 +60,9 @@ static CGFloat BOTTOMHEIGHT = 286;
     [_wxFriendCircleButton setBackgroundImage:[UIImage imageNamed:@"moment_big"] forState:UIControlStateNormal];
     [_bottomView addSubview:_wxFriendCircleButton];
     
-    _weiboButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonInterval + CGRectGetMaxX(_wxFriendCircleButton.frame), CGOriginY(_wxButton.frame), kShareButtonWidth, kShareButtonWidth)];
-    [_weiboButton setBackgroundImage:[UIImage imageNamed:@"weibo_big"] forState:UIControlStateNormal];
-    [_bottomView addSubview:_weiboButton];
+    _sinaWeiboButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonInterval + CGRectGetMaxX(_wxFriendCircleButton.frame), CGOriginY(_wxButton.frame), kShareButtonWidth, kShareButtonWidth)];
+    [_sinaWeiboButton setBackgroundImage:[UIImage imageNamed:@"weibo_big"] forState:UIControlStateNormal];
+    [_bottomView addSubview:_sinaWeiboButton];
     
     _wxLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_wxButton.frame) - kPadding10, CGRectGetMaxY(_wxButton.frame), labelWidth, labelHeight)];
     [self configCommonLabel:_wxLabel WithText:@"微信好友" AndTextColor:[UIColor colorWithHex:0xacb8c1]];
@@ -69,8 +70,8 @@ static CGFloat BOTTOMHEIGHT = 286;
     _wxFriendCircleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_wxFriendCircleButton.frame) - kPadding10, CGRectGetMaxY(_wxFriendCircleButton.frame), labelWidth, labelHeight)];
     [self configCommonLabel:_wxFriendCircleLabel WithText:@"微信朋友圈" AndTextColor:[UIColor colorWithHex:0xacb8c1]];
     
-    _weiboLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_weiboButton.frame) - kPadding10, CGRectGetMaxY(_weiboButton.frame), labelWidth, labelHeight)];
-    [self configCommonLabel:_weiboLabel WithText:@"新浪微博" AndTextColor:[UIColor colorWithHex:0xacb8c1]];
+    _sinaWeiboLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_sinaWeiboButton.frame) - kPadding10, CGRectGetMaxY(_sinaWeiboButton.frame), labelWidth, labelHeight)];
+    [self configCommonLabel:_sinaWeiboLabel WithText:@"新浪微博" AndTextColor:[UIColor colorWithHex:0xacb8c1]];
     
     
     _lineView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_wxFriendCircleLabel.frame) + kPadding5, CGWidth(_bottomView.frame), 0.5)];
@@ -111,6 +112,26 @@ static CGFloat BOTTOMHEIGHT = 286;
     [_bottomView addSubview:_cancelButton];
     [_cancelButton addTarget:self action:@selector(clickCancelButton:) forControlEvents:UIControlEventTouchUpInside];
     
+}
+-(void)configClickEvent {
+    [self.wxButton addTarget:self action:@selector(tapWechatFriendsShareButton) forControlEvents:UIControlEventTouchUpInside];
+    [self.wxFriendCircleButton addTarget:self action:@selector(tapWechatMomentShareButton) forControlEvents:UIControlEventTouchUpInside];
+    [self.sinaWeiboButton addTarget:self action:@selector(tapSinaWeiboShareButton) forControlEvents:UIControlEventTouchUpInside];
+}
+
+-(void)tapWechatFriendsShareButton {
+    if (_delegate && [_delegate respondsToSelector:@selector(tapWechatFriends)]) {
+        [_delegate tapWechatFriends];
+    }
+}
+-(void)tapWechatMomentShareButton {
+    if (_delegate && [_delegate respondsToSelector:@selector(tapWechatMoment)]) {
+        [_delegate tapWechatMoment];
+    }
+}-(void)tapSinaWeiboShareButton {
+    if (_delegate && [_delegate respondsToSelector:@selector(tapSinaWeibo)]) {
+        [_delegate tapSinaWeibo];
+    }
 }
 
 - (void)configCommonLabel:(UILabel *)label WithText:(NSString *)text AndTextColor:(UIColor *)textColor {

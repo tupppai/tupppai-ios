@@ -202,8 +202,9 @@ static int padding10 = 10;
     
     [_showAreaLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(ws.areaLabel.mas_right);
+        make.right.equalTo(ws.areaView.mas_right);
         make.centerY.equalTo(ws.areaLabel.mas_centerY);
-        make.width.equalTo(ws.areaLabel.mas_width).offset(50);
+//        make.width.equalTo(ws.areaLabel.mas_width).offset(100);
         make.height.equalTo(ws.areaLabel.mas_height);
     }];
 }

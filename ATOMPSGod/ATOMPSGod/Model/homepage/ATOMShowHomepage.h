@@ -11,13 +11,12 @@
 
 @interface ATOMShowHomepage : NSObject
 
-- (AFHTTPRequestOperation *)ShowHomepage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *homepageArray, NSError *error))block;
-- (AFHTTPRequestOperation *)toggleLike:(NSDictionary *)param withID:(NSInteger)imageID  withBlock:(void (^)(NSString *, NSError *))block;
+- (NSURLSessionDataTask *)ShowHomepage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *homepageArray, NSError *error))block;
+- (NSURLSessionDataTask *)toggleLike:(NSDictionary *)param withID:(NSInteger)imageID  withBlock:(void (^)(NSString *, NSError *))block;
 
 - (void)saveHomeImagesInDB:(NSMutableArray *)homeImages;
 - (NSArray *)getHomeImages;
-- (NSArray *)getHomeImagesWithHomeType:(NSString *)homeType;
-
+- (NSArray *)getHomeImagesWithHomeType:(ATOMHomepageViewType)homeType;
 - (void)clearHomePages;
 - (void)clearHomePagesWithHomeType:(NSString *)homeType;
 @end

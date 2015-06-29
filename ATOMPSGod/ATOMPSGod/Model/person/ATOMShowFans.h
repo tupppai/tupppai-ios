@@ -10,6 +10,6 @@
 
 @interface ATOMShowFans : NSObject
 
-- (AFHTTPRequestOperation *)ShowFans:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *resultArray, NSError *error))block;
+- (NSURLSessionDataTask *)ShowFans:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *resultArray, NSError *error))block;
 
 @end

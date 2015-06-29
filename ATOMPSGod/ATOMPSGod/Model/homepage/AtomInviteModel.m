@@ -1,57 +1,56 @@
 //
-//  AtomInviteModel.m
+//  ATOMInviteModel.m
 //  ATOMPSGod
 //
 //  Created by Peiwei Chen on 6/24/15.
 //  Copyright (c) 2015 ATOM. All rights reserved.
 //
 
-#import "AtomInviteModel.h"
+#import "ATOMInviteModel.h"
 #import "ATOMHTTPRequestOperationManager.h"
-
-@implementation AtomInviteModel
-- (AFHTTPRequestOperation *)showMasters:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
-    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:@"user/get_recommend_users" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
+#import "ATOMRecommendUser.h"
+@implementation ATOMInviteModel
+- (NSURLSessionDataTask *)showMasters:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *recommendMasters,NSMutableArray *recommendFriends, NSError *))block {
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/get_recommend_users" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"showMasters responseObject%@",responseObject);
         NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
+        NSMutableArray *recommendMasters;
+        NSMutableArray *recommendFriends;
+
         if (ret != 1) {
-            block(nil, nil);
-        } else {
-//            NSMutableArray *homepageArray = [NSMutableArray array];
-//            NSArray *imageDataArray = responseObject[@"data"];
-//            for (int i = 0; i < imageDataArray.count; i++) {
-//                ATOMHomeImage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMHomeImage class] fromJSONDictionary:imageDataArray[i] error:NULL];
-//                homeImage.homePageType = (NSString*)[param[@"type"] copy];
-//                homeImage.tipLabelArray = [NSMutableArray array];
-//                NSArray *labelDataArray = imageDataArray[i][@"labels"];
-//                if (labelDataArray.count) {
-//                    for (int j = 0; j < labelDataArray.count; j++) {
-//                        ATOMImageTipLabel *tipLabel = [MTLJSONAdapter modelOfClass:[ATOMImageTipLabel class] fromJSONDictionary:labelDataArray[j] error:NULL];
-//                        tipLabel.imageID = homeImage.imageID;
-//                        [homeImage.tipLabelArray addObject:tipLabel];
-//                    }
-//                }
-//                homeImage.replierArray = [NSMutableArray array];
-//                NSArray *replierArray = imageDataArray[i][@"replyer"];
-//                if (replierArray.count) {
-//                    for (int j = 0; j < replierArray.count; j++) {
-//                        ATOMReplier *replier = [MTLJSONAdapter modelOfClass:[ATOMReplier class] fromJSONDictionary:replierArray[j] error:NULL];
-//                        replier.imageID = homeImage.imageID;
-//                        [homeImage.replierArray addObject:replier];
-//                    }
-//                }
-//                NSLog(@"homeImage %@ ",homeImage);
-//                [homepageArray addObject:homeImage];
-//            }
-//            if (block) {
-//                block(homepageArray, nil);
-//            }
+            [Util TextHud:@"出现未知错误"];
+            block(nil, nil,nil);
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        else {
+            if (responseObject[@"data"][@"recommends"]) {
+                NSLog(@"showMasters responseObject recommend%@",responseObject[@"data"][@"recommends"]);
+
+                recommendMasters = [NSMutableArray array];
+                NSArray *recommendData = responseObject[@"data"][@"recommends"];
+                for (NSDictionary* data in recommendData) {
+                    NSLog(@"recommendMasters for");
+                    ATOMRecommendUser *ru = [MTLJSONAdapter modelOfClass:[ATOMRecommendUser class] fromJSONDictionary:data error:NULL];
+                    [recommendMasters addObject:ru];
+                }
+                NSLog(@"recommendMasters  %@",recommendMasters);
+
+            }
+            if (responseObject[@"data"][@"fellows"]) {
+                recommendFriends = [NSMutableArray array];
+                NSArray *recommendData2 = responseObject[@"data"][@"fellows"];
+                for (NSDictionary* data in recommendData2) {
+                    ATOMRecommendUser *ru = [MTLJSONAdapter modelOfClass:[ATOMRecommendUser class] fromJSONDictionary:data error:NULL];
+                    [recommendFriends addObject:ru];
+                }
+            }
+            if (block) {
+                block(recommendMasters,recommendFriends,nil);
+            }
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [Util TextHud:@"出现未知错误"];
         if (block) {
-            block(nil, error);
+            block(nil,nil, error);
         }
     }];
     

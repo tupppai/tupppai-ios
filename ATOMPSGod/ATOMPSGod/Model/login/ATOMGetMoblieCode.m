@@ -11,8 +11,8 @@
 
 @implementation ATOMGetMoblieCode
 
-- (AFHTTPRequestOperation *)GetMobileCode:(NSDictionary *)param withBlock:(void (^)(NSString *, NSError *))block {
-    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:@"user/get_mobile_code" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+- (NSURLSessionDataTask *)GetMobileCode:(NSDictionary *)param withBlock:(void (^)(NSString *, NSError *))block {
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/get_mobile_code" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSInteger ret = [responseObject[@"ret"] integerValue];
         NSString *verifyCode = responseObject[@"data"][@"code"];
         NSLog(@"GetMobileCode param %@,response data %@",param,responseObject);
@@ -23,7 +23,7 @@
                 block(@"peiweiSoHandsome", nil);
             }
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         block(@"peiweiSoHandsome", error);
     }];
 }

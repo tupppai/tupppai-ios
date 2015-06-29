@@ -1,5 +1,5 @@
 //
-//  AtomInviteModel.h
+//  ATOMInviteModel.h
 //  ATOMPSGod
 //
 //  Created by Peiwei Chen on 6/24/15.
@@ -8,6 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface AtomInviteModel : NSObject
-- (AFHTTPRequestOperation *)showMasters:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block;
+@interface ATOMInviteModel : NSObject
+- (NSURLSessionDataTask *)showMasters:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *recommendMasters,NSMutableArray *recommendFriends, NSError *))block;
 @end

@@ -12,6 +12,6 @@
 
 @property (nonatomic, strong) UIButton *wxButton;
 @property (nonatomic, strong) UIButton *wxFriendCircleButton;
-@property (nonatomic, strong) UIButton *weiboButton;
-
+@property (nonatomic, strong) UIButton *sinaWeiboButton;
+@property (nonatomic, weak) id<ATOMShareFunctionViewDelegate> delegate;
 @end

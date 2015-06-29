@@ -20,27 +20,34 @@
 
 @implementation ATOMLogin
 
-- (AFHTTPRequestOperation *)openIDAuth:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(bool isRegister,NSString* info, NSError *error))block {
+- (NSURLSessionDataTask *)openIDAuth:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(bool isRegister,NSString* info, NSError *error))block {
     NSLog(@"判断第三平台获取的openid是否已经注册");
     [[KShareManager mascotAnimator]show];
-    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] POST:[NSString stringWithFormat:@"auth/%@",type] parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:[NSString stringWithFormat:@"auth/%@",type] parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         [[KShareManager mascotAnimator]dismiss];
         NSLog(@"openIDAuth param %@",param);
         NSLog(@"openIDAuth responseObject%@",responseObject);
-        NSInteger isRegistered = [responseObject[@"data"][@"is_register"] integerValue];
-        if (isRegistered == 1) {
-            ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:responseObject[@"data"][@"user_obj"] error:NULL];
-            //保存更新数据库的user,并更新currentUser
-            [[ATOMCurrentUser currentUser]saveAndUpdateUser:user];
-            block(YES,@"登录成功",nil);
-        } else {
-            if (block) {
-                block(NO,@"未注册，跳到注册页面",nil);
+        NSString* info = (NSString*)responseObject[@"info"];
+        NSLog(@"openIDAuth info %@",info);
+        NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
+        if (ret == 1) {
+            NSInteger isRegistered = [responseObject[@"data"][@"is_register"] integerValue];
+            if (isRegistered == 1) {
+                ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:responseObject[@"data"][@"user_obj"] error:NULL];
+                //保存更新数据库的user,并更新currentUser
+                [[ATOMCurrentUser currentUser]saveAndUpdateUser:user];
+                block(YES,@"登录成功",nil);
+            } else {
+                if (block) {
+                    block(NO,@"未注册，跳到注册页面",nil);
+                }
             }
+        } else {
+            [Util TextHud:@"出现未知错误"];
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [[KShareManager mascotAnimator]dismiss];
-        NSLog(@"openIDAuth 服务器出错");
+        [Util TextHud:@"出现未知错误"];
         if (block) {
             block(nil,nil,error);
         }
@@ -64,10 +71,9 @@
     }];
 }
 
-
-- (AFHTTPRequestOperation* )Login:(NSDictionary*)param withBlock:(void (^)(BOOL succeed))block{
+- (NSURLSessionDataTask* )Login:(NSDictionary*)param withBlock:(void (^)(BOOL succeed))block{
     [[KShareManager mascotAnimator] show];
-    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] POST:@"user/login" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"user/login" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         [[KShareManager mascotAnimator] dismiss];
         NSInteger ret = [(NSString*)responseObject[@"ret"]integerValue];
         NSString* info = responseObject[@"info"];
@@ -107,7 +113,8 @@
                 block(NO);
             }
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [[KShareManager mascotAnimator] dismiss];
         [Util TextHud:@"出现未知错误"];
         if (block) {
             block(NO);

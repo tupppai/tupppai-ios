@@ -15,7 +15,7 @@
 #import "ATOMHomeImageDAO.h"
 #import "ATOMImageTipLabelDAO.h"
 #import "ATOMReplierDAO.h"
-
+#import "ATOMHomepageScrollView.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMShowHomepage ()
@@ -57,10 +57,10 @@
     return _replierDAO;
 }
 
-- (AFHTTPRequestOperation *)toggleLike:(NSDictionary *)param withID:(NSInteger)imageID  withBlock:(void (^)(NSString *, NSError *))block {
+- (NSURLSessionDataTask *)toggleLike:(NSDictionary *)param withID:(NSInteger)imageID  withBlock:(void (^)(NSString *, NSError *))block {
     NSString* url = [NSString stringWithFormat:@"ask/upask/%ld",(long)imageID];
     NSLog(@"param %@, url %@",param,url);
-    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
         if (ret == 1) {
             if (block) {
@@ -69,20 +69,23 @@
         } else {
             block(@"fail", nil);
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         if (block) {
             block(@"fail", error);
         }
     }];
 }
 
-- (AFHTTPRequestOperation *)ShowHomepage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
-    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:@"ask/index" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+- (NSURLSessionDataTask *)ShowHomepage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"ask/index" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
 
-//        NSLog(@"ShowHomepage responseObject%@",responseObject);
+        NSLog(@"ShowHomepage responseObject%@",responseObject);
+        NSLog(@"ShowHomepage  info%@",responseObject[@"info"]);
+
         NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
         if (ret != 1) {
             block(nil, nil);
+            [Util TextHud:@"出现未知错误"];
         } else {
             NSMutableArray *homepageArray = [NSMutableArray array];
             NSArray *imageDataArray = responseObject[@"data"];
@@ -114,7 +117,7 @@
                 block(homepageArray, nil);
             }
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [Util TextHud:@"出现未知错误"];
         if (block) {
             block(nil, error);
@@ -191,7 +194,7 @@
     return array;
 }
 
-- (NSArray *)getHomeImagesWithHomeType:(NSString *)homeType {
+- (NSArray *)getHomeImagesWithHomeType:(ATOMHomepageViewType)homeType {
     NSArray *array = [self.homeImageDAO selectHomeImagesWithHomeType:homeType];
     for (ATOMHomeImage *homeImage in array) {
         homeImage.tipLabelArray = [self.imageTipLabelDAO selectTipLabelsByImageID:homeImage.imageID];

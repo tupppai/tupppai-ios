@@ -10,6 +10,6 @@
 
 @interface ATOMShowCommentMessage : NSObject
 
-- (AFHTTPRequestOperation *)ShowCommentMessage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *commentMessageArray, NSError *error))block;
+- (NSURLSessionDataTask *)ShowCommentMessage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *commentMessageArray, NSError *error))block;
 
 @end

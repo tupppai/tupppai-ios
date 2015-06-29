@@ -14,9 +14,9 @@
 
 @implementation ATOMSubmitUserInformation
 
-- (AFHTTPRequestOperation *)SubmitUserInformation:(NSDictionary *)param withBlock:(void (^)(NSError *))block {
+- (NSURLSessionDataTask *)SubmitUserInformation:(NSDictionary *)param withBlock:(void (^)(NSError *))block {
     [[KShareManager mascotAnimator]show];
-    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] POST:@"user/save" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"user/save" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         [[KShareManager mascotAnimator]dismiss];
         NSLog(@"SubmitUserInformation param%@",param);
         NSLog(@"SubmitUserInformation responseObject %@ ,\n info %@",responseObject,responseObject[@"info"]);
@@ -29,7 +29,7 @@
         if (block) {
             block(nil);
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [[KShareManager mascotAnimator]dismiss];
         if (block) {
             block(error);

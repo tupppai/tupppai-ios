@@ -10,6 +10,6 @@
 
 @interface ATOMShowProceeding : NSObject
 
-- (AFHTTPRequestOperation *)ShowProceeding:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *resultArray, NSError *error))block;
+- (NSURLSessionDataTask *)ShowProceeding:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *resultArray, NSError *error))block;
 
 @end

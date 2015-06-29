@@ -26,7 +26,7 @@
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMPageDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, ATOMPSViewDelegate>
+@interface ATOMPageDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, ATOMPSViewDelegate,ATOMShareFunctionViewDelegate>
 
 @property (nonatomic, strong) ATOMAskDetailView *askDetailView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
@@ -51,7 +51,7 @@
 - (ATOMShareFunctionView *)shareFunctionView {
     if (!_shareFunctionView) {
         _shareFunctionView = [ATOMShareFunctionView new];
-        [_shareFunctionView.wxButton addTarget:self action:@selector(clickWXButton:) forControlEvents:UIControlEventTouchUpInside];
+        _shareFunctionView.delegate = self;
     }
     return _shareFunctionView;
 }
@@ -72,6 +72,17 @@
     return _psView;
 }
 
+#pragma mark - ATOMShareFunctionViewDelegate
+#pragma mark - ATOMShareFunctionViewDelegate
+-(void)tapWechatFriends {
+    [self postSocialShare:_pageDetailViewModel.pageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:(int)_pageDetailViewModel.type];
+}
+-(void)tapWechatMoment {
+    [self postSocialShare:_pageDetailViewModel.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_pageDetailViewModel.type];
+}
+-(void)tapSinaWeibo {
+    [self postSocialShare:_pageDetailViewModel.pageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:(int)_pageDetailViewModel.type];
+}
 #pragma mark Refresh
 
 - (void)configRecentDetailTableViewRefresh {
@@ -236,7 +247,7 @@
 #pragma mark - Click Event
 
 - (void)clickShareButton:(UITapGestureRecognizer *)sender {
-    [self wxShare];
+    [self postSocialShare:_pageDetailViewModel.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_pageDetailViewModel.type];
 }
 
 - (void)clickMoreShareButton:(UITapGestureRecognizer *)sender {
@@ -307,10 +318,6 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
     [self presentViewController:_imagePickerController animated:YES completion:NULL];
-}
-
-- (void)clickWXButton:(UIButton *)sender {
-    [self wxFriendShare];
 }
 
 #pragma mark - Gesture Event
@@ -397,7 +404,6 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"numberOfRowsInSection");
     if (section == 0) {
         return _hotCommentDataSource.count;
     } else if (section == 1) {
@@ -408,21 +414,18 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"cellForRowAtIndexPath");
-
     if (_askDetailView.recentDetailTableView == tableView) {
-    static NSString *CellIdentifier = @"RecentDetailCell";
-    ATOMAskDetailTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (!cell) {
-        cell = [[ATOMAskDetailTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
-    if (indexPath.section == 0) {
-        cell.viewModel = _hotCommentDataSource[indexPath.row];
-    } else if (indexPath.section ==1) {
-        cell.viewModel = _recentCommentDataSource[indexPath.row];
-    }
-        
-    return cell;
+        static NSString *CellIdentifier = @"RecentDetailCell";
+        ATOMAskDetailTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (!cell) {
+            cell = [[ATOMAskDetailTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        }
+        if (indexPath.section == 0) {
+            cell.viewModel = _hotCommentDataSource[indexPath.row];
+        } else if (indexPath.section ==1) {
+            cell.viewModel = _recentCommentDataSource[indexPath.row];
+        }
+        return cell;
     }
     return nil;
 }
@@ -430,7 +433,6 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    NSLog(@"heightForHeaderInSection");
     if ([tableView.dataSource tableView:tableView numberOfRowsInSection:section] == 0) {
         return 0;
     } else {
@@ -439,7 +441,6 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"heightForRowAtIndexPath");
     NSInteger section = indexPath.section;
     if (section == 0) {
         return [ATOMAskDetailTableViewCell calculateCellHeightWithModel:_hotCommentDataSource[indexPath.row]];

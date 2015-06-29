@@ -10,10 +10,6 @@
 #import "PWHomePageTableView.h"
 #import "ATOMNoDataView.h"
 
-typedef enum {
-    ATOMHomepageHotType = 0,
-    ATOMHomepageRecentType
-}ATOMHomepageViewType;
 
 @interface ATOMHomepageScrollView : UIScrollView
 @property (nonatomic, strong) PWHomePageTableView *homepageHotTableView;

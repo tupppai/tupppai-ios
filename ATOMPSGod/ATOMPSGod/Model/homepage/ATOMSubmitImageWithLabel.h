@@ -11,8 +11,8 @@
 
 @interface ATOMSubmitImageWithLabel : NSObject
 
-- (AFHTTPRequestOperation *)SubmitImageWithLabel:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *labelArray, NSInteger newImageID, NSError *error))block;
-- (AFHTTPRequestOperation *)SubmitWorkWithLabel:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *labelArray, NSError *error))block;
+- (NSURLSessionDataTask *)SubmitImageWithLabel:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *labelArray, NSInteger newImageID, NSError *error))block;
+- (NSURLSessionDataTask *)SubmitWorkWithLabel:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *labelArray, NSError *error))block;
 
 
 @end

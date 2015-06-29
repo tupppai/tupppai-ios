@@ -11,7 +11,7 @@
 
 @interface ATOMLogin : NSObject
 
-- (AFHTTPRequestOperation *)openIDAuth:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(bool isRegister,NSString* info, NSError *error))block;
+- (NSURLSessionDataTask *)openIDAuth:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(bool isRegister,NSString* info, NSError *error))block;
 - (void)thirdPartyAuth:(ShareType)type withBlock:(void (^)(NSDictionary* sourceData))block;
-- (AFHTTPRequestOperation* )Login:(NSDictionary*)param withBlock:(void (^)(BOOL succeed))block;
+- (NSURLSessionDataTask* )Login:(NSDictionary*)param withBlock:(void (^)(BOOL succeed))block;
 @end

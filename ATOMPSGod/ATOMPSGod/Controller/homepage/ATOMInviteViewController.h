@@ -8,9 +8,9 @@
 
 #import "ATOMBaseViewController.h"
 #import "ATOMAskPageViewModel.h"
+#import "ATOMRecommendUser.h"
 
 @interface ATOMInviteViewController : ATOMBaseViewController
 
 @property (nonatomic, strong) ATOMAskPageViewModel *askPageViewModel;
-
 @end

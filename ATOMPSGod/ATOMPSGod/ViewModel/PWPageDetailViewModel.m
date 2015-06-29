@@ -39,7 +39,7 @@
     _pageImage = model.image;
     _liked = model.liked;
 }
--(void)setCommonViewModelWithProduct:(ATOMProductPageViewModel*)model {
+-(void)setCommonViewModelWithProduct:(ATOMHotDetailPageViewModel*)model {
     _type = 2;
     _pageID = model.ID;
     _pageImageURL = model.userImageURL;

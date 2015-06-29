@@ -1,5 +1,5 @@
 //
-//  ATOMProductPageViewModel.h
+//  ATOMHotDetailPageViewModel.h
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/20.
@@ -10,10 +10,11 @@
 @class ATOMDetailImage;
 @class ATOMAskPageViewModel;
 
-@interface ATOMProductPageViewModel : NSObject
+@interface ATOMHotDetailPageViewModel : NSObject
 
 @property (nonatomic, assign) NSInteger ID;
 @property (nonatomic, assign) NSInteger uid;
+@property (nonatomic, assign) int type;
 @property (nonatomic, copy) NSString *userName;
 @property (nonatomic, copy) NSString *userSex;
 @property (nonatomic, copy) NSString *avatarURL;

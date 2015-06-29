@@ -30,6 +30,7 @@
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, assign) BOOL liked;
 @property (nonatomic, assign) BOOL collected;
+@property (nonatomic, assign) int type;
 
 - (void)setViewModelData:(ATOMHomeImage *)homeImage;
 -(void)setViewModelWithCommon:(PWPageDetailViewModel*)commonViewModel;

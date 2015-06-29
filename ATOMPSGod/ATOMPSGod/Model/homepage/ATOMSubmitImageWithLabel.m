@@ -19,9 +19,9 @@
 
 @implementation ATOMSubmitImageWithLabel
 
-- (AFHTTPRequestOperation *)SubmitImageWithLabel:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSInteger, NSError *))block {
+- (NSURLSessionDataTask *)SubmitImageWithLabel:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSInteger, NSError *))block {
     [[KShareManager mascotAnimator]show];
-    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] POST:@"ask/save" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"ask/save" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         [[KShareManager mascotAnimator]dismiss];
         NSLog(@"SubmitImageWithLabel responseObject %@",responseObject);
         NSMutableArray *labelArray = [NSMutableArray array];
@@ -36,7 +36,7 @@
         if (block) {
             block(labelArray, newImageID, nil);
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [[KShareManager mascotAnimator]dismiss];
         if (block) {
             block(nil, 0, error);
@@ -44,9 +44,9 @@
     }];
 }
 
-- (AFHTTPRequestOperation *)SubmitWorkWithLabel:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
+- (NSURLSessionDataTask *)SubmitWorkWithLabel:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
     [[KShareManager mascotAnimator]show];
-    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] POST:@"reply/save" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"reply/save" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         [[KShareManager mascotAnimator]dismiss];
         NSMutableArray *labelArray = [NSMutableArray array];
         NSArray* data = responseObject[@"data"];
@@ -62,7 +62,7 @@
                 block(labelArray, nil);
             }
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [[KShareManager mascotAnimator]dismiss];
         if (block) {
             block(nil, error);

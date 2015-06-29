@@ -8,7 +8,7 @@
 
 #import "ATOMMessageRemindViewController.h"
 #import "ATOMMessageRemindTableViewCell.h"
-
+#import "ATOMShowSettings.h"
 @interface ATOMMessageRemindViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -22,7 +22,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
-    
+    NSMutableDictionary *param = [NSMutableDictionary new];
+//    [param setObject:@"comment" forKey:@"type"];
+    [ATOMShowSettings getPushSetting:param withBlock:^(NSDictionary *dic, NSError *error) {
+    }];
 }
 
 - (void)createUI {
@@ -30,6 +33,7 @@
     _tableView.backgroundColor = [UIColor colorWithHex:0xededed];
     _tableView.scrollEnabled = NO;
     _tableView.tableFooterView = [UIView new];
+    _tableView.allowsSelection = NO;
     [self.view addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -44,7 +48,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 6;
+    return 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -52,6 +56,8 @@
     ATOMMessageRemindTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[ATOMMessageRemindTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        [cell.notificationSwitch addTarget:self action:@selector(toggleSwitch:) forControlEvents:UIControlEventValueChanged];
+        cell.notificationSwitch.tag = indexPath.row;
     }
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
@@ -61,19 +67,55 @@
         } else if (row == 1) {
             cell.themeLabel.text = @"帖子回复";
         } else if (row == 2) {
-            cell.themeLabel.text = @"帖子提醒";
+            cell.themeLabel.text = @"关注通知";
         } else if (row == 3) {
             cell.themeLabel.text = @"邀请通知";
         } else if (row == 4) {
             cell.themeLabel.text = @"系统通知";
-        } else if (row == 5) {
-            cell.themeLabel.text = @"私聊";
         }
     }
-    
     return cell;
 }
+//type: [comment|follow|invite|reply]
 
+
+-(void)toggleSwitch:(id)sender {
+    UISwitch *notificationSwitch = sender;
+    NSString *type;
+    switch (notificationSwitch.tag) {
+        case 0:
+            type = @"comment";
+            break;
+        case 1:
+            type = @"reply";
+            break;
+        case 2:
+            type = @"follow";
+            break;
+        case 3:
+            type = @"invite";
+            break;
+        case 4:
+            type = @"system";
+            break;
+        default:
+            break;
+    }
+//    type(必填): [comment|follow|invite|reply|system]
+//    value(必填): 0|1 （0表示关闭，1表示开启）
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    [param setObject:type forKey:@"type"];
+    if (notificationSwitch.on) {
+        [param setObject:@1 forKey:@"value"];
+    } else {
+        [param setObject:@0 forKey:@"value"];
+    }
+    [ATOMShowSettings setPushSetting:param withBlock:^(NSDictionary *dic, NSError *error) {
+        
+    }];
+
+    NSLog(@"notificationSwitch.tag %ld",(long)notificationSwitch.tag);
+}
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

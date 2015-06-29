@@ -37,7 +37,7 @@ static CGFloat cellHeight = 70;
     [self addSubview:_userHeaderButton];
     
     _userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, CGRectGetMinY(_userHeaderButton.frame), kUserNameLabelWidth, kFont14)];
-    _userNameLabel.text = @"atom";
+    _userNameLabel.text = @"PSGOD";
     _userNameLabel.font = [UIFont systemFontOfSize:kFont14];
     [self addSubview:_userNameLabel];
     
@@ -68,15 +68,15 @@ static CGFloat cellHeight = 70;
     _workNumberLabel.font = [UIFont systemFontOfSize:kFont10];
     [self addSubview:_workNumberLabel];
     
-    _fansNumberLabel.text = @"1000粉丝";
-    _uploadNumberLabel.text = @"1000求P";
-    _workNumberLabel.text = @"1000作品";
-    
-    _fansNumberLabel.frame = CGRectMake(kPadding15 + CGRectGetMaxX(_userHeaderButton.frame), labelOriginY, kFont10 * (_fansNumberLabel.text.length - 1.5), kFont10);
-    _view1.frame = CGRectMake(CGRectGetMaxX(_fansNumberLabel.frame) + kPadding5, labelOriginY + 2.5, 5, 5);
-    _uploadNumberLabel.frame = CGRectMake(CGRectGetMaxX(_view1.frame) + kPadding5, labelOriginY, kFont10 * (_uploadNumberLabel.text.length - 1.5), kFont10);
-    _view2.frame = CGRectMake(CGRectGetMaxX(_uploadNumberLabel.frame) + kPadding5, labelOriginY + 2.5, 5, 5);
-    _workNumberLabel.frame = CGRectMake(CGRectGetMaxX(_view2.frame) + kPadding5, labelOriginY, kFont10 * (_workNumberLabel.text.length - 1.5), kFont10);
+//    _fansNumberLabel.text = @"0粉丝";
+//    _uploadNumberLabel.text = @"0求P";
+//    _workNumberLabel.text = @"0作品";
+//    
+//    _fansNumberLabel.frame = CGRectMake(kPadding15 + CGRectGetMaxX(_userHeaderButton.frame), labelOriginY, kFont10 * (_fansNumberLabel.text.length - 1.5), kFont10);
+//    _view1.frame = CGRectMake(CGRectGetMaxX(_fansNumberLabel.frame) + kPadding5, labelOriginY + 2.5, 5, 5);
+//    _uploadNumberLabel.frame = CGRectMake(CGRectGetMaxX(_view1.frame) + kPadding5, labelOriginY, kFont10 * (_uploadNumberLabel.text.length - 1.5), kFont10);
+//    _view2.frame = CGRectMake(CGRectGetMaxX(_uploadNumberLabel.frame) + kPadding5, labelOriginY + 2.5, 5, 5);
+//    _workNumberLabel.frame = CGRectMake(CGRectGetMaxX(_view2.frame) + kPadding5, labelOriginY, kFont10 * (_workNumberLabel.text.length - 1.5), kFont10);
 }
 
 - (UIView *)littleCircleView {
@@ -97,13 +97,22 @@ static CGFloat cellHeight = 70;
     }
 }
 
-
-
-
-
-
-
-
+-(void)setViewModel:(ATOMInviteCellViewModel *)viewModel {
+    _inviteButton.selected = viewModel.invited;
+    _userNameLabel.text = viewModel.nickname;
+    NSURL* url = [NSURL URLWithString:viewModel.avatarUrl];
+    [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:url placeholderImage:[UIImage imageNamed:@"head_portrait"]];
+    _fansNumberLabel.text = viewModel.fansDesc;
+    _uploadNumberLabel.text = viewModel.askDesc;
+    _workNumberLabel.text = viewModel.replyDesc;
+    
+    CGFloat labelOriginY = CGRectGetMaxY(_userNameLabel.frame) + kPadding5;
+    _fansNumberLabel.frame = CGRectMake(kPadding15 + CGRectGetMaxX(_userHeaderButton.frame), labelOriginY, kFont10 * (_fansNumberLabel.text.length), kFont10);
+    _view1.frame = CGRectMake(CGRectGetMaxX(_fansNumberLabel.frame) + kPadding5, labelOriginY + 2.5, 5, 5);
+    _uploadNumberLabel.frame = CGRectMake(CGRectGetMaxX(_view1.frame) + kPadding5, labelOriginY, kFont10 * (_uploadNumberLabel.text.length ), kFont10);
+    _view2.frame = CGRectMake(CGRectGetMaxX(_uploadNumberLabel.frame) + kPadding5, labelOriginY + 2.5, 5, 5);
+    _workNumberLabel.frame = CGRectMake(CGRectGetMaxX(_view2.frame) + kPadding5, labelOriginY, kFont10 * (_workNumberLabel.text.length), kFont10);
+}
 
 
 

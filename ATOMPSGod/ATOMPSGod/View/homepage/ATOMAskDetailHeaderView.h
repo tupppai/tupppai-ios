@@ -8,7 +8,7 @@
 
 #import "ATOMBaseView.h"
 #import "ATOMAskPageViewModel.h"
-#import "ATOMProductPageViewModel.h"
+#import "ATOMHotDetailPageViewModel.h"
 #import "PWPageDetailViewModel.h"
 @class ATOMBottomCommonButton;
 @interface ATOMAskDetailHeaderView : ATOMBaseView

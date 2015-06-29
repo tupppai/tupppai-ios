@@ -64,7 +64,6 @@
     _personView.personTableView.delegate = self;
     _personView.personTableView.dataSource = self;
     self.navigationItem.title = [ATOMCurrentUser currentUser].nickname;
-    NSLog(@"[ATOMCurrentUser currentUser].nickname %@",[ATOMCurrentUser currentUser].nickname);
 }
 
 #pragma mark - Gesture Event

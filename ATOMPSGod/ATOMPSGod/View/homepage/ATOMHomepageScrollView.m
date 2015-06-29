@@ -61,7 +61,7 @@
         self.contentOffset = CGPointMake(0, 0);
         [_homepageHotTableView reloadData];
     } else if ([buttonTitle isEqualToString:@"最新"]) {
-        _currentHomepageType = ATOMHomepageRecentType;
+        _currentHomepageType = ATOMHomepageAskType;
         self.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
         [_homepageAskTableView reloadData];
     }

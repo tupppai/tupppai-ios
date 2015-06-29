@@ -13,9 +13,9 @@
 
 @implementation ATOMShowCollection
 
-- (AFHTTPRequestOperation *)ShowCollection:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
+- (NSURLSessionDataTask *)ShowCollection:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
     [[KShareManager mascotAnimator]show];
-    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:@"index/index" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"index/index" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         [[KShareManager mascotAnimator]dismiss];
         NSLog(@"ShowCollection responseObject %@",responseObject);
         int ret = [(NSString*)responseObject[@"ret"] intValue];
@@ -43,7 +43,7 @@
                 block(nil, nil);
             }
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [[KShareManager mascotAnimator]dismiss];
         if (block) {
             block(nil, error);

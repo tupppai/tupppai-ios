@@ -13,7 +13,7 @@
 #import "ATOMUploadWorkViewController.h"
 #import "ATOMProceedingViewController.h"
 #import "ATOMOtherPersonViewController.h"
-#import "ATOMProductPageViewModel.h"
+#import "ATOMHotDetailPageViewModel.h"
 #import "ATOMCommentViewModel.h"
 #import "ATOMDetailImage.h"
 #import "ATOMComment.h"
@@ -25,7 +25,7 @@
 #import "ATOMPageDetailViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMHotDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate>
+@interface ATOMHotDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate>
 
 @property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
 @property (nonatomic, strong) UIView *hotDetailView;
@@ -46,11 +46,10 @@
 - (ATOMShareFunctionView *)shareFunctionView {
     if (!_shareFunctionView) {
         _shareFunctionView = [ATOMShareFunctionView new];
-        [_shareFunctionView.wxButton addTarget:self action:@selector(clickWXButton:) forControlEvents:UIControlEventTouchUpInside];
+        _shareFunctionView.delegate = self;
     }
     return _shareFunctionView;
 }
-
 - (UITableView *)hotDetailTableView {
     if (_hotDetailTableView == nil) {
         _hotDetailTableView = [[PWRefreshBaseTableView alloc] initWithFrame:_hotDetailView.bounds];
@@ -80,7 +79,30 @@
     }
     return _imagePickerController;
 }
-
+#pragma mark - ATOMShareFunctionViewDelegate
+-(void)tapWechatFriends {
+    if (_selectedIndexPath.row == 0) {
+        [self postSocialShare:_askPageViewModel.imageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeAsk];
+    } else {
+        ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
+        [self postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeReply];
+    }
+}
+-(void)tapWechatMoment {
+    if (_selectedIndexPath.row == 0) {
+        [self postSocialShare:_askPageViewModel.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
+    } else {
+        ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
+        [self postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeReply];
+    }
+}
+-(void)tapSinaWeibo {
+    if (_selectedIndexPath.row == 0) {
+        [self postSocialShare:_askPageViewModel.imageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:ATOMPageTypeAsk];
+    } else {
+        ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
+        [self postSocialShare:model.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:ATOMPageTypeReply];
+    }}
 #pragma mark Refresh
 
 - (void)configHotDetailTableViewRefresh {
@@ -114,11 +136,11 @@
         _dataSource = nil;
         _dataSource = [NSMutableArray array];
         //第一张图片为首页点击的图片，剩下的图片为回复图片
-        ATOMProductPageViewModel *model = [ATOMProductPageViewModel new];
+        ATOMHotDetailPageViewModel *model = [ATOMHotDetailPageViewModel new];
         [model setViewModelDataWithHomeImage:_askPageViewModel];
         [_dataSource addObject:model];
         for (ATOMDetailImage *detailImage in detailImageArray) {
-            ATOMProductPageViewModel *model = [ATOMProductPageViewModel new];
+            ATOMHotDetailPageViewModel *model = [ATOMHotDetailPageViewModel new];
             [model setViewModelDataWithDetailImage:detailImage];
             model.labelArray = [_askPageViewModel.labelArray mutableCopy];
             [_dataSource addObject:model];
@@ -140,11 +162,11 @@
         //第一张图片为首页点击的图片，剩下的图片为回复图片
         ws.dataSource = nil;
         ws.dataSource = [NSMutableArray array];
-        ATOMProductPageViewModel *model = [ATOMProductPageViewModel new];
+        ATOMHotDetailPageViewModel *model = [ATOMHotDetailPageViewModel new];
         [model setViewModelDataWithHomeImage:ws.askPageViewModel];
         [ws.dataSource addObject:model];
         for (ATOMDetailImage *detailImage in detailOfHomePageArray) {
-            ATOMProductPageViewModel *model = [ATOMProductPageViewModel new];
+            ATOMHotDetailPageViewModel *model = [ATOMHotDetailPageViewModel new];
             [model setViewModelDataWithDetailImage:detailImage];
             model.labelArray = [ws.askPageViewModel.labelArray mutableCopy];
             [ws.dataSource addObject:model];
@@ -168,7 +190,7 @@
     ATOMShowDetailOfHomePage *showDetailOfHomePage = [ATOMShowDetailOfHomePage new];
     [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.askPageViewModel.imageID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
         for (ATOMDetailImage *detailImage in detailOfHomePageArray) {
-            ATOMProductPageViewModel *model = [ATOMProductPageViewModel new];
+            ATOMHotDetailPageViewModel *model = [ATOMHotDetailPageViewModel new];
             [model setViewModelDataWithDetailImage:detailImage];
             model.labelArray = [ws.askPageViewModel.labelArray mutableCopy];
             [ws.dataSource addObject:model];
@@ -235,7 +257,7 @@
 }
 
 - (void)clickWXButton:(UIButton *)sender {
-    [self wxFriendShare];
+//    [self wxFriendShare];
 }
 
 #pragma mark - Gesture Event
@@ -244,7 +266,7 @@
     CGPoint location = [gesture locationInView:_hotDetailTableView];
     _selectedIndexPath = [_hotDetailTableView indexPathForRowAtPoint:location];
     if (_selectedIndexPath) {
-        ATOMProductPageViewModel *model = _dataSource[_selectedIndexPath.row];
+        ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
         _selectedHotDetailCell = (ATOMHotDetailTableViewCell *)[_hotDetailTableView cellForRowAtIndexPath:_selectedIndexPath];
         
         CGPoint p = [gesture locationInView:_selectedHotDetailCell];
@@ -292,8 +314,12 @@
                     [_askPageViewModel toggleLike];
                 }
             } else if (CGRectContainsPoint(_selectedHotDetailCell.shareButton.frame, p)) {
-                [self wxShare];
-            } else if (CGRectContainsPoint(_selectedHotDetailCell.commentButton.frame, p)) {
+                if (_selectedIndexPath.row == 0) {
+                    [self postSocialShare:_askPageViewModel.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
+                } else {
+                    ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
+                    [self postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeReply];
+                }            } else if (CGRectContainsPoint(_selectedHotDetailCell.commentButton.frame, p)) {
                 ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
                 PWPageDetailViewModel* pageDetailViewModel = [PWPageDetailViewModel new];
                 if (_selectedIndexPath.row != 0) {

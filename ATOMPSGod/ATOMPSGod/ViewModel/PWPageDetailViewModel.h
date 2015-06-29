@@ -2,7 +2,7 @@
 #import <Foundation/Foundation.h>
 #import "ATOMFollowPageViewModel.h"
 #import "ATOMAskPageViewModel.h"
-#import "ATOMProductPageViewModel.h"
+#import "ATOMHotDetailPageViewModel.h"
 
 @interface PWPageDetailViewModel : NSObject
 @property (nonatomic, assign) NSInteger pageID;
@@ -20,15 +20,9 @@
 @property (nonatomic, strong) UIImage *pageImage;
 @property (nonatomic, assign) BOOL liked;
 -(void)setCommonViewModelWithAsk:(ATOMAskPageViewModel*)model;
--(void)setCommonViewModelWithProduct:(ATOMProductPageViewModel*)model;
+-(void)setCommonViewModelWithProduct:(ATOMHotDetailPageViewModel*)model;
 -(void)setCommonViewModelWithFollow:(ATOMFollowPageViewModel*)model;
 - (void)toggleLike;
 -(ATOMAskPageViewModel*)generateAskPageViewModel;
-//@property (nonatomic, copy) NSString *userSex;
-//@property (nonatomic, copy) NSString *publishTime;
-//@property (nonatomic, assign) NSInteger userID;
-//@property (nonatomic, copy) NSString *PSNumber;
-//@property (nonatomic, strong) NSMutableArray *labelArray;
-//@property (nonatomic, strong) NSMutableArray *replierArray;
-//@property (nonatomic, strong) NSMutableArray *commentArray;
+
 @end

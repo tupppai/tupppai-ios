@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ATOMProductPageViewModel;
+@class ATOMHotDetailPageViewModel;
 @class ATOMBottomCommonButton;
-
+#import "ATOMAskPageViewModel.h"
 @interface ATOMHotDetailTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) UIButton *userHeaderButton;
@@ -25,8 +25,8 @@
 @property (nonatomic, strong) UIView *thinCenterView;
 @property (nonatomic, strong) UIView *bottomView;
 @property (nonatomic, strong) UIView *extralBottomView;
-@property (nonatomic, strong) ATOMProductPageViewModel *viewModel;
+@property (nonatomic, strong) ATOMHotDetailPageViewModel *viewModel;
 
-+ (CGFloat)calculateCellHeightWith:(ATOMProductPageViewModel *)viewModel;
-
++ (CGFloat)calculateCellHeightWith:(ATOMHotDetailPageViewModel *)viewModel;
++ (CGFloat)calculateCellHeightWithAsk:(ATOMAskPageViewModel *)viewModel;
 @end

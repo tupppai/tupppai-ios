@@ -11,7 +11,6 @@
 #import "ATOMPersonViewController.h"
 #import "ATOMMyAttentionViewController.h"
 #import "ATOMMyMessageViewController.h"
-
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self;
 
 @interface ATOMBaseViewController ()
@@ -71,21 +70,198 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)wxShare {
-    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"0" ofType:@"jpg"];
-    id<ISSContent> publishContent = [ShareSDK content:@"分享内容"
-                                       defaultContent:@"测试一下"
-                                                image:[ShareSDK imageWithPath:imagePath]
-                                                title:@"ShareSDK"
-                                                  url:@"http://www.mob.com"
-                                          description:@"这是一条测试信息"
+//- (void)postWechatShareMoments:(ATOMShare*)share {
+//    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"shareIcon" ofType:@"png"];
+//    NSString* shareUrl;
+//    if ([share.type isEqualToString:@"image"]) {
+//        shareUrl = share.imageUrl;
+//    } else {
+//        shareUrl = share.url;
+//    }
+//    NSString* shareTitle = [NSString stringWithFormat:@"%@%@",@"求PS大神!",share.title];
+//    
+//    id<ISSContent> publishContent = [ShareSDK content:share.desc
+//                                       defaultContent:share.title
+//                                                image:[ShareSDK imageWithPath:imagePath]
+//                                                title:shareTitle
+//                                                  url:shareUrl
+//                                          description:share.desc
+//                                            mediaType:SSPublishContentMediaTypeNews];
+//    [ShareSDK clientShareContent:publishContent //内容对象
+//                            type:ShareTypeWeixiTimeline //平台类型
+//                   statusBarTips:YES
+//                          result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {//返回事件
+//                              if (state == SSPublishContentStateSuccess)
+//                              {
+//                                  NSLog(NSLocalizedString(@"TEXT_SHARE_SUC", @"分享成功!"));
+//                              }
+//                              else if (state == SSPublishContentStateFail)
+//                              {
+//                                  NSLog(NSLocalizedString(@"TEXT_SHARE_FAI", @"分享失败!"), [error errorCode], [error errorDescription]);
+//                              }
+//                          }];
+//}
+//
+//- (void)postWechatShareFriends:(ATOMShare*)share{
+//    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"shareIcon" ofType:@"png"];
+//    NSString* shareUrl;
+//    if ([share.type isEqualToString:@"image"]) {
+//        shareUrl = share.imageUrl;
+//    } else {
+//        shareUrl = share.url;
+//    }
+//    NSString* shareTitle = [NSString stringWithFormat:@"%@%@",@"求PS大神!",share.title];
+//    id<ISSContent> publishContent = [ShareSDK content:share.desc
+//                                       defaultContent:share.title
+//                                                image:[ShareSDK imageWithPath:imagePath]
+//                                                title:shareTitle
+//                                                  url:shareUrl
+//                                          description:share.desc
+//                                            mediaType:SSPublishContentMediaTypeNews];
+//    [ShareSDK clientShareContent:publishContent //内容对象
+//                            type:ShareTypeWeixiSession //平台类型
+//                   statusBarTips:YES
+//                          result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {//返回事件
+////                              ////[SVProgressHUD dismiss];
+//                              if (state == SSPublishContentStateSuccess)
+//                              {
+//                                  NSLog(NSLocalizedString(@"TEXT_SHARE_SUC", @"分享成功!"));
+//                              }
+//                              else if (state == SSPublishContentStateFail)
+//                              {
+//                                  NSLog(NSLocalizedString(@"TEXT_SHARE_FAI", @"分享失败!"), [error errorCode], [error errorDescription]);
+//                              }
+//                          }];
+//}
+//
+//- (void)postSinaWeiboShare:(ATOMShare*)share {
+//    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"shareIcon" ofType:@"png"];
+//    NSString* shareUrl;
+//    if ([share.type isEqualToString:@"image"]) {
+//        shareUrl = share.imageUrl;
+//    } else {
+//        shareUrl = share.url;
+//    }
+//    NSString* shareTitle = [NSString stringWithFormat:@"%@!%@,%@",share.title,@"求PS大神!",shareUrl];
+//    
+//    id<ISSContent> publishContent = [ShareSDK content:shareTitle //微博显示的文字
+//                                       defaultContent:share.title
+//                                                image:[ShareSDK imageWithUrl:share.imageUrl]
+//                                                title:shareTitle
+//                                                  url:shareUrl
+//                                          description:share.desc
+//                                            mediaType:SSPublishContentMediaTypeNews];
+//    [ShareSDK clientShareContent:publishContent //内容对象
+//                            type:SSCShareTypeSinaWeibo //平台类型
+//                   statusBarTips:YES
+//                          result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {//返回事件
+//                              if (state == SSPublishContentStateSuccess)
+//                              {
+//                                  NSLog(NSLocalizedString(@"TEXT_SHARE_SUC", @"分享成功!"));
+//                              }
+//                              else if (state == SSPublishContentStateFail)
+//                              {
+//                                  NSLog(NSLocalizedString(@"TEXT_SHARE_FAI", @"分享失败!"), [error errorCode], [error errorDescription]);
+//                              }
+//                          }];
+//}
+
+
+//
+//-(void)postSinaWeiboShareAskPage:(NSInteger)id {
+//    ATOMShareModel* shareModel = [ATOMShareModel new];
+//    NSMutableDictionary* param = [NSMutableDictionary new];
+//    [param setObject:@"weibo" forKey:@"share_type"];
+//    [param setObject:@"1" forKey:@"type"];
+//    [param setObject:@(id) forKey:@"target_id"];
+//    [shareModel getShareInfo:param withBlock:^(ATOMShare *share, NSError *error) {
+//        if (share) {
+//            [self postSinaWeiboShare:share];
+//        }
+//    }];
+//}
+//
+//-(void)postWechatShareMomentAskPage:(NSInteger)id {
+//    ATOMShareModel* shareModel = [ATOMShareModel new];
+//    NSMutableDictionary* param = [NSMutableDictionary new];
+//    [param setObject:@"weixin" forKey:@"share_type"];
+//    [param setObject:@"1" forKey:@"type"];
+//    [param setObject:@(id) forKey:@"target_id"];
+//    [shareModel getShareInfo:param withBlock:^(ATOMShare *share, NSError *error) {
+//        if (share) {
+//            [self postWechatShareMoments:share];
+//        }
+//    }];
+//}
+//-(void)postWechatShareFriendsAskPage:(NSInteger)id {
+//    ATOMShareModel* shareModel = [ATOMShareModel new];
+//    NSMutableDictionary* param = [NSMutableDictionary new];
+//    [param setObject:@"weixin" forKey:@"share_type"];
+//    [param setObject:@"1" forKey:@"type"];
+//    [param setObject:@(id) forKey:@"target_id"];
+//    [shareModel getShareInfo:param withBlock:^(ATOMShare *share, NSError *error) {
+//        if (share) {
+//            [self postWechatShareFriends:share];
+//        }
+//    }];
+//}
+
+
+-(void)postSocialShare:(NSInteger)id withSocialShareType:(ATOMSocialShareType)shareType withPageType:(ATOMPageType)pageType {
+    ATOMShareModel* shareModel = [ATOMShareModel new];
+    NSMutableDictionary* param = [NSMutableDictionary new];
+    
+    NSString* shareTypeToServer;
+    
+    if (shareType == ATOMShareTypeWechatFriends) {
+        shareTypeToServer = @"weixin";
+    } else if (shareType == ATOMShareTypeWechatMoments) {
+        shareTypeToServer = @"weixin";
+    } else if (shareType == ATOMShareTypeSinaWeibo) {
+        shareTypeToServer = @"weibo";
+    }
+
+    [param setObject:shareTypeToServer forKey:@"share_type"];
+    [param setObject:@(pageType) forKey:@"type"];
+    [param setObject:@(id) forKey:@"target_id"];
+    [shareModel getShareInfo:param withBlock:^(ATOMShare *share, NSError *error) {
+        if (share) {
+            [self postSocialShareShareSdk:share withShareType:shareType];
+        }
+    }];
+}
+- (void)postSocialShareShareSdk:(ATOMShare*)share  withShareType:(ATOMSocialShareType)shareType {
+    ShareType type;
+    
+    if (shareType == ATOMShareTypeWechatFriends) {
+        type = ShareTypeWeixiSession;
+    } else if (shareType == ATOMShareTypeWechatMoments) {
+        type = ShareTypeWeixiTimeline;
+    } else if (shareType == ATOMShareTypeSinaWeibo) {
+        type = SSCShareTypeSinaWeibo;
+    }
+//    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"shareIcon" ofType:@"png"];
+    NSString* shareUrl;
+    if ([share.type isEqualToString:@"image"]) {
+        shareUrl = share.imageUrl;
+    } else {
+        shareUrl = share.url;
+    }
+    NSString* shareTitle = [NSString stringWithFormat:@"%@!%@",share.title,@"小瑞子"];
+//    NSString* shareTitle = [NSString stringWithFormat:@"%@!%@,%@",share.title,@"小瑞子",shareUrl];
+
+    id<ISSContent> publishContent = [ShareSDK content:shareTitle //微博显示的文字
+                                       defaultContent:share.title
+                                                image:[ShareSDK imageWithUrl:share.imageUrl]
+                                                title:shareTitle
+                                                  url:@"http://ipeiwei.xyz/2015/06/29/xiaoruizi/"
+                                          description:share.desc
                                             mediaType:SSPublishContentMediaTypeNews];
-//    //[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
     [ShareSDK clientShareContent:publishContent //内容对象
-                            type:ShareTypeWeixiTimeline //平台类型
+                            type:type //平台类型
                    statusBarTips:YES
                           result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {//返回事件
-//                              ////[SVProgressHUD dismiss];
+                              [[KShareManager mascotAnimator]dismiss];
                               if (state == SSPublishContentStateSuccess)
                               {
                                   NSLog(NSLocalizedString(@"TEXT_SHARE_SUC", @"分享成功!"));
@@ -96,51 +272,4 @@
                               }
                           }];
 }
-
-- (void)wxFriendShare {
-    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"0" ofType:@"jpg"];
-    id<ISSContent> publishContent = [ShareSDK content:@"分享内容"
-                                       defaultContent:@"测试一下"
-                                                image:[ShareSDK imageWithPath:imagePath]
-                                                title:@"ShareSDK"
-                                                  url:@"http://www.mob.com"
-                                          description:@"这是一条测试信息"
-                                            mediaType:SSPublishContentMediaTypeNews];
-//    //[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
-    [ShareSDK clientShareContent:publishContent //内容对象
-                            type:ShareTypeWeixiSession //平台类型
-                   statusBarTips:YES
-                          result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {//返回事件
-//                              ////[SVProgressHUD dismiss];
-                              if (state == SSPublishContentStateSuccess)
-                              {
-                                  NSLog(NSLocalizedString(@"TEXT_SHARE_SUC", @"分享成功!"));
-                              }
-                              else if (state == SSPublishContentStateFail)
-                              {
-                                  NSLog(NSLocalizedString(@"TEXT_SHARE_FAI", @"分享失败!"), [error errorCode], [error errorDescription]);
-                              }
-                          }];
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @end

@@ -10,7 +10,7 @@
 #import "ATOMAskPageViewModel.h"
 #import "ATOMAskDetailHeaderView.h"
 #import "ATOMFaceView.h"
-#import "ATOMProductPageViewModel.h"
+#import "ATOMHotDetailPageViewModel.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMAskDetailView () <UIScrollViewDelegate, ATOMFaceViewDelegate>

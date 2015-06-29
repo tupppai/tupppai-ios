@@ -30,3 +30,18 @@
  * 拉到底部时，继续向上拉触发
  **/-(void) didPullUpCollectionViewBottom;
 @end
+
+@protocol ATOMViewControllerDelegate <NSObject>
+@optional
+- (void)ATOMViewControllerDismissWithLiked:(BOOL)liked;
+@end
+
+@protocol ATOMShareFunctionViewDelegate <NSObject>
+@optional
+- (void)tapWechatFriends;
+- (void)tapWechatMoment;
+- (void)tapSinaWeibo;
+- (void)tapInvite;
+- (void)tapCollect;
+- (void)tapReport;
+@end

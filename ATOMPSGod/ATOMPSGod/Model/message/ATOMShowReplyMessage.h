@@ -10,6 +10,6 @@
 
 @interface ATOMShowReplyMessage : NSObject
 
-- (AFHTTPRequestOperation *)ShowReplyMessage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *replyMessageArray, NSError *error))block;
+- (NSURLSessionDataTask *)ShowReplyMessage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *replyMessageArray, NSError *error))block;
 
 @end

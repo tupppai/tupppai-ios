@@ -11,6 +11,6 @@
 @interface ATOMMessageRemindTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) UILabel *themeLabel;
-@property (nonatomic, strong) UISwitch *offlineDownloadSwitch;
+@property (nonatomic, strong) UISwitch *notificationSwitch;
 
 @end

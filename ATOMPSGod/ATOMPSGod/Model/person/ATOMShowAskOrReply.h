@@ -10,6 +10,6 @@
 
 @interface ATOMShowAskOrReply : NSObject
 
-- (AFHTTPRequestOperation *)ShowAskOrReply:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *resultArray, NSError *error))block;
+- (NSURLSessionDataTask *)ShowAskOrReply:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *resultArray, NSError *error))block;
 
 @end

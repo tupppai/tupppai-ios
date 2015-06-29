@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "ATOMShare.h"
+#import "ATOMShareModel.h"
 typedef enum {
     ATOMTakingPhoto = 0,
     ATOMChangingHeaderImage,
@@ -32,12 +33,32 @@ typedef enum {
     ATOMShareType
 } ATOMDetailPushType;
 
+typedef enum {
+    ATOMHomepageHotType = 0,
+    ATOMHomepageAskType
+}ATOMHomepageViewType;
+
+typedef enum {
+    ATOMPageTypeAsk = 1,
+    ATOMPageTypeReply = 2
+}ATOMPageType;
+
+typedef enum {
+    ATOMShareTypeWechatMoments = 0,
+    ATOMShareTypeWechatFriends ,
+    ATOMShareTypeSinaWeibo
+}ATOMSocialShareType;
+
 @interface ATOMBaseViewController : UIViewController
 
 @property (nonatomic, strong) UIBarButtonItem *negativeSpacer;
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated;
 - (void)popCurrentController;
-- (void)wxShare;
-- (void)wxFriendShare;
-
+//- (void)postWechatShareMoments:(ATOMShare*)share;
+//- (void)postWechatShareFriends:(ATOMShare*)share;
+//- (void)postSinaWeiboShare:(ATOMShare*)share;
+-(void)postSinaWeiboShareAskPage:(NSInteger)id;
+-(void)postWechatShareMomentAskPage:(NSInteger)id;
+-(void)postWechatShareFriendsAskPage:(NSInteger)id;
+-(void)postSocialShare:(NSInteger)id withSocialShareType:(ATOMSocialShareType)shareType withPageType:(ATOMPageType)pageType;
 @end

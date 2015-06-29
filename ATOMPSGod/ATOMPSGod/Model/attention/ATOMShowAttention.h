@@ -10,6 +10,6 @@
 
 @interface ATOMShowAttention : NSObject
 
-- (AFHTTPRequestOperation *)ShowAttention:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *resultArray, NSError *error))block;
+- (NSURLSessionDataTask *)ShowAttention:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *resultArray, NSError *error))block;
 
 @end

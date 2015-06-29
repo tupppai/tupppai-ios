@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ATOMInviteCellViewModel.h"
 
 @interface ATOMInviteTableViewCell : UITableViewCell
 
@@ -16,6 +17,8 @@
 @property (nonatomic, strong) UILabel *uploadNumberLabel;
 @property (nonatomic, strong) UILabel *workNumberLabel;
 @property (nonatomic, strong) UIButton *inviteButton;
+
+@property (nonatomic, strong) ATOMInviteCellViewModel *viewModel;
 
 - (void)changeInviteButtonStatus;
 

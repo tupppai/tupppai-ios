@@ -10,7 +10,7 @@
 
 @interface ATOMShowDetailOfHomePage : NSObject
 
-- (AFHTTPRequestOperation *)ShowDetailOfHomePage:(NSDictionary *)param withImageID:(NSInteger)imageID withBlock:(void (^)(NSMutableArray *detailOfHomePageArray, NSError *error))block;
+- (NSURLSessionDataTask *)ShowDetailOfHomePage:(NSDictionary *)param withImageID:(NSInteger)imageID withBlock:(void (^)(NSMutableArray *detailOfHomePageArray, NSError *error))block;
 - (void)saveDetailImagesInDB:(NSMutableArray *)detailImages;
 - (NSArray *)getDetalImagesByImageID:(NSInteger)imageID;
 

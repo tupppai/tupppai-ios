@@ -10,5 +10,5 @@
 
 @interface ATOMSubmitUserInformation : NSObject
 
-- (AFHTTPRequestOperation *)SubmitUserInformation:(NSDictionary *)param withBlock:(void (^)(NSError *))block;
+- (NSURLSessionDataTask *)SubmitUserInformation:(NSDictionary *)param withBlock:(void (^)(NSError *))block;
 @end

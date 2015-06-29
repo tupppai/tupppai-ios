@@ -11,14 +11,13 @@
 @implementation ATOMHTTPRequestOperationManager
 
 static dispatch_once_t onceToken;
-static ATOMHTTPRequestOperationManager *_sharedRequestOperationManager = nil;
+static ATOMHTTPRequestOperationManager *_shareHTTPSessionManager = nil;
 
-+ (instancetype)sharedRequestOperationManager {
++ (instancetype)shareHTTPSessionManager {
     dispatch_once(&onceToken, ^{
         NSString *baseURL = @"http://android.loiter.us/v1/";
-//        NSString *baseURL = @"http://android.qiupsdashen.com/v1/";
-        _sharedRequestOperationManager = [[ATOMHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:baseURL]];
-        [_sharedRequestOperationManager.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        _shareHTTPSessionManager = [[ATOMHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:baseURL]];
+        [_shareHTTPSessionManager.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
             switch (status) {
                 case AFNetworkReachabilityStatusUnknown:
                     NSLog(@"未知网络");
@@ -36,15 +35,14 @@ static ATOMHTTPRequestOperationManager *_sharedRequestOperationManager = nil;
                     break;
             }
         }];
-        [_sharedRequestOperationManager.reachabilityManager startMonitoring];
-//        _sharedRequestOperationManager.requestSerializer = [AFJSONRequestSerializer serializer];
-        _sharedRequestOperationManager.requestSerializer = [AFHTTPRequestSerializer serializer];
-        [_sharedRequestOperationManager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
-        [_sharedRequestOperationManager.requestSerializer setTimeoutInterval:25];
-        [_sharedRequestOperationManager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
-        _sharedRequestOperationManager.responseSerializer = [AFJSONResponseSerializer serializer];
+        [_shareHTTPSessionManager.reachabilityManager startMonitoring];
+        _shareHTTPSessionManager.requestSerializer = [AFHTTPRequestSerializer serializer];
+        _shareHTTPSessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
+        [_shareHTTPSessionManager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
+        [_shareHTTPSessionManager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+        [_shareHTTPSessionManager.requestSerializer setTimeoutInterval:25];
     });
-    return _sharedRequestOperationManager;
+    return _shareHTTPSessionManager;
 }
 
 

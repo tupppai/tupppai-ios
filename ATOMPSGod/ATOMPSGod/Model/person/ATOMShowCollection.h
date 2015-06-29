@@ -10,6 +10,6 @@
 
 @interface ATOMShowCollection : NSObject
 
-- (AFHTTPRequestOperation *)ShowCollection:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *resultArray, NSError *error))block;
+- (NSURLSessionDataTask *)ShowCollection:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *resultArray, NSError *error))block;
 
 @end

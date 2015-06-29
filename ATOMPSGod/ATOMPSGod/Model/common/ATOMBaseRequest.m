@@ -9,17 +9,17 @@
 #import "ATOMBaseRequest.h"
 #import "ATOMHTTPRequestOperationManager.h"
 @implementation ATOMBaseRequest
-- (AFHTTPRequestOperation *)toggleLike:(NSDictionary *)param withUrl:(NSString*)fUrl withID:(NSInteger)imageID  withBlock:(void (^)(NSError *))block {
+- (NSURLSessionDataTask *)toggleLike:(NSDictionary *)param withUrl:(NSString*)fUrl withID:(NSInteger)imageID  withBlock:(void (^)(NSError *))block {
     NSString* url = [NSString stringWithFormat:@"%@/%ld",fUrl,(long)imageID];
     NSLog(@"param %@, url %@",param,url);
-    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
         if (ret == 1) {
             if (block) {
                 block(nil);
             }
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         if (block) {
             block(error);
         }

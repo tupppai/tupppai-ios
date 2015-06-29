@@ -31,10 +31,10 @@
 #import "KShareManager.h"
 #import "ATOMHomeImageDAO.h"
 #import "PWPageDetailViewModel.h"
-
+#import "ATOMShareModel.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMHomepageViewController() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, ATOMPSViewDelegate, ATOMCameraViewDelegate,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate>
+@interface ATOMHomepageViewController() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, ATOMPSViewDelegate, ATOMCameraViewDelegate,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate>
 
 @property (nonatomic, strong) ATOMHomepageCustomTitleView *customTitleView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
@@ -66,13 +66,6 @@
 
 #pragma mark - Lazy Initialize
 
-//- (ATOMHomepageScrollView *)scrollView {
-//    if (!_scrollView) {
-//        _scrollView = [ATOMHomepageScrollView new];
-//    }
-//    return _scrollView;
-//}
-
 - (UIImagePickerController *)imagePickerController {
     if (_imagePickerController == nil) {
         _imagePickerController = [UIImagePickerController new];
@@ -84,8 +77,7 @@
 - (ATOMShareFunctionView *)shareFunctionView {
     if (!_shareFunctionView) {
         _shareFunctionView = [ATOMShareFunctionView new];
-        [_shareFunctionView.wxButton addTarget:self action:@selector(clickWXButton:) forControlEvents:UIControlEventTouchUpInside];
-        [_shareFunctionView.wxFriendCircleButton addTarget:self action:@selector(clickWXFriendCircleButton:) forControlEvents:UIControlEventTouchUpInside];
+        _shareFunctionView.delegate = self;
     }
     return _shareFunctionView;
 }
@@ -104,6 +96,17 @@
         _cameraView.delegate = self;
     }
     return _cameraView;
+}
+
+#pragma mark - ATOMShareFunctionViewDelegate
+-(void)tapWechatFriends {
+    [self postSocialShare:_selectedAskPageViewModel.imageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeAsk];
+}
+-(void)tapWechatMoment {
+    [self postSocialShare:_selectedAskPageViewModel.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
+}
+-(void)tapSinaWeibo {
+    [self postSocialShare:_selectedAskPageViewModel.imageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:ATOMPageTypeAsk];
 }
 
 #pragma mark - Refresh
@@ -157,19 +160,19 @@
 
 #pragma mark - GetDataSource
 //初始数据
-- (void)firstGetDataSourceOfTableViewWithHomeType:(NSString *)homeType {
+- (void)firstGetDataSourceOfTableViewWithHomeType:(ATOMHomepageViewType)homeType {
     [[KShareManager mascotAnimator]show];
     ATOMShowHomepage *showHomepage = [ATOMShowHomepage new];
     NSArray * homepageArray = [[showHomepage getHomeImagesWithHomeType:homeType] mutableCopy];
-    if ([homeType isEqualToString:@"hot"]) {
+    if (homeType == ATOMHomepageHotType) {
         if (!homepageArray || homepageArray.count == 0) {//读服务器
             [self loadNewHotData];
         } else { //读数据库
-            _dataSourceOfHotTableView = [self fetchDBDataSourceWithHomeType:@"hot"];
-            _dataSourceOfRecentTableView = [self fetchDBDataSourceWithHomeType:@"new"];
+            _dataSourceOfHotTableView = [self fetchDBDataSourceWithHomeType:ATOMHomepageHotType];
+            _dataSourceOfRecentTableView = [self fetchDBDataSourceWithHomeType:ATOMHomepageAskType];
             [_scrollView.homepageHotTableView.header beginRefreshing];
         }
-    } else if ([homeType isEqualToString:@"new"]) {
+    } else if (homeType == ATOMHomepageAskType) {
         //数据库没有“求P”数据
         if (!homepageArray || homepageArray.count == 0) {
             [self loadNewRecentData];
@@ -182,7 +185,7 @@
     }
 }
 
--(NSMutableArray*)fetchDBDataSourceWithHomeType:(NSString*) homeType {
+-(NSMutableArray*)fetchDBDataSourceWithHomeType:(ATOMHomepageViewType) homeType {
     ATOMShowHomepage *showHomepage = [ATOMShowHomepage new];
     NSArray * homepageArray = [[showHomepage getHomeImagesWithHomeType:homeType] mutableCopy];
    NSMutableArray* tableViewDataSource = [NSMutableArray array];
@@ -231,7 +234,7 @@
                 [model setViewModelData:homeImage];
                 if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageHotType) {
                     [ws.dataSourceOfHotTableView addObject:model];
-                } else if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageRecentType) {
+                } else if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageAskType) {
                     [ws.dataSourceOfRecentTableView addObject:model];
                 }
             }
@@ -240,12 +243,11 @@
             if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageHotType) {
                 [ws.scrollView.homepageHotTableView reloadData];
                 [ws.scrollView.homepageHotTableView.header endRefreshing];
-            } else if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageRecentType) {
+            } else if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageAskType) {
                 [ws.scrollView.homepageAskTableView reloadData];
                 [ws.scrollView.homepageAskTableView.header endRefreshing];
             }
         } else {
-//            [Util TextHud:@"出现未知错误"];
             [ws.scrollView.homepageHotTableView.header endRefreshing];
             [ws.scrollView.homepageAskTableView.header endRefreshing];
         }
@@ -282,7 +284,7 @@
                 [model setViewModelData:homeImage];
                 if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageHotType) {
                     [ws.dataSourceOfHotTableView addObject:model];
-                } else if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageRecentType) {
+                } else if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageAskType) {
                     [ws.dataSourceOfRecentTableView addObject:model];
                 }
             }
@@ -294,7 +296,7 @@
                 } else {
                     ws.canRefreshHotFooter = YES;
                 }
-            } else if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageRecentType) {
+            } else if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageAskType) {
                 [ws.scrollView.homepageAskTableView reloadData];
                 [ws.scrollView.homepageAskTableView.footer endRefreshing];
                 if (homepageArray.count == 0) {
@@ -304,7 +306,6 @@
                 }
             }
         } else {
-//            [Util TextHud:@"出现未知错误"];
         }
     }];
 }
@@ -333,12 +334,10 @@
     self.view = _scrollView;
     [self configHomepageHotTableView];
     [self confighomepageAskTableView];
-//    [_scrollView changeUIAccording:@"热门"];
-//    _customTitleView.hotTitleButton.selected = YES;
     _isfirstEnterHomepageRecentView = YES;
     _canRefreshHotFooter = YES;
     _canRefreshRecentFooter = YES;
-    [self firstGetDataSourceOfTableViewWithHomeType:@"hot"];
+    [self firstGetDataSourceOfTableViewWithHomeType:ATOMHomepageHotType];
 }
 
 - (void)configHomepageHotTableView {
@@ -394,7 +393,7 @@
     [_scrollView changeUIAccording:@"最新"];
     if (_isfirstEnterHomepageRecentView) {
         _isfirstEnterHomepageRecentView = NO;
-        [self firstGetDataSourceOfTableViewWithHomeType:@"new"];
+        [self firstGetDataSourceOfTableViewWithHomeType:ATOMHomepageAskType];
     }
 }
 
@@ -424,7 +423,6 @@
         self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
         [self presentViewController:_imagePickerController animated:YES completion:NULL];
     }
-
 }
 
 - (void)dealDownloadWork {
@@ -438,14 +436,6 @@
     }else{
         [Util TextHud:@"保存成功"];
     }
-}
-
-- (void)clickWXButton:(UIButton *)sender {
-    [self wxFriendShare];
-}
-
-- (void)clickWXFriendCircleButton:(UIButton *)sender {
-    [self wxShare];
 }
 
 - (void)changeNavigationBarAccordingTo:(NSString *)type {
@@ -493,7 +483,7 @@
                     [_selectedHotCell.praiseButton toggleLike];
                     [_selectedAskPageViewModel toggleLike];
                 } else if (CGRectContainsPoint(_selectedHotCell.shareButton.frame, p)) {
-                    [self wxShare];
+                    [self postSocialShare:_selectedAskPageViewModel.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
                 } else if (CGRectContainsPoint(_selectedHotCell.commentButton.frame, p)) {
                     ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
                     rdvc.delegate = self;
@@ -514,7 +504,7 @@
 }
 
 - (void)tapHomePageRecentGesture:(UITapGestureRecognizer *)gesture {
-    if ([_scrollView typeOfCurrentHomepageView] == ATOMHomepageRecentType) {
+    if ([_scrollView typeOfCurrentHomepageView] == ATOMHomepageAskType) {
         CGPoint location = [gesture locationInView:_scrollView.homepageAskTableView];
         NSIndexPath *indexPath = [_scrollView.homepageAskTableView indexPathForRowAtPoint:location];
         if (indexPath) {
@@ -550,7 +540,7 @@
                     [_selectedAskCell.praiseButton toggleLike];
                     [_selectedAskPageViewModel toggleLike];
                 } else if (CGRectContainsPoint(_selectedAskCell.shareButton.frame, p)) {
-                    [self wxShare];
+                    [self postSocialShare:_selectedAskPageViewModel.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
                 } else if (CGRectContainsPoint(_selectedAskCell.commentButton.frame, p)) {
                     ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
                     rdvc.delegate = self;
@@ -596,7 +586,7 @@
             [_scrollView changeUIAccording:@"最新"];
             if (_isfirstEnterHomepageRecentView) {
                 _isfirstEnterHomepageRecentView = NO;
-                [self firstGetDataSourceOfTableViewWithHomeType:@"new"];
+                [self firstGetDataSourceOfTableViewWithHomeType:ATOMHomepageAskType];
             }
         }
     }
@@ -678,7 +668,7 @@
 -(void)ATOMViewControllerDismissWithLiked:(BOOL)liked {
     if (_scrollView.typeOfCurrentHomepageView == ATOMHomepageHotType) {
         [_selectedHotCell.praiseButton toggleLikeWhenSelectedChanged:liked];
-    } else if (_scrollView.typeOfCurrentHomepageView == ATOMHomepageRecentType) {
+    } else if (_scrollView.typeOfCurrentHomepageView == ATOMHomepageAskType) {
         [_selectedAskCell.praiseButton toggleLikeWhenSelectedChanged:liked];
     }
 }

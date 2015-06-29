@@ -6,10 +6,10 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "AFHTTPRequestOperationManager.h"
+#import "AFHTTPSessionManager.h"
 
-@interface ATOMHTTPRequestOperationManager : AFHTTPRequestOperationManager
+@interface ATOMHTTPRequestOperationManager : AFHTTPSessionManager
 
-+ (instancetype)sharedRequestOperationManager;
++ (instancetype)shareHTTPSessionManager;
 
 @end

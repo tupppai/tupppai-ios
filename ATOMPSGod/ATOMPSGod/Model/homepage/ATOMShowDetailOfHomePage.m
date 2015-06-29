@@ -37,11 +37,9 @@
     return _commentDAO;
 }
 
-- (AFHTTPRequestOperation *)ShowDetailOfHomePage:(NSDictionary *)param withImageID:(NSInteger)imageID withBlock:(void (^)(NSMutableArray *, NSError *))block {
-    [[KShareManager mascotAnimator]show];
+- (NSURLSessionDataTask *)ShowDetailOfHomePage:(NSDictionary *)param withImageID:(NSInteger)imageID withBlock:(void (^)(NSMutableArray *, NSError *))block {
     NSLog(@"%@ %ld", param[@"type"], [param[@"page"] longValue]);
-    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:[NSString stringWithFormat:@"ask/show/%d", (int)imageID] parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [[KShareManager mascotAnimator]dismiss];
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:[NSString stringWithFormat:@"ask/show/%d", (int)imageID] parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"ask/show/%ld,responseObject%@",(long)imageID,responseObject);
         NSMutableArray *detailOfHomePageArray = [NSMutableArray array];
         NSArray *imageDataArray = responseObject[@"data"][@"replies"];
@@ -65,8 +63,7 @@
         if (block) {
             block(detailOfHomePageArray, nil);
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [[KShareManager mascotAnimator]dismiss];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         if (block) {
             block(nil, error);
         }

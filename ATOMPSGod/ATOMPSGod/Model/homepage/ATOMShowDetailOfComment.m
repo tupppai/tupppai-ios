@@ -26,8 +26,8 @@
     return self;
 }
 
-- (AFHTTPRequestOperation *)ShowDetailOfComment:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSMutableArray *, NSError *))block {
-    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:@"comment/index" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+- (NSURLSessionDataTask *)ShowDetailOfComment:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSMutableArray *, NSError *))block {
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"comment/index" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"ShowDetailOfComment param %@,responseObject%@",param,responseObject);
         NSMutableArray *hotCommentArray = [NSMutableArray array];
         NSMutableArray *recentCommentArray = [NSMutableArray array];
@@ -64,15 +64,15 @@
             }
         }
 
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         if (block) {
             block(nil, nil, error);
         }
     }];
 }
 
-- (AFHTTPRequestOperation *)SendComment:(NSDictionary *)param withBlock:(void (^)(NSInteger, NSError *))block {
-    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] POST:@"comment/send_comment" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+- (NSURLSessionDataTask *)SendComment:(NSDictionary *)param withBlock:(void (^)(NSInteger, NSError *))block {
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"comment/send_comment" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSLog(@"SendComment %@,responseObject%@",param,responseObject);
         NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
@@ -90,7 +90,7 @@
             }
         }
 
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"发送评论失败");
         [Util TextHud:@"评论失败了,请重试"];
         if (block) {
@@ -99,16 +99,16 @@
     }];
 }
 
-- (AFHTTPRequestOperation *)toggleLike:(NSDictionary *)param withID:(NSInteger)commentID withBlock:(void (^)(NSError *))block {
+- (NSURLSessionDataTask *)toggleLike:(NSDictionary *)param withID:(NSInteger)commentID withBlock:(void (^)(NSError *))block {
     NSString* url = [NSString stringWithFormat:@"comment/upComment/%ld",(long)commentID];
     NSLog(@"param %@ , url %@",param,url);
     
-    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"toggleLike success");
         if (block) {
             block(nil);
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         if (block) {
             NSLog(@"%@",error);
             block(error);

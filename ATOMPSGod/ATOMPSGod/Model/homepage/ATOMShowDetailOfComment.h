@@ -10,7 +10,7 @@
 
 @interface ATOMShowDetailOfComment : NSObject
 
-- (AFHTTPRequestOperation *)ShowDetailOfComment:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error))block;
-- (AFHTTPRequestOperation *)SendComment:(NSDictionary *)param withBlock:(void (^)(NSInteger comment_id, NSError *error))block;
-- (AFHTTPRequestOperation *)toggleLike:(NSDictionary *)param withID:(NSInteger)commentID withBlock:(void (^)(NSError *))block;
+- (NSURLSessionDataTask *)ShowDetailOfComment:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error))block;
+- (NSURLSessionDataTask *)SendComment:(NSDictionary *)param withBlock:(void (^)(NSInteger comment_id, NSError *error))block;
+- (NSURLSessionDataTask *)toggleLike:(NSDictionary *)param withID:(NSInteger)commentID withBlock:(void (^)(NSError *))block;
 @end

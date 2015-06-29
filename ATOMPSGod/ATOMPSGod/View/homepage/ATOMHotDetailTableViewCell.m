@@ -8,7 +8,7 @@
 
 #import "ATOMHotDetailTableViewCell.h"
 #import "ATOMCommentViewModel.h"
-#import "ATOMProductPageViewModel.h"
+#import "ATOMHotDetailPageViewModel.h"
 #import "ATOMTipButton.h"
 #import "ATOMImageTipLabelViewModel.h"
 #import "ATOMBottomCommonButton.h"
@@ -145,15 +145,15 @@
     }
 }
 
-+ (CGFloat)calculateCellHeightWith:(ATOMProductPageViewModel *)viewModel {
++ (CGFloat)calculateCellHeightWith:(ATOMHotDetailPageViewModel *)viewModel {
     return 60 + viewModel.height + 60 + ((viewModel.commentArray.count > 2) ? 2 : viewModel.commentArray.count) * 20 + 40;
 }
 
-+ (CGSize)calculateHomePageHotImageViewSizeWith:(ATOMProductPageViewModel *)viewModel {
++ (CGSize)calculateHomePageHotImageViewSizeWith:(ATOMHotDetailPageViewModel *)viewModel {
     return CGSizeMake(viewModel.width, viewModel.height);
 }
 
-- (void)setViewModel:(ATOMProductPageViewModel *)viewModel {
+- (void)setViewModel:(ATOMHotDetailPageViewModel *)viewModel {
     _viewModel = viewModel;
     _userNameLabel.text = viewModel.userName;
     for (int i = 0; i < viewModel.commentArray.count; i++) {

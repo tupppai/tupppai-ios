@@ -104,7 +104,6 @@
         praiseSize = [_pageDetailViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                          NSStringDrawingUsesFontLeading           attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
         praiseSize.width += kBottomCommonButtonWidth + kPadding15;
     }
-    
     _userWorkImageView.frame = CGRectMake((SCREEN_WIDTH - workImageSize.width) / 2, CGRectGetMaxY(_topView.frame), workImageSize.width, workImageSize.height);
 //    _userWorkImageView.contentMode = UIViewContentModeScaleAspectFit;
     CGFloat thinViewHeight = 60;
@@ -139,7 +138,7 @@
     [self setNeedsLayout];
 }
 
--(void)setProductPageViewModel:(ATOMProductPageViewModel *)productPageViewModel {
+-(void)setProductPageViewModel:(ATOMHotDetailPageViewModel *)productPageViewModel {
     _userNameLabel.text = productPageViewModel.userName;
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:productPageViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     if (productPageViewModel.image) {

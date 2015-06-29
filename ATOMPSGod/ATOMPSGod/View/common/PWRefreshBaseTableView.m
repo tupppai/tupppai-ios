@@ -44,7 +44,6 @@
     }
     return _noDataView;
 }
-
 -(void) loadNewHotData {
     if (_psDelegate && [_psDelegate respondsToSelector:@selector(didPullRefreshDown:)]) {
         [_psDelegate didPullRefreshDown:self];

@@ -10,6 +10,6 @@
 
 @interface ATOMShowConcernMessage : NSObject
 
-- (AFHTTPRequestOperation *)ShowConcernMessage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *concernMessageArray, NSError *error))block;
+- (NSURLSessionDataTask *)ShowConcernMessage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *concernMessageArray, NSError *error))block;
 
 @end

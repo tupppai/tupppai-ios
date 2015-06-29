@@ -1,12 +1,12 @@
 //
-//  ATOMProductPageViewModel.m
+//  ATOMHotDetailPageViewModel.m
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/20.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMProductPageViewModel.h"
+#import "ATOMHotDetailPageViewModel.h"
 #import "ATOMAskPageViewModel.h"
 #import "ATOMDetailImage.h"
 #import "ATOMImageTipLabel.h"
@@ -14,7 +14,7 @@
 #import "ATOMComment.h"
 #import "ATOMCommentViewModel.h"
 #import "ATOMBaseRequest.h"
-@implementation ATOMProductPageViewModel
+@implementation ATOMHotDetailPageViewModel
 
 - (instancetype)init {
     self = [super init];
@@ -26,6 +26,7 @@
 }
 
 - (void)setViewModelDataWithHomeImage:(ATOMAskPageViewModel *)askPageViewModel {
+    _type = 1;
     _ID = askPageViewModel.imageID;
     _uid = askPageViewModel.userID;
     _userName = askPageViewModel.userName;
@@ -51,6 +52,7 @@
 }
 
 - (void)setViewModelDataWithDetailImage:(ATOMDetailImage *)detailImage {
+    _type = 2;
     _ID = detailImage.detailID;
     _uid = detailImage.uid;
     _userName = detailImage.nickname;

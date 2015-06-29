@@ -12,9 +12,9 @@
 
 @implementation ATOMShowConcern
 
-- (AFHTTPRequestOperation *)ShowMyConcern:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSMutableArray *, NSError *))block {
+- (NSURLSessionDataTask *)ShowMyConcern:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSMutableArray *, NSError *))block {
     [[KShareManager mascotAnimator]show];
-    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:@"user/myfellow" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/myfellow" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         [[KShareManager mascotAnimator]dismiss];
         NSLog(@"ShowMyConcern responseObject %@",responseObject);
         int ret = [(NSString*)responseObject[@"ret"] intValue];
@@ -39,15 +39,15 @@
                 block(nil,nil, nil);
             }
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         if (block) {
             block(nil, nil, error);
         }
     }];
 }
 
-- (AFHTTPRequestOperation *)ShowOtherConcern:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
-    return [[ATOMHTTPRequestOperationManager sharedRequestOperationManager] GET:@"user/myfellow" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+- (NSURLSessionDataTask *)ShowOtherConcern:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/myfellow" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         int ret = [(NSString*)responseObject[@"ret"] intValue];
         if (ret == 1) {
             NSMutableArray *resultArray = [NSMutableArray array];
@@ -64,7 +64,7 @@
                 block(nil, nil);
             }
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         if (block) {
             block(nil, error);
         }
