@@ -305,7 +305,7 @@
 		E90C7C601B20A0FC00CF0E6A /* KShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E90C7C5F1B20A0FC00CF0E6A /* KShareManager.m */; };
 		E90C7C631B2141B800CF0E6A /* PWHomePageTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E90C7C621B2141B800CF0E6A /* PWHomePageTableView.m */; };
 		E90C7C661B21431000CF0E6A /* PWCommentDetailTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E90C7C651B21431000CF0E6A /* PWCommentDetailTableView.m */; };
-		E93D237A1B3A656E0081F632 /* AtomInviteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D23791B3A656D0081F632 /* AtomInviteModel.m */; };
+		E93D237A1B3A656E0081F632 /* ATOMInviteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D23791B3A656D0081F632 /* ATOMInviteModel.m */; };
 		E93D237E1B3CFA4D0081F632 /* ATOMShareModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D237D1B3CFA4D0081F632 /* ATOMShareModel.m */; };
 		E93D23811B3D065C0081F632 /* ATOMShare.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D23801B3D065C0081F632 /* ATOMShare.m */; };
 		E93D23831B3D26320081F632 /* shareIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = E93D23821B3D26320081F632 /* shareIcon.png */; };
@@ -971,8 +971,8 @@
 		E90C7C621B2141B800CF0E6A /* PWHomePageTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWHomePageTableView.m; sourceTree = "<group>"; };
 		E90C7C641B21431000CF0E6A /* PWCommentDetailTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWCommentDetailTableView.h; sourceTree = "<group>"; };
 		E90C7C651B21431000CF0E6A /* PWCommentDetailTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWCommentDetailTableView.m; sourceTree = "<group>"; };
-		E93D23781B3A656D0081F632 /* AtomInviteModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtomInviteModel.h; sourceTree = "<group>"; };
-		E93D23791B3A656D0081F632 /* AtomInviteModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AtomInviteModel.m; sourceTree = "<group>"; };
+		E93D23781B3A656D0081F632 /* ATOMInviteModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMInviteModel.h; sourceTree = "<group>"; };
+		E93D23791B3A656D0081F632 /* ATOMInviteModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMInviteModel.m; sourceTree = "<group>"; };
 		E93D237C1B3CFA4D0081F632 /* ATOMShareModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShareModel.h; sourceTree = "<group>"; };
 		E93D237D1B3CFA4D0081F632 /* ATOMShareModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShareModel.m; sourceTree = "<group>"; };
 		E93D237F1B3D065C0081F632 /* ATOMShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShare.h; sourceTree = "<group>"; };
@@ -1446,8 +1446,8 @@
 				5C5EF7C21ABBF23E00CE5B84 /* ATOMShowDetailOfHomePage.m */,
 				5C0D282B1ACA333200491452 /* ATOMShowDetailOfComment.h */,
 				5C0D282C1ACA333200491452 /* ATOMShowDetailOfComment.m */,
-				E93D23781B3A656D0081F632 /* AtomInviteModel.h */,
-				E93D23791B3A656D0081F632 /* AtomInviteModel.m */,
+				E93D23781B3A656D0081F632 /* ATOMInviteModel.h */,
+				E93D23791B3A656D0081F632 /* ATOMInviteModel.m */,
 			);
 			path = homepage;
 			sourceTree = "<group>";
@@ -2810,7 +2810,7 @@
 				5C83A88C1AC66F910071A024 /* POPAnimator.mm in Sources */,
 				5C8D4AC71ADE3FBF00B158AE /* ATOMShowConcern.m in Sources */,
 				5CDB065E1AA45C4A0089121E /* ATOMLaunchView.m in Sources */,
-				E93D237A1B3A656E0081F632 /* AtomInviteModel.m in Sources */,
+				E93D237A1B3A656E0081F632 /* ATOMInviteModel.m in Sources */,
 				5C561A7C1AB7C9FB0052D4D5 /* ATOMBaseDAO.m in Sources */,
 				E95691B51B22E88300DA84BB /* NSError+MTLModelException.m in Sources */,
 				E900AB561B4171200019BAEA /* ATOMInviteCellViewModel.m in Sources */,

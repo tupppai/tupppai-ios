@@ -20,6 +20,6 @@
 
 @property (nonatomic, strong) ATOMInviteCellViewModel *viewModel;
 
-- (void)changeInviteButtonStatus;
+- (void)toggleInviteButtonAppearance;
 
 @end

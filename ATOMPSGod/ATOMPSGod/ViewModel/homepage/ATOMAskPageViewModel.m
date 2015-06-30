@@ -108,6 +108,7 @@
 -(PWPageDetailViewModel*)generatepageDetailViewModel {
     PWPageDetailViewModel* commonViewModel = [PWPageDetailViewModel new];
     commonViewModel.pageID = _imageID;
+    commonViewModel.type = ATOMPageTypeAsk;
     commonViewModel.pageImageURL = _userImageURL;
     commonViewModel.pageImage = _image;
     commonViewModel.avatarURL = _avatarURL;

@@ -10,7 +10,7 @@
 #import "ATOMHTTPRequestOperationManager.h"
 #import "ATOMRecommendUser.h"
 @implementation ATOMInviteModel
-- (NSURLSessionDataTask *)showMasters:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *recommendMasters,NSMutableArray *recommendFriends, NSError *))block {
+- (NSURLSessionDataTask *)showRecomendUsers:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *recommendMasters,NSMutableArray *recommendFriends, NSError *))block {
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/get_recommend_users" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"showMasters responseObject%@",responseObject);
         NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
@@ -54,5 +54,21 @@
         }
     }];
     
+}
+
++ (NSURLSessionDataTask *)invite:(NSDictionary *)param {
+    NSLog(@"invite param%@",param);
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"invitation/invite" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSLog(@"invite responseObject%@",responseObject);
+        NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
+        if (ret != 1) {
+            [Util TextHud:@"出现未知错误"];
+        } else {
+            //ok
+        }
+    }  failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [Util TextHud:@"出现未知错误"];
+        NSLog(@"invite error %@",error);
+    }];
 }
 @end

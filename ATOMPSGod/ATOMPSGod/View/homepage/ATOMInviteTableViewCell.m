@@ -10,8 +10,8 @@
 
 @interface ATOMInviteTableViewCell ()
 
-@property (nonatomic, strong) UIView *view1;
-@property (nonatomic, strong) UIView *view2;
+@property (nonatomic, strong) UIView *dotView1;
+@property (nonatomic, strong) UIView *dotView2;
 
 @end
 
@@ -36,7 +36,7 @@ static CGFloat cellHeight = 70;
     [_userHeaderButton setBackgroundImage:[UIImage imageNamed:@"head_portrait"] forState:UIControlStateNormal];
     [self addSubview:_userHeaderButton];
     
-    _userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, CGRectGetMinY(_userHeaderButton.frame), kUserNameLabelWidth, kFont14)];
+    _userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, CGRectGetMinY(_userHeaderButton.frame), kUserNameLabelWidth, kFont14+2)];
     _userNameLabel.text = @"PSGOD";
     _userNameLabel.font = [UIFont systemFontOfSize:kFont14];
     [self addSubview:_userNameLabel];
@@ -50,19 +50,18 @@ static CGFloat cellHeight = 70;
     _inviteButton.titleLabel.font = [UIFont systemFontOfSize:13.f];
     [self addSubview:_inviteButton];
     
-    CGFloat labelOriginY = CGRectGetMaxY(_userNameLabel.frame) + kPadding5;
     _fansNumberLabel = [UILabel new];
     _fansNumberLabel.textColor = [UIColor colorWithHex:0xc5cdd3];
     _fansNumberLabel.font = [UIFont systemFontOfSize:kFont10];
     [self addSubview:_fansNumberLabel];
-    _view1 = [self littleCircleView];
-    [self addSubview:_view1];
+    _dotView1 = [self littleCircleView];
+    [self addSubview:_dotView1];
     _uploadNumberLabel = [UILabel new];
     _uploadNumberLabel.textColor = [UIColor colorWithHex:0xc5cdd3];
     _uploadNumberLabel.font = [UIFont systemFontOfSize:kFont10];
     [self addSubview:_uploadNumberLabel];
-    _view2 = [self littleCircleView];
-    [self addSubview:_view2];
+    _dotView2 = [self littleCircleView];
+    [self addSubview:_dotView2];
     _workNumberLabel = [UILabel new];
     _workNumberLabel.textColor = [UIColor colorWithHex:0xc5cdd3];
     _workNumberLabel.font = [UIFont systemFontOfSize:kFont10];
@@ -86,39 +85,35 @@ static CGFloat cellHeight = 70;
     return view;
 }
 
-- (void)changeInviteButtonStatus {
-    _inviteButton.selected = !_inviteButton.selected;
-    if (_inviteButton.selected) {
-        _inviteButton.backgroundColor = [UIColor colorWithHex:0x74c3ff];
-        [_inviteButton setTitle:@"邀请" forState:UIControlStateNormal];
-    } else {
-        _inviteButton.backgroundColor = [UIColor colorWithHex:0xc5cdd3];
-        [_inviteButton setTitle:@"已邀请" forState:UIControlStateNormal];
+- (void)toggleInviteButtonAppearance {
+    if (!_inviteButton.selected) {
+        _inviteButton.selected = !_inviteButton.selected;
+        if (!_inviteButton.selected) {
+            _inviteButton.backgroundColor = [UIColor colorWithHex:0x74c3ff];
+            [_inviteButton setTitle:@"邀请" forState:UIControlStateNormal];
+        } else {
+            _inviteButton.backgroundColor = [UIColor colorWithHex:0xc5cdd3];
+            [_inviteButton setTitle:@"已邀请" forState:UIControlStateNormal];
+        }
     }
 }
 
 -(void)setViewModel:(ATOMInviteCellViewModel *)viewModel {
     _inviteButton.selected = viewModel.invited;
+    _inviteButton.tag = viewModel.uid;
     _userNameLabel.text = viewModel.nickname;
     NSURL* url = [NSURL URLWithString:viewModel.avatarUrl];
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:url placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     _fansNumberLabel.text = viewModel.fansDesc;
     _uploadNumberLabel.text = viewModel.askDesc;
     _workNumberLabel.text = viewModel.replyDesc;
-    
     CGFloat labelOriginY = CGRectGetMaxY(_userNameLabel.frame) + kPadding5;
     _fansNumberLabel.frame = CGRectMake(kPadding15 + CGRectGetMaxX(_userHeaderButton.frame), labelOriginY, kFont10 * (_fansNumberLabel.text.length), kFont10);
-    _view1.frame = CGRectMake(CGRectGetMaxX(_fansNumberLabel.frame) + kPadding5, labelOriginY + 2.5, 5, 5);
-    _uploadNumberLabel.frame = CGRectMake(CGRectGetMaxX(_view1.frame) + kPadding5, labelOriginY, kFont10 * (_uploadNumberLabel.text.length ), kFont10);
-    _view2.frame = CGRectMake(CGRectGetMaxX(_uploadNumberLabel.frame) + kPadding5, labelOriginY + 2.5, 5, 5);
-    _workNumberLabel.frame = CGRectMake(CGRectGetMaxX(_view2.frame) + kPadding5, labelOriginY, kFont10 * (_workNumberLabel.text.length), kFont10);
+    _dotView1.frame = CGRectMake(CGRectGetMaxX(_fansNumberLabel.frame) + kPadding5, labelOriginY + 2.5, 5, 5);
+    _uploadNumberLabel.frame = CGRectMake(CGRectGetMaxX(_dotView1.frame) + kPadding5, labelOriginY, kFont10 * (_uploadNumberLabel.text.length ), kFont10);
+    _dotView2.frame = CGRectMake(CGRectGetMaxX(_uploadNumberLabel.frame) + kPadding5, labelOriginY + 2.5, 5, 5);
+    _workNumberLabel.frame = CGRectMake(CGRectGetMaxX(_dotView2.frame) + kPadding5, labelOriginY, kFont10 * (_workNumberLabel.text.length), kFont10);
 }
-
-
-
-
-
-
 
 
 

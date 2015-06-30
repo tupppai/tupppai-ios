@@ -33,7 +33,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
-    [self getMasterDataSource];
+    [self getRecommendDataSource];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -71,16 +71,17 @@
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
             [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.inviteButton.frame, p)) {
-            [cell changeInviteButtonStatus];
+            [cell toggleInviteButtonAppearance];
+            [self tapInviteButton:cell.inviteButton];
         }
     }
 }
--(void)getMasterDataSource {
+-(void)getRecommendDataSource {
     ATOMInviteModel* inviteModel = [ATOMInviteModel new];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(3) forKey:@"size"];
-    [inviteModel showMasters:param withBlock:^(NSMutableArray *recommendMasters, NSMutableArray *recommendFriends, NSError *error) {
+    [inviteModel showRecomendUsers:param withBlock:^(NSMutableArray *recommendMasters, NSMutableArray *recommendFriends, NSError *error) {
         if (recommendMasters) {
             _datasourceRecommendMaster = recommendMasters;
         }
@@ -101,11 +102,11 @@
 }
 
 - (void)clickWXFriendCircleButton:(UIButton *)sender {
-//    [self wxShare];
+    [self postSocialShare:_askPageViewModel.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
 }
 
 - (void)clickWXFriendInviteButton:(UIButton *)sender {
-//    [self wxFriendShare];
+    [self postSocialShare:_askPageViewModel.imageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeAsk];
 }
 
 #pragma mark - UITableViewDelegate
@@ -166,5 +167,12 @@
     }
     return cell;
 }
-
+-(void)tapInviteButton:(id)sender {
+    NSLog(@"tapInviteButton");
+    UIButton* button = sender;
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    [param setObject:@(button.tag) forKey:@"invite_uid"];
+    [param setObject:@(_askPageViewModel.imageID) forKey:@"ask_id"];
+    [ATOMInviteModel invite:param];
+}
 @end

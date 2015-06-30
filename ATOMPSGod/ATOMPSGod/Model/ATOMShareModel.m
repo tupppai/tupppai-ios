@@ -12,6 +12,7 @@
 - (NSURLSessionDataTask *)getShareInfo:(NSDictionary *)param withBlock:(void (^)(ATOMShare *, NSError *))block {
     [[KShareManager mascotAnimator]show];
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"app/share" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+        [[KShareManager mascotAnimator]dismiss];
         NSLog(@"getShareInfo param%@",param);
         NSLog(@"getShareInfo responseObject%@",responseObject);
         NSLog(@"getShareInfo info%@",responseObject[@"info"]);
