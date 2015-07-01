@@ -13,9 +13,7 @@
 @implementation ATOMShowFans
 
 - (NSURLSessionDataTask *)ShowFans:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
-    [[KShareManager mascotAnimator]show];
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/myfans" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        [[KShareManager mascotAnimator]dismiss];
         NSLog(@"ShowFans responseObject %@",responseObject);
         int ret = [(NSString*)responseObject[@"ret"] intValue];
         if (ret == 1) {
@@ -35,7 +33,6 @@
         }
 
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [[KShareManager mascotAnimator]dismiss];
         if (block) {
             block(nil, error);
         }

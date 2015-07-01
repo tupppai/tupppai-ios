@@ -15,7 +15,7 @@
  *  作品ID
  */
 @property (nonatomic, assign) NSInteger imageID;
-
+@property (nonatomic, assign) NSInteger askID;
 @property (nonatomic, assign) BOOL liked;
 
 /**

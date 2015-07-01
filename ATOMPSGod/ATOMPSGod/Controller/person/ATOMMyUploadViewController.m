@@ -10,7 +10,7 @@
 #import "ATOMMyUploadCollectionViewCell.h"
 #import "ATOMHotDetailViewController.h"
 #import "ATOMPageDetailViewController.h"
-#import "ATOMShowAskOrReply.h"
+#import "ATOMShowAsk.h"
 #import "ATOMHomeImage.h"
 #import "ATOMAskPageViewModel.h"
 #import "ATOMAskViewModel.h"
@@ -37,6 +37,7 @@ static int collumnNumber = 3;
 
 #pragma mark - Refresh
 -(void)didPullUpCollectionViewBottom {
+    NSLog(@"didPullUpCollectionViewBottom");
     [self loadMoreData];
 }
 - (void)loadMoreData {
@@ -61,15 +62,13 @@ static int collumnNumber = 3;
     _currentPage = 1;
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-    [param setObject:@"new" forKey:@"type"];
+//    [param setObject:@"new" forKey:@"type"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@"time" forKey:@"sort"];
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
-    ATOMShowAskOrReply *showAskOrReply = [ATOMShowAskOrReply new];
-    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-    [showAskOrReply ShowAskOrReply:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        ////[SVProgressHUD dismiss];
+    ATOMShowAsk *ShowMyAsk = [ATOMShowAsk new];
+    [ShowMyAsk ShowMyAsk:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         for (ATOMHomeImage *homeImage in resultArray) {
             ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
             [homepageViewModel setViewModelData:homeImage];
@@ -83,21 +82,20 @@ static int collumnNumber = 3;
 }
 
 - (void)getMoreDataSource {
+    NSLog(@"getMoreDataSource");
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timestamp = [[NSDate date] timeIntervalSince1970];
     ws.currentPage++;
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-    [param setObject:@"new" forKey:@"type"];
+//    [param setObject:@"new" forKey:@"type"];
     [param setObject:@(timestamp) forKey:@"last_updated"];
     [param setObject:@"time" forKey:@"sort"];
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
-    ATOMShowAskOrReply *showAskOrReply = [ATOMShowAskOrReply new];
-    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-    [showAskOrReply ShowAskOrReply:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        ////[SVProgressHUD dismiss];
+    ATOMShowAsk *ShowMyAsk = [ATOMShowAsk new];
+    [ShowMyAsk ShowMyAsk:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         for (ATOMHomeImage *homeImage in resultArray) {
             ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
             [homepageViewModel setViewModelData:homeImage];
@@ -108,6 +106,7 @@ static int collumnNumber = 3;
         }
         if (resultArray.count == 0) {
             ws.canRefreshFooter = NO;
+            NSLog(@"canRefreshFooter = NO");
         } else {
             ws.canRefreshFooter = YES;
         }

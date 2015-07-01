@@ -1,25 +1,25 @@
 //
-//  ATOMShowCollection.m
+//  ATOMShowAsk.m
 //  ATOMPSGod
 //
-//  Created by atom on 15/4/8.
+//  Created by atom on 15/4/7.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMShowCollection.h"
+#import "ATOMShowAsk.h"
 #import "ATOMHTTPRequestOperationManager.h"
 #import "ATOMHomeImage.h"
 #import "ATOMImageTipLabel.h"
 
-@implementation ATOMShowCollection
+@implementation ATOMShowAsk
 
-- (NSURLSessionDataTask *)ShowCollection:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/my_collectionfocus" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"ShowCollection responseObject %@",responseObject);
+- (NSURLSessionDataTask *)ShowMyAsk:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/my_ask" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSLog(@"ShowMyAsk responseObject %@",responseObject);
+        NSMutableArray *resultArray = [NSMutableArray array];
+        NSArray *imageDataArray = responseObject[@"data"];
         int ret = [(NSString*)responseObject[@"ret"] intValue];
         if (ret == 1) {
-            NSMutableArray *resultArray = [NSMutableArray array];
-            NSArray *imageDataArray = responseObject[@"data"];
             for (int i = 0; i < imageDataArray.count; i++) {
                 ATOMHomeImage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMHomeImage class] fromJSONDictionary:imageDataArray[i] error:NULL];
                 homeImage.tipLabelArray = [NSMutableArray array];

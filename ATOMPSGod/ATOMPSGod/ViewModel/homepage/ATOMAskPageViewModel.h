@@ -13,6 +13,7 @@
 @interface ATOMAskPageViewModel : NSObject
 
 @property (nonatomic, assign) NSInteger imageID;
+@property (nonatomic, assign) NSInteger askID;
 @property (nonatomic, assign) NSInteger userID;
 @property (nonatomic, copy) NSString *userName;
 @property (nonatomic, copy) NSString *userSex;
@@ -31,6 +32,7 @@
 @property (nonatomic, assign) BOOL liked;
 @property (nonatomic, assign) BOOL collected;
 @property (nonatomic, assign) int type;
+@property (nonatomic, assign) NSInteger fold;
 
 - (void)setViewModelData:(ATOMHomeImage *)homeImage;
 -(void)setViewModelWithCommon:(PWPageDetailViewModel*)commonViewModel;

@@ -13,9 +13,7 @@
 @implementation ATOMShowConcern
 
 - (NSURLSessionDataTask *)ShowMyConcern:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSMutableArray *, NSError *))block {
-    [[KShareManager mascotAnimator]show];
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/myfellow" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        [[KShareManager mascotAnimator]dismiss];
         NSLog(@"ShowMyConcern responseObject %@",responseObject);
         int ret = [(NSString*)responseObject[@"ret"] intValue];
         if (ret == 1) {

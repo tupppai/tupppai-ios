@@ -102,7 +102,8 @@
     } else {
         ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
         [self postSocialShare:model.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:ATOMPageTypeReply];
-    }}
+    }
+}
 #pragma mark Refresh
 
 - (void)configHotDetailTableViewRefresh {
@@ -135,10 +136,13 @@
     } else { //读数据库
         _dataSource = nil;
         _dataSource = [NSMutableArray array];
-        //第一张图片为首页点击的图片，剩下的图片为回复图片
-        ATOMHotDetailPageViewModel *model = [ATOMHotDetailPageViewModel new];
-        [model setViewModelDataWithHomeImage:_askPageViewModel];
-        [_dataSource addObject:model];
+        if (_askPageViewModel.fold == 0) {
+            //fold=0,不需要从服务器获取求P，直接从上一个controller获取。
+            //第一张图片为首页点击的图片，剩下的图片为回复图片。。。
+            ATOMHotDetailPageViewModel *model = [ATOMHotDetailPageViewModel new];
+            [model setViewModelDataWithHomeImage:_askPageViewModel];
+            [_dataSource addObject:model];
+        }
         for (ATOMDetailImage *detailImage in detailImageArray) {
             ATOMHotDetailPageViewModel *model = [ATOMHotDetailPageViewModel new];
             [model setViewModelDataWithDetailImage:detailImage];
@@ -156,15 +160,18 @@
     [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(5) forKey:@"size"];
+    [param setObject:@(_askPageViewModel.fold) forKey:@"fold"];
     ATOMShowDetailOfHomePage *showDetailOfHomePage = [ATOMShowDetailOfHomePage new];
     NSLog(@"%d", (int)ws.askPageViewModel.imageID);
     [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.askPageViewModel.imageID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
         //第一张图片为首页点击的图片，剩下的图片为回复图片
         ws.dataSource = nil;
         ws.dataSource = [NSMutableArray array];
-        ATOMHotDetailPageViewModel *model = [ATOMHotDetailPageViewModel new];
-        [model setViewModelDataWithHomeImage:ws.askPageViewModel];
-        [ws.dataSource addObject:model];
+        if (_askPageViewModel.fold == 0) {
+            ATOMHotDetailPageViewModel *model = [ATOMHotDetailPageViewModel new];
+            [model setViewModelDataWithHomeImage:ws.askPageViewModel];
+            [ws.dataSource addObject:model];
+        }
         for (ATOMDetailImage *detailImage in detailOfHomePageArray) {
             ATOMHotDetailPageViewModel *model = [ATOMHotDetailPageViewModel new];
             [model setViewModelDataWithDetailImage:detailImage];
@@ -208,7 +215,6 @@
 #pragma mark - UI
 
 - (void)viewDidLoad {
-    NSLog(@"ATOMHotDetailViewController");
     [super viewDidLoad];
     [self createUI];
     [self firstGetDataSource];
@@ -230,7 +236,7 @@
 }
 
 - (void)createUI {
-    self.title = @"详情";
+    self.title = @"作品列表";
     self.view = self.hotDetailView;
     _canRefreshFooter = YES;
 }

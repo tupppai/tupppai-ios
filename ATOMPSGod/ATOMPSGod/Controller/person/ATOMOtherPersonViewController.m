@@ -14,7 +14,7 @@
 #import "ATOMOtherPersonConcernViewController.h"
 #import "ATOMHotDetailViewController.h"
 #import "ATOMOtherPersonCollectionHeaderView.h"
-#import "ATOMShowAskOrReply.h"
+#import "ATOMShowAsk.h"
 #import "ATOMHomeImage.h"
 #import "ATOMAskPageViewModel.h"
 #import "ATOMAskViewModel.h"
@@ -97,9 +97,9 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
     [param setObject:@"time" forKey:@"sort"];
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
-    ATOMShowAskOrReply *showAskOrReply = [ATOMShowAskOrReply new];
+    ATOMShowAsk *ShowMyAsk = [ATOMShowAsk new];
     ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-    [showAskOrReply ShowAskOrReply:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
+    [ShowMyAsk ShowMyAsk:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         ////[SVProgressHUD dismiss];
         for (ATOMHomeImage *homeImage in resultArray) {
             ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
@@ -143,9 +143,9 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
     [param setObject:@"time" forKey:@"sort"];
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
-    ATOMShowAskOrReply *showAskOrReply = [ATOMShowAskOrReply new];
+    ATOMShowAsk *ShowMyAsk = [ATOMShowAsk new];
     ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-    [showAskOrReply ShowAskOrReply:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
+    [ShowMyAsk ShowMyAsk:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         ////[SVProgressHUD dismiss];
         for (ATOMHomeImage *homeImage in resultArray) {
             ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];

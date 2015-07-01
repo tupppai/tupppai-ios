@@ -1,23 +1,20 @@
 //
-//  ATOMShowAskOrReply.m
+//  ATOMShowReply.m
 //  ATOMPSGod
 //
-//  Created by atom on 15/4/7.
-//  Copyright (c) 2015年 ATOM. All rights reserved.
+//  Created by Peiwei Chen on 7/1/15.
+//  Copyright (c) 2015 ATOM. All rights reserved.
 //
 
-#import "ATOMShowAskOrReply.h"
+#import "ATOMShowReply.h"
 #import "ATOMHTTPRequestOperationManager.h"
 #import "ATOMHomeImage.h"
 #import "ATOMImageTipLabel.h"
 
-@implementation ATOMShowAskOrReply
-
-- (NSURLSessionDataTask *)ShowAskOrReply:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
-    [[KShareManager mascotAnimator]show];
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"index/index" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        [[KShareManager mascotAnimator]dismiss];
-        NSLog(@"ShowInviteMessage responseObject %@",responseObject);
+@implementation ATOMShowReply
++ (NSURLSessionDataTask *)ShowMyReply:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/my_reply" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSLog(@"ShowMyReply responseObject %@",responseObject);
         NSMutableArray *resultArray = [NSMutableArray array];
         NSArray *imageDataArray = responseObject[@"data"];
         int ret = [(NSString*)responseObject[@"ret"] intValue];
@@ -44,11 +41,9 @@
             }
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [[KShareManager mascotAnimator]dismiss];
         if (block) {
             block(nil, error);
         }
     }];
 }
-
 @end

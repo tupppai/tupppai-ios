@@ -9,7 +9,7 @@
 #import "ATOMMyWorkViewController.h"
 #import "ATOMMyWorkCollectionViewCell.h"
 #import "ATOMHotDetailViewController.h"
-#import "ATOMShowAskOrReply.h"
+#import "ATOMShowReply.h"
 #import "ATOMHomeImage.h"
 #import "ATOMAskPageViewModel.h"
 #import "ATOMReplyViewModel.h"
@@ -67,17 +67,18 @@ static int collumnNumber = 3;
     [param setObject:@"time" forKey:@"sort"];
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
-    ATOMShowAskOrReply *showAskOrReply = [ATOMShowAskOrReply new];
-    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-    [showAskOrReply ShowAskOrReply:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        ////[SVProgressHUD dismiss];
+    [ATOMShowReply ShowMyReply:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         for (ATOMHomeImage *homeImage in resultArray) {
+            
             ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
-            [homepageViewModel setViewModelData:homeImage];
+            homepageViewModel.imageID = homeImage.askID;
+            homepageViewModel.askID = homeImage.askID;
+            homepageViewModel.fold = 1;
+            [ws.homeImageDataSource addObject:homepageViewModel];
+            
             ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];
             replyViewModel.imageURL = homeImage.imageURL;
             [ws.dataSource addObject:replyViewModel];
-            [ws.homeImageDataSource addObject:homepageViewModel];
         }
         [ws.collectionView reloadData];
     }];
@@ -95,13 +96,12 @@ static int collumnNumber = 3;
     [param setObject:@"time" forKey:@"sort"];
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
-    ATOMShowAskOrReply *showAskOrReply = [ATOMShowAskOrReply new];
-    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-    [showAskOrReply ShowAskOrReply:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        ////[SVProgressHUD dismiss];
+    [ATOMShowReply ShowMyReply:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         for (ATOMHomeImage *homeImage in resultArray) {
             ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
             [homepageViewModel setViewModelData:homeImage];
+            ///ask/show/{id}  （fold : 是否展示ask，1展示，默认为0）
+            homepageViewModel.fold = 1;
             ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];
             [replyViewModel setViewModelData:homeImage];
             [ws.dataSource addObject:replyViewModel];
@@ -166,19 +166,6 @@ static int collumnNumber = 3;
     hdvc.askPageViewModel = _homeImageDataSource[indexPath.row];
     [self pushViewController:hdvc animated:YES];
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -41,12 +41,14 @@
         _replierArray = [NSMutableArray new];
         _liked = NO;
         _collected = NO;
+        _fold = 0;
     }
     return self;
 }
 
 - (void)setViewModelData:(ATOMHomeImage *)homeImage {
-    _imageID = homeImage.imageID;
+//    _imageID = homeImage.imageID;
+    _imageID = homeImage.askID;
     _userID = homeImage.uid;
     _userName = homeImage.nickname;
     _userSex = (homeImage.sex == 1) ? @"man" : @"woman";

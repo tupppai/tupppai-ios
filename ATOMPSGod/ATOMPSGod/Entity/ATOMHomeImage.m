@@ -29,6 +29,8 @@
              @"imageWidth" : @"image_width",
              @"imageHeight" : @"image_height",
              @"liked" :@"uped",
+             @"askID" : @"ask_id",
+
 //             @"collected":@"collected",
              };
 }
@@ -36,6 +38,7 @@
 + (NSDictionary *)FMDBColumnsByPropertyKey {
     return @{
              @"imageID" : @"imageID",
+             @"askID" : @"askID",
              @"uid" : @"uid",
              @"nickname" : @"nickname",
              @"avatar" : @"avatar",

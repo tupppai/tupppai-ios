@@ -38,32 +38,40 @@
 }
 
 - (NSURLSessionDataTask *)ShowDetailOfHomePage:(NSDictionary *)param withImageID:(NSInteger)imageID withBlock:(void (^)(NSMutableArray *, NSError *))block {
-    NSLog(@"%@ %ld", param[@"type"], [param[@"page"] longValue]);
+    NSLog(@"ShowDetailOfHomePage %@", param);
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:[NSString stringWithFormat:@"ask/show/%d", (int)imageID] parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"ask/show/%ld,responseObject%@",(long)imageID,responseObject);
-        NSMutableArray *detailOfHomePageArray = [NSMutableArray array];
-        NSArray *imageDataArray = responseObject[@"data"][@"replies"];
-        NSDate *clickTime = [NSDate date];
-        for (int i = 0; i < imageDataArray.count; i++) {
-            ATOMDetailImage *detailImage = [MTLJSONAdapter modelOfClass:[ATOMDetailImage class] fromJSONDictionary:imageDataArray[i] error:NULL];
-            detailImage.imageID = imageID;
-            detailImage.clickTime = [clickTime timeIntervalSince1970];
-            detailImage.hotCommentArray = [NSMutableArray array];
-            NSArray *hotCommentDataArray = imageDataArray[i][@"hot_comments"];
-            if (hotCommentDataArray.count) {
-                for (int j = 0; j < hotCommentDataArray.count; j++) {
-                    ATOMComment *comment = [MTLJSONAdapter modelOfClass:[ATOMComment class] fromJSONDictionary:hotCommentDataArray[j] error:NULL];
-                    comment.commentType = 1;
-                    comment.detailID = detailImage.detailID;
-                    [detailImage.hotCommentArray addObject:comment];
+        if (responseObject[@"data"]) {
+            NSLog(@"ask/show/%ld,responseObject%@",(long)imageID,responseObject);
+            NSMutableArray *detailOfHomePageArray = [NSMutableArray array];
+            NSArray *imageDataArray = responseObject[@"data"][@"replies"];
+            NSDate *clickTime = [NSDate date];
+            for (int i = 0; i < imageDataArray.count; i++) {
+                ATOMDetailImage *detailImage = [MTLJSONAdapter modelOfClass:[ATOMDetailImage class] fromJSONDictionary:imageDataArray[i] error:NULL];
+                detailImage.imageID = imageID;
+                detailImage.clickTime = [clickTime timeIntervalSince1970];
+                detailImage.hotCommentArray = [NSMutableArray array];
+                NSArray *hotCommentDataArray = imageDataArray[i][@"hot_comments"];
+                if (hotCommentDataArray.count) {
+                    for (int j = 0; j < hotCommentDataArray.count; j++) {
+                        ATOMComment *comment = [MTLJSONAdapter modelOfClass:[ATOMComment class] fromJSONDictionary:hotCommentDataArray[j] error:NULL];
+                        comment.commentType = 1;
+                        comment.detailID = detailImage.detailID;
+                        [detailImage.hotCommentArray addObject:comment];
+                    }
                 }
+                [detailOfHomePageArray addObject:detailImage];
             }
-            [detailOfHomePageArray addObject:detailImage];
-        }
-        if (block) {
-            block(detailOfHomePageArray, nil);
+            if (block) {
+                block(detailOfHomePageArray, nil);
+            }
+        } else {
+            [Util TextHud:@"出现未知错误"];
+            if (block) {
+                block(nil, nil);
+            }
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [Util TextHud:@"出现未知错误"];
         if (block) {
             block(nil, error);
         }

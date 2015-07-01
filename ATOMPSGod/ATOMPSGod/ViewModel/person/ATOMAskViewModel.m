@@ -13,6 +13,7 @@
 
 - (void)setViewModelData:(ATOMHomeImage *)homeImage {
     _imageURL = homeImage.imageURL;
+    NSLog(@"homeImage.totalWorkNumber %ld",(long)homeImage.totalWorkNumber);
     _totalPSNumber = [NSString stringWithFormat:@"%d", (int)homeImage.totalWorkNumber];
 }
 

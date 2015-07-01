@@ -23,7 +23,7 @@
 }
 
 + (NSString *)createHomeImage {
-    return @"create table ATOMHomeImage (imageID integer ,uid integer, nickname integer, avatar text, sex integer, uploadTime bigint, imageURL text, userDescription text, isDownload integer, totalPraiseNumber integer, totalCommentNumber integer, totalShareNumber integer, totalWXShareNumber integer, totalWorkNumber integer, imageWidth real, imageHeight real, tipLabelArray null, replierArray null,homePageType text,liked bool)";
+    return @"create table ATOMHomeImage (imageID integer ,askID integer ,uid integer, nickname integer, avatar text, sex integer, uploadTime bigint, imageURL text, userDescription text, isDownload integer, totalPraiseNumber integer, totalCommentNumber integer, totalShareNumber integer, totalWXShareNumber integer, totalWorkNumber integer, imageWidth real, imageHeight real, tipLabelArray null, replierArray null,homePageType text,liked bool)";
 }
 
 + (NSString *)createComment {
