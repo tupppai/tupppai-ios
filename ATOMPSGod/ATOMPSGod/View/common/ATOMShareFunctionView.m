@@ -17,7 +17,6 @@
 @property (nonatomic, strong) UIView *lineView;
 @property (nonatomic, strong) UIButton *inviteButton;
 @property (nonatomic, strong) UIButton *reportButton;
-@property (nonatomic, strong) UIButton *collectButton;
 @property (nonatomic, strong) UILabel *inviteLabel;
 @property (nonatomic, strong) UILabel *reportLabel;
 @property (nonatomic, strong) UILabel *collectLabel;
@@ -73,7 +72,6 @@ static CGFloat BOTTOMHEIGHT = 286;
     _sinaWeiboLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_sinaWeiboButton.frame) - kPadding10, CGRectGetMaxY(_sinaWeiboButton.frame), labelWidth, labelHeight)];
     [self configCommonLabel:_sinaWeiboLabel WithText:@"新浪微博" AndTextColor:[UIColor colorWithHex:0xacb8c1]];
     
-    
     _lineView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_wxFriendCircleLabel.frame) + kPadding5, CGWidth(_bottomView.frame), 0.5)];
     _lineView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2];
     [_bottomView addSubview:_lineView];
@@ -85,9 +83,8 @@ static CGFloat BOTTOMHEIGHT = 286;
     [_bottomView addSubview:_inviteButton];
     
     _collectButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_inviteButton.frame) + buttonInterval, buttonOriginY, kShareButtonWidth, kShareButtonWidth)];
-    [_collectButton setBackgroundImage:[UIImage imageNamed:@"fav"] forState:UIControlStateNormal];
-    [_collectButton setBackgroundImage:[UIImage imageNamed:@"fv_select"] forState:UIControlStateSelected];
-    [_collectButton addTarget:self action:@selector(clickCollectionButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_collectButton setBackgroundImage:[UIImage imageNamed:@"ic_collect"] forState:UIControlStateNormal];
+    [_collectButton setBackgroundImage:[UIImage imageNamed:@"ic_collect_selected"] forState:UIControlStateSelected];
     [_bottomView addSubview:_collectButton];
     
     _reportButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_collectButton.frame) + buttonInterval, buttonOriginY, kShareButtonWidth, kShareButtonWidth)];
@@ -117,8 +114,10 @@ static CGFloat BOTTOMHEIGHT = 286;
     [self.wxButton addTarget:self action:@selector(tapWechatFriendsShareButton) forControlEvents:UIControlEventTouchUpInside];
     [self.wxFriendCircleButton addTarget:self action:@selector(tapWechatMomentShareButton) forControlEvents:UIControlEventTouchUpInside];
     [self.sinaWeiboButton addTarget:self action:@selector(tapSinaWeiboShareButton) forControlEvents:UIControlEventTouchUpInside];
+    [self.inviteButton addTarget:self action:@selector(tapInviteButton) forControlEvents:UIControlEventTouchUpInside];
+    [self.collectButton addTarget:self action:@selector(tapCollectButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.reportButton addTarget:self action:@selector(tapReportButton) forControlEvents:UIControlEventTouchUpInside];
 }
-
 -(void)tapWechatFriendsShareButton {
     if (_delegate && [_delegate respondsToSelector:@selector(tapWechatFriends)]) {
         [_delegate tapWechatFriends];
@@ -128,12 +127,28 @@ static CGFloat BOTTOMHEIGHT = 286;
     if (_delegate && [_delegate respondsToSelector:@selector(tapWechatMoment)]) {
         [_delegate tapWechatMoment];
     }
-}-(void)tapSinaWeiboShareButton {
+}
+-(void)tapSinaWeiboShareButton {
     if (_delegate && [_delegate respondsToSelector:@selector(tapSinaWeibo)]) {
         [_delegate tapSinaWeibo];
     }
 }
-
+-(void)tapInviteButton {
+    if (_delegate && [_delegate respondsToSelector:@selector(tapInvite)]) {
+        [_delegate tapInvite];
+    }
+}
+-(void)tapCollectButton:(UIButton *)sender {
+    sender.selected = !sender.selected;
+    if (_delegate && [_delegate respondsToSelector:@selector(tapCollect)]) {
+        [_delegate tapCollect];
+    }
+}
+-(void)tapReportButton {
+    if (_delegate && [_delegate respondsToSelector:@selector(tapReport)]) {
+        [_delegate tapReport];
+    }
+}
 - (void)configCommonLabel:(UILabel *)label WithText:(NSString *)text AndTextColor:(UIColor *)textColor {
     label.text = text;
     label.textColor = textColor;
@@ -146,9 +161,6 @@ static CGFloat BOTTOMHEIGHT = 286;
     [self removeFromSuperview];
 }
 
-- (void)clickCollectionButton:(UIButton *)sender {
-    sender.selected = !sender.selected;
-}
 
 
 

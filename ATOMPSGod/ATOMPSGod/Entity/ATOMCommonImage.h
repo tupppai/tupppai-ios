@@ -83,5 +83,6 @@
  */
 @property (nonatomic, strong) NSMutableArray *hotCommentArray;
 @property (nonatomic, assign) BOOL liked;
+@property (nonatomic, assign) BOOL collected;
 
 @end

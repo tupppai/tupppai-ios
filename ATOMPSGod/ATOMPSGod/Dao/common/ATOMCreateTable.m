@@ -23,7 +23,7 @@
 }
 
 + (NSString *)createHomeImage {
-    return @"create table ATOMHomeImage (imageID integer ,askID integer ,uid integer, nickname integer, avatar text, sex integer, uploadTime bigint, imageURL text, userDescription text, isDownload integer, totalPraiseNumber integer, totalCommentNumber integer, totalShareNumber integer, totalWXShareNumber integer, totalWorkNumber integer, imageWidth real, imageHeight real, tipLabelArray null, replierArray null,homePageType text,liked bool)";
+    return @"create table ATOMHomeImage (imageID integer ,askID integer ,uid integer, nickname integer, avatar text, sex integer, uploadTime bigint, imageURL text, userDescription text, isDownload integer, totalPraiseNumber integer, totalCommentNumber integer, totalShareNumber integer, totalWXShareNumber integer, totalWorkNumber integer, imageWidth real, imageHeight real, tipLabelArray null, replierArray null,homePageType text,liked bool,collected bool))";
 }
 
 + (NSString *)createComment {
@@ -31,7 +31,7 @@
 }
 
 + (NSString *)createDetailImage {
-    return @"create table ATOMDetailImage (detailID integer, imageID integer, uid integer, nickname text, avatar text, sex integer, replyTime bigint, imageURL text, replyDescription text, isDownload integer, totalPraiseNumber integer, totalCommentNumber integer, totalShareNumber integer, totalWXShareNumber integer, totalWorkNumber integer, imageWidth real, imageHeight real, hotCommentArray null, clickTime bigint, liked bool)";
+    return @"create table ATOMDetailImage (detailID integer, imageID integer, uid integer, nickname text, avatar text, sex integer, replyTime bigint, imageURL text, replyDescription text, isDownload integer, totalPraiseNumber integer, totalCommentNumber integer, totalShareNumber integer, totalWXShareNumber integer, totalWorkNumber integer, imageWidth real, imageHeight real, hotCommentArray null, clickTime bigint, liked bool,collected bool)";
 }
 
 @end

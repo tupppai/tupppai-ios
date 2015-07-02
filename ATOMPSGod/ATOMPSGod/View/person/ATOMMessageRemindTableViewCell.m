@@ -11,20 +11,25 @@
 @implementation ATOMMessageRemindTableViewCell
 
 static int padding28 = 28;
-static int padding13 = 13;
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.separatorInset = UIEdgeInsetsMake(0, kPadding28, 0, kPadding15);
         [self createSubView];
     }
     return self;
 }
 
 - (void)createSubView {
-    _themeLabel = [[UILabel alloc] initWithFrame:CGRectMake(padding28, padding13, 120, 19)];
+    _themeLabel = [UILabel new];
     _themeLabel.textColor = [UIColor colorWithHex:0x797979];
     [self addSubview:_themeLabel];
+    [self.themeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self).with.offset(padding28);
+        make.centerY.equalTo(self);
+    }];
+
     _notificationSwitch = [UISwitch new];
     self.accessoryView = _notificationSwitch;
     _notificationSwitch.onTintColor = [UIColor colorWithHex:0x00adef];

@@ -19,6 +19,8 @@
 @property (nonatomic, assign) CGFloat height;
 @property (nonatomic, strong) UIImage *pageImage;
 @property (nonatomic, assign) BOOL liked;
+@property (nonatomic, assign) BOOL collected;
+
 -(void)setCommonViewModelWithAsk:(ATOMAskPageViewModel*)model;
 -(void)setCommonViewModelWithProduct:(ATOMHotDetailPageViewModel*)model;
 -(void)setCommonViewModelWithFollow:(ATOMFollowPageViewModel*)model;

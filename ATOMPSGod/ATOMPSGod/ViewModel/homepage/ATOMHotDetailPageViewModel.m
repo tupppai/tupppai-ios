@@ -21,6 +21,7 @@
     if (self) {
         _commentArray = [NSMutableArray array];
         _labelArray = [NSMutableArray array];
+        _collected = NO;
     }
     return self;
 }
@@ -41,6 +42,7 @@
     _height = askPageViewModel.height;
     _labelArray = [askPageViewModel.labelArray mutableCopy];
     _liked = askPageViewModel.liked;
+    _collected = askPageViewModel.collected;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *path = [[NSString stringWithFormat:@"%@/HomePage", PATH_OF_DOCUMENT] stringByAppendingPathComponent:[NSString stringWithFormat:@"ATOMIMAGE-%d.jpg", (int)askPageViewModel.imageID]];
     BOOL flag;
@@ -52,6 +54,7 @@
 }
 
 - (void)setViewModelDataWithDetailImage:(ATOMDetailImage *)detailImage {
+    _collected = detailImage.collected;
     _type = 2;
     _ID = detailImage.detailID;
     _uid = detailImage.uid;

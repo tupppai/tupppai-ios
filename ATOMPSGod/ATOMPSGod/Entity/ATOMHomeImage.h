@@ -17,7 +17,7 @@
 @property (nonatomic, assign) NSInteger imageID;
 @property (nonatomic, assign) NSInteger askID;
 @property (nonatomic, assign) BOOL liked;
-
+@property (nonatomic, assign) BOOL collected;
 /**
  *  类型：hot ,recent
  */

@@ -30,8 +30,7 @@
              @"imageHeight" : @"image_height",
              @"liked" :@"uped",
              @"askID" : @"ask_id",
-
-//             @"collected":@"collected",
+             @"collected":@"collected",
              };
 }
 
@@ -58,6 +57,7 @@
              @"replierArray" : @"replierArray",
              @"homePageType":  @"homePageType",
              @"liked" :@"liked",
+             @"collected":@"collected",
              };
 }
 

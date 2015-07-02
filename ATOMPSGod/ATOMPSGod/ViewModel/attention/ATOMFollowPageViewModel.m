@@ -33,6 +33,7 @@
         _shareNumber = @"0";
         _commentNumber = @"0";
         _totalPSNumber = @"0";
+        _collected = NO;
         _labelArray = [NSMutableArray new];
         _replierArray = [NSMutableArray new];
     }

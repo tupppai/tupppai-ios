@@ -15,21 +15,19 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        self.separatorInset = UIEdgeInsetsMake(0, 15, 0, 15);
-        
-        [self addSubview:self.themeImageView];
-        [self addSubview:self.themeLabel];
-        
-        [self createSubView];
+        self.separatorInset = UIEdgeInsetsMake(0, kPadding15, 0, kPadding15);
+//        [self addSubview:self.themeImageView];
+//        [self addSubview:self.themeLabel];
+//        [self createSubViewConstaints];
     }
     return self;
 }
 
-- (void)createSubView {
+- (void)createSubViewConstaints {
     
     [self.themeImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         NSLog(@"themeImageView mas");
-        make.left.equalTo(self).with.offset(15);
+        make.left.equalTo(self).with.offset(kPadding28);
         make.centerY.equalTo(self);
         make.size.mas_equalTo(CGSizeMake(24, 24));
     }];

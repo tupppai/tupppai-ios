@@ -30,7 +30,8 @@
              @"totalWorkNumber" : @"reply_count",
              @"imageWidth" : @"image_width",
              @"imageHeight" : @"image_height",
-             @"liked" : @"uped"
+             @"liked" : @"uped",
+             @"collected" : @"collected"
              };
 }
 
@@ -56,7 +57,8 @@
              @"tipLabelArray" :@"tipLabelArray",
              @"replierArray" : @"replierArray",
              @"hotCommentArray" : @"hotCommentArray",
-             @"liked" : @"liked"
+             @"liked" : @"liked",
+             @"collected" : @"collected"
              };
 }
 

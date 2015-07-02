@@ -34,6 +34,8 @@
 @protocol ATOMViewControllerDelegate <NSObject>
 @optional
 - (void)ATOMViewControllerDismissWithLiked:(BOOL)liked;
+- (void)ATOMViewControllerDismissWithInfo:(NSDictionary*)info;
+
 @end
 
 @protocol ATOMShareFunctionViewDelegate <NSObject>

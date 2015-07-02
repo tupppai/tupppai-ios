@@ -31,6 +31,7 @@
 @property (nonatomic, strong) NSMutableArray *commentArray;
 @property (nonatomic, assign) UIImage *image;
 @property (nonatomic, assign) BOOL liked;
+@property (nonatomic, assign) BOOL collected;
 
 - (void)setViewModelData:(ATOMCommonImage *)commonImage;
 - (void)toggleLike;

@@ -297,6 +297,8 @@
 		E900AB531B413C1B0019BAEA /* ATOMRecommendUser.m in Sources */ = {isa = PBXBuildFile; fileRef = E900AB521B413C1B0019BAEA /* ATOMRecommendUser.m */; };
 		E900AB561B4171200019BAEA /* ATOMInviteCellViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E900AB551B4171200019BAEA /* ATOMInviteCellViewModel.m */; };
 		E900AB591B4387360019BAEA /* ATOMShowReply.m in Sources */ = {isa = PBXBuildFile; fileRef = E900AB581B4387360019BAEA /* ATOMShowReply.m */; };
+		E900AB5B1B450E970019BAEA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E900AB5A1B450E970019BAEA /* Images.xcassets */; };
+		E900AB5F1B4513B20019BAEA /* ATOMCollectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E900AB5E1B4513B20019BAEA /* ATOMCollectModel.m */; };
 		E90193721B37EE1E00E91555 /* region.csv in Resources */ = {isa = PBXBuildFile; fileRef = E90193711B37EE1E00E91555 /* region.csv */; };
 		E90197351B32D2F800F46B78 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E90197341B32D2F800F46B78 /* MBProgressHUD.m */; };
 		E90197381B32D3C100F46B78 /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = E90197371B32D3C100F46B78 /* Util.m */; };
@@ -326,7 +328,6 @@
 		E95691B61B22E88300DA84BB /* NSObject+MTLComparisonAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E95691A51B22E88300DA84BB /* NSObject+MTLComparisonAdditions.m */; };
 		E95691B71B22E88300DA84BB /* NSValueTransformer+MTLInversionAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E95691A71B22E88300DA84BB /* NSValueTransformer+MTLInversionAdditions.m */; };
 		E95691B81B22E88300DA84BB /* NSValueTransformer+MTLPredefinedTransformerAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E95691A91B22E88300DA84BB /* NSValueTransformer+MTLPredefinedTransformerAdditions.m */; };
-		E95691BA1B23DADC00DA84BB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E95691B91B23DADC00DA84BB /* Images.xcassets */; };
 		E99D2F541B1C7E8D000D7784 /* UIImage+Blurring.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D2F3A1B1C7E8D000D7784 /* UIImage+Blurring.m */; };
 		E99D2F551B1C7E8D000D7784 /* UIImage+Enhancing.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D2F3C1B1C7E8D000D7784 /* UIImage+Enhancing.m */; };
 		E99D2F561B1C7E8D000D7784 /* UIImage+Filtering.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D2F3E1B1C7E8D000D7784 /* UIImage+Filtering.m */; };
@@ -955,6 +956,9 @@
 		E900AB551B4171200019BAEA /* ATOMInviteCellViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMInviteCellViewModel.m; sourceTree = "<group>"; };
 		E900AB571B4387360019BAEA /* ATOMShowReply.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShowReply.h; sourceTree = "<group>"; };
 		E900AB581B4387360019BAEA /* ATOMShowReply.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShowReply.m; sourceTree = "<group>"; };
+		E900AB5A1B450E970019BAEA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		E900AB5D1B4513B20019BAEA /* ATOMCollectModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMCollectModel.h; sourceTree = "<group>"; };
+		E900AB5E1B4513B20019BAEA /* ATOMCollectModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMCollectModel.m; sourceTree = "<group>"; };
 		E90193711B37EE1E00E91555 /* region.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = region.csv; sourceTree = "<group>"; };
 		E90197321B32D2F800F46B78 /* MBProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
 		E90197331B32D2F800F46B78 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
@@ -1015,7 +1019,6 @@
 		E95691A71B22E88300DA84BB /* NSValueTransformer+MTLInversionAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSValueTransformer+MTLInversionAdditions.m"; sourceTree = "<group>"; };
 		E95691A81B22E88300DA84BB /* NSValueTransformer+MTLPredefinedTransformerAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSValueTransformer+MTLPredefinedTransformerAdditions.h"; sourceTree = "<group>"; };
 		E95691A91B22E88300DA84BB /* NSValueTransformer+MTLPredefinedTransformerAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSValueTransformer+MTLPredefinedTransformerAdditions.m"; sourceTree = "<group>"; };
-		E95691B91B23DADC00DA84BB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ATOMPSGod/Images.xcassets; sourceTree = "<group>"; };
 		E99D2F391B1C7E8D000D7784 /* UIImage+Blurring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Blurring.h"; sourceTree = "<group>"; };
 		E99D2F3A1B1C7E8D000D7784 /* UIImage+Blurring.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Blurring.m"; sourceTree = "<group>"; };
 		E99D2F3B1B1C7E8D000D7784 /* UIImage+Enhancing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Enhancing.h"; sourceTree = "<group>"; };
@@ -1945,7 +1948,6 @@
 			isa = PBXGroup;
 			children = (
 				5CDB05C31AA3FE520089121E /* ATOMPSGod */,
-				E95691B91B23DADC00DA84BB /* Images.xcassets */,
 				5CDB05DD1AA3FE520089121E /* ATOMPSGodTests */,
 				5CDB05C21AA3FE520089121E /* Products */,
 			);
@@ -1970,6 +1972,7 @@
 				5C9BD9E81AA8150000715698 /* ViewModel */,
 				5CDB05EE1AA400410089121E /* View */,
 				5CDB05EA1AA400410089121E /* Controller */,
+				E900AB5A1B450E970019BAEA /* Images.xcassets */,
 				5CDB05EC1AA400410089121E /* OpenSource */,
 				5CDB05ED1AA400410089121E /* Uitility */,
 				5CDB05C81AA3FE520089121E /* AppDelegate.h */,
@@ -2027,6 +2030,7 @@
 		5CDB05EB1AA400410089121E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E900AB5C1B4513A20019BAEA /* collect */,
 				E93D237B1B3CFA340081F632 /* share */,
 				5C7B8AB41AFA5A9B00F448CD /* attention */,
 				5C0F04D61ADCB021002003AE /* message */,
@@ -2236,6 +2240,15 @@
 				E900AB3F1B41153A0019BAEA /* UIWebView+AFNetworking.m */,
 			);
 			path = "UIKit+AFNetworking";
+			sourceTree = "<group>";
+		};
+		E900AB5C1B4513A20019BAEA /* collect */ = {
+			isa = PBXGroup;
+			children = (
+				E900AB5D1B4513B20019BAEA /* ATOMCollectModel.h */,
+				E900AB5E1B4513B20019BAEA /* ATOMCollectModel.m */,
+			);
+			name = collect;
 			sourceTree = "<group>";
 		};
 		E90C7C671B21435400CF0E6A /* commentDetail */ = {
@@ -2558,10 +2571,10 @@
 				E9ECD5AD1B2D71A700173F49 /* Resource.bundle in Resources */,
 				5CDB05D51AA3FE520089121E /* LaunchScreen.xib in Resources */,
 				5C6776B01AAC09C400320522 /* IQKeyboardManager.bundle in Resources */,
+				E900AB5B1B450E970019BAEA /* Images.xcassets in Resources */,
 				5C7861311AAF4DD200E87C77 /* bg_main@2x.png in Resources */,
 				E9ECD5B31B2D71A700173F49 /* ShareSDKFlatShareViewUI.bundle in Resources */,
 				5C9BDA4C1AA85E5600715698 /* box-shadow.png in Resources */,
-				E95691BA1B23DADC00DA84BB /* Images.xcassets in Resources */,
 				5C78612B1AAF4DD200E87C77 /* 4.jpg in Resources */,
 				5C78612A1AAF4DD200E87C77 /* 3.jpg in Resources */,
 				5C7861291AAF4DD200E87C77 /* 2.jpg in Resources */,
@@ -2728,6 +2741,7 @@
 				5C4C70DB1AB6FD5700358989 /* ATOMUploadImage.m in Sources */,
 				5C4F5BEF1AA5893700226F64 /* UIActionSheet+Blocks.m in Sources */,
 				5CDB062E1AA428BD0089121E /* MASCompositeConstraint.m in Sources */,
+				E900AB5F1B4513B20019BAEA /* ATOMCollectModel.m in Sources */,
 				5C561A741AB7C8C30052D4D5 /* MJRefreshHeader.m in Sources */,
 				5C4C70C81AB6E20800358989 /* ATOMCurrentUser.m in Sources */,
 				5CDB06671AA45C680089121E /* ATOMLaunchViewController.m in Sources */,

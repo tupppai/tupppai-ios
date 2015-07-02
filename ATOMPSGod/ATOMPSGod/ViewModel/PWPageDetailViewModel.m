@@ -38,6 +38,7 @@
     _userName = model.userName;
     _pageImage = model.image;
     _liked = model.liked;
+    _collected = model.collected;
 }
 -(void)setCommonViewModelWithProduct:(ATOMHotDetailPageViewModel*)model {
     _type = 2;
@@ -53,6 +54,7 @@
     _userName = model.userName;
     _pageImage = model.image;
     _liked = model.liked;
+    _collected = model.collected;
 }
 
 -(void)setCommonViewModelWithFollow:(ATOMFollowPageViewModel*)model {
@@ -70,6 +72,7 @@
     _userName = model.userName;
     _pageImage = model.image;
     _liked = model.liked;
+    _collected = model.collected;
 }
 
 -(ATOMAskPageViewModel*)generateAskPageViewModel {
@@ -90,6 +93,7 @@
     askPageViewModel.userName = _userName;
     askPageViewModel.image = _pageImage;
     askPageViewModel.liked = _liked;
+    askPageViewModel.collected = _collected;
     return askPageViewModel;
 }
 - (void)toggleLike{

@@ -63,9 +63,7 @@
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     ATOMShowConcern *showConcern = [ATOMShowConcern new];
-    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showConcern ShowMyConcern:param withBlock:^(NSMutableArray *recommendConcernArray, NSMutableArray *myConcernArray, NSError *error) {
-        ////[SVProgressHUD dismiss];
         [ws.recommendDataSource removeAllObjects];
         [ws.myDataSource removeAllObjects];
         for (ATOMConcern *concern in recommendConcernArray) {

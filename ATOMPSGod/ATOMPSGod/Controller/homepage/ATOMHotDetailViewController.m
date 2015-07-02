@@ -23,6 +23,7 @@
 #import "ATOMBottomCommonButton.h"
 #import "PWRefreshBaseTableView.h"
 #import "ATOMPageDetailViewController.h"
+#import "ATOMCollectModel.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMHotDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate>
@@ -102,6 +103,31 @@
     } else {
         ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
         [self postSocialShare:model.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:ATOMPageTypeReply];
+    }
+}
+-(void)tapCollect {
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    if (self.shareFunctionView.collectButton.selected) {
+        //收藏
+        [param setObject:@(1) forKey:@"status"];
+    } else {
+        //取消收藏
+        [param setObject:@(0) forKey:@"status"];
+    }
+    if (_selectedIndexPath) {
+        int type;
+        if (_selectedIndexPath.row != 0) {
+            type = ATOMPageTypeReply;
+        } else {
+            type = ATOMPageTypeAsk;
+        }
+        ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
+        [ATOMCollectModel toggleCollect:param withPageType:type withID:model.ID withBlock:^(NSError *error) {
+            if (!error) {
+                model.collected = self.shareFunctionView.collectButton.selected;
+                NSLog(@"tapCollect model.collected%d",model.collected);
+            }
+        }];
     }
 }
 #pragma mark Refresh
@@ -227,12 +253,19 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     if (_askPageViewModel && (self.isMovingFromParentViewController || self.isBeingDismissed)) {
-        if(_delegate && [_delegate respondsToSelector:@selector(ATOMViewControllerDismissWithLiked:)])
-        {
-            ATOMHotDetailTableViewCell *cell = (ATOMHotDetailTableViewCell *)[_hotDetailTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-            [_delegate ATOMViewControllerDismissWithLiked:cell.praiseButton.selected];
-        }
+//        if(_delegate && [_delegate respondsToSelector:@selector(ATOMViewControllerDismissWithLiked:)])
+//        {
+//            ATOMHotDetailTableViewCell *cell = (ATOMHotDetailTableViewCell *)[_hotDetailTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+//            [_delegate ATOMViewControllerDismissWithLiked:cell.praiseButton.selected];
+//        }
+    if(_delegate && [_delegate respondsToSelector:@selector(ATOMViewControllerDismissWithInfo:)])
+    {
+        ATOMHotDetailPageViewModel *model = _dataSource[0];
+        NSLog(@"_delegate model liked %d",model.liked);
+        NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithBool:model.liked],@"liked",[NSNumber numberWithBool:model.collected],@"collected",nil];
+        [_delegate ATOMViewControllerDismissWithInfo:info];
     }
+}
 }
 
 - (void)createUI {
@@ -262,9 +295,6 @@
     [self presentViewController:_imagePickerController animated:YES completion:NULL];
 }
 
-- (void)clickWXButton:(UIButton *)sender {
-//    [self wxFriendShare];
-}
 
 #pragma mark - Gesture Event
 
@@ -337,6 +367,7 @@
                 rdvc.delegate = self;
                 [self pushViewController:rdvc animated:YES];
             } else if (CGRectContainsPoint(_selectedHotDetailCell.moreShareButton.frame, p)) {
+                self.shareFunctionView.collectButton.selected = model.collected;
                 [[AppDelegate APP].window addSubview:self.shareFunctionView];
             }
         }

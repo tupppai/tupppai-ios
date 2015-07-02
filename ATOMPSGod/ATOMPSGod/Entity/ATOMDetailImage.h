@@ -15,9 +15,14 @@
  */
 @property (nonatomic, assign) NSInteger imageID;
 /**
- *  是否被赞过
+ *  是否被赞
  */
 @property (nonatomic, assign) BOOL liked;
+/**
+ *  是否已经被收藏
+ */
+@property (nonatomic, assign) BOOL collected;
+
 /**
  *  回复ID
  */

@@ -10,27 +10,34 @@
 
 @implementation ATOMAccountSettingTableViewCell
 
-static int padding28 = 28;
-static int padding13 = 13;
+
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         [self createSubView];
+        self.separatorInset = UIEdgeInsetsMake(0, kPadding28, 0, kPadding15);
     }
     return self;
 }
 
 - (void)createSubView {
-    _themeLabel = [[UILabel alloc] initWithFrame:CGRectMake(padding28, padding13, 120, 19)];
+    _themeLabel = [[UILabel alloc]initWithFrame:CGRectZero];
+    _themeLabel.font =  [UIFont fontWithName:@"Hiragino Sans GB W3" size:kFont14];
+    _themeLabel.textColor = [UIColor darkGrayColor];
+    //should always add subview to self before makeConstraints!
     [self addSubview:_themeLabel];
+    [self.themeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self).with.offset(kPadding28);
+        make.centerY.equalTo(self);
+    }];
 }
 
 - (void)addSwitch {
-    _offlineDownloadSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - padding13 - 43, 7.5, 43, 30)];
+    _offlineDownloadSwitch = [UISwitch new];
     _offlineDownloadSwitch.onTintColor = [UIColor colorWithHex:0x00adef];
-    [self addSubview:_offlineDownloadSwitch];
+    self.accessoryView = _offlineDownloadSwitch;
 }
 
 - (void)addArrow {

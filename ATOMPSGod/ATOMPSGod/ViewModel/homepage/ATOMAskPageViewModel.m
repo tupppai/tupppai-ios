@@ -58,7 +58,7 @@
     [self updatePublishTime:publishDate];
     _likeNumber = [NSString stringWithFormat:@"%d",(int)homeImage.totalPraiseNumber];
     _liked = homeImage.liked;
-//    _collected = homeImage.collected;
+    _collected = homeImage.collected;
     _shareNumber = [NSString stringWithFormat:@"%d",(int)homeImage.totalShareNumber];
     _commentNumber = [NSString stringWithFormat:@"%d",(int)homeImage.totalCommentNumber];
     _totalPSNumber = [NSString stringWithFormat:@"%d",(int)homeImage.totalWorkNumber];

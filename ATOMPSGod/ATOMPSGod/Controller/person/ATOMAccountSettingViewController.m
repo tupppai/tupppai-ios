@@ -35,7 +35,6 @@
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     _tableView.backgroundColor = [UIColor colorWithHex:0xededed];
     _tableView.tableFooterView = [UIView new];
-    _tableView.scrollEnabled = NO;
     [self.view addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -75,12 +74,10 @@
 
 #pragma mark - UITableViewDelegate
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 22.5;
-}
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 45;
+    return 60;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -115,7 +112,8 @@
             cell.themeLabel.text = @"给应用评分";
         }
     } else if (section == 2) {
-        [cell addLogout];
+//        [cell addLogout];
+         cell.themeLabel.text = @"退出当前账号";
     }
     
     
@@ -123,6 +121,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:true];
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
     if (section == 0) {

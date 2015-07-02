@@ -28,5 +28,5 @@
 @property (nonatomic, strong) ATOMHotDetailPageViewModel *viewModel;
 
 + (CGFloat)calculateCellHeightWith:(ATOMHotDetailPageViewModel *)viewModel;
-+ (CGFloat)calculateCellHeightWithAsk:(ATOMAskPageViewModel *)viewModel;
+//+ (CGFloat)calculateCellHeightWithAsk:(ATOMAskPageViewModel *)viewModel;
 @end

@@ -29,6 +29,7 @@
 @property (nonatomic, strong) NSMutableArray *commentArray;
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, assign) BOOL liked;
+@property (nonatomic, assign) BOOL collected;
 
 - (void)setViewModelDataWithHomeImage:(ATOMAskPageViewModel *)askPageViewModel;
 - (void)setViewModelDataWithDetailImage:(ATOMDetailImage *)detailImage;

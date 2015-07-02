@@ -65,19 +65,20 @@
     NSInteger row = indexPath.row;
     if (row == 0) {
         cell.imageView.image = [UIImage imageNamed:@"ic_news_comment"];
-        cell.themeLabel.text = @"评论";
+        cell.imageView.frame = CGRectMake(100, 0, 0, 0);
+        cell.textLabel.text = @"评论";
     } else if (row == 1) {
-        cell.themeImageView.image = [UIImage imageNamed:@"ic_news_draft"];
-        cell.themeLabel.text = @"帖子回复";
+        cell.imageView.image = [UIImage imageNamed:@"ic_news_draft"];
+        cell.textLabel.text = @"帖子回复";
     } else if (row == 2) {
-        cell.themeImageView.image = [UIImage imageNamed:@"ic_news_follow"];
-        cell.themeLabel.text = @"关注通知";
+        cell.imageView.image = [UIImage imageNamed:@"ic_news_follow"];
+        cell.textLabel.text = @"关注通知";
     } else if (row == 3) {
-        cell.themeImageView.image = [UIImage imageNamed:@"ic_news_invite"];
-        cell.themeLabel.text = @"邀请通知";
+        cell.imageView.image = [UIImage imageNamed:@"ic_news_invite"];
+        cell.textLabel.text = @"邀请通知";
     } else if (row == 4) {
-        cell.themeImageView.image = [UIImage imageNamed:@"ic_news_setting"];
-        cell.themeLabel.text = @"系统通知";
+        cell.imageView.image = [UIImage imageNamed:@"ic_news_setting"];
+        cell.textLabel.text = @"系统通知";
     }
     return cell;
     

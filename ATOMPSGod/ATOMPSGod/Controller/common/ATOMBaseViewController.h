@@ -54,11 +54,5 @@ typedef enum {
 @property (nonatomic, strong) UIBarButtonItem *negativeSpacer;
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated;
 - (void)popCurrentController;
-//- (void)postWechatShareMoments:(ATOMShare*)share;
-//- (void)postWechatShareFriends:(ATOMShare*)share;
-//- (void)postSinaWeiboShare:(ATOMShare*)share;
--(void)postSinaWeiboShareAskPage:(NSInteger)id;
--(void)postWechatShareMomentAskPage:(NSInteger)id;
--(void)postWechatShareFriendsAskPage:(NSInteger)id;
 -(void)postSocialShare:(NSInteger)id withSocialShareType:(ATOMSocialShareType)shareType withPageType:(ATOMPageType)pageType;
 @end

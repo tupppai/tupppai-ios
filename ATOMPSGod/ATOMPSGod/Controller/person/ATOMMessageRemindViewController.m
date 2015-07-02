@@ -131,40 +131,9 @@
 
 #pragma mark - UITableViewDelegate
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 22.5;
-}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 45;
+    return 60;
 }
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    static int padding10 = 10;
-    UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.frame = CGRectMake(padding10, padding10 * 0.5, SCREEN_WIDTH - padding10 * 2, 22.5 - padding10);
-    NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.f], NSFontAttributeName, [UIColor colorWithHex:0x797979], NSForegroundColorAttributeName, nil];
-    NSAttributedString *attributeStr = [[NSAttributedString alloc] initWithString:@"打开后将推送相应内容的消息" attributes:attributeDict];
-    titleLabel.attributedText = attributeStr;
-    
-    UIView *headerView = [[UIView alloc] init];
-    headerView.backgroundColor = [UIColor colorWithHex:0xededed];
-    [headerView addSubview:titleLabel];
-    
-    return headerView;
-}
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 @end
