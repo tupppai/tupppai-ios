@@ -12,14 +12,13 @@
 #import "ATOMLoginViewController.h"
 #import "ATOMLogin.h"
 #import "AppDelegate.h"
+#import "ATOMMainTabBarController.h"
 @interface ATOMLaunchViewController ()
 
 @property (nonatomic, strong) ATOMLaunchView *launchView;
-
 @end
 
 @implementation ATOMLaunchViewController
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
@@ -50,6 +49,7 @@
                 if (isRegister) {
                     NSLog(@"已经注册微信账号");
                     [self.navigationController setViewControllers:nil];
+                    [AppDelegate APP].mainTarBarController = nil;
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
                 } else if (isRegister == NO) {
                     NSLog(@"未注册微信账号");

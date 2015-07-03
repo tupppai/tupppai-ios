@@ -10,7 +10,6 @@
 @implementation KShareManager
 static dispatch_once_t onceToken;
 static PWMascotAnimationView *mascotAnimator;
-
 + (PWMascotAnimationView *)mascotAnimator {
     dispatch_once(&onceToken, ^{
         mascotAnimator = [PWMascotAnimationView new];

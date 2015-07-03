@@ -16,9 +16,7 @@
 #import "ATOMCreateProfileViewController.h"
 
 @interface ATOMLoginViewController ()
-
 @property (nonatomic, strong) ATOMLoginView *loginView;
-
 @end
 
 @implementation ATOMLoginViewController
@@ -48,7 +46,8 @@
         NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:_loginView.mobileTextField.text, @"phone", _loginView.passwordTextField.text, @"password",nil];
         [loginModel Login:param withBlock:^(BOOL succeed) {
             if (succeed) {
-                [self.navigationController popViewControllerAnimated:NO];
+                [self.navigationController setViewControllers:nil];
+                [AppDelegate APP].mainTarBarController = nil;
                 [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
             }
         }];
@@ -57,10 +56,6 @@
 
 
 - (void)clickweiboLoginButton:(UIButton *)sender {
-    
-//    [ATOMCurrentUser currentUser].signUpType = ATOMSignUpWeibo;
-//    [ATOMCurrentUser currentUser].sourceData = sourceData;
-    NSLog(@"clickweiboLoginButton");
     
     ATOMLogin *loginModel = [ATOMLogin new];
     [loginModel thirdPartyAuth:SSCShareTypeSinaWeibo withBlock:^(NSDictionary *sourceData) {
@@ -71,6 +66,8 @@
             [loginModel openIDAuth:param AndType:@"weibo" withBlock:^(bool isRegister, NSString *info, NSError *error) {
                 if (isRegister) {
                     NSLog(@"微博登录成功");
+                    [self.navigationController setViewControllers:nil];
+                    [AppDelegate APP].mainTarBarController = nil;
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
                 } else if (isRegister == NO) {
                     NSLog(@"未注册微博账号");
@@ -108,6 +105,8 @@
             [loginModel openIDAuth:param AndType:@"weixin" withBlock:^(bool isRegister, NSString *info, NSError *error) {
                 if (isRegister) {
                     NSLog(@"微信登录成功");
+                    [self.navigationController setViewControllers:nil];
+                    [AppDelegate APP].mainTarBarController = nil;
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
                 } else if (isRegister == NO) {
                     NSLog(@"未注册微信账号");
@@ -133,10 +132,6 @@
             NSLog(@"获取不到第三平台的数据");
         }
     }];
-}
-
-- (void)clickQQLoginButton:(UIButton *)sender {
-    
 }
 
 - (void)clickForgetPasswordButton:(UIButton *)sender {

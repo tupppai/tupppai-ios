@@ -49,6 +49,7 @@
     if (!_shareFunctionView) {
         _shareFunctionView = [ATOMShareFunctionView new];
         _shareFunctionView.delegate = self;
+        [[AppDelegate APP].window addSubview:self.shareFunctionView];
     }
     return _shareFunctionView;
 }
@@ -265,6 +266,7 @@
     self.title = @"作品列表";
     self.view = self.hotDetailView;
     _canRefreshFooter = YES;
+
 }
 
 #pragma mark - Click Event
@@ -353,7 +355,7 @@
                 [self pushViewController:rdvc animated:YES];
             } else if (CGRectContainsPoint(_selectedHotDetailCell.moreShareButton.frame, p)) {
                 self.shareFunctionView.collectButton.selected = model.collected;
-                [[AppDelegate APP].window addSubview:self.shareFunctionView];
+                [self.shareFunctionView show];
             }
         }
     }

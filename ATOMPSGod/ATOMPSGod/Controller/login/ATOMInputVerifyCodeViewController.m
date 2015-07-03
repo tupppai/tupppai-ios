@@ -11,24 +11,15 @@
 #import "ATOMSubmitUserInfomation.h"
 #import "AppDelegate.h"
 #import "ATOMLoginViewController.h"
-
+#import "ATOMMainTabBarController.h"
 @interface ATOMInputVerifyCodeViewController ()
 
 @property (nonatomic, strong) ATOMInputVerifyCodeView *inputVerifyView;
 @property (nonatomic, strong) NSTimer *verifyTimer;
-@property (nonatomic, strong) NSDateFormatter *df;
-
+//@property (nonatomic, strong) NSDateFormatter *df;
 @end
 
 @implementation ATOMInputVerifyCodeViewController
-
-//- (NSDateFormatter *)df {
-//    if (!_df) {
-//        _df = [[NSDateFormatter alloc] init];
-//        [_df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-//    }
-//    return _df;
-//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -100,8 +91,9 @@
         [submitUserInformation SubmitUserInformation:[param copy] withBlock:^(NSError *error) {
             if (!error) {
                 [Util TextHud:@"注册成功"];
+                [self.navigationController setViewControllers:nil];
+                [AppDelegate APP].mainTarBarController = nil;
                 [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
-                //保存user,调到首页
             }
         }];
     } else {

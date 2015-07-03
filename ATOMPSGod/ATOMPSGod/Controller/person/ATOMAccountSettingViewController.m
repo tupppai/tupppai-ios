@@ -150,7 +150,8 @@
         [ATOMUserDAO clearUsers];
         //清空当前用户
         [[ATOMCurrentUser currentUser]wipe];
-        [self.navigationController popViewControllerAnimated:NO];
+//        [self.navigationController popViewControllerAnimated:NO];
+        self.navigationController.viewControllers = @[];
         self.tabBarController.selectedIndex = 3;
         ATOMLaunchViewController *lvc = [[ATOMLaunchViewController alloc] init];
         [AppDelegate APP].window.rootViewController = [[ATOMCutstomNavigationController alloc] initWithRootViewController:lvc];

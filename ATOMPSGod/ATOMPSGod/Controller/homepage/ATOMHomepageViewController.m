@@ -80,6 +80,7 @@
     if (!_shareFunctionView) {
         _shareFunctionView = [ATOMShareFunctionView new];
         _shareFunctionView.delegate = self;
+        [[AppDelegate APP].window addSubview:self.shareFunctionView];
     }
     return _shareFunctionView;
 }
@@ -157,7 +158,6 @@
     } else {
         [_scrollView.homepageAskTableView.footer endRefreshing];
     }
-    
 }
 
 #pragma mark - PWRefreshBaseTableViewDelegate
@@ -361,7 +361,6 @@
     _canRefreshHotFooter = YES;
     _canRefreshRecentFooter = YES;
     [self firstGetDataSourceOfTableViewWithHomeType:ATOMHomepageHotType];
-    [[AppDelegate APP].window addSubview:self.shareFunctionView];
 }
 
 - (void)configHomepageHotTableView {
@@ -375,7 +374,6 @@
     _scrollView.homepageAskTableView.delegate = self;
     _scrollView.homepageAskTableView.dataSource = self;
     _scrollView.homepageAskTableView.psDelegate = self;
-
     _tapHomePageRecentGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHomePageRecentGesture:)];
     [_scrollView.homepageAskTableView addGestureRecognizer:_tapHomePageRecentGesture];
 }

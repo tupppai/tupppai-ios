@@ -52,6 +52,7 @@
     if (!_shareFunctionView) {
         _shareFunctionView = [ATOMShareFunctionView new];
         _shareFunctionView.delegate = self;
+        [[AppDelegate APP].window addSubview:self.shareFunctionView];
     }
     return _shareFunctionView;
 }
@@ -271,7 +272,7 @@
 
 - (void)clickMoreShareButton:(UITapGestureRecognizer *)sender {
     self.shareFunctionView.collectButton.selected = _pageDetailViewModel.collected;
-    [[AppDelegate APP].window addSubview:self.shareFunctionView];
+    [self.shareFunctionView show];
 }
 
 - (void)clickUserHeaderButton:(UIButton *)sender {

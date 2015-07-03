@@ -20,7 +20,6 @@
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) UITapGestureRecognizer *tapSexViewGesture;
 @property (nonatomic, strong) UITapGestureRecognizer *tapRegionViewGesture;
-
 @property (nonatomic, assign) NSInteger selectedRowComponent1;
 @property (nonatomic, assign) NSInteger selectedRowComponent2;
 @property (nonatomic, strong) NSArray* provinces;

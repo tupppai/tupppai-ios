@@ -161,15 +161,19 @@ static CGFloat BOTTOMHEIGHT = 286;
 -(void)dismiss {
     [UIView animateWithDuration:0.35 animations:^{
         _bottomView.frame = CGRectMake(kPadding5, CGRectGetMaxY(self.frame), SCREEN_WIDTH - 2 * kPadding5, BOTTOMHEIGHT);
+        NSLog(@"self.frame %f %f %f %f",self.frame.origin.x,self.frame.origin.y,self.frame.size.height,self.frame.size.width);
     } completion:^(BOOL finished) {
         self.hidden = YES;
+        NSLog(@"shareFunctionView frame %f %f %d ",_bottomView.frame.origin.x,_bottomView.frame.origin.y,self.hidden);
     }];
 }
 -(void)show {
     [UIView animateWithDuration:0.35 animations:^{
         self.hidden = false;
         _bottomView.frame = CGRectMake(kPadding5, CGRectGetMaxY(self.frame)-BOTTOMHEIGHT, SCREEN_WIDTH - 2 * kPadding5, BOTTOMHEIGHT);
+        NSLog(@"self.frame %f %f %f %f",self.frame.origin.x,self.frame.origin.y,self.frame.size.height,self.frame.size.width);
     } completion:^(BOOL finished) {
+        NSLog(@"shareFunctionView frame %f %f %d ",_bottomView.frame.origin.x,_bottomView.frame.origin.y,self.hidden);
     }];
 }
 - (void)clickCancelButton:(UIButton *)sender {
