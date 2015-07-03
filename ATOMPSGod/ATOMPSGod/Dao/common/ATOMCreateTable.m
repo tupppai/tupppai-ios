@@ -31,7 +31,7 @@
 }
 
 + (NSString *)createDetailImage {
-    return @"create table ATOMDetailImage (detailID integer, imageID integer, uid integer, nickname text, avatar text, sex integer, replyTime bigint, imageURL text, replyDescription text, isDownload integer, totalPraiseNumber integer, totalCommentNumber integer, totalShareNumber integer, totalWXShareNumber integer, totalWorkNumber integer, imageWidth real, imageHeight real, hotCommentArray null, clickTime bigint, liked bool,collected bool)";
+    return @"create table ATOMDetailImage (detailID integer, imageID integer, uid integer, nickname text, avatar text, sex integer, replyTime bigint, imageURL text, replyDescription text, isDownload integer, totalPraiseNumber integer, totalCommentNumber integer, totalShareNumber integer, totalWXShareNumber integer, totalWorkNumber integer, imageWidth real, imageHeight real, hotCommentArray null, clickTime bigint, liked bool,collected bool,type integer)";
 }
 
 @end

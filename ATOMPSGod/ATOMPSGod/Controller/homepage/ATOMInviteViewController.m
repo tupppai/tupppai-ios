@@ -46,9 +46,11 @@
 
 - (void)createUI {
     self.title = @"邀请";
-    UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
-    rightButtonItem.tintColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = rightButtonItem;
+    if (_askPageViewModel) {
+        UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
+        rightButtonItem.tintColor = [UIColor whiteColor];
+        self.navigationItem.rightBarButtonItem = rightButtonItem;
+    }
     _inviteView = [ATOMInviteView new];
     self.view = _inviteView;
     [_inviteView.wxFriendCircleInviteButton addTarget:self action:@selector(clickWXFriendCircleButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -168,7 +170,6 @@
     return cell;
 }
 -(void)tapInviteButton:(id)sender {
-    NSLog(@"tapInviteButton");
     UIButton* button = sender;
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:@(button.tag) forKey:@"invite_uid"];

@@ -32,7 +32,6 @@
 @property (nonatomic, assign) BOOL liked;
 @property (nonatomic, assign) BOOL collected;
 @property (nonatomic, assign) int type;
-@property (nonatomic, assign) NSInteger fold;
 
 - (void)setViewModelData:(ATOMHomeImage *)homeImage;
 -(void)setViewModelWithCommon:(PWPageDetailViewModel*)commonViewModel;

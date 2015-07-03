@@ -29,6 +29,7 @@
              @"imageHeight" : @"image_height",
              @"liked" : @"uped",
              @"collected":@"collected",
+             @"type":@"type",
              };
 }
 
@@ -54,6 +55,7 @@
              @"hotCommentArray" : @"hotCommentArray",
              @"liked" : @"liked",
              @"collected":@"collected",
+             @"type":@"type",
              };
 }
 

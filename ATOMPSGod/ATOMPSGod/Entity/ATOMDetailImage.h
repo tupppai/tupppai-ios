@@ -10,6 +10,7 @@
 
 @interface ATOMDetailImage : ATOMBaseModel <MTLFMDBSerializing>
 
+@property (nonatomic, assign) ATOMPageType type;
 /**
  *  原作品ID
  */

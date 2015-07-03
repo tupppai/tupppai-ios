@@ -15,4 +15,6 @@
 @property (nonatomic, strong) UIButton *sinaWeiboButton;
 @property (nonatomic, strong) UIButton *collectButton;
 @property (nonatomic, weak) id<ATOMShareFunctionViewDelegate> delegate;
+-(void)show;
+-(void)dismiss;
 @end

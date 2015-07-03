@@ -69,11 +69,9 @@ static int collumnNumber = 3;
     [param setObject:@(15) forKey:@"size"];
     [ATOMShowReply ShowMyReply:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         for (ATOMHomeImage *homeImage in resultArray) {
-            
             ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
             homepageViewModel.imageID = homeImage.askID;
             homepageViewModel.askID = homeImage.askID;
-            homepageViewModel.fold = 1;
             [ws.homeImageDataSource addObject:homepageViewModel];
             
             ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];
@@ -100,8 +98,6 @@ static int collumnNumber = 3;
         for (ATOMHomeImage *homeImage in resultArray) {
             ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
             [homepageViewModel setViewModelData:homeImage];
-            ///ask/show/{id}  （fold : 是否展示ask，1展示，默认为0）
-            homepageViewModel.fold = 1;
             ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];
             [replyViewModel setViewModelData:homeImage];
             [ws.dataSource addObject:replyViewModel];
@@ -164,6 +160,7 @@ static int collumnNumber = 3;
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
     hdvc.askPageViewModel = _homeImageDataSource[indexPath.row];
+    hdvc.fold = 1;
     [self pushViewController:hdvc animated:YES];
 }
 

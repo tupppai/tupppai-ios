@@ -76,7 +76,6 @@
 
 
 - (void)drawRect:(CGRect)rect {
-    NSLog(@"like number in drawRect %@",_likeNumber);
     UIBezierPath *rectPath = [UIBezierPath bezierPathWithRect:rect];
     [[UIColor whiteColor] set];
     [rectPath fill];
@@ -89,7 +88,6 @@
     [_currentColor set];
     [path fill];
     CGRect praiseRect = CGRectMake(_extralWidth, 0, CGWidth(rect) - _extralWidth, CGHeight(rect));
-    NSLog(@"%@", NSStringFromCGRect(praiseRect));
     [_likeNumber drawInRect:praiseRect withAttributes:self.attributeDict];
 }
 

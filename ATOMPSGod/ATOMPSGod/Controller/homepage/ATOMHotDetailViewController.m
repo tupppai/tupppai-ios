@@ -24,6 +24,7 @@
 #import "PWRefreshBaseTableView.h"
 #import "ATOMPageDetailViewController.h"
 #import "ATOMCollectModel.h"
+#import "ATOMBaseRequest.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMHotDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate>
@@ -141,7 +142,6 @@
     [_hotDetailTableView addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreHotData)];
     _hotDetailTableView.gifFooter.refreshingImages = animatedImages;
     _hotDetailTableView.footer.stateHidden = YES;
-    
 }
 
 - (void)loadMoreHotData {
@@ -162,14 +162,13 @@
     } else { //读数据库
         _dataSource = nil;
         _dataSource = [NSMutableArray array];
-        if (_askPageViewModel.fold == 0) {
-            //fold=0,不需要从服务器获取求P，直接从上一个controller获取。
-            //第一张图片为首页点击的图片，剩下的图片为回复图片。。。
+        if (_fold != 1) {
             ATOMHotDetailPageViewModel *model = [ATOMHotDetailPageViewModel new];
             [model setViewModelDataWithHomeImage:_askPageViewModel];
             [_dataSource addObject:model];
         }
         for (ATOMDetailImage *detailImage in detailImageArray) {
+            NSLog(@"detailImage %d %@",detailImage.type,detailImage.imageURL);
             ATOMHotDetailPageViewModel *model = [ATOMHotDetailPageViewModel new];
             [model setViewModelDataWithDetailImage:detailImage];
             model.labelArray = [_askPageViewModel.labelArray mutableCopy];
@@ -186,14 +185,14 @@
     [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(5) forKey:@"size"];
-    [param setObject:@(_askPageViewModel.fold) forKey:@"fold"];
+    [param setObject:@(_fold) forKey:@"fold"];
     ATOMShowDetailOfHomePage *showDetailOfHomePage = [ATOMShowDetailOfHomePage new];
     NSLog(@"%d", (int)ws.askPageViewModel.imageID);
     [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.askPageViewModel.imageID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
         //第一张图片为首页点击的图片，剩下的图片为回复图片
         ws.dataSource = nil;
         ws.dataSource = [NSMutableArray array];
-        if (_askPageViewModel.fold == 0) {
+        if (_fold != 1) {
             ATOMHotDetailPageViewModel *model = [ATOMHotDetailPageViewModel new];
             [model setViewModelDataWithHomeImage:ws.askPageViewModel];
             [ws.dataSource addObject:model];
@@ -253,18 +252,12 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     if (_askPageViewModel && (self.isMovingFromParentViewController || self.isBeingDismissed)) {
-//        if(_delegate && [_delegate respondsToSelector:@selector(ATOMViewControllerDismissWithLiked:)])
-//        {
-//            ATOMHotDetailTableViewCell *cell = (ATOMHotDetailTableViewCell *)[_hotDetailTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-//            [_delegate ATOMViewControllerDismissWithLiked:cell.praiseButton.selected];
-//        }
-    if(_delegate && [_delegate respondsToSelector:@selector(ATOMViewControllerDismissWithInfo:)])
-    {
-        ATOMHotDetailPageViewModel *model = _dataSource[0];
-        NSLog(@"_delegate model liked %d",model.liked);
-        NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithBool:model.liked],@"liked",[NSNumber numberWithBool:model.collected],@"collected",nil];
-        [_delegate ATOMViewControllerDismissWithInfo:info];
-    }
+        if(_delegate && [_delegate respondsToSelector:@selector(ATOMViewControllerDismissWithInfo:)])
+        {
+            ATOMHotDetailPageViewModel *model = _dataSource[0];
+            NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithBool:model.liked],@"liked",[NSNumber numberWithBool:model.collected],@"collected",nil];
+            [_delegate ATOMViewControllerDismissWithInfo:info];
+        }
 }
 }
 
@@ -309,11 +302,7 @@
         //点击图片
         if (CGRectContainsPoint(_selectedHotDetailCell.userWorkImageView.frame, p)) {
             PWPageDetailViewModel* pageDetailViewModel = [PWPageDetailViewModel new];
-            if (_selectedIndexPath.row != 0) {
-                [pageDetailViewModel setCommonViewModelWithProduct:model];
-            } else {
-                [pageDetailViewModel setCommonViewModelWithAsk:_askPageViewModel];
-            }
+            [pageDetailViewModel setCommonViewModelWithHotDetail:model];
             ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
             rdvc.pageDetailViewModel = pageDetailViewModel;
             rdvc.delegate = self;
@@ -344,11 +333,7 @@
             p = [gesture locationInView:_selectedHotDetailCell.thinCenterView];
             if (CGRectContainsPoint(_selectedHotDetailCell.praiseButton.frame, p)) {
                 [_selectedHotDetailCell.praiseButton toggleLike];
-                if (_selectedIndexPath.row != 0 ) {
                     [model toggleLike];
-                } else {
-                    [_askPageViewModel toggleLike];
-                }
             } else if (CGRectContainsPoint(_selectedHotDetailCell.shareButton.frame, p)) {
                 if (_selectedIndexPath.row == 0) {
                     [self postSocialShare:_askPageViewModel.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
@@ -422,8 +407,14 @@
 }
 
 #pragma mark - ATOMViewControllerDelegate
--(void)ATOMViewControllerDismissWithLiked:(BOOL)liked {
+-(void)ATOMViewControllerDismissWithInfo:(NSDictionary *)info {
+    bool liked = [info[@"liked"] boolValue];
+    bool collected = [info[@"collected"]boolValue];
+    NSLog(@"hot detail collected %d",collected);
+    //当从child viewcontroller 传来的liked变化的时候，toggle like.
+    //to do:其实应该改变datasource的liked ,tableView reload的时候才能保持。
     [_selectedHotDetailCell.praiseButton toggleLikeWhenSelectedChanged:liked];
+    ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
+    model.collected = collected;
 }
-
 @end

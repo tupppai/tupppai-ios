@@ -55,7 +55,7 @@
 
 - (void)setViewModelDataWithDetailImage:(ATOMDetailImage *)detailImage {
     _collected = detailImage.collected;
-    _type = 2;
+    _type = detailImage.type;
     _ID = detailImage.detailID;
     _uid = detailImage.uid;
     _userName = detailImage.nickname;
@@ -85,10 +85,8 @@
     NSInteger one = _liked? -1:1;
     _liked = !_liked;
     [param setValue:@(status) forKey:@"status"];
-    ATOMBaseRequest* baseRequest = [ATOMBaseRequest new];
     //每一页的第一张图是HomePage
-    NSString* url = @"reply/upreply";
-    [baseRequest toggleLike:param withUrl:url withID:_ID withBlock:^(NSError *error) {
+    [ATOMBaseRequest toggleLike:param withPageType:_type withID:_ID withBlock:^(NSError *error) {
         if (!error) {
             NSLog(@"Server成功toggle like");
             NSInteger number = [_likeNumber integerValue]+one;
@@ -97,5 +95,6 @@
             }
     }];
 }
+
 
 @end

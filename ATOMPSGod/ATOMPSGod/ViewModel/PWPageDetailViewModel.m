@@ -40,6 +40,22 @@
     _liked = model.liked;
     _collected = model.collected;
 }
+-(void)setCommonViewModelWithHotDetail:(ATOMHotDetailPageViewModel*)model {
+    _type = model.type;
+    _pageID = model.ID;
+    _pageImageURL = model.userImageURL;
+    _pageImage = model.image;
+    _avatarURL = model.avatarURL;
+    _width = model.width;
+    _height = model.height;
+    _likeNumber = model.likeNumber;
+    _shareNumber = model.shareNumber;
+    _commentNumber = model.commentNumber;
+    _userName = model.userName;
+    _pageImage = model.image;
+    _liked = model.liked;
+    _collected = model.collected;
+}
 -(void)setCommonViewModelWithProduct:(ATOMHotDetailPageViewModel*)model {
     _type = 2;
     _pageID = model.ID;

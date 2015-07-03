@@ -26,7 +26,7 @@
             NSArray *param = [MTLFMDBAdapter columnValues:detailImage];
             BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
             if (flag) {
-                NSLog(@"add detailImage success");
+                NSLog(@"add detailImage success detailID%ld imageID%ld url %@",detailImage.detailID,detailImage.imageID,detailImage.imageURL);
             } else {
                 NSLog(@"add detailImage fail");
             }
@@ -40,7 +40,7 @@
         [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
             NSString *stmt = [MTLFMDBAdapter updateStatementForModel:detailImage];
             NSMutableArray *param = [[MTLFMDBAdapter columnValues:detailImage] mutableCopy];
-            [param addObject:@(detailImage.imageID)];
+            [param addObject:@(detailImage.detailID)];
             BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
             if (flag) {
                 NSLog(@"update detailImage success");
@@ -59,6 +59,7 @@
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {
             ATOMDetailImage *detailImage = [MTLFMDBAdapter modelOfClass:[ATOMDetailImage class] fromFMResultSet:rs error:NULL];
+            NSLog(@"selectDetailImagesByImageID detailImage %ld ,%@,%@",detailImage.imageID,detailImage.imageURL,detailImage.nickname);
             [muArray addObject:detailImage];
         }
         [rs close];
@@ -73,6 +74,7 @@
         FMResultSet *rs = [db executeQuery:stmt];
         while ([rs next]) {
             ATOMDetailImage *detailImage = [MTLFMDBAdapter modelOfClass:[ATOMDetailImage class] fromFMResultSet:rs error:NULL];
+            NSLog(@"selectDetailImages  ALL detailImage %ld ,%@,%@",detailImage.imageID,detailImage.imageURL,detailImage.nickname);
             [muArray addObject:detailImage];
         }
         [rs close];

@@ -25,9 +25,13 @@
         }
     }];
 }
-
-- (NSURLSessionDataTask *)toggleLike:(NSDictionary *)param withUrl:(NSString*)fUrl withID:(NSInteger)imageID  withBlock:(void (^)(NSError *))block {
-    NSString* url = [NSString stringWithFormat:@"%@/%ld",fUrl,(long)imageID];
++ (NSURLSessionDataTask *)toggleLike:(NSDictionary *)param withPageType:(ATOMPageType)type withID:(NSInteger)ID  withBlock:(void (^)(NSError *))block {
+    NSString* url;
+    if (type == ATOMPageTypeAsk) {
+        url = [NSString stringWithFormat:@"ask/upask/%ld",(long)ID];
+    } else if (type == ATOMPageTypeReply) {
+        url = [NSString stringWithFormat:@"reply/upreply/%ld",(long)ID];
+    }
     NSLog(@"param %@, url %@",param,url);
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];

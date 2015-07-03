@@ -9,5 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface ATOMBaseRequest : NSObject
++ (NSURLSessionDataTask *)toggleLike:(NSDictionary *)param withPageType:(ATOMPageType)type withID:(NSInteger)ID  withBlock:(void (^)(NSError *))block;
+
 - (NSURLSessionDataTask *)toggleLike:(NSDictionary *)param withUrl:(NSString*)fUrl withID:(NSInteger)imageID  withBlock:(void (^)(NSError *))block;
+
 @end

@@ -15,7 +15,6 @@
 #import "ATOMHomeImageDAO.h"
 
 @interface ATOMShowDetailOfHomePage ()
-
 @property (nonatomic, strong) ATOMDetailImageDAO *detailImageDAO;
 @property (nonatomic, strong) ATOMCommentDAO *commentDAO;
 
@@ -45,8 +44,10 @@
             NSMutableArray *detailOfHomePageArray = [NSMutableArray array];
             NSArray *imageDataArray = responseObject[@"data"][@"replies"];
             NSDate *clickTime = [NSDate date];
+            NSLog(@"imageDataArray 个数：%ld",    imageDataArray.count);
             for (int i = 0; i < imageDataArray.count; i++) {
                 ATOMDetailImage *detailImage = [MTLJSONAdapter modelOfClass:[ATOMDetailImage class] fromJSONDictionary:imageDataArray[i] error:NULL];
+                NSLog(@"ShowDetailOfHomePage detailImage %ld %@",detailImage.detailID,detailImage.imageURL);
                 detailImage.imageID = imageID;
                 detailImage.clickTime = [clickTime timeIntervalSince1970];
                 detailImage.hotCommentArray = [NSMutableArray array];
@@ -108,15 +109,14 @@
             //将图片写入沙盒中的HomePage目录下
             dispatch_queue_t q = dispatch_queue_create("LoadImage", NULL);
             dispatch_async(q, ^{
-                NSLog(@"%@",detailImage.imageURL);
                 NSURL *imageURL = [NSURL URLWithString:detailImage.imageURL];
                 NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
                 UIImage *image = [UIImage imageWithData:imageData];
-                NSString *path = [homePageDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"ATOMIMAGE%d-%d.jpg", (int)detailImage.imageID, (int)detailImage.imageID]];
+                NSString *path = [homePageDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"ATOMIMAGE%d-%d.jpg", (int)detailImage.imageID, (int)detailImage.detailID]];
                 if ([UIImageJPEGRepresentation(image, 1) writeToFile:path atomically:YES]) {
-                    NSLog(@"write ATOMIMAGE%d-%d.jpg success", (int)detailImage.imageID, (int)detailImage.detailID);
+                    NSLog(@"保存 ATOMIMAGE%d-%d.jpg 成功", (int)detailImage.imageID, (int)detailImage.detailID);
                 } else {
-                    NSLog(@"write ATOMIMAGE%d-%d.jpg fail in %@", (int)detailImage.imageID, (int)detailImage.detailID, path);
+                    NSLog(@"保存 ATOMIMAGE%d-%d.jpg 失败 in %@", (int)detailImage.imageID, (int)detailImage.detailID, path);
                 }
             });
         }

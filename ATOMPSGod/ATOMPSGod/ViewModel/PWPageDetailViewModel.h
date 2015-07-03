@@ -8,7 +8,7 @@
 @property (nonatomic, assign) NSInteger pageID;
 //type 1 求P ，2 作品
 @property (nonatomic, assign) NSInteger askID;
-@property (nonatomic, assign) NSInteger type;
+@property (nonatomic, assign) int type;
 @property (nonatomic, copy) NSString *userName;
 @property (nonatomic, copy) NSString *avatarURL;
 @property (nonatomic, strong) NSString *pageImageURL;
@@ -24,6 +24,8 @@
 -(void)setCommonViewModelWithAsk:(ATOMAskPageViewModel*)model;
 -(void)setCommonViewModelWithProduct:(ATOMHotDetailPageViewModel*)model;
 -(void)setCommonViewModelWithFollow:(ATOMFollowPageViewModel*)model;
+-(void)setCommonViewModelWithHotDetail:(ATOMHotDetailPageViewModel*)model;
+
 - (void)toggleLike;
 -(ATOMAskPageViewModel*)generateAskPageViewModel;
 

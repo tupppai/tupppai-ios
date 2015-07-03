@@ -9,4 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface ATOMCollectModel : NSObject
-+ (NSURLSessionDataTask *)toggleCollect:(NSDictionary *)param withPageType:(ATOMPageType)type withID:(NSInteger)ID withBlock:(void (^)(NSError *))block;@end
++ (NSURLSessionDataTask *)toggleCollect:(NSDictionary *)param withPageType:(ATOMPageType)type withID:(NSInteger)ID withBlock:(void (^)(NSError *))block;
+@end

@@ -1972,13 +1972,13 @@
 				5C9BD9E81AA8150000715698 /* ViewModel */,
 				5CDB05EE1AA400410089121E /* View */,
 				5CDB05EA1AA400410089121E /* Controller */,
-				E900AB5A1B450E970019BAEA /* Images.xcassets */,
 				5CDB05EC1AA400410089121E /* OpenSource */,
 				5CDB05ED1AA400410089121E /* Uitility */,
 				5CDB05C81AA3FE520089121E /* AppDelegate.h */,
 				5CDB05C91AA3FE520089121E /* AppDelegate.m */,
 				5C6CE6B81ADBE8A10035F522 /* EmojisList.plist */,
 				5CDB05D31AA3FE520089121E /* LaunchScreen.xib */,
+				E900AB5A1B450E970019BAEA /* Images.xcassets */,
 				5CDB05C41AA3FE520089121E /* Supporting Files */,
 			);
 			path = ATOMPSGod;

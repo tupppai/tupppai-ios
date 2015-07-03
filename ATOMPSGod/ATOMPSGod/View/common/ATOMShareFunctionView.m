@@ -34,6 +34,7 @@ static CGFloat BOTTOMHEIGHT = 286;
     if (self) {
         self.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
         self.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
+        self.hidden = true;
         [self createSubView];
         [self configClickEvent];
     }
@@ -44,7 +45,8 @@ static CGFloat BOTTOMHEIGHT = 286;
     CGFloat labelWidth = kShareButtonWidth + kPadding10 * 2;
     CGFloat labelHeight = 30;
     
-    _bottomView = [[UIView alloc] initWithFrame:CGRectMake(kPadding5, CGRectGetMaxY(self.frame) - BOTTOMHEIGHT, SCREEN_WIDTH - 2 * kPadding5, BOTTOMHEIGHT)];
+    _bottomView = [[UIView alloc] initWithFrame:CGRectMake(kPadding5, CGRectGetMaxY(self.frame), SCREEN_WIDTH - 2 * kPadding5, BOTTOMHEIGHT)];
+    
     _bottomView.layer.cornerRadius = 5;
     _bottomView.backgroundColor = [UIColor colorWithHex:0xededed];
     [self addSubview:_bottomView];
@@ -156,9 +158,22 @@ static CGFloat BOTTOMHEIGHT = 286;
     label.font = [UIFont systemFontOfSize:14.f];
     [_bottomView addSubview:label];
 }
-
+-(void)dismiss {
+    [UIView animateWithDuration:0.35 animations:^{
+        _bottomView.frame = CGRectMake(kPadding5, CGRectGetMaxY(self.frame), SCREEN_WIDTH - 2 * kPadding5, BOTTOMHEIGHT);
+    } completion:^(BOOL finished) {
+        self.hidden = YES;
+    }];
+}
+-(void)show {
+    [UIView animateWithDuration:0.35 animations:^{
+        self.hidden = false;
+        _bottomView.frame = CGRectMake(kPadding5, CGRectGetMaxY(self.frame)-BOTTOMHEIGHT, SCREEN_WIDTH - 2 * kPadding5, BOTTOMHEIGHT);
+    } completion:^(BOOL finished) {
+    }];
+}
 - (void)clickCancelButton:(UIButton *)sender {
-    [self removeFromSuperview];
+    [self dismiss];
 }
 
 

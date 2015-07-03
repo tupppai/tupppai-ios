@@ -41,7 +41,6 @@
         _replierArray = [NSMutableArray new];
         _liked = NO;
         _collected = NO;
-        _fold = 0;
     }
     return self;
 }
@@ -136,7 +135,7 @@
     _userName = commonViewModel.userName;
 }
 
-- (void)toggleLike{
+- (void)toggleLike {
     NSMutableDictionary *param = [NSMutableDictionary new];
     NSInteger status = _liked? 0:1;
     NSInteger one = _liked? -1:1;

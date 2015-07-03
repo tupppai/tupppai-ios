@@ -33,6 +33,7 @@
 #import "PWPageDetailViewModel.h"
 #import "ATOMShareModel.h"
 #import "ATOMCollectModel.h"
+#import "ATOMInviteViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMHomepageViewController() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, ATOMPSViewDelegate, ATOMCameraViewDelegate,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate>
@@ -110,7 +111,8 @@
     [self postSocialShare:_selectedAskPageViewModel.imageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:ATOMPageTypeAsk];
 }
 -(void)tapInvite {
-    
+    ATOMInviteViewController* ivc = [ATOMInviteViewController new];
+    [self pushViewController:ivc animated:NO];
 }
 -(void)tapCollect {
     NSMutableDictionary *param = [NSMutableDictionary new];
@@ -359,6 +361,7 @@
     _canRefreshHotFooter = YES;
     _canRefreshRecentFooter = YES;
     [self firstGetDataSourceOfTableViewWithHomeType:ATOMHomepageHotType];
+    [[AppDelegate APP].window addSubview:self.shareFunctionView];
 }
 
 - (void)configHomepageHotTableView {
@@ -483,6 +486,7 @@
                 //进入热门详情
                 ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
                 hdvc.delegate = self;
+                hdvc.fold = 0;
                 hdvc.askPageViewModel = _dataSourceOfHotTableView[indexPath.row];
                 [self pushViewController:hdvc animated:YES];
             } else if (CGRectContainsPoint(_selectedHotCell.topView.frame, p)) {
@@ -517,8 +521,8 @@
 //                    cdvc.type = 1;
 //                    [self pushViewController:cdvc animated:YES];
                 } else if (CGRectContainsPoint(_selectedHotCell.moreShareButton.frame, p)) {
-                    [[AppDelegate APP].window addSubview:self.shareFunctionView];
                     self.shareFunctionView.collectButton.selected = _selectedAskPageViewModel.collected;
+                    [self.shareFunctionView show];
                 }
             }
         }
@@ -572,8 +576,7 @@
                     [self pushViewController:rdvc animated:YES];
                 } else if (CGRectContainsPoint(_selectedAskCell.moreShareButton.frame, p)) {
                     self.shareFunctionView.collectButton.selected = _selectedAskPageViewModel.collected;
-                    [[AppDelegate APP].window addSubview:self.shareFunctionView];
-
+                    [self.shareFunctionView show];
                 }
             }
             
@@ -700,11 +703,8 @@
 }
 
 -(void)ATOMViewControllerDismissWithInfo:(NSDictionary *)info {
-    NSLog(@"ATOMViewControllerDismissWithInfo");
     bool liked = [info[@"liked"] boolValue];
     bool collected = [info[@"collected"]boolValue];
-
-    NSLog(@"ATOMViewControllerDismissWithInfo collected %d",collected);
     if (_scrollView.typeOfCurrentHomepageView == ATOMHomepageHotType) {
         //当从child viewcontroller 传来的liked变化的时候，toggle like.
         //to do:其实应该改变datasource的liked ,tableView reload的时候才能保持。

@@ -23,7 +23,7 @@
 #import "ATOMBottomCommonButton.h"
 #import "ATOMPSView.h"
 #import "ATOMPraiseButton.h"
-
+#import "ATOMCollectModel.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMPageDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, ATOMPSViewDelegate,ATOMShareFunctionViewDelegate>
@@ -82,6 +82,21 @@
 }
 -(void)tapSinaWeibo {
     [self postSocialShare:_pageDetailViewModel.pageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:(int)_pageDetailViewModel.type];
+}
+-(void)tapCollect {
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    if (self.shareFunctionView.collectButton.selected) {
+        //收藏
+        [param setObject:@(1) forKey:@"status"];
+    } else {
+        //取消收藏
+        [param setObject:@(0) forKey:@"status"];
+    }
+    [ATOMCollectModel toggleCollect:param withPageType:_pageDetailViewModel.type withID:_pageDetailViewModel.pageID withBlock:^(NSError *error) {
+        if (!error) {
+            _pageDetailViewModel.collected = self.shareFunctionView.collectButton.selected;
+        }
+    }];
 }
 #pragma mark Refresh
 
@@ -184,9 +199,13 @@
     [super viewWillDisappear:animated];
     
     if ((self.isMovingFromParentViewController || self.isBeingDismissed)) {
-        if(_delegate && [_delegate respondsToSelector:@selector(ATOMViewControllerDismissWithLiked:)])
-        {
-            [_delegate ATOMViewControllerDismissWithLiked:_askDetailView.headerView.praiseButton.selected];
+        if (_pageDetailViewModel && (self.isMovingFromParentViewController || self.isBeingDismissed)) {
+            if(_delegate && [_delegate respondsToSelector:@selector(ATOMViewControllerDismissWithInfo:)])
+            {
+                NSLog(@"_pageDetailViewModel collected %d",_pageDetailViewModel.collected);
+                NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithBool:_pageDetailViewModel.liked],@"liked",[NSNumber numberWithBool:_pageDetailViewModel.collected],@"collected",nil];
+                [_delegate ATOMViewControllerDismissWithInfo:info];
+            }
         }
     }
 }
@@ -251,6 +270,7 @@
 }
 
 - (void)clickMoreShareButton:(UITapGestureRecognizer *)sender {
+    self.shareFunctionView.collectButton.selected = _pageDetailViewModel.collected;
     [[AppDelegate APP].window addSubview:self.shareFunctionView];
 }
 
@@ -268,12 +288,6 @@
     [_pageDetailViewModel toggleLike];
 }
 
-//- (void)clickCommentButton:(UITapGestureRecognizer *)sender {
-//    ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
-//    cdvc.ID = _askPageViewModel.imageID;
-//    cdvc.type = 1;
-//    [self pushViewController:cdvc animated:YES];
-//}
 
 - (void)clickSendCommentButton:(UIButton *)sender {
 //    [_askDetailView.commentTextView resignFirstResponder];

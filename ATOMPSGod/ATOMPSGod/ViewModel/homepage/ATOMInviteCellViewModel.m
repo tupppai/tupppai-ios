@@ -9,18 +9,6 @@
 #import "ATOMInviteCellViewModel.h"
 
 @implementation ATOMInviteCellViewModel
-//@property (nonatomic, assign) NSInteger askCount;
-//@property (nonatomic, copy) NSString *avatarUrl;
-//@property (nonatomic, assign) NSInteger fansCount;
-//@property (nonatomic, assign) NSInteger fellowCount;
-//@property (nonatomic, assign) BOOL invited;
-//@property (nonatomic, assign) BOOL isFan;
-//@property (nonatomic, assign) BOOL isFellow;
-//@property (nonatomic, copy) NSString *nickname;
-//@property (nonatomic, assign) NSInteger replyCount;
-//@property (nonatomic, assign) NSInteger sex;
-//@property (nonatomic, assign) NSInteger uid;
-//@property (nonatomic, copy) NSString *username;
 - (void)setViewModelData:(ATOMRecommendUser *)recommendUser {
     if (recommendUser.fansCount<10000) {
         _fansDesc = [NSString stringWithFormat:@"%ld粉丝",(long)recommendUser.fansCount];
