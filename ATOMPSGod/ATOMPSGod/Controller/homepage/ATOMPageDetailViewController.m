@@ -53,10 +53,17 @@
         _shareFunctionView = [ATOMShareFunctionView new];
         _shareFunctionView.delegate = self;
         [[AppDelegate APP].window addSubview:self.shareFunctionView];
+        UITapGestureRecognizer* tgr = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissShareFunction:)];
+        [_shareFunctionView addGestureRecognizer:tgr];
     }
     return _shareFunctionView;
 }
-
+-(void)dismissShareFunction:(UITapGestureRecognizer*)gesture {
+    CGPoint location = [gesture locationInView:self.view];
+    if (!CGRectContainsPoint(_shareFunctionView.bottomView.frame, location)) {
+        [_shareFunctionView dismiss];
+    }
+}
 - (UIImagePickerController *)imagePickerController {
     if (_imagePickerController == nil) {
         _imagePickerController = [UIImagePickerController new];

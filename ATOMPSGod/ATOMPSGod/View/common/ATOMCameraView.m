@@ -31,12 +31,10 @@ static CGFloat BottomHeight = 215;
 
 - (void)createSubView {
     CGFloat buttonHeight = 45;
-    
     _bottomView = [[UIView alloc] initWithFrame:CGRectMake(kPadding5, CGHeight(self.frame) - BottomHeight, SCREEN_WIDTH - 2 * kPadding5, BottomHeight)];
     _bottomView.backgroundColor = [UIColor colorWithHex:0xededed];
     _bottomView.layer.cornerRadius = 5;
     [self addSubview:_bottomView];
-    
     _helpButton = [[UIButton alloc] initWithFrame:CGRectMake(kPadding10, kPadding25, CGWidth(_bottomView.frame) - 2 * kPadding10, buttonHeight)];
     [self setCommonButton:_helpButton WithTitle:@"求助上传" AndBackgroundColor:[UIColor colorWithHex:0x74c3ff]];
     [_helpButton addTarget:self action:@selector(clickSeekHelpButton:) forControlEvents:UIControlEventTouchUpInside];

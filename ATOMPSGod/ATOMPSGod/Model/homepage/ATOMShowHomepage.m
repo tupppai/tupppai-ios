@@ -78,10 +78,8 @@
 
 - (NSURLSessionDataTask *)ShowHomepage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"ask/index" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-
 //        NSLog(@"ShowHomepage responseObject%@",responseObject);
         NSLog(@"ShowHomepage  info%@",responseObject[@"info"]);
-
         NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
         if (ret != 1) {
             block(nil, nil);

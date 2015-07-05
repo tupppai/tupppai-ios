@@ -9,7 +9,6 @@
 #import "ATOMShareFunctionView.h"
 
 @interface ATOMShareFunctionView ()
-
 @property (nonatomic, strong) UIButton *cancelButton;
 @property (nonatomic, strong) UILabel *wxFriendCircleLabel;
 @property (nonatomic, strong) UILabel *wxLabel;
@@ -20,27 +19,23 @@
 @property (nonatomic, strong) UILabel *inviteLabel;
 @property (nonatomic, strong) UILabel *reportLabel;
 @property (nonatomic, strong) UILabel *collectLabel;
-@property (nonatomic, strong) UIView *bottomView;
-
 @end
 
 @implementation ATOMShareFunctionView
 
 static CGFloat BOTTOMHEIGHT = 286;
 
-
 - (instancetype)init {
     self = [super init];
     if (self) {
         self.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-        self.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
+        self.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.0];
         self.hidden = true;
         [self createSubView];
         [self configClickEvent];
     }
     return self;
 }
-
 - (void)createSubView {
     CGFloat labelWidth = kShareButtonWidth + kPadding10 * 2;
     CGFloat labelHeight = 30;
@@ -136,6 +131,7 @@ static CGFloat BOTTOMHEIGHT = 286;
     }
 }
 -(void)tapInviteButton {
+    [self dismiss];
     if (_delegate && [_delegate respondsToSelector:@selector(tapInvite)]) {
         [_delegate tapInvite];
     }
@@ -161,19 +157,15 @@ static CGFloat BOTTOMHEIGHT = 286;
 -(void)dismiss {
     [UIView animateWithDuration:0.35 animations:^{
         _bottomView.frame = CGRectMake(kPadding5, CGRectGetMaxY(self.frame), SCREEN_WIDTH - 2 * kPadding5, BOTTOMHEIGHT);
-        NSLog(@"self.frame %f %f %f %f",self.frame.origin.x,self.frame.origin.y,self.frame.size.height,self.frame.size.width);
     } completion:^(BOOL finished) {
         self.hidden = YES;
-        NSLog(@"shareFunctionView frame %f %f %d ",_bottomView.frame.origin.x,_bottomView.frame.origin.y,self.hidden);
     }];
 }
 -(void)show {
     [UIView animateWithDuration:0.35 animations:^{
         self.hidden = false;
         _bottomView.frame = CGRectMake(kPadding5, CGRectGetMaxY(self.frame)-BOTTOMHEIGHT, SCREEN_WIDTH - 2 * kPadding5, BOTTOMHEIGHT);
-        NSLog(@"self.frame %f %f %f %f",self.frame.origin.x,self.frame.origin.y,self.frame.size.height,self.frame.size.width);
     } completion:^(BOOL finished) {
-        NSLog(@"shareFunctionView frame %f %f %d ",_bottomView.frame.origin.x,_bottomView.frame.origin.y,self.hidden);
     }];
 }
 - (void)clickCancelButton:(UIButton *)sender {

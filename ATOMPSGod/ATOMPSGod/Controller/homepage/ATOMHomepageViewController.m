@@ -34,10 +34,10 @@
 #import "ATOMShareModel.h"
 #import "ATOMCollectModel.h"
 #import "ATOMInviteViewController.h"
+#import "JGActionSheet.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMHomepageViewController() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, ATOMPSViewDelegate, ATOMCameraViewDelegate,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate>
-
+@interface ATOMHomepageViewController() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, ATOMPSViewDelegate, ATOMCameraViewDelegate,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate>
 @property (nonatomic, strong) ATOMHomepageCustomTitleView *customTitleView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) UITapGestureRecognizer *tapHomePageHotGesture;
@@ -54,6 +54,7 @@
 @property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
 @property (nonatomic, strong) ATOMPSView *psView;
 @property (nonatomic, strong) ATOMCameraView *cameraView;
+@property (nonatomic, strong)  JGActionSheet * cameraActionsheet;
 @property (nonatomic, strong) UIView *thineNavigationView;
 
 @property (nonatomic, strong) NSIndexPath* seletedIndexPath;
@@ -80,11 +81,18 @@
     if (!_shareFunctionView) {
         _shareFunctionView = [ATOMShareFunctionView new];
         _shareFunctionView.delegate = self;
+        UITapGestureRecognizer* tgr = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissShareFunction:)];
+        [_shareFunctionView addGestureRecognizer:tgr];
         [[AppDelegate APP].window addSubview:self.shareFunctionView];
     }
     return _shareFunctionView;
 }
-
+-(void)dismissShareFunction:(UITapGestureRecognizer*)gesture {
+    CGPoint location = [gesture locationInView:self.view];
+    if (!CGRectContainsPoint(_shareFunctionView.bottomView.frame, location)) {
+        [_shareFunctionView dismiss];
+    }
+}
 - (ATOMPSView *)psView {
     if (!_psView) {
         _psView = [ATOMPSView new];
@@ -93,6 +101,26 @@
     return _psView;
 }
 
+- (JGActionSheet *)cameraActionsheet {
+    WS(ws);
+    if (!_cameraActionsheet) {
+        _cameraActionsheet = [JGActionSheet new];
+        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"求助上传", @"作品上传",@"取消"] buttonStyle:JGActionSheetButtonStyleDefault];
+        [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:2];
+        NSArray *sections = @[section];
+       _cameraActionsheet = [JGActionSheet actionSheetWithSections:sections];
+        _cameraActionsheet.delegate = self;
+        [_cameraActionsheet setOutsidePressBlock:^(JGActionSheet *sheet) {
+            [sheet dismissAnimated:YES];
+        }];
+        [_cameraActionsheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
+            if(indexPath.row == 2) {
+                [ws.cameraActionsheet dismissAnimated:YES];
+            }
+        }];
+    }
+    return _cameraActionsheet;
+}
 - (ATOMCameraView *)cameraView {
     if (!_cameraView) {
         _cameraView = [ATOMCameraView new];
@@ -100,7 +128,6 @@
     }
     return _cameraView;
 }
-
 #pragma mark - ATOMShareFunctionViewDelegate
 -(void)tapWechatFriends {
     [self postSocialShare:_selectedAskPageViewModel.imageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeAsk];
@@ -420,7 +447,8 @@
 }
 
 - (void)clickCameraButton:(UIBarButtonItem *)sender {
-    [[AppDelegate APP].window addSubview:self.cameraView];
+//    [[AppDelegate APP].window addSubview:self.cameraActionsheet];
+    [self.cameraActionsheet showInView:[AppDelegate APP].window animated:YES];
 }
 
 - (void)dealSelectingPhotoFromAlbum {
@@ -674,20 +702,16 @@
 #pragma mark - ATOMCameraViewDelegate
 
 - (void)dealWithCommand:(NSString *)command {
-//    [UIActionSheet showInView:self.view withTitle:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@[@"求助上传", @"作品上传"] tapBlock:^(UIActionSheet *actionSheet, NSInteger buttonIndex) {
-//        NSString * tapTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
-//        if ([tapTitle isEqualToString:@"求助上传"]) {
-//            [self dealSelectingPhotoFromAlbum];
-//        } else if ([tapTitle isEqualToString:@"作品上传"]) {
-//            [self dealUploadWorksWithTag:0];
-//        }
-//    }];
+
     if ([command isEqualToString:@"help"]) {
         [self dealSelectingPhotoFromAlbum];
     } else if ([command isEqualToString:@"work"]) {
         [self dealUploadWorksWithTag:0];
     }
 }
+
+
+
 
 #pragma mark - ATOMViewControllerDelegate
 -(void)ATOMViewControllerDismissWithLiked:(BOOL)liked {
