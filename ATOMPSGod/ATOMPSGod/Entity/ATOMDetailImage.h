@@ -28,6 +28,8 @@
  *  回复ID
  */
 @property (nonatomic, assign) NSInteger detailID;
+@property (nonatomic, assign) NSInteger askID;
+
 /**
  *  回复人ID
  */

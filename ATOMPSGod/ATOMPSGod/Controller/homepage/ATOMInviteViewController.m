@@ -17,12 +17,13 @@
 #import "ATOMMyConcernTableHeaderView.h"
 #import "ATOMInviteModel.h"
 #import "ATOMInviteCellViewModel.h"
-@interface ATOMInviteViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface ATOMInviteViewController () <UITableViewDelegate, UITableViewDataSource,UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) ATOMInviteView *inviteView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapInviteGesture;
 @property (nonatomic, strong) NSArray *datasourceRecommendMaster;
 @property (nonatomic, strong) NSArray *datasourceRecommendFriends;
+@property (nonatomic, assign) NSIndexPath* selectedIndexpath;
 
 @end
 
@@ -58,6 +59,7 @@
     _inviteView.inviteTableView.delegate = self;
     _inviteView.inviteTableView.dataSource = self;
     _tapInviteGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapInviteGesture:)];
+    _tapInviteGesture.delegate = self;
     [_inviteView.inviteTableView addGestureRecognizer:_tapInviteGesture];
 }
 
@@ -66,6 +68,7 @@
 - (void)tapInviteGesture:(UITapGestureRecognizer *)gesture {
     CGPoint location = [gesture locationInView:_inviteView.inviteTableView];
     NSIndexPath *indexPath = [_inviteView.inviteTableView indexPathForRowAtPoint:location];
+    _selectedIndexpath = indexPath;
     if (indexPath) {
         ATOMInviteTableViewCell *cell = (ATOMInviteTableViewCell *)[_inviteView.inviteTableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
@@ -176,4 +179,19 @@
     [param setObject:@(_askPageViewModel.imageID) forKey:@"ask_id"];
     [ATOMInviteModel invite:param];
 }
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if (_selectedIndexpath) {
+       ATOMInviteTableViewCell *cell = (ATOMInviteTableViewCell *)[_inviteView.inviteTableView cellForRowAtIndexPath:_selectedIndexpath];
+        //若已经邀请成功，就不再让inviteButton可点
+        if (CGRectContainsPoint(cell.inviteButton.frame, [touch locationInView:cell])){
+            if (cell.inviteButton.selected == YES) {
+                return NO;
+            }else {
+                return YES;
+            }
+            }
+    }
+    return YES;
+    }
+
 @end

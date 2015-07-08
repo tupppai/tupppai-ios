@@ -116,34 +116,24 @@
     _grayThinView = [UIView new];
     _grayThinView.backgroundColor = [UIColor colorWithHex:0xacbbc1];
     [_centerView addSubview:_grayThinView];
-    
+    [self toggleSegmentBar:0];
 }
 
+-(void)toggleSegmentBar:(int)type {
+    if (type == 0) {
+        _blueThinView.frame = CGRectMake(0, CGRectGetMaxY(self.otherPersonUploadButton.frame), SCREEN_WIDTH / 2, kPadding5);
+        _grayThinView.frame = CGRectMake(SCREEN_WIDTH / 2, CGRectGetMaxY(self.otherPersonUploadButton.frame) + 3, SCREEN_WIDTH / 2, kPadding5 / 2);
+        _otherPersonUploadButton.selected = YES;
+        _otherPersonWorkButton.selected = NO;
+    } else if (type == 1) {
+        _blueThinView.frame = CGRectMake(SCREEN_WIDTH / 2, CGRectGetMaxY(self.otherPersonWorkButton.frame), SCREEN_WIDTH / 2, kPadding5);
+        _grayThinView.frame = CGRectMake(0, CGRectGetMaxY(self.otherPersonWorkButton.frame) + 3, SCREEN_WIDTH / 2, kPadding5 / 2);
+        _otherPersonUploadButton.selected = NO;
+        _otherPersonWorkButton.selected = YES;
 
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 
 

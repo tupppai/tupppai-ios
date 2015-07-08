@@ -7,24 +7,13 @@
 //
 
 #import "ATOMBaseView.h"
+#import "ATOMPersonPageScrollView.h"
 @class ATOMOtherPersonCollectionHeaderView;
 
-typedef enum {
-    ATOMUploadType = 0,
-    ATOMWorkType
-}ATOMOtherPersonCollectionViewType;
+
 
 @interface ATOMOtherPersonView : ATOMBaseView
-
 @property (nonatomic, strong) ATOMOtherPersonCollectionHeaderView *uploadHeaderView;
-@property (nonatomic, strong) ATOMOtherPersonCollectionHeaderView *workHeaderView;
-@property (nonatomic, strong) UICollectionView *otherPersonUploadCollectionView;
-@property (nonatomic, strong) UICollectionView *otherPersonWorkCollectionView;
-
-
-- (void)changeToUploadView;
-- (void)changeToWorkView;
-- (ATOMOtherPersonCollectionViewType)typeOfCurrentCollectionView;
-
+@property (nonatomic, strong) ATOMPersonPageScrollView *scrollView;
 
 @end

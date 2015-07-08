@@ -25,7 +25,6 @@
 #import "ATOMPSView.h"
 #import "AppDelegate.h"
 #import "ATOMBottomCommonButton.h"
-#import "ATOMCameraView.h"
 #import "PWMascotAnimationImageView.h"
 #import "ATOMNoDataView.h"
 #import "KShareManager.h"
@@ -35,9 +34,10 @@
 #import "ATOMCollectModel.h"
 #import "ATOMInviteViewController.h"
 #import "JGActionSheet.h"
+#import "ATOMReportModel.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMHomepageViewController() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, ATOMPSViewDelegate, ATOMCameraViewDelegate,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate>
+@interface ATOMHomepageViewController() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate>
 @property (nonatomic, strong) ATOMHomepageCustomTitleView *customTitleView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) UITapGestureRecognizer *tapHomePageHotGesture;
@@ -52,9 +52,11 @@
 @property (nonatomic, assign) BOOL canRefreshHotFooter;
 @property (nonatomic, assign) BOOL canRefreshRecentFooter;
 @property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
-@property (nonatomic, strong) ATOMPSView *psView;
-@property (nonatomic, strong) ATOMCameraView *cameraView;
+//@property (nonatomic, strong) ATOMPSView *psView;
 @property (nonatomic, strong)  JGActionSheet * cameraActionsheet;
+@property (nonatomic, strong)  JGActionSheet * psActionSheet;
+@property (nonatomic, strong)  JGActionSheet * reportActionSheet;
+
 @property (nonatomic, strong) UIView *thineNavigationView;
 
 @property (nonatomic, strong) NSIndexPath* seletedIndexPath;
@@ -93,12 +95,39 @@
         [_shareFunctionView dismiss];
     }
 }
-- (ATOMPSView *)psView {
-    if (!_psView) {
-        _psView = [ATOMPSView new];
-        _psView.delegate = self;
+
+- (JGActionSheet *)psActionSheet {
+    WS(ws);
+    if (!_psActionSheet) {
+        _psActionSheet = [JGActionSheet new];
+        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"下载素材", @"上传作品",@"取消"] buttonStyle:JGActionSheetButtonStyleDefault];
+        [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:2];
+        NSArray *sections = @[section];
+        _psActionSheet = [JGActionSheet actionSheetWithSections:sections];
+        _psActionSheet.delegate = self;
+        [_psActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
+            [sheet dismissAnimated:YES];
+        }];
+        [_psActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
+            switch (indexPath.row) {
+                case 0:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    [ws dealDownloadWork];
+                    break;
+                case 1:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    [ws dealUploadWorksWithTag:1];
+                    break;
+                case 2:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    break;
+                default:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    break;
+            }
+        }];
     }
-    return _psView;
+    return _psActionSheet;
 }
 
 - (JGActionSheet *)cameraActionsheet {
@@ -114,20 +143,78 @@
             [sheet dismissAnimated:YES];
         }];
         [_cameraActionsheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
-            if(indexPath.row == 2) {
-                [ws.cameraActionsheet dismissAnimated:YES];
+            switch (indexPath.row) {
+                case 0:
+                    [ws.cameraActionsheet dismissAnimated:YES];
+                    [ws dealSelectingPhotoFromAlbum];
+                    break;
+                case 1:
+                    [ws.cameraActionsheet dismissAnimated:YES];
+                    [ws dealUploadWorksWithTag:0];
+                    break;
+                case 2:
+                    [ws.cameraActionsheet dismissAnimated:YES];
+                    break;
+                default:
+                    [ws.cameraActionsheet dismissAnimated:YES];
+                    break;
             }
         }];
     }
     return _cameraActionsheet;
 }
-- (ATOMCameraView *)cameraView {
-    if (!_cameraView) {
-        _cameraView = [ATOMCameraView new];
-        _cameraView.delegate = self;
+
+- (JGActionSheet *)reportActionSheet {
+    WS(ws);
+    if (!_reportActionSheet) {
+        _reportActionSheet = [JGActionSheet new];
+        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"色情、淫秽或低俗内容", @"广告或垃圾信息",@"违反法律法规的内容"] buttonStyle:JGActionSheetButtonStyleDefault];
+        NSArray *sections = @[section];
+        _reportActionSheet = [JGActionSheet actionSheetWithSections:sections];
+        _reportActionSheet.delegate = self;
+        [_reportActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
+            [sheet dismissAnimated:YES];
+        }];
+        [_reportActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
+            NSMutableDictionary* param = [NSMutableDictionary new];
+            [param setObject:@(ws.selectedAskPageViewModel.imageID) forKey:@"target_id"];
+            [param setObject:@(ATOMPageTypeAsk) forKey:@"target_type"];
+            UIButton* b = section.buttons[indexPath.row];
+            switch (indexPath.row) {
+                case 0:
+                    [ws.reportActionSheet dismissAnimated:YES];
+                    [param setObject:b.titleLabel.text forKey:@"content"];
+                    break;
+                case 1:
+                    [ws.reportActionSheet dismissAnimated:YES];
+                    [param setObject:b.titleLabel.text forKey:@"content"];
+                    break;
+                case 2:
+                    [ws.reportActionSheet dismissAnimated:YES];
+                    [param setObject:b.titleLabel.text forKey:@"content"];
+                    break;
+                default:
+                    [ws.reportActionSheet dismissAnimated:YES];
+                    break;
+            }
+            [ATOMReportModel report:param withBlock:^(NSError *error) {
+                UIView* view;
+                if (ws.scrollView.currentHomepageType == ATOMHomepageHotType) {
+                    view = ws.scrollView.homepageHotView;
+                } else  if (ws.scrollView.currentHomepageType == ATOMHomepageAskType) {
+                    view = ws.scrollView.homepageRecentView;
+                }
+                if(error) {
+                    [Util TextHud:@"出现未知错误" inView:view];
+                } else {
+                    [Util TextHud:@"已举报" inView:view];
+                }
+            }];
+        }];
     }
-    return _cameraView;
+    return _reportActionSheet;
 }
+
 #pragma mark - ATOMShareFunctionViewDelegate
 -(void)tapWechatFriends {
     [self postSocialShare:_selectedAskPageViewModel.imageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeAsk];
@@ -140,6 +227,7 @@
 }
 -(void)tapInvite {
     ATOMInviteViewController* ivc = [ATOMInviteViewController new];
+    ivc.askPageViewModel = _selectedAskPageViewModel;
     [self pushViewController:ivc animated:NO];
 }
 -(void)tapCollect {
@@ -158,7 +246,7 @@
     }];
 }
 -(void)tapReport {
-    
+    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
 }
 #pragma mark - Refresh
 
@@ -579,7 +667,7 @@
                     opvc.userName = _selectedAskPageViewModel.userName;
                     [self pushViewController:opvc animated:YES];
                 } else if (CGRectContainsPoint(_selectedAskCell.psButton.frame, p)) {
-                    [[AppDelegate APP].window addSubview:self.psView];
+                    [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
                 } else if (CGRectContainsPoint(_selectedAskCell.userNameLabel.frame, p)) {
                     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
                     opvc.userID = _selectedAskPageViewModel.userID;
@@ -688,28 +776,6 @@
         return 0;
     }
 }
-
-#pragma mark - ATOMPSViewDelegate
-
-- (void)dealImageWithCommand:(NSString *)command {
-    if ([command isEqualToString:@"upload"]) {
-        [self dealUploadWorksWithTag:1];
-    } else if ([command isEqualToString:@"download"]) {
-        [self dealDownloadWork];
-    }
-}
-
-#pragma mark - ATOMCameraViewDelegate
-
-- (void)dealWithCommand:(NSString *)command {
-
-    if ([command isEqualToString:@"help"]) {
-        [self dealSelectingPhotoFromAlbum];
-    } else if ([command isEqualToString:@"work"]) {
-        [self dealUploadWorksWithTag:0];
-    }
-}
-
 
 
 

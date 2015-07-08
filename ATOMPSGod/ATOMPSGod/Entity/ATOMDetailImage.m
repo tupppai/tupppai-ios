@@ -13,6 +13,7 @@
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
              @"detailID" : @"id",
+             @"askID":@"ask_id",
              @"uid" : @"uid",
              @"nickname" : @"nickname",
              @"avatar" : @"avatar",
@@ -30,6 +31,7 @@
              @"liked" : @"uped",
              @"collected":@"collected",
              @"type":@"type",
+
              };
 }
 
@@ -56,6 +58,7 @@
              @"liked" : @"liked",
              @"collected":@"collected",
              @"type":@"type",
+             @"askID":@"askID",
              };
 }
 

@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface ATOMReportModel : NSObject
-
++ (NSURLSessionDataTask *)report :(NSDictionary*)param withBlock:(void (^)(NSError *))block;
 @end

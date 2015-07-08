@@ -13,7 +13,7 @@
 
 @property (nonatomic, assign) NSInteger imageID;
 @property (nonatomic, assign) NSInteger askID;
-@property (nonatomic, assign) NSInteger type;
+@property (nonatomic, assign) int type;
 @property (nonatomic, assign) NSInteger userID;
 @property (nonatomic, copy) NSString *userName;
 @property (nonatomic, copy) NSString *userSex;

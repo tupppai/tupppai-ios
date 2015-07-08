@@ -24,5 +24,5 @@
 
 @property (nonatomic, strong) UIView *blueThinView;
 @property (nonatomic, strong) UIView *grayThinView;
-
+-(void)toggleSegmentBar:(int)type;
 @end

@@ -10,8 +10,6 @@
 
 @interface ATOMHomepageScrollView ()
 
-
-
 @end
 
 @implementation ATOMHomepageScrollView

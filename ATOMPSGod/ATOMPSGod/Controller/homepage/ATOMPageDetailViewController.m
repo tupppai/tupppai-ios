@@ -21,12 +21,14 @@
 #import "ATOMShowDetailOfComment.h"
 #import "ATOMShareFunctionView.h"
 #import "ATOMBottomCommonButton.h"
-#import "ATOMPSView.h"
 #import "ATOMPraiseButton.h"
 #import "ATOMCollectModel.h"
+#import "JGActionSheet.h"
+#import "ATOMInviteViewController.h"
+#import "ATOMReportModel.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMPageDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, ATOMPSViewDelegate,ATOMShareFunctionViewDelegate>
+@interface ATOMPageDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate>
 
 @property (nonatomic, strong) ATOMAskDetailView *askDetailView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
@@ -40,7 +42,8 @@
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, strong) ATOMCommentDetailViewModel *atModel;
 @property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
-@property (nonatomic, strong) ATOMPSView *psView;
+@property (nonatomic, strong)  JGActionSheet * psActionSheet;
+@property (nonatomic, strong)  JGActionSheet * reportActionSheet;
 
 @end
 
@@ -71,13 +74,83 @@
     }
     return _imagePickerController;
 }
-
-- (ATOMPSView *)psView {
-    if (!_psView) {
-        _psView = [ATOMPSView new];
-        _psView.delegate = self;
+- (JGActionSheet *)psActionSheet {
+    WS(ws);
+    if (!_psActionSheet) {
+        _psActionSheet = [JGActionSheet new];
+        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"下载素材", @"上传作品",@"取消"] buttonStyle:JGActionSheetButtonStyleDefault];
+        [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:2];
+        NSArray *sections = @[section];
+        _psActionSheet = [JGActionSheet actionSheetWithSections:sections];
+        _psActionSheet.delegate = self;
+        [_psActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
+            [sheet dismissAnimated:YES];
+        }];
+        [_psActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
+            switch (indexPath.row) {
+                case 0:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    [ws dealDownloadWork];
+                    break;
+                case 1:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    [ws dealUploadWork];
+                    break;
+                case 2:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    break;
+                default:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    break;
+            }
+        }];
     }
-    return _psView;
+    return _psActionSheet;
+}
+- (JGActionSheet *)reportActionSheet {
+    WS(ws);
+    if (!_reportActionSheet) {
+        _reportActionSheet = [JGActionSheet new];
+        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"色情、淫秽或低俗内容", @"广告或垃圾信息",@"违反法律法规的内容"] buttonStyle:JGActionSheetButtonStyleDefault];
+        NSArray *sections = @[section];
+        _reportActionSheet = [JGActionSheet actionSheetWithSections:sections];
+        _reportActionSheet.delegate = self;
+        [_reportActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
+            [sheet dismissAnimated:YES];
+        }];
+        [_reportActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
+            NSMutableDictionary* param = [NSMutableDictionary new];
+            [param setObject:@(ws.pageDetailViewModel.pageID) forKey:@"target_id"];
+            [param setObject:@(ws.pageDetailViewModel.type) forKey:@"target_type"];
+            UIButton* b = section.buttons[indexPath.row];
+            switch (indexPath.row) {
+                case 0:
+                    [ws.reportActionSheet dismissAnimated:YES];
+                    [param setObject:b.titleLabel.text forKey:@"content"];
+                    break;
+                case 1:
+                    [ws.reportActionSheet dismissAnimated:YES];
+                    [param setObject:b.titleLabel.text forKey:@"content"];
+                    break;
+                case 2:
+                    [ws.reportActionSheet dismissAnimated:YES];
+                    [param setObject:b.titleLabel.text forKey:@"content"];
+                    break;
+                default:
+                    [ws.reportActionSheet dismissAnimated:YES];
+                    break;
+            }
+            
+            [ATOMReportModel report:param withBlock:^(NSError *error) {
+                if(error) {
+                    [Util TextHud:@"出现未知错误" inView:ws.view];
+                } else {
+                    [Util TextHud:@"已举报" inView:ws.view];
+                }
+            }];
+        }];
+    }
+    return _reportActionSheet;
 }
 
 #pragma mark - ATOMShareFunctionViewDelegate
@@ -105,6 +178,14 @@
             _pageDetailViewModel.collected = self.shareFunctionView.collectButton.selected;
         }
     }];
+}
+-(void)tapInvite {
+    ATOMInviteViewController* ivc = [ATOMInviteViewController new];
+    ivc.askPageViewModel = [_pageDetailViewModel generateAskPageViewModel];
+    [self pushViewController:ivc animated:NO];
+}
+-(void)tapReport {
+    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
 }
 #pragma mark Refresh
 
@@ -202,10 +283,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    NSLog(@"viewWillDisappear");
-
     [super viewWillDisappear:animated];
-    
     if ((self.isMovingFromParentViewController || self.isBeingDismissed)) {
         if (_pageDetailViewModel && (self.isMovingFromParentViewController || self.isBeingDismissed)) {
             if(_delegate && [_delegate respondsToSelector:@selector(ATOMViewControllerDismissWithInfo:)])
@@ -288,7 +366,7 @@
 }
 
 - (void)clickPSButton:(UIButton *)sender {
-    [[AppDelegate APP].window addSubview:self.psView];
+    [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
 }
 
 - (void)clickPraiseButton:(UITapGestureRecognizer *)sender {

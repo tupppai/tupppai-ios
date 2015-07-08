@@ -88,13 +88,9 @@ static CGFloat cellHeight = 70;
 - (void)toggleInviteButtonAppearance {
     if (!_inviteButton.selected) {
         _inviteButton.selected = !_inviteButton.selected;
-        if (!_inviteButton.selected) {
-            _inviteButton.backgroundColor = [UIColor colorWithHex:0x74c3ff];
-            [_inviteButton setTitle:@"邀请" forState:UIControlStateNormal];
-        } else {
             _inviteButton.backgroundColor = [UIColor colorWithHex:0xc5cdd3];
             [_inviteButton setTitle:@"已邀请" forState:UIControlStateNormal];
-        }
+        _inviteButton.enabled = NO;
     }
 }
 

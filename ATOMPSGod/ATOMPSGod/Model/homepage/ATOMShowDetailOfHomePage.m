@@ -44,10 +44,8 @@
             NSMutableArray *detailOfHomePageArray = [NSMutableArray array];
             NSArray *imageDataArray = responseObject[@"data"][@"replies"];
             NSDate *clickTime = [NSDate date];
-            NSLog(@"imageDataArray 个数：%ld",    imageDataArray.count);
             for (int i = 0; i < imageDataArray.count; i++) {
                 ATOMDetailImage *detailImage = [MTLJSONAdapter modelOfClass:[ATOMDetailImage class] fromJSONDictionary:imageDataArray[i] error:NULL];
-                NSLog(@"ShowDetailOfHomePage detailImage %ld %@",detailImage.detailID,detailImage.imageURL);
                 detailImage.imageID = imageID;
                 detailImage.clickTime = [clickTime timeIntervalSince1970];
                 detailImage.hotCommentArray = [NSMutableArray array];

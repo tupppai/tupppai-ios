@@ -20,14 +20,17 @@
 #import "ATOMHeaderImageCropperViewController.h"
 #import "ATOMUploadImage.h"
 #import "ATOMImage.h"
+#import "JGActionSheet.h"
+#import "AppDelegate.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMPersonViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ATOMCropHeaderImageCompleteProtocol>
+@interface ATOMPersonViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ATOMCropHeaderImageCompleteProtocol,JGActionSheetDelegate>
 
 @property (nonatomic, strong) ATOMPersonView *personView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, assign) ATOMClickUserHeaderEventType clickUserHeaderEventType;
+@property (nonatomic, strong) JGActionSheet *avatarActionSheet;
 
 @end
 
@@ -42,7 +45,35 @@
     }
     return _imagePickerController;
 }
-
+- (JGActionSheet *)avatarActionSheet {
+    WS(ws);
+    if (!_avatarActionSheet) {
+        _avatarActionSheet = [JGActionSheet new];
+        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"改头像",@"不改了"] buttonStyle:JGActionSheetButtonStyleDefault];
+        [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:1];
+        NSArray *sections = @[section];
+        _avatarActionSheet = [JGActionSheet actionSheetWithSections:sections];
+        _avatarActionSheet.delegate = self;
+        [_avatarActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
+            [sheet dismissAnimated:YES];
+        }];
+        [_avatarActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
+            switch (indexPath.row) {
+                case 0:
+                    [ws changingHeaderImage];
+                    [ws.avatarActionSheet dismissAnimated:YES];
+                    break;
+                case 1:
+                    [ws.avatarActionSheet dismissAnimated:YES];
+                    break;
+                default:
+                    [ws.avatarActionSheet dismissAnimated:YES];
+                    break;
+            }
+        }];
+    }
+    return _avatarActionSheet;
+}
 #pragma mark - UI
 
 - (void)viewDidLoad {
@@ -76,14 +107,16 @@
 #pragma mark - Click Event
 
 - (void)clickUserHeaderButton:(UIButton *)sender {
-    [UIActionSheet showInView:self.view withTitle:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@[@"更换头像", @"更换背景"] tapBlock:^(UIActionSheet *actionSheet, NSInteger buttonIndex) {
-        NSString *titleStr = [actionSheet buttonTitleAtIndex:buttonIndex];
-        if ([titleStr isEqualToString:@"更换头像"]) {
-            [self changingHeaderImage];
-        } else if ([titleStr isEqualToString:@"更换背景"]) {
-            [self changingBackGroundImage];
-        }
-    }];
+    [self.avatarActionSheet showInView:[AppDelegate APP].window animated:YES];
+//    [UIActionSheet showInView:self.view withTitle:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@[@"更换头像", @"更换背景"] tapBlock:^(UIActionSheet *actionSheet, NSInteger buttonIndex) {
+//        NSString *titleStr = [actionSheet buttonTitleAtIndex:buttonIndex];
+//        if ([titleStr isEqualToString:@"更换头像"]) {
+//            [self changingHeaderImage];
+//        }
+//        else if ([titleStr isEqualToString:@"更换背景"]) {
+//            [self changingBackGroundImage];
+//        }
+//    }];
 }
 
 - (void)dealTakingPhoto {

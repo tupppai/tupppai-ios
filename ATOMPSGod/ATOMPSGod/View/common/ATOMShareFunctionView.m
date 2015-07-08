@@ -143,6 +143,7 @@ static CGFloat BOTTOMHEIGHT = 286;
     }
 }
 -(void)tapReportButton {
+    [self dismiss];
     if (_delegate && [_delegate respondsToSelector:@selector(tapReport)]) {
         [_delegate tapReport];
     }

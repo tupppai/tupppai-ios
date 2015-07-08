@@ -46,8 +46,8 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
 #pragma mark - Refresh
 
 - (void)configCollectionViewRefresh {
-    [_otherPersonView.otherPersonUploadCollectionView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreUploadData)];
-    [_otherPersonView.otherPersonWorkCollectionView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreWorkData)];
+    [_otherPersonView.scrollView.otherPersonUploadCollectionView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreUploadData)];
+    [_otherPersonView.scrollView.otherPersonWorkCollectionView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreWorkData)];
     
 }
 
@@ -55,7 +55,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
     if (_canRefreshUploadFooter) {
         [self getMoreDataSourceWithType:@"upload"];
     } else {
-        [_otherPersonView.otherPersonUploadCollectionView.footer endRefreshing];
+        [_otherPersonView.scrollView.otherPersonUploadCollectionView.footer endRefreshing];
     }
 }
 
@@ -63,7 +63,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
     if (_canRefreshWorkFooter) {
         [self getMoreDataSourceWithType:@"work"];
     } else {
-        [_otherPersonView.otherPersonWorkCollectionView.footer endRefreshing];
+        [_otherPersonView.scrollView.otherPersonWorkCollectionView.footer endRefreshing];
     }
     
 }
@@ -98,29 +98,26 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     ATOMShowAsk *ShowMyAsk = [ATOMShowAsk new];
-    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [ShowMyAsk ShowMyAsk:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        ////[SVProgressHUD dismiss];
         for (ATOMHomeImage *homeImage in resultArray) {
             ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
             [homepageViewModel setViewModelData:homeImage];
-            if ([ws.otherPersonView typeOfCurrentCollectionView] == ATOMUploadType) {
+            if (ws.otherPersonView.scrollView.currentType == ATOMOtherPersonCollectionViewTypeAsk) {
                 ATOMAskViewModel *askViewModel = [ATOMAskViewModel new];
                 [askViewModel setViewModelData:homeImage];
                 [ws.uploadDataSource addObject:askViewModel];
                 [ws.uploadHomeImageDataSource addObject:homepageViewModel];
-            } else if ([ws.otherPersonView typeOfCurrentCollectionView] == ATOMWorkType) {
+            } else if (ws.otherPersonView.scrollView.currentType == ATOMOtherPersonCollectionViewTypeReply) {
                 ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];
                 [replyViewModel setViewModelData:homeImage];
                 [ws.workDataSource addObject:replyViewModel];
                 [ws.workHomeImageDataSource addObject:homepageViewModel];
             }
         }
-        NSLog(@"%d", (int)ws.uploadDataSource.count);
-        if ([ws.otherPersonView typeOfCurrentCollectionView] == ATOMUploadType) {
-            [ws.otherPersonView.otherPersonUploadCollectionView reloadData];
-        } else if ([ws.otherPersonView typeOfCurrentCollectionView] == ATOMWorkType) {
-            [ws.otherPersonView.otherPersonWorkCollectionView reloadData];
+        if (ws.otherPersonView.scrollView.currentType == ATOMOtherPersonCollectionViewTypeAsk) {
+            [ws.otherPersonView.scrollView.otherPersonUploadCollectionView reloadData];
+        } else if (ws.otherPersonView.scrollView.currentType == ATOMOtherPersonCollectionViewTypeReply) {
+            [ws.otherPersonView.scrollView.otherPersonWorkCollectionView reloadData];
         }
     }];
 }
@@ -144,35 +141,33 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     ATOMShowAsk *ShowMyAsk = [ATOMShowAsk new];
-    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [ShowMyAsk ShowMyAsk:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        ////[SVProgressHUD dismiss];
         for (ATOMHomeImage *homeImage in resultArray) {
             ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
             [homepageViewModel setViewModelData:homeImage];
-            if ([ws.otherPersonView typeOfCurrentCollectionView] == ATOMUploadType) {
+            if (ws.otherPersonView.scrollView.currentType == ATOMOtherPersonCollectionViewTypeAsk) {
                 ATOMAskViewModel *askViewModel = [ATOMAskViewModel new];
                 [askViewModel setViewModelData:homeImage];
                 [ws.uploadDataSource addObject:askViewModel];
                 [ws.uploadHomeImageDataSource addObject:homepageViewModel];
-            } else if ([ws.otherPersonView typeOfCurrentCollectionView] == ATOMWorkType) {
+            } else if (ws.otherPersonView.scrollView.currentType == ATOMOtherPersonCollectionViewTypeReply) {
                 ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];
                 [replyViewModel setViewModelData:homeImage];
                 [ws.workDataSource addObject:replyViewModel];
                 [ws.workHomeImageDataSource addObject:homepageViewModel];
             }
         }
-        if ([ws.otherPersonView typeOfCurrentCollectionView] == ATOMUploadType) {
-            [ws.otherPersonView.otherPersonUploadCollectionView reloadData];
-            [ws.otherPersonView.otherPersonUploadCollectionView.footer endRefreshing];
+        if (ws.otherPersonView.scrollView.currentType == ATOMOtherPersonCollectionViewTypeAsk) {
+            [ws.otherPersonView.scrollView.otherPersonUploadCollectionView reloadData];
+            [ws.otherPersonView.scrollView.otherPersonUploadCollectionView.footer endRefreshing];
             if (resultArray.count == 0) {
                 ws.canRefreshUploadFooter = NO;
             } else {
                 ws.canRefreshUploadFooter = YES;
             }
-        } else if ([ws.otherPersonView typeOfCurrentCollectionView] == ATOMWorkType) {
-            [ws.otherPersonView.otherPersonWorkCollectionView reloadData];
-            [ws.otherPersonView.otherPersonWorkCollectionView.footer endRefreshing];
+        } else if (ws.otherPersonView.scrollView.currentType == ATOMOtherPersonCollectionViewTypeReply) {
+            [ws.otherPersonView.scrollView.otherPersonWorkCollectionView reloadData];
+            [ws.otherPersonView.scrollView.otherPersonWorkCollectionView.footer endRefreshing];
             if (resultArray.count == 0) {
                 ws.canRefreshWorkFooter = NO;
             } else {
@@ -193,25 +188,23 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
     self.title = _userName;
     _otherPersonView = [ATOMOtherPersonView new];
     self.view = _otherPersonView;
-    _otherPersonView.otherPersonUploadCollectionView.delegate = self;
-    _otherPersonView.otherPersonUploadCollectionView.dataSource = self;
-    _otherPersonView.otherPersonWorkCollectionView.delegate = self;
-    _otherPersonView.otherPersonWorkCollectionView.dataSource = self;
+    _otherPersonView.scrollView.delegate = self;
+    _otherPersonView.scrollView.otherPersonUploadCollectionView.delegate = self;
+    _otherPersonView.scrollView.otherPersonUploadCollectionView.dataSource = self;
+    _otherPersonView.scrollView.otherPersonWorkCollectionView.delegate = self;
+    _otherPersonView.scrollView.otherPersonWorkCollectionView.dataSource = self;
     [self registerCollection];
     [self addTargetToOtherPersonView:_otherPersonView.uploadHeaderView];
-    [self addTargetToOtherPersonView:_otherPersonView.workHeaderView];
-    [_otherPersonView changeToUploadView];
     [self configCollectionViewRefresh];
     _canRefreshUploadFooter = YES;
     _canRefreshWorkFooter = YES;
     _isFirstEnterWorkCollectionView = YES;
     [self getDataSourceWithType:@"upload"];
-    
 }
 
 - (void)addTargetToOtherPersonView:(ATOMOtherPersonCollectionHeaderView *)headerView {
-    [headerView.otherPersonUploadButton addTarget:self action:@selector(clickOtherPersonUploadButton:) forControlEvents:UIControlEventTouchUpInside];
-    [headerView.otherPersonWorkButton addTarget:self action:@selector(clickOtherPersonWorkButton:) forControlEvents:UIControlEventTouchUpInside];
+    [headerView.otherPersonUploadButton addTarget:self action:@selector(clickAskButton:) forControlEvents:UIControlEventTouchUpInside];
+    [headerView.otherPersonWorkButton addTarget:self action:@selector(clickReplyButton:) forControlEvents:UIControlEventTouchUpInside];
     UITapGestureRecognizer *tapConcernGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapConcernGesture:)];
     [headerView.attentionLabel addGestureRecognizer:tapConcernGesture];
     
@@ -220,23 +213,26 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
 }
 
 - (void)registerCollection {
-    [_otherPersonView.otherPersonUploadCollectionView registerClass:[ATOMMyUploadCollectionViewCell class] forCellWithReuseIdentifier:UploadCellIdentifier];
-    [_otherPersonView.otherPersonWorkCollectionView registerClass:[ATOMMyWorkCollectionViewCell class] forCellWithReuseIdentifier:WorkCellIdentifier];
+    [_otherPersonView.scrollView.otherPersonUploadCollectionView registerClass:[ATOMMyUploadCollectionViewCell class] forCellWithReuseIdentifier:UploadCellIdentifier];
+    [_otherPersonView.scrollView.otherPersonWorkCollectionView registerClass:[ATOMMyWorkCollectionViewCell class] forCellWithReuseIdentifier:WorkCellIdentifier];
 }
 
 #pragma mark - Click Event
 
-- (void)clickOtherPersonUploadButton:(UIButton *)sender {
-    [_otherPersonView changeToUploadView];
+- (void)clickAskButton:(UIButton *)sender {
+    [_otherPersonView.uploadHeaderView toggleSegmentBar:ATOMOtherPersonCollectionViewTypeAsk];
+    [_otherPersonView.scrollView toggleCollectionView:ATOMOtherPersonCollectionViewTypeAsk];
 }
 
-- (void)clickOtherPersonWorkButton:(UIButton *)sender {
-    [_otherPersonView changeToWorkView];
+- (void)clickReplyButton:(UIButton *)sender {
+    [_otherPersonView.uploadHeaderView toggleSegmentBar:ATOMOtherPersonCollectionViewTypeReply];
+    [_otherPersonView.scrollView toggleCollectionView:ATOMOtherPersonCollectionViewTypeReply];
     if (_isFirstEnterWorkCollectionView) {
         _isFirstEnterWorkCollectionView = NO;
         [self getDataSourceWithType:@"work"];
     }
 }
+
 
 #pragma mark - Gesture Event
 
@@ -254,51 +250,50 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
     [self pushViewController:mfvc animated:YES];
 }
 
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    CGFloat sectionHeaderHeight = -44;
-    CGFloat originHeight = -300;
-    if (scrollView == _otherPersonView.otherPersonUploadCollectionView) {
-        CGRect frame = _otherPersonView.uploadHeaderView.frame;
-        if (scrollView.contentOffset.y >= originHeight && scrollView.contentOffset.y < sectionHeaderHeight) {
-            frame.origin.y = originHeight - scrollView.contentOffset.y;
-            [UIView animateWithDuration:0.25 animations:^{
-                _otherPersonView.uploadHeaderView.frame = frame;
-               scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
-            }];
-        } else if (scrollView.contentOffset.y >= sectionHeaderHeight) {
-            frame.origin.y = originHeight - sectionHeaderHeight;
-            [UIView animateWithDuration:0.25 animations:^{
-                _otherPersonView.uploadHeaderView.frame = frame;
-                scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
-            }];
-        }
-    } else if (scrollView == _otherPersonView.otherPersonWorkCollectionView) {
-        CGRect frame = _otherPersonView.workHeaderView.frame;
-        if (scrollView.contentOffset.y >= originHeight && scrollView.contentOffset.y < sectionHeaderHeight) {
-            frame.origin.y = originHeight - scrollView.contentOffset.y;
-            [UIView animateWithDuration:0.25 animations:^{
-                _otherPersonView.workHeaderView.frame = frame;
-                scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
-            }];
-        } else if (scrollView.contentOffset.y >= sectionHeaderHeight) {
-            frame.origin.y = originHeight - sectionHeaderHeight;
-            [UIView animateWithDuration:0.25 animations:^{
-                scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
-                _otherPersonView.workHeaderView.frame = frame;
-            }];
-        }
-    }
-
-}
+//#pragma mark - UIScrollViewDelegate
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    CGFloat sectionHeaderHeight = -44;
+//    CGFloat originHeight = -300;
+//    if (scrollView == _otherPersonView.scrollView.otherPersonUploadCollectionView) {
+//        CGRect frame = _otherPersonView.uploadHeaderView.frame;
+//        if (scrollView.contentOffset.y >= originHeight && scrollView.contentOffset.y < sectionHeaderHeight) {
+//            frame.origin.y = originHeight - scrollView.contentOffset.y;
+//            [UIView animateWithDuration:0.25 animations:^{
+//                _otherPersonView.uploadHeaderView.frame = frame;
+//               scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+//            }];
+//        } else if (scrollView.contentOffset.y >= sectionHeaderHeight) {
+//            frame.origin.y = originHeight - sectionHeaderHeight;
+//            [UIView animateWithDuration:0.25 animations:^{
+//                _otherPersonView.uploadHeaderView.frame = frame;
+//                scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
+//            }];
+//        }
+//    } else if (scrollView == _otherPersonView.scrollView.otherPersonWorkCollectionView) {
+////        CGRect frame = _otherPersonView.workHeaderView.frame;
+//        if (scrollView.contentOffset.y >= originHeight && scrollView.contentOffset.y < sectionHeaderHeight) {
+////            frame.origin.y = originHeight - scrollView.contentOffset.y;
+//            [UIView animateWithDuration:0.25 animations:^{
+////                _otherPersonView.workHeaderView.frame = frame;
+//                scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+//            }];
+//        } else if (scrollView.contentOffset.y >= sectionHeaderHeight) {
+////            frame.origin.y = originHeight - sectionHeaderHeight;
+//            [UIView animateWithDuration:0.25 animations:^{
+//                scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
+////                _otherPersonView.workHeaderView.frame = frame;
+//            }];
+//        }
+//    }
+//
+//}
 
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    if ([_otherPersonView typeOfCurrentCollectionView] == ATOMUploadType) {
+    if (_otherPersonView.scrollView.currentType == ATOMOtherPersonCollectionViewTypeAsk) {
         return _uploadDataSource.count;
-    } else if ([_otherPersonView typeOfCurrentCollectionView] == ATOMWorkType) {
+    } else if (_otherPersonView.scrollView.currentType == ATOMOtherPersonCollectionViewTypeReply) {
         return _workDataSource.count;
     } else {
         return 0;
@@ -306,7 +301,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (collectionView == _otherPersonView.otherPersonUploadCollectionView) {
+    if (collectionView == _otherPersonView.scrollView.otherPersonUploadCollectionView) {
         ATOMMyUploadCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:UploadCellIdentifier forIndexPath:indexPath];
         ATOMAskViewModel *model = _uploadDataSource[indexPath.row];
         [cell.workImageView setImageWithURL:[NSURL URLWithString:model.imageURL]];
@@ -324,7 +319,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (collectionView == _otherPersonView.otherPersonUploadCollectionView) {
+    if (collectionView == _otherPersonView.scrollView.otherPersonUploadCollectionView) {
         ATOMAskViewModel *askViewModel = _uploadDataSource[indexPath.row];
         ATOMAskPageViewModel *homepageViewModel = _uploadHomeImageDataSource[indexPath.row];
         if ([askViewModel.totalPSNumber integerValue] == 0) {
@@ -351,16 +346,22 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
 
 
 
+#pragma mark - UIScrollViewDelegate
 
-
-
-
-
-
-
-
-
-
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+        int currentPage = (_otherPersonView.scrollView.contentOffset.x + CGWidth(_otherPersonView.scrollView.frame) * 0.1) / CGWidth(_otherPersonView.scrollView.frame);
+        if (currentPage == 0) {
+            [_otherPersonView.uploadHeaderView toggleSegmentBar:ATOMOtherPersonCollectionViewTypeAsk];
+            [_otherPersonView.scrollView toggleCollectionView:ATOMOtherPersonCollectionViewTypeAsk];
+        } else if (currentPage == 1) {
+            [_otherPersonView.uploadHeaderView toggleSegmentBar:ATOMOtherPersonCollectionViewTypeReply];
+            [_otherPersonView.scrollView toggleCollectionView:ATOMOtherPersonCollectionViewTypeReply];
+            if (_isFirstEnterWorkCollectionView) {
+                _isFirstEnterWorkCollectionView = NO;
+                [self getDataSourceWithType:@"work"];
+            }
+    }
+}
 
 
 

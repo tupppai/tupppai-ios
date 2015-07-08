@@ -59,7 +59,6 @@
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {
             ATOMDetailImage *detailImage = [MTLFMDBAdapter modelOfClass:[ATOMDetailImage class] fromFMResultSet:rs error:NULL];
-            NSLog(@"selectDetailImagesByImageID detailImage %ld ,%@,%@",detailImage.imageID,detailImage.imageURL,detailImage.nickname);
             [muArray addObject:detailImage];
         }
         [rs close];
@@ -74,7 +73,6 @@
         FMResultSet *rs = [db executeQuery:stmt];
         while ([rs next]) {
             ATOMDetailImage *detailImage = [MTLFMDBAdapter modelOfClass:[ATOMDetailImage class] fromFMResultSet:rs error:NULL];
-            NSLog(@"selectDetailImages  ALL detailImage %ld ,%@,%@",detailImage.imageID,detailImage.imageURL,detailImage.nickname);
             [muArray addObject:detailImage];
         }
         [rs close];

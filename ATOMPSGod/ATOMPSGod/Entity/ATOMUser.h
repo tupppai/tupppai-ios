@@ -12,7 +12,7 @@
 /**
  *  用户唯一ID
  */
-@property (nonatomic, assign) NSInteger uid;
+@property (nonatomic, assign) int uid;
 @property (nonatomic, assign) BOOL boundWeibo;
 @property (nonatomic, assign) BOOL boundWechat;
 @property (nonatomic, assign) NSInteger cityID;

@@ -13,6 +13,7 @@
 @interface ATOMHotDetailPageViewModel : NSObject
 
 @property (nonatomic, assign) NSInteger ID;
+@property (nonatomic, assign) NSInteger askID;
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, assign) int type;
 @property (nonatomic, copy) NSString *userName;

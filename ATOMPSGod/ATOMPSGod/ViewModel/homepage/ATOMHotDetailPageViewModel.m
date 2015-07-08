@@ -29,6 +29,7 @@
 - (void)setViewModelDataWithHomeImage:(ATOMAskPageViewModel *)askPageViewModel {
     _type = 1;
     _ID = askPageViewModel.imageID;
+    _askID = askPageViewModel.askID;
     _uid = askPageViewModel.userID;
     _userName = askPageViewModel.userName;
     _userSex = askPageViewModel.userSex;
@@ -57,6 +58,7 @@
     _collected = detailImage.collected;
     _type = detailImage.type;
     _ID = detailImage.detailID;
+    _askID = detailImage.askID;
     _uid = detailImage.uid;
     _userName = detailImage.nickname;
     _userSex = (detailImage.sex == 1) ? @"man" : @"woman";

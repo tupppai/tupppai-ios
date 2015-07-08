@@ -90,7 +90,7 @@ static ATOMCurrentUser *_currentUser;
 - (void)saveAndUpdateUser:(ATOMUser *)user {
     if ([ATOMUserDAO isExistUser:user]) {
         [ATOMUserDAO updateUser:user];
-        [self setCurrentUser:[ATOMUserDAO  selectUserByUID:[NSString stringWithFormat:@"%ld",user.uid]]];
+        [self setCurrentUser:[ATOMUserDAO  selectUserByUID:[NSString stringWithFormat:@"%d",user.uid]]];
     } else {
         [ATOMUserDAO insertUser:user];
         [self setCurrentUser:user];

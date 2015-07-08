@@ -26,6 +26,7 @@
 
 -(void)setCommonViewModelWithAsk:(ATOMAskPageViewModel*)model {
     _type = 1;
+    _askID = model.askID;
     _pageID = model.imageID;
     _pageImageURL = model.userImageURL;
     _pageImage = model.image;
@@ -43,6 +44,7 @@
 -(void)setCommonViewModelWithHotDetail:(ATOMHotDetailPageViewModel*)model {
     _type = model.type;
     _pageID = model.ID;
+    _askID = model.askID;
     _pageImageURL = model.userImageURL;
     _pageImage = model.image;
     _avatarURL = model.avatarURL;
@@ -57,6 +59,7 @@
     _collected = model.collected;
 }
 -(void)setCommonViewModelWithProduct:(ATOMHotDetailPageViewModel*)model {
+    _askID = model.askID;
     _type = 2;
     _pageID = model.ID;
     _pageImageURL = model.userImageURL;
@@ -74,6 +77,7 @@
 }
 
 -(void)setCommonViewModelWithFollow:(ATOMFollowPageViewModel*)model {
+    _askID = model.askID;
     _type = model.type;
     _pageID = model.imageID;
     _askID = model.askID;
@@ -95,6 +99,7 @@
     ATOMAskPageViewModel* askPageViewModel = [ATOMAskPageViewModel new];
     if (_askID) {
         askPageViewModel.imageID = _askID ;
+        askPageViewModel.askID = _askID;
     } else {
         askPageViewModel.imageID = _pageID ;
     }
