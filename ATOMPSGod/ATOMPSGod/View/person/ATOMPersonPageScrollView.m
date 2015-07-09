@@ -24,7 +24,6 @@ static int collumnNumber = 3;
 
 - (void)configSelf {
     self.frame = CGRectMake(0, 300, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - 300);
-//    self.backgroundColor = [UIColor colorWithHex:0xededed];
     self.showsVerticalScrollIndicator = NO;
     self.showsHorizontalScrollIndicator = NO;
     self.contentSize = CGSizeMake(SCREEN_WIDTH * 2, 0);
@@ -43,13 +42,13 @@ static int collumnNumber = 3;
     return flowLayout;
 }
 - (void)createHomepageHotView {
-    _otherPersonUploadCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height) collectionViewLayout:[self customFlowLayout]];
+    _otherPersonUploadCollectionView = [[PWRefreshFooterCollectionView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height) collectionViewLayout:[self customFlowLayout]];
     _otherPersonUploadCollectionView.backgroundColor = [UIColor whiteColor];
     [self addSubview:_otherPersonUploadCollectionView];
 }
 
 - (void)createHomepageRecentView {
-    _otherPersonWorkCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, self.bounds.size.width, self.bounds.size.height) collectionViewLayout:[self customFlowLayout]];
+    _otherPersonWorkCollectionView = [[PWRefreshFooterCollectionView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, self.bounds.size.width, self.bounds.size.height) collectionViewLayout:[self customFlowLayout]];
     _otherPersonWorkCollectionView.backgroundColor = [UIColor whiteColor];
     [self addSubview:_otherPersonWorkCollectionView];
 }

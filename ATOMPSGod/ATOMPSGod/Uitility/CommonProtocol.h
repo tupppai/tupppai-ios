@@ -5,7 +5,7 @@
 //  Created by Peiwei Chen on 6/19/15.
 //  Copyright (c) 2015 ATOM. All rights reserved.
 //
-
+@class PWRefreshFooterCollectionView;
 #ifndef ATOMPSGod_CommonProtocol_h
 #define ATOMPSGod_CommonProtocol_h
 #endif
@@ -25,10 +25,10 @@
 /**
  * 向下拉触发
  **/
--(void) didPullDownCollectionView;
+-(void) didPullDownCollectionView:(PWRefreshFooterCollectionView*)collectionView;
 /**
  * 拉到底部时，继续向上拉触发
- **/-(void) didPullUpCollectionViewBottom;
+ **/-(void) didPullUpCollectionViewBottom:(PWRefreshFooterCollectionView*)collectionView;
 @end
 
 @protocol ATOMViewControllerDelegate <NSObject>

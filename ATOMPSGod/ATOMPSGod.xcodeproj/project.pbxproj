@@ -120,7 +120,7 @@
 		5C5A7A831ABFA8BB004A00C5 /* ATOMAskDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A7A821ABFA8BB004A00C5 /* ATOMAskDetailTableViewCell.m */; };
 		5C5A7A861ABFF18F004A00C5 /* ATOMDetailImageDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A7A851ABFF18F004A00C5 /* ATOMDetailImageDAO.m */; };
 		5C5A7A891ABFF1A7004A00C5 /* ATOMCommentDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A7A881ABFF1A7004A00C5 /* ATOMCommentDAO.m */; };
-		5C5DDBCB1AD3D0DC00F4B845 /* ATOMShowAsk.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5DDBCA1AD3D0DC00F4B845 /* ATOMShowAsk.m */; };
+		5C5DDBCB1AD3D0DC00F4B845 /* ATOMShowOtherUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5DDBCA1AD3D0DC00F4B845 /* ATOMShowOtherUser.m */; };
 		5C5DDBCE1AD3D3CC00F4B845 /* ATOMAskViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5DDBCD1AD3D3CC00F4B845 /* ATOMAskViewModel.m */; };
 		5C5DDBD11AD3E4B300F4B845 /* ATOMReplyViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5DDBD01AD3E4B300F4B845 /* ATOMReplyViewModel.m */; };
 		5C5DDBD41AD4087800F4B845 /* ATOMProceedingViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5DDBD31AD4087800F4B845 /* ATOMProceedingViewModel.m */; };
@@ -304,7 +304,9 @@
 		E90197381B32D3C100F46B78 /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = E90197371B32D3C100F46B78 /* Util.m */; };
 		E901973B1B33C98600F46B78 /* PWRefreshFooterTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E901973A1B33C98600F46B78 /* PWRefreshFooterTableView.m */; };
 		E901973E1B33F60500F46B78 /* PWRefreshFooterCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = E901973D1B33F60500F46B78 /* PWRefreshFooterCollectionView.m */; };
+		E90578A11B4E6F370066F39B /* ATOMFollowModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E90578A01B4E6F370066F39B /* ATOMFollowModel.m */; };
 		E905AF151B4D052100CB8E45 /* ATOMPersonPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E905AF141B4D052100CB8E45 /* ATOMPersonPageScrollView.m */; };
+		E905AF181B4E386100CB8E45 /* ATOMShowMyAsk.m in Sources */ = {isa = PBXBuildFile; fileRef = E905AF171B4E386100CB8E45 /* ATOMShowMyAsk.m */; };
 		E90C7C5D1B20726400CF0E6A /* PWMascotAnimationImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E90C7C5C1B20726400CF0E6A /* PWMascotAnimationImageView.m */; };
 		E90C7C601B20A0FC00CF0E6A /* KShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E90C7C5F1B20A0FC00CF0E6A /* KShareManager.m */; };
 		E90C7C631B2141B800CF0E6A /* PWHomePageTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E90C7C621B2141B800CF0E6A /* PWHomePageTableView.m */; };
@@ -604,8 +606,8 @@
 		5C5A7A851ABFF18F004A00C5 /* ATOMDetailImageDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMDetailImageDAO.m; sourceTree = "<group>"; };
 		5C5A7A871ABFF1A7004A00C5 /* ATOMCommentDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMCommentDAO.h; sourceTree = "<group>"; };
 		5C5A7A881ABFF1A7004A00C5 /* ATOMCommentDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMCommentDAO.m; sourceTree = "<group>"; };
-		5C5DDBC91AD3D0DC00F4B845 /* ATOMShowAsk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShowAsk.h; sourceTree = "<group>"; };
-		5C5DDBCA1AD3D0DC00F4B845 /* ATOMShowAsk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShowAsk.m; sourceTree = "<group>"; };
+		5C5DDBC91AD3D0DC00F4B845 /* ATOMShowOtherUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShowOtherUser.h; sourceTree = "<group>"; };
+		5C5DDBCA1AD3D0DC00F4B845 /* ATOMShowOtherUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShowOtherUser.m; sourceTree = "<group>"; };
 		5C5DDBCC1AD3D3CC00F4B845 /* ATOMAskViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMAskViewModel.h; sourceTree = "<group>"; };
 		5C5DDBCD1AD3D3CC00F4B845 /* ATOMAskViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMAskViewModel.m; sourceTree = "<group>"; };
 		5C5DDBCF1AD3E4B300F4B845 /* ATOMReplyViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMReplyViewModel.h; sourceTree = "<group>"; };
@@ -973,8 +975,12 @@
 		E901973C1B33F60500F46B78 /* PWRefreshFooterCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWRefreshFooterCollectionView.h; sourceTree = "<group>"; };
 		E901973D1B33F60500F46B78 /* PWRefreshFooterCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWRefreshFooterCollectionView.m; sourceTree = "<group>"; };
 		E901973F1B33F73C00F46B78 /* CommonProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonProtocol.h; sourceTree = "<group>"; };
+		E905789F1B4E6F370066F39B /* ATOMFollowModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMFollowModel.h; sourceTree = "<group>"; };
+		E90578A01B4E6F370066F39B /* ATOMFollowModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMFollowModel.m; sourceTree = "<group>"; };
 		E905AF131B4D052100CB8E45 /* ATOMPersonPageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMPersonPageScrollView.h; sourceTree = "<group>"; };
 		E905AF141B4D052100CB8E45 /* ATOMPersonPageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMPersonPageScrollView.m; sourceTree = "<group>"; };
+		E905AF161B4E386100CB8E45 /* ATOMShowMyAsk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShowMyAsk.h; sourceTree = "<group>"; };
+		E905AF171B4E386100CB8E45 /* ATOMShowMyAsk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShowMyAsk.m; sourceTree = "<group>"; };
 		E90C7C5B1B20726400CF0E6A /* PWMascotAnimationImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWMascotAnimationImageView.h; sourceTree = "<group>"; };
 		E90C7C5C1B20726400CF0E6A /* PWMascotAnimationImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWMascotAnimationImageView.m; sourceTree = "<group>"; };
 		E90C7C5E1B20A0FC00CF0E6A /* KShareManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KShareManager.h; sourceTree = "<group>"; };
@@ -1647,8 +1653,10 @@
 				E93D23841B3FA57B0081F632 /* settings */,
 				E900AB571B4387360019BAEA /* ATOMShowReply.h */,
 				E900AB581B4387360019BAEA /* ATOMShowReply.m */,
-				5C5DDBC91AD3D0DC00F4B845 /* ATOMShowAsk.h */,
-				5C5DDBCA1AD3D0DC00F4B845 /* ATOMShowAsk.m */,
+				5C5DDBC91AD3D0DC00F4B845 /* ATOMShowOtherUser.h */,
+				5C5DDBCA1AD3D0DC00F4B845 /* ATOMShowOtherUser.m */,
+				E905AF161B4E386100CB8E45 /* ATOMShowMyAsk.h */,
+				E905AF171B4E386100CB8E45 /* ATOMShowMyAsk.m */,
 				5C5DDBD51AD40C9800F4B845 /* ATOMShowProceeding.h */,
 				5C5DDBD61AD40C9800F4B845 /* ATOMShowProceeding.m */,
 				5CEAC0311AD4F9540058037C /* ATOMShowCollection.h */,
@@ -1657,6 +1665,8 @@
 				5C0F04F91ADD04CC002003AE /* ATOMShowFans.m */,
 				5C8D4AC51ADE3FBF00B158AE /* ATOMShowConcern.h */,
 				5C8D4AC61ADE3FBF00B158AE /* ATOMShowConcern.m */,
+				E905789F1B4E6F370066F39B /* ATOMFollowModel.h */,
+				E90578A01B4E6F370066F39B /* ATOMFollowModel.m */,
 			);
 			path = person;
 			sourceTree = "<group>";
@@ -2548,7 +2558,7 @@
 		5CDB05B91AA3FE520089121E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = ATOM;
 				TargetAttributes = {
 					5CDB05C01AA3FE520089121E = {
@@ -2673,7 +2683,7 @@
 				5CEAC0331AD4F9540058037C /* ATOMShowCollection.m in Sources */,
 				5C436A8A1AB03FA800D14608 /* ATOMCommentMessageViewModel.m in Sources */,
 				5C436A7E1AB0249F00D14608 /* ATOMMyAttentionTableViewCell.m in Sources */,
-				5C5DDBCB1AD3D0DC00F4B845 /* ATOMShowAsk.m in Sources */,
+				5C5DDBCB1AD3D0DC00F4B845 /* ATOMShowOtherUser.m in Sources */,
 				E900AB4C1B41153A0019BAEA /* UIButton+AFNetworking.m in Sources */,
 				5CDB06711AA47E760089121E /* ATOMInputVerifyCodeViewController.m in Sources */,
 				E99D2F5F1B1C7E8D000D7784 /* NYXImagesHelper.m in Sources */,
@@ -2886,6 +2896,7 @@
 				5C83A88B1AC66F910071A024 /* POPAnimationTracer.mm in Sources */,
 				5C6697A71AAFD242001FCF8A /* ATOMMyUploadCollectionViewCell.m in Sources */,
 				E900AB421B41153A0019BAEA /* AFHTTPSessionManager.m in Sources */,
+				E90578A11B4E6F370066F39B /* ATOMFollowModel.m in Sources */,
 				5C561A501AB7C8210052D4D5 /* ATOMImage.m in Sources */,
 				E900AB481B41153A0019BAEA /* AFURLSessionManager.m in Sources */,
 				5C4F5BD21AA5426700226F64 /* ATOMLoginView.m in Sources */,
@@ -2933,6 +2944,7 @@
 				5C84063B1ABADA8B00068F35 /* ATOMHomeImageDAO.m in Sources */,
 				5C559B341AB10D4E000C5B50 /* ATOMOtherPersonView.m in Sources */,
 				E95691B41B22E88300DA84BB /* NSDictionary+MTLManipulationAdditions.m in Sources */,
+				E905AF181B4E386100CB8E45 /* ATOMShowMyAsk.m in Sources */,
 				E900AB471B41153A0019BAEA /* AFURLResponseSerialization.m in Sources */,
 				5CDF81FE1AC25B3000321694 /* ATOMUserFeedbackView.m in Sources */,
 			);
@@ -3068,7 +3080,6 @@
 		5CDB05E51AA3FE520089121E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -3112,7 +3123,6 @@
 		5CDB05E61AA3FE520089121E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -3237,7 +3247,6 @@
 		E93D23761B3A516B0081F632 /* ad hoc distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

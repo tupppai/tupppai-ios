@@ -38,7 +38,7 @@ static int collumnNumber = 2;
 static float cellWidth;
 
 #pragma mark - Refresh
--(void)didPullUpCollectionViewBottom {
+-(void)didPullUpCollectionViewBottom:(PWRefreshFooterCollectionView *)collectionView {
     [self loadMoreData];
 }
 - (void)loadMoreData {

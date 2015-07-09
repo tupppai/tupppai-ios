@@ -165,6 +165,9 @@
             p = [gesture locationInView:_selectedCell.topView];
             if (CGRectContainsPoint(_selectedCell.userHeaderButton.frame, p)) {
                 ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+                ATOMFollowPageViewModel* model =  (ATOMFollowPageViewModel*)_dataSource[indexPath.row];
+                opvc.userID = model.userID;
+                opvc.userName = model.userName;
                 [self pushViewController:opvc animated:YES];
             } else if (CGRectContainsPoint(_selectedCell.userNameLabel.frame, p)) {
                 p = [gesture locationInView:_selectedCell.userNameLabel];

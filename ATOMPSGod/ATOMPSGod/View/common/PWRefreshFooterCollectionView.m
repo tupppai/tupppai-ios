@@ -43,13 +43,18 @@
     if (!_noDataView) {
         _noDataView = [ATOMNoDataView new];
         [self addSubview:_noDataView];
+        [_noDataView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self);
+            make.centerY.equalTo(self);
+            make.size.mas_equalTo(CGSizeMake(self.bounds.size.width/2, self.bounds.size.width/2));
+        }];
     }
     return _noDataView;
 }
 
 -(void) loadMoreHotData {
-    if (_psDelegate && [_psDelegate respondsToSelector:@selector(didPullUpCollectionViewBottom)]) {
-        [_psDelegate didPullUpCollectionViewBottom];
+    if (_psDelegate && [_psDelegate respondsToSelector:@selector(didPullUpCollectionViewBottom:)]) {
+        [_psDelegate didPullUpCollectionViewBottom:self];
     }}
 
 -(void)reloadData {

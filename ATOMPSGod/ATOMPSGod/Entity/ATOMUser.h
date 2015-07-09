@@ -15,6 +15,15 @@
 @property (nonatomic, assign) int uid;
 @property (nonatomic, assign) BOOL boundWeibo;
 @property (nonatomic, assign) BOOL boundWechat;
+
+/**
+ *  此用户是否我的粉丝
+ */
+@property (nonatomic, assign) BOOL isMyFan;
+/**
+ *  此用户是否我的关注
+ */
+@property (nonatomic, assign) BOOL isMyFollow;
 @property (nonatomic, assign) NSInteger cityID;
 @property (nonatomic, assign) NSInteger provinceID;
 @property (nonatomic, assign) NSInteger locationID;

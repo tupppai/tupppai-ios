@@ -14,16 +14,17 @@
 #import "ATOMOtherPersonConcernViewController.h"
 #import "ATOMHotDetailViewController.h"
 #import "ATOMOtherPersonCollectionHeaderView.h"
-#import "ATOMShowAsk.h"
+#import "ATOMShowOtherUser.h"
 #import "ATOMHomeImage.h"
 #import "ATOMAskPageViewModel.h"
 #import "ATOMAskViewModel.h"
 #import "ATOMReplyViewModel.h"
 #import "ATOMPageDetailViewController.h"
-
+#import "ATOMUser.h"
+#import "ATOMFollowModel.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMOtherPersonViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface ATOMOtherPersonViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate>
 
 @property (nonatomic, strong) ATOMOtherPersonView *otherPersonView;
 @property (nonatomic, strong) NSMutableArray *uploadDataSource;
@@ -45,11 +46,10 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
 
 #pragma mark - Refresh
 
-- (void)configCollectionViewRefresh {
-    [_otherPersonView.scrollView.otherPersonUploadCollectionView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreUploadData)];
-    [_otherPersonView.scrollView.otherPersonWorkCollectionView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreWorkData)];
-    
-}
+//- (void)configCollectionViewRefresh {
+//    [_otherPersonView.scrollView.otherPersonUploadCollectionView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreUploadData)];
+//    [_otherPersonView.scrollView.otherPersonWorkCollectionView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreWorkData)];
+//}
 
 - (void)loadMoreUploadData {
     if (_canRefreshUploadFooter) {
@@ -67,90 +67,62 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
     }
     
 }
-
+#pragma mark - PWRefreshBaseCollectionViewDelegate
+-(void)didPullUpCollectionViewBottom:(PWRefreshFooterCollectionView *)collectionView {
+    if (collectionView == _otherPersonView.scrollView.otherPersonUploadCollectionView) {
+        [self loadMoreUploadData];
+    }else if (collectionView == _otherPersonView.scrollView.otherPersonWorkCollectionView) {
+        [self loadMoreWorkData];
+    }
+}
 #pragma mark - GetDataSource
 
 - (void)getDataSourceWithType:(NSString *)type {
+    //目前的接口是ask和reply一起返回
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
-    if ([type isEqualToString:@"upload"]) {
+    [param setObject:@(_userID) forKey:@"uid"];
+    [param setObject:@(15) forKey:@"size"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(timeStamp) forKey:@"last_updated"];
+
         _uploadDataSource = nil;
         _uploadDataSource = [NSMutableArray array];
         _uploadHomeImageDataSource = nil;
         _uploadHomeImageDataSource = [NSMutableArray array];
         _currentUploadPage = 1;
         [param setObject:@(_currentUploadPage) forKey:@"page"];
-        [param setObject:@"new" forKey:@"type"];
-        
-    } else if ([type isEqualToString:@"work"]) {
+//        [param setObject:@(ATOMPageTypeAsk) forKey:@"type"];
+    
         _workDataSource = nil;
         _workDataSource = [NSMutableArray array];
         _workHomeImageDataSource = nil;
         _workHomeImageDataSource = [NSMutableArray array];
         _currentWorkPage = 1;
-        [param setObject:@(_currentWorkPage) forKey:@"page"];
-        [param setObject:@"hot" forKey:@"type"];
-    }
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
-    [param setObject:@"time" forKey:@"sort"];
-    [param setObject:@"desc" forKey:@"order"];
-    [param setObject:@(15) forKey:@"size"];
-    ATOMShowAsk *ShowMyAsk = [ATOMShowAsk new];
-    [ShowMyAsk ShowMyAsk:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        for (ATOMHomeImage *homeImage in resultArray) {
-            ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
-            [homepageViewModel setViewModelData:homeImage];
-            if (ws.otherPersonView.scrollView.currentType == ATOMOtherPersonCollectionViewTypeAsk) {
-                ATOMAskViewModel *askViewModel = [ATOMAskViewModel new];
-                [askViewModel setViewModelData:homeImage];
-                [ws.uploadDataSource addObject:askViewModel];
-                [ws.uploadHomeImageDataSource addObject:homepageViewModel];
-            } else if (ws.otherPersonView.scrollView.currentType == ATOMOtherPersonCollectionViewTypeReply) {
-                ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];
-                [replyViewModel setViewModelData:homeImage];
-                [ws.workDataSource addObject:replyViewModel];
-                [ws.workHomeImageDataSource addObject:homepageViewModel];
-            }
-        }
-        if (ws.otherPersonView.scrollView.currentType == ATOMOtherPersonCollectionViewTypeAsk) {
-            [ws.otherPersonView.scrollView.otherPersonUploadCollectionView reloadData];
-        } else if (ws.otherPersonView.scrollView.currentType == ATOMOtherPersonCollectionViewTypeReply) {
-            [ws.otherPersonView.scrollView.otherPersonWorkCollectionView reloadData];
-        }
-    }];
-}
+//        [param setObject:@(_currentWorkPage) forKey:@"page"];
+//        [param setObject:@(ATOMPageTypeReply) forKey:@"type"];
 
-- (void)getMoreDataSourceWithType:(NSString *)type {
-    WS(ws);
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
-    if ([type isEqualToString:@"upload"]) {
-        _currentUploadPage++;
-        [param setObject:@(_currentUploadPage) forKey:@"page"];
-        
-    } else if ([type isEqualToString:@"work"]) {
-        _currentWorkPage++;
-        [param setObject:@(_currentWorkPage) forKey:@"page"];
-    }
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-    [param setObject:type forKey:@"type"];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
-    [param setObject:@"time" forKey:@"sort"];
-    [param setObject:@"desc" forKey:@"order"];
-    [param setObject:@(15) forKey:@"size"];
-    ATOMShowAsk *ShowMyAsk = [ATOMShowAsk new];
-    [ShowMyAsk ShowMyAsk:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        for (ATOMHomeImage *homeImage in resultArray) {
-            ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
-            [homepageViewModel setViewModelData:homeImage];
-            if (ws.otherPersonView.scrollView.currentType == ATOMOtherPersonCollectionViewTypeAsk) {
+    [Util loadingHud:@"" inView:self.view];
+    [ATOMShowOtherUser ShowOtherUser:param withBlock:^(NSMutableArray *askReturnArray, NSMutableArray *replyReturnArray, ATOMUser *user, NSError *error) {
+        [Util dismissHud:self.view];
+        if (error) {
+            [Util TextHud:@"出现未知错误" inView:self.view];
+        } else {
+            if (user) {
+                [self updateUserInterface:user];
+            }
+            for (ATOMHomeImage *homeImage in askReturnArray) {
+                ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
+                [homepageViewModel setViewModelData:homeImage];
                 ATOMAskViewModel *askViewModel = [ATOMAskViewModel new];
                 [askViewModel setViewModelData:homeImage];
                 [ws.uploadDataSource addObject:askViewModel];
                 [ws.uploadHomeImageDataSource addObject:homepageViewModel];
-            } else if (ws.otherPersonView.scrollView.currentType == ATOMOtherPersonCollectionViewTypeReply) {
+            }
+            for (ATOMHomeImage *homeImage in replyReturnArray) {
+                ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
+                [homepageViewModel setViewModelData:homeImage];
                 ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];
                 [replyViewModel setViewModelData:homeImage];
                 [ws.workDataSource addObject:replyViewModel];
@@ -160,7 +132,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
         if (ws.otherPersonView.scrollView.currentType == ATOMOtherPersonCollectionViewTypeAsk) {
             [ws.otherPersonView.scrollView.otherPersonUploadCollectionView reloadData];
             [ws.otherPersonView.scrollView.otherPersonUploadCollectionView.footer endRefreshing];
-            if (resultArray.count == 0) {
+            if (askReturnArray.count == 0) {
                 ws.canRefreshUploadFooter = NO;
             } else {
                 ws.canRefreshUploadFooter = YES;
@@ -168,7 +140,70 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
         } else if (ws.otherPersonView.scrollView.currentType == ATOMOtherPersonCollectionViewTypeReply) {
             [ws.otherPersonView.scrollView.otherPersonWorkCollectionView reloadData];
             [ws.otherPersonView.scrollView.otherPersonWorkCollectionView.footer endRefreshing];
-            if (resultArray.count == 0) {
+            if (replyReturnArray.count == 0) {
+                ws.canRefreshWorkFooter = NO;
+            } else {
+                ws.canRefreshWorkFooter = YES;
+            }
+        }
+    }];
+}
+
+- (void)getMoreDataSourceWithType:(NSString *)type {
+    WS(ws);
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    [param setObject:@(_userID) forKey:@"uid"];
+    [param setObject:@(15) forKey:@"size"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(timeStamp) forKey:@"last_updated"];
+//    if ([type isEqualToString:@"upload"]) {
+        _currentUploadPage++;
+        [param setObject:@(_currentUploadPage) forKey:@"page"];
+//        [param setObject:@(ATOMPageTypeAsk) forKey:@"type"];
+//    } else if ([type isEqualToString:@"work"]) {
+        _currentWorkPage++;
+//        [param setObject:@(_currentWorkPage) forKey:@"page"];
+//        [param setObject:@(ATOMPageTypeReply) forKey:@"type"];
+//    }
+//    [param setObject:@"time" forKey:@"sort"];
+//    [param setObject:@"desc" forKey:@"order"];
+    [ATOMShowOtherUser ShowOtherUser:param withBlock:^(NSMutableArray *askReturnArray, NSMutableArray *replyReturnArray, ATOMUser *user, NSError *error) {
+        if (error) {
+            [Util TextHud:@"出现未知错误" inView:self.view];
+        } else {
+            if (user) {
+                [self updateUserInterface:user];
+            }
+            for (ATOMHomeImage *homeImage in askReturnArray) {
+                ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
+                [homepageViewModel setViewModelData:homeImage];
+                    ATOMAskViewModel *askViewModel = [ATOMAskViewModel new];
+                    [askViewModel setViewModelData:homeImage];
+                    [ws.uploadDataSource addObject:askViewModel];
+                    [ws.uploadHomeImageDataSource addObject:homepageViewModel];
+            }
+            for (ATOMHomeImage *homeImage in replyReturnArray) {
+                ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
+                [homepageViewModel setViewModelData:homeImage];
+                    ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];
+                    [replyViewModel setViewModelData:homeImage];
+                    [ws.workDataSource addObject:replyViewModel];
+                    [ws.workHomeImageDataSource addObject:homepageViewModel];
+            }
+        }
+        if (ws.otherPersonView.scrollView.currentType == ATOMOtherPersonCollectionViewTypeAsk) {
+            [ws.otherPersonView.scrollView.otherPersonUploadCollectionView reloadData];
+            [ws.otherPersonView.scrollView.otherPersonUploadCollectionView.footer endRefreshing];
+            if (askReturnArray.count == 0) {
+                ws.canRefreshUploadFooter = NO;
+            } else {
+                ws.canRefreshUploadFooter = YES;
+            }
+        } else if (ws.otherPersonView.scrollView.currentType == ATOMOtherPersonCollectionViewTypeReply) {
+            [ws.otherPersonView.scrollView.otherPersonWorkCollectionView reloadData];
+            [ws.otherPersonView.scrollView.otherPersonWorkCollectionView.footer endRefreshing];
+            if (replyReturnArray.count == 0) {
                 ws.canRefreshWorkFooter = NO;
             } else {
                 ws.canRefreshWorkFooter = YES;
@@ -191,17 +226,59 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
     _otherPersonView.scrollView.delegate = self;
     _otherPersonView.scrollView.otherPersonUploadCollectionView.delegate = self;
     _otherPersonView.scrollView.otherPersonUploadCollectionView.dataSource = self;
+    _otherPersonView.scrollView.otherPersonUploadCollectionView.psDelegate = self;
+
     _otherPersonView.scrollView.otherPersonWorkCollectionView.delegate = self;
     _otherPersonView.scrollView.otherPersonWorkCollectionView.dataSource = self;
+    _otherPersonView.scrollView.otherPersonWorkCollectionView.psDelegate = self;
+
+    [_otherPersonView.uploadHeaderView.attentionButton addTarget:self action:@selector(tapFollowButton) forControlEvents:UIControlEventTouchUpInside];
     [self registerCollection];
     [self addTargetToOtherPersonView:_otherPersonView.uploadHeaderView];
-    [self configCollectionViewRefresh];
+//    [self configCollectionViewRefresh];
     _canRefreshUploadFooter = YES;
     _canRefreshWorkFooter = YES;
     _isFirstEnterWorkCollectionView = YES;
     [self getDataSourceWithType:@"upload"];
 }
-
+-(void)tapFollowButton {
+    _otherPersonView.uploadHeaderView.attentionButton.selected = !_otherPersonView.uploadHeaderView.attentionButton.selected;
+    NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(_userID),@"uid", nil];
+    [ATOMFollowModel follow:param withType:_otherPersonView.uploadHeaderView.attentionButton.selected withBlock:^(NSError *error) {
+        if (error) {
+            [Util TextHud:@"出现未知错误" inView:self.view];
+            _otherPersonView.uploadHeaderView.attentionButton.selected = !_otherPersonView.uploadHeaderView.attentionButton.selected;
+        } else {
+            NSString* desc = _otherPersonView.uploadHeaderView.attentionButton.selected?[NSString stringWithFormat:@"你关注了%@",_userName]:[NSString stringWithFormat:@"你取消关注了%@",_userName];
+            [Util TextHud:desc inView:self.view];
+        }
+    }];
+}
+-(void)updateUserInterface:(ATOMUser*)user {
+    NSURL* avatarURL = [[NSURL alloc]initWithString:user.avatar];
+    [_otherPersonView.uploadHeaderView.userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:avatarURL];
+    _otherPersonView.uploadHeaderView.attentionButton.selected = user.isMyFollow;
+    _otherPersonView.uploadHeaderView.userSexImageView.image = user.sex == 1 ? [UIImage imageNamed:@"gender_male"]:[UIImage imageNamed:@"gender_female"];
+    _otherPersonView.uploadHeaderView.attentionLabel.attributedText = [self getAttributeStr:@"关注" withNumber:user.attentionNumber];
+    _otherPersonView.uploadHeaderView.fansLabel.attributedText = [self getAttributeStr:@"粉丝" withNumber:user.fansNumber];
+    _otherPersonView.uploadHeaderView.praiseLabel.attributedText = [self getAttributeStr:@"赞" withNumber:user.praiseNumber];
+    _otherPersonView.uploadHeaderView.attentionLabel.textAlignment = NSTextAlignmentCenter;
+    _otherPersonView.uploadHeaderView.fansLabel.textAlignment = NSTextAlignmentCenter;
+    _otherPersonView.uploadHeaderView.praiseLabel.textAlignment = NSTextAlignmentCenter;
+    [_otherPersonView.uploadHeaderView.otherPersonUploadButton setTitle:[NSString stringWithFormat:@"求P（%ld）",user.uploadNumber] forState:UIControlStateNormal];
+    [_otherPersonView.uploadHeaderView.otherPersonWorkButton setTitle:[NSString stringWithFormat:@"作品（%ld）",user.replyNumber] forState:UIControlStateNormal];
+}
+-(NSMutableAttributedString*)getAttributeStr:(NSString*)desc withNumber:(NSInteger)number {
+    NSString *numberStr = [NSString stringWithFormat:@"%ld",number];
+    NSLog(@"numberStr%@",numberStr);
+    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+    paragraphStyle.lineSpacing = 6;
+    NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:kFont14], NSFontAttributeName, [UIColor colorWithHex:0x74c3ff], NSForegroundColorAttributeName, paragraphStyle, NSParagraphStyleAttributeName, nil];
+    NSMutableAttributedString *fansStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n%@", numberStr,desc] attributes:attributeDict];
+    NSInteger descCount = desc.length;
+    [fansStr addAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, [UIColor colorWithHex:0xc3cbd2], NSForegroundColorAttributeName, nil] range:NSMakeRange(numberStr.length + 1, descCount)];
+    return fansStr;
+}
 - (void)addTargetToOtherPersonView:(ATOMOtherPersonCollectionHeaderView *)headerView {
     [headerView.otherPersonUploadButton addTarget:self action:@selector(clickAskButton:) forControlEvents:UIControlEventTouchUpInside];
     [headerView.otherPersonWorkButton addTarget:self action:@selector(clickReplyButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -227,10 +304,10 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
 - (void)clickReplyButton:(UIButton *)sender {
     [_otherPersonView.uploadHeaderView toggleSegmentBar:ATOMOtherPersonCollectionViewTypeReply];
     [_otherPersonView.scrollView toggleCollectionView:ATOMOtherPersonCollectionViewTypeReply];
-    if (_isFirstEnterWorkCollectionView) {
-        _isFirstEnterWorkCollectionView = NO;
-        [self getDataSourceWithType:@"work"];
-    }
+//    if (_isFirstEnterWorkCollectionView) {
+//        _isFirstEnterWorkCollectionView = NO;
+//        [self getDataSourceWithType:@"work"];
+//    }
 }
 
 
@@ -356,10 +433,10 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
         } else if (currentPage == 1) {
             [_otherPersonView.uploadHeaderView toggleSegmentBar:ATOMOtherPersonCollectionViewTypeReply];
             [_otherPersonView.scrollView toggleCollectionView:ATOMOtherPersonCollectionViewTypeReply];
-            if (_isFirstEnterWorkCollectionView) {
-                _isFirstEnterWorkCollectionView = NO;
-                [self getDataSourceWithType:@"work"];
-            }
+//            if (_isFirstEnterWorkCollectionView) {
+//                _isFirstEnterWorkCollectionView = NO;
+//                [self getDataSourceWithType:@"work"];
+//            }
     }
 }
 

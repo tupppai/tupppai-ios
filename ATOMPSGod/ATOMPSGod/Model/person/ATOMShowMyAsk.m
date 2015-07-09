@@ -1,18 +1,17 @@
 //
-//  ATOMShowAsk.m
+//  ATOMShowMyAsk.m
 //  ATOMPSGod
 //
-//  Created by atom on 15/4/7.
-//  Copyright (c) 2015年 ATOM. All rights reserved.
+//  Created by Peiwei Chen on 7/9/15.
+//  Copyright (c) 2015 ATOM. All rights reserved.
 //
 
-#import "ATOMShowAsk.h"
+#import "ATOMShowMyAsk.h"
 #import "ATOMHTTPRequestOperationManager.h"
 #import "ATOMHomeImage.h"
 #import "ATOMImageTipLabel.h"
 
-@implementation ATOMShowAsk
-
+@implementation ATOMShowMyAsk
 - (NSURLSessionDataTask *)ShowMyAsk:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/my_ask" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"ShowMyAsk responseObject %@",responseObject);
@@ -47,5 +46,4 @@
         }
     }];
 }
-
 @end

@@ -26,6 +26,12 @@
         _noDataViewCustom = [ATOMNoDataView new];
         _noDataViewCustom.hidden = true;
         [self addSubview:_noDataViewCustom];
+        [_noDataViewCustom mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self);
+            make.centerY.equalTo(self);
+            make.size.mas_equalTo(CGSizeMake(self.bounds.size.width/2, self.bounds.size.width/2));
+        }];
+
     }
     return _noDataViewCustom;
 }

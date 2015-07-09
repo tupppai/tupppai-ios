@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "PWRefreshFooterCollectionView.h"
 typedef enum {
     ATOMOtherPersonCollectionViewTypeAsk = 0,
     ATOMOtherPersonCollectionViewTypeReply
@@ -15,8 +15,8 @@ typedef enum {
 
 @interface ATOMPersonPageScrollView : UIScrollView
 @property (nonatomic, assign) ATOMOtherPersonCollectionViewType currentType;
-@property (nonatomic, strong) UICollectionView *otherPersonUploadCollectionView;
-@property (nonatomic, strong) UICollectionView *otherPersonWorkCollectionView;
+@property (nonatomic, strong) PWRefreshFooterCollectionView *otherPersonUploadCollectionView;
+@property (nonatomic, strong) PWRefreshFooterCollectionView *otherPersonWorkCollectionView;
 
 - (void)toggleCollectionView:(ATOMOtherPersonCollectionViewType)type;
 @end

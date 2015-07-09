@@ -33,8 +33,17 @@
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = message;
 }
++(void)loadingHud:(NSString*)message inView:(UIView*)view {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = message;
+}
+
 +(void)dismissHud {
     [MBProgressHUD hideAllHUDsForView:[UIApplication sharedApplication].keyWindow animated:YES];
+}
++(void)dismissHud:(UIView*)view{
+    [MBProgressHUD hideAllHUDsForView:view animated:YES];
 }
 //class func showSuccessProgress(labelText: String?, view: UIView, complete: (()->())?) {
 //    dismissMBProgressHUD(view)

@@ -12,6 +12,7 @@
 +(void)TextHud:(NSString*)message;
 +(void)TextHud:(NSString*)message inView:(UIView*)view;
 +(void)loadingHud:(NSString*)message;
++(void)loadingHud:(NSString*)message inView:(UIView*)view;
 +(void)dismissHud;
-
++(void)dismissHud:(UIView*)view;
 @end

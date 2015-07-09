@@ -31,6 +31,8 @@
              @"locationID" : @"location",
              @"cityID" : @"city",
              @"provinceID" : @"province",
+             @"isMyFan":@"is_fellow",
+             @"isMyFollow":@"is_fans",
              };
 }
 
@@ -55,6 +57,8 @@
              @"locationID" : @"locationID",
              @"cityID" : @"cityID",
              @"provinceID" : @"provinceID",
+             @"isMyFan":@"isMyFan",
+             @"isMyFollow":@"isMyFan",
              };
 }
 

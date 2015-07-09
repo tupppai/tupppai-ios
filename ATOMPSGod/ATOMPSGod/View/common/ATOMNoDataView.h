@@ -9,5 +9,6 @@
 #import "ATOMBaseView.h"
 
 @interface ATOMNoDataView : ATOMBaseView
-
+@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UILabel *label;
 @end

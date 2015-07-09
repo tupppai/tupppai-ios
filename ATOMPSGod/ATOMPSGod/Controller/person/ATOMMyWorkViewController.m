@@ -37,7 +37,7 @@ static float cellHeight = 150;
 static int collumnNumber = 3;
 
 #pragma mark - Refresh
--(void)didPullUpCollectionViewBottom {
+-(void)didPullUpCollectionViewBottom:(PWRefreshFooterCollectionView *)collectionView {
     [self loadMoreData];
 }
 - (void)loadMoreData {
