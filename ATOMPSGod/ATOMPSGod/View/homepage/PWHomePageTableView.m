@@ -31,7 +31,6 @@
             make.centerY.equalTo(self);
             make.size.mas_equalTo(CGSizeMake(self.bounds.size.width/2, self.bounds.size.width/2));
         }];
-
     }
     return _noDataViewCustom;
 }

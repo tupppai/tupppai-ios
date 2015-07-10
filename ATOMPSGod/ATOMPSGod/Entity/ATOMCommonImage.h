@@ -22,7 +22,7 @@
 /**
  *  1:ask 2:reply
  */
-@property (nonatomic, assign) NSInteger type;
+@property (nonatomic, assign) int type;
 /**
  *  求P人 ID
  */

@@ -231,29 +231,20 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
     _otherPersonView.scrollView.otherPersonWorkCollectionView.delegate = self;
     _otherPersonView.scrollView.otherPersonWorkCollectionView.dataSource = self;
     _otherPersonView.scrollView.otherPersonWorkCollectionView.psDelegate = self;
-
+    
     [_otherPersonView.uploadHeaderView.attentionButton addTarget:self action:@selector(tapFollowButton) forControlEvents:UIControlEventTouchUpInside];
     [self registerCollection];
     [self addTargetToOtherPersonView:_otherPersonView.uploadHeaderView];
-//    [self configCollectionViewRefresh];
     _canRefreshUploadFooter = YES;
     _canRefreshWorkFooter = YES;
     _isFirstEnterWorkCollectionView = YES;
     [self getDataSourceWithType:@"upload"];
+    
+    if (_userID == [ATOMCurrentUser currentUser].uid) {
+        _otherPersonView.uploadHeaderView.attentionButton.hidden = YES;
+    }
 }
--(void)tapFollowButton {
-    _otherPersonView.uploadHeaderView.attentionButton.selected = !_otherPersonView.uploadHeaderView.attentionButton.selected;
-    NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(_userID),@"uid", nil];
-    [ATOMFollowModel follow:param withType:_otherPersonView.uploadHeaderView.attentionButton.selected withBlock:^(NSError *error) {
-        if (error) {
-            [Util TextHud:@"出现未知错误" inView:self.view];
-            _otherPersonView.uploadHeaderView.attentionButton.selected = !_otherPersonView.uploadHeaderView.attentionButton.selected;
-        } else {
-            NSString* desc = _otherPersonView.uploadHeaderView.attentionButton.selected?[NSString stringWithFormat:@"你关注了%@",_userName]:[NSString stringWithFormat:@"你取消关注了%@",_userName];
-            [Util TextHud:desc inView:self.view];
-        }
-    }];
-}
+
 -(void)updateUserInterface:(ATOMUser*)user {
     NSURL* avatarURL = [[NSURL alloc]initWithString:user.avatar];
     [_otherPersonView.uploadHeaderView.userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:avatarURL];
@@ -270,7 +261,6 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
 }
 -(NSMutableAttributedString*)getAttributeStr:(NSString*)desc withNumber:(NSInteger)number {
     NSString *numberStr = [NSString stringWithFormat:@"%ld",number];
-    NSLog(@"numberStr%@",numberStr);
     NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
     paragraphStyle.lineSpacing = 6;
     NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:kFont14], NSFontAttributeName, [UIColor colorWithHex:0x74c3ff], NSForegroundColorAttributeName, paragraphStyle, NSParagraphStyleAttributeName, nil];
@@ -309,7 +299,19 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
 //        [self getDataSourceWithType:@"work"];
 //    }
 }
-
+-(void)tapFollowButton {
+    _otherPersonView.uploadHeaderView.attentionButton.selected = !_otherPersonView.uploadHeaderView.attentionButton.selected;
+    NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(_userID),@"uid", nil];
+    [ATOMFollowModel follow:param withType:_otherPersonView.uploadHeaderView.attentionButton.selected withBlock:^(NSError *error) {
+        if (error) {
+            [Util TextHud:@"出现未知错误" inView:self.view];
+            _otherPersonView.uploadHeaderView.attentionButton.selected = !_otherPersonView.uploadHeaderView.attentionButton.selected;
+        } else {
+            NSString* desc = _otherPersonView.uploadHeaderView.attentionButton.selected?[NSString stringWithFormat:@"你关注了%@",_userName]:[NSString stringWithFormat:@"你取消关注了%@",_userName];
+            [Util TextHud:desc inView:self.view];
+        }
+    }];
+}
 
 #pragma mark - Gesture Event
 

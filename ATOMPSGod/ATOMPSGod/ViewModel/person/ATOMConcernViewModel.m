@@ -19,7 +19,13 @@
     _totalFansNumber = [NSString stringWithFormat:@"%d", (int)concern.totalFansNumber];
     _totalAskNumber = [NSString stringWithFormat:@"%d", (int)concern.totalAskNumber];
     _totalReplyNumber = [NSString stringWithFormat:@"%d", (int)concern.totalReplyNumber];
-    _concernStatus = concern.concernStatus;
+    if (concern.isMyFollow == YES && concern.isMyFan == YES) {
+        _concernStatus = 2;
+    } else if(concern.isMyFollow == YES){
+        _concernStatus = 1;
+    } else if (concern.isMyFollow == NO) {
+        _concernStatus = 0;
+    }
 }
 
 @end

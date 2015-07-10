@@ -12,12 +12,12 @@
 @interface ATOMMyFansTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) UIButton *userHeaderButton;
-@property (nonatomic, strong) UIImageView *userSexImageView;
 @property (nonatomic, strong) UILabel *userNameLabel;
-@property (nonatomic, strong) UIButton *fansNumberButton;
-@property (nonatomic, strong) UIButton *uploadNumberButton;
-@property (nonatomic, strong) UIButton *workNumberButton;
 @property (nonatomic, strong) UIButton *attentionButton;
+@property (nonatomic, strong) UILabel *fansNumberLabel;
+@property (nonatomic, strong) UILabel *uploadNumberLabel;
+@property (nonatomic, strong) UILabel *workNumberLabel;
+
 @property (nonatomic, strong) ATOMFansViewModel *viewModel;
 
 @end

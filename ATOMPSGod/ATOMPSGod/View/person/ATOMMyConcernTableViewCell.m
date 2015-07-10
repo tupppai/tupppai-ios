@@ -38,14 +38,13 @@ static CGFloat cellHeight = 70;
     [self addSubview:_userHeaderButton];
     
     _userNameLabel = [UILabel new];
-    _userNameLabel.text = @"atom";
+    _userNameLabel.text = @"**";
     _userNameLabel.font = [UIFont systemFontOfSize:kFont14];
     [self addSubview:_userNameLabel];
     
     _attentionButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - kPadding15 - 24, 18, 24, 24)];
     _attentionButton.userInteractionEnabled = NO;
     [self addSubview:_attentionButton];
-    
     _fansNumberLabel = [UILabel new];
     _fansNumberLabel.textColor = [UIColor colorWithHex:0xc5cdd3];
     _fansNumberLabel.font = [UIFont systemFontOfSize:kFont10];
@@ -86,9 +85,8 @@ static CGFloat cellHeight = 70;
     _workNumberLabel.frame = CGRectMake(CGRectGetMaxX(_view2.frame) + kPadding5, labelOriginY, workSize.width, kFont10);
 }
 
-- (void)changeAttentionButtonStatus {
-    _attentionButton.selected = !_attentionButton.selected;
-}
+
+
 
 - (void)setViewModel:(ATOMConcernViewModel *)viewModel {
     _viewModel = viewModel;
@@ -97,12 +95,13 @@ static CGFloat cellHeight = 70;
     _fansNumberLabel.text = [NSString stringWithFormat:@"%@粉丝", viewModel.totalFansNumber];
     _uploadNumberLabel.text = [NSString stringWithFormat:@"%@求p", viewModel.totalAskNumber];
     _workNumberLabel.text = [NSString stringWithFormat:@"%@求p", viewModel.totalReplyNumber];
-    if (viewModel.concernStatus == 0) {
         [_attentionButton setBackgroundImage:[UIImage imageNamed:@"btn_addattention"] forState:UIControlStateNormal];
-    } else if (viewModel.concernStatus == 1) {
-        [_attentionButton setBackgroundImage:[UIImage imageNamed:@"btn_attention"] forState:UIControlStateNormal];
+    if (viewModel.concernStatus == 1) {
+        [_attentionButton setBackgroundImage:[UIImage imageNamed:@"btn_attention"] forState:UIControlStateSelected];
+        _attentionButton.selected = YES;
     } else if (viewModel.concernStatus == 2) {
-        [_attentionButton setBackgroundImage:[UIImage imageNamed:@"btn_mutualattention"] forState:UIControlStateNormal];
+        [_attentionButton setBackgroundImage:[UIImage imageNamed:@"btn_mutualattention"] forState:UIControlStateSelected];
+        _attentionButton.selected = YES;
     }
     [self setNeedsLayout];
 }

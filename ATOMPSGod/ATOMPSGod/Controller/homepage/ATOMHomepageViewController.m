@@ -342,7 +342,6 @@
     
     NSMutableDictionary *param = [NSMutableDictionary new];
     double timeStamp = [[NSDate date] timeIntervalSince1970];
-
     [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
     [param setObject:homeType forKey:@"type"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];

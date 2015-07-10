@@ -15,6 +15,7 @@
 #import "ATOMConcernViewModel.h"
 #import "ATOMShowConcern.h"
 #import "PWRefreshBaseTableView.h"
+#import "ATOMFollowModel.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMMyConcernViewController () <UITableViewDataSource, UITableViewDelegate,PWRefreshBaseTableViewDelegate>
@@ -154,7 +155,17 @@
             opvc.userName = model.userName;
             [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.attentionButton.frame, p)) {
-            [cell changeAttentionButtonStatus];
+            cell.attentionButton.selected = !cell.attentionButton.selected;
+            NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(cell.viewModel.uid),@"uid", nil];
+            [ATOMFollowModel follow:param withType:cell.attentionButton.selected withBlock:^(NSError *error) {
+                if (error) {
+                    [Util TextHud:@"出现未知错误" inView:self.view];
+                    cell.attentionButton.selected = !cell.attentionButton.selected;
+                } else {
+                    NSString* desc =  cell.attentionButton.selected?[NSString stringWithFormat:@"你关注了%@",cell.viewModel.userName]:[NSString stringWithFormat:@"你取消关注了%@",cell.viewModel.userName];
+                    [Util TextHud:desc inView:self.view];
+                }
+            }];
         }
         
     }
@@ -226,6 +237,8 @@
     } else {
         cell.viewModel = _myDataSource[indexPath.row];
     }
+    BOOL ie = cell.attentionButton.userInteractionEnabled;
+    NSLog(@"attentionButton.userInteractionEnabled %d",ie);
     return cell;
 }
 

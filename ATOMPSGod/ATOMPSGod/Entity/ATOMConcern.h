@@ -39,6 +39,7 @@
 /**
  *  关注状态，0（未关注）1（已关注）2（相互关注）
  */
-@property (nonatomic, assign) NSInteger concernStatus;
+@property (nonatomic, assign) BOOL isMyFan;
+@property (nonatomic, assign) BOOL isMyFollow;
 
 @end

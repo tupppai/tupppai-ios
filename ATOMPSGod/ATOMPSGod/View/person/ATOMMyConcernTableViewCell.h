@@ -19,6 +19,5 @@
 @property (nonatomic, strong) UILabel *workNumberLabel;
 @property (nonatomic, strong) ATOMConcernViewModel *viewModel;
 
-- (void)changeAttentionButtonStatus;
 
 @end

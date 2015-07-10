@@ -12,7 +12,7 @@
 #import "ATOMShowFans.h"
 #import "ATOMFans.h"
 #import "ATOMFansViewModel.h"
-
+#import "ATOMFollowModel.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMMyFansViewController () <UITableViewDelegate, UITableViewDataSource>
@@ -23,6 +23,7 @@
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL canRefreshFooter;
+@property (nonatomic, assign) NSIndexPath* selectedIndexPath;
 
 @end
 
@@ -56,9 +57,9 @@
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(_uid) forKeyedSubscript:@"uid"];
     ATOMShowFans *showFans = [ATOMShowFans new];
-    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    [Util loadingHud:@"" inView:self.view];
     [showFans ShowFans:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        ////[SVProgressHUD dismiss];
+        [Util dismissHud:self.view];
         for (ATOMFans *fans in resultArray) {
             ATOMFansViewModel *fansViewModel = [ATOMFansViewModel new];
             [fansViewModel setViewModelData:fans];
@@ -77,9 +78,7 @@
     [param setObject:@(timestamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     ATOMShowFans *showFans = [ATOMShowFans new];
-    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showFans ShowFans:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        ////[SVProgressHUD dismiss];
         for (ATOMFans *fans in resultArray) {
             ATOMFansViewModel *fansViewModel = [ATOMFansViewModel new];
             [fansViewModel setViewModelData:fans];
@@ -125,10 +124,10 @@
 
 - (void)tapMyFansGesture:(UITapGestureRecognizer *)gesture {
     CGPoint location = [gesture locationInView:_tableView];
-    NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:location];
-    if (indexPath) {
-        ATOMFansViewModel *viewModel = _dataSource[indexPath.row];
-        ATOMMyFansTableViewCell *cell = (ATOMMyFansTableViewCell *)[_tableView cellForRowAtIndexPath:indexPath];
+    _selectedIndexPath = [_tableView indexPathForRowAtPoint:location];
+    if (_selectedIndexPath) {
+        ATOMFansViewModel *viewModel = _dataSource[_selectedIndexPath.row];
+        ATOMMyFansTableViewCell *cell = (ATOMMyFansTableViewCell *)[_tableView cellForRowAtIndexPath:_selectedIndexPath];
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
@@ -137,6 +136,16 @@
             [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.attentionButton.frame, p)) {
             cell.attentionButton.selected = !cell.attentionButton.selected;
+            NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(cell.viewModel.uid),@"uid", nil];
+            [ATOMFollowModel follow:param withType:cell.attentionButton.selected withBlock:^(NSError *error) {
+                if (error) {
+                    [Util TextHud:@"出现未知错误" inView:self.view];
+                    cell.attentionButton.selected = !cell.attentionButton.selected;
+                } else {
+                    NSString* desc =  cell.attentionButton.selected?[NSString stringWithFormat:@"你关注了%@",cell.viewModel.userName]:[NSString stringWithFormat:@"你取消关注了%@",cell.viewModel.userName];
+                    [Util TextHud:desc inView:self.view];
+                }
+            }];
         }
         
     }
@@ -156,7 +165,7 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 57;
+    return 65;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

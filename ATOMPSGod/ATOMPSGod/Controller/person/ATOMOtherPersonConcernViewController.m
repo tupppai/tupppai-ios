@@ -12,12 +12,13 @@
 #import "ATOMShowConcern.h"
 #import "ATOMConcern.h"
 #import "ATOMConcernViewModel.h"
-
+#import "PWRefreshFooterTableView.h"
+#import "ATOMFollowModel.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMOtherPersonConcernViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface ATOMOtherPersonConcernViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate>
 
-@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) PWRefreshFooterTableView *tableView;
 @property (nonatomic, strong) UIView *concernView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapConcernGesture;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -30,9 +31,8 @@
 
 #pragma mark - Refresh
 
-- (void)configTableViewRefresh {
-    [_tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(getDataSource)];
-    [_tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+-(void)didPullRefreshUp:(UITableView *)tableView {
+    [self loadMoreData];
 }
 
 - (void)loadMoreData {
@@ -52,16 +52,15 @@
     _dataSource = nil;
     _dataSource = [NSMutableArray array];
     _currentPage = 1;
-    //    [param setObject:@(_uid) forKeyedSubscript:@""]
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(_uid) forKeyedSubscript:@"uid"];
     ATOMShowConcern *showConcern = [ATOMShowConcern new];
-    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    [Util loadingHud:@"" inView:self.view];
     [showConcern ShowOtherConcern:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        ////[SVProgressHUD dismiss];
-        for (ATOMConcern *concern in resultArray) {
+        [Util dismissHud:self.view];
+         for (ATOMConcern *concern in resultArray) {
             ATOMConcernViewModel *concernViewModel = [ATOMConcernViewModel new];
             [concernViewModel setViewModelData:concern];
             [ws.dataSource addObject:concernViewModel];
@@ -81,9 +80,7 @@
     [param setObject:@(timestamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     ATOMShowConcern *showConcern = [ATOMShowConcern new];
-    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showConcern ShowOtherConcern:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        ////[SVProgressHUD dismiss];
         for (ATOMConcern *concern in resultArray) {
             ATOMConcernViewModel *concernViewModel = [ATOMConcernViewModel new];
             [concernViewModel setViewModelData:concern];
@@ -110,15 +107,16 @@
     self.title = [NSString stringWithFormat:@"%@的关注", _userName];
     _concernView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _concernView;
-    _tableView = [[UITableView alloc] initWithFrame:_concernView.bounds];
+    _tableView = [[PWRefreshFooterTableView alloc] initWithFrame:_concernView.bounds];
     _tableView.backgroundColor = [UIColor colorWithHex:0xededed];
     _tableView.tableFooterView = [UIView new];
     [_concernView addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.psDelegate = self;
     _tapConcernGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapConcernGesture:)];
     [_tableView addGestureRecognizer:_tapConcernGesture];
-    [self configTableViewRefresh];
+//    [self configTableViewRefresh];
     _canRefreshFooter = YES;
     [self getDataSource];
 }
@@ -141,6 +139,17 @@
             [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.attentionButton.frame, p)) {
             cell.attentionButton.selected = !cell.attentionButton.selected;
+            NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(cell.viewModel.uid),@"uid", nil];
+            [ATOMFollowModel follow:param withType:cell.attentionButton.selected withBlock:^(NSError *error) {
+                if (error) {
+                    [Util TextHud:@"出现未知错误" inView:self.view];
+                    cell.attentionButton.selected = !cell.attentionButton.selected;
+                } else {
+                    NSString* desc =  cell.attentionButton.selected?[NSString stringWithFormat:@"你关注了%@",cell.viewModel.userName]:[NSString stringWithFormat:@"你取消关注了%@",cell.viewModel.userName];
+                    [Util TextHud:desc inView:self.view];
+                }
+            }];
+
         }
         
     }
