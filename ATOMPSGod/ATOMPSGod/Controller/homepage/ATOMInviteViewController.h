@@ -13,4 +13,7 @@
 @interface ATOMInviteViewController : ATOMBaseViewController
 
 @property (nonatomic, strong) ATOMAskPageViewModel *askPageViewModel;
+@property (nonatomic, strong) NSDictionary *info;
+@property (nonatomic, assign) BOOL showNext;
+
 @end

@@ -10,7 +10,8 @@
 @class ATOMHomeImage;
 
 @interface ATOMCollectionViewModel : NSObject
-
+@property (nonatomic, assign) NSInteger uid;
+@property (nonatomic, assign) int type;
 @property (nonatomic, copy) NSString *userName;
 @property (nonatomic, copy) NSString *userSex;
 @property (nonatomic, copy) NSString *avatarURL;

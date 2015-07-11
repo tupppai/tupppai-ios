@@ -47,7 +47,7 @@
 
 - (void)createUI {
     self.title = @"邀请";
-    if (_askPageViewModel) {
+    if (_showNext) {
         UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
         rightButtonItem.tintColor = [UIColor whiteColor];
         self.navigationItem.rightBarButtonItem = rightButtonItem;
@@ -100,18 +100,24 @@
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)barButtonItem {
     ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
-    rdvc.pageDetailViewModel = [_askPageViewModel generatepageDetailViewModel];
+    if (_askPageViewModel) {
+        rdvc.pageDetailViewModel = [_askPageViewModel generatepageDetailViewModel];
+    }
     ATOMHomepageViewController *hvc = self.navigationController.viewControllers[0];
     [self pushViewController:rdvc animated:YES];
     [self.navigationController setViewControllers:@[hvc, rdvc]];
 }
 
 - (void)clickWXFriendCircleButton:(UIButton *)sender {
-    [self postSocialShare:_askPageViewModel.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
+    NSInteger ID = (NSInteger)[_info objectForKey:@"ID"];
+    int type = (int)[_info objectForKey:@"type"];
+    [self postSocialShare:ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:type];
 }
 
 - (void)clickWXFriendInviteButton:(UIButton *)sender {
-    [self postSocialShare:_askPageViewModel.imageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeAsk];
+    NSInteger ID = (NSInteger)[_info objectForKey:@"ID"];
+    int type = (int)[_info objectForKey:@"type"];
+    [self postSocialShare:ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:type];
 }
 
 #pragma mark - UITableViewDelegate
@@ -174,9 +180,10 @@
 }
 -(void)tapInviteButton:(id)sender {
     UIButton* button = sender;
+    NSInteger askID = (NSInteger)[_info objectForKey:@"askID"];
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:@(button.tag) forKey:@"invite_uid"];
-    [param setObject:@(_askPageViewModel.imageID) forKey:@"ask_id"];
+    [param setObject:@(askID) forKey:@"ask_id"];
     [ATOMInviteModel invite:param];
 }
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {

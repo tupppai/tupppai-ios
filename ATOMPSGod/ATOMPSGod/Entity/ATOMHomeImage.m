@@ -31,6 +31,8 @@
              @"liked" :@"uped",
              @"askID" : @"ask_id",
              @"collected":@"collected",
+             @"homePageType":  @"homePageType",
+             @"type":@"type",
              };
 }
 
@@ -58,6 +60,7 @@
              @"homePageType":  @"homePageType",
              @"liked" :@"liked",
              @"collected":@"collected",
+             @"type":@"type"
              };
 }
 

@@ -23,6 +23,10 @@
  */
 @property (nonatomic, copy) NSString *homePageType;
 /**
+ *  求P，作品：ATOMPageTypeAsk ,ATOMPageTypeReply
+ */
+@property (nonatomic, assign) int type;
+/**
  *  求P人 ID
  */
 @property (nonatomic, assign) NSInteger uid;

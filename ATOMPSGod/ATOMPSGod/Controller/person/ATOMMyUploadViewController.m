@@ -152,7 +152,7 @@ static int collumnNumber = 3;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ATOMMyUploadCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:_cellIdentifier forIndexPath:indexPath];
     ATOMAskViewModel *model = _dataSource[indexPath.row];
-    [cell.workImageView setImageWithURL:[NSURL URLWithString:model.imageURL]];
+    [cell.workImageView setImageWithURL:[NSURL URLWithString:model.imageURL]placeholderImage:[UIImage imageNamed:@"placeholderImage_1"]];
     cell.totalPSNumber = model.totalPSNumber;
     cell.colorType = 1;
     return cell;

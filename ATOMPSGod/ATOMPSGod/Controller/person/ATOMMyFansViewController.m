@@ -13,11 +13,13 @@
 #import "ATOMFans.h"
 #import "ATOMFansViewModel.h"
 #import "ATOMFollowModel.h"
+#import "PWRefreshFooterTableView.h"
+
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMMyFansViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface ATOMMyFansViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate>
 
-@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) PWRefreshFooterTableView *tableView;
 @property (nonatomic, strong) UIView *myFansView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapMyFansGesture;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -29,10 +31,13 @@
 
 @implementation ATOMMyFansViewController
 
-#pragma mark - Refresh
+#pragma mark - Refresh PWRefreshBaseTableViewDelegate
 
-- (void)configTableViewRefresh {
-    [_tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+//- (void)configTableViewRefresh {
+//    [_tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+//}
+-(void)didPullRefreshUp:(UITableView *)tableView {
+    [self loadMoreData];
 }
 
 - (void)loadMoreData {
@@ -105,15 +110,16 @@
     self.title = [NSString stringWithFormat:@"%@的粉丝", _uid ? _userName : @"我"];
     _myFansView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _myFansView;
-    _tableView = [[UITableView alloc] initWithFrame:_myFansView.bounds];
+    _tableView = [[PWRefreshFooterTableView alloc] initWithFrame:_myFansView.bounds];
     _tableView.backgroundColor = [UIColor colorWithHex:0xededed];
-    _tableView.tableFooterView = [UIView new];
+//    _tableView.tableFooterView = [UIView new];
     [_myFansView addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.psDelegate = self;
     _tapMyFansGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMyFansGesture:)];
     [_tableView addGestureRecognizer:_tapMyFansGesture];
-    [self configTableViewRefresh];
+//    [self configTableViewRefresh];
     _canRefreshFooter = YES;
     [self getDataSource];
 }

@@ -76,7 +76,7 @@
         _hotDetailTableView.dataSource = self;
         _tapHotDetailGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHotDetailGesture:)];
         [_hotDetailTableView addGestureRecognizer:_tapHotDetailGesture];
-        [self configHotDetailTableViewRefresh];
+//        [self configHotDetailTableViewRefresh];
     }
     return _hotDetailTableView;
 }
@@ -211,17 +211,10 @@
         [param setObject:@(0) forKey:@"status"];
     }
     if (_selectedIndexPath) {
-        int type;
-        if (_selectedIndexPath.row != 0) {
-            type = ATOMPageTypeReply;
-        } else {
-            type = ATOMPageTypeAsk;
-        }
         ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
-        [ATOMCollectModel toggleCollect:param withPageType:type withID:model.ID withBlock:^(NSError *error) {
+        [ATOMCollectModel toggleCollect:param withPageType:model.type withID:model.ID withBlock:^(NSError *error) {
             if (!error) {
                 model.collected = self.shareFunctionView.collectButton.selected;
-                NSLog(@"tapCollect model.collected%d",model.collected);
             }
         }];
     }
@@ -236,17 +229,15 @@
 }
 #pragma mark Refresh
 
-- (void)configHotDetailTableViewRefresh {
-    NSMutableArray *animatedImages = [NSMutableArray array];
-    for (int i = 1; i<=3; i++) {
-        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"loading_%ddot", i]];
-        [animatedImages addObject:image];
-    }
-    [_hotDetailTableView addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreHotData)];
-    _hotDetailTableView.gifFooter.refreshingImages = animatedImages;
-    _hotDetailTableView.footer.stateHidden = YES;
+-(void)didPullRefreshDown:(UITableView *)tableView {
+    [self loadHotData];
 }
-
+-(void)didPullRefreshUp:(UITableView *)tableView {
+    [self loadMoreHotData];
+}
+- (void)loadHotData {
+    [self getDataSource];
+}
 - (void)loadMoreHotData {
     if (_canRefreshFooter) {
         [self getMoreDataSource];
@@ -258,6 +249,7 @@
 #pragma mark - GetDataSource
 
 - (void)firstGetDataSource {
+    _currentPage = 1;
     ATOMShowDetailOfHomePage *showDetailOfHomePage = [ATOMShowDetailOfHomePage new];
     NSArray *detailImageArray = [showDetailOfHomePage getDetalImagesByImageID:_askPageViewModel.imageID];
     if (!detailImageArray || detailImageArray.count == 0) { //读服务器
@@ -282,16 +274,15 @@
 }
 
 - (void)getDataSource {
+    _currentPage = 1;
     WS(ws);
-    ws.currentPage = 1;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(5) forKey:@"size"];
     [param setObject:@(_fold) forKey:@"fold"];
     ATOMShowDetailOfHomePage *showDetailOfHomePage = [ATOMShowDetailOfHomePage new];
-    NSLog(@"%d", (int)ws.askPageViewModel.imageID);
-    [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.askPageViewModel.imageID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
+    [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.askPageViewModel.askID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
         //第一张图片为首页点击的图片，剩下的图片为回复图片
         ws.dataSource = nil;
         ws.dataSource = [NSMutableArray array];
@@ -322,6 +313,7 @@
     [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
+    [param setObject:@(_fold) forKey:@"fold"];
     ATOMShowDetailOfHomePage *showDetailOfHomePage = [ATOMShowDetailOfHomePage new];
     [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.askPageViewModel.imageID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
         for (ATOMDetailImage *detailImage in detailOfHomePageArray) {
@@ -329,6 +321,7 @@
             [model setViewModelDataWithDetailImage:detailImage];
             model.labelArray = [ws.askPageViewModel.labelArray mutableCopy];
             [ws.dataSource addObject:model];
+            NSLog(@"for in getMoreDataSource");
         }
         if (detailOfHomePageArray.count == 0) {
             _canRefreshFooter = NO;
@@ -368,7 +361,6 @@
     self.title = @"作品列表";
     self.view = self.hotDetailView;
     _canRefreshFooter = YES;
-
 }
 
 #pragma mark - Click Event
@@ -441,7 +433,7 @@
                 ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
                 PWPageDetailViewModel* pageDetailViewModel = [PWPageDetailViewModel new];
                 if (_selectedIndexPath.row != 0) {
-                    [pageDetailViewModel setCommonViewModelWithProduct:model];
+                    [pageDetailViewModel setCommonViewModelWithHotDetail:model];
                 } else {
                     [pageDetailViewModel setCommonViewModelWithAsk:_askPageViewModel];
                 }
@@ -495,13 +487,6 @@
     return [ATOMHotDetailTableViewCell calculateCellHeightWith:_dataSource[indexPath.row]];
 }
 
-
--(void)didPullRefreshDown:(UITableView *)tableView {
-    [self getDataSource];
-}
--(void)didPullRefreshUp:(UITableView *)tableView {
-    [self getMoreDataSource];
-}
 
 #pragma mark - ATOMViewControllerDelegate
 -(void)ATOMViewControllerDismissWithInfo:(NSDictionary *)info {

@@ -41,6 +41,7 @@
 }
 
 - (void)setViewModelData:(ATOMCommonImage *)commonImage {
+    _collected = commonImage.collected;
     _imageID = commonImage.imageID;
     _askID = commonImage.askID;
     _type = commonImage.type;

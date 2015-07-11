@@ -45,21 +45,29 @@
 }
 
 - (NSURLSessionDataTask *)SubmitWorkWithLabel:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
+    NSLog(@"保存作品SubmitWorkWithLabel");
     [[KShareManager mascotAnimator]show];
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"reply/save" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         [[KShareManager mascotAnimator]dismiss];
-        NSMutableArray *labelArray = [NSMutableArray array];
-        NSArray* data = responseObject[@"data"];
-        if (data.count > 0) {
-            NSArray *dictArray = responseObject[@"data"][@"labels"];
-            for (int i = 0; i < dictArray.count; i++) {
-                ATOMImageTipLabel *imageTipLabel = [ATOMImageTipLabel new];
-                imageTipLabel.labelID = [dictArray[i][@"id"] integerValue];
-                imageTipLabel.imageID = [responseObject[@"data"][@"ask_id"] integerValue];
-                [labelArray addObject:imageTipLabel];
+        NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
+        if (ret == 1) {
+            NSMutableArray *labelArray = [NSMutableArray array];
+            NSArray* data = responseObject[@"data"];
+            if (data.count > 0) {
+                NSArray *dictArray = responseObject[@"data"][@"labels"];
+                for (int i = 0; i < dictArray.count; i++) {
+                    ATOMImageTipLabel *imageTipLabel = [ATOMImageTipLabel new];
+                    imageTipLabel.labelID = [dictArray[i][@"id"] integerValue];
+                    imageTipLabel.imageID = [responseObject[@"data"][@"ask_id"] integerValue];
+                    [labelArray addObject:imageTipLabel];
+                }
+                if (block) {
+                    block(labelArray, nil);
+                }
             }
+        } else {
             if (block) {
-                block(labelArray, nil);
+                block(nil, nil);
             }
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {

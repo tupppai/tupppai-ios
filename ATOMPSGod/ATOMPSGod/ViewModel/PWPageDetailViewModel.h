@@ -10,6 +10,8 @@
 @property (nonatomic, assign) NSInteger askID;
 @property (nonatomic, assign) int type;
 @property (nonatomic, copy) NSString *userName;
+@property (nonatomic, assign) NSInteger uid;
+
 @property (nonatomic, copy) NSString *avatarURL;
 @property (nonatomic, strong) NSString *pageImageURL;
 @property (nonatomic, copy) NSString *likeNumber;
@@ -22,7 +24,7 @@
 @property (nonatomic, assign) BOOL collected;
 
 -(void)setCommonViewModelWithAsk:(ATOMAskPageViewModel*)model;
--(void)setCommonViewModelWithProduct:(ATOMHotDetailPageViewModel*)model;
+//-(void)setCommonViewModelWithProduct:(ATOMHotDetailPageViewModel*)model;
 -(void)setCommonViewModelWithFollow:(ATOMFollowPageViewModel*)model;
 -(void)setCommonViewModelWithHotDetail:(ATOMHotDetailPageViewModel*)model;
 

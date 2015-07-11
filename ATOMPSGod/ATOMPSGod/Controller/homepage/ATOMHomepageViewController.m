@@ -51,8 +51,8 @@
 @property (nonatomic, assign) BOOL isfirstEnterHomepageRecentView;
 @property (nonatomic, assign) BOOL canRefreshHotFooter;
 @property (nonatomic, assign) BOOL canRefreshRecentFooter;
+
 @property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
-//@property (nonatomic, strong) ATOMPSView *psView;
 @property (nonatomic, strong)  JGActionSheet * cameraActionsheet;
 @property (nonatomic, strong)  JGActionSheet * psActionSheet;
 @property (nonatomic, strong)  JGActionSheet * reportActionSheet;
@@ -228,7 +228,7 @@
 -(void)tapInvite {
     ATOMInviteViewController* ivc = [ATOMInviteViewController new];
     ivc.askPageViewModel = _selectedAskPageViewModel;
-    [self pushViewController:ivc animated:NO];
+    [self pushViewController:ivc animated:YES];
 }
 -(void)tapCollect {
     NSMutableDictionary *param = [NSMutableDictionary new];
@@ -242,6 +242,8 @@
     [ATOMCollectModel toggleCollect:param withPageType:ATOMPageTypeAsk withID:_selectedAskPageViewModel.imageID withBlock:^(NSError *error) {
         if (!error) {
             _selectedAskPageViewModel.collected = self.shareFunctionView.collectButton.selected;
+        }   else {
+            self.shareFunctionView.collectButton.selected = !self.shareFunctionView.collectButton.selected;
         }
     }];
 }

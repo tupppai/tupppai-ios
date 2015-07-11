@@ -18,7 +18,7 @@
             url = [NSString stringWithFormat:@"reply/collectreply/%ld",ID];
         }
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-            NSLog(@"toggleCollect param%@",param);
+            NSLog(@"toggleCollect url %@ param%@",url,param);
             NSLog(@"toggleCollect responseObject%@",responseObject);
             NSLog(@"toggleCollect info%@",responseObject[@"info"]);
             NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];

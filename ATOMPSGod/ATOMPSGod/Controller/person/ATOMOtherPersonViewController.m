@@ -383,14 +383,14 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
     if (collectionView == _otherPersonView.scrollView.otherPersonUploadCollectionView) {
         ATOMMyUploadCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:UploadCellIdentifier forIndexPath:indexPath];
         ATOMAskViewModel *model = _uploadDataSource[indexPath.row];
-        [cell.workImageView setImageWithURL:[NSURL URLWithString:model.imageURL]];
+        [cell.workImageView setImageWithURL:[NSURL URLWithString:model.imageURL]placeholderImage:[UIImage imageNamed:@"placeholderImage_1"]];
         cell.totalPSNumber = model.totalPSNumber;
         cell.colorType = 0;
         return cell;
     } else {
         ATOMMyWorkCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:WorkCellIdentifier forIndexPath:indexPath];
         ATOMReplyViewModel *model = _workDataSource[indexPath.row];
-        [cell.workImageView setImageWithURL:[NSURL URLWithString:model.imageURL]];
+        [cell.workImageView setImageWithURL:[NSURL URLWithString:model.imageURL]placeholderImage:[UIImage imageNamed:@"placeholderImage_1"]];
         return cell;
     }
 }

@@ -310,9 +310,13 @@
         }
         [Util TextHud:@"提交求P成功"];
         self.navigationItem.rightBarButtonItem.enabled = YES;
+        
         ATOMInviteViewController *ivc = [ATOMInviteViewController new];
+        NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:@(_newAskPageViewModel.imageID),@"ID",@(ws.newAskPageViewModel.askID),@"askID",_newAskPageViewModel.type,@"type", nil];
         ws.newAskPageViewModel.imageID = newImageID;
         ivc.askPageViewModel = ws.newAskPageViewModel;
+        ivc.info = info;
+        ivc.showNext = YES;
         [ws pushViewController:ivc animated:YES];
     }];
 }

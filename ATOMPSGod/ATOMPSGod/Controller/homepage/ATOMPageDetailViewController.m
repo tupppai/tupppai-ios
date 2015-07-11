@@ -362,6 +362,8 @@
 
 - (void)clickUserHeaderButton:(UIButton *)sender {
     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+    opvc.userID = _pageDetailViewModel.uid;
+    opvc.userName = _pageDetailViewModel.userName;
     [self pushViewController:opvc animated:YES];
 }
 
@@ -436,9 +438,13 @@
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+            opvc.userID = cell.viewModel.uid;
+            opvc.userName = cell.viewModel.nickname;
             [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+            opvc.userID = cell.viewModel.uid;
+            opvc.userName = cell.viewModel.nickname;
             [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.praiseButton.frame, p)) {
             NSInteger section = indexPath.section;

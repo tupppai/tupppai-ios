@@ -15,6 +15,7 @@
 #import "ATOMCollectionViewModel.h"
 #import "ATOMShowCollection.h"
 #import "PWRefreshFooterCollectionView.h"
+#import "ATOMPageDetailViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMMyCollectionViewController () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate,PWRefreshBaseCollectionViewDelegate>
@@ -68,9 +69,7 @@ static float cellWidth;
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     ATOMShowCollection *showCollection = [ATOMShowCollection new];
-    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showCollection ShowCollection:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        ////[SVProgressHUD dismiss];
         for (ATOMHomeImage *homeImage in resultArray) {
             ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
             [homepageViewModel setViewModelData:homeImage];
@@ -156,14 +155,37 @@ static float cellWidth;
     if (indexPath) {
         ATOMMyCollectionCollectionViewCell *cell = (ATOMMyCollectionCollectionViewCell *)[_collectionView cellForItemAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
+        ATOMAskPageViewModel* model = _homeImageDataSource[indexPath.row];
         if (CGRectContainsPoint(cell.collectionImageView.frame, p)) {
-            ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
-            hdvc.askPageViewModel = _homeImageDataSource[indexPath.row];
-            [self pushViewController:hdvc animated:YES];
+            if (cell.viewModel.type == ATOMPageTypeAsk) {
+                if (cell.viewModel.totalPSNumber == 0) {
+                    ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
+                    rdvc.pageDetailViewModel = [model generatepageDetailViewModel];
+                    [self pushViewController:rdvc animated:YES];
+                } else {
+                    ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
+                    hdvc.askPageViewModel = model;
+                    hdvc.fold = 0;
+                    [self pushViewController:hdvc animated:YES];
+                }
+            } else {
+                ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
+                hdvc.askPageViewModel = model;
+                hdvc.fold = 1;
+                [self pushViewController:hdvc animated:YES];
+            }
         } else if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+            opvc.userName = cell.viewModel.userName;
+            opvc.userID = cell.viewModel.uid;
+            [self pushViewController:opvc animated:YES];
+        }   else if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
+            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+            opvc.userName = cell.viewModel.userName;
+            opvc.userID = cell.viewModel.uid;
             [self pushViewController:opvc animated:YES];
         }
+
         
     }
 }

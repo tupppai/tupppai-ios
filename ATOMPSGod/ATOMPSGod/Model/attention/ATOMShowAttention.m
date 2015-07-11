@@ -15,17 +15,8 @@
 
 @implementation ATOMShowAttention
 
-//- (instancetype)init {
-//    self = [super init];
-//    if (self) {
-//    }
-//    return self;
-//}
-
 - (NSURLSessionDataTask *)ShowAttention:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
-    [[KShareManager mascotAnimator]show];
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/fellowsDynamic" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        [[KShareManager mascotAnimator]dismiss];
         NSLog(@"ShowAttention responseObject %@",responseObject);
         NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
         if (ret != 1) {

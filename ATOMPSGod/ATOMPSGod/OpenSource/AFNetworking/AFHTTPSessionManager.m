@@ -20,12 +20,10 @@
 // THE SOFTWARE.
 
 #import "AFHTTPSessionManager.h"
-
 #if (defined(__IPHONE_OS_VERSION_MAX_ALLOWED) && __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000) || (defined(__MAC_OS_X_VERSION_MAX_ALLOWED) && __MAC_OS_X_VERSION_MAX_ALLOWED >= 1090)
 
 #import "AFURLRequestSerialization.h"
 #import "AFURLResponseSerialization.h"
-
 #import <Availability.h>
 #import <Security/Security.h>
 
@@ -248,6 +246,12 @@
         } else {
             if (success) {
                 success(dataTask, responseObject);
+                int ret = [(NSString*)responseObject[@"ret"] intValue];
+                if (ret == 2) {
+                    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"SignOut" object:nil]];
+                    NSLog(@"登录失效");
+                    [Util TextHud:@"登录失效"];
+                }
             }
         }
     }];

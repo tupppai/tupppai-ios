@@ -151,7 +151,7 @@ static int collumnNumber = 3;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ATOMMyWorkCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:_cellIdentifier forIndexPath:indexPath];
     ATOMReplyViewModel *model = _dataSource[indexPath.row];
-    [cell.workImageView setImageWithURL:[NSURL URLWithString:model.imageURL]];
+    [cell.workImageView setImageWithURL:[NSURL URLWithString:model.imageURL]placeholderImage:[UIImage imageNamed:@"placeholderImage_1"]];
     return cell;
 }
 

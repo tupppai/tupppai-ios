@@ -177,7 +177,7 @@
     _shareButton.number = viewModel.shareNumber;
     _commentButton.number = viewModel.commentNumber;
     _userWorkImageView.contentMode = UIViewContentModeScaleAspectFit;
-    [_userWorkImageView setImageWithURL:[NSURL URLWithString:viewModel.userImageURL] placeholderImage:[UIImage imageNamed:@"homePage_Default"]];
+    [_userWorkImageView setImageWithURL:[NSURL URLWithString:viewModel.userImageURL] placeholderImage:[UIImage imageNamed:@"placeholderImage_1"]];
     [self addTipLabelToImageView];
     [self setNeedsLayout];
 }
