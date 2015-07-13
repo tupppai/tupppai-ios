@@ -18,7 +18,7 @@
         NSMutableArray *recommendFriends;
 
         if (ret != 1) {
-            [Util TextHud:@"出现未知错误"];
+            
             block(nil, nil,nil);
         }
         else {
@@ -48,7 +48,7 @@
             }
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [Util TextHud:@"出现未知错误"];
+        
         if (block) {
             block(nil,nil, error);
         }
@@ -62,12 +62,12 @@
         NSLog(@"invite responseObject%@",responseObject);
         NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
         if (ret != 1) {
-            [Util TextHud:@"出现未知错误"];
+            
         } else {
             //ok
         }
     }  failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [Util TextHud:@"出现未知错误"];
+        
         NSLog(@"invite error %@",error);
     }];
 }

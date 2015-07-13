@@ -42,7 +42,7 @@
     _fansLabel.center = CGPointMake(_fansLabel.center.x, _userHeaderButton.center.y);
     _fansLabel.userInteractionEnabled = YES;
     _fansLabel.numberOfLines = 0;
-    NSMutableAttributedString *fansLabelText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld\n粉丝", (NSInteger)[ATOMCurrentUser currentUser].fansNumber] attributes:attributeDict];
+    NSMutableAttributedString *fansLabelText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld\n粉丝", (long)[ATOMCurrentUser currentUser].fansNumber] attributes:attributeDict];
 //    [fansLabelText addAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont15], NSFontAttributeName, [UIColor colorWithHex:0xc3cbd2], NSForegroundColorAttributeName, nil] range:NSMakeRange(str.length + 1, 2)];
     _fansLabel.attributedText = fansLabelText;
     _fansLabel.minimumScaleFactor = 0.7;
@@ -64,7 +64,6 @@
     _personTableView.backgroundColor = [UIColor whiteColor];
     _personTableView.tableFooterView = [UIView new];
     _personTableView.rowHeight = 60;
-    _personTableView.scrollEnabled = NO;
     _personTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self addSubview:_personTableView];
 }

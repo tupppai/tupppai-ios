@@ -345,6 +345,9 @@
 		E99D2F5D1B1C7E8D000D7784 /* UIView+Screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D2F4C1B1C7E8D000D7784 /* UIView+Screenshot.m */; };
 		E99D2F5E1B1C7E8D000D7784 /* NYXProgressiveImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D2F4F1B1C7E8D000D7784 /* NYXProgressiveImageView.m */; };
 		E99D2F5F1B1C7E8D000D7784 /* NYXImagesHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D2F521B1C7E8D000D7784 /* NYXImagesHelper.m */; };
+		E9CBFF4B1B5214FB00DC8ED4 /* SIAlertView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E9CBFF461B5214FB00DC8ED4 /* SIAlertView.bundle */; };
+		E9CBFF4C1B5214FB00DC8ED4 /* SIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9CBFF481B5214FB00DC8ED4 /* SIAlertView.m */; };
+		E9CBFF4D1B5214FB00DC8ED4 /* UIWindow+SIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E9CBFF4A1B5214FB00DC8ED4 /* UIWindow+SIUtils.m */; };
 		E9D1F88C1B203A4F0072242B /* PWRefreshBaseTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9D1F88B1B203A4F0072242B /* PWRefreshBaseTableView.m */; };
 		E9E19D701B37BC72004B9910 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9E19D6F1B37BC72004B9910 /* ImageIO.framework */; };
 		E9ECD58F1B2D6D0300173F49 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C51B2551AB908D200F442A6 /* libsqlite3.dylib */; };
@@ -1059,6 +1062,11 @@
 		E99D2F511B1C7E8D000D7784 /* NYXImagesHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NYXImagesHelper.h; sourceTree = "<group>"; };
 		E99D2F521B1C7E8D000D7784 /* NYXImagesHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NYXImagesHelper.m; sourceTree = "<group>"; };
 		E99D2F531B1C7E8D000D7784 /* NYXImagesKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NYXImagesKit.h; sourceTree = "<group>"; };
+		E9CBFF461B5214FB00DC8ED4 /* SIAlertView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SIAlertView.bundle; sourceTree = "<group>"; };
+		E9CBFF471B5214FB00DC8ED4 /* SIAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIAlertView.h; sourceTree = "<group>"; };
+		E9CBFF481B5214FB00DC8ED4 /* SIAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIAlertView.m; sourceTree = "<group>"; };
+		E9CBFF491B5214FB00DC8ED4 /* UIWindow+SIUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+SIUtils.h"; sourceTree = "<group>"; };
+		E9CBFF4A1B5214FB00DC8ED4 /* UIWindow+SIUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+SIUtils.m"; sourceTree = "<group>"; };
 		E9D1F88A1B203A4F0072242B /* PWRefreshBaseTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWRefreshBaseTableView.h; sourceTree = "<group>"; };
 		E9D1F88B1B203A4F0072242B /* PWRefreshBaseTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWRefreshBaseTableView.m; sourceTree = "<group>"; };
 		E9E19D6F1B37BC72004B9910 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
@@ -2067,6 +2075,7 @@
 		5CDB05EC1AA400410089121E /* OpenSource */ = {
 			isa = PBXGroup;
 			children = (
+				E9CBFF451B5214FB00DC8ED4 /* SIAlertView */,
 				E97901331B48EB51003FB0B5 /* JGActionSheet */,
 				E900AB1A1B41153A0019BAEA /* AFNetworking */,
 				E900AB2E1B41153A0019BAEA /* UIKit+AFNetworking */,
@@ -2424,6 +2433,18 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
+		E9CBFF451B5214FB00DC8ED4 /* SIAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				E9CBFF461B5214FB00DC8ED4 /* SIAlertView.bundle */,
+				E9CBFF471B5214FB00DC8ED4 /* SIAlertView.h */,
+				E9CBFF481B5214FB00DC8ED4 /* SIAlertView.m */,
+				E9CBFF491B5214FB00DC8ED4 /* UIWindow+SIUtils.h */,
+				E9CBFF4A1B5214FB00DC8ED4 /* UIWindow+SIUtils.m */,
+			);
+			path = SIAlertView;
+			sourceTree = "<group>";
+		};
 		E9E19D711B37E1DF004B9910 /* MBProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
@@ -2630,6 +2651,7 @@
 				5C9BDA501AA85E5600715698 /* hot.png in Resources */,
 				5C9BDA4B1AA85E5600715698 /* back.png in Resources */,
 				5C9BDA4F1AA85E5600715698 /* font.png in Resources */,
+				E9CBFF4B1B5214FB00DC8ED4 /* SIAlertView.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2834,6 +2856,7 @@
 				5C0F04FD1ADD0D88002003AE /* ATOMConcern.m in Sources */,
 				E99D2F571B1C7E8D000D7784 /* UIImage+Masking.m in Sources */,
 				5C83A8871AC66F910071A024 /* POPAnimation.mm in Sources */,
+				E9CBFF4D1B5214FB00DC8ED4 /* UIWindow+SIUtils.m in Sources */,
 				5C70715F1AC52656004B3A6A /* ATOMImageCropper.m in Sources */,
 				E900AB531B413C1B0019BAEA /* ATOMRecommendUser.m in Sources */,
 				5C4F884A1AB56F180042E9BA /* ATOMShareView.m in Sources */,
@@ -2897,6 +2920,7 @@
 				5C6697A71AAFD242001FCF8A /* ATOMMyUploadCollectionViewCell.m in Sources */,
 				E900AB421B41153A0019BAEA /* AFHTTPSessionManager.m in Sources */,
 				E90578A11B4E6F370066F39B /* ATOMFollowModel.m in Sources */,
+				E9CBFF4C1B5214FB00DC8ED4 /* SIAlertView.m in Sources */,
 				5C561A501AB7C8210052D4D5 /* ATOMImage.m in Sources */,
 				E900AB481B41153A0019BAEA /* AFURLSessionManager.m in Sources */,
 				5C4F5BD21AA5426700226F64 /* ATOMLoginView.m in Sources */,

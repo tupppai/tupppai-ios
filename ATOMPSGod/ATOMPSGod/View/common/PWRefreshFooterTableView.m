@@ -29,13 +29,7 @@
     if (!_noDataView) {
         _noDataView = [ATOMNoDataView new];
         [self addSubview:_noDataView];
-        
-        [_noDataView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(self);
-            make.centerY.equalTo(self);
-            make.size.mas_equalTo(CGSizeMake(self.bounds.size.width/2, self.bounds.size.width/2));
-        }];
-
+        _noDataView.frame = CGRectMake(CGRectGetMidX(self.bounds)-self.bounds.size.width/4, CGRectGetMidY(self.bounds)-self.bounds.size.height/4, self.bounds.size.width/2, self.bounds.size.height/2);
     }
     return _noDataView;
 }

@@ -14,6 +14,7 @@
 #import "ATOMUserDAO.h"
 #import "ATOMCutstomNavigationController.h"
 #import "AppDelegate.h"
+#import "SIAlertView.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self;
 
 @interface ATOMBaseViewController ()
@@ -25,6 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(signOut) name:@"SignOut" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorEccured) name:@"ErrorOccurred" object:nil];
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
@@ -49,17 +51,28 @@
     }
 //    self.navigationItem.hidesBackButton = YES;
 }
--(void)signOut {
-    //清空数据库用户表
-    [ATOMUserDAO clearUsers];
-    //清空当前用户
-    [[ATOMCurrentUser currentUser]wipe];
-    self.navigationController.viewControllers = @[];
-    ATOMLaunchViewController *lvc = [[ATOMLaunchViewController alloc] init];
-    [AppDelegate APP].window.rootViewController = [[ATOMCutstomNavigationController alloc] initWithRootViewController:lvc];
+-(void) signOut {
+    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"大神来通知" andMessage:@"为了更好为你服务，请重新登录"];
+    [alertView addButtonWithTitle:@"好咯"
+                             type:SIAlertViewButtonTypeDefault
+                          handler:^(SIAlertView *alert) {
+                              //清空数据库用户表
+                              [ATOMUserDAO clearUsers];
+                              //清空当前用户
+                              [[ATOMCurrentUser currentUser]wipe];
+                              self.navigationController.viewControllers = @[];
+                              ATOMLaunchViewController *lvc = [[ATOMLaunchViewController alloc] init];
+                              [AppDelegate APP].window.rootViewController = [[ATOMCutstomNavigationController alloc] initWithRootViewController:lvc];
+                          }];
+    alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
+    [alertView show];
+}
+-(void) errorEccured {
+    [Util TextHud:@"出现未知错误" inView:self.view];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {

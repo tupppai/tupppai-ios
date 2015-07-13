@@ -83,7 +83,7 @@
         NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
         if (ret != 1) {
             block(nil, nil);
-            [Util TextHud:@"出现未知错误"];
+            
         } else {
             NSMutableArray *homepageArray = [NSMutableArray array];
             NSArray *imageDataArray = responseObject[@"data"];
@@ -116,7 +116,7 @@
             }
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [Util TextHud:@"出现未知错误"];
+        
         if (block) {
             block(nil, error);
         }

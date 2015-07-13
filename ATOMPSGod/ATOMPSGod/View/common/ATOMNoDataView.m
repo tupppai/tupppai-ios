@@ -19,7 +19,6 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-//        self.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT);
         self.backgroundColor = [UIColor clearColor];
         [self createSubView];
     }
@@ -50,18 +49,6 @@
         make.size.mas_equalTo(CGSizeMake(150, 22));
     }];
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

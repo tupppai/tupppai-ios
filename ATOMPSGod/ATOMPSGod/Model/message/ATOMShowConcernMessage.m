@@ -13,9 +13,7 @@
 @implementation ATOMShowConcernMessage
 
 - (NSURLSessionDataTask *)ShowConcernMessage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
-    [[KShareManager mascotAnimator]show];
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"message/follow" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        [[KShareManager mascotAnimator]dismiss];
         NSLog(@"ShowConcernMessage responseObject%@",responseObject);
         NSMutableArray *concernMessageArray = [NSMutableArray array];
         NSArray *dataArray = responseObject[@"data"];
@@ -32,7 +30,6 @@
             block(nil, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [[KShareManager mascotAnimator]dismiss];
         if (block) {
             block(nil, error);
         }

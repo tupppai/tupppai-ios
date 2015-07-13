@@ -204,11 +204,10 @@
                 } else  if (ws.scrollView.currentHomepageType == ATOMHomepageAskType) {
                     view = ws.scrollView.homepageRecentView;
                 }
-                if(error) {
-                    [Util TextHud:@"出现未知错误" inView:view];
-                } else {
+                if(!error) {
                     [Util TextHud:@"已举报" inView:view];
-                }
+                } 
+                
             }];
         }];
     }

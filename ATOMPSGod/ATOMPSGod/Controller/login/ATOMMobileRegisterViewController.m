@@ -54,7 +54,7 @@
                     ivcvc.verifyCode = verifyCode;
                     [self.navigationController pushViewController:ivcvc animated:YES];
                 } else {
-                    [Util TextHud:@"出现未知错误"];
+                    
                 }
             }];
 }

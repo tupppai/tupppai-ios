@@ -26,7 +26,7 @@
             NSArray *param = [MTLFMDBAdapter columnValues:detailImage];
             BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
             if (flag) {
-                NSLog(@"add detailImage success detailID%ld imageID%ld url %@",detailImage.detailID,detailImage.imageID,detailImage.imageURL);
+                NSLog(@"add detailImage success detailID%ld imageID%ld url %@",(long)detailImage.detailID,(long)detailImage.imageID,detailImage.imageURL);
             } else {
                 NSLog(@"add detailImage fail");
             }

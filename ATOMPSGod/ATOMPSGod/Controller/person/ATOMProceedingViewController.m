@@ -82,8 +82,8 @@
 //    [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
     [param setObject:@"new" forKey:@"type"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
-    [param setObject:@"time" forKey:@"sort"];
-    [param setObject:@"desc" forKey:@"order"];
+//    [param setObject:@"time" forKey:@"sort"];
+//    [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     ATOMShowProceeding *showProceeding = [ATOMShowProceeding new];
     [showProceeding ShowProceeding:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
@@ -146,8 +146,7 @@
     self.title = @"进行中";
     _proceedingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _proceedingView;
-    _tableView = [[PWRefreshBaseTableView alloc] initWithFrame:_proceedingView.bounds style:UITableViewStylePlain];
-    _tableView.backgroundColor = [UIColor whiteColor];
+    _tableView = [[PWRefreshBaseTableView alloc] initWithFrame:_proceedingView.bounds];
     [_proceedingView addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;

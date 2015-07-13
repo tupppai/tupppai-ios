@@ -24,14 +24,14 @@
                 block(share, nil);
             }
         } else {
-            [Util TextHud:@"出现未知错误"];
+            
             if (block) {
                 block(nil, nil);
             }
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [[KShareManager mascotAnimator]dismiss];
-        [Util TextHud:@"出现未知错误"];
+        
         if (block) {
             block(nil, error);
         }

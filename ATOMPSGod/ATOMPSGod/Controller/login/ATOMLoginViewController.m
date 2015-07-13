@@ -37,24 +37,21 @@
 }
 
 - (void)clickLoginButton:(UIButton *)sender {
-    [self.navigationController setViewControllers:nil];
-    [AppDelegate APP].mainTarBarController = nil;
-    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
-//    if (![_loginView.mobileTextField.text isMobileNumber]) {
-//        [Util TextHud:@"手机格式有误"];
-//    } else if (![_loginView.passwordTextField.text isPassword]) {
-//        [Util TextHud:@"密码格式有误"];
-//    } else {
-//        ATOMLogin *loginModel = [ATOMLogin new];
-//        NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:_loginView.mobileTextField.text, @"phone", _loginView.passwordTextField.text, @"password",nil];
-//        [loginModel Login:param withBlock:^(BOOL succeed) {
-//            if (succeed) {
-//                [self.navigationController setViewControllers:nil];
-//                [AppDelegate APP].mainTarBarController = nil;
-//                [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
-//            }
-//        }];
-//    }
+    if (![_loginView.mobileTextField.text isMobileNumber]) {
+        [Util TextHud:@"手机格式有误" inView:self.view];
+    } else if (![_loginView.passwordTextField.text isPassword]) {
+        [Util TextHud:@"密码格式有误" inView:self.view];
+    } else {
+        ATOMLogin *loginModel = [ATOMLogin new];
+        NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:_loginView.mobileTextField.text, @"phone", _loginView.passwordTextField.text, @"password",nil];
+        [loginModel Login:param withBlock:^(BOOL succeed) {
+            if (succeed) {
+                [self.navigationController setViewControllers:nil];
+                [AppDelegate APP].mainTarBarController = nil;
+                [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
+            }
+        }];
+    }
 }
 
 

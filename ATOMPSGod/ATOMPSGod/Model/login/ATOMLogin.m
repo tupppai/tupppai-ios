@@ -43,11 +43,11 @@
                 }
             }
         } else {
-            [Util TextHud:@"出现未知错误"];
+            
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [[KShareManager mascotAnimator]dismiss];
-        [Util TextHud:@"出现未知错误"];
+        
         if (block) {
             block(nil,nil,error);
         }
@@ -68,7 +68,7 @@
             NSLog(@"sourceData %@",sourceData);
             block(sourceData);
         } else {
-            [Util TextHud:@"出现未知错误"];
+            
             block(nil);
         }
     }];
@@ -111,14 +111,14 @@
                 }
             }
         } else {
-            [Util TextHud:@"出现未知错误"];
+            
             if (block) {
                 block(NO);
             }
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [[KShareManager mascotAnimator] dismiss];
-        [Util TextHud:@"出现未知错误"];
+        
         if (block) {
             block(NO);
         }

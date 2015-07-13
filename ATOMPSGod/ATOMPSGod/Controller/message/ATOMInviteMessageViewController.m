@@ -89,9 +89,7 @@
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     ATOMShowInviteMessage *showInviteMessage = [ATOMShowInviteMessage new];
-    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showInviteMessage ShowInviteMessage:param withBlock:^(NSMutableArray *inviteMessageArray, NSError *error) {
-        ////[SVProgressHUD dismiss];
         for (ATOMInviteMessage *inviteMessage in inviteMessageArray) {
             ATOMInviteMessageViewModel *inviteMessageViewModel = [ATOMInviteMessageViewModel new];
             [inviteMessageViewModel setViewModelData:inviteMessage];

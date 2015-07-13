@@ -22,13 +22,13 @@
                 block(nil);
             }
         } else {
-            [Util TextHud:@"出现未知错误"];
+            
             if (block) {
                 block(nil);
             }
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [Util TextHud:@"出现未知错误"];
+        
         if (block) {
             block(error);
         }

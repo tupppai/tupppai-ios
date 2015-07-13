@@ -15,6 +15,7 @@
 #import "ATOMUserDAO.h"
 #import "ATOMCutstomNavigationController.h"
 #import "AppDelegate.h"
+#import "SIAlertView.h"
 @interface ATOMAccountSettingViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -59,28 +60,35 @@
     return 0;
 }
 
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (scrollView == _tableView) {
-        CGFloat sectionHeaderHeight = 22.5;
-        if (scrollView.contentOffset.y <= sectionHeaderHeight && scrollView.contentOffset.y >= 0) {
-            scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
-        } else if (scrollView.contentOffset.y >= sectionHeaderHeight) {
-            scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
-        }
-    }
-}
+//#pragma mark - UIScrollViewDelegate
+//
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    if (scrollView == _tableView) {
+//        CGFloat sectionHeaderHeight = 22.5;
+//        if (scrollView.contentOffset.y <= sectionHeaderHeight && scrollView.contentOffset.y >= 0) {
+//            scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+//        } else if (scrollView.contentOffset.y >= sectionHeaderHeight) {
+//            scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
+//        }
+//    }
+//}
 
 #pragma mark - UITableViewDelegate
 
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 60;
+    return 58;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 1) {
+        return 15;
+    }
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"cellForRowAtIndexPath");
     static NSString *CellIdentifier = @"AccountSettingCell";
     ATOMAccountSettingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
@@ -90,30 +98,29 @@
     NSInteger row = indexPath.row;
     if (section == 0) {
         if (row == 0) {
-            cell.themeLabel.text = @"消息提醒";
+            cell.textLabel.text = @"消息提醒";
         } else if (row == 1) {
-            cell.themeLabel.text = @"修改密码";
+            cell.textLabel.text = @"修改密码";
         } else if (row == 2) {
-            cell.themeLabel.text = @"账号绑定";
+            cell.textLabel.text = @"账号绑定";
         }
     } else if (section == 1) {
         if (row == 0) {
-            cell.themeLabel.text = @"离线下载";
+            cell.textLabel.text = @"离线下载";
             [cell addSwitch];
         } else if (row == 1) {
-            cell.themeLabel.text = @"清除缓存";
+            cell.textLabel.text = @"清除缓存";
         } else if (row == 2) {
-            cell.themeLabel.text = @"推荐应用给好友";
+            cell.textLabel.text = @"推荐应用给好友";
         } else if (row == 3) {
-            cell.themeLabel.text = @"用户反馈";
+            cell.textLabel.text = @"用户反馈";
         } else if (row == 4) {
-            cell.themeLabel.text = @"关于我们";
+            cell.textLabel.text = @"关于我们";
         } else if (row == 5) {
-            cell.themeLabel.text = @"给应用评分";
+            cell.textLabel.text = @"给应用评分";
         }
     } else if (section == 2) {
-//        [cell addLogout];
-         cell.themeLabel.text = @"退出当前账号";
+        cell.textLabel.text = @"退出当前账号";
     }
     
     
@@ -146,14 +153,29 @@
         } else if (row == 5) {
         }
     } else if (section == 2) {
-        //清空数据库用户表
-        [ATOMUserDAO clearUsers];
-        //清空当前用户
-        [[ATOMCurrentUser currentUser]wipe];
-        self.navigationController.viewControllers = @[];
-        ATOMLaunchViewController *lvc = [[ATOMLaunchViewController alloc] init];
-        [AppDelegate APP].window.rootViewController = [[ATOMCutstomNavigationController alloc] initWithRootViewController:lvc];
+        [self signOut];
     }
+}
+
+-(void) signOut {
+    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"退货" andMessage:@"亲，你确定要退货吗？"];
+    [alertView addButtonWithTitle:@"不走了😊"
+                             type:SIAlertViewButtonTypeDestructive
+                          handler:^(SIAlertView *alert) {
+                          }];
+    [alertView addButtonWithTitle:@"很确定😭"
+                             type:SIAlertViewButtonTypeDefault
+                          handler:^(SIAlertView *alert) {
+                              //清空数据库用户表
+                              [ATOMUserDAO clearUsers];
+                              //清空当前用户
+                              [[ATOMCurrentUser currentUser]wipe];
+                              self.navigationController.viewControllers = @[];
+                              ATOMLaunchViewController *lvc = [[ATOMLaunchViewController alloc] init];
+                              [AppDelegate APP].window.rootViewController = [[ATOMCutstomNavigationController alloc] initWithRootViewController:lvc];
+                          }];
+    alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
+    [alertView show];
 }
 
 @end

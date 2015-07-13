@@ -30,9 +30,9 @@
              @"imageHeight" : @"image_height",
              @"liked" :@"uped",
              @"askID" : @"ask_id",
-             @"collected":@"collected",
-             @"homePageType":  @"homePageType",
-             @"type":@"type",
+             @"collected" : @"collected",
+             @"homePageType" :  @"homePageType",
+             @"type" : @"type",
              };
 }
 

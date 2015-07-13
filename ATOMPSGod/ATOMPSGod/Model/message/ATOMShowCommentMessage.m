@@ -15,9 +15,7 @@
 @implementation ATOMShowCommentMessage
 
 - (NSURLSessionDataTask *)ShowCommentMessage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
-    [[KShareManager mascotAnimator]show];
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"message/comment" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        [[KShareManager mascotAnimator]dismiss];
         NSLog(@"ShowCommentMessage responseObject%@",responseObject);
         NSMutableArray *commentMessageArray = [NSMutableArray array];
         NSArray *dataArray = responseObject[@"data"];
@@ -48,8 +46,7 @@
             }
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [[KShareManager mascotAnimator]dismiss];
-        [Util TextHud:@"出现未知错误"];
+        
         if (block) {
             block(nil, error);
         }

@@ -311,8 +311,9 @@
         [Util TextHud:@"提交求P成功"];
         self.navigationItem.rightBarButtonItem.enabled = YES;
         
+        NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithInteger:newImageID],@"ID",[NSNumber numberWithInteger:newImageID],@"askID",@(ATOMPageTypeAsk),@"type", nil];
+//        NSDictionary* info2 = [[NSDictionary alloc]initWithObjectsAndKeys:@(newImageID),@"ID",@(newImageID),@"askID", nil];;
         ATOMInviteViewController *ivc = [ATOMInviteViewController new];
-        NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:@(_newAskPageViewModel.imageID),@"ID",@(ws.newAskPageViewModel.askID),@"askID",_newAskPageViewModel.type,@"type", nil];
         ws.newAskPageViewModel.imageID = newImageID;
         ivc.askPageViewModel = ws.newAskPageViewModel;
         ivc.info = info;

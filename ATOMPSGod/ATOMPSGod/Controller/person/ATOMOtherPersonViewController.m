@@ -106,9 +106,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
     [Util loadingHud:@"" inView:self.view];
     [ATOMShowOtherUser ShowOtherUser:param withBlock:^(NSMutableArray *askReturnArray, NSMutableArray *replyReturnArray, ATOMUser *user, NSError *error) {
         [Util dismissHud:self.view];
-        if (error) {
-            [Util TextHud:@"出现未知错误" inView:self.view];
-        } else {
+        if (!error) {
             if (user) {
                 [self updateUserInterface:user];
             }
@@ -169,9 +167,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
 //    [param setObject:@"time" forKey:@"sort"];
 //    [param setObject:@"desc" forKey:@"order"];
     [ATOMShowOtherUser ShowOtherUser:param withBlock:^(NSMutableArray *askReturnArray, NSMutableArray *replyReturnArray, ATOMUser *user, NSError *error) {
-        if (error) {
-            [Util TextHud:@"出现未知错误" inView:self.view];
-        } else {
+        if (!error) {
             if (user) {
                 [self updateUserInterface:user];
             }
@@ -304,7 +300,6 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
     NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(_userID),@"uid", nil];
     [ATOMFollowModel follow:param withType:_otherPersonView.uploadHeaderView.attentionButton.selected withBlock:^(NSError *error) {
         if (error) {
-            [Util TextHud:@"出现未知错误" inView:self.view];
             _otherPersonView.uploadHeaderView.attentionButton.selected = !_otherPersonView.uploadHeaderView.attentionButton.selected;
         } else {
             NSString* desc = _otherPersonView.uploadHeaderView.attentionButton.selected?[NSString stringWithFormat:@"你关注了%@",_userName]:[NSString stringWithFormat:@"你取消关注了%@",_userName];
@@ -377,6 +372,8 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
     } else {
         return 0;
     }
+    return 0;
+
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {

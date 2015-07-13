@@ -64,13 +64,13 @@
                 block(detailOfHomePageArray, nil);
             }
         } else {
-            [Util TextHud:@"出现未知错误"];
+            
             if (block) {
                 block(nil, nil);
             }
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [Util TextHud:@"出现未知错误"];
+        
         if (block) {
             block(nil, error);
         }

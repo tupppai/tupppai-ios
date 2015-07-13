@@ -241,6 +241,7 @@
     dataTask = [self dataTaskWithRequest:request completionHandler:^(NSURLResponse * __unused response, id responseObject, NSError *error) {
         if (error) {
             if (failure) {
+                [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"ErrorOccurred" object:nil]];
                 failure(dataTask, error);
             }
         } else {
@@ -249,9 +250,11 @@
                 int ret = [(NSString*)responseObject[@"ret"] intValue];
                 if (ret == 2) {
                     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"SignOut" object:nil]];
-                    NSLog(@"登录失效");
                     [Util TextHud:@"登录失效"];
+                } else if (ret != 1) {
+                    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"ErrorOccurred" object:nil]];
                 }
+               
             }
         }
     }];

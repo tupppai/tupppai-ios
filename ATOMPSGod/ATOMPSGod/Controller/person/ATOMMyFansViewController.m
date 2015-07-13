@@ -145,7 +145,6 @@
             NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(cell.viewModel.uid),@"uid", nil];
             [ATOMFollowModel follow:param withType:cell.attentionButton.selected withBlock:^(NSError *error) {
                 if (error) {
-                    [Util TextHud:@"出现未知错误" inView:self.view];
                     cell.attentionButton.selected = !cell.attentionButton.selected;
                 } else {
                     NSString* desc =  cell.attentionButton.selected?[NSString stringWithFormat:@"你关注了%@",cell.viewModel.userName]:[NSString stringWithFormat:@"你取消关注了%@",cell.viewModel.userName];

@@ -158,9 +158,7 @@
             }
             
             [ATOMReportModel report:param withBlock:^(NSError *error) {
-                if(error) {
-                    [Util TextHud:@"出现未知错误" inView:ws.view];
-                } else {
+                if(!error) {
                     [Util TextHud:@"已举报" inView:ws.view];
                 }
             }];

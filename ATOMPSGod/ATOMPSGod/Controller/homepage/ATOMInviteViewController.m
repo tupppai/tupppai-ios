@@ -32,6 +32,7 @@
 #pragma mark - UI
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     [self createUI];
     [self getRecommendDataSource];
@@ -109,14 +110,14 @@
 }
 
 - (void)clickWXFriendCircleButton:(UIButton *)sender {
-    NSInteger ID = (NSInteger)[_info objectForKey:@"ID"];
-    int type = (int)[_info objectForKey:@"type"];
+    NSInteger ID = [[_info objectForKey:@"ID"]integerValue];
+    int type = [[_info objectForKey:@"type"]intValue];
     [self postSocialShare:ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:type];
 }
 
 - (void)clickWXFriendInviteButton:(UIButton *)sender {
-    NSInteger ID = (NSInteger)[_info objectForKey:@"ID"];
-    int type = (int)[_info objectForKey:@"type"];
+    NSInteger ID = [[_info objectForKey:@"ID"]integerValue];
+    int type = [[_info objectForKey:@"type"]intValue];
     [self postSocialShare:ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:type];
 }
 
