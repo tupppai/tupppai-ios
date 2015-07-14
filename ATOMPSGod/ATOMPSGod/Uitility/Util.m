@@ -45,60 +45,21 @@
 +(void)dismissHud:(UIView*)view{
     [MBProgressHUD hideAllHUDsForView:view animated:YES];
 }
-//class func showSuccessProgress(labelText: String?, view: UIView, complete: (()->())?) {
-//    dismissMBProgressHUD(view)
-//    let progressHud = MBProgressHUD.showHUDAddedTo(view, animated: true)
-//    progressHud.customView = UIImageView(image: UIImage(named: "ic-checked-filled"))
-//    progressHud.mode = MBProgressHUDModeCustomView
-//    progressHud.labelText = labelText
-//    progressHud.hide(true, afterDelay: 0.6)
-//    
-//    if let complete = complete {
-//        let completeTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.6))
-//        dispatch_after(completeTime, dispatch_get_main_queue(), complete)
-//    }
-//}
-//
-//class func showErrorProgress(labelText: String?, view: UIView, complete: (()->())?) {
-//    dismissMBProgressHUD(view)
-//    
-//    let progressHud = MBProgressHUD.showHUDAddedTo(view, animated: true)
-//    progressHud.customView = UIImageView(image: UIImage(named: "ic-cancel-filled"))
-//    progressHud.mode = MBProgressHUDModeCustomView
-//    progressHud.labelText = labelText
-//    progressHud.hide(true, afterDelay: 0.6)
-//    
-//    if let complete = complete {
-//        let completeTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.6))
-//        dispatch_after(completeTime, dispatch_get_main_queue(), complete)
-//    }
-//}
-//
-//class func showLoadingProgress(labelText: String?, view: UIView) {
-//    dismissMBProgressHUD(view)
-//    let progressHud = MBProgressHUD.showHUDAddedTo(view, animated: true)
-//    progressHud.mode = MBProgressHUDModeIndeterminate
-//    progressHud.labelText = labelText
-//}
-//
-//class func showLoadingProgressColored(labelText: String?, view: UIView, backgroundColor: UIColor?) {
-//    dismissMBProgressHUD(view)
-//    let progressHud = MBProgressHUD.showHUDAddedTo(view, animated: true)
-//    progressHud.mode = MBProgressHUDModeIndeterminate
-//    progressHud.labelText = labelText
-//    progressHud.color = backgroundColor
-//}
-//class func showTextOnlyProgress(labelText: String?, view: UIView, backgroundColor: UIColor?,removeFromSuperViewOnHide:Bool,delayToHide:NSTimeInterval) {
-//    dismissMBProgressHUD(view)
-//    let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
-//    hud.mode = MBProgressHUDModeText
-//    hud.labelText = labelText
-//    hud.color = backgroundColor
-//    hud.margin = 10
-//    hud.removeFromSuperViewOnHide = removeFromSuperViewOnHide
-//    hud.hide(true, afterDelay: delayToHide)
-//}
-//class func dismissMBProgressHUD(view: UIView) {
-//    MBProgressHUD.hideHUDForView(view, animated: true)
-//}
++(void)successHud:(NSString*)message inView:(UIView*)view {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
+    hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hud_checkmark"]];
+    hud.mode = MBProgressHUDModeCustomView;
+    hud.labelText = message;
+    [hud show:YES];
+    [hud hide:YES afterDelay:0.8];
+}
++(void)failureHud:(NSString*)message inView:(UIView*)view {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"???"]];
+    hud.labelText = message;
+    [hud show:YES];
+    [hud hide:YES afterDelay:0.8];
+}
+
 @end

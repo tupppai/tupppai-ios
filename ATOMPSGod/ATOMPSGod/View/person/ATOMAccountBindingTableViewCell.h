@@ -10,11 +10,11 @@
 
 @interface ATOMAccountBindingTableViewCell : UITableViewCell
 
-@property (nonatomic, strong) UIImageView *themeImageView;
-@property (nonatomic, strong) UILabel *themeLabel;
-@property (nonatomic, strong) UIButton *rightButton;
+//@property (nonatomic, strong) UIImageView *themeImageView;
+//@property (nonatomic, strong) UILabel *themeLabel;
+//@property (nonatomic, strong) UIButton *rightButton;
 @property (nonatomic, strong) NSString *phoneNumber;
-
-- (void)setFootCell;
+-(void)addSwitch;
+//- (void)setFootCell;
 
 @end

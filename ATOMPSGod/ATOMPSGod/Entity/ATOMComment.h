@@ -49,5 +49,5 @@
  *  @数组
  */
 @property (nonatomic, strong) NSMutableArray *atCommentArray;
-@property (nonatomic, assign) BOOL liked;
+@property (nonatomic, assign) bool liked;
 @end

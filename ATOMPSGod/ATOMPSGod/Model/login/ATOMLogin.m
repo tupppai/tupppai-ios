@@ -93,6 +93,7 @@
                     if (error) {
                         NSLog(@"Login error %@",error);
                     }
+                    NSLog(@"user %@ %d",user.nickname,user.uid);
                     //保存更新数据库的user,并更新currentUser
                     [[ATOMCurrentUser currentUser]saveAndUpdateUser:user];
                     if (block) {

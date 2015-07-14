@@ -13,17 +13,17 @@
  *  用户唯一ID
  */
 @property (nonatomic, assign) int uid;
-@property (nonatomic, assign) BOOL boundWeibo;
-@property (nonatomic, assign) BOOL boundWechat;
+@property (nonatomic, assign) bool boundWeibo;
+@property (nonatomic, assign) bool boundWechat;
 
 /**
  *  此用户是否我的粉丝
  */
-@property (nonatomic, assign) BOOL isMyFan;
+@property (nonatomic, assign) bool isMyFan;
 /**
  *  此用户是否我的关注
  */
-@property (nonatomic, assign) BOOL isMyFollow;
+@property (nonatomic, assign) bool isMyFollow;
 @property (nonatomic, assign) NSInteger cityID;
 @property (nonatomic, assign) NSInteger provinceID;
 @property (nonatomic, assign) NSInteger locationID;

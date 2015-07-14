@@ -54,7 +54,6 @@
     }
 }
 
-
 - (void)clickweiboLoginButton:(UIButton *)sender {
     
     ATOMLogin *loginModel = [ATOMLogin new];

@@ -89,6 +89,7 @@
             NSArray *imageDataArray = responseObject[@"data"];
             for (int i = 0; i < imageDataArray.count; i++) {
                 ATOMHomeImage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMHomeImage class] fromJSONDictionary:imageDataArray[i] error:NULL];
+                NSLog(homeImage.collected ? @"ShowHomepage Yes" : @"ShowHomepage No");
                 homeImage.homePageType = (NSString*)[param[@"type"] copy];
                 homeImage.tipLabelArray = [NSMutableArray array];
                 NSArray *labelDataArray = imageDataArray[i][@"labels"];
@@ -149,14 +150,12 @@
             //将图片写入沙盒中的HomePage目录下
             dispatch_queue_t q = dispatch_queue_create("LoadImage", NULL);
             dispatch_async(q, ^{
-                NSLog(@"%@",homeImage.imageURL);
                 NSURL *imageURL = [NSURL URLWithString:homeImage.imageURL];
                 NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
                 UIImage *image = [UIImage imageWithData:imageData];
                 NSString *path = [homePageDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"ATOMIMAGE-%d.jpg", (int)homeImage.imageID]];
-                NSLog(@"path %@",path);
                 if ([UIImageJPEGRepresentation(image, 1) writeToFile:path atomically:YES]) {
-                    NSLog(@"write ATOMIMAGE-%d success", (int)homeImage.imageID);
+//                    NSLog(@"write ATOMIMAGE-%d success", (int)homeImage.imageID);
                 } else {
                     NSLog(@"write ATOMIMAGE-%d fail in %@", (int)homeImage.imageID, path);
                 }

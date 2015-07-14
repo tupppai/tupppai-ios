@@ -18,11 +18,11 @@
 /**
  *  是否被赞
  */
-@property (nonatomic, assign) BOOL liked;
+@property (nonatomic, assign) bool liked;
 /**
  *  是否已经被收藏
  */
-@property (nonatomic, assign) BOOL collected;
+@property (nonatomic, assign) bool collected;
 
 /**
  *  回复ID

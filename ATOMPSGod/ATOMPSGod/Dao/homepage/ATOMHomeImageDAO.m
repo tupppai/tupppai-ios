@@ -70,8 +70,8 @@
     __block NSMutableArray *muArray = [NSMutableArray array];
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
         NSString *stmt = @"select * from ATOMHomeImage where homePageType = ?";
-        NSString* homeTypeStr = homeType==ATOMHomepageHotType?@"hot":@"new";
-        NSArray *param = @[homeTypeStr];
+        NSInteger HT = homeType==ATOMHomepageHotType?0:1;
+        NSArray *param =  @[@(HT)];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {
             ATOMHomeImage *homeImage = [MTLFMDBAdapter modelOfClass:[ATOMHomeImage class] fromFMResultSet:rs error:NULL];

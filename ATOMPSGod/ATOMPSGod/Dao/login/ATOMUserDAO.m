@@ -34,12 +34,13 @@
     });
 }
 
-+ (ATOMUser *)selectUserByUID:(NSString *)uid {
++ (ATOMUser *)selectUserByUID:(int)uid {
     NSLog(@"selectUserByUID");
     __block ATOMUser *user;
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
         NSString *stmt = @"select * from ATOMUser where uid = ?";
-        NSArray *param = @[uid];
+        NSNumber* uid_ns = [NSNumber numberWithInt:uid];
+        NSArray *param = @[uid_ns];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {
             user = [MTLFMDBAdapter modelOfClass:[ATOMUser class] fromFMResultSet:rs error:NULL];
@@ -73,11 +74,13 @@
 }
 
 + (BOOL)isExistUser:(ATOMUser *)user {
-    __block BOOL flag;
+    __block BOOL flag = false;
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
         NSString *stmt = @"select * from ATOMUser where uid = ?";
-        NSArray *param = @[@(user.uid)];
-        FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
+        NSNumber* uid = [NSNumber numberWithInt:user.uid];
+//        NSArray *param = @[uid];
+//        FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
+        FMResultSet *rs = [db executeQuery:stmt,uid];
         while ([rs next]) {
             ATOMUser *user = [MTLFMDBAdapter modelOfClass:[ATOMUser class] fromFMResultSet:rs error:NULL];
             [user NSLogSelf];
@@ -92,6 +95,7 @@
         }
         [rs close];
     }];
+
     return flag;
 }
 
@@ -101,7 +105,8 @@
         [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
             NSString *stmt = [MTLFMDBAdapter updateStatementForModel:user];
             NSMutableArray *param = [[MTLFMDBAdapter columnValues:user] mutableCopy];
-            [param addObject:@(user.uid)];
+            NSNumber* uid = [NSNumber numberWithInt:user.uid];
+            [param addObject:uid];
             BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
             if (flag) {
                 NSLog(@"update user in DB succeed");

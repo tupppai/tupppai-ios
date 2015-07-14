@@ -13,6 +13,7 @@
 #import "ATOMMessageRemindViewController.h"
 #import "ATOMUserFeedbackViewController.h"
 #import "ATOMUserDAO.h"
+#import "ATOMHomeImageDAO.h"
 #import "ATOMCutstomNavigationController.h"
 #import "AppDelegate.h"
 #import "SIAlertView.h"
@@ -88,7 +89,6 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"cellForRowAtIndexPath");
     static NSString *CellIdentifier = @"AccountSettingCell";
     ATOMAccountSettingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
@@ -145,6 +145,7 @@
     } else if (section == 1) {
         if (row == 0) {
         } else if (row == 1) {
+            [self clearCache];
         } else if (row == 2) {
         } else if (row == 3) {
             ATOMUserFeedbackViewController *ufvc = [ATOMUserFeedbackViewController new];
@@ -177,5 +178,21 @@
     alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
     [alertView show];
 }
-
+-(void) clearCache {
+    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"ლ(°◕‵ƹ′◕ლ)" andMessage:@"确定清理缓存吗？"];
+    [alertView addButtonWithTitle:@"取消"
+                             type:SIAlertViewButtonTypeDestructive
+                          handler:^(SIAlertView *alert) {
+                          }];
+    [alertView addButtonWithTitle:@"确定"
+                             type:SIAlertViewButtonTypeDefault
+                          handler:^(SIAlertView *alert) {
+                              [[NSURLCache sharedURLCache]removeAllCachedResponses];
+                              ATOMHomeImageDAO* hid = [ATOMHomeImageDAO new];
+                              [hid clearHomeImages];
+                              [Util successHud:@"清理缓存成功" inView:self.view];
+                          }];
+    alertView.transitionStyle = SIAlertViewTransitionStyleDropDown;
+    [alertView show];
+}
 @end

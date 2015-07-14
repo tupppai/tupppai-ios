@@ -12,7 +12,7 @@
 @interface ATOMUserDAO : ATOMBaseDAO
 
 + (void)insertUser:(ATOMUser *)user;
-+ (ATOMUser *)selectUserByUID:(NSString *)uid;
++ (ATOMUser *)selectUserByUID:(int)uid;
 + (BOOL)isExistUser:(ATOMUser *)user;
 + (void)updateUser:(ATOMUser *)user;
 + (void)fetchUser:(void (^)(ATOMUser*))block;

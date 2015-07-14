@@ -14,6 +14,7 @@
     return @{
              @"imageID" : @"id",
              @"uid" : @"uid",
+             @"askID" : @"ask_id",
              @"nickname" : @"nickname",
              @"avatar" : @"avatar",
              @"sex" : @"sex",
@@ -29,7 +30,6 @@
              @"imageWidth" : @"image_width",
              @"imageHeight" : @"image_height",
              @"liked" :@"uped",
-             @"askID" : @"ask_id",
              @"collected" : @"collected",
              @"homePageType" :  @"homePageType",
              @"type" : @"type",

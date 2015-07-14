@@ -39,7 +39,7 @@
 /**
  *  自身是否已经关注了该用户
  */
-@property (nonatomic, assign) BOOL isFellow;
+@property (nonatomic, assign) bool isFellow;
 
 
 @end

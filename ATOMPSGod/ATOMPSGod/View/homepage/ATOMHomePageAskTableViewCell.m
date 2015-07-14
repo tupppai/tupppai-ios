@@ -122,7 +122,7 @@
     _praiseButton.selected = viewModel.liked;
     _shareButton.number = viewModel.shareNumber;
     _commentButton.number = viewModel.commentNumber;
-    _userWorkImageView.contentMode = UIViewContentModeScaleAspectFit;
+//    _userWorkImageView.contentMode = UIViewContentModeScaleAspectFit;
     if (viewModel.image) {
         _userWorkImageView.image = viewModel.image;
     } else {

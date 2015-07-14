@@ -287,7 +287,6 @@
     self.newAskPageViewModel.width = CGWidth(_addTipLabelToImageView.workImageView.frame);
     self.newAskPageViewModel.height = CGHeight(_addTipLabelToImageView.workImageView.frame);
     ATOMUploadImage *uploadImage = [ATOMUploadImage new];
-//    //[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
     [uploadImage UploadImage:data WithBlock:^(ATOMImage *imageInformation, NSError *error) {
         if (error) {
             [Util dismissHud];

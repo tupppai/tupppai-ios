@@ -29,6 +29,7 @@
     self.title = @"账号绑定";
     _accountBindingView = [ATOMAccountBindingView new];
     self.view = _accountBindingView;
+    _accountBindingView.accountBindingTableView.scrollEnabled = NO;
     _accountBindingView.accountBindingTableView.delegate = self;
     _accountBindingView.accountBindingTableView.dataSource = self;
 }
@@ -47,49 +48,71 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    if (section == 0) {
+        return 2;
+    } else if (section == 1) {
+        return 1;
+    }
+    return 0;
 }
 
 #pragma mark - UITableViewDelegate
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 4) {
-        return 36;
-    } else {
-        return 53;
-    }
+        return 60;
+}
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    
+    NSArray* list = @[@"社交账号绑定",@"手机号绑定"];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 35)];
+    /* Create custom view to display section header... */
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, SCREEN_WIDTH-30, 35)];
+    [label setFont:[UIFont fontWithName:@"Hiragino Sans GB W3" size:kFont14]];
+    NSString *string = [list objectAtIndex:section];
+    view.backgroundColor = [UIColor colorWithRed:247/255.0f green:247/255.0f blue:247/255.0f alpha:1.0f];
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor colorWithHex:0x637685];
+    /* Section header is in 0th index... */
+    [label setText:string];
+    [view addSubview:label];
+    return view;
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 35;
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"AccountBindingCell";
     ATOMAccountBindingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[ATOMAccountBindingTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        [cell.rightButton addTarget:self action:@selector(clickCellRightButton:) forControlEvents:UIControlEventTouchUpInside];
+//        [cell.rightButton addTarget:self action:@selector(clickCellRightButton:) forControlEvents:UIControlEventTouchUpInside];
     }
+    NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
-    if (row == 0) {
-        cell.themeImageView.image = [UIImage imageNamed:@"weibo"];
-        cell.themeLabel.text = @"新浪微博";
-    } else if (row == 1) {
-        cell.themeImageView.image = [UIImage imageNamed:@"qq"];
-        cell.themeLabel.text = @"QQ";
-    } else if (row == 2) {
-        cell.themeImageView.image = [UIImage imageNamed:@"wechat"];
-        cell.themeLabel.text = @"微信";
-        cell.rightButton.hidden = YES;
-    } else if (row == 3) {
-        cell.themeImageView.image = [UIImage imageNamed:@"tel"];
-        cell.phoneNumber = @"17731321949";
-        [cell.rightButton setTitle:@"修改" forState:UIControlStateNormal];
-    } else if (row == 4) {
-        [cell setFootCell];
+    if (section == 0) {
+        if (row == 0) {
+            cell.imageView.image = [UIImage imageNamed:@"weibo_login"];
+            cell.textLabel.text = @"新浪微博";
+            [cell addSwitch];
+        } else if (row == 1) {
+            cell.imageView.backgroundColor = [UIColor lightGrayColor];
+            cell.imageView.image = [UIImage imageNamed:@"wechat_login"];
+            cell.textLabel.text = @"微信";
+            [cell addSwitch];
+        }
+    } else if (section == 1) {
+        cell.textLabel.text = @"手机号";
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.phoneNumber = @"13128981404";
     }
+   
     return cell;
     
 }

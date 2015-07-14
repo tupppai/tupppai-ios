@@ -64,6 +64,7 @@
     _totalPSNumber = [NSString stringWithFormat:@"%d",(int)homeImage.totalWorkNumber];
     _width = homeImage.imageWidth;
     _height = homeImage.imageHeight;
+    NSLog(@"homeImage size %f %f",_width,_height);
     for (ATOMImageTipLabel *tipLabel in homeImage.tipLabelArray) {
         ATOMImageTipLabelViewModel *model = [ATOMImageTipLabelViewModel new];
         [model setViewModelData:tipLabel];

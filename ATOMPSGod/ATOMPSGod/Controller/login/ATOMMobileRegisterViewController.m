@@ -40,6 +40,7 @@
 #pragma mark - Click Event
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)sender {
+    NSLog(@"clickRightButtonItem");
     if (![self checkInputMessageSuccess]) {
         return ;
     }

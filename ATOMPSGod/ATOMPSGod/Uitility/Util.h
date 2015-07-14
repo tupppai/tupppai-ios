@@ -15,4 +15,5 @@
 +(void)loadingHud:(NSString*)message inView:(UIView*)view;
 +(void)dismissHud;
 +(void)dismissHud:(UIView*)view;
++(void)successHud:(NSString*)message inView:(UIView*)view;
 @end
