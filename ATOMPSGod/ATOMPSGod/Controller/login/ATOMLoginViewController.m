@@ -14,7 +14,7 @@
 #import "ATOMUser.h"
 #import "ATOMUserProfileViewModel.h"
 #import "ATOMCreateProfileViewController.h"
-
+#import "ATOMShareSDKModel.h"
 @interface ATOMLoginViewController ()
 @property (nonatomic, strong) ATOMLoginView *loginView;
 @end
@@ -57,11 +57,11 @@
 - (void)clickweiboLoginButton:(UIButton *)sender {
     
     ATOMLogin *loginModel = [ATOMLogin new];
-    [loginModel thirdPartyAuth:SSCShareTypeSinaWeibo withBlock:^(NSDictionary *sourceData) {
+    [ATOMShareSDKModel getUserInfo:SSCShareTypeSinaWeibo withBlock:^(NSDictionary *sourceData) {
         if (sourceData) {
-            NSString* id = sourceData[@"idstr"];
+            NSString* openID = sourceData[@"idstr"];
             NSMutableDictionary* param = [NSMutableDictionary new];
-            [param setObject:id forKey:@"openid"];
+            [param setObject:openID forKey:@"openid"];
             [loginModel openIDAuth:param AndType:@"weibo" withBlock:^(bool isRegister, NSString *info, NSError *error) {
                 if (isRegister) {
                     NSLog(@"微博登录成功");
@@ -96,7 +96,7 @@
 }
 - (void)clickwechatLoginButton:(UIButton *)sender {
     ATOMLogin *loginModel = [ATOMLogin new];
-    [loginModel thirdPartyAuth:ShareTypeWeixiTimeline withBlock:^(NSDictionary *sourceData) {
+    [ATOMShareSDKModel getUserInfo:ShareTypeWeixiTimeline withBlock:^(NSDictionary *sourceData) {
         if (sourceData) {
             NSString* openid = sourceData[@"openid"];
             NSMutableDictionary* param = [NSMutableDictionary new];

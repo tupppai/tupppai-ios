@@ -34,8 +34,8 @@ typedef enum {
 } ATOMDetailPushType;
 
 typedef enum {
-    ATOMHomepageHotType = 0,
-    ATOMHomepageAskType
+    ATOMHomepageViewTypeHot = 0,
+    ATOMHomepageViewTypeAsk
 }ATOMHomepageViewType;
 
 typedef enum {

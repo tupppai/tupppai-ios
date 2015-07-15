@@ -55,11 +55,11 @@
 
 - (void)changeUIAccording:(NSString *)buttonTitle {
     if ([buttonTitle isEqualToString:@"热门"]) {
-        _currentHomepageType = ATOMHomepageHotType;
+        _currentHomepageType = ATOMHomepageViewTypeHot;
         self.contentOffset = CGPointMake(0, 0);
         [_homepageHotTableView reloadData];
     } else if ([buttonTitle isEqualToString:@"最新"]) {
-        _currentHomepageType = ATOMHomepageAskType;
+        _currentHomepageType = ATOMHomepageViewTypeAsk;
         self.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
         [_homepageAskTableView reloadData];
     }

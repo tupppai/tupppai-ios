@@ -13,6 +13,7 @@
 
 - (void)setViewModelData:(ATOMReplier *)replier {
     _avatarURL = replier.avatar;
+    _uid = replier.uid;
 }
 
 @end

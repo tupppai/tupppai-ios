@@ -42,7 +42,7 @@ static CGFloat cellHeight = 70;
     _userNameLabel.font = [UIFont systemFontOfSize:kFont14];
     [self addSubview:_userNameLabel];
     
-    _attentionButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - kPadding15 - 24, 18, 24, 24)];
+    _attentionButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - kPadding15 - 33, 18, 33, 27)];
     _attentionButton.userInteractionEnabled = NO;
     [self addSubview:_attentionButton];
     _fansNumberLabel = [UILabel new];
@@ -76,7 +76,7 @@ static CGFloat cellHeight = 70;
     CGSize uploadSize = [_uploadNumberLabel.text boundingRectWithSize:CGSizeMake(MAXFLOAT, kFont10) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
     CGSize workSize = [_workNumberLabel.text boundingRectWithSize:CGSizeMake(MAXFLOAT, kFont10) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
     _userHeaderButton.frame = CGRectMake(kPadding15, (cellHeight - kUserHeaderButtonWidth) / 2, kUserHeaderButtonWidth, kUserHeaderButtonWidth);
-    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, CGRectGetMinY(_userHeaderButton.frame), kUserNameLabelWidth, kFont14);
+    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, CGRectGetMinY(_userHeaderButton.frame), kUserNameLabelWidth, kFont14+3);
     CGFloat labelOriginY = CGRectGetMaxY(_userNameLabel.frame) + kPadding5;
     _fansNumberLabel.frame = CGRectMake(kPadding15 + CGRectGetMaxX(_userHeaderButton.frame), labelOriginY, fansSize.width, kFont10);
     _view1.frame = CGRectMake(CGRectGetMaxX(_fansNumberLabel.frame) + kPadding5, labelOriginY + 2.5, 5, 5);

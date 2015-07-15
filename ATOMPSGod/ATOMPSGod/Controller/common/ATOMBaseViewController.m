@@ -30,7 +30,7 @@
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
-    self.view.backgroundColor = [UIColor colorWithHex:0xededed];
+//    self.view.backgroundColor = [UIColor colorWithHex:0xededed];
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil];
     [self.navigationController.navigationBar setTitleTextAttributes:attributes];
     self.navigationController.navigationBar.backgroundColor = [UIColor colorWithHex:0x74c3ff];
@@ -99,7 +99,6 @@
 -(void)postSocialShare:(NSInteger)id withSocialShareType:(ATOMSocialShareType)shareType withPageType:(ATOMPageType)pageType {
     ATOMShareModel* shareModel = [ATOMShareModel new];
     NSMutableDictionary* param = [NSMutableDictionary new];
-    
     NSString* shareTypeToServer;
     
     if (shareType == ATOMShareTypeWechatFriends) {

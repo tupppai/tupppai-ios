@@ -105,8 +105,7 @@
         [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
             NSString *stmt = [MTLFMDBAdapter updateStatementForModel:user];
             NSMutableArray *param = [[MTLFMDBAdapter columnValues:user] mutableCopy];
-            NSNumber* uid = [NSNumber numberWithInt:user.uid];
-            [param addObject:uid];
+            [param addObject:@(user.uid)];
             BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
             if (flag) {
                 NSLog(@"update user in DB succeed");

@@ -199,9 +199,9 @@
             }
             [ATOMReportModel report:param withBlock:^(NSError *error) {
                 UIView* view;
-                if (ws.scrollView.currentHomepageType == ATOMHomepageHotType) {
+                if (ws.scrollView.currentHomepageType == ATOMHomepageViewTypeHot) {
                     view = ws.scrollView.homepageHotView;
-                } else  if (ws.scrollView.currentHomepageType == ATOMHomepageAskType) {
+                } else  if (ws.scrollView.currentHomepageType == ATOMHomepageViewTypeAsk) {
                     view = ws.scrollView.homepageRecentView;
                 }
                 if(!error) {
@@ -303,15 +303,15 @@
     [[KShareManager mascotAnimator]show];
     ATOMShowHomepage *showHomepage = [ATOMShowHomepage new];
     NSArray * homepageArray = [[showHomepage getHomeImagesWithHomeType:homeType] mutableCopy];
-    if (homeType == ATOMHomepageHotType) {
+    if (homeType == ATOMHomepageViewTypeHot) {
         if (!homepageArray || homepageArray.count == 0) {//读服务器
             [self loadNewHotData];
         } else { //读数据库
-            _dataSourceOfHotTableView = [self fetchDBDataSourceWithHomeType:ATOMHomepageHotType];
-            _dataSourceOfRecentTableView = [self fetchDBDataSourceWithHomeType:ATOMHomepageAskType];
+            _dataSourceOfHotTableView = [self fetchDBDataSourceWithHomeType:ATOMHomepageViewTypeHot];
+            _dataSourceOfRecentTableView = [self fetchDBDataSourceWithHomeType:ATOMHomepageViewTypeAsk];
             [_scrollView.homepageHotTableView.header beginRefreshing];
         }
-    } else if (homeType == ATOMHomepageAskType) {
+    } else if (homeType == ATOMHomepageViewTypeAsk) {
         //数据库没有“求P”数据
         if (!homepageArray || homepageArray.count == 0) {
             [self loadNewRecentData];
@@ -370,18 +370,18 @@
             for (ATOMHomeImage *homeImage in homepageArray) {
                 ATOMAskPageViewModel *model = [ATOMAskPageViewModel new];
                 [model setViewModelData:homeImage];
-                if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageHotType) {
+                if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageViewTypeHot) {
                     [ws.dataSourceOfHotTableView addObject:model];
-                } else if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageAskType) {
+                } else if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageViewTypeAsk) {
                     [ws.dataSourceOfRecentTableView addObject:model];
                 }
             }
             [showHomepage saveHomeImagesInDB:homepageArray];
             
-            if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageHotType) {
+            if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageViewTypeHot) {
                 [ws.scrollView.homepageHotTableView reloadData];
                 [ws.scrollView.homepageHotTableView.header endRefreshing];
-            } else if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageAskType) {
+            } else if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageViewTypeAsk) {
                 [ws.scrollView.homepageAskTableView reloadData];
                 [ws.scrollView.homepageAskTableView.header endRefreshing];
             }
@@ -420,13 +420,13 @@
             for (ATOMHomeImage *homeImage in homepageArray) {
                 ATOMAskPageViewModel *model = [ATOMAskPageViewModel new];
                 [model setViewModelData:homeImage];
-                if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageHotType) {
+                if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageViewTypeHot) {
                     [ws.dataSourceOfHotTableView addObject:model];
-                } else if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageAskType) {
+                } else if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageViewTypeAsk) {
                     [ws.dataSourceOfRecentTableView addObject:model];
                 }
             }
-            if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageHotType) {
+            if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageViewTypeHot) {
                 [ws.scrollView.homepageHotTableView reloadData];
                 [ws.scrollView.homepageHotTableView.footer endRefreshing];
                 if (homepageArray.count == 0) {
@@ -434,7 +434,7 @@
                 } else {
                     ws.canRefreshHotFooter = YES;
                 }
-            } else if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageAskType) {
+            } else if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageViewTypeAsk) {
                 [ws.scrollView.homepageAskTableView reloadData];
                 [ws.scrollView.homepageAskTableView.footer endRefreshing];
                 if (homepageArray.count == 0) {
@@ -475,7 +475,7 @@
     _isfirstEnterHomepageRecentView = YES;
     _canRefreshHotFooter = YES;
     _canRefreshRecentFooter = YES;
-    [self firstGetDataSourceOfTableViewWithHomeType:ATOMHomepageHotType];
+    [self firstGetDataSourceOfTableViewWithHomeType:ATOMHomepageViewTypeHot];
 }
 
 - (void)configHomepageHotTableView {
@@ -530,7 +530,7 @@
     [_scrollView changeUIAccording:@"最新"];
     if (_isfirstEnterHomepageRecentView) {
         _isfirstEnterHomepageRecentView = NO;
-        [self firstGetDataSourceOfTableViewWithHomeType:ATOMHomepageAskType];
+        [self firstGetDataSourceOfTableViewWithHomeType:ATOMHomepageViewTypeAsk];
     }
 }
 
@@ -587,7 +587,7 @@
 #pragma mark - Gesture Event
 
 - (void)tapHomePageHotGesture:(UITapGestureRecognizer *)gesture {
-    if ([_scrollView typeOfCurrentHomepageView] == ATOMHomepageHotType) {
+    if ([_scrollView typeOfCurrentHomepageView] == ATOMHomepageViewTypeHot) {
         CGPoint location = [gesture locationInView:_scrollView.homepageHotTableView];
         NSIndexPath *indexPath = [_scrollView.homepageHotTableView indexPathForRowAtPoint:location];
         if (indexPath) {
@@ -644,7 +644,7 @@
 }
 
 - (void)tapHomePageRecentGesture:(UITapGestureRecognizer *)gesture {
-    if ([_scrollView typeOfCurrentHomepageView] == ATOMHomepageAskType) {
+    if ([_scrollView typeOfCurrentHomepageView] == ATOMHomepageViewTypeAsk) {
         CGPoint location = [gesture locationInView:_scrollView.homepageAskTableView];
         NSIndexPath *indexPath = [_scrollView.homepageAskTableView indexPathForRowAtPoint:location];
         if (indexPath) {
@@ -727,7 +727,7 @@
             [_scrollView changeUIAccording:@"最新"];
             if (_isfirstEnterHomepageRecentView) {
                 _isfirstEnterHomepageRecentView = NO;
-                [self firstGetDataSourceOfTableViewWithHomeType:ATOMHomepageAskType];
+                [self firstGetDataSourceOfTableViewWithHomeType:ATOMHomepageViewTypeAsk];
             }
         }
     }
@@ -781,11 +781,11 @@
 
 #pragma mark - ATOMViewControllerDelegate
 -(void)ATOMViewControllerDismissWithLiked:(BOOL)liked {
-    if (_scrollView.typeOfCurrentHomepageView == ATOMHomepageHotType) {
+    if (_scrollView.typeOfCurrentHomepageView == ATOMHomepageViewTypeHot) {
         //当从child viewcontroller 传来的liked变化的时候，toggle like.
         //to do:其实应该改变datasource的liked ,tableView reload的时候才能保持。
         [_selectedHotCell.praiseButton toggleLikeWhenSelectedChanged:liked];
-    } else if (_scrollView.typeOfCurrentHomepageView == ATOMHomepageAskType) {
+    } else if (_scrollView.typeOfCurrentHomepageView == ATOMHomepageViewTypeAsk) {
         [_selectedAskCell.praiseButton toggleLikeWhenSelectedChanged:liked];
     }
 }
@@ -793,14 +793,14 @@
 -(void)ATOMViewControllerDismissWithInfo:(NSDictionary *)info {
     bool liked = [info[@"liked"] boolValue];
     bool collected = [info[@"collected"]boolValue];
-    if (_scrollView.typeOfCurrentHomepageView == ATOMHomepageHotType) {
+    if (_scrollView.typeOfCurrentHomepageView == ATOMHomepageViewTypeHot) {
         //当从child viewcontroller 传来的liked变化的时候，toggle like.
         //to do:其实应该改变datasource的liked ,tableView reload的时候才能保持。
         [_selectedHotCell.praiseButton toggleLikeWhenSelectedChanged:liked];
         _selectedAskPageViewModel.collected = collected;
         NSLog(@"_selectedAskPageViewModel.collected %d",collected);
 
-    } else if (_scrollView.typeOfCurrentHomepageView == ATOMHomepageAskType) {
+    } else if (_scrollView.typeOfCurrentHomepageView == ATOMHomepageViewTypeAsk) {
         [_selectedAskCell.praiseButton toggleLikeWhenSelectedChanged:liked];
         _selectedAskPageViewModel.collected = collected;
     }

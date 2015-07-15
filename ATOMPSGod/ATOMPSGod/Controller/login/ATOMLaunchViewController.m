@@ -13,6 +13,8 @@
 #import "ATOMLogin.h"
 #import "AppDelegate.h"
 #import "ATOMMainTabBarController.h"
+#import "ATOMShareSDKModel.h"
+
 @interface ATOMLaunchViewController ()
 
 @property (nonatomic, strong) ATOMLaunchView *launchView;
@@ -40,7 +42,7 @@
 }
 - (void)clickWXRegisterButton:(UIButton *)sender {
     ATOMLogin *loginModel = [ATOMLogin new];
-    [loginModel thirdPartyAuth:ShareTypeWeixiTimeline withBlock:^(NSDictionary *sourceData) {
+    [ATOMShareSDKModel getUserInfo:ShareTypeWeixiTimeline withBlock:^(NSDictionary *sourceData) {
         if (sourceData) {
             NSString* openid = sourceData[@"openid"];
             NSMutableDictionary* param = [NSMutableDictionary new];

@@ -78,7 +78,7 @@
 
 - (NSURLSessionDataTask *)ShowHomepage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"ask/index" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"ShowHomepage responseObject%@",responseObject);
+//        NSLog(@"ShowHomepage responseObject%@",responseObject);
         NSLog(@"ShowHomepage  info%@",responseObject[@"info"]);
         NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
         if (ret != 1) {
@@ -89,7 +89,6 @@
             NSArray *imageDataArray = responseObject[@"data"];
             for (int i = 0; i < imageDataArray.count; i++) {
                 ATOMHomeImage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMHomeImage class] fromJSONDictionary:imageDataArray[i] error:NULL];
-                NSLog(homeImage.collected ? @"ShowHomepage Yes" : @"ShowHomepage No");
                 homeImage.homePageType = (NSString*)[param[@"type"] copy];
                 homeImage.tipLabelArray = [NSMutableArray array];
                 NSArray *labelDataArray = imageDataArray[i][@"labels"];

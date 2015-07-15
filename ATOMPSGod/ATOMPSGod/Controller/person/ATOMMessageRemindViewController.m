@@ -30,7 +30,6 @@
 
 - (void)createUI {
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
-    _tableView.backgroundColor = [UIColor colorWithHex:0xededed];
     _tableView.scrollEnabled = NO;
     _tableView.tableFooterView = [UIView new];
     _tableView.allowsSelection = NO;
@@ -63,15 +62,15 @@
     NSInteger row = indexPath.row;
     if (section == 0) {
         if (row == 0) {
-            cell.themeLabel.text = @"评论";
+            cell.textLabel.text = @"评论";
         } else if (row == 1) {
-            cell.themeLabel.text = @"帖子回复";
+            cell.textLabel.text = @"帖子回复";
         } else if (row == 2) {
-            cell.themeLabel.text = @"关注通知";
+            cell.textLabel.text = @"关注通知";
         } else if (row == 3) {
-            cell.themeLabel.text = @"邀请通知";
+            cell.textLabel.text = @"邀请通知";
         } else if (row == 4) {
-            cell.themeLabel.text = @"系统通知";
+            cell.textLabel.text = @"系统通知";
         }
     }
     return cell;
@@ -110,11 +109,10 @@
     } else {
         [param setObject:@0 forKey:@"value"];
     }
-    [ATOMShowSettings setPushSetting:param withBlock:^(NSDictionary *dic, NSError *error) {
-        
+    [ATOMShowSettings setPushSetting:param withBlock:^(NSError *error) {
+        if (error) {
+        }
     }];
-
-    NSLog(@"notificationSwitch.tag %ld",(long)notificationSwitch.tag);
 }
 #pragma mark - UIScrollViewDelegate
 

@@ -26,6 +26,10 @@ static ATOMCurrentUser *_currentUser;
     self = [super init];
     if (self) {
         _region = [NSMutableDictionary new];
+        _bindWechat = NO;
+        _bindWeibo = NO;
+        _mobile = @"-1";
+        _nickname = @"惹不起的雅";
     }
     return self;
 }
@@ -65,7 +69,6 @@ static ATOMCurrentUser *_currentUser;
 }
 
 - (void)setCurrentUser:(ATOMUser *)user {
-    NSLog(@"setCurrentUser");
     _uid = user.uid;
     _mobile = user.mobile;
     _password = @"";
@@ -82,6 +85,8 @@ static ATOMCurrentUser *_currentUser;
     _proceedingNumber = user.proceedingNumber;
     _attentionUploadNumber = user.attentionUploadNumber;
     _attentionWorkNumber = user.attentionWorkNumber;
+    _bindWechat = user.boundWechat;
+    _bindWeibo = user.boundWeibo;
 }
 
 -(void)tellMeEveryThingAboutYou {
@@ -95,7 +100,6 @@ static ATOMCurrentUser *_currentUser;
         [ATOMUserDAO insertUser:user];
         [self setCurrentUser:user];
     }
-    [self tellMeEveryThingAboutYou];
 }
 -(void)wipe {
     self.sourceData = nil;
@@ -106,7 +110,10 @@ static ATOMCurrentUser *_currentUser;
     self.avatar = @"";
     self.avatarID = 0;
     self.backgroundImage = @"";
+    self.bindWechat = NO;
+    self.bindWeibo = NO;
 }
+
 -(void)fetchCurrentUserInDB:(void (^)(BOOL))block {
   [ATOMUserDAO fetchUser:^(ATOMUser *user) {
       if (user) {

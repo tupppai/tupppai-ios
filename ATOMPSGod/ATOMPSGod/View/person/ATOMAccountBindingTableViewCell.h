@@ -9,10 +9,7 @@
 #import "ATOMBaseView.h"
 
 @interface ATOMAccountBindingTableViewCell : UITableViewCell
-
-//@property (nonatomic, strong) UIImageView *themeImageView;
-//@property (nonatomic, strong) UILabel *themeLabel;
-//@property (nonatomic, strong) UIButton *rightButton;
+@property (nonatomic, strong) UISwitch *bindSwitch;
 @property (nonatomic, strong) NSString *phoneNumber;
 -(void)addSwitch;
 //- (void)setFootCell;

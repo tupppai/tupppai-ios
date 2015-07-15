@@ -39,7 +39,7 @@ static CGFloat cellHeight = 70;
     _userNameLabel.font = [UIFont systemFontOfSize:kFont14];
     [self addSubview:_userNameLabel];
     
-    _attentionButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - kPadding15 - 24, 18, 24, 24)];
+    _attentionButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - kPadding15 - 33, 18, 33, 27)];
     _attentionButton.userInteractionEnabled = NO;
     [self addSubview:_attentionButton];
     _fansNumberLabel = [UILabel new];

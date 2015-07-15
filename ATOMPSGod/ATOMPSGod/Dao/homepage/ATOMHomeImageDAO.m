@@ -69,9 +69,9 @@
 - (NSArray *)selectHomeImagesWithHomeType:(ATOMHomepageViewType)homeType {
     __block NSMutableArray *muArray = [NSMutableArray array];
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
+        NSString* homeTypeStr = homeType == ATOMHomepageViewTypeHot?@"hot":@"recent";
         NSString *stmt = @"select * from ATOMHomeImage where homePageType = ?";
-        NSInteger HT = homeType==ATOMHomepageHotType?0:1;
-        NSArray *param =  @[@(HT)];
+        NSArray *param =  @[homeTypeStr];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {
             ATOMHomeImage *homeImage = [MTLFMDBAdapter modelOfClass:[ATOMHomeImage class] fromFMResultSet:rs error:NULL];

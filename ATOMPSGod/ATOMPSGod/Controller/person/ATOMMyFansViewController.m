@@ -135,12 +135,13 @@
         ATOMFansViewModel *viewModel = _dataSource[_selectedIndexPath.row];
         ATOMMyFansTableViewCell *cell = (ATOMMyFansTableViewCell *)[_tableView cellForRowAtIndexPath:_selectedIndexPath];
         CGPoint p = [gesture locationInView:cell];
-        if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
-            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-            opvc.userID = viewModel.uid;
-            opvc.userName = viewModel.userName;
-            [self pushViewController:opvc animated:YES];
-        } else if (CGRectContainsPoint(cell.attentionButton.frame, p)) {
+//        if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
+//            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+//            opvc.userID = viewModel.uid;
+//            opvc.userName = viewModel.userName;
+//            [self pushViewController:opvc animated:YES];
+//        }
+        if (CGRectContainsPoint(cell.attentionButton.frame, p)) {
             cell.attentionButton.selected = !cell.attentionButton.selected;
             NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(cell.viewModel.uid),@"uid", nil];
             [ATOMFollowModel follow:param withType:cell.attentionButton.selected withBlock:^(NSError *error) {
@@ -151,6 +152,11 @@
                     [Util TextHud:desc inView:self.view];
                 }
             }];
+        } else {
+            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+            opvc.userID = viewModel.uid;
+            opvc.userName = viewModel.userName;
+            [self pushViewController:opvc animated:YES];
         }
         
     }

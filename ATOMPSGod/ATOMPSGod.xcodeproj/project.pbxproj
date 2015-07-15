@@ -368,6 +368,8 @@
 		E9ECD5BD1B2E83B200173F49 /* WeChatConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9ECD5931B2D71A700173F49 /* WeChatConnection.framework */; };
 		E9FC94D91B2F0D0C00B72C60 /* ATOMUserProfileViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FC94D81B2F0D0C00B72C60 /* ATOMUserProfileViewModel.m */; };
 		E9FD023D1B29708200FC5E17 /* PWPageDetailViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD023C1B29708200FC5E17 /* PWPageDetailViewModel.m */; };
+		E9FF3FCD1B563B6D007AA3F6 /* ATOMShareSDKModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF3FCC1B563B6D007AA3F6 /* ATOMShareSDKModel.m */; };
+		E9FF3FD01B5650EB007AA3F6 /* ATOMShowUser.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF3FCF1B5650EB007AA3F6 /* ATOMShowUser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1093,6 +1095,10 @@
 		E9FC94D81B2F0D0C00B72C60 /* ATOMUserProfileViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATOMUserProfileViewModel.m; path = ATOMPSGod/Model/login/ATOMUserProfileViewModel.m; sourceTree = SOURCE_ROOT; };
 		E9FD023B1B29708200FC5E17 /* PWPageDetailViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PWPageDetailViewModel.h; path = ../PWPageDetailViewModel.h; sourceTree = "<group>"; };
 		E9FD023C1B29708200FC5E17 /* PWPageDetailViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PWPageDetailViewModel.m; path = ../PWPageDetailViewModel.m; sourceTree = "<group>"; };
+		E9FF3FCB1B563B6D007AA3F6 /* ATOMShareSDKModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShareSDKModel.h; sourceTree = "<group>"; };
+		E9FF3FCC1B563B6D007AA3F6 /* ATOMShareSDKModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShareSDKModel.m; sourceTree = "<group>"; };
+		E9FF3FCE1B5650EB007AA3F6 /* ATOMShowUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShowUser.h; sourceTree = "<group>"; };
+		E9FF3FCF1B5650EB007AA3F6 /* ATOMShowUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShowUser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1176,6 +1182,8 @@
 				5C4C70D51AB6FD5700358989 /* ATOMUploadImage.m */,
 				5C4C70E31AB7124F00358989 /* ATOMLogin.h */,
 				5C4C70E41AB7124F00358989 /* ATOMLogin.m */,
+				E9FF3FCB1B563B6D007AA3F6 /* ATOMShareSDKModel.h */,
+				E9FF3FCC1B563B6D007AA3F6 /* ATOMShareSDKModel.m */,
 			);
 			path = login;
 			sourceTree = "<group>";
@@ -1659,6 +1667,8 @@
 			isa = PBXGroup;
 			children = (
 				E93D23841B3FA57B0081F632 /* settings */,
+				E9FF3FCE1B5650EB007AA3F6 /* ATOMShowUser.h */,
+				E9FF3FCF1B5650EB007AA3F6 /* ATOMShowUser.m */,
 				E900AB571B4387360019BAEA /* ATOMShowReply.h */,
 				E900AB581B4387360019BAEA /* ATOMShowReply.m */,
 				5C5DDBC91AD3D0DC00F4B845 /* ATOMShowOtherUser.h */,
@@ -2919,6 +2929,7 @@
 				5C83A88B1AC66F910071A024 /* POPAnimationTracer.mm in Sources */,
 				5C6697A71AAFD242001FCF8A /* ATOMMyUploadCollectionViewCell.m in Sources */,
 				E900AB421B41153A0019BAEA /* AFHTTPSessionManager.m in Sources */,
+				E9FF3FCD1B563B6D007AA3F6 /* ATOMShareSDKModel.m in Sources */,
 				E90578A11B4E6F370066F39B /* ATOMFollowModel.m in Sources */,
 				E9CBFF4C1B5214FB00DC8ED4 /* SIAlertView.m in Sources */,
 				5C561A501AB7C8210052D4D5 /* ATOMImage.m in Sources */,
@@ -2934,6 +2945,7 @@
 				5C8502351AF39B7500724AC6 /* ATOMCollectionViewLabel.m in Sources */,
 				5CDB06681AA45C680089121E /* ATOMMobileRegisterViewController.m in Sources */,
 				5C561A701AB7C8C30052D4D5 /* MJRefreshConst.m in Sources */,
+				E9FF3FD01B5650EB007AA3F6 /* ATOMShowUser.m in Sources */,
 				5C67FB271AB2B41F004EFF05 /* ATOMHeaderImageCropperViewController.m in Sources */,
 				E95691AD1B22E88300DA84BB /* MTLJSONAdapter.m in Sources */,
 				E95691AB1B22E88300DA84BB /* EXTScope.m in Sources */,

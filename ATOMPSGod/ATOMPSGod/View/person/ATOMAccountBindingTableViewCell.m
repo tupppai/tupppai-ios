@@ -21,9 +21,9 @@
     return self;
 }
 -(void)addSwitch {
-    UISwitch* stc = [UISwitch new];
-    stc.onTintColor = [UIColor colorWithHex:0x00adef];
-    self.accessoryView = stc;
+     _bindSwitch = [UISwitch new];
+    _bindSwitch.onTintColor = [UIColor colorWithHex:0x00adef];
+    self.accessoryView = _bindSwitch;
 }
 //- (void)createSubView {
 //    _themeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(padding10, 6.5, 41, 40)];

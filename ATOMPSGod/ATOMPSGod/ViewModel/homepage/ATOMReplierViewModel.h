@@ -12,6 +12,8 @@
 @interface ATOMReplierViewModel : NSObject
 
 @property (nonatomic, copy) NSString *avatarURL;
+@property (nonatomic, assign) NSInteger uid;
+
 - (void)setViewModelData:(ATOMReplier *)replier;
 
 @end

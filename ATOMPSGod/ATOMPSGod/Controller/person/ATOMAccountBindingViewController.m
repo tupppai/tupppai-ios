@@ -9,7 +9,9 @@
 #import "ATOMAccountBindingViewController.h"
 #import "ATOMAccountBindingView.h"
 #import "ATOMAccountBindingTableViewCell.h"
-
+#import "ATOMShowSettings.h"
+#import "ATOMShareSDKModel.h"
+#import "ATOMShowUser.h"
 @interface ATOMAccountBindingViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) ATOMAccountBindingView *accountBindingView;
@@ -43,6 +45,10 @@
     } else {
         button.backgroundColor = [UIColor colorWithHex:0xcccccc];
     }
+}
+-(void)viewDidDisappear:(BOOL)animated {
+    [ATOMShowUser ShowUserInfo:^(ATOMUser *user, NSError *error) {
+    }];
 }
 
 #pragma mark - UITableViewDataSource
@@ -92,7 +98,6 @@
     ATOMAccountBindingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[ATOMAccountBindingTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-//        [cell.rightButton addTarget:self action:@selector(clickCellRightButton:) forControlEvents:UIControlEventTouchUpInside];
     }
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
@@ -101,33 +106,76 @@
             cell.imageView.image = [UIImage imageNamed:@"weibo_login"];
             cell.textLabel.text = @"新浪微博";
             [cell addSwitch];
+            [cell.bindSwitch setOn:[ATOMCurrentUser currentUser].bindWeibo];
         } else if (row == 1) {
             cell.imageView.backgroundColor = [UIColor lightGrayColor];
             cell.imageView.image = [UIImage imageNamed:@"wechat_login"];
             cell.textLabel.text = @"微信";
             [cell addSwitch];
+            [cell.bindSwitch setOn:[ATOMCurrentUser currentUser].bindWechat];
         }
+        [cell.bindSwitch addTarget:self action:@selector(toggleSwitch:) forControlEvents:UIControlEventValueChanged];
+        cell.bindSwitch.tag = indexPath.row;
+
     } else if (section == 1) {
         cell.textLabel.text = @"手机号";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.phoneNumber = @"13128981404";
+        if ([[ATOMCurrentUser currentUser].mobile isEqualToString:@"-1"]) {
+            cell.phoneNumber = @"未绑定";
+        } else {
+            cell.phoneNumber = [ATOMCurrentUser currentUser].mobile;
+        }
     }
    
     return cell;
     
 }
 
+-(void)toggleSwitch:(id)sender {
+    UISwitch *bindSwitch = sender;
+    NSString *type;
+    NSString* openIDKey;
+    int shareType = 99;
+    switch (bindSwitch.tag) {
+        case 0:
+            type = @"weibo";
+            shareType = SSCShareTypeSinaWeibo;
+            openIDKey = @"idstr";
+            break;
+        case 1:
+            type = @"weixin";
+            shareType = ShareTypeWeixiSession;
+            openIDKey = @"openid";
+            break;
+        default:
+            break;
+    }
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    [param setObject:type forKey:@"type"];
+    //1.如果想要绑定
+    if (bindSwitch.on) {
+        [ATOMShareSDKModel getUserInfo:shareType withBlock:^(NSDictionary *sourceData) {
+            NSString* openID = sourceData[openIDKey];
+            [param setObject:openID forKey:@"openid"];
+            [ATOMShowSettings setBindSetting:param withToggleBind:YES withBlock:^(NSError *error) {
+                if (error) {
+                    //绑定失败，回到原型
+                    bindSwitch.on = NO;
+                }
+            }];
 
-
-
-
-
-
-
-
-
-
-
+        }];
+    }
+    //2.如果想要取消绑定
+    else  {
+        [ATOMShowSettings setBindSetting:param withToggleBind:NO withBlock:^(NSError *error) {
+            //绑定失败，回到原型
+            if (error) {
+                bindSwitch.on = YES;
+            }
+        }];
+    }
+}
 
 
 

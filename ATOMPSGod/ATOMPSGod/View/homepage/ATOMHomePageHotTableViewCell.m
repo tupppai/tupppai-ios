@@ -203,7 +203,6 @@ static CGFloat replierWidth = 25;
     for (int i = 0; i < MIN(_viewModel.replierArray.count, defaultAvatarCount); i++) {
         ATOMReplierViewModel *replierViewModel = _viewModel.replierArray[i];
         UIImageView *imageView = _replierAvatars[defaultAvatarCount - MIN(_viewModel.replierArray.count, defaultAvatarCount) + i];
-//        imageView.hidden = NO;
         [imageView setImageWithURL:[NSURL URLWithString:replierViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     }
 }

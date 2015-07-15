@@ -35,7 +35,6 @@
              @"isMyFollow":@"is_fans",
              };
 }
-
 + (NSDictionary *)FMDBColumnsByPropertyKey {
     return @{
              @"uid" : @"uid",

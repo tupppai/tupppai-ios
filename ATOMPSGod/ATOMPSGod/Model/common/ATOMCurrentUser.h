@@ -75,6 +75,9 @@
  */
 @property (nonatomic, assign) NSInteger attentionWorkNumber;
 @property (nonatomic, assign) NSInteger avatarID;
+@property (nonatomic, assign) bool bindWechat;
+@property (nonatomic, assign) bool bindWeibo;
+
 
 + (ATOMCurrentUser *)currentUser;
 
