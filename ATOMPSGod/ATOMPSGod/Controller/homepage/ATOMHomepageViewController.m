@@ -351,7 +351,6 @@
     [param setObject:@(10) forKey:@"size"];
     ATOMShowHomepage *showHomepage = [ATOMShowHomepage new];
     [showHomepage clearHomePagesWithHomeType:homeType];
-
     [showHomepage ShowHomepage:param withBlock:^(NSMutableArray *homepageArray, NSError *error) {
      
         if (homepageArray && error == nil) {

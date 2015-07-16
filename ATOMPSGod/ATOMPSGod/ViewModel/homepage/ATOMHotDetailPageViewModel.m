@@ -44,14 +44,14 @@
     _labelArray = [askPageViewModel.labelArray mutableCopy];
     _liked = askPageViewModel.liked;
     _collected = askPageViewModel.collected;
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *path = [[NSString stringWithFormat:@"%@/HomePage", PATH_OF_DOCUMENT] stringByAppendingPathComponent:[NSString stringWithFormat:@"ATOMIMAGE-%d.jpg", (int)askPageViewModel.imageID]];
-    BOOL flag;
-    if ([fileManager fileExistsAtPath:path isDirectory:&flag]) {
-        _image = [UIImage imageWithContentsOfFile:path];
-    } else {
-        NSLog(@"image not exist in %@", path);
-    }
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//    NSString *path = [[NSString stringWithFormat:@"%@/HomePage", PATH_OF_DOCUMENT] stringByAppendingPathComponent:[NSString stringWithFormat:@"ATOMIMAGE-%d.jpg", (int)askPageViewModel.imageID]];
+//    BOOL flag;
+//    if ([fileManager fileExistsAtPath:path isDirectory:&flag]) {
+//        _image = [UIImage imageWithContentsOfFile:path];
+//    } else {
+//        NSLog(@"image not exist in %@", path);
+//    }
 }
 
 - (void)setViewModelDataWithDetailImage:(ATOMDetailImage *)detailImage {

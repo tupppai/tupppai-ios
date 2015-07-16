@@ -41,9 +41,8 @@ static CGFloat BOTTOMHEIGHT = 286;
     CGFloat labelHeight = 30;
     
     _bottomView = [[UIView alloc] initWithFrame:CGRectMake(kPadding5, CGRectGetMaxY(self.frame), SCREEN_WIDTH - 2 * kPadding5, BOTTOMHEIGHT)];
-    
     _bottomView.layer.cornerRadius = 5;
-    _bottomView.backgroundColor = [UIColor colorWithHex:0xededed];
+    _bottomView.backgroundColor = [UIColor whiteColor];
     [self addSubview:_bottomView];
     
     CGFloat buttonInterval = (CGWidth(_bottomView.frame) - 3 * kShareButtonWidth) / 4;

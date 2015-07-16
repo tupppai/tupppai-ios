@@ -53,6 +53,15 @@
     [hud show:YES];
     [hud hide:YES afterDelay:0.8];
 }
++(void)showSuccess:(NSString*)message {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+    hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hud_checkmark"]];
+    hud.mode = MBProgressHUDModeCustomView;
+    hud.labelText = message;
+    [hud show:YES];
+    [hud hide:YES afterDelay:0.8];
+}
+
 +(void)failureHud:(NSString*)message inView:(UIView*)view {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;

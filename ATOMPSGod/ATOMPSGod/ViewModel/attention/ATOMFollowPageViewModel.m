@@ -76,14 +76,14 @@
         [model setViewModelData:comment];
         [_commentArray addObject:model];
     }
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *path = [[NSString stringWithFormat:@"%@/CommonImage", PATH_OF_DOCUMENT] stringByAppendingPathComponent:[NSString stringWithFormat:@"ATOMIMAGE-%d.jpg", (int)commonImage.imageID]];
-    BOOL flag;
-    if ([fileManager fileExistsAtPath:path isDirectory:&flag]) {
-        _image = [UIImage imageWithContentsOfFile:path];
-    } else {
-        NSLog(@"image not exist in %@", path);
-    }
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//    NSString *path = [[NSString stringWithFormat:@"%@/CommonImage", PATH_OF_DOCUMENT] stringByAppendingPathComponent:[NSString stringWithFormat:@"ATOMIMAGE-%d.jpg", (int)commonImage.imageID]];
+//    BOOL flag;
+//    if ([fileManager fileExistsAtPath:path isDirectory:&flag]) {
+//        _image = [UIImage imageWithContentsOfFile:path];
+//    } else {
+//        NSLog(@"image not exist in %@", path);
+//    }
 }
 - (void)toggleLike{
     NSMutableDictionary *param = [NSMutableDictionary new];

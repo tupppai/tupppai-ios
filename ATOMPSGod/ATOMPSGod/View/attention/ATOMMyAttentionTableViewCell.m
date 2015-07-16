@@ -111,7 +111,7 @@ static CGFloat replierWidth = 25;
     CGFloat topViewHeight = 60;
     _topView.frame = CGRectMake(0, 0, SCREEN_WIDTH, topViewHeight);
     _userHeaderButton.frame = CGRectMake(kPadding15, (topViewHeight - kUserHeaderButtonWidth) / 2, kUserHeaderButtonWidth, kUserHeaderButtonWidth);
-    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, CGRectGetMinY(_userHeaderButton.frame), kUserNameLabelWidth, kFont14);
+    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, CGRectGetMinY(_userHeaderButton.frame), self.bounds.size.width - CGRectGetMaxX(_userHeaderButton.frame) - kPadding10 , kFont14+3);
     _userPublishTimeLabel.frame = CGRectMake(CGRectGetMinX(_userNameLabel.frame), CGRectGetMaxY(_userHeaderButton.frame) - kFont10, kUserNameLabelWidth, kFont10);
     
     CGSize workImageSize = CGSizeZero;

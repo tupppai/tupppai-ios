@@ -64,7 +64,6 @@ static ATOMCurrentUser *_currentUser;
         default:
             break;
     }
-    
     return [dict mutableCopy];
 }
 

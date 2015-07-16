@@ -52,7 +52,7 @@
 //    self.navigationItem.hidesBackButton = YES;
 }
 -(void) signOut {
-    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"大神来通知" andMessage:@"为了更好为你服务，请重新登录"];
+    SIAlertView *alertView = [KShareManager signOutAlertView];
     [alertView addButtonWithTitle:@"好咯"
                              type:SIAlertViewButtonTypeDefault
                           handler:^(SIAlertView *alert) {
@@ -119,6 +119,7 @@
     }];
 }
 - (void)postSocialShareShareSdk:(ATOMShare*)share  withShareType:(ATOMSocialShareType)shareType {
+
     ShareType type;
     
     if (shareType == ATOMShareTypeWechatFriends) {
@@ -128,7 +129,7 @@
     } else if (shareType == ATOMShareTypeSinaWeibo) {
         type = SSCShareTypeSinaWeibo;
     }
-//    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"shareIcon" ofType:@"png"];
+
     NSString* shareUrl;
     if ([share.type isEqualToString:@"image"]) {
         shareUrl = share.imageUrl;

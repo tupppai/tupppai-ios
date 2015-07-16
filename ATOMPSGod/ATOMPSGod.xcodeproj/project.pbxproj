@@ -370,6 +370,7 @@
 		E9FD023D1B29708200FC5E17 /* PWPageDetailViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD023C1B29708200FC5E17 /* PWPageDetailViewModel.m */; };
 		E9FF3FCD1B563B6D007AA3F6 /* ATOMShareSDKModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF3FCC1B563B6D007AA3F6 /* ATOMShareSDKModel.m */; };
 		E9FF3FD01B5650EB007AA3F6 /* ATOMShowUser.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF3FCF1B5650EB007AA3F6 /* ATOMShowUser.m */; };
+		E9FF3FD61B575C1C007AA3F6 /* ATOMCommonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF3FD51B575C1C007AA3F6 /* ATOMCommonModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1099,6 +1100,8 @@
 		E9FF3FCC1B563B6D007AA3F6 /* ATOMShareSDKModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShareSDKModel.m; sourceTree = "<group>"; };
 		E9FF3FCE1B5650EB007AA3F6 /* ATOMShowUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShowUser.h; sourceTree = "<group>"; };
 		E9FF3FCF1B5650EB007AA3F6 /* ATOMShowUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShowUser.m; sourceTree = "<group>"; };
+		E9FF3FD41B575C1C007AA3F6 /* ATOMCommonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMCommonModel.h; sourceTree = "<group>"; };
+		E9FF3FD51B575C1C007AA3F6 /* ATOMCommonModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMCommonModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1165,6 +1168,8 @@
 				5C4C70B31AB6A60C00358989 /* ATOMHTTPRequestOperationManager.m */,
 				5C4C70C31AB6BC5200358989 /* ATOMBaseRequest.h */,
 				5C4C70C41AB6BC5200358989 /* ATOMBaseRequest.m */,
+				E9FF3FD41B575C1C007AA3F6 /* ATOMCommonModel.h */,
+				E9FF3FD51B575C1C007AA3F6 /* ATOMCommonModel.m */,
 				5C4C70C61AB6E20800358989 /* ATOMCurrentUser.h */,
 				5C4C70C71AB6E20800358989 /* ATOMCurrentUser.m */,
 			);
@@ -2686,6 +2691,7 @@
 				E900AB491B41153A0019BAEA /* AFNetworkActivityIndicatorManager.m in Sources */,
 				5C83A8891AC66F910071A024 /* POPAnimationExtras.mm in Sources */,
 				5C54DF291AB9810B00BDE34D /* ATOMImageTipLabel.m in Sources */,
+				E9FF3FD61B575C1C007AA3F6 /* ATOMCommonModel.m in Sources */,
 				5C6697AA1AAFD348001FCF8A /* ATOMMyCollectionViewController.m in Sources */,
 				5C4C70B41AB6A60C00358989 /* ATOMHTTPRequestOperationManager.m in Sources */,
 				5C561A851AB80F400052D4D5 /* ATOMOtherPersonCollectionHeaderView.m in Sources */,

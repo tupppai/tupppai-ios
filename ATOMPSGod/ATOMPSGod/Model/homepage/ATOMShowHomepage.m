@@ -108,7 +108,7 @@
                         [homeImage.replierArray addObject:replier];
                     }
                 }
-                NSLog(@"homeImage %@ ",homeImage);
+//                NSLog(@"homeImage %@ ",homeImage);
                 [homepageArray addObject:homeImage];
             }
             if (block) {
@@ -130,35 +130,38 @@
             [self.homeImageDAO updateHomeImage:homeImage];
         } else {
             [self.homeImageDAO insertHomeImage:homeImage];
-            //创建HomePage目录
-            NSFileManager *fileManager = [NSFileManager defaultManager];
-            NSString *homePageDirectory = [PATH_OF_DOCUMENT stringByAppendingPathComponent:@"HomePage"];
-            BOOL flag;
-            if ([fileManager fileExistsAtPath:homePageDirectory isDirectory:&flag]) {
-                if (flag) {
-                    NSLog(@"HomePage directory already exists");
-                }
-            } else {
-                BOOL bo = [fileManager createDirectoryAtPath:homePageDirectory withIntermediateDirectories:YES attributes:nil error:NULL];
-                if (bo) {
-                    NSLog(@"create HomePage directory success");
-                } else {
-                    NSLog(@"create HomePage directory fail");
-                }
-            }
-            //将图片写入沙盒中的HomePage目录下
-            dispatch_queue_t q = dispatch_queue_create("LoadImage", NULL);
-            dispatch_async(q, ^{
-                NSURL *imageURL = [NSURL URLWithString:homeImage.imageURL];
-                NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-                UIImage *image = [UIImage imageWithData:imageData];
-                NSString *path = [homePageDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"ATOMIMAGE-%d.jpg", (int)homeImage.imageID]];
-                if ([UIImageJPEGRepresentation(image, 1) writeToFile:path atomically:YES]) {
-//                    NSLog(@"write ATOMIMAGE-%d success", (int)homeImage.imageID);
-                } else {
-                    NSLog(@"write ATOMIMAGE-%d fail in %@", (int)homeImage.imageID, path);
-                }
-            });
+            
+            //！没有必要把图片存起来，AFNetworking已经cached了图片。
+            
+//            //创建HomePage目录
+//            NSFileManager *fileManager = [NSFileManager defaultManager];
+//            NSString *homePageDirectory = [PATH_OF_DOCUMENT stringByAppendingPathComponent:@"HomePage"];
+//            BOOL flag;
+//            if ([fileManager fileExistsAtPath:homePageDirectory isDirectory:&flag]) {
+//                if (flag) {
+//                    NSLog(@"HomePage directory already exists");
+//                }
+//            } else {
+//                BOOL bo = [fileManager createDirectoryAtPath:homePageDirectory withIntermediateDirectories:YES attributes:nil error:NULL];
+//                if (bo) {
+//                    NSLog(@"create HomePage directory success");
+//                } else {
+//                    NSLog(@"create HomePage directory fail");
+//                }
+//            }
+//            //将图片写入沙盒中的HomePage目录下
+//            dispatch_queue_t q = dispatch_queue_create("LoadImage", NULL);
+//            dispatch_async(q, ^{
+//                NSURL *imageURL = [NSURL URLWithString:homeImage.imageURL];
+//                NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+//                UIImage *image = [UIImage imageWithData:imageData];
+//                NSString *path = [homePageDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"ATOMIMAGE-%d.jpg", (int)homeImage.imageID]];
+//                if ([UIImageJPEGRepresentation(image, 1) writeToFile:path atomically:YES]) {
+////                    NSLog(@"write ATOMIMAGE-%d success", (int)homeImage.imageID);
+//                } else {
+//                    NSLog(@"write ATOMIMAGE-%d fail in %@", (int)homeImage.imageID, path);
+//                }
+//            });
         }
         //插入标签
         NSArray *labels = homeImage.tipLabelArray;
@@ -205,41 +208,43 @@
     [self.imageTipLabelDAO clearTipLabels];
     //清空ATOMReplier数据库
     [self.replierDAO clearReplier];
-    //删除沙盒中HomePage文件夹
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *directory = [NSString stringWithFormat:@"%@/HomePage", PATH_OF_DOCUMENT];
-    NSArray *fileContents = [fileManager contentsOfDirectoryAtPath:directory error:NULL];
-    NSEnumerator *e =[fileContents objectEnumerator];
-    NSString *filename;
-    while (filename = [e nextObject]) {
-        BOOL bo = [fileManager removeItemAtPath:[directory stringByAppendingPathComponent:filename] error:NULL];
-        if (bo) {
-            NSLog(@"remove HomePageImage success");
-        } else {
-            NSLog(@"remove HomePageImage fail");
-        }
-    }
+    
+//    //删除沙盒中HomePage文件夹
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//    NSString *directory = [NSString stringWithFormat:@"%@/HomePage", PATH_OF_DOCUMENT];
+//    NSArray *fileContents = [fileManager contentsOfDirectoryAtPath:directory error:NULL];
+//    NSEnumerator *e =[fileContents objectEnumerator];
+//    NSString *filename;
+//    while (filename = [e nextObject]) {
+//        BOOL bo = [fileManager removeItemAtPath:[directory stringByAppendingPathComponent:filename] error:NULL];
+//        if (bo) {
+//            NSLog(@"remove HomePageImage success");
+//        } else {
+//            NSLog(@"remove HomePageImage fail");
+//        }
+//    }
 }
 - (void)clearHomePagesWithHomeType:(NSString *)homeType {
+    NSLog(@"clearHomePagesWithHomeType");
     [self.homeImageDAO clearHomeImagesWithHomeType:homeType];
     //清空标签数据库
     [self.imageTipLabelDAO clearTipLabels];
     //清空ATOMReplier数据库
     [self.replierDAO clearReplier];
     //删除沙盒中HomePage文件夹
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *directory = [NSString stringWithFormat:@"%@/HomePage", PATH_OF_DOCUMENT];
-    NSArray *fileContents = [fileManager contentsOfDirectoryAtPath:directory error:NULL];
-    NSEnumerator *e =[fileContents objectEnumerator];
-    NSString *filename;
-    while (filename = [e nextObject]) {
-        BOOL bo = [fileManager removeItemAtPath:[directory stringByAppendingPathComponent:filename] error:NULL];
-        if (bo) {
-            NSLog(@"remove HomePageImage success");
-        } else {
-            NSLog(@"remove HomePageImage fail");
-        }
-    }
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//    NSString *directory = [NSString stringWithFormat:@"%@/HomePage", PATH_OF_DOCUMENT];
+//    NSArray *fileContents = [fileManager contentsOfDirectoryAtPath:directory error:NULL];
+//    NSEnumerator *e =[fileContents objectEnumerator];
+//    NSString *filename;
+//    while (filename = [e nextObject]) {
+//        BOOL bo = [fileManager removeItemAtPath:[directory stringByAppendingPathComponent:filename] error:NULL];
+//        if (bo) {
+//            NSLog(@"remove HomePageImage success");
+//        } else {
+//            NSLog(@"remove HomePageImage fail");
+//        }
+//    }
 }
 
 

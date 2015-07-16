@@ -14,6 +14,7 @@
 #import "WeiboSDK.h"
 #import "WXApi.h"
 #import "ATOMBaseDAO.h"
+
 @interface AppDelegate ()
 
 @end

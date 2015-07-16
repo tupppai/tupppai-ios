@@ -65,10 +65,6 @@
         NSLog(@"setPushSetting error %@",error);
     }];
 }
-
-//+ (NSURLSessionDataTask *)getBindSetting:(NSDictionary *)param withBlock:(void (^)(NSDictionary *, NSError *))block {
-//    
-//}
 + (NSURLSessionDataTask *)setBindSetting:(NSDictionary *)param withToggleBind:(BOOL)bind withBlock:(void (^)(NSError *))block {
     NSLog(@"setBindSetting param %@ ",param);
     NSString* url = bind?@"auth/bind":@"auth/unbind";

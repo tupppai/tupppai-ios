@@ -8,7 +8,7 @@
 
 #import "ATOMUserFeedbackViewController.h"
 #import "ATOMUserFeedbackView.h"
-
+#import "ATOMCommonModel.h"
 @interface ATOMUserFeedbackViewController () <UITextViewDelegate, UITextFieldDelegate>
 
 @property (nonatomic, strong) ATOMUserFeedbackView *userFeedbackView;
@@ -32,8 +32,8 @@
 
 - (void)createUI {
     UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
+    rightButtonItem.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightButtonItem;
-    
     _userFeedbackView = [ATOMUserFeedbackView new];
     self.view = _userFeedbackView;
     _userFeedbackView.feedbackTextView.delegate = self;
@@ -43,7 +43,20 @@
 #pragma mark - Click Event
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)barButtonItem {
-    
+    if (_userFeedbackView.feedbackTextView.text.length <= 0) {
+        [Util TextHud:@"请输入你的建议" inView:self.view];
+    } else {
+        NSMutableDictionary *param = [NSMutableDictionary new];
+        [param setObject:_userFeedbackView.feedbackTextView.text forKey:@"content"];
+        [param setObject:_userFeedbackView.contactTextField.text forKey:@"contact"];
+        [ATOMCommonModel post:param withUrl:@"feedback/save" withBlock:^(NSError *error) {
+            if (error) {
+            } else {
+                [Util showSuccess:@"感谢你的反馈💗"];
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        }];
+    }
 }
 
 #pragma mark - UITextViewDelegate

@@ -129,7 +129,6 @@
 }
 - (void)clearHomeImagesWithHomeType:(NSString *)homeType {
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
-
         NSString *stmt = @"delete from ATOMHomeImage where homePageType = ?";
         NSArray *param = @[homeType];
         BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];

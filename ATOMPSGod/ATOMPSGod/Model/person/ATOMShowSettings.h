@@ -12,7 +12,5 @@
 @interface ATOMShowSettings : NSObject
 + (NSURLSessionDataTask *)getPushSetting:(NSDictionary *)param withBlock:(void (^)(NSDictionary *, NSError *))block;
 + (NSURLSessionDataTask *)setPushSetting:(NSDictionary *)param withBlock:(void (^)(NSError *))block ;
-
-+ (NSURLSessionDataTask *)getBindSetting:(NSDictionary *)param withBlock:(void (^)(NSDictionary *, NSError *))block;
 + (NSURLSessionDataTask *)setBindSetting:(NSDictionary *)param withToggleBind:(BOOL)bind withBlock:(void (^)(NSError *))block;
 @end

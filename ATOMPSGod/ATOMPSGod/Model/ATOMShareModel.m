@@ -24,7 +24,6 @@
                 block(share, nil);
             }
         } else {
-            
             if (block) {
                 block(nil, nil);
             }
@@ -37,6 +36,22 @@
         }
     }];
 }
+
+//
+//-(void)shareOnWechatMoments:(NSInteger)id withPageType:(ATOMPageType)pageType {
+//    ATOMShareModel* shareModel = [ATOMShareModel new];
+//    NSMutableDictionary* param = [NSMutableDictionary new];
+//    NSString* shareTypeToServer;
+//    
+//    [param setObject:shareTypeToServer forKey:@"share_type"];
+//    [param setObject:@(pageType) forKey:@"type"];
+//    [param setObject:@(id) forKey:@"target_id"];
+//    [shareModel getShareInfo:param withBlock:^(ATOMShare *share, NSError *error) {
+//        if (share) {
+//            [self postSocialShareShareSdk:share withShareType:shareType];
+//        }
+//    }];
+//}
 
 
 @end
