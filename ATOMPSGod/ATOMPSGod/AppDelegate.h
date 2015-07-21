@@ -13,7 +13,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, strong) UINavigationController *baseNav;
-@property (nonatomic, strong) ATOMMainTabBarController *mainTarBarController;
+@property (nonatomic, strong) ATOMMainTabBarController *mainTabBarController;
 
 + (AppDelegate *)APP;
 

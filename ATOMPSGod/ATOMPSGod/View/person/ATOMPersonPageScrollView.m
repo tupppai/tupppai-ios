@@ -18,8 +18,9 @@
     }
     return self;
 }
+float kPadding2 = 2;
 static float cellWidth;
-static float cellHeight = 150;
+static float cellHeight;
 static int collumnNumber = 3;
 
 - (void)configSelf {
@@ -30,15 +31,16 @@ static int collumnNumber = 3;
     self.pagingEnabled = YES;
 }
 - (void)createSubView {
-    cellWidth = (SCREEN_WIDTH - (collumnNumber - 1) *kPadding5) / 3;
+    cellWidth = (SCREEN_WIDTH - (collumnNumber - 1) * kPadding2) / 3;
+    cellHeight = (SCREEN_WIDTH - (collumnNumber - 1) * kPadding2) / 3;
     [self createHomepageHotView];
     [self createHomepageRecentView];
 }
 - (UICollectionViewFlowLayout *)customFlowLayout {
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.itemSize =CGSizeMake(cellWidth, cellHeight);
-    flowLayout.minimumInteritemSpacing = kPadding5;
-    flowLayout.minimumLineSpacing = kPadding5;
+    flowLayout.minimumInteritemSpacing = 1;
+    flowLayout.minimumLineSpacing = 1;
     return flowLayout;
 }
 - (void)createHomepageHotView {

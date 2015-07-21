@@ -20,8 +20,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.image = [[UIImage imageNamed:@"pic_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
-//        self.backgroundColor = [UIColor orangeColor];
+//        self.image = [[UIImage imageNamed:@"pic_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
         [self createSubView];
     }
     return self;

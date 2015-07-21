@@ -20,15 +20,37 @@
         [[KShareManager mascotAnimator]dismiss];
         NSLog(@"SubmitUserInformation param%@",param);
         NSLog(@"SubmitUserInformation responseObject %@ ,\n info %@",responseObject,responseObject[@"info"]);
-        if (responseObject[@"data"]) {
-            ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:responseObject[@"data"] error:NULL];
-            [[ATOMCurrentUser currentUser]saveAndUpdateUser:user];
+        NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
+        if (ret == 1) {
+            if (responseObject[@"data"]) {
+                ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:responseObject[@"data"] error:NULL];
+                [[ATOMCurrentUser currentUser]saveAndUpdateUser:user];
+                if (block) {
+                    block(nil);
+                }
+            } else {
+                NSError* error = [NSError new];
+                if (block) {
+                    block(error);
+                }
+                NSLog(@"返回的数据为空");
+            }
+            if (block) {
+                block(nil);
+            }
+        } else if (ret == 0) {
+            NSError* error = [NSError new];
+            if (block) {
+                block(error);
+            }
+            
         } else {
-            NSLog(@"返回的数据为空");
+            NSError* error = [NSError new];
+            if (block) {
+                block(error);
+            }
         }
-        if (block) {
-            block(nil);
-        }
+
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [[KShareManager mascotAnimator]dismiss];
         if (block) {

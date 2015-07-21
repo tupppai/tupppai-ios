@@ -12,7 +12,6 @@
 //shareSDK 获取 用户手机的第三方平台的信息
 + (void)getUserInfo:(ShareType)type withBlock:(void (^)(NSDictionary* sourceData))block{
     [Util loadingHud:@""];
-    NSLog(@"查看Iphone是否有登录的（微博，微信）客户端，并索取数据");
     [ShareSDK getUserInfoWithType:type authOptions:nil result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error) {
         [Util dismissHud];
         NSLog(@"result %d, userInfo %@,error %@",result,userInfo,error);

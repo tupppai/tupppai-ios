@@ -80,11 +80,11 @@
     _currentPage = 1;
     [param setObject:@(_currentPage) forKey:@"page"];
 //    [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
-    [param setObject:@"new" forKey:@"type"];
+//    [param setObject:@"new" forKey:@"type"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
 //    [param setObject:@"time" forKey:@"sort"];
 //    [param setObject:@"desc" forKey:@"order"];
-    [param setObject:@(15) forKey:@"size"];
+    [param setObject:@(10) forKey:@"size"];
     ATOMShowProceeding *showProceeding = [ATOMShowProceeding new];
     [showProceeding ShowProceeding:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         if (resultArray.count) {

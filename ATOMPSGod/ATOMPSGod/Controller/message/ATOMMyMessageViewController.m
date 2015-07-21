@@ -95,6 +95,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.navigationController.topViewController != self) {
+        return;
+    }
     NSInteger row = indexPath.row;
     if (row == 0) {
         ATOMCommentMessageViewController *cmvc = [ATOMCommentMessageViewController new];

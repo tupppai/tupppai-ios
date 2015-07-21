@@ -159,6 +159,8 @@
                 if (error) {
                     //绑定失败，回到原型
                     bindSwitch.on = NO;
+                }else {
+                    [Util successHud:@"绑定成功" inView:self.view];
                 }
             }];
 
@@ -170,6 +172,8 @@
             //绑定失败，回到原型
             if (error) {
                 bindSwitch.on = YES;
+            } else {
+                [Util successHud:@"已解绑" inView:self.view];
             }
         }];
     }

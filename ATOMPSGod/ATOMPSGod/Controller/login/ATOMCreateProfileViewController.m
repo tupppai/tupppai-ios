@@ -76,7 +76,7 @@
     [_createProfileView.sexView addGestureRecognizer:self.tapSexViewGesture];
     _createProfileView.sexPickerView.delegate = self;
     _createProfileView.sexPickerView.dataSource = self;
-    
+    _createProfileView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
     [_createProfileView.areaView addGestureRecognizer:self.tapRegionViewGesture];
     _createProfileView.regionPickerView.delegate = self;
     _createProfileView.regionPickerView.dataSource = self;
@@ -151,8 +151,8 @@
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)sender {
     NSString *str = _createProfileView.nicknameTextField.text;
-    if (str.length < 4) {
-        [Util TextHud:@"昵称不能低于4位"];
+    if (str.length < 2) {
+        [Util TextHud:@"昵称不能低于2位"];
         return ;
     } else if (str.length > 8) {
         [Util TextHud:@"昵称不能大于8位"];
@@ -195,9 +195,11 @@
 #pragma mark - Gesture Event
 
 - (void)tapSexViewGesture:(UITapGestureRecognizer *)gesture {
+    [_createProfileView.nicknameTextField resignFirstResponder];
     [_createProfileView showSexPickerView];
 }
 - (void)tapRegionViewGesture:(UITapGestureRecognizer *)gesture {
+    [_createProfileView.nicknameTextField resignFirstResponder];
     [_createProfileView showRegionPickerView];
 }
 #pragma mark - UIImagePickerControllerDelegate
@@ -238,8 +240,8 @@
     if (str.length == 0) {
         [Util TextHud:@"昵称不能为空..."];
         return NO;
-    } else if (str.length >= 6) {
-        [Util TextHud:@"昵称不能大于6位..."];
+    } else if (str.length > 8) {
+        [Util TextHud:@"昵称不能大于8位..."];
         return NO;
     }
     [_createProfileView.nicknameTextField resignFirstResponder];

@@ -414,6 +414,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
     } else {
         ATOMAskPageViewModel *homepageViewModel = _workHomeImageDataSource[indexPath.row];
         ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
+        hdvc.fold = 1;
         hdvc.askPageViewModel = homepageViewModel;
         [self pushViewController:hdvc animated:YES];
     }

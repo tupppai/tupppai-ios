@@ -32,7 +32,7 @@
     [[ATOMCurrentUser currentUser]fetchCurrentUserInDB:^(BOOL hasCurrentUser) {
         if (hasCurrentUser) {
             NSLog(@"hasCurrentUser");
-            self.window.rootViewController = self.mainTarBarController;
+            self.window.rootViewController = self.mainTabBarController;
         } else {
             NSLog(@"hasCurrentUser == false");
             ATOMLaunchViewController *lvc = [[ATOMLaunchViewController alloc] init];
@@ -63,14 +63,14 @@
 }
 - (void)setCommonNavigationStyle {
     [[UINavigationBar appearance] setBarTintColor:kBlueColor];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
-- (ATOMMainTabBarController *)mainTarBarController {
-    if (_mainTarBarController == nil) {
-        _mainTarBarController = [ATOMMainTabBarController new];
+- (ATOMMainTabBarController *)mainTabBarController {
+    if (_mainTabBarController == nil) {
+        _mainTabBarController = [ATOMMainTabBarController new];
     }
-    return _mainTarBarController;
+    return _mainTabBarController;
 }
 
 #pragma mark - Share

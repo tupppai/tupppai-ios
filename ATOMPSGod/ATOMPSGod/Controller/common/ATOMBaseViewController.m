@@ -25,12 +25,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(signOut) name:@"SignOut" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorEccured) name:@"ErrorOccurred" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(signOutRET) name:@"SignOut" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorEccuredRET) name:@"ErrorOccurred" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showInfoRET:) name:@"ShowInfo" object:nil];
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
-//    self.view.backgroundColor = [UIColor colorWithHex:0xededed];
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil];
     [self.navigationController.navigationBar setTitleTextAttributes:attributes];
     self.navigationController.navigationBar.backgroundColor = [UIColor colorWithHex:0x74c3ff];
@@ -51,7 +51,7 @@
     }
 //    self.navigationItem.hidesBackButton = YES;
 }
--(void) signOut {
+-(void) signOutRET {
     SIAlertView *alertView = [KShareManager signOutAlertView];
     [alertView addButtonWithTitle:@"好咯"
                              type:SIAlertViewButtonTypeDefault
@@ -67,12 +67,16 @@
     alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
     [alertView show];
 }
--(void) errorEccured {
+-(void) errorEccuredRET {
     [Util TextHud:@"出现未知错误" inView:self.view];
 }
+-(void) showInfoRET:(NSNotification *)notification {
+    NSString* info = [[notification userInfo] valueForKey:@"info"];
+    [Util TextHud:info inView:self.view];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
@@ -121,34 +125,39 @@
 - (void)postSocialShareShareSdk:(ATOMShare*)share  withShareType:(ATOMSocialShareType)shareType {
 
     ShareType type;
-    
-    if (shareType == ATOMShareTypeWechatFriends) {
-        type = ShareTypeWeixiSession;
-    } else if (shareType == ATOMShareTypeWechatMoments) {
-        type = ShareTypeWeixiTimeline;
-    } else if (shareType == ATOMShareTypeSinaWeibo) {
-        type = SSCShareTypeSinaWeibo;
-    }
-
     NSString* shareUrl;
+    
     if ([share.type isEqualToString:@"image"]) {
         shareUrl = share.imageUrl;
     } else {
         shareUrl = share.url;
     }
-    NSString* shareTitle = [NSString stringWithFormat:@"%@!%@",share.title,@""];
+    
+    NSString* shareTitle;
+
+    
+    if (shareType == ATOMShareTypeWechatFriends) {
+        type = ShareTypeWeixiSession;
+        shareTitle = [NSString stringWithFormat:@"%@",share.title];
+    } else if (shareType == ATOMShareTypeWechatMoments) {
+        type = ShareTypeWeixiTimeline;
+        shareTitle = [NSString stringWithFormat:@"%@",share.title];
+    } else if (shareType == ATOMShareTypeSinaWeibo) {
+        type = SSCShareTypeSinaWeibo;
+        shareTitle = [NSString stringWithFormat:@"#求PS大神#%@!点击链接%@",share.title,shareUrl];
+    }
 //    NSString* shareTitle = [NSString stringWithFormat:@"%@!%@,%@",share.title,@"小瑞子",shareUrl];
 
     id<ISSContent> publishContent = [ShareSDK content:shareTitle //微博显示的文字
                                        defaultContent:share.title
                                                 image:[ShareSDK imageWithUrl:share.imageUrl]
                                                 title:shareTitle
-                                                  url:@"http://ipeiwei.xyz/2015/06/29/xiaoruizi/"
+                                                  url:shareUrl
                                           description:share.desc
                                             mediaType:SSPublishContentMediaTypeNews];
     [ShareSDK clientShareContent:publishContent //内容对象
                             type:type //平台类型
-                   statusBarTips:YES
+                   statusBarTips:NO
                           result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {//返回事件
                               [[KShareManager mascotAnimator]dismiss];
                               if (state == SSPublishContentStateSuccess)

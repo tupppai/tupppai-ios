@@ -26,7 +26,7 @@
             NSArray *param = [MTLFMDBAdapter columnValues:replier];
             BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
             if (flag) {
-                NSLog(@"add replier success");
+//                NSLog(@"add replier success");
             } else {
                 NSLog(@"add replier fail");
             }
@@ -43,7 +43,7 @@
             [param addObject:@(replier.replierID)];
             BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
             if (flag) {
-                NSLog(@"update replier success");
+//                NSLog(@"update replier success");
             } else {
                 NSLog(@"update replier fail");
             }

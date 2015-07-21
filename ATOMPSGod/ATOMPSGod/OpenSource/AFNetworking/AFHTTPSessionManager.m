@@ -250,9 +250,15 @@
                 int ret = [(NSString*)responseObject[@"ret"] intValue];
                 if (ret == 2) {
                     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"SignOut" object:nil]];
+//                } else if (ret == 0) {
                 } else if (ret != 1) {
-                    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"ErrorOccurred" object:nil]];
+                    NSString* info = [responseObject objectForKey:@"info"];
+                    NSDictionary* userInfo = [NSDictionary dictionaryWithObject:info forKey:@"info"];
+                    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"ShowInfo" object:nil userInfo:userInfo]];
                 }
+//                else if (ret != 1) {
+//                    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"ErrorOccurred" object:nil]];
+//                }
                
             }
         }

@@ -10,6 +10,5 @@
 
 @interface ATOMGetMoblieCode : NSObject
 
-- (NSURLSessionDataTask *)GetMobileCode:(NSDictionary *)param withBlock:(void (^)(NSString *verifyCode, NSError *error))block;
-
+- (void)GetMobileCode:(NSDictionary *)param withBlock:(void (^)(NSString *, NSError *))block;
 @end

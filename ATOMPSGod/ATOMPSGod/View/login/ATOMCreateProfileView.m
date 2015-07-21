@@ -57,8 +57,8 @@ static int padding10 = 10;
     [_topView addSubview:_userHeaderButton];
     
     _changeHeaderLabel = [UILabel new];
-    _changeHeaderLabel.textColor = [UIColor colorWithHex:0x7fc7ff];
-    _changeHeaderLabel.text = @"修改头像";
+    _changeHeaderLabel.textColor = [UIColor lightGrayColor];
+    _changeHeaderLabel.text = @"选择头像";
     _changeHeaderLabel.font = [UIFont systemFontOfSize:kFont14];
     _changeHeaderLabel.textAlignment = NSTextAlignmentCenter;
     [_topView addSubview:_changeHeaderLabel];
@@ -204,7 +204,6 @@ static int padding10 = 10;
         make.left.equalTo(ws.areaLabel.mas_right);
         make.right.equalTo(ws.areaView.mas_right);
         make.centerY.equalTo(ws.areaLabel.mas_centerY);
-//        make.width.equalTo(ws.areaLabel.mas_width).offset(100);
         make.height.equalTo(ws.areaLabel.mas_height);
     }];
 }
@@ -231,7 +230,6 @@ static int padding10 = 10;
     WS(ws);
     _sexPickerView.tag = 111;
     _sexPickerView = [UIPickerView new];
-//    _sexPickerView.showsSelectionIndicator = YES;
     _sexPickerView.backgroundColor = [UIColor whiteColor];
     [self addSubview:_sexPickerView];
     

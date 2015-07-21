@@ -17,6 +17,7 @@
 #import "ATOMCutstomNavigationController.h"
 #import "AppDelegate.h"
 #import "SIAlertView.h"
+#import "ATOMShowHomepage.h"
 @interface ATOMAccountSettingViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -128,6 +129,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.navigationController.topViewController != self) {
+        return;
+    }
     [tableView deselectRowAtIndexPath:indexPath animated:true];
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
@@ -161,7 +165,7 @@
 -(void) signOut {
     SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"退货" andMessage:@"亲，你确定要退货吗？"];
     [alertView addButtonWithTitle:@"不走了😊"
-                             type:SIAlertViewButtonTypeDestructive
+                             type:SIAlertViewButtonTypeCancel
                           handler:^(SIAlertView *alert) {
                           }];
     [alertView addButtonWithTitle:@"很确定😭"
@@ -180,16 +184,18 @@
 }
 -(void) clearCache {
     SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"ლ(°◕‵ƹ′◕ლ)" andMessage:@"确定清理缓存吗？"];
-    [alertView addButtonWithTitle:@"取消"
+    [alertView addButtonWithTitle:@"不清理"
                              type:SIAlertViewButtonTypeDestructive
                           handler:^(SIAlertView *alert) {
                           }];
-    [alertView addButtonWithTitle:@"确定"
+    [alertView addButtonWithTitle:@"要清理"
                              type:SIAlertViewButtonTypeDefault
                           handler:^(SIAlertView *alert) {
                               [[NSURLCache sharedURLCache]removeAllCachedResponses];
-                              ATOMHomeImageDAO* hid = [ATOMHomeImageDAO new];
-                              [hid clearHomeImages];
+                              ATOMShowHomepage *showHomepage = [ATOMShowHomepage new];
+                              [showHomepage clearHomePages];
+//                              ATOMHomeImageDAO* hid = [ATOMHomeImageDAO new];
+//                              [hid clearHomeImages];
                               [Util successHud:@"清理缓存成功" inView:self.view];
                           }];
     alertView.transitionStyle = SIAlertViewTransitionStyleDropDown;

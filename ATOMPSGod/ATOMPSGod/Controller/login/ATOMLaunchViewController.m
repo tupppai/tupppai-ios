@@ -51,8 +51,8 @@
                 if (isRegister) {
                     NSLog(@"已经注册微信账号");
                     [self.navigationController setViewControllers:nil];
-                    [AppDelegate APP].mainTarBarController = nil;
-                    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
+                    [AppDelegate APP].mainTabBarController = nil;
+                    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
                 } else if (isRegister == NO) {
                     NSLog(@"未注册微信账号");
                     [ATOMCurrentUser currentUser].signUpType = ATOMSignUpWeixin;

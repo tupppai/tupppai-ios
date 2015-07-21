@@ -157,6 +157,10 @@
 }
 
 #pragma mark - GetDataSource
+- (void)firstGetDataSource {
+    [_tableView.header beginRefreshing];
+    [self getDataSource];
+}
 
 - (void)getDataSource {
     _currentPage = 1;
@@ -232,10 +236,9 @@
     [_myAttentionView addSubview:_tableView];
     _tapMyAttentionGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMyAttentionGesture:)];
     [_tableView addGestureRecognizer:_tapMyAttentionGesture];
-//    [self configTableViewRefresh];
     _canRefreshFooter = YES;
     _dataSource = [NSMutableArray array];
-    [self getDataSource];
+    [self firstGetDataSource];
 }
 
 #pragma mark - Gesture Event
@@ -316,17 +319,13 @@
     return [ATOMMyAttentionTableViewCell calculateCellHeightWith:_dataSource[indexPath.row]];
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-}
+
 
 #pragma mark - PWRefreshBaseTableViewDelegate
 -(void)didPullRefreshDown:(UITableView *)tableView {
-    NSLog(@"didPullRefreshDown");
     [self loadNewHotData];
 }
 -(void)didPullRefreshUp:(UITableView *)tableView {
-    NSLog(@"didPullRefreshUp");
     [self loadMoreHotData];
 }
 

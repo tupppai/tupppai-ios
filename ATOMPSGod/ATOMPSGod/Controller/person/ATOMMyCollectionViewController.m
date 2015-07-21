@@ -33,7 +33,7 @@
 
 @implementation ATOMMyCollectionViewController
 
-static int padding6 = 6;
+static int padding = 2;
 static float cellHeight;
 static int collumnNumber = 2;
 static float cellWidth;
@@ -126,13 +126,13 @@ static float cellWidth;
 - (void)createUI {
     self.title = @"我的收藏";
     _myWorkView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
-    cellWidth = (SCREEN_WIDTH - (collumnNumber - 1) *padding6) / collumnNumber;
+    cellWidth = (SCREEN_WIDTH - (collumnNumber - 1) *padding) / collumnNumber;
     cellHeight = cellWidth + 50;
     self.view = _myWorkView;
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.itemSize =CGSizeMake(cellWidth, cellHeight);
-    flowLayout.minimumInteritemSpacing = padding6;
-    flowLayout.minimumLineSpacing = padding6;
+    flowLayout.minimumInteritemSpacing = padding;
+    flowLayout.minimumLineSpacing = padding;
     _collectionView = [[PWRefreshFooterCollectionView alloc] initWithFrame:CGRectInset(_myWorkView.frame, 0, 0) collectionViewLayout:flowLayout];
     _collectionView.backgroundColor = [UIColor colorWithHex:0xededed];
     [_myWorkView addSubview:_collectionView];

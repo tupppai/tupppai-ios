@@ -13,30 +13,28 @@
 
 @property (nonatomic, assign) CGFloat cellWidth;
 @property (nonatomic, assign) CGFloat cellHeight;
-@property (nonatomic, assign) CGFloat imageViewHeight;
 
 @end
 
 @implementation ATOMMyCollectionCollectionViewCell
 
-static int padding6 = 6;
-static int padding10 = 10;
+static int padding = 5;
 static int collumnNumber = 2;
 
 - (CGFloat)cellWidth {
     if (!_cellWidth) {
-        _cellWidth = (SCREEN_WIDTH - (collumnNumber - 1) * padding6) / collumnNumber;
-        _cellHeight = _cellWidth + 50;
-        _imageViewHeight = _cellWidth;
+        _cellWidth = (SCREEN_WIDTH - (collumnNumber - 1) * padding) / collumnNumber;
+        _cellHeight = _cellWidth ;
     }
     return _cellWidth;
 }
 
 - (UIImageView *)collectionImageView {
     if (!_collectionImageView) {
-        _collectionImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 50, self.cellWidth, self.imageViewHeight)];
+        _collectionImageView = [[UIImageView alloc] initWithFrame:CGRectMake(padding, 40, self.cellWidth-padding, _cellHeight)];
         _collectionImageView.backgroundColor = [UIColor whiteColor];
-        _collectionImageView.contentMode = UIViewContentModeScaleAspectFit;
+        _collectionImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _collectionImageView.clipsToBounds = YES;
         [self addSubview:_collectionImageView];
     }
     return _collectionImageView;
@@ -44,7 +42,7 @@ static int collumnNumber = 2;
 
 - (UIButton *)userHeaderButton {
     if (!_userHeaderButton) {
-        _userHeaderButton = [[UIButton alloc] initWithFrame:CGRectMake(padding10, padding10, 30, 30)];
+        _userHeaderButton = [[UIButton alloc] initWithFrame:CGRectMake(padding, padding, 30, 30)];
         _userHeaderButton.userInteractionEnabled = NO;
         _userHeaderButton.backgroundColor = [UIColor orangeColor];
         _userHeaderButton.layer.cornerRadius = 14.5;
@@ -56,7 +54,7 @@ static int collumnNumber = 2;
 
 - (UILabel *)userNameLabel {
     if (!_userNameLabel) {
-        _userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.userHeaderButton.frame) + padding10, padding10, 80, 30)];
+        _userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.userHeaderButton.frame) + 10, padding, 80, 30)];
         _userNameLabel.textColor = [UIColor colorWithHex:0x838383];
         [self addSubview:_userNameLabel];
     }

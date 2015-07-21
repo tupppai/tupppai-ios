@@ -40,24 +40,23 @@
 #pragma mark - Click Event
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)sender {
-    NSLog(@"clickRightButtonItem");
-    if (![self checkInputMessageSuccess]) {
-        return ;
+    NSLog(@"clickRightButtonItem ATOMMobileRegisterViewController");
+    if ([self checkInputMessageSuccess]) {
+        ATOMGetMoblieCode *getMobileCode = [ATOMGetMoblieCode new];
+        NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:_mobileRegisterView.mobileTextField.text, @"phone", nil];
+        [getMobileCode GetMobileCode:param withBlock:^(NSString *verifyCode, NSError *error) {
+            if (verifyCode && !error) {
+                [ATOMCurrentUser currentUser].mobile = _mobileRegisterView.mobileTextField.text;
+                [ATOMCurrentUser currentUser].password = [_mobileRegisterView.passwordTextField.text sha1];
+//                NSLog(@"sha1 password%@",[ATOMCurrentUser currentUser].password);
+                ATOMInputVerifyCodeViewController *ivcvc = [ATOMInputVerifyCodeViewController new];
+                ivcvc.verifyCode = verifyCode;
+                [self.navigationController pushViewController:ivcvc animated:YES];
+            } else {
+                
+            }
+        }];
     }
-            ATOMGetMoblieCode *getMobileCode = [ATOMGetMoblieCode new];
-            NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:_mobileRegisterView.mobileTextField.text, @"phone", nil];
-            [getMobileCode GetMobileCode:param withBlock:^(NSString *verifyCode, NSError *error) {
-                if (verifyCode) {
-                    [ATOMCurrentUser currentUser].mobile = _mobileRegisterView.mobileTextField.text;
-                    [ATOMCurrentUser currentUser].password = [_mobileRegisterView.passwordTextField.text sha1];
-                    NSLog(@"sha1 password%@",[ATOMCurrentUser currentUser].password);
-                    ATOMInputVerifyCodeViewController *ivcvc = [ATOMInputVerifyCodeViewController new];
-                    ivcvc.verifyCode = verifyCode;
-                    [self.navigationController pushViewController:ivcvc animated:YES];
-                } else {
-                    
-                }
-            }];
 }
 
 - (BOOL)checkInputMessageSuccess {

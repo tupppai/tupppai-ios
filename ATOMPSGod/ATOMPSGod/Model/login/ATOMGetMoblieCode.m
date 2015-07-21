@@ -11,8 +11,8 @@
 
 @implementation ATOMGetMoblieCode
 
-- (NSURLSessionDataTask *)GetMobileCode:(NSDictionary *)param withBlock:(void (^)(NSString *, NSError *))block {
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/get_mobile_code" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+- (void)GetMobileCode:(NSDictionary *)param withBlock:(void (^)(NSString *, NSError *))block {
+     [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/get_mobile_code" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSInteger ret = [responseObject[@"ret"] integerValue];
         NSString *verifyCode = responseObject[@"data"][@"code"];
         NSLog(@"GetMobileCode param %@,response data %@",param,responseObject);

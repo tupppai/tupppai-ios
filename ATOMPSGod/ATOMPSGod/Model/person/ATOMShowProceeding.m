@@ -14,6 +14,7 @@
 @implementation ATOMShowProceeding
 
 - (NSURLSessionDataTask *)ShowProceeding:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
+    NSLog(@"ShowProceeding param %@",param);
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/my_proceeding" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"ShowProceeding responseObject %@",responseObject);
         int ret = [(NSString*)responseObject[@"ret"] intValue];

@@ -47,8 +47,8 @@
         [loginModel Login:param withBlock:^(BOOL succeed) {
             if (succeed) {
                 [self.navigationController setViewControllers:nil];
-                [AppDelegate APP].mainTarBarController = nil;
-                [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
+                [AppDelegate APP].mainTabBarController = nil;
+                [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
             }
         }];
     }
@@ -66,8 +66,8 @@
                 if (isRegister) {
                     NSLog(@"微博登录成功");
                     [self.navigationController setViewControllers:nil];
-                    [AppDelegate APP].mainTarBarController = nil;
-                    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
+                    [AppDelegate APP].mainTabBarController = nil;
+                    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
                 } else if (isRegister == NO) {
                     NSLog(@"未注册微博账号");
                     [ATOMCurrentUser currentUser].signUpType = ATOMSignUpWeibo;
@@ -105,8 +105,8 @@
                 if (isRegister) {
                     NSLog(@"微信登录成功");
                     [self.navigationController setViewControllers:nil];
-                    [AppDelegate APP].mainTarBarController = nil;
-                    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
+                    [AppDelegate APP].mainTabBarController = nil;
+                    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
                 } else if (isRegister == NO) {
                     NSLog(@"未注册微信账号");
                     [ATOMCurrentUser currentUser].signUpType = ATOMSignUpWeixin;

@@ -35,6 +35,8 @@
 #import "ATOMInviteViewController.h"
 #import "JGActionSheet.h"
 #import "ATOMReportModel.h"
+#import "ATOMRecordModel.h"
+
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMHomepageViewController() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate>
@@ -297,30 +299,25 @@
 
 
 
-#pragma mark - GetDataSource
+#pragma mark - GetDataSource from DB
+- (void)firstGetDataSourceFromDataBase {
+    _dataSourceOfRecentTableView = [self fetchDBDataSourceWithHomeType:ATOMHomepageViewTypeAsk];
+    [self.scrollView.homepageAskTableView reloadData];
+    
+    _dataSourceOfHotTableView = [self fetchDBDataSourceWithHomeType:ATOMHomepageViewTypeHot];
+    [self.scrollView.homepageHotTableView reloadData];
+
+}
+#pragma mark - GetDataSource from Server
+
 //初始数据
 - (void)firstGetDataSourceOfTableViewWithHomeType:(ATOMHomepageViewType)homeType {
-    [[KShareManager mascotAnimator]show];
-    ATOMShowHomepage *showHomepage = [ATOMShowHomepage new];
-    NSArray * homepageArray = [[showHomepage getHomeImagesWithHomeType:homeType] mutableCopy];
     if (homeType == ATOMHomepageViewTypeHot) {
-        if (!homepageArray || homepageArray.count == 0) {//读服务器
-            [self loadNewHotData];
-        } else { //读数据库
-            _dataSourceOfHotTableView = [self fetchDBDataSourceWithHomeType:ATOMHomepageViewTypeHot];
-            _dataSourceOfRecentTableView = [self fetchDBDataSourceWithHomeType:ATOMHomepageViewTypeAsk];
-            [_scrollView.homepageHotTableView.header beginRefreshing];
-        }
+        [_scrollView.homepageHotTableView.header beginRefreshing];
+//        [self loadNewHotData];
     } else if (homeType == ATOMHomepageViewTypeAsk) {
-        //数据库没有“求P”数据
-        if (!homepageArray || homepageArray.count == 0) {
-            [self loadNewRecentData];
-        }
-        //数据库有“求P”数据
-        else {
-            [[KShareManager mascotAnimator]dismiss];
-            [_scrollView.homepageAskTableView.header beginRefreshing];
-        }
+        [_scrollView.homepageAskTableView.header beginRefreshing];
+//            [self loadNewRecentData];
     }
 }
 
@@ -333,7 +330,6 @@
         [model setViewModelData:homeImage];
         [tableViewDataSource addObject:model];
     }
-    [[KShareManager mascotAnimator]dismiss];
     return tableViewDataSource;
 }
 
@@ -348,12 +344,11 @@
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@"time" forKey:@"sort"];
     [param setObject:@"desc" forKey:@"order"];
-    [param setObject:@(10) forKey:@"size"];
+    [param setObject:@(8) forKey:@"size"];
     ATOMShowHomepage *showHomepage = [ATOMShowHomepage new];
-    [showHomepage clearHomePagesWithHomeType:homeType];
     [showHomepage ShowHomepage:param withBlock:^(NSMutableArray *homepageArray, NSError *error) {
-     
         if (homepageArray && error == nil) {
+            [showHomepage clearHomePagesWithHomeType:homeType];
             if ([homeType isEqualToString:@"new"]) {
                 _dataSourceOfRecentTableView = nil;
                 _dataSourceOfRecentTableView = [NSMutableArray array];
@@ -375,8 +370,6 @@
                     [ws.dataSourceOfRecentTableView addObject:model];
                 }
             }
-            [showHomepage saveHomeImagesInDB:homepageArray];
-            
             if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageViewTypeHot) {
                 [ws.scrollView.homepageHotTableView reloadData];
                 [ws.scrollView.homepageHotTableView.header endRefreshing];
@@ -384,12 +377,11 @@
                 [ws.scrollView.homepageAskTableView reloadData];
                 [ws.scrollView.homepageAskTableView.header endRefreshing];
             }
+            [showHomepage saveHomeImagesInDB:homepageArray];
         } else {
             [ws.scrollView.homepageHotTableView.header endRefreshing];
             [ws.scrollView.homepageAskTableView.header endRefreshing];
         }
-        [[KShareManager mascotAnimator] dismiss];
-            
     }];
 
 }
@@ -474,6 +466,7 @@
     _isfirstEnterHomepageRecentView = YES;
     _canRefreshHotFooter = YES;
     _canRefreshRecentFooter = YES;
+    [self firstGetDataSourceFromDataBase];
     [self firstGetDataSourceOfTableViewWithHomeType:ATOMHomepageViewTypeHot];
 }
 
@@ -563,6 +556,15 @@
 }
 
 - (void)dealDownloadWork {
+    NSMutableDictionary* param = [NSMutableDictionary new];
+    [param setObject:@(ATOMHomepageViewTypeAsk) forKey:@"type"];
+    [param setObject:@(_selectedAskCell.viewModel.imageID) forKey:@"target"];
+ 
+    [ATOMRecordModel record:param withBlock:^(NSError *error, NSString *url) {
+        if (!error) {
+            
+        }
+    }];
     UIImageWriteToSavedPhotosAlbum(_selectedAskCell.userWorkImageView.image
                                    ,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
 }

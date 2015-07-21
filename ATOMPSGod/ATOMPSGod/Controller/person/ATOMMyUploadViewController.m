@@ -30,7 +30,7 @@
 
 @implementation ATOMMyUploadViewController
 
-static int padding6 = 6;
+static int padding = 2;
 static float cellWidth;
 static float cellHeight;
 static int collumnNumber = 3;
@@ -82,7 +82,6 @@ static int collumnNumber = 3;
 }
 
 - (void)getMoreDataSource {
-    NSLog(@"getMoreDataSource");
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timestamp = [[NSDate date] timeIntervalSince1970];
@@ -124,14 +123,14 @@ static int collumnNumber = 3;
     self.title = @"我的求P";
     _myUploadView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     _myUploadView.backgroundColor = [UIColor whiteColor];
-    cellWidth = (SCREEN_WIDTH - (collumnNumber + 1) *padding6) / 3;
+    cellWidth = (SCREEN_WIDTH - (collumnNumber + 2) *padding) / 3;
     cellHeight = cellWidth;
     self.view = _myUploadView;
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.itemSize =CGSizeMake(cellWidth, cellHeight);
-    flowLayout.minimumInteritemSpacing = padding6;
-    flowLayout.minimumLineSpacing = padding6;
-    _collectionView = [[PWRefreshFooterCollectionView alloc] initWithFrame:CGRectInset(_myUploadView.frame, padding6, padding6) collectionViewLayout:flowLayout];
+    flowLayout.minimumInteritemSpacing = padding;
+    flowLayout.minimumLineSpacing = padding;
+    _collectionView = [[PWRefreshFooterCollectionView alloc] initWithFrame:CGRectInset(_myUploadView.frame, padding, padding) collectionViewLayout:flowLayout];
     _collectionView.backgroundColor = [UIColor whiteColor];
     [_myUploadView addSubview:_collectionView];
     _collectionView.dataSource = self;
@@ -153,6 +152,7 @@ static int collumnNumber = 3;
     ATOMMyUploadCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:_cellIdentifier forIndexPath:indexPath];
     ATOMAskViewModel *model = _dataSource[indexPath.row];
     [cell.workImageView setImageWithURL:[NSURL URLWithString:model.imageURL]placeholderImage:[UIImage imageNamed:@"placeholderImage_1"]];
+    NSLog(@"model.totalPSNumber %@",model.totalPSNumber);
     cell.totalPSNumber = model.totalPSNumber;
     cell.colorType = 1;
     return cell;

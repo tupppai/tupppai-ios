@@ -154,6 +154,7 @@ static CGFloat replierWidth = 25;
 }
 
 - (void)setViewModel:(ATOMAskPageViewModel *)viewModel {
+    NSLog(@"hotCell viewModel id %ld",(long)viewModel.imageID);
     _viewModel = viewModel;
     _userNameLabel.text = viewModel.userName;
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];

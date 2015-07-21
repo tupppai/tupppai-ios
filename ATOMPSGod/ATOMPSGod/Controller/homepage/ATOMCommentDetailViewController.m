@@ -276,8 +276,7 @@
     return headerView;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-}
+
 
 #pragma mark - UITextViewDelegate
 

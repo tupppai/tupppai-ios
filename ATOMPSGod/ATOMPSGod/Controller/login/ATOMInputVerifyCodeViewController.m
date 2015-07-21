@@ -92,8 +92,8 @@
             if (!error) {
                 [Util TextHud:@"注册成功"];
                 [self.navigationController setViewControllers:nil];
-                [AppDelegate APP].mainTarBarController = nil;
-                [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTarBarController];
+                [AppDelegate APP].mainTabBarController = nil;
+                [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
             }
         }];
     } else {

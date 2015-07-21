@@ -26,7 +26,7 @@
             NSArray *param = [MTLFMDBAdapter columnValues:tipLabel];
             BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
             if (flag) {
-                NSLog(@"add imageTipLabel success");
+//                NSLog(@"add imageTipLabel success");
             } else {
                 NSLog(@"add imageTipLabel fail");
             }
@@ -43,7 +43,7 @@
             [param addObject:@(tipLabel.labelID)];
             BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
             if (flag) {
-                NSLog(@"update imageTipLabel success");
+//                NSLog(@"update imageTipLabel success");
             } else {
                 NSLog(@"update imageTipLabel fail");
             }

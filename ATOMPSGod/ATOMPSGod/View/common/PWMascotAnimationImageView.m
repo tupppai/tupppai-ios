@@ -38,7 +38,6 @@
 
 -(void)show {
     if (self) {
-        NSLog(@"show PWMascotAnimationView");
         [_mascotImageView startAnimating];
         self.alpha = 1.0;
         [[UIApplication sharedApplication].keyWindow addSubview:self];
@@ -47,7 +46,6 @@
 }
 -(void)dismiss {
     if (self) {
-        NSLog(@"dismiss PWMascotAnimationImageView");
          [UIView animateWithDuration:2 animations:^{
              self.alpha = 0.0;
         } completion:^(BOOL finished) {
