@@ -55,7 +55,7 @@
     _userImageURL = homeImage.imageURL;
     _avatarURL = homeImage.avatar;
     NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:homeImage.uploadTime];
-    [self updatePublishTime:publishDate];
+    _publishTime = [Util formatPublishTime:publishDate];
     _likeNumber = [NSString stringWithFormat:@"%d",(int)homeImage.totalPraiseNumber];
     _liked = homeImage.liked;
     _collected = homeImage.collected;
@@ -86,27 +86,6 @@
 }
 
 
--(void)updatePublishTime:(NSDate*)date {
-    
-    NSDateFormatter *df = [NSDateFormatter new];
-    NSTimeInterval timeInterval = - ([date timeIntervalSinceNow]);
-    float dayDif = timeInterval/3600/24;
-    int result = 0;
-    if (dayDif > 7) {
-        [df setDateFormat:@"MM月dd日 HH:mm"];
-        _publishTime = [df stringFromDate:date];
-    } else if (dayDif >= 1) {
-        result = (int)roundf(dayDif);
-        _publishTime = [NSString stringWithFormat:@"%d天前",result];
-    } else if (dayDif >= 1/24.0) {
-        result = (int)roundf(dayDif*24.0);
-        _publishTime = [NSString stringWithFormat:@"%d小时前",result];
-    } else {
-            result = (int)roundf(dayDif*24.0*60);
-            _publishTime = [NSString stringWithFormat:@"%d分钟前",result];
-        }
-}
-
 -(PWPageDetailViewModel*)generatepageDetailViewModel {
     PWPageDetailViewModel* commonViewModel = [PWPageDetailViewModel new];
     commonViewModel.pageID = _imageID;
@@ -120,6 +99,7 @@
     commonViewModel.width = _width;
     commonViewModel.height = _height;
     commonViewModel.userName = _userName;
+    commonViewModel.uid = _userID;
     return commonViewModel;
 }
 

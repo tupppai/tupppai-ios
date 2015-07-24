@@ -26,7 +26,7 @@
             NSArray *param = [MTLFMDBAdapter columnValues:homeImage];
             BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
             if (flag) {
-                NSLog(@"save homeImage %ld ok",(long)homeImage.imageID);
+//                NSLog(@"save homeImage %ld ok",(long)homeImage.imageID);
             } else {
                 NSLog(@"save homeImage fail");
             }
@@ -43,7 +43,7 @@
             [param addObject:@(homeImage.imageID)];
             BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
             if (flag) {
-                NSLog(@"update homeImage %ld --ok",(long)homeImage.imageID);
+//                NSLog(@"update homeImage %ld --ok",(long)homeImage.imageID);
             } else {
                 NSLog(@"update homeImage fail");
             }
@@ -121,7 +121,7 @@
         NSString *stmt = @"delete from ATOMHomeImage";
         BOOL flag = [db executeUpdate:stmt];
         if (flag) {
-            NSLog(@"delete homeImage success");
+//            NSLog(@"delete homeImage success");
         } else {
             NSLog(@"delete homeImage fail");
         }
@@ -133,7 +133,7 @@
         NSArray *param = @[homeType];
         BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
         if (flag) {
-            NSLog(@"delete homeImage ok");
+//            NSLog(@"delete homeImage ok");
         } else {
             NSLog(@"delete homeImage fail");
         }

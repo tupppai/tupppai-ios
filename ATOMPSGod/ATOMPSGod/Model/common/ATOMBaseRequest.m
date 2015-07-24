@@ -8,6 +8,7 @@
 
 #import "ATOMBaseRequest.h"
 #import "ATOMHTTPRequestOperationManager.h"
+
 @implementation ATOMBaseRequest
 - (NSURLSessionDataTask *)toggleLike:(NSDictionary *)param withUrl:(NSString*)fUrl withID:(NSInteger)imageID  withBlock:(void (^)(NSError *))block {
     NSString* url = [NSString stringWithFormat:@"%@/%ld",fUrl,(long)imageID];
@@ -50,15 +51,22 @@
 + (void)downloadImage:(NSString*)url withBlock:(void (^)(UIImage* image))block {
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
-    
-    NSURL *URL = [NSURL URLWithString:@"http://example.com/download.zip"];
+    NSURL *URL = [NSURL URLWithString:url];
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-    
     NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
-        NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
+        NSLog(@"downloadTaskWithRequest response %@",response);
+        NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSCachesDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
         return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
     } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
-        NSLog(@"File downloaded to: %@", filePath);
+//        NSLog(@"File downloaded to: %@", filePath);
+//        NSLog(@"completionHandler response %@",response);
+        UIImage *image = [UIImage imageWithData: [NSData dataWithContentsOfURL:filePath]];
+        if (image) {
+            block(image);
+        } else {
+            block(nil);
+        }
+        
     }];
     [downloadTask resume];
 }

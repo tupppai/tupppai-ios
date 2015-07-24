@@ -39,6 +39,7 @@
 }
 
 - (void)setDataWithAtModel:(ATOMCommentDetailViewModel *)viewModel andContent:(NSString *)content{
+    _uid = [ATOMCurrentUser currentUser].uid;
     _nickname = [ATOMCurrentUser currentUser].nickname;
     _userSex = ([ATOMCurrentUser currentUser].sex == 1) ? @"man" : @"woman";
     _likeNumber = @"0";

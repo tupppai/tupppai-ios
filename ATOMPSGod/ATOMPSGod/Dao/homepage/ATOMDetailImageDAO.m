@@ -26,7 +26,7 @@
             NSArray *param = [MTLFMDBAdapter columnValues:detailImage];
             BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
             if (flag) {
-                NSLog(@"add detailImage success detailID%ld imageID%ld url %@",(long)detailImage.detailID,(long)detailImage.imageID,detailImage.imageURL);
+//                NSLog(@"add detailImage success detailID%ld imageID%ld url %@",(long)detailImage.detailID,(long)detailImage.imageID,detailImage.imageURL);
             } else {
                 NSLog(@"add detailImage fail");
             }
@@ -43,7 +43,7 @@
             [param addObject:@(detailImage.detailID)];
             BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
             if (flag) {
-                NSLog(@"update detailImage success");
+//                NSLog(@"update detailImage success");
             } else {
                 NSLog(@"update detailImage fail");
             }
@@ -119,7 +119,7 @@
         NSArray *param = @[@(imageID)];
         BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
         if (flag) {
-            NSLog(@"delete detailImage%d success", (int)imageID);
+//            NSLog(@"delete detailImage%d success", (int)imageID);
         } else {
             NSLog(@"delete detailImage%d fail", (int)imageID);
         }

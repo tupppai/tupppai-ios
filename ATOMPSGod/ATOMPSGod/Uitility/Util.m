@@ -71,4 +71,26 @@
     [hud hide:YES afterDelay:0.8];
 }
 
++(NSString*)formatPublishTime:(NSDate*)date {
+    NSString* publishTime;
+    NSDateFormatter *df = [NSDateFormatter new];
+    NSTimeInterval timeInterval = - ([date timeIntervalSinceNow]);
+    float dayDif = timeInterval/3600/24;
+    int result = 0;
+    if (dayDif > 7) {
+        [df setDateFormat:@"MM月dd日 HH:mm"];
+        publishTime = [df stringFromDate:date];
+    } else if (dayDif >= 1) {
+        result = (int)roundf(dayDif);
+        publishTime = [NSString stringWithFormat:@"%d天前",result];
+    } else if (dayDif >= 1/24.0) {
+        result = (int)roundf(dayDif*24.0);
+        publishTime = [NSString stringWithFormat:@"%d小时前",result];
+    } else {
+        result = (int)roundf(dayDif*24.0*60);
+        publishTime = [NSString stringWithFormat:@"%d分钟前",result];
+    }
+    return publishTime;
+}
+
 @end

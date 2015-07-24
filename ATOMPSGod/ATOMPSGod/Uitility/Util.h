@@ -17,4 +17,5 @@
 +(void)dismissHud:(UIView*)view;
 +(void)successHud:(NSString*)message inView:(UIView*)view;
 +(void)showSuccess:(NSString*)message;
++(NSString*)formatPublishTime:(NSDate*)date;
 @end

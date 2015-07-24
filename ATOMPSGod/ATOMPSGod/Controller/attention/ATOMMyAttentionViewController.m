@@ -307,6 +307,7 @@
     ATOMMyAttentionTableViewCell *cell = [_tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[ATOMMyAttentionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        [cell showPlaceHolder];
     }
     cell.viewModel = _dataSource[indexPath.row];
     return cell;

@@ -31,11 +31,7 @@
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil];
-    [self.navigationController.navigationBar setTitleTextAttributes:attributes];
-    self.navigationController.navigationBar.backgroundColor = [UIColor colorWithHex:0x74c3ff];
-    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-    
+    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     [backView addSubview:backButton];
     [backButton setImage:[UIImage imageNamed:@"icon_back"] forState:UIControlStateNormal];
@@ -49,7 +45,6 @@
     } else {
         self.navigationItem.leftBarButtonItems = @[_negativeSpacer, barBackButtonItem];
     }
-//    self.navigationItem.hidesBackButton = YES;
 }
 -(void) signOutRET {
     SIAlertView *alertView = [KShareManager signOutAlertView];

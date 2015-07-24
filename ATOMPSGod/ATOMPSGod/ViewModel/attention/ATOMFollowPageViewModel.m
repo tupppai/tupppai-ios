@@ -53,7 +53,8 @@
     NSDateFormatter *df = [NSDateFormatter new];
     [df setDateFormat:@"yyyy年MM月dd日 HH时mm分"];
     NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:commonImage.uploadTime];
-    _publishTime = [df stringFromDate:publishDate];
+    _publishTime = [Util formatPublishTime:publishDate];
+    
     _likeNumber = [NSString stringWithFormat:@"%d",(int)commonImage.totalPraiseNumber];
     _shareNumber = [NSString stringWithFormat:@"%d",(int)commonImage.totalShareNumber];
     _commentNumber = [NSString stringWithFormat:@"%d",(int)commonImage.totalCommentNumber];

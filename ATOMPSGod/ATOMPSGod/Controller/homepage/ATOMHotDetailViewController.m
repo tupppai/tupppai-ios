@@ -378,8 +378,23 @@
 - (void)dealUploadWork {
     [[NSUserDefaults standardUserDefaults] setObject:@"Uploading" forKey:@"UploadingOrSeekingHelp"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-    [self presentViewController:_imagePickerController animated:YES completion:NULL];
+    
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])
+    {
+        self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        [self presentViewController:_imagePickerController animated:YES completion:NULL];
+    }
+    else
+    {
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"😭" andMessage:@"找不到你的相册在哪"];
+        [alertView addButtonWithTitle:@"我知道了"
+                                 type:SIAlertViewButtonTypeDefault
+                              handler:^(SIAlertView *alert) {
+                              }];
+        alertView.transitionStyle = SIAlertViewTransitionStyleFade;
+        [alertView show];
+    }
+
 }
 
 

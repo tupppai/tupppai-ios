@@ -16,6 +16,7 @@
 #import "ATOMProceedingViewModel.h"
 #import "ATOMShowProceeding.h"
 #import "PWRefreshBaseTableView.h"
+#import "ATOMCommonModel.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMProceedingViewController () <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,PWRefreshBaseTableViewDelegate>
@@ -178,6 +179,15 @@
         } else if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
             [self pushViewController:opvc animated:YES];
+        } else if (CGRectContainsPoint(cell.deleteButton.frame, p)) {
+            NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(cell.viewModel.ID),@"id", nil];
+            [ATOMCommonModel post:param withUrl:@"user/delete_progress" withBlock:^(NSError *error) {
+                if (!error) {
+                    [Util successHud:@"已删除" inView:self.view];
+                }
+                [_dataSource removeObjectAtIndex:indexPath.row];
+                [_tableView reloadData];
+            }];
         }
     }
 }
@@ -185,8 +195,21 @@
 #pragma mark - Click Event
 
 - (void)dealUploadWork {
-    self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-    [self presentViewController:_imagePickerController animated:YES completion:NULL];
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])
+    {
+        self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        [self presentViewController:_imagePickerController animated:YES completion:NULL];
+    }
+    else
+    {
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"😭" andMessage:@"找不到你的相册在哪"];
+        [alertView addButtonWithTitle:@"我知道了"
+                                 type:SIAlertViewButtonTypeDefault
+                              handler:^(SIAlertView *alert) {
+                              }];
+        alertView.transitionStyle = SIAlertViewTransitionStyleFade;
+        [alertView show];
+    }
 }
 
 #pragma mark - UIImagePickerControllerDelegate

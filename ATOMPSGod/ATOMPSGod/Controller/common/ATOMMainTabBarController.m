@@ -27,7 +27,6 @@
 
 #pragma mark - Lazy Initialize
 
-
 #pragma mark - Config
 
 - (instancetype)init {
@@ -71,7 +70,6 @@
     _nav4.tabBarItem.selectedImage = [ _nav4.tabBarItem.selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
     self.viewControllers = [NSArray arrayWithObjects:_nav1, _nav2, _nav3, _nav4, nil];
-
 }
 
 

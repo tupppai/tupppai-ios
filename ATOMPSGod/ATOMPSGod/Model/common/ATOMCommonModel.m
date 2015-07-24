@@ -32,6 +32,7 @@
         }
     }];
 }
+
 + (NSURLSessionDataTask *)get :(NSDictionary*)param withUrl:(NSString*)url withBlock:(void (^)(NSError *))block {
     NSLog(@"ATOMCommonModel post param %@",param);
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {

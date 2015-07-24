@@ -352,11 +352,21 @@ static SIAlertView *__si_alert_current_view;
 
 - (void)addButtonWithTitle:(NSString *)title type:(SIAlertViewButtonType)type handler:(SIAlertViewHandler)handler
 {
-    SIAlertItem *item = [[SIAlertItem alloc] init];
-	item.title = title;
-	item.type = type;
-	item.action = handler;
-	[self.items addObject:item];
+    
+    BOOL ToAdd = YES;
+    for (SIAlertItem* item2 in self.items) {
+        if ([item2.title isEqualToString:title]) {
+            ToAdd = false;
+            break;
+        }
+    }
+    if (ToAdd) {
+        SIAlertItem *item = [[SIAlertItem alloc] init];
+        item.title = title;
+        item.type = type;
+        item.action = handler;
+        [self.items addObject:item];
+    }
 }
 
 - (void)show

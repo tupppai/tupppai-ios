@@ -400,7 +400,6 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
         ATOMAskPageViewModel *homepageViewModel = _uploadHomeImageDataSource[indexPath.row];
         if ([askViewModel.totalPSNumber integerValue] == 0) {
             ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
-//            rdvc.delegate = self;
             PWPageDetailViewModel* pageDetailViewModel = [PWPageDetailViewModel new];
             [pageDetailViewModel setCommonViewModelWithAsk:homepageViewModel];
             rdvc.pageDetailViewModel = pageDetailViewModel;

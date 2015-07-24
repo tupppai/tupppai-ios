@@ -106,7 +106,7 @@
         NSString *stmt = @"delete from ATOMImageTipLabel";
         BOOL flag = [db executeUpdate:stmt];
         if (flag) {
-            NSLog(@"delete imageTipLabel success");
+//            NSLog(@"delete imageTipLabel success");
         } else {
             NSLog(@"delete imageTipLabel fail");
         }

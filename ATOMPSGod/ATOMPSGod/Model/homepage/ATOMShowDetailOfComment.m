@@ -77,13 +77,11 @@
         NSLog(@"SendComment %@,responseObject%@",param,responseObject);
         NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
         if (ret == 1) {
-            NSLog(@"发送评论成功");
             NSInteger comment_id = [responseObject[@"data"][@"id"] integerValue];
             if (block) {
                 block(comment_id, nil);
             }
         } else if (ret == 0) {
-            NSLog(@"发送评论失败");
             [Util TextHud:@"评论失败了,请重试"];
             if (block) {
                 block(-1, nil);
@@ -91,7 +89,6 @@
         }
 
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"发送评论失败");
         [Util TextHud:@"评论失败了,请重试"];
         if (block) {
             block(-1, error);

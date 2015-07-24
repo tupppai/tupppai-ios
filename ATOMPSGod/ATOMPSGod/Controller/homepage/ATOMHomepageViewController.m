@@ -36,6 +36,7 @@
 #import "JGActionSheet.h"
 #import "ATOMReportModel.h"
 #import "ATOMRecordModel.h"
+#import "ATOMBaseRequest.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -503,7 +504,7 @@
     [cameraView addSubview:cameraButton];
     UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cameraView];
     self.navigationItem.rightBarButtonItems = @[negativeSpacer, rightButtonItem];
-    
+
     _thineNavigationView = [UIView new];
     _thineNavigationView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2];
     _thineNavigationView.frame = CGRectMake(CGRectGetMinX(self.navigationItem.titleView.frame) + 10, 40, 60, 4);
@@ -527,15 +528,27 @@
 }
 
 - (void)clickCameraButton:(UIBarButtonItem *)sender {
-//    [[AppDelegate APP].window addSubview:self.cameraActionsheet];
     [self.cameraActionsheet showInView:[AppDelegate APP].window animated:YES];
 }
 
 - (void)dealSelectingPhotoFromAlbum {
     [[NSUserDefaults standardUserDefaults] setObject:@"SeekingHelp" forKey:@"UploadingOrSeekingHelp"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-    [self presentViewController:_imagePickerController animated:YES completion:NULL];
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])
+    {
+        self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        [self presentViewController:_imagePickerController animated:YES completion:NULL];
+    }
+    else
+    {
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"😭" andMessage:@"找不到你的相册在哪"];
+        [alertView addButtonWithTitle:@"我知道了"
+                                 type:SIAlertViewButtonTypeDefault
+                              handler:^(SIAlertView *alert) {
+                              }];
+        alertView.transitionStyle = SIAlertViewTransitionStyleFade;
+        [alertView show];
+    }
 }
 
 /**
@@ -550,23 +563,35 @@
         ATOMProceedingViewController *pvc = [ATOMProceedingViewController new];
         [self pushViewController:pvc animated:YES];
     } else {
-        self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-        [self presentViewController:_imagePickerController animated:YES completion:NULL];
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])
+        {
+            self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            [self presentViewController:_imagePickerController animated:YES completion:NULL];
+        }
+        else
+        {
+            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"😭" andMessage:@"找不到你的相册在哪"];
+            [alertView addButtonWithTitle:@"我知道了"
+                                     type:SIAlertViewButtonTypeDefault
+                                  handler:^(SIAlertView *alert) {
+                                  }];
+            alertView.transitionStyle = SIAlertViewTransitionStyleFade;
+            [alertView show];
+        }
     }
 }
 
 - (void)dealDownloadWork {
     NSMutableDictionary* param = [NSMutableDictionary new];
-    [param setObject:@(ATOMHomepageViewTypeAsk) forKey:@"type"];
+    [param setObject:@"ask" forKey:@"type"];
     [param setObject:@(_selectedAskCell.viewModel.imageID) forKey:@"target"];
- 
     [ATOMRecordModel record:param withBlock:^(NSError *error, NSString *url) {
         if (!error) {
-            
+            [ATOMBaseRequest downloadImage:url withBlock:^(UIImage *image) {
+                UIImageWriteToSavedPhotosAlbum(image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+            }];
         }
     }];
-    UIImageWriteToSavedPhotosAlbum(_selectedAskCell.userWorkImageView.image
-                                   ,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
 }
 - (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error
   contextInfo: (void *) contextInfo {

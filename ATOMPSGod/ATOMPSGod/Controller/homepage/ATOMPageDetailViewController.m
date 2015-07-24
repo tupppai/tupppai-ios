@@ -152,7 +152,6 @@
 }
 
 #pragma mark - ATOMShareFunctionViewDelegate
-#pragma mark - ATOMShareFunctionViewDelegate
 -(void)tapWechatFriends {
     [self postSocialShare:_pageDetailViewModel.pageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:(int)_pageDetailViewModel.type];
 }
@@ -300,7 +299,7 @@
     _askDetailView = [ATOMAskDetailView new];
     [self configRecentDetailTableViewRefresh];
     self.view = _askDetailView;
-
+    NSLog(@"_pageDetailViewModel %ld , %@",_pageDetailViewModel.uid,_pageDetailViewModel.userName);
 //    if (_askPageViewModel) {
 //        _type = 1;
 //        _ID = _askPageViewModel.imageID;
@@ -310,7 +309,6 @@
 //        _ID = _productPageViewModel.ID;
 //        _askDetailView.productPageViewModel = _productPageViewModel;
 //    }
-    NSLog(@"_commonPageViewMode%@",_pageDetailViewModel);
     _type = _pageDetailViewModel.type;
     _ID = _pageDetailViewModel.pageID;
     _askDetailView.pageDetailViewModel = _pageDetailViewModel;
@@ -384,7 +382,7 @@
     [model setDataWithAtModel:_atModel andContent:commentStr];
     [_recentCommentDataSource insertObject:model atIndex:0];
     [_askDetailView.recentDetailTableView reloadData];
-    [_askDetailView.recentDetailTableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+//    [_askDetailView.recentDetailTableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:commentStr forKey:@"content"];
     [param setObject:@(_type) forKey:@"type"];
@@ -396,6 +394,7 @@
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
     [showDetailOfComment SendComment:param withBlock:^(NSInteger comment_id, NSError *error) {
         model.comment_id = comment_id;
+        
     }];
 //    _atModel = nil;
 }
@@ -416,8 +415,22 @@
 - (void)dealUploadWork {
     [[NSUserDefaults standardUserDefaults] setObject:@"Uploading" forKey:@"UploadingOrSeekingHelp"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-    [self presentViewController:_imagePickerController animated:YES completion:NULL];
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])
+    {
+        self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        [self presentViewController:_imagePickerController animated:YES completion:NULL];
+    }
+    else
+    {
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"😭" andMessage:@"找不到你的相册在哪"];
+        [alertView addButtonWithTitle:@"我知道了"
+                                 type:SIAlertViewButtonTypeDefault
+                              handler:^(SIAlertView *alert) {
+                              }];
+        alertView.transitionStyle = SIAlertViewTransitionStyleFade;
+        [alertView show];
+    }
+
 }
 
 #pragma mark - Gesture Event
@@ -481,7 +494,10 @@
 }
 
 - (void)tapUserNameLabelGesture:(UITapGestureRecognizer *)gesture {
+    NSLog(@"tapUserNameLabelGesture");
     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+    opvc.userID = _pageDetailViewModel.uid;
+    opvc.userName = _pageDetailViewModel.userName;
     [self pushViewController:opvc animated:YES];
 }
 
