@@ -1,5 +1,5 @@
 //
-//  ATOMMyAttentionViewController.h
+//  ATOMMyFollowViewController.h
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/3.
@@ -8,6 +8,6 @@
 
 #import "ATOMBaseViewController.h"
 
-@interface ATOMMyAttentionViewController : ATOMBaseViewController
+@interface ATOMMyFollowViewController : ATOMBaseViewController
 
 @end

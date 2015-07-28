@@ -29,6 +29,7 @@
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
     self.window.backgroundColor = [UIColor whiteColor];
+    [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
     [self initializeDatabase];
     [self initializeAfterDB];
     [self setupShareSDK];
@@ -119,7 +120,6 @@
     [[UINavigationBar appearance] setBarTintColor:kBlueColor];
     [[UINavigationBar appearance] setTintColor:kNavBarColor];
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil]];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
 - (ATOMMainTabBarController *)mainTabBarController {

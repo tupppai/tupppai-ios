@@ -43,7 +43,6 @@
 #import "Util.h"
 #import "CommonProtocol.h"
 #import "KShareManager.h"
-#import "TSMessage.h"
 #endif
 
 

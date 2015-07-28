@@ -14,10 +14,13 @@
 @property (nonatomic, strong) UILabel *tipLabel;
 @property (nonatomic, strong) UILabel *bigLabel;
 @property (nonatomic, strong) UILabel *smallLabel;
+@property (nonatomic, assign) int BOTTOMHEIGHT;
+
 
 @end
 
-static const int BOTTOMHEIGHT = 150;
+
+
 static int padding10 = 10;
 
 @implementation ATOMAddTipLabelToImageView
@@ -25,6 +28,7 @@ static int padding10 = 10;
 - (instancetype)init {
     self = [super init];
     if (self) {
+         _BOTTOMHEIGHT = (SCREEN_HEIGHT-NAV_HEIGHT)/2.5;
         [self createSubView];
     }
     return self;
@@ -42,8 +46,7 @@ static int padding10 = 10;
 
 - (void)createSubView {
     self.backgroundColor = [UIColor whiteColor];
-    _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - NAV_HEIGHT - BOTTOMHEIGHT, SCREEN_WIDTH, BOTTOMHEIGHT)];
-    _bottomView.backgroundColor = [UIColor colorWithHex:0xf4f7f7];
+    _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - NAV_HEIGHT - _BOTTOMHEIGHT, SCREEN_WIDTH, _BOTTOMHEIGHT)];
     [self addSubview:_bottomView];
     [self createBottomView];
 }
@@ -55,7 +58,7 @@ static int padding10 = 10;
 }
 
 - (void)createBottomView {
-    NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:@"UploadingOrSeekingHelp"];
+//    NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:@"UploadingOrSeekingHelp"];
 //    if ([str isEqualToString:@"Uploading"]) {
 //        CGFloat buttonInterval = 25;
 //        CGFloat xlButtonLeftPadding = (SCREEN_WIDTH - 3 * buttonInterval - 4 * 28) / 2;
@@ -75,32 +78,38 @@ static int padding10 = 10;
 //        [_bottomView addSubview:_tipLabel];
 //    } else
     
-        if ([str isEqualToString:@"SeekingHelp"]) {
-        _bigLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 13, SCREEN_WIDTH, 30)];
+//        if ([str isEqualToString:@"SeekingHelp"]) {
+        _bigLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, _BOTTOMHEIGHT/3, SCREEN_WIDTH, 30)];
         _bigLabel.text = @"点击图片";
-        _bigLabel.textColor = [UIColor colorWithHex:0xb3b3b3];
-        _bigLabel.font = [UIFont systemFontOfSize:30.f];
+        _bigLabel.textColor = [UIColor colorWithHex:0x637685];
+        _bigLabel.font = [UIFont systemFontOfSize:18];
         _bigLabel.textAlignment = NSTextAlignmentCenter;
         [_bottomView addSubview:_bigLabel];
         _smallLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_bigLabel.frame) + 20, SCREEN_WIDTH, 12)];
         _smallLabel.text = @"在标签里添加你要的效果";
-        _smallLabel.textColor = [UIColor colorWithHex:0xb3b3b3];
-        _smallLabel.font = [UIFont systemFontOfSize:18.f];
+        _smallLabel.textColor = [UIColor colorWithHex:0x637685];
+        _smallLabel.font = [UIFont systemFontOfSize:14];
         _smallLabel.textAlignment = NSTextAlignmentCenter;
         [_bottomView addSubview:_smallLabel];
-    }
+    
+    CALayer *TopBorder = [CALayer layer];
+    TopBorder.frame = CGRectMake(10.0f, 0.0f, _bottomView.frame.size.width-20, 1.0f);
+    TopBorder.backgroundColor = [UIColor colorWithHex:0xc6c6c6 andAlpha:0.8].CGColor;
+    [_bottomView.layer addSublayer:TopBorder];
+//    }
 }
 
-- (void) setCommonButton:(UIButton *)button WithImage:(UIImage *)image AndSelectedImage:(UIImage *)simage {
-    [button setBackgroundImage:image forState:UIControlStateNormal];
-    [button setBackgroundImage:simage forState:UIControlStateSelected];
-    [_bottomView addSubview:button];
-}
+//- (void) setCommonButton:(UIButton *)button WithImage:(UIImage *)image AndSelectedImage:(UIImage *)simage {
+//    [button setBackgroundImage:image forState:UIControlStateNormal];
+//    [button setBackgroundImage:simage forState:UIControlStateSelected];
+//    [_bottomView addSubview:button];
+//}
 
 - (CGRect)calculateImageViewFrame {
     
+
     CGFloat maxWith = SCREEN_WIDTH;
-    CGFloat maxHeight = SCREEN_HEIGHT - BOTTOMHEIGHT - NAV_HEIGHT;
+    CGFloat maxHeight = SCREEN_HEIGHT - _BOTTOMHEIGHT - NAV_HEIGHT;
     CGFloat imageScale;
     CGPoint location;
     
@@ -174,30 +183,30 @@ static int padding10 = 10;
     _pointImageView.hidden = YES;
 }
 
-- (void)changeStatusOfShareButton:(UIButton *)button {
-    if (button == _xlButton) {
-        _xlButton.selected = YES;
-        _wxButton.selected = NO;
-        _qqButton.selected = NO;
-        _qqzoneButton.selected = NO;
-    } else if (button == _wxButton) {
-        _xlButton.selected = NO;
-        _wxButton.selected = YES;
-        _qqButton.selected = NO;
-        _qqzoneButton.selected = NO;
-    } else if (button == _qqButton) {
-        _xlButton.selected = NO;
-        _wxButton.selected = NO;
-        _qqButton.selected = YES;
-        _qqzoneButton.selected = NO;
-    } else if (button == _qqzoneButton) {
-        _xlButton.selected = NO;
-        _wxButton.selected = NO;
-        _qqButton.selected = NO;
-        _qqzoneButton.selected = YES;
-    }
-    
-}
+//- (void)changeStatusOfShareButton:(UIButton *)button {
+//    if (button == _xlButton) {
+//        _xlButton.selected = YES;
+//        _wxButton.selected = NO;
+//        _qqButton.selected = NO;
+//        _qqzoneButton.selected = NO;
+//    } else if (button == _wxButton) {
+//        _xlButton.selected = NO;
+//        _wxButton.selected = YES;
+//        _qqButton.selected = NO;
+//        _qqzoneButton.selected = NO;
+//    } else if (button == _qqButton) {
+//        _xlButton.selected = NO;
+//        _wxButton.selected = NO;
+//        _qqButton.selected = YES;
+//        _qqzoneButton.selected = NO;
+//    } else if (button == _qqzoneButton) {
+//        _xlButton.selected = NO;
+//        _wxButton.selected = NO;
+//        _qqButton.selected = NO;
+//        _qqzoneButton.selected = YES;
+//    }
+//    
+//}
 
 
 

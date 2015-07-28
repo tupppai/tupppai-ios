@@ -13,7 +13,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.backgroundColor = [UIColor colorWithHex:0xededed];
+        self.backgroundColor = [UIColor whiteColor];
 //        [self showPlaceHolder];
     }
     return self;

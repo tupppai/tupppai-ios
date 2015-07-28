@@ -74,6 +74,7 @@
         _hotDetailTableView.psDelegate = self;
         _hotDetailTableView.delegate = self;
         _hotDetailTableView.dataSource = self;
+        _hotDetailTableView.backgroundColor = [UIColor colorWithHex:0xf5f5f5];
         _tapHotDetailGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHotDetailGesture:)];
         [_hotDetailTableView addGestureRecognizer:_tapHotDetailGesture];
 //        [self configHotDetailTableViewRefresh];

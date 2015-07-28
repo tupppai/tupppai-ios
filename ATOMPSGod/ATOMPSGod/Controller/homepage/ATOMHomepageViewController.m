@@ -37,7 +37,7 @@
 #import "ATOMReportModel.h"
 #import "ATOMRecordModel.h"
 #import "ATOMBaseRequest.h"
-
+#import "TSMessage.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMHomepageViewController() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate>
@@ -489,10 +489,8 @@
 - (void)createCustomNavigationBar {
     _customTitleView = [ATOMHomepageCustomTitleView new];
     self.navigationItem.titleView = _customTitleView;
-    
     [_customTitleView.hotTitleButton addTarget:self action:@selector(clickHotTitleButton:) forControlEvents:UIControlEventTouchUpInside];
     [_customTitleView.recentTitleButton addTarget:self action:@selector(clickRecentTitleButton:) forControlEvents:UIControlEventTouchUpInside];
-    
     UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     negativeSpacer.width = 0;
     UIView *cameraView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
@@ -525,6 +523,9 @@
         _isfirstEnterHomepageRecentView = NO;
         [self firstGetDataSourceOfTableViewWithHomeType:ATOMHomepageViewTypeAsk];
     }
+    [TSMessage showNotificationWithTitle:@"你还没告诉大神你想要的效果"
+                                subtitle:@"请点击图片填写效果"
+                                    type:TSMessageNotificationTypeWarning];
 }
 
 - (void)clickCameraButton:(UIBarButtonItem *)sender {
@@ -803,18 +804,16 @@
     }
 }
 
-
-
 #pragma mark - ATOMViewControllerDelegate
--(void)ATOMViewControllerDismissWithLiked:(BOOL)liked {
-    if (_scrollView.typeOfCurrentHomepageView == ATOMHomepageViewTypeHot) {
-        //当从child viewcontroller 传来的liked变化的时候，toggle like.
-        //to do:其实应该改变datasource的liked ,tableView reload的时候才能保持。
-        [_selectedHotCell.praiseButton toggleLikeWhenSelectedChanged:liked];
-    } else if (_scrollView.typeOfCurrentHomepageView == ATOMHomepageViewTypeAsk) {
-        [_selectedAskCell.praiseButton toggleLikeWhenSelectedChanged:liked];
-    }
-}
+//-(void)ATOMViewControllerDismissWithLiked:(BOOL)liked {
+//    if (_scrollView.typeOfCurrentHomepageView == ATOMHomepageViewTypeHot) {
+//        //当从child viewcontroller 传来的liked变化的时候，toggle like.
+//        //to do:其实应该改变datasource的liked ,tableView reload的时候才能保持。
+//        [_selectedHotCell.praiseButton toggleLikeWhenSelectedChanged:liked];
+//    } else if (_scrollView.typeOfCurrentHomepageView == ATOMHomepageViewTypeAsk) {
+//        [_selectedAskCell.praiseButton toggleLikeWhenSelectedChanged:liked];
+//    }
+//}
 
 -(void)ATOMViewControllerDismissWithInfo:(NSDictionary *)info {
     bool liked = [info[@"liked"] boolValue];
@@ -831,5 +830,8 @@
         _selectedAskPageViewModel.collected = collected;
     }
 }
+
+
+
 
 @end

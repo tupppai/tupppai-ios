@@ -20,7 +20,7 @@
 #import "ATOMImageTipLabelViewModel.h"
 #import "ATOMHotDetailViewController.h"
 #import "ATOMHomepageViewController.h"
-
+#import "TSMessage.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMAddTipLabelToImageViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate>
@@ -77,7 +77,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
-    [self addClickEventToShareButton];
+//    [self addClickEventToShareButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -107,7 +107,7 @@
 - (void)createUI {
     self.title = @"填写标签内容";
     UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
-    rightButtonItem.tintColor = [UIColor whiteColor];
+//    rightButtonItem.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightButtonItem;
     _originLeftBarButtonItems = self.navigationItem.leftBarButtonItems;
     _originRightBarButtonItem = self.navigationItem.rightBarButtonItem;
@@ -126,22 +126,21 @@
     [_addTipLabelToImageView.deleteTipLabelButton addTarget:self action:@selector(clickDeleteTipLabelButton:) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)addClickEventToShareButton {
-    [_addTipLabelToImageView.xlButton addTarget:self action:@selector(clickShareButton:) forControlEvents:UIControlEventTouchUpInside];
-    [_addTipLabelToImageView.wxButton addTarget:self action:@selector(clickShareButton:) forControlEvents:UIControlEventTouchUpInside];
-    [_addTipLabelToImageView.qqButton addTarget:self action:@selector(clickShareButton:) forControlEvents:UIControlEventTouchUpInside];
-    [_addTipLabelToImageView.qqzoneButton addTarget:self action:@selector(clickShareButton:) forControlEvents:UIControlEventTouchUpInside];
-}
+//- (void)addClickEventToShareButton {
+//    [_addTipLabelToImageView.xlButton addTarget:self action:@selector(clickShareButton:) forControlEvents:UIControlEventTouchUpInside];
+//    [_addTipLabelToImageView.wxButton addTarget:self action:@selector(clickShareButton:) forControlEvents:UIControlEventTouchUpInside];
+//    [_addTipLabelToImageView.qqButton addTarget:self action:@selector(clickShareButton:) forControlEvents:UIControlEventTouchUpInside];
+//    [_addTipLabelToImageView.qqzoneButton addTarget:self action:@selector(clickShareButton:) forControlEvents:UIControlEventTouchUpInside];
+//}
 
 #pragma mark - Click Event
 
-- (void)clickShareButton:(UIButton *)button {
-    [_addTipLabelToImageView changeStatusOfShareButton:button];
-}
+//- (void)clickShareButton:(UIButton *)button {
+//    [_addTipLabelToImageView changeStatusOfShareButton:button];
+//}
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)sender {
     if (_tipLabelArray.count == 0) {
-//        [Util TextHud:@"请先添加标签"];
         [self showWarnLabel];
         return ;
     }
@@ -271,7 +270,7 @@
 - (void)dealSubmitUploadWithLabel {
     WS(ws);
     [Util loadingHud:@"正在上传你的求P"];
-    NSData *data = UIImageJPEGRepresentation(_workImage, 0.4);
+    NSData *data = UIImageJPEGRepresentation(_workImage, 0.7);
 //    NSData *data2 = UIImageJPEGRepresentation(_workImage, 0.2);
 //    NSData *data3 = UIImageJPEGRepresentation(_workImage, 0.6);
 //    NSData *data4 = UIImageJPEGRepresentation(_workImage, 0.8);
@@ -311,7 +310,6 @@
         self.navigationItem.rightBarButtonItem.enabled = YES;
         
         NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithInteger:newImageID],@"ID",[NSNumber numberWithInteger:newImageID],@"askID",@(ATOMPageTypeAsk),@"type", nil];
-//        NSDictionary* info2 = [[NSDictionary alloc]initWithObjectsAndKeys:@(newImageID),@"ID",@(newImageID),@"askID", nil];;
         ATOMInviteViewController *ivc = [ATOMInviteViewController new];
         ws.newAskPageViewModel.imageID = newImageID;
         ivc.askPageViewModel = ws.newAskPageViewModel;
@@ -323,7 +321,9 @@
 
 - (void)clickSendTipLabelTextButton:(UIButton *)sender {
     _currentTipLabelText = _fillInContentOfTipLabelView.tipLabelContentTextField.text;
-    if (_currentTipLabelText.length) {
+    if (_currentTipLabelText.length <= 0) {
+        [self showWarnLabel2];
+    } else {
         [_fillInContentOfTipLabelView.tipLabelContentTextField resignFirstResponder];
         [self changeViewToOrigin];
         [self addTipLabelAtLocation];
@@ -352,13 +352,13 @@
                 _currentLocation = [gesture locationInView:_addTipLabelToImageView.workImageView];
                 [self changeViewToFillInTipLabel];
             }
+        } else {
+            [self showWarnLabel3];
         }
     }
 }
 
 - (void)changeViewToFillInTipLabel {
-//    WS(ws);
-//    self.view = _fillInContentOfTipLabelView;
     [_addTipLabelToImageView addTemporaryPointAt:_currentLocation];
     [_addTipLabelToImageView addSubview:_fillInContentOfTipLabelView];
     [_fillInContentOfTipLabelView.tipLabelContentTextField becomeFirstResponder];
@@ -368,23 +368,26 @@
 }
 
 -(void)showWarnLabel {
-    WS(ws);
     NSString *pushTypeStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"UploadingOrSeekingHelp"];
     if ([pushTypeStr isEqualToString:@"Uploading"]) {
-        _fillInContentOfTipLabelView.topWarnLabel.text = @"大神，你还没有说你巨作的效果";
+        [TSMessage showNotificationWithTitle:@"大神你还没炫耀你的效果"
+                                    subtitle:@"请点击图片填写效果"
+                                        type:TSMessageNotificationTypeWarning];
+    } else if ([pushTypeStr isEqualToString:@"SeekingHelp"]) {
+        [TSMessage showNotificationWithTitle:@"你还没告诉大神你想要的效果"
+                                    subtitle:@"请点击图片填写效果"
+                                        type:TSMessageNotificationTypeWarning];
     }
-    [[AppDelegate APP].window addSubview:_fillInContentOfTipLabelView.topWarnLabel];
-    [[AppDelegate APP].window addSubview:_fillInContentOfTipLabelView.topWarnLabel2];
-    [UIView animateWithDuration:4 animations:^{
-        ws.fillInContentOfTipLabelView.topWarnLabel.alpha = 0.0;
-        ws.fillInContentOfTipLabelView.topWarnLabel2.alpha = 0.0;
-    } completion:^(BOOL finished) {
-        [UIApplication sharedApplication].statusBarHidden = NO;
-        ws.fillInContentOfTipLabelView.topWarnLabel.alpha = 1.0;
-        [ws.fillInContentOfTipLabelView.topWarnLabel removeFromSuperview];
-        ws.fillInContentOfTipLabelView.topWarnLabel2.alpha = 1.0;
-        [ws.fillInContentOfTipLabelView.topWarnLabel2 removeFromSuperview];
-    }];
+}
+-(void)showWarnLabel2 {
+        [TSMessage showNotificationWithTitle:@"标签内容不能为空"
+                                        type:TSMessageNotificationTypeWarning];
+    
+}
+-(void)showWarnLabel3 {
+    [TSMessage showNotificationWithTitle:@"标签数量不能超过三个"
+                                    type:TSMessageNotificationTypeWarning];
+    
 }
 - (void)panTipLabelGesture:(UIPanGestureRecognizer *)gesture {
     CGPoint location = [gesture translationInView:_addTipLabelToImageView.workImageView];
@@ -417,10 +420,12 @@
 }
 
 #pragma mark - UITextFieldDelegate
-
+//called when done of keyboard is tapped
 -(BOOL) textFieldShouldReturn:(UITextField *)textField {
     _currentTipLabelText = textField.text;
-    if (_currentTipLabelText.length) {
+    if (_currentTipLabelText.length <= 0) {
+        [self showWarnLabel2];
+    } else {
         [textField resignFirstResponder];
         [self changeViewToOrigin];
         [self addTipLabelAtLocation];

@@ -82,7 +82,7 @@
                     self.gifView.image = [images lastObject];
                 } else { // 多张图片
                     self.gifView.animationImages = images;
-                    self.gifView.animationDuration = images.count * 0.1;
+                    self.gifView.animationDuration = images.count * 0.2;
                     [self.gifView startAnimating];
                 }
                 break;

@@ -25,7 +25,7 @@
         [self addSubview:mascotImageView];
         
         UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, -1, SCREEN_WIDTH, 1)];
-        line.backgroundColor = [UIColor lightGrayColor];
+        line.backgroundColor = [UIColor colorWithHex:0xf5f5f5 andAlpha:0.8];
         [self addSubview:line];
         [self.gifHeader setImages:animatedImages forState:MJRefreshHeaderStateIdle];
         [self.gifHeader setImages:animatedImages forState:MJRefreshHeaderStateRefreshing];

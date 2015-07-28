@@ -23,13 +23,13 @@
 
 @implementation ATOMShareFunctionView
 
-static CGFloat BOTTOMHEIGHT = 286;
+static CGFloat BOTTOMHEIGHT = 300;
 
 - (instancetype)init {
     self = [super init];
     if (self) {
         self.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-        self.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.0];
+//        self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.8];
         self.hidden = true;
         [self createSubView];
         [self configClickEvent];
@@ -41,7 +41,7 @@ static CGFloat BOTTOMHEIGHT = 286;
     CGFloat labelHeight = 30;
     
     _bottomView = [[UIView alloc] initWithFrame:CGRectMake(kPadding5, CGRectGetMaxY(self.frame), SCREEN_WIDTH - 2 * kPadding5, BOTTOMHEIGHT)];
-    _bottomView.layer.cornerRadius = 5;
+    _bottomView.layer.cornerRadius = 6;
     _bottomView.backgroundColor = [UIColor whiteColor];
     [self addSubview:_bottomView];
     
@@ -96,7 +96,7 @@ static CGFloat BOTTOMHEIGHT = 286;
     _reportLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_reportButton.frame) - kPadding10, CGRectGetMaxY(_reportButton.frame), labelWidth, labelHeight)];
     [self configCommonLabel:_reportLabel WithText:@"举报" AndTextColor:[UIColor colorWithHex:0xacb8c1]];
     
-    _cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(20, CGHeight(_bottomView.frame) - 17 - 43, CGWidth(_bottomView.frame) - 20 * 2, 43)];
+    _cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(20, CGHeight(_bottomView.frame) - 17 - 43, CGWidth(_bottomView.frame) - 20 * 2, 50)];
     _cancelButton.backgroundColor = [UIColor colorWithHex:0xbdc7ce];
     _cancelButton.layer.cornerRadius = 43 / 2;
     _cancelButton.layer.masksToBounds = YES;
@@ -155,6 +155,7 @@ static CGFloat BOTTOMHEIGHT = 286;
     [_bottomView addSubview:label];
 }
 -(void)dismiss {
+    self.backgroundColor = [UIColor clearColor];
     [UIView animateWithDuration:0.35 animations:^{
         _bottomView.frame = CGRectMake(kPadding5, CGRectGetMaxY(self.frame), SCREEN_WIDTH - 2 * kPadding5, BOTTOMHEIGHT);
     } completion:^(BOOL finished) {
@@ -162,6 +163,7 @@ static CGFloat BOTTOMHEIGHT = 286;
     }];
 }
 -(void)show {
+    self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.8];
     [UIView animateWithDuration:0.35 animations:^{
         self.hidden = false;
         _bottomView.frame = CGRectMake(kPadding5, CGRectGetMaxY(self.frame)-BOTTOMHEIGHT, SCREEN_WIDTH - 2 * kPadding5, BOTTOMHEIGHT);

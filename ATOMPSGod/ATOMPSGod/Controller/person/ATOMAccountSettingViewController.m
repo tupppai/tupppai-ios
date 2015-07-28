@@ -36,7 +36,7 @@
 
 - (void)createUI {
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
-    _tableView.backgroundColor = [UIColor colorWithHex:0xededed];
+    _tableView.backgroundColor = [UIColor colorWithHex:0xF5F5F5];
     _tableView.tableFooterView = [UIView new];
     [self.view addSubview:_tableView];
     _tableView.delegate = self;
@@ -105,7 +105,8 @@
         } else if (row == 2) {
             cell.textLabel.text = @"账号绑定";
         }
-    } else if (section == 1) {
+    }
+    else if (section == 1) {
         if (row == 0) {
             cell.textLabel.text = @"离线下载";
             [cell addSwitch];
@@ -120,7 +121,8 @@
         } else if (row == 5) {
             cell.textLabel.text = @"给应用评分";
         }
-    } else if (section == 2) {
+    }
+    else if (section == 2) {
         cell.textLabel.text = @"退出当前账号";
     }
     

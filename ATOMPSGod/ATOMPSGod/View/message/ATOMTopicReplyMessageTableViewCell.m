@@ -55,7 +55,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     _userHeaderButton.frame = CGRectMake(kPadding15, kPadding20, kUserHeaderButtonWidth2, kUserHeaderButtonWidth2);
-    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding20, kPadding20, kUserNameLabelWidth, kFont15);
+    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding20, kPadding20, kUserNameLabelWidth, kFont15+2);
     _topicReplyContentLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding20, CGRectGetMaxY(_userHeaderButton.frame) - kFont14, kUserNameLabelWidth, kFont14);
     _topicReplyTimeLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding20, 100 - kPadding15 - kFont10, kUserNameLabelWidth, kFont10);
     _workImageView.frame = CGRectMake(SCREEN_WIDTH - kPadding15 - 65, kPadding20, 65, 65);

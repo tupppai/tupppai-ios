@@ -9,7 +9,7 @@
 #import "ATOMMainTabBarController.h"
 #import "ATOMHomepageViewController.h"
 #import "ATOMMyMessageViewController.h"
-#import "ATOMMyAttentionViewController.h"
+#import "ATOMMyFollowViewController.h"
 #import "ATOMPersonViewController.h"
 #import "ATOMCutstomNavigationController.h"
 
@@ -39,7 +39,7 @@
 
 - (void)configureTabBarController {
     ATOMHomepageViewController *homePageViewController = [ATOMHomepageViewController new];
-    ATOMMyAttentionViewController *myAttentionViewController = [ATOMMyAttentionViewController new];
+    ATOMMyFollowViewController *myAttentionViewController = [ATOMMyFollowViewController new];
     ATOMMyMessageViewController *myMessageViewController = [ATOMMyMessageViewController new];
     ATOMPersonViewController *personViewController = [ATOMPersonViewController new];
     homePageViewController.title = @"首页";

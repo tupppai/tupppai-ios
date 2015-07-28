@@ -73,7 +73,7 @@ static CGFloat cellHeight = 70;
     CGSize uploadSize = [_uploadNumberLabel.text boundingRectWithSize:CGSizeMake(MAXFLOAT, kFont10) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
     CGSize workSize = [_workNumberLabel.text boundingRectWithSize:CGSizeMake(MAXFLOAT, kFont10) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
     _userHeaderButton.frame = CGRectMake(kPadding15, (cellHeight - kUserHeaderButtonWidth) / 2, kUserHeaderButtonWidth, kUserHeaderButtonWidth);
-    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, CGRectGetMinY(_userHeaderButton.frame), kUserNameLabelWidth, kFont14);
+    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, CGRectGetMinY(_userHeaderButton.frame), kUserNameLabelWidth, kFont14+2);
     [_attentionButton setBackgroundImage:[UIImage imageNamed:@"btn_addattention"] forState:UIControlStateNormal];
     [_attentionButton setBackgroundImage:[UIImage imageNamed:@"btn_mutualattention"] forState:UIControlStateSelected];
     CGFloat labelOriginY = CGRectGetMaxY(_userNameLabel.frame) + kPadding5;

@@ -1,12 +1,12 @@
 //
-//  ATOMMyAttentionViewController.m
+//  ATOMMyFollowViewController.m
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/3.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMMyAttentionViewController.h"
+#import "ATOMMyFollowViewController.h"
 #import "ATOMMyAttentionTableViewCell.h"
 #import "ATOMCommentDetailViewController.h"
 #import "ATOMHotDetailViewController.h"
@@ -28,7 +28,7 @@
 #import "ATOMInviteViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMMyAttentionViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate>
+@interface ATOMMyFollowViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate>
 
 @property (nonatomic, strong) UIView *myAttentionView;
 @property (nonatomic, strong) PWRefreshBaseTableView *tableView;
@@ -43,7 +43,7 @@
 
 @end
 
-@implementation ATOMMyAttentionViewController
+@implementation ATOMMyFollowViewController
 
 #pragma mark - Lazy Initialize
 - (ATOMShareFunctionView *)shareFunctionView {
@@ -217,12 +217,7 @@
     [self createUI];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
 
--(void)viewDidAppear:(BOOL)animated {
-}
 
 - (void)createUI {
     self.navigationItem.title = @"关注";
@@ -307,7 +302,7 @@
     ATOMMyAttentionTableViewCell *cell = [_tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[ATOMMyAttentionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        [cell showPlaceHolder];
+//        [cell showPlaceHolder];
     }
     cell.viewModel = _dataSource[indexPath.row];
     return cell;

@@ -56,7 +56,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     _userHeaderButton.frame = CGRectMake(kPadding15, (60 - kUserHeaderButtonWidth) / 2, kUserHeaderButtonWidth, kUserHeaderButtonWidth);
-    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, (60 - kFont14) / 2, kUserNameLabelWidth, kFont14);
+    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, (60 - kFont14) / 2, kUserNameLabelWidth, kFont14+2);
     _uploadButton.frame = CGRectMake(SCREEN_WIDTH - kPadding15 - 27, 16.5, 27, 27);
     CGSize imageSize = CGSizeZero;
     if (_viewModel) {

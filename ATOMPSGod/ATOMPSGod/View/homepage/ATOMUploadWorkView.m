@@ -30,23 +30,24 @@ static CGFloat buttonWidth = 30;
 - (void)createSubView {
     self.backgroundColor = [UIColor whiteColor];
     _topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
-    _topView.backgroundColor = [UIColor whiteColor];
+    _topView.backgroundColor = [UIColor colorWithHex:0xc6c6c6 andAlpha:0.8];
     [self addSubview:_topView];
     
-    _cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(36, kPadding20, 22, 22)];
-    [_cancelButton setBackgroundImage:[UIImage imageNamed:@"icon_cancel"] forState:UIControlStateNormal];
+    _cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(36, kPadding20, 40, 22)];
+    [_cancelButton setImage:[UIImage imageNamed:@"icon_cancel"] forState:UIControlStateNormal];
     [_topView addSubview:_cancelButton];
     
-    _confirmButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 36 - 22, kPadding20, 22, 22)];
-    [_confirmButton setBackgroundImage:[UIImage imageNamed:@"icon_next"] forState:UIControlStateNormal];
+    _confirmButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 36 - 40, kPadding20, 40, 22)];
+    [_confirmButton setImage:[UIImage imageNamed:@"icon_next"] forState:UIControlStateNormal];
     [_topView addSubview:_confirmButton];
     
     _centerView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_topView.frame), SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - BottomHeight)];
-    _centerView.backgroundColor = [UIColor colorWithHex:0x333333];
+//    _centerView.backgroundColor = [UIColor colorWithHex:0x333333];
     [self addSubview:_centerView];
     
     _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - BottomHeight, SCREEN_WIDTH, BottomHeight)];
-    _bottomView.backgroundColor = [UIColor whiteColor];
+    _bottomView.backgroundColor = [UIColor colorWithHex:0xc6c6c6 andAlpha:0.8];
+//    _bottomView.backgroundColor = [UIColor whiteColor];
     [self addSubview:_bottomView];
     [self createSubViewOfBottomView];
 }

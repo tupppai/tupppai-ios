@@ -94,7 +94,7 @@
     if (self.selected) {
         _currentColor = [UIColor colorWithHex:0xfe8282];
     } else {
-        _currentColor = [UIColor colorWithHex:0xb2b2b2];
+        _currentColor = [UIColor colorWithHex:0x666666];
     }
 }
 -(void)toggleNumber {

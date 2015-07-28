@@ -151,7 +151,15 @@ static int padding10 = 10;
         make.bottom.equalTo(ws.nicknameView.mas_bottom);
         make.right.equalTo(ws.nicknameView.mas_right).with.offset(-padding10);
     }];
-    
+    UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+    arrowImageView.contentMode = UIViewContentModeCenter;
+    arrowImageView.image = [UIImage imageNamed:@"ic_right-arrow"];
+    [_nicknameView addSubview:arrowImageView];
+    [arrowImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(_nicknameView.mas_right).with.offset(-kPadding5);
+        make.centerY.equalTo(_nicknameView.mas_centerY);
+        make.size.mas_equalTo(CGSizeMake(11, 24));
+    }];
 }
 
 - (void)createSexSubView {
@@ -179,6 +187,17 @@ static int padding10 = 10;
         make.width.equalTo(ws.sexLabel.mas_width);
         make.height.equalTo(ws.sexLabel.mas_height);
     }];
+    
+    UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+    arrowImageView.contentMode = UIViewContentModeCenter;
+    arrowImageView.image = [UIImage imageNamed:@"ic_right-arrow"];
+    [_sexView addSubview:arrowImageView];
+    [arrowImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(_sexView.mas_right).with.offset(-kPadding5);
+        make.centerY.equalTo(_sexView.mas_centerY);
+        make.size.mas_equalTo(CGSizeMake(11, 24));
+    }];
+
 }
 
 - (void)createAreaSubView {
@@ -205,6 +224,16 @@ static int padding10 = 10;
         make.right.equalTo(ws.areaView.mas_right);
         make.centerY.equalTo(ws.areaLabel.mas_centerY);
         make.height.equalTo(ws.areaLabel.mas_height);
+    }];
+    
+    UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+    arrowImageView.contentMode = UIViewContentModeCenter;
+    arrowImageView.image = [UIImage imageNamed:@"ic_right-arrow"];
+    [_areaView addSubview:arrowImageView];
+    [arrowImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(_areaView.mas_right).with.offset(-kPadding5);
+        make.centerY.equalTo(_areaView.mas_centerY);
+        make.size.mas_equalTo(CGSizeMake(11, 24));
     }];
 }
 
@@ -368,10 +397,6 @@ static int padding10 = 10;
     }
     return -1;
 }
-
-
-
-
 
 
 

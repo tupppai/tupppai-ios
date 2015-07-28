@@ -9,7 +9,7 @@
 #import "ATOMBaseViewController.h"
 #import "ATOMHomepageViewController.h"
 #import "ATOMPersonViewController.h"
-#import "ATOMMyAttentionViewController.h"
+#import "ATOMMyFollowViewController.h"
 #import "ATOMMyMessageViewController.h"
 #import "ATOMUserDAO.h"
 #import "ATOMCutstomNavigationController.h"
@@ -82,7 +82,7 @@
         self.hidesBottomBarWhenPushed = NO;
     } else if ([self isKindOfClass:[ATOMPersonViewController class]]){
         self.hidesBottomBarWhenPushed = NO;
-    } else if ([self isKindOfClass:[ATOMMyAttentionViewController class]]) {
+    } else if ([self isKindOfClass:[ATOMMyFollowViewController class]]) {
         self.hidesBottomBarWhenPushed = NO;
     } else if ([self isKindOfClass:[ATOMMyMessageViewController class]]) {
         self.hidesBottomBarWhenPushed = NO;
@@ -164,5 +164,10 @@
                                   NSLog(NSLocalizedString(@"TEXT_SHARE_FAI", @"分享失败!"), [error errorCode], [error errorDescription]);
                               }
                           }];
+}
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 @end

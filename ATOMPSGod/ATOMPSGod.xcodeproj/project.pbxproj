@@ -61,7 +61,7 @@
 		5C4F5BD21AA5426700226F64 /* ATOMLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BD11AA5426700226F64 /* ATOMLoginView.m */; };
 		5C4F5BDC1AA555F900226F64 /* ATOMHomepageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BDB1AA555F900226F64 /* ATOMHomepageViewController.m */; };
 		5C4F5BDF1AA556E600226F64 /* ATOMMyMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BDE1AA556E600226F64 /* ATOMMyMessageViewController.m */; };
-		5C4F5BE21AA5575300226F64 /* ATOMMyAttentionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BE11AA5575300226F64 /* ATOMMyAttentionViewController.m */; };
+		5C4F5BE21AA5575300226F64 /* ATOMMyFollowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BE11AA5575300226F64 /* ATOMMyFollowViewController.m */; };
 		5C4F5BE51AA557AF00226F64 /* ATOMPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BE41AA557AF00226F64 /* ATOMPersonViewController.m */; };
 		5C4F5BEF1AA5893700226F64 /* UIActionSheet+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BEE1AA5893700226F64 /* UIActionSheet+Blocks.m */; };
 		5C4F5BF31AA593E200226F64 /* ATOMHomePageHotTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BF21AA593E200226F64 /* ATOMHomePageHotTableViewCell.m */; };
@@ -517,8 +517,8 @@
 		5C4F5BDB1AA555F900226F64 /* ATOMHomepageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMHomepageViewController.m; sourceTree = "<group>"; };
 		5C4F5BDD1AA556E600226F64 /* ATOMMyMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMMyMessageViewController.h; sourceTree = "<group>"; };
 		5C4F5BDE1AA556E600226F64 /* ATOMMyMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMMyMessageViewController.m; sourceTree = "<group>"; };
-		5C4F5BE01AA5575300226F64 /* ATOMMyAttentionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMMyAttentionViewController.h; sourceTree = "<group>"; };
-		5C4F5BE11AA5575300226F64 /* ATOMMyAttentionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMMyAttentionViewController.m; sourceTree = "<group>"; };
+		5C4F5BE01AA5575300226F64 /* ATOMMyFollowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMMyFollowViewController.h; sourceTree = "<group>"; };
+		5C4F5BE11AA5575300226F64 /* ATOMMyFollowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMMyFollowViewController.m; sourceTree = "<group>"; };
 		5C4F5BE31AA557AF00226F64 /* ATOMPersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMPersonViewController.h; sourceTree = "<group>"; };
 		5C4F5BE41AA557AF00226F64 /* ATOMPersonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMPersonViewController.m; sourceTree = "<group>"; };
 		5C4F5BED1AA5893700226F64 /* UIActionSheet+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActionSheet+Blocks.h"; sourceTree = "<group>"; };
@@ -1253,8 +1253,8 @@
 		5C4F5BD61AA551BF00226F64 /* attention */ = {
 			isa = PBXGroup;
 			children = (
-				5C4F5BE01AA5575300226F64 /* ATOMMyAttentionViewController.h */,
-				5C4F5BE11AA5575300226F64 /* ATOMMyAttentionViewController.m */,
+				5C4F5BE01AA5575300226F64 /* ATOMMyFollowViewController.h */,
+				5C4F5BE11AA5575300226F64 /* ATOMMyFollowViewController.m */,
 			);
 			path = attention;
 			sourceTree = "<group>";
@@ -3049,7 +3049,7 @@
 				5C819C951AA71FCD00CDDB5B /* ATOMCommentDetailTableViewCell.m in Sources */,
 				E900AB401B41153A0019BAEA /* AFHTTPRequestOperation.m in Sources */,
 				5C31018D1AAEAB3C00EF529B /* ATOMAccountBindingTableViewCell.m in Sources */,
-				5C4F5BE21AA5575300226F64 /* ATOMMyAttentionViewController.m in Sources */,
+				5C4F5BE21AA5575300226F64 /* ATOMMyFollowViewController.m in Sources */,
 				E942898F1B5E220F00ED26E4 /* ATOMRecordModel.m in Sources */,
 				E9FC94D91B2F0D0C00B72C60 /* ATOMUserProfileViewModel.m in Sources */,
 				5C653B9E1AA973630025814B /* ATOMAddTipLabelToImageViewController.m in Sources */,

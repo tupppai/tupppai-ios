@@ -39,7 +39,6 @@
     self.view = _myMessageView;
     _tableView = [[UITableView alloc] initWithFrame:_myMessageView.bounds];
     _tableView.tableFooterView = [UIView new];
-    _tableView.separatorStyle = UITableViewCellAccessoryDisclosureIndicator;
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.scrollEnabled = NO;
@@ -81,7 +80,6 @@
         cell.textLabel.text = @"系统通知";
     }
     return cell;
-    
 }
 
 #pragma mark - UITableViewDelegate

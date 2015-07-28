@@ -31,8 +31,8 @@ extern NSInteger const kPadding30;
 extern NSInteger const kPadding35;
 
 extern CGFloat const kFont10;
+extern CGFloat const kFont12;
 extern CGFloat const kFont13;
-
 extern CGFloat const kFont14;
 extern CGFloat const kFont15;
 extern NSUInteger const kCommentTextViewMaxLength;

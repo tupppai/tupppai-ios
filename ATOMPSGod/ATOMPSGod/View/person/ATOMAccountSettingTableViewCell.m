@@ -15,6 +15,7 @@
     if (self) {
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         self.separatorInset = UIEdgeInsetsMake(0, kPadding28, 0, kPadding15);
+        self.textLabel.textColor = [UIColor colorWithHex:0x737373];
     }
     return self;
 }

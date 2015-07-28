@@ -267,9 +267,7 @@ canBeDismissedByUser:(BOOL)dismissingEnabled
             self.backgroundBlurView.blurTintColor = [UIColor colorWithHexString:current[@"backgroundColor"]];
             [self addSubview:self.backgroundBlurView];
         }
-
         UIColor *fontColor = [UIColor colorWithHexString:[current valueForKey:@"textColor"]];
-
 
         self.textSpaceLeft = 2 * padding;
         if (image) self.textSpaceLeft += image.size.width + 2 * padding;

@@ -28,7 +28,6 @@
 
 - (void)createSubView {
     WS(ws);
-
     _mobileTextField = [UITextField new];
     _mobileTextField.placeholder = @"手机号";
     _mobileTextField.textColor = [UIColor colorWithHex:0x637685];
@@ -170,7 +169,6 @@
     }];
 
 }
-
 
 
 
