@@ -9,6 +9,6 @@
 #import "ATOMBaseViewController.h"
 #import "ATOMUserProfileViewModel.h"
 
-@interface ATOMCreateProfileViewController : ATOMBaseViewController
+@interface ATOMCreateProfileViewController : ATOMLoginBaseViewController
 @property (nonatomic, strong) ATOMUserProfileViewModel *userProfileViewModel;
 @end

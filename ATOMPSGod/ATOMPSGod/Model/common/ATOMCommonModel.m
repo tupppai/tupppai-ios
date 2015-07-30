@@ -14,8 +14,8 @@
     NSLog(@"ATOMCommonModel post param %@",param);
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"ATOMCommonModel post responseObject%@",responseObject);
-        NSLog(@"ATOMCommonModel post info%@",responseObject[@"info"]);
-        NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
+        NSLog(@"ATOMCommonModel post info%@",[ responseObject objectForKey:@"info"]);
+        NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
             if (block) {
                 block(nil);
@@ -37,8 +37,8 @@
     NSLog(@"ATOMCommonModel post param %@",param);
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"ATOMCommonModel post responseObject%@",responseObject);
-        NSLog(@"ATOMCommonModel post info%@",responseObject[@"info"]);
-        NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
+        NSLog(@"ATOMCommonModel post info%@",[ responseObject objectForKey:@"info"]);
+        NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
             if (block) {
                 block(nil);

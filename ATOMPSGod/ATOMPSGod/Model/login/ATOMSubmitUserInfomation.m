@@ -19,11 +19,11 @@
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"user/save" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         [[KShareManager mascotAnimator]dismiss];
         NSLog(@"SubmitUserInformation param%@",param);
-        NSLog(@"SubmitUserInformation responseObject %@ ,\n info %@",responseObject,responseObject[@"info"]);
-        NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
+        NSLog(@"SubmitUserInformation responseObject %@ ,\n info %@",responseObject,[ responseObject objectForKey:@"info"]);
+        NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
-            if (responseObject[@"data"]) {
-                ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:responseObject[@"data"] error:NULL];
+            if ([ responseObject objectForKey:@"data"]) {
+                ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:[ responseObject objectForKey:@"data"] error:NULL];
                 [[ATOMCurrentUser currentUser]saveAndUpdateUser:user];
                 if (block) {
                     block(nil);

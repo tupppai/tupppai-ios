@@ -29,6 +29,9 @@
     _topView = [UIView new];
     _topView.backgroundColor = [UIColor whiteColor];
     _userWorkImageView = [UIImageView new];
+    _userWorkImageView.contentMode = UIViewContentModeScaleAspectFill;
+    _userWorkImageView.layer.masksToBounds = YES;
+
     _thinCenterView = [UIView new];
     [self addSubview:_topView];
     [self addSubview:_userWorkImageView];

@@ -12,7 +12,7 @@
 #import "ATOMMyFollowViewController.h"
 #import "ATOMMyMessageViewController.h"
 #import "ATOMUserDAO.h"
-#import "ATOMCutstomNavigationController.h"
+#import "ATOMLoginCustomNavigationController.h"
 #import "AppDelegate.h"
 #import "SIAlertView.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self;
@@ -57,7 +57,7 @@
                               [[ATOMCurrentUser currentUser]wipe];
                               self.navigationController.viewControllers = @[];
                               ATOMLaunchViewController *lvc = [[ATOMLaunchViewController alloc] init];
-                              [AppDelegate APP].window.rootViewController = [[ATOMCutstomNavigationController alloc] initWithRootViewController:lvc];
+                              [AppDelegate APP].window.rootViewController = [[ATOMLoginCustomNavigationController alloc] initWithRootViewController:lvc];
                           }];
     alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
     [alertView show];

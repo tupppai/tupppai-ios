@@ -16,8 +16,8 @@
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/my_reply" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"ShowMyReply responseObject %@",responseObject);
         NSMutableArray *resultArray = [NSMutableArray array];
-        NSArray *imageDataArray = responseObject[@"data"];
-        int ret = [(NSString*)responseObject[@"ret"] intValue];
+        NSArray *imageDataArray = [ responseObject objectForKey:@"data"];
+        int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
         if (ret == 1) {
             for (int i = 0; i < imageDataArray.count; i++) {
                 ATOMHomeImage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMHomeImage class] fromJSONDictionary:imageDataArray[i] error:NULL];

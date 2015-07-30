@@ -337,9 +337,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
-    [self firstGetDataSource];
+//    [self firstGetDataSource];
 }
-
+-(void)viewDidAppear:(BOOL)animated {
+    [_hotDetailTableView.header beginRefreshing];
+}
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 }

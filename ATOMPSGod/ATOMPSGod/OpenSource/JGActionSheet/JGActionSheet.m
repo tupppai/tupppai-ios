@@ -47,9 +47,10 @@
 #define iPad (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 #endif
 
-#define kHostsCornerRadius 8.0f
+#define kHostsCornerRadius 6.0f
 
-#define kSpacing 5.0f
+#define kHorizontalSpacing 4.0f
+#define kButtonYSpacing 5.0f
 
 #define kArrowBaseWidth 20.0f
 #define kArrowHeight 10.0f
@@ -74,36 +75,6 @@
 
 @end
 
-NS_INLINE UIBezierPath *trianglePath(CGRect rect, JGActionSheetArrowDirection arrowDirection, BOOL closePath) {
-    UIBezierPath *path = [UIBezierPath bezierPath];
-    
-    if (arrowDirection == JGActionSheetArrowDirectionBottom) {
-        [path moveToPoint:CGPointZero];
-        [path addLineToPoint:(CGPoint){CGRectGetWidth(rect)/2.0f, CGRectGetHeight(rect)}];
-        [path addLineToPoint:(CGPoint){CGRectGetWidth(rect), 0.0f}];
-    }
-    else if (arrowDirection == JGActionSheetArrowDirectionLeft) {
-        [path moveToPoint:(CGPoint){CGRectGetWidth(rect), 0.0f}];
-        [path addLineToPoint:(CGPoint){0.0f, CGRectGetHeight(rect)/2.0f}];
-        [path addLineToPoint:(CGPoint){CGRectGetWidth(rect), CGRectGetHeight(rect)}];
-    }
-    else if (arrowDirection == JGActionSheetArrowDirectionRight) {
-        [path moveToPoint:CGPointZero];
-        [path addLineToPoint:(CGPoint){CGRectGetWidth(rect), CGRectGetHeight(rect)/2.0f}];
-        [path addLineToPoint:(CGPoint){0.0f, CGRectGetHeight(rect)}];
-    }
-    else if (arrowDirection == JGActionSheetArrowDirectionTop) {
-        [path moveToPoint:(CGPoint){0.0f, CGRectGetHeight(rect)}];
-        [path addLineToPoint:(CGPoint){CGRectGetWidth(rect)/2.0f, 0.0f}];
-        [path addLineToPoint:(CGPoint){CGRectGetWidth(rect), CGRectGetHeight(rect)}];
-    }
-    
-    if (closePath) {
-        [path closePath];
-    }
-    
-    return path;
-}
 
 static BOOL disableCustomEasing = NO;
 
@@ -121,53 +92,6 @@ static BOOL disableCustomEasing = NO;
     }
     
     [super addAnimation:anim forKey:key];
-}
-
-@end
-
-@interface JGActionSheetTriangle : UIView
-
-- (void)setFrame:(CGRect)frame arrowDirection:(JGActionSheetArrowDirection)direction;
-
-@end
-
-@implementation JGActionSheetTriangle
-
-- (void)setFrame:(CGRect)frame arrowDirection:(JGActionSheetArrowDirection)direction {
-    self.frame = frame;
-    
-    [((CAShapeLayer *)self.layer) setPath:trianglePath(frame, direction, YES).CGPath];
-    self.layer.shadowPath = trianglePath(frame, direction, NO).CGPath;
-    
-    BOOL leftOrRight = (direction == JGActionSheetArrowDirectionLeft || direction == JGActionSheetArrowDirectionRight);
-    
-    CGRect pathRect = (CGRect){CGPointZero, {CGRectGetWidth(frame)+(leftOrRight ? kShadowRadius+1.0f : 2.0f*(kShadowRadius+1.0f)), CGRectGetHeight(frame)+(leftOrRight ? 2.0f*(kShadowRadius+1.0f) : kShadowRadius+1.0f)}};
-    
-    if (direction == JGActionSheetArrowDirectionTop) {
-        pathRect.origin.y -= kShadowRadius+1.0f;
-    }
-    else if (direction == JGActionSheetArrowDirectionLeft) {
-        pathRect.origin.x -= kShadowRadius+1.0f;
-    }
-    
-    UIBezierPath *path = [UIBezierPath bezierPathWithRect:pathRect];
-    
-    CAShapeLayer *mask = [CAShapeLayer layer];
-    mask.path = path.CGPath;
-    mask.fillColor = [UIColor blackColor].CGColor;
-    
-    self.layer.mask = mask;
-    self.layer.shadowColor = [UIColor blackColor].CGColor;
-    self.layer.shadowOffset = CGSizeZero;
-    self.layer.shadowRadius = kShadowRadius;
-    self.layer.shadowOpacity = kShadowOpacity;
-    
-    self.layer.contentsScale = [UIScreen mainScreen].scale;
-    ((CAShapeLayer *)self.layer).fillColor = [UIColor whiteColor].CGColor;
-}
-
-+ (Class)layerClass {
-    return [JGActionSheetLayer class];
 }
 
 @end
@@ -321,12 +245,14 @@ static BOOL disableCustomEasing = NO;
     }
     else {
         self.backgroundColor = [UIColor whiteColor];
-        self.layer.cornerRadius = kHostsCornerRadius;
+//        self.layer.cornerRadius = kHostsCornerRadius;
+        
         
         self.layer.shadowColor = [UIColor blackColor].CGColor;
         self.layer.shadowOffset = CGSizeZero;
         self.layer.shadowRadius = kShadowRadius;
         self.layer.shadowOpacity = kShadowOpacity;
+        
     }
 }
 
@@ -361,17 +287,15 @@ static BOOL disableCustomEasing = NO;
     UIFont *font = nil;
     
     if (buttonStyle == JGActionSheetButtonStyleDefault) {
-        font = [UIFont fontWithName:@"Hiragino Sans GB W3" size:16.0];
+        font = [UIFont boldSystemFontOfSize:17.0];
         titleColor = [UIColor whiteColor];
-//        backgroundColor = [UIColor colorWithWhite:0.95f alpha:1.0f];
         backgroundColor = [UIColor colorWithHex:0x74C3FF];
         borderColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
     }
     else if (buttonStyle == JGActionSheetButtonStyleCancel) {
-        font = [UIFont fontWithName:@"Hiragino Sans GB W3" size:16.0];
+        font = [UIFont boldSystemFontOfSize:17.0];
         titleColor = [UIColor whiteColor];
         backgroundColor = [UIColor colorWithHex:0xb5c0c8];
-//        backgroundColor = [UIColor colorWithWhite:0.95f alpha:1.0f];
         borderColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
     }
     else if (buttonStyle == JGActionSheetButtonStyleRed) {
@@ -430,7 +354,7 @@ static BOOL disableCustomEasing = NO;
 
 - (CGRect)layoutForWidth:(CGFloat)width {
     CGFloat buttonHeight = 50.0f;
-    CGFloat spacing = kSpacing;
+    CGFloat spacing = kButtonYSpacing;
     
     CGFloat height = 0.0f;
     CGFloat whiteGapHeight = 15.0;
@@ -493,6 +417,16 @@ static BOOL disableCustomEasing = NO;
     height += whiteGapHeight;
     self.frame = (CGRect){CGPointZero, {width, height}};
     
+    //draw topLeft and TopRight cornor radius to section.
+    UIBezierPath *maskPath;
+    maskPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
+                                     byRoundingCorners:(UIRectCornerTopLeft|UIRectCornerTopRight)
+                                           cornerRadii:CGSizeMake(6.0, 6.0)];
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+    maskLayer.frame = self.bounds;
+    maskLayer.path = maskPath.CGPath;
+    self.layer.mask = maskLayer;
+    
     return self.frame;
 }
 
@@ -502,7 +436,6 @@ static BOOL disableCustomEasing = NO;
 
 @interface JGActionSheet () <UIGestureRecognizerDelegate> {
     UIScrollView *_scrollView;
-    JGActionSheetTriangle *_arrowView;
     JGActionSheetView *_scrollViewHost;
     
     CGRect _finalContentFrame;
@@ -548,7 +481,7 @@ static BOOL disableCustomEasing = NO;
         [_scrollViewHost addSubview:_scrollView];
         [self addSubview:_scrollViewHost];
         
-        self.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.3f];
+        self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.8];
         
         _sections = sections;
         
@@ -605,21 +538,7 @@ static BOOL disableCustomEasing = NO;
     }
 }
 
-- (void)orientationChanged {
-    if (_targetView && !CGRectEqualToRect(self.bounds, _targetView.bounds)) {
-        disableCustomEasing = YES;
-        [UIView animateWithDuration:(iPad ? 0.4 : 0.3) delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut animations:^{
-            if (_anchoredAtPoint) {
-                [self moveToPoint:_anchorPoint arrowDirection:_anchoredArrowDirection animated:NO];
-            }
-            else {
-                [self layoutSheetInitial:NO];
-            }
-        } completion:^(BOOL finished) {
-            disableCustomEasing = NO;
-        }];
-    }
-}
+
 
 - (void)buttonPressed:(NSIndexPath *)indexPath {
     if (self.buttonPressedBlock) {
@@ -634,11 +553,11 @@ static BOOL disableCustomEasing = NO;
 #pragma mark Layout
 
 - (void)layoutSheetForFrame:(CGRect)frame fitToRect:(BOOL)fitToRect initialSetUp:(BOOL)initial continuous:(BOOL)continuous {
-    if (continuous) {
-        frame.size.width = kFixedWidthContinuous;
-    }
+//    if (continuous) {
+//        frame.size.width = kFixedWidthContinuous;
+//    }
     
-    CGFloat spacing = 2.0f*kSpacing;
+    CGFloat spacing = 2.0f*kHorizontalSpacing;
     
     CGFloat width = CGRectGetWidth(frame);
     
@@ -654,21 +573,20 @@ static BOOL disableCustomEasing = NO;
         }
         
         CGRect f = [section layoutForWidth:width];
-        
         f.origin.y = height;
-        
+
         if (!continuous) {
             f.origin.x = spacing;
         }
         
         section.frame = f;
         
-        height += CGRectGetHeight(f)+spacing;
+        height += CGRectGetHeight(f);
     }
     
-    if (continuous) {
-        height -= spacing;
-    }
+//    if (continuous) {
+//        height -= spacing;
+//    }
     
     _scrollView.contentSize = (CGSize){CGRectGetWidth(frame), height};
     
@@ -710,7 +628,7 @@ static BOOL disableCustomEasing = NO;
         
         if (iPad) {
             viewToModify.alpha = 1.0f;
-            _arrowView.alpha = 1.0f;
+//            _arrowView.alpha = 1.0f;
         }
         else {
             viewToModify.frame = _finalContentFrame;
@@ -721,7 +639,7 @@ static BOOL disableCustomEasing = NO;
         
         if (iPad) {
             viewToModify.alpha = 0.0f;
-            _arrowView.alpha = 0.0f;
+//            _arrowView.alpha = 0.0f;
         }
         else {
             viewToModify.frame = (CGRect){{viewToModify.frame.origin.x, CGRectGetHeight(_targetView.bounds)}, _scrollView.contentSize};
@@ -752,7 +670,6 @@ static BOOL disableCustomEasing = NO;
         }
     };
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationChanged) name:UIApplicationDidChangeStatusBarFrameNotification object:nil];
     
     [self layoutForVisible:!animated];
     
@@ -794,192 +711,7 @@ static BOOL disableCustomEasing = NO;
     [self layoutSheetForFrame:frame fitToRect:!iPad initialSetUp:initial continuous:NO];
 }
 
-#pragma mark Showing From Point
 
-- (void)showFromPoint:(CGPoint)point inView:(UIView *)view arrowDirection:(JGActionSheetArrowDirection)arrowDirection animated:(BOOL)animated {
-    NSAssert(!self.visible, @"Action Sheet is already visisble!");
-    
-    if (!iPad) {
-        return [self showInView:view animated:animated];
-    }
-    
-    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
-    
-    _targetView = view;
-    
-    [self moveToPoint:point arrowDirection:arrowDirection animated:NO];
-    
-    if ([self.delegate respondsToSelector:@selector(actionSheetWillPresent:)]) {
-        [self.delegate actionSheetWillPresent:self];
-    }
-    
-    void (^completion)(void) = ^{
-        [[UIApplication sharedApplication] endIgnoringInteractionEvents];
-        
-        if ([self.delegate respondsToSelector:@selector(actionSheetDidPresent:)]) {
-            [self.delegate actionSheetDidPresent:self];
-        }
-    };
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationChanged) name:UIApplicationDidChangeStatusBarFrameNotification object:nil];
-    
-    [self layoutForVisible:!animated];
-    
-    [_targetView addSubview:self];
-    
-    if (!animated) {
-        completion();
-    }
-    else {
-        CGFloat duration = 0.3f;
-        
-        [UIView animateWithDuration:duration animations:^{
-            [self layoutForVisible:YES];
-        } completion:^(BOOL finished) {
-            completion();
-        }];
-    }
-}
-
-- (void)moveToPoint:(CGPoint)point arrowDirection:(JGActionSheetArrowDirection)arrowDirection animated:(BOOL)animated {
-    if (!iPad) {
-        return;
-    }
-    
-    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
-    
-    disableCustomEasing = YES;
-    
-    NSAssert(self.visible, @"Action Sheet requires to be visible in order to move the anchor point!");
-    
-    void (^changes)(void) = ^{
-        self.frame = _targetView.bounds;
-        
-        CGRect finalFrame = CGRectZero;
-        
-        CGFloat arrowHeight = kArrowHeight;
-        
-        CGFloat spacing = kSpacing;
-        
-        if (arrowDirection == JGActionSheetArrowDirectionRight) {
-            finalFrame.size.width = point.x-arrowHeight;
-            finalFrame.size.height = CGRectGetHeight(_targetView.bounds);
-        }
-        else if (arrowDirection == JGActionSheetArrowDirectionLeft) {
-            finalFrame.size.width = CGRectGetWidth(_targetView.bounds)-point.x-arrowHeight;
-            finalFrame.size.height = CGRectGetHeight(_targetView.bounds);
-            finalFrame.origin.x = point.x+arrowHeight;
-        }
-        else if (arrowDirection == JGActionSheetArrowDirectionTop) {
-            finalFrame.size.width = CGRectGetWidth(_targetView.bounds);
-            finalFrame.size.height = CGRectGetHeight(_targetView.bounds)-point.y-arrowHeight;
-            finalFrame.origin.y = point.y+arrowHeight;
-        }
-        else if (arrowDirection == JGActionSheetArrowDirectionBottom) {
-            finalFrame.size.width = CGRectGetWidth(_targetView.bounds);
-            finalFrame.size.height = point.y-arrowHeight;
-        }
-        else {
-            @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Invalid arrow direction" userInfo:nil];
-        }
-        
-        finalFrame.origin.x += spacing;
-        finalFrame.origin.y += spacing;
-        finalFrame.size.height -= spacing*2.0f;
-        finalFrame.size.width -= spacing*2.0f;
-        
-        finalFrame = UIEdgeInsetsInsetRect(finalFrame, self.insets);
-        
-        _scrollViewHost.backgroundColor = [UIColor whiteColor];
-        
-        _scrollViewHost.layer.cornerRadius = kHostsCornerRadius;
-        
-        _scrollViewHost.layer.shadowColor = [UIColor blackColor].CGColor;
-        _scrollViewHost.layer.shadowOffset = CGSizeZero;
-        _scrollViewHost.layer.shadowRadius = kShadowRadius;
-        _scrollViewHost.layer.shadowOpacity = kShadowOpacity;
-        
-        [self layoutSheetForFrame:finalFrame fitToRect:NO initialSetUp:YES continuous:YES];
-        
-        [self anchorSheetAtPoint:point withArrowDirection:arrowDirection availableFrame:finalFrame];
-    };
-    
-    void (^completion)(void) = ^{
-        [[UIApplication sharedApplication] endIgnoringInteractionEvents];
-    };
-    
-    if (animated) {
-        [UIView animateWithDuration:0.3 animations:changes completion:^(BOOL finished) {
-            completion();
-        }];
-    }
-    else {
-        changes();
-        completion();
-    }
-    
-    disableCustomEasing = NO;
-}
-
-- (void)anchorSheetAtPoint:(CGPoint)point withArrowDirection:(JGActionSheetArrowDirection)arrowDirection availableFrame:(CGRect)frame {
-    _anchoredAtPoint = YES;
-    _anchorPoint = point;
-    _anchoredArrowDirection = arrowDirection;
-    
-    CGRect finalFrame = _scrollViewHost.frame;
-    
-    CGFloat arrowHeight = kArrowHeight;
-    CGFloat arrrowBaseWidth = kArrowBaseWidth;
-    
-    BOOL leftOrRight = (arrowDirection == JGActionSheetArrowDirectionLeft || arrowDirection == JGActionSheetArrowDirectionRight);
-    
-    CGRect arrowFrame = (CGRect){CGPointZero, {(leftOrRight ? arrowHeight : arrrowBaseWidth), (leftOrRight ? arrrowBaseWidth : arrowHeight)}};
-    
-    if (arrowDirection == JGActionSheetArrowDirectionRight) {
-        arrowFrame.origin.x = point.x-arrowHeight;
-        arrowFrame.origin.y = point.y-arrrowBaseWidth/2.0f;
-        
-        finalFrame.origin.x = point.x-CGRectGetWidth(finalFrame)-arrowHeight;
-    }
-    else if (arrowDirection == JGActionSheetArrowDirectionLeft) {
-        arrowFrame.origin.x = point.x;
-        arrowFrame.origin.y = point.y-arrrowBaseWidth/2.0f;
-        
-        finalFrame.origin.x = point.x+arrowHeight;
-    }
-    else if (arrowDirection == JGActionSheetArrowDirectionTop) {
-        arrowFrame.origin.x = point.x-arrrowBaseWidth/2.0f;
-        arrowFrame.origin.y = point.y;
-        
-        finalFrame.origin.y = point.y+arrowHeight;
-    }
-    else if (arrowDirection == JGActionSheetArrowDirectionBottom) {
-        arrowFrame.origin.x = point.x-arrrowBaseWidth/2.0f;
-        arrowFrame.origin.y = point.y-arrowHeight;
-        
-        finalFrame.origin.y = point.y-CGRectGetHeight(finalFrame)-arrowHeight;
-    }
-    
-    if (leftOrRight) {
-        finalFrame.origin.y = MIN(MAX(CGRectGetMaxY(frame)-CGRectGetHeight(finalFrame), CGRectGetMaxY(arrowFrame)-CGRectGetHeight(finalFrame)+kHostsCornerRadius), MIN(MAX(CGRectGetMinY(frame), point.y-CGRectGetHeight(finalFrame)/2.0f), CGRectGetMinY(arrowFrame)-kHostsCornerRadius));
-    }
-    else {
-        finalFrame.origin.x = MIN(MAX(MIN(CGRectGetMinX(frame), CGRectGetMinX(arrowFrame)-kHostsCornerRadius), point.x-CGRectGetWidth(finalFrame)/2.0f), MAX(CGRectGetMaxX(frame)-CGRectGetWidth(finalFrame), CGRectGetMaxX(arrowFrame)+kHostsCornerRadius-CGRectGetWidth(finalFrame)));
-    }
-    
-    if (!_arrowView) {
-        _arrowView = [[JGActionSheetTriangle alloc] init];
-        [self addSubview:_arrowView];
-    }
-    
-    [_arrowView setFrame:arrowFrame arrowDirection:arrowDirection];
-    
-    if (!CGRectContainsRect(_targetView.bounds, finalFrame) || !CGRectContainsRect(_targetView.bounds, arrowFrame)) {
-        NSLog(@"WARNING: Action sheet does not fit within view bounds! Select a different arrow direction or provide a different anchor point!");
-    }
-    
-    _scrollViewHost.frame = finalFrame;
-}
 
 #pragma mark Dismissal
 
@@ -989,8 +721,8 @@ static BOOL disableCustomEasing = NO;
     [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     
     void (^completion)(void) = ^{
-        [_arrowView removeFromSuperview];
-        _arrowView = nil;
+//        [_arrowView removeFromSuperview];
+//        _arrowView = nil;
         
         _targetView = nil;
         

@@ -14,8 +14,8 @@
     NSLog(@"ATOMCommonModel get param %@",param);
      [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/record" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"ATOMRecordModel get responseObject%@",responseObject);
-        NSLog(@"ATOMRecordModel get info%@",responseObject[@"info"]);
-        NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
+        NSLog(@"ATOMRecordModel get info%@",[ responseObject objectForKey:@"info"]);
+        NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
             NSString* url = [[responseObject objectForKey:@"data"]objectForKey:@"url"];
             if (block) {
@@ -38,8 +38,8 @@
 //    NSLog(@"ATOMCommonModel post param %@",param);
 //    [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/record" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
 //        NSLog(@"ATOMRecordModel get responseObject%@",responseObject);
-//        NSLog(@"ATOMRecordModel get info%@",responseObject[@"info"]);
-//        NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
+//        NSLog(@"ATOMRecordModel get info%@",[ responseObject objectForKey:@"info"]);
+//        NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
 //        if (ret == 1) {
 //            NSString* url = [[responseObject objectForKey:@"data"]objectForKey:@"url"];
 //            if (block) {

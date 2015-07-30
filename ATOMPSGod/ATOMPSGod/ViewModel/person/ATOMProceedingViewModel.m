@@ -13,6 +13,7 @@
 
 - (void)setViewModelData:(ATOMHomeImage *)homeImage {
     _ID = homeImage.imageID;
+    _userID = homeImage.uid;
     _userName = homeImage.nickname;
     _userSex = (homeImage.sex == 1) ? @"man" :@"woman";
     _avatarURL = homeImage.avatar;

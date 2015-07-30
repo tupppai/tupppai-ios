@@ -18,8 +18,8 @@
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"message/comment" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"ShowCommentMessage responseObject%@",responseObject);
         NSMutableArray *commentMessageArray = [NSMutableArray array];
-        NSArray *dataArray = responseObject[@"data"];
-        int ret = [(NSString*)responseObject[@"ret"] intValue];
+        NSArray *dataArray = [ responseObject objectForKey:@"data"];
+        int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
         if (ret == 1) {
             for (int i = 0; i < dataArray.count; i++) {
                 ATOMCommentMessage *commentMessage = [MTLJSONAdapter modelOfClass:[ATOMCommentMessage class] fromJSONDictionary:dataArray[i][@"comment"] error:NULL];

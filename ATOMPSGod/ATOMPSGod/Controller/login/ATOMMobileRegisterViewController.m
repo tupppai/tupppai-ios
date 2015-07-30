@@ -27,20 +27,25 @@
 }
 
 - (void)createUI {
-    self.title = @"手机注册";
-    UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
-    rightButtonItem.tintColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = rightButtonItem;
+//    self.title = @"手机注册";
+//    UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
+//    rightButtonItem.tintColor = [UIColor whiteColor];
+//    self.navigationItem.rightBarButtonItem = rightButtonItem;
+    
     _mobileRegisterView = [ATOMMobileRegisterView new];
     self.view = _mobileRegisterView;
     _mobileRegisterView.mobileTextField.delegate = self;
     _mobileRegisterView.passwordTextField.delegate = self;
+    
+    [_mobileRegisterView.nextButton addTarget:self action:@selector(clickRightButtonItem) forControlEvents:UIControlEventTouchUpInside];
+    [_mobileRegisterView.backButton addTarget:self action:@selector(clickLeftButtonItem) forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark - Click Event
-
-- (void)clickRightButtonItem:(UIBarButtonItem *)sender {
-    NSLog(@"clickRightButtonItem ATOMMobileRegisterViewController");
+- (void)clickLeftButtonItem {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+- (void)clickRightButtonItem {
     if ([self checkInputMessageSuccess]) {
         ATOMGetMoblieCode *getMobileCode = [ATOMGetMoblieCode new];
         NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:_mobileRegisterView.mobileTextField.text, @"phone", nil];

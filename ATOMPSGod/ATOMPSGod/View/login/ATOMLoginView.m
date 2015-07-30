@@ -10,11 +10,12 @@
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self;
 
-@interface ATOMLoginView ()
+@interface ATOMLoginView ()<UITextFieldDelegate>
 
 @property (nonatomic, strong) UIView *lineView;
 @property (nonatomic, strong) UILabel *tipLabel1;
 @end
+#define kTextColor [UIColor colorWithHex:0x637685];
 
 @implementation ATOMLoginView
 
@@ -28,28 +29,41 @@
 
 - (void)createSubView {
     WS(ws);
+    
+    self.backgroundColor = [UIColor whiteColor];
+    _backButton = [UIButton new];
+    [_backButton setImage:[UIImage imageNamed:@"icon_back_login"] forState:UIControlStateNormal];
+    [self addSubview:_backButton];
+    
+    UILabel* backButtonLabel = [UILabel new];
+    backButtonLabel.text = @"登录";
+    backButtonLabel.textColor = kTextColor;
+    backButtonLabel.font = [UIFont systemFontOfSize:18.0];
+    [self addSubview:backButtonLabel];
+
     _mobileTextField = [UITextField new];
     _mobileTextField.placeholder = @"手机号";
-    _mobileTextField.textColor = [UIColor colorWithHex:0x637685];
+    _mobileTextField.textColor = kTextColor;
     _mobileTextField.font = [UIFont systemFontOfSize:18];
     _mobileTextField.keyboardType = UIKeyboardTypePhonePad;
-    _mobileTextField.textAlignment = NSTextAlignmentCenter;
+    _mobileTextField.delegate = self;
     [self addSubview:_mobileTextField];
     
     UIView * mobileBottomLine = [UIView new];
-    mobileBottomLine.backgroundColor = [UIColor colorWithWhite:0x000000 alpha:0.2];
+    mobileBottomLine.backgroundColor = [UIColor colorWithWhite:0x000000 alpha:0.6];
     [self addSubview:mobileBottomLine];
     
     _passwordTextField = [UITextField new];
     _passwordTextField.secureTextEntry = YES;
     _passwordTextField.placeholder = @"密码";
-    _passwordTextField.textColor = [UIColor colorWithHex:0x637685];
+    _passwordTextField.textColor = kTextColor;
     _passwordTextField.font = [UIFont systemFontOfSize:18];
-    _passwordTextField.textAlignment = NSTextAlignmentCenter;
+    _passwordTextField.delegate = self;
+
     [self addSubview:_passwordTextField];
     
     UIView * passwordBottomLine = [UIView new];
-    passwordBottomLine.backgroundColor = [UIColor colorWithWhite:0x000000 alpha:0.2];
+    passwordBottomLine.backgroundColor = [UIColor colorWithWhite:0x000000 alpha:0.6];
     [self addSubview:passwordBottomLine];
     
     _loginButton = [UIButton new];
@@ -96,18 +110,28 @@
     [self addSubview:_wechatLoginButton];
     [self addSubview:_weiboLoginButton];
     
+    [_backButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(ws.mas_left).with.offset(kPadding15);
+        make.top.equalTo(ws.mas_top).with.offset(kPadding30);
+        make.height.equalTo(@40);
+        make.width.equalTo(@40);
+    }];
+    [backButtonLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(ws.mas_centerX);
+        make.centerY.equalTo(_backButton.mas_centerY);
+        make.height.equalTo(@40);
+        make.width.equalTo(@40);
+    }];
     [_mobileTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
-        make.top.equalTo(ws.mas_top).with.offset(20);
-        make.left.equalTo(ws.mas_left).with.offset(50);
-        make.right.equalTo(ws.mas_right).with.offset(-50);
+        make.top.equalTo(_backButton.mas_top).with.offset(80);
+        make.width.equalTo(@(kLineWidth));
         make.height.equalTo(@40);
     }];
     
     [mobileBottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
-        make.top.equalTo(_mobileTextField.mas_bottom).with.offset(2
-                                                                  );
+        make.top.equalTo(_mobileTextField.mas_bottom).with.offset(2);
         make.width.equalTo(@(kLineWidth));
         make.height.equalTo(@0.5);
     }];
@@ -171,7 +195,23 @@
 }
 
 
+- (BOOL)textField:(UITextField *) textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+        NSUInteger oldLength = [textField.text length];
+        NSUInteger replacementLength = [string length];
+        NSUInteger rangeLength = range.length;
+        
+        NSUInteger newLength = oldLength - rangeLength + replacementLength;
+        
+        BOOL returnKey = [string rangeOfString: @"\n"].location != NSNotFound;
+    if (textField == _mobileTextField) {
+        return ((newLength <= 11) || returnKey);
 
+    } else if (textField == _passwordTextField) {
+        return ((newLength <= 20) || returnKey);
+    }
+    
+    return YES;
+}
 
 
 

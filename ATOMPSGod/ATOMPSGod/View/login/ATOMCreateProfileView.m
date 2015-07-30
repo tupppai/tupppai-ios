@@ -20,7 +20,6 @@
 @property (nonatomic, strong) UIView *protocolView;
 @property (nonatomic, strong) UIView *sexPickerTopView;
 @property (nonatomic, strong) UIView *regionPickerTopView;
-
 @end
 
 @implementation ATOMCreateProfileView
@@ -30,7 +29,6 @@ static int padding10 = 10;
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.backgroundColor = [UIColor whiteColor];
         [self createSubView];
         [self createNicknameSubView];
         [self createSexSubView];
@@ -46,6 +44,21 @@ static int padding10 = 10;
 
 - (void)createSubView {
     WS(ws);
+    _backButton = [UIButton new];
+    [_backButton setImage:[UIImage imageNamed:@"icon_back_login"] forState:UIControlStateNormal];
+    [self addSubview:_backButton];
+    
+    UILabel *backButtonLabel = [UILabel new];
+    backButtonLabel.text = @"其它方式注册";
+    backButtonLabel.textColor = [UIColor colorWithHex:0x637685];
+    backButtonLabel.font = [UIFont systemFontOfSize:18.0];
+    [self addSubview:backButtonLabel];
+    
+    _nextButton = [UIButton new];
+    [_nextButton setTitle:@"下一步" forState:UIControlStateNormal];
+    [_nextButton setTitleColor:[UIColor colorWithHex:0x637685] forState:UIControlStateNormal];
+    [self addSubview:_nextButton];
+
     _topView = [UIView new];
     _topView.backgroundColor = [UIColor whiteColor];
     [self addSubview:_topView];
@@ -75,9 +88,26 @@ static int padding10 = 10;
     _protocolView = [UIView new];
     [self setCommonView:_protocolView];
     
+    [_backButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(ws.mas_left).with.offset(kPadding15);
+        make.top.equalTo(ws.mas_top).with.offset(kPadding30);
+        make.height.equalTo(@40);
+        make.width.equalTo(@40);
+    }];
+    [backButtonLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(ws.mas_centerX);
+        make.centerY.equalTo(_backButton.mas_centerY);
+        make.height.equalTo(@40);
+    }];
+    [_nextButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(ws.mas_right).with.offset(-kPadding15);
+        make.centerY.equalTo(_backButton.mas_centerY);
+        make.height.equalTo(@40);
+    }];
+    
     [_topView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
-        make.top.equalTo(ws.mas_top);
+        make.top.equalTo(_backButton.mas_bottom);
         make.width.equalTo(ws.mas_width);
         make.height.equalTo(@150);
     }];
@@ -397,15 +427,6 @@ static int padding10 = 10;
     }
     return -1;
 }
-
-
-
-
-
-
-
-
-
 
 
 

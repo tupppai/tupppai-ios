@@ -27,7 +27,7 @@
                 NSArray *askDataArray = [data objectForKey:@"asks"];
                 NSArray *replyDataArray = [data objectForKey:@"replies"];
                 
-                        ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:responseObject[@"data"] error:NULL];
+                        ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:[ responseObject objectForKey:@"data"] error:NULL];
                         for (int i = 0; i < askDataArray.count; i++) {
                             ATOMHomeImage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMHomeImage class] fromJSONDictionary:askDataArray[i] error:NULL];
                             homeImage.tipLabelArray = [NSMutableArray array];

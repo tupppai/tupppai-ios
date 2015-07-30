@@ -228,7 +228,7 @@ typedef NS_ENUM(NSUInteger, JGActionSheetArrowDirection) {
  
  @Attention This method is only available on iPad devices.
  */
-- (void)showFromPoint:(CGPoint)point inView:(UIView *)view arrowDirection:(JGActionSheetArrowDirection)arrowDirection animated:(BOOL)animated;
+//- (void)showFromPoint:(CGPoint)point inView:(UIView *)view arrowDirection:(JGActionSheetArrowDirection)arrowDirection animated:(BOOL)animated;
 
 /**
  Moves the action sheet to a new point.
@@ -240,7 +240,7 @@ typedef NS_ENUM(NSUInteger, JGActionSheetArrowDirection) {
  @Note This method can only be called if the action sheet is already visible on screen.
  @Attention This method is only available on iPad devices.
  */
-- (void)moveToPoint:(CGPoint)point arrowDirection:(JGActionSheetArrowDirection)arrowDirection animated:(BOOL)animated;
+//- (void)moveToPoint:(CGPoint)point arrowDirection:(JGActionSheetArrowDirection)arrowDirection animated:(BOOL)animated;
 
 /**
  Dismisses the action sheet.

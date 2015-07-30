@@ -43,14 +43,16 @@ static CGFloat replierWidth = 25;
     _topView = [UIView new];
     _topView.backgroundColor = [UIColor whiteColor];
     _userWorkImageView = [UIImageView new];
+    _userWorkImageView.contentMode = UIViewContentModeScaleAspectFill;
+    _userWorkImageView.layer.masksToBounds = YES;
     _thinCenterView = [UIView new];
     _thinCenterView.backgroundColor = [UIColor whiteColor];
     _bottomView = [UIView new];
     _bottomView.backgroundColor = [UIColor whiteColor];
     _bottomThinView = [UIView new];
     _bottomThinView.backgroundColor = [UIColor colorWithHex:0xf3f3f3];
-    [self addSubview:_topView];
     [self addSubview:_userWorkImageView];
+    [self addSubview:_topView];
     [self addSubview:_thinCenterView];
     [self addSubview:_bottomView];
     [self addSubview:_bottomThinView];
@@ -123,7 +125,6 @@ static CGFloat replierWidth = 25;
         praiseSize.width += kBottomCommonButtonWidth + kPadding15;
     }
     _userWorkImageView.frame = CGRectMake((SCREEN_WIDTH - workImageSize.width) / 2, CGRectGetMaxY(_topView.frame), workImageSize.width, workImageSize.height);
-    
     CGFloat thinViewHeight = 60;
     CGFloat bottomButtonOriginY = (thinViewHeight - kBottomCommonButtonWidth) / 2;
     _thinCenterView.frame = CGRectMake(0, CGRectGetMaxY(_userWorkImageView.frame), SCREEN_WIDTH, thinViewHeight);
@@ -155,7 +156,6 @@ static CGFloat replierWidth = 25;
 }
 
 - (void)setViewModel:(ATOMAskPageViewModel *)viewModel {
-    NSLog(@"hotCell viewModel id %ld",(long)viewModel.imageID);
     _viewModel = viewModel;
     _userNameLabel.text = viewModel.userName;
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
@@ -165,7 +165,6 @@ static CGFloat replierWidth = 25;
     _shareButton.number = viewModel.shareNumber;
     _commentButton.number = viewModel.commentNumber;
     _totalPSLabel.number = viewModel.totalPSNumber;
-    _userWorkImageView.contentMode = UIViewContentModeScaleAspectFit;
     if (viewModel.image) {
         _userWorkImageView.image = viewModel.image;
     } else {
@@ -198,10 +197,6 @@ static CGFloat replierWidth = 25;
 }
 
 - (void)addReplier {
-//    for (int i = 0; i < defaultAvatarCount; i++) {
-//        UIImageView *imageView = _replierAvatars[i];
-//        imageView.hidden = YES;
-//    }
     for (int i = 0; i < MIN(_viewModel.replierArray.count, defaultAvatarCount); i++) {
         ATOMReplierViewModel *replierViewModel = _viewModel.replierArray[i];
         UIImageView *imageView = _replierAvatars[defaultAvatarCount - MIN(_viewModel.replierArray.count, defaultAvatarCount) + i];

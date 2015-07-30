@@ -18,6 +18,7 @@ CGFloat const kPSButtonWidth = 54;
 CGFloat const kPSButtonHeight = 26;
 CGFloat const kBottomCommonButtonWidth = 24;
 
+NSInteger const kPagePadding = 15;
 NSInteger const kPadding5 = 5;
 NSInteger const kPadding10 = 10;
 NSInteger const kPadding13 = 13;

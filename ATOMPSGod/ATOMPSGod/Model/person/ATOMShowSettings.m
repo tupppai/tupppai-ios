@@ -15,9 +15,9 @@
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager]GET:@"user/get_push_settings" parameters:param success:^(NSURLSessionDataTask *task
 , id responseObject) {
         NSLog(@"getPushSetting responseObject%@",responseObject);
-        NSString* info = (NSString*)responseObject[@"info"];
+        NSString* info = (NSString*)[ responseObject objectForKey:@"info"];
         NSLog(@"getPushSetting info %@",info);
-        int ret = [(NSString*)responseObject[@"ret"] intValue];
+        int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
         if (ret == 1) {
             if (block) {
                 //                block(, nil);
@@ -45,8 +45,8 @@
     NSLog(@"setPushSetting param %@ ",param);
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"user/set_push_settings" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"toggleSetting param %@ responseObject%@",param,responseObject);
-        int ret = [(NSString*)responseObject[@"ret"] intValue];
-        NSString* info = (NSString*)responseObject[@"info"];
+        int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
+        NSString* info = (NSString*)[ responseObject objectForKey:@"info"];
         NSLog(@"toggleSetting info %@",info);
         if (ret == 1) {
             if (block) {
@@ -70,8 +70,8 @@
     NSString* url = bind?@"auth/bind":@"auth/unbind";
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"setBindSetting param %@ responseObject%@",param,responseObject);
-        int ret = [(NSString*)responseObject[@"ret"] intValue];
-        NSString* info = (NSString*)responseObject[@"info"];
+        int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
+        NSString* info = (NSString*)[ responseObject objectForKey:@"info"];
         NSLog(@"setBindSetting info %@",info);
         if (ret == 1) {
             if (block) {

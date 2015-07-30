@@ -247,7 +247,7 @@
         } else {
             if (success) {
                 success(dataTask, responseObject);
-                int ret = [(NSString*)responseObject[@"ret"] intValue];
+                int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
                 if (ret == 2) {
                     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"SignOut" object:nil]];
 //                } else if (ret == 0) {

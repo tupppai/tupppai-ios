@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ATOMBaseView.h"
 
-@interface ATOMCreateProfileView : UIScrollView
+@interface ATOMCreateProfileView : ATOMBaseView
 
+@property (nonatomic, strong) UIButton *backButton;
+@property (nonatomic, strong) UIButton *nextButton;
 @property (nonatomic, strong) UIView *topView;
 @property (nonatomic, strong) UIButton *userHeaderButton;
 @property (nonatomic, strong) UITextField *nicknameTextField;

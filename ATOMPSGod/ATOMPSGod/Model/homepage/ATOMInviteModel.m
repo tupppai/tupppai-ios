@@ -13,7 +13,7 @@
 - (NSURLSessionDataTask *)showRecomendUsers:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *recommendMasters,NSMutableArray *recommendFriends, NSError *))block {
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/get_recommend_users" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"showMasters responseObject%@",responseObject);
-        NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
+        NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         NSMutableArray *recommendMasters;
         NSMutableArray *recommendFriends;
 
@@ -22,11 +22,11 @@
             block(nil, nil,nil);
         }
         else {
-            if (responseObject[@"data"][@"recommends"]) {
-                NSLog(@"showMasters responseObject recommend%@",responseObject[@"data"][@"recommends"]);
+            if ([ responseObject objectForKey:@"data"][@"recommends"]) {
+                NSLog(@"showMasters responseObject recommend%@",[ responseObject objectForKey:@"data"][@"recommends"]);
 
                 recommendMasters = [NSMutableArray array];
-                NSArray *recommendData = responseObject[@"data"][@"recommends"];
+                NSArray *recommendData = [ responseObject objectForKey:@"data"][@"recommends"];
                 for (NSDictionary* data in recommendData) {
                     NSLog(@"recommendMasters for");
                     ATOMRecommendUser *ru = [MTLJSONAdapter modelOfClass:[ATOMRecommendUser class] fromJSONDictionary:data error:NULL];
@@ -35,9 +35,9 @@
                 NSLog(@"recommendMasters  %@",recommendMasters);
 
             }
-            if (responseObject[@"data"][@"fellows"]) {
+            if ([ responseObject objectForKey:@"data"][@"fellows"]) {
                 recommendFriends = [NSMutableArray array];
-                NSArray *recommendData2 = responseObject[@"data"][@"fellows"];
+                NSArray *recommendData2 = [ responseObject objectForKey:@"data"][@"fellows"];
                 for (NSDictionary* data in recommendData2) {
                     ATOMRecommendUser *ru = [MTLJSONAdapter modelOfClass:[ATOMRecommendUser class] fromJSONDictionary:data error:NULL];
                     [recommendFriends addObject:ru];
@@ -60,7 +60,7 @@
     NSLog(@"invite param%@",param);
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"invitation/invite" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"invite responseObject%@",responseObject);
-        NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
+        NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret != 1) {
             
         } else {

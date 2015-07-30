@@ -62,7 +62,7 @@ static CGFloat pageControlWidth = 150;
     _commentDetailTableView.tableFooterView = [UIView new];
     _commentDetailTableView.rowHeight = 70;
     _commentDetailTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _commentDetailTableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag|UIScrollViewKeyboardDismissModeInteractive;
+//    _commentDetailTableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag|UIScrollViewKeyboardDismissModeInteractive;
     [self addSubview:_commentDetailTableView];
     
     _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, CGHeight(self.frame) - 46, SCREEN_WIDTH, 46)];

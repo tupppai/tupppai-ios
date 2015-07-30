@@ -17,10 +17,10 @@
     NSLog(@"ShowProceeding param %@",param);
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/my_proceeding" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"ShowProceeding responseObject %@",responseObject);
-        int ret = [(NSString*)responseObject[@"ret"] intValue];
+        int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
         if (ret == 1) {
         NSMutableArray *resultArray = [NSMutableArray array];
-        NSArray *imageDataArray = responseObject[@"data"];
+        NSArray *imageDataArray = [ responseObject objectForKey:@"data"];
         for (int i = 0; i < imageDataArray.count; i++) {
             ATOMHomeImage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMHomeImage class] fromJSONDictionary:imageDataArray[i] error:NULL];
             homeImage.tipLabelArray = [NSMutableArray array];

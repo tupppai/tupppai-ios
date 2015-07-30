@@ -15,8 +15,8 @@
     NSLog(@"report param %@",param);
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"inform/report_abuse" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"report responseObject%@",responseObject);
-        NSLog(@"report info%@",responseObject[@"info"]);
-        NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
+        NSLog(@"report info%@",[ responseObject objectForKey:@"info"]);
+        NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
             if (block) {
                 block(nil);

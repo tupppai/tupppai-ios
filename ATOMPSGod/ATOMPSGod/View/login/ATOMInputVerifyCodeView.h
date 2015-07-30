@@ -9,7 +9,8 @@
 #import "ATOMBaseView.h"
 
 @interface ATOMInputVerifyCodeView : ATOMBaseView
-
+@property (nonatomic, strong) UIButton *backButton;
+@property (nonatomic, strong) UIButton *nextButton;
 @property (nonatomic, strong) UITextField *verifyCodeTextField;
 @property (nonatomic, strong) UIButton *sendVerifyCodeButton;
 @property (nonatomic, assign) NSInteger lastSecond;

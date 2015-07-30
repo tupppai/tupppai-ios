@@ -15,12 +15,12 @@
 - (NSURLSessionDataTask *)ShowMyConcern:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSMutableArray *, NSError *))block {
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/myfellow" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"ShowMyConcern responseObject %@",responseObject);
-        int ret = [(NSString*)responseObject[@"ret"] intValue];
+        int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
         if (ret == 1) {
             NSMutableArray *recommendConcernArray = [NSMutableArray array];
             NSMutableArray *myConcernArray = [NSMutableArray array];
-            NSArray *recommendDataArray = responseObject[@"data"][@"recommends"];
-            NSArray *myDataArray = responseObject[@"data"][@"felLows"];
+            NSArray *recommendDataArray = [ responseObject objectForKey:@"data"][@"recommends"];
+            NSArray *myDataArray = [ responseObject objectForKey:@"data"][@"felLows"];
             for (int i = 0; i < recommendDataArray.count; i++) {
                 ATOMConcern *concern = [MTLJSONAdapter modelOfClass:[ATOMConcern class] fromJSONDictionary:recommendDataArray[i] error:NULL];
                 [recommendConcernArray addObject:concern];
@@ -45,12 +45,13 @@
 }
 
 - (NSURLSessionDataTask *)ShowOtherConcern:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/myfellow" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/othersfellow" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"ShowOtherConcern  responseObject %@",responseObject);
-        int ret = [(NSString*)responseObject[@"ret"] intValue];
+        NSLog(@"ShowOtherConcern  param %@",param);
+        int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
         if (ret == 1) {
             NSMutableArray *resultArray = [NSMutableArray array];
-            NSArray *dataArray = responseObject[@"data"][@"fellows"];
+            NSArray *dataArray = [responseObject objectForKey:@"data"];
             for (int i = 0; i < dataArray.count; i++) {
                 ATOMConcern *concern = [MTLJSONAdapter modelOfClass:[ATOMConcern class] fromJSONDictionary:dataArray[i] error:NULL];
                 [resultArray addObject:concern];

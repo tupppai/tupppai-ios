@@ -15,8 +15,8 @@
     NSLog(@"follow url %@ ,param %@",url,param);
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"follow responseObject%@",responseObject);
-        NSLog(@"follow info%@",responseObject[@"info"]);
-        NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
+        NSLog(@"follow info%@",[ responseObject objectForKey:@"info"]);
+        NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
             if (block) {
                 block(nil);

@@ -25,14 +25,14 @@
         [[KShareManager mascotAnimator]dismiss];
         NSLog(@"SubmitImageWithLabel responseObject %@",responseObject);
         NSMutableArray *labelArray = [NSMutableArray array];
-        NSArray *dictArray = responseObject[@"data"][@"labels"];
+        NSArray *dictArray = [ responseObject objectForKey:@"data"][@"labels"];
         for (int i = 0; i < dictArray.count; i++) {
             ATOMImageTipLabel *imageTipLabel = [ATOMImageTipLabel new];
             imageTipLabel.labelID = [dictArray[i][@"id"] integerValue];
-            imageTipLabel.imageID = [responseObject[@"data"][@"ask_id"] integerValue];
+            imageTipLabel.imageID = [[ responseObject objectForKey:@"data"][@"ask_id"] integerValue];
             [labelArray addObject:imageTipLabel];
         }
-        NSInteger newImageID = [responseObject[@"data"][@"ask_id"] integerValue];
+        NSInteger newImageID = [[ responseObject objectForKey:@"data"][@"ask_id"] integerValue];
         if (block) {
             block(labelArray, newImageID, nil);
         }
@@ -49,16 +49,16 @@
     [[KShareManager mascotAnimator]show];
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"reply/save" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         [[KShareManager mascotAnimator]dismiss];
-        NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
+        NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
             NSMutableArray *labelArray = [NSMutableArray array];
-            NSArray* data = responseObject[@"data"];
+            NSArray* data = [ responseObject objectForKey:@"data"];
             if (data.count > 0) {
-                NSArray *dictArray = responseObject[@"data"][@"labels"];
+                NSArray *dictArray = [ responseObject objectForKey:@"data"][@"labels"];
                 for (int i = 0; i < dictArray.count; i++) {
                     ATOMImageTipLabel *imageTipLabel = [ATOMImageTipLabel new];
                     imageTipLabel.labelID = [dictArray[i][@"id"] integerValue];
-                    imageTipLabel.imageID = [responseObject[@"data"][@"ask_id"] integerValue];
+                    imageTipLabel.imageID = [[ responseObject objectForKey:@"data"][@"ask_id"] integerValue];
                     [labelArray addObject:imageTipLabel];
                 }
                 if (block) {

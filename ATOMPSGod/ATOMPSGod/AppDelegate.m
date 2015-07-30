@@ -10,6 +10,7 @@
 #import "ATOMLaunchViewController.h"
 #import "ATOMMainTabBarController.h"
 #import "ATOMCutstomNavigationController.h"
+#import "ATOMLoginCustomNavigationController.h"
 #import "WXApi.h"
 #import "WeiboSDK.h"
 #import "WXApi.h"
@@ -94,7 +95,7 @@
         } else {
             NSLog(@"hasCurrentUser == false");
             ATOMLaunchViewController *lvc = [[ATOMLaunchViewController alloc] init];
-            self.baseNav = [[ATOMCutstomNavigationController alloc] initWithRootViewController:lvc];
+            self.baseNav = [[ATOMLoginCustomNavigationController alloc] initWithRootViewController:lvc];
             self.window.rootViewController = self.baseNav;
         }
         [self.window makeKeyAndVisible];

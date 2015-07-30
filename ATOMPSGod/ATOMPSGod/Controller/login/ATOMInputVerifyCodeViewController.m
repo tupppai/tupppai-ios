@@ -36,6 +36,8 @@
     self.view = _inputVerifyView;
     [_inputVerifyView.sendVerifyCodeButton addTarget:self action:@selector(clickVerifyButton:) forControlEvents:UIControlEventTouchUpInside];
     [_inputVerifyView.verifyCodeTextField becomeFirstResponder];
+    [_inputVerifyView.nextButton addTarget:self action:@selector(clickRightButtonItem) forControlEvents:UIControlEventTouchUpInside];
+    [_inputVerifyView.backButton addTarget:self action:@selector(clickLeftButtonItem) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)createVerifyTimer {
@@ -82,7 +84,7 @@
     [self createVerifyTimer];
 }
 
-- (void)clickRightButtonItem:(UIBarButtonItem *)sender {
+- (void)clickRightButtonItem{
     
     if ([_inputVerifyView.verifyCodeTextField.text isEqualToString:_verifyCode]) {
         NSMutableDictionary *param = [[ATOMCurrentUser currentUser] dictionaryFromModel];
@@ -100,7 +102,9 @@
         [Util TextHud:@"验证码有误"];
     }
 }
-
+- (void)clickLeftButtonItem{
+    [self.navigationController popViewControllerAnimated:YES];
+}
     
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];

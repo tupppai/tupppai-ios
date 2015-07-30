@@ -31,14 +31,15 @@
     _topView = [UIView new];
     _topView.backgroundColor = [UIColor whiteColor];
     _userWorkImageView = [UIImageView new];
+    _userWorkImageView.contentMode = UIViewContentModeScaleAspectFill;
     _thinCenterView = [UIView new];
     _bottomThinView = [UIView new];
     _bottomThinView.backgroundColor = [UIColor colorWithHex:0xf3f3f3];
-    [self addSubview:_topView];
     [self addSubview:_userWorkImageView];
+    [self addSubview:_topView];
     [self addSubview:_thinCenterView];
     [self addSubview:_bottomThinView];
-    
+
     _userHeaderButton = [UIButton new];
     _userHeaderButton.userInteractionEnabled = NO;
     _userHeaderButton.layer.cornerRadius = kUserHeaderButtonWidth / 2;
@@ -77,7 +78,7 @@
     [super layoutSubviews];
     _topView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 60);
     _userHeaderButton.frame = CGRectMake(kPadding15, (60 - kUserHeaderButtonWidth) / 2, kUserHeaderButtonWidth, kUserHeaderButtonWidth);
-    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, (60 - kFont14) / 2, kUserNameLabelWidth, kFont14);
+    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, (60 - kFont14) / 2, kUserNameLabelWidth, kFont14+2);
     _psButton.frame = CGRectMake(SCREEN_WIDTH - kPadding15 - kPSButtonWidth, (60 - kPSButtonHeight) / 2, kPSButtonWidth, kPSButtonHeight);
     
     CGSize workImageSize = CGSizeZero;
@@ -123,7 +124,6 @@
     _praiseButton.selected = viewModel.liked;
     _shareButton.number = viewModel.shareNumber;
     _commentButton.number = viewModel.commentNumber;
-//    _userWorkImageView.contentMode = UIViewContentModeScaleAspectFit;
     if (viewModel.image) {
         _userWorkImageView.image = viewModel.image;
     } else {

@@ -52,6 +52,8 @@
 @property (nonatomic, assign) NSInteger currentRecentPage;
 
 @property (nonatomic, assign) BOOL isfirstEnterHomepageRecentView;
+@property (nonatomic, assign) BOOL isfirstEnterHomepage ;
+
 @property (nonatomic, assign) BOOL canRefreshHotFooter;
 @property (nonatomic, assign) BOOL canRefreshRecentFooter;
 
@@ -443,6 +445,7 @@
 #pragma mark - UI
 
 - (void)viewDidLoad {
+
     [super viewDidLoad];
     [self createUI];
 }
@@ -456,7 +459,17 @@
     [super viewWillDisappear:animated];
     _thineNavigationView.hidden = YES;
 }
-
+-(void)viewDidAppear:(BOOL)animated {
+//    NSLog(@"viewDidAppear");
+//    if ([_scrollView typeOfCurrentHomepageView] == ATOMHomepageViewTypeHot && !_isfirstEnterHomepage) {
+//        [_scrollView.homepageHotTableView.header beginRefreshing];
+//        NSLog(@"viewDidAppear beginRefreshing1");
+//    } else if ([_scrollView typeOfCurrentHomepageView] == ATOMHomepageViewTypeAsk && !_isfirstEnterHomepageRecentView) {
+//        [_scrollView.homepageAskTableView.header beginRefreshing];
+//        NSLog(@"viewDidAppear beginRefreshing2");
+//    }
+//    _isfirstEnterHomepage = NO;
+}
 - (void)createUI {
     [self createCustomNavigationBar];
     _scrollView = [ATOMHomepageScrollView new];
@@ -465,6 +478,7 @@
     [self configHomepageHotTableView];
     [self confighomepageAskTableView];
     _isfirstEnterHomepageRecentView = YES;
+//    _isfirstEnterHomepage = YES;
     _canRefreshHotFooter = YES;
     _canRefreshRecentFooter = YES;
     [self firstGetDataSourceFromDataBase];
@@ -475,6 +489,7 @@
     _scrollView.homepageHotTableView.delegate = self;
     _scrollView.homepageHotTableView.dataSource = self;
     _scrollView.homepageHotTableView.psDelegate = self;
+    _scrollView.homepageHotTableView.estimatedRowHeight = 340;
     _tapHomePageHotGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHomePageHotGesture:)];
     [_scrollView.homepageHotTableView addGestureRecognizer:_tapHomePageHotGesture];
 }
@@ -482,6 +497,7 @@
     _scrollView.homepageAskTableView.delegate = self;
     _scrollView.homepageAskTableView.dataSource = self;
     _scrollView.homepageAskTableView.psDelegate = self;
+    _scrollView.homepageAskTableView.estimatedRowHeight = 340;
     _tapHomePageRecentGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHomePageRecentGesture:)];
     [_scrollView.homepageAskTableView addGestureRecognizer:_tapHomePageRecentGesture];
 }
@@ -523,9 +539,6 @@
         _isfirstEnterHomepageRecentView = NO;
         [self firstGetDataSourceOfTableViewWithHomeType:ATOMHomepageViewTypeAsk];
     }
-    [TSMessage showNotificationWithTitle:@"你还没告诉大神你想要的效果"
-                                subtitle:@"请点击图片填写效果"
-                                    type:TSMessageNotificationTypeWarning];
 }
 
 - (void)clickCameraButton:(UIBarButtonItem *)sender {
@@ -771,6 +784,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"cellForRowAtIndexPath %ld",indexPath.row);
     if (_scrollView.homepageHotTableView == tableView) {
         static NSString *CellIdentifier1 = @"HomePageHotCell";
         ATOMHomePageHotTableViewCell *cell = [_scrollView.homepageHotTableView dequeueReusableCellWithIdentifier:CellIdentifier1];
@@ -795,6 +809,7 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"heightForRowAtIndexPath %ld",indexPath.row);
     if (_scrollView.homepageHotTableView == tableView) {
         return [ATOMHomePageHotTableViewCell calculateCellHeightWith:_dataSourceOfHotTableView[indexPath.row]];
     } else if (_scrollView.homepageAskTableView == tableView) {

@@ -31,10 +31,10 @@
         NSLog(@"ShowDetailOfComment param %@,responseObject%@",param,responseObject);
         NSMutableArray *hotCommentArray = [NSMutableArray array];
         NSMutableArray *recentCommentArray = [NSMutableArray array];
-        NSArray* data = responseObject[@"data"];
+        NSArray* data = [ responseObject objectForKey:@"data"];
         if (data.count != 0) {
-            NSArray *hotCommentDataArray = responseObject[@"data"][@"hot_comments"];
-            NSArray *recentCommentDataArray = responseObject[@"data"][@"new_comments"];
+            NSArray *hotCommentDataArray = [ responseObject objectForKey:@"data"][@"hot_comments"];
+            NSArray *recentCommentDataArray = [ responseObject objectForKey:@"data"][@"new_comments"];
             for (int i = 0; i < hotCommentDataArray.count; i++) {
                 ATOMComment *comment = [MTLJSONAdapter modelOfClass:[ATOMComment class] fromJSONDictionary:hotCommentDataArray[i] error:NULL];
                 comment.commentType = [param[@"type"] integerValue];
@@ -75,9 +75,9 @@
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"comment/send_comment" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSLog(@"SendComment %@,responseObject%@",param,responseObject);
-        NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
+        NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
-            NSInteger comment_id = [responseObject[@"data"][@"id"] integerValue];
+            NSInteger comment_id = [[ responseObject objectForKey:@"data"][@"id"] integerValue];
             if (block) {
                 block(comment_id, nil);
             }

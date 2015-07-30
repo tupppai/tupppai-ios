@@ -354,6 +354,8 @@ static SIAlertView *__si_alert_current_view;
 {
     
     BOOL ToAdd = YES;
+    
+    //Avoid adding same title repeatedly.
     for (SIAlertItem* item2 in self.items) {
         if ([item2.title isEqualToString:title]) {
             ToAdd = false;

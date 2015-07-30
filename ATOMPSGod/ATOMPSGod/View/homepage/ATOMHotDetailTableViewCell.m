@@ -37,6 +37,9 @@
     _topView = [UIView new];
     _topView.backgroundColor = [UIColor whiteColor];
     _userWorkImageView = [UIImageView new];
+    _userWorkImageView.contentMode = UIViewContentModeScaleAspectFill;
+    _userWorkImageView.layer.masksToBounds = YES;
+
     _thinCenterView = [UIView new];
     _thinCenterView.backgroundColor = [UIColor whiteColor];
     _bottomView = [UIView new];

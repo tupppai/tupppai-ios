@@ -27,13 +27,13 @@
         [[KShareManager mascotAnimator]dismiss];
         NSLog(@"openIDAuth param %@",param);
         NSLog(@"openIDAuth responseObject%@",responseObject);
-        NSString* info = (NSString*)responseObject[@"info"];
+        NSString* info = (NSString*)[ responseObject objectForKey:@"info"];
         NSLog(@"openIDAuth info %@",info);
-        NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
+        NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
-            NSInteger isRegistered = [responseObject[@"data"][@"is_register"] integerValue];
+            NSInteger isRegistered = [[ responseObject objectForKey:@"data"][@"is_register"] integerValue];
             if (isRegistered == 1) {
-                ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:responseObject[@"data"][@"user_obj"] error:NULL];
+                ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:[ responseObject objectForKey:@"data"][@"user_obj"] error:NULL];
                 //保存更新数据库的user,并更新currentUser
                 [[ATOMCurrentUser currentUser]saveAndUpdateUser:user];
                 block(YES,@"登录成功",nil);
@@ -58,18 +58,18 @@
     [[KShareManager mascotAnimator] show];
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"user/login" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         [[KShareManager mascotAnimator] dismiss];
-        NSInteger ret = [(NSString*)responseObject[@"ret"]integerValue];
-        NSString* info = responseObject[@"info"];
+        NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"]integerValue];
+        NSString* info = [ responseObject objectForKey:@"info"];
         NSLog(@"Login param %@",param);
         NSLog(@"Login responseObject %@ \n info %@",responseObject,info);
         if (ret == 1) {
-            if (responseObject[@"data"]) {
+            if ([ responseObject objectForKey:@"data"]) {
                 //        data: { status: 1,正常  2，密码错误 3，未注册 }
-                NSInteger status = [(NSString*)responseObject[@"data"][@"status"] integerValue];
+                NSInteger status = [(NSString*)[ responseObject objectForKey:@"data"][@"status"] integerValue];
                 if(status == 1) {
                     [Util TextHud:@"登录成功"];
                     NSError* error;
-                    ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:responseObject[@"data"] error:&error];
+                    ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:[ responseObject objectForKey:@"data"] error:&error];
                     if (error) {
                         NSLog(@"Login error %@",error);
                     }

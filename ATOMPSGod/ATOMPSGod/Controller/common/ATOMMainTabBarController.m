@@ -15,7 +15,7 @@
 
 //#define  BUTTON_INTERVAL (SCREEN_WIDTH - 30 * 2 - 49 * 4) / 3
 
-@interface ATOMMainTabBarController ()
+@interface ATOMMainTabBarController ()<UITabBarControllerDelegate>
 
 @property (nonatomic, strong) ATOMCutstomNavigationController *nav1;
 @property (nonatomic, strong) ATOMCutstomNavigationController *nav2;
@@ -46,7 +46,6 @@
     myAttentionViewController.title = @"关注";
     myMessageViewController.title = @"消息";
     personViewController.title = @"我的";
-
     _nav1 = [[ATOMCutstomNavigationController alloc] initWithRootViewController:homePageViewController];
     _nav2 = [[ATOMCutstomNavigationController alloc] initWithRootViewController:myAttentionViewController];
     _nav3 = [[ATOMCutstomNavigationController alloc] initWithRootViewController:myMessageViewController];
@@ -71,7 +70,6 @@
     
     self.viewControllers = [NSArray arrayWithObjects:_nav1, _nav2, _nav3, _nav4, nil];
 }
-
 
 
 

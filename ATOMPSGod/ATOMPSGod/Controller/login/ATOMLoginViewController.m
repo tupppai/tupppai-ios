@@ -24,18 +24,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
+    self.navigationController.navigationBarHidden = YES;
 }
 
 - (void)createUI {
-    self.title = @"登录";
     _loginView = [ATOMLoginView new];
-    self.view = _loginView;
+    self.view  = _loginView;
+    [_loginView.backButton addTarget:self action:@selector(clickBackButton) forControlEvents:UIControlEventTouchUpInside];
     [_loginView.loginButton addTarget:self action:@selector(clickLoginButton:) forControlEvents:UIControlEventTouchUpInside];
     [_loginView.weiboLoginButton addTarget:self action:@selector(clickweiboLoginButton:) forControlEvents:UIControlEventTouchUpInside];
     [_loginView.wechatLoginButton addTarget:self action:@selector(clickwechatLoginButton:) forControlEvents:UIControlEventTouchUpInside];
     [_loginView.forgetPasswordButton addTarget:self action:@selector(clickForgetPasswordButton:) forControlEvents:UIControlEventTouchUpInside];
 }
-
+- (void)clickBackButton {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 - (void)clickLoginButton:(UIButton *)sender {
     if (![_loginView.mobileTextField.text isMobileNumber]) {
         [Util TextHud:@"手机格式有误" inView:self.view];
@@ -84,7 +87,7 @@
                     }
                     ATOMCreateProfileViewController *cpvc = [ATOMCreateProfileViewController new];
                     cpvc.userProfileViewModel = ipvm;
-                    [self pushViewController:cpvc animated:YES];
+                    [self.navigationController pushViewController:cpvc animated:YES];
                 }
             }];
         }
@@ -123,7 +126,7 @@
                     }
                     ATOMCreateProfileViewController *cpvc = [ATOMCreateProfileViewController new];
                     cpvc.userProfileViewModel = ipvm;
-                    [self pushViewController:cpvc animated:YES];
+                    [self.navigationController pushViewController:cpvc animated:YES];
                 }
             }];
         }

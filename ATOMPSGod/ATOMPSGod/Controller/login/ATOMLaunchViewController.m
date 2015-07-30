@@ -31,11 +31,11 @@
 //}
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    self.navigationController.navigationBarHidden = YES;
+//    self.navigationController.navigationBarHidden = YES;
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBarHidden = NO;
 }
 - (void)createUI {
     _launchView = [ATOMLaunchView new];
@@ -73,7 +73,7 @@
                     }
                     ATOMCreateProfileViewController *cpvc = [ATOMCreateProfileViewController new];
                     cpvc.userProfileViewModel = ipvm;
-                    [self pushViewController:cpvc animated:YES];
+                    [self.navigationController pushViewController:cpvc animated:YES];
                 }
             }];
         }
@@ -86,11 +86,11 @@
 - (void)clickOtherRegisterButton:(UIButton *)sender {
     [ATOMCurrentUser currentUser].signUpType = ATOMSignUpMobile;
     ATOMCreateProfileViewController *cpvc = [ATOMCreateProfileViewController new];
-    [self pushViewController:cpvc animated:YES];
+    [self.navigationController pushViewController:cpvc animated:YES];
 }
 
 - (void)clickLoginButton:(UIButton *)sender {
     ATOMLoginViewController *lvc = [ATOMLoginViewController new];
-    [self pushViewController:lvc animated:YES];
+    [self.navigationController pushViewController:lvc animated:YES];
 }
 @end

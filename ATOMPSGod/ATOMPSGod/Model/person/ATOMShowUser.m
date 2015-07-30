@@ -13,9 +13,9 @@
 + (NSURLSessionDataTask *)ShowUserInfo:(void (^)(ATOMUser *, NSError *))block {
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/info" parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"ShowUserInfo responseObject %@",responseObject);
-        int ret = [(NSString*)responseObject[@"ret"] intValue];
+        int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
         if (ret == 1) {
-            ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:responseObject[@"data"] error:NULL];
+            ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:[ responseObject objectForKey:@"data"] error:NULL];
             //保存更新数据库的user,并更新currentUser
             [[ATOMCurrentUser currentUser]saveAndUpdateUser:user];
             if (block) {

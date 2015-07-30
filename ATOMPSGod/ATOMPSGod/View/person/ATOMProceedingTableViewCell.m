@@ -61,7 +61,6 @@
     CGSize imageSize = CGSizeZero;
     if (_viewModel) {
         imageSize = CGSizeMake(_viewModel.width, _viewModel.height);
-        NSLog(@"imageSize %f %f",imageSize.width,imageSize.height);
     }
     _userUploadImageView.frame = CGRectMake((SCREEN_WIDTH - imageSize.width) / 2, 60, imageSize.width, imageSize.height);
 

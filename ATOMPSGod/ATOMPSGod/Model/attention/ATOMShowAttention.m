@@ -18,12 +18,12 @@
 - (NSURLSessionDataTask *)ShowAttention:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/fellowsDynamic" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"ShowAttention responseObject %@",responseObject);
-        NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
+        NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret != 1) {
             block(nil, nil);
         } else {
             NSMutableArray *resultArray = [NSMutableArray array];
-            NSArray *imageDataArray = responseObject[@"data"];
+            NSArray *imageDataArray = [ responseObject objectForKey:@"data"];
 
             for (int i = 0; i < imageDataArray.count; i++) {
                 ATOMCommonImage *commonImage = [MTLJSONAdapter modelOfClass:[ATOMCommonImage class] fromJSONDictionary:imageDataArray[i] error:NULL];

@@ -14,7 +14,6 @@
     self = [super init];
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
-//        [self showPlaceHolder];
     }
     return self;
 }

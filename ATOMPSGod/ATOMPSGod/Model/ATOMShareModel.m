@@ -15,11 +15,11 @@
         [[KShareManager mascotAnimator]dismiss];
         NSLog(@"getShareInfo param%@",param);
         NSLog(@"getShareInfo responseObject%@",responseObject);
-        NSLog(@"getShareInfo info%@",responseObject[@"info"]);
+        NSLog(@"getShareInfo info%@",[ responseObject objectForKey:@"info"]);
 
-        NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
+        NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
-            ATOMShare *share = [MTLJSONAdapter modelOfClass:[ATOMShare class] fromJSONDictionary:responseObject[@"data"] error:NULL];
+            ATOMShare *share = [MTLJSONAdapter modelOfClass:[ATOMShare class] fromJSONDictionary:[ responseObject objectForKey:@"data"] error:NULL];
             if (block) {
                 block(share, nil);
             }

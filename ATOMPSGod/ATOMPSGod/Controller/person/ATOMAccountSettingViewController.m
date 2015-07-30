@@ -14,7 +14,7 @@
 #import "ATOMUserFeedbackViewController.h"
 #import "ATOMUserDAO.h"
 #import "ATOMHomeImageDAO.h"
-#import "ATOMCutstomNavigationController.h"
+#import "ATOMLoginCustomNavigationController.h"
 #import "AppDelegate.h"
 #import "SIAlertView.h"
 #import "ATOMShowHomepage.h"
@@ -179,7 +179,7 @@
                               [[ATOMCurrentUser currentUser]wipe];
                               self.navigationController.viewControllers = @[];
                               ATOMLaunchViewController *lvc = [[ATOMLaunchViewController alloc] init];
-                              [AppDelegate APP].window.rootViewController = [[ATOMCutstomNavigationController alloc] initWithRootViewController:lvc];
+                              [AppDelegate APP].window.rootViewController = [[ATOMLoginCustomNavigationController alloc] initWithRootViewController:lvc];
                           }];
     alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
     [alertView show];

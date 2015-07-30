@@ -16,8 +16,8 @@
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"message/follow" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"ShowConcernMessage responseObject%@",responseObject);
         NSMutableArray *concernMessageArray = [NSMutableArray array];
-        NSArray *dataArray = responseObject[@"data"];
-        int ret = [(NSString*)responseObject[@"ret"] intValue];
+        NSArray *dataArray = [ responseObject objectForKey:@"data"];
+        int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
         if (ret == 1) {
             for (int i = 0; i < dataArray.count; i++) {
                 ATOMConcernMessage *concernMessage = [MTLJSONAdapter modelOfClass:[ATOMConcernMessage class] fromJSONDictionary:dataArray[i] error:NULL];

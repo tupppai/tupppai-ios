@@ -66,7 +66,7 @@ static CGFloat pageControlWidth = 150;
     _recentDetailTableView.tableFooterView = [UIView new];
     _recentDetailTableView.rowHeight = 70;
     _recentDetailTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _recentDetailTableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag|UIScrollViewKeyboardDismissModeInteractive;
+//    _recentDetailTableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag|UIScrollViewKeyboardDismissModeInteractive;
     [self addSubview:_recentDetailTableView];
     
     //后期把_bottomView抓出来写一个View类

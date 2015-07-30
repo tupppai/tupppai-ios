@@ -17,6 +17,7 @@
 #import "ATOMShowProceeding.h"
 #import "PWRefreshBaseTableView.h"
 #import "ATOMCommonModel.h"
+#import "ATOMPageDetailViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMProceedingViewController () <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,PWRefreshBaseTableViewDelegate>
@@ -28,6 +29,8 @@
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *homeImageDataSource;
 @property (nonatomic, assign) NSInteger currentPage;
+@property (nonatomic, assign) NSIndexPath* selectedIndexPath;
+
 @property (nonatomic, assign) BOOL canRefreshFooter;
 
 @end
@@ -80,7 +83,7 @@
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     _currentPage = 1;
     [param setObject:@(_currentPage) forKey:@"page"];
-//    [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
 //    [param setObject:@"new" forKey:@"type"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
 //    [param setObject:@"time" forKey:@"sort"];
@@ -166,6 +169,7 @@
 - (void)tapProceedingGesture:(UITapGestureRecognizer *)gesture {
     CGPoint location = [gesture locationInView:_tableView];
     NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:location];
+    _selectedIndexPath = indexPath;
     if (indexPath) {
         ATOMProceedingTableViewCell *cell = (ATOMProceedingTableViewCell *)[_tableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
@@ -173,11 +177,28 @@
         if (CGRectContainsPoint(cell.uploadButton.frame, p)) {
             [self dealUploadWork];
         } else if (CGRectContainsPoint(cell.userUploadImageView.frame, p)) {
-            ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
-            hdvc.askPageViewModel = _homeImageDataSource[indexPath.row];
-            [self pushViewController:hdvc animated:YES];
+            ATOMAskPageViewModel* askPVM = _homeImageDataSource[indexPath.row];
+
+            if ([askPVM.totalPSNumber integerValue] == 0) {
+                ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
+                rdvc.pageDetailViewModel = [askPVM generatepageDetailViewModel];
+                [self pushViewController:rdvc animated:YES];
+            } else {
+                ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
+                hdvc.askPageViewModel = askPVM;
+                hdvc.fold = 0;
+                [self pushViewController:hdvc animated:YES];
+            }
+            
         } else if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+            opvc.userID = cell.viewModel.userID;
+            opvc.userName = cell.viewModel.userName;
+            [self pushViewController:opvc animated:YES];
+        } else if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
+            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+            opvc.userID = cell.viewModel.userID;
+            opvc.userName = cell.viewModel.userName;
             [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.deleteButton.frame, p)) {
             NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(cell.viewModel.ID),@"id", nil];
@@ -223,6 +244,7 @@
     [self dismissViewControllerAnimated:YES completion:^{
         ATOMUploadWorkViewController *uwvc = [ATOMUploadWorkViewController new];
         uwvc.originImage = info[UIImagePickerControllerOriginalImage];
+        uwvc.askPageViewModel = [_homeImageDataSource objectAtIndex:_selectedIndexPath.row];
         [ws pushViewController:uwvc animated:YES];
     }];
 }

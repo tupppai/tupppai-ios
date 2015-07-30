@@ -20,8 +20,8 @@
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
             NSLog(@"toggleCollect url %@ param%@",url,param);
             NSLog(@"toggleCollect responseObject%@",responseObject);
-            NSLog(@"toggleCollect info%@",responseObject[@"info"]);
-            NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
+            NSLog(@"toggleCollect info%@",[ responseObject objectForKey:@"info"]);
+            NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
             if (ret == 1) {
                 if (block) {
                     block(nil);

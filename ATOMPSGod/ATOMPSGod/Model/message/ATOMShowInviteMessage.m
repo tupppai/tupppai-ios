@@ -18,8 +18,8 @@
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"message/invite" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"ShowInviteMessage responseObject%@",responseObject);
         NSMutableArray *inviteMessageArray = [NSMutableArray array];
-        NSArray *dataArray = responseObject[@"data"];
-        int ret = [(NSString*)responseObject[@"ret"] intValue];
+        NSArray *dataArray = [ responseObject objectForKey:@"data"];
+        int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
         if (ret == 1) {
             for (int i = 0; i < dataArray.count; i++) {
                 ATOMInviteMessage *inviteMessage = [MTLJSONAdapter modelOfClass:[ATOMInviteMessage class] fromJSONDictionary:dataArray[i][@"inviter"] error:NULL];

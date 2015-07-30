@@ -22,17 +22,18 @@
         self.delegate = self;
     }
 }
+ 
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
     if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        self.interactivePopGestureRecognizer.enabled = NO;
+        self.interactivePopGestureRecognizer.enabled = YES;
     }
     [super pushViewController:viewController animated:animated];
 }
 
-#pragma mark - UINavigationControllerDelegate
-
+//#pragma mark - UINavigationControllerDelegate
+//
 - (void)navigationController:(UINavigationController *)navigationController
        didShowViewController:(UIViewController *)viewController
                     animated:(BOOL)animate {

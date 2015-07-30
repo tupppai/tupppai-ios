@@ -164,8 +164,6 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
 //        [param setObject:@(_currentWorkPage) forKey:@"page"];
 //        [param setObject:@(ATOMPageTypeReply) forKey:@"type"];
 //    }
-//    [param setObject:@"time" forKey:@"sort"];
-//    [param setObject:@"desc" forKey:@"order"];
     [ATOMShowOtherUser ShowOtherUser:param withBlock:^(NSMutableArray *askReturnArray, NSMutableArray *replyReturnArray, ATOMUser *user, NSError *error) {
         if (!error) {
             if (user) {

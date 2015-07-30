@@ -39,10 +39,10 @@
 - (NSURLSessionDataTask *)ShowDetailOfHomePage:(NSDictionary *)param withImageID:(NSInteger)imageID withBlock:(void (^)(NSMutableArray *, NSError *))block {
     NSLog(@"ShowDetailOfHomePage %@", param);
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:[NSString stringWithFormat:@"ask/show/%d", (int)imageID] parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        if (responseObject[@"data"]) {
+        if ([ responseObject objectForKey:@"data"]) {
             NSLog(@"ask/show/%ld,responseObject%@",(long)imageID,responseObject);
             NSMutableArray *detailOfHomePageArray = [NSMutableArray array];
-            NSArray *imageDataArray = responseObject[@"data"][@"replies"];
+            NSArray *imageDataArray = [ responseObject objectForKey:@"data"][@"replies"];
             NSDate *clickTime = [NSDate date];
             for (int i = 0; i < imageDataArray.count; i++) {
                 ATOMDetailImage *detailImage = [MTLJSONAdapter modelOfClass:[ATOMDetailImage class] fromJSONDictionary:imageDataArray[i] error:NULL];

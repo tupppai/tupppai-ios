@@ -59,24 +59,24 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//    [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
-//    [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
 }
 
 - (void)createUI {
     self.title = @"创建个人资料";
-    UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
-    rightButtonItem.tintColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = rightButtonItem;
+//    UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
+//    rightButtonItem.tintColor = [UIColor whiteColor];
+//    self.navigationItem.rightBarButtonItem = rightButtonItem;
     
     _createProfileView = [ATOMCreateProfileView new];
     self.view = _createProfileView;
     _createProfileView.nicknameTextField.delegate = self;
     [_createProfileView.userHeaderButton addTarget:self action:@selector(clickUserHeaderButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_createProfileView.nextButton addTarget:self action:@selector(clickRightButtonItem) forControlEvents:UIControlEventTouchUpInside];
+    [_createProfileView.backButton addTarget:self action:@selector(clickLeftButtonItem) forControlEvents:UIControlEventTouchUpInside];
+
     [_createProfileView.sexView addGestureRecognizer:self.tapSexViewGesture];
     _createProfileView.sexPickerView.delegate = self;
     _createProfileView.sexPickerView.dataSource = self;
-    _createProfileView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
     [_createProfileView.areaView addGestureRecognizer:self.tapRegionViewGesture];
     _createProfileView.regionPickerView.delegate = self;
     _createProfileView.regionPickerView.dataSource = self;
@@ -149,7 +149,7 @@
 
 #pragma mark - Click Event
 
-- (void)clickRightButtonItem:(UIBarButtonItem *)sender {
+- (void)clickRightButtonItem {
     NSString *str = _createProfileView.nicknameTextField.text;
     if (str.length < 2) {
         [Util TextHud:@"昵称不能低于2位"];
@@ -164,9 +164,11 @@
     [ATOMCurrentUser currentUser].sex = [_createProfileView tagOfCurrentSex];
     [ATOMCurrentUser currentUser].nickname = str;
     ATOMMobileRegisterViewController *mrvc = [[ATOMMobileRegisterViewController alloc] init];
-    [self pushViewController:mrvc animated:YES];
+    [self.navigationController pushViewController:mrvc animated:YES];
 }
-
+- (void)clickLeftButtonItem {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 - (void)clickUserHeaderButton:(UIButton *)sender {
     self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
     [self presentViewController:_imagePickerController animated:YES completion:NULL];
@@ -214,7 +216,7 @@
         ATOMHeaderImageCropperViewController *hicvc = [ATOMHeaderImageCropperViewController new];
         hicvc.delegate = ws;
         hicvc.originImage = info[UIImagePickerControllerOriginalImage];
-        [self pushViewController:hicvc animated:NO];
+        [self.navigationController pushViewController:hicvc animated:NO];
     }];
 }
 

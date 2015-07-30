@@ -20,6 +20,8 @@ extern CGFloat const kPSButtonWidth;
 extern CGFloat const kPSButtonHeight;
 extern CGFloat const kBottomCommonButtonWidth;
 
+extern NSInteger const kPagePadding;
+
 extern NSInteger const kPadding5;
 extern NSInteger const kPadding10;
 extern NSInteger const kPadding13;

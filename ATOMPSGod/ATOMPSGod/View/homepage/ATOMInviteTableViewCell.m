@@ -67,15 +67,6 @@ static CGFloat cellHeight = 70;
     _workNumberLabel.font = [UIFont systemFontOfSize:kFont10];
     [self addSubview:_workNumberLabel];
     
-//    _fansNumberLabel.text = @"0粉丝";
-//    _uploadNumberLabel.text = @"0求P";
-//    _workNumberLabel.text = @"0作品";
-//    
-//    _fansNumberLabel.frame = CGRectMake(kPadding15 + CGRectGetMaxX(_userHeaderButton.frame), labelOriginY, kFont10 * (_fansNumberLabel.text.length - 1.5), kFont10);
-//    _view1.frame = CGRectMake(CGRectGetMaxX(_fansNumberLabel.frame) + kPadding5, labelOriginY + 2.5, 5, 5);
-//    _uploadNumberLabel.frame = CGRectMake(CGRectGetMaxX(_view1.frame) + kPadding5, labelOriginY, kFont10 * (_uploadNumberLabel.text.length - 1.5), kFont10);
-//    _view2.frame = CGRectMake(CGRectGetMaxX(_uploadNumberLabel.frame) + kPadding5, labelOriginY + 2.5, 5, 5);
-//    _workNumberLabel.frame = CGRectMake(CGRectGetMaxX(_view2.frame) + kPadding5, labelOriginY, kFont10 * (_workNumberLabel.text.length - 1.5), kFont10);
 }
 
 - (UIView *)littleCircleView {

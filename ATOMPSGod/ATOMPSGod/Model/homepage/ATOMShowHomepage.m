@@ -61,7 +61,7 @@
     NSString* url = [NSString stringWithFormat:@"ask/upask/%ld",(long)imageID];
     NSLog(@"param %@, url %@",param,url);
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
+        NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
             if (block) {
                 block(@"success", nil);
@@ -79,14 +79,14 @@
 - (NSURLSessionDataTask *)ShowHomepage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"ask/index" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"ShowHomepage responseObject%@",responseObject);
-        NSLog(@"ShowHomepage  info%@",responseObject[@"info"]);
-        NSInteger ret = [(NSString*)responseObject[@"ret"] integerValue];
+        NSLog(@"ShowHomepage  info%@",[responseObject objectForKey:@"info"]);
+        NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret != 1) {
             block(nil, nil);
             
         } else {
             NSMutableArray *homepageArray = [NSMutableArray array];
-            NSArray *imageDataArray = responseObject[@"data"];
+            NSArray *imageDataArray = [ responseObject objectForKey:@"data"];
             for (int i = 0; i < imageDataArray.count; i++) {
                 ATOMHomeImage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMHomeImage class] fromJSONDictionary:imageDataArray[i] error:NULL];
                 homeImage.homePageType = (NSString*)[param[@"type"] copy];
@@ -116,7 +116,7 @@
             }
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
+        NSLog(@"%@",error);
         if (block) {
             block(nil, error);
         }

@@ -18,8 +18,8 @@
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"message/reply" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"ShowReplyMessage responseObject%@",responseObject);
         NSMutableArray *replyMessageArray = [NSMutableArray array];
-        NSArray *dataArray = responseObject[@"data"];
-        int ret = [(NSString*)responseObject[@"ret"] intValue];
+        NSArray *dataArray = [ responseObject objectForKey:@"data"];
+        int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
         if (ret == 1) {
             for (int i = 0; i < dataArray.count; i++) {
                 ATOMReplyMessage *replyMessage = [MTLJSONAdapter modelOfClass:[ATOMReplyMessage class] fromJSONDictionary:dataArray[i][@"reply"] error:NULL];
