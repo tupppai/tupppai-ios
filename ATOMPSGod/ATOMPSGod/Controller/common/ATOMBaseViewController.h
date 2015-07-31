@@ -9,11 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "ATOMShare.h"
 #import "ATOMShareModel.h"
-typedef enum {
-    ATOMTakingPhoto = 0,
-    ATOMChangingHeaderImage,
-    ATOMChangingBackGroundImage
-}ATOMClickUserHeaderEventType;
 
 typedef enum {
     ATOMUploadWorType = 0,

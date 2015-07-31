@@ -35,7 +35,6 @@
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.delegate = self;
     }
-    [[UIApplication sharedApplication] setStatusBarHidden:YES];
     self.navigationController.navigationBarHidden = YES;
 }
 
@@ -44,7 +43,6 @@
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.delegate = nil;
     }
-    [[UIApplication sharedApplication] setStatusBarHidden:NO];
     self.navigationController.navigationBarHidden = NO;
 }
 
@@ -57,7 +55,6 @@
 }
 
 - (void)createUI {
-    self.title = @"上传图片";
     _uploadWorkView = [ATOMUploadWorkView new];
     _uploadWorkView.originImage = _originImage;
     self.view = _uploadWorkView;
@@ -69,7 +66,9 @@
     [_uploadWorkView.cancelButton addTarget:self action:@selector(clickCancelButton:) forControlEvents:UIControlEventTouchUpInside];
     [_uploadWorkView.confirmButton addTarget:self action:@selector(clickConfirmButton:) forControlEvents:UIControlEventTouchUpInside];
 }
-
+-(BOOL)prefersStatusBarHidden {
+    return YES;
+}
 #pragma mark - Click Event
 
 - (void)clickThreeFourButton:(UIButton *)sender {

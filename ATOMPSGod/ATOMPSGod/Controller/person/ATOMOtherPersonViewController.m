@@ -250,11 +250,11 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
     _otherPersonView.uploadHeaderView.attentionLabel.textAlignment = NSTextAlignmentCenter;
     _otherPersonView.uploadHeaderView.fansLabel.textAlignment = NSTextAlignmentCenter;
     _otherPersonView.uploadHeaderView.praiseLabel.textAlignment = NSTextAlignmentCenter;
-    [_otherPersonView.uploadHeaderView.otherPersonUploadButton setTitle:[NSString stringWithFormat:@"求P（%ld）",user.uploadNumber] forState:UIControlStateNormal];
-    [_otherPersonView.uploadHeaderView.otherPersonWorkButton setTitle:[NSString stringWithFormat:@"作品（%ld）",user.replyNumber] forState:UIControlStateNormal];
+    [_otherPersonView.uploadHeaderView.otherPersonUploadButton setTitle:[NSString stringWithFormat:@"求P（%ld）",(long)user.uploadNumber] forState:UIControlStateNormal];
+    [_otherPersonView.uploadHeaderView.otherPersonWorkButton setTitle:[NSString stringWithFormat:@"作品（%ld）",(long)user.replyNumber] forState:UIControlStateNormal];
 }
 -(NSMutableAttributedString*)getAttributeStr:(NSString*)desc withNumber:(NSInteger)number {
-    NSString *numberStr = [NSString stringWithFormat:@"%ld",number];
+    NSString *numberStr = [NSString stringWithFormat:@"%ld",(long)number];
     NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
     paragraphStyle.lineSpacing = 6;
     NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:17], NSFontAttributeName, [UIColor colorWithHex:0x74c3ff], NSForegroundColorAttributeName, paragraphStyle, NSParagraphStyleAttributeName, nil];

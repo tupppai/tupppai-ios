@@ -43,6 +43,7 @@
     _nextButton = [UIButton new];
     [_nextButton setTitle:@"完成注册" forState:UIControlStateNormal];
     [_nextButton setTitleColor:[UIColor colorWithHex:0x637685] forState:UIControlStateNormal];
+    [_nextButton setTitleColor:[UIColor colorWithHex:0x637685 andAlpha:0.2] forState:UIControlStateHighlighted];
     [self addSubview:_nextButton];
     
     _verifyCodeTextField = [UITextField new];

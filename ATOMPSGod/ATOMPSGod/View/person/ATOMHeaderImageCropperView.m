@@ -28,7 +28,21 @@
 }
 
 - (void)createSubView {
-    _transparencyView = [[UIView alloc] initWithFrame:self.bounds];
+    
+    self.backgroundColor = [UIColor whiteColor];
+    UIView* topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
+    topView.backgroundColor = [UIColor colorWithHex:0xc6c6c6 andAlpha:0.8];
+    [self addSubview:topView];
+    
+    _cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(0, kPadding20, SCREEN_WIDTH/2, 22)];
+    [_cancelButton setImage:[UIImage imageNamed:@"icon_cancel"] forState:UIControlStateNormal];
+    [topView addSubview:_cancelButton];
+    
+    _confirmButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2, kPadding20, SCREEN_WIDTH/2, 22)];
+    [_confirmButton setImage:[UIImage imageNamed:@"icon_next"] forState:UIControlStateNormal];
+    [topView addSubview:_confirmButton];
+    
+    _transparencyView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(topView.frame), SCREEN_WIDTH, SCREEN_HEIGHT - 65)];
     _transparencyView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.7];
     [self addSubview:_transparencyView];
     

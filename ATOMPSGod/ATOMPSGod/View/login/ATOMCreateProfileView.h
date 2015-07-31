@@ -20,6 +20,7 @@
 @property (nonatomic, strong) UIPickerView *sexPickerView;
 @property (nonatomic, strong) UIPickerView *regionPickerView;
 @property (nonatomic, strong) UIView *areaView;
+@property (nonatomic, strong) UILabel *changeHeaderLabel;
 
 @property (nonatomic, strong) UIButton *cancelPickerButton;
 @property (nonatomic, strong) UIButton *confirmPickerButton;

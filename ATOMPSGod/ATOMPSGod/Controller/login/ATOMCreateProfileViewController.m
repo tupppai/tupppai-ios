@@ -12,6 +12,7 @@
 #import "ATOMHeaderImageCropperViewController.h"
 #import "ATOMUploadImage.h"
 #import "ATOMImage.h"
+#import "JGActionSheet.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -23,12 +24,48 @@
 @property (nonatomic, assign) NSInteger selectedRowComponent1;
 @property (nonatomic, assign) NSInteger selectedRowComponent2;
 @property (nonatomic, strong) NSArray* provinces;
+@property (nonatomic, strong)  JGActionSheet * cameraActionsheet;
 
 @end
 
 @implementation ATOMCreateProfileViewController
 
 #pragma mark - Lazy Initialize
+- (JGActionSheet *)cameraActionsheet {
+    WS(ws);
+    if (!_cameraActionsheet) {
+        _cameraActionsheet = [JGActionSheet new];
+        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"拍照", @"从相册选择",@"取消"] buttonStyle:JGActionSheetButtonStyleDefault];
+        [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:2];
+        NSArray *sections = @[section];
+        _cameraActionsheet = [JGActionSheet actionSheetWithSections:sections];
+//        _cameraActionsheet.delegate = self;
+        [_cameraActionsheet setOutsidePressBlock:^(JGActionSheet *sheet) {
+            [sheet dismissAnimated:YES];
+        }];
+        [_cameraActionsheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
+            switch (indexPath.row) {
+                case 0:
+                    ws.imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+                    [ws presentViewController:ws.imagePickerController animated:YES completion:NULL];
+                    [ws.cameraActionsheet dismissAnimated:YES];
+                    break;
+                case 1:
+                    ws.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                    [ws presentViewController:ws.imagePickerController animated:YES completion:NULL];
+                    [ws.cameraActionsheet dismissAnimated:YES];
+                    break;
+                case 2:
+                    [ws.cameraActionsheet dismissAnimated:YES];
+                    break;
+                default:
+                    [ws.cameraActionsheet dismissAnimated:YES];
+                    break;
+            }
+        }];
+    }
+    return _cameraActionsheet;
+}
 
 - (UIImagePickerController *)imagePickerController {
     if (!_imagePickerController) {
@@ -62,15 +99,13 @@
 }
 
 - (void)createUI {
-    self.title = @"创建个人资料";
-//    UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
-//    rightButtonItem.tintColor = [UIColor whiteColor];
-//    self.navigationItem.rightBarButtonItem = rightButtonItem;
-    
     _createProfileView = [ATOMCreateProfileView new];
     self.view = _createProfileView;
     _createProfileView.nicknameTextField.delegate = self;
-    [_createProfileView.userHeaderButton addTarget:self action:@selector(clickUserHeaderButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_createProfileView.userHeaderButton addTarget:self action:@selector(clickToManageAvatar) forControlEvents:UIControlEventTouchUpInside];
+    UITapGestureRecognizer* headerLabelTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(clickToManageAvatar)];
+    [_createProfileView.changeHeaderLabel addGestureRecognizer:headerLabelTapGesture];
+    
     [_createProfileView.nextButton addTarget:self action:@selector(clickRightButtonItem) forControlEvents:UIControlEventTouchUpInside];
     [_createProfileView.backButton addTarget:self action:@selector(clickLeftButtonItem) forControlEvents:UIControlEventTouchUpInside];
 
@@ -169,9 +204,8 @@
 - (void)clickLeftButtonItem {
     [self.navigationController popViewControllerAnimated:YES];
 }
-- (void)clickUserHeaderButton:(UIButton *)sender {
-    self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-    [self presentViewController:_imagePickerController animated:YES completion:NULL];
+- (void)clickToManageAvatar{
+    [self.cameraActionsheet showInView:self.view animated:true];
 }
 
 - (void)clickCancelPickerButton:(UIButton *)sender {
@@ -216,7 +250,7 @@
         ATOMHeaderImageCropperViewController *hicvc = [ATOMHeaderImageCropperViewController new];
         hicvc.delegate = ws;
         hicvc.originImage = info[UIImagePickerControllerOriginalImage];
-        [self.navigationController pushViewController:hicvc animated:NO];
+        [self.navigationController presentViewController:hicvc animated:NO completion:nil];
     }];
 }
 

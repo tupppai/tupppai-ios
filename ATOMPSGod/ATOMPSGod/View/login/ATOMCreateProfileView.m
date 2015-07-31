@@ -12,7 +12,6 @@
 
 @interface ATOMCreateProfileView ()
 
-@property (nonatomic, strong) UILabel *changeHeaderLabel;
 @property (nonatomic, strong) UILabel *nicknameLabel;
 @property (nonatomic, strong) UILabel *sexLabel;
 @property (nonatomic, strong) UILabel *areaLabel;
@@ -57,6 +56,8 @@ static int padding10 = 10;
     _nextButton = [UIButton new];
     [_nextButton setTitle:@"下一步" forState:UIControlStateNormal];
     [_nextButton setTitleColor:[UIColor colorWithHex:0x637685] forState:UIControlStateNormal];
+    [_nextButton setTitleColor:[UIColor colorWithHex:0x637685 andAlpha:0.1] forState:UIControlStateHighlighted];
+
     [self addSubview:_nextButton];
 
     _topView = [UIView new];
@@ -70,9 +71,10 @@ static int padding10 = 10;
     [_topView addSubview:_userHeaderButton];
     
     _changeHeaderLabel = [UILabel new];
-    _changeHeaderLabel.textColor = [UIColor lightGrayColor];
+    _changeHeaderLabel.textColor = [UIColor colorWithHex:0x7fc7ff];
     _changeHeaderLabel.text = @"选择头像";
     _changeHeaderLabel.font = [UIFont systemFontOfSize:kFont14];
+    _changeHeaderLabel.userInteractionEnabled = YES;
     _changeHeaderLabel.textAlignment = NSTextAlignmentCenter;
     [_topView addSubview:_changeHeaderLabel];
     
@@ -159,8 +161,8 @@ static int padding10 = 10;
 - (void)createNicknameSubView {
     WS(ws);
     _nicknameLabel = [UILabel new];
-    _nicknameLabel.text = @"昵称 :";
-    _nicknameLabel.textColor = [UIColor colorWithHex:0x606060];
+    _nicknameLabel.text = @"昵称";
+    _nicknameLabel.textColor = [UIColor colorWithHex:0x737373];
     [_nicknameView addSubview:_nicknameLabel];
     
     [_nicknameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -171,8 +173,9 @@ static int padding10 = 10;
     }];
     
     _nicknameTextField = [UITextField new];
-    _nicknameTextField.textColor = [UIColor colorWithHex:0x606060];
+    _nicknameTextField.textColor = [UIColor colorWithHex:0x737373];
     _nicknameTextField.returnKeyType = UIReturnKeyDone;
+    _nicknameTextField.placeholder = @"惹不起的PS大神";
     [_nicknameView addSubview:_nicknameTextField];
     
     [_nicknameTextField mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -195,7 +198,7 @@ static int padding10 = 10;
 - (void)createSexSubView {
     WS(ws);
     _sexLabel = [UILabel new];
-    _sexLabel.text = @"性别 :";
+    _sexLabel.text = @"性别";
     _sexLabel.textColor = [UIColor colorWithHex:0x606060];
     [_sexView addSubview:_sexLabel];
     
@@ -233,7 +236,7 @@ static int padding10 = 10;
 - (void)createAreaSubView {
     WS(ws);
     _areaLabel = [UILabel new];
-    _areaLabel.text = @"所在地 :";
+    _areaLabel.text = @"所在地";
     _areaLabel.textColor = [UIColor colorWithHex:0x606060];
     [_areaView addSubview:_areaLabel];
     

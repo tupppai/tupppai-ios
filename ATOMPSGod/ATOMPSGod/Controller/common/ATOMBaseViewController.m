@@ -46,6 +46,8 @@
         self.navigationItem.leftBarButtonItems = @[_negativeSpacer, barBackButtonItem];
     }
 }
+
+
 -(void) signOutRET {
     SIAlertView *alertView = [KShareManager signOutAlertView];
     [alertView addButtonWithTitle:@"好咯"
@@ -68,10 +70,6 @@
 -(void) showInfoRET:(NSNotification *)notification {
     NSString* info = [[notification userInfo] valueForKey:@"info"];
     [Util TextHud:info inView:self.view];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
@@ -166,8 +164,8 @@
                           }];
 }
 
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
-{
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-}
+//- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+//{
+//}
+
 @end

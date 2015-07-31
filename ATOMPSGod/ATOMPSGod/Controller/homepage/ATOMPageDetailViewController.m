@@ -299,7 +299,6 @@
     _askDetailView = [ATOMAskDetailView new];
     [self configRecentDetailTableViewRefresh];
     self.view = _askDetailView;
-    NSLog(@"_pageDetailViewModel %ld , %@",_pageDetailViewModel.uid,_pageDetailViewModel.userName);
 //    if (_askPageViewModel) {
 //        _type = 1;
 //        _ID = _askPageViewModel.imageID;

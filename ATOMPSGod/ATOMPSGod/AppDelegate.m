@@ -90,10 +90,8 @@
 -(void)initializeAfterDB {
     [[ATOMCurrentUser currentUser]fetchCurrentUserInDB:^(BOOL hasCurrentUser) {
         if (hasCurrentUser) {
-            NSLog(@"hasCurrentUser");
             self.window.rootViewController = self.mainTabBarController;
         } else {
-            NSLog(@"hasCurrentUser == false");
             ATOMLaunchViewController *lvc = [[ATOMLaunchViewController alloc] init];
             self.baseNav = [[ATOMLoginCustomNavigationController alloc] initWithRootViewController:lvc];
             self.window.rootViewController = self.baseNav;
@@ -196,13 +194,6 @@
                                     stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]]
                                    stringByReplacingOccurrencesOfString:@" " withString:@""];
     NSLog(@"devicetokenString%@", devicetokenString);
-//
-//    // Store the deviceToken in the current installation and save it to Parse.
-//    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-//    [currentInstallation setDeviceTokenFromData:deviceToken];
-//    currentInstallation.channels = @[ @"global" ];
-//    [currentInstallation saveInBackground];
-    
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{

@@ -15,7 +15,7 @@
 @end
 
 
-@interface ATOMHeaderImageCropperViewController : ATOMBaseViewController
+@interface ATOMHeaderImageCropperViewController : ATOMLoginBaseViewController
 
 @property (nonatomic, strong) UIImage *originImage;
 @property (nonatomic, weak) id <ATOMCropHeaderImageCompleteProtocol> delegate;

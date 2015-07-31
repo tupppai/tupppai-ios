@@ -26,8 +26,6 @@
 #import "AppDelegate.h"
 #import "ATOMBottomCommonButton.h"
 #import "PWMascotAnimationImageView.h"
-#import "ATOMNoDataView.h"
-#import "KShareManager.h"
 #import "ATOMHomeImageDAO.h"
 #import "PWPageDetailViewModel.h"
 #import "ATOMShareModel.h"
@@ -304,12 +302,11 @@
 
 #pragma mark - GetDataSource from DB
 - (void)firstGetDataSourceFromDataBase {
-    _dataSourceOfRecentTableView = [self fetchDBDataSourceWithHomeType:ATOMHomepageViewTypeAsk];
-    [self.scrollView.homepageAskTableView reloadData];
-    
     _dataSourceOfHotTableView = [self fetchDBDataSourceWithHomeType:ATOMHomepageViewTypeHot];
     [self.scrollView.homepageHotTableView reloadData];
 
+    _dataSourceOfRecentTableView = [self fetchDBDataSourceWithHomeType:ATOMHomepageViewTypeAsk];
+    [self.scrollView.homepageAskTableView reloadData];
 }
 #pragma mark - GetDataSource from Server
 
@@ -350,8 +347,8 @@
     [param setObject:@(8) forKey:@"size"];
     ATOMShowHomepage *showHomepage = [ATOMShowHomepage new];
     [showHomepage ShowHomepage:param withBlock:^(NSMutableArray *homepageArray, NSError *error) {
-        if (homepageArray && error == nil) {
-            [showHomepage clearHomePagesWithHomeType:homeType];
+        if (homepageArray.count != 0 && error == nil) {
+//            [showHomepage clearHomePagesWithHomeType:homeType];
             if ([homeType isEqualToString:@"new"]) {
                 _dataSourceOfRecentTableView = nil;
                 _dataSourceOfRecentTableView = [NSMutableArray array];
@@ -784,7 +781,6 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"cellForRowAtIndexPath %ld",indexPath.row);
     if (_scrollView.homepageHotTableView == tableView) {
         static NSString *CellIdentifier1 = @"HomePageHotCell";
         ATOMHomePageHotTableViewCell *cell = [_scrollView.homepageHotTableView dequeueReusableCellWithIdentifier:CellIdentifier1];
@@ -809,7 +805,6 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"heightForRowAtIndexPath %ld",indexPath.row);
     if (_scrollView.homepageHotTableView == tableView) {
         return [ATOMHomePageHotTableViewCell calculateCellHeightWith:_dataSourceOfHotTableView[indexPath.row]];
     } else if (_scrollView.homepageAskTableView == tableView) {

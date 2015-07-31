@@ -26,7 +26,7 @@
             NSArray *param = [MTLFMDBAdapter columnValues:homeImage];
             BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
             if (flag) {
-//                NSLog(@"save homeImage %ld ok",(long)homeImage.imageID);
+//                NSLog(@"save homeImage %ld succeed",(long)homeImage.imageID);
             } else {
                 NSLog(@"save homeImage fail");
             }

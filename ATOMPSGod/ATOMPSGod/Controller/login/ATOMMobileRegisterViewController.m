@@ -27,11 +27,7 @@
 }
 
 - (void)createUI {
-//    self.title = @"手机注册";
-//    UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
-//    rightButtonItem.tintColor = [UIColor whiteColor];
-//    self.navigationItem.rightBarButtonItem = rightButtonItem;
-    
+
     _mobileRegisterView = [ATOMMobileRegisterView new];
     self.view = _mobileRegisterView;
     _mobileRegisterView.mobileTextField.delegate = self;

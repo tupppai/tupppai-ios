@@ -7,7 +7,7 @@
 //
 
 #import "ATOMLoginCustomNavigationController.h"
-@interface ATOMLoginCustomNavigationController () <UIGestureRecognizerDelegate>
+@interface ATOMLoginCustomNavigationController () <UIGestureRecognizerDelegate,UINavigationControllerDelegate>
 @end
 @implementation ATOMLoginCustomNavigationController
 - (void)viewDidLoad {
@@ -16,30 +16,20 @@
     __weak typeof (self) weakSelf = self;
     if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.interactivePopGestureRecognizer.delegate = weakSelf;
-//        self.delegate = self;
+        self.delegate = self;
     }
 }
 
-
-//- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
-//{
-//    if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-//        self.interactivePopGestureRecognizer.enabled = YES;
-//    }
-//    [super pushViewController:viewController animated:animated];
-//}
-//
-////#pragma mark - UINavigationControllerDelegate
-////
-//- (void)navigationController:(UINavigationController *)navigationController
-//       didShowViewController:(UIViewController *)viewController
-//                    animated:(BOOL)animate {
-//    if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-//        if (self.viewControllers.count == 1) {
-//            self.interactivePopGestureRecognizer.enabled = NO;
-//        } else {
-//            self.interactivePopGestureRecognizer.enabled = YES;
-//        }
-//    }
-//}
+#pragma mark - UINavigationControllerDelegate
+- (void)navigationController:(UINavigationController *)navigationController
+       didShowViewController:(UIViewController *)viewController
+                    animated:(BOOL)animate {
+    if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        if (self.viewControllers.count == 1) {
+            self.interactivePopGestureRecognizer.enabled = NO;
+        } else {
+            self.interactivePopGestureRecognizer.enabled = YES;
+        }
+    }
+}
 @end

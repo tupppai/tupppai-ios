@@ -99,9 +99,9 @@
 }
 -(void)toggleNumber {
     if (self.selected) {
-        self.number =  [NSString stringWithFormat:@"%ld",[_number integerValue] + 1 ];
+        self.number =  [NSString stringWithFormat:@"%d",[_number integerValue] + 1 ];
     } else {
-        self.number =  [NSString stringWithFormat:@"%ld",[_number integerValue] - 1 ];
+        self.number =  [NSString stringWithFormat:@"%d",[_number integerValue] - 1 ];
     }
     [self setNeedsDisplay];
 }

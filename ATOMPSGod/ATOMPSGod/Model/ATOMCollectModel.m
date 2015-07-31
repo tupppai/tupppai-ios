@@ -13,9 +13,9 @@
 + (NSURLSessionDataTask *)toggleCollect:(NSDictionary *)param withPageType:(ATOMPageType)type withID:(NSInteger)ID withBlock:(void (^)(NSError *))block {
         NSString* url;
         if (type == ATOMPageTypeAsk) {
-            url = [NSString stringWithFormat:@"ask/focusask/%ld",ID];
+            url = [NSString stringWithFormat:@"ask/focusask/%ld",(long)ID];
         }   if (type == ATOMPageTypeReply) {
-            url = [NSString stringWithFormat:@"reply/collectreply/%ld",ID];
+            url = [NSString stringWithFormat:@"reply/collectreply/%ld",(long)ID];
         }
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
             NSLog(@"toggleCollect url %@ param%@",url,param);

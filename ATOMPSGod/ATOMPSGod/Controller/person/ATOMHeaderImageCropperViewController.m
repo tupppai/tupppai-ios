@@ -48,58 +48,25 @@
 }
 
 - (void)createUI {
-    self.title = @"头像裁剪";
-    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(clickLeftButtonItem:)];
-    self.navigationItem.leftBarButtonItems = @[leftButtonItem];
-    UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
-    self.navigationItem.rightBarButtonItem = rightButtonItem;
     _headerImageCropperView = [ATOMHeaderImageCropperView new];
     self.view = _headerImageCropperView;
     _headerImageCropperView.originImage = _originImage;
+    [_headerImageCropperView.cancelButton addTarget:self action:@selector(clickLeftButtonItem:) forControlEvents:UIControlEventTouchUpInside];
+    [_headerImageCropperView.confirmButton addTarget:self action:@selector(clickRightButtonItem:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark - Click Event
 
 - (void)clickLeftButtonItem:(UIBarButtonItem *)barButtonItem {
-    [self.navigationController popViewControllerAnimated:NO];
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)barButtonItem {
     if ([_delegate respondsToSelector:@selector(cropHeaderImageCompleteWith:)]) {
         [_delegate cropHeaderImageCompleteWith:[_headerImageCropperView.imageCropperView getCroppedImage]];
     }
-    [self.navigationController popViewControllerAnimated:NO];
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

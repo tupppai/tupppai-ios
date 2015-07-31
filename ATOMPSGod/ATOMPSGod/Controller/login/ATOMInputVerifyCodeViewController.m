@@ -28,10 +28,6 @@
 }
 
 - (void)createUI {
-    self.title = @"填写验证码";
-    UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
-    rightButtonItem.tintColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = rightButtonItem;
     _inputVerifyView = [ATOMInputVerifyCodeView new];
     self.view = _inputVerifyView;
     [_inputVerifyView.sendVerifyCodeButton addTarget:self action:@selector(clickVerifyButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -41,28 +37,8 @@
 }
 
 - (void)createVerifyTimer {
-//    NSDate * currentDate = [NSDate date];
-//    NSString *verifyTitleString = [[NSUserDefaults standardUserDefaults] objectForKey:@"verifyTimer"];
-//    if (verifyTitleString != nil && ![verifyTitleString isEqualToString:@""]) {
-//        NSDate *savedDate = [self.df dateFromString:verifyTitleString];
-//        NSTimeInterval lastSecond = 60 - [currentDate timeIntervalSinceDate:savedDate];
-//        if ([verifyTitleString isEqualToString:@"invalidTimer"] || lastSecond >= 60 || lastSecond <= 0) {
-//            lastSecond = 60;
-//            verifyTitleString = [self.df stringFromDate:currentDate];
-//            [[NSUserDefaults standardUserDefaults] setObject:verifyTitleString forKey:@"verifyTimer"];
-//            [[NSUserDefaults standardUserDefaults] synchronize];
-//        }
-//        _inputVerifyView.lastSecond = lastSecond;
-//    } else {
-//        verifyTitleString = [self.df stringFromDate:currentDate];
-//        _inputVerifyView.lastSecond = 60;
-//        [[NSUserDefaults standardUserDefaults] setObject:verifyTitleString forKey:@"verifyTimer"];
-//        [[NSUserDefaults standardUserDefaults] synchronize];
-//    }
-            _inputVerifyView.lastSecond = 60;
 
     _verifyTimer = [NSTimer scheduledTimerWithTimeInterval:1.f target:self selector:@selector(runVerifyTimer) userInfo:nil repeats:YES];
-//    [[NSRunLoop currentRunLoop] addTimer:_verifyTimer forMode:NSDefaultRunLoopMode];
     _inputVerifyView.sendVerifyCodeButton.userInteractionEnabled = NO;
 }
 
@@ -72,10 +48,6 @@
         [_verifyTimer invalidate];
         _verifyTimer = nil;
         _inputVerifyView.sendVerifyCodeButton.userInteractionEnabled = YES;
-        
-//        NSString *verifyTitleString = @"invalidTimer";
-//        [[NSUserDefaults standardUserDefaults] setObject:verifyTitleString forKey:@"verifyTimer"];
-//        [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }
 

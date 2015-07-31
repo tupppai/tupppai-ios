@@ -29,7 +29,6 @@
 
 @property (nonatomic, strong) ATOMPersonView *personView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
-@property (nonatomic, assign) ATOMClickUserHeaderEventType clickUserHeaderEventType;
 @property (nonatomic, strong) JGActionSheet *avatarActionSheet;
 
 @end
@@ -49,8 +48,8 @@
     WS(ws);
     if (!_avatarActionSheet) {
         _avatarActionSheet = [JGActionSheet new];
-        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"改头像",@"不改了"] buttonStyle:JGActionSheetButtonStyleDefault];
-        [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:1];
+        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:@"修改头像" message:nil buttonTitles:@[@"拍照",@"从相册选择",@"取消"] buttonStyle:JGActionSheetButtonStyleDefault];
+        [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:2];
         NSArray *sections = @[section];
         _avatarActionSheet = [JGActionSheet actionSheetWithSections:sections];
         _avatarActionSheet.delegate = self;
@@ -60,10 +59,11 @@
         [_avatarActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
             switch (indexPath.row) {
                 case 0:
-                    [ws changingHeaderImage];
+                    [ws dealTakingPhoto];
                     [ws.avatarActionSheet dismissAnimated:YES];
                     break;
                 case 1:
+                    [ws dealPhotoLibrary];
                     [ws.avatarActionSheet dismissAnimated:YES];
                     break;
                 default:
@@ -108,40 +108,27 @@
 
 - (void)clickUserHeaderButton:(UIButton *)sender {
     [self.avatarActionSheet showInView:[AppDelegate APP].window animated:YES];
-//    [UIActionSheet showInView:self.view withTitle:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@[@"更换头像", @"更换背景"] tapBlock:^(UIActionSheet *actionSheet, NSInteger buttonIndex) {
-//        NSString *titleStr = [actionSheet buttonTitleAtIndex:buttonIndex];
-//        if ([titleStr isEqualToString:@"更换头像"]) {
-//            [self changingHeaderImage];
-//        }
-//        else if ([titleStr isEqualToString:@"更换背景"]) {
-//            [self changingBackGroundImage];
-//        }
-//    }];
 }
 
 - (void)dealTakingPhoto {
-    _clickUserHeaderEventType = ATOMTakingPhoto;
     UIImagePickerControllerSourceType currentType = UIImagePickerControllerSourceTypeCamera;
     BOOL ok = [UIImagePickerController isSourceTypeAvailable:currentType];
     if (ok) {
         self.imagePickerController.sourceType = currentType;
-        [self presentViewController:self.imagePickerController animated:YES completion:NULL];
+        [self presentViewController:self.imagePickerController animated:NO completion:NULL];
     } else {
     }
 }
 
-- (void)changingHeaderImage {
-    _clickUserHeaderEventType = ATOMChangingHeaderImage;
-    self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-    [self presentViewController:_imagePickerController animated:YES completion:NULL];
+- (void)dealPhotoLibrary {
+    UIImagePickerControllerSourceType currentType = UIImagePickerControllerSourceTypePhotoLibrary;
+    BOOL ok = [UIImagePickerController isSourceTypeAvailable:currentType];
+    if (ok) {
+        self.imagePickerController.sourceType = currentType;
+        [self presentViewController:self.imagePickerController animated:NO completion:NULL];
+    }
 }
 
-- (void)changingBackGroundImage {
-    _clickUserHeaderEventType = ATOMChangingBackGroundImage;
-    self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-    [self presentViewController:_imagePickerController animated:YES completion:NULL];
-    
-}
 
 #pragma mark - UIImagePickerControllerDelegate
 
@@ -152,14 +139,10 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
 //    WS(ws);
     [self dismissViewControllerAnimated:YES completion:^{
-        if (_clickUserHeaderEventType == ATOMChangingBackGroundImage) {
-            _personView.topBackGroundImageView.image = info[UIImagePickerControllerOriginalImage];
-        } else if (_clickUserHeaderEventType == ATOMChangingHeaderImage) {
             ATOMHeaderImageCropperViewController *hicvc = [ATOMHeaderImageCropperViewController new];
             hicvc.delegate = self;
             hicvc.originImage = info[UIImagePickerControllerOriginalImage];
-            [self pushViewController:hicvc animated:NO];
-        }
+            [self presentViewController:hicvc animated:NO completion:nil];
     }];
 }
 

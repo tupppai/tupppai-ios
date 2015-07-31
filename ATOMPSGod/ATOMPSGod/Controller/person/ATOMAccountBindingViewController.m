@@ -153,8 +153,10 @@
     //1.如果想要绑定
     if (bindSwitch.on) {
         [ATOMShareSDKModel getUserInfo:shareType withBlock:^(NSDictionary *sourceData) {
-            NSString* openID = sourceData[openIDKey];
-            [param setObject:openID forKey:@"openid"];
+            NSString* openID = [sourceData objectForKey:openIDKey];
+            if (openID) {
+                [param setObject:openID forKey:@"openid"];
+            }
             [ATOMShowSettings setBindSetting:param withToggleBind:YES withBlock:^(NSError *error) {
                 if (error) {
                     //绑定失败，回到原型
