@@ -77,8 +77,10 @@
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
             [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.inviteButton.frame, p)) {
-            [cell toggleInviteButtonAppearance];
-            [self tapInviteButton:cell.inviteButton];
+            if (!cell.inviteButton.selected) {
+                [cell toggleInviteButtonAppearance];
+                [self tapInviteButton:cell.inviteButton];
+            }
         }
     }
 }
@@ -187,19 +189,19 @@
     [param setObject:@(askID) forKey:@"ask_id"];
     [ATOMInviteModel invite:param];
 }
--(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    if (_selectedIndexpath) {
-       ATOMInviteTableViewCell *cell = (ATOMInviteTableViewCell *)[_inviteView.inviteTableView cellForRowAtIndexPath:_selectedIndexpath];
-        //若已经邀请成功，就不再让inviteButton可点
-        if (CGRectContainsPoint(cell.inviteButton.frame, [touch locationInView:cell])){
-            if (cell.inviteButton.selected == YES) {
-                return NO;
-            }else {
-                return YES;
-            }
-            }
-    }
-    return YES;
-    }
+//-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+//    if([touch.view.superview isKindOfClass:[ATOMInviteTableViewCell class]]) {
+//        if (_selectedIndexpath) {
+//            ATOMInviteTableViewCell *cell = (ATOMInviteTableViewCell *)[_inviteView.inviteTableView cellForRowAtIndexPath:_selectedIndexpath];
+//            //若已经邀请成功，就不再让inviteButton可点
+//            if (CGRectContainsPoint(cell.inviteButton.frame, [touch locationInView:cell])){
+//                if (cell.inviteButton.selected == YES) {
+//                    return NO;
+//                }
+//            }
+//            }
+//    }
+//    return YES;
+//    }
 
 @end

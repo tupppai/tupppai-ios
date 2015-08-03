@@ -127,7 +127,6 @@
     }
     
     NSString* shareTitle;
-
     
     if (shareType == ATOMShareTypeWechatFriends) {
         type = ShareTypeWeixiSession;
@@ -139,15 +138,16 @@
         type = SSCShareTypeSinaWeibo;
         shareTitle = [NSString stringWithFormat:@"#求PS大神#%@!点击链接%@",share.title,shareUrl];
     }
-//    NSString* shareTitle = [NSString stringWithFormat:@"%@!%@,%@",share.title,@"小瑞子",shareUrl];
-
+    NSString *str=[[NSBundle mainBundle] pathForResource:@"0" ofType:@"jpg"];
+    NSData *fileData = [NSData dataWithContentsOfFile:str];
+    
     id<ISSContent> publishContent = [ShareSDK content:shareTitle //微博显示的文字
                                        defaultContent:share.title
-                                                image:[ShareSDK imageWithUrl:share.imageUrl]
+                                                image:[ShareSDK imageWithData:fileData fileName:@"image" mimeType:@"Application/Image"]
                                                 title:shareTitle
                                                   url:shareUrl
                                           description:share.desc
-                                            mediaType:SSPublishContentMediaTypeNews];
+                                            mediaType:SSPublishContentMediaTypeImage];
     [ShareSDK clientShareContent:publishContent //内容对象
                             type:type //平台类型
                    statusBarTips:NO
@@ -164,8 +164,5 @@
                           }];
 }
 
-//- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
-//{
-//}
 
 @end

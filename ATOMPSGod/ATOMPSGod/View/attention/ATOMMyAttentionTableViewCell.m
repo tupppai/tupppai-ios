@@ -23,6 +23,7 @@
 @property (nonatomic, strong) NSMutableArray *replierAvatars;
 @property (nonatomic, strong) UIView *lineView;
 @property (nonatomic, strong) ATOMTotalPSView *totalPSLabel;
+@property (nonatomic, strong) UILabel *publishTypeLabel;
 
 @end
 
@@ -63,15 +64,22 @@ static CGFloat replierWidth = 25;
     _userHeaderButton.userInteractionEnabled = NO;
     _userHeaderButton.layer.cornerRadius = kUserHeaderButtonWidth / 2;
     _userHeaderButton.layer.masksToBounds = YES;
+    
     _userNameLabel = [UILabel new];
-    _userNameLabel.font = [UIFont systemFontOfSize:kFont14];
+    _userNameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:kFont14];
     _userNameLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
+    
+    _publishTypeLabel = [UILabel new];
+    _publishTypeLabel.font = [UIFont systemFontOfSize:kFont14];
+    _publishTypeLabel.textColor = [UIColor colorWithHex:0x74c3ff];
+
     _userPublishTimeLabel = [UILabel new];
-    _userPublishTimeLabel.font = [UIFont systemFontOfSize:kFont10];
+    _userPublishTimeLabel.font = [UIFont systemFontOfSize:kFont12];
     _userPublishTimeLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
     
     [_topView addSubview:_userHeaderButton];
     [_topView addSubview:_userNameLabel];
+    [_topView addSubview:_publishTypeLabel];
     [_topView addSubview:_userPublishTimeLabel];
     
     _praiseButton = [ATOMBottomCommonButton new];
@@ -113,8 +121,9 @@ static CGFloat replierWidth = 25;
     CGFloat topViewHeight = 60;
     _topView.frame = CGRectMake(0, 0, SCREEN_WIDTH, topViewHeight);
     _userHeaderButton.frame = CGRectMake(kPadding15, (topViewHeight - kUserHeaderButtonWidth) / 2, kUserHeaderButtonWidth, kUserHeaderButtonWidth);
-    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, CGRectGetMinY(_userHeaderButton.frame), self.bounds.size.width - CGRectGetMaxX(_userHeaderButton.frame) - kPadding10 , kFont14+3);
-    _userPublishTimeLabel.frame = CGRectMake(CGRectGetMinX(_userNameLabel.frame), CGRectGetMaxY(_userHeaderButton.frame) - kFont10, kUserNameLabelWidth, kFont10);
+    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, CGRectGetMinY(_userHeaderButton.frame), kUserNameLabelWidth, kFont14+3);
+    _publishTypeLabel.frame = CGRectMake(CGRectGetMaxX(_userNameLabel.frame) + kPadding13, CGRectGetMinY(_userHeaderButton.frame), kFont14*7 , kFont14+3);
+    _userPublishTimeLabel.frame = CGRectMake(CGRectGetMinX(_userNameLabel.frame)+1, CGRectGetMaxY(_userHeaderButton.frame) - kFont10, 200, kFont12+1);
     
     CGSize workImageSize = CGSizeZero;
     CGSize commentSize, shareSize, praiseSize;
@@ -166,10 +175,11 @@ static CGFloat replierWidth = 25;
 - (void)setViewModel:(ATOMFollowPageViewModel *)viewModel {
     _viewModel = viewModel;
     if (viewModel.type == 1) {
-        _userNameLabel.text = [NSString stringWithFormat:@"%@ 发布了一个求P", viewModel.userName];
+        _publishTypeLabel.text = @"发布了一个求P";
     } else {
-        _userNameLabel.text = [NSString stringWithFormat:@"%@ 发布了一个作品", viewModel.userName];
+        _publishTypeLabel.text = @"发布了一个作品";
     }
+    _userNameLabel.text = [NSString stringWithFormat:@"%@", viewModel.userName];
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     _userPublishTimeLabel.text = viewModel.publishTime;
     _praiseButton.number = viewModel.likeNumber;

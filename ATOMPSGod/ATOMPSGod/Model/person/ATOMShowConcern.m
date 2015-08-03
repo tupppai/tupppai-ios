@@ -19,19 +19,23 @@
         if (ret == 1) {
             NSMutableArray *recommendConcernArray = [NSMutableArray array];
             NSMutableArray *myConcernArray = [NSMutableArray array];
-            NSArray *recommendDataArray = [ responseObject objectForKey:@"data"][@"recommends"];
-            NSArray *myDataArray = [ responseObject objectForKey:@"data"][@"felLows"];
-            for (int i = 0; i < recommendDataArray.count; i++) {
-                ATOMConcern *concern = [MTLJSONAdapter modelOfClass:[ATOMConcern class] fromJSONDictionary:recommendDataArray[i] error:NULL];
-                [recommendConcernArray addObject:concern];
+            NSDictionary* data = [responseObject objectForKey:@"data"];
+            if (data) {
+                NSArray *recommendDataArray = [data objectForKey:@"recommends"];
+                NSArray *myDataArray = [data objectForKey:@"felLows"];
+                for (int i = 0; i < recommendDataArray.count; i++) {
+                    ATOMConcern *concern = [MTLJSONAdapter modelOfClass:[ATOMConcern class] fromJSONDictionary:recommendDataArray[i] error:NULL];
+                    [recommendConcernArray addObject:concern];
+                }
+                for (int i = 0; i < myDataArray.count; i++) {
+                    ATOMConcern *concern = [MTLJSONAdapter modelOfClass:[ATOMConcern class] fromJSONDictionary:myDataArray[i] error:NULL];
+                    [myConcernArray addObject:concern];
+                }
+                if (block) {
+                    block(recommendConcernArray, myConcernArray, nil);
+                }
             }
-            for (int i = 0; i < myDataArray.count; i++) {
-                ATOMConcern *concern = [MTLJSONAdapter modelOfClass:[ATOMConcern class] fromJSONDictionary:myDataArray[i] error:NULL];
-                [myConcernArray addObject:concern];
-            }
-            if (block) {
-                block(recommendConcernArray, myConcernArray, nil);
-            }
+
         } else {
             if (block) {
                 block(nil,nil, nil);

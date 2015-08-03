@@ -205,7 +205,8 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)clickToManageAvatar{
-    [self.cameraActionsheet showInView:self.view animated:true];
+    [self.view endEditing:YES];
+    [self.cameraActionsheet showInView:self.view animated:YES];
 }
 
 - (void)clickCancelPickerButton:(UIButton *)sender {
@@ -230,7 +231,7 @@
 
 #pragma mark - Gesture Event
 
-- (void)tapSexViewGesture:(UITapGestureRecognizer *)gesture {
+- (void)tapSexViewGesture:(id *)gesture {
     [_createProfileView.nicknameTextField resignFirstResponder];
     [_createProfileView showSexPickerView];
 }
@@ -329,7 +330,7 @@
 }
 -(CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
     if (pickerView == _createProfileView.sexPickerView) {
-        return 50;
+        return 30;
     } else {
         return 25;
     }

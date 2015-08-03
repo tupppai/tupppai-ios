@@ -62,9 +62,9 @@
 //toggle Number
 -(void)toggleNumber {
     if (self.selected) {
-        self.likeNumber =  [NSString stringWithFormat:@"%d",[_likeNumber integerValue] + 1 ];
+        self.likeNumber =  [NSString stringWithFormat:@"%d",[_likeNumber intValue] + 1 ];
     } else {
-        self.likeNumber =  [NSString stringWithFormat:@"%d",[_likeNumber integerValue] - 1 ];
+        self.likeNumber =  [NSString stringWithFormat:@"%d",[_likeNumber intValue] - 1 ];
     }
     [self setNeedsDisplay];
 }

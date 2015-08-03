@@ -11,7 +11,6 @@
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self;
 
 @interface ATOMCreateProfileView ()
-
 @property (nonatomic, strong) UILabel *nicknameLabel;
 @property (nonatomic, strong) UILabel *sexLabel;
 @property (nonatomic, strong) UILabel *areaLabel;
@@ -19,11 +18,12 @@
 @property (nonatomic, strong) UIView *protocolView;
 @property (nonatomic, strong) UIView *sexPickerTopView;
 @property (nonatomic, strong) UIView *regionPickerTopView;
+
 @end
 
 @implementation ATOMCreateProfileView
 
-static int padding10 = 10;
+//static int padding10 = 10;
 
 - (instancetype)init {
     self = [super init];
@@ -175,14 +175,15 @@ static int padding10 = 10;
     _nicknameTextField = [UITextField new];
     _nicknameTextField.textColor = [UIColor colorWithHex:0x737373];
     _nicknameTextField.returnKeyType = UIReturnKeyDone;
+    _nicknameTextField.textAlignment = NSTextAlignmentRight;
     _nicknameTextField.placeholder = @"惹不起的PS大神";
     [_nicknameView addSubview:_nicknameTextField];
     
     [_nicknameTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(ws.nicknameLabel.mas_right);
         make.top.equalTo(ws.nicknameView.mas_top);
         make.bottom.equalTo(ws.nicknameView.mas_bottom);
-        make.right.equalTo(ws.nicknameView.mas_right).with.offset(-padding10);
+        make.left.equalTo(ws.nicknameLabel.mas_right);
+        make.right.equalTo(ws.nicknameView.mas_right).with.offset(-25);
     }];
     UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
     arrowImageView.contentMode = UIViewContentModeCenter;
@@ -212,13 +213,15 @@ static int padding10 = 10;
     _showSexLabel = [UILabel new];
     _showSexLabel.text = @"";
     _showSexLabel.textColor = [UIColor colorWithHex:0x606060];
+    _showSexLabel.textAlignment = NSTextAlignmentRight;
     [_sexView addSubview:_showSexLabel];
     
     [_showSexLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(ws.sexLabel.mas_right);
         make.centerY.equalTo(ws.sexLabel.mas_centerY);
-        make.width.equalTo(ws.sexLabel.mas_width);
         make.height.equalTo(ws.sexLabel.mas_height);
+        make.left.equalTo(ws.sexLabel.mas_right);
+        make.right.equalTo(ws.sexView.mas_right).with.offset(-45);
     }];
     
     UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
@@ -249,12 +252,13 @@ static int padding10 = 10;
     
     _showAreaLabel = [UILabel new];
     _showAreaLabel.text = @"";
+    _showAreaLabel.textAlignment = NSTextAlignmentRight;
     _showAreaLabel.textColor = [UIColor colorWithHex:0x606060];
     [_areaView addSubview:_showAreaLabel];
     
     [_showAreaLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(ws.areaLabel.mas_right);
-        make.right.equalTo(ws.areaView.mas_right);
+        make.right.equalTo(ws.areaView.mas_right).with.offset(-25);
         make.centerY.equalTo(ws.areaLabel.mas_centerY);
         make.height.equalTo(ws.areaLabel.mas_height);
     }];
@@ -290,14 +294,20 @@ static int padding10 = 10;
 
 - (void)createSexPickerView {
     WS(ws);
+    _sexPickerBackgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    _sexPickerBackgroundView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
+    [self addSubview:_sexPickerBackgroundView];
     _sexPickerView.tag = 111;
     _sexPickerView = [UIPickerView new];
     _sexPickerView.backgroundColor = [UIColor whiteColor];
-    [self addSubview:_sexPickerView];
+    [_sexPickerBackgroundView addSubview:_sexPickerView];
     
     _sexPickerTopView = [UIView new];
     _sexPickerTopView.backgroundColor = [UIColor whiteColor];
-    [self addSubview:_sexPickerTopView];
+    _sexPickerTopView.layer.borderWidth = 0.5;
+    _sexPickerTopView.layer.borderColor = [UIColor colorWithHex:0x737373 andAlpha:0.8].CGColor;
+
+    [_sexPickerBackgroundView addSubview:_sexPickerTopView];
     
     _cancelPickerButton = [UIButton new];
     [_cancelPickerButton setTitle:@"取消" forState:UIControlStateNormal];
@@ -313,41 +323,46 @@ static int padding10 = 10;
         make.left.equalTo(ws);
         make.right.equalTo(ws);
         make.bottom.equalTo(ws);
-        make.height.equalTo(@150);
+//        make.height.equalTo(@250);
     }];
     
     [_sexPickerTopView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(ws.sexPickerView);
         make.right.equalTo(ws.sexPickerView);
         make.bottom.equalTo(ws.sexPickerView.mas_top);
-        make.height.equalTo(@60);
+        make.height.equalTo(@40);
     }];
     
     [_cancelPickerButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(ws.sexPickerTopView.mas_left).with.offset(padding10);
-        make.width.equalTo(@50);
+        make.left.equalTo(ws.sexPickerTopView.mas_left);
+        make.right.equalTo(ws.confirmPickerButton.mas_leading);
         make.height.equalTo(@40);
-        make.top.equalTo(ws.sexPickerTopView.mas_top).with.offset(padding10);
+        make.top.equalTo(ws.sexPickerTopView.mas_top);
     }];
     
     [_confirmPickerButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(ws.sexPickerTopView.mas_right).with.offset(-padding10);
-        make.width.equalTo(@50);
+        make.right.equalTo(ws.sexPickerTopView.mas_right);
+        make.width.equalTo(ws.cancelPickerButton.mas_width);
         make.height.equalTo(@40);
-        make.top.equalTo(ws.sexPickerTopView.mas_top).with.offset(padding10);
+        make.top.equalTo(ws.sexPickerTopView.mas_top);
     }];
 }
 
 - (void)createRegionPickerView {
     WS(ws);
+    _regionPickerBackgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    _regionPickerBackgroundView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
+    [self addSubview:_regionPickerBackgroundView];
     _regionPickerView.tag = 222;
     _regionPickerView = [UIPickerView new];
     _regionPickerView.backgroundColor = [UIColor whiteColor];
-    [self addSubview:_regionPickerView];
+    [_regionPickerBackgroundView addSubview:_regionPickerView];
     
     _regionPickerTopView = [UIView new];
+    _regionPickerTopView.layer.borderWidth = 0.5;
+    _regionPickerTopView.layer.borderColor = [UIColor colorWithHex:0x737373 andAlpha:0.8].CGColor;
     _regionPickerTopView.backgroundColor = [UIColor whiteColor];
-    [self addSubview:_regionPickerTopView];
+    [_regionPickerBackgroundView addSubview:_regionPickerTopView];
     
     _cancelRegionPickerButton = [UIButton new];
     [_cancelRegionPickerButton setTitle:@"取消" forState:UIControlStateNormal];
@@ -360,31 +375,30 @@ static int padding10 = 10;
     [_regionPickerTopView addSubview:_confirmRegionPickerButton];
     
     [_regionPickerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(ws);
         make.left.equalTo(ws);
         make.right.equalTo(ws);
-        make.height.equalTo(@200);
+        make.bottom.equalTo(ws);
     }];
     
     [_regionPickerTopView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(ws.regionPickerView);
         make.right.equalTo(ws.regionPickerView);
+        make.height.equalTo(@40);
         make.bottom.equalTo(ws.regionPickerView.mas_top);
-        make.height.equalTo(@60);
     }];
     
     [_cancelRegionPickerButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(ws.regionPickerTopView.mas_left).with.offset(padding10);
-        make.width.equalTo(@50);
+        make.left.equalTo(ws.regionPickerTopView.mas_left);
+        make.right.equalTo(ws.confirmRegionPickerButton.mas_leading);
         make.height.equalTo(@40);
-        make.top.equalTo(ws.regionPickerTopView.mas_top).with.offset(padding10);
+        make.top.equalTo(ws.regionPickerTopView.mas_top);
     }];
     
     [_confirmRegionPickerButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(ws.regionPickerTopView.mas_right).with.offset(-padding10);
-        make.width.equalTo(@50);
+        make.right.equalTo(ws.regionPickerTopView.mas_right);
+        make.width.equalTo(ws.cancelRegionPickerButton.mas_width);
         make.height.equalTo(@40);
-        make.top.equalTo(ws.regionPickerTopView.mas_top).with.offset(padding10);
+        make.top.equalTo(ws.regionPickerTopView.mas_top);
     }];
 }
 
@@ -403,23 +417,19 @@ static int padding10 = 10;
 }
 
 - (void)showSexPickerView {
-    _sexPickerView.hidden = NO;
-    _sexPickerTopView.hidden = NO;
+    _sexPickerBackgroundView.hidden = NO;
 }
 
 - (void)hideSexPickerView {
-    _sexPickerView.hidden = YES;
-    _sexPickerTopView.hidden = YES;
+    _sexPickerBackgroundView.hidden = YES;
 }
 
 - (void)showRegionPickerView {
-    _regionPickerTopView.hidden = NO;
-    _regionPickerView.hidden = NO;
+    _regionPickerBackgroundView.hidden = NO;
 }
 
 - (void)hideRegionPickerView {
-    _regionPickerTopView.hidden = YES;
-    _regionPickerView.hidden = YES;
+    _regionPickerBackgroundView.hidden = YES;
 }
 
 - (NSInteger)tagOfCurrentSex {

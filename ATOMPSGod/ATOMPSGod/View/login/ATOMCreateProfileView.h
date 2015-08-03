@@ -19,7 +19,12 @@
 @property (nonatomic, strong) UIView *sexView;
 @property (nonatomic, strong) UIPickerView *sexPickerView;
 @property (nonatomic, strong) UIPickerView *regionPickerView;
+
 @property (nonatomic, strong) UIView *areaView;
+
+@property (nonatomic, strong) UIView *sexPickerBackgroundView;
+@property (nonatomic, strong) UIView *regionPickerBackgroundView;
+
 @property (nonatomic, strong) UILabel *changeHeaderLabel;
 
 @property (nonatomic, strong) UIButton *cancelPickerButton;

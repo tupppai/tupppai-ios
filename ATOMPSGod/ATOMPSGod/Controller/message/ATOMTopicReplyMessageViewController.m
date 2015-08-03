@@ -181,7 +181,9 @@
     if (!cell) {
         cell = [[ATOMTopicReplyMessageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    cell.viewModel = _dataSource[indexPath.row];
+    if (_dataSource.count > 0) {
+        cell.viewModel = _dataSource[indexPath.row];
+    }
     return cell;
 }
 #pragma mark - UITableViewDelegate
