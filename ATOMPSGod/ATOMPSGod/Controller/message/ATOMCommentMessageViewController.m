@@ -165,7 +165,7 @@
         } else if (CGRectContainsPoint(cell.replyContentLabel.frame, p)) {
             ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
             cdvc.type = viewModel.type;
-            cdvc.ID = viewModel.homepageViewModel.imageID;
+            cdvc.ID = viewModel.homepageViewModel.ID;
             [self pushViewController:cdvc animated:YES];
         } else if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];

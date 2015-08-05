@@ -108,7 +108,6 @@
         praiseSize.width += kBottomCommonButtonWidth + kPadding15;
     }
     _userWorkImageView.frame = CGRectMake((SCREEN_WIDTH - workImageSize.width) / 2, CGRectGetMaxY(_topView.frame), workImageSize.width, workImageSize.height);
-//    _userWorkImageView.contentMode = UIViewContentModeScaleAspectFit;
     CGFloat thinViewHeight = 60;
     CGFloat bottomButtonOriginY = (thinViewHeight - kBottomCommonButtonWidth) / 2;
     _thinCenterView.frame = CGRectMake(0, CGRectGetMaxY(_userWorkImageView.frame), SCREEN_WIDTH, thinViewHeight);

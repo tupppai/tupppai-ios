@@ -178,7 +178,7 @@
 #pragma mark - ATOMShareFunctionViewDelegate
 -(void)tapWechatFriends {
     if (_selectedIndexPath.row == 0) {
-        [self postSocialShare:_askPageViewModel.imageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeAsk];
+        [self postSocialShare:_askPageViewModel.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeAsk];
     } else {
         ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
         [self postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeReply];
@@ -186,7 +186,7 @@
 }
 -(void)tapWechatMoment {
     if (_selectedIndexPath.row == 0) {
-        [self postSocialShare:_askPageViewModel.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
+        [self postSocialShare:_askPageViewModel.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
     } else {
         ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
         [self postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeReply];
@@ -194,7 +194,7 @@
 }
 -(void)tapSinaWeibo {
     if (_selectedIndexPath.row == 0) {
-        [self postSocialShare:_askPageViewModel.imageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:ATOMPageTypeAsk];
+        [self postSocialShare:_askPageViewModel.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:ATOMPageTypeAsk];
     } else {
         ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
         [self postSocialShare:model.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:ATOMPageTypeReply];
@@ -250,7 +250,7 @@
 - (void)firstGetDataSource {
     _currentPage = 1;
     ATOMShowDetailOfHomePage *showDetailOfHomePage = [ATOMShowDetailOfHomePage new];
-    NSArray *detailImageArray = [showDetailOfHomePage getDetalImagesByImageID:_askPageViewModel.imageID];
+    NSArray *detailImageArray = [showDetailOfHomePage getDetalImagesByImageID:_askPageViewModel.ID];
     if (!detailImageArray || detailImageArray.count == 0) { //读服务器
         [self getDataSource];
     } else { //读数据库
@@ -262,7 +262,6 @@
             [_dataSource addObject:model];
         }
         for (ATOMDetailImage *detailImage in detailImageArray) {
-            NSLog(@"detailImage %d %@",detailImage.type,detailImage.imageURL);
             ATOMHotDetailPageViewModel *model = [ATOMHotDetailPageViewModel new];
             [model setViewModelDataWithDetailImage:detailImage];
             model.labelArray = [_askPageViewModel.labelArray mutableCopy];
@@ -281,7 +280,7 @@
     [param setObject:@(5) forKey:@"size"];
     [param setObject:@(_fold) forKey:@"fold"];
     ATOMShowDetailOfHomePage *showDetailOfHomePage = [ATOMShowDetailOfHomePage new];
-    [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.askPageViewModel.askID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
+    [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.askPageViewModel.ID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
         //第一张图片为首页点击的图片，剩下的图片为回复图片
         ws.dataSource = nil;
         ws.dataSource = [NSMutableArray array];
@@ -314,7 +313,7 @@
     [param setObject:@(10) forKey:@"size"];
     [param setObject:@(_fold) forKey:@"fold"];
     ATOMShowDetailOfHomePage *showDetailOfHomePage = [ATOMShowDetailOfHomePage new];
-    [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.askPageViewModel.imageID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
+    [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.askPageViewModel.ID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
         for (ATOMDetailImage *detailImage in detailOfHomePageArray) {
             ATOMHotDetailPageViewModel *model = [ATOMHotDetailPageViewModel new];
             [model setViewModelDataWithDetailImage:detailImage];
@@ -337,13 +336,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
-//    [self firstGetDataSource];
-}
--(void)viewDidAppear:(BOOL)animated {
-    [_hotDetailTableView.header beginRefreshing];
-}
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -441,7 +433,7 @@
                     [model toggleLike];
             } else if (CGRectContainsPoint(_selectedHotDetailCell.shareButton.frame, p)) {
                 if (_selectedIndexPath.row == 0) {
-                    [self postSocialShare:_askPageViewModel.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
+                    [self postSocialShare:_askPageViewModel.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
                 } else {
                     ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
                     [self postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeReply];

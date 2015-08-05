@@ -166,6 +166,7 @@ static int collumnNumber = 3;
         [self pushViewController:rdvc animated:YES];
     } else {
         ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
+        hdvc.fold = 0;
         hdvc.askPageViewModel = homepageViewModel;
         [self pushViewController:hdvc animated:YES];
     }

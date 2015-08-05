@@ -84,15 +84,17 @@
     [_thinCenterView addSubview:_moreShareButton];
     
     _commentImageView = [UIImageView new];
-//    _commentImageView.backgroundColor = [UIColor orangeColor];
     _commentImageView.image = [UIImage imageNamed:@"ic_comment"];
     [_bottomView addSubview:_commentImageView];
     
     _commentLabel1 = [UILabel new];
     _commentLabel2 = [UILabel new];
+
     [_bottomView addSubview:_commentLabel1];
     [_bottomView addSubview:_commentLabel2];
     
+//    _commentLabel1.backgroundColor = [UIColor orangeColor];
+//    _commentLabel2.backgroundColor = [UIColor orangeColor];
 }
 
 - (void)layoutSubviews {
@@ -134,16 +136,16 @@
             _commentLabel2.frame = CGRectZero;
             _extralBottomView.frame = CGRectMake(0, CGRectGetMaxY(_thinCenterView.frame), SCREEN_WIDTH, 40);
         } else if (commentCount == 1) {
-            _bottomView.frame = CGRectMake(0, CGRectGetMaxY(_thinCenterView.frame), SCREEN_WIDTH, 20);
-            _commentImageView.frame = CGRectMake(kPadding15, 2.5, kPadding15, kPadding15);
+            _bottomView.frame = CGRectMake(0, CGRectGetMaxY(_thinCenterView.frame), SCREEN_WIDTH, 24);
+            _commentImageView.frame = CGRectMake(kPadding15, 4, kPadding15, kPadding15);
             _commentLabel1.frame = CGRectMake(CGRectGetMaxX(_commentImageView.frame) + kPadding15, 0, CGWidth(_bottomView.frame) - 4 * kPadding15, 20);
             _commentLabel2.frame = CGRectZero;
             _extralBottomView.frame = CGRectMake(0, CGRectGetMaxY(_bottomView.frame), SCREEN_WIDTH, 40);
         } else if (commentCount == 2) {
-            _bottomView.frame = CGRectMake(0, CGRectGetMaxY(_thinCenterView.frame), SCREEN_WIDTH, 40);
-            _commentImageView.frame = CGRectMake(kPadding15, 2.5, kPadding15, kPadding15);
+            _bottomView.frame = CGRectMake(0, CGRectGetMaxY(_thinCenterView.frame), SCREEN_WIDTH, 44);
+            _commentImageView.frame = CGRectMake(kPadding15, 4, kPadding15, kPadding15);
             _commentLabel1.frame = CGRectMake(CGRectGetMaxX(_commentImageView.frame) + kPadding15, 0, CGWidth(_bottomView.frame) - 4 * kPadding15, 20);
-            _commentLabel2.frame = CGRectMake(CGRectGetMaxX(_commentImageView.frame) + kPadding15, 20, CGWidth(_bottomView.frame) - 4 * kPadding15, 20);
+            _commentLabel2.frame = CGRectMake(CGRectGetMaxX(_commentImageView.frame) + kPadding15, 24, CGWidth(_bottomView.frame) - 4 * kPadding15, 20);
             _extralBottomView.frame = CGRectMake(0, CGRectGetMaxY(_bottomView.frame), SCREEN_WIDTH, 40);
         }
     }
@@ -164,9 +166,9 @@
         ATOMCommentViewModel *commentViewModel = viewModel.commentArray[i];
         NSInteger commentNameLength = commentViewModel.nickname.length;
         NSRange range = {0, commentNameLength + 1};
-        NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.f], NSFontAttributeName, [UIColor colorWithHex:0x797979], NSForegroundColorAttributeName, nil];
+        NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14.f], NSFontAttributeName, [UIColor colorWithHex:0x000000 andAlpha:0.6], NSForegroundColorAttributeName, nil];
         NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@： %@",commentViewModel.nickname, commentViewModel.content] attributes:attributeDict];
-        [attributeStr addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:range];
+        [attributeStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0x000000 andAlpha:0.8] range:range];
         if (i == 0) {
             _commentLabel1.attributedText = attributeStr;
         } else if (i == 1) {
@@ -176,11 +178,9 @@
 
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     _praiseButton.number = viewModel.likeNumber;
-    NSLog(@"_praiseButton number %@,selected%d,ID%ld",viewModel.likeNumber,viewModel.liked,(long)viewModel.ID);
     _praiseButton.selected = viewModel.liked;
     _shareButton.number = viewModel.shareNumber;
     _commentButton.number = viewModel.commentNumber;
-    _userWorkImageView.contentMode = UIViewContentModeScaleAspectFit;
     [_userWorkImageView setImageWithURL:[NSURL URLWithString:viewModel.userImageURL] placeholderImage:[UIImage imageNamed:@"placeholderImage_1"]];
     [self addTipLabelToImageView];
     [self setNeedsLayout];

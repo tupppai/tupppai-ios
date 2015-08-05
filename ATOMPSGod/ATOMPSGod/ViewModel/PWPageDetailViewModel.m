@@ -27,8 +27,8 @@
 -(void)setCommonViewModelWithAsk:(ATOMAskPageViewModel*)model {
     _type = 1;
     _uid = model.userID;
-    _askID = model.askID;
-    _pageID = model.imageID;
+    _askID = model.ID;
+    _pageID = model.ID;
     _pageImageURL = model.userImageURL;
     _pageImage = model.image;
     _avatarURL = model.avatarURL;
@@ -101,10 +101,9 @@
 -(ATOMAskPageViewModel*)generateAskPageViewModel {
     ATOMAskPageViewModel* askPageViewModel = [ATOMAskPageViewModel new];
     if (_askID) {
-        askPageViewModel.imageID = _askID ;
-        askPageViewModel.askID = _askID;
+        askPageViewModel.ID = _askID ;
     } else {
-        askPageViewModel.imageID = _pageID ;
+        askPageViewModel.ID = _pageID ;
     }
     askPageViewModel.userImageURL = _pageImageURL;
     askPageViewModel.image = _pageImage;

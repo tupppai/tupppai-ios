@@ -180,7 +180,7 @@
         }];
         [_reportActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
             NSMutableDictionary* param = [NSMutableDictionary new];
-            [param setObject:@(ws.selectedAskPageViewModel.imageID) forKey:@"target_id"];
+            [param setObject:@(ws.selectedAskPageViewModel.ID) forKey:@"target_id"];
             [param setObject:@(ATOMPageTypeAsk) forKey:@"target_type"];
             UIButton* b = section.buttons[indexPath.row];
             switch (indexPath.row) {
@@ -219,13 +219,13 @@
 
 #pragma mark - ATOMShareFunctionViewDelegate
 -(void)tapWechatFriends {
-    [self postSocialShare:_selectedAskPageViewModel.imageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeAsk];
+    [self postSocialShare:_selectedAskPageViewModel.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeAsk];
 }
 -(void)tapWechatMoment {
-    [self postSocialShare:_selectedAskPageViewModel.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
+    [self postSocialShare:_selectedAskPageViewModel.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
 }
 -(void)tapSinaWeibo {
-    [self postSocialShare:_selectedAskPageViewModel.imageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:ATOMPageTypeAsk];
+    [self postSocialShare:_selectedAskPageViewModel.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:ATOMPageTypeAsk];
 }
 -(void)tapInvite {
     ATOMInviteViewController* ivc = [ATOMInviteViewController new];
@@ -241,7 +241,7 @@
         //取消收藏
         [param setObject:@(0) forKey:@"status"];
     }
-    [ATOMCollectModel toggleCollect:param withPageType:ATOMPageTypeAsk withID:_selectedAskPageViewModel.imageID withBlock:^(NSError *error) {
+    [ATOMCollectModel toggleCollect:param withPageType:ATOMPageTypeAsk withID:_selectedAskPageViewModel.ID withBlock:^(NSError *error) {
         if (!error) {
             _selectedAskPageViewModel.collected = self.shareFunctionView.collectButton.selected;
         }   else {
@@ -595,7 +595,7 @@
 - (void)dealDownloadWork {
     NSMutableDictionary* param = [NSMutableDictionary new];
     [param setObject:@"ask" forKey:@"type"];
-    [param setObject:@(_selectedAskCell.viewModel.imageID) forKey:@"target"];
+    [param setObject:@(_selectedAskCell.viewModel.ID) forKey:@"target"];
     [ATOMRecordModel record:param withBlock:^(NSError *error, NSString *url) {
         if (!error) {
             [ATOMBaseRequest downloadImage:url withBlock:^(UIImage *image) {
@@ -659,7 +659,7 @@
                     [_selectedHotCell.praiseButton toggleLike];
                     [_selectedAskPageViewModel toggleLike];
                 } else if (CGRectContainsPoint(_selectedHotCell.shareButton.frame, p)) {
-                    [self postSocialShare:_selectedAskPageViewModel.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
+                    [self postSocialShare:_selectedAskPageViewModel.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
                 } else if (CGRectContainsPoint(_selectedHotCell.commentButton.frame, p)) {
                     ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
                     rdvc.delegate = self;
@@ -717,7 +717,7 @@
                     [_selectedAskCell.praiseButton toggleLike];
                     [_selectedAskPageViewModel toggleLike];
                 } else if (CGRectContainsPoint(_selectedAskCell.shareButton.frame, p)) {
-                    [self postSocialShare:_selectedAskPageViewModel.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
+                    [self postSocialShare:_selectedAskPageViewModel.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
                 } else if (CGRectContainsPoint(_selectedAskCell.commentButton.frame, p)) {
                     ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
                     rdvc.delegate = self;
@@ -815,15 +815,7 @@
 }
 
 #pragma mark - ATOMViewControllerDelegate
-//-(void)ATOMViewControllerDismissWithLiked:(BOOL)liked {
-//    if (_scrollView.typeOfCurrentHomepageView == ATOMHomepageViewTypeHot) {
-//        //当从child viewcontroller 传来的liked变化的时候，toggle like.
-//        //to do:其实应该改变datasource的liked ,tableView reload的时候才能保持。
-//        [_selectedHotCell.praiseButton toggleLikeWhenSelectedChanged:liked];
-//    } else if (_scrollView.typeOfCurrentHomepageView == ATOMHomepageViewTypeAsk) {
-//        [_selectedAskCell.praiseButton toggleLikeWhenSelectedChanged:liked];
-//    }
-//}
+
 
 -(void)ATOMViewControllerDismissWithInfo:(NSDictionary *)info {
     bool liked = [info[@"liked"] boolValue];

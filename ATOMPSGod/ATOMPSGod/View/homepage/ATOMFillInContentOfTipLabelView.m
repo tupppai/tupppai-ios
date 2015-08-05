@@ -49,7 +49,7 @@
 //    _tipLabelContentTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     [_topView addSubview:_tipLabelContentTextField];
     _tipLabelContentTextField.returnKeyType = UIReturnKeyDone;
-    _tipLabelContentTextField.frame = CGRectMake(kPadding15, CGRectGetMaxY(_showNumberLabel.frame) + kPadding10, CGWidth(_topView.frame) - 2 * kPadding15 - kPadding30 - kPadding10, kFont15+1);
+    _tipLabelContentTextField.frame = CGRectMake(kPadding15, CGRectGetMaxY(_showNumberLabel.frame) + kPadding10, CGWidth(_topView.frame) - 2 * kPadding15 - kPadding30 - kPadding10, kFont15+3);
     _tipLabelContentTextField.font = [UIFont systemFontOfSize:kFont15];
     
     _sendTipLabelTextButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - kPadding15 - kPadding30, (60 - kPadding30) / 2, kPadding35, kPadding35)];

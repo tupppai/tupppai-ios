@@ -67,7 +67,6 @@
 }
 
 - (void)setViewModel:(ATOMCommentDetailViewModel *)viewModel {
-    NSLog(@"setViewModel %@ ",viewModel);
     _viewModel = viewModel;
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatar] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     _userNameLabel.text = viewModel.nickname;

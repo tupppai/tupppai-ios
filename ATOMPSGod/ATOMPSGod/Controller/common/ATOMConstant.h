@@ -13,6 +13,7 @@
 extern CGFloat const kCommentTableViewHeaderHeight;
 extern CGFloat const kUserHeaderButtonWidth;
 extern CGFloat const kUserHeaderButtonWidth2;
+extern CGFloat const kPublishTimeLabelWidth;
 extern CGFloat const kUserBigHeaderButtonWidth;
 extern CGFloat const kShareButtonWidth;
 extern CGFloat const kUserNameLabelWidth;

@@ -7,7 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+//#import "ATOMAskPageViewModel.h"
 @class ATOMCommonImage;
+@class ATOMAskPageViewModel;
 
 @interface ATOMFollowPageViewModel : NSObject
 
@@ -35,4 +37,6 @@
 
 - (void)setViewModelData:(ATOMCommonImage *)commonImage;
 - (void)toggleLike;
+-(ATOMAskPageViewModel*)generateAskPageViewModel;
+
 @end

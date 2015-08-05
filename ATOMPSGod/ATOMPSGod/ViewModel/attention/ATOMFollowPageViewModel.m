@@ -15,6 +15,7 @@
 #import "ATOMComment.h"
 #import "ATOMCommentViewModel.h"
 #import "ATOMBaseRequest.h"
+#import "ATOMAskPageViewModel.h"
 @implementation ATOMFollowPageViewModel
 
 - (instancetype)init {
@@ -85,6 +86,27 @@
 //    } else {
 //        NSLog(@"image not exist in %@", path);
 //    }
+}
+-(ATOMAskPageViewModel*)generateAskPageViewModel {
+
+    ATOMAskPageViewModel* askPVM = [ATOMAskPageViewModel new];
+    askPVM.ID = _askID;
+    askPVM.userID = _userID;
+    askPVM.userName = _userName;
+    askPVM.likeNumber = _likeNumber;
+    askPVM.liked = _liked;
+    askPVM.commentNumber = _commentNumber;
+    askPVM.liked = _liked;
+    askPVM.labelArray = _labelArray;
+    askPVM.replierArray = _replierArray;
+    askPVM.width = _width;
+    askPVM.height = _height;
+    askPVM.userImageURL = _pageImageURL;
+    askPVM.shareNumber = _shareNumber;
+    askPVM.totalPSNumber = _totalPSNumber;
+    askPVM.publishTime = _publishTime;
+    askPVM.collected = _collected;
+    return askPVM;
 }
 - (void)toggleLike{
     NSMutableDictionary *param = [NSMutableDictionary new];

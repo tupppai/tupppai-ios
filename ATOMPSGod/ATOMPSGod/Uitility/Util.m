@@ -93,4 +93,20 @@
     return publishTime;
 }
 
++(void)ShowTSMessageError:(NSString*)str {
+    [TSMessage showNotificationWithTitle:str
+                                    type:TSMessageNotificationTypeError];
+    
+}
++(void)ShowTSMessageSuccess:(NSString*)str {
+    [TSMessage showNotificationWithTitle:str
+                                    type:TSMessageNotificationTypeSuccess];
+    
+}
+
++(void)ShowTSMessageWarn:(NSString*)str {
+    [TSMessage showNotificationWithTitle:str
+                                    type:TSMessageNotificationTypeWarning];
+    
+}
 @end

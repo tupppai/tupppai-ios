@@ -44,7 +44,7 @@
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *avatar;
-@property (nonatomic, assign) NSInteger sex;
+//@property (nonatomic, assign) NSInteger sex;
 /**
  *  @数组
  */

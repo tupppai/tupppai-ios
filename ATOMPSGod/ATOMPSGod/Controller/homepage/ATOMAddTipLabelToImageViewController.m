@@ -245,7 +245,7 @@
 - (void)dealSubmitWorkWithLabelBy:(NSInteger)imageID {
     WS(ws);
     ATOMSubmitImageWithLabel *submitWorkWithLabel = [ATOMSubmitImageWithLabel new];
-    [submitWorkWithLabel SubmitWorkWithLabel:[ws getParamWithImageID:imageID AndAskID:ws.askPageViewModel.imageID] withBlock:^(NSMutableArray *labelArray, NSError *error) {
+    [submitWorkWithLabel SubmitWorkWithLabel:[ws getParamWithImageID:imageID AndAskID:ws.askPageViewModel.ID] withBlock:^(NSMutableArray *labelArray, NSError *error) {
         [Util dismissHud];
         if (error) {
             [Util TextHud:@"提交作品失败"];
@@ -260,6 +260,7 @@
         
         ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
         hdvc.askPageViewModel = ws.askPageViewModel;
+        hdvc.fold = 0;
         ATOMHomepageViewController *hvc = self.navigationController.viewControllers[0];
         [self pushViewController:hdvc animated:YES];
         [self.navigationController setViewControllers:@[hvc, hdvc]];
@@ -311,7 +312,7 @@
         
         NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithInteger:newImageID],@"ID",[NSNumber numberWithInteger:newImageID],@"askID",@(ATOMPageTypeAsk),@"type", nil];
         ATOMInviteViewController *ivc = [ATOMInviteViewController new];
-        ws.newAskPageViewModel.imageID = newImageID;
+        ws.newAskPageViewModel.ID = newImageID;
         ivc.askPageViewModel = ws.newAskPageViewModel;
         ivc.info = info;
         ivc.showNext = YES;
@@ -416,7 +417,6 @@
     [button addGestureRecognizer:panTipLabelGesture];
     [button addTarget:self action:@selector(clickTipLabel:) forControlEvents:UIControlEventTouchUpInside];
     [_addTipLabelToImageView.workImageView addSubview:button];
-
 }
 
 #pragma mark - UITextFieldDelegate

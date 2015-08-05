@@ -26,9 +26,14 @@
 #import "ATOMReportModel.h"
 #import "ATOMCollectModel.h"
 #import "ATOMInviteViewController.h"
+#import "ATOMUploadWorkViewController.h"
+#import "ATOMRecordModel.h"
+#import "ATOMBaseRequest.h"
+
+
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMMyFollowViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate>
+@interface ATOMMyFollowViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 @property (nonatomic, strong) UIView *myAttentionView;
 @property (nonatomic, strong) PWRefreshBaseTableView *tableView;
@@ -40,6 +45,7 @@
 @property (nonatomic, assign) NSInteger canRefreshFooter;
 @property (nonatomic, assign) ATOMMyAttentionTableViewCell* selectedCell;
 @property (nonatomic, strong)  JGActionSheet * reportActionSheet;
+@property (nonatomic, strong)  JGActionSheet * psActionSheet;
 
 @end
 
@@ -61,6 +67,46 @@
     if (!CGRectContainsPoint(_shareFunctionView.bottomView.frame, location)) {
         [_shareFunctionView dismiss];
     }
+}
+- (JGActionSheet *)psActionSheet {
+    WS(ws);
+    if (!_psActionSheet) {
+        _psActionSheet = [JGActionSheet new];
+        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"下载素材", @"上传作品",@"取消"] buttonStyle:JGActionSheetButtonStyleDefault];
+        [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:2];
+        NSArray *sections = @[section];
+        _psActionSheet = [JGActionSheet actionSheetWithSections:sections];
+        _psActionSheet.delegate = self;
+        [_psActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
+            [sheet dismissAnimated:YES];
+        }];
+        [_psActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
+            switch (indexPath.row) {
+                case 0:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    [ws dealDownloadWork];
+                    break;
+                case 1:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    [ws dealUploadWork];
+                    break;
+                case 2:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    break;
+                default:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    break;
+            }
+        }];
+    }
+    return _psActionSheet;
+}
+- (UIImagePickerController *)imagePickerController {
+    if (_imagePickerController == nil) {
+        _imagePickerController = [UIImagePickerController new];
+        _imagePickerController.delegate = self;
+    }
+    return _imagePickerController;
 }
 - (JGActionSheet *)reportActionSheet {
     WS(ws);
@@ -261,12 +307,15 @@
                 opvc.userName = model.userName;
                 [self pushViewController:opvc animated:YES];
             } else if (CGRectContainsPoint(_selectedCell.userNameLabel.frame, p)) {
-                p = [gesture locationInView:_selectedCell.userNameLabel];
-                if (p.x <= 16 * 3) {
                     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+                    ATOMFollowPageViewModel* model =  (ATOMFollowPageViewModel*)_dataSource[indexPath.row];
+                    opvc.userID = model.userID;
+                    opvc.userName = model.userName;
                     [self pushViewController:opvc animated:YES];
-                }
+            }else if (CGRectContainsPoint(_selectedCell.psButton.frame, p)) {
+                [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
             }
+
         } else {
             p = [gesture locationInView:_selectedCell.thinCenterView];
             if (CGRectContainsPoint(_selectedCell.praiseButton.frame, p)) {
@@ -302,7 +351,6 @@
     ATOMMyAttentionTableViewCell *cell = [_tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[ATOMMyAttentionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-//        [cell showPlaceHolder];
     }
     cell.viewModel = _dataSource[indexPath.row];
     return cell;
@@ -314,8 +362,6 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [ATOMMyAttentionTableViewCell calculateCellHeightWith:_dataSource[indexPath.row]];
 }
-
-
 
 #pragma mark - PWRefreshBaseTableViewDelegate
 -(void)didPullRefreshDown:(UITableView *)tableView {
@@ -333,8 +379,65 @@
 
 
 
+- (void)dealDownloadWork {
+    NSMutableDictionary* param = [NSMutableDictionary new];
+    [param setObject:@"ask" forKey:@"type"];
+    [param setObject:@(_selectedCell.viewModel.askID) forKey:@"target"];
+    [ATOMRecordModel record:param withBlock:^(NSError *error, NSString *url) {
+        if (!error) {
+            [ATOMBaseRequest downloadImage:url withBlock:^(UIImage *image) {
+                UIImageWriteToSavedPhotosAlbum(image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+            }];
+        }
+    }];
+}
 
 
+- (void)dealUploadWork {
+    
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])
+    {
+        self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        [self presentViewController:_imagePickerController animated:YES completion:NULL];
+    }
+    else
+    {
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"😭" andMessage:@"找不到你的相册在哪"];
+        [alertView addButtonWithTitle:@"我知道了"
+                                 type:SIAlertViewButtonTypeDefault
+                              handler:^(SIAlertView *alert) {
+                              }];
+        alertView.transitionStyle = SIAlertViewTransitionStyleFade;
+        [alertView show];
+    }
+    
+}
+
+- (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error
+  contextInfo: (void *) contextInfo {
+    if(error != NULL){
+        [Util TextHud:@"保存失败"];
+    }else{
+        [Util TextHud:@"保存成功"];
+    }
+}
+
+
+#pragma mark - UIImagePickerControllerDelegate
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    WS(ws);
+    [self dismissViewControllerAnimated:YES completion:^{
+        ATOMUploadWorkViewController *uwvc = [ATOMUploadWorkViewController new];
+        uwvc.originImage = info[UIImagePickerControllerOriginalImage];
+        uwvc.askPageViewModel = [_selectedCell.viewModel generateAskPageViewModel];
+        [ws pushViewController:uwvc animated:YES];
+    }];
+}
 
 
 

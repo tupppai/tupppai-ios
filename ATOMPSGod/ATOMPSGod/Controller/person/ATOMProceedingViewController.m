@@ -175,8 +175,21 @@
         CGPoint p = [gesture locationInView:cell];
         //点击图片
         if (CGRectContainsPoint(cell.uploadButton.frame, p)) {
-            [self dealUploadWork];
+            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"上传作品" andMessage:@"确定要上传你的作品到这个求P中吗？"];
+            [alertView addButtonWithTitle:@"取消"
+                                     type:SIAlertViewButtonTypeDefault
+                                  handler:^(SIAlertView *alert) {
+                                  }];
+            [alertView addButtonWithTitle:@"确定"
+                                     type:SIAlertViewButtonTypeDefault
+                                  handler:^(SIAlertView *alert) {
+                                      [self dealUploadWork];
+                                  }];
+
+            alertView.transitionStyle = SIAlertViewTransitionStyleFade;
+            [alertView show];
         } else if (CGRectContainsPoint(cell.userUploadImageView.frame, p)) {
+
             ATOMAskPageViewModel* askPVM = _homeImageDataSource[indexPath.row];
 
             if ([askPVM.totalPSNumber integerValue] == 0) {
@@ -202,7 +215,7 @@
             [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.deleteButton.frame, p)) {
             NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(cell.viewModel.ID),@"id", nil];
-            [ATOMCommonModel post:param withUrl:@"user/delete_progress" withBlock:^(NSError *error) {
+            [ATOMCommonModel post:param withUrl:@"user/delete_progress" withBlock:^(NSError *error,int ret) {
                 if (!error) {
                     [Util successHud:@"已删除" inView:self.view];
                 }

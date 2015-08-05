@@ -24,7 +24,7 @@
     self = [super init];
     if (self) {
         _type = 1;
-        _imageID = 0;
+        _ID = 0;
         _userID = [ATOMCurrentUser currentUser].uid;
         _userName = [ATOMCurrentUser currentUser].nickname;
         _userSex = ([ATOMCurrentUser currentUser].sex == 0) ? @"woman" : @"man";
@@ -46,12 +46,10 @@
 }
 
 - (void)setViewModelData:(ATOMHomeImage *)homeImage {
-//    _imageID = homeImage.imageID;
-    _imageID = homeImage.askID;
-    _askID = homeImage.askID;
+    _ID = homeImage.askID;
     _userID = homeImage.uid;
     _userName = homeImage.nickname;
-    _userSex = (homeImage.sex == 1) ? @"man" : @"woman";
+//    _userSex = (homeImage.sex == 1) ? @"man" : @"woman";
     _userImageURL = homeImage.imageURL;
     _avatarURL = homeImage.avatar;
     NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:homeImage.uploadTime];
@@ -88,7 +86,7 @@
 
 -(PWPageDetailViewModel*)generatepageDetailViewModel {
     PWPageDetailViewModel* commonViewModel = [PWPageDetailViewModel new];
-    commonViewModel.pageID = _imageID;
+    commonViewModel.pageID = _ID;
     commonViewModel.type = ATOMPageTypeAsk;
     commonViewModel.pageImageURL = _userImageURL;
     commonViewModel.pageImage = _image;
@@ -104,7 +102,7 @@
 }
 
 -(void)setViewModelWithCommon:(PWPageDetailViewModel*)commonViewModel {
-    _imageID = commonViewModel.pageID;
+    _ID = commonViewModel.pageID;
     _userImageURL = commonViewModel.pageImageURL;
     _image = commonViewModel.pageImage;
     _avatarURL = commonViewModel.avatarURL;
@@ -123,7 +121,7 @@
     _liked = !_liked;
     [param setValue:@(status) forKey:@"status"];
     ATOMBaseRequest* baseRequest = [ATOMBaseRequest new];
-    [baseRequest toggleLike:param withUrl:@"ask/upask" withID:_imageID withBlock:^(NSError *error) {
+    [baseRequest toggleLike:param withUrl:@"ask/upask" withID:_ID withBlock:^(NSError *error) {
         if (!error) {
             NSLog(@"Server成功toggle like");
             NSInteger number = [_likeNumber integerValue]+one;

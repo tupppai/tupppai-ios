@@ -21,7 +21,6 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.backgroundColor = [UIColor colorWithHex:0xededed];
         [self createSubView];
     }
     return self;
@@ -29,80 +28,77 @@
 
 - (void)createSubView {
     WS(ws);
-    
-    NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:13.f], NSFontAttributeName, nil];
-    
-    UILabel *oldPasswordLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 81.5, 40)];
-    oldPasswordLabel.text = @"旧密码";
+
     _oldPasswordTextField = [UITextField new];
     _oldPasswordTextField.secureTextEntry = YES;
-    _oldPasswordTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"输入你的旧密码" attributes:attributeDict];
-    [self setCommonTextField:_oldPasswordTextField AndLabel:oldPasswordLabel];
+    _oldPasswordTextField.placeholder = @"输入旧密码";
+    _oldPasswordTextField.font = [UIFont systemFontOfSize:19];
+    [self addSubview:_oldPasswordTextField];
+
     
-    UILabel *modifyPasswordLabel= [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 81.5, 40)];
-    modifyPasswordLabel.text = @"新密码";
     _modifyPasswordTextField = [UITextField new];
     _modifyPasswordTextField.secureTextEntry = YES;
-    _modifyPasswordTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"6-16位字符，区分大小写" attributes:attributeDict];
-    [self setCommonTextField:_modifyPasswordTextField AndLabel:modifyPasswordLabel];
-    
-    UILabel *confirmPasswordLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 81.5, 40)];
-    confirmPasswordLabel.text = @"确认密码";
+    _modifyPasswordTextField.placeholder = @"输入新密码";
+    _modifyPasswordTextField.font = [UIFont systemFontOfSize:19];
+    [self addSubview:_modifyPasswordTextField];
+
     _confirmPasswordTextField = [UITextField new];
     _confirmPasswordTextField.secureTextEntry = YES;
-    _confirmPasswordTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"重复新密码" attributes:attributeDict];
-    [self setCommonTextField:_confirmPasswordTextField AndLabel:confirmPasswordLabel];
-    
+    _confirmPasswordTextField.placeholder = @"再次输入新密码";
+    _confirmPasswordTextField.font = [UIFont systemFontOfSize:19];
+    [self addSubview:_confirmPasswordTextField];
+
     _forgetPasswordButton = [UIButton new];
-    _forgetPasswordButton.titleLabel.font = [UIFont systemFontOfSize:12.f];
     [_forgetPasswordButton setTitle:@"忘记密码" forState:UIControlStateNormal];
-    [_forgetPasswordButton setTitleColor:[UIColor colorWithHex:0x838383] forState:UIControlStateNormal];
+    [_forgetPasswordButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    _forgetPasswordButton.titleLabel.font = [UIFont systemFontOfSize: 14];
     [self addSubview:_forgetPasswordButton];
-    
+
     [_oldPasswordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
-        make.top.equalTo(ws.mas_top).with.offset(15);
-        make.left.equalTo(ws.mas_left).with.offset(20);
-        make.right.equalTo(ws.mas_right).with.offset(-20);
-        make.height.equalTo(@40);
+        make.top.equalTo(ws).with.offset(40);
+        make.width.equalTo(@250);
+        make.height.equalTo(@50);
     }];
     
     [_modifyPasswordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
-        make.top.equalTo(ws.oldPasswordTextField.mas_bottom).with.offset(10);
+        make.top.equalTo(ws.oldPasswordTextField.mas_bottom).with.offset(20);
         make.width.equalTo(ws.oldPasswordTextField);
         make.height.equalTo(ws.oldPasswordTextField);
     }];
     
     [_confirmPasswordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
-        make.top.equalTo(ws.modifyPasswordTextField.mas_bottom).with.offset(10);
-        make.width.equalTo(ws.modifyPasswordTextField);
-        make.height.equalTo(ws.modifyPasswordTextField);
+        make.top.equalTo(ws.modifyPasswordTextField.mas_bottom).with.offset(20);
+        make.width.equalTo(ws.oldPasswordTextField);
+        make.height.equalTo(ws.oldPasswordTextField);
     }];
     
+    CALayer *bottomBorder = [CALayer layer];
+    bottomBorder.frame = CGRectMake(0, 40, kLineWidth, 0.5);
+    bottomBorder.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2].CGColor;
+    
+    CALayer *bottomBorder2 = [CALayer layer];
+    bottomBorder2.frame = CGRectMake(0, 40, kLineWidth, 0.5);
+    bottomBorder2.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2].CGColor;
+    CALayer *bottomBorder3 = [CALayer layer];
+    bottomBorder3.frame = CGRectMake(0, 40, kLineWidth, 0.5);
+    bottomBorder3.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2].CGColor;
+    
+    [_oldPasswordTextField.layer addSublayer:bottomBorder];
+    [_modifyPasswordTextField.layer addSublayer:bottomBorder2];
+    [_confirmPasswordTextField.layer addSublayer:bottomBorder3];
+
     [_forgetPasswordButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(ws.confirmPasswordTextField);
-        make.top.equalTo(ws.confirmPasswordTextField.mas_bottom).with.offset(10);
-        make.width.equalTo(@60);
-        make.height.equalTo(@30);
+        make.top.equalTo(ws.confirmPasswordTextField.mas_bottom).with.offset(5);
+        make.right.equalTo(ws.confirmPasswordTextField.mas_right);
+        make.width.equalTo(@100);
+        make.height.equalTo(@5);
     }];
-    
+
 }
 
-- (void)setCommonTextField:(UITextField *)textField AndLabel:(UILabel *)label {
-    [self addSubview:_oldPasswordTextField];
-    label.backgroundColor = [UIColor colorWithHex:0x9c9c9c];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor whiteColor];
-    label.layer.cornerRadius = 5;
-    label.layer.masksToBounds = YES;
-    
-    textField.borderStyle = UITextBorderStyleRoundedRect;
-    textField.leftViewMode = UITextFieldViewModeAlways;
-    textField.leftView = label;
-    textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    [self addSubview:textField];
-}
+
 
 @end

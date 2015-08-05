@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MBProgressHUD.h"
+#import "TSMessage.h"
 
 @interface Util : NSObject
 +(void)TextHud:(NSString*)message;
@@ -18,4 +20,9 @@
 +(void)successHud:(NSString*)message inView:(UIView*)view;
 +(void)showSuccess:(NSString*)message;
 +(NSString*)formatPublishTime:(NSDate*)date;
+
++(void)ShowTSMessageError:(NSString*)str;
++(void)ShowTSMessageWarn:(NSString*)str;
++(void)ShowTSMessageSuccess:(NSString*)str;
+
 @end

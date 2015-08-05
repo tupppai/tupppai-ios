@@ -28,8 +28,8 @@
 
 - (void)setViewModelDataWithHomeImage:(ATOMAskPageViewModel *)askPageViewModel {
     _type = 1;
-    _ID = askPageViewModel.imageID;
-    _askID = askPageViewModel.askID;
+    _ID = askPageViewModel.ID;
+    _askID = askPageViewModel.ID;
     _uid = askPageViewModel.userID;
     _userName = askPageViewModel.userName;
     _userSex = askPageViewModel.userSex;
@@ -61,7 +61,7 @@
     _askID = detailImage.askID;
     _uid = detailImage.uid;
     _userName = detailImage.nickname;
-    _userSex = (detailImage.sex == 1) ? @"man" : @"woman";
+//    _userSex = (detailImage.sex == 1) ? @"man" : @"woman";
     _userImageURL = detailImage.imageURL;
     _avatarURL = detailImage.avatar;
     NSDateFormatter *df = [NSDateFormatter new];

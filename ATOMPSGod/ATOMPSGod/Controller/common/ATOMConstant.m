@@ -13,7 +13,9 @@ CGFloat const kUserHeaderButtonWidth = 35;
 CGFloat const kUserHeaderButtonWidth2 = 41;
 CGFloat const kUserBigHeaderButtonWidth = 74;
 CGFloat const kShareButtonWidth = 65;
-CGFloat const kUserNameLabelWidth = 80;
+CGFloat const kUserNameLabelWidth = 100;
+CGFloat const kPublishTimeLabelWidth = 150;
+
 CGFloat const kPSButtonWidth = 54;
 CGFloat const kPSButtonHeight = 26;
 CGFloat const kBottomCommonButtonWidth = 24;

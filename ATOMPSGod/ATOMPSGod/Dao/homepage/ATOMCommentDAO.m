@@ -26,7 +26,7 @@
             NSArray *param = [MTLFMDBAdapter columnValues:comment];
             BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
             if (flag) {
-                NSLog(@"add comment success");
+//                NSLog(@"add comment success");
             } else {
                 NSLog(@"add comment fail");
             }
@@ -43,7 +43,7 @@
             [param addObject:@(comment.cid)];
             BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
             if (flag) {
-                NSLog(@"update comment success");
+//                NSLog(@"update comment success");
             } else {
                 NSLog(@"update comment fail");
             }

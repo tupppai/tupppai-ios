@@ -15,10 +15,10 @@
              @"cid" : @"comment_id",
              @"uid" : @"uid",
              @"nickname" : @"nickname",
-             @"sex" : @"sex",
+//             @"sex" : @"sex",
              @"avatar" : @"avatar",
              @"content" : @"content",
-             @"commentTime" : @"created",
+             @"commentTime" : @"created_time",
              @"praiseNumber" : @"up_count",
              @"liked": @"uped"
              };

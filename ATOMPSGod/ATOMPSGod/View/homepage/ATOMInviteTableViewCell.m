@@ -36,7 +36,7 @@ static CGFloat cellHeight = 70;
     [_userHeaderButton setBackgroundImage:[UIImage imageNamed:@"head_portrait"] forState:UIControlStateNormal];
     [self addSubview:_userHeaderButton];
     
-    _userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, CGRectGetMinY(_userHeaderButton.frame), kUserNameLabelWidth, kFont14+2)];
+    _userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, CGRectGetMinY(_userHeaderButton.frame), kUserNameLabelWidth, kFont14+3)];
     _userNameLabel.text = @"PSGOD";
     _userNameLabel.font = [UIFont systemFontOfSize:kFont14];
     [self addSubview:_userNameLabel];

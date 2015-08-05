@@ -22,7 +22,6 @@
 @property (nonatomic, strong) NSMutableArray *replierAvatars;
 @property (nonatomic, strong) UIView *lineView;
 @property (nonatomic, strong) ATOMTotalPSView *totalPSLabel;
-
 @end
 
 @implementation ATOMHomePageHotTableViewCell

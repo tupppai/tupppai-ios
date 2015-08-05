@@ -39,10 +39,6 @@
  */
 @property (nonatomic, copy) NSString *avatar;
 /**
- *  回复人性别
- */
-@property (nonatomic, assign) NSInteger sex;
-/**
  *  回复人昵称
  */
 @property (nonatomic, copy) NSString *nickname;

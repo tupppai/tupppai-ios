@@ -72,16 +72,21 @@ static CGFloat replierWidth = 25;
     _publishTypeLabel = [UILabel new];
     _publishTypeLabel.font = [UIFont systemFontOfSize:kFont14];
     _publishTypeLabel.textColor = [UIColor colorWithHex:0x74c3ff];
-
+    
     _userPublishTimeLabel = [UILabel new];
-    _userPublishTimeLabel.font = [UIFont systemFontOfSize:kFont12];
+    _userPublishTimeLabel.font = [UIFont systemFontOfSize:11];
     _userPublishTimeLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
     
+    _psButton = [UIButton new];
+    _psButton.userInteractionEnabled = NO;
+    [_psButton setBackgroundImage:[UIImage imageNamed:@"btn_p_normal"] forState:UIControlStateNormal];
+
     [_topView addSubview:_userHeaderButton];
     [_topView addSubview:_userNameLabel];
     [_topView addSubview:_publishTypeLabel];
     [_topView addSubview:_userPublishTimeLabel];
-    
+    [_topView addSubview:_psButton];
+
     _praiseButton = [ATOMBottomCommonButton new];
     _praiseButton.image = [UIImage imageNamed:@"btn_comment_like_normal"];
     _shareButton = [ATOMBottomCommonButton new];
@@ -124,7 +129,7 @@ static CGFloat replierWidth = 25;
     _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, CGRectGetMinY(_userHeaderButton.frame), kUserNameLabelWidth, kFont14+3);
     _publishTypeLabel.frame = CGRectMake(CGRectGetMaxX(_userNameLabel.frame) + kPadding13, CGRectGetMinY(_userHeaderButton.frame), kFont14*7 , kFont14+3);
     _userPublishTimeLabel.frame = CGRectMake(CGRectGetMinX(_userNameLabel.frame)+1, CGRectGetMaxY(_userHeaderButton.frame) - kFont10, 200, kFont12+1);
-    
+    _psButton.frame = CGRectMake(SCREEN_WIDTH - kPadding15 - kPSButtonWidth, (60 - kPSButtonHeight) / 2, kPSButtonWidth, kPSButtonHeight);
     CGSize workImageSize = CGSizeZero;
     CGSize commentSize, shareSize, praiseSize;
     if (_viewModel) {

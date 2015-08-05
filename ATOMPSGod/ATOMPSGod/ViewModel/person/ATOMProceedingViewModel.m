@@ -15,7 +15,7 @@
     _ID = homeImage.imageID;
     _userID = homeImage.uid;
     _userName = homeImage.nickname;
-    _userSex = (homeImage.sex == 1) ? @"man" :@"woman";
+//    _userSex = (homeImage.sex == 1) ? @"man" :@"woman";
     _avatarURL = homeImage.avatar;
     NSDateFormatter *df = [NSDateFormatter new];
     [df setDateFormat:@"yyyy年MM月dd日 HH时mm分"];

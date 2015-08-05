@@ -15,6 +15,7 @@
 #import "ATOMUserProfileViewModel.h"
 #import "ATOMCreateProfileViewController.h"
 #import "ATOMShareSDKModel.h"
+#import "ATOMForgetPasswordViewController.h"
 @interface ATOMLoginViewController ()
 @property (nonatomic, strong) ATOMLoginView *loginView;
 @end
@@ -137,7 +138,8 @@
 }
 
 - (void)clickForgetPasswordButton:(UIButton *)sender {
-    
+    ATOMForgetPasswordViewController* fpvc = [ATOMForgetPasswordViewController new];
+    [self.navigationController pushViewController:fpvc animated:YES];
 }
 
 

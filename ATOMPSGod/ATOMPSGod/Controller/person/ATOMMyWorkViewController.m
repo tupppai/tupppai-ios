@@ -70,8 +70,7 @@ static int collumnNumber = 3;
     [ATOMShowReply ShowMyReply:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         for (ATOMHomeImage *homeImage in resultArray) {
             ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
-            homepageViewModel.imageID = homeImage.askID;
-            homepageViewModel.askID = homeImage.askID;
+            homepageViewModel.ID = homeImage.askID;
             [ws.homeImageDataSource addObject:homepageViewModel];
             
             ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];

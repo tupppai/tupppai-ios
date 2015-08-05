@@ -65,7 +65,7 @@
     _userUploadImageView.frame = CGRectMake((SCREEN_WIDTH - imageSize.width) / 2, 60, imageSize.width, imageSize.height);
 
     _timeImageView.frame = CGRectMake(kPadding15, (50 - 14) / 2 + CGRectGetMaxY(_userUploadImageView.frame), 14, 14);
-    _userPublishTimeLabel.frame = CGRectMake(CGRectGetMaxX(_timeImageView.frame) + kPadding15, (50 - kFont14) / 2 + CGRectGetMaxY(_userUploadImageView.frame), kUserNameLabelWidth, kFont14);
+    _userPublishTimeLabel.frame = CGRectMake(CGRectGetMaxX(_timeImageView.frame) + kPadding15, (50 - kFont14) / 2 + CGRectGetMaxY(_userUploadImageView.frame), kPublishTimeLabelWidth, kFont14);
     _userPublishTimeLabel.minimumScaleFactor = 0.6;
     _deleteButton.frame = CGRectMake(SCREEN_WIDTH - kPadding15 - 27, (50 - 27) / 2 + CGRectGetMaxY(_userUploadImageView.frame), 27, 27);
 }

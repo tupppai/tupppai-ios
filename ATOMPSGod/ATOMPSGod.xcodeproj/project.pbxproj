@@ -277,6 +277,7 @@
 		5CE4082F1ACE94D600A56E4B /* UIViewController+ATOMTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CE4082E1ACE94D600A56E4B /* UIViewController+ATOMTracking.m */; };
 		5CEAC0301AD4D7750058037C /* ATOMCollectionViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CEAC02F1AD4D7750058037C /* ATOMCollectionViewModel.m */; };
 		5CEAC0331AD4F9540058037C /* ATOMShowCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CEAC0321AD4F9540058037C /* ATOMShowCollection.m */; };
+		E900919D1B71E04E004623E4 /* ATOMInputVerifyCodeAndPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E900919C1B71E04E004623E4 /* ATOMInputVerifyCodeAndPasswordViewController.m */; };
 		E900AB401B41153A0019BAEA /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E900AB1C1B41153A0019BAEA /* AFHTTPRequestOperation.m */; };
 		E900AB411B41153A0019BAEA /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E900AB1E1B41153A0019BAEA /* AFHTTPRequestOperationManager.m */; };
 		E900AB421B41153A0019BAEA /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E900AB201B41153A0019BAEA /* AFHTTPSessionManager.m */; };
@@ -398,6 +399,9 @@
 		E9FF3FCD1B563B6D007AA3F6 /* ATOMShareSDKModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF3FCC1B563B6D007AA3F6 /* ATOMShareSDKModel.m */; };
 		E9FF3FD01B5650EB007AA3F6 /* ATOMShowUser.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF3FCF1B5650EB007AA3F6 /* ATOMShowUser.m */; };
 		E9FF3FD61B575C1C007AA3F6 /* ATOMCommonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF3FD51B575C1C007AA3F6 /* ATOMCommonModel.m */; };
+		E9FF8A3B1B71CCB70010D2C4 /* ATOMForgetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF8A3A1B71CCB70010D2C4 /* ATOMForgetPasswordViewController.m */; };
+		E9FF8A3E1B71CD480010D2C4 /* ATOMInputMobileView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF8A3D1B71CD480010D2C4 /* ATOMInputMobileView.m */; };
+		E9FF8A411B71CE610010D2C4 /* ATOMInputVerifyCodeAndPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF8A401B71CE610010D2C4 /* ATOMInputVerifyCodeAndPasswordView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -952,6 +956,8 @@
 		5CEAC02F1AD4D7750058037C /* ATOMCollectionViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMCollectionViewModel.m; sourceTree = "<group>"; };
 		5CEAC0311AD4F9540058037C /* ATOMShowCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShowCollection.h; sourceTree = "<group>"; };
 		5CEAC0321AD4F9540058037C /* ATOMShowCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShowCollection.m; sourceTree = "<group>"; };
+		E900919B1B71E04E004623E4 /* ATOMInputVerifyCodeAndPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMInputVerifyCodeAndPasswordViewController.h; sourceTree = "<group>"; };
+		E900919C1B71E04E004623E4 /* ATOMInputVerifyCodeAndPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMInputVerifyCodeAndPasswordViewController.m; sourceTree = "<group>"; };
 		E900AB1B1B41153A0019BAEA /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		E900AB1C1B41153A0019BAEA /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		E900AB1D1B41153A0019BAEA /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -1164,6 +1170,12 @@
 		E9FF3FCF1B5650EB007AA3F6 /* ATOMShowUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShowUser.m; sourceTree = "<group>"; };
 		E9FF3FD41B575C1C007AA3F6 /* ATOMCommonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMCommonModel.h; sourceTree = "<group>"; };
 		E9FF3FD51B575C1C007AA3F6 /* ATOMCommonModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMCommonModel.m; sourceTree = "<group>"; };
+		E9FF8A391B71CCB70010D2C4 /* ATOMForgetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMForgetPasswordViewController.h; sourceTree = "<group>"; };
+		E9FF8A3A1B71CCB70010D2C4 /* ATOMForgetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMForgetPasswordViewController.m; sourceTree = "<group>"; };
+		E9FF8A3C1B71CD480010D2C4 /* ATOMInputMobileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMInputMobileView.h; sourceTree = "<group>"; };
+		E9FF8A3D1B71CD480010D2C4 /* ATOMInputMobileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMInputMobileView.m; sourceTree = "<group>"; };
+		E9FF8A3F1B71CE610010D2C4 /* ATOMInputVerifyCodeAndPasswordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMInputVerifyCodeAndPasswordView.h; sourceTree = "<group>"; };
+		E9FF8A401B71CE610010D2C4 /* ATOMInputVerifyCodeAndPasswordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMInputVerifyCodeAndPasswordView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2284,6 +2296,10 @@
 				5CDB065C1AA45C4A0089121E /* ATOMLaunchView.m */,
 				5CDB06691AA45C920089121E /* ATOMMobileRegisterView.h */,
 				5CDB066A1AA45C920089121E /* ATOMMobileRegisterView.m */,
+				E9FF8A3C1B71CD480010D2C4 /* ATOMInputMobileView.h */,
+				E9FF8A3D1B71CD480010D2C4 /* ATOMInputMobileView.m */,
+				E9FF8A3F1B71CE610010D2C4 /* ATOMInputVerifyCodeAndPasswordView.h */,
+				E9FF8A401B71CE610010D2C4 /* ATOMInputVerifyCodeAndPasswordView.m */,
 				5CDB06721AA47EEC0089121E /* ATOMInputVerifyCodeView.h */,
 				5CDB06731AA47EEC0089121E /* ATOMInputVerifyCodeView.m */,
 				5C4F5BD01AA5426700226F64 /* ATOMLoginView.h */,
@@ -2305,6 +2321,10 @@
 				5CDB06701AA47E760089121E /* ATOMInputVerifyCodeViewController.m */,
 				5C4F5BCD1AA541DE00226F64 /* ATOMLoginViewController.h */,
 				5C4F5BCE1AA541DE00226F64 /* ATOMLoginViewController.m */,
+				E9FF8A391B71CCB70010D2C4 /* ATOMForgetPasswordViewController.h */,
+				E9FF8A3A1B71CCB70010D2C4 /* ATOMForgetPasswordViewController.m */,
+				E900919B1B71E04E004623E4 /* ATOMInputVerifyCodeAndPasswordViewController.h */,
+				E900919C1B71E04E004623E4 /* ATOMInputVerifyCodeAndPasswordViewController.m */,
 			);
 			path = login;
 			sourceTree = "<group>";
@@ -2909,6 +2929,7 @@
 				E901973B1B33C98600F46B78 /* PWRefreshFooterTableView.m in Sources */,
 				5C0F04E81ADCF508002003AE /* ATOMConcernMessageViewModel.m in Sources */,
 				E97901361B48EB51003FB0B5 /* JGActionSheet.m in Sources */,
+				E9FF8A3E1B71CD480010D2C4 /* ATOMInputMobileView.m in Sources */,
 				5C561A781AB7C8C30052D4D5 /* UIScrollView+MJRefresh.m in Sources */,
 				5C561A751AB7C8C30052D4D5 /* MJRefreshLegendFooter.m in Sources */,
 				5C559B2B1AB10C93000C5B50 /* ATOMOtherPersonViewController.m in Sources */,
@@ -2957,6 +2978,7 @@
 				5C5EF7BA1ABBB8AC00CE5B84 /* ATOMDetailImage.m in Sources */,
 				5C561A761AB7C8C30052D4D5 /* MJRefreshLegendHeader.m in Sources */,
 				5CDB05C71AA3FE520089121E /* main.m in Sources */,
+				E9FF8A411B71CE610010D2C4 /* ATOMInputVerifyCodeAndPasswordView.m in Sources */,
 				5C4F5BE51AA557AF00226F64 /* ATOMPersonViewController.m in Sources */,
 				5C84062F1ABA6C5300068F35 /* ATOMImageTipLabelDAO.m in Sources */,
 				5C0F04E51ADCF457002003AE /* ATOMConcernMessage.m in Sources */,
@@ -3054,6 +3076,7 @@
 				5C8A2A241AAF31B30064EB1C /* ATOMMyConcernTableFooterView.m in Sources */,
 				5C84062C1ABA67CC00068F35 /* JSONKit.m in Sources */,
 				5C6697B61AAFED63001FCF8A /* ATOMProceedingViewController.m in Sources */,
+				E900919D1B71E04E004623E4 /* ATOMInputVerifyCodeAndPasswordViewController.m in Sources */,
 				5C6CEF2A1AF18BA800F06213 /* ATOMConstant.m in Sources */,
 				5C436A811AB02E7300D14608 /* ATOMMyMessageTableViewCell.m in Sources */,
 				5C0F04D51ADCAD31002003AE /* ATOMCommentMessage.m in Sources */,
@@ -3087,6 +3110,7 @@
 				5C436A9F1AB07F6F00D14608 /* ATOMTopicReplyMessageTableViewCell.m in Sources */,
 				E900AB451B41153A0019BAEA /* AFURLConnectionOperation.m in Sources */,
 				5C5DDBCE1AD3D3CC00F4B845 /* ATOMAskViewModel.m in Sources */,
+				E9FF8A3B1B71CCB70010D2C4 /* ATOMForgetPasswordViewController.m in Sources */,
 				5C3101931AAEC9D800EF529B /* ATOMMessageRemindTableViewCell.m in Sources */,
 				5C6697AD1AAFD710001FCF8A /* ATOMMyCollectionCollectionViewCell.m in Sources */,
 				5C561A731AB7C8C30052D4D5 /* MJRefreshGifHeader.m in Sources */,

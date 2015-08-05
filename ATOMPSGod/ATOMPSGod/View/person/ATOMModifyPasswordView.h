@@ -8,7 +8,7 @@
 
 #import "ATOMBaseView.h"
 
-@interface ATOMModifyPasswordView : UIScrollView
+@interface ATOMModifyPasswordView : ATOMBaseView
 
 @property (nonatomic, strong) UITextField *oldPasswordTextField;
 @property (nonatomic, strong) UITextField *modifyPasswordTextField;
