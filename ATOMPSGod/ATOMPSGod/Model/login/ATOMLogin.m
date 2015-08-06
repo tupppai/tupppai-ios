@@ -67,25 +67,25 @@
                 //        data: { status: 1,正常  2，密码错误 3，未注册 }
                 NSInteger status = [(NSString*)[ responseObject objectForKey:@"data"][@"status"] integerValue];
                 if(status == 1) {
-                    [Util TextHud:@"登录成功"];
+                    [Util showSuccess:@"登录成功"];
                     NSError* error;
                     ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:[ responseObject objectForKey:@"data"] error:&error];
                     if (error) {
                         NSLog(@"Login error %@",error);
+                        [Util ShowTSMessageError:@"登录失败"];
                     }
-                    NSLog(@"user %@ %d",user.nickname,user.uid);
                     //保存更新数据库的user,并更新currentUser
                     [[ATOMCurrentUser currentUser]saveAndUpdateUser:user];
                     if (block) {
                         block(YES);
                     }
                 } else if (status == 2) {
-                    [Util TextHud:@"密码错误"];
+                    [Util ShowTSMessageError:@"密码错误"];
                     if (block) {
                         block(NO);
                     }
                 } else if (status == 3) {
-                    [Util TextHud:@"此手机号未注册"];
+                    [Util ShowTSMessageWarn:@"此手机号无注册"];
                     if (block) {
                         block(NO);
                     }

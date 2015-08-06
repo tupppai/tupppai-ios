@@ -7,7 +7,6 @@
 //
 
 #import "ATOMInputVerifyCodeView.h"
-
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self;
 
 @interface ATOMInputVerifyCodeView ()
@@ -29,6 +28,8 @@
 
 - (void)createSubView {
     WS(ws);
+    
+    _lastSecond = 30;
     
     _backButton = [UIButton new];
     [_backButton setImage:[UIImage imageNamed:@"icon_back_login"] forState:UIControlStateNormal];
@@ -57,6 +58,7 @@
     _buttonTitleStr = [NSString stringWithFormat:@"%d秒后点此可重发验证码",(int)self.lastSecond];
     [_sendVerifyCodeButton setTitle:_buttonTitleStr forState:UIControlStateNormal];
     [_sendVerifyCodeButton setTitleColor:[UIColor colorWithHex:0xBDC7CE] forState:UIControlStateNormal];
+    _sendVerifyCodeButton.userInteractionEnabled = NO;
     [self addSubview:_sendVerifyCodeButton];
     
     UIView * BottomLine = [UIView new];
@@ -104,6 +106,7 @@
     
 }
 
+
 - (void)setLastSecond:(NSInteger)lastSecond {
     _lastSecond = lastSecond;
     if (_lastSecond <= 0) {
@@ -111,6 +114,7 @@
             _buttonTitleStr = @"重发验证码";
             [_sendVerifyCodeButton setTitle:_buttonTitleStr forState:UIControlStateNormal];
             [_sendVerifyCodeButton setTitleColor:[UIColor colorWithHex:0x74c3ff] forState:UIControlStateNormal];
+            [_sendVerifyCodeButton setTitleColor:[UIColor colorWithHex:0x74c3ff andAlpha:0.2] forState:UIControlStateHighlighted];
         });
     } else {
         dispatch_async(dispatch_get_main_queue(), ^{

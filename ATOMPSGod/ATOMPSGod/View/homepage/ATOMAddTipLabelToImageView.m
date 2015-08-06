@@ -58,8 +58,8 @@ static int padding10 = 10;
 }
 
 - (void)createBottomView {
-//    NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:@"UploadingOrSeekingHelp"];
-//    if ([str isEqualToString:@"Uploading"]) {
+//    NSString *str = [[NSUserDefaults standardUserDefaults] objectforKey:@"AskOrReply"];
+//    if ([str isEqualToString:@"Reply"]) {
 //        CGFloat buttonInterval = 25;
 //        CGFloat xlButtonLeftPadding = (SCREEN_WIDTH - 3 * buttonInterval - 4 * 28) / 2;
 //        _xlButton = [[UIButton alloc] initWithFrame:CGRectMake(xlButtonLeftPadding, padding10, 28, 28)];
@@ -78,7 +78,7 @@ static int padding10 = 10;
 //        [_bottomView addSubview:_tipLabel];
 //    } else
     
-//        if ([str isEqualToString:@"SeekingHelp"]) {
+//        if ([str isEqualToString:@"Ask"]) {
         _bigLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, _BOTTOMHEIGHT/3, SCREEN_WIDTH, 30)];
         _bigLabel.text = @"点击图片";
         _bigLabel.textColor = [UIColor colorWithHex:0x637685];

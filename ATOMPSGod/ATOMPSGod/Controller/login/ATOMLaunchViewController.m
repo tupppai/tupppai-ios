@@ -14,7 +14,7 @@
 #import "AppDelegate.h"
 #import "ATOMMainTabBarController.h"
 #import "ATOMShareSDKModel.h"
-
+#import "EAIntroView.h"
 @interface ATOMLaunchViewController ()
 
 @property (nonatomic, strong) ATOMLaunchView *launchView;
@@ -44,6 +44,7 @@
     [_launchView.otherRegisterButton addTarget:self action:@selector(clickOtherRegisterButton:) forControlEvents:UIControlEventTouchUpInside];
     [_launchView.loginButton addTarget:self action:@selector(clickLoginButton:) forControlEvents:UIControlEventTouchUpInside];
 }
+
 - (void)clickWXRegisterButton:(UIButton *)sender {
     ATOMLogin *loginModel = [ATOMLogin new];
     [ATOMShareSDKModel getUserInfo:ShareTypeWeixiTimeline withBlock:^(NSDictionary *sourceData) {
@@ -53,12 +54,10 @@
             [param setObject:openid forKey:@"openid"];
             [loginModel openIDAuth:param AndType:@"weixin" withBlock:^(bool isRegister, NSString *info, NSError *error) {
                 if (isRegister) {
-                    NSLog(@"已经注册微信账号");
                     [self.navigationController setViewControllers:nil];
                     [AppDelegate APP].mainTabBarController = nil;
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
                 } else if (isRegister == NO) {
-                    NSLog(@"未注册微信账号");
                     [ATOMCurrentUser currentUser].signUpType = ATOMSignUpWeixin;
                     [ATOMCurrentUser currentUser].sourceData = sourceData;
                     ATOMUserProfileViewModel* ipvm = [ATOMUserProfileViewModel new];

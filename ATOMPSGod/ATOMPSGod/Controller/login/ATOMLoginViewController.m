@@ -42,9 +42,9 @@
 }
 - (void)clickLoginButton:(UIButton *)sender {
     if (![_loginView.mobileTextField.text isMobileNumber]) {
-        [Util TextHud:@"手机格式有误" inView:self.view];
+        [Util ShowTSMessageWarn:@"手机格式有误"];
     } else if (![_loginView.passwordTextField.text isPassword]) {
-        [Util TextHud:@"密码格式有误" inView:self.view];
+        [Util ShowTSMessageWarn:@"密码格式有误"];
     } else {
         ATOMLogin *loginModel = [ATOMLogin new];
         NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:_loginView.mobileTextField.text, @"phone", _loginView.passwordTextField.text, @"password",nil];

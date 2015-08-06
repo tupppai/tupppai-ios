@@ -11,6 +11,7 @@
 #import "ATOMMainTabBarController.h"
 #import "ATOMCutstomNavigationController.h"
 #import "ATOMLoginCustomNavigationController.h"
+#import "ATOMIntroductionOnFirstLaunchViewController.h"
 #import "WXApi.h"
 #import "WeiboSDK.h"
 #import "WXApi.h"
@@ -88,16 +89,29 @@
     [UMessage setLogEnabled:YES];
 }
 -(void)initializeAfterDB {
-    [[ATOMCurrentUser currentUser]fetchCurrentUserInDB:^(BOOL hasCurrentUser) {
-        if (hasCurrentUser) {
-            self.window.rootViewController = self.mainTabBarController;
-        } else {
-            ATOMLaunchViewController *lvc = [[ATOMLaunchViewController alloc] init];
-            self.baseNav = [[ATOMLoginCustomNavigationController alloc] initWithRootViewController:lvc];
-            self.window.rootViewController = self.baseNav;
-        }
+    ATOMIntroductionOnFirstLaunchViewController* vc = [ATOMIntroductionOnFirstLaunchViewController new];
+        self.baseNav = [[ATOMLoginCustomNavigationController alloc] initWithRootViewController:vc];
+        self.window.rootViewController = self.baseNav;
         [self.window makeKeyAndVisible];
-    }];
+
+//    [[ATOMCurrentUser currentUser]fetchCurrentUserInDB:^(BOOL hasCurrentUser) {
+//        if (hasCurrentUser) {
+//            self.window.rootViewController = self.mainTabBarController;
+//        } else {
+//            
+//            if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
+//            {
+//                //UIPageViewController
+//                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
+//                [[NSUserDefaults standardUserDefaults] synchronize];
+//            } else {
+//                ATOMLaunchViewController *lvc = [[ATOMLaunchViewController alloc] init];
+//                self.baseNav = [[ATOMLoginCustomNavigationController alloc] initWithRootViewController:lvc];
+//                self.window.rootViewController = self.baseNav;
+//            }
+//        }
+//        [self.window makeKeyAndVisible];
+//    }];
 }
 
 -(void)setupNotification {

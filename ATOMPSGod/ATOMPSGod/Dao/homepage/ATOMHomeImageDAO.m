@@ -70,10 +70,11 @@
     __block NSMutableArray *muArray = [NSMutableArray array];
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
         NSString* homeTypeStr = homeType == ATOMHomepageViewTypeHot?@"hot":@"new";
-        NSString *stmt = @"select * from ATOMHomeImage where homePageType = ?";
+        NSString *stmt = @"SELECT * FROM ATOMHomeImage where homePageType = ? ORDER BY uploadTime DESC LIMIT 5";
         NSArray *param =  @[homeTypeStr];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {
+            NSLog(@"selectHomeImagesWithHomeType---");
             ATOMHomeImage *homeImage = [MTLFMDBAdapter modelOfClass:[ATOMHomeImage class] fromFMResultSet:rs error:NULL];
             [muArray addObject:homeImage];
         }
@@ -84,8 +85,7 @@
 - (NSArray *)selectHomeImages {
     __block NSMutableArray *muArray = [NSMutableArray array];
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
-        
-        NSString *stmt = @"select * from ATOMHomeImage";
+        NSString *stmt = @"SELECT * FROM ATOMHomeImage ORDER BY uploadTime DESC limit 15";
         FMResultSet *rs = [db executeQuery:stmt];
         while ([rs next]) {
             ATOMHomeImage *homeImage = [MTLFMDBAdapter modelOfClass:[ATOMHomeImage class] fromFMResultSet:rs error:NULL];

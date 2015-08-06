@@ -10,8 +10,10 @@
 #import "ATOMInputVerifyCodeView.h"
 #import "ATOMSubmitUserInfomation.h"
 #import "AppDelegate.h"
-#import "ATOMLoginViewController.h"
+//#import "ATOMLoginViewController.h"
 #import "ATOMMainTabBarController.h"
+#import "ATOMGetMoblieCode.h"
+
 @interface ATOMInputVerifyCodeViewController ()
 
 @property (nonatomic, strong) ATOMInputVerifyCodeView *inputVerifyView;
@@ -36,9 +38,7 @@
 }
 
 - (void)createVerifyTimer {
-
-    _verifyTimer = [NSTimer scheduledTimerWithTimeInterval:1.f target:self selector:@selector(runVerifyTimer) userInfo:nil repeats:YES];
-    _inputVerifyView.sendVerifyCodeButton.userInteractionEnabled = NO;
+    _verifyTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(runVerifyTimer) userInfo:nil repeats:YES];
 }
 
 - (void)runVerifyTimer {
@@ -52,7 +52,22 @@
 
 - (void)clickVerifyButton:(UIButton *)sender {
     _inputVerifyView.sendVerifyCodeButton.userInteractionEnabled = NO;
+    _inputVerifyView.lastSecond = 30;
     [self createVerifyTimer];
+    [self updateAuthCode];
+}
+
+- (void)updateAuthCode {
+    ATOMGetMoblieCode *getMobileCode = [ATOMGetMoblieCode new];
+    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:[ATOMCurrentUser currentUser].mobile, @"phone", nil];
+    [getMobileCode GetMobileCode:param withBlock:^(NSString *verifyCode, NSError *error) {
+        if (verifyCode && !error) {
+            self.verifyCode = verifyCode;
+        } else {
+            [Util ShowTSMessageError:@"无法获取到验证码"];
+        }
+        
+    }];
 }
 
 - (void)clickRightButtonItem{
@@ -63,14 +78,14 @@
         
         [submitUserInformation SubmitUserInformation:[param copy] withBlock:^(NSError *error) {
             if (!error) {
-                [Util TextHud:@"注册成功"];
+                [Util ShowTSMessageSuccess:@"👼求PS大神欢迎你的加入❗️"];
                 [self.navigationController setViewControllers:nil];
                 [AppDelegate APP].mainTabBarController = nil;
                 [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
             }
         }];
     } else {
-        [Util TextHud:@"验证码有误"];
+        [Util ShowTSMessageError:@"验证码错误哦"];
     }
 }
 - (void)clickLeftButtonItem{

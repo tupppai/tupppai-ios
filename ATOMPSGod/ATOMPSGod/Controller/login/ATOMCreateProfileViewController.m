@@ -275,10 +275,11 @@
 -(BOOL) textFieldShouldReturn:(UITextField *)textField {
     NSString *str = textField.text;
     if (str.length == 0) {
-        [Util TextHud:@"昵称不能为空..."];
+        [Util ShowTSMessageWarn:@"昵称不能为空"];
         return NO;
     } else if (str.length > 8) {
-        [Util TextHud:@"昵称不能大于8位..."];
+        [Util ShowTSMessageWarn:@"昵称不能大于8位"];
+
         return NO;
     }
     [_createProfileView.nicknameTextField resignFirstResponder];

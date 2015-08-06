@@ -50,7 +50,7 @@
     [self addSubview:_mobileTextField];
     
     UIView * mobileBottomLine = [UIView new];
-    mobileBottomLine.backgroundColor = [UIColor colorWithWhite:0x000000 alpha:0.6];
+    mobileBottomLine.backgroundColor = [UIColor colorWithWhite:0x000000 alpha:0.2];
     [self addSubview:mobileBottomLine];
     
     _passwordTextField = [UITextField new];
@@ -63,7 +63,7 @@
     [self addSubview:_passwordTextField];
     
     UIView * passwordBottomLine = [UIView new];
-    passwordBottomLine.backgroundColor = [UIColor colorWithWhite:0x000000 alpha:0.6];
+    passwordBottomLine.backgroundColor = [UIColor colorWithWhite:0x000000 alpha:0.2];
     [self addSubview:passwordBottomLine];
     
     _loginButton = [UIButton new];
@@ -78,6 +78,8 @@
     _forgetPasswordButton.titleLabel.font = [UIFont systemFontOfSize:12.f];
     [_forgetPasswordButton setTitle:@"忘记密码" forState:UIControlStateNormal];
     [_forgetPasswordButton setTitleColor:[UIColor colorWithHex:0x838383] forState:UIControlStateNormal];
+    [_forgetPasswordButton setTitleColor:[UIColor colorWithHex:0x838383 andAlpha:0.2] forState:UIControlStateHighlighted];
+
     [self addSubview:_forgetPasswordButton];
     
     _lineView = [UIView new];
@@ -131,7 +133,7 @@
     
     [mobileBottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
-        make.top.equalTo(_mobileTextField.mas_bottom).with.offset(2);
+        make.top.equalTo(_mobileTextField.mas_bottom).with.offset(0);
         make.width.equalTo(@(kLineWidth));
         make.height.equalTo(@0.5);
     }];
@@ -145,7 +147,7 @@
     
     [passwordBottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
-        make.top.equalTo(_passwordTextField.mas_bottom).with.offset(2);
+        make.top.equalTo(_passwordTextField.mas_bottom).with.offset(0);
         make.width.equalTo(@(kLineWidth));
         make.height.equalTo(@0.5);
     }];
@@ -207,7 +209,7 @@
         return ((newLength <= 11) || returnKey);
 
     } else if (textField == _passwordTextField) {
-        return ((newLength <= 20) || returnKey);
+        return ((newLength <= 16) || returnKey);
     }
     
     return YES;

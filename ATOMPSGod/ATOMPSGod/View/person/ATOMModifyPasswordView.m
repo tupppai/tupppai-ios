@@ -49,11 +49,12 @@
     [self addSubview:_confirmPasswordTextField];
 
     _forgetPasswordButton = [UIButton new];
+    _forgetPasswordButton.titleLabel.font = [UIFont systemFontOfSize:12.f];
     [_forgetPasswordButton setTitle:@"忘记密码" forState:UIControlStateNormal];
-    [_forgetPasswordButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-    _forgetPasswordButton.titleLabel.font = [UIFont systemFontOfSize: 14];
+    [_forgetPasswordButton setTitleColor:[UIColor colorWithHex:0x838383] forState:UIControlStateNormal];
+    [_forgetPasswordButton setTitleColor:[UIColor colorWithHex:0x838383 andAlpha:0.2] forState:UIControlStateHighlighted];
     [self addSubview:_forgetPasswordButton];
-
+    
     [_oldPasswordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
         make.top.equalTo(ws).with.offset(40);
@@ -93,10 +94,9 @@
     [_forgetPasswordButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(ws.confirmPasswordTextField.mas_bottom).with.offset(5);
         make.right.equalTo(ws.confirmPasswordTextField.mas_right);
-        make.width.equalTo(@100);
-        make.height.equalTo(@5);
+        make.width.equalTo(@60);
+        make.height.equalTo(@30);
     }];
-
 }
 
 

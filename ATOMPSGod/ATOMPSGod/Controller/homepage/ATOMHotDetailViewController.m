@@ -28,9 +28,13 @@
 #import "JGActionSheet.h"
 #import "ATOMInviteViewController.h"
 #import "ATOMReportModel.h"
+
+#import "JTSImageViewController.h"
+#import "JTSImageInfo.h"
+
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMHotDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate>
+@interface ATOMHotDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate,JTSImageViewControllerInteractionsDelegate>
 
 @property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
 @property (nonatomic, strong) UIView *hotDetailView;
@@ -336,6 +340,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
+    [_hotDetailTableView.header beginRefreshing];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -358,6 +363,28 @@
 
 #pragma mark - Click Event
 
+- (void)tapOnImageView:(UIImage*)image withURL:(NSString*)url{
+    
+    // Create image info
+    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+    if (image != nil) {
+        imageInfo.image = image;
+    } else {
+        imageInfo.imageURL = [NSURL URLWithString:url];
+    }
+    imageInfo.referenceRect = _selectedHotDetailCell.userHeaderButton.frame;
+    imageInfo.referenceView = _selectedHotDetailCell.userHeaderButton;
+    
+    // Setup view controller
+    JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
+                                           initWithImageInfo:imageInfo
+                                           mode:JTSImageViewControllerMode_Image
+                                           backgroundStyle:JTSImageViewControllerBackgroundOption_Scaled];
+    
+    // Present the view controller.
+    [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOriginalPosition];
+    imageViewer.interactionsDelegate = self;
+}
 - (void)dealDownloadWork {
     ATOMHotDetailTableViewCell *cell = (ATOMHotDetailTableViewCell *)[_hotDetailTableView cellForRowAtIndexPath:_selectedIndexPath];
     UIImageWriteToSavedPhotosAlbum(cell.userWorkImageView.image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
@@ -371,7 +398,7 @@
     }
 }
 - (void)dealUploadWork {
-    [[NSUserDefaults standardUserDefaults] setObject:@"Uploading" forKey:@"UploadingOrSeekingHelp"];
+    [[NSUserDefaults standardUserDefaults] setObject:@"Reply" forKey:@"AskOrReply"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])
@@ -405,12 +432,7 @@
         CGPoint p = [gesture locationInView:_selectedHotDetailCell];
         //点击图片
         if (CGRectContainsPoint(_selectedHotDetailCell.userWorkImageView.frame, p)) {
-            PWPageDetailViewModel* pageDetailViewModel = [PWPageDetailViewModel new];
-            [pageDetailViewModel setCommonViewModelWithHotDetail:model];
-            ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
-            rdvc.pageDetailViewModel = pageDetailViewModel;
-            rdvc.delegate = self;
-            [self pushViewController:rdvc animated:YES];
+            [self tapOnImageView:_selectedHotDetailCell.userWorkImageView.image withURL:_selectedHotDetailCell.viewModel.userImageURL];
         } else if (CGRectContainsPoint(_selectedHotDetailCell.topView.frame, p)) {
             p = [gesture locationInView:_selectedHotDetailCell.topView];
             if (CGRectContainsPoint(_selectedHotDetailCell.userHeaderButton.frame, p)) {
@@ -455,6 +477,9 @@
         }
     }
 }
+
+
+
 
 #pragma mark - UIImagePickerControllerDelegate
 
@@ -506,5 +531,10 @@
     [_selectedHotDetailCell.praiseButton toggleLikeWhenSelectedChanged:liked];
     ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
     model.collected = collected;
+}
+#pragma mark - JTSImageViewControllerInteractionsDelegate
+
+- (void)imageViewerDidLongPress:(JTSImageViewController *)imageViewer atRect:(CGRect)rect {
+    NSLog(@"longpressed");
 }
 @end

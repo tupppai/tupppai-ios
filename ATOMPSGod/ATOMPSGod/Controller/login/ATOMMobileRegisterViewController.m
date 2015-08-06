@@ -66,9 +66,9 @@
     NSString *passwordStr = _mobileRegisterView.passwordTextField.text;
     if (![mobileStr isMobileNumber]) {
         flag = NO;
-        [Util TextHud:@"请输入正确的手机号"];
+        [Util ShowTSMessageWarn:@"请输入正确的手机号"];
     } else if (![passwordStr isPassword]) {
-        [Util TextHud:@"请输入正确的密码"];
+        [Util ShowTSMessageWarn:@"密码必须由6~16的位的数字和字母组成"];
         flag = NO;
     }
     return flag;

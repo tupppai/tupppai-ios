@@ -13,19 +13,14 @@
 #import "ATOMPageDetailViewController.h"
 #import "ATOMUploadWorkViewController.h"
 #import "ATOMOtherPersonViewController.h"
-#import "ATOMCommentDetailViewController.h"
 #import "ATOMProceedingViewController.h"
 #import "ATOMAskPageViewModel.h"
 #import "ATOMHomepageCustomTitleView.h"
 #import "ATOMHomepageScrollView.h"
-#import "ATOMHomeImage.h"
-#import "ATOMImageTipLabel.h"
 #import "ATOMShowHomepage.h"
 #import "ATOMShareFunctionView.h"
-#import "ATOMPSView.h"
 #import "AppDelegate.h"
 #import "ATOMBottomCommonButton.h"
-#import "PWMascotAnimationImageView.h"
 #import "ATOMHomeImageDAO.h"
 #import "PWPageDetailViewModel.h"
 #import "ATOMShareModel.h"
@@ -35,14 +30,17 @@
 #import "ATOMReportModel.h"
 #import "ATOMRecordModel.h"
 #import "ATOMBaseRequest.h"
-#import "TSMessage.h"
+#import "JTSImageViewController.h"
+#import "JTSImageInfo.h"
+@class ATOMHomeImage;
+
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMHomepageViewController() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate>
 @property (nonatomic, strong) ATOMHomepageCustomTitleView *customTitleView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) UITapGestureRecognizer *tapHomePageHotGesture;
-@property (nonatomic, strong) UITapGestureRecognizer *tapHomePageRecentGesture;
+@property (nonatomic, strong) UITapGestureRecognizer *tapHomePageAskGesture;
 @property (nonatomic, strong) NSMutableArray *dataSourceOfHotTableView;
 @property (nonatomic, strong) NSMutableArray *dataSourceOfRecentTableView;
 @property (nonatomic, strong) ATOMHomepageScrollView *scrollView;
@@ -50,7 +48,6 @@
 @property (nonatomic, assign) NSInteger currentRecentPage;
 
 @property (nonatomic, assign) BOOL isfirstEnterHomepageRecentView;
-@property (nonatomic, assign) BOOL isfirstEnterHomepage ;
 
 @property (nonatomic, assign) BOOL canRefreshHotFooter;
 @property (nonatomic, assign) BOOL canRefreshRecentFooter;
@@ -62,7 +59,6 @@
 
 @property (nonatomic, strong) UIView *thineNavigationView;
 
-@property (nonatomic, strong) NSIndexPath* seletedIndexPath;
 @property (nonatomic, strong) ATOMHomePageHotTableViewCell *selectedHotCell;
 @property (nonatomic, strong) ATOMhomepageAskTableViewCell *selectedAskCell;
 
@@ -495,8 +491,8 @@
     _scrollView.homepageAskTableView.dataSource = self;
     _scrollView.homepageAskTableView.psDelegate = self;
     _scrollView.homepageAskTableView.estimatedRowHeight = 340;
-    _tapHomePageRecentGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHomePageRecentGesture:)];
-    [_scrollView.homepageAskTableView addGestureRecognizer:_tapHomePageRecentGesture];
+    _tapHomePageAskGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHomePageAskGesture:)];
+    [_scrollView.homepageAskTableView addGestureRecognizer:_tapHomePageAskGesture];
 }
 
 - (void)createCustomNavigationBar {
@@ -543,7 +539,7 @@
 }
 
 - (void)dealSelectingPhotoFromAlbum {
-    [[NSUserDefaults standardUserDefaults] setObject:@"SeekingHelp" forKey:@"UploadingOrSeekingHelp"];
+    [[NSUserDefaults standardUserDefaults] setObject:@"Ask" forKey:@"AskOrReply"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])
     {
@@ -561,14 +557,35 @@
         [alertView show];
     }
 }
-
+- (void)tapOnImageView:(UIImage*)image withURL:(NSString*)url{
+    
+    // Create image info
+    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+    if (image != nil) {
+        imageInfo.image = image;
+    } else {
+        imageInfo.imageURL = [NSURL URLWithString:url];
+    }
+    imageInfo.referenceRect = _selectedAskCell.userHeaderButton.frame;
+    imageInfo.referenceView = _selectedAskCell.userHeaderButton;
+    
+    // Setup view controller
+    JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
+                                           initWithImageInfo:imageInfo
+                                           mode:JTSImageViewControllerMode_Image
+                                           backgroundStyle:JTSImageViewControllerBackgroundOption_Scaled];
+    
+    // Present the view controller.
+    [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOffscreen];
+//    imageViewer.interactionsDelegate = self;
+}
 /**
  *  上传作品
  *
  *  @param tag 0:->进行中  1:->选择相册图片
  */
 - (void)dealUploadWorksWithTag:(NSInteger)tag {
-    [[NSUserDefaults standardUserDefaults] setObject:@"Uploading" forKey:@"UploadingOrSeekingHelp"];
+    [[NSUserDefaults standardUserDefaults] setObject:@"Reply" forKey:@"AskOrReply"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     if (tag == 0) {
         ATOMProceedingViewController *pvc = [ATOMProceedingViewController new];
@@ -628,7 +645,6 @@
         CGPoint location = [gesture locationInView:_scrollView.homepageHotTableView];
         NSIndexPath *indexPath = [_scrollView.homepageHotTableView indexPathForRowAtPoint:location];
         if (indexPath) {
-            _seletedIndexPath = indexPath;
             _selectedHotCell = (ATOMHomePageHotTableViewCell *)[_scrollView.homepageHotTableView cellForRowAtIndexPath:indexPath];
             CGPoint p = [gesture locationInView:_selectedHotCell];
             _selectedAskPageViewModel = _dataSourceOfHotTableView[indexPath.row];
@@ -667,10 +683,6 @@
                     [pageDetailViewModel setCommonViewModelWithAsk:_selectedAskPageViewModel];
                     rdvc.pageDetailViewModel = pageDetailViewModel;
                     [self pushViewController:rdvc animated:YES];
-//                    ATOMCommentDetailViewController *cdvc = [ATOMCommentDetailViewController new];
-//                    cdvc.ID = _selectedAskPageViewModel.imageID;
-//                    cdvc.type = 1;
-//                    [self pushViewController:cdvc animated:YES];
                 } else if (CGRectContainsPoint(_selectedHotCell.moreShareButton.frame, p)) {
                     self.shareFunctionView.collectButton.selected = _selectedAskPageViewModel.collected;
                     [self.shareFunctionView show];
@@ -680,22 +692,16 @@
     }
 }
 
-- (void)tapHomePageRecentGesture:(UITapGestureRecognizer *)gesture {
+- (void)tapHomePageAskGesture:(UITapGestureRecognizer *)gesture {
     if ([_scrollView typeOfCurrentHomepageView] == ATOMHomepageViewTypeAsk) {
         CGPoint location = [gesture locationInView:_scrollView.homepageAskTableView];
         NSIndexPath *indexPath = [_scrollView.homepageAskTableView indexPathForRowAtPoint:location];
         if (indexPath) {
-            _seletedIndexPath = indexPath;
             _selectedAskCell = (ATOMhomepageAskTableViewCell *)[_scrollView.homepageAskTableView cellForRowAtIndexPath:indexPath];
             CGPoint p = [gesture locationInView:_selectedAskCell];
             _selectedAskPageViewModel = _dataSourceOfRecentTableView[indexPath.row];
             if (CGRectContainsPoint(_selectedAskCell.userWorkImageView.frame, p)) {
-                ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
-                rdvc.delegate = self;
-                PWPageDetailViewModel* pageDetailViewModel = [PWPageDetailViewModel new];
-                [pageDetailViewModel setCommonViewModelWithAsk:_selectedAskPageViewModel];
-                rdvc.pageDetailViewModel = pageDetailViewModel;
-                [self pushViewController:rdvc animated:YES];
+                [self tapOnImageView:_selectedAskCell.userWorkImageView.image withURL:_selectedAskCell.viewModel.userImageURL];
             } else if (CGRectContainsPoint(_selectedAskCell.topView.frame, p)) {
                 p = [gesture locationInView:_selectedAskCell.topView];
                 if (CGRectContainsPoint(_selectedAskCell.userHeaderButton.frame, p)) {

@@ -146,12 +146,12 @@
     }
     
     self.navigationItem.rightBarButtonItem.enabled = NO;
-    NSString *pushTypeStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"UploadingOrSeekingHelp"];
-    if ([pushTypeStr isEqualToString:@"Uploading"]) {
+    NSString *pushTypeStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"AskOrReply"];
+    if ([pushTypeStr isEqualToString:@"Reply"]) {
         [self dealSubmitWorkWithLabel];
 //        ATOMShareViewController *svc = [ATOMShareViewController new];
 //        [self pushViewController:svc animated:YES];
-    } else if ([pushTypeStr isEqualToString:@"SeekingHelp"]) {
+    } else if ([pushTypeStr isEqualToString:@"Ask"]) {
         [self dealSubmitUploadWithLabel];
     }
 }
@@ -369,12 +369,12 @@
 }
 
 -(void)showWarnLabel {
-    NSString *pushTypeStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"UploadingOrSeekingHelp"];
-    if ([pushTypeStr isEqualToString:@"Uploading"]) {
+    NSString *pushTypeStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"AskOrReply"];
+    if ([pushTypeStr isEqualToString:@"Reply"]) {
         [TSMessage showNotificationWithTitle:@"大神你还没炫耀你的效果"
                                     subtitle:@"请点击图片填写效果"
                                         type:TSMessageNotificationTypeWarning];
-    } else if ([pushTypeStr isEqualToString:@"SeekingHelp"]) {
+    } else if ([pushTypeStr isEqualToString:@"Ask"]) {
         [TSMessage showNotificationWithTitle:@"你还没告诉大神你想要的效果"
                                     subtitle:@"请点击图片填写效果"
                                         type:TSMessageNotificationTypeWarning];
