@@ -22,7 +22,15 @@
         self.interactivePopGestureRecognizer.delegate = weakSelf;
         self.delegate = self;
     }
+    [self setCommonNavigationStyle];
 }
+
+- (void)setCommonNavigationStyle {
+    [self.navigationBar setBarTintColor:kBlueColor];
+    [self.navigationBar setTintColor:[UIColor whiteColor]];
+    [self.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil]];
+}
+
 -(UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }

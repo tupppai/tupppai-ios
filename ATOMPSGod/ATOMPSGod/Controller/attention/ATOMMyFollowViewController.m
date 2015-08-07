@@ -56,17 +56,8 @@
     if (!_shareFunctionView) {
         _shareFunctionView = [ATOMShareFunctionView new];
         _shareFunctionView.delegate = self;
-        UITapGestureRecognizer* tgr = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissShareFunction:)];
-        [_shareFunctionView addGestureRecognizer:tgr];
-        [[AppDelegate APP].window addSubview:self.shareFunctionView];
     }
     return _shareFunctionView;
-}
--(void)dismissShareFunction:(UITapGestureRecognizer*)gesture {
-    CGPoint location = [gesture locationInView:self.view];
-    if (!CGRectContainsPoint(_shareFunctionView.bottomView.frame, location)) {
-        [_shareFunctionView dismiss];
-    }
 }
 - (JGActionSheet *)psActionSheet {
     WS(ws);
@@ -332,7 +323,7 @@
                 [self pushViewController:pdvc animated:true];
             } else if (CGRectContainsPoint(_selectedCell.moreShareButton.frame, p)) {
                 self.shareFunctionView.collectButton.selected = _selectedCell.viewModel.collected;
-                [self.shareFunctionView show];
+                [self.shareFunctionView showInView:[AppDelegate APP].window animated:YES];
             }
 
         }

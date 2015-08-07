@@ -25,11 +25,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
-    self.navigationController.navigationBarHidden = YES;
+//    self.navigationController.navigationBarHidden = YES;
 }
 
 - (void)createUI {
     _loginView = [ATOMLoginView new];
+    self.title = @"登录";
     self.view  = _loginView;
     [_loginView.backButton addTarget:self action:@selector(clickBackButton) forControlEvents:UIControlEventTouchUpInside];
     [_loginView.loginButton addTarget:self action:@selector(clickLoginButton:) forControlEvents:UIControlEventTouchUpInside];

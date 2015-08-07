@@ -59,18 +59,10 @@
     if (!_shareFunctionView) {
         _shareFunctionView = [ATOMShareFunctionView new];
         _shareFunctionView.delegate = self;
-        UITapGestureRecognizer* tgr = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissShareFunction:)];
-        [_shareFunctionView addGestureRecognizer:tgr];
-        [[AppDelegate APP].window addSubview:self.shareFunctionView];
     }
     return _shareFunctionView;
 }
--(void)dismissShareFunction:(UITapGestureRecognizer*)gesture {
-    CGPoint location = [gesture locationInView:self.view];
-    if (!CGRectContainsPoint(_shareFunctionView.bottomView.frame, location)) {
-        [_shareFunctionView dismiss];
-    }
-}
+
 - (UITableView *)hotDetailTableView {
     if (_hotDetailTableView == nil) {
         _hotDetailTableView = [[PWRefreshBaseTableView alloc] initWithFrame:_hotDetailView.bounds];
@@ -472,7 +464,7 @@
                 [self pushViewController:rdvc animated:YES];
             } else if (CGRectContainsPoint(_selectedHotDetailCell.moreShareButton.frame, p)) {
                 self.shareFunctionView.collectButton.selected = model.collected;
-                [self.shareFunctionView show];
+                [self.shareFunctionView showInView:[AppDelegate APP].window animated:YES];
             }
         }
     }

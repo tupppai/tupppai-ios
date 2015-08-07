@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "PWHomePageTableView.h"
-#import "ATOMNoDataView.h"
 
 
 @interface ATOMHomepageScrollView : UIScrollView

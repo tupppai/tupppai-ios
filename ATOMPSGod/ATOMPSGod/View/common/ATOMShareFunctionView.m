@@ -107,12 +107,22 @@ static CGFloat BOTTOMHEIGHT = 300;
     
 }
 -(void)configClickEvent {
+    
+    UITapGestureRecognizer* tapGes = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnSelf:)];
+    [self addGestureRecognizer:tapGes];
+    
     [self.wxButton addTarget:self action:@selector(tapWechatFriendsShareButton) forControlEvents:UIControlEventTouchUpInside];
     [self.wxFriendCircleButton addTarget:self action:@selector(tapWechatMomentShareButton) forControlEvents:UIControlEventTouchUpInside];
     [self.sinaWeiboButton addTarget:self action:@selector(tapSinaWeiboShareButton) forControlEvents:UIControlEventTouchUpInside];
     [self.inviteButton addTarget:self action:@selector(tapInviteButton) forControlEvents:UIControlEventTouchUpInside];
     [self.collectButton addTarget:self action:@selector(tapCollectButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.reportButton addTarget:self action:@selector(tapReportButton) forControlEvents:UIControlEventTouchUpInside];
+}
+- (void)tapOnSelf:(UIGestureRecognizer*)gesture {
+    if ([self hitTest:[gesture locationInView:self] withEvent:nil] == self ) {
+        [self dismiss];
+//        self.outsidePressBlock(self);
+    }
 }
 -(void)tapWechatFriendsShareButton {
     if (_delegate && [_delegate respondsToSelector:@selector(tapWechatFriends)]) {
@@ -147,6 +157,7 @@ static CGFloat BOTTOMHEIGHT = 300;
         [_delegate tapReport];
     }
 }
+
 - (void)configCommonLabel:(UILabel *)label WithText:(NSString *)text AndTextColor:(UIColor *)textColor {
     label.text = text;
     label.textColor = textColor;
@@ -169,6 +180,18 @@ static CGFloat BOTTOMHEIGHT = 300;
         _bottomView.frame = CGRectMake(kPadding5, CGRectGetMaxY(self.frame)-BOTTOMHEIGHT, SCREEN_WIDTH - 2 * kPadding5, BOTTOMHEIGHT);
     } completion:^(BOOL finished) {
     }];
+}
+
+- (void)showInView:(UIView *)view animated:(BOOL)animated {
+    self.frame = view.bounds;
+    [view addSubview:self];
+    self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.8];
+    [UIView animateWithDuration:0.35 animations:^{
+        self.hidden = false;
+        _bottomView.frame = CGRectMake(kPadding5, CGRectGetMaxY(self.frame)-BOTTOMHEIGHT, SCREEN_WIDTH - 2 * kPadding5, BOTTOMHEIGHT);
+    } completion:^(BOOL finished) {
+    }];
+    
 }
 - (void)clickCancelButton:(UIButton *)sender {
     [self dismiss];

@@ -25,17 +25,15 @@
     [super viewDidLoad];
     [self createUI];
 }
-//- (void)viewWillAppear:(BOOL)animated {
-//    [super viewWillAppear:animated];
-//    self.navigationController.navigationBarHidden = YES;
-//}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 //    self.navigationController.navigationBarHidden = YES;
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-//    self.navigationController.navigationBarHidden = NO;
 }
 - (void)createUI {
     _launchView = [ATOMLaunchView new];

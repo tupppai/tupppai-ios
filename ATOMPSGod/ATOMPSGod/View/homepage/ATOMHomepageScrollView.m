@@ -56,11 +56,14 @@
 - (void)changeUIAccording:(NSString *)buttonTitle {
     if ([buttonTitle isEqualToString:@"热门"]) {
         _currentHomepageType = ATOMHomepageViewTypeHot;
-        self.contentOffset = CGPointMake(0, 0);
-        [_homepageHotTableView reloadData];
+        [UIView animateWithDuration:0.5 animations:^{
+            self.contentOffset = CGPointMake(0, 0);
+        }];        [_homepageHotTableView reloadData];
     } else if ([buttonTitle isEqualToString:@"最新"]) {
         _currentHomepageType = ATOMHomepageViewTypeAsk;
-        self.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
+        [UIView animateWithDuration:0.5 animations:^{
+            self.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
+        }];
         [_homepageAskTableView reloadData];
     }
 }

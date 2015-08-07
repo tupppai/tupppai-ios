@@ -32,6 +32,8 @@
 #import "ATOMBaseRequest.h"
 #import "JTSImageViewController.h"
 #import "JTSImageInfo.h"
+#import "HMSegmentedControl.h"
+
 @class ATOMHomeImage;
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
@@ -63,6 +65,8 @@
 @property (nonatomic, strong) ATOMhomepageAskTableViewCell *selectedAskCell;
 
 @property (nonatomic, strong) ATOMAskPageViewModel *selectedAskPageViewModel;
+@property (nonatomic, strong) HMSegmentedControl *segmentedControl;
+
 
 @end
 
@@ -82,17 +86,8 @@
     if (!_shareFunctionView) {
         _shareFunctionView = [ATOMShareFunctionView new];
         _shareFunctionView.delegate = self;
-        UITapGestureRecognizer* tgr = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissShareFunction:)];
-        [_shareFunctionView addGestureRecognizer:tgr];
-        [[AppDelegate APP].window addSubview:self.shareFunctionView];
     }
     return _shareFunctionView;
-}
--(void)dismissShareFunction:(UITapGestureRecognizer*)gesture {
-    CGPoint location = [gesture locationInView:self.view];
-    if (!CGRectContainsPoint(_shareFunctionView.bottomView.frame, location)) {
-        [_shareFunctionView dismiss];
-    }
 }
 
 - (JGActionSheet *)psActionSheet {
@@ -445,12 +440,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    _thineNavigationView.hidden = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    _thineNavigationView.hidden = YES;
 }
 -(void)viewDidAppear:(BOOL)animated {
 //    NSLog(@"viewDidAppear");
@@ -471,7 +464,6 @@
     [self configHomepageHotTableView];
     [self confighomepageAskTableView];
     _isfirstEnterHomepageRecentView = YES;
-//    _isfirstEnterHomepage = YES;
     _canRefreshHotFooter = YES;
     _canRefreshRecentFooter = YES;
     [self firstGetDataSourceFromDataBase];
@@ -496,14 +488,11 @@
 }
 
 - (void)createCustomNavigationBar {
-    _customTitleView = [ATOMHomepageCustomTitleView new];
-    self.navigationItem.titleView = _customTitleView;
-    [_customTitleView.hotTitleButton addTarget:self action:@selector(clickHotTitleButton:) forControlEvents:UIControlEventTouchUpInside];
-    [_customTitleView.recentTitleButton addTarget:self action:@selector(clickRecentTitleButton:) forControlEvents:UIControlEventTouchUpInside];
+    WS(ws);
     UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     negativeSpacer.width = 0;
-    UIView *cameraView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-    UIButton *cameraButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    UIView *cameraView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 40, 35)];
+    UIButton *cameraButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 35)];
     [cameraButton setImage:[UIImage imageNamed:@"btn_psask_normal"] forState:UIControlStateNormal];
     [cameraButton setImage:[UIImage imageNamed:@"btn_psask_pressed"] forState:UIControlStateHighlighted];
     [cameraButton setImageEdgeInsets:UIEdgeInsetsMake(5.5, 5, 5.5, 0)];
@@ -512,21 +501,33 @@
     UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cameraView];
     self.navigationItem.rightBarButtonItems = @[negativeSpacer, rightButtonItem];
 
-    _thineNavigationView = [UIView new];
-    _thineNavigationView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2];
-    _thineNavigationView.frame = CGRectMake(CGRectGetMinX(self.navigationItem.titleView.frame) + 10, 40, 60, 4);
-    [self.navigationController.navigationBar addSubview:_thineNavigationView];
+
+    _segmentedControl = [[HMSegmentedControl alloc] initWithSectionImages:@[[UIImage imageNamed:@"btn_home_hot"], [UIImage imageNamed:@"btn_home_ask"]] sectionSelectedImages:nil];
+    _segmentedControl.frame = CGRectMake(0, 120, 200, 45);
+    _segmentedControl.selectionIndicatorHeight = 4.0f;
+    _segmentedControl.selectionIndicatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.2];
+    _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+    _segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
+    [_segmentedControl setIndexChangeBlock:^(NSInteger index) {
+        if (index == 0) {
+            [ws clickHotTitleButton];
+        } else if (index == 1) {
+            [ws clickRecentTitleButton];
+        }
+    }];
+
+    _segmentedControl.backgroundColor = [UIColor clearColor];
+    self.navigationItem.titleView = _segmentedControl;
+
 }
 
 #pragma mark - Click Event
 
-- (void)clickHotTitleButton:(UIButton *)sender {
-    [self changeNavigationBarAccordingTo:@"hot"];
+- (void)clickHotTitleButton {
     [_scrollView changeUIAccording:@"热门"];
 }
 
-- (void)clickRecentTitleButton:(UIButton *)sender {
-    [self changeNavigationBarAccordingTo:@"new"];
+- (void)clickRecentTitleButton {
     [_scrollView changeUIAccording:@"最新"];
     if (_isfirstEnterHomepageRecentView) {
         _isfirstEnterHomepageRecentView = NO;
@@ -630,14 +631,6 @@
     }
 }
 
-- (void)changeNavigationBarAccordingTo:(NSString *)type {
-    if ([type isEqualToString:@"hot"]) {
-        _thineNavigationView.frame = CGRectMake(CGRectGetMinX(self.navigationItem.titleView.frame) + 10, 40, 60, 4);
-    } else if ([type isEqualToString:@"new"]) {
-        _thineNavigationView.frame = CGRectMake(CGRectGetMinX(self.navigationItem.titleView.frame) + 130, 40, 60, 4);
-    }
-}
-
 #pragma mark - Gesture Event
 
 - (void)tapHomePageHotGesture:(UITapGestureRecognizer *)gesture {
@@ -685,7 +678,7 @@
                     [self pushViewController:rdvc animated:YES];
                 } else if (CGRectContainsPoint(_selectedHotCell.moreShareButton.frame, p)) {
                     self.shareFunctionView.collectButton.selected = _selectedAskPageViewModel.collected;
-                    [self.shareFunctionView show];
+                    [self.shareFunctionView showInView:[AppDelegate APP].window animated:YES];
                 }
             }
         }
@@ -763,10 +756,10 @@
     if (scrollView == _scrollView) {
         int currentPage = (_scrollView.contentOffset.x + CGWidth(_scrollView.frame) * 0.1) / CGWidth(_scrollView.frame);
         if (currentPage == 0) {
-            [self changeNavigationBarAccordingTo:@"hot"];
             [_scrollView changeUIAccording:@"热门"];
+            [_segmentedControl setSelectedSegmentIndex:0 animated:YES];
         } else if (currentPage == 1) {
-            [self changeNavigationBarAccordingTo:@"new"];
+            [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
             [_scrollView changeUIAccording:@"最新"];
             if (_isfirstEnterHomepageRecentView) {
                 _isfirstEnterHomepageRecentView = NO;
@@ -838,6 +831,7 @@
         _selectedAskPageViewModel.collected = collected;
     }
 }
+
 
 
 

@@ -17,6 +17,7 @@
 #import "WXApi.h"
 #import "ATOMBaseDAO.h"
 #import "UMessage.h"
+#import "ATOMCommonModel.h"
 
 @interface AppDelegate ()
 
@@ -35,7 +36,7 @@
     [self initializeDatabase];
     [self initializeAfterDB];
     [self setupShareSDK];
-    [self setCommonNavigationStyle];
+//    [self setCommonNavigationStyle];
     [self setupUmengPush:launchOptions];
     return YES;
 }
@@ -49,7 +50,6 @@
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= _IPHONE80_
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
     {
-
         UIUserNotificationSettings *userSettings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge|UIUserNotificationTypeSound|UIUserNotificationTypeAlert
                                                                                      categories:nil];
         [UMessage registerRemoteNotificationAndUserNotificationSettings:userSettings];
@@ -73,10 +73,16 @@
 }
 -(void)initializeAfterDB {
 
+   
+//    ATOMIntroductionOnFirstLaunchViewController* vc = [ATOMIntroductionOnFirstLaunchViewController new];
+//    self.baseNav = [[ATOMLoginCustomNavigationController alloc] initWithRootViewController:vc];
+//    self.window.rootViewController = self.baseNav;
+//    [self.window makeKeyAndVisible];
 
     [[ATOMCurrentUser currentUser]fetchCurrentUserInDB:^(BOOL hasCurrentUser) {
         if (hasCurrentUser) {
             self.window.rootViewController = self.mainTabBarController;
+            
         } else {
             
             if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
@@ -87,7 +93,6 @@
                 ATOMIntroductionOnFirstLaunchViewController* vc = [ATOMIntroductionOnFirstLaunchViewController new];
                 self.baseNav = [[ATOMLoginCustomNavigationController alloc] initWithRootViewController:vc];
                 self.window.rootViewController = self.baseNav;
-                [self.window makeKeyAndVisible];
             } else {
                 ATOMLaunchViewController *lvc = [[ATOMLaunchViewController alloc] init];
                 self.baseNav = [[ATOMLoginCustomNavigationController alloc] initWithRootViewController:lvc];
@@ -113,11 +118,6 @@
 -(void)initializeDatabase {
     [ATOMBaseDAO new];
 }
-- (void)setCommonNavigationStyle {
-    [[UINavigationBar appearance] setBarTintColor:kBlueColor];
-    [[UINavigationBar appearance] setTintColor:kNavBarColor];
-    [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil]];
-}
 
 - (ATOMMainTabBarController *)mainTabBarController {
     if (_mainTabBarController == nil) {
@@ -137,13 +137,6 @@
     [ShareSDK connectSinaWeiboWithAppKey:@"882276088"
                                appSecret:@"454f67c8e6d29b770d701e9272bc5ee7"
                              redirectUri:@"https://api.weibo.com/oauth2/default.html"];
-//    [ShareSDK  connectSinaWeiboWithAppKey:@"882276088"
-//                                appSecret:@"454f67c8e6d29b770d701e9272bc5ee7"
-//                              redirectUri:@"https://api.weibo.com/oauth2/default.html"
-//                              weiboSDKCls:[WeiboSDK class]];
-    
-//    [Parse setApplicationId:@"SgknH6DsznpSXdBqqJlYMInkLviSPwltw0StP9es" clientKey:@"2zfmu9kMFLtpeDLgfszprClkGYrDGpqzUd3IpUT2"];
-    
 }
 
 - (BOOL)application:(UIApplication *)application
@@ -188,9 +181,14 @@
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     [UMessage registerDeviceToken:deviceToken];
+    [UMessage setLogEnabled:YES];
     NSString *devicetokenString = [[[deviceToken description]
                                     stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]]
                                    stringByReplacingOccurrencesOfString:@" " withString:@""];
+
+    [[NSUserDefaults standardUserDefaults]setObject:devicetokenString forKey:@"devicetoken"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
     NSLog(@"devicetokenString%@", devicetokenString);
 }
 
@@ -198,7 +196,6 @@
     // 处理推送消息
     NSLog(@"userinfo:%@",userInfo);
     NSLog(@"收到推送消息:%@",[[userInfo objectForKey:@"aps"] objectForKey:@"alert"]);
-//    [PFPush handlePush:userInfo];
     [UMessage didReceiveRemoteNotification:userInfo];
 }
 

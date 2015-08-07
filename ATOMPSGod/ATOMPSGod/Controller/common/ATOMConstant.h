@@ -41,9 +41,7 @@ extern CGFloat const kFont15;
 extern NSUInteger const kCommentTextViewMaxLength;
 extern NSInteger const kLineWidth;
 
-#define kNavBarColor [UIColor whiteColor]
 #define kBlueColor [UIColor colorWithHex:0x74c3ff]
-#define kLoginSignUpBackgroundColor [UIColor colorWithHex:0x74c3ff]
 
 
 

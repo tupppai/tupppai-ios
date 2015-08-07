@@ -7,7 +7,7 @@
 //
 
 #import "Util.h"
-
+#import "ATOMCommonModel.h"
 @implementation Util
 +(void)TextHud:(NSString*)message {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
@@ -109,4 +109,11 @@
                                     type:TSMessageNotificationTypeWarning];
     
 }
+
++(void)postDeviceToken {
+    NSString *devicetokenString = [[NSUserDefaults standardUserDefaults] objectForKey:@"device_token"];
+    NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:devicetokenString,@"device_token",@2,@"platform", nil];
+    [ATOMCommonModel post:param withUrl:@"user_devicetoken" withBlock:nil];
+}
+
 @end

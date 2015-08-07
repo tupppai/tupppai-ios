@@ -16,6 +16,7 @@
 @property (nonatomic, strong) UIButton *collectButton;
 @property (nonatomic, strong) UIView *bottomView;
 @property (nonatomic, weak) id<ATOMShareFunctionViewDelegate> delegate;
+- (void)showInView:(UIView *)view animated:(BOOL)animated;
 -(void)show;
 -(void)dismiss;
 @end
