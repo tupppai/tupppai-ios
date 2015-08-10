@@ -74,7 +74,6 @@
         NSArray *param =  @[homeTypeStr];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {
-            NSLog(@"selectHomeImagesWithHomeType---");
             ATOMHomeImage *homeImage = [MTLFMDBAdapter modelOfClass:[ATOMHomeImage class] fromFMResultSet:rs error:NULL];
             [muArray addObject:homeImage];
         }

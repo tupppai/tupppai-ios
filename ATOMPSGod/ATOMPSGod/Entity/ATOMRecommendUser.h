@@ -14,7 +14,7 @@
 @property (nonatomic, assign) NSInteger fellowCount;
 @property (nonatomic, assign) BOOL invited;
 @property (nonatomic, assign) BOOL isFan;
-@property (nonatomic, assign) BOOL isFellow;
+@property (nonatomic, assign) BOOL isFollow;
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, assign) NSInteger replyCount;
 @property (nonatomic, assign) NSInteger sex;

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "MBProgressHUD.h"
 #import "TSMessage.h"
+#import <sys/utsname.h> // import it in your header or implementation file.
 
 @interface Util : NSObject
 +(void)TextHud:(NSString*)message;
@@ -24,5 +25,5 @@
 +(void)ShowTSMessageError:(NSString*)str;
 +(void)ShowTSMessageWarn:(NSString*)str;
 +(void)ShowTSMessageSuccess:(NSString*)str;
-
+NSString* deviceName();
 @end

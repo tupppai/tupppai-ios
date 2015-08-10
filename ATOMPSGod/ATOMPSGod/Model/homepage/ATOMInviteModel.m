@@ -16,7 +16,6 @@
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         NSMutableArray *recommendMasters;
         NSMutableArray *recommendFriends;
-
         if (ret != 1) {
             
             block(nil, nil,nil);
@@ -33,11 +32,10 @@
                     [recommendMasters addObject:ru];
                 }
                 NSLog(@"recommendMasters  %@",recommendMasters);
-
             }
-            if ([ responseObject objectForKey:@"data"][@"fellows"]) {
+            if ([[ responseObject objectForKey:@"data"]objectForKey:@"fellows"]) {
                 recommendFriends = [NSMutableArray array];
-                NSArray *recommendData2 = [ responseObject objectForKey:@"data"][@"fellows"];
+                NSArray *recommendData2 = [[responseObject objectForKey:@"data"]objectForKey:@"fellows"];
                 for (NSDictionary* data in recommendData2) {
                     ATOMRecommendUser *ru = [MTLJSONAdapter modelOfClass:[ATOMRecommendUser class] fromJSONDictionary:data error:NULL];
                     [recommendFriends addObject:ru];
@@ -48,7 +46,6 @@
             }
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
         if (block) {
             block(nil,nil, error);
         }

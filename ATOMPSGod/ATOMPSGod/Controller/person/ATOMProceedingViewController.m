@@ -8,7 +8,7 @@
 
 #import "ATOMProceedingViewController.h"
 #import "ATOMProceedingTableViewCell.h"
-#import "ATOMUploadWorkViewController.h"
+#import "ATOMCropImageController.h"
 #import "ATOMHotDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMHomeImage.h"
@@ -255,7 +255,7 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     WS(ws);
     [self dismissViewControllerAnimated:YES completion:^{
-        ATOMUploadWorkViewController *uwvc = [ATOMUploadWorkViewController new];
+        ATOMCropImageController *uwvc = [ATOMCropImageController new];
         uwvc.originImage = info[UIImagePickerControllerOriginalImage];
         uwvc.askPageViewModel = [_homeImageDataSource objectAtIndex:_selectedIndexPath.row];
         [ws pushViewController:uwvc animated:YES];

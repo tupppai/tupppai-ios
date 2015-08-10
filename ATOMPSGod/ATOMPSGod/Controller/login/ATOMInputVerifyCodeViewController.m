@@ -66,7 +66,6 @@
         } else {
             [Util ShowTSMessageError:@"无法获取到验证码"];
         }
-        
     }];
 }
 

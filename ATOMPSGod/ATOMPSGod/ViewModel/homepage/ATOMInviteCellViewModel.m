@@ -29,5 +29,8 @@
     _nickname = recommendUser.nickname;
     _invited = recommendUser.invited;
     _uid = recommendUser.uid;
+    //服务器是相对他，此viewModel是相对我。
+    _isFan = recommendUser.isFollow;
+    _isFollow = recommendUser.isFan;
 }
 @end

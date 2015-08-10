@@ -10,6 +10,7 @@
 #import "ATOMTipButton.h"
 #import "ATOMImageTipLabelViewModel.h"
 #import "ATOMBottomCommonButton.h"
+#define MAXHEIGHT (SCREEN_WIDTH-kPadding15*2)*4/3
 
 @interface ATOMhomepageAskTableViewCell ()
 
@@ -31,7 +32,8 @@
     _topView = [UIView new];
     _topView.backgroundColor = [UIColor whiteColor];
     _userWorkImageView = [UIImageView new];
-    _userWorkImageView.contentMode = UIViewContentModeScaleAspectFill;
+    _userWorkImageView.contentMode = UIViewContentModeScaleAspectFit;
+    _userWorkImageView.layer.masksToBounds = YES;
     _thinCenterView = [UIView new];
     _bottomThinView = [UIView new];
     _bottomThinView.backgroundColor = [UIColor colorWithHex:0xf3f3f3];
@@ -92,7 +94,13 @@
         praiseSize = [_viewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading           attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
         praiseSize.width += kBottomCommonButtonWidth + kPadding15;
     }
-    _userWorkImageView.frame = CGRectMake((SCREEN_WIDTH - workImageSize.width) / 2, CGRectGetMaxY(_topView.frame), workImageSize.width, workImageSize.height);
+    CGFloat cellHeight;
+    if (workImageSize.height >= MAXHEIGHT) {
+        cellHeight = MAXHEIGHT;
+    } else {
+        cellHeight = workImageSize.height;
+    }
+    _userWorkImageView.frame = CGRectMake((SCREEN_WIDTH - workImageSize.width) / 2, CGRectGetMaxY(_topView.frame), workImageSize.width, cellHeight);
     
     CGFloat thinViewHeight = 60;
     CGFloat bottomButtonOriginY = (thinViewHeight - kBottomCommonButtonWidth) / 2;
@@ -109,6 +117,9 @@
 }
 
 + (CGFloat)calculateCellHeightWith:(ATOMAskPageViewModel *)viewModel {
+    if (viewModel.height >= MAXHEIGHT) {
+        return 60 + MAXHEIGHT + 60 + 8;
+    }
     return 60 + viewModel.height + 60 + 8;
 }
 

@@ -25,7 +25,7 @@
 
 - (void)createSubView {
     WS(ws);
-    
+    _lastSecond = 30;
     _backButton = [UIButton new];
     [_backButton setImage:[UIImage imageNamed:@"icon_back_login"] forState:UIControlStateNormal];
     [self addSubview:_backButton];
@@ -129,6 +129,7 @@
             _buttonTitleStr = @"重发验证码";
             [_sendVerifyCodeButton setTitle:_buttonTitleStr forState:UIControlStateNormal];
             [_sendVerifyCodeButton setTitleColor:[UIColor colorWithHex:0x74c3ff] forState:UIControlStateNormal];
+            [_sendVerifyCodeButton setTitleColor:[UIColor colorWithHex:0x74c3ff andAlpha:0.2] forState:UIControlStateHighlighted];
         });
     } else {
         dispatch_async(dispatch_get_main_queue(), ^{

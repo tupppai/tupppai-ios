@@ -72,7 +72,6 @@ static int collumnNumber = 3;
             ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
             homepageViewModel.ID = homeImage.askID;
             [ws.homeImageDataSource addObject:homepageViewModel];
-            
             ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];
             replyViewModel.imageURL = homeImage.imageURL;
             [ws.dataSource addObject:replyViewModel];

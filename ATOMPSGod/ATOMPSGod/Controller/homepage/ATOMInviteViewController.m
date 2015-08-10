@@ -17,6 +17,7 @@
 #import "ATOMMyConcernTableHeaderView.h"
 #import "ATOMInviteModel.h"
 #import "ATOMInviteCellViewModel.h"
+#import "ATOMFollowModel.h"
 @interface ATOMInviteViewController () <UITableViewDelegate, UITableViewDataSource,UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) ATOMInviteView *inviteView;
@@ -36,6 +37,9 @@
     [super viewDidLoad];
     [self createUI];
     [self getRecommendDataSource];
+    if (_askPageViewModel) {
+        _info = [[NSDictionary alloc]initWithObjectsAndKeys:@(_askPageViewModel.ID),@"ID",@(_askPageViewModel.ID),@"askID",@(_askPageViewModel.type),@"type", nil];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -75,11 +79,36 @@
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+            opvc.userName = cell.viewModel.username;
+            opvc.userID = cell.viewModel.uid;
             [self pushViewController:opvc animated:YES];
-        } else if (CGRectContainsPoint(cell.inviteButton.frame, p)) {
+        } else  if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
+            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+            [self pushViewController:opvc animated:YES];
+            opvc.userName = cell.viewModel.username;
+            opvc.userID = cell.viewModel.uid;
+        }else if (CGRectContainsPoint(cell.inviteButton.frame, p)) {
             if (!cell.inviteButton.selected) {
-                [cell toggleInviteButtonAppearance];
-                [self tapInviteButton:cell.inviteButton];
+                if (cell.viewModel.isFollow) {
+                    [cell toggleInviteButtonAppearance];
+                    [self tapInviteButton:cell.inviteButton];
+                } else {
+                    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"你没有关注这位大神，需要关注才能发送邀请" andMessage:nil];
+                    [alertView addButtonWithTitle:@"取消"
+                                             type:SIAlertViewButtonTypeDefault
+                                          handler:^(SIAlertView *alert) {
+                                          }];
+                    [alertView addButtonWithTitle:@"邀请并关注"
+                                             type:SIAlertViewButtonTypeDefault
+                                          handler:^(SIAlertView *alert) {
+                                              NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(cell.viewModel.uid),@"uid", nil];
+                                              [ATOMFollowModel follow:param withType:YES withBlock:nil];
+                                              [cell toggleInviteButtonAppearance];
+                                              [self tapInviteButton:cell.inviteButton];
+                                          }];
+                    alertView.transitionStyle = SIAlertViewTransitionStyleDropDown;
+                    [alertView show];
+                }
             }
         }
     }
@@ -183,7 +212,7 @@
 }
 -(void)tapInviteButton:(id)sender {
     UIButton* button = sender;
-    NSInteger askID = (NSInteger)[_info objectForKey:@"askID"];
+    NSInteger askID = [[_info objectForKey:@"askID"]integerValue];
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:@(button.tag) forKey:@"invite_uid"];
     [param setObject:@(askID) forKey:@"ask_id"];

@@ -185,7 +185,7 @@
     [alertView show];
 }
 -(void) clearCache {
-    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"ლ(°◕‵ƹ′◕ლ)" andMessage:@"确定清理缓存吗？"];
+    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"😊" andMessage:@"确定清理缓存吗？"];
     [alertView addButtonWithTitle:@"不清理"
                              type:SIAlertViewButtonTypeDestructive
                           handler:^(SIAlertView *alert) {

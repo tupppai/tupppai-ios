@@ -323,7 +323,6 @@ static BOOL disableCustomEasing = NO;
     [button setTitleColor:titleColor forState:UIControlStateNormal];
     
     button.titleLabel.font = font;
-    
     [button setBackgroundImage:[self pixelImageWithColor:backgroundColor] forState:UIControlStateNormal];
     [button setBackgroundImage:[self pixelImageWithColor:borderColor] forState:UIControlStateHighlighted];
     button.layer.cornerRadius = 45 / 2;

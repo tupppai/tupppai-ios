@@ -26,7 +26,7 @@
 #import "ATOMReportModel.h"
 #import "ATOMCollectModel.h"
 #import "ATOMInviteViewController.h"
-#import "ATOMUploadWorkViewController.h"
+#import "ATOMCropImageController.h"
 #import "ATOMRecordModel.h"
 #import "ATOMBaseRequest.h"
 
@@ -254,8 +254,10 @@
     [self createUI];
 }
 
-
-
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+}
 - (void)createUI {
     self.navigationItem.title = @"关注";
     _myAttentionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
@@ -423,7 +425,7 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     WS(ws);
     [self dismissViewControllerAnimated:YES completion:^{
-        ATOMUploadWorkViewController *uwvc = [ATOMUploadWorkViewController new];
+        ATOMCropImageController *uwvc = [ATOMCropImageController new];
         uwvc.originImage = info[UIImagePickerControllerOriginalImage];
         uwvc.askPageViewModel = [_selectedCell.viewModel generateAskPageViewModel];
         [ws pushViewController:uwvc animated:YES];

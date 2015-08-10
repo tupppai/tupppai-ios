@@ -17,7 +17,7 @@
              @"fellowCount" : @"fellow_count",
              @"invited" : @"has_invited",
              @"isFan" : @"is_fans",
-             @"isFellow" : @"is_fellow",
+             @"isFollow" : @"is_fellow",
              @"nickname" : @"nickname",
              @"replyCount" : @"reply_count",
              @"sex" : @"sex",

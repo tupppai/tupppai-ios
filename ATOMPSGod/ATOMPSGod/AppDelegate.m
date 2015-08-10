@@ -17,7 +17,6 @@
 #import "WXApi.h"
 #import "ATOMBaseDAO.h"
 #import "UMessage.h"
-#import "ATOMCommonModel.h"
 
 @interface AppDelegate ()
 
@@ -36,17 +35,14 @@
     [self initializeDatabase];
     [self initializeAfterDB];
     [self setupShareSDK];
-//    [self setCommonNavigationStyle];
     [self setupUmengPush:launchOptions];
     return YES;
 }
 -(void)setupUmengPush:(NSDictionary *)launchOptions {
-    
     [UMessage setLogEnabled:YES];
-
     //set AppKey and AppSecret
     [UMessage startWithAppkey:@"55b1ecdbe0f55a1de9001164" launchOptions:launchOptions];
-    
+
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= _IPHONE80_
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
     {
@@ -72,19 +68,14 @@
     [UMessage setLogEnabled:YES];
 }
 -(void)initializeAfterDB {
-
-   
 //    ATOMIntroductionOnFirstLaunchViewController* vc = [ATOMIntroductionOnFirstLaunchViewController new];
 //    self.baseNav = [[ATOMLoginCustomNavigationController alloc] initWithRootViewController:vc];
 //    self.window.rootViewController = self.baseNav;
 //    [self.window makeKeyAndVisible];
-
     [[ATOMCurrentUser currentUser]fetchCurrentUserInDB:^(BOOL hasCurrentUser) {
         if (hasCurrentUser) {
             self.window.rootViewController = self.mainTabBarController;
-            
         } else {
-            
             if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
             {
                 //UIPageViewController
@@ -185,7 +176,7 @@
     NSString *devicetokenString = [[[deviceToken description]
                                     stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]]
                                    stringByReplacingOccurrencesOfString:@" " withString:@""];
-
+    NSLog(@"standardUserDefaults setObject");
     [[NSUserDefaults standardUserDefaults]setObject:devicetokenString forKey:@"devicetoken"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 

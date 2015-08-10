@@ -30,7 +30,6 @@
     WS(ws);
     
     _lastSecond = 30;
-    
     _backButton = [UIButton new];
     [_backButton setImage:[UIImage imageNamed:@"icon_back_login"] forState:UIControlStateNormal];
     [self addSubview:_backButton];

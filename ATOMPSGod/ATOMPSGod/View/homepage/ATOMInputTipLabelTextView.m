@@ -1,22 +1,22 @@
 //
-//  ATOMFillInContentOfTipLabelView.m
+//  ATOMInputTipLabelTextView.m
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/8.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMFillInContentOfTipLabelView.h"
+#import "ATOMInputTipLabelTextView.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self;
 
-@interface ATOMFillInContentOfTipLabelView ()
+@interface ATOMInputTipLabelTextView ()
 
 @property (nonatomic, strong) UIView * topView;
 
 @end
 
-@implementation ATOMFillInContentOfTipLabelView
+@implementation ATOMInputTipLabelTextView
 
 - (instancetype)init {
     self = [super init];
@@ -60,19 +60,6 @@
     [_sendTipLabelTextButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_topView addSubview:_sendTipLabelTextButton];
 
-    _topWarnLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
-    _topWarnLabel.backgroundColor = [UIColor colorWithHex:0xFE8282 andAlpha:0.9];
-    _topWarnLabel.text = [NSString stringWithFormat:@"你还没告诉大神你想要的效果,"];
-    _topWarnLabel.numberOfLines = 0;
-    _topWarnLabel.textAlignment = NSTextAlignmentCenter;
-    _topWarnLabel.textColor = [UIColor whiteColor];
-    
-    _topWarnLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 40, SCREEN_WIDTH, 40)];
-    _topWarnLabel2.backgroundColor = [UIColor colorWithHex:0xFE8282 andAlpha:0.9];
-    _topWarnLabel2.text = [NSString stringWithFormat:@"请点击图片填写效果"];
-    _topWarnLabel2.numberOfLines = 0;
-    _topWarnLabel2.textAlignment = NSTextAlignmentCenter;
-    _topWarnLabel2.textColor = [UIColor whiteColor];
 }
 
 

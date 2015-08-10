@@ -191,7 +191,11 @@ static CGFloat replierWidth = 25;
     _praiseButton.selected = viewModel.liked;
     _shareButton.number = viewModel.shareNumber;
     _commentButton.number = viewModel.commentNumber;
-    _totalPSLabel.number = viewModel.totalPSNumber;
+    if (viewModel.totalPSNumber <= 0) {
+        _totalPSLabel.hidden = YES;
+    } else {
+        _totalPSLabel.number = viewModel.totalPSNumber;
+    }
 
     if (viewModel.image) {
         _userWorkImageView.image = viewModel.image;

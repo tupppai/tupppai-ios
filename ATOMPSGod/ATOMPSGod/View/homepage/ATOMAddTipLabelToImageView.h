@@ -11,6 +11,7 @@
 @interface ATOMAddTipLabelToImageView : ATOMBaseView
 
 @property (nonatomic, strong) UIImageView *workImageView;
+@property (nonatomic, strong) UIView *imageContainerView;
 @property (nonatomic, strong) UIView *bottomView;
 @property (nonatomic, strong) UIImage *workImage;
 @property (nonatomic, strong) UIButton *changeTipLabelDirectionButton;

@@ -13,6 +13,7 @@
 #import "ATOMReplierViewModel.h"
 #import "ATOMTotalPSView.h"
 #import "ATOMBottomCommonButton.h"
+#define MAXHEIGHT (SCREEN_WIDTH-kPadding15*2)*4/3
 
 @interface ATOMHomePageHotTableViewCell ()
 
@@ -42,8 +43,7 @@ static CGFloat replierWidth = 25;
     _topView = [UIView new];
     _topView.backgroundColor = [UIColor whiteColor];
     _userWorkImageView = [UIImageView new];
-    _userWorkImageView.contentMode = UIViewContentModeScaleAspectFill;
-    _userWorkImageView.layer.masksToBounds = YES;
+    _userWorkImageView.contentMode = UIViewContentModeScaleAspectFit;
     _thinCenterView = [UIView new];
     _thinCenterView.backgroundColor = [UIColor whiteColor];
     _bottomView = [UIView new];
@@ -123,7 +123,15 @@ static CGFloat replierWidth = 25;
         praiseSize = [_viewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading           attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
         praiseSize.width += kBottomCommonButtonWidth + kPadding15;
     }
-    _userWorkImageView.frame = CGRectMake((SCREEN_WIDTH - workImageSize.width) / 2, CGRectGetMaxY(_topView.frame), workImageSize.width, workImageSize.height);
+    {
+        CGFloat cellHeight;
+        if (workImageSize.height >= MAXHEIGHT) {
+            cellHeight = MAXHEIGHT;
+        } else {
+            cellHeight = workImageSize.height;
+        }
+        _userWorkImageView.frame = CGRectMake((SCREEN_WIDTH - workImageSize.width) / 2, CGRectGetMaxY(_topView.frame), workImageSize.width, cellHeight);
+    }
     CGFloat thinViewHeight = 60;
     CGFloat bottomButtonOriginY = (thinViewHeight - kBottomCommonButtonWidth) / 2;
     _thinCenterView.frame = CGRectMake(0, CGRectGetMaxY(_userWorkImageView.frame), SCREEN_WIDTH, thinViewHeight);
@@ -142,12 +150,14 @@ static CGFloat replierWidth = 25;
         imageView.frame = CGRectMake(originX + i * (replierWidth + kPadding5), (CGHeight(_bottomView.frame) - replierWidth) / 2, replierWidth, replierWidth);
     }
     _totalPSLabel.frame = CGRectMake(kPadding15, (CGHeight(_bottomView.frame) - kFont14) / 2, kFont14 * (_viewModel.totalPSNumber.length + 3) + 6 * 2, kFont14);
-    
     _bottomThinView.frame = CGRectMake(0, CGRectGetMaxY(_bottomView.frame), SCREEN_WIDTH, 8);
 }
 
 + (CGFloat)calculateCellHeightWith:(ATOMAskPageViewModel *)viewModel {
-    return 60 + viewModel.height + 60 + 60 + 8;
+    if (viewModel.height >= MAXHEIGHT) {
+        return 60 + MAXHEIGHT + 60 + 8;
+    }
+    return 60 + viewModel.height + 60 + 8;
 }
 
 + (CGSize)calculateHomePageHotImageViewSizeWith:(ATOMAskPageViewModel *)viewModel {
@@ -163,7 +173,11 @@ static CGFloat replierWidth = 25;
     _praiseButton.selected = viewModel.liked;
     _shareButton.number = viewModel.shareNumber;
     _commentButton.number = viewModel.commentNumber;
-    _totalPSLabel.number = viewModel.totalPSNumber;
+    if (viewModel.totalPSNumber <= 0) {
+        _totalPSLabel.hidden = YES;
+    } else {
+        _totalPSLabel.number = viewModel.totalPSNumber;
+    }
     if (viewModel.image) {
         _userWorkImageView.image = viewModel.image;
     } else {

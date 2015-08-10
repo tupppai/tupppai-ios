@@ -58,10 +58,13 @@
     [[KShareManager mascotAnimator] show];
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"user/login" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         [[KShareManager mascotAnimator] dismiss];
-        NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"]integerValue];
+        NSLog(@"Login responseObject %@ \n",responseObject);
         NSString* info = [ responseObject objectForKey:@"info"];
+
         NSLog(@"Login param %@",param);
         NSLog(@"Login responseObject %@ \n info %@",responseObject,info);
+        NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"]integerValue];
+
         if (ret == 1) {
             if ([ responseObject objectForKey:@"data"]) {
                 //        data: { status: 1,正常  2，密码错误 3，未注册 }
@@ -99,7 +102,7 @@
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [[KShareManager mascotAnimator] dismiss];
-        
+        NSLog(@"%@",error);
         if (block) {
             block(NO);
         }

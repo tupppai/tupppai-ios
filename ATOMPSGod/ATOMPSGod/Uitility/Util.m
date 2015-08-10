@@ -8,7 +8,18 @@
 
 #import "Util.h"
 #import "ATOMCommonModel.h"
+
+
 @implementation Util
+
+NSString* deviceName()
+{
+    struct utsname systemInfo;
+    uname(&systemInfo);
+    
+    return [NSString stringWithCString:systemInfo.machine
+                              encoding:NSUTF8StringEncoding];
+}
 +(void)TextHud:(NSString*)message {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
     // Configure for text only and offset down

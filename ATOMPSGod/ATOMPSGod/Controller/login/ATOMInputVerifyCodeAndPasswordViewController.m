@@ -9,11 +9,12 @@
 #import "ATOMInputVerifyCodeAndPasswordViewController.h"
 #import "ATOMInputVerifyCodeAndPasswordView.h"
 #import "ATOMCommonModel.h"
+#import "ATOMGetMoblieCode.h"
+
 @interface ATOMInputVerifyCodeAndPasswordViewController ()
 
 @property (nonatomic, strong) ATOMInputVerifyCodeAndPasswordView *inputVerifyView;
 @property (nonatomic, strong) NSTimer *verifyTimer;
-//@property (nonatomic, strong) NSDateFormatter *df;
 @end
 
 @implementation ATOMInputVerifyCodeAndPasswordViewController
@@ -23,7 +24,6 @@
     [self createUI];
     [self createVerifyTimer];
 }
-
 - (void)createUI {
     _inputVerifyView = [ATOMInputVerifyCodeAndPasswordView new];
     self.view = _inputVerifyView;
@@ -47,11 +47,25 @@
         _inputVerifyView.sendVerifyCodeButton.userInteractionEnabled = YES;
     }
 }
-
 - (void)clickVerifyButton:(UIButton *)sender {
     _inputVerifyView.sendVerifyCodeButton.userInteractionEnabled = NO;
+    _inputVerifyView.lastSecond = 30;
     [self createVerifyTimer];
+    [self updateAuthCode];
 }
+
+- (void)updateAuthCode {
+    ATOMGetMoblieCode *getMobileCode = [ATOMGetMoblieCode new];
+    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:[ATOMCurrentUser currentUser].mobile, @"phone", nil];
+    [getMobileCode GetMobileCode:param withBlock:^(NSString *verifyCode, NSError *error) {
+        if (verifyCode && !error) {
+            self.verifyCode = verifyCode;
+        } else {
+            [Util ShowTSMessageError:@"无法获取到验证码"];
+        }
+    }];
+}
+
 
 - (void)clickRightButtonItem{
         if ([_inputVerifyView.verifyCodeTextField.text isEqualToString:_verifyCode]) {
@@ -62,6 +76,7 @@
             [ATOMCommonModel post:param withUrl:@"user/reset_password" withBlock:^(NSError *error, int ret) {
                 if ( error == nil && ret == 1) {
                     [Util ShowTSMessageSuccess:@"成功设置密码"];
+                    [self.navigationController popToRootViewControllerAnimated:YES];
                 } else {
                     [Util ShowTSMessageError:@"操作失败"];
                 }

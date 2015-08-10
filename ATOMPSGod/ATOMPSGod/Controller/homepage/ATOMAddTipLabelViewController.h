@@ -1,5 +1,5 @@
 //
-//  ATOMAddTipLabelToImageViewController.h
+//  ATOMAddTipLabelViewController.h
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/6.
@@ -9,7 +9,7 @@
 #import "ATOMBaseViewController.h"
 #import "ATOMAskPageViewModel.h"
 #import "PWPageDetailViewModel.h"
-@interface ATOMAddTipLabelToImageViewController : ATOMBaseViewController
+@interface ATOMAddTipLabelViewController : ATOMBaseViewController
 @property (nonatomic, strong) ATOMAskPageViewModel *askPageViewModel;
 @property (nonatomic, strong) UIImage *workImage;
 

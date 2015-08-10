@@ -1,24 +1,24 @@
 //
-//  ATOMUploadWorkViewController.m
+//  ATOMCropImageController.m
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/5.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMUploadWorkViewController.h"
+#import "ATOMCropImageController.h"
 #import "ATOMUploadWorkView.h"
-#import "ATOMAddTipLabelToImageViewController.h"
+#import "ATOMAddTipLabelViewController.h"
 #import "ATOMImageCropper.h"
 #import "BJImageCropper.h"
 
-@interface ATOMUploadWorkViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate>
+@interface ATOMCropImageController () <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) ATOMUploadWorkView *uploadWorkView;
 
 @end
 
-@implementation ATOMUploadWorkViewController
+@implementation ATOMCropImageController
 
 #pragma mark - Lazy Initialize
 
@@ -92,7 +92,7 @@
 }
 
 - (void)clickConfirmButton:(UIButton *)sender {
-    ATOMAddTipLabelToImageViewController *atltivc = [ATOMAddTipLabelToImageViewController new];
+    ATOMAddTipLabelViewController *atltivc = [ATOMAddTipLabelViewController new];
     if (_uploadWorkView.imageOriginView) {
         atltivc.workImage = _uploadWorkView.originImage;
     } else {

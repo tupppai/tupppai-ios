@@ -12,11 +12,9 @@
 #import "ATOMMyFollowViewController.h"
 #import "ATOMPersonViewController.h"
 #import "ATOMCutstomNavigationController.h"
-
-//#define  BUTTON_INTERVAL (SCREEN_WIDTH - 30 * 2 - 49 * 4) / 3
+#import "ATOMCommonModel.h"
 
 @interface ATOMMainTabBarController ()<UITabBarControllerDelegate>
-
 @property (nonatomic, strong) ATOMCutstomNavigationController *nav1;
 @property (nonatomic, strong) ATOMCutstomNavigationController *nav2;
 @property (nonatomic, strong) ATOMCutstomNavigationController *nav3;
@@ -28,6 +26,7 @@
 #pragma mark - Lazy Initialize
 
 #pragma mark - Config
+static dispatch_once_t once;
 
 - (instancetype)init {
     self = [super init];
@@ -36,7 +35,18 @@
     }
     return self;
 }
-
+-(void)viewDidLoad {
+    [super viewDidLoad];
+    [self uploadDeviceInfo];
+}
+-(void)uploadDeviceInfo {
+    dispatch_once(&once, ^ {
+        NSUUID *oNSUUID = [[UIDevice currentDevice] identifierForVendor];
+        NSString* token = [[NSUserDefaults standardUserDefaults]stringForKey:@"devicetoken"];
+        NSDictionary* param = [NSDictionary dictionaryWithObjectsAndKeys:token, @"device_token",@1,@"platform",@([[UIDevice currentDevice].systemVersion floatValue]),@"device_os",deviceName(),@"device_name",[oNSUUID UUIDString],@"device_mac",nil];
+        [ATOMCommonModel post:param withUrl:@"user/device_token" withBlock:nil];
+    });
+}
 - (void)configureTabBarController {
     ATOMHomepageViewController *homePageViewController = [ATOMHomepageViewController new];
     ATOMMyFollowViewController *myAttentionViewController = [ATOMMyFollowViewController new];
@@ -67,31 +77,6 @@
     _nav3.tabBarItem.selectedImage = [ _nav3.tabBarItem.selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     _nav4.tabBarItem.image = [ _nav4.tabBarItem.image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     _nav4.tabBarItem.selectedImage = [ _nav4.tabBarItem.selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    
     self.viewControllers = [NSArray arrayWithObjects:_nav1, _nav2, _nav3, _nav4, nil];
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @end

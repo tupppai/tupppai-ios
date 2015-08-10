@@ -12,6 +12,7 @@
 @interface ATOMMessageRemindViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) NSDictionary *data;
 
 @end
 
@@ -22,12 +23,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
-    NSMutableDictionary *param = [NSMutableDictionary new];
-//    [param setObject:@"comment" forKey:@"type"];
-    [ATOMShowSettings getPushSetting:param withBlock:^(NSDictionary *dic, NSError *error) {
+}
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [ATOMShowSettings getPushSetting:nil withBlock:^(NSDictionary *data, NSError *error) {
+        if (data) {
+            _data = data;
+            [_tableView reloadData];
+        }
     }];
 }
-
 - (void)createUI {
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     _tableView.scrollEnabled = NO;
@@ -63,19 +68,23 @@
     if (section == 0) {
         if (row == 0) {
             cell.textLabel.text = @"评论";
+            cell.notificationSwitch.on = [[_data objectForKey:@"comment"]boolValue];
         } else if (row == 1) {
             cell.textLabel.text = @"帖子回复";
+            cell.notificationSwitch.on = [[_data objectForKey:@"reply"]boolValue];
         } else if (row == 2) {
             cell.textLabel.text = @"关注通知";
+            cell.notificationSwitch.on = [[_data objectForKey:@"follow"]boolValue];
         } else if (row == 3) {
             cell.textLabel.text = @"邀请通知";
+            cell.notificationSwitch.on = [[_data objectForKey:@"invite"]boolValue];
         } else if (row == 4) {
+            cell.notificationSwitch.on = [[_data objectForKey:@"system"]boolValue];
             cell.textLabel.text = @"系统通知";
         }
     }
     return cell;
 }
-//type: [comment|follow|invite|reply]
 
 
 -(void)toggleSwitch:(id)sender {

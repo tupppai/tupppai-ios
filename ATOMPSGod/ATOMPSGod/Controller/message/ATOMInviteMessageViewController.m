@@ -148,12 +148,10 @@
         if (CGRectContainsPoint(cell.workImageView.frame, p)) {
             if ([viewModel.homepageViewModel.totalPSNumber integerValue] == 0) {
                 ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
-//                rdvc.delegate = self;
                 PWPageDetailViewModel* pageDetailViewModel = [PWPageDetailViewModel new];
                 [pageDetailViewModel setCommonViewModelWithAsk:viewModel.homepageViewModel];
                 rdvc.pageDetailViewModel = pageDetailViewModel;
                 [self pushViewController:rdvc animated:YES];
-                
             } else {
                 ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
                 hdvc.askPageViewModel = viewModel.homepageViewModel;
@@ -162,10 +160,12 @@
         } else if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
             opvc.userID = viewModel.uid;
+            opvc.userName = viewModel.userName;
             [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
             opvc.userID = viewModel.uid;
+            opvc.userName = viewModel.userName;
             [self pushViewController:opvc animated:YES];
         }
         

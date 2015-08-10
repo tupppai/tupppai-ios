@@ -1,5 +1,5 @@
 //
-//  ATOMUploadWorkViewController.h
+//  ATOMCropImageController.h
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/5.
@@ -9,7 +9,7 @@
 #import "ATOMBaseViewController.h"
 @class ATOMAskPageViewModel;
 @class PWPageDetailViewModel;
-@interface ATOMUploadWorkViewController : ATOMBaseViewController
+@interface ATOMCropImageController : ATOMBaseViewController
 
 @property (nonatomic, strong) ATOMAskPageViewModel *askPageViewModel;
 @property (nonatomic, strong) UIImage *originImage;

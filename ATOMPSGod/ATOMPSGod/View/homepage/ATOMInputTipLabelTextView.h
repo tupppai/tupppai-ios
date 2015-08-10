@@ -1,5 +1,5 @@
 //
-//  ATOMFillInContentOfTipLabelView.h
+//  ATOMInputTipLabelTextView.h
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/8.
@@ -8,11 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ATOMFillInContentOfTipLabelView : UIScrollView
+@interface ATOMInputTipLabelTextView : UIScrollView
 
 @property (nonatomic, strong) UITextField *tipLabelContentTextField;
 @property (nonatomic, strong) UIButton *sendTipLabelTextButton;
 @property (nonatomic, strong) UILabel *showNumberLabel;
-@property (nonatomic, strong) UILabel *topWarnLabel;
-@property (nonatomic, strong) UILabel *topWarnLabel2;
 @end

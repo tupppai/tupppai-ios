@@ -10,7 +10,7 @@
 #import "ATOMHotDetailViewController.h"
 #import "ATOMHotDetailTableViewCell.h"
 #import "ATOMCommentDetailViewController.h"
-#import "ATOMUploadWorkViewController.h"
+#import "ATOMCropImageController.h"
 #import "ATOMProceedingViewController.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMHotDetailPageViewModel.h"
@@ -482,7 +482,7 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     WS(ws);
     [self dismissViewControllerAnimated:YES completion:^{
-        ATOMUploadWorkViewController *uwvc = [ATOMUploadWorkViewController new];
+        ATOMCropImageController *uwvc = [ATOMCropImageController new];
         uwvc.originImage = info[UIImagePickerControllerOriginalImage];
         uwvc.askPageViewModel = ws.askPageViewModel;
         [ws pushViewController:uwvc animated:YES];

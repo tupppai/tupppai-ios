@@ -24,17 +24,17 @@
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"ask/save" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         [[KShareManager mascotAnimator]dismiss];
         NSLog(@"SubmitImageWithLabel responseObject %@",responseObject);
-        NSMutableArray *labelArray = [NSMutableArray array];
-        NSArray *dictArray = [ responseObject objectForKey:@"data"][@"labels"];
-        for (int i = 0; i < dictArray.count; i++) {
-            ATOMImageTipLabel *imageTipLabel = [ATOMImageTipLabel new];
-            imageTipLabel.labelID = [dictArray[i][@"id"] integerValue];
-            imageTipLabel.imageID = [[ responseObject objectForKey:@"data"][@"ask_id"] integerValue];
-            [labelArray addObject:imageTipLabel];
-        }
+//        NSMutableArray *labelArray = [NSMutableArray array];
+//        NSArray *dictArray = [ responseObject objectForKey:@"data"][@"labels"];
+//        for (int i = 0; i < dictArray.count; i++) {
+//            ATOMImageTipLabel *imageTipLabel = [ATOMImageTipLabel new];
+//            imageTipLabel.labelID = [dictArray[i][@"id"] integerValue];
+//            imageTipLabel.imageID = [[ responseObject objectForKey:@"data"][@"ask_id"] integerValue];
+//            [labelArray addObject:imageTipLabel];
+//        }
         NSInteger newImageID = [[ responseObject objectForKey:@"data"][@"ask_id"] integerValue];
         if (block) {
-            block(labelArray, newImageID, nil);
+            block(nil, newImageID, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [[KShareManager mascotAnimator]dismiss];

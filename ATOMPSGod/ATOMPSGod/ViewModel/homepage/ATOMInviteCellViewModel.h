@@ -16,7 +16,7 @@
 @property (nonatomic, copy) NSString* replyDesc;
 @property (nonatomic, assign) BOOL invited;
 @property (nonatomic, assign) BOOL isFan;
-@property (nonatomic, assign) BOOL isFellow;
+@property (nonatomic, assign) BOOL isFollow;
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, assign) NSInteger sex;
 @property (nonatomic, assign) NSInteger uid;

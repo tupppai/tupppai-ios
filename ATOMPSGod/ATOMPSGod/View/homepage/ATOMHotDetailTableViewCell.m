@@ -12,6 +12,7 @@
 #import "ATOMTipButton.h"
 #import "ATOMImageTipLabelViewModel.h"
 #import "ATOMBottomCommonButton.h"
+#define MAXHEIGHT (SCREEN_WIDTH-kPadding15*2)*4/3
 
 @interface ATOMHotDetailTableViewCell ()
 
@@ -37,9 +38,7 @@
     _topView = [UIView new];
     _topView.backgroundColor = [UIColor whiteColor];
     _userWorkImageView = [UIImageView new];
-    _userWorkImageView.contentMode = UIViewContentModeScaleAspectFill;
-    _userWorkImageView.layer.masksToBounds = YES;
-
+    _userWorkImageView.contentMode = UIViewContentModeScaleAspectFit;
     _thinCenterView = [UIView new];
     _thinCenterView.backgroundColor = [UIColor whiteColor];
     _bottomView = [UIView new];
@@ -107,7 +106,7 @@
     CGSize workImageSize = CGSizeZero;
     CGSize commentSize, shareSize, praiseSize;
     if (_viewModel) {
-        workImageSize = [[self class] calculateHomePageHotImageViewSizeWith:_viewModel];
+        workImageSize = [[self class] getImageSize:_viewModel];
         commentSize = [_viewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
         commentSize.width += kBottomCommonButtonWidth + kPadding15;
         shareSize = [_viewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
@@ -115,7 +114,17 @@
         praiseSize = [_viewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
         praiseSize.width += kBottomCommonButtonWidth + kPadding15;
     }
-    _userWorkImageView.frame = CGRectMake((SCREEN_WIDTH - workImageSize.width) / 2, CGRectGetMaxY(_topView.frame), workImageSize.width, workImageSize.height);
+    
+    {
+        CGFloat cellHeight;
+        if (workImageSize.height >= MAXHEIGHT) {
+            cellHeight = MAXHEIGHT;
+        } else {
+            cellHeight = workImageSize.height;
+        }
+        _userWorkImageView.frame = CGRectMake((SCREEN_WIDTH - workImageSize.width) / 2, CGRectGetMaxY(_topView.frame), workImageSize.width, cellHeight);
+    }
+
     
     CGFloat thinViewHeight = 60;
     CGFloat bottomButtonOriginY = (thinViewHeight - kBottomCommonButtonWidth) / 2;
@@ -152,10 +161,13 @@
 }
 
 + (CGFloat)calculateCellHeightWith:(ATOMHotDetailPageViewModel *)viewModel {
+    if (viewModel.height >= MAXHEIGHT) {
+        return 60 + MAXHEIGHT + 60 + ((viewModel.commentArray.count > 2) ? 2 : viewModel.commentArray.count) * 20 + 40;
+    }
     return 60 + viewModel.height + 60 + ((viewModel.commentArray.count > 2) ? 2 : viewModel.commentArray.count) * 20 + 40;
 }
 
-+ (CGSize)calculateHomePageHotImageViewSizeWith:(ATOMHotDetailPageViewModel *)viewModel {
++ (CGSize)getImageSize:(ATOMHotDetailPageViewModel *)viewModel {
     return CGSizeMake(viewModel.width, viewModel.height);
 }
 
@@ -175,7 +187,6 @@
             _commentLabel2.attributedText = attributeStr;
         }
     }
-
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     _praiseButton.number = viewModel.likeNumber;
     _praiseButton.selected = viewModel.liked;

@@ -11,11 +11,10 @@
 #import "ATOMhomepageAskTableViewCell.h"
 #import "ATOMHotDetailViewController.h"
 #import "ATOMPageDetailViewController.h"
-#import "ATOMUploadWorkViewController.h"
+#import "ATOMCropImageController.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMProceedingViewController.h"
 #import "ATOMAskPageViewModel.h"
-#import "ATOMHomepageCustomTitleView.h"
 #import "ATOMHomepageScrollView.h"
 #import "ATOMShowHomepage.h"
 #import "ATOMShareFunctionView.h"
@@ -33,26 +32,24 @@
 #import "JTSImageViewController.h"
 #import "JTSImageInfo.h"
 #import "HMSegmentedControl.h"
-
+#import "ATOMCommonModel.h"
 @class ATOMHomeImage;
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMHomepageViewController() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate>
-@property (nonatomic, strong) ATOMHomepageCustomTitleView *customTitleView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) UITapGestureRecognizer *tapHomePageHotGesture;
 @property (nonatomic, strong) UITapGestureRecognizer *tapHomePageAskGesture;
 @property (nonatomic, strong) NSMutableArray *dataSourceOfHotTableView;
 @property (nonatomic, strong) NSMutableArray *dataSourceOfRecentTableView;
-@property (nonatomic, strong) ATOMHomepageScrollView *scrollView;
 @property (nonatomic, assign) NSInteger currentHotPage;
 @property (nonatomic, assign) NSInteger currentRecentPage;
 
 @property (nonatomic, assign) BOOL isfirstEnterHomepageRecentView;
-
 @property (nonatomic, assign) BOOL canRefreshHotFooter;
 @property (nonatomic, assign) BOOL canRefreshRecentFooter;
+@property (nonatomic, strong) ATOMHomepageScrollView *scrollView;
 
 @property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
 @property (nonatomic, strong)  JGActionSheet * cameraActionsheet;
@@ -66,7 +63,6 @@
 
 @property (nonatomic, strong) ATOMAskPageViewModel *selectedAskPageViewModel;
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
-
 
 @end
 
@@ -438,8 +434,9 @@
     [self createUI];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+-(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -743,7 +740,7 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     WS(ws);
     [self dismissViewControllerAnimated:YES completion:^{
-        ATOMUploadWorkViewController *uwvc = [ATOMUploadWorkViewController new];
+        ATOMCropImageController *uwvc = [ATOMCropImageController new];
         uwvc.originImage = info[UIImagePickerControllerOriginalImage];
         uwvc.askPageViewModel = ws.selectedAskPageViewModel;
         [ws pushViewController:uwvc animated:YES];

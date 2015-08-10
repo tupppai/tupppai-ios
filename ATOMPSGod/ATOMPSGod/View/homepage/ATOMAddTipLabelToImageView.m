@@ -28,7 +28,7 @@ static int padding10 = 10;
 - (instancetype)init {
     self = [super init];
     if (self) {
-         _BOTTOMHEIGHT = (SCREEN_HEIGHT-NAV_HEIGHT)/2.5;
+         _BOTTOMHEIGHT = (SCREEN_HEIGHT-NAV_HEIGHT)-(SCREEN_WIDTH-kPadding15*2)*4/3;
         [self createSubView];
     }
     return self;
@@ -37,21 +37,24 @@ static int padding10 = 10;
 - (void)setWorkImage:(UIImage *)workImage {
     _workImage = workImage;
     _workImageView = [[UIImageView alloc] initWithFrame:[self calculateImageViewFrame]];
+    _workImageView.contentMode = UIViewContentModeScaleAspectFit;
     _workImageView.userInteractionEnabled = YES;
     _workImageView.image = _workImage;
-    [self createTemporaryPoint];
+    [self createBlinkBlinkPoint];
     [self createOperationButton];
-    [self addSubview:_workImageView];
+    [_imageContainerView addSubview:_workImageView];
 }
 
 - (void)createSubView {
     self.backgroundColor = [UIColor whiteColor];
+    _imageContainerView = [[UIView alloc] initWithFrame:CGRectMake(kPadding15, 0, SCREEN_WIDTH,SCREEN_HEIGHT - NAV_HEIGHT -  _BOTTOMHEIGHT)];
     _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - NAV_HEIGHT - _BOTTOMHEIGHT, SCREEN_WIDTH, _BOTTOMHEIGHT)];
+    [self addSubview:_imageContainerView];
     [self addSubview:_bottomView];
     [self createBottomView];
 }
 
-- (void)createTemporaryPoint {
+- (void)createBlinkBlinkPoint {
     _pointImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tag_point"]];
     _pointImageView.hidden = YES;
     [_workImageView addSubview:_pointImageView];
@@ -106,36 +109,52 @@ static int padding10 = 10;
 //}
 
 - (CGRect)calculateImageViewFrame {
-    
 
-    CGFloat maxWith = SCREEN_WIDTH;
+    CGFloat maxWith = SCREEN_WIDTH-kPadding15*2;
     CGFloat maxHeight = SCREEN_HEIGHT - _BOTTOMHEIGHT - NAV_HEIGHT;
-    CGFloat imageScale;
+//    CGFloat imageScale;
     CGPoint location;
     
-    CGRect rect = CGRectMake(0, 0, _workImage.size.width, _workImage.size.height);
-    if ((int)CGWidth(rect) <= maxWith && (int)CGHeight(rect) <= maxHeight) {
+    CGRect rect;
+    if ((int)_workImage.size.height <= maxHeight) {
+            rect = CGRectMake(0, 0, maxWith, _workImage.size.height);
+    } else {
+            rect = CGRectMake(0, 0, maxWith, maxHeight);
+    }
+    
+    NSLog(@"workImage.size.width%f",_workImage.size.width);
+    if ((int)_workImage.size.width <= maxWith) {
         location.x = (maxWith - _workImage.size.width) / 2;
-        location.y = (maxHeight - _workImage.size.height) / 2;
-        rect.origin = location;
-        return rect;
+        NSLog(@"location.x %f",location.x);
+    } else {
+        location.x = 0;
     }
-    
-    imageScale = maxHeight / _workImage.size.height;
-    rect = CGRectMake(0, 0, _workImage.size.width * imageScale, _workImage.size.height * imageScale);
-    if ((int)CGWidth(rect) <= maxWith && (int)CGHeight(rect) <= maxHeight) {
-        location.x = (maxWith - rect.size.width) / 2;
-        location.y = (maxHeight - rect.size.height) / 2;
-        rect.origin = location;
-        return rect;
-    }
-    
-    imageScale = maxWith / _workImage.size.width;
-    rect = CGRectMake(0, 0, _workImage.size.width * imageScale, _workImage.size.height * imageScale);
-    location.x = (maxWith - rect.size.width) / 2;
+    NSLog(@"location.x 2%f",location.x);
+
     location.y = (maxHeight - rect.size.height) / 2;
     rect.origin = location;
+
     return rect;
+//    if ((int)CGWidth(rect) <= maxWith && (int)CGHeight(rect) <= maxHeight) {
+//        rect.origin = location;
+//        return rect;
+//    }
+//    
+//    imageScale = maxHeight / _workImage.size.height;
+//    rect = CGRectMake(0, 0, _workImage.size.width * imageScale, _workImage.size.height * imageScale);
+//    if ((int)CGWidth(rect) <= maxWith && (int)CGHeight(rect) <= maxHeight) {
+//        location.x = (maxWith - rect.size.width) / 2;
+//        location.y = (maxHeight - rect.size.height) / 2;
+//        rect.origin = location;
+//        return rect;
+//    }
+//    
+//    imageScale = maxWith / _workImage.size.width;
+//    rect = CGRectMake(0, 0, _workImage.size.width * imageScale, _workImage.size.height * imageScale);
+//    location.x = (maxWith - rect.size.width) / 2;
+//    location.y = (maxHeight - rect.size.height) / 2;
+//    rect.origin = location;
+//    return rect;
     
 }
 
@@ -144,13 +163,13 @@ static int padding10 = 10;
     _changeTipLabelDirectionButton = [[UIButton alloc] initWithFrame:CGRectMake(padding10, centerY - 28, 41, 41)];
     [_changeTipLabelDirectionButton setBackgroundImage:[UIImage imageNamed:@"btn_changeside_normal"] forState:UIControlStateNormal];
     [_changeTipLabelDirectionButton setBackgroundImage:[UIImage imageNamed:@"btn_changeside_pressed"] forState:UIControlStateHighlighted];
-    [_workImageView addSubview:_changeTipLabelDirectionButton];
+    [self addSubview:_changeTipLabelDirectionButton];
     _changeTipLabelDirectionButton.hidden = YES;
     
     _deleteTipLabelButton = [[UIButton alloc] initWithFrame:CGRectMake(padding10, centerY + 28, 41, 41)];
     [_deleteTipLabelButton setBackgroundImage:[UIImage imageNamed:@"btn_delete_normal"] forState:UIControlStateNormal];
     [_deleteTipLabelButton setBackgroundImage:[UIImage imageNamed:@"btn_delete_pressed"] forState:UIControlStateHighlighted];
-    [_workImageView addSubview:_deleteTipLabelButton];
+    [self addSubview:_deleteTipLabelButton];
     _deleteTipLabelButton.hidden = YES;
 }
 

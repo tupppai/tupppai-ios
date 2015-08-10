@@ -1,15 +1,15 @@
 //
-//  ATOMAddTipLabelToImageViewController.m
+//  ATOMAddTipLabelViewController.m
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/6.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMAddTipLabelToImageViewController.h"
+#import "ATOMAddTipLabelViewController.h"
 #import "ATOMAddTipLabelToImageView.h"
 #import "ATOMTipButton.h"
-#import "ATOMFillInContentOfTipLabelView.h"
+#import "ATOMInputTipLabelTextView.h"
 #import "ATOMInviteViewController.h"
 #import "ATOMShareViewController.h"
 #import "ATOMSubmitImageWithLabel.h"
@@ -23,11 +23,11 @@
 #import "TSMessage.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMAddTipLabelToImageViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate>
+@interface ATOMAddTipLabelViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) ATOMAddTipLabelToImageView *addTipLabelToImageView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapAddTipLabelToImageViewGesture;
-@property (nonatomic, strong) ATOMFillInContentOfTipLabelView *fillInContentOfTipLabelView;
+@property (nonatomic, strong) ATOMInputTipLabelTextView *fillInContentOfTipLabelView;
 @property (nonatomic, strong) NSArray *originLeftBarButtonItems;
 @property (nonatomic, strong) UIBarButtonItem *originRightBarButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *cancelLeftBarButtonItem;
@@ -39,7 +39,7 @@
 
 @end
 
-@implementation ATOMAddTipLabelToImageViewController
+@implementation ATOMAddTipLabelViewController
 
 #pragma mark - Lazy Initialize
 
@@ -115,7 +115,7 @@
     _addTipLabelToImageView = [ATOMAddTipLabelToImageView new];
     self.view = _addTipLabelToImageView;
     
-    _fillInContentOfTipLabelView = [ATOMFillInContentOfTipLabelView new];
+    _fillInContentOfTipLabelView = [ATOMInputTipLabelTextView new];
     _fillInContentOfTipLabelView.tipLabelContentTextField.delegate = self;
     [_fillInContentOfTipLabelView.tipLabelContentTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [_fillInContentOfTipLabelView.sendTipLabelTextButton addTarget:self action:@selector(clickSendTipLabelTextButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -144,7 +144,6 @@
         [self showWarnLabel];
         return ;
     }
-    
     self.navigationItem.rightBarButtonItem.enabled = NO;
     NSString *pushTypeStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"AskOrReply"];
     if ([pushTypeStr isEqualToString:@"Reply"]) {
@@ -368,28 +367,7 @@
     self.navigationItem.rightBarButtonItem = nil;
 }
 
--(void)showWarnLabel {
-    NSString *pushTypeStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"AskOrReply"];
-    if ([pushTypeStr isEqualToString:@"Reply"]) {
-        [TSMessage showNotificationWithTitle:@"大神你还没炫耀你的效果"
-                                    subtitle:@"请点击图片填写效果"
-                                        type:TSMessageNotificationTypeWarning];
-    } else if ([pushTypeStr isEqualToString:@"Ask"]) {
-        [TSMessage showNotificationWithTitle:@"你还没告诉大神你想要的效果"
-                                    subtitle:@"请点击图片填写效果"
-                                        type:TSMessageNotificationTypeWarning];
-    }
-}
--(void)showWarnLabel2 {
-        [TSMessage showNotificationWithTitle:@"标签内容不能为空"
-                                        type:TSMessageNotificationTypeWarning];
-    
-}
--(void)showWarnLabel3 {
-    [TSMessage showNotificationWithTitle:@"标签数量不能超过三个"
-                                    type:TSMessageNotificationTypeWarning];
-    
-}
+
 - (void)panTipLabelGesture:(UIPanGestureRecognizer *)gesture {
     CGPoint location = [gesture translationInView:_addTipLabelToImageView.workImageView];
     CGFloat x = gesture.view.center.x + location.x;
@@ -435,7 +413,30 @@
 }
 
 
+#pragma mark - warn label
 
+-(void)showWarnLabel {
+    NSString *pushTypeStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"AskOrReply"];
+    if ([pushTypeStr isEqualToString:@"Reply"]) {
+        [TSMessage showNotificationWithTitle:@"大神你还没炫耀你的效果"
+                                    subtitle:@"请点击图片填写效果"
+                                        type:TSMessageNotificationTypeWarning];
+    } else if ([pushTypeStr isEqualToString:@"Ask"]) {
+        [TSMessage showNotificationWithTitle:@"你还没告诉大神你想要的效果"
+                                    subtitle:@"请点击图片填写效果"
+                                        type:TSMessageNotificationTypeWarning];
+    }
+}
+-(void)showWarnLabel2 {
+    [TSMessage showNotificationWithTitle:@"标签内容不能为空"
+                                    type:TSMessageNotificationTypeWarning];
+    
+}
+-(void)showWarnLabel3 {
+    [TSMessage showNotificationWithTitle:@"标签数量不能超过三个"
+                                    type:TSMessageNotificationTypeWarning];
+    
+}
 
 
 

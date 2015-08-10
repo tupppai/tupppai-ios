@@ -19,8 +19,9 @@
         NSLog(@"getPushSetting info %@",info);
         int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
         if (ret == 1) {
-            if (block) {
-                //                block(, nil);
+            NSDictionary* data = [responseObject objectForKey:@"data"];
+            if (block && data) {
+                block(data,nil);
             }
         } else {
             

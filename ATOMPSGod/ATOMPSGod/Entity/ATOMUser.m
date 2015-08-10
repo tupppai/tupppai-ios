@@ -28,9 +28,9 @@
              @"mobile" : @"is_bound_mobile",
              @"boundWeibo" : @"is_bound_weibo",
              @"boundWechat" : @"is_bound_weixin",
-             @"locationID" : @"location",
-             @"cityID" : @"city",
-             @"provinceID" : @"province",
+//             @"locationID" : @"location",
+//             @"cityID" : @"city",
+//             @"provinceID" : @"province",
              @"isMyFan":@"is_fellow",
              @"isMyFollow":@"is_fans",
              };
