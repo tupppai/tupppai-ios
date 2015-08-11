@@ -1,14 +1,14 @@
 //
-//  PWPageDetailViewModel.m
+//  ATOMPageDetailViewModel.m
 //  ATOMPSGod
 //
 //  Created by Peiwei Chen on 6/11/15.
 //  Copyright (c) 2015 ATOM. All rights reserved.
 //
 
-#import "PWPageDetailViewModel.h"
+#import "ATOMPageDetailViewModel.h"
 #import "ATOMBaseRequest.h"
-@implementation PWPageDetailViewModel
+@implementation ATOMPageDetailViewModel
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -41,6 +41,7 @@
     _pageImage = model.image;
     _liked = model.liked;
     _collected = model.collected;
+    _labelArray = model.labelArray;
 }
 -(void)setCommonViewModelWithHotDetail:(ATOMHotDetailPageViewModel*)model {
     _type = model.type;
@@ -59,24 +60,9 @@
     _pageImage = model.image;
     _liked = model.liked;
     _collected = model.collected;
+    _labelArray = model.labelArray;
 }
-//-(void)setCommonViewModelWithProduct:(ATOMHotDetailPageViewModel*)model {
-//    _askID = model.askID;
-//    _type = 2;
-//    _pageID = model.ID;
-//    _pageImageURL = model.userImageURL;
-//    _pageImage = model.image;
-//    _avatarURL = model.avatarURL;
-//    _width = model.width;
-//    _height = model.height;
-//    _likeNumber = model.likeNumber;
-//    _shareNumber = model.shareNumber;
-//    _commentNumber = model.commentNumber;
-//    _userName = model.userName;
-//    _pageImage = model.image;
-//    _liked = model.liked;
-//    _collected = model.collected;
-//}
+
 
 -(void)setCommonViewModelWithFollow:(ATOMFollowPageViewModel*)model {
     _uid = model.userID;
@@ -96,6 +82,7 @@
     _pageImage = model.image;
     _liked = model.liked;
     _collected = model.collected;
+    _labelArray = model.labelArray;
 }
 
 -(ATOMAskPageViewModel*)generateAskPageViewModel {
@@ -117,6 +104,7 @@
     askPageViewModel.image = _pageImage;
     askPageViewModel.liked = _liked;
     askPageViewModel.collected = _collected;
+    askPageViewModel.labelArray = _labelArray;
     return askPageViewModel;
 }
 - (void)toggleLike{

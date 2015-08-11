@@ -7,10 +7,10 @@
 //
 
 #import "ATOMBaseViewController.h"
-#import "PWPageDetailViewModel.h"
+#import "ATOMPageDetailViewModel.h"
 @interface ATOMPageDetailViewController : ATOMBaseViewController
 
-@property (nonatomic, strong) PWPageDetailViewModel *pageDetailViewModel;
+@property (nonatomic, strong) ATOMPageDetailViewModel *pageDetailViewModel;
 
 //回传 是否点赞 到 parent VC
 @property (nonatomic, weak)   id<ATOMViewControllerDelegate> delegate;

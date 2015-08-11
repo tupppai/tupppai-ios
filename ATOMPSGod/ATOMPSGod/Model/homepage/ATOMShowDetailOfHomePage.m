@@ -13,7 +13,7 @@
 #import "ATOMCommentDAO.h"
 #import "ATOMDetailImageDAO.h"
 #import "ATOMHomeImageDAO.h"
-
+#import "ATOMImageTipLabel.h"
 @interface ATOMShowDetailOfHomePage ()
 @property (nonatomic, strong) ATOMDetailImageDAO *detailImageDAO;
 @property (nonatomic, strong) ATOMCommentDAO *commentDAO;
@@ -48,6 +48,17 @@
                 ATOMDetailImage *detailImage = [MTLJSONAdapter modelOfClass:[ATOMDetailImage class] fromJSONDictionary:imageDataArray[i] error:NULL];
                 detailImage.imageID = imageID;
                 detailImage.clickTime = [clickTime timeIntervalSince1970];
+                
+                detailImage.tipLabelArray = [NSMutableArray array];
+                NSArray *labelDataArray = [imageDataArray[i] objectForKey:@"labels"];
+                if (labelDataArray.count) {
+                    for (int j = 0; j < labelDataArray.count; j++) {
+                        ATOMImageTipLabel *tipLabel = [MTLJSONAdapter modelOfClass:[ATOMImageTipLabel class] fromJSONDictionary:labelDataArray[j] error:NULL];
+                        tipLabel.imageID = detailImage.imageID;
+                        [detailImage.tipLabelArray addObject:tipLabel];
+                    }
+                }
+                
                 detailImage.hotCommentArray = [NSMutableArray array];
                 NSArray *hotCommentDataArray = imageDataArray[i][@"hot_comments"];
                 if (hotCommentDataArray.count) {
@@ -78,7 +89,6 @@
 }
 
 - (void)saveDetailImagesInDB:(NSMutableArray *)detailImages {
-    
     if ([self isDetailImagesRechingTopBounds]) {
         [self clearPartOfDetailImages];
     }
@@ -88,35 +98,35 @@
             [self.detailImageDAO updateDetailImage:detailImage];
         } else {
             [self.detailImageDAO insertDetailImage:detailImage];
-            //创建HomePage目录
-            NSFileManager *fileManager = [NSFileManager defaultManager];
-            NSString *homePageDirectory = [PATH_OF_DOCUMENT stringByAppendingPathComponent:@"DetailImage"];
-            BOOL flag;
-            if ([fileManager fileExistsAtPath:homePageDirectory isDirectory:&flag]) {
-                if (flag) {
-                    NSLog(@"DetailImage directory already exists");
-                }
-            } else {
-                BOOL bo = [fileManager createDirectoryAtPath:homePageDirectory withIntermediateDirectories:YES attributes:nil error:NULL];
-                if (bo) {
-                    NSLog(@"create DetailImage directory success");
-                } else {
-                    NSLog(@"create DetailImage directory fail");
-                }
-            }
-            //将图片写入沙盒中的HomePage目录下
-            dispatch_queue_t q = dispatch_queue_create("LoadImage", NULL);
-            dispatch_async(q, ^{
-                NSURL *imageURL = [NSURL URLWithString:detailImage.imageURL];
-                NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-                UIImage *image = [UIImage imageWithData:imageData];
-                NSString *path = [homePageDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"ATOMIMAGE%d-%d.jpg", (int)detailImage.imageID, (int)detailImage.detailID]];
-                if ([UIImageJPEGRepresentation(image, 1) writeToFile:path atomically:YES]) {
-                    NSLog(@"保存 ATOMIMAGE%d-%d.jpg 成功", (int)detailImage.imageID, (int)detailImage.detailID);
-                } else {
-                    NSLog(@"保存 ATOMIMAGE%d-%d.jpg 失败 in %@", (int)detailImage.imageID, (int)detailImage.detailID, path);
-                }
-            });
+//            //创建DetailImage目录
+//            NSFileManager *fileManager = [NSFileManager defaultManager];
+//            NSString *homePageDirectory = [PATH_OF_DOCUMENT stringByAppendingPathComponent:@"DetailImage"];
+//            BOOL flag;
+//            if ([fileManager fileExistsAtPath:homePageDirectory isDirectory:&flag]) {
+//                if (flag) {
+//                    NSLog(@"DetailImage directory already exists");
+//                }
+//            } else {
+//                BOOL bo = [fileManager createDirectoryAtPath:homePageDirectory withIntermediateDirectories:YES attributes:nil error:NULL];
+//                if (bo) {
+////                    NSLog(@"create DetailImage directory success");
+//                } else {
+//                    NSLog(@"create DetailImage directory fail");
+//                }
+//            }
+//            //将图片写入沙盒中的DetailImage目录下
+//            dispatch_queue_t q = dispatch_queue_create("LoadImage", NULL);
+//            dispatch_async(q, ^{
+//                NSURL *imageURL = [NSURL URLWithString:detailImage.imageURL];
+//                NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+//                UIImage *image = [UIImage imageWithData:imageData];
+//                NSString *path = [homePageDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"ATOMIMAGE%d-%d.jpg", (int)detailImage.imageID, (int)detailImage.detailID]];
+//                if ([UIImageJPEGRepresentation(image, 1) writeToFile:path atomically:YES]) {
+//                    NSLog(@"保存 ATOMIMAGE%d-%d.jpg 成功", (int)detailImage.imageID, (int)detailImage.detailID);
+//                } else {
+//                    NSLog(@"保存 ATOMIMAGE%d-%d.jpg 失败 in %@", (int)detailImage.imageID, (int)detailImage.detailID, path);
+//                }
+//            });
         }
         //存储热门评论
         NSArray *comments = detailImage.hotCommentArray;
@@ -160,8 +170,8 @@
  *  按照时间戳排序清理前15条数据
  */
 - (void)clearPartOfDetailImages {
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *directory = [NSString stringWithFormat:@"%@/DetailImage", PATH_OF_DOCUMENT];
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//    NSString *directory = [NSString stringWithFormat:@"%@/DetailImage", PATH_OF_DOCUMENT];
     NSArray *homeImageIDArray = [self.detailImageDAO selectHomeImageIDOrderByClickTime];
     for (int i = 0; i < homeImageIDArray.count; i++) {
         NSInteger homeImageID = [homeImageIDArray[i] integerValue];
@@ -170,13 +180,13 @@
         for (ATOMDetailImage *detailImage in detailImageArray) {
             [self.commentDAO clearCommentsByDetailImageID:detailImage.detailID];
             //删除沙盒中DetailImage文件夹中对应的记录
-            NSString *filename = [directory stringByAppendingPathComponent:[NSString stringWithFormat:@"ATOMIMAGE%d-%d.jpg", (int)detailImage.imageID, (int)detailImage.imageID]];
-            BOOL bo = [fileManager removeItemAtPath:filename error:NULL];
-            if (bo) {
-                NSLog(@"remove %@ success", filename);
-            } else {
-                NSLog(@"remove %@ fail", filename);
-            }
+//            NSString *filename = [directory stringByAppendingPathComponent:[NSString stringWithFormat:@"ATOMIMAGE%d-%d.jpg", (int)detailImage.imageID, (int)detailImage.imageID]];
+//            BOOL bo = [fileManager removeItemAtPath:filename error:NULL];
+//            if (bo) {
+//                NSLog(@"remove %@ success", filename);
+//            } else {
+//                NSLog(@"remove %@ fail", filename);
+//            }
         }
         //删除详情
         [self.detailImageDAO clearDetailImagsByImageID:homeImageID];

@@ -4,7 +4,7 @@
 #import "ATOMAskPageViewModel.h"
 #import "ATOMHotDetailPageViewModel.h"
 
-@interface PWPageDetailViewModel : NSObject
+@interface ATOMPageDetailViewModel : NSObject
 @property (nonatomic, assign) NSInteger pageID;
 //type 1 求P ，2 作品
 @property (nonatomic, assign) NSInteger askID;
@@ -22,6 +22,9 @@
 @property (nonatomic, strong) UIImage *pageImage;
 @property (nonatomic, assign) BOOL liked;
 @property (nonatomic, assign) BOOL collected;
+
+@property (nonatomic, strong) NSMutableArray *labelArray;
+
 
 -(void)setCommonViewModelWithAsk:(ATOMAskPageViewModel*)model;
 //-(void)setCommonViewModelWithProduct:(ATOMHotDetailPageViewModel*)model;

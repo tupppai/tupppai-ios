@@ -84,8 +84,8 @@
 }
 
 
--(PWPageDetailViewModel*)generatepageDetailViewModel {
-    PWPageDetailViewModel* commonViewModel = [PWPageDetailViewModel new];
+-(ATOMPageDetailViewModel*)generatepageDetailViewModel {
+    ATOMPageDetailViewModel* commonViewModel = [ATOMPageDetailViewModel new];
     commonViewModel.pageID = _ID;
     commonViewModel.type = ATOMPageTypeAsk;
     commonViewModel.pageImageURL = _userImageURL;
@@ -101,7 +101,7 @@
     return commonViewModel;
 }
 
--(void)setViewModelWithCommon:(PWPageDetailViewModel*)commonViewModel {
+-(void)setViewModelWithCommon:(ATOMPageDetailViewModel*)commonViewModel {
     _ID = commonViewModel.pageID;
     _userImageURL = commonViewModel.pageImageURL;
     _image = commonViewModel.pageImage;

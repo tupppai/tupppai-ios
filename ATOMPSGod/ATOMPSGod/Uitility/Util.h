@@ -26,4 +26,5 @@
 +(void)ShowTSMessageWarn:(NSString*)str;
 +(void)ShowTSMessageSuccess:(NSString*)str;
 NSString* deviceName();
++(void)showWeAreWorkingOnThisFeature;
 @end

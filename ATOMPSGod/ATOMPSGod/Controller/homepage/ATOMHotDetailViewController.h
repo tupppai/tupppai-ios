@@ -7,7 +7,7 @@
 //
 
 #import "ATOMBaseViewController.h"
-#import "PWPageDetailViewModel.h"
+#import "ATOMPageDetailViewModel.h"
 #import "ATOMAskPageViewModel.h"
 
 @interface ATOMHotDetailViewController : ATOMBaseViewController

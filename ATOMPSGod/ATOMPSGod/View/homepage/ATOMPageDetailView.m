@@ -1,19 +1,19 @@
 //
-//  ATOMAskDetailView.m
+//  ATOMPageDetailView.m
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/22.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMAskDetailView.h"
+#import "ATOMPageDetailView.h"
 #import "ATOMAskPageViewModel.h"
-#import "ATOMAskDetailHeaderView.h"
+#import "ATOMPageDetailHeaderView.h"
 #import "ATOMFaceView.h"
 #import "ATOMHotDetailPageViewModel.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMAskDetailView () <UIScrollViewDelegate, ATOMFaceViewDelegate>
+@interface ATOMPageDetailView () <UIScrollViewDelegate, ATOMFaceViewDelegate>
 
 @property (nonatomic, assign) int lastContentSizeHeight;
 @property (nonatomic, assign) BOOL isKeyboardVisible;
@@ -24,7 +24,7 @@
 
 @end
 
-@implementation ATOMAskDetailView
+@implementation ATOMPageDetailView
 
 static CGFloat faceViewHeight = 200;
 static CGFloat pageControlWidth = 150;
@@ -62,7 +62,7 @@ static CGFloat pageControlWidth = 150;
 
 - (void)createSubView {
     _recentDetailTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - 46)];
-    _headerView = [ATOMAskDetailHeaderView new];
+    _headerView = [ATOMPageDetailHeaderView new];
     _recentDetailTableView.tableFooterView = [UIView new];
     _recentDetailTableView.rowHeight = 70;
     _recentDetailTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -137,9 +137,9 @@ static CGFloat pageControlWidth = 150;
 }
 
 
--(void)setPageDetailViewModel:(PWPageDetailViewModel *)pageDetailViewModel {
+-(void)setPageDetailViewModel:(ATOMPageDetailViewModel *)pageDetailViewModel {
     _headerView.pageDetailViewModel = pageDetailViewModel;
-    CGFloat headerHeight = [ATOMAskDetailHeaderView calculateHeaderViewHeight:pageDetailViewModel];
+    CGFloat headerHeight = [ATOMPageDetailHeaderView calculateHeaderViewHeight:pageDetailViewModel];
     _headerView.frame = CGRectMake(0, 0, SCREEN_WIDTH, headerHeight);
     _recentDetailTableView.tableHeaderView = _headerView;
 }

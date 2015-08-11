@@ -1,20 +1,23 @@
 //
-//  ATOMAskDetailHeaderView.m
+//  ATOMPageDetailHeaderView.m
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/22.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMAskDetailHeaderView.h"
+#import "ATOMPageDetailHeaderView.h"
 #import "ATOMAskPageViewModel.h"
 #import "ATOMBottomCommonButton.h"
+#import "ATOMTipButton.h"
+#import "ATOMImageTipLabelViewModel.h"
+#define MAXHEIGHT (SCREEN_WIDTH-kPadding15*2)*4/3
 
-@interface ATOMAskDetailHeaderView ()
+@interface ATOMPageDetailHeaderView ()
 
 @end
 
-@implementation ATOMAskDetailHeaderView
+@implementation ATOMPageDetailHeaderView
 
 - (instancetype)init {
     self = [super init];
@@ -29,16 +32,14 @@
     _topView = [UIView new];
     _topView.backgroundColor = [UIColor whiteColor];
     _userWorkImageView = [UIImageView new];
-    _userWorkImageView.contentMode = UIViewContentModeScaleAspectFill;
-    _userWorkImageView.layer.masksToBounds = YES;
-
+    _userWorkImageView.contentMode = UIViewContentModeScaleAspectFit;
+    _userWorkImageView.userInteractionEnabled = YES;
     _thinCenterView = [UIView new];
     [self addSubview:_topView];
     [self addSubview:_userWorkImageView];
     [self addSubview:_thinCenterView];
     
     _userHeaderButton = [UIButton new];
-//    _userHeaderButton.userInteractionEnabled = NO;
     _userHeaderButton.layer.cornerRadius = kUserHeaderButtonWidth / 2;
     _userHeaderButton.layer.masksToBounds = YES;
     
@@ -47,7 +48,6 @@
     _userNameLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
     
     _psButton = [UIButton new];
-//    _psButton.userInteractionEnabled = NO;
     [_psButton setBackgroundImage:[UIImage imageNamed:@"btn_p_normal"] forState:UIControlStateNormal];
     
     [_topView addSubview:_userHeaderButton];
@@ -80,23 +80,6 @@
     
     CGSize workImageSize = CGSizeZero;
     CGSize commentSize, shareSize, praiseSize;
-//    if (_askPageViewModel) {
-//        workImageSize = [[self class] calculateImageViewSizeWith:_askPageViewModel.width height:_askPageViewModel.height];
-//        commentSize = [_askPageViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                         NSStringDrawingUsesFontLeading          attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
-//        commentSize.width += kBottomCommonButtonWidth + kPadding15;
-//        shareSize = [_askPageViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                           NSStringDrawingUsesFontLeading            attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
-//        shareSize.width += kBottomCommonButtonWidth + kPadding15;
-//        praiseSize = [_askPageViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                          NSStringDrawingUsesFontLeading           attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
-//        praiseSize.width += kBottomCommonButtonWidth + kPadding15;
-//    } else if (_productPageViewModel) {
-//        workImageSize = [[self class] calculateImageViewSizeWith:_productPageViewModel.width height:_productPageViewModel.height];
-//        commentSize = [_productPageViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                         NSStringDrawingUsesFontLeading          attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
-//        commentSize.width += kBottomCommonButtonWidth + kPadding15;
-//        shareSize = [_productPageViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                           NSStringDrawingUsesFontLeading            attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
-//        shareSize.width += kBottomCommonButtonWidth + kPadding15;
-//        praiseSize = [_productPageViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                          NSStringDrawingUsesFontLeading           attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
-//        praiseSize.width += kBottomCommonButtonWidth + kPadding15;
-//    }
     
     if (_pageDetailViewModel) {
         workImageSize = [[self class] calculateImageViewSizeWith:_pageDetailViewModel.width height:_pageDetailViewModel.height];
@@ -107,7 +90,15 @@
         praiseSize = [_pageDetailViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                          NSStringDrawingUsesFontLeading           attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
         praiseSize.width += kBottomCommonButtonWidth + kPadding15;
     }
-    _userWorkImageView.frame = CGRectMake((SCREEN_WIDTH - workImageSize.width) / 2, CGRectGetMaxY(_topView.frame), workImageSize.width, workImageSize.height);
+    
+    CGFloat cellHeight;
+    if (workImageSize.height >= MAXHEIGHT) {
+        cellHeight = MAXHEIGHT;
+    } else {
+        cellHeight = workImageSize.height;
+    }
+    _userWorkImageView.frame = CGRectMake((SCREEN_WIDTH - workImageSize.width) / 2, CGRectGetMaxY(_topView.frame), workImageSize.width, cellHeight);
+    
     CGFloat thinViewHeight = 60;
     CGFloat bottomButtonOriginY = (thinViewHeight - kBottomCommonButtonWidth) / 2;
     _thinCenterView.frame = CGRectMake(0, CGRectGetMaxY(_userWorkImageView.frame), SCREEN_WIDTH, thinViewHeight);
@@ -121,42 +112,44 @@
 + (CGSize)calculateImageViewSizeWith:(CGFloat)width height:(CGFloat)height {
     return CGSizeMake(width, height);
 }
-+ (CGFloat)calculateHeaderViewHeight:(PWPageDetailViewModel *)viewModel {
-    NSLog(@"calculateHeaderViewHeight %f",60 + viewModel.height + 60);
-    return 60 + viewModel.height + 60;
-}
-- (void)setAskPageViewModel:(ATOMAskPageViewModel *)askPageViewModel {
-    _userNameLabel.text = askPageViewModel.userName;
-    [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:askPageViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
-    if (askPageViewModel.image) {
-        _userWorkImageView.image = askPageViewModel.image;
-    } else {
-        [_userWorkImageView setImageWithURL:[NSURL URLWithString:askPageViewModel.userImageURL]];
++ (CGFloat)calculateHeaderViewHeight:(ATOMPageDetailViewModel *)viewModel {
+    if (viewModel.height >= MAXHEIGHT) {
+        return 60 + MAXHEIGHT + 60;
     }
-    
-    _praiseButton.selected = askPageViewModel.liked;
-    _praiseButton.number = askPageViewModel.likeNumber;
-    _shareButton.number = askPageViewModel.shareNumber;
-    _commentButton.number = askPageViewModel.commentNumber;
-    [self setNeedsLayout];
+    return 60 + viewModel.height + 60 ;
 }
+//- (void)setAskPageViewModel:(ATOMAskPageViewModel *)askPageViewModel {
+//    _userNameLabel.text = askPageViewModel.userName;
+//    [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:askPageViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
+//    if (askPageViewModel.image) {
+//        _userWorkImageView.image = askPageViewModel.image;
+//    } else {
+//        [_userWorkImageView setImageWithURL:[NSURL URLWithString:askPageViewModel.userImageURL]];
+//    }
+//    
+//    _praiseButton.selected = askPageViewModel.liked;
+//    _praiseButton.number = askPageViewModel.likeNumber;
+//    _shareButton.number = askPageViewModel.shareNumber;
+//    _commentButton.number = askPageViewModel.commentNumber;
+//    [self setNeedsLayout];
+//}
 
--(void)setProductPageViewModel:(ATOMHotDetailPageViewModel *)productPageViewModel {
-    _userNameLabel.text = productPageViewModel.userName;
-    [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:productPageViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
-    if (productPageViewModel.image) {
-        _userWorkImageView.image = productPageViewModel.image;
-    } else {
-        [_userWorkImageView setImageWithURL:[NSURL URLWithString:productPageViewModel.userImageURL]];
-    }
-    _praiseButton.selected = productPageViewModel.liked;
-    _praiseButton.number = productPageViewModel.likeNumber;
-    _shareButton.number = productPageViewModel.shareNumber;
-    _commentButton.number = productPageViewModel.commentNumber;
-    [self setNeedsLayout];
-}
+//-(void)setProductPageViewModel:(ATOMHotDetailPageViewModel *)productPageViewModel {
+//    _userNameLabel.text = productPageViewModel.userName;
+//    [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:productPageViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
+//    if (productPageViewModel.image) {
+//        _userWorkImageView.image = productPageViewModel.image;
+//    } else {
+//        [_userWorkImageView setImageWithURL:[NSURL URLWithString:productPageViewModel.userImageURL]];
+//    }
+//    _praiseButton.selected = productPageViewModel.liked;
+//    _praiseButton.number = productPageViewModel.likeNumber;
+//    _shareButton.number = productPageViewModel.shareNumber;
+//    _commentButton.number = productPageViewModel.commentNumber;
+//    [self setNeedsLayout];
+//}
 
--(void)setPageDetailViewModel:(PWPageDetailViewModel *)pageDetailViewModel {
+-(void)setPageDetailViewModel:(ATOMPageDetailViewModel *)pageDetailViewModel {
     _pageDetailViewModel = pageDetailViewModel;
     _userNameLabel.text = pageDetailViewModel.userName;
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pageDetailViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
@@ -169,14 +162,32 @@
     _praiseButton.number = pageDetailViewModel.likeNumber;
     _shareButton.number = pageDetailViewModel.shareNumber;
     _commentButton.number = pageDetailViewModel.commentNumber;
+    [self addTipLabelToImageView];
     [self setNeedsLayout];
 }
 
 
 
-
-
-
+- (void)addTipLabelToImageView {
+    //移除旧的标签
+    for (UIView * subView in _userWorkImageView.subviews) {
+        if ([subView isKindOfClass:[ATOMTipButton class]]) {
+            ATOMTipButton *button = (ATOMTipButton *)subView;
+            [button removeFromSuperview];
+        }
+    }
+    for (ATOMImageTipLabelViewModel *labelViewModel in _pageDetailViewModel.labelArray) {
+        CGRect labelFrame = [labelViewModel imageTipLabelFrameByImageSize:CGSizeMake(_pageDetailViewModel.width, _pageDetailViewModel.height)];
+        ATOMTipButton * button = [[ATOMTipButton alloc] initWithFrame:labelFrame];
+        if (labelViewModel.labelDirection == 0) {
+            button.tipButtonType = ATOMLeftTipType;
+        } else {
+            button.tipButtonType = ATOMRightTipType;
+        }
+        button.buttonText = labelViewModel.content;
+        [_userWorkImageView addSubview:button];
+    }
+}
 
 
 

@@ -44,6 +44,7 @@
     _labelArray = [askPageViewModel.labelArray mutableCopy];
     _liked = askPageViewModel.liked;
     _collected = askPageViewModel.collected;
+    
 //    NSFileManager *fileManager = [NSFileManager defaultManager];
 //    NSString *path = [[NSString stringWithFormat:@"%@/HomePage", PATH_OF_DOCUMENT] stringByAppendingPathComponent:[NSString stringWithFormat:@"ATOMIMAGE-%d.jpg", (int)askPageViewModel.imageID]];
 //    BOOL flag;
@@ -67,13 +68,19 @@
     NSDateFormatter *df = [NSDateFormatter new];
     [df setDateFormat:@"yyyy年MM月dd日 HH时mm分"];
     NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:detailImage.replyTime];
-    _publishTime = [df stringFromDate:publishDate];
+//    _publishTime = [df stringFromDate:publishDate];
+    _publishTime = [Util formatPublishTime:publishDate];
     _likeNumber = [NSString stringWithFormat:@"%d",(int)detailImage.totalPraiseNumber];
     _shareNumber = [NSString stringWithFormat:@"%d",(int)detailImage.totalShareNumber];
     _commentNumber = [NSString stringWithFormat:@"%d",(int)detailImage.totalCommentNumber];
     _liked = detailImage.liked;
     _width = detailImage.imageWidth;
     _height = detailImage.imageHeight;
+    for (ATOMImageTipLabel *tipLabel in detailImage.tipLabelArray) {
+        ATOMImageTipLabelViewModel *model = [ATOMImageTipLabelViewModel new];
+        [model setViewModelData:tipLabel];
+        [_labelArray addObject:model];
+    }
     for (ATOMComment *comment in detailImage.hotCommentArray) {
         ATOMCommentViewModel *model = [ATOMCommentViewModel new];
         [model setViewModelData:comment];

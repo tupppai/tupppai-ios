@@ -1,5 +1,5 @@
 //
-//  ATOMAskDetailHeaderView.h
+//  ATOMPageDetailHeaderView.h
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/22.
@@ -9,9 +9,9 @@
 #import "ATOMBaseView.h"
 #import "ATOMAskPageViewModel.h"
 #import "ATOMHotDetailPageViewModel.h"
-#import "PWPageDetailViewModel.h"
+#import "ATOMPageDetailViewModel.h"
 @class ATOMBottomCommonButton;
-@interface ATOMAskDetailHeaderView : ATOMBaseView
+@interface ATOMPageDetailHeaderView : ATOMBaseView
 
 @property (nonatomic, strong) UIButton *userHeaderButton;
 @property (nonatomic, strong) UILabel *userNameLabel;
@@ -23,8 +23,8 @@
 @property (nonatomic, strong) UIButton *moreShareButton;
 @property (nonatomic, strong) UIView *topView;
 @property (nonatomic, strong) UIView *thinCenterView;
-@property (nonatomic, strong) PWPageDetailViewModel *pageDetailViewModel;
+@property (nonatomic, strong) ATOMPageDetailViewModel *pageDetailViewModel;
 
-+ (CGFloat)calculateHeaderViewHeight:(PWPageDetailViewModel *)viewModel;
++ (CGFloat)calculateHeaderViewHeight:(ATOMPageDetailViewModel *)viewModel;
 
 @end

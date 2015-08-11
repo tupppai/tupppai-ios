@@ -27,6 +27,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTableView) name:@"ReceiveRemoteNotification" object:nil];
+}
+
+-(void)refreshTableView {
+    [_tableView reloadData];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -80,6 +85,9 @@
         cell.imageView.image = [UIImage imageNamed:@"ic_news_setting"];
         cell.textLabel.text = @"系统通知";
     }
+    NSString* badgeKey = [NSString stringWithFormat:@"NotifyType%zd",indexPath.row];
+    cell.badgeNumber = [[[NSUserDefaults standardUserDefaults]objectForKey:badgeKey]intValue];
+    NSLog(@"number %d badgeKey %@",[[[NSUserDefaults standardUserDefaults]objectForKey:badgeKey]intValue],badgeKey);
     return cell;
 }
 
@@ -98,6 +106,15 @@
         return;
     }
     NSInteger row = indexPath.row;
+    
+    //clear badge
+    NSString* badgeKey = [NSString stringWithFormat:@"NotifyType%zd",row];
+    [[NSUserDefaults standardUserDefaults]setObject:@(0) forKey:badgeKey];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    ATOMMyMessageTableViewCell *cell = (ATOMMyMessageTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+    cell.badgeNumber = 0;
+    [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    
     if (row == 0) {
         ATOMCommentMessageViewController *cmvc = [ATOMCommentMessageViewController new];
         [self pushViewController:cmvc animated:YES];

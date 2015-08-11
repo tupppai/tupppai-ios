@@ -18,7 +18,7 @@
 #import "ATOMBottomCommonButton.h"
 #import "ATOMNoDataView.h"
 #import "PWRefreshBaseTableView.h"
-#import "PWPageDetailViewModel.h"
+#import "ATOMPageDetailViewModel.h"
 #import "ATOMShareFunctionView.h"
 #import "ATOMPageDetailViewController.h"
 #import "AppDelegate.h"
@@ -286,7 +286,7 @@
         //点击图片
         if (CGRectContainsPoint(_selectedCell.userWorkImageView.frame, p)) {
             ATOMPageDetailViewController* pdvc = [ATOMPageDetailViewController new];
-            PWPageDetailViewModel *pageDetailViewModel = [PWPageDetailViewModel new];
+            ATOMPageDetailViewModel *pageDetailViewModel = [ATOMPageDetailViewModel new];
             [pageDetailViewModel setCommonViewModelWithFollow:_dataSource[indexPath.row]];
             pdvc.pageDetailViewModel = pageDetailViewModel;
             pdvc.delegate = self;
@@ -318,7 +318,7 @@
                 [self postSocialShare:_selectedCell.viewModel.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:_selectedCell.viewModel.type];
             } else if (CGRectContainsPoint(_selectedCell.commentButton.frame, p)) {
                 ATOMPageDetailViewController* pdvc = [ATOMPageDetailViewController new];
-                PWPageDetailViewModel *pageDetailViewModel = [PWPageDetailViewModel new];
+                ATOMPageDetailViewModel *pageDetailViewModel = [ATOMPageDetailViewModel new];
                 [pageDetailViewModel setCommonViewModelWithFollow:_dataSource[indexPath.row]];
                 pdvc.delegate = self;
                 pdvc.pageDetailViewModel = pageDetailViewModel;
@@ -368,9 +368,6 @@
 -(void)ATOMViewControllerDismissWithLiked:(BOOL)liked {
     [_selectedCell.praiseButton toggleLikeWhenSelectedChanged:liked];
 }
-
-
-
 
 - (void)dealDownloadWork {
     NSMutableDictionary* param = [NSMutableDictionary new];

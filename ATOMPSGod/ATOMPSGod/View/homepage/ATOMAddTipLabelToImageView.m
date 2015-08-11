@@ -48,9 +48,8 @@ static int padding10 = 10;
 - (void)createSubView {
     self.backgroundColor = [UIColor whiteColor];
     _imageContainerView = [[UIView alloc] initWithFrame:CGRectMake(kPadding15, 0, SCREEN_WIDTH,SCREEN_HEIGHT - NAV_HEIGHT -  _BOTTOMHEIGHT)];
-    _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - NAV_HEIGHT - _BOTTOMHEIGHT, SCREEN_WIDTH, _BOTTOMHEIGHT)];
+
     [self addSubview:_imageContainerView];
-    [self addSubview:_bottomView];
     [self createBottomView];
 }
 
@@ -82,24 +81,31 @@ static int padding10 = 10;
 //    } else
     
 //        if ([str isEqualToString:@"Ask"]) {
-        _bigLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, _BOTTOMHEIGHT/3, SCREEN_WIDTH, 30)];
-        _bigLabel.text = @"点击图片";
-        _bigLabel.textColor = [UIColor colorWithHex:0x637685];
-        _bigLabel.font = [UIFont systemFontOfSize:18];
-        _bigLabel.textAlignment = NSTextAlignmentCenter;
-        [_bottomView addSubview:_bigLabel];
-        _smallLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_bigLabel.frame) + 20, SCREEN_WIDTH, 12)];
-        _smallLabel.text = @"在标签里添加你要的效果";
-        _smallLabel.textColor = [UIColor colorWithHex:0x637685];
-        _smallLabel.font = [UIFont systemFontOfSize:14];
-        _smallLabel.textAlignment = NSTextAlignmentCenter;
-        [_bottomView addSubview:_smallLabel];
+    
+    _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - NAV_HEIGHT - _BOTTOMHEIGHT, SCREEN_WIDTH, _BOTTOMHEIGHT)];
+    [self addSubview:_bottomView];
+    _bigLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, _BOTTOMHEIGHT/5, SCREEN_WIDTH, 30)];
+    _bigLabel.text = @"点击图片";
+    _bigLabel.textColor = [UIColor colorWithHex:0x637685];
+    _bigLabel.font = [UIFont systemFontOfSize:18];
+    _bigLabel.textAlignment = NSTextAlignmentCenter;
+    [_bottomView addSubview:_bigLabel];
+    _smallLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_bigLabel.frame) + 20, SCREEN_WIDTH, 12)];
+    _smallLabel.text = @"在标签里添加你要的效果";
+    _smallLabel.textColor = [UIColor colorWithHex:0x637685];
+    _smallLabel.font = [UIFont systemFontOfSize:14];
+    _smallLabel.textAlignment = NSTextAlignmentCenter;
+    [_bottomView addSubview:_smallLabel];
+    NSString *pushTypeStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"AskOrReply"];
+    if ([pushTypeStr isEqualToString:@"Reply"]) {
+        _bigLabel.text = @"求PS大神";
+        _smallLabel.text = @"感谢有你";
+        }
     
     CALayer *TopBorder = [CALayer layer];
     TopBorder.frame = CGRectMake(10.0f, 0.0f, _bottomView.frame.size.width-20, 1.0f);
     TopBorder.backgroundColor = [UIColor colorWithHex:0xc6c6c6 andAlpha:0.8].CGColor;
     [_bottomView.layer addSublayer:TopBorder];
-//    }
 }
 
 //- (void) setCommonButton:(UIButton *)button WithImage:(UIImage *)image AndSelectedImage:(UIImage *)simage {
@@ -112,49 +118,25 @@ static int padding10 = 10;
 
     CGFloat maxWith = SCREEN_WIDTH-kPadding15*2;
     CGFloat maxHeight = SCREEN_HEIGHT - _BOTTOMHEIGHT - NAV_HEIGHT;
-//    CGFloat imageScale;
+    CGFloat imageScale = maxWith/_workImage.size.width;
+    CGFloat relativeHeight = _workImage.size.height*imageScale;
     CGPoint location;
     
     CGRect rect;
-    if ((int)_workImage.size.height <= maxHeight) {
-            rect = CGRectMake(0, 0, maxWith, _workImage.size.height);
+    if (relativeHeight <= maxHeight) {
+            rect = CGRectMake(0, 0, maxWith, relativeHeight);
     } else {
             rect = CGRectMake(0, 0, maxWith, maxHeight);
     }
-    
-    NSLog(@"workImage.size.width%f",_workImage.size.width);
     if ((int)_workImage.size.width <= maxWith) {
         location.x = (maxWith - _workImage.size.width) / 2;
-        NSLog(@"location.x %f",location.x);
     } else {
         location.x = 0;
     }
-    NSLog(@"location.x 2%f",location.x);
 
     location.y = (maxHeight - rect.size.height) / 2;
     rect.origin = location;
-
     return rect;
-//    if ((int)CGWidth(rect) <= maxWith && (int)CGHeight(rect) <= maxHeight) {
-//        rect.origin = location;
-//        return rect;
-//    }
-//    
-//    imageScale = maxHeight / _workImage.size.height;
-//    rect = CGRectMake(0, 0, _workImage.size.width * imageScale, _workImage.size.height * imageScale);
-//    if ((int)CGWidth(rect) <= maxWith && (int)CGHeight(rect) <= maxHeight) {
-//        location.x = (maxWith - rect.size.width) / 2;
-//        location.y = (maxHeight - rect.size.height) / 2;
-//        rect.origin = location;
-//        return rect;
-//    }
-//    
-//    imageScale = maxWith / _workImage.size.width;
-//    rect = CGRectMake(0, 0, _workImage.size.width * imageScale, _workImage.size.height * imageScale);
-//    location.x = (maxWith - rect.size.width) / 2;
-//    location.y = (maxHeight - rect.size.height) / 2;
-//    rect.origin = location;
-//    return rect;
     
 }
 

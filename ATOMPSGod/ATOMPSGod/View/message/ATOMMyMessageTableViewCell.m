@@ -7,6 +7,13 @@
 //
 
 #import "ATOMMyMessageTableViewCell.h"
+#import "CustomBadge.h"
+
+@interface ATOMMyMessageTableViewCell()
+
+@property (nonatomic, strong) CustomBadge *badge;
+
+@end
 
 @implementation ATOMMyMessageTableViewCell
 
@@ -15,18 +22,29 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-//        UIImageView* arrowImageView = [UIImageView new];
-//        arrowImageView.contentMode = UIViewContentModeCenter;
-//        self.textLabel.textColor = [UIColor colorWithHex:0x737373 andAlpha:1.0];
-//        arrowImageView.image = [UIImage imageNamed:@"ic_right-arrow"];
-//        self.accessoryView = arrowImageView;
+        _badgeNumber = 0;
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         self.separatorInset = UIEdgeInsetsMake(0, kPadding20, 0, kPadding20);
         self.textLabel.textColor = [UIColor colorWithHex:0x737373];
     }
     return self;
 }
-
+-(void)setBadgeNumber:(int)badgeNumber {
+    if (badgeNumber <= 0) {
+        [_badge removeFromSuperview];
+    } else {
+        [_badge removeFromSuperview];
+        _badge = [CustomBadge customBadgeWithString:[NSString stringWithFormat:@"%d",badgeNumber]];
+        [self addSubview:_badge];
+        _badge.hidden = NO;
+        [_badge mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(self);
+            make.right.equalTo(self.mas_right).with.offset(-100);
+            make.width.equalTo(@30);
+            make.height.equalTo(@30);
+        }];
+    }
+}
 //- (void)createSubViewConstaints {
 //    
 //    [self.themeImageView mas_makeConstraints:^(MASConstraintMaker *make) {

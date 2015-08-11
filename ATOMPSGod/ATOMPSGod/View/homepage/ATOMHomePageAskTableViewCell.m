@@ -94,13 +94,13 @@
         praiseSize = [_viewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading           attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
         praiseSize.width += kBottomCommonButtonWidth + kPadding15;
     }
-    CGFloat cellHeight;
+    CGFloat imageViewHeight;
     if (workImageSize.height >= MAXHEIGHT) {
-        cellHeight = MAXHEIGHT;
+        imageViewHeight = MAXHEIGHT;
     } else {
-        cellHeight = workImageSize.height;
+        imageViewHeight = workImageSize.height;
     }
-    _userWorkImageView.frame = CGRectMake((SCREEN_WIDTH - workImageSize.width) / 2, CGRectGetMaxY(_topView.frame), workImageSize.width, cellHeight);
+    _userWorkImageView.frame = CGRectMake((SCREEN_WIDTH - workImageSize.width) / 2, CGRectGetMaxY(_topView.frame), workImageSize.width, imageViewHeight);
     
     CGFloat thinViewHeight = 60;
     CGFloat bottomButtonOriginY = (thinViewHeight - kBottomCommonButtonWidth) / 2;
@@ -152,7 +152,6 @@
             [button removeFromSuperview];
         }
     }
-    
     for (ATOMImageTipLabelViewModel *labelViewModel in _viewModel.labelArray) {
         CGRect labelFrame = [labelViewModel imageTipLabelFrameByImageSize:CGSizeMake(_viewModel.width, _viewModel.height)];
         ATOMTipButton * button = [[ATOMTipButton alloc] initWithFrame:labelFrame];

@@ -53,18 +53,25 @@
     [self addSubview:_extralBottomView];
     
     _userHeaderButton = [UIButton new];
+    _userHeaderButton.userInteractionEnabled = NO;
     _userHeaderButton.layer.cornerRadius = kUserHeaderButtonWidth / 2;
     _userHeaderButton.layer.masksToBounds = YES;
     
     _userNameLabel = [UILabel new];
-    _userNameLabel.font = [UIFont systemFontOfSize:kFont14];
-    _userNameLabel.textColor = [UIColor colorWithHex:0x585858];
-
+    _userNameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:kFont14];
+    _userNameLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
+        
+    _userPublishTimeLabel = [UILabel new];
+    _userPublishTimeLabel.font = [UIFont systemFontOfSize:11];
+    _userPublishTimeLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
+    
     _psButton = [UIButton new];
+    _psButton.userInteractionEnabled = NO;
     [_psButton setBackgroundImage:[UIImage imageNamed:@"btn_p_normal"] forState:UIControlStateNormal];
     
     [_topView addSubview:_userHeaderButton];
     [_topView addSubview:_userNameLabel];
+    [_topView addSubview:_userPublishTimeLabel];
     [_topView addSubview:_psButton];
 
     _praiseButton = [ATOMBottomCommonButton new];
@@ -100,9 +107,10 @@
     [super layoutSubviews];
     _topView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 60);
     _userHeaderButton.frame = CGRectMake(kPadding15, (60 - kUserHeaderButtonWidth) / 2, kUserHeaderButtonWidth, kUserHeaderButtonWidth);
-    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, (60 - kFont14) / 2, kUserNameLabelWidth, kFont14+2);
+//    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, (60 - kFont14) / 2, kUserNameLabelWidth, kFont14+2);
     _psButton.frame = CGRectMake(SCREEN_WIDTH - kPadding15 - kPSButtonWidth, (60 - kPSButtonHeight) / 2, kPSButtonWidth, kPSButtonHeight);
-    
+    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, CGRectGetMinY(_userHeaderButton.frame), kUserNameLabelWidth, kFont14+3);
+    _userPublishTimeLabel.frame = CGRectMake(CGRectGetMinX(_userNameLabel.frame)+1, CGRectGetMaxY(_userHeaderButton.frame) - kFont10, 200, kFont12+1);
     CGSize workImageSize = CGSizeZero;
     CGSize commentSize, shareSize, praiseSize;
     if (_viewModel) {
@@ -188,6 +196,7 @@
         }
     }
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
+    _userPublishTimeLabel.text = viewModel.publishTime;
     _praiseButton.number = viewModel.likeNumber;
     _praiseButton.selected = viewModel.liked;
     _shareButton.number = viewModel.shareNumber;
@@ -205,9 +214,9 @@
             [button removeFromSuperview];
         }
     }
-    
     for (ATOMImageTipLabelViewModel *labelViewModel in _viewModel.labelArray) {
         CGRect labelFrame = [labelViewModel imageTipLabelFrameByImageSize:CGSizeMake(_viewModel.width, _viewModel.height)];
+        
         ATOMTipButton * button = [[ATOMTipButton alloc] initWithFrame:labelFrame];
         if (labelViewModel.labelDirection == 0) {
             button.tipButtonType = ATOMLeftTipType;
@@ -215,6 +224,7 @@
             button.tipButtonType = ATOMRightTipType;
         }
         button.buttonText = labelViewModel.content;
+        
         [_userWorkImageView addSubview:button];
     }
 }

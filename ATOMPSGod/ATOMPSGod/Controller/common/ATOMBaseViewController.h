@@ -9,6 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "ATOMShare.h"
 #import "ATOMShareModel.h"
+typedef enum {
+    ATOMNotifyTypeComment = 0,
+    ATOMNotifyTypeReply,
+    ATOMNotifyTypeAttention,
+    ATOMNotifyTypeInvite,
+    ATOMNotifyTypeSystem,
+}ATOMNotifyType;
 
 typedef enum {
     ATOMUploadWorType = 0,

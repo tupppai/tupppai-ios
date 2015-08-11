@@ -107,6 +107,9 @@
 }
 
 - (void)createUI {
+    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"推荐关注" style:UIBarButtonItemStylePlain target:self action:@selector(showRecommendation)];
+    self.navigationItem.rightBarButtonItem = anotherButton;
+    
     self.title = [NSString stringWithFormat:@"%@的粉丝", _uid ? _userName : @"我"];
     _myFansView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _myFansView;
@@ -125,7 +128,9 @@
 }
 
 #pragma mark - Click Event
-
+-(void) showRecommendation {
+    [Util showWeAreWorkingOnThisFeature];
+}
 #pragma mark - Gesture Event
 
 - (void)tapMyFansGesture:(UITapGestureRecognizer *)gesture {

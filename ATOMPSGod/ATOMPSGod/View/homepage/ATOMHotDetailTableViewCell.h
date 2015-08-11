@@ -14,6 +14,7 @@
 
 @property (nonatomic, strong) UIButton *userHeaderButton;
 @property (nonatomic, strong) UILabel *userNameLabel;
+@property (nonatomic, strong) UILabel *userPublishTimeLabel;
 @property (nonatomic, strong) UIButton *psButton;
 @property (nonatomic, strong) UIImageView *userWorkImageView;
 @property (nonatomic, strong) ATOMBottomCommonButton *praiseButton;

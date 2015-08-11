@@ -91,6 +91,8 @@
  */
 @property (nonatomic, strong) NSMutableArray *hotCommentArray;
 
+@property (nonatomic, strong) NSMutableArray *tipLabelArray;
+
 
 
 

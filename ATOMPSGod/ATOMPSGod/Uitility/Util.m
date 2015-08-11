@@ -100,6 +100,9 @@ NSString* deviceName()
     } else {
         result = (int)roundf(dayDif*24.0*60);
         publishTime = [NSString stringWithFormat:@"%d分钟前",result];
+        if (result == 0) {
+            publishTime = @"刚刚";
+        }
     }
     return publishTime;
 }
@@ -121,10 +124,13 @@ NSString* deviceName()
     
 }
 
-+(void)postDeviceToken {
-    NSString *devicetokenString = [[NSUserDefaults standardUserDefaults] objectForKey:@"device_token"];
-    NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:devicetokenString,@"device_token",@2,@"platform", nil];
-    [ATOMCommonModel post:param withUrl:@"user_devicetoken" withBlock:nil];
+
++(void)showWeAreWorkingOnThisFeature {
+    SIAlertView* alertView = [[SIAlertView alloc]initWithTitle:@"敬请期待" andMessage:@"产品爷正在催程序狗正在写代码"];
+    [alertView addButtonWithTitle:@"我知道了" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
+        [alertView dismissAnimated:YES];
+    }];
+    [alertView show];
 }
 
 @end

@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PWPageDetailViewModel.h"
+#import "ATOMPageDetailViewModel.h"
 @class ATOMHomeImage;
-@class PWPageDetailViewModel;
+@class ATOMPageDetailViewModel;
 @interface ATOMAskPageViewModel : NSObject
 
 @property (nonatomic, assign) NSInteger ID;
@@ -33,8 +33,8 @@
 @property (nonatomic, assign) int type;
 
 - (void)setViewModelData:(ATOMHomeImage *)homeImage;
--(void)setViewModelWithCommon:(PWPageDetailViewModel*)commonViewModel;
+-(void)setViewModelWithCommon:(ATOMPageDetailViewModel*)commonViewModel;
 - (void)toggleLike;
--(PWPageDetailViewModel*)generatepageDetailViewModel;
+-(ATOMPageDetailViewModel*)generatepageDetailViewModel;
 @end
 

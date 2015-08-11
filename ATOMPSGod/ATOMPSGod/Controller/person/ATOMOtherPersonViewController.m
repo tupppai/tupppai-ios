@@ -398,7 +398,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
         ATOMAskPageViewModel *homepageViewModel = _uploadHomeImageDataSource[indexPath.row];
         if ([askViewModel.totalPSNumber integerValue] == 0) {
             ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
-            PWPageDetailViewModel* pageDetailViewModel = [PWPageDetailViewModel new];
+            ATOMPageDetailViewModel* pageDetailViewModel = [ATOMPageDetailViewModel new];
             [pageDetailViewModel setCommonViewModelWithAsk:homepageViewModel];
             rdvc.pageDetailViewModel = pageDetailViewModel;
             [self pushViewController:rdvc animated:YES];

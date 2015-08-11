@@ -17,7 +17,7 @@
              @"uid" : @"uid",
              @"nickname" : @"nickname",
              @"avatar" : @"avatar",
-             @"replyTime" : @"reply_created",
+             @"replyTime" : @"create_time",
              @"imageURL" : @"image_url",
              @"replyDescription" : @"desc",
              @"isDownload" : @"is_download",
@@ -30,7 +30,6 @@
              @"liked" : @"uped",
              @"collected":@"collected",
              @"type":@"type",
-
              };
 }
 

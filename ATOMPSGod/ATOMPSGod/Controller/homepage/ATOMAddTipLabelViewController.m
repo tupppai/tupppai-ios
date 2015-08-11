@@ -140,17 +140,15 @@
 //}
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)sender {
-    if (_tipLabelArray.count == 0) {
-        [self showWarnLabel];
-        return ;
-    }
-    self.navigationItem.rightBarButtonItem.enabled = NO;
     NSString *pushTypeStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"AskOrReply"];
+    self.navigationItem.rightBarButtonItem.enabled = NO;
     if ([pushTypeStr isEqualToString:@"Reply"]) {
         [self dealSubmitWorkWithLabel];
-//        ATOMShareViewController *svc = [ATOMShareViewController new];
-//        [self pushViewController:svc animated:YES];
     } else if ([pushTypeStr isEqualToString:@"Ask"]) {
+        if (_tipLabelArray.count == 0) {
+            [self showWarnLabel];
+            return;
+        }
         [self dealSubmitUploadWithLabel];
     }
 }
@@ -160,7 +158,6 @@
 }
 
 - (void)clickTipLabel:(UIButton *)sender {
-//    NSLog(@"click %d", (int)sender.tag);
     _lastAddButton = (ATOMTipButton *)sender;
     if (![_addTipLabelToImageView isOperationButtonShow]) {
         [_addTipLabelToImageView showOperationButton];
@@ -174,7 +171,6 @@
     self.navigationItem.leftBarButtonItems = _originLeftBarButtonItems;
     self.navigationItem.rightBarButtonItem = _originRightBarButtonItem;
     _fillInContentOfTipLabelView.tipLabelContentTextField.text = @"";
-//    [_fillInContentOfTipLabelView.topWarnLabel removeFromSuperview];
 }
 
 - (void)clickChangeTipLabelDirectionButton:(UIButton *)sender {
@@ -283,8 +279,8 @@
 //    NSLog(@"原图上传的图片大小 = %f",[data5 length]/1024.0);
 
     self.newAskPageViewModel.image = [UIImage imageWithData:data];
-    self.newAskPageViewModel.width = CGWidth(_addTipLabelToImageView.workImageView.frame);
-    self.newAskPageViewModel.height = CGHeight(_addTipLabelToImageView.workImageView.frame);
+    self.newAskPageViewModel.width =    CGWidth(_addTipLabelToImageView.workImageView.frame);
+    self.newAskPageViewModel.height =   CGHeight(_addTipLabelToImageView.workImageView.frame);
     ATOMUploadImage *uploadImage = [ATOMUploadImage new];
     [uploadImage UploadImage:data WithBlock:^(ATOMImage *imageInformation, NSError *error) {
         if (error) {
@@ -416,16 +412,16 @@
 #pragma mark - warn label
 
 -(void)showWarnLabel {
-    NSString *pushTypeStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"AskOrReply"];
-    if ([pushTypeStr isEqualToString:@"Reply"]) {
-        [TSMessage showNotificationWithTitle:@"大神你还没炫耀你的效果"
-                                    subtitle:@"请点击图片填写效果"
-                                        type:TSMessageNotificationTypeWarning];
-    } else if ([pushTypeStr isEqualToString:@"Ask"]) {
+//    NSString *pushTypeStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"AskOrReply"];
+//    if ([pushTypeStr isEqualToString:@"Reply"]) {
+//        [TSMessage showNotificationWithTitle:@"大神你还没炫耀你的效果"
+//                                    subtitle:@"请点击图片填写效果"
+//                                        type:TSMessageNotificationTypeWarning];
+//    } else if ([pushTypeStr isEqualToString:@"Ask"]) {
         [TSMessage showNotificationWithTitle:@"你还没告诉大神你想要的效果"
                                     subtitle:@"请点击图片填写效果"
                                         type:TSMessageNotificationTypeWarning];
-    }
+//    }
 }
 -(void)showWarnLabel2 {
     [TSMessage showNotificationWithTitle:@"标签内容不能为空"

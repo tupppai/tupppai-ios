@@ -260,7 +260,6 @@
         for (ATOMDetailImage *detailImage in detailImageArray) {
             ATOMHotDetailPageViewModel *model = [ATOMHotDetailPageViewModel new];
             [model setViewModelDataWithDetailImage:detailImage];
-            model.labelArray = [_askPageViewModel.labelArray mutableCopy];
             [_dataSource addObject:model];
         }
         [_hotDetailTableView reloadData];
@@ -288,7 +287,6 @@
         for (ATOMDetailImage *detailImage in detailOfHomePageArray) {
             ATOMHotDetailPageViewModel *model = [ATOMHotDetailPageViewModel new];
             [model setViewModelDataWithDetailImage:detailImage];
-            model.labelArray = [ws.askPageViewModel.labelArray mutableCopy];
             [ws.dataSource addObject:model];
         }
         if (detailOfHomePageArray.count == 0) {
@@ -453,7 +451,7 @@
                     [self postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeReply];
                 }            } else if (CGRectContainsPoint(_selectedHotDetailCell.commentButton.frame, p)) {
                 ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
-                PWPageDetailViewModel* pageDetailViewModel = [PWPageDetailViewModel new];
+                ATOMPageDetailViewModel* pageDetailViewModel = [ATOMPageDetailViewModel new];
                 if (_selectedIndexPath.row != 0) {
                     [pageDetailViewModel setCommonViewModelWithHotDetail:model];
                 } else {
@@ -469,8 +467,6 @@
         }
     }
 }
-
-
 
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -505,7 +501,6 @@
     return cell;
 }
 
-
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -517,7 +512,6 @@
 -(void)ATOMViewControllerDismissWithInfo:(NSDictionary *)info {
     bool liked = [info[@"liked"] boolValue];
     bool collected = [info[@"collected"]boolValue];
-    NSLog(@"hot detail collected %d",collected);
     //当从child viewcontroller 传来的liked变化的时候，toggle like.
     //to do:其实应该改变datasource的liked ,tableView reload的时候才能保持。
     [_selectedHotDetailCell.praiseButton toggleLikeWhenSelectedChanged:liked];

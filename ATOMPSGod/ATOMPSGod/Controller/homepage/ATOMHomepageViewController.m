@@ -21,7 +21,7 @@
 #import "AppDelegate.h"
 #import "ATOMBottomCommonButton.h"
 #import "ATOMHomeImageDAO.h"
-#import "PWPageDetailViewModel.h"
+#import "ATOMPageDetailViewModel.h"
 #import "ATOMShareModel.h"
 #import "ATOMCollectModel.h"
 #import "ATOMInviteViewController.h"
@@ -669,7 +669,7 @@
                 } else if (CGRectContainsPoint(_selectedHotCell.commentButton.frame, p)) {
                     ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
                     rdvc.delegate = self;
-                    PWPageDetailViewModel* pageDetailViewModel = [PWPageDetailViewModel new];
+                    ATOMPageDetailViewModel* pageDetailViewModel = [ATOMPageDetailViewModel new];
                     [pageDetailViewModel setCommonViewModelWithAsk:_selectedAskPageViewModel];
                     rdvc.pageDetailViewModel = pageDetailViewModel;
                     [self pushViewController:rdvc animated:YES];
@@ -717,7 +717,7 @@
                 } else if (CGRectContainsPoint(_selectedAskCell.commentButton.frame, p)) {
                     ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
                     rdvc.delegate = self;
-                    PWPageDetailViewModel* pageDetailViewModel = [PWPageDetailViewModel new];
+                    ATOMPageDetailViewModel* pageDetailViewModel = [ATOMPageDetailViewModel new];
                     [pageDetailViewModel setCommonViewModelWithAsk:_selectedAskPageViewModel];
                     rdvc.pageDetailViewModel = pageDetailViewModel;
                     [self pushViewController:rdvc animated:YES];

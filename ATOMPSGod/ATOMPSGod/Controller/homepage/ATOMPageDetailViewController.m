@@ -8,12 +8,12 @@
 
 #import "AppDelegate.h"
 #import "ATOMPageDetailViewController.h"
-#import "ATOMAskDetailView.h"
+#import "ATOMPageDetailView.h"
 #import "ATOMCommentDetailViewModel.h"
 #import "ATOMCropImageController.h"
-#import "ATOMAskDetailTableViewCell.h"
+#import "ATOMCommentTableViewCell.h"
 #import "ATOMMyConcernTableHeaderView.h"
-#import "ATOMAskDetailHeaderView.h"
+#import "ATOMPageDetailHeaderView.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMCommentDetailViewController.h"
 #import "ATOMComment.h"
@@ -26,11 +26,13 @@
 #import "JGActionSheet.h"
 #import "ATOMInviteViewController.h"
 #import "ATOMReportModel.h"
+#import "JTSImageViewController.h"
+#import "JTSImageInfo.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMPageDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate>
 
-@property (nonatomic, strong) ATOMAskDetailView *askDetailView;
+@property (nonatomic, strong) ATOMPageDetailView *askDetailView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) NSMutableArray *hotCommentDataSource;
 @property (nonatomic, strong) NSMutableArray *recentCommentDataSource;
@@ -99,6 +101,30 @@
     }
     return _psActionSheet;
 }
+
+- (void)tapOnImageView:(UIImage*)image withURL:(NSString*)url{
+    
+    // Create image info
+    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+    if (image != nil) {
+        imageInfo.image = image;
+    } else {
+        imageInfo.imageURL = [NSURL URLWithString:url];
+    }
+//    imageInfo.referenceRect = _selectedAskCell.userHeaderButton.frame;
+//    imageInfo.referenceView = _selectedAskCell.userHeaderButton;
+    
+    // Setup view controller
+    JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
+                                           initWithImageInfo:imageInfo
+                                           mode:JTSImageViewControllerMode_Image
+                                           backgroundStyle:JTSImageViewControllerBackgroundOption_Scaled];
+    
+    // Present the view controller.
+    [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOffscreen];
+    //    imageViewer.interactionsDelegate = self;
+}
+
 - (JGActionSheet *)reportActionSheet {
     WS(ws);
     if (!_reportActionSheet) {
@@ -288,7 +314,7 @@
 - (void)createUI {
     self.title = @"详情";
     //fucking _askDetailView should be alloc and init before assigned to self.view
-    _askDetailView = [ATOMAskDetailView new];
+    _askDetailView = [ATOMPageDetailView new];
     [self configRecentDetailTableViewRefresh];
     self.view = _askDetailView;
 //    if (_askPageViewModel) {
@@ -321,8 +347,8 @@
     [_askDetailView.headerView.moreShareButton addGestureRecognizer:g2];
     UITapGestureRecognizer *g3 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickPraiseButton:)];
     [_askDetailView.headerView.praiseButton addGestureRecognizer:g3];
-//    UITapGestureRecognizer *g4 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickCommentButton:)];
-//    [_askDetailView.headerView.commentButton addGestureRecognizer:g4];
+    UITapGestureRecognizer *g4 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickUserWorkImageView:)];
+    [_askDetailView.headerView.userWorkImageView addGestureRecognizer:g4];
     
     [_askDetailView.headerView.userHeaderButton addTarget:self action:@selector(clickUserHeaderButton:) forControlEvents:UIControlEventTouchUpInside];
     [_askDetailView.headerView.psButton addTarget:self action:@selector(clickPSButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -362,7 +388,10 @@
     [_askDetailView.headerView.praiseButton toggleLike];
     [_pageDetailViewModel toggleLike];
 }
-
+- (void)clickUserWorkImageView:(UITapGestureRecognizer *)sender {
+    NSLog(@"clickUserWorkImageView");
+    [self tapOnImageView:_askDetailView.headerView.userWorkImageView.image withURL:nil];
+}
 
 - (void)clickSendCommentButton:(UIButton *)sender {
 //    [_askDetailView.commentTextView resignFirstResponder];
@@ -436,7 +465,7 @@
     CGPoint location = [gesture locationInView:_askDetailView.recentDetailTableView];
     NSIndexPath *indexPath = [_askDetailView.recentDetailTableView indexPathForRowAtPoint:location];
     if (indexPath) {
-        ATOMAskDetailTableViewCell *cell = (ATOMAskDetailTableViewCell *)[_askDetailView.recentDetailTableView cellForRowAtIndexPath:indexPath];
+        ATOMCommentTableViewCell *cell = (ATOMCommentTableViewCell *)[_askDetailView.recentDetailTableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
@@ -527,9 +556,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_askDetailView.recentDetailTableView == tableView) {
         static NSString *CellIdentifier = @"RecentDetailCell";
-        ATOMAskDetailTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        ATOMCommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (!cell) {
-            cell = [[ATOMAskDetailTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            cell = [[ATOMCommentTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         if (indexPath.section == 0) {
             cell.viewModel = _hotCommentDataSource[indexPath.row];
@@ -554,9 +583,9 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger section = indexPath.section;
     if (section == 0) {
-        return [ATOMAskDetailTableViewCell calculateCellHeightWithModel:_hotCommentDataSource[indexPath.row]];
+        return [ATOMCommentTableViewCell calculateCellHeightWithModel:_hotCommentDataSource[indexPath.row]];
     } else if (section == 1) {
-        return [ATOMAskDetailTableViewCell calculateCellHeightWithModel:_recentCommentDataSource[indexPath.row]];
+        return [ATOMCommentTableViewCell calculateCellHeightWithModel:_recentCommentDataSource[indexPath.row]];
     }
     return 0;
 }

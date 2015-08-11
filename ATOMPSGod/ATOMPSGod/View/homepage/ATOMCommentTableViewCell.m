@@ -1,16 +1,16 @@
 //
-//  ATOMAskDetailTableViewCell.m
+//  ATOMCommentTableViewCell.m
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/23.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMAskDetailTableViewCell.h"
+#import "ATOMCommentTableViewCell.h"
 #import "ATOMCommentDetailViewModel.h"
 #import "ATOMPraiseButton.h"
 
-@implementation ATOMAskDetailTableViewCell
+@implementation ATOMCommentTableViewCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -75,42 +75,6 @@
     _praiseButton.selected = _viewModel.liked;
     [self setNeedsLayout];
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

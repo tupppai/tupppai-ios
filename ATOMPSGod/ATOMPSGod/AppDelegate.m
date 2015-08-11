@@ -36,10 +36,18 @@
     [self initializeAfterDB];
     [self setupShareSDK];
     [self setupUmengPush:launchOptions];
+    
+    if (launchOptions != nil) {
+        // Launched from push notification
+        NSDictionary *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        NSLog(@"notification %@",notification);
+        [Util showSuccess:[NSString stringWithFormat:@"%@",notification]];
+    }
+
     return YES;
 }
 -(void)setupUmengPush:(NSDictionary *)launchOptions {
-    [UMessage setLogEnabled:YES];
+//    [UMessage setLogEnabled:YES];
     //set AppKey and AppSecret
     [UMessage startWithAppkey:@"55b1ecdbe0f55a1de9001164" launchOptions:launchOptions];
 
@@ -65,7 +73,7 @@
     
 #endif
     //for log
-    [UMessage setLogEnabled:YES];
+//    [UMessage setLogEnabled:YES];
 }
 -(void)initializeAfterDB {
 //    ATOMIntroductionOnFirstLaunchViewController* vc = [ATOMIntroductionOnFirstLaunchViewController new];
@@ -172,11 +180,10 @@
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     [UMessage registerDeviceToken:deviceToken];
-    [UMessage setLogEnabled:YES];
     NSString *devicetokenString = [[[deviceToken description]
                                     stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]]
                                    stringByReplacingOccurrencesOfString:@" " withString:@""];
-    NSLog(@"standardUserDefaults setObject");
+//    NSLog(@"standardUserDefaults setObject");
     [[NSUserDefaults standardUserDefaults]setObject:devicetokenString forKey:@"devicetoken"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
@@ -184,10 +191,61 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+    
+//userinfo:{
+//    aps =     {
+//        alert = "\U60a8\U6709\U4e00\U6761\U65b0\U7684\U6c42p\U9080\U8bf7";
+//        badge = 1;
+//        sound = chime;
+//    };
+//    count = 1;
+//    d = uu75868143928550190401;
+//    p = 0;
+//    type = invite;
+//}
     // 处理推送消息
-    NSLog(@"userinfo:%@",userInfo);
-    NSLog(@"收到推送消息:%@",[[userInfo objectForKey:@"aps"] objectForKey:@"alert"]);
-    [UMessage didReceiveRemoteNotification:userInfo];
+    
+//    [[NSUserDefaults standardUserDefaults]setObject:userInfo forKey:@"RemoteNoficationInfo"];
+//    
+//    NSLog(@"userinfo:%@",userInfo);
+//    [UMessage didReceiveRemoteNotification:userInfo];
+    
+    NSString* notifyType = [userInfo objectForKey:@"type"];
+    int badgeNumber = [[[userInfo objectForKey:@"aps"]objectForKey:@"badge"]intValue];
+
+    typedef void (^CaseBlock)();
+    NSDictionary *dic = @{
+                        @"comment":
+                            ^{
+                                [self updateBadgeNumberForKey:@"NotifyType0" toAdd:badgeNumber];
+                            },
+                        @"reply":
+                            ^{
+                                [self updateBadgeNumberForKey:@"NotifyType1" toAdd:badgeNumber];
+                            },
+                        @"attention":
+                            ^{
+                                [self updateBadgeNumberForKey:@"NotifyType2" toAdd:badgeNumber];
+                            },
+                        @"invite":
+                            ^{
+                                [self updateBadgeNumberForKey:@"NotifyType3" toAdd:badgeNumber];
+                            },
+                        @"system":
+                            ^{
+                                [self updateBadgeNumberForKey:@"NotifyType4" toAdd:badgeNumber];
+                            }
+                        };
+    ((CaseBlock)dic[notifyType])();
+    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"ReceiveRemoteNotification" object:nil]];
+
+}
+
+-(void)updateBadgeNumberForKey:(NSString*)key toAdd:(int)badgeNumber {
+    int currentBadgeNumber = [[[NSUserDefaults standardUserDefaults]objectForKey:key]intValue];
+    int newBadgeNumber = currentBadgeNumber + badgeNumber;
+    [[NSUserDefaults standardUserDefaults]setObject:@(newBadgeNumber) forKey:key];
+    [[NSUserDefaults standardUserDefaults]synchronize];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
