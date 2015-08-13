@@ -10,7 +10,7 @@
 
 @protocol ATOMFaceViewDelegate <NSObject>
 
-- (void)selectFaceView:(NSString *)str;
+- (void)selectFace:(NSString *)str;
 
 @end
 

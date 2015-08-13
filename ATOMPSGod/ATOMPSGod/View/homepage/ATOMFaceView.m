@@ -43,7 +43,7 @@
 - (void)clickButton:(UIButton *)sender {
     NSString *str = sender.titleLabel.text;
     if ([_delegate respondsToSelector:@selector(selectFaceView:)]) {
-        [_delegate selectFaceView:str];
+        [_delegate selectFace:str];
     }
 }
 

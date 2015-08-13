@@ -16,6 +16,7 @@ static ATOMHTTPRequestOperationManager *_shareHTTPSessionManager = nil;
 + (instancetype)shareHTTPSessionManager {
     dispatch_once(&onceToken, ^{
         NSString *baseURL = @"http://android.loiter.us/v1/";
+//        NSString *baseURL = @"http://api.loiter.us/";
 //        NSString *baseURL = @"http://ps.loiter.us/v1/";
         _shareHTTPSessionManager = [[ATOMHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:baseURL]];
         [_shareHTTPSessionManager.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {

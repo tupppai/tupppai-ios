@@ -8,7 +8,7 @@
 
 #import "ATOMConstant.h"
 
-CGFloat const kCommentTableViewHeaderHeight = 50;
+CGFloat const kCommentTableViewHeaderHeight = 40;
 CGFloat const kUserHeaderButtonWidth = 35;
 CGFloat const kUserHeaderButtonWidth2 = 41;
 CGFloat const kUserBigHeaderButtonWidth = 74;

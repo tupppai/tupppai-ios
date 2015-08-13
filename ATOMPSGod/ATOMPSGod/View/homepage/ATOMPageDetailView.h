@@ -13,7 +13,7 @@
 @interface ATOMPageDetailView : UIScrollView;
 
 @property (nonatomic, strong) ATOMPageDetailHeaderView *headerView;
-@property (nonatomic, strong) UITableView *recentDetailTableView;
+@property (nonatomic, strong) UITableView *tableViewComent;
 @property (nonatomic, strong) UIButton *sendCommentButton;
 @property (nonatomic, strong) UITextView *commentTextView;
 @property (nonatomic, strong) UILabel *placeHolderLabel;
@@ -29,5 +29,5 @@
 - (void)toggleSendCommentView;
 - (void)hideCommentView;
 - (BOOL)isEditingCommentView;
-
+- (void)restoreBottomView;
 @end

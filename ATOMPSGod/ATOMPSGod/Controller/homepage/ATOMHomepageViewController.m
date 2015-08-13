@@ -33,6 +33,7 @@
 #import "JTSImageInfo.h"
 #import "HMSegmentedControl.h"
 #import "ATOMCommonModel.h"
+
 @class ATOMHomeImage;
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
@@ -723,7 +724,7 @@
                     [self pushViewController:rdvc animated:YES];
                 } else if (CGRectContainsPoint(_selectedAskCell.moreShareButton.frame, p)) {
                     self.shareFunctionView.collectButton.selected = _selectedAskPageViewModel.collected;
-                    [self.shareFunctionView show];
+                    [self.shareFunctionView showInView:[AppDelegate APP].window animated:YES];
                 }
             }
             

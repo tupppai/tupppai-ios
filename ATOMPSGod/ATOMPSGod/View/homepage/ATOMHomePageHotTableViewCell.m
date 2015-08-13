@@ -179,7 +179,7 @@ static CGFloat replierWidth = 25;
     _praiseButton.selected = viewModel.liked;
     _shareButton.number = viewModel.shareNumber;
     _totalPSLabel.number = viewModel.totalPSNumber;
-
+    _commentButton.number = viewModel.commentNumber;
     if (viewModel.image) {
         _userWorkImageView.image = viewModel.image;
     } else {

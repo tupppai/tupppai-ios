@@ -11,6 +11,7 @@
 #import "ATOMPageDetailHeaderView.h"
 #import "ATOMFaceView.h"
 #import "ATOMHotDetailPageViewModel.h"
+#import "ATOMTextViewComment.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMPageDetailView () <UIScrollViewDelegate, ATOMFaceViewDelegate>
@@ -21,6 +22,8 @@
 @property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic, assign) CGRect currentBottomViewFrame;
 @property (nonatomic, strong) NSMutableArray *facesArray;
+@property (nonatomic, strong) ATOMTextViewComment *textviewComment;
+
 
 @end
 
@@ -35,96 +38,114 @@ static CGFloat pageControlWidth = 150;
         self.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT);
         self.scrollEnabled = NO;
         self.contentSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT);
-        [self setupFaceArray];
-        [self addNotificationToRecentDetailView];
+//        [self setupFaceArray];
+//        [self addNotificationToRecentDetailView];
         [self createSubView];
     }
     return self;
 }
 
-- (void)setupFaceArray {
-    _facesArray = [NSMutableArray array];
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"EmojisList" ofType:@"plist"];
-    NSMutableDictionary *data = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
-    NSArray *peopleArray = data[@"People"];
-    NSArray *natureArray = data[@"Nature"];
-    NSArray *placesArray = data[@"Places"];
-    for (NSString *str in peopleArray) {
-        [_facesArray addObject:str];
-    }
-    for (NSString *str in natureArray) {
-        [_facesArray addObject:str];
-    }
-    for (NSString *str in placesArray) {
-        [_facesArray addObject:str];
-    }
-}
+//- (void)setupFaceArray {
+//    _facesArray = [NSMutableArray array];
+//    NSString *path = [[NSBundle mainBundle] pathForResource:@"EmojisList" ofType:@"plist"];
+//    NSMutableDictionary *data = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
+//    NSArray *peopleArray = data[@"People"];
+//    NSArray *natureArray = data[@"Nature"];
+//    NSArray *placesArray = data[@"Places"];
+//    for (NSString *str in peopleArray) {
+//        [_facesArray addObject:str];
+//    }
+//    for (NSString *str in natureArray) {
+//        [_facesArray addObject:str];
+//    }
+//    for (NSString *str in placesArray) {
+//        [_facesArray addObject:str];
+//    }
+//}
 
 - (void)createSubView {
-    _recentDetailTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - 46)];
     _headerView = [ATOMPageDetailHeaderView new];
-    _recentDetailTableView.tableFooterView = [UIView new];
-    _recentDetailTableView.rowHeight = 70;
-    _recentDetailTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//    _recentDetailTableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag|UIScrollViewKeyboardDismissModeInteractive;
-    [self addSubview:_recentDetailTableView];
+    _tableViewComent = [UITableView new];
     
-    //后期把_bottomView抓出来写一个View类
-    _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, CGHeight(self.frame) - 46, SCREEN_WIDTH, 46)];
-    _bottomView.backgroundColor = [UIColor whiteColor];
-    [self addSubview:_bottomView];
+//    _tableViewComent = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - 46)];
+    _tableViewComent.tableFooterView = [UIView new];
+    _tableViewComent.rowHeight = 70;
+//    _tableViewComent.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableViewComent.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag|UIScrollViewKeyboardDismissModeInteractive;
+    [self addSubview:_tableViewComent];
     
-    CALayer *TopBorder = [CALayer layer];
-    TopBorder.frame = CGRectMake(0.0f, 0.0f, _bottomView.frame.size.width, 1.0f);
-    TopBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
-    [_bottomView.layer addSublayer:TopBorder];
     
-    _sendCommentButton = [[UIButton alloc] initWithFrame:CGRectMake(CGWidth(self.frame) - kPadding15 - 32, 7, 32, 32)];
-    _sendCommentButton.titleLabel.font = [UIFont systemFontOfSize:kFont15];
-    [_sendCommentButton setTitle:@"发送" forState:UIControlStateNormal];
-    [_sendCommentButton setTitleColor:[UIColor colorWithHex:0xcbcbcb] forState:UIControlStateNormal];
-    [_bottomView addSubview:_sendCommentButton];
+    [_tableViewComent mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self);
+        make.left.equalTo(self);
+        make.width.equalTo(@(SCREEN_WIDTH));
+        make.height.equalTo(@(SCREEN_HEIGHT - NAV_HEIGHT - 46));
+    }];
     
-    _faceButton = [[UIButton alloc] initWithFrame:CGRectMake(kPadding15, 9.5, 21, 27)];
-    [_faceButton setBackgroundImage:[UIImage imageNamed:@"comment_write"] forState:UIControlStateNormal];
-    [_faceButton addTarget:self action:@selector(showFaceView) forControlEvents:UIControlEventTouchUpInside];
-    [_bottomView addSubview:_faceButton];
-    
-
-    
-    _commentTextView = [[UITextView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_faceButton.frame) + 26, 8, CGRectGetMinX(_sendCommentButton.frame) - 26 * 2 - CGRectGetMaxX(_faceButton.frame), 30)];
-    _commentTextView.textColor = [UIColor blackColor];
-    _commentTextView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-    [_bottomView addSubview:_commentTextView];
-    
-    _placeholderString = @"发表你的神回复..";
-    _placeHolderLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, 0, 150, 30)];
-    _placeHolderLabel.text = _placeholderString;
-    _placeHolderLabel.textColor = [UIColor colorWithHex:0xcbcbcb];
-    _placeHolderLabel.font = [UIFont systemFontOfSize:kFont14];
-    [_commentTextView addSubview:_placeHolderLabel];
-    
-    _faceView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, CGHeight(self.frame) - faceViewHeight - 40, SCREEN_WIDTH, faceViewHeight)];
-    _faceView.backgroundColor = [UIColor whiteColor];
-    [_faceView setShowsVerticalScrollIndicator:NO];
-    [_faceView setShowsHorizontalScrollIndicator:NO];
-    _faceView.pagingEnabled = YES;
-    _faceView.delegate = self;
-    _faceView.contentSize = CGSizeMake(SCREEN_WIDTH * 9, faceViewHeight);
-    [self addSubview:_faceView];
-    [self setupFaceView];
-    _faceView.hidden = YES;
-    
-    _pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake((SCREEN_WIDTH - pageControlWidth) / 2, CGRectGetMaxY(_faceView.frame), pageControlWidth, 40)];
-    _pageControl.numberOfPages = 9;
-    [_pageControl setBackgroundColor:[UIColor clearColor]];
-    _pageControl.pageIndicatorTintColor = [UIColor colorWithHex:0xededed];
-    _pageControl.currentPageIndicatorTintColor = [UIColor colorWithHex:0x00aedf];
-    [_pageControl setCurrentPage:0];
-    [_pageControl addTarget:self action:@selector(changePage:) forControlEvents:UIControlEventValueChanged];
-    [self addSubview:_pageControl];
-    _pageControl.hidden = YES;
-    
+    _textviewComment = [ATOMTextViewComment new];
+    [self addSubview:_textviewComment];
+    [_textviewComment mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self).with.offset(SCREEN_HEIGHT-NAV_HEIGHT-46);
+        make.left.equalTo(self);
+        make.width.equalTo(self);
+        make.height.equalTo(@240);
+    }];
+   
+//    //后期把_bottomView抓出来写一个View类
+//    _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, CGHeight(self.frame) - 46, SCREEN_WIDTH, 46)];
+////    _bottomView.backgroundColor = [UIColor whiteColor];
+//    [self addSubview:_bottomView];
+//    
+//    CALayer *TopBorder = [CALayer layer];
+//    TopBorder.frame = CGRectMake(0.0f, 0.0f, _bottomView.frame.size.width, 1.0f);
+//    TopBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
+//    [_bottomView.layer addSublayer:TopBorder];
+//    
+//    _sendCommentButton = [[UIButton alloc] initWithFrame:CGRectMake(CGWidth(self.frame) - kPadding15 - 32, 7, 32, 32)];
+//    _sendCommentButton.titleLabel.font = [UIFont systemFontOfSize:kFont15];
+//    [_sendCommentButton setTitle:@"发送" forState:UIControlStateNormal];
+//    [_sendCommentButton setTitleColor:[UIColor colorWithHex:0xcbcbcb] forState:UIControlStateNormal];
+//    [_bottomView addSubview:_sendCommentButton];
+//    
+//    _faceButton = [[UIButton alloc] initWithFrame:CGRectMake(kPadding15, 9.5, 21, 27)];
+//    [_faceButton setBackgroundImage:[UIImage imageNamed:@"comment_write"] forState:UIControlStateNormal];
+//    [_faceButton addTarget:self action:@selector(showFaceView) forControlEvents:UIControlEventTouchUpInside];
+//    [_bottomView addSubview:_faceButton];
+//    
+//
+//    
+//    _commentTextView = [[UITextView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_faceButton.frame) + 26, 8, CGRectGetMinX(_sendCommentButton.frame) - 26 * 2 - CGRectGetMaxX(_faceButton.frame), 30)];
+//    _commentTextView.textColor = [UIColor blackColor];
+//    _commentTextView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+//    [_bottomView addSubview:_commentTextView];
+//    
+//    _placeholderString = @"发表你的神回复..";
+//    _placeHolderLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, 0, 150, 30)];
+//    _placeHolderLabel.text = _placeholderString;
+//    _placeHolderLabel.textColor = [UIColor colorWithHex:0xcbcbcb];
+//    _placeHolderLabel.font = [UIFont systemFontOfSize:kFont14];
+//    [_commentTextView addSubview:_placeHolderLabel];
+//    
+//    _faceView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, CGHeight(self.frame) - faceViewHeight - 40, SCREEN_WIDTH, faceViewHeight)];
+////    _faceView.backgroundColor = [UIColor whiteColor];
+//    [_faceView setShowsVerticalScrollIndicator:NO];
+//    [_faceView setShowsHorizontalScrollIndicator:NO];
+//    _faceView.pagingEnabled = YES;
+//    _faceView.delegate = self;
+//    _faceView.contentSize = CGSizeMake(SCREEN_WIDTH * 9, faceViewHeight);
+//    [self addSubview:_faceView];
+//    [self setupFaceView];
+//    _faceView.hidden = YES;
+//    
+//    _pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake((SCREEN_WIDTH - pageControlWidth) / 2, CGRectGetMaxY(_faceView.frame), pageControlWidth, 40)];
+//    _pageControl.numberOfPages = 9;
+//    [_pageControl setBackgroundColor:[UIColor clearColor]];
+//    _pageControl.pageIndicatorTintColor = [UIColor colorWithHex:0xededed];
+//    _pageControl.currentPageIndicatorTintColor = [UIColor colorWithHex:0x00aedf];
+//    [_pageControl setCurrentPage:0];
+//    [_pageControl addTarget:self action:@selector(changePage:) forControlEvents:UIControlEventValueChanged];
+//    [self addSubview:_pageControl];
+//    _pageControl.hidden = YES;
 }
 
 - (void)setupFaceView {
@@ -141,7 +162,7 @@ static CGFloat pageControlWidth = 150;
     _headerView.pageDetailViewModel = pageDetailViewModel;
     CGFloat headerHeight = [ATOMPageDetailHeaderView calculateHeaderViewHeight:pageDetailViewModel];
     _headerView.frame = CGRectMake(0, 0, SCREEN_WIDTH, headerHeight);
-    _recentDetailTableView.tableHeaderView = _headerView;
+    _tableViewComent.tableHeaderView = _headerView;
 }
 #pragma mark - ClickEvent
 
@@ -184,9 +205,9 @@ static CGFloat pageControlWidth = 150;
 
 - (void)textDidChange:(NSNotification *)notification {
     CGSize contentSize = _commentTextView.contentSize;
-    if (contentSize.height >= 30 + 14 * 10) {
-        return ;
-    }
+//    if (contentSize.height >= 30 + 14 * 10) {
+//        return ;
+//    }
     int increaseHeight = contentSize.height - _lastContentSizeHeight;
     CGFloat bottomViewHeight = CGHeight(_bottomView.frame) + increaseHeight;
     CGFloat bottomViewOriginY = CGRectGetMaxY(_bottomView.frame) - bottomViewHeight;
@@ -226,6 +247,7 @@ static CGFloat pageControlWidth = 150;
 
 - (void)keyboardDidHide:(NSNotification *)notification {
     _isKeyboardVisible = NO;
+    _placeHolderLabel.text = @"发表你的神回复...";
 }
 
 #pragma mark - *********************************
@@ -245,7 +267,6 @@ static CGFloat pageControlWidth = 150;
     }
     
     [UIView animateWithDuration:.25 animations:^{
-        
         CGRect frame = ws.bottomView.frame;
         frame.origin.y = CGHeight(self.frame) - faceViewHeight - CGHeight(frame) - 40;
         ws.bottomView.frame = frame;

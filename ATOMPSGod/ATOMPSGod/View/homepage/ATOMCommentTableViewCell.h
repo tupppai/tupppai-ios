@@ -13,7 +13,8 @@
 @interface ATOMCommentTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) UIButton *userHeaderButton;
-@property (nonatomic, strong) UILabel *userNameLabel;
+@property (nonatomic, strong) UIButton *userNameButton;
+//@property (nonatomic, strong) UILabel *userNameLabel;
 @property (nonatomic, strong) UILabel *userCommentDetailLabel;
 @property (nonatomic, strong) ATOMPraiseButton *praiseButton;
 
