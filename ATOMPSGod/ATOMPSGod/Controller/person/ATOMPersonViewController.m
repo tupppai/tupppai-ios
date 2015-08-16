@@ -95,7 +95,7 @@
     [_personView.fansLabel addGestureRecognizer:tapFansGesture];
     _personView.personTableView.delegate = self;
     _personView.personTableView.dataSource = self;
-    self.navigationItem.title = [ATOMCurrentUser currentUser].nickname;
+    self.navigationItem.title = [ATOMCurrentUser currentUser].username;
 }
 
 #pragma mark - Gesture Event

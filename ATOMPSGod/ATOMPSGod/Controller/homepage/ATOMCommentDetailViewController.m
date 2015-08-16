@@ -8,14 +8,14 @@
 
 #import "ATOMCommentDetailViewController.h"
 #import "ATOMCommentDetailTableViewCell.h"
-#import "ATOMCommentDetailViewModel.h"
+#import "CommentVM.h"
 #import "ATOMCommentDetailView.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMMyConcernTableHeaderView.h"
 #import "ATOMShowDetailOfComment.h"
-#import "ATOMCommentDetailViewModel.h"
+#import "CommentVM.h"
 #import "ATOMComment.h"
-#import "ATOMPraiseButton.h"
+#import "CommentLikeButton.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -27,7 +27,7 @@
 @property (nonatomic, strong) NSMutableArray *recentCommentDataSource;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL canRefreshFooter;
-@property (nonatomic, strong) ATOMCommentDetailViewModel *atModel;
+@property (nonatomic, strong) CommentVM *atModel;
 
 @end
 
@@ -75,12 +75,12 @@
     [showDetailOfComment ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
         NSLog(@"param%@hotCommentArray%@RCommentArray%@",param,hotCommentArray,recentCommentArray);
         for (ATOMComment *comment in hotCommentArray) {
-            ATOMCommentDetailViewModel *model = [ATOMCommentDetailViewModel new];
+            CommentVM *model = [CommentVM new];
             [model setViewModelData:comment];
             [ws.hotCommentDataSource addObject:model];
         }
         for (ATOMComment *comment in recentCommentArray) {
-            ATOMCommentDetailViewModel *model = [ATOMCommentDetailViewModel new];
+            CommentVM *model = [CommentVM new];
             [model setViewModelData:comment];
             [ws.recentCommentDataSource addObject:model];
         }
@@ -100,7 +100,7 @@
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
     [showDetailOfComment ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
         for (ATOMComment *comment in recentCommentArray) {
-            ATOMCommentDetailViewModel *model = [ATOMCommentDetailViewModel new];
+            CommentVM *model = [CommentVM new];
             [model setViewModelData:comment];
             [ws.recentCommentDataSource addObject:model];
         }
@@ -148,7 +148,7 @@
 - (void)clickSendCommentButton:(UIButton *)sender {
     [_commentDetailView hideCommentView];
     NSString *commentStr = _commentDetailView.commentText;
-    ATOMCommentDetailViewModel *model = [ATOMCommentDetailViewModel new];
+    CommentVM *model = [CommentVM new];
     [model setDataWithAtModel:_atModel andContent:commentStr];
     [_recentCommentDataSource insertObject:model atIndex:0];
     [_commentDetailView.commentDetailTableView reloadData];
@@ -163,12 +163,12 @@
     NSLog(@"content%@,type%ld,target_id%ld \n param %@",commentStr,(long)_type,(long)_ID,param);
     
     if (_atModel) {
-        [param setObject:@(_atModel.comment_id) forKey:@"reply_to"];
+        [param setObject:@(_atModel.ID) forKey:@"reply_to"];
     }
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
     [showDetailOfComment SendComment:param withBlock:^(NSInteger comment_id, NSError *error) {
         NSLog(@"comment id %ld ,error %@",(long)comment_id,error);
-        model.comment_id = comment_id;
+        model.ID = comment_id;
     }];
     _atModel = nil;
 }
@@ -185,18 +185,18 @@
     CGPoint location = [gesture locationInView:_commentDetailView.commentDetailTableView];
     NSIndexPath *indexPath = [_commentDetailView.commentDetailTableView indexPathForRowAtPoint:location];
     if (indexPath) {
-        ATOMCommentDetailViewModel *model = (indexPath.section == 0) ? _hotCommentDataSource[indexPath.row] : _recentCommentDataSource[indexPath.row];
+        CommentVM *model = (indexPath.section == 0) ? _hotCommentDataSource[indexPath.row] : _recentCommentDataSource[indexPath.row];
         ATOMCommentDetailTableViewCell *cell = (ATOMCommentDetailTableViewCell *)[_commentDetailView.commentDetailTableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
             opvc.userID = model.uid;
-            opvc.userName = model.nickname;
+            opvc.userName = model.username;
             [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
             opvc.userID = model.uid;
-            opvc.userName = model.nickname;
+            opvc.userName = model.username;
             [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.praiseButton.frame, p)) {
             //UI 颜色和数字

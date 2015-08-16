@@ -10,7 +10,7 @@
 #import "ATOMAskPageViewModel.h"
 #import "ATOMHotDetailPageViewModel.h"
 #import "ATOMPageDetailViewModel.h"
-@class ATOMBottomCommonButton;
+#import "ATOMBottomCommonButton.h"
 @interface ATOMPageDetailHeaderView : ATOMBaseView
 
 @property (nonatomic, strong) UIButton *userHeaderButton;

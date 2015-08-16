@@ -42,6 +42,8 @@
 #import "Util.h"
 #import "CommonProtocol.h"
 #import "KShareManager.h"
+
+#import "UIColor+PSGod.h"
 #endif
 
 

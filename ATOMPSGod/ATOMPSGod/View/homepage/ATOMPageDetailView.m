@@ -23,8 +23,6 @@
 @property (nonatomic, assign) CGRect currentBottomViewFrame;
 @property (nonatomic, strong) NSMutableArray *facesArray;
 @property (nonatomic, strong) ATOMTextViewComment *textviewComment;
-
-
 @end
 
 @implementation ATOMPageDetailView

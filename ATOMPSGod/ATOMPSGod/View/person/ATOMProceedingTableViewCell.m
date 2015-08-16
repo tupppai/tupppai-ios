@@ -23,7 +23,7 @@
 - (void)createSubView {
     _userHeaderButton = [UIButton new];
     _userHeaderButton.userInteractionEnabled = NO;
-    _userHeaderButton.layer.cornerRadius = kUserHeaderButtonWidth / 2;
+    _userHeaderButton.layer.cornerRadius = KAvatarWidth / 2;
     _userHeaderButton.layer.masksToBounds = YES;
     [self addSubview:_userHeaderButton];
     
@@ -55,7 +55,7 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    _userHeaderButton.frame = CGRectMake(kPadding15, (60 - kUserHeaderButtonWidth) / 2, kUserHeaderButtonWidth, kUserHeaderButtonWidth);
+    _userHeaderButton.frame = CGRectMake(kPadding15, (60 - KAvatarWidth) / 2, KAvatarWidth, KAvatarWidth);
     _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, (60 - kFont14) / 2, kUserNameLabelWidth, kFont14+2);
     _uploadButton.frame = CGRectMake(SCREEN_WIDTH - kPadding15 - 27, 16.5, 27, 27);
     CGSize imageSize = CGSizeZero;

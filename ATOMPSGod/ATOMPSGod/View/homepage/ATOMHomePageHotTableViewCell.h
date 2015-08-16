@@ -12,20 +12,18 @@
 
 @interface ATOMHomePageHotTableViewCell : UITableViewCell
 
-@property (nonatomic, strong) UIButton *userHeaderButton;
-@property (nonatomic, strong) UILabel *userNameLabel;
-@property (nonatomic, strong) UILabel *userPublishTimeLabel;
-@property (nonatomic, strong) UIImageView *userWorkImageView;
-@property (nonatomic, strong) ATOMBottomCommonButton *praiseButton;
-@property (nonatomic, strong) ATOMBottomCommonButton *shareButton;
+@property (nonatomic, strong) UIImageView *avatarView;
+@property (nonatomic, strong) UILabel *usernameLabel;
+@property (nonatomic, strong) UILabel *publishTimeLabel;
+@property (nonatomic, strong) UIImageView *imageViewMain;
+@property (nonatomic, strong) ATOMBottomCommonButton *likeButton;
+@property (nonatomic, strong) ATOMBottomCommonButton *wechatButton;
 @property (nonatomic, strong) ATOMBottomCommonButton *commentButton;
-@property (nonatomic, strong) UIButton *moreShareButton;
+@property (nonatomic, strong) UIButton *moreButton;
 @property (nonatomic, strong) UIView *topView;
+@property (nonatomic, strong) UIView *additionView;
 @property (nonatomic, strong) UIView *bottomView;
-@property (nonatomic, strong) UIView *thinCenterView;
-@property (nonatomic, strong) UIView *bottomThinView;
-@property (nonatomic, strong) ATOMAskPageViewModel *viewModel;
+@property (nonatomic, strong) UIView *gapView;
 
-+ (CGFloat)calculateCellHeightWith:(ATOMAskPageViewModel *)viewModel;
-
+- (void)configCell:(ATOMAskPageViewModel *)viewModel;
 @end

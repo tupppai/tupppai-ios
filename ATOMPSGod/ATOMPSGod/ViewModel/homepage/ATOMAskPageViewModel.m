@@ -26,7 +26,7 @@
         _type = 1;
         _ID = 0;
         _userID = [ATOMCurrentUser currentUser].uid;
-        _userName = [ATOMCurrentUser currentUser].nickname;
+        _userName = [ATOMCurrentUser currentUser].username;
         _userSex = ([ATOMCurrentUser currentUser].sex == 0) ? @"woman" : @"man";
         _avatarURL = [ATOMCurrentUser currentUser].avatar;
         NSDateFormatter *df = [NSDateFormatter new];

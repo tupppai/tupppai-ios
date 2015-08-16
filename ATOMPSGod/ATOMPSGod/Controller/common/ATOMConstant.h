@@ -11,7 +11,7 @@
 @interface ATOMConstant : NSObject
 
 extern CGFloat const kCommentTableViewHeaderHeight;
-extern CGFloat const kUserHeaderButtonWidth;
+extern CGFloat const KAvatarWidth;
 extern CGFloat const kUserHeaderButtonWidth2;
 extern CGFloat const kPublishTimeLabelWidth;
 extern CGFloat const kUserBigHeaderButtonWidth;
@@ -20,6 +20,12 @@ extern CGFloat const kUserNameLabelWidth;
 extern CGFloat const kPSButtonWidth;
 extern CGFloat const kPSButtonHeight;
 extern CGFloat const kBottomCommonButtonWidth;
+
+extern CGFloat const kfcButtonHeight;
+extern CGFloat const kfcTopViewHeight;
+extern CGFloat const kfcGapViewHeight;
+extern CGFloat const kfcBottomViewHeight;
+extern CGFloat const kfcAddtionViewHeight;
 
 extern NSInteger const kPagePadding;
 
@@ -38,8 +44,16 @@ extern CGFloat const kFont12;
 extern CGFloat const kFont13;
 extern CGFloat const kFont14;
 extern CGFloat const kFont15;
+
 extern NSUInteger const kCommentTextViewMaxLength;
 extern NSInteger const kLineWidth;
+
+extern CGFloat const kUsernameFontSize;
+extern CGFloat const kPublishTimeFontSizeBig;
+extern CGFloat const kPublishTimeFontSizeSmall;
+
+extern NSString * const kUserNameFont;
+extern NSString * const kPublishTimeFont;
 
 #define kBlueColor [UIColor colorWithHex:0x74c3ff]
 

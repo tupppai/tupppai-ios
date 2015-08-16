@@ -12,5 +12,6 @@
 @interface PWRefreshBaseTableView : UITableView
 @property (nonatomic, weak) id<PWRefreshBaseTableViewDelegate> psDelegate;
 @property (nonatomic, strong) ATOMNoDataView *noDataView;
+@property (nonatomic, assign) BOOL firstReload;
 -(void)reloadDataCustom;
 @end

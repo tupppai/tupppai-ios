@@ -29,14 +29,14 @@ static ATOMCurrentUser *_currentUser;
         _bindWechat = NO;
         _bindWeibo = NO;
         _mobile = @"-1";
-        _nickname = @"惹不起的雅";
+        _username = @"惹不起的雅";
     }
     return self;
 }
 
 - (NSMutableDictionary *)dictionaryFromModel {
     NSMutableDictionary *dict = [NSMutableDictionary new];
-    [dict setObject:_nickname forKey:@"nickname"];
+    [dict setObject:_username forKey:@"nickname"];
     [dict setObject:_mobile forKey:@"mobile"];
     [dict setObject:_password forKey:@"password"];
     [dict setObject:[NSString stringWithFormat:@"%d", (int)_locationID] forKey:@"location"];
@@ -71,7 +71,7 @@ static ATOMCurrentUser *_currentUser;
     _uid = user.uid;
     _mobile = user.mobile;
     _password = @"";
-    _nickname = user.nickname;
+    _username = user.nickname;
     _sex = user.sex;
     _avatar = user.avatar;
     _locationID = user.locationID;
@@ -89,7 +89,7 @@ static ATOMCurrentUser *_currentUser;
 }
 
 -(void)tellMeEveryThingAboutYou {
-    NSLog(@"%@,%@,%@,_praiseNumber%ld",_nickname,_mobile,_avatar,(long)_praiseNumber);
+    NSLog(@"%@,%@,%@,_praiseNumber%ld id %zd",_username,_mobile,_avatar,(long)_praiseNumber,_uid);
 }
 - (void)saveAndUpdateUser:(ATOMUser *)user {
     if ([ATOMUserDAO isExistUser:user]) {
@@ -103,7 +103,7 @@ static ATOMCurrentUser *_currentUser;
 -(void)wipe {
     self.sourceData = nil;
     self.uid = 0;
-    self.nickname = @"游客";
+    self.username = @"游客";
     self.mobile = @"-1";
     self.locationID = 0;
     self.avatar = @"";

@@ -147,6 +147,7 @@
     } else if ([pushTypeStr isEqualToString:@"Ask"]) {
         if (_tipLabelArray.count == 0) {
             [self showWarnLabel];
+            self.navigationItem.rightBarButtonItem.enabled = YES;
             return;
         }
         [self dealSubmitUploadWithLabel];

@@ -54,11 +54,11 @@
     
     _userHeaderButton = [UIButton new];
     _userHeaderButton.userInteractionEnabled = NO;
-    _userHeaderButton.layer.cornerRadius = kUserHeaderButtonWidth / 2;
+    _userHeaderButton.layer.cornerRadius = KAvatarWidth / 2;
     _userHeaderButton.layer.masksToBounds = YES;
     
     _userNameLabel = [UILabel new];
-    _userNameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:kFont14];
+    _userNameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:kUsernameFontSize];
     _userNameLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
         
     _userPublishTimeLabel = [UILabel new];
@@ -106,7 +106,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     _topView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 60);
-    _userHeaderButton.frame = CGRectMake(kPadding15, (60 - kUserHeaderButtonWidth) / 2, kUserHeaderButtonWidth, kUserHeaderButtonWidth);
+    _userHeaderButton.frame = CGRectMake(kPadding15, (60 - KAvatarWidth) / 2, KAvatarWidth, KAvatarWidth);
 //    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, (60 - kFont14) / 2, kUserNameLabelWidth, kFont14+2);
     _psButton.frame = CGRectMake(SCREEN_WIDTH - kPadding15 - kPSButtonWidth, (60 - kPSButtonHeight) / 2, kPSButtonWidth, kPSButtonHeight);
     _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, CGRectGetMinY(_userHeaderButton.frame), kUserNameLabelWidth, kFont14+3);

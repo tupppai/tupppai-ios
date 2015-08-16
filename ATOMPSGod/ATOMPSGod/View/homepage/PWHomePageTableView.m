@@ -14,8 +14,6 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
-        
     }
     return self;
 }
@@ -31,16 +29,17 @@
     return _noDataViewCustom;
 }
 
--(void)reloadData {
-    [super reloadDataCustom];
-    if (self) {
-        for (int i = 0; i < [self numberOfSections]; i++) {
-            if ([self numberOfRowsInSection:i] > 0) {
-                self.noDataViewCustom.hidden = true;
-                break;
-            }
-            self.noDataViewCustom.hidden = false;
-        }
-    }
-}
+//-(void)reloadData {
+//    [super reloadDataCustom];
+//    if (self) {
+//        for (int i = 0; i < [self numberOfSections]; i++) {
+//            if ([self numberOfRowsInSection:i] > 0) {
+//                self.noDataViewCustom.hidden = true;
+//                break;
+//            }
+//            self.noDataViewCustom.hidden = false;
+//        }
+//    }
+//}
+
 @end

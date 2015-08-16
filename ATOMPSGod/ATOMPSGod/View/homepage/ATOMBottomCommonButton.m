@@ -20,8 +20,9 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor clearColor];
         _extralWidth = 24 + kPadding5;
+        _number = @"0";
         self.selected = NO;
     }
     return self;
@@ -92,9 +93,9 @@
 }
 -(void)toggleColor {
     if (self.selected) {
-        _currentColor = [UIColor colorWithHex:0xfe8282];
+        _currentColor = [UIColor kfcButtonColor];
     } else {
-        _currentColor = [UIColor colorWithHex:0x666666];
+        _currentColor = [UIColor kfcButtonColorSelected];
     }
 }
 -(void)toggleNumber {

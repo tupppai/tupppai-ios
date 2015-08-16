@@ -29,16 +29,17 @@ static CGFloat cellHeight = 70;
 }
 
 - (void)createSubView {
-    _userHeaderButton = [[UIButton alloc] initWithFrame:CGRectMake(kPadding15, (cellHeight - kUserHeaderButtonWidth) / 2, kUserHeaderButtonWidth, kUserHeaderButtonWidth)];
+    _userHeaderButton = [[UIButton alloc] initWithFrame:CGRectMake(kPadding15, (cellHeight - KAvatarWidth) / 2, KAvatarWidth, KAvatarWidth)];
     _userHeaderButton.userInteractionEnabled = NO;
-    _userHeaderButton.layer.cornerRadius = kUserHeaderButtonWidth / 2;
+    _userHeaderButton.layer.cornerRadius = KAvatarWidth / 2;
     _userHeaderButton.layer.masksToBounds = YES;
     [_userHeaderButton setBackgroundImage:[UIImage imageNamed:@"head_portrait"] forState:UIControlStateNormal];
     [self addSubview:_userHeaderButton];
     
     _userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, CGRectGetMinY(_userHeaderButton.frame), kUserNameLabelWidth, kFont14+3)];
     _userNameLabel.text = @"PSGOD";
-    _userNameLabel.font = [UIFont systemFontOfSize:kFont14];
+    _userNameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:kUsernameFontSize];
+    _userNameLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
     [self addSubview:_userNameLabel];
     
     _inviteButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - kPadding15 - 55, 20, 55, 30)];

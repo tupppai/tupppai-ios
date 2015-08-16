@@ -13,6 +13,9 @@
 #import "ATOMReplierViewModel.h"
 #import "ATOMTotalPSView.h"
 #import "ATOMBottomCommonButton.h"
+
+
+#import "PageComonSubviews.h"
 #define MAXHEIGHT (SCREEN_WIDTH-kPadding15*2)*4/3
 
 @interface ATOMHomePageHotTableViewCell ()
@@ -34,172 +37,162 @@ static CGFloat replierWidth = 25;
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        [self createSubView];
+        [self configSubviews];
     }
     return self;
 }
 
-- (void)createSubView {
-    _topView = [UIView new];
-    _topView.backgroundColor = [UIColor whiteColor];
-    _userWorkImageView = [UIImageView new];
-    _userWorkImageView.contentMode = UIViewContentModeScaleAspectFit;
-    _thinCenterView = [UIView new];
-    _thinCenterView.backgroundColor = [UIColor whiteColor];
-    _bottomView = [UIView new];
-    _bottomView.backgroundColor = [UIColor whiteColor];
-    _bottomThinView = [UIView new];
-    _bottomThinView.backgroundColor = [UIColor colorWithHex:0xf3f3f3];
-    [self addSubview:_userWorkImageView];
-    [self addSubview:_topView];
-    [self addSubview:_thinCenterView];
-    [self addSubview:_bottomView];
-    [self addSubview:_bottomThinView];
+- (void)configSubviews {
+    //use self.property ，not _property
+    [self.contentView addSubview:self.topView];
+    [self.contentView addSubview:self.imageViewMain];
+    [self.contentView addSubview:self.bottomView];
+    [self.contentView addSubview:self.lineView];
+    [self.contentView addSubview:self.additionView];
+    [self.contentView addSubview:self.gapView];
     
-    _userHeaderButton = [UIButton new];
-    _userHeaderButton.userInteractionEnabled = NO;
-    _userHeaderButton.layer.cornerRadius = kUserHeaderButtonWidth / 2;
-    _userHeaderButton.layer.masksToBounds = YES;
-    _userNameLabel = [UILabel new];
-    _userNameLabel.font = [UIFont fontWithName:@"Helvetica Light" size:kFont14];
-    _userNameLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
-    _userPublishTimeLabel = [UILabel new];
-    _userPublishTimeLabel.font = [UIFont systemFontOfSize:kFont13];
-    _userPublishTimeLabel.textColor = [UIColor colorWithHex:0xC9C9C9 andAlpha:1];
-    
-    [_topView addSubview:_userHeaderButton];
-    [_topView addSubview:_userNameLabel];
-    [_topView addSubview:_userPublishTimeLabel];
-    
-    _praiseButton = [ATOMBottomCommonButton new];
-    _praiseButton.image = [UIImage imageNamed:@"btn_comment_like_normal"];
-    _shareButton = [ATOMBottomCommonButton new];
-    _shareButton.image = [UIImage imageNamed:@"icon_share_normal"];
-    _commentButton = [ATOMBottomCommonButton new];
-    _commentButton.image = [UIImage imageNamed:@"icon_comment_normal"];
-    
-    [_thinCenterView addSubview:_praiseButton];
-    [_thinCenterView addSubview:_shareButton];
-    [_thinCenterView addSubview:_commentButton];
-    
-    _moreShareButton = [UIButton new];
-    _moreShareButton.userInteractionEnabled = NO;
-    [_moreShareButton setImage:[UIImage imageNamed:@"icon_others_normal"] forState:UIControlStateNormal];
-    [_thinCenterView addSubview:_moreShareButton];
-    
-    _lineView = [UIView new];
-    _lineView.backgroundColor = [UIColor colorWithHex:0xededed];
-    [_thinCenterView addSubview:_lineView];
-    
-    _totalPSLabel = [ATOMTotalPSView new];
-    [_bottomView addSubview:_totalPSLabel];
-    
-    _replierAvatars = [NSMutableArray array];
-    for (int i = 0; i < defaultAvatarCount; i++) {
-        UIImageView *imageView = [UIImageView new];
-        imageView.layer.cornerRadius = replierWidth / 2;
-        imageView.layer.masksToBounds = YES;
-        [_bottomView addSubview:imageView];
-        [_replierAvatars addObject:imageView];
-    }
+    [self configMansory];
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    CGFloat topViewHeight = 60;
-    _topView.frame = CGRectMake(0, 0, SCREEN_WIDTH, topViewHeight);
-    _userHeaderButton.frame = CGRectMake(kPadding15, (topViewHeight - kUserHeaderButtonWidth) / 2, kUserHeaderButtonWidth, kUserHeaderButtonWidth);
-    _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, (topViewHeight - kFont14) / 2, kUserNameLabelWidth, kFont14+2);
-    _userPublishTimeLabel.frame = CGRectMake(SCREEN_WIDTH - kPadding15 - 130, (topViewHeight - kFont14) / 2, 130, kFont14);
-    _userPublishTimeLabel.textAlignment = NSTextAlignmentRight;
-    CGSize workImageSize = CGSizeZero;
-    CGSize commentSize, shareSize, praiseSize;
-    if (_viewModel) {
-        workImageSize = [[self class] calculateHomePageHotImageViewSizeWith:_viewModel];
-        commentSize = [_viewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading          attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
-        commentSize.width += kBottomCommonButtonWidth + kPadding15;
-        shareSize = [_viewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading            attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
-        shareSize.width += kBottomCommonButtonWidth + kPadding15;
-        praiseSize = [_viewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading           attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
-        praiseSize.width += kBottomCommonButtonWidth + kPadding15;
-    }
-    {
-        CGFloat imageViewHeight;
-        if (workImageSize.height >= MAXHEIGHT) {
-            imageViewHeight = MAXHEIGHT;
-        } else {
-            imageViewHeight = workImageSize.height;
-        }
-        _userWorkImageView.frame = CGRectMake((SCREEN_WIDTH - workImageSize.width) / 2, CGRectGetMaxY(_topView.frame), workImageSize.width, imageViewHeight);
-    }
-    CGFloat thinViewHeight = 60;
-    CGFloat bottomButtonOriginY = (thinViewHeight - kBottomCommonButtonWidth) / 2;
-    _thinCenterView.frame = CGRectMake(0, CGRectGetMaxY(_userWorkImageView.frame), SCREEN_WIDTH, thinViewHeight);
-    _moreShareButton.frame = CGRectMake(kPadding15+1, (thinViewHeight - kBottomCommonButtonWidth) / 2, 60, kBottomCommonButtonWidth);
-    _moreShareButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 30);
-    
-    _commentButton.frame = CGRectMake(SCREEN_WIDTH - kPadding15 - commentSize.width, bottomButtonOriginY, commentSize.width, kBottomCommonButtonWidth);
-    _shareButton.frame = CGRectMake(CGRectGetMinX(_commentButton.frame) - kPadding20 - shareSize.width, bottomButtonOriginY, shareSize.width, kBottomCommonButtonWidth);
-    _praiseButton.frame = CGRectMake(CGRectGetMinX(_shareButton.frame) - kPadding20 - praiseSize.width, bottomButtonOriginY, praiseSize.width, kBottomCommonButtonWidth);
-    _lineView.frame = CGRectMake(kPadding15, CGHeight(_thinCenterView.frame) - 1, SCREEN_WIDTH - 2 * kPadding15, 1);
-        _bottomView.frame = CGRectMake(0, CGRectGetMaxY(_thinCenterView.frame), SCREEN_WIDTH, 60);
-        CGFloat originX = SCREEN_WIDTH - defaultAvatarCount * (kPadding5 + replierWidth) + kPadding5 - kPadding15;
-        for (int i = 0; i < defaultAvatarCount; i++) {
-            UIImageView *imageView = _replierAvatars[i];
-            imageView.frame = CGRectMake(originX + i * (replierWidth + kPadding5), (CGHeight(_bottomView.frame) - replierWidth) / 2, replierWidth, replierWidth);
-        }
-        _totalPSLabel.frame = CGRectMake(kPadding15, (CGHeight(_bottomView.frame) - kFont14) / 2, kFont14 * (_viewModel.totalPSNumber.length + 3) + 6 * 2, kFont14);
-    _bottomThinView.frame = CGRectMake(0, CGRectGetMaxY(_bottomView.frame), SCREEN_WIDTH, 8);
+- (void)configMansory {
+    [self configMansoryViews];
+    [self configMansoryTopView];
+    [self configMansorybottomView];
+    [self configMansoryadditionView];
 }
 
-+ (CGFloat)calculateCellHeightWith:(ATOMAskPageViewModel *)viewModel {
-    
-    CGFloat imageHeight;
-
-    if (viewModel.height >= MAXHEIGHT) {
-        imageHeight = MAXHEIGHT;
-    } else {
-        imageHeight = viewModel.height;
-    }
-    
-    return 60 + imageHeight + 60 + 60 + 8;
-
+- (void) configMansoryViews {
+    [_topView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.contentView).with.offset(0);
+        make.left.equalTo(self.contentView).with.offset(kPadding15);
+        make.right.equalTo(self.contentView).with.offset(-kPadding15);
+        make.height.equalTo(@(kfcTopViewHeight));
+    }];
+    [_imageViewMain mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_topView.mas_bottom).with.offset(0);
+        make.left.equalTo(self.contentView).with.offset(kPadding15);
+        make.right.equalTo(self.contentView).with.offset(-kPadding15);
+        make.bottom.equalTo(_bottomView.mas_top).with.offset(0);
+    }];
+    [_bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.contentView).with.offset(kPadding15);
+        make.right.equalTo(self.contentView).with.offset(-kPadding15);
+        //todo :change height var and name of _additionView
+        make.height.equalTo(@(kfcBottomViewHeight));
+    }];
+    [_lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_bottomView.mas_bottom).with.offset(0);
+        make.left.equalTo(self.contentView).with.offset(kPadding15);
+        make.right.equalTo(self.contentView).with.offset(-kPadding15);
+        make.height.equalTo(@(1));
+        make.bottom.equalTo(_additionView.mas_top).with.offset(0);
+    }];
+    [_additionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.contentView).with.offset(kPadding15);
+        make.right.equalTo(self.contentView).with.offset(-kPadding15);
+        //change height var and name of _additionView
+        make.height.equalTo(@(kfcAddtionViewHeight));
+    }];
+    [_gapView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_additionView.mas_bottom).with.offset(0);
+        make.left.equalTo(self.contentView).with.offset(0);
+        make.right.equalTo(self.contentView).with.offset(0);
+        //change height var and name of _additionView
+        make.height.equalTo(@(kfcGapViewHeight));
+        make.bottom.equalTo(self.contentView).with.offset(0);
+    }];
 }
 
-+ (CGSize)calculateHomePageHotImageViewSizeWith:(ATOMAskPageViewModel *)viewModel {
-    return CGSizeMake(viewModel.width, viewModel.height);
+- (void) configMansoryTopView {
+    
+    [_avatarView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_topView).with.offset(0);
+        make.left.equalTo(_topView).with.offset(0);
+        make.width.equalTo(@(KAvatarWidth));
+        make.height.equalTo(@(KAvatarWidth));
+    }];
+    
+    [_usernameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_topView).with.offset(0);
+        make.left.equalTo(_avatarView.mas_right).with.offset(kPadding15);
+    }];
+    
+    [_publishTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_topView).with.offset(0);
+        make.right.equalTo(_topView).with.offset(-kPadding15);
+    }];
 }
 
-- (void)setViewModel:(ATOMAskPageViewModel *)viewModel {
-    _viewModel = viewModel;
-    _userNameLabel.text = viewModel.userName;
-    [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
-    _userPublishTimeLabel.text = viewModel.publishTime;
-    _praiseButton.number = viewModel.likeNumber;
-    _praiseButton.selected = viewModel.liked;
-    _shareButton.number = viewModel.shareNumber;
+- (void) configMansorybottomView {
+    
+    [_moreButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_bottomView);
+        make.left.equalTo(_bottomView).with.offset(0);
+        make.width.equalTo(@(kfcButtonHeight*2));
+        make.height.equalTo(@(kfcButtonHeight));
+    }];
+    
+    [_likeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_bottomView);
+        make.right.equalTo(_wechatButton.mas_leading).with.offset(-kPadding15);
+        make.height.equalTo(@(kfcButtonHeight));
+        make.width.equalTo(@(kfcButtonHeight*1.5));
+    }];
+    
+    [_wechatButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_bottomView);
+        make.right.equalTo(_commentButton.mas_leading).with.offset(-kPadding15);
+        make.height.equalTo(@(kfcButtonHeight));
+        make.width.equalTo(@(kfcButtonHeight*1.5));
+    }];
+    [_commentButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_bottomView);
+        make.right.equalTo(_bottomView).with.offset(-kPadding15);
+        make.height.equalTo(@(kfcButtonHeight));
+        make.width.equalTo(@(kfcButtonHeight*1.5));
+    }];
+}
+- (void) configMansoryadditionView {
+    
+    [_totalPSLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_additionView).with.offset(kPadding15);
+        make.left.equalTo(_additionView).with.offset(kPadding15);
+    }];
+    
+}
+
+
+
+
+- (void)configCell:(ATOMAskPageViewModel *)viewModel {
+//    _viewModel = viewModel;
+    _usernameLabel.text = viewModel.userName;
+    [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
+    _publishTimeLabel.text = viewModel.publishTime;
+    _likeButton.number = viewModel.likeNumber;
+    _likeButton.selected = viewModel.liked;
+    _wechatButton.number = viewModel.shareNumber;
     _totalPSLabel.number = viewModel.totalPSNumber;
     _commentButton.number = viewModel.commentNumber;
+    [_imageViewMain mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@(viewModel.height));
+    }];
     if (viewModel.image) {
-        _userWorkImageView.image = viewModel.image;
+        _imageViewMain.image = viewModel.image;
     } else {
-        [_userWorkImageView setImageWithURL:[NSURL URLWithString:viewModel.userImageURL] placeholderImage:[UIImage imageNamed:@"placeholderImage_1"]];
+        [_imageViewMain setImageWithURL:[NSURL URLWithString:viewModel.userImageURL] placeholderImage:[UIImage imageNamed:@"placeholderImage_1"]];
     }
-    [self addTipLabelToImageView];
-    [self addReplier];
-    [self setNeedsLayout];
 }
-
-- (void)addTipLabelToImageView {
+- (void)addTipLabel:(ATOMAskPageViewModel*)vm {
     //移除旧的标签
-    for (UIView * subView in _userWorkImageView.subviews) {
+    for (UIView * subView in _imageViewMain.subviews) {
         if ([subView isKindOfClass:[ATOMTipButton class]]) {
             ATOMTipButton *button = (ATOMTipButton *)subView;
             [button removeFromSuperview];
         }
     }
-    for (ATOMImageTipLabelViewModel *labelViewModel in _viewModel.labelArray) {
-        CGRect labelFrame = [labelViewModel imageTipLabelFrameByImageSize:CGSizeMake(_viewModel.width, _viewModel.height)];
+    for (ATOMImageTipLabelViewModel *labelViewModel in vm.labelArray) {
+        CGRect labelFrame = [labelViewModel imageTipLabelFrameByImageSize:CGSizeMake(vm.width, vm.height)];
         ATOMTipButton * button = [[ATOMTipButton alloc] initWithFrame:labelFrame];
         if (labelViewModel.labelDirection == 0) {
             button.tipButtonType = ATOMLeftTipType;
@@ -207,28 +200,112 @@ static CGFloat replierWidth = 25;
             button.tipButtonType = ATOMRightTipType;
         }
         button.buttonText = labelViewModel.content;
-        [_userWorkImageView addSubview:button];
+        [_imageViewMain addSubview:button];
     }
 }
 
-- (void)addReplier {
-    for (int i = 0; i < MIN(_viewModel.replierArray.count, defaultAvatarCount); i++) {
-        ATOMReplierViewModel *replierViewModel = _viewModel.replierArray[i];
-        UIImageView *imageView = _replierAvatars[defaultAvatarCount - MIN(_viewModel.replierArray.count, defaultAvatarCount) + i];
-        [imageView setImageWithURL:[NSURL URLWithString:replierViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
+//- (void)addReplier {
+//    for (int i = 0; i < MIN(_viewModel.replierArray.count, defaultAvatarCount); i++) {
+//        ATOMReplierViewModel *replierViewModel = _viewModel.replierArray[i];
+//        UIImageView *imageView = _replierAvatars[defaultAvatarCount - MIN(_viewModel.replierArray.count, defaultAvatarCount) + i];
+//        [imageView setImageWithURL:[NSURL URLWithString:replierViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
+//    }
+//}
+
+-(UIView *)topView {
+    if (!_topView) {
+        _topView = [UIView new];
+        _topView.backgroundColor = [UIColor clearColor];
+        [_topView addSubview:self.avatarView];
+        [_topView addSubview:self.usernameLabel];
+        [_topView addSubview:self.publishTimeLabel];
     }
+    return _topView;
+}
+-(UIView *)bottomView {
+    if (!_bottomView) {
+        _bottomView = [UIView new];
+        _bottomView.backgroundColor = [UIColor clearColor];
+        _likeButton = [ATOMBottomCommonButton new];
+        _likeButton.image = [UIImage imageNamed:@"btn_comment_like_normal"];
+        _wechatButton = [ATOMBottomCommonButton new];
+        _wechatButton.image = [UIImage imageNamed:@"icon_share_normal"];
+        _commentButton = [ATOMBottomCommonButton new];
+        _commentButton.image = [UIImage imageNamed:@"icon_comment_normal"];
+        _moreButton= [UIButton new];
+        _moreButton.imageEdgeInsets = UIEdgeInsetsMake(0, -28, 0, 0);
+        _moreButton.userInteractionEnabled = NO;
+        [_moreButton setImage:[UIImage imageNamed:@"icon_others_normal"] forState:UIControlStateNormal];
+        [_bottomView addSubview:_moreButton];
+        [_bottomView addSubview:_likeButton];
+        [_bottomView addSubview:_wechatButton];
+        [_bottomView addSubview:_commentButton];
+    }
+    return _bottomView;
 }
 
+-(UIView *)lineView {
+    if (!_lineView) {
+        _lineView = [UIView new];
+        _lineView.backgroundColor = [UIColor colorWithHex:0xededed andAlpha:0.5];
+    }
+    return _lineView;
+}
 
+-(UIView *)additionView {
+    if (!_additionView) {
+        _additionView = [UIView new];
+        _additionView.backgroundColor = [UIColor clearColor];
+        _totalPSLabel = [ATOMTotalPSView new];
+        [_additionView addSubview:_totalPSLabel];
+        _replierAvatars = [NSMutableArray array];
+        for (int i = 0; i < defaultAvatarCount; i++) {
+            UIImageView *imageView = [UIImageView new];
+            imageView.layer.cornerRadius = replierWidth / 2;
+            imageView.layer.masksToBounds = YES;
+            [_additionView addSubview:imageView];
+            [_replierAvatars addObject:imageView];
+        }
+    }
+    return _additionView;
+}
 
+- (UIImageView *)avatarView
+{
+    if (!_avatarView) {
+        _avatarView = [kAvatarView new];
+    }
+    return _avatarView;
+}
 
+- (UILabel *)usernameLabel
+{
+    if (!_usernameLabel) {
+        _usernameLabel = [kUsernameLabel new];
+    }
+    return _usernameLabel;
+}
 
+- (UILabel *)publishTimeLabel
+{
+    if (!_publishTimeLabel) {
+        _publishTimeLabel = [kPublishTimeLabel new];
+    }
+    return _publishTimeLabel;
+}
 
+-(UIView*)gapView {
+    if (!_gapView) {
+        _gapView = [kGapView new];
+    }
+    return _gapView;
+}
 
-
-
-
-
-
+-(UIImageView*)imageViewMain {
+    if (!_imageViewMain) {
+        _imageViewMain = [kImageView new];
+    }
+    return _imageViewMain;
+}
 
 @end

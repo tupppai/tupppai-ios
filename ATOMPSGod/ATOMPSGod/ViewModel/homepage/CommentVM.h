@@ -1,5 +1,5 @@
 //
-//  ATOMCommentDetailViewModel.h
+//  CommentVM.h
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/5.
@@ -9,19 +9,19 @@
 #import <Foundation/Foundation.h>
 @class ATOMComment;
 
-@interface ATOMCommentDetailViewModel : NSObject
+@interface CommentVM : NSObject
 
 @property (nonatomic, assign) NSInteger uid;
-@property (nonatomic, copy) NSString *nickname;
-@property (nonatomic, copy) NSString *content;
+@property (nonatomic, copy) NSString *username;
+@property (nonatomic, copy) NSString *text;
 @property (nonatomic, copy) NSString *likeNumber;
-@property (nonatomic, assign) NSInteger comment_id;
-@property (nonatomic, copy) NSString *userSex;
+@property (nonatomic, assign) NSInteger ID;
+@property (nonatomic, copy) NSString *sex;
 @property (nonatomic, copy) NSString *avatar;
 @property (nonatomic, assign) BOOL liked;
 
 - (void)setViewModelData:(ATOMComment *)comment;
-- (void)setDataWithAtModel:(ATOMCommentDetailViewModel *)viewModel andContent:(NSString *)content;
+- (void)setDataWithAtModel:(CommentVM *)viewModel andContent:(NSString *)content;
 - (void)increasePraiseNumber;
 - (void)toggleLike;
 

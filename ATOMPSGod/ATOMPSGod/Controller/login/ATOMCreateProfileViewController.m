@@ -197,7 +197,7 @@
         return ;
     }
     [ATOMCurrentUser currentUser].sex = [_createProfileView tagOfCurrentSex];
-    [ATOMCurrentUser currentUser].nickname = str;
+    [ATOMCurrentUser currentUser].username = str;
     ATOMMobileRegisterViewController *mrvc = [[ATOMMobileRegisterViewController alloc] init];
     [self.navigationController pushViewController:mrvc animated:YES];
 }

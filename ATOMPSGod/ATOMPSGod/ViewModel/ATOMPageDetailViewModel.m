@@ -15,7 +15,7 @@
         _pageID = 0;
 //        _userID = [ATOMCurrentUser currentUser].uid;
 //        _userSex = ([ATOMCurrentUser currentUser].sex == 0) ? @"woman" : @"man";
-        _userName = [ATOMCurrentUser currentUser].nickname;
+        _userName = [ATOMCurrentUser currentUser].username;
         _avatarURL = [ATOMCurrentUser currentUser].avatar;
         _likeNumber = @"0";
         _shareNumber = @"0";

@@ -1,28 +1,31 @@
 //
-//  ATOMCommentDetailViewModel.m
+//  CommentVM.m
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/5.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMCommentDetailViewModel.h"
+#import "CommentVM.h"
 #import "ATOMComment.h"
 #import "ATOMAtComment.h"
 #import "ATOMShowDetailOfComment.h"
-@implementation ATOMCommentDetailViewModel
+@implementation CommentVM
 
 - (instancetype)init {
     self = [super init];
     if (self) {
+        _likeNumber = @"0";
+        _username = @"visitor";
+        _liked = NO;
     }
     return self;
 }
 
 - (void)setViewModelData:(ATOMComment *)comment {
     _uid = comment.uid;
-    _nickname = comment.nickname;
-    _comment_id = comment.cid;
+    _username = comment.nickname;
+    _ID = comment.cid;
 //    _userSex = (comment.sex == 1) ? @"man" : @"woman";
     _likeNumber = [NSString stringWithFormat:@"%ld", (long)comment.praiseNumber];
     _avatar = comment.avatar;
@@ -31,25 +34,24 @@
         for (ATOMAtComment *atComment in comment.atCommentArray) {
             content = [NSString stringWithFormat:@"%@//@%@:%@", content, atComment.nick, atComment.content];
         }
-        _content = content;
+        _text = content;
     } else {
-        _content = comment.content;
+        _text = comment.content;
     }
     _liked = comment.liked;
 }
 
-- (void)setDataWithAtModel:(ATOMCommentDetailViewModel *)viewModel andContent:(NSString *)content{
+- (void)setDataWithAtModel:(CommentVM *)viewModel andContent:(NSString *)text{
     _uid = [ATOMCurrentUser currentUser].uid;
-    _nickname = [ATOMCurrentUser currentUser].nickname;
-    _userSex = ([ATOMCurrentUser currentUser].sex == 1) ? @"man" : @"woman";
+    _username = [ATOMCurrentUser currentUser].username;
+//    _userSex = ([ATOMCurrentUser currentUser].sex == 1) ? @"man" : @"woman";
     _likeNumber = @"0";
     _avatar = [ATOMCurrentUser currentUser].avatar;
     if (viewModel) {
-        _content = [NSString stringWithFormat:@"%@//@%@:%@", content, viewModel.nickname, viewModel.content];
+        _text = [NSString stringWithFormat:@"%@//@%@:%@", text, viewModel.username, viewModel.text];
     } else {
-        _content = content;
+        _text = text;
     }
-//    _liked = NO;
 }
 
 - (void)increasePraiseNumber {
@@ -67,7 +69,7 @@
     [param setValue:@(status) forKey:@"status"];
     
     ATOMShowDetailOfComment * showCommentDetail = [ATOMShowDetailOfComment new];
-    [showCommentDetail toggleLike:param withID:self.comment_id withBlock:^(NSError *error) {
+    [showCommentDetail toggleLike:param withID:self.ID withBlock:^(NSError *error) {
         if (!error) {
             NSLog(@"Server成功toggle like");
             NSInteger number = [_likeNumber integerValue]+one;

@@ -40,11 +40,11 @@
     [self addSubview:_thinCenterView];
     
     _userHeaderButton = [UIButton new];
-    _userHeaderButton.layer.cornerRadius = kUserHeaderButtonWidth / 2;
+    _userHeaderButton.layer.cornerRadius = KAvatarWidth / 2;
     _userHeaderButton.layer.masksToBounds = YES;
     
     _userNameLabel = [UILabel new];
-    _userNameLabel.font = [UIFont systemFontOfSize:kFont14];
+    _userNameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:kUsernameFontSize];
     _userNameLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
     
     _psButton = [UIButton new];
@@ -74,7 +74,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     _topView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 60);
-    _userHeaderButton.frame = CGRectMake(kPadding15, (60 - kUserHeaderButtonWidth) / 2, kUserHeaderButtonWidth, kUserHeaderButtonWidth);
+    _userHeaderButton.frame = CGRectMake(kPadding15, (60 - KAvatarWidth) / 2, KAvatarWidth, KAvatarWidth);
     _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, (60 - kFont14) / 2, kUserNameLabelWidth, kFont14+2);
     _psButton.frame = CGRectMake(SCREEN_WIDTH - kPadding15 - kPSButtonWidth, (60 - kPSButtonHeight) / 2, kPSButtonWidth, kPSButtonHeight);
     
@@ -151,6 +151,8 @@
 
 -(void)setPageDetailViewModel:(ATOMPageDetailViewModel *)pageDetailViewModel {
     _pageDetailViewModel = pageDetailViewModel;
+    CGFloat height = [[self class]calculateHeaderViewHeight:pageDetailViewModel];
+    self.frame = CGRectMake(0, 0, SCREEN_WIDTH, height);
     _userNameLabel.text = pageDetailViewModel.userName;
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:pageDetailViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     if (pageDetailViewModel.pageImage) {

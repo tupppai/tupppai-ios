@@ -7,17 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ATOMCommentDetailViewModel;
-@class ATOMPraiseButton;
+@class CommentVM;
+@class CommentLikeButton;
 
 @interface ATOMCommentDetailTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) UIButton *userHeaderButton;
 @property (nonatomic, strong) UILabel *userNameLabel;
-@property (nonatomic, strong) ATOMPraiseButton *praiseButton;
+@property (nonatomic, strong) CommentLikeButton *praiseButton;
 @property (nonatomic, strong) UILabel *userCommentDetailLabel;
-@property (nonatomic, strong) ATOMCommentDetailViewModel *viewModel;
+@property (nonatomic, strong) CommentVM *viewModel;
 
-+ (CGFloat)calculateCellHeightWithModel:(ATOMCommentDetailViewModel *)viewModel;
++ (CGFloat)calculateCellHeightWithModel:(CommentVM *)viewModel;
 
 @end

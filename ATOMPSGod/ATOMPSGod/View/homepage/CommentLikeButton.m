@@ -1,15 +1,15 @@
 //
-//  ATOMPraiseButton.m
+//  CommentLikeButton.m
 //  ATOMPSGod
 //
 //  Created by atom on 15/4/30.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMPraiseButton.h"
+#import "CommentLikeButton.h"
 #import "ATOMShowDetailOfComment.h"
 
-@interface ATOMPraiseButton ()
+@interface CommentLikeButton ()
 
 @property (nonatomic, strong) NSDictionary *attributeDict;
 @property (nonatomic, strong) UIColor *currentColor;
@@ -17,12 +17,14 @@
 
 @end
 
-@implementation ATOMPraiseButton
+@implementation CommentLikeButton
 
 - (instancetype)init{
     self = [super init];
     if (self) {
         _extralWidth = 14 + kPadding5 * 2 + 2;
+        _currentColor = [UIColor colorWithHex:0xb2b2b2];
+        _likeNumber = @"0";
     }
     return self;
 }
@@ -72,8 +74,6 @@
     self.selected = !self.selected;
 }
 
-
-
 - (void)drawRect:(CGRect)rect {
     UIBezierPath *rectPath = [UIBezierPath bezierPathWithRect:rect];
     [[UIColor clearColor] set];
@@ -90,7 +90,6 @@
     CGRect praiseRect = CGRectMake(_extralWidth, centerPos, CGWidth(rect) - _extralWidth, CGHeight(rect));
     [_likeNumber drawInRect:praiseRect withAttributes:self.attributeDict];
 }
-
 
 
 

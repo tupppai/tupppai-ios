@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "ATOMPageDetailViewController.h"
 #import "ATOMPageDetailView.h"
-#import "ATOMCommentDetailViewModel.h"
+#import "CommentVM.h"
 #import "ATOMCropImageController.h"
 #import "ATOMCommentTableViewCell.h"
 #import "ATOMMyConcernTableHeaderView.h"
@@ -17,37 +17,37 @@
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMCommentDetailViewController.h"
 #import "ATOMComment.h"
-#import "ATOMCommentDetailViewModel.h"
+#import "CommentVM.h"
 #import "ATOMShowDetailOfComment.h"
 #import "ATOMShareFunctionView.h"
 #import "ATOMBottomCommonButton.h"
-#import "ATOMPraiseButton.h"
+#import "CommentLikeButton.h"
 #import "ATOMCollectModel.h"
 #import "JGActionSheet.h"
 #import "ATOMInviteViewController.h"
 #import "ATOMReportModel.h"
 #import "JTSImageViewController.h"
 #import "JTSImageInfo.h"
+
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMPageDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate>
 
 @property (nonatomic, strong) ATOMPageDetailView *pageDetailView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
-@property (nonatomic, strong) NSMutableArray *dataSourceHotComment;
-@property (nonatomic, strong) NSMutableArray *dataSourceNewComment;
+@property (nonatomic, strong) NSMutableArray *commentsHot;
+@property (nonatomic, strong) NSMutableArray *commentsNew;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) NSInteger ID;
 @property (nonatomic, assign) NSInteger type;
 @property (nonatomic, strong) UITapGestureRecognizer *tapUserNameLabelGesture;
 @property (nonatomic, strong) UITapGestureRecognizer *tapCommentDetailGesture;
 @property (nonatomic, assign) BOOL canRefreshFooter;
-@property (nonatomic, strong) ATOMCommentDetailViewModel *atModel;
+@property (nonatomic, strong) CommentVM *atModel;
 @property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
 @property (nonatomic, strong)  JGActionSheet * psActionSheet;
 @property (nonatomic, strong)  JGActionSheet * reportActionSheet;
 @property (nonatomic, strong) NSIndexPath *selectedIndexpath;
-
 
 @end
 
@@ -230,10 +230,10 @@
 
 - (void)getDataSource {
     WS(ws);
-    _dataSourceHotComment = nil;
-    _dataSourceHotComment = [NSMutableArray array];
-    _dataSourceNewComment = nil;
-    _dataSourceNewComment = [NSMutableArray array];
+    _commentsHot = nil;
+    _commentsHot = [NSMutableArray array];
+    _commentsNew = nil;
+    _commentsNew = [NSMutableArray array];
     _currentPage = 1;
 
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -245,14 +245,14 @@
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
     [showDetailOfComment ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
         for (ATOMComment *comment in hotCommentArray) {
-            ATOMCommentDetailViewModel *model = [ATOMCommentDetailViewModel new];
+            CommentVM *model = [CommentVM new];
             [model setViewModelData:comment];
-            [ws.dataSourceHotComment addObject:model];
+            [ws.commentsHot addObject:model];
         }
         for (ATOMComment *comment in recentCommentArray) {
-            ATOMCommentDetailViewModel *model = [ATOMCommentDetailViewModel new];
+            CommentVM *model = [CommentVM new];
             [model setViewModelData:comment];
-            [ws.dataSourceNewComment addObject:model];
+            [ws.commentsNew addObject:model];
         }
         [ws.pageDetailView.tableViewComent reloadData];
     }];
@@ -269,9 +269,9 @@
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
     [showDetailOfComment ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
         for (ATOMComment *comment in recentCommentArray) {
-            ATOMCommentDetailViewModel *model = [ATOMCommentDetailViewModel new];
+            CommentVM *model = [CommentVM new];
             [model setViewModelData:comment];
-            [ws.dataSourceNewComment addObject:model];
+            [ws.commentsNew addObject:model];
         }
         [_pageDetailView.tableViewComent.footer endRefreshing];
         [ws.pageDetailView.tableViewComent reloadData];
@@ -305,7 +305,6 @@
         if (_pageDetailViewModel && (self.isMovingFromParentViewController || self.isBeingDismissed)) {
             if(_delegate && [_delegate respondsToSelector:@selector(ATOMViewControllerDismissWithInfo:)])
             {
-                NSLog(@"_pageDetailViewModel collected %d",_pageDetailViewModel.collected);
                 NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithBool:_pageDetailViewModel.liked],@"liked",[NSNumber numberWithBool:_pageDetailViewModel.collected],@"collected",nil];
                 [_delegate ATOMViewControllerDismissWithInfo:info];
             }
@@ -399,9 +398,9 @@
     _pageDetailView.commentTextView.text = @"";
     [_pageDetailView restoreBottomView];
     
-    ATOMCommentDetailViewModel *model = [ATOMCommentDetailViewModel new];
+    CommentVM *model = [CommentVM new];
     [model setDataWithAtModel:_atModel andContent:commentStr];
-    [_dataSourceNewComment insertObject:model atIndex:0];
+    [_commentsNew insertObject:model atIndex:0];
     [_pageDetailView.tableViewComent reloadData];
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -414,8 +413,7 @@
 //    }
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
     [showDetailOfComment SendComment:param withBlock:^(NSInteger comment_id, NSError *error) {
-        model.comment_id = comment_id;
-        
+        model.ID = comment_id;
     }];
 //    _atModel = nil;
 }
@@ -471,17 +469,17 @@
         if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
             opvc.userID = cell.viewModel.uid;
-            opvc.userName = cell.viewModel.nickname;
+            opvc.userName = cell.viewModel.username;
             [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.userNameButton.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
             opvc.userID = cell.viewModel.uid;
-            opvc.userName = cell.viewModel.nickname;
+            opvc.userName = cell.viewModel.username;
             [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.praiseButton.frame, p)) {
             NSInteger section = indexPath.section;
             NSInteger row = indexPath.row;
-            ATOMCommentDetailViewModel *model = (section == 0) ? _dataSourceHotComment[row] : _dataSourceNewComment[row];
+            CommentVM *model = (section == 0) ? _commentsHot[row] : _commentsNew[row];
 //            if (!model.liked) {
 ////                cell.praiseButton.selected = !cell.praiseButton.selected;
 //                ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
@@ -504,9 +502,9 @@
 //            NSInteger section = indexPath.section;
 //            NSInteger row = indexPath.row;
 //            if (section == 0) {
-//                _atModel = _dataSourceHotComment[row];
+//                _atModel = _commentsHot[row];
 //            } else if (section == 1) {
-//                _atModel = _dataSourceNewComment[row];
+//                _atModel = _commentsNew[row];
 //            }
 //            _pageDetailView.textViewPlaceholder = [NSString stringWithFormat:@"//@%@:", _atModel.nickname];
 //            _pageDetailView.commentTextView.text = _pageDetailView.textViewPlaceholder;
@@ -545,9 +543,9 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return _dataSourceHotComment.count;
+        return _commentsHot.count;
     } else if (section == 1) {
-        return _dataSourceNewComment.count;
+        return _commentsNew.count;
     } else {
         return 0;
     }
@@ -561,9 +559,9 @@
             cell = [[ATOMCommentTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         if (indexPath.section == 0) {
-            cell.viewModel = _dataSourceHotComment[indexPath.row];
+            cell.viewModel = _commentsHot[indexPath.row];
         } else if (indexPath.section ==1) {
-            cell.viewModel = _dataSourceNewComment[indexPath.row];
+            cell.viewModel = _commentsNew[indexPath.row];
         }
         return cell;
     }
@@ -583,9 +581,9 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger section = indexPath.section;
     if (section == 0) {
-        return [ATOMCommentTableViewCell calculateCellHeightWithModel:_dataSourceHotComment[indexPath.row]];
+        return [ATOMCommentTableViewCell calculateCellHeightWithModel:_commentsHot[indexPath.row]];
     } else if (section == 1) {
-        return [ATOMCommentTableViewCell calculateCellHeightWithModel:_dataSourceNewComment[indexPath.row]];
+        return [ATOMCommentTableViewCell calculateCellHeightWithModel:_commentsNew[indexPath.row]];
     }
     return 0;
 }
@@ -606,12 +604,12 @@
                 NSInteger section = indexPath.section;
                 NSInteger row = indexPath.row;
                 if (section == 0) {
-                    _atModel = _dataSourceHotComment[row];
+                    _atModel = _commentsHot[row];
                 } else if (section == 1) {
-                    _atModel = _dataSourceNewComment[row];
+                    _atModel = _commentsNew[row];
                 }
-    NSLog(@" _atModel.nickname %@", _atModel.nickname);
-    _pageDetailView.placeHolderLabel.text = [NSString stringWithFormat:@"回复%@:", _atModel.nickname];
+//    NSLog(@" _atModel.nickname %@", _atModel.nickname);
+//    _pageDetailView.placeHolderLabel.text = [NSString stringWithFormat:@"回复%@:", _atModel.nickname];
 }
 #pragma mark - UITextViewDelegate
 

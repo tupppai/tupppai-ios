@@ -264,6 +264,7 @@
     self.view = _myAttentionView;
     _tableView = [[PWRefreshBaseTableView alloc] initWithFrame:_myAttentionView.bounds];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.estimatedRowHeight = SCREEN_HEIGHT - NAV_HEIGHT - 100;
     _tableView.delegate = self;
     _tableView.psDelegate = self;
     _tableView.dataSource = self;

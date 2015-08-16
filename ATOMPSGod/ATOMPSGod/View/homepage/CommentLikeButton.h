@@ -1,5 +1,5 @@
 //
-//  ATOMPraiseButton.h
+//  CommentLikeButton.h
 //  ATOMPSGod
 //
 //  Created by atom on 15/4/30.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ATOMPraiseButton : UIButton
+@interface CommentLikeButton : UIButton
 
 @property (nonatomic, copy) NSString *likeNumber;
 -(void)toggleNumber;

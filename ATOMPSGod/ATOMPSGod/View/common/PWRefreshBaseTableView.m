@@ -13,31 +13,37 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [self addGifHeaderWithRefreshingTarget:self refreshingAction:@selector(loadNewHotData)];
-        [self addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreHotData)];
-        NSMutableArray *animatedImages = [NSMutableArray array];
-        for (int i = 1; i<=3; i++) {
-            UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"loading_%ddot", i]];
-            [animatedImages addObject:image];
-        }
-        UIImageView* mascotImageView = [[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/2 + 30, -30, 40, 30)];
-        mascotImageView.image = [UIImage imageNamed:@"loading_mascot"];
-        [self addSubview:mascotImageView];
-        
-        UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, -1, SCREEN_WIDTH, 1)];
-        line.backgroundColor = [UIColor colorWithHex:0xf5f5f5 andAlpha:0.8];
-        [self addSubview:line];
-        [self.gifHeader setImages:animatedImages forState:MJRefreshHeaderStateIdle];
-        [self.gifHeader setImages:animatedImages forState:MJRefreshHeaderStateRefreshing];
-        self.header.updatedTimeHidden = YES;
-        self.header.stateHidden = YES;
-        self.gifFooter.refreshingImages = animatedImages;
-        self.footer.stateHidden = YES;
+        [self configRefresh];
         self.tableFooterView = [UIView new];
+        _firstReload = YES;
     }
     return self;
 }
 
+- (void) configRefresh {
+    
+    [self addGifHeaderWithRefreshingTarget:self refreshingAction:@selector(loadNewHotData)];
+    [self addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreHotData)];
+    NSMutableArray *animatedImages = [NSMutableArray array];
+    for (int i = 1; i<=3; i++) {
+        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"loading_%ddot", i]];
+        [animatedImages addObject:image];
+    }
+    UIImageView* mascotImageView = [[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/2 + 30, -30, 40, 30)];
+    mascotImageView.image = [UIImage imageNamed:@"loading_mascot"];
+    [self addSubview:mascotImageView];
+    
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, -1, SCREEN_WIDTH, 1)];
+    line.backgroundColor = [UIColor colorWithHex:0xf5f5f5 andAlpha:0.8];
+    [self addSubview:line];
+    
+    [self.gifHeader setImages:animatedImages forState:MJRefreshHeaderStateIdle];
+    [self.gifHeader setImages:animatedImages forState:MJRefreshHeaderStateRefreshing];
+    self.header.updatedTimeHidden = YES;
+    self.header.stateHidden = YES;
+    self.gifFooter.refreshingImages = animatedImages;
+    self.footer.stateHidden = YES;
+}
 #pragma mark lazy initilize
 - (ATOMNoDataView *)noDataView {
     if (!_noDataView) {
@@ -58,16 +64,22 @@
     }}
 
 -(void)reloadData {
+    NSLog(@"PWRefreshBaseTableView reloadData");
+    NSLog(@"_firstReload %d",_firstReload);
     [super reloadData];
-    if (self) {
-        for (int i = 0; i < [self numberOfSections]; i++) {
-            if ([self numberOfRowsInSection:i] > 0) {
-                self.noDataView.hidden = true;
-                break;
+    if (!_firstReload) {
+
+        if (self) {
+            for (int i = 0; i < [self numberOfSections]; i++) {
+                if ([self numberOfRowsInSection:i] > 0) {
+                    self.noDataView.hidden = true;
+                    break;
+                }
+                self.noDataView.hidden = false;
             }
-            self.noDataView.hidden = false;
         }
     }
+    _firstReload = NO;
 }
 
 -(void)reloadDataCustom {
