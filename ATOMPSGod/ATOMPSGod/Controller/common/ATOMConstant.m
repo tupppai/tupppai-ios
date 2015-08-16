@@ -21,9 +21,18 @@ CGFloat const kPSButtonHeight = 26;
 CGFloat const kBottomCommonButtonWidth = 24;
 
 CGFloat const kfcButtonHeight = 24;
-CGFloat const kfcTopViewHeight = 60;
-CGFloat const kfcBottomViewHeight = 60;
-CGFloat const kfcAddtionViewHeight = 60;
+CGFloat const kfcButtonWidth = 32;
+
+CGFloat const kfcTopViewHeight = 50;
+CGFloat const kfcBottomViewHeight = 49;
+CGFloat const kfcAddtionViewHeight = 45;
+CGFloat const kfcReplierWidth = 24;
+CGFloat const kfcReplierGap = 3;
+CGFloat const kfcImageHeightDefault = 250;
+CGFloat const kfcImageHeightMax = 600;
+
+NSInteger const kfcReplierDefaultQuantity = 7;
+
 
 CGFloat const kfcGapViewHeight = 8;
 
@@ -50,6 +59,8 @@ NSInteger const kLineWidth = 260;
 
 NSString * const kUserNameFont = @"HelveticaNeue-Light";
 NSString * const kPublishTimeFont = @"HelveticaNeue-Light";
+NSString * const kFontNameDefault = @"HelveticaNeue-Light";
+NSString * const kfcMaxNumberString = @"1000k+";
 
 CGFloat const kUsernameFontSize = 16.f;
 CGFloat const kPublishTimeFontSizeBig = 14.f;

@@ -409,6 +409,7 @@
 		E9ECD5BB1B2E7C8D00173F49 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CCE44351AD7C56500FEDDB3 /* Social.framework */; };
 		E9ECD5BC1B2E7CCD00173F49 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CCE44331AD7C51600FEDDB3 /* Accounts.framework */; };
 		E9ECD5BD1B2E83B200173F49 /* WeChatConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9ECD5931B2D71A700173F49 /* WeChatConnection.framework */; };
+		E9ED35861B80F62F00B93BE5 /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = E9ED35851B80F62F00B93BE5 /* UIScrollView+EmptyDataSet.m */; };
 		E9FBCD2C1B69F92D00BF7096 /* ATOMLoginBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FBCD2B1B69F92D00BF7096 /* ATOMLoginBaseViewController.m */; };
 		E9FBCD2F1B6A042000BF7096 /* ATOMLoginCustomNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FBCD2E1B6A042000BF7096 /* ATOMLoginCustomNavigationController.m */; };
 		E9FC94D91B2F0D0C00B72C60 /* ATOMUserProfileViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FC94D81B2F0D0C00B72C60 /* ATOMUserProfileViewModel.m */; };
@@ -1231,6 +1232,8 @@
 		E9ECD5A81B2D71A700173F49 /* ShareSDKShareActionSheet.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKShareActionSheet.framework; sourceTree = "<group>"; };
 		E9ECD5B71B2E7BA600173F49 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		E9ECD5B91B2E7BAF00173F49 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		E9ED35841B80F62F00B93BE5 /* UIScrollView+EmptyDataSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+EmptyDataSet.h"; sourceTree = "<group>"; };
+		E9ED35851B80F62F00B93BE5 /* UIScrollView+EmptyDataSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+EmptyDataSet.m"; sourceTree = "<group>"; };
 		E9FBCD2A1B69F92D00BF7096 /* ATOMLoginBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMLoginBaseViewController.h; sourceTree = "<group>"; };
 		E9FBCD2B1B69F92D00BF7096 /* ATOMLoginBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMLoginBaseViewController.m; sourceTree = "<group>"; };
 		E9FBCD2D1B6A042000BF7096 /* ATOMLoginCustomNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMLoginCustomNavigationController.h; sourceTree = "<group>"; };
@@ -2171,6 +2174,7 @@
 				5CDB05EE1AA400410089121E /* View */,
 				5CDB05EA1AA400410089121E /* Controller */,
 				5CDB05EC1AA400410089121E /* OpenSource */,
+				E9ED35831B80F62F00B93BE5 /* NODataSet */,
 				5CDB05ED1AA400410089121E /* Uitility */,
 				5CDB05C81AA3FE520089121E /* AppDelegate.h */,
 				5CDB05C91AA3FE520089121E /* AppDelegate.m */,
@@ -2936,6 +2940,15 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		E9ED35831B80F62F00B93BE5 /* NODataSet */ = {
+			isa = PBXGroup;
+			children = (
+				E9ED35841B80F62F00B93BE5 /* UIScrollView+EmptyDataSet.h */,
+				E9ED35851B80F62F00B93BE5 /* UIScrollView+EmptyDataSet.m */,
+			);
+			path = NODataSet;
+			sourceTree = "<group>";
+		};
 		E9FD023A1B296EA600FC5E17 /* common */ = {
 			isa = PBXGroup;
 			children = (
@@ -3131,6 +3144,7 @@
 				5C535CB51AF1FC8A00BF30D1 /* ATOMBaseView.m in Sources */,
 				5C5A7A891ABFF1A7004A00C5 /* ATOMCommentDAO.m in Sources */,
 				E90091AD1B7213A2004623E4 /* JTSImageViewController.m in Sources */,
+				E9ED35861B80F62F00B93BE5 /* UIScrollView+EmptyDataSet.m in Sources */,
 				5C67FB2D1AB2C509004EFF05 /* ATOMCustomCopperView.m in Sources */,
 				5C83A8861AC66F910071A024 /* POPAnimatableProperty.mm in Sources */,
 				5C9BDA081AA84D1000715698 /* CommentVM.m in Sources */,

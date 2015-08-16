@@ -459,11 +459,10 @@
 - (void)configHomepageHotTableView {
     _scrollView.homepageHotTableView.fd_debugLogEnabled = YES;
     _scrollView.homepageHotTableView.delegate = self;
-
     _scrollView.homepageHotTableView.dataSource = self;
     _scrollView.homepageHotTableView.psDelegate = self;
     [_scrollView.homepageHotTableView registerClass:[ATOMHomePageHotTableViewCell class] forCellReuseIdentifier:@"HotCell"];
-    _scrollView.homepageHotTableView.estimatedRowHeight = 340;
+    _scrollView.homepageHotTableView.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
     _tapHomePageHotGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHomePageHotGesture:)];
     [_scrollView.homepageHotTableView addGestureRecognizer:_tapHomePageHotGesture];
 }
@@ -777,7 +776,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_scrollView.homepageHotTableView == tableView) {
-        ATOMHomePageHotTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HotCell" forIndexPath:indexPath];
+        ATOMHomePageHotTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HotCell"];
         [cell configCell:_dataSourceOfHotTableView[indexPath.row]];
         return cell;
     } else if (_scrollView.homepageAskTableView == tableView) {

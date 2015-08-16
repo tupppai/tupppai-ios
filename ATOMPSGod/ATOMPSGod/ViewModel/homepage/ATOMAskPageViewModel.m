@@ -27,7 +27,6 @@
         _ID = 0;
         _userID = [ATOMCurrentUser currentUser].uid;
         _userName = [ATOMCurrentUser currentUser].username;
-        _userSex = ([ATOMCurrentUser currentUser].sex == 0) ? @"woman" : @"man";
         _avatarURL = [ATOMCurrentUser currentUser].avatar;
         NSDateFormatter *df = [NSDateFormatter new];
         [df setDateFormat:@"MM月dd日 HH时mm分"];
@@ -49,17 +48,33 @@
     _ID = homeImage.askID;
     _userID = homeImage.uid;
     _userName = homeImage.nickname;
-//    _userSex = (homeImage.sex == 1) ? @"man" : @"woman";
     _userImageURL = homeImage.imageURL;
     _avatarURL = homeImage.avatar;
     NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:homeImage.uploadTime];
     _publishTime = [Util formatPublishTime:publishDate];
-    _likeNumber = [NSString stringWithFormat:@"%d",(int)homeImage.totalPraiseNumber];
+
+    if (homeImage.totalPraiseNumber>999999) {
+        _likeNumber = kfcMaxNumberString;
+    } else {
+        _likeNumber = [NSString stringWithFormat:@"%zd",homeImage.totalPraiseNumber];
+    }
+    if (homeImage.totalShareNumber>999999) {
+        _shareNumber = kfcMaxNumberString;
+    } else {
+        _shareNumber = [NSString stringWithFormat:@"%zd",homeImage.totalShareNumber];
+    }
+    if (homeImage.totalCommentNumber>999999) {
+        _commentNumber = kfcMaxNumberString;
+    } else {
+        _commentNumber = [NSString stringWithFormat:@"%zd",homeImage.totalCommentNumber];
+    }
+    if (homeImage.totalWorkNumber>999999) {
+        _totalPSNumber = kfcMaxNumberString;
+    } else {
+        _totalPSNumber = [NSString stringWithFormat:@"%zd",homeImage.totalWorkNumber];
+    }
     _liked = homeImage.liked;
     _collected = homeImage.collected;
-    _shareNumber = [NSString stringWithFormat:@"%d",(int)homeImage.totalShareNumber];
-    _commentNumber = [NSString stringWithFormat:@"%d",(int)homeImage.totalCommentNumber];
-    _totalPSNumber = [NSString stringWithFormat:@"%d",(int)homeImage.totalWorkNumber];
     _width = homeImage.imageWidth;
     _height = homeImage.imageHeight;
     for (ATOMImageTipLabel *tipLabel in homeImage.tipLabelArray) {
@@ -72,15 +87,6 @@
         [model setViewModelData:replier];
         [_replierArray addObject:model];
     }
-//    NSFileManager *fileManager = [NSFileManager defaultManager];
-//    NSString *path = [[NSString stringWithFormat:@"%@/HomePage", PATH_OF_DOCUMENT] stringByAppendingPathComponent:[NSString stringWithFormat:@"ATOMIMAGE-%d.jpg", (int)homeImage.imageID]];
-//    BOOL flag;
-//    if ([fileManager fileExistsAtPath:path isDirectory:&flag]) {
-//        _image = [UIImage imageWithContentsOfFile:path];
-//    } else {
-//        NSLog(@"image not exist in %@", path);
-//    }
-    
 }
 
 

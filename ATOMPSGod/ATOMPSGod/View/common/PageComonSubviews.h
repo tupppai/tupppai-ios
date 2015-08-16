@@ -17,6 +17,8 @@
 
 @interface kImageView : UIImageView
 @end
+@interface kReplierView : UIImageView
+@end
 @interface kGapView : UIView
 @end
 //@interface kAvatarView : UIImageView

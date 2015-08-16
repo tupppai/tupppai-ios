@@ -21,7 +21,6 @@
     self = [super init];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
-        _extralWidth = 24 + kPadding5;
         _number = @"0";
         self.selected = NO;
     }
@@ -33,49 +32,19 @@
 }
 
 - (NSDictionary *)attributeDict {
-    _attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, _currentColor, NSForegroundColorAttributeName, nil];
+    _attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont kfcButton], NSFontAttributeName, _currentColor, NSForegroundColorAttributeName, nil];
     return _attributeDict;
 }
 
 - (void)setNumber:(NSString *)number{
     _number = number;
+    CGFloat numberWidth = [[[NSAttributedString alloc] initWithString:_number attributes:_attributeDict] size].width;
+    [self mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(@(kfcButtonHeight+4+numberWidth));
+    }];
+
     [self setNeedsDisplay];
 }
-//
-//- (void)setSelected:(BOOL)selected {
-//    _selected = selected;
-//    if (!_selected) {
-//        _currentColor = [UIColor colorWithHex:0xcdcdcd];
-//        NSLog(@"toggle color 1");
-//    } else {
-//        _currentColor = [UIColor colorWithHex:0xfe8282];
-//        NSLog(@"toggle color 2");
-//    }
-//    [self setNeedsDisplay];
-//    
-//}
-//
-//
-//- (void)toggleLike:(NSInteger)id{
-//    
-//    //call setSelected() and change color
-//    self.selected = !self.selected;
-//    NSMutableDictionary *param = [NSMutableDictionary new];
-//    NSInteger status = !_selected? 0:1;
-//    NSInteger one = !_selected? -1:1;
-//    [param setValue:@(status) forKey:@"status"];
-//    ATOMShowHomepage * showHomepage = [ATOMShowHomepage new];
-//    [showHomepage toggleLike:param withID:id withBlock:^(NSString *msg, NSError *error) {
-//            if (!error) {
-//                NSLog(@"Server成功toggle like");
-//                NSInteger number = [_number integerValue]+one;
-//                [self setNumber:[NSString stringWithFormat:@"%ld",(long)number]];
-//            } else {
-//                NSLog(@"Server失败 toggle like");
-//            }
-//        }];
-//}
-//
 
 - (void)setSelected:(BOOL)selected {
     if (_selected != selected) {
@@ -93,17 +62,20 @@
 }
 -(void)toggleColor {
     if (self.selected) {
-        _currentColor = [UIColor kfcButtonColor];
+        _currentColor = [UIColor kfcButtonSelected];
     } else {
-        _currentColor = [UIColor kfcButtonColorSelected];
+        _currentColor = [UIColor kfcButton];
     }
 }
 -(void)toggleNumber {
-    if (self.selected) {
-        self.number =  [NSString stringWithFormat:@"%d",[_number intValue] + 1 ];
-    } else {
-        self.number =  [NSString stringWithFormat:@"%d",[_number intValue] - 1 ];
+    if (![_number isEqualToString:kfcMaxNumberString]) {
+        if (self.selected) {
+                self.number =  [NSString stringWithFormat:@"%d",[_number intValue] + 1 ];
+        } else {
+            self.number =  [NSString stringWithFormat:@"%d",[_number intValue] - 1 ];
+        }
     }
+
     [self setNeedsDisplay];
 }
 -(void)toggleSeleted {
@@ -120,15 +92,18 @@
 }
 
 - (void)drawRect:(CGRect)rect {
-    UIBezierPath *rectPath = [UIBezierPath bezierPathWithRect:rect];
+    
+    CGFloat numberWidth = [[[NSAttributedString alloc] initWithString:_number attributes:_attributeDict] size].width;
+        UIBezierPath *rectPath = [UIBezierPath bezierPathWithRect:rect];
     [[UIColor whiteColor] set];
     [rectPath fill];
     if (_selected) {
-        [[UIImage imageNamed:@"btn_comment_like_pressed"] drawInRect:CGRectMake(0, 0, kBottomCommonButtonWidth, kBottomCommonButtonWidth)];
+        [[UIImage imageNamed:@"btn_comment_like_pressed"] drawInRect:CGRectMake(0, 0, kfcButtonHeight, kfcButtonHeight)];
     } else {
-        [_image drawInRect:CGRectMake(0, 0, kBottomCommonButtonWidth, kBottomCommonButtonWidth)];
+        [_image drawInRect:CGRectMake(0, 0, kfcButtonHeight, kfcButtonHeight)];
     }
-    [_number drawInRect:CGRectMake(kBottomCommonButtonWidth + kPadding5, (CGHeight(rect) - kFont10) / 2, CGWidth(rect) - _extralWidth, kFont10) withAttributes:self.attributeDict];
+  
+    [_number drawInRect:CGRectMake(kfcButtonHeight + 4, (CGHeight(rect) - 12 ) / 2 - 3,numberWidth, 12) withAttributes:self.attributeDict];
 }
 
 

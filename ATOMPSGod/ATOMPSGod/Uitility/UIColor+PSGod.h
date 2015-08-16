@@ -9,9 +9,13 @@
 
 @interface UIColor(PSGod)
 
-+(UIColor *) kfcUsernameColor;
-+(UIColor *)kfcPublishTimeColor;
-+(UIColor *)kfcButtonColor;
-+(UIColor *)kfcButtonColorSelected;
++(UIColor *) kfcUsername;
++(UIColor *)kfcPublishTime;
++(UIColor *)kfcButton;
++(UIColor *)kfcButtonSelected;
 
+@end
+@interface UIFont(PSGod)
++  (UIFont *)kfcButton;
++  (UIFont *)kfcPublishTime;
 @end

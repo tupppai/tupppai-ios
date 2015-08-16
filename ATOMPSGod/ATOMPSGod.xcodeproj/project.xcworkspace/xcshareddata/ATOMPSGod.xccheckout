@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>C8826312-6D9B-4A5A-9E32-859D0C10A5AA</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>ATOMPSGod</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>9CCA68C2F3D60ADE696D19164A43041C762D86F3</key>
 		<string>https://git.oschina.net/gatesanye/psgod-ios.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ATOMPSGod/ATOMPSGod.xcodeproj/project.xcworkspace</string>
+	<string>ATOMPSGod/ATOMPSGod.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>9CCA68C2F3D60ADE696D19164A43041C762D86F3</key>

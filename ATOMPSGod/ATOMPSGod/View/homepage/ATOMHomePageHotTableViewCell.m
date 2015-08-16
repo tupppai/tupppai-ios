@@ -23,20 +23,20 @@
 @property (nonatomic, strong) UIView *littleVerticalView1;
 @property (nonatomic, strong) UIView *littleVerticalView2;
 @property (nonatomic, strong) UIView *littleVerticalView3;
-@property (nonatomic, strong) NSMutableArray *replierAvatars;
+@property (nonatomic, strong) NSMutableArray *repliers;
 @property (nonatomic, strong) UIView *lineView;
 @property (nonatomic, strong) ATOMTotalPSView *totalPSLabel;
 @end
 
 @implementation ATOMHomePageHotTableViewCell
 
-static int defaultAvatarCount = 7;
-static CGFloat replierWidth = 25;
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        //ios7.1 auto layout height issue
+        self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
         [self configSubviews];
     }
     return self;
@@ -50,7 +50,6 @@ static CGFloat replierWidth = 25;
     [self.contentView addSubview:self.lineView];
     [self.contentView addSubview:self.additionView];
     [self.contentView addSubview:self.gapView];
-    
     [self configMansory];
 }
 
@@ -58,7 +57,7 @@ static CGFloat replierWidth = 25;
     [self configMansoryViews];
     [self configMansoryTopView];
     [self configMansorybottomView];
-    [self configMansoryadditionView];
+    [self configMansoryAdditionView];
 }
 
 - (void) configMansoryViews {
@@ -72,9 +71,10 @@ static CGFloat replierWidth = 25;
         make.top.equalTo(_topView.mas_bottom).with.offset(0);
         make.left.equalTo(self.contentView).with.offset(kPadding15);
         make.right.equalTo(self.contentView).with.offset(-kPadding15);
-        make.bottom.equalTo(_bottomView.mas_top).with.offset(0);
+        make.height.lessThanOrEqualTo(@(kfcImageHeightMax));
     }];
     [_bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_imageViewMain.mas_bottom).with.offset(0);
         make.left.equalTo(self.contentView).with.offset(kPadding15);
         make.right.equalTo(self.contentView).with.offset(-kPadding15);
         //todo :change height var and name of _additionView
@@ -119,7 +119,7 @@ static CGFloat replierWidth = 25;
     
     [_publishTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_topView).with.offset(0);
-        make.right.equalTo(_topView).with.offset(-kPadding15);
+        make.right.equalTo(_topView).with.offset(0);
     }];
 }
 
@@ -128,63 +128,72 @@ static CGFloat replierWidth = 25;
     [_moreButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_bottomView);
         make.left.equalTo(_bottomView).with.offset(0);
-        make.width.equalTo(@(kfcButtonHeight*2));
+        make.width.equalTo(@(kfcButtonWidth));
         make.height.equalTo(@(kfcButtonHeight));
     }];
     
     [_likeButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_bottomView);
-        make.right.equalTo(_wechatButton.mas_leading).with.offset(-kPadding15);
+        make.right.equalTo(_wechatButton.mas_leading).with.offset(-kPadding10);
         make.height.equalTo(@(kfcButtonHeight));
-        make.width.equalTo(@(kfcButtonHeight*1.5));
+//        make.width.greaterThanOrEqualTo(@(kfcButtonWidth));
     }];
     
     [_wechatButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_bottomView);
-        make.right.equalTo(_commentButton.mas_leading).with.offset(-kPadding15);
+        make.right.equalTo(_commentButton.mas_leading).with.offset(-kPadding10);
         make.height.equalTo(@(kfcButtonHeight));
-        make.width.equalTo(@(kfcButtonHeight*1.5));
+//        make.width.greaterThanOrEqualTo(@(kfcButtonWidth));
     }];
     [_commentButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_bottomView);
-        make.right.equalTo(_bottomView).with.offset(-kPadding15);
+        make.right.equalTo(_bottomView).with.offset(-2);
         make.height.equalTo(@(kfcButtonHeight));
-        make.width.equalTo(@(kfcButtonHeight*1.5));
+//        make.width.greaterThanOrEqualTo(@(kfcButtonWidth));
     }];
+    
 }
-- (void) configMansoryadditionView {
-    
+- (void) configMansoryAdditionView {
     [_totalPSLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_additionView).with.offset(kPadding15);
-        make.left.equalTo(_additionView).with.offset(kPadding15);
+        make.centerY.equalTo(_additionView).with.offset(0);
+        make.left.equalTo(_additionView).with.offset(0);
+        make.height.equalTo(@(kfcReplierWidth));
     }];
-    
 }
 
 
 
 
 - (void)configCell:(ATOMAskPageViewModel *)viewModel {
-//    _viewModel = viewModel;
     _usernameLabel.text = viewModel.userName;
     [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
+    
     _publishTimeLabel.text = viewModel.publishTime;
     _likeButton.number = viewModel.likeNumber;
     _likeButton.selected = viewModel.liked;
     _wechatButton.number = viewModel.shareNumber;
-    _totalPSLabel.number = viewModel.totalPSNumber;
     _commentButton.number = viewModel.commentNumber;
+    _totalPSLabel.number = viewModel.totalPSNumber;
+
     [_imageViewMain mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@(viewModel.height));
+        make.height.equalTo(@(viewModel.height)).with.priorityHigh();
     }];
+    [super updateConstraints];
+
     if (viewModel.image) {
         _imageViewMain.image = viewModel.image;
     } else {
         [_imageViewMain setImageWithURL:[NSURL URLWithString:viewModel.userImageURL] placeholderImage:[UIImage imageNamed:@"placeholderImage_1"]];
     }
+    [self addTipLabel:viewModel];
+    [self addReplier:viewModel];
+    
+//    [self setNeedsLayout];
+//    [self layoutIfNeeded];
+
 }
 - (void)addTipLabel:(ATOMAskPageViewModel*)vm {
-    //移除旧的标签
+//    移除旧的标签
     for (UIView * subView in _imageViewMain.subviews) {
         if ([subView isKindOfClass:[ATOMTipButton class]]) {
             ATOMTipButton *button = (ATOMTipButton *)subView;
@@ -204,13 +213,28 @@ static CGFloat replierWidth = 25;
     }
 }
 
-//- (void)addReplier {
-//    for (int i = 0; i < MIN(_viewModel.replierArray.count, defaultAvatarCount); i++) {
-//        ATOMReplierViewModel *replierViewModel = _viewModel.replierArray[i];
-//        UIImageView *imageView = _replierAvatars[defaultAvatarCount - MIN(_viewModel.replierArray.count, defaultAvatarCount) + i];
-//        [imageView setImageWithURL:[NSURL URLWithString:replierViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
-//    }
-//}
+- (void)addReplier:(ATOMAskPageViewModel*)vm {
+    _repliers = [NSMutableArray array];
+    NSInteger min = MIN(vm.replierArray.count, kfcReplierDefaultQuantity);
+    for (int i = 0; i < min; i++) {
+        ATOMReplierViewModel *replierViewModel = vm.replierArray[i];
+        kReplierView* replier = [kReplierView new];
+        [_additionView addSubview:replier];
+        [replier setImageWithURL:[NSURL URLWithString:replierViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
+        CGFloat offset = -i * (kfcReplierWidth + kPadding5);
+        [replier mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(_additionView).with.offset(0);
+            make.right.equalTo(_additionView).with.offset(offset);
+        }];
+        if (i == min - 1) {
+            [_totalPSLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.right.equalTo(replier.mas_left).with.offset(-kPadding5).with.priorityHigh();
+            }];
+            [super updateConstraints];
+        }
+    }
+    _repliers = nil;
+}
 
 -(UIView *)topView {
     if (!_topView) {
@@ -233,7 +257,6 @@ static CGFloat replierWidth = 25;
         _commentButton = [ATOMBottomCommonButton new];
         _commentButton.image = [UIImage imageNamed:@"icon_comment_normal"];
         _moreButton= [UIButton new];
-        _moreButton.imageEdgeInsets = UIEdgeInsetsMake(0, -28, 0, 0);
         _moreButton.userInteractionEnabled = NO;
         [_moreButton setImage:[UIImage imageNamed:@"icon_others_normal"] forState:UIControlStateNormal];
         [_bottomView addSubview:_moreButton];
@@ -258,14 +281,6 @@ static CGFloat replierWidth = 25;
         _additionView.backgroundColor = [UIColor clearColor];
         _totalPSLabel = [ATOMTotalPSView new];
         [_additionView addSubview:_totalPSLabel];
-        _replierAvatars = [NSMutableArray array];
-        for (int i = 0; i < defaultAvatarCount; i++) {
-            UIImageView *imageView = [UIImageView new];
-            imageView.layer.cornerRadius = replierWidth / 2;
-            imageView.layer.masksToBounds = YES;
-            [_additionView addSubview:imageView];
-            [_replierAvatars addObject:imageView];
-        }
     }
     return _additionView;
 }
@@ -304,6 +319,7 @@ static CGFloat replierWidth = 25;
 -(UIImageView*)imageViewMain {
     if (!_imageViewMain) {
         _imageViewMain = [kImageView new];
+        _imageViewMain.image = [UIImage imageNamed:@"placeholderImage_1"];
     }
     return _imageViewMain;
 }

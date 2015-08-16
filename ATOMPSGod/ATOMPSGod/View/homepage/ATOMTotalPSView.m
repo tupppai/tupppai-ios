@@ -22,6 +22,7 @@
     self = [super init];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
+        _number = @"*人";
     }
     return self;
 }
@@ -32,7 +33,7 @@
 
 - (NSDictionary *)attributeDict {
     if (!_attributeDict) {
-        _attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont14], NSFontAttributeName, [UIColor colorWithHex:0x666666], NSForegroundColorAttributeName, nil];
+        _attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"HelveticaNeue-Light" size:12], NSFontAttributeName, [UIColor colorWithHex:0x000000 andAlpha:0.8], NSForegroundColorAttributeName, nil];
     }
     return _attributeDict;
 }
@@ -43,12 +44,17 @@
 }
 
 - (void)drawRect:(CGRect)rect {
-    [_number drawInRect:CGRectMake(0, 0, _number.length * kFont14, kFont14) withAttributes:self.attributeDict];
-    UIBezierPath *circlePath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(_number.length * kFont14, 5, 6, 6)];
+    
+    CGFloat numberWidth = [[[NSAttributedString alloc] initWithString:_number attributes:_attributeDict] size].width;
+    
+    [_number drawInRect:CGRectMake(0, (CGRectGetHeight(rect)-kFont14)/2, numberWidth, kFont14) withAttributes:self.attributeDict];
+    
+    UIBezierPath *circlePath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(numberWidth+kPadding5, (CGRectGetHeight(rect)-6)/2, 6, 6)];
+    
     [[UIColor colorWithHex:0xacb8c1] set];
     [circlePath fill];
-    NSString *str = @"P过";
-    [str drawInRect:CGRectMake(CGWidth(rect) - kFont14 * 2, 0, kFont14 * 2, kFont14) withAttributes:self.attributeDict];
+    
+    [@"P过" drawInRect:CGRectMake(numberWidth+kPadding5+6+kPadding5,(CGRectGetHeight(rect)-kFont14)/2, kFont14 * 2, kFont14) withAttributes:self.attributeDict];
 }
 
 

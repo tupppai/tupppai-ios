@@ -7,7 +7,9 @@
 //
 
 #import "PWRefreshBaseTableView.h"
-
+@interface PWRefreshBaseTableView()
+@property (nonatomic, assign) BOOL firstReload;
+@end
 @implementation PWRefreshBaseTableView
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -64,11 +66,8 @@
     }}
 
 -(void)reloadData {
-    NSLog(@"PWRefreshBaseTableView reloadData");
-    NSLog(@"_firstReload %d",_firstReload);
     [super reloadData];
     if (!_firstReload) {
-
         if (self) {
             for (int i = 0; i < [self numberOfSections]; i++) {
                 if ([self numberOfRowsInSection:i] > 0) {

@@ -10,17 +10,26 @@
 
 @implementation UIColor (PSGod)
 
-+  (UIColor *)kfcUsernameColor {
-    return [UIColor colorWithHex:0x000000 andAlpha:0.8];
-}
-+  (UIColor *)kfcPublishTimeColor {
-    return [UIColor colorWithHex:0x000000 andAlpha:0.5];
-}
-+  (UIColor *)kfcButtonColor {
++  (UIColor *)kfcUsername {
     return [UIColor colorWithHex:0x000000 andAlpha:0.6];
 }
-+  (UIColor *)kfcButtonColorSelected {
++  (UIColor *)kfcPublishTime {
+    return [UIColor colorWithHex:0x000000 andAlpha:0.4];
+}
++  (UIColor *)kfcButton {
+    return [UIColor colorWithHex:0x000000 andAlpha:0.4];
+}
++  (UIColor *)kfcButtonSelected {
     return [UIColor colorWithHex:0xFe8282];
 }
 
+@end
+@implementation UIFont (PSGod)
+
++  (UIFont *)kfcButton {
+    return [UIFont fontWithName:kFontNameDefault size:12];
+}
++  (UIFont *)kfcPublishTime {
+    return [UIFont fontWithName:kFontNameDefault size:11];
+}
 @end

@@ -7,7 +7,9 @@
 //
 
 #import "PWRefreshFooterCollectionView.h"
-
+@interface PWRefreshFooterCollectionView()
+@property (nonatomic, assign) BOOL firstReload;
+@end
 @implementation PWRefreshFooterCollectionView
 
 -(instancetype)initWithFrame:(CGRect)frame {
@@ -21,6 +23,8 @@
         }
         self.gifFooter.refreshingImages = animatedImages;
         self.footer.stateHidden = YES;
+        _firstReload = YES;
+
     }
     return self;
 }
@@ -55,6 +59,8 @@
 
 -(void)reloadData {
     [super reloadData];
+    if (!_firstReload) {
+
     if (self) {
         for (int i = 0; i < [self numberOfSections]; i++) {
             if ([self numberOfItemsInSection:i] > 0) {
@@ -64,6 +70,8 @@
             self.noDataView.hidden = false;
         }
     }
+    }
+    _firstReload = NO;
 }
 
 -(void)reloadDataCustom {

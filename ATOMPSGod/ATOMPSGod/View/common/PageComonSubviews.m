@@ -23,6 +23,21 @@
     self = [super init];
     if (self) {
         self.contentMode = UIViewContentModeScaleAspectFit;
+//        self.layer.masksToBounds = YES;
+    }
+    return self;
+}
+@end
+@implementation kReplierView
+-(instancetype)init {
+    self = [super init];
+    if (self) {
+        self.layer.cornerRadius = kfcReplierWidth / 2;
+        self.layer.masksToBounds = YES;
+        [self mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.width.equalTo(@(kfcReplierWidth));
+            make.height.equalTo(@(kfcReplierWidth));
+        }];
     }
     return self;
 }
@@ -35,7 +50,7 @@
         self.backgroundColor = [UIColor clearColor];
         self.numberOfLines = 0;
         self.font = [UIFont fontWithName:kUserNameFont size:kUsernameFontSize];
-        self.textColor = [UIColor kfcUsernameColor];
+        self.textColor = [UIColor kfcUsername];
     }
     return self;
 }
@@ -47,8 +62,8 @@
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         self.numberOfLines = 0;
-        self.font = [UIFont systemFontOfSize:kPublishTimeFontSizeBig];
-        self.textColor = [UIColor kfcPublishTimeColor];
+        self.font = [UIFont kfcPublishTime];
+        self.textColor = [UIColor kfcPublishTime];
     }
     return self;
 }

@@ -22,10 +22,18 @@ extern CGFloat const kPSButtonHeight;
 extern CGFloat const kBottomCommonButtonWidth;
 
 extern CGFloat const kfcButtonHeight;
+extern CGFloat const kfcButtonWidth;
 extern CGFloat const kfcTopViewHeight;
 extern CGFloat const kfcGapViewHeight;
 extern CGFloat const kfcBottomViewHeight;
 extern CGFloat const kfcAddtionViewHeight;
+extern CGFloat const kfcReplierWidth;
+extern CGFloat const kfcReplierGap;
+extern NSInteger const kfcReplierDefaultQuantity;
+extern CGFloat const kfcImageHeightDefault;
+extern CGFloat const kfcImageHeightMax;
+extern NSString * const kfcMaxNumberString;
+
 
 extern NSInteger const kPagePadding;
 
@@ -52,6 +60,7 @@ extern CGFloat const kUsernameFontSize;
 extern CGFloat const kPublishTimeFontSizeBig;
 extern CGFloat const kPublishTimeFontSizeSmall;
 
+extern NSString * const kFontNameDefault;
 extern NSString * const kUserNameFont;
 extern NSString * const kPublishTimeFont;
 

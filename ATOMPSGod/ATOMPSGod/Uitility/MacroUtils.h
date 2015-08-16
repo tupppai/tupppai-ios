@@ -27,5 +27,4 @@
 
 #define _S(number) (number*[ATOMBaseView scaleInView])
 
-
 #endif
