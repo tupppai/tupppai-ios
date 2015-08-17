@@ -22,7 +22,6 @@
 #import "ATOMShareFunctionView.h"
 #import "ATOMBottomCommonButton.h"
 #import "RefreshTableView.h"
-#import "ATOMPageDetailViewController.h"
 #import "ATOMCollectModel.h"
 #import "ATOMBaseRequest.h"
 #import "JGActionSheet.h"
@@ -453,14 +452,14 @@ static NSString *CellIdentifier = @"HotDetailCell";
                     [self postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeReply];
                 }            } else if (CGRectContainsPoint(_selectedHotDetailCell.commentButton.frame, p)) {
                     
-                ATOMPageDetailViewModel* pageDetailViewModel = [ATOMPageDetailViewModel new];
+                kfcPageVM* vm = [kfcPageVM new];
                 if (_selectedIndexPath.row != 0) {
-                    [pageDetailViewModel setCommonViewModelWithHotDetail:model];
+                    [vm setCommonViewModelWithHotDetail:model];
                 } else {
-                    [pageDetailViewModel setCommonViewModelWithAsk:_askPageViewModel];
+                    [vm setCommonViewModelWithAsk:_askPageViewModel];
                 }
                     MessageViewController* mvc = [MessageViewController new];
-                    mvc.pageDetailViewModel = pageDetailViewModel;
+                    mvc.vm = vm;
                     mvc.delegate = self;
                     [self pushViewController:mvc animated:YES];
             } else if (CGRectContainsPoint(_selectedHotDetailCell.moreButton.frame, p)) {

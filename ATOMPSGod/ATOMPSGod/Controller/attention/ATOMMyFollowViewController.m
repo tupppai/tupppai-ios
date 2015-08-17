@@ -18,9 +18,8 @@
 #import "ATOMBottomCommonButton.h"
 #import "ATOMNoDataView.h"
 #import "RefreshTableView.h"
-#import "ATOMPageDetailViewModel.h"
+#import "kfcPageVM.h"
 #import "ATOMShareFunctionView.h"
-#import "ATOMPageDetailViewController.h"
 #import "AppDelegate.h"
 #import "JGActionSheet.h"
 #import "ATOMReportModel.h"
@@ -296,12 +295,12 @@ static NSString *CellIdentifier = @"MyAttentionCell";
         CGPoint p = [gesture locationInView:cell];
         //点击图片
         if (CGRectContainsPoint(cell.imageViewMain.frame, p)) {
-            ATOMPageDetailViewController* pdvc = [ATOMPageDetailViewController new];
-            ATOMPageDetailViewModel *pageDetailViewModel = [ATOMPageDetailViewModel new];
-            [pageDetailViewModel setCommonViewModelWithFollow:_dataSource[_selectedIndexPath.row]];
-            pdvc.pageDetailViewModel = pageDetailViewModel;
-            pdvc.delegate = self;
-            [self pushViewController:pdvc animated:true];
+//            ATOMPageDetailViewController* pdvc = [ATOMPageDetailViewController new];
+//            kfcPageVM *pageDetailViewModel = [kfcPageVM new];
+//            [pageDetailViewModel setCommonViewModelWithFollow:_dataSource[_selectedIndexPath.row]];
+//            pdvc.pageDetailViewModel = pageDetailViewModel;
+//            pdvc.delegate = self;
+//            [self pushViewController:pdvc animated:true];
         } else if (CGRectContainsPoint(cell.topView.frame, p)) {
             p = [gesture locationInView:cell.topView];
             if (CGRectContainsPoint(cell.avatarView.frame, p)) {
@@ -317,7 +316,6 @@ static NSString *CellIdentifier = @"MyAttentionCell";
             }else if (CGRectContainsPoint(cell.psView.frame, p)) {
                 [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
             }
-
         } else {
             p = [gesture locationInView:cell.bottomView];
             if (CGRectContainsPoint(cell.likeButton.frame, p)) {
@@ -327,18 +325,16 @@ static NSString *CellIdentifier = @"MyAttentionCell";
                 [self postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:vm.type];
             } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
                 MessageViewController* mvc = [MessageViewController new];
-                ATOMPageDetailViewModel *pageDetailViewModel = [ATOMPageDetailViewModel new];
-                [pageDetailViewModel setCommonViewModelWithFollow:_dataSource[_selectedIndexPath.row]];
-                mvc.pageDetailViewModel = pageDetailViewModel;
+                kfcPageVM *vm = [kfcPageVM new];
+                [vm setCommonViewModelWithFollow:_dataSource[_selectedIndexPath.row]];
+                mvc.vm = vm;
                 mvc.delegate = self;
                 [self pushViewController:mvc animated:YES];
             } else if (CGRectContainsPoint(cell.moreButton.frame, p)) {
                 self.shareFunctionView.collectButton.selected = vm.collected;
                 [self.shareFunctionView showInView:[AppDelegate APP].window animated:YES];
             }
-
         }
-        
     }
 }
 

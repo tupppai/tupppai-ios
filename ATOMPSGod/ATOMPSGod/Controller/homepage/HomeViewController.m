@@ -10,7 +10,6 @@
 #import "kfcHotCell.h"
 #import "kfcAskCell.h"
 #import "HotDetailViewController.h"
-#import "ATOMPageDetailViewController.h"
 #import "ATOMCropImageController.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMProceedingViewController.h"
@@ -21,7 +20,7 @@
 #import "AppDelegate.h"
 #import "ATOMBottomCommonButton.h"
 #import "ATOMHomeImageDAO.h"
-#import "ATOMPageDetailViewModel.h"
+#import "kfcPageVM.h"
 #import "ATOMShareModel.h"
 #import "ATOMCollectModel.h"
 #import "ATOMInviteViewController.h"
@@ -655,10 +654,10 @@ static NSString *CellIdentifier2 = @"AskCell";
                 } else if (CGRectContainsPoint(cell.wechatButton.frame, p)) {
                     [self postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
                 } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
-                    ATOMPageDetailViewModel* pageDetailViewModel = [ATOMPageDetailViewModel new];
-                    [pageDetailViewModel setCommonViewModelWithAsk:_selectedVM];
+                    kfcPageVM* vm = [kfcPageVM new];
+                    [vm setCommonViewModelWithAsk:_selectedVM];
                     MessageViewController* mvc = [MessageViewController new];
-                    mvc.pageDetailViewModel = pageDetailViewModel;
+                    mvc.vm = vm;
                     mvc.delegate = self;
                     [self pushViewController:mvc animated:YES];
                 } else if (CGRectContainsPoint(cell.moreButton.frame, p)) {
@@ -704,10 +703,10 @@ static NSString *CellIdentifier2 = @"AskCell";
                 } else if (CGRectContainsPoint(cell.wechatButton.frame, p)) {
                     [self postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
                 } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
-                    ATOMPageDetailViewModel* pageDetailViewModel = [ATOMPageDetailViewModel new];
-                    [pageDetailViewModel setCommonViewModelWithAsk:_selectedVM];
+                    kfcPageVM* vm = [kfcPageVM new];
+                    [vm setCommonViewModelWithAsk:_selectedVM];
                     MessageViewController* mvc = [MessageViewController new];
-                    mvc.pageDetailViewModel = pageDetailViewModel;
+                    mvc.vm = vm;
                     mvc.delegate = self;
                     [self pushViewController:mvc animated:YES];
                 } else if (CGRectContainsPoint(cell.moreButton.frame, p)) {

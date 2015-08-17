@@ -90,8 +90,8 @@
 }
 
 
--(ATOMPageDetailViewModel*)generatepageDetailViewModel {
-    ATOMPageDetailViewModel* commonViewModel = [ATOMPageDetailViewModel new];
+-(kfcPageVM*)generatepageDetailViewModel {
+    kfcPageVM* commonViewModel = [kfcPageVM new];
     commonViewModel.pageID = _ID;
     commonViewModel.type = ATOMPageTypeAsk;
     commonViewModel.pageImageURL = _userImageURL;
@@ -107,7 +107,7 @@
     return commonViewModel;
 }
 
--(void)setViewModelWithCommon:(ATOMPageDetailViewModel*)commonViewModel {
+-(void)setViewModelWithCommon:(kfcPageVM*)commonViewModel {
     _ID = commonViewModel.pageID;
     _userImageURL = commonViewModel.pageImageURL;
     _image = commonViewModel.pageImage;

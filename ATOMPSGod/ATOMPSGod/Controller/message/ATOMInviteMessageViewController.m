@@ -9,7 +9,6 @@
 #import "ATOMInviteMessageViewController.h"
 #import "ATOMInviteMessageTableViewCell.h"
 #import "HotDetailViewController.h"
-#import "ATOMPageDetailViewController.h"
 #import "ATOMCommentDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMShowInviteMessage.h"
@@ -18,6 +17,7 @@
 #import "ATOMHomeImage.h"
 #import "ATOMAskPageViewModel.h"
 #import "RefreshFooterTableView.h"
+#import "MessageViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMInviteMessageViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate>
@@ -147,11 +147,12 @@
         //点击图片
         if (CGRectContainsPoint(cell.workImageView.frame, p)) {
             if ([viewModel.homepageViewModel.totalPSNumber integerValue] == 0) {
-                ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
-                ATOMPageDetailViewModel* pageDetailViewModel = [ATOMPageDetailViewModel new];
-                [pageDetailViewModel setCommonViewModelWithAsk:viewModel.homepageViewModel];
-                rdvc.pageDetailViewModel = pageDetailViewModel;
-                [self pushViewController:rdvc animated:YES];
+                kfcPageVM* vm = [kfcPageVM new];
+                [vm setCommonViewModelWithAsk:viewModel.homepageViewModel];
+                MessageViewController* mvc = [MessageViewController new];
+                mvc.vm = vm;
+//                mvc.delegate = self;
+                [self pushViewController:mvc animated:YES];
             } else {
                 HotDetailViewController *hdvc = [HotDetailViewController new];
                 hdvc.askPageViewModel = viewModel.homepageViewModel;

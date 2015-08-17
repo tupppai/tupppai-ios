@@ -100,13 +100,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 #endif
 }
 
-//-(void)setPageDetailViewModel:(ATOMPageDetailViewModel *)pageDetailViewModel {
-//    _headerView.pageDetailViewModel = pageDetailViewModel;
-//    CGFloat headerHeight = [ATOMPageDetailHeaderView calculateHeaderViewHeight:pageDetailViewModel];
-//    _headerView.frame = CGRectMake(0, 0, SCREEN_WIDTH, headerHeight);
-//    NSLog(@"setPageDetailViewModel headerHeight %f",headerHeight);
-//    //    _tableViewComent.tableHeaderView = _headerView;
-//}
 
 #pragma mark - View lifecycle
 
@@ -114,13 +107,12 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 {
     [super viewDidLoad];
     
-    _headerView = [ATOMPageDetailHeaderView new];
-    _headerView.pageDetailViewModel = _pageDetailViewModel;
+    _headerView = [kfcPageView new];
+    _headerView.vm = _vm;
     self.tableView.tableHeaderView = _headerView;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
     [self.tableView registerClass:[MessageTableViewCell class] forCellReuseIdentifier:MessengerCellIdentifier];
     self.tableView.tableFooterView = [UIView new];
-
 
     [self config];
     self.bounces = NO;
@@ -157,10 +149,10 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     if ((self.isMovingFromParentViewController || self.isBeingDismissed)) {
-        if (_pageDetailViewModel && (self.isMovingFromParentViewController || self.isBeingDismissed)) {
+        if (_vm && (self.isMovingFromParentViewController || self.isBeingDismissed)) {
             if(_delegate && [_delegate respondsToSelector:@selector(ATOMViewControllerDismissWithInfo:)])
             {
-                NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithBool:_pageDetailViewModel.liked],@"liked",[NSNumber numberWithBool:_pageDetailViewModel.collected],@"collected",nil];
+                NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithBool:_vm.liked],@"liked",[NSNumber numberWithBool:_vm.collected],@"collected",nil];
                 [_delegate ATOMViewControllerDismissWithInfo:info];
             }
         }
@@ -526,8 +518,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         }];
         [_reportActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
             NSMutableDictionary* param = [NSMutableDictionary new];
-            [param setObject:@(ws.pageDetailViewModel.pageID) forKey:@"target_id"];
-            [param setObject:@(ws.pageDetailViewModel.type) forKey:@"target_type"];
+            [param setObject:@(ws.vm.pageID) forKey:@"target_id"];
+            [param setObject:@(ws.vm.type) forKey:@"target_type"];
             UIButton* b = section.buttons[indexPath.row];
             switch (indexPath.row) {
                 case 0:
@@ -559,13 +551,13 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 #pragma mark - ATOMShareFunctionViewDelegate
 -(void)tapWechatFriends {
-    [self postSocialShare:_pageDetailViewModel.pageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:(int)_pageDetailViewModel.type];
+    [self postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:(int)_vm.type];
 }
 -(void)tapWechatMoment {
-    [self postSocialShare:_pageDetailViewModel.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_pageDetailViewModel.type];
+    [self postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
 }
 -(void)tapSinaWeibo {
-    [self postSocialShare:_pageDetailViewModel.pageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:(int)_pageDetailViewModel.type];
+    [self postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:(int)_vm.type];
 }
 -(void)tapCollect {
     NSMutableDictionary *param = [NSMutableDictionary new];
@@ -576,15 +568,15 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         //取消收藏
         [param setObject:@(0) forKey:@"status"];
     }
-    [ATOMCollectModel toggleCollect:param withPageType:_pageDetailViewModel.type withID:_pageDetailViewModel.pageID withBlock:^(NSError *error) {
+    [ATOMCollectModel toggleCollect:param withPageType:_vm.type withID:_vm.pageID withBlock:^(NSError *error) {
         if (!error) {
-            _pageDetailViewModel.collected = self.shareFunctionView.collectButton.selected;
+            _vm.collected = self.shareFunctionView.collectButton.selected;
         }
     }];
 }
 -(void)tapInvite {
     ATOMInviteViewController* ivc = [ATOMInviteViewController new];
-    ivc.askPageViewModel = [_pageDetailViewModel generateAskPageViewModel];
+    ivc.askPageViewModel = [_vm generateAskPageViewModel];
     [self pushViewController:ivc animated:NO];
 }
 -(void)tapReport {
@@ -595,8 +587,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 -(void)config {
     self.title = @"评论";
     [self configRecentDetailTableViewRefresh];
-    _type = _pageDetailViewModel.type;
-    _ID = _pageDetailViewModel.pageID;
+    _type = _vm.type;
+    _ID = _vm.pageID;
     [self addClickEventToHeaderView];
     [self addGestureEventToCommentTableView];
     [self getDataSource];
@@ -615,17 +607,17 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 - (void)addClickEventToHeaderView {
     UITapGestureRecognizer *g1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickShareButton:)];
-    [_headerView.shareButton addGestureRecognizer:g1];
+    [_headerView.wechatButton addGestureRecognizer:g1];
     UITapGestureRecognizer *g2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickMoreShareButton:)];
-    [_headerView.moreShareButton addGestureRecognizer:g2];
+    [_headerView.moreButton addGestureRecognizer:g2];
     UITapGestureRecognizer *g3 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickPraiseButton:)];
     [_headerView.likeButton addGestureRecognizer:g3];
     UITapGestureRecognizer *g4 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickUserWorkImageView:)];
-    [_headerView.userWorkImageView addGestureRecognizer:g4];
-    [_headerView.userHeaderButton addTarget:self action:@selector(clickUserHeaderButton:) forControlEvents:UIControlEventTouchUpInside];
-    [_headerView.psButton addTarget:self action:@selector(clickPSButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_headerView.imageViewMain addGestureRecognizer:g4];
+//    [_headerView.userHeaderButton addTarget:self action:@selector(clickUserHeaderButton:) forControlEvents:UIControlEventTouchUpInside];
+//    [_headerView.psButton addTarget:self action:@selector(clickPSButton:) forControlEvents:UIControlEventTouchUpInside];
     _tapUserNameLabelGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapUserNameLabelGesture:)];
-    [_headerView.userNameLabel addGestureRecognizer:_tapUserNameLabelGesture];
+    [_headerView.usernameLabel addGestureRecognizer:_tapUserNameLabelGesture];
 }
 
 - (void)addGestureEventToCommentTableView {
@@ -669,24 +661,24 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 - (void)tapUserNameLabelGesture:(UITapGestureRecognizer *)gesture {
     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-    opvc.userID = _pageDetailViewModel.uid;
-    opvc.userName = _pageDetailViewModel.userName;
+    opvc.userID = _vm.uid;
+    opvc.userName = _vm.userName;
     [self pushViewController:opvc animated:YES];
 }
 
 - (void)clickShareButton:(UITapGestureRecognizer *)sender {
-    [self postSocialShare:_pageDetailViewModel.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_pageDetailViewModel.type];
+    [self postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
 }
 
 - (void)clickMoreShareButton:(UITapGestureRecognizer *)sender {
-    self.shareFunctionView.collectButton.selected = _pageDetailViewModel.collected;
+    self.shareFunctionView.collectButton.selected = _vm.collected;
     [self.shareFunctionView showInView:[AppDelegate APP].window animated:YES];
 }
 
 - (void)clickUserHeaderButton:(UIButton *)sender {
     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-    opvc.userID = _pageDetailViewModel.uid;
-    opvc.userName = _pageDetailViewModel.userName;
+    opvc.userID = _vm.uid;
+    opvc.userName = _vm.userName;
     [self pushViewController:opvc animated:YES];
 }
 
@@ -696,10 +688,10 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 - (void)clickPraiseButton:(UITapGestureRecognizer *)sender {
     [_headerView.likeButton toggleLike];
-    [_pageDetailViewModel toggleLike];
+    [_vm toggleLike];
 }
 - (void)clickUserWorkImageView:(UITapGestureRecognizer *)sender {
-    [self tapOnImageView:_headerView.userWorkImageView.image withURL:nil];
+    [self tapOnImageView:_headerView.imageViewMain.image withURL:nil];
 }
 
 #pragma mark Refresh
@@ -789,13 +781,13 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [self dismissViewControllerAnimated:YES completion:^{
         ATOMCropImageController *uwvc = [ATOMCropImageController new];
         uwvc.originImage = info[UIImagePickerControllerOriginalImage];
-        uwvc.askPageViewModel = [ws.pageDetailViewModel generateAskPageViewModel];
+        uwvc.askPageViewModel = [ws.vm generateAskPageViewModel];
         [ws pushViewController:uwvc animated:YES];
     }];
 }
 
 - (void)dealDownloadWork {
-    UIImageWriteToSavedPhotosAlbum(_headerView.userWorkImageView.image
+    UIImageWriteToSavedPhotosAlbum(_headerView.imageViewMain.image
                                    ,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
 }
 - (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error

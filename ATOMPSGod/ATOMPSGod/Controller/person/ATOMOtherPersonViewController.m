@@ -19,9 +19,10 @@
 #import "ATOMAskPageViewModel.h"
 #import "ATOMAskViewModel.h"
 #import "ATOMReplyViewModel.h"
-#import "ATOMPageDetailViewController.h"
 #import "ATOMUser.h"
 #import "ATOMFollowModel.h"
+
+#import "MessageViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMOtherPersonViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate>
@@ -397,12 +398,13 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
         ATOMAskViewModel *askViewModel = _uploadDataSource[indexPath.row];
         ATOMAskPageViewModel *homepageViewModel = _uploadHomeImageDataSource[indexPath.row];
         if ([askViewModel.totalPSNumber integerValue] == 0) {
-            ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
-            ATOMPageDetailViewModel* pageDetailViewModel = [ATOMPageDetailViewModel new];
-            [pageDetailViewModel setCommonViewModelWithAsk:homepageViewModel];
-            rdvc.pageDetailViewModel = pageDetailViewModel;
-            [self pushViewController:rdvc animated:YES];
-            
+            kfcPageVM* vm = [kfcPageVM new];
+            [vm setCommonViewModelWithAsk:homepageViewModel];
+            MessageViewController* mvc = [MessageViewController new];
+            mvc.vm = vm;
+//            mvc.delegate = self;
+            [self pushViewController:mvc animated:YES];
+
         } else {
             HotDetailViewController *hdvc = [HotDetailViewController new];
             hdvc.askPageViewModel = homepageViewModel;

@@ -4,7 +4,7 @@
 #import "ATOMAskPageViewModel.h"
 #import "ATOMHotDetailPageViewModel.h"
 
-@interface ATOMPageDetailViewModel : NSObject
+@interface kfcPageVM : NSObject
 @property (nonatomic, assign) NSInteger pageID;
 //type 1 求P ，2 作品
 @property (nonatomic, assign) NSInteger askID;

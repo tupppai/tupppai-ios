@@ -1,14 +1,14 @@
 //
-//  ATOMPageDetailViewModel.m
+//  kfcPageVM.m
 //  ATOMPSGod
 //
 //  Created by Peiwei Chen on 6/11/15.
 //  Copyright (c) 2015 ATOM. All rights reserved.
 //
 
-#import "ATOMPageDetailViewModel.h"
+#import "kfcPageVM.h"
 #import "ATOMBaseRequest.h"
-@implementation ATOMPageDetailViewModel
+@implementation kfcPageVM
 - (instancetype)init {
     self = [super init];
     if (self) {

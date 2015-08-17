@@ -8,7 +8,7 @@
 
 #import "ATOMBaseViewController.h"
 #import "ATOMAskPageViewModel.h"
-#import "ATOMPageDetailViewModel.h"
+#import "kfcPageVM.h"
 @interface ATOMAddTipLabelViewController : ATOMBaseViewController
 @property (nonatomic, strong) ATOMAskPageViewModel *askPageViewModel;
 @property (nonatomic, strong) UIImage *workImage;

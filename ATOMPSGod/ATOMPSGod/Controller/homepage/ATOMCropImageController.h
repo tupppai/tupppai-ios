@@ -8,7 +8,7 @@
 
 #import "ATOMBaseViewController.h"
 @class ATOMAskPageViewModel;
-@class ATOMPageDetailViewModel;
+@class kfcPageVM;
 @interface ATOMCropImageController : ATOMBaseViewController
 
 @property (nonatomic, strong) ATOMAskPageViewModel *askPageViewModel;

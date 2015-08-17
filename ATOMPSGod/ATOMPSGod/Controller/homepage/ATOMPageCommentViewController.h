@@ -7,10 +7,10 @@
 //
 
 #import "ATOMBaseViewController.h"
-#import "ATOMPageDetailViewModel.h"
+#import "kfcPageVM.h"
 
 @interface ATOMPageCommentViewController : ATOMBaseViewController
-@property (nonatomic, strong) ATOMPageDetailViewModel *pageDetailViewModel;
+@property (nonatomic, strong) kfcPageVM *pageDetailViewModel;
 
 //回传 是否点赞 到 parent VC
 @property (nonatomic, weak)   id<ATOMViewControllerDelegate> delegate;

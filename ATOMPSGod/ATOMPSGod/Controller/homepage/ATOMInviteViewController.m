@@ -10,7 +10,7 @@
 #import "ATOMInviteView.h"
 #import "InviteCell.h"
 #import "ATOMInviteTableHeaderView.h"
-#import "ATOMPageDetailViewController.h"
+#import "MessageViewController.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMAskPageViewModel.h"
 #import "HomeViewController.h"
@@ -131,13 +131,16 @@
 #pragma mark - Click Event
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)barButtonItem {
-    ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
+    
+//    kfcPageVM* vm = [kfcPageVM new];
+    MessageViewController* mvc = [MessageViewController new];
+//    mvc.delegate = self;
     if (_askPageViewModel) {
-        rdvc.pageDetailViewModel = [_askPageViewModel generatepageDetailViewModel];
+        mvc.vm = [_askPageViewModel generatepageDetailViewModel];
     }
     HomeViewController *hvc = self.navigationController.viewControllers[0];
-    [self pushViewController:rdvc animated:YES];
-    [self.navigationController setViewControllers:@[hvc, rdvc]];
+    [self pushViewController:mvc animated:YES];
+    [self.navigationController setViewControllers:@[hvc, mvc]];
 }
 
 - (void)clickWXFriendCircleButton:(UIButton *)sender {

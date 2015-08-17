@@ -17,7 +17,7 @@
 #import "ATOMShowProceeding.h"
 #import "RefreshTableView.h"
 #import "ATOMCommonModel.h"
-#import "ATOMPageDetailViewController.h"
+#import "MessageViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMProceedingViewController () <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,PWRefreshBaseTableViewDelegate>
@@ -193,9 +193,11 @@
             ATOMAskPageViewModel* askPVM = _homeImageDataSource[indexPath.row];
 
             if ([askPVM.totalPSNumber integerValue] == 0) {
-                ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
-                rdvc.pageDetailViewModel = [askPVM generatepageDetailViewModel];
-                [self pushViewController:rdvc animated:YES];
+                MessageViewController* mvc = [MessageViewController new];
+                mvc.vm = [askPVM generatepageDetailViewModel];
+//                mvc.delegate = self;
+                [self pushViewController:mvc animated:YES];
+
             } else {
                 HotDetailViewController *hdvc = [HotDetailViewController new];
                 hdvc.askPageViewModel = askPVM;

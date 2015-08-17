@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ATOMPageDetailViewModel.h"
+#import "kfcPageVM.h"
 @class ATOMHomeImage;
-@class ATOMPageDetailViewModel;
+@class kfcPageVM;
 @interface ATOMAskPageViewModel : NSObject
 
 @property (nonatomic, assign) NSInteger ID;
@@ -33,8 +33,8 @@
 @property (nonatomic, assign) int type;
 
 - (void)setViewModelData:(ATOMHomeImage *)homeImage;
--(void)setViewModelWithCommon:(ATOMPageDetailViewModel*)commonViewModel;
+-(void)setViewModelWithCommon:(kfcPageVM*)commonViewModel;
 - (void)toggleLike;
--(ATOMPageDetailViewModel*)generatepageDetailViewModel;
+-(kfcPageVM*)generatepageDetailViewModel;
 @end
 

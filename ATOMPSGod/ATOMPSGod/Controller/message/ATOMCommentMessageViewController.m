@@ -17,8 +17,9 @@
 #import "ATOMCommentMessageViewModel.h"
 #import "ATOMHomeImage.h"
 #import "ATOMAskPageViewModel.h"
-#import "ATOMPageDetailViewController.h"
 #import "RefreshFooterTableView.h"
+
+#import "MessageViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMCommentMessageViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate>
@@ -153,9 +154,11 @@
         if (CGRectContainsPoint(cell.workImageView.frame, p)) {
             if ([viewModel.homepageViewModel.totalPSNumber integerValue] == 0) {
                 //进入最新详情
-                ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
-                rdvc.pageDetailViewModel= [viewModel.homepageViewModel generatepageDetailViewModel];
-                [self pushViewController:rdvc animated:YES];
+                MessageViewController* mvc = [MessageViewController new];
+                mvc.vm = [viewModel.homepageViewModel generatepageDetailViewModel];
+//                mvc.delegate = self;
+                [self pushViewController:mvc animated:YES];
+
             } else {
                 //进入热门详情
                 HotDetailViewController *hdvc = [HotDetailViewController new];

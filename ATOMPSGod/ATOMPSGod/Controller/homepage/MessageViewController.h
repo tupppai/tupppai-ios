@@ -7,12 +7,12 @@
 //
 
 #import "SLKTextViewController.h"
-#import "ATOMPageDetailViewModel.h"
-#import "ATOMPageDetailHeaderView.h"
+#import "kfcPageVM.h"
+#import "kfcPageView.h"
 @interface MessageViewController : SLKTextViewController
 
-@property (nonatomic, strong) ATOMPageDetailHeaderView *headerView;
-@property (nonatomic, strong) ATOMPageDetailViewModel *pageDetailViewModel;
+@property (nonatomic, strong) kfcPageView *headerView;
+@property (nonatomic, strong) kfcPageVM *vm;
 //回传 是否点赞 到 parent VC
 @property (nonatomic, weak)   id<ATOMViewControllerDelegate> delegate;
 
