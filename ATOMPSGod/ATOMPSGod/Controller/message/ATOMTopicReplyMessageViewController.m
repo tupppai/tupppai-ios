@@ -9,7 +9,7 @@
 #import "ATOMTopicReplyMessageViewController.h"
 #import "ATOMNoDataView.h"
 #import "ATOMTopicReplyMessageTableViewCell.h"
-#import "ATOMHotDetailViewController.h"
+#import "HotDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMPageDetailViewController.h"
 #import "ATOMReplyMessage.h"
@@ -17,13 +17,13 @@
 #import "ATOMHomeImage.h"
 #import "ATOMAskPageViewModel.h"
 #import "ATOMShowReplyMessage.h"
-#import "PWRefreshFooterTableView.h"
+#import "RefreshFooterTableView.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMTopicReplyMessageViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate>
 
 @property (nonatomic, strong) UIView *topicReplyMessageView;
-@property (nonatomic, strong) PWRefreshFooterTableView *tableView;
+@property (nonatomic, strong) RefreshFooterTableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) UITapGestureRecognizer *tapTopicReplyMessageGesture;
 @property (nonatomic, assign) NSInteger currentPage;
@@ -120,7 +120,7 @@
     self.navigationItem.rightBarButtonItem = rightButtonItem;
     _topicReplyMessageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _topicReplyMessageView;
-    _tableView = [[PWRefreshFooterTableView alloc] initWithFrame:_topicReplyMessageView.bounds];
+    _tableView = [[RefreshFooterTableView alloc] initWithFrame:_topicReplyMessageView.bounds];
     [_topicReplyMessageView addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -153,7 +153,7 @@
                 rdvc.pageDetailViewModel = [viewModel.homepageViewModel generatepageDetailViewModel];
                 [self pushViewController:rdvc animated:YES];
             } else {
-                ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
+                HotDetailViewController *hdvc = [HotDetailViewController new];
                 hdvc.askPageViewModel = viewModel.homepageViewModel;
                 [self pushViewController:hdvc animated:YES];
             }

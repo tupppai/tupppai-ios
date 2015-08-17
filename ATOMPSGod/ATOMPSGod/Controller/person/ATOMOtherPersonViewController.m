@@ -12,7 +12,7 @@
 #import "ATOMMyUploadCollectionViewCell.h"
 #import "ATOMMyFansViewController.h"
 #import "ATOMOtherPersonConcernViewController.h"
-#import "ATOMHotDetailViewController.h"
+#import "HotDetailViewController.h"
 #import "ATOMOtherPersonCollectionHeaderView.h"
 #import "ATOMShowOtherUser.h"
 #import "ATOMHomeImage.h"
@@ -246,10 +246,10 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
     _otherPersonView.uploadHeaderView.userSexImageView.image = user.sex == 1 ? [UIImage imageNamed:@"gender_male"]:[UIImage imageNamed:@"gender_female"];
     _otherPersonView.uploadHeaderView.attentionLabel.attributedText = [self getAttributeStr:@"关注" withNumber:user.attentionNumber];
     _otherPersonView.uploadHeaderView.fansLabel.attributedText = [self getAttributeStr:@"粉丝" withNumber:user.fansNumber];
-    _otherPersonView.uploadHeaderView.praiseLabel.attributedText = [self getAttributeStr:@"赞" withNumber:user.praiseNumber];
+    _otherPersonView.uploadHeaderView.likeLabel.attributedText = [self getAttributeStr:@"赞" withNumber:user.likeNumber];
     _otherPersonView.uploadHeaderView.attentionLabel.textAlignment = NSTextAlignmentCenter;
     _otherPersonView.uploadHeaderView.fansLabel.textAlignment = NSTextAlignmentCenter;
-    _otherPersonView.uploadHeaderView.praiseLabel.textAlignment = NSTextAlignmentCenter;
+    _otherPersonView.uploadHeaderView.likeLabel.textAlignment = NSTextAlignmentCenter;
     [_otherPersonView.uploadHeaderView.otherPersonUploadButton setTitle:[NSString stringWithFormat:@"求P（%ld）",(long)user.uploadNumber] forState:UIControlStateNormal];
     [_otherPersonView.uploadHeaderView.otherPersonWorkButton setTitle:[NSString stringWithFormat:@"作品（%ld）",(long)user.replyNumber] forState:UIControlStateNormal];
 }
@@ -404,13 +404,13 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
             [self pushViewController:rdvc animated:YES];
             
         } else {
-            ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
+            HotDetailViewController *hdvc = [HotDetailViewController new];
             hdvc.askPageViewModel = homepageViewModel;
             [self pushViewController:hdvc animated:YES];
         }
     } else {
         ATOMAskPageViewModel *homepageViewModel = _workHomeImageDataSource[indexPath.row];
-        ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
+        HotDetailViewController *hdvc = [HotDetailViewController new];
         hdvc.fold = 1;
         hdvc.askPageViewModel = homepageViewModel;
         [self pushViewController:hdvc animated:YES];

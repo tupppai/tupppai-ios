@@ -20,31 +20,31 @@
             
             block(nil, nil,nil);
         }
-        else {
-            if ([ responseObject objectForKey:@"data"][@"recommends"]) {
-                NSLog(@"showMasters responseObject recommend%@",[ responseObject objectForKey:@"data"][@"recommends"]);
-
-                recommendMasters = [NSMutableArray array];
-                NSArray *recommendData = [ responseObject objectForKey:@"data"][@"recommends"];
-                for (NSDictionary* data in recommendData) {
-                    NSLog(@"recommendMasters for");
-                    ATOMRecommendUser *ru = [MTLJSONAdapter modelOfClass:[ATOMRecommendUser class] fromJSONDictionary:data error:NULL];
-                    [recommendMasters addObject:ru];
-                }
-                NSLog(@"recommendMasters  %@",recommendMasters);
-            }
-            if ([[ responseObject objectForKey:@"data"]objectForKey:@"fellows"]) {
-                recommendFriends = [NSMutableArray array];
-                NSArray *recommendData2 = [[responseObject objectForKey:@"data"]objectForKey:@"fellows"];
-                for (NSDictionary* data in recommendData2) {
-                    ATOMRecommendUser *ru = [MTLJSONAdapter modelOfClass:[ATOMRecommendUser class] fromJSONDictionary:data error:NULL];
-                    [recommendFriends addObject:ru];
-                }
-            }
-            if (block) {
-                block(recommendMasters,recommendFriends,nil);
-            }
-        }
+//        else {
+//            if ([ responseObject objectForKey:@"data"][@"recommends"]) {
+//                NSLog(@"showMasters responseObject recommend%@",[ responseObject objectForKey:@"data"][@"recommends"]);
+//
+//                recommendMasters = [NSMutableArray array];
+//                NSArray *recommendData = [ responseObject objectForKey:@"data"][@"recommends"];
+//                for (NSDictionary* data in recommendData) {
+//                    NSLog(@"recommendMasters for");
+//                    ATOMRecommendUser *ru = [MTLJSONAdapter modelOfClass:[ATOMRecommendUser class] fromJSONDictionary:data error:NULL];
+//                    [recommendMasters addObject:ru];
+//                }
+//                NSLog(@"recommendMasters  %@",recommendMasters);
+//            }
+//            if ([[ responseObject objectForKey:@"data"]objectForKey:@"fellows"]) {
+//                recommendFriends = [NSMutableArray array];
+//                NSArray *recommendData2 = [[responseObject objectForKey:@"data"]objectForKey:@"fellows"];
+//                for (NSDictionary* data in recommendData2) {
+//                    ATOMRecommendUser *ru = [MTLJSONAdapter modelOfClass:[ATOMRecommendUser class] fromJSONDictionary:data error:NULL];
+//                    [recommendFriends addObject:ru];
+//                }
+//            }
+//            if (block) {
+//                block(recommendMasters,recommendFriends,nil);
+//            }
+//        }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         if (block) {
             block(nil,nil, error);

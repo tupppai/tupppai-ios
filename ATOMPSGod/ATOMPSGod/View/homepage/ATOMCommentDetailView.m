@@ -58,7 +58,7 @@ static CGFloat pageControlWidth = 150;
 }
 
 - (void)createSubView {
-    _commentDetailTableView = [[PWCommentDetailTableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - 46)];
+    _commentDetailTableView = [[RefreshFooterTableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - 46)];
     _commentDetailTableView.tableFooterView = [UIView new];
     _commentDetailTableView.rowHeight = 70;
     _commentDetailTableView.separatorStyle = UITableViewCellSeparatorStyleNone;

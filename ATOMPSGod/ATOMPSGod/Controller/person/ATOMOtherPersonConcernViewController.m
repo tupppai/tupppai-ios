@@ -12,13 +12,13 @@
 #import "ATOMShowConcern.h"
 #import "ATOMConcern.h"
 #import "ATOMConcernViewModel.h"
-#import "PWRefreshFooterTableView.h"
+#import "RefreshFooterTableView.h"
 #import "ATOMFollowModel.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMOtherPersonConcernViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate>
 
-@property (nonatomic, strong) PWRefreshFooterTableView *tableView;
+@property (nonatomic, strong) RefreshFooterTableView *tableView;
 @property (nonatomic, strong) UIView *concernView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapConcernGesture;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -107,7 +107,7 @@
     self.title = [NSString stringWithFormat:@"%@的关注", _userName];
     _concernView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _concernView;
-    _tableView = [[PWRefreshFooterTableView alloc] initWithFrame:_concernView.bounds];
+    _tableView = [[RefreshFooterTableView alloc] initWithFrame:_concernView.bounds];
     _tableView.backgroundColor = [UIColor colorWithHex:0xededed];
     _tableView.tableFooterView = [UIView new];
     [_concernView addSubview:_tableView];

@@ -13,9 +13,13 @@
 +(UIColor *)kfcPublishTime;
 +(UIColor *)kfcButton;
 +(UIColor *)kfcButtonSelected;
-
++  (UIColor *)kfcPublishType;
 @end
 @interface UIFont(PSGod)
 +  (UIFont *)kfcButton;
 +  (UIFont *)kfcPublishTime;
++  (UIFont *)kfcPublishTimeSmall;
++  (UIFont *)kfcPublishType;
++  (UIFont *)kfcCommentUserName;
++  (UIFont *)kfcComment;
 @end

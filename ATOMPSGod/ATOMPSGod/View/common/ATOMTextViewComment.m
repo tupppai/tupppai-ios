@@ -14,9 +14,6 @@
 @end
 
 @implementation ATOMTextViewComment
-//static const CGFloat textviewHeight = 46;
-//static const CGFloat faceViewHeight = 200;
-//static CGFloat pageControlWidth = 150;
 
  NSString *placeholderString = @"发表你的神回复..";
 

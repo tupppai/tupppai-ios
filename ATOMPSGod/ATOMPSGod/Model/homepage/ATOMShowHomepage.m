@@ -15,7 +15,7 @@
 #import "ATOMHomeImageDAO.h"
 #import "ATOMImageTipLabelDAO.h"
 #import "ATOMReplierDAO.h"
-#import "ATOMHomepageScrollView.h"
+#import "kfcHomeScrollView.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMShowHomepage ()

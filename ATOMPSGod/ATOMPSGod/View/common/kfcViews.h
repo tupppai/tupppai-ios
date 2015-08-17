@@ -12,7 +12,13 @@
 @end
 @interface kUsernameLabel : UILabel
 @end
+@interface kfcCommentLabel : UILabel
+@property (nonatomic, strong) NSDictionary *info;
+@end
+
 @interface kPublishTimeLabel : UILabel
+@end
+@interface kfcPublishTypeLabel : UILabel
 @end
 
 @interface kImageView : UIImageView

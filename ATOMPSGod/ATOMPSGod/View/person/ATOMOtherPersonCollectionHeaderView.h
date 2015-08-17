@@ -15,7 +15,7 @@
 @property (nonatomic, strong) UIImageView *userSexImageView;
 @property (nonatomic, strong) UILabel *attentionLabel;
 @property (nonatomic, strong) UILabel *fansLabel;
-@property (nonatomic, strong) UILabel *praiseLabel;
+@property (nonatomic, strong) UILabel *likeLabel;
 @property (nonatomic, strong) UIButton *attentionButton;
 @property (nonatomic, strong) UIView *centerView;
 @property (nonatomic, strong) UIButton *otherPersonUploadButton;

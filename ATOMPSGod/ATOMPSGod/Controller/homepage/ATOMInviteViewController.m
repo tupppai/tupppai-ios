@@ -8,12 +8,12 @@
 
 #import "ATOMInviteViewController.h"
 #import "ATOMInviteView.h"
-#import "ATOMInviteTableViewCell.h"
+#import "InviteCell.h"
 #import "ATOMInviteTableHeaderView.h"
 #import "ATOMPageDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMAskPageViewModel.h"
-#import "ATOMHomepageViewController.h"
+#import "HomeViewController.h"
 #import "ATOMMyConcernTableHeaderView.h"
 #import "ATOMInviteModel.h"
 #import "ATOMInviteCellViewModel.h"
@@ -75,7 +75,7 @@
     NSIndexPath *indexPath = [_inviteView.inviteTableView indexPathForRowAtPoint:location];
     _selectedIndexpath = indexPath;
     if (indexPath) {
-        ATOMInviteTableViewCell *cell = (ATOMInviteTableViewCell *)[_inviteView.inviteTableView cellForRowAtIndexPath:indexPath];
+        InviteCell *cell = (InviteCell *)[_inviteView.inviteTableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
@@ -135,7 +135,7 @@
     if (_askPageViewModel) {
         rdvc.pageDetailViewModel = [_askPageViewModel generatepageDetailViewModel];
     }
-    ATOMHomepageViewController *hvc = self.navigationController.viewControllers[0];
+    HomeViewController *hvc = self.navigationController.viewControllers[0];
     [self pushViewController:rdvc animated:YES];
     [self.navigationController setViewControllers:@[hvc, rdvc]];
 }
@@ -195,9 +195,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"InviteCell";
   
-    ATOMInviteTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    InviteCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
-        cell = [[ATOMInviteTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[InviteCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     ATOMInviteCellViewModel * cellViewModel = [ATOMInviteCellViewModel new];
     if (indexPath.section == 0) {
@@ -219,9 +219,9 @@
     [ATOMInviteModel invite:param];
 }
 //-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-//    if([touch.view.superview isKindOfClass:[ATOMInviteTableViewCell class]]) {
+//    if([touch.view.superview isKindOfClass:[InviteCell class]]) {
 //        if (_selectedIndexpath) {
-//            ATOMInviteTableViewCell *cell = (ATOMInviteTableViewCell *)[_inviteView.inviteTableView cellForRowAtIndexPath:_selectedIndexpath];
+//            InviteCell *cell = (InviteCell *)[_inviteView.inviteTableView cellForRowAtIndexPath:_selectedIndexpath];
 //            //若已经邀请成功，就不再让inviteButton可点
 //            if (CGRectContainsPoint(cell.inviteButton.frame, [touch locationInView:cell])){
 //                if (cell.inviteButton.selected == YES) {

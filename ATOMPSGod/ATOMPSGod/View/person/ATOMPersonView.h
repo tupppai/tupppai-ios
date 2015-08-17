@@ -13,7 +13,7 @@
 @property (nonatomic, strong) UIImageView *topBackGroundImageView;
 @property (nonatomic, strong) UIButton *userHeaderButton;
 @property (nonatomic, strong) UILabel *fansLabel;
-@property (nonatomic, strong) UILabel *praiseLabel;
+@property (nonatomic, strong) UILabel *likeLabel;
 
 @property (nonatomic, strong) UITableView *personTableView;
 

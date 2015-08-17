@@ -1,5 +1,5 @@
 //
-//  ATOMFollowPageViewModel.h.h
+//  kfcFollowVM.h.h
 //  ATOMPSGod
 //
 //  Created by atom on 15/5/6.
@@ -11,7 +11,7 @@
 @class ATOMCommonImage;
 @class ATOMAskPageViewModel;
 
-@interface ATOMFollowPageViewModel : NSObject
+@interface kfcFollowVM : NSObject
 
 @property (nonatomic, assign) NSInteger imageID;
 @property (nonatomic, assign) NSInteger askID;

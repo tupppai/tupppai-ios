@@ -19,7 +19,7 @@
              @"avatar" : @"avatar",
              @"content" : @"content",
              @"commentTime" : @"created_time",
-             @"praiseNumber" : @"up_count",
+             @"likeNumber" : @"up_count",
              @"liked": @"uped"
              };
 }
@@ -36,7 +36,7 @@
              @"avatar" : @"avatar",
              @"content" : @"content",
              @"commentTime" : @"commentTime",
-             @"praiseNumber" : @"praiseNumber",
+             @"likeNumber" : @"likeNumber",
              @"atCommentArray" : @"atCommentArray",
              @"liked": @"liked"
              };

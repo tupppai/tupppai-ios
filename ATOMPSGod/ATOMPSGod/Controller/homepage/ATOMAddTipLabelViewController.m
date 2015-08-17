@@ -18,8 +18,8 @@
 #import "ATOMImageTipLabel.h"
 #import "AppDelegate.h"
 #import "ATOMImageTipLabelViewModel.h"
-#import "ATOMHotDetailViewController.h"
-#import "ATOMHomepageViewController.h"
+#import "HotDetailViewController.h"
+#import "HomeViewController.h"
 #import "TSMessage.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -254,10 +254,10 @@
 //        svc.askPageViewModel = ws.askPageViewModel;
 //        [ws pushViewController:svc animated:YES];
         
-        ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
+        HotDetailViewController *hdvc = [HotDetailViewController new];
         hdvc.askPageViewModel = ws.askPageViewModel;
         hdvc.fold = 0;
-        ATOMHomepageViewController *hvc = self.navigationController.viewControllers[0];
+        HomeViewController *hvc = self.navigationController.viewControllers[0];
         [self pushViewController:hdvc animated:YES];
         [self.navigationController setViewControllers:@[hvc, hdvc]];
     }];

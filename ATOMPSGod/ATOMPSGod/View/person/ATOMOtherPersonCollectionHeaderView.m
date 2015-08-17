@@ -92,14 +92,14 @@
     [_attentionLabel.layer addSublayer:Border1];
     
     
-    _praiseLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_fansLabel.frame) + buttonInterval, buttonOriginY, buttonWidth, buttonHeight)];
-    _praiseLabel.userInteractionEnabled = YES;
-    _praiseLabel.numberOfLines = 0;
-    NSMutableAttributedString *praiseStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n赞", str] attributes:attributeDict];
-    [praiseStr addAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont12], NSFontAttributeName, [UIColor colorWithHex:0xc3cbd2], NSForegroundColorAttributeName, nil] range:NSMakeRange(str.length + 1, 1)];
-    _praiseLabel.attributedText = praiseStr;
-    _praiseLabel.textAlignment = NSTextAlignmentCenter;
-    [_topView addSubview:_praiseLabel];
+    _likeLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_fansLabel.frame) + buttonInterval, buttonOriginY, buttonWidth, buttonHeight)];
+    _likeLabel.userInteractionEnabled = YES;
+    _likeLabel.numberOfLines = 0;
+    NSMutableAttributedString *likeStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n赞", str] attributes:attributeDict];
+    [likeStr addAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont12], NSFontAttributeName, [UIColor colorWithHex:0xc3cbd2], NSForegroundColorAttributeName, nil] range:NSMakeRange(str.length + 1, 1)];
+    _likeLabel.attributedText = likeStr;
+    _likeLabel.textAlignment = NSTextAlignmentCenter;
+    [_topView addSubview:_likeLabel];
     
     _attentionButton = [[UIButton alloc] initWithFrame:CGRectMake(_userHeaderButton.center.x - 50, CGRectGetMaxY(_fansLabel.frame) + kPadding20, 100, kPadding35+4)];
     [_attentionButton setImage:[UIImage imageNamed:@"btn_add_focus"] forState:UIControlStateNormal];

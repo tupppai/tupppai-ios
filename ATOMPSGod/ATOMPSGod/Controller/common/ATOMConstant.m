@@ -9,17 +9,19 @@
 #import "ATOMConstant.h"
 
 CGFloat const kCommentTableViewHeaderHeight = 40;
-CGFloat const KAvatarWidth = 35;
 CGFloat const kUserHeaderButtonWidth2 = 41;
 CGFloat const kUserBigHeaderButtonWidth = 74;
 CGFloat const kShareButtonWidth = 65;
 CGFloat const kUserNameLabelWidth = 100;
 CGFloat const kPublishTimeLabelWidth = 150;
 
-CGFloat const kPSButtonWidth = 54;
-CGFloat const kPSButtonHeight = 26;
+
+
 CGFloat const kBottomCommonButtonWidth = 24;
 
+CGFloat const kfcAvatarWidth = 35;
+CGFloat const kfcPSHeight = 26;
+CGFloat const kfcPSWidth = 54;
 CGFloat const kfcButtonHeight = 24;
 CGFloat const kfcButtonWidth = 32;
 

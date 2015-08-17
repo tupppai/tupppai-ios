@@ -42,7 +42,6 @@
     [self mas_updateConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@(kfcButtonHeight+4+numberWidth));
     }];
-
     [self setNeedsDisplay];
 }
 
@@ -75,7 +74,6 @@
             self.number =  [NSString stringWithFormat:@"%d",[_number intValue] - 1 ];
         }
     }
-
     [self setNeedsDisplay];
 }
 -(void)toggleSeleted {

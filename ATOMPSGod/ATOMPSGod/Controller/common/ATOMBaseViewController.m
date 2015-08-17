@@ -7,7 +7,7 @@
 //
 
 #import "ATOMBaseViewController.h"
-#import "ATOMHomepageViewController.h"
+#import "HomeViewController.h"
 #import "ATOMPersonViewController.h"
 #import "ATOMMyFollowViewController.h"
 #import "ATOMMyMessageViewController.h"
@@ -76,7 +76,7 @@
     self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:viewController animated:animated];
-    if ([self isKindOfClass:[ATOMHomepageViewController class]]) {
+    if ([self isKindOfClass:[HomeViewController class]]) {
         self.hidesBottomBarWhenPushed = NO;
     } else if ([self isKindOfClass:[ATOMPersonViewController class]]){
         self.hidesBottomBarWhenPushed = NO;

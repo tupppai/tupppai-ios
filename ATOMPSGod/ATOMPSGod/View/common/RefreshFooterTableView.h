@@ -1,5 +1,5 @@
 //
-//  PWRefreshFooterTableView.h
+//  RefreshFooterTableView.h
 //  ATOMPSGod
 //
 //  Created by Peiwei Chen on 6/19/15.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "ATOMNoDataView.h"
-@interface PWRefreshFooterTableView : UITableView
+@interface RefreshFooterTableView : UITableView
 @property (nonatomic, weak) id<PWRefreshBaseTableViewDelegate> psDelegate;
-@property (nonatomic, strong) ATOMNoDataView *noDataView;
--(void)reloadDataCustom;
 @end

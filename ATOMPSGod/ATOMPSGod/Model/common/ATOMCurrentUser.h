@@ -53,7 +53,7 @@
 /**
  *  被点赞数
  */
-@property (nonatomic, assign) NSInteger praiseNumber;
+@property (nonatomic, assign) NSInteger likeNumber;
 /**
  *  求P数
  */

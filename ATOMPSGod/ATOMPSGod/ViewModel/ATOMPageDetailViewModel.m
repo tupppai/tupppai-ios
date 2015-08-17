@@ -64,7 +64,7 @@
 }
 
 
--(void)setCommonViewModelWithFollow:(ATOMFollowPageViewModel*)model {
+-(void)setCommonViewModelWithFollow:(kfcFollowVM*)model {
     _uid = model.userID;
     _askID = model.askID;
     _type = model.type;

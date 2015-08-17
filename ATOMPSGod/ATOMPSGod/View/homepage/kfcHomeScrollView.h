@@ -1,5 +1,5 @@
 //
-//  ATOMHomepageScrollView.h
+//  kfcHomeScrollView.h
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/18.
@@ -7,13 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PWHomePageTableView.h"
-#import "PWRefreshBaseTableView.h"
+#import "RefreshTableView.h"
 
 
-@interface ATOMHomepageScrollView : UIScrollView
-@property (nonatomic, strong) PWRefreshBaseTableView *homepageHotTableView;
-@property (nonatomic, strong) PWRefreshBaseTableView *homepageAskTableView;
+@interface kfcHomeScrollView : UIScrollView
+@property (nonatomic, strong) RefreshTableView *homepageHotTableView;
+@property (nonatomic, strong) RefreshTableView *homepageAskTableView;
 @property (nonatomic, strong) UIView *homepageHotView;
 @property (nonatomic, strong) UIView *homepageRecentView;
 @property (nonatomic, assign) ATOMHomepageViewType currentHomepageType;

@@ -11,7 +11,7 @@
 #import "ATOMPageDetailView.h"
 #import "CommentVM.h"
 #import "ATOMCropImageController.h"
-#import "ATOMCommentTableViewCell.h"
+#import "CommentCell.h"
 #import "ATOMMyConcernTableHeaderView.h"
 #import "ATOMPageDetailHeaderView.h"
 #import "ATOMOtherPersonViewController.h"
@@ -330,7 +330,7 @@
     _type = _pageDetailViewModel.type;
     _ID = _pageDetailViewModel.pageID;
     _pageDetailView.pageDetailViewModel = _pageDetailViewModel;
-//    _pageDetailView.headerView.praiseButton.selected = _pageDetailViewModel.liked;
+//    _pageDetailView.headerView.likeButton.selected = _pageDetailViewModel.liked;
     
     _pageDetailView.tableViewComent.delegate = self;
     _pageDetailView.tableViewComent.dataSource = self;
@@ -347,7 +347,7 @@
     UITapGestureRecognizer *g2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickMoreShareButton:)];
     [_pageDetailView.headerView.moreShareButton addGestureRecognizer:g2];
     UITapGestureRecognizer *g3 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickPraiseButton:)];
-    [_pageDetailView.headerView.praiseButton addGestureRecognizer:g3];
+    [_pageDetailView.headerView.likeButton addGestureRecognizer:g3];
     UITapGestureRecognizer *g4 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickUserWorkImageView:)];
     [_pageDetailView.headerView.userWorkImageView addGestureRecognizer:g4];
     [_pageDetailView.headerView.userHeaderButton addTarget:self action:@selector(clickUserHeaderButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -386,7 +386,7 @@
 }
 
 - (void)clickPraiseButton:(UITapGestureRecognizer *)sender {
-    [_pageDetailView.headerView.praiseButton toggleLike];
+    [_pageDetailView.headerView.likeButton toggleLike];
     [_pageDetailViewModel toggleLike];
 }
 - (void)clickUserWorkImageView:(UITapGestureRecognizer *)sender {
@@ -464,7 +464,7 @@
     CGPoint location = [gesture locationInView:_pageDetailView.tableViewComent];
     NSIndexPath *indexPath = [_pageDetailView.tableViewComent indexPathForRowAtPoint:location];
     if (indexPath) {
-        ATOMCommentTableViewCell *cell = (ATOMCommentTableViewCell *)[_pageDetailView.tableViewComent cellForRowAtIndexPath:indexPath];
+        CommentCell *cell = (CommentCell *)[_pageDetailView.tableViewComent cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
@@ -476,23 +476,23 @@
             opvc.userID = cell.viewModel.uid;
             opvc.userName = cell.viewModel.username;
             [self pushViewController:opvc animated:YES];
-        } else if (CGRectContainsPoint(cell.praiseButton.frame, p)) {
+        } else if (CGRectContainsPoint(cell.likeButton.frame, p)) {
             NSInteger section = indexPath.section;
             NSInteger row = indexPath.row;
             CommentVM *model = (section == 0) ? _commentsHot[row] : _commentsNew[row];
 //            if (!model.liked) {
-////                cell.praiseButton.selected = !cell.praiseButton.selected;
+////                cell.likeButton.selected = !cell.likeButton.selected;
 //                ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
 //                NSMutableDictionary *param = [NSMutableDictionary dictionary];
 //                [param setObject:@(model.comment_id) forKey:@"cid"];
 ////                [showDetailOfComment PraiseComment:param withBlock:^(NSError *error) {
 ////                    if (!error) {
-////                        NSLog(@"praise");
+////                        NSLog(@"like");
 ////                    }
 ////                }];
 //            }
             //UI 颜色和数字
-            [cell.praiseButton toggleLike];
+            [cell.likeButton toggleLike];
             //Network,点赞，取消赞
             [model toggleLike];
 
@@ -554,9 +554,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_pageDetailView.tableViewComent == tableView) {
         static NSString *CellIdentifier = @"RecentDetailCell";
-        ATOMCommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        CommentCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (!cell) {
-            cell = [[ATOMCommentTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            cell = [[CommentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         if (indexPath.section == 0) {
             cell.viewModel = _commentsHot[indexPath.row];
@@ -581,9 +581,9 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger section = indexPath.section;
     if (section == 0) {
-        return [ATOMCommentTableViewCell calculateCellHeightWithModel:_commentsHot[indexPath.row]];
+        return [CommentCell calculateCellHeightWithModel:_commentsHot[indexPath.row]];
     } else if (section == 1) {
-        return [ATOMCommentTableViewCell calculateCellHeightWithModel:_commentsNew[indexPath.row]];
+        return [CommentCell calculateCellHeightWithModel:_commentsNew[indexPath.row]];
     }
     return 0;
 }

@@ -33,7 +33,7 @@
 /**
  *  评论获赞数
  */
-@property (nonatomic, assign) NSInteger praiseNumber;
+@property (nonatomic, assign) NSInteger likeNumber;
 /**
  *  评论类型 0：ask 1：reply
  */

@@ -44,15 +44,6 @@
     _labelArray = [askPageViewModel.labelArray mutableCopy];
     _liked = askPageViewModel.liked;
     _collected = askPageViewModel.collected;
-    
-//    NSFileManager *fileManager = [NSFileManager defaultManager];
-//    NSString *path = [[NSString stringWithFormat:@"%@/HomePage", PATH_OF_DOCUMENT] stringByAppendingPathComponent:[NSString stringWithFormat:@"ATOMIMAGE-%d.jpg", (int)askPageViewModel.imageID]];
-//    BOOL flag;
-//    if ([fileManager fileExistsAtPath:path isDirectory:&flag]) {
-//        _image = [UIImage imageWithContentsOfFile:path];
-//    } else {
-//        NSLog(@"image not exist in %@", path);
-//    }
 }
 
 - (void)setViewModelDataWithDetailImage:(ATOMDetailImage *)detailImage {
@@ -62,13 +53,11 @@
     _askID = detailImage.askID;
     _uid = detailImage.uid;
     _userName = detailImage.nickname;
-//    _userSex = (detailImage.sex == 1) ? @"man" : @"woman";
     _userImageURL = detailImage.imageURL;
     _avatarURL = detailImage.avatar;
     NSDateFormatter *df = [NSDateFormatter new];
     [df setDateFormat:@"yyyy年MM月dd日 HH时mm分"];
     NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:detailImage.replyTime];
-//    _publishTime = [df stringFromDate:publishDate];
     _publishTime = [Util formatPublishTime:publishDate];
     _likeNumber = [NSString stringWithFormat:@"%d",(int)detailImage.totalPraiseNumber];
     _shareNumber = [NSString stringWithFormat:@"%d",(int)detailImage.totalShareNumber];
@@ -97,7 +86,6 @@
     //每一页的第一张图是HomePage
     [ATOMBaseRequest toggleLike:param withPageType:_type withID:_ID withBlock:^(NSError *error) {
         if (!error) {
-            NSLog(@"Server成功toggle like");
             NSInteger number = [_likeNumber integerValue]+one;
             [self setLikeNumber:[NSString stringWithFormat:@"%ld",(long)number]];            } else {
                 NSLog(@"Server失败 toggle like");

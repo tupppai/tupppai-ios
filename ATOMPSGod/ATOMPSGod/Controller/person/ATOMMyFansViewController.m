@@ -13,13 +13,13 @@
 #import "ATOMFans.h"
 #import "ATOMFansViewModel.h"
 #import "ATOMFollowModel.h"
-#import "PWRefreshFooterTableView.h"
+#import "RefreshFooterTableView.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMMyFansViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate>
 
-@property (nonatomic, strong) PWRefreshFooterTableView *tableView;
+@property (nonatomic, strong) RefreshFooterTableView *tableView;
 @property (nonatomic, strong) UIView *myFansView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapMyFansGesture;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -113,7 +113,7 @@
     self.title = [NSString stringWithFormat:@"%@的粉丝", _uid ? _userName : @"我"];
     _myFansView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _myFansView;
-    _tableView = [[PWRefreshFooterTableView alloc] initWithFrame:_myFansView.bounds];
+    _tableView = [[RefreshFooterTableView alloc] initWithFrame:_myFansView.bounds];
     _tableView.backgroundColor = [UIColor colorWithHex:0xededed];
 //    _tableView.tableFooterView = [UIView new];
     [_myFansView addSubview:_tableView];

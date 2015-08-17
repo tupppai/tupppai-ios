@@ -49,16 +49,16 @@
     _fansLabel.textAlignment = NSTextAlignmentCenter;
     [_topBackGroundImageView addSubview:_fansLabel];
     
-    _praiseLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + buttonPadding, 0, buttonWidth, 80)];
-    _praiseLabel.center = CGPointMake(_praiseLabel.center.x, _userHeaderButton.center.y);
-    _praiseLabel.minimumScaleFactor = 0.7;
-    _praiseLabel.numberOfLines = 0;
-    NSMutableAttributedString *praiseLabelText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%d\n赞", (int)[ATOMCurrentUser currentUser].praiseNumber] attributes:attributeDict];
-    str = [NSString stringWithFormat:@"%d", (int)[ATOMCurrentUser currentUser].praiseNumber];
-//    [praiseLabelText addAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont15], NSFontAttributeName, [UIColor colorWithHex:0xc3cbd2], NSForegroundColorAttributeName, nil] range:NSMakeRange(str.length + 1, 1)];
-    _praiseLabel.attributedText = praiseLabelText;
-    _praiseLabel.textAlignment = NSTextAlignmentCenter;
-    [_topBackGroundImageView addSubview:_praiseLabel];
+    _likeLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + buttonPadding, 0, buttonWidth, 80)];
+    _likeLabel.center = CGPointMake(_likeLabel.center.x, _userHeaderButton.center.y);
+    _likeLabel.minimumScaleFactor = 0.7;
+    _likeLabel.numberOfLines = 0;
+    NSMutableAttributedString *likeLabelText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%d\n赞", (int)[ATOMCurrentUser currentUser].likeNumber] attributes:attributeDict];
+    str = [NSString stringWithFormat:@"%d", (int)[ATOMCurrentUser currentUser].likeNumber];
+//    [likeLabelText addAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont15], NSFontAttributeName, [UIColor colorWithHex:0xc3cbd2], NSForegroundColorAttributeName, nil] range:NSMakeRange(str.length + 1, 1)];
+    _likeLabel.attributedText = likeLabelText;
+    _likeLabel.textAlignment = NSTextAlignmentCenter;
+    [_topBackGroundImageView addSubview:_likeLabel];
     
     _personTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_topBackGroundImageView.frame), SCREEN_WIDTH, CGHeight(self.frame) - CGHeight(_topBackGroundImageView.frame)) style:UITableViewStylePlain];
     _personTableView.backgroundColor = [UIColor whiteColor];

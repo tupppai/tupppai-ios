@@ -11,14 +11,14 @@
 @interface ATOMConstant : NSObject
 
 extern CGFloat const kCommentTableViewHeaderHeight;
-extern CGFloat const KAvatarWidth;
+extern CGFloat const kfcAvatarWidth;
 extern CGFloat const kUserHeaderButtonWidth2;
 extern CGFloat const kPublishTimeLabelWidth;
 extern CGFloat const kUserBigHeaderButtonWidth;
 extern CGFloat const kShareButtonWidth;
 extern CGFloat const kUserNameLabelWidth;
-extern CGFloat const kPSButtonWidth;
-extern CGFloat const kPSButtonHeight;
+extern CGFloat const kfcPSWidth;
+extern CGFloat const kfcPSHeight;
 extern CGFloat const kBottomCommonButtonWidth;
 
 extern CGFloat const kfcButtonHeight;

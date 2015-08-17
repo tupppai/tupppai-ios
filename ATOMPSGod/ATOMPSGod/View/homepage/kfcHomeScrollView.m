@@ -1,18 +1,18 @@
 //
-//  ATOMHomepageScrollView.m
+//  kfcHomeScrollView.m
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/18.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMHomepageScrollView.h"
+#import "kfcHomeScrollView.h"
 
-@interface ATOMHomepageScrollView ()
+@interface kfcHomeScrollView ()
 
 @end
 
-@implementation ATOMHomepageScrollView
+@implementation kfcHomeScrollView
 
 - (instancetype)init {
     self = [super init];
@@ -25,7 +25,6 @@
 
 - (void)configSelf {
     self.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT);
-    self.backgroundColor = [UIColor colorWithHex:0xededed];
     self.showsVerticalScrollIndicator = NO;
     self.showsHorizontalScrollIndicator = NO;
     self.contentSize = CGSizeMake(SCREEN_WIDTH * 2, 0);
@@ -40,7 +39,7 @@
 - (void)createHomepageHotView {
     _homepageHotView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
     [self addSubview:_homepageHotView];
-    _homepageHotTableView = [[PWRefreshBaseTableView alloc] initWithFrame:_homepageHotView.bounds];
+    _homepageHotTableView = [[RefreshTableView alloc] initWithFrame:_homepageHotView.bounds];
     _homepageHotTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [_homepageHotView addSubview:_homepageHotTableView];
 }
@@ -48,7 +47,7 @@
 - (void)createHomepageRecentView {
     _homepageRecentView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
     [self addSubview:_homepageRecentView];
-    _homepageAskTableView = [[PWRefreshBaseTableView alloc] initWithFrame:_homepageRecentView.bounds];
+    _homepageAskTableView = [[RefreshTableView alloc] initWithFrame:_homepageRecentView.bounds];
     _homepageAskTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [_homepageRecentView addSubview:_homepageAskTableView];
 }
@@ -71,20 +70,6 @@
 - (NSInteger)typeOfCurrentHomepageView {
     return _currentHomepageType;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

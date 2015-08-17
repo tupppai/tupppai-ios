@@ -1,5 +1,5 @@
 //
-//  ATOMHotDetailViewController.m
+//  HotDetailViewController.m
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/3.
@@ -7,8 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "ATOMHotDetailViewController.h"
-#import "ATOMHotDetailTableViewCell.h"
+#import "HotDetailViewController.h"
+#import "kfcDetailCell.h"
 #import "ATOMCommentDetailViewController.h"
 #import "ATOMCropImageController.h"
 #import "ATOMProceedingViewController.h"
@@ -21,7 +21,7 @@
 #import "ATOMAskPageViewModel.h"
 #import "ATOMShareFunctionView.h"
 #import "ATOMBottomCommonButton.h"
-#import "PWRefreshBaseTableView.h"
+#import "RefreshTableView.h"
 #import "ATOMPageDetailViewController.h"
 #import "ATOMCollectModel.h"
 #import "ATOMBaseRequest.h"
@@ -31,27 +31,29 @@
 
 #import "JTSImageViewController.h"
 #import "JTSImageInfo.h"
-
+#import "UITableView+FDTemplateLayoutCell.h"
+#import "MessageViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMHotDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate,JTSImageViewControllerInteractionsDelegate>
+@interface HotDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate,JTSImageViewControllerInteractionsDelegate>
 
 @property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
 @property (nonatomic, strong) UIView *hotDetailView;
-@property (nonatomic, strong) PWRefreshBaseTableView *hotDetailTableView;
+@property (nonatomic, strong) RefreshTableView *hotDetailTableView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) UITapGestureRecognizer *tapHotDetailGesture;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, assign) NSIndexPath* selectedIndexPath;
-@property (nonatomic, assign) ATOMHotDetailTableViewCell* selectedHotDetailCell;
+@property (nonatomic, assign) kfcDetailCell* selectedHotDetailCell;
 @property (nonatomic, strong)  JGActionSheet * psActionSheet;
 @property (nonatomic, strong)  JGActionSheet * reportActionSheet;
 
 @end
 
-@implementation ATOMHotDetailViewController
+@implementation HotDetailViewController
+static NSString *CellIdentifier = @"HotDetailCell";
 
 #pragma mark - Lazy Initialize
 
@@ -65,15 +67,15 @@
 
 - (UITableView *)hotDetailTableView {
     if (_hotDetailTableView == nil) {
-        _hotDetailTableView = [[PWRefreshBaseTableView alloc] initWithFrame:_hotDetailView.bounds];
+        _hotDetailTableView = [[RefreshTableView alloc] initWithFrame:_hotDetailView.bounds];
+        [_hotDetailTableView registerClass:[kfcDetailCell class] forCellReuseIdentifier:CellIdentifier];
         _hotDetailTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _hotDetailTableView.psDelegate = self;
         _hotDetailTableView.delegate = self;
         _hotDetailTableView.dataSource = self;
-        _hotDetailTableView.backgroundColor = [UIColor colorWithHex:0xf5f5f5];
+//        _hotDetailTableView.backgroundColor = [UIColor colorWithHex:0xf5f5f5];
         _tapHotDetailGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHotDetailGesture:)];
         [_hotDetailTableView addGestureRecognizer:_tapHotDetailGesture];
-//        [self configHotDetailTableViewRefresh];
     }
     return _hotDetailTableView;
 }
@@ -362,8 +364,8 @@
     } else {
         imageInfo.imageURL = [NSURL URLWithString:url];
     }
-    imageInfo.referenceRect = _selectedHotDetailCell.userHeaderButton.frame;
-    imageInfo.referenceView = _selectedHotDetailCell.userHeaderButton;
+//    imageInfo.referenceRect = _selectedHotDetailCell.userHeaderButton.frame;
+//    imageInfo.referenceView = _selectedHotDetailCell.userHeaderButton;
     
     // Setup view controller
     JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
@@ -376,8 +378,8 @@
     imageViewer.interactionsDelegate = self;
 }
 - (void)dealDownloadWork {
-    ATOMHotDetailTableViewCell *cell = (ATOMHotDetailTableViewCell *)[_hotDetailTableView cellForRowAtIndexPath:_selectedIndexPath];
-    UIImageWriteToSavedPhotosAlbum(cell.userWorkImageView.image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+    kfcDetailCell *cell = (kfcDetailCell *)[_hotDetailTableView cellForRowAtIndexPath:_selectedIndexPath];
+    UIImageWriteToSavedPhotosAlbum(cell.imageViewMain.image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
 }
 - (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error
                  contextInfo: (void *) contextInfo {
@@ -417,50 +419,51 @@
     _selectedIndexPath = [_hotDetailTableView indexPathForRowAtPoint:location];
     if (_selectedIndexPath) {
         ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
-        _selectedHotDetailCell = (ATOMHotDetailTableViewCell *)[_hotDetailTableView cellForRowAtIndexPath:_selectedIndexPath];
+        _selectedHotDetailCell = (kfcDetailCell *)[_hotDetailTableView cellForRowAtIndexPath:_selectedIndexPath];
         
         CGPoint p = [gesture locationInView:_selectedHotDetailCell];
         //点击图片
-        if (CGRectContainsPoint(_selectedHotDetailCell.userWorkImageView.frame, p)) {
-            [self tapOnImageView:_selectedHotDetailCell.userWorkImageView.image withURL:_selectedHotDetailCell.viewModel.userImageURL];
+        if (CGRectContainsPoint(_selectedHotDetailCell.imageViewMain.frame, p)) {
+            [self tapOnImageView:_selectedHotDetailCell.imageViewMain.image withURL:model.userImageURL];
         } else if (CGRectContainsPoint(_selectedHotDetailCell.topView.frame, p)) {
             p = [gesture locationInView:_selectedHotDetailCell.topView];
-            if (CGRectContainsPoint(_selectedHotDetailCell.userHeaderButton.frame, p)) {
+            if (CGRectContainsPoint(_selectedHotDetailCell.avatarView.frame, p)) {
                 ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
                 opvc.userID = model.uid;
                 opvc.userName = model.userName;
                 [self pushViewController:opvc animated:YES];
-            } else if (CGRectContainsPoint(_selectedHotDetailCell.psButton.frame, p)) {
+            } else if (CGRectContainsPoint(_selectedHotDetailCell.psView.frame, p)) {
                 [self.psActionSheet showInView:[AppDelegate APP].window animated:true];
-            } else if (CGRectContainsPoint(_selectedHotDetailCell.userNameLabel.frame, p)) {
+            } else if (CGRectContainsPoint(_selectedHotDetailCell.usernameLabel.frame, p)) {
                 ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
                 opvc.userID = model.uid;
                 opvc.userName = model.userName;
                 [self pushViewController:opvc animated:YES];
             }
         } else {
-            p = [gesture locationInView:_selectedHotDetailCell.thinCenterView];
-            if (CGRectContainsPoint(_selectedHotDetailCell.praiseButton.frame, p)) {
-                [_selectedHotDetailCell.praiseButton toggleLike];
+            p = [gesture locationInView:_selectedHotDetailCell.bottomView];
+            if (CGRectContainsPoint(_selectedHotDetailCell.likeButton.frame, p)) {
+                [_selectedHotDetailCell.likeButton toggleLike];
                     [model toggleLike];
-            } else if (CGRectContainsPoint(_selectedHotDetailCell.shareButton.frame, p)) {
+            } else if (CGRectContainsPoint(_selectedHotDetailCell.wechatButton.frame, p)) {
                 if (_selectedIndexPath.row == 0) {
                     [self postSocialShare:_askPageViewModel.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
                 } else {
                     ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
                     [self postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeReply];
                 }            } else if (CGRectContainsPoint(_selectedHotDetailCell.commentButton.frame, p)) {
-                ATOMPageDetailViewController *rdvc = [ATOMPageDetailViewController new];
+                    
                 ATOMPageDetailViewModel* pageDetailViewModel = [ATOMPageDetailViewModel new];
                 if (_selectedIndexPath.row != 0) {
                     [pageDetailViewModel setCommonViewModelWithHotDetail:model];
                 } else {
                     [pageDetailViewModel setCommonViewModelWithAsk:_askPageViewModel];
                 }
-                rdvc.pageDetailViewModel = pageDetailViewModel;
-                rdvc.delegate = self;
-                [self pushViewController:rdvc animated:YES];
-            } else if (CGRectContainsPoint(_selectedHotDetailCell.moreShareButton.frame, p)) {
+                    MessageViewController* mvc = [MessageViewController new];
+                    mvc.pageDetailViewModel = pageDetailViewModel;
+                    mvc.delegate = self;
+                    [self pushViewController:mvc animated:YES];
+            } else if (CGRectContainsPoint(_selectedHotDetailCell.moreButton.frame, p)) {
                 self.shareFunctionView.collectButton.selected = model.collected;
                 [self.shareFunctionView showInView:[AppDelegate APP].window animated:YES];
             }
@@ -492,19 +495,20 @@
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"HotDetailCell";
-    ATOMHotDetailTableViewCell *cell = [_hotDetailTableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    kfcDetailCell *cell = [_hotDetailTableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
-        cell = [[ATOMHotDetailTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[kfcDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    cell.viewModel = _dataSource[indexPath.row];
+    [cell configCell:_dataSource[indexPath.row]];
     return cell;
 }
 
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [ATOMHotDetailTableViewCell calculateCellHeightWith:_dataSource[indexPath.row]];
+    return [tableView fd_heightForCellWithIdentifier:CellIdentifier cacheByIndexPath:indexPath configuration:^(kfcDetailCell* cell) {
+        [cell configCell:_dataSource[indexPath.row]];
+    }];
 }
 
 
@@ -514,7 +518,7 @@
     bool collected = [info[@"collected"]boolValue];
     //当从child viewcontroller 传来的liked变化的时候，toggle like.
     //to do:其实应该改变datasource的liked ,tableView reload的时候才能保持。
-    [_selectedHotDetailCell.praiseButton toggleLikeWhenSelectedChanged:liked];
+    [_selectedHotDetailCell.likeButton toggleLikeWhenSelectedChanged:liked];
     ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
     model.collected = collected;
 }

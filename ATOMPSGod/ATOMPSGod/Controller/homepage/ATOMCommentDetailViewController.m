@@ -198,9 +198,9 @@
             opvc.userID = model.uid;
             opvc.userName = model.username;
             [self pushViewController:opvc animated:YES];
-        } else if (CGRectContainsPoint(cell.praiseButton.frame, p)) {
+        } else if (CGRectContainsPoint(cell.likeButton.frame, p)) {
             //UI 颜色和数字
-            [cell.praiseButton toggleLike];
+            [cell.likeButton toggleLike];
             //Network,点赞，取消赞
             [model toggleLike];
         } else if (CGRectContainsPoint(cell.userCommentDetailLabel.frame, p)) {

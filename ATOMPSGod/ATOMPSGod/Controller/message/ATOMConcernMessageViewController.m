@@ -12,14 +12,14 @@
 #import "ATOMConcernMessage.h"
 #import "ATOMConcernMessageViewModel.h"
 #import "ATOMShowConcernMessage.h"
-#import "PWRefreshFooterTableView.h"
+#import "RefreshFooterTableView.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMConcernMessageViewController () <UITableViewDataSource, UITableViewDelegate,PWRefreshBaseTableViewDelegate>
 
 @property (nonatomic, strong) UIView *concernMessageView;
-@property (nonatomic, strong) PWRefreshFooterTableView *tableView;
+@property (nonatomic, strong) RefreshFooterTableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) UITapGestureRecognizer *tapConcernMessageGesture;
 @property (nonatomic, assign) NSInteger currentPage;
@@ -110,7 +110,7 @@
     self.navigationItem.rightBarButtonItem = rightButtonItem;
     _concernMessageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _concernMessageView;
-    _tableView = [[PWRefreshFooterTableView alloc] initWithFrame:_concernMessageView.bounds];
+    _tableView = [[RefreshFooterTableView alloc] initWithFrame:_concernMessageView.bounds];
     [_concernMessageView addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;

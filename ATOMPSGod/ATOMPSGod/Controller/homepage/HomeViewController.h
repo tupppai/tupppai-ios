@@ -1,5 +1,5 @@
 //
-//  ATOMHomepageViewController.h
+//  HomeViewController.h
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/3.
@@ -8,6 +8,6 @@
 
 #import "ATOMBaseViewController.h"
 
-@interface ATOMHomepageViewController : ATOMBaseViewController
+@interface HomeViewController : ATOMBaseViewController
 
 @end

@@ -1,5 +1,5 @@
 //
-//  ATOMInviteTableViewCell.h
+//  InviteCell.h
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/12.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ATOMInviteCellViewModel.h"
 
-@interface ATOMInviteTableViewCell : UITableViewCell
+@interface InviteCell : UITableViewCell
 
 @property (nonatomic, strong) UIButton *userHeaderButton;
 @property (nonatomic, strong) UILabel *userNameLabel;

@@ -78,7 +78,7 @@ static ATOMCurrentUser *_currentUser;
     _backgroundImage = user.backgroundImage;
     _attentionNumber = user.attentionNumber;
     _fansNumber = user.fansNumber;
-    _praiseNumber = user.praiseNumber;
+    _likeNumber = user.likeNumber;
     _uploadNumber = user.uploadNumber;
     _replyNumber = user.replyNumber;
     _proceedingNumber = user.proceedingNumber;
@@ -89,7 +89,7 @@ static ATOMCurrentUser *_currentUser;
 }
 
 -(void)tellMeEveryThingAboutYou {
-    NSLog(@"%@,%@,%@,_praiseNumber%ld id %zd",_username,_mobile,_avatar,(long)_praiseNumber,_uid);
+    NSLog(@"%@,%@,%@,_likeNumber%ld id %zd",_username,_mobile,_avatar,(long)_likeNumber,_uid);
 }
 - (void)saveAndUpdateUser:(ATOMUser *)user {
     if ([ATOMUserDAO isExistUser:user]) {

@@ -1,6 +1,6 @@
 
 #import <Foundation/Foundation.h>
-#import "ATOMFollowPageViewModel.h"
+#import "kfcFollowVM.h"
 #import "ATOMAskPageViewModel.h"
 #import "ATOMHotDetailPageViewModel.h"
 
@@ -28,7 +28,7 @@
 
 -(void)setCommonViewModelWithAsk:(ATOMAskPageViewModel*)model;
 //-(void)setCommonViewModelWithProduct:(ATOMHotDetailPageViewModel*)model;
--(void)setCommonViewModelWithFollow:(ATOMFollowPageViewModel*)model;
+-(void)setCommonViewModelWithFollow:(kfcFollowVM*)model;
 -(void)setCommonViewModelWithHotDetail:(ATOMHotDetailPageViewModel*)model;
 
 - (void)toggleLike;

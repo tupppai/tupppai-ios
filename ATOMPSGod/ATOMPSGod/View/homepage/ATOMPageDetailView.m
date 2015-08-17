@@ -28,7 +28,7 @@
 @implementation ATOMPageDetailView
 
 static CGFloat faceViewHeight = 200;
-static CGFloat pageControlWidth = 150;
+//static CGFloat pageControlWidth = 150;
 
 - (instancetype)init {
     self = [super init];

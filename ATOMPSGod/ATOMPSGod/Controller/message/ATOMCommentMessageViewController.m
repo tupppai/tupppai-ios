@@ -9,7 +9,7 @@
 #import "ATOMCommentMessageViewController.h"
 #import "ATOMCommentMessageViewModel.h"
 #import "ATOMCommentMessageTableViewCell.h"
-#import "ATOMHotDetailViewController.h"
+#import "HotDetailViewController.h"
 #import "ATOMCommentDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMShowCommentMessage.h"
@@ -18,13 +18,13 @@
 #import "ATOMHomeImage.h"
 #import "ATOMAskPageViewModel.h"
 #import "ATOMPageDetailViewController.h"
-#import "PWRefreshFooterTableView.h"
+#import "RefreshFooterTableView.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMCommentMessageViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate>
 
 @property (nonatomic, strong) UIView *commentMessageView;
-@property (nonatomic, strong)  PWRefreshFooterTableView *tableView;
+@property (nonatomic, strong)  RefreshFooterTableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) UITapGestureRecognizer *tapCommentMessageGesture;
 @property (nonatomic, assign) NSInteger currentPage;
@@ -119,7 +119,7 @@
     self.navigationItem.rightBarButtonItem = rightButtonItem;
     _commentMessageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _commentMessageView;
-    _tableView = [[PWRefreshFooterTableView alloc] initWithFrame:_commentMessageView.bounds];
+    _tableView = [[RefreshFooterTableView alloc] initWithFrame:_commentMessageView.bounds];
     [_commentMessageView addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -158,7 +158,7 @@
                 [self pushViewController:rdvc animated:YES];
             } else {
                 //进入热门详情
-                ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
+                HotDetailViewController *hdvc = [HotDetailViewController new];
                 hdvc.askPageViewModel = viewModel.homepageViewModel;
                 [self pushViewController:hdvc animated:YES];
             }

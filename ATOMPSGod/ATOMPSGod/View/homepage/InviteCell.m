@@ -1,21 +1,21 @@
 //
-//  ATOMInviteTableViewCell.m
+//  InviteCell.m
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/12.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMInviteTableViewCell.h"
+#import "InviteCell.h"
 
-@interface ATOMInviteTableViewCell ()
+@interface InviteCell ()
 
 @property (nonatomic, strong) UIView *dotView1;
 @property (nonatomic, strong) UIView *dotView2;
 
 @end
 
-@implementation ATOMInviteTableViewCell
+@implementation InviteCell
 
 static CGFloat cellHeight = 70;
 
@@ -29,9 +29,9 @@ static CGFloat cellHeight = 70;
 }
 
 - (void)createSubView {
-    _userHeaderButton = [[UIButton alloc] initWithFrame:CGRectMake(kPadding15, (cellHeight - KAvatarWidth) / 2, KAvatarWidth, KAvatarWidth)];
+    _userHeaderButton = [[UIButton alloc] initWithFrame:CGRectMake(kPadding15, (cellHeight - kfcAvatarWidth) / 2, kfcAvatarWidth, kfcAvatarWidth)];
     _userHeaderButton.userInteractionEnabled = NO;
-    _userHeaderButton.layer.cornerRadius = KAvatarWidth / 2;
+    _userHeaderButton.layer.cornerRadius = kfcAvatarWidth / 2;
     _userHeaderButton.layer.masksToBounds = YES;
     [_userHeaderButton setBackgroundImage:[UIImage imageNamed:@"head_portrait"] forState:UIControlStateNormal];
     [self addSubview:_userHeaderButton];

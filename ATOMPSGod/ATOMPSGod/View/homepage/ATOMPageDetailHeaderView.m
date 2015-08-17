@@ -40,7 +40,7 @@
     [self addSubview:_thinCenterView];
     
     _userHeaderButton = [UIButton new];
-    _userHeaderButton.layer.cornerRadius = KAvatarWidth / 2;
+    _userHeaderButton.layer.cornerRadius = kfcAvatarWidth / 2;
     _userHeaderButton.layer.masksToBounds = YES;
     
     _userNameLabel = [UILabel new];
@@ -54,14 +54,14 @@
     [_topView addSubview:_userNameLabel];
     [_topView addSubview:_psButton];
     
-    _praiseButton = [ATOMBottomCommonButton new];
-    _praiseButton.image = [UIImage imageNamed:@"btn_comment_like_normal"];
+    _likeButton = [ATOMBottomCommonButton new];
+    _likeButton.image = [UIImage imageNamed:@"btn_comment_like_normal"];
     _shareButton = [ATOMBottomCommonButton new];
     _shareButton.image = [UIImage imageNamed:@"icon_share_normal"];
     _commentButton = [ATOMBottomCommonButton new];
     _commentButton.image = [UIImage imageNamed:@"icon_comment_normal"];
     
-    [_thinCenterView addSubview:_praiseButton];
+    [_thinCenterView addSubview:_likeButton];
     [_thinCenterView addSubview:_shareButton];
     [_thinCenterView addSubview:_commentButton];
     
@@ -74,12 +74,12 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     _topView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 60);
-    _userHeaderButton.frame = CGRectMake(kPadding15, (60 - KAvatarWidth) / 2, KAvatarWidth, KAvatarWidth);
+    _userHeaderButton.frame = CGRectMake(kPadding15, (60 - kfcAvatarWidth) / 2, kfcAvatarWidth, kfcAvatarWidth);
     _userNameLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, (60 - kFont14) / 2, kUserNameLabelWidth, kFont14+2);
-    _psButton.frame = CGRectMake(SCREEN_WIDTH - kPadding15 - kPSButtonWidth, (60 - kPSButtonHeight) / 2, kPSButtonWidth, kPSButtonHeight);
+    _psButton.frame = CGRectMake(SCREEN_WIDTH - kPadding15 - kfcPSWidth, (60 - kfcPSHeight) / 2, kfcPSWidth, kfcPSHeight);
     
     CGSize workImageSize = CGSizeZero;
-    CGSize commentSize, shareSize, praiseSize;
+    CGSize commentSize, shareSize, likeSize;
     
     if (_pageDetailViewModel) {
         workImageSize = [[self class] calculateImageViewSizeWith:_pageDetailViewModel.width height:_pageDetailViewModel.height];
@@ -87,8 +87,8 @@
         commentSize.width += kBottomCommonButtonWidth + kPadding15;
         shareSize = [_pageDetailViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                           NSStringDrawingUsesFontLeading            attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
         shareSize.width += kBottomCommonButtonWidth + kPadding15;
-        praiseSize = [_pageDetailViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                          NSStringDrawingUsesFontLeading           attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
-        praiseSize.width += kBottomCommonButtonWidth + kPadding15;
+        likeSize = [_pageDetailViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                          NSStringDrawingUsesFontLeading           attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
+        likeSize.width += kBottomCommonButtonWidth + kPadding15;
     }
     
     CGFloat cellHeight;
@@ -107,7 +107,7 @@
     
     _commentButton.frame = CGRectMake(SCREEN_WIDTH - kPadding15 - commentSize.width, bottomButtonOriginY, commentSize.width, kBottomCommonButtonWidth);
     _shareButton.frame = CGRectMake(CGRectGetMinX(_commentButton.frame) - kPadding20 - shareSize.width, bottomButtonOriginY, shareSize.width, kBottomCommonButtonWidth);
-    _praiseButton.frame = CGRectMake(CGRectGetMinX(_shareButton.frame) - kPadding20 - praiseSize.width, bottomButtonOriginY, praiseSize.width, kBottomCommonButtonWidth);
+    _likeButton.frame = CGRectMake(CGRectGetMinX(_shareButton.frame) - kPadding20 - likeSize.width, bottomButtonOriginY, likeSize.width, kBottomCommonButtonWidth);
 }
 + (CGSize)calculateImageViewSizeWith:(CGFloat)width height:(CGFloat)height {
     return CGSizeMake(width, height);
@@ -127,8 +127,8 @@
 //        [_userWorkImageView setImageWithURL:[NSURL URLWithString:askPageViewModel.userImageURL]];
 //    }
 //    
-//    _praiseButton.selected = askPageViewModel.liked;
-//    _praiseButton.number = askPageViewModel.likeNumber;
+//    _likeButton.selected = askPageViewModel.liked;
+//    _likeButton.number = askPageViewModel.likeNumber;
 //    _shareButton.number = askPageViewModel.shareNumber;
 //    _commentButton.number = askPageViewModel.commentNumber;
 //    [self setNeedsLayout];
@@ -142,8 +142,8 @@
 //    } else {
 //        [_userWorkImageView setImageWithURL:[NSURL URLWithString:productPageViewModel.userImageURL]];
 //    }
-//    _praiseButton.selected = productPageViewModel.liked;
-//    _praiseButton.number = productPageViewModel.likeNumber;
+//    _likeButton.selected = productPageViewModel.liked;
+//    _likeButton.number = productPageViewModel.likeNumber;
 //    _shareButton.number = productPageViewModel.shareNumber;
 //    _commentButton.number = productPageViewModel.commentNumber;
 //    [self setNeedsLayout];
@@ -160,8 +160,8 @@
     } else {
         [_userWorkImageView setImageWithURL:[NSURL URLWithString:pageDetailViewModel.pageImageURL]];
     }
-    _praiseButton.selected = pageDetailViewModel.liked;
-    _praiseButton.number = pageDetailViewModel.likeNumber;
+    _likeButton.selected = pageDetailViewModel.liked;
+    _likeButton.number = pageDetailViewModel.likeNumber;
     _shareButton.number = pageDetailViewModel.shareNumber;
     _commentButton.number = pageDetailViewModel.commentNumber;
     [self addTipLabelToImageView];

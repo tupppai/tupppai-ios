@@ -87,8 +87,8 @@
     UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(14 + kPadding5, centerPos+5.5, 2, 2)];
     [_currentColor set];
     [path fill];
-    CGRect praiseRect = CGRectMake(_extralWidth, centerPos, CGWidth(rect) - _extralWidth, CGHeight(rect));
-    [_likeNumber drawInRect:praiseRect withAttributes:self.attributeDict];
+    CGRect likeRect = CGRectMake(_extralWidth, centerPos, CGWidth(rect) - _extralWidth, CGHeight(rect));
+    [_likeNumber drawInRect:likeRect withAttributes:self.attributeDict];
 }
 
 

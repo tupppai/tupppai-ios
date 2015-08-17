@@ -1,12 +1,12 @@
 //
-//  ATOMFollowPageViewModel.h.m
+//  kfcFollowVM.h.m
 //  ATOMPSGod
 //
 //  Created by atom on 15/5/6.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMFollowPageViewModel.h"
+#import "kfcFollowVM.h"
 #import "ATOMCommonImage.h"
 #import "ATOMImageTipLabel.h"
 #import "ATOMImageTipLabelViewModel.h"
@@ -16,7 +16,7 @@
 #import "ATOMCommentViewModel.h"
 #import "ATOMBaseRequest.h"
 #import "ATOMAskPageViewModel.h"
-@implementation ATOMFollowPageViewModel
+@implementation kfcFollowVM
 
 - (instancetype)init {
     self = [super init];
@@ -24,7 +24,6 @@
         _imageID = 0;
         _userID = [ATOMCurrentUser currentUser].uid;
         _userName = [ATOMCurrentUser currentUser].username;
-        _userSex = ([ATOMCurrentUser currentUser].sex == 0) ? @"woman" : @"man";
         _avatarURL = [ATOMCurrentUser currentUser].avatar;
         NSDateFormatter *df = [NSDateFormatter new];
         [df setDateFormat:@"yyyy年MM月dd日 HH时mm分"];
@@ -37,6 +36,7 @@
         _collected = NO;
         _labelArray = [NSMutableArray new];
         _replierArray = [NSMutableArray new];
+        _commentArray = [NSMutableArray array];
     }
     return self;
 }
@@ -78,14 +78,7 @@
         [model setViewModelData:comment];
         [_commentArray addObject:model];
     }
-//    NSFileManager *fileManager = [NSFileManager defaultManager];
-//    NSString *path = [[NSString stringWithFormat:@"%@/CommonImage", PATH_OF_DOCUMENT] stringByAppendingPathComponent:[NSString stringWithFormat:@"ATOMIMAGE-%d.jpg", (int)commonImage.imageID]];
-//    BOOL flag;
-//    if ([fileManager fileExistsAtPath:path isDirectory:&flag]) {
-//        _image = [UIImage imageWithContentsOfFile:path];
-//    } else {
-//        NSLog(@"image not exist in %@", path);
-//    }
+
 }
 -(ATOMAskPageViewModel*)generateAskPageViewModel {
 

@@ -18,7 +18,7 @@
 #import "CommentVM.h"
 #import "AppDelegate.h"
 #import "ATOMCropImageController.h"
-#import "ATOMCommentTableViewCell.h"
+#import "CommentCell.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMComment.h"
 #import "ATOMShowDetailOfComment.h"
@@ -619,7 +619,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     UITapGestureRecognizer *g2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickMoreShareButton:)];
     [_headerView.moreShareButton addGestureRecognizer:g2];
     UITapGestureRecognizer *g3 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickPraiseButton:)];
-    [_headerView.praiseButton addGestureRecognizer:g3];
+    [_headerView.likeButton addGestureRecognizer:g3];
     UITapGestureRecognizer *g4 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickUserWorkImageView:)];
     [_headerView.userWorkImageView addGestureRecognizer:g4];
     [_headerView.userHeaderButton addTarget:self action:@selector(clickUserHeaderButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -695,7 +695,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 
 - (void)clickPraiseButton:(UITapGestureRecognizer *)sender {
-    [_headerView.praiseButton toggleLike];
+    [_headerView.likeButton toggleLike];
     [_pageDetailViewModel toggleLike];
 }
 - (void)clickUserWorkImageView:(UITapGestureRecognizer *)sender {

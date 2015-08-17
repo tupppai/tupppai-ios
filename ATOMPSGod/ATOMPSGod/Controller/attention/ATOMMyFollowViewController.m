@@ -7,17 +7,17 @@
 //
 
 #import "ATOMMyFollowViewController.h"
-#import "ATOMMyAttentionTableViewCell.h"
+#import "kfcFollowCell.h"
 #import "ATOMCommentDetailViewController.h"
-#import "ATOMHotDetailViewController.h"
+#import "HotDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMAskPageViewModel.h"
 #import "ATOMShowAttention.h"
 #import "ATOMCommonImage.h"
-#import "ATOMFollowPageViewModel.h"
+#import "kfcFollowVM.h"
 #import "ATOMBottomCommonButton.h"
 #import "ATOMNoDataView.h"
-#import "PWRefreshBaseTableView.h"
+#import "RefreshTableView.h"
 #import "ATOMPageDetailViewModel.h"
 #import "ATOMShareFunctionView.h"
 #import "ATOMPageDetailViewController.h"
@@ -29,27 +29,29 @@
 #import "ATOMCropImageController.h"
 #import "ATOMRecordModel.h"
 #import "ATOMBaseRequest.h"
-
+#import "MessageViewController.h"
+#import "UITableView+FDTemplateLayoutCell.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMMyFollowViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 @property (nonatomic, strong) UIView *myAttentionView;
-@property (nonatomic, strong) PWRefreshBaseTableView *tableView;
+@property (nonatomic, strong) RefreshTableView *tableView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) UITapGestureRecognizer *tapMyAttentionGesture;
 @property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) NSInteger canRefreshFooter;
-@property (nonatomic, assign) ATOMMyAttentionTableViewCell* selectedCell;
+@property (nonatomic, strong) NSIndexPath* selectedIndexPath;
 @property (nonatomic, strong)  JGActionSheet * reportActionSheet;
 @property (nonatomic, strong)  JGActionSheet * psActionSheet;
 
 @end
 
 @implementation ATOMMyFollowViewController
+static NSString *CellIdentifier = @"MyAttentionCell";
 
 #pragma mark - Lazy Initialize
 - (ATOMShareFunctionView *)shareFunctionView {
@@ -112,8 +114,9 @@
         }];
         [_reportActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
             NSMutableDictionary* param = [NSMutableDictionary new];
-            [param setObject:@(ws.selectedCell.viewModel.imageID) forKey:@"target_id"];
-            [param setObject:@(ws.selectedCell.viewModel.type) forKey:@"target_type"];
+            kfcFollowVM* vm = ws.dataSource[ws.selectedIndexPath.row];
+            [param setObject:@(vm.imageID) forKey:@"target_id"];
+            [param setObject:@(vm.type) forKey:@"target_type"];
             UIButton* b = section.buttons[indexPath.row];
             switch (indexPath.row) {
                 case 0:
@@ -158,21 +161,26 @@
 }
 #pragma mark - ATOMShareFunctionViewDelegate
 -(void)tapWechatFriends {
-    [self postSocialShare:_selectedCell.viewModel.imageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:_selectedCell.viewModel.type];
+    kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];
+    [self postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:vm.type];
 }
 -(void)tapWechatMoment {
-    [self postSocialShare:_selectedCell.viewModel.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:_selectedCell.viewModel.type];
+    kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];
+    [self postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:vm.type];
 }
 -(void)tapSinaWeibo {
-    [self postSocialShare:_selectedCell.viewModel.imageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:_selectedCell.viewModel.type];
+    kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];
+    [self postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:vm.type];
 }
 -(void)tapInvite {
+    kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];
     ATOMInviteViewController* ivc = [ATOMInviteViewController new];
-    NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:@(_selectedCell.viewModel.imageID),@"ID",@(_selectedCell.viewModel.askID),@"askID",@(_selectedCell.viewModel.type),@"type", nil];
+    NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:@(vm.imageID),@"ID",@(vm.askID),@"askID",@(vm.type),@"type", nil];
     ivc.info = info;
     [self pushViewController:ivc animated:NO];
 }
 -(void)tapCollect {
+    kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];
     NSMutableDictionary *param = [NSMutableDictionary new];
     if (self.shareFunctionView.collectButton.selected) {
         //收藏
@@ -181,9 +189,9 @@
         //取消收藏
         [param setObject:@(0) forKey:@"status"];
     }
-    [ATOMCollectModel toggleCollect:param withPageType:_selectedCell.viewModel.type withID:_selectedCell.viewModel.imageID withBlock:^(NSError *error) {
+    [ATOMCollectModel toggleCollect:param withPageType:vm.type withID:vm.imageID withBlock:^(NSError *error) {
         if (!error) {
-            _selectedCell.viewModel.collected = self.shareFunctionView.collectButton.selected;
+            vm.collected = self.shareFunctionView.collectButton.selected;
         } else {
             self.shareFunctionView.collectButton.selected = !self.shareFunctionView.collectButton.selected;
         }
@@ -213,7 +221,7 @@
             [_dataSource removeAllObjects];
         }
         for (ATOMCommonImage *commonImage in resultArray) {
-            ATOMFollowPageViewModel * viewModel = [ATOMFollowPageViewModel new];
+            kfcFollowVM * viewModel = [kfcFollowVM new];
             [viewModel setViewModelData:commonImage];
             [_dataSource addObject:viewModel];
         }
@@ -233,7 +241,7 @@
     ATOMShowAttention *showAttention = [ATOMShowAttention new];
     [showAttention ShowAttention:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         for (ATOMCommonImage *commonImage in resultArray) {
-            ATOMFollowPageViewModel * viewModel = [ATOMFollowPageViewModel new];
+            kfcFollowVM * viewModel = [kfcFollowVM new];
             [viewModel setViewModelData:commonImage];
             [_dataSource addObject:viewModel];
         }
@@ -262,9 +270,10 @@
     self.navigationItem.title = @"关注";
     _myAttentionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
     self.view = _myAttentionView;
-    _tableView = [[PWRefreshBaseTableView alloc] initWithFrame:_myAttentionView.bounds];
+    _tableView = [[RefreshTableView alloc] initWithFrame:_myAttentionView.bounds];
+    [_tableView registerClass:[kfcFollowCell class] forCellReuseIdentifier:CellIdentifier];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _tableView.estimatedRowHeight = SCREEN_HEIGHT - NAV_HEIGHT - 100;
+    _tableView.estimatedRowHeight = SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT;
     _tableView.delegate = self;
     _tableView.psDelegate = self;
     _tableView.dataSource = self;
@@ -280,52 +289,51 @@
 
 - (void)tapMyAttentionGesture:(UITapGestureRecognizer *)gesture {
     CGPoint location = [gesture locationInView:_tableView];
-    NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:location];
-    if (indexPath) {
-        _selectedCell = (ATOMMyAttentionTableViewCell *)[_tableView cellForRowAtIndexPath:indexPath];
-        CGPoint p = [gesture locationInView:_selectedCell];
+    _selectedIndexPath = [_tableView indexPathForRowAtPoint:location];
+    if (_selectedIndexPath) {
+       kfcFollowCell* cell = (kfcFollowCell *)[_tableView cellForRowAtIndexPath:_selectedIndexPath];
+        kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];
+        CGPoint p = [gesture locationInView:cell];
         //点击图片
-        if (CGRectContainsPoint(_selectedCell.userWorkImageView.frame, p)) {
+        if (CGRectContainsPoint(cell.imageViewMain.frame, p)) {
             ATOMPageDetailViewController* pdvc = [ATOMPageDetailViewController new];
             ATOMPageDetailViewModel *pageDetailViewModel = [ATOMPageDetailViewModel new];
-            [pageDetailViewModel setCommonViewModelWithFollow:_dataSource[indexPath.row]];
+            [pageDetailViewModel setCommonViewModelWithFollow:_dataSource[_selectedIndexPath.row]];
             pdvc.pageDetailViewModel = pageDetailViewModel;
             pdvc.delegate = self;
             [self pushViewController:pdvc animated:true];
-        } else if (CGRectContainsPoint(_selectedCell.topView.frame, p)) {
-            p = [gesture locationInView:_selectedCell.topView];
-            if (CGRectContainsPoint(_selectedCell.userHeaderButton.frame, p)) {
+        } else if (CGRectContainsPoint(cell.topView.frame, p)) {
+            p = [gesture locationInView:cell.topView];
+            if (CGRectContainsPoint(cell.avatarView.frame, p)) {
                 ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-                ATOMFollowPageViewModel* model =  (ATOMFollowPageViewModel*)_dataSource[indexPath.row];
-                opvc.userID = model.userID;
-                opvc.userName = model.userName;
+                opvc.userID = vm.userID;
+                opvc.userName = vm.userName;
                 [self pushViewController:opvc animated:YES];
-            } else if (CGRectContainsPoint(_selectedCell.userNameLabel.frame, p)) {
+            } else if (CGRectContainsPoint(cell.usernameLabel.frame, p)) {
                     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-                    ATOMFollowPageViewModel* model =  (ATOMFollowPageViewModel*)_dataSource[indexPath.row];
-                    opvc.userID = model.userID;
-                    opvc.userName = model.userName;
+                    opvc.userID = vm.userID;
+                    opvc.userName = vm.userName;
                     [self pushViewController:opvc animated:YES];
-            }else if (CGRectContainsPoint(_selectedCell.psButton.frame, p)) {
+            }else if (CGRectContainsPoint(cell.psView.frame, p)) {
                 [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
             }
 
         } else {
-            p = [gesture locationInView:_selectedCell.thinCenterView];
-            if (CGRectContainsPoint(_selectedCell.praiseButton.frame, p)) {
-                [_selectedCell.praiseButton toggleLike];
-                [_dataSource[indexPath.row] toggleLike];
-            } else if (CGRectContainsPoint(_selectedCell.shareButton.frame, p)) {
-                [self postSocialShare:_selectedCell.viewModel.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:_selectedCell.viewModel.type];
-            } else if (CGRectContainsPoint(_selectedCell.commentButton.frame, p)) {
-                ATOMPageDetailViewController* pdvc = [ATOMPageDetailViewController new];
+            p = [gesture locationInView:cell.bottomView];
+            if (CGRectContainsPoint(cell.likeButton.frame, p)) {
+                [cell.likeButton toggleLike];
+                [_dataSource[_selectedIndexPath.row] toggleLike];
+            } else if (CGRectContainsPoint(cell.wechatButton.frame, p)) {
+                [self postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:vm.type];
+            } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
+                MessageViewController* mvc = [MessageViewController new];
                 ATOMPageDetailViewModel *pageDetailViewModel = [ATOMPageDetailViewModel new];
-                [pageDetailViewModel setCommonViewModelWithFollow:_dataSource[indexPath.row]];
-                pdvc.delegate = self;
-                pdvc.pageDetailViewModel = pageDetailViewModel;
-                [self pushViewController:pdvc animated:true];
-            } else if (CGRectContainsPoint(_selectedCell.moreShareButton.frame, p)) {
-                self.shareFunctionView.collectButton.selected = _selectedCell.viewModel.collected;
+                [pageDetailViewModel setCommonViewModelWithFollow:_dataSource[_selectedIndexPath.row]];
+                mvc.pageDetailViewModel = pageDetailViewModel;
+                mvc.delegate = self;
+                [self pushViewController:mvc animated:YES];
+            } else if (CGRectContainsPoint(cell.moreButton.frame, p)) {
+                self.shareFunctionView.collectButton.selected = vm.collected;
                 [self.shareFunctionView showInView:[AppDelegate APP].window animated:YES];
             }
 
@@ -341,12 +349,9 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"MyAttentionCell";
-    ATOMMyAttentionTableViewCell *cell = [_tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (!cell) {
-        cell = [[ATOMMyAttentionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
-    cell.viewModel = _dataSource[indexPath.row];
+    kfcFollowCell *cell = [_tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    kfcFollowVM* vm = _dataSource[indexPath.row];
+    [cell configCell:vm];
     return cell;
 }
 
@@ -354,7 +359,10 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [ATOMMyAttentionTableViewCell calculateCellHeightWith:_dataSource[indexPath.row]];
+    return [tableView fd_heightForCellWithIdentifier:CellIdentifier cacheByIndexPath:indexPath configuration:^(kfcFollowCell* cell) {
+        kfcFollowVM* vm = _dataSource[indexPath.row];
+        [cell configCell:vm];
+    }];
 }
 
 #pragma mark - PWRefreshBaseTableViewDelegate
@@ -367,13 +375,15 @@
 
 #pragma mark - ATOMViewControllerDelegate
 -(void)ATOMViewControllerDismissWithLiked:(BOOL)liked {
-    [_selectedCell.praiseButton toggleLikeWhenSelectedChanged:liked];
+    kfcFollowCell* cell = (kfcFollowCell *)[_tableView cellForRowAtIndexPath:_selectedIndexPath];
+    [cell.likeButton toggleLikeWhenSelectedChanged:liked];
 }
 
 - (void)dealDownloadWork {
+    kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];
     NSMutableDictionary* param = [NSMutableDictionary new];
     [param setObject:@"ask" forKey:@"type"];
-    [param setObject:@(_selectedCell.viewModel.askID) forKey:@"target"];
+    [param setObject:@(vm.askID) forKey:@"target"];
     [ATOMRecordModel record:param withBlock:^(NSError *error, NSString *url) {
         if (!error) {
             [ATOMBaseRequest downloadImage:url withBlock:^(UIImage *image) {
@@ -423,9 +433,10 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     WS(ws);
     [self dismissViewControllerAnimated:YES completion:^{
+        kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];
         ATOMCropImageController *uwvc = [ATOMCropImageController new];
         uwvc.originImage = info[UIImagePickerControllerOriginalImage];
-        uwvc.askPageViewModel = [_selectedCell.viewModel generateAskPageViewModel];
+        uwvc.askPageViewModel = [vm generateAskPageViewModel];
         [ws pushViewController:uwvc animated:YES];
     }];
 }

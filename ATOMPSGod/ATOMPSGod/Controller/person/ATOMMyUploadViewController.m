@@ -8,7 +8,7 @@
 
 #import "ATOMMyUploadViewController.h"
 #import "ATOMMyUploadCollectionViewCell.h"
-#import "ATOMHotDetailViewController.h"
+#import "HotDetailViewController.h"
 #import "ATOMPageDetailViewController.h"
 #import "ATOMHomeImage.h"
 #import "ATOMAskPageViewModel.h"
@@ -165,7 +165,7 @@ static int collumnNumber = 3;
         rdvc.pageDetailViewModel = [homepageViewModel generatepageDetailViewModel];
         [self pushViewController:rdvc animated:YES];
     } else {
-        ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
+        HotDetailViewController *hdvc = [HotDetailViewController new];
         hdvc.fold = 0;
         hdvc.askPageViewModel = homepageViewModel;
         [self pushViewController:hdvc animated:YES];

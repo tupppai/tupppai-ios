@@ -1,5 +1,5 @@
 //
-//  ATOMHotDetailViewController.h
+//  HotDetailViewController.h
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/3.
@@ -10,7 +10,7 @@
 #import "ATOMPageDetailViewModel.h"
 #import "ATOMAskPageViewModel.h"
 
-@interface ATOMHotDetailViewController : ATOMBaseViewController
+@interface HotDetailViewController : ATOMBaseViewController
 
 //fold=0,不需要从服务器获取求P，直接从上一个controller获取。
 @property (nonatomic, assign) int fold;

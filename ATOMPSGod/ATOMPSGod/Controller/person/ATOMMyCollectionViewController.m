@@ -8,7 +8,7 @@
 
 #import "ATOMMyCollectionViewController.h"
 #import "ATOMMyCollectionCollectionViewCell.h"
-#import "ATOMHotDetailViewController.h"
+#import "HotDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMHomeImage.h"
 #import "ATOMAskPageViewModel.h"
@@ -163,13 +163,13 @@ static float cellWidth;
                     rdvc.pageDetailViewModel = [model generatepageDetailViewModel];
                     [self pushViewController:rdvc animated:YES];
                 } else {
-                    ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
+                    HotDetailViewController *hdvc = [HotDetailViewController new];
                     hdvc.askPageViewModel = model;
                     hdvc.fold = 0;
                     [self pushViewController:hdvc animated:YES];
                 }
             } else {
-                ATOMHotDetailViewController *hdvc = [ATOMHotDetailViewController new];
+                HotDetailViewController *hdvc = [HotDetailViewController new];
                 hdvc.askPageViewModel = model;
                 hdvc.fold = 1;
                 [self pushViewController:hdvc animated:YES];

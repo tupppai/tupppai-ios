@@ -27,7 +27,7 @@
     _username = comment.nickname;
     _ID = comment.cid;
 //    _userSex = (comment.sex == 1) ? @"man" : @"woman";
-    _likeNumber = [NSString stringWithFormat:@"%ld", (long)comment.praiseNumber];
+    _likeNumber = [NSString stringWithFormat:@"%ld", (long)comment.likeNumber];
     _avatar = comment.avatar;
     if (comment.atCommentArray && comment.atCommentArray.count > 0) {
         NSString *content = comment.content;

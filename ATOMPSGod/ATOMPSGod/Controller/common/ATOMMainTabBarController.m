@@ -7,7 +7,7 @@
 //
 
 #import "ATOMMainTabBarController.h"
-#import "ATOMHomepageViewController.h"
+#import "HomeViewController.h"
 #import "ATOMMyMessageViewController.h"
 #import "ATOMMyFollowViewController.h"
 #import "ATOMPersonViewController.h"
@@ -48,7 +48,7 @@ static dispatch_once_t once;
     });
 }
 - (void)configureTabBarController {
-    ATOMHomepageViewController *homePageViewController = [ATOMHomepageViewController new];
+    HomeViewController *homePageViewController = [HomeViewController new];
     ATOMMyFollowViewController *myAttentionViewController = [ATOMMyFollowViewController new];
     ATOMMyMessageViewController *myMessageViewController = [ATOMMyMessageViewController new];
     ATOMPersonViewController *personViewController = [ATOMPersonViewController new];
