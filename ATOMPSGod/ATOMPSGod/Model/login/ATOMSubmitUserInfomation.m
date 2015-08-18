@@ -52,6 +52,7 @@
         }
 
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"%@",error);
         [[KShareManager mascotAnimator]dismiss];
         if (block) {
             block(error);
