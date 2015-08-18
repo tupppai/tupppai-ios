@@ -1,5 +1,5 @@
 //
-//  ATOMMyConcernTableHeaderView.h
+//  ZZCommentHeaderView.h
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/10.
@@ -8,7 +8,7 @@
 
 #import "ATOMBaseView.h"
 
-@interface ATOMMyConcernTableHeaderView : ATOMBaseView
+@interface ZZCommentHeaderView : ATOMBaseView
 
 @property (nonatomic, strong) UILabel *titleLabel;
 

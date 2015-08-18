@@ -73,7 +73,6 @@
 
 - (NSURLSessionDataTask *)SendComment:(NSDictionary *)param withBlock:(void (^)(NSInteger, NSError *))block {
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"comment/send_comment" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        
         NSLog(@"SendComment %@,responseObject%@",param,responseObject);
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
@@ -82,14 +81,14 @@
                 block(comment_id, nil);
             }
         } else if (ret == 0) {
-            [Util TextHud:@"评论失败了,请重试"];
+//            [Util TextHud:@"评论失败了,请重试"];
             if (block) {
                 block(-1, nil);
             }
         }
 
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [Util TextHud:@"评论失败了,请重试"];
+//        [Util TextHud:@"评论失败了,请重试"];
         if (block) {
             block(-1, error);
         }

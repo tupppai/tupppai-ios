@@ -200,7 +200,7 @@
 		5C8502351AF39B7500724AC6 /* ATOMCollectionViewLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8502341AF39B7500724AC6 /* ATOMCollectionViewLabel.m */; };
 		5C8A2A181AAF1CE20064EB1C /* ATOMMyConcernViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8A2A171AAF1CE20064EB1C /* ATOMMyConcernViewController.m */; };
 		5C8A2A1B1AAF21820064EB1C /* ATOMMyConcernTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8A2A1A1AAF21820064EB1C /* ATOMMyConcernTableViewCell.m */; };
-		5C8A2A211AAF26570064EB1C /* ATOMMyConcernTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8A2A201AAF26570064EB1C /* ATOMMyConcernTableHeaderView.m */; };
+		5C8A2A211AAF26570064EB1C /* ZZCommentHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8A2A201AAF26570064EB1C /* ZZCommentHeaderView.m */; };
 		5C8A2A241AAF31B30064EB1C /* ATOMMyConcernTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8A2A231AAF31B30064EB1C /* ATOMMyConcernTableFooterView.m */; };
 		5C8D4AC71ADE3FBF00B158AE /* ATOMShowConcern.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8D4AC61ADE3FBF00B158AE /* ATOMShowConcern.m */; };
 		5C8D4ACA1ADE400100B158AE /* ATOMConcernViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8D4AC91ADE400100B158AE /* ATOMConcernViewModel.m */; };
@@ -834,8 +834,8 @@
 		5C8A2A171AAF1CE20064EB1C /* ATOMMyConcernViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMMyConcernViewController.m; sourceTree = "<group>"; };
 		5C8A2A191AAF21820064EB1C /* ATOMMyConcernTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMMyConcernTableViewCell.h; sourceTree = "<group>"; };
 		5C8A2A1A1AAF21820064EB1C /* ATOMMyConcernTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMMyConcernTableViewCell.m; sourceTree = "<group>"; };
-		5C8A2A1F1AAF26570064EB1C /* ATOMMyConcernTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMMyConcernTableHeaderView.h; sourceTree = "<group>"; };
-		5C8A2A201AAF26570064EB1C /* ATOMMyConcernTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMMyConcernTableHeaderView.m; sourceTree = "<group>"; };
+		5C8A2A1F1AAF26570064EB1C /* ZZCommentHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZZCommentHeaderView.h; sourceTree = "<group>"; };
+		5C8A2A201AAF26570064EB1C /* ZZCommentHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZZCommentHeaderView.m; sourceTree = "<group>"; };
 		5C8A2A221AAF31B30064EB1C /* ATOMMyConcernTableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMMyConcernTableFooterView.h; sourceTree = "<group>"; };
 		5C8A2A231AAF31B30064EB1C /* ATOMMyConcernTableFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMMyConcernTableFooterView.m; sourceTree = "<group>"; };
 		5C8D4AC51ADE3FBF00B158AE /* ATOMShowConcern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShowConcern.h; sourceTree = "<group>"; };
@@ -1480,8 +1480,8 @@
 				5C4AE3EE1AAED6520020E102 /* ATOMMyFansTableViewCell.m */,
 				5C8A2A191AAF21820064EB1C /* ATOMMyConcernTableViewCell.h */,
 				5C8A2A1A1AAF21820064EB1C /* ATOMMyConcernTableViewCell.m */,
-				5C8A2A1F1AAF26570064EB1C /* ATOMMyConcernTableHeaderView.h */,
-				5C8A2A201AAF26570064EB1C /* ATOMMyConcernTableHeaderView.m */,
+				5C8A2A1F1AAF26570064EB1C /* ZZCommentHeaderView.h */,
+				5C8A2A201AAF26570064EB1C /* ZZCommentHeaderView.m */,
 				5C8A2A221AAF31B30064EB1C /* ATOMMyConcernTableFooterView.h */,
 				5C8A2A231AAF31B30064EB1C /* ATOMMyConcernTableFooterView.m */,
 				5C66979F1AAFC9B0001FCF8A /* ATOMMyWorkCollectionViewCell.h */,
@@ -3402,7 +3402,7 @@
 				5C6776A51AAC09C400320522 /* IQNSArray+Sort.m in Sources */,
 				5C83A8881AC66F910071A024 /* POPAnimationEvent.mm in Sources */,
 				E90197381B32D3C100F46B78 /* Util.m in Sources */,
-				5C8A2A211AAF26570064EB1C /* ATOMMyConcernTableHeaderView.m in Sources */,
+				5C8A2A211AAF26570064EB1C /* ZZCommentHeaderView.m in Sources */,
 				5C8A2A1B1AAF21820064EB1C /* ATOMMyConcernTableViewCell.m in Sources */,
 				5C8502351AF39B7500724AC6 /* ATOMCollectionViewLabel.m in Sources */,
 				5CDB06681AA45C680089121E /* ATOMMobileRegisterViewController.m in Sources */,

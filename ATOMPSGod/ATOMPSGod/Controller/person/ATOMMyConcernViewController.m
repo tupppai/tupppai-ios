@@ -8,7 +8,7 @@
 
 #import "ATOMMyConcernViewController.h"
 #import "ATOMMyConcernTableViewCell.h"
-#import "ATOMMyConcernTableHeaderView.h"
+#import "ZZCommentHeaderView.h"
 #import "ATOMMyConcernTableFooterView.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMConcern.h"
@@ -209,7 +209,7 @@
     }
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    ATOMMyConcernTableHeaderView *headerView = [ATOMMyConcernTableHeaderView new];
+    ZZCommentHeaderView *headerView = [ZZCommentHeaderView new];
     if (section == 0) {
         headerView.titleLabel.text = @"推荐关注";
     } else if (section == 1) {

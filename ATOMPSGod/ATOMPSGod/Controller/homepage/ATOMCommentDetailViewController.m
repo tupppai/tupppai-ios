@@ -11,7 +11,7 @@
 #import "CommentVM.h"
 #import "ATOMCommentDetailView.h"
 #import "ATOMOtherPersonViewController.h"
-#import "ATOMMyConcernTableHeaderView.h"
+#import "ZZCommentHeaderView.h"
 #import "ATOMShowDetailOfComment.h"
 #import "CommentVM.h"
 #import "ATOMComment.h"
@@ -267,7 +267,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
-    ATOMMyConcernTableHeaderView *headerView = [ATOMMyConcernTableHeaderView new];
+    ZZCommentHeaderView *headerView = [ZZCommentHeaderView new];
     if (section == 0) {
         headerView.titleLabel.text = @"最热评论";
     } else if (section == 1) {

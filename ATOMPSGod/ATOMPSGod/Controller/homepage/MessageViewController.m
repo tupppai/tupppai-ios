@@ -30,7 +30,7 @@
 #import "ATOMReportModel.h"
 #import "JTSImageViewController.h"
 #import "JTSImageInfo.h"
-#import "ATOMMyConcernTableHeaderView.h"
+#import "ZZCommentHeaderView.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 #define DEBUG_CUSTOM_TYPING_INDICATOR 0
@@ -39,21 +39,12 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 @interface MessageViewController ()<ATOMShareFunctionViewDelegate,ATOMViewControllerDelegate,JGActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
-@property (nonatomic, strong) NSMutableArray *messages;
-@property (nonatomic, strong) NSArray *users;
-@property (nonatomic, strong) NSArray *channels;
-@property (nonatomic, strong) NSArray *emojis;
-@property (nonatomic, strong) NSArray *searchResult;
-
-
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) NSMutableArray *commentsHot;
 @property (nonatomic, strong) NSMutableArray *commentsNew;
 @property (nonatomic, assign) NSInteger currentPage;
-@property (nonatomic, assign) NSInteger ID;
-@property (nonatomic, assign) NSInteger type;
 @property (nonatomic, strong) UITapGestureRecognizer *tapUserNameLabelGesture;
-@property (nonatomic, strong) UITapGestureRecognizer *tapCommentTableGes;
+@property (nonatomic, strong) UITapGestureRecognizer *tapCommentTableGesture;
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, strong) CommentVM *atModel;
 @property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
@@ -106,33 +97,13 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    _headerView = [kfcPageView new];
-    _headerView.vm = _vm;
-    self.tableView.tableHeaderView = _headerView;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
-    [self.tableView registerClass:[MessageTableViewCell class] forCellReuseIdentifier:MessengerCellIdentifier];
-    self.tableView.tableFooterView = [UIView new];
 
-    [self config];
-    self.bounces = NO;
-    self.shakeToClearEnabled = YES;
-    self.keyboardPanningEnabled = YES;
-    self.shouldScrollToBottomAfterKeyboardShows = NO;
-    self.inverted = NO;
-
-    [self.leftButton setImage:[UIImage imageNamed:@"btn_emoji"] forState:UIControlStateNormal];
-    
-    [self.rightButton setImage:[UIImage imageNamed:@"btn_comment_send"] forState:UIControlStateNormal];
-
-    self.textInputbar.autoHideRightButton = YES;
-    self.textInputbar.maxCharCount = 256;
-    self.textInputbar.counterStyle = SLKCounterStyleSplit;
-    self.textInputbar.counterPosition = SLKCounterPositionTop;
-
-#if !DEBUG_CUSTOM_TYPING_INDICATOR
-    self.typingIndicatorView.canResignByTouch = YES;
-#endif
+    [self configTableView];
+    [self configFooterRefresh];
+    [self configTextInput];
+    [self addGestureToHeaderView];
+    [self addGestureToCommentTableView];
+    [self getDataSource];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -144,6 +115,12 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [self scrollElegantly];
+}
+
+- (void)scrollElegantly {
+    [self.tableView setContentOffset:CGPointMake(0, _headerView.frame.size.height - kfcBottomViewHeight) animated:YES];
+    [self.textView becomeFirstResponder];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -226,14 +203,10 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     // See https://github.com/slackhq/SlackTextViewController/issues/94#issuecomment-69929927
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     
-    
-//    CommentVM *model = [CommentVM new];
-//    [model setDataWithAtModel:_atModel andContent:self.textView.text];
-    
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:commentText forKey:@"content"];
-    [param setObject:@(_type) forKey:@"type"];
-    [param setObject:@(_ID) forKey:@"target_id"];
+    [param setObject:@(_vm.type) forKey:@"type"];
+    [param setObject:@(_vm.pageID) forKey:@"target_id"];
     [param setObject:@(0) forKey:@"for_comment"];
     if (_atModel) {
             [param setObject:@(_atModel.ID) forKey:@"comment_reply_to"];
@@ -320,7 +293,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         if (!cell) {
             cell = [[MessageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
-        
         if (indexPath.section == 0) {
             [cell getSource:_commentsHot[indexPath.row]];
         } else if (indexPath.section ==1) {
@@ -378,6 +350,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 1) {
+        return kCommentTableViewHeaderHeight;
+    }
     if ([tableView.dataSource tableView:tableView numberOfRowsInSection:section] == 0) {
         return 0;
     } else {
@@ -386,7 +361,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    ATOMMyConcernTableHeaderView *headerView = [ATOMMyConcernTableHeaderView new];
+    ZZCommentHeaderView *headerView = [ZZCommentHeaderView new];
     if (section == 0) {
         headerView.titleLabel.text = @"最热评论";
     } else if (section == 1) {
@@ -582,19 +557,44 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 -(void)tapReport {
     [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
 }
-#pragma mark config
+#pragma mark init and config
 
--(void)config {
-    self.title = @"评论";
-    [self configRecentDetailTableViewRefresh];
-    _type = _vm.type;
-    _ID = _vm.pageID;
-    [self addClickEventToHeaderView];
-    [self addGestureEventToCommentTableView];
-    [self getDataSource];
-    _canRefreshFooter = YES;
+-(void)configTableView {
+    _headerView = [kfcPageView new];
+    _headerView.vm = _vm;
+    self.tableView.tableHeaderView = _headerView;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.tableView registerClass:[MessageTableViewCell class] forCellReuseIdentifier:MessengerCellIdentifier];
+    self.tableView.tableFooterView = [UIView new];
+    self.tableView.showsVerticalScrollIndicator = NO;
+    self.tableView.showsHorizontalScrollIndicator = NO;
+    UIView *header = self.tableView.tableHeaderView;
+    [header setNeedsLayout];
+    [header layoutIfNeeded];
+    CGFloat height = [header systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    CGRect frame = header.frame;
+    frame.size.height = height;
+    header.frame = frame;
+    self.tableView.tableHeaderView = header;
 }
-- (void)configRecentDetailTableViewRefresh {
+-(void)configTextInput {
+    self.bounces = NO;
+    self.shakeToClearEnabled = YES;
+    self.keyboardPanningEnabled = YES;
+    self.shouldScrollToBottomAfterKeyboardShows = NO;
+    self.inverted = NO;
+    [self.leftButton setImage:[UIImage imageNamed:@"btn_emoji"] forState:UIControlStateNormal];
+    [self.rightButton setImage:[UIImage imageNamed:@"btn_comment_send"] forState:UIControlStateNormal];
+    self.textInputbar.autoHideRightButton = YES;
+    self.textInputbar.maxCharCount = 256;
+    self.textInputbar.counterStyle = SLKCounterStyleSplit;
+    self.textInputbar.counterPosition = SLKCounterPositionTop;
+#if !DEBUG_CUSTOM_TYPING_INDICATOR
+    self.typingIndicatorView.canResignByTouch = YES;
+#endif
+
+}
+- (void)configFooterRefresh {
     [self.tableView addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     NSMutableArray *animatedImages = [NSMutableArray array];
     for (int i = 1; i<=3; i++) {
@@ -603,27 +603,31 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     }
     self.tableView.gifFooter.refreshingImages = animatedImages;
     self.tableView.footer.stateHidden = YES;
+    _canRefreshFooter = YES;
 }
 
-- (void)addClickEventToHeaderView {
-    UITapGestureRecognizer *g1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickShareButton:)];
+- (void)addGestureToHeaderView {
+    UITapGestureRecognizer *g1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickShareButton)];
     [_headerView.wechatButton addGestureRecognizer:g1];
-    UITapGestureRecognizer *g2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickMoreShareButton:)];
+    UITapGestureRecognizer *g2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickMoreShareButton)];
     [_headerView.moreButton addGestureRecognizer:g2];
-    UITapGestureRecognizer *g3 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickPraiseButton:)];
+    UITapGestureRecognizer *g3 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickPraiseButton)];
     [_headerView.likeButton addGestureRecognizer:g3];
-    UITapGestureRecognizer *g4 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickUserWorkImageView:)];
-    [_headerView.imageViewMain addGestureRecognizer:g4];
-//    [_headerView.userHeaderButton addTarget:self action:@selector(clickUserHeaderButton:) forControlEvents:UIControlEventTouchUpInside];
-//    [_headerView.psButton addTarget:self action:@selector(clickPSButton:) forControlEvents:UIControlEventTouchUpInside];
-    _tapUserNameLabelGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapUserNameLabelGesture:)];
+    UITapGestureRecognizer *g4 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickUserHeaderButton)];
+    [_headerView.avatarView addGestureRecognizer:g4];
+    UITapGestureRecognizer *g5 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickPSButton)];
+    [_headerView.psView addGestureRecognizer:g5];
+    UITapGestureRecognizer *g6 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickUserWorkImageView)];
+    [_headerView.imageViewMain addGestureRecognizer:g6];
+
+    _tapUserNameLabelGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapUserNameLabel)];
     [_headerView.usernameLabel addGestureRecognizer:_tapUserNameLabelGesture];
 }
 
-- (void)addGestureEventToCommentTableView {
-    _tapCommentTableGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCommentTable:)];
-    _tapCommentTableGes.cancelsTouchesInView = NO;
-    [self.tableView addGestureRecognizer:_tapCommentTableGes];
+- (void)addGestureToCommentTableView {
+    _tapCommentTableGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCommentTable:)];
+    _tapCommentTableGesture.cancelsTouchesInView = NO;
+    [self.tableView addGestureRecognizer:_tapCommentTableGesture];
 }
 
 #pragma mark - tap Event
@@ -659,38 +663,39 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     }
 }
 }
-- (void)tapUserNameLabelGesture:(UITapGestureRecognizer *)gesture {
+- (void)tapUserNameLabel {
     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
     opvc.userID = _vm.uid;
     opvc.userName = _vm.userName;
     [self pushViewController:opvc animated:YES];
 }
 
-- (void)clickShareButton:(UITapGestureRecognizer *)sender {
+- (void)clickShareButton{
     [self postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
 }
 
-- (void)clickMoreShareButton:(UITapGestureRecognizer *)sender {
+- (void)clickMoreShareButton {
+    NSLog(@"clickMoreShareButton");
     self.shareFunctionView.collectButton.selected = _vm.collected;
     [self.shareFunctionView showInView:[AppDelegate APP].window animated:YES];
 }
 
-- (void)clickUserHeaderButton:(UIButton *)sender {
+- (void)clickUserHeaderButton {
     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
     opvc.userID = _vm.uid;
     opvc.userName = _vm.userName;
     [self pushViewController:opvc animated:YES];
 }
 
-- (void)clickPSButton:(UIButton *)sender {
+- (void)clickPSButton {
     [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
 }
 
-- (void)clickPraiseButton:(UITapGestureRecognizer *)sender {
+- (void)clickPraiseButton {
     [_headerView.likeButton toggleLike];
     [_vm toggleLike];
 }
-- (void)clickUserWorkImageView:(UITapGestureRecognizer *)sender {
+- (void)clickUserWorkImageView {
     [self tapOnImageView:_headerView.imageViewMain.image withURL:nil];
 }
 
@@ -715,8 +720,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     _currentPage = 1;
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@(_ID) forKey:@"target_id"];
-    [param setObject:@(_type) forKey:@"type"];
+    [param setObject:@(_vm.pageID) forKey:@"target_id"];
+    [param setObject:@(_vm.type) forKey:@"type"];
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
     
@@ -740,8 +745,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     WS(ws);
     _currentPage++;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@(_ID) forKey:@"target_id"];
-    [param setObject:@(_type) forKey:@"type"];
+    [param setObject:@(_vm.pageID) forKey:@"target_id"];
+    [param setObject:@(_vm.type) forKey:@"type"];
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];

@@ -14,7 +14,7 @@
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMAskPageViewModel.h"
 #import "HomeViewController.h"
-#import "ATOMMyConcernTableHeaderView.h"
+#import "ZZCommentHeaderView.h"
 #import "ATOMInviteModel.h"
 #import "ATOMInviteCellViewModel.h"
 #import "ATOMFollowModel.h"
@@ -170,7 +170,7 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    ATOMMyConcernTableHeaderView *headerView = [ATOMMyConcernTableHeaderView new];
+    ZZCommentHeaderView *headerView = [ZZCommentHeaderView new];
     if (section == 0) {
         headerView.titleLabel.text = @"推荐大神";
     } else if (section == 1) {

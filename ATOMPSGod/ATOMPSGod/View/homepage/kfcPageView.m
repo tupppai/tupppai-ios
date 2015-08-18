@@ -34,7 +34,6 @@
     [self addSubview:self.imageViewMain];
     [self addSubview:self.bottomView];
     //    [self addSubview:self.lineView];
-    [self addSubview:self.gapView];
     [self configMansory];
 }
 
@@ -63,13 +62,6 @@
         make.right.equalTo(self).with.offset(-kPadding15);
         //todo :change height var and name of _additionView
         make.height.equalTo(@(kfcBottomViewHeight));
-    }];
-    
-    [_gapView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_bottomView.mas_bottom).with.offset(0);
-        make.left.equalTo(self).with.offset(0);
-        make.right.equalTo(self).with.offset(0);
-        make.height.equalTo(@(kfcGapViewHeight));
         make.bottom.equalTo(self).with.offset(0);
     }];
 }
@@ -120,7 +112,6 @@
         make.right.equalTo(_bottomView).with.offset(-2);
         make.height.equalTo(@(kfcButtonHeight));
     }];
-    
 }
 
 -(void)setVm:(kfcPageVM *)vm {
@@ -171,6 +162,7 @@
         _psView = [UIImageView new];
         _psView.contentMode = UIViewContentModeTopRight;
         _psView.image = [UIImage imageNamed:@"btn_p_normal"];
+        _psView.userInteractionEnabled = YES;
         [_topView addSubview:_psView];
         [_topView addSubview:self.avatarView];
         [_topView addSubview:self.usernameLabel];
@@ -189,7 +181,6 @@
         _commentButton = [ATOMBottomCommonButton new];
         _commentButton.image = [UIImage imageNamed:@"icon_comment_normal"];
         _moreButton= [UIButton new];
-        _moreButton.userInteractionEnabled = NO;
         [_moreButton setImage:[UIImage imageNamed:@"icon_others_normal"] forState:UIControlStateNormal];
         [_bottomView addSubview:_moreButton];
         [_bottomView addSubview:_likeButton];
@@ -204,6 +195,7 @@
 {
     if (!_avatarView) {
         _avatarView = [kAvatarView new];
+        _avatarView.userInteractionEnabled = YES;
     }
     return _avatarView;
 }
@@ -212,21 +204,16 @@
 {
     if (!_usernameLabel) {
         _usernameLabel = [kUsernameLabel new];
+        _usernameLabel.userInteractionEnabled = YES;
     }
     return _usernameLabel;
-}
-
--(UIView*)gapView {
-    if (!_gapView) {
-        _gapView = [kGapView new];
-    }
-    return _gapView;
 }
 
 -(UIImageView*)imageViewMain {
     if (!_imageViewMain) {
         _imageViewMain = [kImageView new];
         _imageViewMain.image = [UIImage imageNamed:@"placeholderImage_1"];
+        _imageViewMain.userInteractionEnabled = YES;
     }
     return _imageViewMain;
 }

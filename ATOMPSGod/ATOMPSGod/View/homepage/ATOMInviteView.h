@@ -7,12 +7,12 @@
 //
 
 #import "ATOMBaseView.h"
-@class ATOMMyConcernTableHeaderView;
+@class ZZCommentHeaderView;
 
 @interface ATOMInviteView : ATOMBaseView
 
 @property (nonatomic, strong) UIView *topView;
-@property (nonatomic, strong) ATOMMyConcernTableHeaderView *inviteFriendView;
+@property (nonatomic, strong) ZZCommentHeaderView *inviteFriendView;
 @property (nonatomic, strong) UIButton *wxFriendInviteButton;
 @property (nonatomic, strong) UIButton *wxFriendCircleInviteButton;
 

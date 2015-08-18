@@ -16,7 +16,7 @@
 
 @property (nonatomic, strong) UIView *topView;
 @property (nonatomic, strong) UIView *bottomView;
-@property (nonatomic, strong) UIView *gapView;
+//@property (nonatomic, strong) UIView *gapView;
 
 @property (nonatomic, strong) UIImageView *avatarView;
 @property (nonatomic, strong) UILabel *usernameLabel;
