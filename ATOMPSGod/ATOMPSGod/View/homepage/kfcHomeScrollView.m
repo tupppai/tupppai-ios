@@ -39,17 +39,17 @@
 - (void)createHomepageHotView {
     _homepageHotView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
     [self addSubview:_homepageHotView];
-    _homepageHotTableView = [[RefreshTableView alloc] initWithFrame:_homepageHotView.bounds];
-    _homepageHotTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [_homepageHotView addSubview:_homepageHotTableView];
+    _hotTable = [[RefreshTableView alloc] initWithFrame:_homepageHotView.bounds];
+    _hotTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [_homepageHotView addSubview:_hotTable];
 }
 
 - (void)createHomepageRecentView {
     _homepageRecentView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
     [self addSubview:_homepageRecentView];
-    _homepageAskTableView = [[RefreshTableView alloc] initWithFrame:_homepageRecentView.bounds];
-    _homepageAskTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [_homepageRecentView addSubview:_homepageAskTableView];
+    _askTable = [[RefreshTableView alloc] initWithFrame:_homepageRecentView.bounds];
+    _askTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [_homepageRecentView addSubview:_askTable];
 }
 
 - (void)changeUIAccording:(NSString *)buttonTitle {
@@ -57,13 +57,12 @@
         _currentHomepageType = ATOMHomepageViewTypeHot;
         [UIView animateWithDuration:0.5 animations:^{
             self.contentOffset = CGPointMake(0, 0);
-        }];        [_homepageHotTableView reloadData];
+        }];
     } else if ([buttonTitle isEqualToString:@"最新"]) {
         _currentHomepageType = ATOMHomepageViewTypeAsk;
         [UIView animateWithDuration:0.5 animations:^{
             self.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
         }];
-        [_homepageAskTableView reloadData];
     }
 }
 

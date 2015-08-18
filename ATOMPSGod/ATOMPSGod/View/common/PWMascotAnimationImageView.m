@@ -46,7 +46,7 @@
 }
 -(void)dismiss {
     if (self) {
-         [UIView animateWithDuration:2 animations:^{
+         [UIView animateWithDuration:0.5 animations:^{
              self.alpha = 0.0;
         } completion:^(BOOL finished) {
             [self removeFromSuperview];

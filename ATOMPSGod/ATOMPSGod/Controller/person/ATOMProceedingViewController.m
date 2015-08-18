@@ -15,15 +15,15 @@
 #import "ATOMAskPageViewModel.h"
 #import "ATOMProceedingViewModel.h"
 #import "ATOMShowProceeding.h"
-#import "RefreshTableView.h"
+#import "RefreshFooterTableView.h"
 #import "ATOMCommonModel.h"
 #import "MessageViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMProceedingViewController () <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,PWRefreshBaseTableViewDelegate>
+@interface ATOMProceedingViewController () <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource>
 
 @property (nonatomic, strong) UIView *proceedingView;
-@property (nonatomic, strong) RefreshTableView *tableView;
+@property (nonatomic, strong) RefreshFooterTableView *tableView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapProceedingGesture;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -55,9 +55,6 @@
 }
 
 #pragma mark - Refresh
--(void)didPullRefreshDown:(UITableView *)tableView{
-    [self loadData];
-}
 -(void)didPullRefreshUp:(UITableView *)tableView{
     [self loadMoreData];
 }
@@ -79,15 +76,13 @@
 
 - (void)getDataSource {
     WS(ws);
+    [[KShareManager mascotAnimator]show];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     _currentPage = 1;
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
-//    [param setObject:@"new" forKey:@"type"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
-//    [param setObject:@"time" forKey:@"sort"];
-//    [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(10) forKey:@"size"];
     ATOMShowProceeding *showProceeding = [ATOMShowProceeding new];
     [showProceeding ShowProceeding:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
@@ -103,7 +98,8 @@
             [proceedingViewModel setViewModelData:homeImage];
             [ws.dataSource addObject:proceedingViewModel];
         }
-        [ws.tableView.header endRefreshing];
+        [[KShareManager mascotAnimator]dismiss];
+        _tableView.dataSource = self;
         [ws.tableView reloadData];
     }];
 }
@@ -150,11 +146,12 @@
     self.title = @"进行中";
     _proceedingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _proceedingView;
-    _tableView = [[RefreshTableView alloc] initWithFrame:_proceedingView.bounds];
+    _tableView = [[RefreshFooterTableView alloc] initWithFrame:_proceedingView.bounds];
     [_proceedingView addSubview:_tableView];
     _tableView.delegate = self;
-    _tableView.dataSource = self;
+    _tableView.dataSource = nil;
     _tableView.psDelegate = self;
+    _tableView.emptyDataSetSource = self;
     [_tableView addGestureRecognizer:self.tapProceedingGesture];
     _canRefreshFooter = YES;
     _dataSource = nil;
@@ -286,30 +283,19 @@
     return [ATOMProceedingTableViewCell calculateCellHeight:_dataSource[indexPath.row]];
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#pragma mark - DZNEmptyDataSetSource & delegate
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
+{
+    return [UIImage imageNamed:@"ic_cry"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text = @"你没有下载任何素材，去首页看看吧";
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:kTitleSizeForEmptyDataSet],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
 
 
 @end

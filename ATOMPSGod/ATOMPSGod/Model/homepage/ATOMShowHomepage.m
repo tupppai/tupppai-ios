@@ -108,7 +108,6 @@
                         [homeImage.replierArray addObject:replier];
                     }
                 }
-//                NSLog(@"homeImage %@ ",homeImage);
                 [homepageArray addObject:homeImage];
             }
             if (block) {

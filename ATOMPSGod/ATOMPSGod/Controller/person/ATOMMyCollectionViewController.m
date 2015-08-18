@@ -18,7 +18,7 @@
 #import "MessageViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMMyCollectionViewController () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate,PWRefreshBaseCollectionViewDelegate>
+@interface ATOMMyCollectionViewController () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource>
 
 @property (nonatomic, strong) UIView *myWorkView;
 @property (nonatomic, strong) PWRefreshFooterCollectionView *collectionView;
@@ -54,6 +54,7 @@ static float cellWidth;
 
 - (void)getDataSource {
     WS(ws);
+    [[KShareManager mascotAnimator]show];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     _dataSource = nil;
@@ -78,6 +79,8 @@ static float cellWidth;
             [collectionViewModel setViewModelData:homeImage];
             [ws.dataSource addObject:collectionViewModel];
         }
+        [[KShareManager mascotAnimator]dismiss];
+        _collectionView.dataSource = self;
         [ws.collectionView reloadData];
     }];
 }
@@ -136,7 +139,8 @@ static float cellWidth;
     _collectionView = [[PWRefreshFooterCollectionView alloc] initWithFrame:CGRectInset(_myWorkView.frame, 0, 0) collectionViewLayout:flowLayout];
     _collectionView.backgroundColor = [UIColor colorWithHex:0xededed];
     [_myWorkView addSubview:_collectionView];
-    _collectionView.dataSource = self;
+    _collectionView.dataSource = nil;
+    _collectionView.emptyDataSetSource = self;
     _collectionView.delegate = self;
     _collectionView.psDelegate = self;
     _cellIdentifier = @"MyCollectionCell";
@@ -203,6 +207,19 @@ static float cellWidth;
     return cell;
 }
 
-#pragma mark - UICollectionViewDelegate
+#pragma mark - DZNEmptyDataSetSource & delegate
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
+{
+    return [UIImage imageNamed:@"ic_cry"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text = @"你还没有任何收藏喔:-O";
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:kTitleSizeForEmptyDataSet],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
 
 @end

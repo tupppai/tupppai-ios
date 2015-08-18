@@ -37,7 +37,7 @@
 
 static NSString *MessengerCellIdentifier = @"MessengerCell";
 
-@interface MessageViewController ()<ATOMShareFunctionViewDelegate,ATOMViewControllerDelegate,JGActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface MessageViewController ()<ATOMShareFunctionViewDelegate,ATOMViewControllerDelegate,JGActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,DZNEmptyDataSetSource>
 
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) NSMutableArray *commentsHot;
@@ -230,7 +230,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)willRequestUndo
 {
     // Notifies the view controller when a user did shake the device to undo the typed text
-    
     [super willRequestUndo];
 }
 
@@ -563,6 +562,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     _headerView = [kfcPageView new];
     _headerView.vm = _vm;
     self.tableView.tableHeaderView = _headerView;
+    self.tableView.emptyDataSetSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[MessageTableViewCell class] forCellReuseIdentifier:MessengerCellIdentifier];
     self.tableView.tableFooterView = [UIView new];
@@ -823,6 +823,22 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         [alertView show];
     }
     
+}
+
+
+#pragma mark - DZNEmptyDataSetSource
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
+{
+    return [UIImage imageNamed:@"ic_cry"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text = @"快来抢第一个坐上沙发";
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0f],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
 @end

@@ -17,7 +17,7 @@
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMMyWorkViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate>
+@interface ATOMMyWorkViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource>
 
 @property (nonatomic, strong) UIView *myWorkView;
 @property (nonatomic, strong) PWRefreshFooterCollectionView *collectionView;
@@ -53,6 +53,7 @@ static int collumnNumber = 3;
 
 - (void)getDataSource {
     WS(ws);
+    [[KShareManager mascotAnimator]show];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     _dataSource = nil;
@@ -76,6 +77,8 @@ static int collumnNumber = 3;
             replyViewModel.imageURL = homeImage.imageURL;
             [ws.dataSource addObject:replyViewModel];
         }
+        [[KShareManager mascotAnimator]dismiss];
+        ws.collectionView.dataSource = self;
         [ws.collectionView reloadData];
     }];
 }
@@ -131,12 +134,13 @@ static int collumnNumber = 3;
     _collectionView = [[PWRefreshFooterCollectionView alloc] initWithFrame:CGRectInset(_myWorkView.frame, padding6, padding6) collectionViewLayout:flowLayout];
     _collectionView.backgroundColor = [UIColor whiteColor];
     [_myWorkView addSubview:_collectionView];
-    _collectionView.dataSource = self;
+    _collectionView.dataSource = nil;
     _collectionView.delegate = self;
     _collectionView.psDelegate = self;
     _cellIdentifier = @"MyWorkCell";
     [_collectionView registerClass:[ATOMMyWorkCollectionViewCell class] forCellWithReuseIdentifier:_cellIdentifier];
     _canRefreshFooter = YES;
+    _collectionView.emptyDataSetSource = self;
     [self getDataSource];
 }
 
@@ -164,6 +168,20 @@ static int collumnNumber = 3;
 
 
 
+#pragma mark - DZNEmptyDataSetSource & delegate
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
+{
+    return [UIImage imageNamed:@"ic_cry"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text = @"快去帮助众生PS,成为PS大神吧";
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:kTitleSizeForEmptyDataSet],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
 
 
 

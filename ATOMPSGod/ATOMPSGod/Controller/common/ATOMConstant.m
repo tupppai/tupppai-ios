@@ -68,6 +68,7 @@ CGFloat const kUsernameFontSize = 16.f;
 CGFloat const kPublishTimeFontSizeBig = 14.f;
 CGFloat const kPublishTimeFontSizeSmall = 13.f;
 
+CGFloat const kTitleSizeForEmptyDataSet = 17.f;
 
 
 

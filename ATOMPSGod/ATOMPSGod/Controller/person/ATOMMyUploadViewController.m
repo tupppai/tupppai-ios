@@ -17,7 +17,7 @@
 #import "ATOMShowMyAsk.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMMyUploadViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate>
+@interface ATOMMyUploadViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource>
 
 @property (nonatomic, strong) UIView *myUploadView;
 @property (nonatomic, strong) PWRefreshFooterCollectionView *collectionView;
@@ -37,7 +37,6 @@ static int collumnNumber = 3;
 
 #pragma mark - Refresh
 -(void)didPullUpCollectionViewBottom:(PWRefreshFooterCollectionView *)collectionView {
-    NSLog(@"didPullUpCollectionViewBottom");
     [self loadMoreData];
 }
 - (void)loadMoreData {
@@ -46,13 +45,13 @@ static int collumnNumber = 3;
     } else {
         [_collectionView.footer endRefreshing];
     }
-    
 }
 
 #pragma mark - GetDataSource
 
 - (void)getDataSource {
     WS(ws);
+    [[KShareManager mascotAnimator]show];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     _dataSource = nil;
@@ -76,6 +75,8 @@ static int collumnNumber = 3;
             [ws.dataSource addObject:askViewModel];
             [ws.homeImageDataSource addObject:homepageViewModel];
         }
+        [[KShareManager mascotAnimator]dismiss];
+        ws.collectionView.dataSource = self;
         [ws.collectionView reloadData];
     }];
 }
@@ -114,6 +115,7 @@ static int collumnNumber = 3;
 #pragma mark - UI
 
 - (void)viewDidLoad {
+    NSLog(@"viewDidLoad");
     [super viewDidLoad];
     [self createUI];
 }
@@ -132,7 +134,8 @@ static int collumnNumber = 3;
     _collectionView = [[PWRefreshFooterCollectionView alloc] initWithFrame:CGRectInset(_myUploadView.frame, padding, padding) collectionViewLayout:flowLayout];
     _collectionView.backgroundColor = [UIColor whiteColor];
     [_myUploadView addSubview:_collectionView];
-    _collectionView.dataSource = self;
+    _collectionView.emptyDataSetSource = self;
+    _collectionView.dataSource = nil;
     _collectionView.delegate = self;
     _collectionView.psDelegate = self;
     _cellIdentifier = @"MyUploadCell";
@@ -175,5 +178,19 @@ static int collumnNumber = 3;
     }
 }
 
+#pragma mark - DZNEmptyDataSetSource & delegate
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
+{
+    return [UIImage imageNamed:@"ic_cry"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text = @"快去上传你的照片，让大神来帮你PS吧";
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:kTitleSizeForEmptyDataSet],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
 
 @end

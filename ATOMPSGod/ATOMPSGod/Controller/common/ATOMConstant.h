@@ -59,6 +59,7 @@ extern NSInteger const kLineWidth;
 extern CGFloat const kUsernameFontSize;
 extern CGFloat const kPublishTimeFontSizeBig;
 extern CGFloat const kPublishTimeFontSizeSmall;
+extern CGFloat const kTitleSizeForEmptyDataSet;
 
 extern NSString * const kFontNameDefault;
 extern NSString * const kUserNameFont;

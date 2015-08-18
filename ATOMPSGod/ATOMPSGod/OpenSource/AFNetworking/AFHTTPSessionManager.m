@@ -241,6 +241,10 @@
     dataTask = [self dataTaskWithRequest:request completionHandler:^(NSURLResponse * __unused response, id responseObject, NSError *error) {
         if (error) {
             if (failure) {
+#if DEBUG
+                [Util ShowTSMessageError:[NSString stringWithFormat:@"%@",error]];
+#endif
+
                 [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"ErrorOccurred" object:nil]];
                 failure(dataTask, error);
             }
@@ -250,15 +254,12 @@
                 int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
                 if (ret == 2) {
                     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"SignOut" object:nil]];
-//                } else if (ret == 0) {
                 } else if (ret != 1) {
                     NSString* info = [responseObject objectForKey:@"info"];
                     NSDictionary* userInfo = [NSDictionary dictionaryWithObject:info forKey:@"info"];
                     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"ShowInfo" object:nil userInfo:userInfo]];
                 }
-//                else if (ret != 1) {
-//                    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"ErrorOccurred" object:nil]];
-//                }
+
                
             }
         }

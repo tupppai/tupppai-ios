@@ -11,8 +11,8 @@
 
 
 @interface kfcHomeScrollView : UIScrollView
-@property (nonatomic, strong) RefreshTableView *homepageHotTableView;
-@property (nonatomic, strong) RefreshTableView *homepageAskTableView;
+@property (nonatomic, strong) RefreshTableView *hotTable;
+@property (nonatomic, strong) RefreshTableView *askTable;
 @property (nonatomic, strong) UIView *homepageHotView;
 @property (nonatomic, strong) UIView *homepageRecentView;
 @property (nonatomic, assign) ATOMHomepageViewType currentHomepageType;
