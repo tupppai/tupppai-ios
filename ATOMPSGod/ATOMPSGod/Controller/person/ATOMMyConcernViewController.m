@@ -156,9 +156,13 @@
 //            [self pushViewController:opvc animated:YES];
 //        } else
             if (CGRectContainsPoint(cell.attentionButton.frame, p)) {
-            cell.attentionButton.selected = !cell.attentionButton.selected;
-            NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(cell.viewModel.uid),@"uid", nil];
-            [ATOMFollowModel follow:param withType:cell.attentionButton.selected withBlock:^(NSError *error) {
+                cell.attentionButton.selected = !cell.attentionButton.selected;
+                NSMutableDictionary* param = [NSMutableDictionary new];
+                [param setObject:@(cell.viewModel.uid) forKey:@"uid"];
+                if (!cell.attentionButton.selected) {
+                    [param setObject:@0 forKey:@"status"];
+                }
+            [ATOMFollowModel follow:param withBlock:^(NSError *error) {
                 if (error) {
                     cell.attentionButton.selected = !cell.attentionButton.selected;
                 } else {

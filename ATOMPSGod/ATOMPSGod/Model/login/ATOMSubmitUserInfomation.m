@@ -16,7 +16,7 @@
 
 - (NSURLSessionDataTask *)SubmitUserInformation:(NSDictionary *)param withBlock:(void (^)(NSError *))block {
     [[KShareManager mascotAnimator]show];
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"user/save" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"account/register" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         [[KShareManager mascotAnimator]dismiss];
         NSLog(@"SubmitUserInformation param%@",param);
         NSLog(@"SubmitUserInformation responseObject %@ ,\n info %@",responseObject,[ responseObject objectForKey:@"info"]);

@@ -48,7 +48,7 @@
         [param setObject:_modifyPasswordView.oldPasswordTextField.text forKey:@"old_pwd"];
         [param setObject:_modifyPasswordView.modifyPasswordTextField.text forKey:@"new_pwd"];
 
-        [ATOMCommonModel post:param withUrl:@"user/chg_password" withBlock:^(NSError *error, int ret) {
+        [ATOMCommonModel post:param withUrl:@"profile/updatePassword" withBlock:^(NSError *error, int ret) {
             if (error == nil) {
                 if (ret == 1) {
                     [Util ShowTSMessageSuccess:@"修改密码成功"];

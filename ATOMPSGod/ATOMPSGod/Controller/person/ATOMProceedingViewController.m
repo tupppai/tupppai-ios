@@ -217,7 +217,7 @@
             [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.deleteButton.frame, p)) {
             NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(cell.viewModel.ID),@"id", nil];
-            [ATOMCommonModel post:param withUrl:@"user/delete_progress" withBlock:^(NSError *error,int ret) {
+            [ATOMCommonModel post:param withUrl:@"profile/deleteDownloadRecord" withBlock:^(NSError *error,int ret) {
                 if (!error) {
                     [Util successHud:@"已删除" inView:self.view];
                 }

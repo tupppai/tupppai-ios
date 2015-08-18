@@ -12,7 +12,7 @@
 
 + (NSURLSessionDataTask *)getPushSetting:(NSDictionary *)param withBlock:(void (^)(NSDictionary *, NSError *))block {
     NSLog(@"getPushSetting param %@ ",param);
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager]GET:@"user/get_push_settings" parameters:param success:^(NSURLSessionDataTask *task
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager]GET:@"profile/get_push_settings" parameters:param success:^(NSURLSessionDataTask *task
 , id responseObject) {
         NSLog(@"getPushSetting responseObject%@",responseObject);
         NSString* info = (NSString*)[ responseObject objectForKey:@"info"];
@@ -44,7 +44,7 @@
 
 + (NSURLSessionDataTask *)setPushSetting:(NSDictionary *)param withBlock:(void (^)(NSError *))block {
     NSLog(@"setPushSetting param %@ ",param);
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"user/set_push_settings" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"profile/set_push_settings" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"toggleSetting param %@ responseObject%@",param,responseObject);
         int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
         NSString* info = (NSString*)[ responseObject objectForKey:@"info"];

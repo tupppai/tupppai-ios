@@ -56,7 +56,7 @@
 
 - (NSURLSessionDataTask* )Login:(NSDictionary*)param withBlock:(void (^)(BOOL succeed))block{
     [[KShareManager mascotAnimator] show];
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"user/login" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"account/login" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         [[KShareManager mascotAnimator] dismiss];
         NSLog(@"Login responseObject %@ \n",responseObject);
         NSString* info = [ responseObject objectForKey:@"info"];

@@ -47,11 +47,6 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
 
 #pragma mark - Refresh
 
-//- (void)configCollectionViewRefresh {
-//    [_otherPersonView.scrollView.otherPersonUploadCollectionView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreUploadData)];
-//    [_otherPersonView.scrollView.otherPersonWorkCollectionView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreWorkData)];
-//}
-
 - (void)loadMoreUploadData {
     if (_canRefreshUploadFooter) {
         [self getMoreDataSourceWithType:@"upload"];
@@ -289,15 +284,15 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
 - (void)clickReplyButton:(UIButton *)sender {
     [_otherPersonView.uploadHeaderView toggleSegmentBar:ATOMOtherPersonCollectionViewTypeReply];
     [_otherPersonView.scrollView toggleCollectionView:ATOMOtherPersonCollectionViewTypeReply];
-//    if (_isFirstEnterWorkCollectionView) {
-//        _isFirstEnterWorkCollectionView = NO;
-//        [self getDataSourceWithType:@"work"];
-//    }
 }
 -(void)tapFollowButton {
     _otherPersonView.uploadHeaderView.attentionButton.selected = !_otherPersonView.uploadHeaderView.attentionButton.selected;
-    NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(_userID),@"uid", nil];
-    [ATOMFollowModel follow:param withType:_otherPersonView.uploadHeaderView.attentionButton.selected withBlock:^(NSError *error) {
+    NSMutableDictionary* param = [NSMutableDictionary new];
+    [param setObject:@(_userID) forKey:@"uid"];
+    if (!_otherPersonView.uploadHeaderView.attentionButton.selected) {
+        [param setObject:@0 forKey:@"status"];
+    }
+    [ATOMFollowModel follow:param withBlock:^(NSError *error) {
         if (error) {
             _otherPersonView.uploadHeaderView.attentionButton.selected = !_otherPersonView.uploadHeaderView.attentionButton.selected;
         } else {

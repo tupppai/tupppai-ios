@@ -12,7 +12,7 @@
 @implementation ATOMGetMoblieCode
 
 - (void)GetMobileCode:(NSDictionary *)param withBlock:(void (^)(NSString *, NSError *))block {
-     [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/get_mobile_code" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+     [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"account/requestAuthCode" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSInteger ret = [[ responseObject objectForKey:@"ret"] integerValue];
         NSString *verifyCode = [ responseObject objectForKey:@"data"][@"code"];
         NSLog(@"GetMobileCode param %@,response data %@",param,responseObject);
