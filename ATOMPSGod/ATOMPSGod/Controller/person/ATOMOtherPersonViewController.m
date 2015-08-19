@@ -22,7 +22,7 @@
 #import "ATOMUser.h"
 #import "ATOMFollowModel.h"
 
-#import "MessageViewController.h"
+#import "CommentViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMOtherPersonViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate>
@@ -400,7 +400,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
         if ([askViewModel.totalPSNumber integerValue] == 0) {
             kfcPageVM* vm = [kfcPageVM new];
             [vm setCommonViewModelWithAsk:homepageViewModel];
-            MessageViewController* mvc = [MessageViewController new];
+            CommentViewController* mvc = [CommentViewController new];
             mvc.vm = vm;
 //            mvc.delegate = self;
             [self pushViewController:mvc animated:YES];

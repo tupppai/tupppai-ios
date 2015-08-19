@@ -33,12 +33,11 @@
 #import "HMSegmentedControl.h"
 #import "ATOMCommonModel.h"
 
-#import "MessageViewController.h"
+#import "CommentViewController.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 @class ATOMHomeImage;
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
-
-@interface HomeViewController() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate,DZNEmptyDataSetSource>
+@interface HomeViewController() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate>
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureHot;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureAsk;
@@ -50,8 +49,6 @@
 @property (nonatomic, assign) BOOL isfirstEnterHomepageRecentView;
 @property (nonatomic, assign) BOOL canRefreshHotFooter;
 @property (nonatomic, assign) BOOL canRefreshRecentFooter;
-@property (nonatomic, assign) BOOL hasSetHotSource;
-@property (nonatomic, assign) BOOL hasSetAskSource;
 @property (nonatomic, strong) kfcHomeScrollView *scrollView;
 
 @property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
@@ -232,8 +229,6 @@ static NSString *CellIdentifier2 = @"AskCell";
     _isfirstEnterHomepageRecentView = YES;
     _canRefreshHotFooter = YES;
     _canRefreshRecentFooter = YES;
-    _hasSetHotSource = NO;
-    _hasSetAskSource = NO;
     [self firstGetDataSourceFromDataBase];
     [self firstGetDataSourceOfTableViewWithHomeType:ATOMHomepageViewTypeHot];
 }
@@ -242,7 +237,6 @@ static NSString *CellIdentifier2 = @"AskCell";
     _scrollView.hotTable.delegate = self;
     _scrollView.hotTable.dataSource = self;
     _scrollView.hotTable.noDataView.label.text = @"网络连接断了吧-_-!";
-    _scrollView.hotTable.emptyDataSetSource = self;
     _scrollView.hotTable.psDelegate = self;
     [_scrollView.hotTable registerClass:[kfcHotCell class] forCellReuseIdentifier:CellIdentifier];
     _scrollView.hotTable.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
@@ -253,7 +247,6 @@ static NSString *CellIdentifier2 = @"AskCell";
     _scrollView.askTable.delegate = self;
     _scrollView.askTable.dataSource = self;
     _scrollView.askTable.noDataView.label.text = @"网络连接断了吧-_-!";
-    _scrollView.askTable.emptyDataSetSource = self;
     _scrollView.askTable.psDelegate = self;
     _scrollView.hotTable.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
     [_scrollView.askTable registerClass:[kfcAskCell class] forCellReuseIdentifier:CellIdentifier2];
@@ -443,7 +436,7 @@ static NSString *CellIdentifier2 = @"AskCell";
                 } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
                     kfcPageVM* vm = [kfcPageVM new];
                     [vm setCommonViewModelWithAsk:_selectedVM];
-                    MessageViewController* mvc = [MessageViewController new];
+                    CommentViewController* mvc = [CommentViewController new];
                     mvc.vm = vm;
                     mvc.delegate = self;
                     [self pushViewController:mvc animated:YES];
@@ -492,7 +485,7 @@ static NSString *CellIdentifier2 = @"AskCell";
                 } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
                     kfcPageVM* vm = [kfcPageVM new];
                     [vm setCommonViewModelWithAsk:_selectedVM];
-                    MessageViewController* mvc = [MessageViewController new];
+                    CommentViewController* mvc = [CommentViewController new];
                     mvc.vm = vm;
                     mvc.delegate = self;
                     [self pushViewController:mvc animated:YES];
@@ -819,21 +812,6 @@ static NSString *CellIdentifier2 = @"AskCell";
         [self loadMoreRecentData];
     }
 }
-
-#pragma mark - DZNEmptyDataSetSource
-- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
-{
-    return [UIImage imageNamed:@"ic_cry"];
-}
-//- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
-//{
-//    NSString *text = @"这里空空如也>_<%";
-//    
-//    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:kTitleSizeForEmptyDataSet],
-//                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
-//    
-//    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
-//}
 
 
 @end

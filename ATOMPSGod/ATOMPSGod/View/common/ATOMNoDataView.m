@@ -21,6 +21,7 @@
         self.backgroundColor = [UIColor clearColor];
         [self createSubView];
         _canShow = NO;
+        self.hidden = YES;
     }
     return self;
 }
@@ -49,7 +50,6 @@
         make.size.mas_equalTo(CGSizeMake(150, 22));
     }];
 }
-
 
 
 @end

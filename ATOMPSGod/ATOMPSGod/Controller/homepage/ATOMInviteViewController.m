@@ -10,7 +10,7 @@
 #import "ATOMInviteView.h"
 #import "InviteCell.h"
 #import "ATOMInviteTableHeaderView.h"
-#import "MessageViewController.h"
+#import "CommentViewController.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMAskPageViewModel.h"
 #import "HomeViewController.h"
@@ -62,10 +62,11 @@
     [_inviteView.wxFriendCircleInviteButton addTarget:self action:@selector(clickWXFriendCircleButton:) forControlEvents:UIControlEventTouchUpInside];
     [_inviteView.wxFriendInviteButton addTarget:self action:@selector(clickWXFriendInviteButton:) forControlEvents:UIControlEventTouchUpInside];
     _inviteView.inviteTableView.delegate = self;
-    _inviteView.inviteTableView.dataSource = self;
+    _inviteView.inviteTableView.dataSource = nil;
     _tapInviteGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapInviteGesture:)];
     _tapInviteGesture.delegate = self;
     [_inviteView.inviteTableView addGestureRecognizer:_tapInviteGesture];
+    [self getRecommendDataSource];
 }
 
 #pragma mark - Gesture Event
@@ -133,7 +134,7 @@
 - (void)clickRightButtonItem:(UIBarButtonItem *)barButtonItem {
     
 //    kfcPageVM* vm = [kfcPageVM new];
-    MessageViewController* mvc = [MessageViewController new];
+    CommentViewController* mvc = [CommentViewController new];
 //    mvc.delegate = self;
     if (_askPageViewModel) {
         mvc.vm = [_askPageViewModel generatepageDetailViewModel];

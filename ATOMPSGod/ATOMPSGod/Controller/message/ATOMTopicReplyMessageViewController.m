@@ -11,7 +11,7 @@
 #import "ATOMTopicReplyMessageTableViewCell.h"
 #import "HotDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
-#import "MessageViewController.h"
+#import "CommentViewController.h"
 #import "ATOMReplyMessage.h"
 #import "ATOMReplyMessageViewModel.h"
 #import "ATOMHomeImage.h"
@@ -73,6 +73,7 @@
             [replyMessageViewModel setViewModelData:replyMessage];
             [ws.dataSource addObject:replyMessageViewModel];
         }
+        _tableView.dataSource = self;
         [[KShareManager mascotAnimator]dismiss];
         [ws.tableView reloadData];
     }];
@@ -125,7 +126,7 @@
     _tableView = [[RefreshFooterTableView alloc] initWithFrame:_topicReplyMessageView.bounds];
     [_topicReplyMessageView addSubview:_tableView];
     _tableView.delegate = self;
-    _tableView.dataSource = self;
+    _tableView.dataSource = nil;
     _tableView.emptyDataSetSource = self;
     _tableView.psDelegate = self;
     _tapTopicReplyMessageGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapTopicReplyMessageGesture:)];
@@ -152,7 +153,7 @@
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.workImageView.frame, p)) {
             if ([viewModel.homepageViewModel.totalPSNumber integerValue] == 0) {
-                MessageViewController* mvc = [MessageViewController new];
+                CommentViewController* mvc = [CommentViewController new];
                 mvc.vm = [viewModel.homepageViewModel generatepageDetailViewModel];;
 //                mvc.delegate = self;
                 [self pushViewController:mvc animated:YES];

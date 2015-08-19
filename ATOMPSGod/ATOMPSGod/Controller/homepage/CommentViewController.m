@@ -1,18 +1,14 @@
 //
-//  MessageViewController.m
+//  CommentViewController.m
 //  Messenger
 //
 //  Created by Ignacio Romero Zurbuchen on 8/15/14.
 //  Copyright (c) 2014 Slack Technologies, Inc. All rights reserved.
 //
 
-#import "MessageViewController.h"
-#import "MessageTableViewCell.h"
-#import "MessageTextView.h"
-#import "TypingIndicatorView.h"
-#import "Message.h"
-#import "LoremIpsum.h"
-
+#import "CommentViewController.h"
+#import "CommentTableViewCell.h"
+#import "CommentTextView.h"
 #import "JGActionSheet.h"
 #import "ATOMShareFunctionView.h"
 #import "CommentVM.h"
@@ -37,7 +33,7 @@
 
 static NSString *MessengerCellIdentifier = @"MessengerCell";
 
-@interface MessageViewController ()<ATOMShareFunctionViewDelegate,ATOMViewControllerDelegate,JGActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,DZNEmptyDataSetSource>
+@interface CommentViewController ()<ATOMShareFunctionViewDelegate,ATOMViewControllerDelegate,JGActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,DZNEmptyDataSetSource>
 
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) NSMutableArray *commentsHot;
@@ -55,7 +51,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 @end
 
-@implementation MessageViewController
+@implementation CommentViewController
 
 - (id)init
 {
@@ -83,7 +79,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)commonInit
 {
     // Register a SLKTextView subclass, if you need any special appearance and/or behavior customisation.
-    [self registerClassForTextView:[MessageTextView class]];
+    [self registerClassForTextView:[CommentTextView class]];
     
 #if DEBUG_CUSTOM_TYPING_INDICATOR
     // Register a UIView subclass, conforming to SLKTypingIndicatorProtocol, to use a custom typing indicator view.
@@ -118,7 +114,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 
 - (void)scrollElegantly {
-//    [self.tableView setContentOffset:CGPointMake(0, _headerView.frame.size.height - kfcBottomViewHeight) animated:YES];
+    [self.tableView setContentOffset:CGPointMake(0, _headerView.frame.size.height - kfcBottomViewHeight) animated:YES];
     [self.textView becomeFirstResponder];
 }
 
@@ -176,6 +172,12 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)didPressRightButton:(id)sender
 {
     // Notifies the view controller when the right button's action has been triggered, manually or by using the keyboard return key.
+    [self sendComment];
+    [super didPressRightButton:sender];
+}
+
+-(void)sendComment {
+
     
     // This little trick validates any pending auto-correction or auto-spelling just after hitting the 'Send' button
     [self.textView refreshFirstResponder];
@@ -190,7 +192,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
     UITableViewRowAnimation rowAnimation = self.inverted ? UITableViewRowAnimationBottom : UITableViewRowAnimationTop;
     UITableViewScrollPosition scrollPosition = self.inverted ? UITableViewScrollPositionBottom : UITableViewScrollPositionTop;
-
+    
     [self.tableView beginUpdates];
     [self.commentsNew insertObject:comment atIndex:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:rowAnimation];
@@ -208,17 +210,14 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [param setObject:@(_vm.pageID) forKey:@"target_id"];
     [param setObject:@(0) forKey:@"for_comment"];
     if (_atModel) {
-            [param setObject:@(_atModel.ID) forKey:@"comment_reply_to"];
+        [param setObject:@(_atModel.ID) forKey:@"comment_reply_to"];
     }
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
     [showDetailOfComment SendComment:param withBlock:^(NSInteger comment_id, NSError *error) {
         comment.ID = comment_id;
     }];
     _atModel = nil;
-    [super didPressRightButton:sender];
 }
-
-
 
 - (NSString *)keyForTextCaching
 {
@@ -287,9 +286,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.tableView == tableView) {
         static NSString *CellIdentifier = @"CommentCell";
-        MessageTableViewCell *cell = (MessageTableViewCell *)[self.tableView dequeueReusableCellWithIdentifier:MessengerCellIdentifier];
+        CommentTableViewCell *cell = (CommentTableViewCell *)[self.tableView dequeueReusableCellWithIdentifier:MessengerCellIdentifier];
         if (!cell) {
-            cell = [[MessageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            cell = [[CommentTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         if (indexPath.section == 0) {
             [cell getSource:_commentsHot[indexPath.row]];
@@ -402,6 +401,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 /** UITextViewDelegate */
 - (BOOL)textView:(SLKTextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
+    if ([text isEqualToString:@"\n"]) {
+        [self sendComment];
+    }
     return [super textView:textView shouldChangeTextInRange:range replacementText:text];
 }
 #pragma mark - Lazy Initialize
@@ -522,39 +524,39 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     return _reportActionSheet;
 }
 
-#pragma mark - ATOMShareFunctionViewDelegate
--(void)tapWechatFriends {
-    [self postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:(int)_vm.type];
-}
--(void)tapWechatMoment {
-    [self postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
-}
--(void)tapSinaWeibo {
-    [self postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:(int)_vm.type];
-}
--(void)tapCollect {
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    if (self.shareFunctionView.collectButton.selected) {
-        //收藏
-        [param setObject:@(1) forKey:@"status"];
-    } else {
-        //取消收藏
-        [param setObject:@(0) forKey:@"status"];
-    }
-    [ATOMCollectModel toggleCollect:param withPageType:_vm.type withID:_vm.pageID withBlock:^(NSError *error) {
-        if (!error) {
-            _vm.collected = self.shareFunctionView.collectButton.selected;
-        }
-    }];
-}
--(void)tapInvite {
-    ATOMInviteViewController* ivc = [ATOMInviteViewController new];
-    ivc.askPageViewModel = [_vm generateAskPageViewModel];
-    [self pushViewController:ivc animated:NO];
-}
--(void)tapReport {
-    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
-}
+//#pragma mark - ATOMShareFunctionViewDelegate
+//-(void)tapWechatFriends {
+//    [self postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:(int)_vm.type];
+//}
+//-(void)tapWechatMoment {
+//    [self postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
+//}
+//-(void)tapSinaWeibo {
+//    [self postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:(int)_vm.type];
+//}
+//-(void)tapCollect {
+//    NSMutableDictionary *param = [NSMutableDictionary new];
+//    if (self.shareFunctionView.collectButton.selected) {
+//        //收藏
+//        [param setObject:@(1) forKey:@"status"];
+//    } else {
+//        //取消收藏
+//        [param setObject:@(0) forKey:@"status"];
+//    }
+//    [ATOMCollectModel toggleCollect:param withPageType:_vm.type withID:_vm.pageID withBlock:^(NSError *error) {
+//        if (!error) {
+//            _vm.collected = self.shareFunctionView.collectButton.selected;
+//        }
+//    }];
+//}
+//-(void)tapInvite {
+//    ATOMInviteViewController* ivc = [ATOMInviteViewController new];
+//    ivc.askPageViewModel = [_vm generateAskPageViewModel];
+//    [self pushViewController:ivc animated:NO];
+//}
+//-(void)tapReport {
+//    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
+//}
 #pragma mark init and config
 
 -(void)configTableView {
@@ -563,7 +565,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     self.tableView.tableHeaderView = _headerView;
     self.tableView.emptyDataSetSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.tableView registerClass:[MessageTableViewCell class] forCellReuseIdentifier:MessengerCellIdentifier];
+    [self.tableView registerClass:[CommentTableViewCell class] forCellReuseIdentifier:MessengerCellIdentifier];
     self.tableView.tableFooterView = [UIView new];
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.showsHorizontalScrollIndicator = NO;
@@ -635,14 +637,14 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     if (indexPath) {
         NSInteger section = indexPath.section;
         NSInteger row = indexPath.row;
-        MessageTableViewCell *cell = (MessageTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        CommentTableViewCell *cell = (CommentTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         CommentVM *model = (section == 0) ? _commentsHot[row] : _commentsNew[row];
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.avatarView.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
             opvc.userID = model.uid;
             opvc.userName = model.username;
-            [self pushViewController:opvc animated:YES];
+            [self.navigationController pushViewController:opvc animated:YES];
         }
 //        else if (CGRectContainsPoint(cell.usernameLabel.frame, p)) {
 //            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
@@ -663,12 +665,12 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
     opvc.userID = _vm.uid;
     opvc.userName = _vm.userName;
-    [self pushViewController:opvc animated:YES];
+//    [self pushViewController:opvc animated:YES];
 }
 
-- (void)clickShareButton{
-    [self postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
-}
+//- (void)clickShareButton{
+//    [self postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
+//}
 
 - (void)clickMoreShareButton {
     self.shareFunctionView.collectButton.selected = _vm.collected;
@@ -679,7 +681,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
     opvc.userID = _vm.uid;
     opvc.userName = _vm.userName;
-    [self pushViewController:opvc animated:YES];
+//    [self pushViewController:opvc animated:YES];
 }
 
 - (void)clickPSButton {
@@ -782,7 +784,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         ATOMCropImageController *uwvc = [ATOMCropImageController new];
         uwvc.originImage = info[UIImagePickerControllerOriginalImage];
         uwvc.askPageViewModel = [ws.vm generateAskPageViewModel];
-        [ws pushViewController:uwvc animated:YES];
+//        [ws pushViewController:uwvc animated:YES];
     }];
 }
 
@@ -835,5 +837,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
+
 
 @end

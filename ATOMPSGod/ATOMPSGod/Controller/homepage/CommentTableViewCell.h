@@ -1,5 +1,5 @@
 //
-//  MessageTableViewCell.h
+//  CommentTableViewCell.h
 //  Messenger
 //
 //  Created by Ignacio Romero Zurbuchen on 9/1/14.
@@ -12,7 +12,7 @@
 static CGFloat kMessageTableViewCellMinimumHeight = 50.0;
 static CGFloat kMessageTableViewCellAvatarHeight = 30.0;
 
-@interface MessageTableViewCell : UITableViewCell
+@interface CommentTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) UIImageView *avatarView;
 @property (nonatomic, strong) UILabel *usernameLabel;

@@ -17,7 +17,7 @@
 #import "ATOMHomeImage.h"
 #import "ATOMAskPageViewModel.h"
 #import "RefreshFooterTableView.h"
-#import "MessageViewController.h"
+#import "CommentViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMInviteMessageViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource>
@@ -152,7 +152,7 @@
             if ([viewModel.homepageViewModel.totalPSNumber integerValue] == 0) {
                 kfcPageVM* vm = [kfcPageVM new];
                 [vm setCommonViewModelWithAsk:viewModel.homepageViewModel];
-                MessageViewController* mvc = [MessageViewController new];
+                CommentViewController* mvc = [CommentViewController new];
                 mvc.vm = vm;
 //                mvc.delegate = self;
                 [self pushViewController:mvc animated:YES];

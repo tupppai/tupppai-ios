@@ -18,7 +18,7 @@
 #import "RefreshFooterTableView.h"
 
 #import "ATOMCommonModel.h"
-#import "MessageViewController.h"
+#import "CommentViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMProceedingViewController () <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource>
@@ -94,7 +94,7 @@
             ATOMAskPageViewModel* askPVM = _homeImageDataSource[indexPath.row];
 
             if ([askPVM.totalPSNumber integerValue] == 0) {
-                MessageViewController* mvc = [MessageViewController new];
+                CommentViewController* mvc = [CommentViewController new];
                 mvc.vm = [askPVM generatepageDetailViewModel];
 //                mvc.delegate = self;
                 [self pushViewController:mvc animated:YES];

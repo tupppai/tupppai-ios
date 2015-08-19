@@ -28,12 +28,12 @@
 #import "ATOMCropImageController.h"
 #import "ATOMRecordModel.h"
 #import "ATOMBaseRequest.h"
-#import "MessageViewController.h"
+#import "CommentViewController.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMMyFollowViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,DZNEmptyDataSetSource>
+@interface ATOMMyFollowViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 @property (nonatomic, strong) UIView *myAttentionView;
 @property (nonatomic, strong) RefreshTableView *tableView;
@@ -46,8 +46,6 @@
 @property (nonatomic, strong) NSIndexPath* selectedIndexPath;
 @property (nonatomic, strong)  JGActionSheet * reportActionSheet;
 @property (nonatomic, strong)  JGActionSheet * psActionSheet;
-@property (nonatomic, assign)  BOOL hasSetSource;
-
 
 @end
 
@@ -77,8 +75,6 @@ static NSString *CellIdentifier = @"MyAttentionCell";
     _tableView.delegate = self;
     _tableView.psDelegate = self;
     _tableView.dataSource = self;
-//    _tableView.emptyDataSetSource = self;
-    _hasSetSource = NO;
     [_myAttentionView addSubview:_tableView];
     _tapMyAttentionGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMyAttentionGesture:)];
     [_tableView addGestureRecognizer:_tapMyAttentionGesture];
@@ -127,7 +123,7 @@ static NSString *CellIdentifier = @"MyAttentionCell";
             } else if (CGRectContainsPoint(cell.wechatButton.frame, p)) {
                 [self postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:vm.type];
             } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
-                MessageViewController* mvc = [MessageViewController new];
+                CommentViewController* mvc = [CommentViewController new];
                 kfcPageVM *vm = [kfcPageVM new];
                 [vm setCommonViewModelWithFollow:_dataSource[_selectedIndexPath.row]];
                 mvc.vm = vm;
@@ -412,10 +408,6 @@ static NSString *CellIdentifier = @"MyAttentionCell";
             [viewModel setViewModelData:commonImage];
             [_dataSource addObject:viewModel];
         }
-        if (!_hasSetSource) {
-            _tableView.dataSource = self;
-            _hasSetSource = YES;
-        }
         _tableView.noDataView.canShow = YES;
         [_tableView reloadData];
         [_tableView.header endRefreshing];
@@ -446,24 +438,6 @@ static NSString *CellIdentifier = @"MyAttentionCell";
         [_tableView.footer endRefreshing];
     }];
 }
-
-//#pragma mark - DZNEmptyDataSetSource & delegate
-//- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
-//{
-//    return [UIImage imageNamed:@"ic_cry"];
-//}
-//- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
-//{
-//    NSString *text = @"为什么你关注的人都这么懒-_-|||";
-//    
-//    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:kTitleSizeForEmptyDataSet],
-//                                 NSForegroundColorAttributeName: [UIColor kTitleForEmptySource]};
-//    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
-//}
-//
-//
-
-
 
 
 

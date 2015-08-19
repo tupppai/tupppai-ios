@@ -1,14 +1,14 @@
 //
-//  MessageTableViewCell.m
+//  CommentTableViewCell.m
 //  Messenger
 //
 //  Created by Ignacio Romero Zurbuchen on 9/1/14.
 //  Copyright (c) 2014 Slack Technologies, Inc. All rights reserved.
 //
 
-#import "MessageTableViewCell.h"
+#import "CommentTableViewCell.h"
 
-@implementation MessageTableViewCell
+@implementation CommentTableViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

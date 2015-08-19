@@ -1,5 +1,5 @@
 //
-//  MessageViewController.h
+//  CommentViewController.h
 //  Messenger
 //
 //  Created by Ignacio Romero Zurbuchen on 8/15/14.
@@ -9,7 +9,7 @@
 #import "SLKTextViewController.h"
 #import "kfcPageVM.h"
 #import "kfcPageView.h"
-@interface MessageViewController : SLKTextViewController
+@interface CommentViewController : SLKTextViewController
 
 @property (nonatomic, strong) kfcPageView *headerView;
 @property (nonatomic, strong) kfcPageVM *vm;

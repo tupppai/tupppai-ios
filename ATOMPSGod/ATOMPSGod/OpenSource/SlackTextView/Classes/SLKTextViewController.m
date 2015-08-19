@@ -1748,8 +1748,13 @@ NSInteger const SLKAlertViewClearTextTag = 1534347677; // absolute hash of 'SLKT
     
     if ([text isEqualToString:@"\n"]) {
         //Detected break. Should insert new line break manually.
-        [textView slk_insertNewLineBreak];
-        
+//        [textView slk_insertNewLineBreak];
+        if (self.shouldClearTextAtRightButtonPress) {
+            // Clears the text and the undo manager
+            [self.textView slk_clearText:YES];
+        }
+        // Clears cache
+        [self clearCachedText];
         return NO;
     }
     else {

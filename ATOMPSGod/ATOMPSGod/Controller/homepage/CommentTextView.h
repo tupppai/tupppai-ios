@@ -1,5 +1,5 @@
 //
-//  MessageTextView.h
+//  CommentTextView.h
 //  Messenger
 //
 //  Created by Ignacio Romero Z. on 1/20/15.
@@ -8,6 +8,6 @@
 
 #import "SLKTextView.h"
 
-@interface MessageTextView : SLKTextView
+@interface CommentTextView : SLKTextView
 
 @end

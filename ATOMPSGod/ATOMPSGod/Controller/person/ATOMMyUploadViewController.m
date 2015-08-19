@@ -9,7 +9,7 @@
 #import "ATOMMyUploadViewController.h"
 #import "ATOMMyUploadCollectionViewCell.h"
 #import "HotDetailViewController.h"
-#import "MessageViewController.h"
+#import "CommentViewController.h"
 #import "ATOMHomeImage.h"
 #import "ATOMAskPageViewModel.h"
 #import "ATOMAskViewModel.h"
@@ -165,7 +165,7 @@ static int collumnNumber = 3;
     ATOMAskPageViewModel *homepageViewModel = _homeImageDataSource[indexPath.row];
     if ([askViewModel.totalPSNumber integerValue] == 0) {
         
-        MessageViewController* mvc = [MessageViewController new];
+        CommentViewController* mvc = [CommentViewController new];
         mvc.vm = [homepageViewModel generatepageDetailViewModel];;
 //        mvc.delegate = self;
         [self pushViewController:mvc animated:YES];

@@ -19,7 +19,7 @@
 #import "ATOMAskPageViewModel.h"
 #import "RefreshFooterTableView.h"
 
-#import "MessageViewController.h"
+#import "CommentViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMCommentMessageViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource>
@@ -66,14 +66,13 @@
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     ATOMShowCommentMessage *showCommentMessage = [ATOMShowCommentMessage new];
-    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showCommentMessage ShowCommentMessage:param withBlock:^(NSMutableArray *commentMessageArray, NSError *error) {
-        ////[SVProgressHUD dismiss];
         for (ATOMCommentMessage *commentMessage in commentMessageArray) {
             ATOMCommentMessageViewModel *commentMessageViewModel = [ATOMCommentMessageViewModel new];
             [commentMessageViewModel setViewModelData:commentMessage];
             [ws.dataSource addObject:commentMessageViewModel];
         }
+        _tableView.dataSource = self;
         [[KShareManager mascotAnimator]dismiss];
         [ws.tableView reloadData];
     }];
@@ -125,7 +124,7 @@
     _tableView = [[RefreshFooterTableView alloc] initWithFrame:_commentMessageView.bounds];
     [_commentMessageView addSubview:_tableView];
     _tableView.delegate = self;
-    _tableView.dataSource = self;
+    _tableView.dataSource = nil;
     _tableView.emptyDataSetSource = self;
     _tableView.psDelegate = self;
     _tapCommentMessageGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCommentMessageGesture:)];
@@ -157,7 +156,7 @@
         if (CGRectContainsPoint(cell.workImageView.frame, p)) {
             if ([viewModel.homepageViewModel.totalPSNumber integerValue] == 0) {
                 //进入最新详情
-                MessageViewController* mvc = [MessageViewController new];
+                CommentViewController* mvc = [CommentViewController new];
                 mvc.vm = [viewModel.homepageViewModel generatepageDetailViewModel];
 //                mvc.delegate = self;
                 [self pushViewController:mvc animated:YES];

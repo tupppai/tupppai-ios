@@ -77,6 +77,7 @@
             [concernViewModel setViewModelData:concern];
             [ws.myDataSource addObject:concernViewModel];
         }
+        _tableView.dataSource = self;
         [ws.tableView.header endRefreshing];
         [ws.tableView reloadData];
         ws.isRefreshingHeader = NO;
@@ -126,7 +127,7 @@
     _tableView.backgroundColor = [UIColor colorWithHex:0xededed];
     [_myConcernView addSubview:_tableView];
     _tableView.delegate = self;
-    _tableView.dataSource = self;
+    _tableView.dataSource = nil;
     _tableView.psDelegate = self;
     _tapMyConcernGesutre = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMyConcernGesutre:)];
     [_tableView addGestureRecognizer:_tapMyConcernGesutre];

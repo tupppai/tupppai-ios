@@ -31,11 +31,11 @@
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
-    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
+    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 15, 30)];
+    backButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     [backView addSubview:backButton];
     [backButton setImage:[UIImage imageNamed:@"icon_back"] forState:UIControlStateNormal];
-    [backButton setImageEdgeInsets:UIEdgeInsetsMake(6, -25, 6, 19)];
     UIBarButtonItem *barBackButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backView];
     [backButton addTarget:self action:@selector(popCurrentController) forControlEvents:UIControlEventTouchUpInside];
     _negativeSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];

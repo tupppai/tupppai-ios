@@ -34,6 +34,7 @@
         self.gifFooter.refreshingImages = animatedImages;
         self.footer.stateHidden = YES;
         self.tableFooterView = [UIView new];
+    
     }
     return self;
 }
@@ -42,7 +43,6 @@
 - (ATOMNoDataView *)noDataView {
     if (!_noDataView) {
         _noDataView = [ATOMNoDataView new];
-        _noDataView.hidden = YES;
         [self addSubview:_noDataView];
         _noDataView.frame = CGRectMake(CGRectGetMidX(self.bounds)-self.bounds.size.width/4, CGRectGetMidY(self.bounds)-self.bounds.size.height/4, self.bounds.size.width/2, self.bounds.size.height/2);
     }
@@ -60,7 +60,7 @@
 
 -(void)reloadData {
     [super reloadData];
-    if (_noDataView.canShow) {
+    if (self.noDataView.canShow) {
         if (self) {
             for (int i = 0; i < [self numberOfSections]; i++) {
                 if ([self numberOfRowsInSection:i] > 0) {

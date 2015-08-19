@@ -31,7 +31,7 @@
 #import "JTSImageViewController.h"
 #import "JTSImageInfo.h"
 #import "UITableView+FDTemplateLayoutCell.h"
-#import "MessageViewController.h"
+#import "CommentViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface HotDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate,JTSImageViewControllerInteractionsDelegate>
@@ -461,7 +461,7 @@ static NSString *CellIdentifier = @"HotDetailCell";
                 } else {
                     [vm setCommonViewModelWithAsk:_askPageViewModel];
                 }
-                    MessageViewController* mvc = [MessageViewController new];
+                    CommentViewController* mvc = [CommentViewController new];
                     mvc.vm = vm;
                     mvc.delegate = self;
                     [self pushViewController:mvc animated:YES];

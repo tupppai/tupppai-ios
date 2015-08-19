@@ -15,7 +15,7 @@
 #import "ATOMCollectionViewModel.h"
 #import "ATOMShowCollection.h"
 #import "PWRefreshFooterCollectionView.h"
-#import "MessageViewController.h"
+#import "CommentViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMMyCollectionViewController () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource>
@@ -163,7 +163,7 @@ static float cellWidth;
         if (CGRectContainsPoint(cell.collectionImageView.frame, p)) {
             if (cell.viewModel.type == ATOMPageTypeAsk) {
                 if (cell.viewModel.totalPSNumber == 0) {
-                    MessageViewController* mvc = [MessageViewController new];
+                    CommentViewController* mvc = [CommentViewController new];
                     mvc.vm = [model generatepageDetailViewModel];
                     [self pushViewController:mvc animated:YES];
                 } else {

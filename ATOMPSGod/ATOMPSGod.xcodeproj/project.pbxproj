@@ -339,12 +339,9 @@
 		E94B03101B7C72E000863C6F /* SLKTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B03051B7C72E000863C6F /* SLKTextViewController.m */; };
 		E94B03111B7C72E000863C6F /* SLKTypingIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B03081B7C72E000863C6F /* SLKTypingIndicatorView.m */; };
 		E94B03141B7C744B00863C6F /* ATOMPageCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B03131B7C744B00863C6F /* ATOMPageCommentViewController.m */; };
-		E94B03201B7C74E500863C6F /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B03171B7C74E500863C6F /* Message.m */; };
-		E94B03211B7C74E500863C6F /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B03191B7C74E500863C6F /* MessageTableViewCell.m */; };
-		E94B03221B7C74E500863C6F /* MessageTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B031B1B7C74E500863C6F /* MessageTextView.m */; };
-		E94B03231B7C74E500863C6F /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B031D1B7C74E500863C6F /* MessageViewController.m */; };
-		E94B03241B7C74E500863C6F /* TypingIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B031F1B7C74E500863C6F /* TypingIndicatorView.m */; };
-		E94B03271B7C75E500863C6F /* LoremIpsum.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B03261B7C75E500863C6F /* LoremIpsum.m */; };
+		E94B03211B7C74E500863C6F /* CommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B03191B7C74E500863C6F /* CommentTableViewCell.m */; };
+		E94B03221B7C74E500863C6F /* CommentTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B031B1B7C74E500863C6F /* CommentTextView.m */; };
+		E94B03231B7C74E500863C6F /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B031D1B7C74E500863C6F /* CommentViewController.m */; };
 		E94B032A1B7DE6EC00863C6F /* UIColor+PSGod.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B03291B7DE6EC00863C6F /* UIColor+PSGod.m */; };
 		E94B032D1B7DE7D300863C6F /* kfcViews.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B032C1B7DE7D300863C6F /* kfcViews.m */; };
 		E95691AA1B22E88300DA84BB /* EXTRuntimeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = E956918C1B22E88300DA84BB /* EXTRuntimeExtensions.m */; };
@@ -1101,18 +1098,12 @@
 		E94B03081B7C72E000863C6F /* SLKTypingIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLKTypingIndicatorView.m; sourceTree = "<group>"; };
 		E94B03121B7C744B00863C6F /* ATOMPageCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMPageCommentViewController.h; sourceTree = "<group>"; };
 		E94B03131B7C744B00863C6F /* ATOMPageCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMPageCommentViewController.m; sourceTree = "<group>"; };
-		E94B03161B7C74E500863C6F /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
-		E94B03171B7C74E500863C6F /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
-		E94B03181B7C74E500863C6F /* MessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTableViewCell.h; sourceTree = "<group>"; };
-		E94B03191B7C74E500863C6F /* MessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableViewCell.m; sourceTree = "<group>"; };
-		E94B031A1B7C74E500863C6F /* MessageTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTextView.h; sourceTree = "<group>"; };
-		E94B031B1B7C74E500863C6F /* MessageTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTextView.m; sourceTree = "<group>"; };
-		E94B031C1B7C74E500863C6F /* MessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageViewController.h; sourceTree = "<group>"; };
-		E94B031D1B7C74E500863C6F /* MessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageViewController.m; sourceTree = "<group>"; };
-		E94B031E1B7C74E500863C6F /* TypingIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TypingIndicatorView.h; sourceTree = "<group>"; };
-		E94B031F1B7C74E500863C6F /* TypingIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TypingIndicatorView.m; sourceTree = "<group>"; };
-		E94B03251B7C75E500863C6F /* LoremIpsum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoremIpsum.h; sourceTree = "<group>"; };
-		E94B03261B7C75E500863C6F /* LoremIpsum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoremIpsum.m; sourceTree = "<group>"; };
+		E94B03181B7C74E500863C6F /* CommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentTableViewCell.h; sourceTree = "<group>"; };
+		E94B03191B7C74E500863C6F /* CommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentTableViewCell.m; sourceTree = "<group>"; };
+		E94B031A1B7C74E500863C6F /* CommentTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentTextView.h; sourceTree = "<group>"; };
+		E94B031B1B7C74E500863C6F /* CommentTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentTextView.m; sourceTree = "<group>"; };
+		E94B031C1B7C74E500863C6F /* CommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentViewController.h; sourceTree = "<group>"; };
+		E94B031D1B7C74E500863C6F /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
 		E94B03281B7DE6EC00863C6F /* UIColor+PSGod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+PSGod.h"; sourceTree = "<group>"; };
 		E94B03291B7DE6EC00863C6F /* UIColor+PSGod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+PSGod.m"; sourceTree = "<group>"; };
 		E94B032B1B7DE7D300863C6F /* kfcViews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kfcViews.h; sourceTree = "<group>"; };
@@ -1354,7 +1345,7 @@
 		5C4F5BD71AA551BF00226F64 /* homepage */ = {
 			isa = PBXGroup;
 			children = (
-				E94B03151B7C74C600863C6F /* commentTest */,
+				E94B03151B7C74C600863C6F /* comment */,
 				5C4F5BDA1AA555F900226F64 /* HomeViewController.h */,
 				5C4F5BDB1AA555F900226F64 /* HomeViewController.m */,
 				5C4F5BF71AA5E0B600226F64 /* HotDetailViewController.h */,
@@ -2610,23 +2601,17 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
-		E94B03151B7C74C600863C6F /* commentTest */ = {
+		E94B03151B7C74C600863C6F /* comment */ = {
 			isa = PBXGroup;
 			children = (
-				E94B03161B7C74E500863C6F /* Message.h */,
-				E94B03171B7C74E500863C6F /* Message.m */,
-				E94B03181B7C74E500863C6F /* MessageTableViewCell.h */,
-				E94B03191B7C74E500863C6F /* MessageTableViewCell.m */,
-				E94B03251B7C75E500863C6F /* LoremIpsum.h */,
-				E94B03261B7C75E500863C6F /* LoremIpsum.m */,
-				E94B031A1B7C74E500863C6F /* MessageTextView.h */,
-				E94B031B1B7C74E500863C6F /* MessageTextView.m */,
-				E94B031C1B7C74E500863C6F /* MessageViewController.h */,
-				E94B031D1B7C74E500863C6F /* MessageViewController.m */,
-				E94B031E1B7C74E500863C6F /* TypingIndicatorView.h */,
-				E94B031F1B7C74E500863C6F /* TypingIndicatorView.m */,
+				E94B03181B7C74E500863C6F /* CommentTableViewCell.h */,
+				E94B03191B7C74E500863C6F /* CommentTableViewCell.m */,
+				E94B031A1B7C74E500863C6F /* CommentTextView.h */,
+				E94B031B1B7C74E500863C6F /* CommentTextView.m */,
+				E94B031C1B7C74E500863C6F /* CommentViewController.h */,
+				E94B031D1B7C74E500863C6F /* CommentViewController.m */,
 			);
-			name = commentTest;
+			name = comment;
 			sourceTree = "<group>";
 		};
 		E95691881B22E88300DA84BB /* Mantle */ = {
@@ -3154,7 +3139,7 @@
 				5CDB06031AA405A40089121E /* UIColor+Hex.m in Sources */,
 				E900AB4D1B41153A0019BAEA /* UIImageView+AFNetworking.m in Sources */,
 				5C5DDBD41AD4087800F4B845 /* ATOMProceedingViewModel.m in Sources */,
-				E94B03231B7C74E500863C6F /* MessageViewController.m in Sources */,
+				E94B03231B7C74E500863C6F /* CommentViewController.m in Sources */,
 				5C6697B31AAFE0A6001FCF8A /* ATOMProfileEditView.m in Sources */,
 				5C561A2C1AB7C31A0052D4D5 /* FMDatabasePool.m in Sources */,
 				5C4C70E51AB7124F00358989 /* ATOMLogin.m in Sources */,
@@ -3172,7 +3157,6 @@
 				E94B030E1B7C72E000863C6F /* SLKTextInputbar.m in Sources */,
 				5C83A8931AC66F910071A024 /* POPMath.mm in Sources */,
 				5C0F04F71ADD033D002003AE /* ATOMFansViewModel.m in Sources */,
-				E94B03241B7C74E500863C6F /* TypingIndicatorView.m in Sources */,
 				5C3101901AAEC8F900EF529B /* ATOMMessageRemindViewController.m in Sources */,
 				5C54DF201AB9738E00BDE34D /* ATOMMainTabBarController.m in Sources */,
 				5C535CB71AF1FC8A00BF30D1 /* ATOMShareFunctionView.m in Sources */,
@@ -3267,7 +3251,7 @@
 				5C4F5BDC1AA555F900226F64 /* HomeViewController.m in Sources */,
 				5C436A931AB074EF00D14608 /* ATOMInviteMessageTableViewCell.m in Sources */,
 				E9FD023D1B29708200FC5E17 /* kfcPageVM.m in Sources */,
-				E94B03211B7C74E500863C6F /* MessageTableViewCell.m in Sources */,
+				E94B03211B7C74E500863C6F /* CommentTableViewCell.m in Sources */,
 				5C559B3A1AB138C3000C5B50 /* ATOMInviteView.m in Sources */,
 				E900AB4A1B41153A0019BAEA /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				5CDB06041AA405A40089121E /* UIColor+HSB.m in Sources */,
@@ -3296,7 +3280,6 @@
 				5C561A2B1AB7C31A0052D4D5 /* FMDatabaseAdditions.m in Sources */,
 				5C8A2A181AAF1CE20064EB1C /* ATOMMyConcernViewController.m in Sources */,
 				E99D2F581B1C7E8D000D7784 /* UIImage+Reflection.m in Sources */,
-				E94B03271B7C75E500863C6F /* LoremIpsum.m in Sources */,
 				E900AB461B41153A0019BAEA /* AFURLRequestSerialization.m in Sources */,
 				5C3E0CE51ABEB052006C9175 /* kfcPageView.m in Sources */,
 				E99D2F5C1B1C7E8D000D7784 /* UIScrollView+Screenshot.m in Sources */,
@@ -3338,7 +3321,7 @@
 				E94B030D1B7C72E000863C6F /* SLKInputAccessoryView.m in Sources */,
 				5C8A2A241AAF31B30064EB1C /* ATOMMyConcernTableFooterView.m in Sources */,
 				5C84062C1ABA67CC00068F35 /* JSONKit.m in Sources */,
-				E94B03221B7C74E500863C6F /* MessageTextView.m in Sources */,
+				E94B03221B7C74E500863C6F /* CommentTextView.m in Sources */,
 				5C6697B61AAFED63001FCF8A /* ATOMProceedingViewController.m in Sources */,
 				E93ED5261B7F25F00035630B /* UITableView+FDTemplateLayoutCell.m in Sources */,
 				E900919D1B71E04E004623E4 /* ATOMInputVerifyCodeAndPasswordViewController.m in Sources */,
@@ -3421,7 +3404,6 @@
 				5CADF3EE1AAC8A3100FF8015 /* ATOMPersonView.m in Sources */,
 				E90197351B32D2F800F46B78 /* MBProgressHUD.m in Sources */,
 				E99D2F5D1B1C7E8D000D7784 /* UIView+Screenshot.m in Sources */,
-				E94B03201B7C74E500863C6F /* Message.m in Sources */,
 				E94B032A1B7DE6EC00863C6F /* UIColor+PSGod.m in Sources */,
 				5C9BDA001AA8303700715698 /* ATOMUploadWorkView.m in Sources */,
 				5C4F5BF61AA5BFEC00226F64 /* kfcAskCell.m in Sources */,
