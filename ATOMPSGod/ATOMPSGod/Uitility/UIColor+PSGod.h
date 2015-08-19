@@ -14,6 +14,7 @@
 +(UIColor *)kfcButton;
 +(UIColor *)kfcButtonSelected;
 +  (UIColor *)kfcPublishType;
++  (UIColor *)kTitleForEmptySource;
 @end
 @interface UIFont(PSGod)
 +  (UIFont *)kfcButton;

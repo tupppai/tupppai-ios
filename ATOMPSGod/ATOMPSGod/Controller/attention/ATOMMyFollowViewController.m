@@ -33,7 +33,7 @@
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMMyFollowViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface ATOMMyFollowViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,DZNEmptyDataSetSource>
 
 @property (nonatomic, strong) UIView *myAttentionView;
 @property (nonatomic, strong) RefreshTableView *tableView;
@@ -46,213 +46,14 @@
 @property (nonatomic, strong) NSIndexPath* selectedIndexPath;
 @property (nonatomic, strong)  JGActionSheet * reportActionSheet;
 @property (nonatomic, strong)  JGActionSheet * psActionSheet;
+@property (nonatomic, assign)  BOOL hasSetSource;
+
 
 @end
 
 @implementation ATOMMyFollowViewController
 static NSString *CellIdentifier = @"MyAttentionCell";
 
-#pragma mark - Lazy Initialize
-- (ATOMShareFunctionView *)shareFunctionView {
-    if (!_shareFunctionView) {
-        _shareFunctionView = [ATOMShareFunctionView new];
-        _shareFunctionView.delegate = self;
-    }
-    return _shareFunctionView;
-}
-- (JGActionSheet *)psActionSheet {
-    WS(ws);
-    if (!_psActionSheet) {
-        _psActionSheet = [JGActionSheet new];
-        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"下载素材", @"上传作品",@"取消"] buttonStyle:JGActionSheetButtonStyleDefault];
-        [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:2];
-        NSArray *sections = @[section];
-        _psActionSheet = [JGActionSheet actionSheetWithSections:sections];
-        _psActionSheet.delegate = self;
-        [_psActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
-            [sheet dismissAnimated:YES];
-        }];
-        [_psActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
-            switch (indexPath.row) {
-                case 0:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    [ws dealDownloadWork];
-                    break;
-                case 1:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    [ws dealUploadWork];
-                    break;
-                case 2:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    break;
-                default:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    break;
-            }
-        }];
-    }
-    return _psActionSheet;
-}
-- (UIImagePickerController *)imagePickerController {
-    if (_imagePickerController == nil) {
-        _imagePickerController = [UIImagePickerController new];
-        _imagePickerController.delegate = self;
-    }
-    return _imagePickerController;
-}
-- (JGActionSheet *)reportActionSheet {
-    WS(ws);
-    if (!_reportActionSheet) {
-        _reportActionSheet = [JGActionSheet new];
-        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"色情、淫秽或低俗内容", @"广告或垃圾信息",@"违反法律法规的内容"] buttonStyle:JGActionSheetButtonStyleDefault];
-        NSArray *sections = @[section];
-        _reportActionSheet = [JGActionSheet actionSheetWithSections:sections];
-        _reportActionSheet.delegate = self;
-        [_reportActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
-            [sheet dismissAnimated:YES];
-        }];
-        [_reportActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
-            NSMutableDictionary* param = [NSMutableDictionary new];
-            kfcFollowVM* vm = ws.dataSource[ws.selectedIndexPath.row];
-            [param setObject:@(vm.imageID) forKey:@"target_id"];
-            [param setObject:@(vm.type) forKey:@"target_type"];
-            UIButton* b = section.buttons[indexPath.row];
-            switch (indexPath.row) {
-                case 0:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                case 1:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                case 2:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                default:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    break;
-            }
-            [ATOMReportModel report:param withBlock:^(NSError *error) {
-                if(!error) {
-                    [Util TextHud:@"已举报" inView:ws.view];
-                }
-            }];
-        }];
-    }
-    return _reportActionSheet;
-}
-
-#pragma mark Refresh
-
-- (void)loadNewHotData {
-    [self getDataSource];
-    [_tableView.header endRefreshing];
-}
-
-- (void)loadMoreHotData {
-    if (_canRefreshFooter) {
-        [self getMoreDataSource];
-    } else {
-        [_tableView.footer endRefreshing];
-    }
-}
-#pragma mark - ATOMShareFunctionViewDelegate
--(void)tapWechatFriends {
-    kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];
-    [self postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:vm.type];
-}
--(void)tapWechatMoment {
-    kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];
-    [self postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:vm.type];
-}
--(void)tapSinaWeibo {
-    kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];
-    [self postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:vm.type];
-}
--(void)tapInvite {
-    kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];
-    ATOMInviteViewController* ivc = [ATOMInviteViewController new];
-    NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:@(vm.imageID),@"ID",@(vm.askID),@"askID",@(vm.type),@"type", nil];
-    ivc.info = info;
-    [self pushViewController:ivc animated:NO];
-}
--(void)tapCollect {
-    kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    if (self.shareFunctionView.collectButton.selected) {
-        //收藏
-        [param setObject:@(1) forKey:@"status"];
-    } else {
-        //取消收藏
-        [param setObject:@(0) forKey:@"status"];
-    }
-    [ATOMCollectModel toggleCollect:param withPageType:vm.type withID:vm.imageID withBlock:^(NSError *error) {
-        if (!error) {
-            vm.collected = self.shareFunctionView.collectButton.selected;
-        } else {
-            self.shareFunctionView.collectButton.selected = !self.shareFunctionView.collectButton.selected;
-        }
-    }];
-}
--(void)tapReport {
-    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
-}
-
-#pragma mark - GetDataSource
-- (void)firstGetDataSource {
-    [_tableView.header beginRefreshing];
-    [self getDataSource];
-}
-
-- (void)getDataSource {
-    _currentPage = 1;
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
-    [param setObject:@(_currentPage) forKey:@"page"];
-    [param setObject:@(10) forKey:@"size"];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
-    ATOMShowAttention *showAttention = [ATOMShowAttention new];
-    [showAttention ShowAttention:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        if (resultArray.count) {
-            [_dataSource removeAllObjects];
-        }
-        for (ATOMCommonImage *commonImage in resultArray) {
-            kfcFollowVM * viewModel = [kfcFollowVM new];
-            [viewModel setViewModelData:commonImage];
-            [_dataSource addObject:viewModel];
-        }
-        [_tableView reloadData];
-        [_tableView.header endRefreshing];
-    }];
-}
-
-- (void)getMoreDataSource {
-    _currentPage++;
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
-    [param setObject:@(_currentPage) forKey:@"page"];
-    [param setObject:@(10) forKey:@"size"];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
-    ATOMShowAttention *showAttention = [ATOMShowAttention new];
-    [showAttention ShowAttention:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        for (ATOMCommonImage *commonImage in resultArray) {
-            kfcFollowVM * viewModel = [kfcFollowVM new];
-            [viewModel setViewModelData:commonImage];
-            [_dataSource addObject:viewModel];
-        }
-        if (resultArray.count == 0) {
-            _canRefreshFooter = NO;
-        } else {
-            _canRefreshFooter = YES;
-        }
-        [_tableView reloadData];
-        [_tableView.footer endRefreshing];
-    }];
-}
 
 #pragma mark - UI
 
@@ -275,7 +76,9 @@ static NSString *CellIdentifier = @"MyAttentionCell";
     _tableView.estimatedRowHeight = SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT;
     _tableView.delegate = self;
     _tableView.psDelegate = self;
-    _tableView.dataSource = self;
+    _tableView.dataSource = nil;
+//    _tableView.emptyDataSetSource = self;
+    _hasSetSource = NO;
     [_myAttentionView addSubview:_tableView];
     _tapMyAttentionGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMyAttentionGesture:)];
     [_tableView addGestureRecognizer:_tapMyAttentionGesture];
@@ -438,9 +241,226 @@ static NSString *CellIdentifier = @"MyAttentionCell";
 }
 
 
+#pragma mark - Lazy Initialize
+- (ATOMShareFunctionView *)shareFunctionView {
+    if (!_shareFunctionView) {
+        _shareFunctionView = [ATOMShareFunctionView new];
+        _shareFunctionView.delegate = self;
+    }
+    return _shareFunctionView;
+}
+- (JGActionSheet *)psActionSheet {
+    WS(ws);
+    if (!_psActionSheet) {
+        _psActionSheet = [JGActionSheet new];
+        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"下载素材", @"上传作品",@"取消"] buttonStyle:JGActionSheetButtonStyleDefault];
+        [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:2];
+        NSArray *sections = @[section];
+        _psActionSheet = [JGActionSheet actionSheetWithSections:sections];
+        _psActionSheet.delegate = self;
+        [_psActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
+            [sheet dismissAnimated:YES];
+        }];
+        [_psActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
+            switch (indexPath.row) {
+                case 0:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    [ws dealDownloadWork];
+                    break;
+                case 1:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    [ws dealUploadWork];
+                    break;
+                case 2:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    break;
+                default:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    break;
+            }
+        }];
+    }
+    return _psActionSheet;
+}
+- (UIImagePickerController *)imagePickerController {
+    if (_imagePickerController == nil) {
+        _imagePickerController = [UIImagePickerController new];
+        _imagePickerController.delegate = self;
+    }
+    return _imagePickerController;
+}
+- (JGActionSheet *)reportActionSheet {
+    WS(ws);
+    if (!_reportActionSheet) {
+        _reportActionSheet = [JGActionSheet new];
+        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"色情、淫秽或低俗内容", @"广告或垃圾信息",@"违反法律法规的内容"] buttonStyle:JGActionSheetButtonStyleDefault];
+        NSArray *sections = @[section];
+        _reportActionSheet = [JGActionSheet actionSheetWithSections:sections];
+        _reportActionSheet.delegate = self;
+        [_reportActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
+            [sheet dismissAnimated:YES];
+        }];
+        [_reportActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
+            NSMutableDictionary* param = [NSMutableDictionary new];
+            kfcFollowVM* vm = ws.dataSource[ws.selectedIndexPath.row];
+            [param setObject:@(vm.imageID) forKey:@"target_id"];
+            [param setObject:@(vm.type) forKey:@"target_type"];
+            UIButton* b = section.buttons[indexPath.row];
+            switch (indexPath.row) {
+                case 0:
+                    [ws.reportActionSheet dismissAnimated:YES];
+                    [param setObject:b.titleLabel.text forKey:@"content"];
+                    break;
+                case 1:
+                    [ws.reportActionSheet dismissAnimated:YES];
+                    [param setObject:b.titleLabel.text forKey:@"content"];
+                    break;
+                case 2:
+                    [ws.reportActionSheet dismissAnimated:YES];
+                    [param setObject:b.titleLabel.text forKey:@"content"];
+                    break;
+                default:
+                    [ws.reportActionSheet dismissAnimated:YES];
+                    break;
+            }
+            [ATOMReportModel report:param withBlock:^(NSError *error) {
+                if(!error) {
+                    [Util TextHud:@"已举报" inView:ws.view];
+                }
+            }];
+        }];
+    }
+    return _reportActionSheet;
+}
 
+#pragma mark Refresh
 
+- (void)loadNewHotData {
+    [self getDataSource];
+    [_tableView.header endRefreshing];
+}
 
+- (void)loadMoreHotData {
+    if (_canRefreshFooter) {
+        [self getMoreDataSource];
+    } else {
+        [_tableView.footer endRefreshing];
+    }
+}
+#pragma mark - ATOMShareFunctionViewDelegate
+-(void)tapWechatFriends {
+    kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];
+    [self postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:vm.type];
+}
+-(void)tapWechatMoment {
+    kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];
+    [self postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:vm.type];
+}
+-(void)tapSinaWeibo {
+    kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];
+    [self postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:vm.type];
+}
+-(void)tapInvite {
+    kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];
+    ATOMInviteViewController* ivc = [ATOMInviteViewController new];
+    NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:@(vm.imageID),@"ID",@(vm.askID),@"askID",@(vm.type),@"type", nil];
+    ivc.info = info;
+    [self pushViewController:ivc animated:NO];
+}
+-(void)tapCollect {
+    kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    if (self.shareFunctionView.collectButton.selected) {
+        //收藏
+        [param setObject:@(1) forKey:@"status"];
+    } else {
+        //取消收藏
+        [param setObject:@(0) forKey:@"status"];
+    }
+    [ATOMCollectModel toggleCollect:param withPageType:vm.type withID:vm.imageID withBlock:^(NSError *error) {
+        if (!error) {
+            vm.collected = self.shareFunctionView.collectButton.selected;
+        } else {
+            self.shareFunctionView.collectButton.selected = !self.shareFunctionView.collectButton.selected;
+        }
+    }];
+}
+-(void)tapReport {
+    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
+}
+
+#pragma mark - GetDataSource
+- (void)firstGetDataSource {
+    [_tableView.header beginRefreshing];
+}
+
+- (void)getDataSource {
+    _currentPage = 1;
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
+    [param setObject:@(_currentPage) forKey:@"page"];
+    [param setObject:@(10) forKey:@"size"];
+    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    ATOMShowAttention *showAttention = [ATOMShowAttention new];
+    [showAttention ShowAttention:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
+        if (resultArray.count) {
+            [_dataSource removeAllObjects];
+        }
+        for (ATOMCommonImage *commonImage in resultArray) {
+            kfcFollowVM * viewModel = [kfcFollowVM new];
+            [viewModel setViewModelData:commonImage];
+            [_dataSource addObject:viewModel];
+        }
+        if (!_hasSetSource) {
+            _tableView.dataSource = self;
+            _hasSetSource = YES;
+        }
+        [_tableView reloadData];
+        [_tableView.header endRefreshing];
+    }];
+}
+
+- (void)getMoreDataSource {
+    _currentPage++;
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
+    [param setObject:@(_currentPage) forKey:@"page"];
+    [param setObject:@(10) forKey:@"size"];
+    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    ATOMShowAttention *showAttention = [ATOMShowAttention new];
+    [showAttention ShowAttention:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
+        for (ATOMCommonImage *commonImage in resultArray) {
+            kfcFollowVM * viewModel = [kfcFollowVM new];
+            [viewModel setViewModelData:commonImage];
+            [_dataSource addObject:viewModel];
+        }
+        if (resultArray.count == 0) {
+            _canRefreshFooter = NO;
+        } else {
+            _canRefreshFooter = YES;
+        }
+        [_tableView reloadData];
+        [_tableView.footer endRefreshing];
+    }];
+}
+
+//#pragma mark - DZNEmptyDataSetSource & delegate
+//- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
+//{
+//    return [UIImage imageNamed:@"ic_cry"];
+//}
+//- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+//{
+//    NSString *text = @"为什么你关注的人都这么懒-_-|||";
+//    
+//    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:kTitleSizeForEmptyDataSet],
+//                                 NSForegroundColorAttributeName: [UIColor kTitleForEmptySource]};
+//    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+//}
+//
+//
 
 
 

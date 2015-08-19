@@ -26,6 +26,10 @@
 +  (UIColor *)kfcPublishType {
     return [UIColor colorWithHex:0x74c3ff];
 }
++  (UIColor *)kTitleForEmptySource {
+    return [UIColor lightGrayColor];
+}
+
 @end
 @implementation UIFont (PSGod)
 
