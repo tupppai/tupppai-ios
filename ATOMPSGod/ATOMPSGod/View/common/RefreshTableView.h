@@ -11,4 +11,5 @@
 
 @interface RefreshTableView : UITableView
 @property (nonatomic, weak) id<PWRefreshBaseTableViewDelegate> psDelegate;
+@property (nonatomic, strong) ATOMNoDataView* noDataView;
 @end

@@ -20,7 +20,7 @@
 #import "MessageViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMInviteMessageViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate>
+@interface ATOMInviteMessageViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource>
 
 @property (nonatomic, strong) UIView *inviteMessageView;
 @property (nonatomic, strong) RefreshFooterTableView *tableView;
@@ -53,6 +53,7 @@
 
 - (void)getDataSource {
     WS(ws);
+    [[KShareManager mascotAnimator]show];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     _dataSource = nil;
@@ -73,6 +74,7 @@
             [inviteMessageViewModel setViewModelData:inviteMessage];
             [ws.dataSource addObject:inviteMessageViewModel];
         }
+        [[KShareManager mascotAnimator]dismiss];
         [ws.tableView reloadData];
     }];
 }
@@ -123,6 +125,7 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.psDelegate = self;
+    _tableView.emptyDataSetSource = self;
     _tapInviteMessageGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapInviteMessageGesture:)];
     [_tableView addGestureRecognizer:_tapInviteMessageGesture];
     _canRefreshFooter = YES;
@@ -208,6 +211,21 @@
 //            self.view = self.noDataView;
 //        }
     }
+}
+
+#pragma mark - DZNEmptyDataSetSource & delegate
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
+{
+    return [UIImage imageNamed:@"ic_cry"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text = @"还没有人邀请你,快去社区活跃一下吧";
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:kTitleSizeForEmptyDataSet],
+                                 NSForegroundColorAttributeName: [UIColor kTitleForEmptySource]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
 

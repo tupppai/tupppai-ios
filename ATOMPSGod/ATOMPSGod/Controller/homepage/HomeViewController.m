@@ -74,20 +74,10 @@ static NSString *CellIdentifier2 = @"AskCell";
 #pragma mark - GetDataSource from DB
 - (void)firstGetDataSourceFromDataBase {
     _dataSourceOfHotTableView = [self fetchDBDataSourceWithHomeType:ATOMHomepageViewTypeHot];
-    if (_dataSourceOfHotTableView.count > 0) {
-        NSLog(@"_dataSourceOfHotTableView.count > 0");
-        _hasSetHotSource = YES;
-        _scrollView.hotTable.dataSource = self;
         [_scrollView.hotTable reloadData];
-    }
 
     _dataSourceOfAskTableView = [self fetchDBDataSourceWithHomeType:ATOMHomepageViewTypeAsk];
-    if (_dataSourceOfAskTableView.count > 0) {
-        _hasSetAskSource = YES;
-        _scrollView.askTable.dataSource = self;
         [_scrollView.askTable reloadData];
-    }
-
 }
 #pragma mark - GetDataSource from Server
 
@@ -148,18 +138,11 @@ static NSString *CellIdentifier2 = @"AskCell";
                 }
             }
             if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageViewTypeHot) {
-                if (!_hasSetHotSource) {
-                    _scrollView.hotTable.dataSource = self;
-                    NSLog(@"_dataSourceOfHotTableView.count > 0...");
-                    _hasSetHotSource = YES;
-                }
+                ws.scrollView.hotTable.noDataView.canShow = YES;
                 [ws.scrollView.hotTable reloadData];
                 [ws.scrollView.hotTable.header endRefreshing];
             } else if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageViewTypeAsk) {
-                if (!_hasSetAskSource) {
-                    _scrollView.askTable.dataSource = self;
-                    _hasSetHotSource = YES;
-                }
+                ws.scrollView.askTable.noDataView.canShow = YES;
                 [ws.scrollView.askTable reloadData];
                 [ws.scrollView.askTable.header endRefreshing];
             }
@@ -257,7 +240,8 @@ static NSString *CellIdentifier2 = @"AskCell";
 
 - (void)confighotTable {
     _scrollView.hotTable.delegate = self;
-    _scrollView.hotTable.dataSource = nil;
+    _scrollView.hotTable.dataSource = self;
+    _scrollView.hotTable.noDataView.label.text = @"网络连接断了吧-_-!";
     _scrollView.hotTable.emptyDataSetSource = self;
     _scrollView.hotTable.psDelegate = self;
     [_scrollView.hotTable registerClass:[kfcHotCell class] forCellReuseIdentifier:CellIdentifier];
@@ -267,7 +251,8 @@ static NSString *CellIdentifier2 = @"AskCell";
 }
 - (void)configaskTable {
     _scrollView.askTable.delegate = self;
-    _scrollView.askTable.dataSource = nil;
+    _scrollView.askTable.dataSource = self;
+    _scrollView.askTable.noDataView.label.text = @"网络连接断了吧-_-!";
     _scrollView.askTable.emptyDataSetSource = self;
     _scrollView.askTable.psDelegate = self;
     _scrollView.hotTable.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;

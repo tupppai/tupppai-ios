@@ -16,7 +16,7 @@
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMConcernMessageViewController () <UITableViewDataSource, UITableViewDelegate,PWRefreshBaseTableViewDelegate>
+@interface ATOMConcernMessageViewController () <UITableViewDataSource, UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource>
 
 @property (nonatomic, strong) UIView *concernMessageView;
 @property (nonatomic, strong) RefreshFooterTableView *tableView;
@@ -49,6 +49,7 @@
 
 - (void)getDataSource {
     WS(ws);
+    [[KShareManager mascotAnimator]show];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     _dataSource = nil;
@@ -66,6 +67,7 @@
             [concernMessageViewModel setViewModelData:concernMessage];
             [ws.dataSource addObject:concernMessageViewModel];
         }
+        [[KShareManager mascotAnimator]dismiss];
         [ws.tableView reloadData];
     }];
 }
@@ -79,9 +81,7 @@
     [param setObject:@(timestamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     ATOMShowConcernMessage *showConcernMessage = [ATOMShowConcernMessage new];
-    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showConcernMessage ShowConcernMessage:param withBlock:^(NSMutableArray *concernMessageArray, NSError *error) {
-        ////[SVProgressHUD dismiss];
         for (ATOMConcernMessage *concernMessage in concernMessageArray) {
             ATOMConcernMessageViewModel *concernMessageViewModel = [ATOMConcernMessageViewModel new];
             [concernMessageViewModel setViewModelData:concernMessage];
@@ -114,6 +114,7 @@
     [_concernMessageView addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.emptyDataSetSource = self;
     _tableView.psDelegate = self;
     _tapConcernMessageGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapConcernMessageGesture:)];
     [_tableView addGestureRecognizer:_tapConcernMessageGesture];
@@ -185,5 +186,21 @@
         [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
+
+#pragma mark - DZNEmptyDataSetSource & delegate
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
+{
+    return [UIImage imageNamed:@"ic_cry"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text = @"还没有通知喔,快去社区活跃一下吧";
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:kTitleSizeForEmptyDataSet],
+                                 NSForegroundColorAttributeName: [UIColor kTitleForEmptySource]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
 
 @end

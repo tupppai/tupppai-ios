@@ -97,7 +97,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     [self configTableView];
     [self configFooterRefresh];
     [self configTextInput];
@@ -119,7 +118,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 
 - (void)scrollElegantly {
-    [self.tableView setContentOffset:CGPointMake(0, _headerView.frame.size.height - kfcBottomViewHeight) animated:YES];
+//    [self.tableView setContentOffset:CGPointMake(0, _headerView.frame.size.height - kfcBottomViewHeight) animated:YES];
     [self.textView becomeFirstResponder];
 }
 
@@ -589,9 +588,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     self.textInputbar.maxCharCount = 256;
     self.textInputbar.counterStyle = SLKCounterStyleSplit;
     self.textInputbar.counterPosition = SLKCounterPositionTop;
-#if !DEBUG_CUSTOM_TYPING_INDICATOR
-    self.typingIndicatorView.canResignByTouch = YES;
-#endif
 
 }
 - (void)configFooterRefresh {
@@ -675,7 +671,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 
 - (void)clickMoreShareButton {
-    NSLog(@"clickMoreShareButton");
     self.shareFunctionView.collectButton.selected = _vm.collected;
     [self.shareFunctionView showInView:[AppDelegate APP].window animated:YES];
 }

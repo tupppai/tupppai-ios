@@ -42,7 +42,7 @@ static ATOMHTTPRequestOperationManager *_shareHTTPSessionManager = nil;
         _shareHTTPSessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
         [_shareHTTPSessionManager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
         [_shareHTTPSessionManager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
-        [_shareHTTPSessionManager.requestSerializer setTimeoutInterval:25];
+        [_shareHTTPSessionManager.requestSerializer setTimeoutInterval:8];
     });
     return _shareHTTPSessionManager;
 }

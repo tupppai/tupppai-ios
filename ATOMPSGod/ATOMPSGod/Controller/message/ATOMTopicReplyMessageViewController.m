@@ -20,7 +20,7 @@
 #import "RefreshFooterTableView.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMTopicReplyMessageViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate>
+@interface ATOMTopicReplyMessageViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource>
 
 @property (nonatomic, strong) UIView *topicReplyMessageView;
 @property (nonatomic, strong) RefreshFooterTableView *tableView;
@@ -52,6 +52,7 @@
 
 - (void)getDataSource {
     WS(ws);
+    [[KShareManager mascotAnimator]show];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     _dataSource = nil;
@@ -72,6 +73,7 @@
             [replyMessageViewModel setViewModelData:replyMessage];
             [ws.dataSource addObject:replyMessageViewModel];
         }
+        [[KShareManager mascotAnimator]dismiss];
         [ws.tableView reloadData];
     }];
 }
@@ -124,6 +126,7 @@
     [_topicReplyMessageView addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.emptyDataSetSource = self;
     _tableView.psDelegate = self;
     _tapTopicReplyMessageGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapTopicReplyMessageGesture:)];
     [_tableView addGestureRecognizer:_tapTopicReplyMessageGesture];
@@ -203,4 +206,20 @@
         [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
+#pragma mark - DZNEmptyDataSetSource & delegate
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
+{
+    return [UIImage imageNamed:@"ic_cry"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text = @"还没有人回复你喔,快去社区活跃一下吧";
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:kTitleSizeForEmptyDataSet],
+                                 NSForegroundColorAttributeName: [UIColor kTitleForEmptySource]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+
 @end

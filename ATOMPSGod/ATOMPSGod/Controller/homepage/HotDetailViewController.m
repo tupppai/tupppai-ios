@@ -72,7 +72,6 @@ static NSString *CellIdentifier = @"HotDetailCell";
         _hotDetailTableView.psDelegate = self;
         _hotDetailTableView.delegate = self;
         _hotDetailTableView.dataSource = self;
-//        _hotDetailTableView.backgroundColor = [UIColor colorWithHex:0xf5f5f5];
         _tapHotDetailGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHotDetailGesture:)];
         [_hotDetailTableView addGestureRecognizer:_tapHotDetailGesture];
     }
@@ -243,29 +242,30 @@ static NSString *CellIdentifier = @"HotDetailCell";
 }
 
 #pragma mark - GetDataSource
-
-- (void)firstGetDataSource {
-    _currentPage = 1;
-    ATOMShowDetailOfHomePage *showDetailOfHomePage = [ATOMShowDetailOfHomePage new];
-    NSArray *detailImageArray = [showDetailOfHomePage getDetalImagesByImageID:_askPageViewModel.ID];
-    if (!detailImageArray || detailImageArray.count == 0) { //读服务器
-        [self getDataSource];
-    } else { //读数据库
-        _dataSource = nil;
-        _dataSource = [NSMutableArray array];
-        if (_fold != 1) {
-            ATOMHotDetailPageViewModel *model = [ATOMHotDetailPageViewModel new];
-            [model setViewModelDataWithHomeImage:_askPageViewModel];
-            [_dataSource addObject:model];
-        }
-        for (ATOMDetailImage *detailImage in detailImageArray) {
-            ATOMHotDetailPageViewModel *model = [ATOMHotDetailPageViewModel new];
-            [model setViewModelDataWithDetailImage:detailImage];
-            [_dataSource addObject:model];
-        }
-        [_hotDetailTableView reloadData];
-    }
-}
+//
+//- (void)firstGetDataSource {
+//    _currentPage = 1;
+//    ATOMShowDetailOfHomePage *showDetailOfHomePage = [ATOMShowDetailOfHomePage new];
+//    NSArray *detailImageArray = [showDetailOfHomePage getDetalImagesByImageID:_askPageViewModel.ID];
+//    if (!detailImageArray || detailImageArray.count == 0) { //读服务器
+//        [self getDataSource];
+//    } else { //读数据库
+//        _dataSource = nil;
+//        _dataSource = [NSMutableArray array];
+//        if (_fold != 1) {
+//            ATOMHotDetailPageViewModel *model = [ATOMHotDetailPageViewModel new];
+//            [model setViewModelDataWithHomeImage:_askPageViewModel];
+//            [_dataSource addObject:model];
+//        }
+//        for (ATOMDetailImage *detailImage in detailImageArray) {
+//            ATOMHotDetailPageViewModel *model = [ATOMHotDetailPageViewModel new];
+//            [model setViewModelDataWithDetailImage:detailImage];
+//            [_dataSource addObject:model];
+//        }
+//        _hotDetailTableView.noDataView.canShow = YES;
+//        [_hotDetailTableView reloadData];
+//    }
+//}
 
 - (void)getDataSource {
     _currentPage = 1;
@@ -293,7 +293,8 @@ static NSString *CellIdentifier = @"HotDetailCell";
         if (detailOfHomePageArray.count == 0) {
             _canRefreshFooter = NO;
         }
-        [showDetailOfHomePage saveDetailImagesInDB:detailOfHomePageArray];
+//        [showDetailOfHomePage saveDetailImagesInDB:detailOfHomePageArray];
+        _hotDetailTableView.noDataView.canShow = YES;
         [ws.hotDetailTableView reloadData];
         [ws.hotDetailTableView.header endRefreshing];
     }];
@@ -331,6 +332,7 @@ static NSString *CellIdentifier = @"HotDetailCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
+//    [self firstGetDataSource];
     [_hotDetailTableView.header beginRefreshing];
 }
 
@@ -348,6 +350,7 @@ static NSString *CellIdentifier = @"HotDetailCell";
 
 - (void)createUI {
     self.title = @"作品列表";
+    _hotDetailTableView.noDataView.label.text = @"网络连接断了吧😶";
     self.view = self.hotDetailView;
     _canRefreshFooter = YES;
 }

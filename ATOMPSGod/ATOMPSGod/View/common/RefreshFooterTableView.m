@@ -27,5 +27,8 @@
 -(void) loadMoreHotData {
     [_psDelegate didPullRefreshUp:self];
 }
-
+-(void)reloadData {
+    [super reloadData];
+    [super reloadEmptyDataSet];
+}
 @end

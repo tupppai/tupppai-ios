@@ -137,7 +137,7 @@
         _textView.typingSuggestionEnabled = YES;
         _textView.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         _textView.keyboardType = UIKeyboardTypeDefault;
-        _textView.returnKeyType = UIReturnKeyDefault;
+        _textView.returnKeyType = UIReturnKeySend;
         _textView.enablesReturnKeyAutomatically = YES;
         _textView.scrollIndicatorInsets = UIEdgeInsetsMake(0.0, -1.0, 0.0, 1.0);
         _textView.textContainerInset = UIEdgeInsetsMake(8.0, 4.0, 8.0, 0.0);
@@ -174,7 +174,6 @@
         _rightButton.translatesAutoresizingMaskIntoConstraints = NO;
         _rightButton.titleLabel.font = [UIFont boldSystemFontOfSize:15.0];
         _rightButton.enabled = NO;
-//        [_rightButton setTitle:NSLocalizedString(@"发送", nil) forState:UIControlStateNormal];
     }
     return _rightButton;
 }

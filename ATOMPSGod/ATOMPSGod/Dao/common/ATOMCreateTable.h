@@ -15,6 +15,6 @@
 + (NSString *)createReplier;
 + (NSString *)createHomeImage;
 + (NSString *)createComment;
-+ (NSString *)createDetailImage;
+//+ (NSString *)createDetailImage;
 
 @end

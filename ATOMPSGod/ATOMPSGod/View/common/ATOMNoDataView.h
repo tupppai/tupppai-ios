@@ -11,4 +11,5 @@
 @interface ATOMNoDataView : ATOMBaseView
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UILabel *label;
+@property (nonatomic, assign) BOOL canShow;
 @end

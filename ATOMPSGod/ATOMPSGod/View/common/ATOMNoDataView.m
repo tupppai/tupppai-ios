@@ -15,12 +15,12 @@
 
 @implementation ATOMNoDataView
 
-
 - (instancetype)init {
     self = [super init];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         [self createSubView];
+        _canShow = NO;
     }
     return self;
 }
@@ -32,19 +32,19 @@
     [self addSubview:_imageView];
     
     _label = [UILabel new];
-    _label.text = @"这里空空如也...";
     _label.textAlignment = NSTextAlignmentCenter;
-    _label.font = [UIFont systemFontOfSize:20.f];
-    _label.textColor = [UIColor colorWithHex:0xadadad];
+    _label.font = [UIFont boldSystemFontOfSize:kTitleSizeForEmptyDataSet];
+    _label.textColor = [UIColor kTitleForEmptySource];
+    _label.text = @"这里空空如也";
     [self addSubview:_label];
     self.imageView.frame = CGRectMake(0,0, 100, 100);
     [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self);
+        make.centerY.equalTo(self).with.offset(-50);
         make.centerX.equalTo(self);
     }];
     
     [self.label mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.imageView.mas_bottom).with.offset(4);
+        make.top.equalTo(self.imageView.mas_bottom).with.offset(20);
         make.centerX.equalTo(self.imageView);
         make.size.mas_equalTo(CGSizeMake(150, 22));
     }];

@@ -76,12 +76,12 @@ static FMDatabaseQueue *_fmQueue = nil;
         } else {
             NSLog(@"create Table HomeImage fail");
         }
-        flag = [db executeUpdate:[ATOMCreateTable createDetailImage]];
-        if (flag) {
-            NSLog(@"create Table DetailImage success");
-        } else {
-            NSLog(@"create Table DetailImage fail");
-        }
+//        flag = [db executeUpdate:[ATOMCreateTable createDetailImage]];
+//        if (flag) {
+//            NSLog(@"create Table DetailImage success");
+//        } else {
+//            NSLog(@"create Table DetailImage fail");
+//        }
         flag = [db executeUpdate:[ATOMCreateTable createComment]];
         if (flag) {
             NSLog(@"create Table Comment success");

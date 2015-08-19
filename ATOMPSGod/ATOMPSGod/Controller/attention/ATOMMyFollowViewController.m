@@ -76,7 +76,7 @@ static NSString *CellIdentifier = @"MyAttentionCell";
     _tableView.estimatedRowHeight = SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT;
     _tableView.delegate = self;
     _tableView.psDelegate = self;
-    _tableView.dataSource = nil;
+    _tableView.dataSource = self;
 //    _tableView.emptyDataSetSource = self;
     _hasSetSource = NO;
     [_myAttentionView addSubview:_tableView];
@@ -416,6 +416,7 @@ static NSString *CellIdentifier = @"MyAttentionCell";
             _tableView.dataSource = self;
             _hasSetSource = YES;
         }
+        _tableView.noDataView.canShow = YES;
         [_tableView reloadData];
         [_tableView.header endRefreshing];
     }];

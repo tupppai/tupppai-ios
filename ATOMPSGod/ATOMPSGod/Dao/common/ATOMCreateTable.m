@@ -30,8 +30,8 @@
     return @"create table ATOMComment (cid integer, imageID integer, detailID integer, commentType integer, uid integer, nickname text, avatar text, content text, commentTime bigint, likeNumber integer, atCommentArray null,liked bool)";
 }
 
-+ (NSString *)createDetailImage {
-    return @"create table ATOMDetailImage (detailID integer,askID integer, imageID integer, uid integer, nickname text, avatar text, replyTime bigint, imageURL text, replyDescription text, isDownload integer, totalPraiseNumber integer, totalCommentNumber integer, totalShareNumber integer, totalWXShareNumber integer, totalWorkNumber integer, imageWidth real, imageHeight real, hotCommentArray null, clickTime bigint, liked bool,collected bool,type integer)";
-}
+//+ (NSString *)createDetailImage {
+//    return @"create table ATOMDetailImage (detailID integer,askID integer, imageID integer, uid integer, nickname text, avatar text, replyTime bigint, imageURL text, replyDescription text, isDownload integer, totalPraiseNumber integer, totalCommentNumber integer, totalShareNumber integer, totalWXShareNumber integer, totalWorkNumber integer, imageWidth real, imageHeight real, hotCommentArray null, clickTime bigint, liked bool,collected bool,type integer)";
+//}
 
 @end

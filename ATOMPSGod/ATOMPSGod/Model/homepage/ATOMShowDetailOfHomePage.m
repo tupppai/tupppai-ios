@@ -88,6 +88,8 @@
     }];
 }
 
+
+//暂时不存。
 - (void)saveDetailImagesInDB:(NSMutableArray *)detailImages {
     if ([self isDetailImagesRechingTopBounds]) {
         [self clearPartOfDetailImages];
@@ -98,35 +100,6 @@
             [self.detailImageDAO updateDetailImage:detailImage];
         } else {
             [self.detailImageDAO insertDetailImage:detailImage];
-//            //创建DetailImage目录
-//            NSFileManager *fileManager = [NSFileManager defaultManager];
-//            NSString *homePageDirectory = [PATH_OF_DOCUMENT stringByAppendingPathComponent:@"DetailImage"];
-//            BOOL flag;
-//            if ([fileManager fileExistsAtPath:homePageDirectory isDirectory:&flag]) {
-//                if (flag) {
-//                    NSLog(@"DetailImage directory already exists");
-//                }
-//            } else {
-//                BOOL bo = [fileManager createDirectoryAtPath:homePageDirectory withIntermediateDirectories:YES attributes:nil error:NULL];
-//                if (bo) {
-////                    NSLog(@"create DetailImage directory success");
-//                } else {
-//                    NSLog(@"create DetailImage directory fail");
-//                }
-//            }
-//            //将图片写入沙盒中的DetailImage目录下
-//            dispatch_queue_t q = dispatch_queue_create("LoadImage", NULL);
-//            dispatch_async(q, ^{
-//                NSURL *imageURL = [NSURL URLWithString:detailImage.imageURL];
-//                NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-//                UIImage *image = [UIImage imageWithData:imageData];
-//                NSString *path = [homePageDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"ATOMIMAGE%d-%d.jpg", (int)detailImage.imageID, (int)detailImage.detailID]];
-//                if ([UIImageJPEGRepresentation(image, 1) writeToFile:path atomically:YES]) {
-//                    NSLog(@"保存 ATOMIMAGE%d-%d.jpg 成功", (int)detailImage.imageID, (int)detailImage.detailID);
-//                } else {
-//                    NSLog(@"保存 ATOMIMAGE%d-%d.jpg 失败 in %@", (int)detailImage.imageID, (int)detailImage.detailID, path);
-//                }
-//            });
         }
         //存储热门评论
         NSArray *comments = detailImage.hotCommentArray;
