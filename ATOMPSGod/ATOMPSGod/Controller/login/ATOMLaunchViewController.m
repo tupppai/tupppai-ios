@@ -44,8 +44,9 @@
 }
 
 - (void)clickWXRegisterButton:(UIButton *)sender {
+    
     ATOMLogin *loginModel = [ATOMLogin new];
-    [ATOMShareSDKModel getUserInfo:ShareTypeWeixiTimeline withBlock:^(NSDictionary *sourceData) {
+    [ATOMShareSDKModel getUserInfo:SSDKPlatformTypeWechat withBlock:^(NSDictionary *sourceData) {
         if (sourceData) {
             NSString* openid = sourceData[@"openid"];
             NSMutableDictionary* param = [NSMutableDictionary new];
@@ -81,9 +82,10 @@
 }
 
 - (void)clickOtherRegisterButton:(UIButton *)sender {
-    [ATOMCurrentUser currentUser].signUpType = ATOMSignUpMobile;
-    ATOMCreateProfileViewController *cpvc = [ATOMCreateProfileViewController new];
-    [self.navigationController pushViewController:cpvc animated:YES];
+    [ATOMShareSDKModel share ];
+    //    [ATOMCurrentUser currentUser].signUpType = ATOMSignUpMobile;
+//    ATOMCreateProfileViewController *cpvc = [ATOMCreateProfileViewController new];
+//    [self.navigationController pushViewController:cpvc animated:YES];
 }
 
 - (void)clickLoginButton:(UIButton *)sender {

@@ -12,11 +12,16 @@
 #import "ATOMCutstomNavigationController.h"
 #import "ATOMLoginCustomNavigationController.h"
 #import "ATOMIntroductionOnFirstLaunchViewController.h"
+<<<<<<< Updated upstream
 #import "WXApi.h"
 #import "WeiboSDK.h"
-#import "WXApi.h"
+=======
+>>>>>>> Stashed changes
 #import "ATOMBaseDAO.h"
 #import "UMessage.h"
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKConnector/ShareSDKConnector.h>
+#import "WXApi.h"
 
 @interface AppDelegate ()
 
@@ -36,18 +41,10 @@
     [self initializeAfterDB];
     [self setupShareSDK];
     [self setupUmengPush:launchOptions];
-    
-    if (launchOptions != nil) {
-        // Launched from push notification
-        NSDictionary *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-        NSLog(@"notification %@",notification);
-        [Util showSuccess:[NSString stringWithFormat:@"%@",notification]];
-    }
 
     return YES;
 }
 -(void)setupUmengPush:(NSDictionary *)launchOptions {
-//    [UMessage setLogEnabled:YES];
     //set AppKey and AppSecret
     [UMessage startWithAppkey:@"55b1ecdbe0f55a1de9001164" launchOptions:launchOptions];
 
@@ -128,33 +125,30 @@
 #pragma mark - Share
 
 - (void)setupShareSDK {
-    [ShareSDK registerApp:@"65b1ce491325"];
-    [ShareSDK connectWeChatWithAppId:@"wx86ff6f67a2b9b4b8"   //微信APPID
-                           appSecret:@"c2da31fda3acf1c09c40ee25772b6ca5"  //微信APPSecret
-                           wechatCls:[WXApi class]];
- 
-    [ShareSDK connectSinaWeiboWithAppKey:@"882276088"
-                               appSecret:@"454f67c8e6d29b770d701e9272bc5ee7"
-                             redirectUri:@"https://api.weibo.com/oauth2/default.html"];
+    [ShareSDK registerApp:@"65b1ce491325"
+          activePlatforms:@[@(SSDKPlatformTypeWechat), @(SSDKPlatformTypeSinaWeibo)]
+                 onImport:nil
+          onConfiguration:^(SSDKPlatformType platformType, NSMutableDictionary *appInfo) {
+              switch (platformType)
+              {
+                  case SSDKPlatformTypeSinaWeibo:
+                      //设置新浪微博应用信息,其中authType设置为使用SSO＋Web形式授权
+                      [appInfo SSDKSetupSinaWeiboByAppKey:@"882276088"
+                                                appSecret:@"454f67c8e6d29b770d701e9272bc5ee7"
+                                              redirectUri:@"https://api.weibo.com/oauth2/default.html"
+                                                 authType:SSDKAuthTypeBoth];
+                      break;
+                  case SSDKPlatformTypeWechat:
+                      [appInfo SSDKSetupWeChatByAppId:@"wx86ff6f67a2b9b4b8" appSecret:@"c2da31fda3acf1c09c40ee25772b6ca5"];
+                      break;
+
+              }
+          }
+     ];
+    
+
 }
 
-- (BOOL)application:(UIApplication *)application
-      handleOpenURL:(NSURL *)url
-{
-    return [ShareSDK handleOpenURL:url
-                        wxDelegate:self];
-}
-
-- (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication
-         annotation:(id)annotation
-{
-    return [ShareSDK handleOpenURL:url
-                 sourceApplication:sourceApplication
-                        annotation:annotation
-                        wxDelegate:self];
-}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -254,10 +248,14 @@
 
 
 
+-(BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    return [WXApi handleOpenURL:url delegate:self];
+}
 
 
-
-
+-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [WXApi handleOpenURL:url delegate:self];
+}
 
 
 

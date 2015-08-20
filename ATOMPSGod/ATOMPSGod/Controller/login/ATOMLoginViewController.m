@@ -62,7 +62,7 @@
 - (void)clickweiboLoginButton:(UIButton *)sender {
     
     ATOMLogin *loginModel = [ATOMLogin new];
-    [ATOMShareSDKModel getUserInfo:SSCShareTypeSinaWeibo withBlock:^(NSDictionary *sourceData) {
+    [ATOMShareSDKModel getUserInfo:SSDKPlatformTypeSinaWeibo withBlock:^(NSDictionary *sourceData) {
         if (sourceData) {
             NSString* openID = sourceData[@"idstr"];
             NSMutableDictionary* param = [NSMutableDictionary new];
@@ -101,7 +101,7 @@
 }
 - (void)clickwechatLoginButton:(UIButton *)sender {
     ATOMLogin *loginModel = [ATOMLogin new];
-    [ATOMShareSDKModel getUserInfo:ShareTypeWeixiTimeline withBlock:^(NSDictionary *sourceData) {
+    [ATOMShareSDKModel getUserInfo:SSDKPlatformTypeWechat withBlock:^(NSDictionary *sourceData) {
         if (sourceData) {
             NSString* openid = sourceData[@"openid"];
             NSMutableDictionary* param = [NSMutableDictionary new];

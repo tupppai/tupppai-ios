@@ -31,5 +31,5 @@ NSString* deviceName();
 
 
 @interface Share : NSObject
-
++ (void) sendLinkContent;
 @end
