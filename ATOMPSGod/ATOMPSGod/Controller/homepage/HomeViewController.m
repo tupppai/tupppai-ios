@@ -775,7 +775,7 @@ static NSString *CellIdentifier2 = @"AskCell";
 }
 
 - (void)loadMoreHotData {
-    if (_canRefreshHotFooter) {
+    if (_canRefreshHotFooter && !_scrollView.hotTable.header.isRefreshing) {
         [self getMoreDataSourceOfTableViewWithHomeType:@"hot"];
     } else {
         [_scrollView.hotTable.footer endRefreshing];
@@ -788,7 +788,7 @@ static NSString *CellIdentifier2 = @"AskCell";
 }
 
 - (void)loadMoreRecentData {
-    if (_canRefreshRecentFooter) {
+    if (_canRefreshRecentFooter && !_scrollView.askTable.header.isRefreshing) {
         [self getMoreDataSourceOfTableViewWithHomeType:@"new"];
     } else {
         [_scrollView.askTable.footer endRefreshing];

@@ -28,3 +28,8 @@
 NSString* deviceName();
 +(void)showWeAreWorkingOnThisFeature;
 @end
+
+
+@interface Share : NSObject
+
+@end

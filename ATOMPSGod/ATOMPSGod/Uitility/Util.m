@@ -135,4 +135,9 @@ NSString* deviceName()
     [alertView show];
 }
 
+
+@end
+
+@implementation Share
+
 @end

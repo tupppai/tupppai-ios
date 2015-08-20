@@ -23,7 +23,6 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.backgroundColor = [UIColor whiteColor];
         [self configSubviews];
     }
     return self;
@@ -54,13 +53,12 @@
         make.top.equalTo(_topView.mas_bottom).with.offset(0);
         make.left.equalTo(self).with.offset(kPadding15);
         make.right.equalTo(self).with.offset(-kPadding15);
-        make.height.lessThanOrEqualTo(@(kfcImageHeightMax));
+        make.height.lessThanOrEqualTo(@(kfcImageHeightMax)).with.priorityLow();
     }];
     [_bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_imageViewMain.mas_bottom).with.offset(0);
         make.left.equalTo(self).with.offset(kPadding15);
         make.right.equalTo(self).with.offset(-kPadding15);
-        //todo :change height var and name of _additionView
         make.height.equalTo(@(kfcBottomViewHeight));
         make.bottom.equalTo(self).with.offset(0);
     }];
@@ -166,7 +164,6 @@
         [_topView addSubview:_psView];
         [_topView addSubview:self.avatarView];
         [_topView addSubview:self.usernameLabel];
-        
     }
     return _topView;
 }
@@ -189,7 +186,6 @@
     }
     return _bottomView;
 }
-
 
 - (UIImageView *)avatarView
 {

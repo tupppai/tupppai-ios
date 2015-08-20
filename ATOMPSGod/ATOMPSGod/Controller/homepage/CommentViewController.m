@@ -264,11 +264,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 #pragma mark - UITableViewDataSource Methods
 
-#pragma mark - UITableViewDataSource
-
-
-#pragma mark - UITableViewDataSource
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;
 }

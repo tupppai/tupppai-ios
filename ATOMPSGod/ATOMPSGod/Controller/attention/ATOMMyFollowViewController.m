@@ -337,7 +337,7 @@ static NSString *CellIdentifier = @"MyAttentionCell";
 }
 
 - (void)loadMoreHotData {
-    if (_canRefreshFooter) {
+    if (_canRefreshFooter && !_tableView.header.isRefreshing) {
         [self getMoreDataSource];
     } else {
         [_tableView.footer endRefreshing];

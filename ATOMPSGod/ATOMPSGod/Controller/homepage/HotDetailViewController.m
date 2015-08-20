@@ -38,7 +38,7 @@
 
 @property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
 @property (nonatomic, strong) UIView *hotDetailView;
-@property (nonatomic, strong) RefreshTableView *hotDetailTableView;
+@property (nonatomic, strong) RefreshTableView *tableView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) UITapGestureRecognizer *tapHotDetailGesture;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -64,24 +64,24 @@ static NSString *CellIdentifier = @"HotDetailCell";
     return _shareFunctionView;
 }
 
-- (UITableView *)hotDetailTableView {
-    if (_hotDetailTableView == nil) {
-        _hotDetailTableView = [[RefreshTableView alloc] initWithFrame:_hotDetailView.bounds];
-        [_hotDetailTableView registerClass:[kfcDetailCell class] forCellReuseIdentifier:CellIdentifier];
-        _hotDetailTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _hotDetailTableView.psDelegate = self;
-        _hotDetailTableView.delegate = self;
-        _hotDetailTableView.dataSource = self;
+- (UITableView *)tableView {
+    if (_tableView == nil) {
+        _tableView = [[RefreshTableView alloc] initWithFrame:_hotDetailView.bounds];
+        [_tableView registerClass:[kfcDetailCell class] forCellReuseIdentifier:CellIdentifier];
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tableView.psDelegate = self;
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
         _tapHotDetailGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHotDetailGesture:)];
-        [_hotDetailTableView addGestureRecognizer:_tapHotDetailGesture];
+        [_tableView addGestureRecognizer:_tapHotDetailGesture];
     }
-    return _hotDetailTableView;
+    return _tableView;
 }
 
 - (UIView *)hotDetailView {
     if (_hotDetailView == nil) {
         _hotDetailView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
-        [_hotDetailView addSubview:self.hotDetailTableView];
+        [_hotDetailView addSubview:self.tableView];
     }
     return _hotDetailView;
 }
@@ -234,10 +234,10 @@ static NSString *CellIdentifier = @"HotDetailCell";
     [self getDataSource];
 }
 - (void)loadMoreHotData {
-    if (_canRefreshFooter) {
+    if (_canRefreshFooter && !_tableView.header.isRefreshing) {
         [self getMoreDataSource];
     } else {
-        [_hotDetailTableView.footer endRefreshing];
+        [_tableView.footer endRefreshing];
     }
 }
 
@@ -262,8 +262,8 @@ static NSString *CellIdentifier = @"HotDetailCell";
 //            [model setViewModelDataWithDetailImage:detailImage];
 //            [_dataSource addObject:model];
 //        }
-//        _hotDetailTableView.noDataView.canShow = YES;
-//        [_hotDetailTableView reloadData];
+//        _tableView.noDataView.canShow = YES;
+//        [_tableView reloadData];
 //    }
 //}
 
@@ -294,9 +294,9 @@ static NSString *CellIdentifier = @"HotDetailCell";
             _canRefreshFooter = NO;
         }
 //        [showDetailOfHomePage saveDetailImagesInDB:detailOfHomePageArray];
-        _hotDetailTableView.noDataView.canShow = YES;
-        [ws.hotDetailTableView reloadData];
-        [ws.hotDetailTableView.header endRefreshing];
+        _tableView.noDataView.canShow = YES;
+        [ws.tableView reloadData];
+        [ws.tableView.header endRefreshing];
     }];
 }
 
@@ -315,15 +315,14 @@ static NSString *CellIdentifier = @"HotDetailCell";
             [model setViewModelDataWithDetailImage:detailImage];
             model.labelArray = [ws.askPageViewModel.labelArray mutableCopy];
             [ws.dataSource addObject:model];
-            NSLog(@"for in getMoreDataSource");
         }
         if (detailOfHomePageArray.count == 0) {
             _canRefreshFooter = NO;
         } else {
             _canRefreshFooter = YES;
         }
-        [ws.hotDetailTableView reloadData];
-        [ws.hotDetailTableView.footer endRefreshing];
+        [ws.tableView reloadData];
+        [ws.tableView.footer endRefreshing];
     }];
 }
 
@@ -332,8 +331,7 @@ static NSString *CellIdentifier = @"HotDetailCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
-//    [self firstGetDataSource];
-    [_hotDetailTableView.header beginRefreshing];
+    [_tableView.header beginRefreshing];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -350,7 +348,7 @@ static NSString *CellIdentifier = @"HotDetailCell";
 
 - (void)createUI {
     self.title = @"作品列表";
-    _hotDetailTableView.noDataView.label.text = @"网络连接断了吧😶";
+    _tableView.noDataView.label.text = @"网络连接断了吧😶";
     self.view = self.hotDetailView;
     _canRefreshFooter = YES;
 }
@@ -380,7 +378,7 @@ static NSString *CellIdentifier = @"HotDetailCell";
     imageViewer.interactionsDelegate = self;
 }
 - (void)dealDownloadWork {
-    kfcDetailCell *cell = (kfcDetailCell *)[_hotDetailTableView cellForRowAtIndexPath:_selectedIndexPath];
+    kfcDetailCell *cell = (kfcDetailCell *)[_tableView cellForRowAtIndexPath:_selectedIndexPath];
     UIImageWriteToSavedPhotosAlbum(cell.imageViewMain.image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
 }
 - (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error
@@ -417,11 +415,11 @@ static NSString *CellIdentifier = @"HotDetailCell";
 #pragma mark - Gesture Event
 
 - (void)tapHotDetailGesture:(UITapGestureRecognizer *)gesture {
-    CGPoint location = [gesture locationInView:_hotDetailTableView];
-    _selectedIndexPath = [_hotDetailTableView indexPathForRowAtPoint:location];
+    CGPoint location = [gesture locationInView:_tableView];
+    _selectedIndexPath = [_tableView indexPathForRowAtPoint:location];
     if (_selectedIndexPath) {
         ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
-        _selectedHotDetailCell = (kfcDetailCell *)[_hotDetailTableView cellForRowAtIndexPath:_selectedIndexPath];
+        _selectedHotDetailCell = (kfcDetailCell *)[_tableView cellForRowAtIndexPath:_selectedIndexPath];
         
         CGPoint p = [gesture locationInView:_selectedHotDetailCell];
         //点击图片
@@ -497,7 +495,7 @@ static NSString *CellIdentifier = @"HotDetailCell";
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    kfcDetailCell *cell = [_hotDetailTableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    kfcDetailCell *cell = [_tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[kfcDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
