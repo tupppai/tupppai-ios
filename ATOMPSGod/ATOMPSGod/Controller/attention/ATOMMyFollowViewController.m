@@ -121,7 +121,7 @@ static NSString *CellIdentifier = @"MyAttentionCell";
                 [cell.likeButton toggleLike];
                 [_dataSource[_selectedIndexPath.row] toggleLike];
             } else if (CGRectContainsPoint(cell.wechatButton.frame, p)) {
-                [self postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:vm.type];
+                [ATOMShareSDKModel postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:vm.type];
             } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
                 CommentViewController* mvc = [CommentViewController new];
                 kfcPageVM *vm = [kfcPageVM new];
@@ -346,15 +346,15 @@ static NSString *CellIdentifier = @"MyAttentionCell";
 #pragma mark - ATOMShareFunctionViewDelegate
 -(void)tapWechatFriends {
     kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];
-    [self postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:vm.type];
+    [ATOMShareSDKModel postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:vm.type];
 }
 -(void)tapWechatMoment {
     kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];
-    [self postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:vm.type];
+    [ATOMShareSDKModel postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:vm.type];
 }
 -(void)tapSinaWeibo {
     kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];
-    [self postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:vm.type];
+    [ATOMShareSDKModel postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:vm.type];
 }
 -(void)tapInvite {
     kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];

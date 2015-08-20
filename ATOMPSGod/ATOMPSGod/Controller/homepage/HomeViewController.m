@@ -432,7 +432,7 @@ static NSString *CellIdentifier2 = @"AskCell";
                     [cell.likeButton toggleLike];
                     [_selectedVM toggleLike];
                 } else if (CGRectContainsPoint(cell.wechatButton.frame, p)) {
-                    [self postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
+                    [ATOMShareSDKModel postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
                 } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
                     kfcPageVM* vm = [kfcPageVM new];
                     [vm setCommonViewModelWithAsk:_selectedVM];
@@ -481,7 +481,7 @@ static NSString *CellIdentifier2 = @"AskCell";
                     [cell.likeButton toggleLike];
                     [_selectedVM toggleLike];
                 } else if (CGRectContainsPoint(cell.wechatButton.frame, p)) {
-                    [self postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
+                    [ATOMShareSDKModel postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
                 } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
                     kfcPageVM* vm = [kfcPageVM new];
                     [vm setCommonViewModelWithAsk:_selectedVM];
@@ -735,13 +735,13 @@ static NSString *CellIdentifier2 = @"AskCell";
 }
 #pragma mark - ATOMShareFunctionViewDelegate
 -(void)tapWechatFriends {
-    [self postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeAsk];
+    [ATOMShareSDKModel postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeAsk];
 }
 -(void)tapWechatMoment {
-    [self postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
+    [ATOMShareSDKModel postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
 }
 -(void)tapSinaWeibo {
-    [self postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:ATOMPageTypeAsk];
+    [ATOMShareSDKModel postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:ATOMPageTypeAsk];
 }
 -(void)tapInvite {
     ATOMInviteViewController* ivc = [ATOMInviteViewController new];

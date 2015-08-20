@@ -174,26 +174,26 @@ static NSString *CellIdentifier = @"HotDetailCell";
 #pragma mark - ATOMShareFunctionViewDelegate
 -(void)tapWechatFriends {
     if (_selectedIndexPath.row == 0) {
-        [self postSocialShare:_askPageViewModel.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeAsk];
+        [ATOMShareSDKModel postSocialShare:_askPageViewModel.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeAsk];
     } else {
         ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
-        [self postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeReply];
+        [ATOMShareSDKModel postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeReply];
     }
 }
 -(void)tapWechatMoment {
     if (_selectedIndexPath.row == 0) {
-        [self postSocialShare:_askPageViewModel.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
+        [ATOMShareSDKModel postSocialShare:_askPageViewModel.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
     } else {
         ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
-        [self postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeReply];
+        [ATOMShareSDKModel postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeReply];
     }
 }
 -(void)tapSinaWeibo {
     if (_selectedIndexPath.row == 0) {
-        [self postSocialShare:_askPageViewModel.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:ATOMPageTypeAsk];
+        [ATOMShareSDKModel postSocialShare:_askPageViewModel.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:ATOMPageTypeAsk];
     } else {
         ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
-        [self postSocialShare:model.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:ATOMPageTypeReply];
+        [ATOMShareSDKModel postSocialShare:model.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:ATOMPageTypeReply];
     }
 }
 -(void)tapCollect {
@@ -447,10 +447,10 @@ static NSString *CellIdentifier = @"HotDetailCell";
                     [model toggleLike];
             } else if (CGRectContainsPoint(_selectedHotDetailCell.wechatButton.frame, p)) {
                 if (_selectedIndexPath.row == 0) {
-                    [self postSocialShare:_askPageViewModel.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
+                    [ATOMShareSDKModel postSocialShare:_askPageViewModel.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
                 } else {
                     ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
-                    [self postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeReply];
+                    [ATOMShareSDKModel postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeReply];
                 }            } else if (CGRectContainsPoint(_selectedHotDetailCell.commentButton.frame, p)) {
                     
                 kfcPageVM* vm = [kfcPageVM new];

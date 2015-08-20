@@ -309,15 +309,6 @@
 		E942898F1B5E220F00ED26E4 /* ATOMRecordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E942898E1B5E220F00ED26E4 /* ATOMRecordModel.m */; };
 		E94B02EE1B7B2EE300863C6F /* ATOMTextViewComment.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B02ED1B7B2EE300863C6F /* ATOMTextViewComment.m */; };
 		E94B02F11B7B3F6A00863C6F /* ATOMFaceCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B02F01B7B3F6A00863C6F /* ATOMFaceCollectionView.m */; };
-		E94B03091B7C72E000863C6F /* SLKTextView+SLKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B02F51B7C72E000863C6F /* SLKTextView+SLKAdditions.m */; };
-		E94B030A1B7C72E000863C6F /* UIResponder+SLKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B02F81B7C72E000863C6F /* UIResponder+SLKAdditions.m */; };
-		E94B030B1B7C72E000863C6F /* UIScrollView+SLKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B02FA1B7C72E000863C6F /* UIScrollView+SLKAdditions.m */; };
-		E94B030C1B7C72E000863C6F /* UIView+SLKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B02FC1B7C72E000863C6F /* UIView+SLKAdditions.m */; };
-		E94B030D1B7C72E000863C6F /* SLKInputAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B02FF1B7C72E000863C6F /* SLKInputAccessoryView.m */; };
-		E94B030E1B7C72E000863C6F /* SLKTextInputbar.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B03011B7C72E000863C6F /* SLKTextInputbar.m */; };
-		E94B030F1B7C72E000863C6F /* SLKTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B03031B7C72E000863C6F /* SLKTextView.m */; };
-		E94B03101B7C72E000863C6F /* SLKTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B03051B7C72E000863C6F /* SLKTextViewController.m */; };
-		E94B03111B7C72E000863C6F /* SLKTypingIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B03081B7C72E000863C6F /* SLKTypingIndicatorView.m */; };
 		E94B03141B7C744B00863C6F /* ATOMPageCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B03131B7C744B00863C6F /* ATOMPageCommentViewController.m */; };
 		E94B03211B7C74E500863C6F /* CommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B03191B7C74E500863C6F /* CommentTableViewCell.m */; };
 		E94B03221B7C74E500863C6F /* CommentTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B031B1B7C74E500863C6F /* CommentTextView.m */; };
@@ -362,7 +353,6 @@
 		E99C51171B85A4CB004CA47B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E99C51161B85A4CB004CA47B /* libz.dylib */; };
 		E99C51371B85ACFA004CA47B /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E99C51211B85ACFA004CA47B /* libWeiboSDK.a */; };
 		E99C51381B85ACFA004CA47B /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E99C51291B85ACFA004CA47B /* WeiboSDK.bundle */; };
-		E99C51391B85ACFA004CA47B /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E99C512D1B85ACFA004CA47B /* libWeChatSDK.a */; };
 		E99C513A1B85ACFA004CA47B /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E99C51301B85ACFA004CA47B /* MOBFoundation.framework */; };
 		E99C513B1B85ACFA004CA47B /* ShareSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E99C51311B85ACFA004CA47B /* ShareSDK.bundle */; };
 		E99C513C1B85ACFA004CA47B /* ShareSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E99C51321B85ACFA004CA47B /* ShareSDK.framework */; };
@@ -374,6 +364,7 @@
 		E99C51441B85ADE9004CA47B /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E99C51431B85ADE9004CA47B /* libstdc++.dylib */; };
 		E99C51461B85ADEF004CA47B /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E99C51451B85ADEF004CA47B /* JavaScriptCore.framework */; };
 		E99C51481B85ADF9004CA47B /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E99C51471B85ADF9004CA47B /* ImageIO.framework */; };
+		E99C514C1B85C851004CA47B /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E99C51491B85C851004CA47B /* libWeChatSDK.a */; };
 		E99D2F541B1C7E8D000D7784 /* UIImage+Blurring.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D2F3A1B1C7E8D000D7784 /* UIImage+Blurring.m */; };
 		E99D2F551B1C7E8D000D7784 /* UIImage+Enhancing.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D2F3C1B1C7E8D000D7784 /* UIImage+Enhancing.m */; };
 		E99D2F561B1C7E8D000D7784 /* UIImage+Filtering.m in Sources */ = {isa = PBXBuildFile; fileRef = E99D2F3E1B1C7E8D000D7784 /* UIImage+Filtering.m */; };
@@ -394,6 +385,16 @@
 		E9D739131B79F200008CE562 /* BadgeStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = E9D7390C1B79F200008CE562 /* BadgeStyle.m */; };
 		E9D739141B79F200008CE562 /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = E9D7390E1B79F200008CE562 /* CustomBadge.m */; };
 		E9ED35861B80F62F00B93BE5 /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = E9ED35851B80F62F00B93BE5 /* UIScrollView+EmptyDataSet.m */; };
+		E9F7C0141B85E8E800D97539 /* SLKTextView+SLKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E9F7C0001B85E8E800D97539 /* SLKTextView+SLKAdditions.m */; };
+		E9F7C0151B85E8E800D97539 /* UIResponder+SLKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E9F7C0031B85E8E800D97539 /* UIResponder+SLKAdditions.m */; };
+		E9F7C0161B85E8E800D97539 /* UIScrollView+SLKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E9F7C0051B85E8E800D97539 /* UIScrollView+SLKAdditions.m */; };
+		E9F7C0171B85E8E800D97539 /* UIView+SLKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E9F7C0071B85E8E800D97539 /* UIView+SLKAdditions.m */; };
+		E9F7C0181B85E8E800D97539 /* SLKInputAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9F7C00A1B85E8E800D97539 /* SLKInputAccessoryView.m */; };
+		E9F7C0191B85E8E800D97539 /* SLKTextInputbar.m in Sources */ = {isa = PBXBuildFile; fileRef = E9F7C00C1B85E8E800D97539 /* SLKTextInputbar.m */; };
+		E9F7C01A1B85E8E800D97539 /* SLKTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9F7C00E1B85E8E800D97539 /* SLKTextView.m */; };
+		E9F7C01B1B85E8E800D97539 /* SLKTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9F7C0101B85E8E800D97539 /* SLKTextViewController.m */; };
+		E9F7C01C1B85E8E800D97539 /* SLKTypingIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9F7C0131B85E8E800D97539 /* SLKTypingIndicatorView.m */; };
+		E9F7C01F1B85EB4C00D97539 /* TypingIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9F7C01E1B85EB4C00D97539 /* TypingIndicatorView.m */; };
 		E9FBCD2C1B69F92D00BF7096 /* ATOMLoginBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FBCD2B1B69F92D00BF7096 /* ATOMLoginBaseViewController.m */; };
 		E9FBCD2F1B6A042000BF7096 /* ATOMLoginCustomNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FBCD2E1B6A042000BF7096 /* ATOMLoginCustomNavigationController.m */; };
 		E9FC94D91B2F0D0C00B72C60 /* ATOMUserProfileViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FC94D81B2F0D0C00B72C60 /* ATOMUserProfileViewModel.m */; };
@@ -1030,26 +1031,6 @@
 		E94B02ED1B7B2EE300863C6F /* ATOMTextViewComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMTextViewComment.m; sourceTree = "<group>"; };
 		E94B02EF1B7B3F6A00863C6F /* ATOMFaceCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMFaceCollectionView.h; sourceTree = "<group>"; };
 		E94B02F01B7B3F6A00863C6F /* ATOMFaceCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMFaceCollectionView.m; sourceTree = "<group>"; };
-		E94B02F41B7C72E000863C6F /* SLKTextView+SLKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SLKTextView+SLKAdditions.h"; sourceTree = "<group>"; };
-		E94B02F51B7C72E000863C6F /* SLKTextView+SLKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SLKTextView+SLKAdditions.m"; sourceTree = "<group>"; };
-		E94B02F61B7C72E000863C6F /* SLKUIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKUIConstants.h; sourceTree = "<group>"; };
-		E94B02F71B7C72E000863C6F /* UIResponder+SLKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIResponder+SLKAdditions.h"; sourceTree = "<group>"; };
-		E94B02F81B7C72E000863C6F /* UIResponder+SLKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+SLKAdditions.m"; sourceTree = "<group>"; };
-		E94B02F91B7C72E000863C6F /* UIScrollView+SLKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SLKAdditions.h"; sourceTree = "<group>"; };
-		E94B02FA1B7C72E000863C6F /* UIScrollView+SLKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SLKAdditions.m"; sourceTree = "<group>"; };
-		E94B02FB1B7C72E000863C6F /* UIView+SLKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SLKAdditions.h"; sourceTree = "<group>"; };
-		E94B02FC1B7C72E000863C6F /* UIView+SLKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SLKAdditions.m"; sourceTree = "<group>"; };
-		E94B02FE1B7C72E000863C6F /* SLKInputAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKInputAccessoryView.h; sourceTree = "<group>"; };
-		E94B02FF1B7C72E000863C6F /* SLKInputAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLKInputAccessoryView.m; sourceTree = "<group>"; };
-		E94B03001B7C72E000863C6F /* SLKTextInputbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKTextInputbar.h; sourceTree = "<group>"; };
-		E94B03011B7C72E000863C6F /* SLKTextInputbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLKTextInputbar.m; sourceTree = "<group>"; };
-		E94B03021B7C72E000863C6F /* SLKTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKTextView.h; sourceTree = "<group>"; };
-		E94B03031B7C72E000863C6F /* SLKTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLKTextView.m; sourceTree = "<group>"; };
-		E94B03041B7C72E000863C6F /* SLKTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKTextViewController.h; sourceTree = "<group>"; };
-		E94B03051B7C72E000863C6F /* SLKTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLKTextViewController.m; sourceTree = "<group>"; };
-		E94B03061B7C72E000863C6F /* SLKTypingIndicatorProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKTypingIndicatorProtocol.h; sourceTree = "<group>"; };
-		E94B03071B7C72E000863C6F /* SLKTypingIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKTypingIndicatorView.h; sourceTree = "<group>"; };
-		E94B03081B7C72E000863C6F /* SLKTypingIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLKTypingIndicatorView.m; sourceTree = "<group>"; };
 		E94B03121B7C744B00863C6F /* ATOMPageCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMPageCommentViewController.h; sourceTree = "<group>"; };
 		E94B03131B7C744B00863C6F /* ATOMPageCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMPageCommentViewController.m; sourceTree = "<group>"; };
 		E94B03181B7C74E500863C6F /* CommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentTableViewCell.h; sourceTree = "<group>"; };
@@ -1144,9 +1125,6 @@
 		E99C51291B85ACFA004CA47B /* WeiboSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = WeiboSDK.bundle; sourceTree = "<group>"; };
 		E99C512A1B85ACFA004CA47B /* WeiboSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboSDK.h; sourceTree = "<group>"; };
 		E99C512B1B85ACFA004CA47B /* WeiboUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboUser.h; sourceTree = "<group>"; };
-		E99C512D1B85ACFA004CA47B /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
-		E99C512E1B85ACFA004CA47B /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
-		E99C512F1B85ACFA004CA47B /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		E99C51301B85ACFA004CA47B /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
 		E99C51311B85ACFA004CA47B /* ShareSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDK.bundle; sourceTree = "<group>"; };
 		E99C51321B85ACFA004CA47B /* ShareSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDK.framework; sourceTree = "<group>"; };
@@ -1158,6 +1136,9 @@
 		E99C51431B85ADE9004CA47B /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		E99C51451B85ADEF004CA47B /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		E99C51471B85ADF9004CA47B /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		E99C51491B85C851004CA47B /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		E99C514A1B85C851004CA47B /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		E99C514B1B85C851004CA47B /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		E99D2F391B1C7E8D000D7784 /* UIImage+Blurring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Blurring.h"; sourceTree = "<group>"; };
 		E99D2F3A1B1C7E8D000D7784 /* UIImage+Blurring.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Blurring.m"; sourceTree = "<group>"; };
 		E99D2F3B1B1C7E8D000D7784 /* UIImage+Enhancing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Enhancing.h"; sourceTree = "<group>"; };
@@ -1198,6 +1179,28 @@
 		E9D7390E1B79F200008CE562 /* CustomBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomBadge.m; sourceTree = "<group>"; };
 		E9ED35841B80F62F00B93BE5 /* UIScrollView+EmptyDataSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+EmptyDataSet.h"; sourceTree = "<group>"; };
 		E9ED35851B80F62F00B93BE5 /* UIScrollView+EmptyDataSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+EmptyDataSet.m"; sourceTree = "<group>"; };
+		E9F7BFFF1B85E8E800D97539 /* SLKTextView+SLKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SLKTextView+SLKAdditions.h"; sourceTree = "<group>"; };
+		E9F7C0001B85E8E800D97539 /* SLKTextView+SLKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SLKTextView+SLKAdditions.m"; sourceTree = "<group>"; };
+		E9F7C0011B85E8E800D97539 /* SLKUIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKUIConstants.h; sourceTree = "<group>"; };
+		E9F7C0021B85E8E800D97539 /* UIResponder+SLKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIResponder+SLKAdditions.h"; sourceTree = "<group>"; };
+		E9F7C0031B85E8E800D97539 /* UIResponder+SLKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+SLKAdditions.m"; sourceTree = "<group>"; };
+		E9F7C0041B85E8E800D97539 /* UIScrollView+SLKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SLKAdditions.h"; sourceTree = "<group>"; };
+		E9F7C0051B85E8E800D97539 /* UIScrollView+SLKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SLKAdditions.m"; sourceTree = "<group>"; };
+		E9F7C0061B85E8E800D97539 /* UIView+SLKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SLKAdditions.h"; sourceTree = "<group>"; };
+		E9F7C0071B85E8E800D97539 /* UIView+SLKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SLKAdditions.m"; sourceTree = "<group>"; };
+		E9F7C0091B85E8E800D97539 /* SLKInputAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKInputAccessoryView.h; sourceTree = "<group>"; };
+		E9F7C00A1B85E8E800D97539 /* SLKInputAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLKInputAccessoryView.m; sourceTree = "<group>"; };
+		E9F7C00B1B85E8E800D97539 /* SLKTextInputbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKTextInputbar.h; sourceTree = "<group>"; };
+		E9F7C00C1B85E8E800D97539 /* SLKTextInputbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLKTextInputbar.m; sourceTree = "<group>"; };
+		E9F7C00D1B85E8E800D97539 /* SLKTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKTextView.h; sourceTree = "<group>"; };
+		E9F7C00E1B85E8E800D97539 /* SLKTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLKTextView.m; sourceTree = "<group>"; };
+		E9F7C00F1B85E8E800D97539 /* SLKTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKTextViewController.h; sourceTree = "<group>"; };
+		E9F7C0101B85E8E800D97539 /* SLKTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLKTextViewController.m; sourceTree = "<group>"; };
+		E9F7C0111B85E8E800D97539 /* SLKTypingIndicatorProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKTypingIndicatorProtocol.h; sourceTree = "<group>"; };
+		E9F7C0121B85E8E800D97539 /* SLKTypingIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKTypingIndicatorView.h; sourceTree = "<group>"; };
+		E9F7C0131B85E8E800D97539 /* SLKTypingIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLKTypingIndicatorView.m; sourceTree = "<group>"; };
+		E9F7C01D1B85EB4C00D97539 /* TypingIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TypingIndicatorView.h; sourceTree = "<group>"; };
+		E9F7C01E1B85EB4C00D97539 /* TypingIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TypingIndicatorView.m; sourceTree = "<group>"; };
 		E9FBCD2A1B69F92D00BF7096 /* ATOMLoginBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMLoginBaseViewController.h; sourceTree = "<group>"; };
 		E9FBCD2B1B69F92D00BF7096 /* ATOMLoginBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMLoginBaseViewController.m; sourceTree = "<group>"; };
 		E9FBCD2D1B6A042000BF7096 /* ATOMLoginCustomNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMLoginCustomNavigationController.h; sourceTree = "<group>"; };
@@ -1233,12 +1236,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				E99C51481B85ADF9004CA47B /* ImageIO.framework in Frameworks */,
+				E99C514C1B85C851004CA47B /* libWeChatSDK.a in Frameworks */,
 				E99C51461B85ADEF004CA47B /* JavaScriptCore.framework in Frameworks */,
 				E99C51441B85ADE9004CA47B /* libstdc++.dylib in Frameworks */,
 				E99C51421B85ADD5004CA47B /* libicucore.dylib in Frameworks */,
 				E99C51171B85A4CB004CA47B /* libz.dylib in Frameworks */,
 				E99C51151B85A40E004CA47B /* libsqlite3.0.dylib in Frameworks */,
-				E99C51391B85ACFA004CA47B /* libWeChatSDK.a in Frameworks */,
 				E99C513D1B85ACFA004CA47B /* ShareSDKConnector.framework in Frameworks */,
 				E99C51131B85A40A004CA47B /* libc++.dylib in Frameworks */,
 				E99C513E1B85ACFA004CA47B /* ShareSDKExtension.framework in Frameworks */,
@@ -2191,10 +2194,10 @@
 		5CDB05EC1AA400410089121E /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				E9F7BFFD1B85E8E800D97539 /* Slack */,
 				E99C51181B85A536004CA47B /* Share */,
 				E9ED35831B80F62F00B93BE5 /* NODataSet */,
 				E93ED5231B7F25EF0035630B /* FDAutoHeightCell */,
-				E94B02F21B7C72E000863C6F /* SlackTextViewController */,
 				E9D7390A1B79F200008CE562 /* BadgeView */,
 				E9FF94A91B7476FC00F06819 /* HMSegmentedControl */,
 				E991EEFB1B735B7000025108 /* EAIntroView */,
@@ -2507,50 +2510,6 @@
 			name = record;
 			sourceTree = "<group>";
 		};
-		E94B02F21B7C72E000863C6F /* SlackTextViewController */ = {
-			isa = PBXGroup;
-			children = (
-				E94B02F31B7C72E000863C6F /* Additions */,
-				E94B02FD1B7C72E000863C6F /* Classes */,
-			);
-			name = SlackTextViewController;
-			path = SlackTextView;
-			sourceTree = "<group>";
-		};
-		E94B02F31B7C72E000863C6F /* Additions */ = {
-			isa = PBXGroup;
-			children = (
-				E94B02F41B7C72E000863C6F /* SLKTextView+SLKAdditions.h */,
-				E94B02F51B7C72E000863C6F /* SLKTextView+SLKAdditions.m */,
-				E94B02F61B7C72E000863C6F /* SLKUIConstants.h */,
-				E94B02F71B7C72E000863C6F /* UIResponder+SLKAdditions.h */,
-				E94B02F81B7C72E000863C6F /* UIResponder+SLKAdditions.m */,
-				E94B02F91B7C72E000863C6F /* UIScrollView+SLKAdditions.h */,
-				E94B02FA1B7C72E000863C6F /* UIScrollView+SLKAdditions.m */,
-				E94B02FB1B7C72E000863C6F /* UIView+SLKAdditions.h */,
-				E94B02FC1B7C72E000863C6F /* UIView+SLKAdditions.m */,
-			);
-			path = Additions;
-			sourceTree = "<group>";
-		};
-		E94B02FD1B7C72E000863C6F /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				E94B02FE1B7C72E000863C6F /* SLKInputAccessoryView.h */,
-				E94B02FF1B7C72E000863C6F /* SLKInputAccessoryView.m */,
-				E94B03001B7C72E000863C6F /* SLKTextInputbar.h */,
-				E94B03011B7C72E000863C6F /* SLKTextInputbar.m */,
-				E94B03021B7C72E000863C6F /* SLKTextView.h */,
-				E94B03031B7C72E000863C6F /* SLKTextView.m */,
-				E94B03041B7C72E000863C6F /* SLKTextViewController.h */,
-				E94B03051B7C72E000863C6F /* SLKTextViewController.m */,
-				E94B03061B7C72E000863C6F /* SLKTypingIndicatorProtocol.h */,
-				E94B03071B7C72E000863C6F /* SLKTypingIndicatorView.h */,
-				E94B03081B7C72E000863C6F /* SLKTypingIndicatorView.m */,
-			);
-			path = Classes;
-			sourceTree = "<group>";
-		};
 		E94B03151B7C74C600863C6F /* comment */ = {
 			isa = PBXGroup;
 			children = (
@@ -2560,6 +2519,8 @@
 				E94B031B1B7C74E500863C6F /* CommentTextView.m */,
 				E94B031C1B7C74E500863C6F /* CommentViewController.h */,
 				E94B031D1B7C74E500863C6F /* CommentViewController.m */,
+				E9F7C01D1B85EB4C00D97539 /* TypingIndicatorView.h */,
+				E9F7C01E1B85EB4C00D97539 /* TypingIndicatorView.m */,
 			);
 			name = comment;
 			sourceTree = "<group>";
@@ -2756,9 +2717,9 @@
 		E99C512C1B85ACFA004CA47B /* WeChatSDK */ = {
 			isa = PBXGroup;
 			children = (
-				E99C512D1B85ACFA004CA47B /* libWeChatSDK.a */,
-				E99C512E1B85ACFA004CA47B /* WXApi.h */,
-				E99C512F1B85ACFA004CA47B /* WXApiObject.h */,
+				E99C51491B85C851004CA47B /* libWeChatSDK.a */,
+				E99C514A1B85C851004CA47B /* WXApi.h */,
+				E99C514B1B85C851004CA47B /* WXApiObject.h */,
 			);
 			path = WeChatSDK;
 			sourceTree = "<group>";
@@ -2870,6 +2831,49 @@
 			);
 			name = NODataSet;
 			path = ../NODataSet;
+			sourceTree = "<group>";
+		};
+		E9F7BFFD1B85E8E800D97539 /* Slack */ = {
+			isa = PBXGroup;
+			children = (
+				E9F7BFFE1B85E8E800D97539 /* Additions */,
+				E9F7C0081B85E8E800D97539 /* Classes */,
+			);
+			path = Slack;
+			sourceTree = "<group>";
+		};
+		E9F7BFFE1B85E8E800D97539 /* Additions */ = {
+			isa = PBXGroup;
+			children = (
+				E9F7BFFF1B85E8E800D97539 /* SLKTextView+SLKAdditions.h */,
+				E9F7C0001B85E8E800D97539 /* SLKTextView+SLKAdditions.m */,
+				E9F7C0011B85E8E800D97539 /* SLKUIConstants.h */,
+				E9F7C0021B85E8E800D97539 /* UIResponder+SLKAdditions.h */,
+				E9F7C0031B85E8E800D97539 /* UIResponder+SLKAdditions.m */,
+				E9F7C0041B85E8E800D97539 /* UIScrollView+SLKAdditions.h */,
+				E9F7C0051B85E8E800D97539 /* UIScrollView+SLKAdditions.m */,
+				E9F7C0061B85E8E800D97539 /* UIView+SLKAdditions.h */,
+				E9F7C0071B85E8E800D97539 /* UIView+SLKAdditions.m */,
+			);
+			path = Additions;
+			sourceTree = "<group>";
+		};
+		E9F7C0081B85E8E800D97539 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				E9F7C0091B85E8E800D97539 /* SLKInputAccessoryView.h */,
+				E9F7C00A1B85E8E800D97539 /* SLKInputAccessoryView.m */,
+				E9F7C00B1B85E8E800D97539 /* SLKTextInputbar.h */,
+				E9F7C00C1B85E8E800D97539 /* SLKTextInputbar.m */,
+				E9F7C00D1B85E8E800D97539 /* SLKTextView.h */,
+				E9F7C00E1B85E8E800D97539 /* SLKTextView.m */,
+				E9F7C00F1B85E8E800D97539 /* SLKTextViewController.h */,
+				E9F7C0101B85E8E800D97539 /* SLKTextViewController.m */,
+				E9F7C0111B85E8E800D97539 /* SLKTypingIndicatorProtocol.h */,
+				E9F7C0121B85E8E800D97539 /* SLKTypingIndicatorView.h */,
+				E9F7C0131B85E8E800D97539 /* SLKTypingIndicatorView.m */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 		E9FD023A1B296EA600FC5E17 /* common */ = {
@@ -3043,11 +3047,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				5CDB05CA1AA3FE520089121E /* AppDelegate.m in Sources */,
+				E9F7C0171B85E8E800D97539 /* UIView+SLKAdditions.m in Sources */,
 				5C83A8961AC66F910071A024 /* POPVector.mm in Sources */,
 				5C83A8921AC66F910071A024 /* POPLayerExtras.mm in Sources */,
 				E99C50EB1B85A256004CA47B /* FMDatabaseQueue.m in Sources */,
 				5CDB06351AA428BD0089121E /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
-				E94B03101B7C72E000863C6F /* SLKTextViewController.m in Sources */,
 				E900AB491B41153A0019BAEA /* AFNetworkActivityIndicatorManager.m in Sources */,
 				5C83A8891AC66F910071A024 /* POPAnimationExtras.mm in Sources */,
 				5C54DF291AB9810B00BDE34D /* ATOMImageTipLabel.m in Sources */,
@@ -3081,7 +3085,6 @@
 				5C54DF1F1AB9738E00BDE34D /* ATOMCutstomNavigationController.m in Sources */,
 				5C83A8971AC66F910071A024 /* TransformationMatrix.cpp in Sources */,
 				5CEAC0331AD4F9540058037C /* ATOMShowCollection.m in Sources */,
-				E94B030C1B7C72E000863C6F /* UIView+SLKAdditions.m in Sources */,
 				5C436A8A1AB03FA800D14608 /* ATOMCommentMessageViewModel.m in Sources */,
 				E99C510C1B85A2A6004CA47B /* JTSAnimatedGIFUtility.m in Sources */,
 				5C436A7E1AB0249F00D14608 /* kfcFollowCell.m in Sources */,
@@ -3089,7 +3092,6 @@
 				E900AB4C1B41153A0019BAEA /* UIButton+AFNetworking.m in Sources */,
 				5CDB06711AA47E760089121E /* ATOMInputVerifyCodeViewController.m in Sources */,
 				E99D2F5F1B1C7E8D000D7784 /* NYXImagesHelper.m in Sources */,
-				E94B030A1B7C72E000863C6F /* UIResponder+SLKAdditions.m in Sources */,
 				5C436A841AB03BF100D14608 /* ATOMCommentMessageViewController.m in Sources */,
 				5C54DF2D1AB99F5300BDE34D /* ATOMSubmitImageWithLabel.m in Sources */,
 				5CDB06031AA405A40089121E /* UIColor+Hex.m in Sources */,
@@ -3105,10 +3107,10 @@
 				5C54DF231AB9772000BDE34D /* ATOMHomeImage.m in Sources */,
 				5C4C70D91AB6FD5700358989 /* ATOMGetMoblieCode.m in Sources */,
 				5C6776AD1AAC09C400320522 /* IQTitleBarButtonItem.m in Sources */,
+				E9F7C0151B85E8E800D97539 /* UIResponder+SLKAdditions.m in Sources */,
 				5C5DDBD71AD40C9800F4B845 /* ATOMShowProceeding.m in Sources */,
 				5C6776AB1AAC09C400320522 /* IQTextView.m in Sources */,
 				E991EF0B1B735D0500025108 /* ATOMIntroductionOnFirstLaunchViewController.m in Sources */,
-				E94B030E1B7C72E000863C6F /* SLKTextInputbar.m in Sources */,
 				5C83A8931AC66F910071A024 /* POPMath.mm in Sources */,
 				5C0F04F71ADD033D002003AE /* ATOMFansViewModel.m in Sources */,
 				5C3101901AAEC8F900EF529B /* ATOMMessageRemindViewController.m in Sources */,
@@ -3127,12 +3129,12 @@
 				5C4AE3EC1AAED60A0020E102 /* ATOMMyFansViewController.m in Sources */,
 				5C7B8AB31AFA549D00F448CD /* kfcFollowVM.m in Sources */,
 				5C653BA11AA98B870025814B /* ATOMAddTipLabelToImageView.m in Sources */,
+				E9F7C0161B85E8E800D97539 /* UIScrollView+SLKAdditions.m in Sources */,
 				5C3101871AAE9B0F00EF529B /* ATOMAccountBindingViewController.m in Sources */,
 				5C561A711AB7C8C30052D4D5 /* MJRefreshFooter.m in Sources */,
 				5CD42E7A1AE37F7500BACDDD /* ATOMReplier.m in Sources */,
 				E900AB441B41153A0019BAEA /* AFSecurityPolicy.m in Sources */,
 				5C83A8951AC66F910071A024 /* POPSpringAnimation.mm in Sources */,
-				E94B030B1B7C72E000863C6F /* UIScrollView+SLKAdditions.m in Sources */,
 				5CDB06321AA428BD0089121E /* MASViewAttribute.m in Sources */,
 				E99D2F5A1B1C7E8D000D7784 /* UIImage+Rotating.m in Sources */,
 				5C436A901AB0723700D14608 /* ATOMInviteMessageViewController.m in Sources */,
@@ -3147,6 +3149,8 @@
 				E93D237E1B3CFA4D0081F632 /* ATOMShareModel.m in Sources */,
 				5C6697B91AAFFD5F001FCF8A /* ATOMProceedingTableViewCell.m in Sources */,
 				E99C510F1B85A2A6004CA47B /* JTSSimpleImageDownloader.m in Sources */,
+				E9F7C0191B85E8E800D97539 /* SLKTextInputbar.m in Sources */,
+				E9F7C01A1B85E8E800D97539 /* SLKTextView.m in Sources */,
 				5C436A961AB0799900D14608 /* ATOMConcernMessageViewController.m in Sources */,
 				E900AB501B41153A0019BAEA /* UIWebView+AFNetworking.m in Sources */,
 				5CDB06301AA428BD0089121E /* MASConstraintMaker.m in Sources */,
@@ -3178,6 +3182,7 @@
 				5C84062F1ABA6C5300068F35 /* ATOMImageTipLabelDAO.m in Sources */,
 				5C0F04E51ADCF457002003AE /* ATOMConcernMessage.m in Sources */,
 				5CDB06341AA428BD0089121E /* NSArray+MASAdditions.m in Sources */,
+				E9F7C01C1B85E8E800D97539 /* SLKTypingIndicatorView.m in Sources */,
 				5C3101811AAE8D4300EF529B /* ATOMModifyPasswordViewController.m in Sources */,
 				E9FF94AC1B7476FC00F06819 /* HMSegmentedControl.m in Sources */,
 				E900AB591B4387360019BAEA /* ATOMShowReply.m in Sources */,
@@ -3259,7 +3264,6 @@
 				5C6776A91AAC09C400320522 /* IQKeyboardReturnKeyHandler.m in Sources */,
 				E99D2F541B1C7E8D000D7784 /* UIImage+Blurring.m in Sources */,
 				5C5A7A861ABFF18F004A00C5 /* ATOMDetailImageDAO.m in Sources */,
-				E94B03091B7C72E000863C6F /* SLKTextView+SLKAdditions.m in Sources */,
 				5C5EF7C31ABBF23E00CE5B84 /* ATOMShowDetailOfHomePage.m in Sources */,
 				5C6776AC1AAC09C400320522 /* IQBarButtonItem.m in Sources */,
 				E9FBCD2F1B6A042000BF7096 /* ATOMLoginCustomNavigationController.m in Sources */,
@@ -3267,13 +3271,13 @@
 				5C83A88E1AC66F910071A024 /* POPCGUtils.mm in Sources */,
 				5CDB06741AA47EEC0089121E /* ATOMInputVerifyCodeView.m in Sources */,
 				5C8084F91AF2603D0062421C /* ATOMBottomCommonButton.m in Sources */,
+				E9F7C01F1B85EB4C00D97539 /* TypingIndicatorView.m in Sources */,
 				E90C7C5D1B20726400CF0E6A /* PWMascotAnimationImageView.m in Sources */,
 				5C4C70C51AB6BC5200358989 /* ATOMBaseRequest.m in Sources */,
 				E94B032D1B7DE7D300863C6F /* kfcViews.m in Sources */,
 				5CDB06051AA405A40089121E /* UIColor+HSL.m in Sources */,
 				E9D739131B79F200008CE562 /* BadgeStyle.m in Sources */,
 				5C535CBA1AF1FCEC00BF30D1 /* ATOMPSView.m in Sources */,
-				E94B030D1B7C72E000863C6F /* SLKInputAccessoryView.m in Sources */,
 				5C8A2A241AAF31B30064EB1C /* ATOMMyConcernTableFooterView.m in Sources */,
 				5C84062C1ABA67CC00068F35 /* JSONKit.m in Sources */,
 				E94B03221B7C74E500863C6F /* CommentTextView.m in Sources */,
@@ -3291,6 +3295,7 @@
 				E9FC94D91B2F0D0C00B72C60 /* ATOMUserProfileViewModel.m in Sources */,
 				5C653B9E1AA973630025814B /* ATOMAddTipLabelViewController.m in Sources */,
 				5C0F04DC1ADCE70C002003AE /* ATOMReplyMessage.m in Sources */,
+				E9F7C01B1B85E8E800D97539 /* SLKTextViewController.m in Sources */,
 				E90C7C601B20A0FC00CF0E6A /* KShareManager.m in Sources */,
 				5C9BD9EE1AA8293400715698 /* ATOMCropImageController.m in Sources */,
 				5C6CEF2D1AF1971400F06213 /* CommentLikeButton.m in Sources */,
@@ -3329,13 +3334,11 @@
 				E9FF3FCD1B563B6D007AA3F6 /* ATOMShareSDKModel.m in Sources */,
 				E90578A11B4E6F370066F39B /* ATOMFollowModel.m in Sources */,
 				E9CBFF4C1B5214FB00DC8ED4 /* SIAlertView.m in Sources */,
-				E94B03111B7C72E000863C6F /* SLKTypingIndicatorView.m in Sources */,
 				5C561A501AB7C8210052D4D5 /* ATOMImage.m in Sources */,
 				E900AB481B41153A0019BAEA /* AFURLSessionManager.m in Sources */,
 				5C4F5BD21AA5426700226F64 /* ATOMLoginView.m in Sources */,
 				5C0F04E21ADCED2B002003AE /* ATOMReplyMessageViewModel.m in Sources */,
 				5C559B3D1AB1394C000C5B50 /* ATOMInviteTableHeaderView.m in Sources */,
-				E94B030F1B7C72E000863C6F /* SLKTextView.m in Sources */,
 				5C6776A51AAC09C400320522 /* IQNSArray+Sort.m in Sources */,
 				5C83A8881AC66F910071A024 /* POPAnimationEvent.mm in Sources */,
 				E90197381B32D3C100F46B78 /* Util.m in Sources */,
@@ -3374,10 +3377,12 @@
 				E9D1F88C1B203A4F0072242B /* RefreshTableView.m in Sources */,
 				5CDB062F1AA428BD0089121E /* MASConstraint.m in Sources */,
 				5C561A791AB7C8C30052D4D5 /* UIView+MJExtension.m in Sources */,
+				E9F7C0141B85E8E800D97539 /* SLKTextView+SLKAdditions.m in Sources */,
 				5C31017B1AAE84C600EF529B /* ATOMAccountSettingViewController.m in Sources */,
 				E979013A1B4A6494003FB0B5 /* ATOMReportModel.m in Sources */,
 				E900AB4E1B41153A0019BAEA /* UIProgressView+AFNetworking.m in Sources */,
 				E942898B1B5B374B00ED26E4 /* HexColors.m in Sources */,
+				E9F7C0181B85E8E800D97539 /* SLKInputAccessoryView.m in Sources */,
 				5C31018A1AAE9B5700EF529B /* ATOMAccountBindingView.m in Sources */,
 				5C84063B1ABADA8B00068F35 /* ATOMHomeImageDAO.m in Sources */,
 				5C559B341AB10D4E000C5B50 /* ATOMOtherPersonView.m in Sources */,

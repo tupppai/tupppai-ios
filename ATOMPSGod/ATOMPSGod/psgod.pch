@@ -43,6 +43,8 @@
 #import "KShareManager.h"
 #import "UIColor+PSGod.h"
 #import "UIScrollView+EmptyDataSet.h"
+#import "ATOMShareSDKModel.h"
+
 #endif
 
 

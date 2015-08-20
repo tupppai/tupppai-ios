@@ -12,11 +12,6 @@
 #import "ATOMCutstomNavigationController.h"
 #import "ATOMLoginCustomNavigationController.h"
 #import "ATOMIntroductionOnFirstLaunchViewController.h"
-<<<<<<< Updated upstream
-#import "WXApi.h"
-#import "WeiboSDK.h"
-=======
->>>>>>> Stashed changes
 #import "ATOMBaseDAO.h"
 #import "UMessage.h"
 #import <ShareSDK/ShareSDK.h>
@@ -127,10 +122,26 @@
 - (void)setupShareSDK {
     [ShareSDK registerApp:@"65b1ce491325"
           activePlatforms:@[@(SSDKPlatformTypeWechat), @(SSDKPlatformTypeSinaWeibo)]
-                 onImport:nil
+                 onImport:^(SSDKPlatformType platformType) {
+                     
+                     switch (platformType)
+                     {
+                         case SSDKPlatformTypeWechat:
+                             [ShareSDKConnector connectWeChat:[WXApi class]];
+                             break;
+                             
+                         default:
+                             break;
+                     }
+                     
+                 }
           onConfiguration:^(SSDKPlatformType platformType, NSMutableDictionary *appInfo) {
               switch (platformType)
               {
+                
+                  case SSDKPlatformTypeWechat:
+                      [appInfo SSDKSetupWeChatByAppId:@"wx86ff6f67a2b9b4b8" appSecret:@"c2da31fda3acf1c09c40ee25772b6ca5"];
+                      break;
                   case SSDKPlatformTypeSinaWeibo:
                       //设置新浪微博应用信息,其中authType设置为使用SSO＋Web形式授权
                       [appInfo SSDKSetupSinaWeiboByAppKey:@"882276088"
@@ -138,10 +149,6 @@
                                               redirectUri:@"https://api.weibo.com/oauth2/default.html"
                                                  authType:SSDKAuthTypeBoth];
                       break;
-                  case SSDKPlatformTypeWechat:
-                      [appInfo SSDKSetupWeChatByAppId:@"wx86ff6f67a2b9b4b8" appSecret:@"c2da31fda3acf1c09c40ee25772b6ca5"];
-                      break;
-
               }
           }
      ];
@@ -247,15 +254,6 @@
 }
 
 
-
--(BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    return [WXApi handleOpenURL:url delegate:self];
-}
-
-
--(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    return [WXApi handleOpenURL:url delegate:self];
-}
 
 
 

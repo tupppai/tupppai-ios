@@ -136,8 +136,8 @@
         
         _textView.typingSuggestionEnabled = YES;
         _textView.autocapitalizationType = UITextAutocapitalizationTypeSentences;
-        _textView.keyboardType = UIKeyboardTypeDefault;
-        _textView.returnKeyType = UIReturnKeySend;
+        _textView.keyboardType = UIKeyboardTypeTwitter;
+        _textView.returnKeyType = UIReturnKeyDefault;
         _textView.enablesReturnKeyAutomatically = YES;
         _textView.scrollIndicatorInsets = UIEdgeInsetsMake(0.0, -1.0, 0.0, 1.0);
         _textView.textContainerInset = UIEdgeInsetsMake(8.0, 4.0, 8.0, 0.0);
@@ -174,6 +174,8 @@
         _rightButton.translatesAutoresizingMaskIntoConstraints = NO;
         _rightButton.titleLabel.font = [UIFont boldSystemFontOfSize:15.0];
         _rightButton.enabled = NO;
+        
+        [_rightButton setTitle:NSLocalizedString(@"Send", nil) forState:UIControlStateNormal];
     }
     return _rightButton;
 }
@@ -317,23 +319,19 @@
 
 - (CGFloat)slk_appropriateRightButtonWidth
 {
-//    NSString *title = [self.rightButton titleForState:UIControlStateNormal];
-//    CGSize rigthButtonSize = [title sizeWithAttributes:@{NSFontAttributeName: self.rightButton.titleLabel.font}];
-    CGSize rigthButtonSize = [_rightButton imageForState:UIControlStateNormal].size;
-    //peiwei
+    NSString *title = [self.rightButton titleForState:UIControlStateNormal];
+    CGSize rigthButtonSize = [title sizeWithAttributes:@{NSFontAttributeName: self.rightButton.titleLabel.font}];
+    
     if (self.autoHideRightButton) {
         if (self.textView.text.length == 0) {
             return 0.0;
         }
     }
-    return rigthButtonSize.width+self.contentInset.right+5;
+    return rigthButtonSize.width+self.contentInset.right;
 }
 
 - (CGFloat)slk_appropriateRightButtonMargin
 {
-    
-    //peiwei
-
     if (self.autoHideRightButton) {
         if (self.textView.text.length == 0) {
             return 0.0;
@@ -658,7 +656,7 @@
         self.rightMarginWC.constant = [self slk_appropriateRightButtonMargin];
         
         [self.rightButton sizeToFit];
-
+        
         CGFloat rightVerMargin = (self.intrinsicContentSize.height - CGRectGetHeight(self.rightButton.frame)) / 2.0;
         
         self.rightButtonTopMarginC.constant = rightVerMargin;

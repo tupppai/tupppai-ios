@@ -180,7 +180,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
     
     // This little trick validates any pending auto-correction or auto-spelling just after hitting the 'Send' button
-    [self.textView refreshFirstResponder];
+    [self.textView resignFirstResponder];
     
     CommentVM *comment = [CommentVM new];
     comment.username = [ATOMCurrentUser currentUser].username;
@@ -343,12 +343,12 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 1) {
-        return kCommentTableViewHeaderHeight;
+        return 0;
     }
     if ([tableView.dataSource tableView:tableView numberOfRowsInSection:section] == 0) {
         return 0;
     } else {
-        return kCommentTableViewHeaderHeight;
+        return 0;
     }
 }
 
@@ -521,13 +521,13 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 //#pragma mark - ATOMShareFunctionViewDelegate
 //-(void)tapWechatFriends {
-//    [self postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:(int)_vm.type];
+//    [ATOMShareSDKModel postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:(int)_vm.type];
 //}
 //-(void)tapWechatMoment {
-//    [self postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
+//    [ATOMShareSDKModel postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
 //}
 //-(void)tapSinaWeibo {
-//    [self postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:(int)_vm.type];
+//    [ATOMShareSDKModel postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:(int)_vm.type];
 //}
 //-(void)tapCollect {
 //    NSMutableDictionary *param = [NSMutableDictionary new];
@@ -557,27 +557,27 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 -(void)configTableView {
     _headerView = [kfcPageView new];
     _headerView.vm = _vm;
-    self.tableView.tableHeaderView = _headerView;
+//    self.tableView.tableHeaderView = _headerView;
     self.tableView.emptyDataSetSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[CommentTableViewCell class] forCellReuseIdentifier:MessengerCellIdentifier];
     self.tableView.tableFooterView = [UIView new];
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.showsHorizontalScrollIndicator = NO;
-    UIView *header = self.tableView.tableHeaderView;
-    [header setNeedsLayout];
-    [header layoutIfNeeded];
-    CGFloat height = [header systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-    CGRect frame = header.frame;
-    frame.size.height = height;
-    header.frame = frame;
-    self.tableView.tableHeaderView = header;
+//    UIView *header = self.tableView.tableHeaderView;
+//    [header setNeedsLayout];
+//    [header layoutIfNeeded];
+//    CGFloat height = [header systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+//    CGRect frame = header.frame;
+//    frame.size.height = height;
+//    header.frame = frame;
+//    self.tableView.tableHeaderView = header;
 }
 -(void)configTextInput {
     self.bounces = NO;
-    self.shakeToClearEnabled = YES;
-    self.keyboardPanningEnabled = YES;
-    self.shouldScrollToBottomAfterKeyboardShows = NO;
+    self.shakeToClearEnabled = NO;
+    self.keyboardPanningEnabled = NO;
+    self.shouldScrollToBottomAfterKeyboardShows = YES;
     self.inverted = NO;
     [self.leftButton setImage:[UIImage imageNamed:@"btn_emoji"] forState:UIControlStateNormal];
     [self.rightButton setImage:[UIImage imageNamed:@"btn_comment_send"] forState:UIControlStateNormal];
@@ -585,7 +585,11 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     self.textInputbar.maxCharCount = 256;
     self.textInputbar.counterStyle = SLKCounterStyleSplit;
     self.textInputbar.counterPosition = SLKCounterPositionTop;
-
+    
+}
+-(BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {
+    [super scrollViewShouldScrollToTop:scrollView];
+    return NO;
 }
 - (void)configFooterRefresh {
     [self.tableView addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
@@ -664,7 +668,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 
 //- (void)clickShareButton{
-//    [self postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
+//    [ATOMShareSDKModel postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
 //}
 
 - (void)clickMoreShareButton {
@@ -819,15 +823,12 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 
 #pragma mark - DZNEmptyDataSetSource
-- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
-{
-    return [UIImage imageNamed:@"ic_cry"];
-}
+
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
 {
     NSString *text = @"快来抢第一个坐上沙发";
     
-    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0f],
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:13.0f],
                                  NSForegroundColorAttributeName: [UIColor darkGrayColor]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];

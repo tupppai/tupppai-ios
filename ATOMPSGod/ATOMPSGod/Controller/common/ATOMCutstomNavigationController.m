@@ -31,9 +31,9 @@
     [self.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil]];
 }
 
--(UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+//-(UIStatusBarStyle)preferredStatusBarStyle {
+//    return UIStatusBarStyleLightContent;
+//}
 //- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
 //{
 //    if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)]) {

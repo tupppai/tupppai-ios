@@ -48,7 +48,7 @@
 //    [param setObject:@(id) forKey:@"target_id"];
 //    [shareModel getShareInfo:param withBlock:^(ATOMShare *share, NSError *error) {
 //        if (share) {
-//            [self postSocialShareShareSdk:share withShareType:shareType];
+//            [ATOMShareSDKModel postSocialShareShareSdk:share withShareType:shareType];
 //        }
 //    }];
 //}

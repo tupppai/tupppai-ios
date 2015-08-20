@@ -82,10 +82,11 @@
 }
 
 - (void)clickOtherRegisterButton:(UIButton *)sender {
-    [ATOMShareSDKModel share ];
-    //    [ATOMCurrentUser currentUser].signUpType = ATOMSignUpMobile;
-//    ATOMCreateProfileViewController *cpvc = [ATOMCreateProfileViewController new];
-//    [self.navigationController pushViewController:cpvc animated:YES];
+
+    [ATOMCurrentUser currentUser].signUpType = ATOMSignUpMobile;
+    
+    ATOMCreateProfileViewController *cpvc = [ATOMCreateProfileViewController new];
+    [self.navigationController pushViewController:cpvc animated:YES];
 }
 
 - (void)clickLoginButton:(UIButton *)sender {
