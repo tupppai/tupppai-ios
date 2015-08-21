@@ -18,6 +18,7 @@
 #import "ATOMInviteModel.h"
 #import "ATOMInviteCellViewModel.h"
 #import "ATOMFollowModel.h"
+#import "ATOMMainTabBarController.h"
 @interface ATOMInviteViewController () <UITableViewDelegate, UITableViewDataSource,UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) ATOMInviteView *inviteView;
@@ -52,6 +53,7 @@
 
 - (void)createUI {
     self.title = @"邀请";
+    self.navigationItem.leftBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:[[UIView alloc] initWithFrame:CGRectZero]]];
     if (_showNext) {
         UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
         rightButtonItem.tintColor = [UIColor whiteColor];
@@ -132,16 +134,7 @@
 #pragma mark - Click Event
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)barButtonItem {
-    
-//    kfcPageVM* vm = [kfcPageVM new];
-    CommentViewController* mvc = [CommentViewController new];
-//    mvc.delegate = self;
-    if (_askPageViewModel) {
-        mvc.vm = [_askPageViewModel generatepageDetailViewModel];
-    }
-    HomeViewController *hvc = self.navigationController.viewControllers[0];
-    [self pushViewController:mvc animated:YES];
-    [self.navigationController setViewControllers:@[hvc, mvc]];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)clickWXFriendCircleButton:(UIButton *)sender {

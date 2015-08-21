@@ -22,9 +22,7 @@
 
 - (NSURLSessionDataTask *)openIDAuth:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(bool isRegister,NSString* info, NSError *error))block {
     NSLog(@"判断第三平台获取的openid是否已经注册");
-    [[KShareManager mascotAnimator]show];
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:[NSString stringWithFormat:@"auth/%@",type] parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        [[KShareManager mascotAnimator]dismiss];
         NSLog(@"openIDAuth param %@",param);
         NSLog(@"openIDAuth responseObject%@",responseObject);
         NSString* info = (NSString*)[ responseObject objectForKey:@"info"];
@@ -46,8 +44,6 @@
             
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [[KShareManager mascotAnimator]dismiss];
-        
         if (block) {
             block(nil,nil,error);
         }

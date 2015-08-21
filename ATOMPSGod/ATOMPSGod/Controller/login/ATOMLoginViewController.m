@@ -114,7 +114,7 @@
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
                 } else if (isRegister == NO) {
                     NSLog(@"未注册微信账号");
-                    [ATOMCurrentUser currentUser].signUpType = ATOMSignUpWeixin;
+                    [ATOMCurrentUser currentUser].signUpType = ATOMSignUpWechat;
                     [ATOMCurrentUser currentUser].sourceData = sourceData;
                     ATOMUserProfileViewModel* ipvm = [ATOMUserProfileViewModel new];
                     ipvm.nickName = sourceData[@"nickname"];

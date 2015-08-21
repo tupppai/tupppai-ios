@@ -21,6 +21,7 @@
 #import "HotDetailViewController.h"
 #import "HomeViewController.h"
 #import "TSMessage.h"
+#import "ATOMCustomNavigationController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMAddTipLabelViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate>
@@ -82,8 +83,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
-    [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
+//    [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
+//    [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.delegate = self;
     }
@@ -250,16 +251,16 @@
         [Util TextHud:@"提交作品成功"];
         self.navigationItem.rightBarButtonItem.enabled = YES;
         
-//        ATOMShareViewController *svc = [ATOMShareViewController new];
-//        svc.askPageViewModel = ws.askPageViewModel;
-//        [ws pushViewController:svc animated:YES];
-        
+        [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:@"shouldNavToHotSegment"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+
         HotDetailViewController *hdvc = [HotDetailViewController new];
         hdvc.askPageViewModel = ws.askPageViewModel;
         hdvc.fold = 0;
         HomeViewController *hvc = self.navigationController.viewControllers[0];
         [self pushViewController:hdvc animated:YES];
         [self.navigationController setViewControllers:@[hvc, hdvc]];
+        
     }];
 }
 
@@ -306,13 +307,16 @@
         [Util TextHud:@"提交求P成功"];
         self.navigationItem.rightBarButtonItem.enabled = YES;
         
+        [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:@"shouldNavToAskSegment"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+
         NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithInteger:newImageID],@"ID",[NSNumber numberWithInteger:newImageID],@"askID",@(ATOMPageTypeAsk),@"type", nil];
         ATOMInviteViewController *ivc = [ATOMInviteViewController new];
         ws.newAskPageViewModel.ID = newImageID;
         ivc.askPageViewModel = ws.newAskPageViewModel;
         ivc.info = info;
         ivc.showNext = YES;
-        [ws pushViewController:ivc animated:YES];
+        [self pushViewController:ivc animated:YES];
     }];
 }
 

@@ -11,14 +11,14 @@
 #import "ATOMMyMessageViewController.h"
 #import "ATOMMyFollowViewController.h"
 #import "ATOMPersonViewController.h"
-#import "ATOMCutstomNavigationController.h"
+#import "ATOMCustomNavigationController.h"
 #import "ATOMCommonModel.h"
 
 @interface ATOMMainTabBarController ()<UITabBarControllerDelegate>
-@property (nonatomic, strong) ATOMCutstomNavigationController *nav1;
-@property (nonatomic, strong) ATOMCutstomNavigationController *nav2;
-@property (nonatomic, strong) ATOMCutstomNavigationController *nav3;
-@property (nonatomic, strong) ATOMCutstomNavigationController *nav4;
+@property (nonatomic, strong) ATOMCustomNavigationController *nav1;
+@property (nonatomic, strong) ATOMCustomNavigationController *nav2;
+@property (nonatomic, strong) ATOMCustomNavigationController *nav3;
+@property (nonatomic, strong) ATOMCustomNavigationController *nav4;
 @end
 
 @implementation ATOMMainTabBarController
@@ -56,10 +56,10 @@ static dispatch_once_t once;
     myAttentionViewController.title = @"关注";
     myMessageViewController.title = @"消息";
     personViewController.title = @"我的";
-    _nav1 = [[ATOMCutstomNavigationController alloc] initWithRootViewController:homePageViewController];
-    _nav2 = [[ATOMCutstomNavigationController alloc] initWithRootViewController:myAttentionViewController];
-    _nav3 = [[ATOMCutstomNavigationController alloc] initWithRootViewController:myMessageViewController];
-    _nav4 = [[ATOMCutstomNavigationController alloc] initWithRootViewController:personViewController];
+    _nav1 = [[ATOMCustomNavigationController alloc] initWithRootViewController:homePageViewController];
+    _nav2 = [[ATOMCustomNavigationController alloc] initWithRootViewController:myAttentionViewController];
+    _nav3 = [[ATOMCustomNavigationController alloc] initWithRootViewController:myMessageViewController];
+    _nav4 = [[ATOMCustomNavigationController alloc] initWithRootViewController:personViewController];
     _nav1.tabBarItem.image = [UIImage imageNamed:@"btn_index_normal"];
     _nav1.tabBarItem.selectedImage = [UIImage imageNamed:@"btn_index_pressed"];
     _nav2.tabBarItem.image = [UIImage imageNamed:@"btn_look_normal"];

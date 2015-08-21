@@ -44,7 +44,7 @@ static ATOMCurrentUser *_currentUser;
     [dict setObject:[NSString stringWithFormat:@"%@", _avatar] forKey:@"avatar"];
 
     switch (_signUpType) {
-        case ATOMSignUpWeixin:
+        case ATOMSignUpWechat:
             [dict setObject:_sourceData[@"openid"] forKey:@"openid"];
             [dict setObject:_sourceData[@"headimgurl"] forKey:@"avatar_url"];
             [dict setObject:@"weixin" forKey:@"type"];

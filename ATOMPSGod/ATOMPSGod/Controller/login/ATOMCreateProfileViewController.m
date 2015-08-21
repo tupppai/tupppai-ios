@@ -136,7 +136,7 @@
         
         switch ([ATOMCurrentUser currentUser].signUpType) {
                 //微信获取到的地区是名字，需要解析为ID
-            case ATOMSignUpWeixin:
+            case ATOMSignUpWechat:
                 _createProfileView.showAreaLabel.text = [NSString stringWithFormat:@"%@,%@",_userProfileViewModel.province,_userProfileViewModel.city];
                 for (NSDictionary* province in _provinces) {
                     NSString* provinceName = (NSString* )province[@"name"];

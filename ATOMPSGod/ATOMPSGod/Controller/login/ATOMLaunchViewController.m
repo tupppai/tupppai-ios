@@ -57,7 +57,7 @@
                     [AppDelegate APP].mainTabBarController = nil;
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
                 } else if (isRegister == NO) {
-                    [ATOMCurrentUser currentUser].signUpType = ATOMSignUpWeixin;
+                    [ATOMCurrentUser currentUser].signUpType = ATOMSignUpWechat;
                     [ATOMCurrentUser currentUser].sourceData = sourceData;
                     ATOMUserProfileViewModel* ipvm = [ATOMUserProfileViewModel new];
                     ipvm.nickName = sourceData[@"nickname"];

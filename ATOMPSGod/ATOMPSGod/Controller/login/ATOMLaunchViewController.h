@@ -9,7 +9,7 @@
 #import "ATOMLoginBaseViewController.h"
 
 typedef enum {
-    ATOMSignUpWeixin = 0,
+    ATOMSignUpWechat = 0,
     ATOMSignUpWeibo,
     ATOMSignUpMobile
 }ATOMSignUpType;

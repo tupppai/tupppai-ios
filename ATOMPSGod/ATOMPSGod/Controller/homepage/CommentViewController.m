@@ -48,7 +48,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 @property (nonatomic, strong)  JGActionSheet * reportActionSheet;
 @property (nonatomic, strong) NSIndexPath *selectedIndexpath;
 
-
 @end
 
 @implementation CommentViewController
@@ -80,13 +79,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 {
     // Register a SLKTextView subclass, if you need any special appearance and/or behavior customisation.
     [self registerClassForTextView:[CommentTextView class]];
-    
-#if DEBUG_CUSTOM_TYPING_INDICATOR
-    // Register a UIView subclass, conforming to SLKTypingIndicatorProtocol, to use a custom typing indicator view.
-    [self registerClassForTypingIndicatorView:[TypingIndicatorView class]];
-#endif
 }
-
 
 #pragma mark - View lifecycle
 
@@ -94,24 +87,25 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 {
     [super viewDidLoad];
     [self configTableView];
-//    [self configFooterRefresh];
+    [self configFooterRefresh];
     [self configTextInput];
-//    [self addGestureToHeaderView];
-//    [self addGestureToCommentTableView];
+    [self addGestureToHeaderView];
+    [self addGestureToCommentTableView];
     [self getDataSource];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self scrollElegantly];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [self scrollElegantly];
+    });
 }
 
 - (void)scrollElegantly {
@@ -132,13 +126,12 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     }
 }
 
-#pragma mark - Action Methods
-
 
 
 
 #pragma mark - Overriden Methods
 
+//don't ignore babe --peiwei.
 - (BOOL)ignoreTextInputbarAdjustment
 {
     return NO;
@@ -178,8 +171,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 
 -(void)sendComment {
-
-    
     // This little trick validates any pending auto-correction or auto-spelling just after hitting the 'Send' button
     [self.textView resignFirstResponder];
     
@@ -191,19 +182,19 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     comment.avatar = [ATOMCurrentUser currentUser].avatar;
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
-    UITableViewRowAnimation rowAnimation = self.inverted ? UITableViewRowAnimationBottom : UITableViewRowAnimationTop;
+//    UITableViewRowAnimation rowAnimation = self.inverted ? UITableViewRowAnimationBottom : UITableViewRowAnimationTop;
     UITableViewScrollPosition scrollPosition = self.inverted ? UITableViewScrollPositionBottom : UITableViewScrollPositionTop;
     
     [self.tableView beginUpdates];
     [self.commentsNew insertObject:comment atIndex:0];
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:rowAnimation];
+    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
     
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:scrollPosition animated:YES];
     
     // Fixes the cell from blinking (because of the transform, when using translucent cells)
     // See https://github.com/slackhq/SlackTextViewController/issues/94#issuecomment-69929927
-    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:commentText forKey:@"content"];
@@ -266,12 +257,12 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 #pragma mark - UITableViewDataSource Methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return _commentsNew.count;
+        return _commentsHot.count;
     } else if (section == 1) {
         return _commentsNew.count;
     } else {
@@ -286,14 +277,14 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         if (!cell) {
             cell = [[CommentTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
-        if (indexPath.section == 1) {
+        if (indexPath.section == 0) {
             [cell getSource:_commentsHot[indexPath.row]];
-        } else if (indexPath.section == 0) {
+        } else if (indexPath.section == 1) {
             [cell getSource:_commentsNew[indexPath.row]];
         }
         // Cells must inherit the table view's transform
         // This is very important, since the main table view may be inverted
-        cell.transform = self.tableView.transform;
+//        cell.transform = self.tableView.transform;
         return cell;
     }
     return nil;
@@ -305,9 +296,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 {
     if ([tableView isEqual:self.tableView]) {
         CommentVM* vm;
-        if (indexPath.section == 1) {
+        if (indexPath.section == 0) {
             vm = _commentsHot[indexPath.row];
-        } else if (indexPath.section ==0) {
+        } else if (indexPath.section == 1) {
             vm = _commentsNew[indexPath.row];
         }
         
@@ -343,13 +334,10 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (section == 1) {
-        return 0;
-    }
     if ([tableView.dataSource tableView:tableView numberOfRowsInSection:section] == 0) {
         return 0;
     } else {
-        return 0;
+        return kCommentTableViewHeaderHeight;
     }
 }
 
@@ -375,7 +363,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     } else if (section == 1) {
         _atModel = _commentsNew[row];
     }
-    NSString* textToEdit = [NSString stringWithFormat:@"//%@:%@",_atModel.username,_atModel.text];
+    NSString* textToEdit = [NSString stringWithFormat:@"//@%@:%@",_atModel.username,_atModel.text];
     self.textView.text = textToEdit;
     [self.textView becomeFirstResponder];
     [self.textView setSelectedRange:NSMakeRange(0, 0)];
@@ -523,77 +511,83 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     return _reportActionSheet;
 }
 
-//#pragma mark - ATOMShareFunctionViewDelegate
-//-(void)tapWechatFriends {
-//    [ATOMShareSDKModel postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:(int)_vm.type];
-//}
-//-(void)tapWechatMoment {
-//    [ATOMShareSDKModel postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
-//}
-//-(void)tapSinaWeibo {
-//    [ATOMShareSDKModel postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:(int)_vm.type];
-//}
-//-(void)tapCollect {
-//    NSMutableDictionary *param = [NSMutableDictionary new];
-//    if (self.shareFunctionView.collectButton.selected) {
-//        //收藏
-//        [param setObject:@(1) forKey:@"status"];
-//    } else {
-//        //取消收藏
-//        [param setObject:@(0) forKey:@"status"];
-//    }
-//    [ATOMCollectModel toggleCollect:param withPageType:_vm.type withID:_vm.pageID withBlock:^(NSError *error) {
-//        if (!error) {
-//            _vm.collected = self.shareFunctionView.collectButton.selected;
-//        }
-//    }];
-//}
-//-(void)tapInvite {
-//    ATOMInviteViewController* ivc = [ATOMInviteViewController new];
-//    ivc.askPageViewModel = [_vm generateAskPageViewModel];
-//    [self pushViewController:ivc animated:NO];
-//}
-//-(void)tapReport {
-//    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
-//}
+#pragma mark - ATOMShareFunctionViewDelegate
+-(void)tapWechatFriends {
+    [ATOMShareSDKModel postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:(int)_vm.type];
+}
+-(void)tapWechatMoment {
+    [ATOMShareSDKModel postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
+}
+-(void)tapSinaWeibo {
+    [ATOMShareSDKModel postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:(int)_vm.type];
+}
+-(void)tapCollect {
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    if (self.shareFunctionView.collectButton.selected) {
+        //收藏
+        [param setObject:@(1) forKey:@"status"];
+    } else {
+        //取消收藏
+        [param setObject:@(0) forKey:@"status"];
+    }
+    [ATOMCollectModel toggleCollect:param withPageType:_vm.type withID:_vm.pageID withBlock:^(NSError *error) {
+        if (!error) {
+            _vm.collected = self.shareFunctionView.collectButton.selected;
+        }
+    }];
+}
+-(void)tapInvite {
+    ATOMInviteViewController* ivc = [ATOMInviteViewController new];
+    ivc.askPageViewModel = [_vm generateAskPageViewModel];
+    [self.navigationController pushViewController:ivc animated:NO];
+}
+-(void)tapReport {
+    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
+}
 #pragma mark init and config
 
 -(void)configTableView {
     _headerView = [kfcPageView new];
     _headerView.vm = _vm;
-//    self.tableView.tableHeaderView = _headerView;
+    self.tableView.tableHeaderView = _headerView;
     self.tableView.emptyDataSetSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[CommentTableViewCell class] forCellReuseIdentifier:MessengerCellIdentifier];
     self.tableView.tableFooterView = [UIView new];
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.showsHorizontalScrollIndicator = NO;
-//    UIView *header = self.tableView.tableHeaderView;
-//    [header setNeedsLayout];
-//    [header layoutIfNeeded];
-//    CGFloat height = [header systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-//    CGRect frame = header.frame;
-//    frame.size.height = height;
-//    header.frame = frame;
-//    self.tableView.tableHeaderView = header;
+    UIView *header = self.tableView.tableHeaderView;
+    [header setNeedsLayout];
+    [header layoutIfNeeded];
+    CGFloat height = [header systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    CGRect frame = header.frame;
+    frame.size.height = height;
+    header.frame = frame;
+    self.tableView.tableHeaderView = header;
+    
+//    UIButton* dismissBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 32,32)];
+//    [dismissBtn setImage:[UIImage imageNamed:@"ic_dismiss"] forState:UIControlStateNormal];
+//    dismissBtn.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.7];
+//    [dismissBtn addTarget:self action:@selector(dismissSelf) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:dismissBtn];
+//    [self.view bringSubviewToFront:dismissBtn];
+}
+- (void) dismissSelf {
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
 -(void)configTextInput {
     self.bounces = NO;
     self.shakeToClearEnabled = NO;
-    self.keyboardPanningEnabled = NO;
-    self.shouldScrollToBottomAfterKeyboardShows = YES;
+    self.keyboardPanningEnabled = YES;
+    self.shouldScrollToBottomAfterKeyboardShows = NO;
     self.inverted = NO;
-    [self.leftButton setImage:[UIImage imageNamed:@"btn_emoji"] forState:UIControlStateNormal];
+//    [self.leftButton setImage:[UIImage imageNamed:@"btn_emoji"] forState:UIControlStateNormal];
     [self.rightButton setImage:[UIImage imageNamed:@"btn_comment_send"] forState:UIControlStateNormal];
+    [self.rightButton setTitle:@"" forState:UIControlStateNormal];
     self.textInputbar.autoHideRightButton = YES;
     self.textInputbar.maxCharCount = 256;
     self.textInputbar.counterStyle = SLKCounterStyleSplit;
     self.textInputbar.counterPosition = SLKCounterPositionTop;
-    
-}
--(BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {
-    [super scrollViewShouldScrollToTop:scrollView];
-    return NO;
 }
 - (void)configFooterRefresh {
     [self.tableView addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
@@ -604,7 +598,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     }
     self.tableView.gifFooter.refreshingImages = animatedImages;
     self.tableView.footer.stateHidden = YES;
-    _canRefreshFooter = YES;
+    _canRefreshFooter = NO;
 }
 
 - (void)addGestureToHeaderView {
@@ -668,15 +662,16 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
     opvc.userID = _vm.uid;
     opvc.userName = _vm.userName;
-//    [self pushViewController:opvc animated:YES];
+    [self.navigationController pushViewController:opvc animated:YES];
 }
 
-//- (void)clickShareButton{
-//    [ATOMShareSDKModel postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
-//}
+- (void)clickShareButton{
+    [ATOMShareSDKModel postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
+}
 
 - (void)clickMoreShareButton {
     self.shareFunctionView.collectButton.selected = _vm.collected;
+    [self.textView resignFirstResponder];
     [self.shareFunctionView showInView:[AppDelegate APP].window animated:YES];
 }
 
@@ -684,7 +679,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
     opvc.userID = _vm.uid;
     opvc.userName = _vm.userName;
-//    [self pushViewController:opvc animated:YES];
+    [self.navigationController pushViewController:opvc animated:YES];
 }
 
 - (void)clickPSButton {
@@ -737,6 +732,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
             [model setViewModelData:comment];
             [ws.commentsNew addObject:model];
         }
+        if (recentCommentArray.count > 0) {
+            _canRefreshFooter = YES;
+        }
         [self.tableView reloadData];
     }];
 }
@@ -787,7 +785,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         ATOMCropImageController *uwvc = [ATOMCropImageController new];
         uwvc.originImage = info[UIImagePickerControllerOriginalImage];
         uwvc.askPageViewModel = [ws.vm generateAskPageViewModel];
-//        [ws pushViewController:uwvc animated:YES];
+        [ws.navigationController pushViewController:uwvc animated:YES];
     }];
 }
 

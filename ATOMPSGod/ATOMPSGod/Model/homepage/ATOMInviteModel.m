@@ -14,8 +14,8 @@
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/get_recommend_users" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"showMasters responseObject%@",responseObject);
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
-        NSMutableArray *recommendMasters;
-        NSMutableArray *recommendFriends;
+//        NSMutableArray *recommendMasters;
+//        NSMutableArray *recommendFriends;
         if (ret != 1) {
             
             block(nil, nil,nil);

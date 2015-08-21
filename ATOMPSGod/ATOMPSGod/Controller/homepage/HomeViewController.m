@@ -217,7 +217,10 @@ static NSString *CellIdentifier2 = @"AskCell";
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
 }
-
+-(void)viewDidAppear:(BOOL)animated {
+    [self shouldNavToAskSegment];
+    [self shouldNavToHotSegment];
+}
 
 - (void)createUI {
     [self createCustomNavigationBar];
@@ -440,6 +443,7 @@ static NSString *CellIdentifier2 = @"AskCell";
                     mvc.vm = vm;
                     mvc.delegate = self;
                     [self pushViewController:mvc animated:YES];
+//                    [self presentViewController:mvc animated:YES completion:nil];
                 } else if (CGRectContainsPoint(cell.moreButton.frame, p)) {
                     self.shareFunctionView.collectButton.selected = _selectedVM.collected;
                     [self.shareFunctionView showInView:[AppDelegate APP].window animated:YES];
@@ -507,7 +511,7 @@ static NSString *CellIdentifier2 = @"AskCell";
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     WS(ws);
-    [self dismissViewControllerAnimated:YES completion:^{
+    [self dismissViewControllerAnimated:NO completion:^{
         ATOMCropImageController *uwvc = [ATOMCropImageController new];
         uwvc.originImage = info[UIImagePickerControllerOriginalImage];
         uwvc.askPageViewModel = _selectedVM;
@@ -813,5 +817,29 @@ static NSString *CellIdentifier2 = @"AskCell";
     }
 }
 
+- (void)shouldNavToHotSegment {
+    BOOL shouldNav = [[NSUserDefaults standardUserDefaults]
+                      boolForKey:@"shouldNavToHotSegment"];
+    if (shouldNav) {
+        [_segmentedControl setSelectedSegmentIndex:0 animated:YES];
+        [_scrollView changeUIAccording:@"热门"];
+        [_scrollView.hotTable.header beginRefreshing];
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:@"shouldNavToHotSegment"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+
+- (void)shouldNavToAskSegment {
+    BOOL shouldNav = [[NSUserDefaults standardUserDefaults]
+                            boolForKey:@"shouldNavToAskSegment"];
+    if (shouldNav) {
+        [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
+        [_scrollView changeUIAccording:@"最新"];
+        [_scrollView.askTable.header beginRefreshing];
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:@"shouldNavToAskSegment"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 
 @end

@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "ATOMLaunchViewController.h"
 #import "ATOMMainTabBarController.h"
-#import "ATOMCutstomNavigationController.h"
+#import "ATOMCustomNavigationController.h"
 #import "ATOMLoginCustomNavigationController.h"
 #import "ATOMIntroductionOnFirstLaunchViewController.h"
 #import "ATOMBaseDAO.h"
@@ -17,7 +17,7 @@
 #import <ShareSDK/ShareSDK.h>
 #import <ShareSDKConnector/ShareSDKConnector.h>
 #import "WXApi.h"
-
+#import "CommentViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -37,6 +37,8 @@
     [self setupShareSDK];
     [self setupUmengPush:launchOptions];
 
+    [[IQKeyboardManager sharedManager] disableInViewControllerClass:[CommentViewController class]];
+    [[IQKeyboardManager sharedManager]setEnableAutoToolbar:NO];
     return YES;
 }
 -(void)setupUmengPush:(NSDictionary *)launchOptions {
