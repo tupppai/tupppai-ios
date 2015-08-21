@@ -61,14 +61,10 @@
             [self shareStep2:SSDKPlatformTypeWechat withShareParams:shareParams];
 
         } else if (shareType == ATOMShareTypeWechatMoments) {
+            NSLog(@"Moments");
             shareTitle = [NSString stringWithFormat:@"%@",share.title];
-            [shareParams SSDKSetupShareParamsByText:@"分享内容"
-                                             images:img
-                                                url:[NSURL URLWithString:@"http://mob.com"]
-                                              title:@"分享标题"
-                                               type:SSDKContentTypeAuto];
-            
-            [shareParams SSDKSetupWeChatParamsByText:@"分享内容" title:@"分享内容" url:[NSURL URLWithString:@"http://mob.com"] thumbImage:nil image:[UIImage imageNamed:@"psps"] musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeImage forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
+            NSData *data = UIImagePNGRepresentation(img);
+            [shareParams SSDKSetupWeChatParamsByText:@"分享内容" title:@"分享内容" url:[NSURL URLWithString:@"http://mob.com"] thumbImage:nil image:@"psps" musicFileURL:nil extInfo:nil fileData:data emoticonData:data type:SSDKContentTypeWebPage forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
                                                                                 
                                                                                 [self shareStep2:SSDKPlatformTypeWechat withShareParams:shareParams];
         } else if (shareType == ATOMShareTypeSinaWeibo) {

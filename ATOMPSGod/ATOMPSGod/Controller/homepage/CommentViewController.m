@@ -94,11 +94,12 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 {
     [super viewDidLoad];
     [self configTableView];
-    [self configFooterRefresh];
+//    [self configFooterRefresh];
     [self configTextInput];
-    [self addGestureToHeaderView];
-    [self addGestureToCommentTableView];
+//    [self addGestureToHeaderView];
+//    [self addGestureToCommentTableView];
     [self getDataSource];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -265,12 +266,12 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 #pragma mark - UITableViewDataSource Methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return _commentsHot.count;
+        return _commentsNew.count;
     } else if (section == 1) {
         return _commentsNew.count;
     } else {
@@ -285,9 +286,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         if (!cell) {
             cell = [[CommentTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
-        if (indexPath.section == 0) {
+        if (indexPath.section == 1) {
             [cell getSource:_commentsHot[indexPath.row]];
-        } else if (indexPath.section ==1) {
+        } else if (indexPath.section == 0) {
             [cell getSource:_commentsNew[indexPath.row]];
         }
         // Cells must inherit the table view's transform
@@ -304,9 +305,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 {
     if ([tableView isEqual:self.tableView]) {
         CommentVM* vm;
-        if (indexPath.section == 0) {
+        if (indexPath.section == 1) {
             vm = _commentsHot[indexPath.row];
-        } else if (indexPath.section ==1) {
+        } else if (indexPath.section ==0) {
             vm = _commentsNew[indexPath.row];
         }
         
@@ -386,7 +387,10 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    
     // Since SLKTextViewController uses UIScrollViewDelegate to update a few things, it is important that if you ovveride this method, to call super.
+    NSLog(@"Navframe Height=%@",NSStringFromCGRect(self.navigationController.navigationBar.frame));
+    NSLog(@"scrollViewDidScroll");
     [super scrollViewDidScroll:scrollView];
 }
 

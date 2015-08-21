@@ -11,4 +11,5 @@
 @interface ATOMShareSDKModel : NSObject
 + (void)getUserInfo:(SSDKPlatformType)type withBlock:(void (^)(NSDictionary* ))block;
 +(void)postSocialShare:(NSInteger)id withSocialShareType:(ATOMSocialShareType)shareType withPageType:(ATOMPageType)pageType;
++ (void)authrize:(SSDKPlatformType)type withBlock:(void (^)(NSDictionary* ))block;
 @end

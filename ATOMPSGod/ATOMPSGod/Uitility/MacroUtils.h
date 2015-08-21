@@ -17,7 +17,7 @@
 
 #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
-#define NAV_HEIGHT 64
+#define NAV_HEIGHT 44
 #define TAB_HEIGHT 49
 #define CGWidth(rect)                   rect.size.width
 #define CGHeight(rect)                  rect.size.height
