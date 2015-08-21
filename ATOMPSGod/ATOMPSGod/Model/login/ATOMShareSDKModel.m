@@ -44,6 +44,7 @@
         }];
 }
 + (void)shareStep1:(ATOMShare*)share  withShareType:(ATOMSocialShareType)shareType {
+    NSLog(@"ATOMShare url%@,title%@,desc%@,imgurl%@",share.url,share.title,share.desc,share.imageUrl);
         NSString* shareUrl;
         if ([share.type isEqualToString:@"image"]) {
             shareUrl = share.imageUrl;
@@ -66,8 +67,8 @@
             [shareParams SSDKSetupWeChatParamsByText:share.desc title:shareTitle url:sUrl thumbImage:imageUrl image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeWebPage forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
             [self shareStep2:SSDKPlatformSubTypeWechatTimeline withShareParams:shareParams];
         } else if (shareType == ATOMShareTypeSinaWeibo) {
-            shareTitle = [NSString stringWithFormat:@"\"%@\" ! 求PS大神显灵，还不快戳→→%@ :-D",share.title,shareUrl];
-            [shareParams SSDKSetupSinaWeiboShareParamsByText:share.desc title:shareTitle image:img url:sUrl latitude:0 longitude:0 objectID:nil type:SSDKContentTypeImage];
+            shareTitle = [NSString stringWithFormat:@"\"%@,%@\" ! 求PS大神显灵，还不快戳",share.title,share.desc];
+            [shareParams SSDKSetupSinaWeiboShareParamsByText:shareTitle title:shareTitle image:img url:sUrl latitude:0 longitude:0 objectID:nil type:SSDKContentTypeImage];
             [self shareStep2:SSDKPlatformTypeSinaWeibo withShareParams:shareParams];
         }
 }

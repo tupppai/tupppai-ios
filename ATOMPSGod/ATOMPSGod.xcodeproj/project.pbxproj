@@ -340,9 +340,6 @@
 		E99C513B1B85ACFA004CA47B /* ShareSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E99C51311B85ACFA004CA47B /* ShareSDK.bundle */; };
 		E99C513C1B85ACFA004CA47B /* ShareSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E99C51321B85ACFA004CA47B /* ShareSDK.framework */; };
 		E99C513D1B85ACFA004CA47B /* ShareSDKConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E99C51331B85ACFA004CA47B /* ShareSDKConnector.framework */; };
-		E99C513E1B85ACFA004CA47B /* ShareSDKExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E99C51341B85ACFA004CA47B /* ShareSDKExtension.framework */; };
-		E99C513F1B85ACFA004CA47B /* ShareSDKUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E99C51351B85ACFA004CA47B /* ShareSDKUI.bundle */; };
-		E99C51401B85ACFA004CA47B /* ShareSDKUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E99C51361B85ACFA004CA47B /* ShareSDKUI.framework */; };
 		E99C51421B85ADD5004CA47B /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E99C51411B85ADD5004CA47B /* libicucore.dylib */; };
 		E99C51441B85ADE9004CA47B /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E99C51431B85ADE9004CA47B /* libstdc++.dylib */; };
 		E99C51461B85ADEF004CA47B /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E99C51451B85ADEF004CA47B /* JavaScriptCore.framework */; };
@@ -1095,9 +1092,6 @@
 		E99C51311B85ACFA004CA47B /* ShareSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDK.bundle; sourceTree = "<group>"; };
 		E99C51321B85ACFA004CA47B /* ShareSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDK.framework; sourceTree = "<group>"; };
 		E99C51331B85ACFA004CA47B /* ShareSDKConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKConnector.framework; sourceTree = "<group>"; };
-		E99C51341B85ACFA004CA47B /* ShareSDKExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKExtension.framework; sourceTree = "<group>"; };
-		E99C51351B85ACFA004CA47B /* ShareSDKUI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDKUI.bundle; sourceTree = "<group>"; };
-		E99C51361B85ACFA004CA47B /* ShareSDKUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKUI.framework; sourceTree = "<group>"; };
 		E99C51411B85ADD5004CA47B /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		E99C51431B85ADE9004CA47B /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		E99C51451B85ADEF004CA47B /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -1252,11 +1246,9 @@
 				E99C51151B85A40E004CA47B /* libsqlite3.0.dylib in Frameworks */,
 				E99C513D1B85ACFA004CA47B /* ShareSDKConnector.framework in Frameworks */,
 				E99C51131B85A40A004CA47B /* libc++.dylib in Frameworks */,
-				E99C513E1B85ACFA004CA47B /* ShareSDKExtension.framework in Frameworks */,
 				E99C51371B85ACFA004CA47B /* libWeiboSDK.a in Frameworks */,
 				5CDF82401AC2BEEA00321694 /* SystemConfiguration.framework in Frameworks */,
 				E99C513A1B85ACFA004CA47B /* MOBFoundation.framework in Frameworks */,
-				E99C51401B85ACFA004CA47B /* ShareSDKUI.framework in Frameworks */,
 				5CDF82421AC2BEF900321694 /* QuartzCore.framework in Frameworks */,
 				E9B1B3B41B61FF5C00842E05 /* libUMessage_Sdk_1.1.0.a in Frameworks */,
 				E99C513C1B85ACFA004CA47B /* ShareSDK.framework in Frameworks */,
@@ -1540,6 +1532,11 @@
 		5C51B2521AB9088700F442A6 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				E99C51471B85ADF9004CA47B /* ImageIO.framework */,
+				E99C51451B85ADEF004CA47B /* JavaScriptCore.framework */,
+				E99C51431B85ADE9004CA47B /* libstdc++.dylib */,
+				E99C51411B85ADD5004CA47B /* libicucore.dylib */,
+				E991EEFB1B735B7000025108 /* EAIntroView */,
 				E99C51161B85A4CB004CA47B /* libz.dylib */,
 				E99C51141B85A40E004CA47B /* libsqlite3.0.dylib */,
 				E99C51121B85A409004CA47B /* libc++.dylib */,
@@ -1999,10 +1996,6 @@
 		5CDB05B81AA3FE520089121E = {
 			isa = PBXGroup;
 			children = (
-				E99C51471B85ADF9004CA47B /* ImageIO.framework */,
-				E99C51451B85ADEF004CA47B /* JavaScriptCore.framework */,
-				E99C51431B85ADE9004CA47B /* libstdc++.dylib */,
-				E99C51411B85ADD5004CA47B /* libicucore.dylib */,
 				5CDB05C31AA3FE520089121E /* ATOMPSGod */,
 				5CDB05DD1AA3FE520089121E /* ATOMPSGodTests */,
 				5CDB05C21AA3FE520089121E /* Products */,
@@ -2105,14 +2098,13 @@
 			isa = PBXGroup;
 			children = (
 				E9F890D71B87038F0057ECBF /* IQKeyBoardManager */,
-				E9F890B71B86FE6B0057ECBF /* SlackTextVC */,
+				E9F890B71B86FE6B0057ECBF /* Slack */,
 				E9F890821B86C4AB0057ECBF /* fmdb */,
 				E99C51181B85A536004CA47B /* Share */,
 				E9ED35831B80F62F00B93BE5 /* NODataSet */,
 				E93ED5231B7F25EF0035630B /* FDAutoHeightCell */,
 				E9D7390A1B79F200008CE562 /* BadgeView */,
 				E9FF94A91B7476FC00F06819 /* HMSegmentedControl */,
-				E991EEFB1B735B7000025108 /* EAIntroView */,
 				E9B1B3B11B61FF5C00842E05 /* UMessage_Sdk_1.1.0 */,
 				E94289571B5B32A200ED26E4 /* TSMessage */,
 				E9CBFF451B5214FB00DC8ED4 /* SIAlertView */,
@@ -2509,7 +2501,8 @@
 				E991EEFE1B735B7000025108 /* EAIntroView.h */,
 				E991EEFF1B735B7000025108 /* EAIntroView.m */,
 			);
-			path = EAIntroView;
+			name = EAIntroView;
+			path = ../OpenSource/EAIntroView;
 			sourceTree = "<group>";
 		};
 		E991EF021B735C2E00025108 /* EARestrictedScrollView */ = {
@@ -2590,9 +2583,6 @@
 				E99C51311B85ACFA004CA47B /* ShareSDK.bundle */,
 				E99C51321B85ACFA004CA47B /* ShareSDK.framework */,
 				E99C51331B85ACFA004CA47B /* ShareSDKConnector.framework */,
-				E99C51341B85ACFA004CA47B /* ShareSDKExtension.framework */,
-				E99C51351B85ACFA004CA47B /* ShareSDKUI.bundle */,
-				E99C51361B85ACFA004CA47B /* ShareSDKUI.framework */,
 			);
 			path = libraries;
 			sourceTree = "<group>";
@@ -2761,12 +2751,13 @@
 			path = fmdb;
 			sourceTree = "<group>";
 		};
-		E9F890B71B86FE6B0057ECBF /* SlackTextVC */ = {
+		E9F890B71B86FE6B0057ECBF /* Slack */ = {
 			isa = PBXGroup;
 			children = (
 				E9F890B81B86FE6B0057ECBF /* Additions */,
 				E9F890C21B86FE6B0057ECBF /* Classes */,
 			);
+			name = Slack;
 			path = SlackTextVC;
 			sourceTree = "<group>";
 		};
@@ -3010,7 +3001,6 @@
 				E942897F1B5B32A200ED26E4 /* NotificationBackgroundWarning@2x.png in Resources */,
 				E942897A1B5B32A200ED26E4 /* NotificationBackgroundSuccess.png in Resources */,
 				E942897C1B5B32A200ED26E4 /* NotificationBackgroundSuccessIcon.png in Resources */,
-				E99C513F1B85ACFA004CA47B /* ShareSDKUI.bundle in Resources */,
 				E94289781B5B32A200ED26E4 /* NotificationBackgroundMessage.png in Resources */,
 				E90193721B37EE1E00E91555 /* region.csv in Resources */,
 				E9FF94A61B745BAA00F06819 /* intro4.png in Resources */,
