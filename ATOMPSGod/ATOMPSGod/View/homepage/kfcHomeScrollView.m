@@ -54,21 +54,18 @@
 
 - (void)changeUIAccording:(NSString *)buttonTitle {
     if ([buttonTitle isEqualToString:@"热门"]) {
-        _currentHomepageType = ATOMHomepageViewTypeHot;
+        _type = ATOMHomepageViewTypeHot;
         [UIView animateWithDuration:0.5 animations:^{
             self.contentOffset = CGPointMake(0, 0);
         }];
     } else if ([buttonTitle isEqualToString:@"最新"]) {
-        _currentHomepageType = ATOMHomepageViewTypeAsk;
+        _type = ATOMHomepageViewTypeAsk;
         [UIView animateWithDuration:0.5 animations:^{
             self.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
         }];
     }
 }
 
-- (NSInteger)typeOfCurrentHomepageView {
-    return _currentHomepageType;
-}
 
 
 

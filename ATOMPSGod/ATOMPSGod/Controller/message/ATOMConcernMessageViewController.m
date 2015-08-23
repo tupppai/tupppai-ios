@@ -106,8 +106,8 @@
 
 - (void)createUI {
     self.title = @"关注通知";
-    UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清除" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
-    self.navigationItem.rightBarButtonItem = rightButtonItem;
+//    UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清除" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
+//    self.navigationItem.rightBarButtonItem = rightButtonItem;
     _concernMessageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _concernMessageView;
     _tableView = [[RefreshFooterTableView alloc] initWithFrame:_concernMessageView.bounds];

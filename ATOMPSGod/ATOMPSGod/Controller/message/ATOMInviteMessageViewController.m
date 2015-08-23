@@ -116,8 +116,8 @@
 
 - (void)createUI {
     self.title = @"邀请通知";
-    UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清除" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
-    self.navigationItem.rightBarButtonItem = rightButtonItem;
+//    UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清除" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
+//    self.navigationItem.rightBarButtonItem = rightButtonItem;
     _inviteMessageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _inviteMessageView;
     _tableView = [[RefreshFooterTableView alloc] initWithFrame:_inviteMessageView.bounds];

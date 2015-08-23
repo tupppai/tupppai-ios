@@ -58,8 +58,13 @@ static NSString *CellIdentifier = @"MyAttentionCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshNav2) name:@"RefreshNav2" object:nil];
 }
-
+- (void)refreshNav2 {
+    if (!_tableView.header.isRefreshing) {
+        [_tableView.header beginRefreshing];
+    }
+}
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;

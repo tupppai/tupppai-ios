@@ -118,9 +118,9 @@
 
 - (void)createUI {
     self.title = @"帖子通知";
-    UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清除" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
-    rightButtonItem.tintColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = rightButtonItem;
+//    UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清除" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
+//    rightButtonItem.tintColor = [UIColor whiteColor];
+//    self.navigationItem.rightBarButtonItem = rightButtonItem;
     _topicReplyMessageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _topicReplyMessageView;
     _tableView = [[RefreshFooterTableView alloc] initWithFrame:_topicReplyMessageView.bounds];

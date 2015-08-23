@@ -19,6 +19,8 @@
 @property (nonatomic, strong) ATOMCustomNavigationController *nav2;
 @property (nonatomic, strong) ATOMCustomNavigationController *nav3;
 @property (nonatomic, strong) ATOMCustomNavigationController *nav4;
+@property (nonatomic, strong) ATOMCustomNavigationController *preNav;
+
 @end
 
 @implementation ATOMMainTabBarController
@@ -38,6 +40,7 @@ static dispatch_once_t once;
 -(void)viewDidLoad {
     [super viewDidLoad];
     [self uploadDeviceInfo];
+    self.delegate = self;
 }
 -(void)uploadDeviceInfo {
     dispatch_once(&once, ^ {
@@ -78,5 +81,17 @@ static dispatch_once_t once;
     _nav4.tabBarItem.image = [ _nav4.tabBarItem.image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     _nav4.tabBarItem.selectedImage = [ _nav4.tabBarItem.selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     self.viewControllers = [NSArray arrayWithObjects:_nav1, _nav2, _nav3, _nav4, nil];
+}
+-(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+    if (viewController == _nav1) {
+        if (_preNav == _nav1) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshNav1" object:nil];
+        }
+    } else if (viewController == _nav2) {
+        if (_preNav == _nav2) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshNav2" object:nil];
+        }
+    }
+    _preNav = (ATOMCustomNavigationController*)viewController;
 }
 @end

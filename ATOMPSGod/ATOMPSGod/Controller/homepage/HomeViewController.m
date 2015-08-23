@@ -128,17 +128,17 @@ static NSString *CellIdentifier2 = @"AskCell";
             for (ATOMHomeImage *homeImage in homepageArray) {
                 ATOMAskPageViewModel *model = [ATOMAskPageViewModel new];
                 [model setViewModelData:homeImage];
-                if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageViewTypeHot) {
+                if (ws.scrollView.type == ATOMHomepageViewTypeHot) {
                     [ws.dataSourceOfHotTableView addObject:model];
-                } else if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageViewTypeAsk) {
+                } else if (ws.scrollView.type == ATOMHomepageViewTypeAsk) {
                     [ws.dataSourceOfAskTableView addObject:model];
                 }
             }
-            if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageViewTypeHot) {
+            if (ws.scrollView.type == ATOMHomepageViewTypeHot) {
                 ws.scrollView.hotTable.noDataView.canShow = YES;
                 [ws.scrollView.hotTable reloadData];
                 [ws.scrollView.hotTable.header endRefreshing];
-            } else if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageViewTypeAsk) {
+            } else if (ws.scrollView.type == ATOMHomepageViewTypeAsk) {
                 ws.scrollView.askTable.noDataView.canShow = YES;
                 [ws.scrollView.askTable reloadData];
                 [ws.scrollView.askTable.header endRefreshing];
@@ -178,13 +178,13 @@ static NSString *CellIdentifier2 = @"AskCell";
             for (ATOMHomeImage *homeImage in homepageArray) {
                 ATOMAskPageViewModel *model = [ATOMAskPageViewModel new];
                 [model setViewModelData:homeImage];
-                if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageViewTypeHot) {
+                if (ws.scrollView.type == ATOMHomepageViewTypeHot) {
                     [ws.dataSourceOfHotTableView addObject:model];
-                } else if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageViewTypeAsk) {
+                } else if (ws.scrollView.type == ATOMHomepageViewTypeAsk) {
                     [ws.dataSourceOfAskTableView addObject:model];
                 }
             }
-            if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageViewTypeHot) {
+            if (ws.scrollView.type == ATOMHomepageViewTypeHot) {
                 [ws.scrollView.hotTable reloadData];
                 [ws.scrollView.hotTable.footer endRefreshing];
                 if (homepageArray.count == 0) {
@@ -192,7 +192,7 @@ static NSString *CellIdentifier2 = @"AskCell";
                 } else {
                     ws.canRefreshHotFooter = YES;
                 }
-            } else if ([ws.scrollView typeOfCurrentHomepageView] == ATOMHomepageViewTypeAsk) {
+            } else if (ws.scrollView.type == ATOMHomepageViewTypeAsk) {
                 [ws.scrollView.askTable reloadData];
                 [ws.scrollView.askTable.footer endRefreshing];
                 if (homepageArray.count == 0) {
@@ -234,6 +234,8 @@ static NSString *CellIdentifier2 = @"AskCell";
     _canRefreshRecentFooter = YES;
     [self firstGetDataSourceFromDataBase];
     [self firstGetDataSourceOfTableViewWithHomeType:ATOMHomepageViewTypeHot];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshNav1) name:@"RefreshNav1" object:nil];
 }
 
 - (void)confighotTable {
@@ -401,7 +403,7 @@ static NSString *CellIdentifier2 = @"AskCell";
 #pragma mark - Gesture Event
 
 - (void)tapGestureHot:(UITapGestureRecognizer *)gesture {
-    if ([_scrollView typeOfCurrentHomepageView] == ATOMHomepageViewTypeHot) {
+    if (_scrollView.type == ATOMHomepageViewTypeHot) {
         CGPoint location = [gesture locationInView:_scrollView.hotTable];
         _selectedIndexPath = [_scrollView.hotTable indexPathForRowAtPoint:location];
         if (_selectedIndexPath) {
@@ -454,7 +456,7 @@ static NSString *CellIdentifier2 = @"AskCell";
 }
 
 - (void)tapGestureAsk:(UITapGestureRecognizer *)gesture {
-    if ([_scrollView typeOfCurrentHomepageView] == ATOMHomepageViewTypeAsk) {
+    if (_scrollView.type == ATOMHomepageViewTypeAsk) {
         CGPoint location = [gesture locationInView:_scrollView.askTable];
         NSIndexPath *indexPath = [_scrollView.askTable indexPathForRowAtPoint:location];
         if (indexPath) {
@@ -585,7 +587,7 @@ static NSString *CellIdentifier2 = @"AskCell";
 -(void)ATOMViewControllerDismissWithInfo:(NSDictionary *)info {
     bool liked = [info[@"liked"] boolValue];
     bool collected = [info[@"collected"]boolValue];
-    if (_scrollView.typeOfCurrentHomepageView == ATOMHomepageViewTypeHot) {
+    if (_scrollView.type == ATOMHomepageViewTypeHot) {
         //当从child viewcontroller 传来的liked变化的时候，toggle like.
         //to do:其实应该改变datasource的liked ,tableView reload的时候才能保持。
         kfcHotCell* cell= (kfcHotCell *)[_scrollView.hotTable cellForRowAtIndexPath:_selectedIndexPath];
@@ -593,7 +595,7 @@ static NSString *CellIdentifier2 = @"AskCell";
         _selectedVM.collected = collected;
         NSLog(@"_selectedVM.collected %d",collected);
 
-    } else if (_scrollView.typeOfCurrentHomepageView == ATOMHomepageViewTypeAsk) {
+    } else if (_scrollView.type == ATOMHomepageViewTypeAsk) {
         kfcAskCell* cell= (kfcAskCell *)[_scrollView.askTable cellForRowAtIndexPath:_selectedIndexPath];
         [cell.likeButton toggleLikeWhenSelectedChanged:liked];
         _selectedVM.collected = collected;
@@ -723,9 +725,9 @@ static NSString *CellIdentifier2 = @"AskCell";
             }
             [ATOMReportModel report:param withBlock:^(NSError *error) {
                 UIView* view;
-                if (ws.scrollView.currentHomepageType == ATOMHomepageViewTypeHot) {
+                if (ws.scrollView.type == ATOMHomepageViewTypeHot) {
                     view = ws.scrollView.homepageHotView;
-                } else  if (ws.scrollView.currentHomepageType == ATOMHomepageViewTypeAsk) {
+                } else  if (ws.scrollView.type == ATOMHomepageViewTypeAsk) {
                     view = ws.scrollView.homepageRecentView;
                 }
                 if(!error) {
@@ -842,4 +844,22 @@ static NSString *CellIdentifier2 = @"AskCell";
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+- (void)shouldRefreshHeader {
+   BOOL shouldRefresh = [[NSUserDefaults standardUserDefaults]boolForKey:@"tapNav1"];
+    if (shouldRefresh) {
+        if (_scrollView.type == ATOMHomepageViewTypeHot && ![_scrollView.hotTable.header isRefreshing]) {
+            [_scrollView.hotTable.header beginRefreshing];
+        } else if (_scrollView.type == ATOMHomepageViewTypeAsk && ![_scrollView.askTable.header isRefreshing]) {
+            [_scrollView.askTable.header beginRefreshing];
+        }
+}
+}
+
+- (void)refreshNav1 {
+    if (_scrollView.type == ATOMHomepageViewTypeHot && ![_scrollView.hotTable.header isRefreshing]) {
+        [_scrollView.hotTable.header beginRefreshing];
+    } else if (_scrollView.type == ATOMHomepageViewTypeAsk && ![_scrollView.askTable.header isRefreshing]) {
+        [_scrollView.askTable.header beginRefreshing];
+    }
+}
 @end

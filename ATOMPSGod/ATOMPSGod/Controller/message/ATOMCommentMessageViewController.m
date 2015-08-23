@@ -117,8 +117,8 @@
 
 - (void)createUI {
     self.title = @"评论";
-    UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清除" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
-    self.navigationItem.rightBarButtonItem = rightButtonItem;
+//    UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清除" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
+//    self.navigationItem.rightBarButtonItem = rightButtonItem;
     _commentMessageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _commentMessageView;
     _tableView = [[RefreshFooterTableView alloc] initWithFrame:_commentMessageView.bounds];
@@ -137,7 +137,7 @@
 #pragma mark - Click Event
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)sender {
-    [_dataSource removeAllObjects];
+//    [_dataSource removeAllObjects];
 //    if (_dataSource.count == 0) {
 //        self.view = self.noDataView;
 //    }
