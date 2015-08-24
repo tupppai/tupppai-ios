@@ -104,9 +104,9 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
 //        [param setObject:@(_currentWorkPage) forKey:@"page"];
 //        [param setObject:@(ATOMPageTypeReply) forKey:@"type"];
 
-    [Util loadingHud:@"" inView:self.view];
+    [Util activity:@"" inView:self.view];
     [ATOMShowOtherUser ShowOtherUser:param withBlock:^(NSMutableArray *askReturnArray, NSMutableArray *replyReturnArray, ATOMUser *user, NSError *error) {
-        [Util dismissHud:self.view];
+        [Util dismiss:self.view];
         if (!error) {
             if (user) {
                 [self updateUserInterface:user];
@@ -302,7 +302,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
             _otherPersonView.uploadHeaderView.attentionButton.selected = !_otherPersonView.uploadHeaderView.attentionButton.selected;
         } else {
             NSString* desc = _otherPersonView.uploadHeaderView.attentionButton.selected?[NSString stringWithFormat:@"你关注了%@",_userName]:[NSString stringWithFormat:@"你取消关注了%@",_userName];
-            [Util TextHud:desc inView:self.view];
+            [Util text:desc inView:self.view];
         }
     }];
 }

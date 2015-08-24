@@ -66,11 +66,11 @@
     [alertView show];
 }
 -(void) errorEccuredRET {
-    [Util TextHud:@"出现未知错误" inView:self.view];
+    [Util text:@"出现未知错误" inView:self.view];
 }
 -(void) showInfoRET:(NSNotification *)notification {
     NSString* info = [[notification userInfo] valueForKey:@"info"];
-    [Util TextHud:info inView:self.view];
+    [Util text:info inView:self.view];
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {

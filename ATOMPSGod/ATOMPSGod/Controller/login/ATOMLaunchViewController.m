@@ -46,7 +46,7 @@
 - (void)clickWXRegisterButton:(UIButton *)sender {
     
     ATOMLogin *loginModel = [ATOMLogin new];
-    [ATOMShareSDKModel authrize:SSDKPlatformTypeWechat withBlock:^(NSDictionary *sourceData) {
+    [ATOMShareSDKModel authorize:SSDKPlatformTypeWechat withBlock:^(NSDictionary *sourceData) {
         if (sourceData) {
             NSString* openid = sourceData[@"openid"];
             NSMutableDictionary* param = [NSMutableDictionary new];

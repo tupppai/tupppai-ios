@@ -66,7 +66,7 @@
                 //        data: { status: 1,正常  2，密码错误 3，未注册 }
                 NSInteger status = [(NSString*)[ responseObject objectForKey:@"data"][@"status"] integerValue];
                 if(status == 1) {
-                    [Util showSuccess:@"登录成功"];
+                    [Util Success:@"登录成功"];
                     NSError* error;
                     ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:[ responseObject objectForKey:@"data"] error:&error];
                     if (error) {

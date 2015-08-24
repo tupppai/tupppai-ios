@@ -156,7 +156,7 @@ static NSString *CellIdentifier = @"HotDetailCell";
             
             [ATOMReportModel report:param withBlock:^(NSError *error) {
                 if(!error) {
-                    [Util TextHud:@"已举报" inView:ws.view];
+                    [Util text:@"已举报" inView:ws.view];
                 }
             }];
         }];
@@ -384,9 +384,9 @@ static NSString *CellIdentifier = @"HotDetailCell";
 - (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error
                  contextInfo: (void *) contextInfo {
     if(error != NULL){
-        [Util TextHud:@"保存失败"];
+        [Util text:@"保存失败"];
     }else{
-        [Util TextHud:@"保存成功"];
+        [Util text:@"保存成功"];
     }
 }
 - (void)dealUploadWork {

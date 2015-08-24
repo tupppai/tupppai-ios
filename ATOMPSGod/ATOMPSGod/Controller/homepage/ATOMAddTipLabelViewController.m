@@ -37,10 +37,15 @@
 @property (nonatomic, assign) CGPoint currentLocation;
 @property (nonatomic, strong) ATOMTipButton *lastAddButton;
 @property (nonatomic, strong) ATOMAskPageViewModel *newAskPageViewModel;
+@property (nonatomic, strong) ATOMImage *imageInfo;
+@property (nonatomic, strong) dispatch_semaphore_t sema ;
+@property (nonatomic, assign) BOOL imgUploadSucceed;
+@property (nonatomic, assign) BOOL imgUploading;
 
 @end
 
 @implementation ATOMAddTipLabelViewController
+
 
 #pragma mark - Lazy Initialize
 
@@ -77,8 +82,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self createUI];
-//    [self addClickEventToShareButton];
+    [self commitInit];
+    NSString *pushTypeStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"AskOrReply"];
+    if ([pushTypeStr isEqualToString:@"Reply"]) {
+        [self uploadReplyImg];
+    } else {
+        [self uploadImage];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -105,10 +115,9 @@
     }
 }
 
-- (void)createUI {
+- (void)commitInit {
     self.title = @"填写标签内容";
     UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
-//    rightButtonItem.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightButtonItem;
     _originLeftBarButtonItems = self.navigationItem.leftBarButtonItems;
     _originRightBarButtonItem = self.navigationItem.rightBarButtonItem;
@@ -125,33 +134,55 @@
     [_addTipLabelToImageView addGestureRecognizer:self.tapAddTipLabelToImageViewGesture];
     [_addTipLabelToImageView.changeTipLabelDirectionButton addTarget:self action:@selector(clickChangeTipLabelDirectionButton:) forControlEvents:UIControlEventTouchUpInside];
     [_addTipLabelToImageView.deleteTipLabelButton addTarget:self action:@selector(clickDeleteTipLabelButton:) forControlEvents:UIControlEventTouchUpInside];
+    _sema = dispatch_semaphore_create(0);
+    _imgUploadSucceed = NO;
+    _imgUploading = YES;
 }
 
-//- (void)addClickEventToShareButton {
-//    [_addTipLabelToImageView.xlButton addTarget:self action:@selector(clickShareButton:) forControlEvents:UIControlEventTouchUpInside];
-//    [_addTipLabelToImageView.wxButton addTarget:self action:@selector(clickShareButton:) forControlEvents:UIControlEventTouchUpInside];
-//    [_addTipLabelToImageView.qqButton addTarget:self action:@selector(clickShareButton:) forControlEvents:UIControlEventTouchUpInside];
-//    [_addTipLabelToImageView.qqzoneButton addTarget:self action:@selector(clickShareButton:) forControlEvents:UIControlEventTouchUpInside];
-//}
 
 #pragma mark - Click Event
 
-//- (void)clickShareButton:(UIButton *)button {
-//    [_addTipLabelToImageView changeStatusOfShareButton:button];
-//}
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)sender {
     NSString *pushTypeStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"AskOrReply"];
     self.navigationItem.rightBarButtonItem.enabled = NO;
+    [Util activity:@"上传中.." inView:self.view];
+
     if ([pushTypeStr isEqualToString:@"Reply"]) {
-        [self dealSubmitWorkWithLabel];
+        if (_imgUploadSucceed) {
+            [self uploadReplyLabel:_imageInfo.imageID];
+        } else {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                dispatch_semaphore_wait(_sema, DISPATCH_TIME_FOREVER);
+                [self uploadReplyLabel:_imageInfo.imageID];
+            });
+            if (_imgUploading ) {
+                
+            } else {
+                [self uploadReplyImg];
+                return;
+            }
+        }
     } else if ([pushTypeStr isEqualToString:@"Ask"]) {
         if (_tipLabelArray.count == 0) {
             [self showWarnLabel];
             self.navigationItem.rightBarButtonItem.enabled = YES;
             return;
         }
-        [self dealSubmitUploadWithLabel];
+        if (_imgUploadSucceed) {
+            [self uploadTipLabel:_imageInfo.imageID];
+        } else {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                dispatch_semaphore_wait(_sema, DISPATCH_TIME_FOREVER);
+                [self uploadTipLabel:_imageInfo.imageID];
+            });
+            if (_imgUploading ) {
+
+            } else {
+                [self uploadImage];
+                return;
+            }
+        }
     }
 }
 
@@ -167,7 +198,6 @@
 }
 
 - (void)changeViewToOrigin {
-//    self.view = _addTipLabelToImageView;
     [_addTipLabelToImageView removeTemporaryPoint];
     [_fillInContentOfTipLabelView removeFromSuperview];
     self.navigationItem.leftBarButtonItems = _originLeftBarButtonItems;
@@ -223,33 +253,37 @@
     return [param copy];
 }
 //上传作品
-- (void)dealSubmitWorkWithLabel {
-    [Util loadingHud:@"正在上传你的作品"];
-    WS(ws);
-    NSData *data = UIImageJPEGRepresentation(_workImage, 0.4);
+- (void)uploadReplyImg {
+    NSLog(@"uploadReplyImg");
+    NSData *data = UIImageJPEGRepresentation(_workImage, 0.7);
     ATOMUploadImage *uploadWork = [ATOMUploadImage new];
     [uploadWork UploadImage:data WithBlock:^(ATOMImage *imageInformation, NSError *error) {
+        _imgUploading = NO;
         if (error) {
-            [Util dismissHud];
-            [Util TextHud:@"提交作品失败"];
+            [Util dismiss:self.view];
+            [Util error:@"请检查你的网络" inView:self.view];
             self.navigationItem.rightBarButtonItem.enabled = YES;
+            _imgUploadSucceed = NO;
             return ;
         }
-        [ws dealSubmitWorkWithLabelBy:imageInformation.imageID];
+        _imageInfo = imageInformation;
+        _imgUploadSucceed = YES;
+        dispatch_semaphore_signal(_sema);
+        //        [ws dealSubmitWorkWithLabelBy:imageInformation.imageID];
     }];
 }
 
-- (void)dealSubmitWorkWithLabelBy:(NSInteger)imageID {
+- (void)uploadReplyLabel:(NSInteger)imageID {
     WS(ws);
     ATOMSubmitImageWithLabel *submitWorkWithLabel = [ATOMSubmitImageWithLabel new];
     [submitWorkWithLabel SubmitWorkWithLabel:[ws getParamWithImageID:imageID AndAskID:ws.askPageViewModel.ID] withBlock:^(NSMutableArray *labelArray, NSError *error) {
-        [Util dismissHud];
+        [Util dismiss:self.view];
         if (error) {
-            [Util TextHud:@"提交作品失败"];
+            self.navigationItem.rightBarButtonItem.enabled = YES;
+            [Util error:@"上传作品失败,请检查你的网络"];
             return ;
         }
-        [Util TextHud:@"提交作品成功"];
-        self.navigationItem.rightBarButtonItem.enabled = YES;
+        [Util Success:@"提交作品成功"];
         
         [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:@"shouldNavToHotSegment"];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -265,10 +299,10 @@
 }
 
 //上传求助
-- (void)dealSubmitUploadWithLabel {
-    WS(ws);
-    [Util loadingHud:@"正在上传你的求P"];
-    NSData *data = UIImageJPEGRepresentation(_workImage, 0.7);
+//- (void)uploadAsk {
+//    WS(ws);
+//    [Util activity:@"正在上传你的求P"];
+//    NSData *data = UIImageJPEGRepresentation(_workImage, 0.7);
 //    NSData *data2 = UIImageJPEGRepresentation(_workImage, 0.2);
 //    NSData *data3 = UIImageJPEGRepresentation(_workImage, 0.6);
 //    NSData *data4 = UIImageJPEGRepresentation(_workImage, 0.8);
@@ -280,32 +314,41 @@
 //    NSLog(@"压缩了2成上传的图片大小 = %f",[data4 length]/1024.0);
 //    NSLog(@"原图上传的图片大小 = %f",[data5 length]/1024.0);
 
+//    [self uploadImage];
+//}
+
+- (void)uploadImage {
+    NSData *data = UIImageJPEGRepresentation(_workImage, 0.7);
     self.newAskPageViewModel.image = [UIImage imageWithData:data];
     self.newAskPageViewModel.width =    CGWidth(_addTipLabelToImageView.workImageView.frame);
     self.newAskPageViewModel.height =   CGHeight(_addTipLabelToImageView.workImageView.frame);
     ATOMUploadImage *uploadImage = [ATOMUploadImage new];
     [uploadImage UploadImage:data WithBlock:^(ATOMImage *imageInformation, NSError *error) {
+        _imgUploading = NO;
         if (error) {
-            [Util dismissHud];
-            [Util TextHud:@"提交求P失败"];
+            [Util dismiss:self.view];
+            [Util error:@"请检查你的网络" inView:self.view];
             self.navigationItem.rightBarButtonItem.enabled = YES;
+            _imgUploadSucceed = NO;
             return ;
         }
-        [ws dealSubmitUploadWithLabelBy:imageInformation.imageID];
+        _imageInfo = imageInformation;
+        _imgUploadSucceed = YES;
+        dispatch_semaphore_signal(_sema);
     }];
 }
-
-- (void)dealSubmitUploadWithLabelBy:(NSInteger)imageID {
+- (void)uploadTipLabel:(NSInteger)imageID {
     WS(ws);
+    NSLog(@"uploadTipLabel");
     ATOMSubmitImageWithLabel *submitImageWithLabel = [ATOMSubmitImageWithLabel new];
     [submitImageWithLabel SubmitImageWithLabel:[ws getParamWithImageID:imageID AndAskID:-1] withBlock:^(NSMutableArray *labelArray, NSInteger newImageID, NSError *error) {
-        [Util dismissHud];
+        [Util dismiss:self.view];
         if (error) {
-            [Util TextHud:@"提交求P失败"];
+            self.navigationItem.rightBarButtonItem.enabled = YES;
+            [Util error:@"求P失败,请检查你的网络"];
             return ;
         }
-        [Util TextHud:@"提交求P成功"];
-        self.navigationItem.rightBarButtonItem.enabled = YES;
+        [Util Success:@"求P成功"];
         
         [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:@"shouldNavToAskSegment"];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -399,7 +442,7 @@
 }
 
 #pragma mark - UITextFieldDelegate
-//called when done of keyboard is tapped
+//called when done is tapped
 -(BOOL) textFieldShouldReturn:(UITextField *)textField {
     _currentTipLabelText = textField.text;
     if (_currentTipLabelText.length <= 0) {
@@ -417,16 +460,9 @@
 #pragma mark - warn label
 
 -(void)showWarnLabel {
-//    NSString *pushTypeStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"AskOrReply"];
-//    if ([pushTypeStr isEqualToString:@"Reply"]) {
-//        [TSMessage showNotificationWithTitle:@"大神你还没炫耀你的效果"
-//                                    subtitle:@"请点击图片填写效果"
-//                                        type:TSMessageNotificationTypeWarning];
-//    } else if ([pushTypeStr isEqualToString:@"Ask"]) {
         [TSMessage showNotificationWithTitle:@"你还没告诉大神你想要的效果"
                                     subtitle:@"请点击图片填写效果"
                                         type:TSMessageNotificationTypeWarning];
-//    }
 }
 -(void)showWarnLabel2 {
     [TSMessage showNotificationWithTitle:@"标签内容不能为空"

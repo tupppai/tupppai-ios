@@ -15,7 +15,7 @@
         block(user.rawData);
     }];
 }
-+ (void)authrize:(SSDKPlatformType)type withBlock:(void (^)(NSDictionary* ))block{
++ (void)authorize:(SSDKPlatformType)type withBlock:(void (^)(NSDictionary* ))block{
 
     [ShareSDK authorize:type settings:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
         NSLog(@"第三平台user rawData%@ ",user.rawData);
@@ -100,8 +100,10 @@
 //                                                           otherButtonTitles:nil];
 //                 [alertView show];
 #if DEBUG
-                                  UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"分享失败,测试"
-                                                                                      message:[NSString stringWithFormat:@"%@", error]
+                 NSString* errorMsg = [error.userInfo objectForKey:@"error_message"];
+
+                                  UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"分享失败"
+                                                                                      message:[NSString stringWithFormat:@"%@", errorMsg]
                                                                                      delegate:nil
                                                                             cancelButtonTitle:@"确定"
                                                                             otherButtonTitles:nil];

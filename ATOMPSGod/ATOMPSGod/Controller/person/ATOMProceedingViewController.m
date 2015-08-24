@@ -120,7 +120,7 @@
             NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(cell.viewModel.ID),@"id", nil];
             [ATOMCommonModel post:param withUrl:@"user/delete_progress" withBlock:^(NSError *error,int ret) {
                 if (!error) {
-                    [Util successHud:@"已删除" inView:self.view];
+                    [Util success:@"已删除" inView:self.view];
                 }
                 if (_dataSource.count > 0) {
                     [_dataSource removeObjectAtIndex:indexPath.row];

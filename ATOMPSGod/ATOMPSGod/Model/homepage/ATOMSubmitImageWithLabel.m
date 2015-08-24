@@ -20,7 +20,7 @@
 @implementation ATOMSubmitImageWithLabel
 
 - (NSURLSessionDataTask *)SubmitImageWithLabel:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSInteger, NSError *))block {
-    [[KShareManager mascotAnimator]show];
+//    [[KShareManager mascotAnimator]show];
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"ask/save" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         [[KShareManager mascotAnimator]dismiss];
         NSLog(@"SubmitImageWithLabel responseObject %@",responseObject);
@@ -37,7 +37,7 @@
             block(nil, newImageID, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [[KShareManager mascotAnimator]dismiss];
+//        [[KShareManager mascotAnimator]dismiss];
         if (block) {
             block(nil, 0, error);
         }

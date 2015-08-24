@@ -81,14 +81,14 @@
                 block(comment_id, nil);
             }
         } else if (ret == 0) {
-//            [Util TextHud:@"评论失败了,请重试"];
+//            [Util text:@"评论失败了,请重试"];
             if (block) {
                 block(-1, nil);
             }
         }
 
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-//        [Util TextHud:@"评论失败了,请重试"];
+//        [Util text:@"评论失败了,请重试"];
         if (block) {
             block(-1, error);
         }

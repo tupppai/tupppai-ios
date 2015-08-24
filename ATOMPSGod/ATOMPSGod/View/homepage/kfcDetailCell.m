@@ -164,6 +164,15 @@
     }
     [self addTipLabel:viewModel];
     if (viewModel.commentArray.count == 0) {
+        [_commentView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeZero);
+        }];
+        [_commentLabel1 mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeZero);
+        }];
+        [_commentLabel2 mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeZero);
+        }];
     } else if (viewModel.commentArray.count == 1) {
         [_commentView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(_additionView).with.offset(kPadding15);
@@ -177,6 +186,10 @@
             make.right.equalTo(_additionView.mas_right).with.offset(-1);
             make.bottom.equalTo(_additionView).with.offset(-10);
         }];
+        [_commentLabel2 mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeZero);
+        }];
+
     } else {
         [_commentView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(_additionView).with.offset(kPadding15);
@@ -208,15 +221,15 @@
 }
 -(void)prepareForReuse {
     
-    [_commentView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeZero);
-    }];
-    [_commentLabel1 mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeZero);
-    }];
-    [_commentLabel2 mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeZero);
-    }];
+//    [_commentView mas_remakeConstraints:^(MASConstraintMaker *make) {
+//        make.size.mas_equalTo(CGSizeZero);
+//    }];
+//    [_commentLabel1 mas_remakeConstraints:^(MASConstraintMaker *make) {
+//        make.size.mas_equalTo(CGSizeZero);
+//    }];
+//    [_commentLabel2 mas_remakeConstraints:^(MASConstraintMaker *make) {
+//        make.size.mas_equalTo(CGSizeZero);
+//    }];
 
 }
 - (void)addTipLabel:(ATOMHotDetailPageViewModel*)vm {

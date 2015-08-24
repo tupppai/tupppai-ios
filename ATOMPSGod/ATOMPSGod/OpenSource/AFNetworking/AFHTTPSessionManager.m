@@ -242,7 +242,7 @@
         if (error) {
             if (failure) {
 #if DEBUG
-                [Util ShowTSMessageError:[NSString stringWithFormat:@"%@",error]];
+//                [Util ShowTSMessageError:[NSString stringWithFormat:@"%@",error]];
 #endif
 
                 [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"ErrorOccurred" object:nil]];

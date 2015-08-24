@@ -129,57 +129,57 @@
     
 }
 
-//-(void)toggleSwitch:(id)sender {
-//    UISwitch *bindSwitch = sender;
-//    NSString *type;
-//    NSString* openIDKey;
-//    int shareType = 99;
-//    switch (bindSwitch.tag) {
-//        case 0:
-//            type = @"weibo";
-//            shareType = SSCShareTypeSinaWeibo;
-//            openIDKey = @"idstr";
-//            break;
-//        case 1:
-//            type = @"weixin";
-//            shareType = ShareTypeWeixiSession;
-//            openIDKey = @"openid";
-//            break;
-//        default:
-//            break;
-//    }
-//    NSMutableDictionary *param = [NSMutableDictionary new];
-//    [param setObject:type forKey:@"type"];
-//    //1.如果想要绑定
-//    if (bindSwitch.on) {
-//        [ATOMShareSDKModel getUserInfo:shareType withBlock:^(NSDictionary *sourceData) {
-//            NSString* openID = [sourceData objectForKey:openIDKey];
-//            if (openID) {
-//                [param setObject:openID forKey:@"openid"];
-//            }
-//            [ATOMShowSettings setBindSetting:param withToggleBind:YES withBlock:^(NSError *error) {
-//                if (error) {
-//                    //绑定失败，回到原型
-//                    bindSwitch.on = NO;
-//                }else {
-//                    [Util successHud:@"绑定成功" inView:self.view];
-//                }
-//            }];
-//
-//        }];
-//    }
-//    //2.如果想要取消绑定
-//    else  {
-//        [ATOMShowSettings setBindSetting:param withToggleBind:NO withBlock:^(NSError *error) {
-//            //绑定失败，回到原型
-//            if (error) {
-//                bindSwitch.on = YES;
-//            } else {
-//                [Util successHud:@"已解绑" inView:self.view];
-//            }
-//        }];
-//    }
-//}
+-(void)toggleSwitch:(id)sender {
+    UISwitch *bindSwitch = sender;
+    NSString *type;
+    NSString* openIDKey;
+    int shareType = 99;
+    switch (bindSwitch.tag) {
+        case 0:
+            type = @"weibo";
+            shareType = SSDKPlatformTypeSinaWeibo;
+            openIDKey = @"idstr";
+            break;
+        case 1:
+            type = @"weixin";
+            shareType = SSDKPlatformTypeWechat;
+            openIDKey = @"openid";
+            break;
+        default:
+            break;
+    }
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    [param setObject:type forKey:@"type"];
+    //1.如果想要绑定
+    if (bindSwitch.on) {
+        [ATOMShareSDKModel getUserInfo:shareType withBlock:^(NSDictionary *sourceData) {
+            NSString* openID = [sourceData objectForKey:openIDKey];
+            if (openID) {
+                [param setObject:openID forKey:@"openid"];
+            }
+            [ATOMShowSettings setBindSetting:param withToggleBind:YES withBlock:^(NSError *error) {
+                if (error) {
+                    //绑定失败，回到原型
+                    bindSwitch.on = NO;
+                }else {
+                    [Util success:@"绑定成功" inView:self.view];
+                }
+            }];
+
+        }];
+    }
+    //2.如果想要取消绑定
+    else  {
+        [ATOMShowSettings setBindSetting:param withToggleBind:NO withBlock:^(NSError *error) {
+            //绑定失败，回到原型
+            if (error) {
+                bindSwitch.on = YES;
+            } else {
+                [Util success:@"已解绑" inView:self.view];
+            }
+        }];
+    }
+}
 
 
 

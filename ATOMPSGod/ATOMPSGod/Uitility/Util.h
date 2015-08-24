@@ -12,15 +12,18 @@
 #import <sys/utsname.h> // import it in your header or implementation file.
 
 @interface Util : NSObject
-+(void)TextHud:(NSString*)message;
-+(void)TextHud:(NSString*)message inView:(UIView*)view;
-+(void)loadingHud:(NSString*)message;
-+(void)loadingHud:(NSString*)message inView:(UIView*)view;
-+(void)dismissHud;
-+(void)dismissHud:(UIView*)view;
-+(void)successHud:(NSString*)message inView:(UIView*)view;
-+(void)showSuccess:(NSString*)message;
++(void)text:(NSString*)message;
++(void)text:(NSString*)message inView:(UIView*)view;
++(void)activity:(NSString*)message;
++(void)activity:(NSString*)message inView:(UIView*)view;
++(void)dismiss;
++(void)dismiss:(UIView*)view;
++(void)success:(NSString*)message inView:(UIView*)view;
++(void)Success:(NSString*)message;
++(void)error:(NSString*)message inView:(UIView*)view;
++(void)error:(NSString*)message;
 +(NSString*)formatPublishTime:(NSDate*)date;
+
 
 +(void)ShowTSMessageError:(NSString*)str;
 +(void)ShowTSMessageWarn:(NSString*)str;
@@ -28,7 +31,8 @@
 NSString* deviceName();
 +(void)showWeAreWorkingOnThisFeature;
 @end
-
+@interface Hud : NSObject
+@end
 
 @interface Share : NSObject
 + (void) sendLinkContent;

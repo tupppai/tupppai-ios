@@ -217,9 +217,9 @@ static NSString *CellIdentifier = @"MyAttentionCell";
 - (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error
   contextInfo: (void *) contextInfo {
     if(error != NULL){
-        [Util TextHud:@"保存失败"];
+        [Util text:@"保存失败"];
     }else{
-        [Util TextHud:@"保存成功"];
+        [Util text:@"保存成功"];
     }
 }
 
@@ -326,7 +326,7 @@ static NSString *CellIdentifier = @"MyAttentionCell";
             }
             [ATOMReportModel report:param withBlock:^(NSError *error) {
                 if(!error) {
-                    [Util TextHud:@"已举报" inView:ws.view];
+                    [Util text:@"已举报" inView:ws.view];
                 }
             }];
         }];

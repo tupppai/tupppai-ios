@@ -33,11 +33,11 @@ static CGFloat buttonWidth = 30;
     _topView.backgroundColor = [UIColor colorWithHex:0xc6c6c6 andAlpha:0.8];
     [self addSubview:_topView];
     
-    _cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(0, kPadding20, SCREEN_WIDTH/2, 22)];
+    _cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH/2, 64)];
     [_cancelButton setImage:[UIImage imageNamed:@"icon_cancel"] forState:UIControlStateNormal];
     [_topView addSubview:_cancelButton];
     
-    _confirmButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2, kPadding20, SCREEN_WIDTH/2, 22)];
+    _confirmButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2, 0, SCREEN_WIDTH/2, 64)];
     [_confirmButton setImage:[UIImage imageNamed:@"icon_next"] forState:UIControlStateNormal];
     [_topView addSubview:_confirmButton];
     

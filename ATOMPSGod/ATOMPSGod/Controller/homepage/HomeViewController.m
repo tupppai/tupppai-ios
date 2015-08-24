@@ -114,14 +114,14 @@ static NSString *CellIdentifier2 = @"AskCell";
     [showHomepage ShowHomepage:param withBlock:^(NSMutableArray *homepageArray, NSError *error) {
         if (homepageArray.count != 0 && error == nil) {
             if ([homeType isEqualToString:@"new"]) {
-                _dataSourceOfAskTableView = nil;
-                _dataSourceOfAskTableView = [NSMutableArray array];
-                _currentRecentPage = 1;
+                ws.dataSourceOfAskTableView = nil;
+                ws.dataSourceOfAskTableView = [NSMutableArray array];
+                ws.currentRecentPage = 1;
                 [param setObject:@(_currentRecentPage) forKey:@"page"];
             } else if ([homeType isEqualToString:@"hot"]) {
-                _dataSourceOfHotTableView = nil;
-                _dataSourceOfHotTableView = [NSMutableArray array];
-                _currentHotPage = 1;
+                ws.dataSourceOfHotTableView = nil;
+                ws.dataSourceOfHotTableView = [NSMutableArray array];
+                ws.currentHotPage = 1;
                 [param setObject:@(_currentHotPage) forKey:@"page"];
             }
             
@@ -394,9 +394,9 @@ static NSString *CellIdentifier2 = @"AskCell";
 - (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error
   contextInfo: (void *) contextInfo {
     if(error != NULL){
-        [Util TextHud:@"保存失败"];
+        [Util text:@"保存失败"];
     }else{
-        [Util TextHud:@"保存成功"];
+        [Util text:@"保存成功"];
     }
 }
 
@@ -731,7 +731,7 @@ static NSString *CellIdentifier2 = @"AskCell";
                     view = ws.scrollView.homepageRecentView;
                 }
                 if(!error) {
-                    [Util TextHud:@"已举报" inView:view];
+                    [Util text:@"已举报" inView:view];
                 }
                 
             }];

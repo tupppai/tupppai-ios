@@ -13,7 +13,6 @@
 @implementation Util
 
 
-
 NSString* deviceName()
 {
     struct utsname systemInfo;
@@ -22,7 +21,7 @@ NSString* deviceName()
     return [NSString stringWithCString:systemInfo.machine
                               encoding:NSUTF8StringEncoding];
 }
-+(void)TextHud:(NSString*)message {
++(void)text:(NSString*)message {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
     // Configure for text only and offset down
     hud.mode = MBProgressHUDModeText;
@@ -31,7 +30,7 @@ NSString* deviceName()
     hud.removeFromSuperViewOnHide = YES;
     [hud hide:YES afterDelay:1];
 }
-+(void)TextHud:(NSString*)message inView:(UIView*)view {
++(void)text:(NSString*)message inView:(UIView*)view {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
     // Configure for text only and offset down
     hud.mode = MBProgressHUDModeText;
@@ -41,24 +40,24 @@ NSString* deviceName()
     [hud hide:YES afterDelay:1];
 }
 
-+(void)loadingHud:(NSString*)message {
++(void)activity:(NSString*)message {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = message;
 }
-+(void)loadingHud:(NSString*)message inView:(UIView*)view {
++(void)activity:(NSString*)message inView:(UIView*)view {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = message;
 }
 
-+(void)dismissHud {
++(void)dismiss {
     [MBProgressHUD hideAllHUDsForView:[UIApplication sharedApplication].keyWindow animated:YES];
 }
-+(void)dismissHud:(UIView*)view{
++(void)dismiss:(UIView*)view{
     [MBProgressHUD hideAllHUDsForView:view animated:YES];
 }
-+(void)successHud:(NSString*)message inView:(UIView*)view {
++(void)success:(NSString*)message inView:(UIView*)view {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
     hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hud_checkmark"]];
     hud.mode = MBProgressHUDModeCustomView;
@@ -66,7 +65,7 @@ NSString* deviceName()
     [hud show:YES];
     [hud hide:YES afterDelay:0.8];
 }
-+(void)showSuccess:(NSString*)message {
++(void)Success:(NSString*)message {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
     hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hud_checkmark"]];
     hud.mode = MBProgressHUDModeCustomView;
@@ -75,15 +74,22 @@ NSString* deviceName()
     [hud hide:YES afterDelay:0.8];
 }
 
-+(void)failureHud:(NSString*)message inView:(UIView*)view {
++(void)error:(NSString*)message inView:(UIView*)view {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
-    hud.mode = MBProgressHUDModeIndeterminate;
-    hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"???"]];
+    hud.mode = MBProgressHUDModeCustomView;
+    hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"NotificationBackgroundErrorIcon"]];
     hud.labelText = message;
     [hud show:YES];
     [hud hide:YES afterDelay:0.8];
 }
-
++(void)error:(NSString*)message {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+    hud.mode = MBProgressHUDModeCustomView;
+    hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"NotificationBackgroundErrorIcon"]];
+    hud.labelText = message;
+    [hud show:YES];
+    [hud hide:YES afterDelay:0.8];
+}
 +(NSString*)formatPublishTime:(NSDate*)date {
     NSString* publishTime;
     NSDateFormatter *df = [NSDateFormatter new];
@@ -134,7 +140,6 @@ NSString* deviceName()
     }];
     [alertView show];
 }
-
 
 @end
 

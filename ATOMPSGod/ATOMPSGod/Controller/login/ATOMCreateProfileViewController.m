@@ -187,13 +187,13 @@
 - (void)clickRightButtonItem {
     NSString *str = _createProfileView.nicknameTextField.text;
     if (str.length < 2) {
-        [Util TextHud:@"昵称不能低于2位"];
+        [Util text:@"昵称不能低于2位"];
         return ;
     } else if (str.length > 8) {
-        [Util TextHud:@"昵称不能大于8位"];
+        [Util text:@"昵称不能大于8位"];
         return ;
     } else if ([_createProfileView tagOfCurrentSex] == -1) {
-        [Util TextHud:@"请选择性别"];
+        [Util text:@"请选择性别"];
         return ;
     }
     [ATOMCurrentUser currentUser].sex = [_createProfileView tagOfCurrentSex];

@@ -183,8 +183,8 @@
 //    移除旧的标签
     for (UIView * subView in _imageViewMain.subviews) {
         if ([subView isKindOfClass:[ATOMTipButton class]]) {
-            ATOMTipButton *button = (ATOMTipButton *)subView;
-            [button removeFromSuperview];
+//            ATOMTipButton *button = (ATOMTipButton *)subView;
+            [subView removeFromSuperview];
         }
     }
     for (ATOMImageTipLabelViewModel *labelViewModel in vm.labelArray) {
@@ -201,7 +201,6 @@
 }
 
 - (void)addReplier:(ATOMAskPageViewModel*)vm {
-    _repliers = [NSMutableArray array];
     NSInteger min = MIN(vm.replierArray.count, kfcReplierDefaultQuantity);
     for (int i = 0; i < min; i++) {
         ATOMReplierViewModel *replierViewModel = vm.replierArray[i];
@@ -220,9 +219,16 @@
             [super updateConstraints];
         }
     }
-    _repliers = nil;
 }
-
+-(void)prepareForReuse {
+    [super prepareForReuse];
+    //    移除旧的replier
+    for (UIView * subView in _additionView.subviews) {
+        if ([subView isKindOfClass:[kReplierView class]]) {
+            [subView removeFromSuperview];
+        }
+    }
+}
 -(UIView *)topView {
     if (!_topView) {
         _topView = [UIView new];
