@@ -53,7 +53,6 @@
             [param setObject:openid forKey:@"openid"];
             [loginModel openIDAuth:param AndType:@"weixin" withBlock:^(bool isRegister, NSString *info, NSError *error) {
                 if (isRegister) {
-                    [Util activity:@"" inView:self.view];
                     [self.navigationController setViewControllers:nil];
                     [AppDelegate APP].mainTabBarController = nil;
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];

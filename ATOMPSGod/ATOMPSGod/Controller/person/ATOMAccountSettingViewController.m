@@ -198,7 +198,7 @@
                               [showHomepage clearHomePages];
 //                              ATOMHomeImageDAO* hid = [ATOMHomeImageDAO new];
 //                              [hid clearHomeImages];
-                              [Util success:@"清理缓存成功" inView:self.view];
+                              [Hud success:@"清理缓存成功" inView:self.view];
                           }];
     alertView.transitionStyle = SIAlertViewTransitionStyleDropDown;
     [alertView show];

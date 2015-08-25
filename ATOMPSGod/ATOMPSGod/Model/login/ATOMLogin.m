@@ -21,8 +21,10 @@
 @implementation ATOMLogin
 
 - (NSURLSessionDataTask *)openIDAuth:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(bool isRegister,NSString* info, NSError *error))block {
+    [Hud activity:@""];
     NSLog(@"判断第三平台获取的openid是否已经注册");
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:[NSString stringWithFormat:@"auth/%@",type] parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+        [Hud dismiss];
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
             NSInteger isRegistered = [[ responseObject objectForKey:@"data"][@"is_register"] integerValue];
@@ -47,14 +49,16 @@
 }
 
 - (NSURLSessionDataTask* )Login:(NSDictionary*)param withBlock:(void (^)(BOOL succeed))block{
+    [Hud activity:@""];
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"user/login" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+        [Hud dismiss];
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"]integerValue];
         if (ret == 1) {
             if ([ responseObject objectForKey:@"data"]) {
                 //        data: { status: 1,正常  2，密码错误 3，未注册 }
                 NSInteger status = [(NSString*)[ responseObject objectForKey:@"data"][@"status"] integerValue];
                 if(status == 1) {
-                    [Util Success:@"登录成功"];
+                    [Hud success:@"登录成功"];
                     NSError* error;
                     ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:[ responseObject objectForKey:@"data"] error:&error];
                     if (error) {
@@ -78,12 +82,12 @@
                 }
             }
         } else {
-            
             if (block) {
                 block(NO);
             }
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [Hud dismiss];
         if (block) {
             block(NO);
         }

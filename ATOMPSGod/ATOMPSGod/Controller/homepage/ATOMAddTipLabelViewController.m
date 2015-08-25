@@ -146,7 +146,7 @@
 - (void)clickRightButtonItem:(UIBarButtonItem *)sender {
     NSString *pushTypeStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"AskOrReply"];
     self.navigationItem.rightBarButtonItem.enabled = NO;
-    [Util activity:@"上传中.." inView:self.view];
+    [Hud activity:@"上传中.." inView:self.view];
 
     if ([pushTypeStr isEqualToString:@"Reply"]) {
         if (_imgUploadSucceed) {
@@ -259,8 +259,8 @@
     [uploadWork UploadImage:data WithBlock:^(ATOMImage *imageInformation, NSError *error) {
         _imgUploading = NO;
         if (error) {
-            [Util dismiss:self.view];
-            [Util error:@"请检查你的网络" inView:self.view];
+            [Hud dismiss:self.view];
+            [Hud error:@"请检查你的网络" inView:self.view];
             self.navigationItem.rightBarButtonItem.enabled = YES;
             _imgUploadSucceed = NO;
             return ;
@@ -276,13 +276,13 @@
     WS(ws);
     ATOMSubmitImageWithLabel *submitWorkWithLabel = [ATOMSubmitImageWithLabel new];
     [submitWorkWithLabel SubmitWorkWithLabel:[ws getParamWithImageID:imageID AndAskID:ws.askPageViewModel.ID] withBlock:^(NSMutableArray *labelArray, NSError *error) {
-        [Util dismiss:self.view];
+        [Hud dismiss:self.view];
         if (error) {
             self.navigationItem.rightBarButtonItem.enabled = YES;
-            [Util error:@"上传作品失败,请检查你的网络"];
+            [Hud error:@"上传作品失败,请检查你的网络"];
             return ;
         }
-        [Util Success:@"提交作品成功"];
+        [Hud success:@"提交作品成功"];
         
         [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:@"shouldNavToHotSegment"];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -300,7 +300,7 @@
 //上传求助
 //- (void)uploadAsk {
 //    WS(ws);
-//    [Util activity:@"正在上传你的求P"];
+//    [Hud activity:@"正在上传你的求P"];
 //    NSData *data = UIImageJPEGRepresentation(_workImage, 0.7);
 //    NSData *data2 = UIImageJPEGRepresentation(_workImage, 0.2);
 //    NSData *data3 = UIImageJPEGRepresentation(_workImage, 0.6);
@@ -325,8 +325,8 @@
     [uploadImage UploadImage:data WithBlock:^(ATOMImage *imageInformation, NSError *error) {
         _imgUploading = NO;
         if (error) {
-            [Util dismiss:self.view];
-            [Util error:@"请检查你的网络" inView:self.view];
+            [Hud dismiss:self.view];
+            [Hud error:@"请检查你的网络" inView:self.view];
             self.navigationItem.rightBarButtonItem.enabled = YES;
             _imgUploadSucceed = NO;
             return ;
@@ -340,13 +340,13 @@
     WS(ws);
     ATOMSubmitImageWithLabel *submitImageWithLabel = [ATOMSubmitImageWithLabel new];
     [submitImageWithLabel SubmitImageWithLabel:[ws getParamWithImageID:imageID AndAskID:-1] withBlock:^(NSMutableArray *labelArray, NSInteger newImageID, NSError *error) {
-        [Util dismiss:self.view];
+        [Hud dismiss:self.view];
         if (error) {
             self.navigationItem.rightBarButtonItem.enabled = YES;
-            [Util error:@"求P失败,请检查你的网络"];
+            [Hud error:@"求P失败,请检查你的网络"];
             return ;
         }
-        [Util Success:@"求P成功"];
+        [Hud success:@"求P成功"];
         
         [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:@"shouldNavToAskSegment"];
         [[NSUserDefaults standardUserDefaults] synchronize];

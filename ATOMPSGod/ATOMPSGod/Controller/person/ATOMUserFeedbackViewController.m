@@ -44,7 +44,7 @@
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)barButtonItem {
     if (_userFeedbackView.feedbackTextView.text.length <= 0) {
-        [Util text:@"请输入你的建议" inView:self.view];
+        [Hud text:@"请输入你的建议" inView:self.view];
     } else {
         NSMutableDictionary *param = [NSMutableDictionary new];
         [param setObject:_userFeedbackView.feedbackTextView.text forKey:@"content"];
@@ -52,7 +52,7 @@
         [ATOMBaseRequest post:param withUrl:@"feedback/save" withBlock:^(NSError *error,int ret) {
             if (error) {
             } else {
-                [Util Success:@"感谢你的反馈💗"];
+                [Hud success:@"感谢你的反馈💗"];
                 [self.navigationController popViewControllerAnimated:YES];
             }
         }];

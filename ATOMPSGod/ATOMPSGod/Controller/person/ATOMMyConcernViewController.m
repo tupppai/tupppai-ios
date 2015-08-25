@@ -164,7 +164,7 @@
                     cell.attentionButton.selected = !cell.attentionButton.selected;
                 } else {
                     NSString* desc =  cell.attentionButton.selected?[NSString stringWithFormat:@"你关注了%@",cell.viewModel.userName]:[NSString stringWithFormat:@"你取消关注了%@",cell.viewModel.userName];
-                    [Util text:desc inView:self.view];
+                    [Hud text:desc inView:self.view];
                 }
             }];
             } else {

@@ -57,9 +57,9 @@
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(_uid) forKeyedSubscript:@"uid"];
     ATOMShowConcern *showConcern = [ATOMShowConcern new];
-    [Util activity:@"" inView:self.view];
+    [Hud activity:@"" inView:self.view];
     [showConcern ShowOtherConcern:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        [Util dismiss:self.view];
+        [Hud dismiss:self.view];
          for (ATOMConcern *concern in resultArray) {
             ATOMConcernViewModel *concernViewModel = [ATOMConcernViewModel new];
             [concernViewModel setViewModelData:concern];
@@ -147,7 +147,7 @@
                     cell.attentionButton.selected = !cell.attentionButton.selected;
                 } else {
                     NSString* desc =  cell.attentionButton.selected?[NSString stringWithFormat:@"你关注了%@",cell.viewModel.userName]:[NSString stringWithFormat:@"你取消关注了%@",cell.viewModel.userName];
-                    [Util text:desc inView:self.view];
+                    [Hud text:desc inView:self.view];
                 }
             }];
 
