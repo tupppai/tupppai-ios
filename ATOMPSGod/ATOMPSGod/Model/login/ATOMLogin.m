@@ -23,10 +23,6 @@
 - (NSURLSessionDataTask *)openIDAuth:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(bool isRegister,NSString* info, NSError *error))block {
     NSLog(@"判断第三平台获取的openid是否已经注册");
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:[NSString stringWithFormat:@"auth/%@",type] parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"openIDAuth param %@",param);
-        NSLog(@"openIDAuth responseObject%@",responseObject);
-        NSString* info = (NSString*)[ responseObject objectForKey:@"info"];
-        NSLog(@"openIDAuth info %@",info);
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
             NSInteger isRegistered = [[ responseObject objectForKey:@"data"][@"is_register"] integerValue];
@@ -51,16 +47,8 @@
 }
 
 - (NSURLSessionDataTask* )Login:(NSDictionary*)param withBlock:(void (^)(BOOL succeed))block{
-    [[KShareManager mascotAnimator] show];
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"user/login" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        [[KShareManager mascotAnimator] dismiss];
-        NSLog(@"Login responseObject %@ \n",responseObject);
-        NSString* info = [ responseObject objectForKey:@"info"];
-
-        NSLog(@"Login param %@",param);
-        NSLog(@"Login responseObject %@ \n info %@",responseObject,info);
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"]integerValue];
-
         if (ret == 1) {
             if ([ responseObject objectForKey:@"data"]) {
                 //        data: { status: 1,正常  2，密码错误 3，未注册 }
@@ -70,7 +58,6 @@
                     NSError* error;
                     ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:[ responseObject objectForKey:@"data"] error:&error];
                     if (error) {
-                        NSLog(@"Login error %@",error);
                         [Util ShowTSMessageError:@"登录失败"];
                     }
                     //保存更新数据库的user,并更新currentUser
@@ -97,8 +84,6 @@
             }
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [[KShareManager mascotAnimator] dismiss];
-        NSLog(@"%@",error);
         if (block) {
             block(NO);
         }

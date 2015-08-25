@@ -11,7 +11,7 @@
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMCommentDetailView () <UIScrollViewDelegate, ATOMFaceViewDelegate>
+@interface ATOMCommentDetailView () <UIScrollViewDelegate>
 
 @property (nonatomic, assign) int lastContentSizeHeight;
 @property (nonatomic, assign) BOOL isKeyboardVisible;
@@ -131,7 +131,7 @@ static CGFloat pageControlWidth = 150;
     for (int i = 0; i < 9; i++) {
         ATOMFaceView *fView = [[ATOMFaceView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH * i, kPadding10 * 2, SCREEN_WIDTH, faceViewHeight)];
         [fView loadFaceView:i Size:CGSizeMake(30, 40) Faces:_facesArray];
-        fView.delegate = self;
+//        fView.delegate = self;
         [_faceView addSubview:fView];
     }
 }

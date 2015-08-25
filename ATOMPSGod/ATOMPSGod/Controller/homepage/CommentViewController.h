@@ -7,12 +7,12 @@
 //
 
 #import "SLKTextViewController.h"
-#import "kfcPageVM.h"
+#import "DDCommentPageVM.h"
 #import "kfcPageView.h"
 @interface CommentViewController : SLKTextViewController
 
 @property (nonatomic, strong) kfcPageView *headerView;
-@property (nonatomic, strong) kfcPageVM *vm;
+@property (nonatomic, strong) DDCommentPageVM *vm;
 //回传 是否点赞 到 parent VC
 @property (nonatomic, weak)   id<ATOMViewControllerDelegate> delegate;
 

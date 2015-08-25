@@ -14,7 +14,6 @@
 
 - (NSURLSessionDataTask *)ShowFans:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/myfans" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"ShowFans responseObject %@",responseObject);
         int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
         if (ret == 1) {
             NSMutableArray *resultArray = [NSMutableArray array];

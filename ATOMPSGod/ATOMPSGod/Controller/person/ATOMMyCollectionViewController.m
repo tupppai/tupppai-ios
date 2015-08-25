@@ -11,7 +11,7 @@
 #import "HotDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMHomeImage.h"
-#import "ATOMAskPageViewModel.h"
+#import "DDAskPageVM.h"
 #import "ATOMCollectionViewModel.h"
 #import "ATOMShowCollection.h"
 #import "PWRefreshFooterCollectionView.h"
@@ -72,7 +72,7 @@ static float cellWidth;
     ATOMShowCollection *showCollection = [ATOMShowCollection new];
     [showCollection ShowCollection:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         for (ATOMHomeImage *homeImage in resultArray) {
-            ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
+            DDAskPageVM *homepageViewModel = [DDAskPageVM new];
             [homepageViewModel setViewModelData:homeImage];
             [ws.homeImageDataSource addObject:homepageViewModel];
             ATOMCollectionViewModel *collectionViewModel = [ATOMCollectionViewModel new];
@@ -102,7 +102,7 @@ static float cellWidth;
     [showCollection ShowCollection:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         ////[SVProgressHUD dismiss];
         for (ATOMHomeImage *homeImage in resultArray) {
-            ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
+            DDAskPageVM *homepageViewModel = [DDAskPageVM new];
             [homepageViewModel setViewModelData:homeImage];
             [ws.homeImageDataSource addObject:homepageViewModel];
             ATOMCollectionViewModel *collectionViewModel = [ATOMCollectionViewModel new];
@@ -159,7 +159,7 @@ static float cellWidth;
     if (indexPath) {
         ATOMMyCollectionCollectionViewCell *cell = (ATOMMyCollectionCollectionViewCell *)[_collectionView cellForItemAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
-        ATOMAskPageViewModel* model = _homeImageDataSource[indexPath.row];
+        DDAskPageVM* model = _homeImageDataSource[indexPath.row];
         if (CGRectContainsPoint(cell.collectionImageView.frame, p)) {
             if (cell.viewModel.type == ATOMPageTypeAsk) {
                 if (cell.viewModel.totalPSNumber == 0) {
@@ -168,13 +168,13 @@ static float cellWidth;
                     [self pushViewController:mvc animated:YES];
                 } else {
                     HotDetailViewController *hdvc = [HotDetailViewController new];
-                    hdvc.askPageViewModel = model;
+                    hdvc.askVM = model;
                     hdvc.fold = 0;
                     [self pushViewController:hdvc animated:YES];
                 }
             } else {
                 HotDetailViewController *hdvc = [HotDetailViewController new];
-                hdvc.askPageViewModel = model;
+                hdvc.askVM = model;
                 hdvc.fold = 1;
                 [self pushViewController:hdvc animated:YES];
             }

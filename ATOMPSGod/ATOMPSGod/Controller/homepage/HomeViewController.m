@@ -13,14 +13,14 @@
 #import "ATOMCropImageController.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMProceedingViewController.h"
-#import "ATOMAskPageViewModel.h"
+#import "DDAskPageVM.h"
 #import "kfcHomeScrollView.h"
 #import "ATOMShowHomepage.h"
 #import "ATOMShareFunctionView.h"
 #import "AppDelegate.h"
-#import "ATOMBottomCommonButton.h"
+#import "kfcButton.h"
 #import "ATOMHomeImageDAO.h"
-#import "kfcPageVM.h"
+#import "DDCommentPageVM.h"
 #import "ATOMShareModel.h"
 #import "ATOMCollectModel.h"
 #import "ATOMInviteViewController.h"
@@ -31,7 +31,7 @@
 #import "JTSImageViewController.h"
 #import "JTSImageInfo.h"
 #import "HMSegmentedControl.h"
-#import "ATOMCommonModel.h"
+#import "ATOMBaseRequest.h"
 
 #import "CommentViewController.h"
 #import "UITableView+FDTemplateLayoutCell.h"
@@ -57,7 +57,7 @@
 @property (nonatomic, strong)  JGActionSheet * reportActionSheet;
 
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
-@property (nonatomic, strong) ATOMAskPageViewModel *selectedVM;
+@property (nonatomic, strong) DDAskPageVM *selectedVM;
 
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
 
@@ -92,7 +92,7 @@ static NSString *CellIdentifier2 = @"AskCell";
     NSArray * homepageArray = [[showHomepage getHomeImagesWithHomeType:homeType] mutableCopy];
    NSMutableArray* tableViewDataSource = [NSMutableArray array];
     for (ATOMHomeImage *homeImage in homepageArray) {
-        ATOMAskPageViewModel *model = [ATOMAskPageViewModel new];
+        DDAskPageVM *model = [DDAskPageVM new];
         [model setViewModelData:homeImage];
         [tableViewDataSource addObject:model];
     }
@@ -126,7 +126,7 @@ static NSString *CellIdentifier2 = @"AskCell";
             }
             
             for (ATOMHomeImage *homeImage in homepageArray) {
-                ATOMAskPageViewModel *model = [ATOMAskPageViewModel new];
+                DDAskPageVM *model = [DDAskPageVM new];
                 [model setViewModelData:homeImage];
                 if (ws.scrollView.type == ATOMHomepageViewTypeHot) {
                     [ws.dataSourceOfHotTableView addObject:model];
@@ -176,7 +176,7 @@ static NSString *CellIdentifier2 = @"AskCell";
         if (homepageArray && error == nil) {
 
             for (ATOMHomeImage *homeImage in homepageArray) {
-                ATOMAskPageViewModel *model = [ATOMAskPageViewModel new];
+                DDAskPageVM *model = [DDAskPageVM new];
                 [model setViewModelData:homeImage];
                 if (ws.scrollView.type == ATOMHomepageViewTypeHot) {
                     [ws.dataSourceOfHotTableView addObject:model];
@@ -416,7 +416,7 @@ static NSString *CellIdentifier2 = @"AskCell";
                 HotDetailViewController *hdvc = [HotDetailViewController new];
                 hdvc.delegate = self;
                 hdvc.fold = 0;
-                hdvc.askPageViewModel = _selectedVM;
+                hdvc.askVM = _selectedVM;
                 [self pushViewController:hdvc animated:YES];
             } else if (CGRectContainsPoint(cell.topView.frame, p)) {
                 p = [gesture locationInView:cell.topView];
@@ -439,7 +439,7 @@ static NSString *CellIdentifier2 = @"AskCell";
                 } else if (CGRectContainsPoint(cell.wechatButton.frame, p)) {
                     [ATOMShareSDKModel postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
                 } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
-                    kfcPageVM* vm = [kfcPageVM new];
+                    DDCommentPageVM* vm = [DDCommentPageVM new];
                     [vm setCommonViewModelWithAsk:_selectedVM];
                     CommentViewController* mvc = [CommentViewController new];
                     mvc.vm = vm;
@@ -489,7 +489,7 @@ static NSString *CellIdentifier2 = @"AskCell";
                 } else if (CGRectContainsPoint(cell.wechatButton.frame, p)) {
                     [ATOMShareSDKModel postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
                 } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
-                    kfcPageVM* vm = [kfcPageVM new];
+                    DDCommentPageVM* vm = [DDCommentPageVM new];
                     [vm setCommonViewModelWithAsk:_selectedVM];
                     CommentViewController* mvc = [CommentViewController new];
                     mvc.vm = vm;

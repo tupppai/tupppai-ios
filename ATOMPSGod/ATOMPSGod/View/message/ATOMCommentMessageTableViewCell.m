@@ -8,7 +8,7 @@
 
 #import "ATOMCommentMessageTableViewCell.h"
 #import "ATOMCommentMessageViewModel.h"
-#import "ATOMAskPageViewModel.h"
+#import "DDAskPageVM.h"
 
 @implementation ATOMCommentMessageTableViewCell
 

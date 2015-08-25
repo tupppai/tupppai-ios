@@ -1,5 +1,5 @@
 //
-//  ATOMBottomCommonButton.h
+//  kfcButton.h
 //  ATOMPSGod
 //
 //  Created by atom on 15/4/30.
@@ -7,16 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-@protocol ATOMBottomCommonButtonDelegate <NSObject>
+@protocol kfcButtonDelegate <NSObject>
 -(void) tapLikeButton:(UIView*)buttonView;
 -(void) untapLikeButton:(UIView*)buttonView;
 @end
 
-@interface ATOMBottomCommonButton : UIView
+@interface kfcButton : UIView
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, copy) NSString *number;
 @property (nonatomic, assign) BOOL selected;
-@property (nonatomic, weak) id<ATOMBottomCommonButtonDelegate> delegate;
+@property (nonatomic, weak) id<kfcButtonDelegate> delegate;
 -(void)toggleLike;
 -(void)toggleSeleted;
 -(void)toggleNumber;

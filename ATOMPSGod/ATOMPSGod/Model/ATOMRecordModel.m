@@ -11,10 +11,7 @@
 
 @implementation ATOMRecordModel
 + (void)record :(NSDictionary*)param withBlock:(void (^)(NSError *,NSString*))block {
-    NSLog(@"ATOMCommonModel get param %@",param);
      [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/record" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"ATOMRecordModel get responseObject%@",responseObject);
-        NSLog(@"ATOMRecordModel get info%@",[ responseObject objectForKey:@"info"]);
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
             NSString* url = [[responseObject objectForKey:@"data"]objectForKey:@"url"];
@@ -35,7 +32,7 @@
 }
 
 //+ (void)download :(url)param withBlock:(void (^)(UIImage *image))block {
-//    NSLog(@"ATOMCommonModel post param %@",param);
+//    NSLog(@"ATOMBaseRequest post param %@",param);
 //    [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/record" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
 //        NSLog(@"ATOMRecordModel get responseObject%@",responseObject);
 //        NSLog(@"ATOMRecordModel get info%@",[ responseObject objectForKey:@"info"]);

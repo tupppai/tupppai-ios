@@ -7,11 +7,11 @@
 //
 
 #import "ATOMBaseViewController.h"
-@class ATOMAskPageViewModel;
-@class kfcPageVM;
+@class DDAskPageVM;
+@class DDCommentPageVM;
 @interface ATOMCropImageController : ATOMBaseViewController
 
-@property (nonatomic, strong) ATOMAskPageViewModel *askPageViewModel;
+@property (nonatomic, strong) DDAskPageVM *askPageViewModel;
 @property (nonatomic, strong) UIImage *originImage;
 @property (nonatomic, strong) UIImage *workImage;
 

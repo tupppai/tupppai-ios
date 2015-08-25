@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 @class ATOMInviteMessage;
-@class ATOMAskPageViewModel;
+@class DDAskPageVM;
 
 @interface ATOMInviteMessageViewModel : NSObject
 
@@ -18,7 +18,7 @@
 @property (nonatomic, copy) NSString *avatarURL;
 @property (nonatomic, copy) NSString *publishTime;
 @property (nonatomic, copy) NSString *imageURL;
-@property (nonatomic, strong) ATOMAskPageViewModel *homepageViewModel;
+@property (nonatomic, strong) DDAskPageVM *homepageViewModel;
 
 - (void)setViewModelData:(ATOMInviteMessage *)inviteMessage;
 

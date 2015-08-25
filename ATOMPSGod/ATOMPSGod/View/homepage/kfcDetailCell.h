@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ATOMHotDetailPageViewModel;
-@class ATOMBottomCommonButton;
+@class DDHotDetailPageVM;
+@class kfcButton;
 #import "kfcViews.h"
 
 @interface kfcDetailCell : UITableViewCell
@@ -27,13 +27,13 @@
 @property (nonatomic, strong) UIImageView *imageViewMain;
 
 @property (nonatomic, strong) UIButton *moreButton;
-@property (nonatomic, strong) ATOMBottomCommonButton *likeButton;
-@property (nonatomic, strong) ATOMBottomCommonButton *wechatButton;
-@property (nonatomic, strong) ATOMBottomCommonButton *commentButton;
+@property (nonatomic, strong) kfcButton *likeButton;
+@property (nonatomic, strong) kfcButton *wechatButton;
+@property (nonatomic, strong) kfcButton *commentButton;
 @property (nonatomic, strong) UIImageView *commentView;
 @property (nonatomic, strong) kfcCommentLabel *commentLabel1;
 @property (nonatomic, strong) kfcCommentLabel *commentLabel2;
 
-- (void)configCell:(ATOMHotDetailPageViewModel *)viewModel;
+- (void)configCell:(DDHotDetailPageVM *)viewModel;
 
 @end

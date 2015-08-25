@@ -69,7 +69,7 @@
             [param setObject:openID forKey:@"openid"];
             [loginModel openIDAuth:param AndType:@"weibo" withBlock:^(bool isRegister, NSString *info, NSError *error) {
                 if (isRegister) {
-                    NSLog(@"微博登录成功");
+                    [Util activity:@"" inView:self.view];
                     [self.navigationController setViewControllers:nil];
                     [AppDelegate APP].mainTabBarController = nil;
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
@@ -108,12 +108,11 @@
             [param setObject:openid forKey:@"openid"];
             [loginModel openIDAuth:param AndType:@"weixin" withBlock:^(bool isRegister, NSString *info, NSError *error) {
                 if (isRegister) {
-                    NSLog(@"微信登录成功");
+                    [Util activity:@"" inView:self.view];
                     [self.navigationController setViewControllers:nil];
                     [AppDelegate APP].mainTabBarController = nil;
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
                 } else if (isRegister == NO) {
-                    NSLog(@"未注册微信账号");
                     [ATOMCurrentUser currentUser].signUpType = ATOMSignUpWechat;
                     [ATOMCurrentUser currentUser].sourceData = sourceData;
                     ATOMUserProfileViewModel* ipvm = [ATOMUserProfileViewModel new];

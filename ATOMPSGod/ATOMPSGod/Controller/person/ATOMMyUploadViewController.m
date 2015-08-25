@@ -11,7 +11,7 @@
 #import "HotDetailViewController.h"
 #import "CommentViewController.h"
 #import "ATOMHomeImage.h"
-#import "ATOMAskPageViewModel.h"
+#import "DDAskPageVM.h"
 #import "ATOMAskViewModel.h"
 #import "PWRefreshFooterCollectionView.h"
 #import "ATOMShowMyAsk.h"
@@ -68,7 +68,7 @@ static int collumnNumber = 3;
     ATOMShowMyAsk *showMyAsk = [ATOMShowMyAsk new];
     [showMyAsk ShowMyAsk:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         for (ATOMHomeImage *homeImage in resultArray) {
-            ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
+            DDAskPageVM *homepageViewModel = [DDAskPageVM new];
             [homepageViewModel setViewModelData:homeImage];
             ATOMAskViewModel *askViewModel = [ATOMAskViewModel new];
             [askViewModel setViewModelData:homeImage];
@@ -94,7 +94,7 @@ static int collumnNumber = 3;
     [param setObject:@(15) forKey:@"size"];
     ATOMShowMyAsk *showMyAsk = [ATOMShowMyAsk new];
     [showMyAsk ShowMyAsk:param withBlock:^(NSMutableArray *resultArray, NSError *error) {        for (ATOMHomeImage *homeImage in resultArray) {
-            ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
+            DDAskPageVM *homepageViewModel = [DDAskPageVM new];
             [homepageViewModel setViewModelData:homeImage];
             ATOMAskViewModel *askViewModel = [ATOMAskViewModel new];
             [askViewModel setViewModelData:homeImage];
@@ -162,7 +162,7 @@ static int collumnNumber = 3;
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     ATOMAskViewModel *askViewModel = _dataSource[indexPath.row];
-    ATOMAskPageViewModel *homepageViewModel = _homeImageDataSource[indexPath.row];
+    DDAskPageVM *homepageViewModel = _homeImageDataSource[indexPath.row];
     if ([askViewModel.totalPSNumber integerValue] == 0) {
         
         CommentViewController* mvc = [CommentViewController new];
@@ -173,7 +173,7 @@ static int collumnNumber = 3;
     } else {
         HotDetailViewController *hdvc = [HotDetailViewController new];
         hdvc.fold = 0;
-        hdvc.askPageViewModel = homepageViewModel;
+        hdvc.askVM = homepageViewModel;
         [self pushViewController:hdvc animated:YES];
     }
 }

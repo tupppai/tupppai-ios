@@ -11,14 +11,14 @@
 #import "ATOMCommentDetailViewController.h"
 #import "HotDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
-#import "ATOMAskPageViewModel.h"
+#import "DDAskPageVM.h"
 #import "ATOMShowAttention.h"
 #import "ATOMCommonImage.h"
 #import "kfcFollowVM.h"
-#import "ATOMBottomCommonButton.h"
+#import "kfcButton.h"
 #import "ATOMNoDataView.h"
 #import "RefreshTableView.h"
-#import "kfcPageVM.h"
+#import "DDCommentPageVM.h"
 #import "ATOMShareFunctionView.h"
 #import "AppDelegate.h"
 #import "JGActionSheet.h"
@@ -129,7 +129,7 @@ static NSString *CellIdentifier = @"MyAttentionCell";
                 [ATOMShareSDKModel postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:vm.type];
             } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
                 CommentViewController* mvc = [CommentViewController new];
-                kfcPageVM *vm = [kfcPageVM new];
+                DDCommentPageVM *vm = [DDCommentPageVM new];
                 [vm setCommonViewModelWithFollow:_dataSource[_selectedIndexPath.row]];
                 mvc.vm = vm;
                 mvc.delegate = self;

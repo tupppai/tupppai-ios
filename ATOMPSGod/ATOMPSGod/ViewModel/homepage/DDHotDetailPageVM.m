@@ -6,15 +6,15 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMHotDetailPageViewModel.h"
-#import "ATOMAskPageViewModel.h"
+#import "DDHotDetailPageVM.h"
+#import "DDAskPageVM.h"
 #import "ATOMDetailImage.h"
 #import "ATOMImageTipLabel.h"
-#import "ATOMImageTipLabelViewModel.h"
+#import "DDTipLabelVM.h"
 #import "ATOMComment.h"
-#import "ATOMCommentViewModel.h"
+#import "DDCommentVM.h"
 #import "ATOMBaseRequest.h"
-@implementation ATOMHotDetailPageViewModel
+@implementation DDHotDetailPageVM
 
 - (instancetype)init {
     self = [super init];
@@ -26,7 +26,7 @@
     return self;
 }
 
-- (void)setViewModelDataWithHomeImage:(ATOMAskPageViewModel *)askPageViewModel {
+- (void)setViewModelDataWithHomeImage:(DDAskPageVM *)askPageViewModel {
     _type = 1;
     _ID = askPageViewModel.ID;
     _askID = askPageViewModel.ID;
@@ -66,12 +66,12 @@
     _width = detailImage.imageWidth;
     _height = detailImage.imageHeight;
     for (ATOMImageTipLabel *tipLabel in detailImage.tipLabelArray) {
-        ATOMImageTipLabelViewModel *model = [ATOMImageTipLabelViewModel new];
+        DDTipLabelVM *model = [DDTipLabelVM new];
         [model setViewModelData:tipLabel];
         [_labelArray addObject:model];
     }
     for (ATOMComment *comment in detailImage.hotCommentArray) {
-        ATOMCommentViewModel *model = [ATOMCommentViewModel new];
+        DDCommentVM *model = [DDCommentVM new];
         [model setViewModelData:comment];
         [_commentArray addObject:model];
     }
@@ -87,9 +87,8 @@
     [ATOMBaseRequest toggleLike:param withPageType:_type withID:_ID withBlock:^(NSError *error) {
         if (!error) {
             NSInteger number = [_likeNumber integerValue]+one;
-            [self setLikeNumber:[NSString stringWithFormat:@"%ld",(long)number]];            } else {
-                NSLog(@"Server失败 toggle like");
-            }
+            [self setLikeNumber:[NSString stringWithFormat:@"%ld",(long)number]];
+        }
     }];
 }
 

@@ -16,7 +16,7 @@
 #import "ATOMCommentMessage.h"
 #import "ATOMCommentMessageViewModel.h"
 #import "ATOMHomeImage.h"
-#import "ATOMAskPageViewModel.h"
+#import "DDAskPageVM.h"
 #import "RefreshFooterTableView.h"
 
 #import "CommentViewController.h"
@@ -164,7 +164,7 @@
             } else {
                 //进入热门详情
                 HotDetailViewController *hdvc = [HotDetailViewController new];
-                hdvc.askPageViewModel = viewModel.homepageViewModel;
+                hdvc.askVM = viewModel.homepageViewModel;
                 [self pushViewController:hdvc animated:YES];
             }
         } else if (CGRectContainsPoint(cell.replyContentLabel.frame, p)) {

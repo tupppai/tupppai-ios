@@ -9,20 +9,27 @@
 #import <Foundation/Foundation.h>
 @class ATOMComment;
 
-@interface CommentVM : NSObject
+@interface DDCommentVM : NSObject
 
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, copy) NSString *username;
+/**
+ *  username发布的最新评论，即text显示的评论数组里的第一个。
+ */
+@property (nonatomic, copy) NSString *originText;
+/**
+ *  所展示出来的评论内容
+ */
 @property (nonatomic, copy) NSString *text;
 @property (nonatomic, copy) NSString *likeNumber;
 @property (nonatomic, assign) NSInteger ID;
 @property (nonatomic, copy) NSString *sex;
 @property (nonatomic, copy) NSString *avatar;
 @property (nonatomic, assign) BOOL liked;
+@property (nonatomic, strong) NSMutableArray* replyArray;
 
 - (void)setViewModelData:(ATOMComment *)comment;
-- (void)setDataWithAtModel:(CommentVM *)viewModel andContent:(NSString *)content;
-- (void)increasePraiseNumber;
+- (void)setDataWithAtModel:(DDCommentVM *)viewModel andContent:(NSString *)content;
 - (void)toggleLike;
 
 @end

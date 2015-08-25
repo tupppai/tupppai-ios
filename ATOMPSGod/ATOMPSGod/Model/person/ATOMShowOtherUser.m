@@ -14,10 +14,7 @@
 @implementation ATOMShowOtherUser
 
 + (NSURLSessionDataTask *)ShowOtherUser:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *askReturnArray,NSMutableArray *replyReturnArray,ATOMUser *user, NSError *))block {
-    NSLog(@"showOtherUser param %@",param);
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/others" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"showOtherUser responseObject %@",responseObject);
-        
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/others" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {        
         int ret = [(NSString*)[responseObject objectForKey:@"ret"] intValue];
         if (ret == 1 ) {
             NSDictionary *data = [responseObject objectForKey:@"data"];

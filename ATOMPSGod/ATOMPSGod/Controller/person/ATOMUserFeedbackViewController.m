@@ -8,7 +8,7 @@
 
 #import "ATOMUserFeedbackViewController.h"
 #import "ATOMUserFeedbackView.h"
-#import "ATOMCommonModel.h"
+#import "ATOMBaseRequest.h"
 @interface ATOMUserFeedbackViewController () <UITextViewDelegate, UITextFieldDelegate>
 
 @property (nonatomic, strong) ATOMUserFeedbackView *userFeedbackView;
@@ -49,7 +49,7 @@
         NSMutableDictionary *param = [NSMutableDictionary new];
         [param setObject:_userFeedbackView.feedbackTextView.text forKey:@"content"];
         [param setObject:_userFeedbackView.contactTextField.text forKey:@"contact"];
-        [ATOMCommonModel post:param withUrl:@"feedback/save" withBlock:^(NSError *error,int ret) {
+        [ATOMBaseRequest post:param withUrl:@"feedback/save" withBlock:^(NSError *error,int ret) {
             if (error) {
             } else {
                 [Util Success:@"感谢你的反馈💗"];

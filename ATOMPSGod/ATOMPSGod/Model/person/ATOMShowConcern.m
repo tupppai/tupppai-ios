@@ -14,7 +14,6 @@
 
 - (NSURLSessionDataTask *)ShowMyConcern:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSMutableArray *, NSError *))block {
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/myfellow" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"ShowMyConcern responseObject %@",responseObject);
         int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
         if (ret == 1) {
             NSMutableArray *recommendConcernArray = [NSMutableArray array];
@@ -35,7 +34,6 @@
                     block(recommendConcernArray, myConcernArray, nil);
                 }
             }
-
         } else {
             if (block) {
                 block(nil,nil, nil);
@@ -50,8 +48,6 @@
 
 - (NSURLSessionDataTask *)ShowOtherConcern:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/othersfellow" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"ShowOtherConcern  responseObject %@",responseObject);
-        NSLog(@"ShowOtherConcern  param %@",param);
         int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
         if (ret == 1) {
             NSMutableArray *resultArray = [NSMutableArray array];

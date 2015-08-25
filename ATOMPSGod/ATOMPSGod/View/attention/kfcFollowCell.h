@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @class kfcFollowVM;
-@class ATOMBottomCommonButton;
+@class kfcButton;
 #import "kfcViews.h"
 
 @interface kfcFollowCell : UITableViewCell
@@ -27,9 +27,9 @@
 @property (nonatomic, strong) UIImageView *imageViewMain;
 
 @property (nonatomic, strong) UIButton *moreButton;
-@property (nonatomic, strong) ATOMBottomCommonButton *likeButton;
-@property (nonatomic, strong) ATOMBottomCommonButton *wechatButton;
-@property (nonatomic, strong) ATOMBottomCommonButton *commentButton;
+@property (nonatomic, strong) kfcButton *likeButton;
+@property (nonatomic, strong) kfcButton *wechatButton;
+@property (nonatomic, strong) kfcButton *commentButton;
 
 @property (nonatomic, strong) kfcPublishTypeLabel *publishTypeLabel;
 @property (nonatomic, strong) kfcCommentLabel *commentLabel1;

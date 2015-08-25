@@ -13,14 +13,14 @@
 #import "ATOMCropImageController.h"
 #import "ATOMProceedingViewController.h"
 #import "ATOMOtherPersonViewController.h"
-#import "ATOMHotDetailPageViewModel.h"
-#import "ATOMCommentViewModel.h"
+#import "DDHotDetailPageVM.h"
+#import "DDCommentVM.h"
 #import "ATOMDetailImage.h"
 #import "ATOMComment.h"
 #import "ATOMShowDetailOfHomePage.h"
-#import "ATOMAskPageViewModel.h"
+#import "DDAskPageVM.h"
 #import "ATOMShareFunctionView.h"
-#import "ATOMBottomCommonButton.h"
+#import "kfcButton.h"
 #import "RefreshTableView.h"
 #import "ATOMCollectModel.h"
 #import "ATOMBaseRequest.h"
@@ -44,8 +44,8 @@
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL canRefreshFooter;
-@property (nonatomic, assign) NSIndexPath* selectedIndexPath;
-@property (nonatomic, assign) kfcDetailCell* selectedHotDetailCell;
+@property (nonatomic, strong) NSIndexPath* selectedIndexPath;
+@property (nonatomic, strong) kfcDetailCell* selectedHotDetailCell;
 @property (nonatomic, strong)  JGActionSheet * psActionSheet;
 @property (nonatomic, strong)  JGActionSheet * reportActionSheet;
 
@@ -131,7 +131,7 @@ static NSString *CellIdentifier = @"HotDetailCell";
             [sheet dismissAnimated:YES];
         }];
         [_reportActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
-            ATOMHotDetailPageViewModel *model = ws.dataSource[ws.selectedIndexPath.row];
+            DDHotDetailPageVM *model = ws.dataSource[ws.selectedIndexPath.row];
             NSMutableDictionary* param = [NSMutableDictionary new];
             [param setObject:@(model.ID) forKey:@"target_id"];
             [param setObject:@(model.type) forKey:@"target_type"];
@@ -174,25 +174,25 @@ static NSString *CellIdentifier = @"HotDetailCell";
 #pragma mark - ATOMShareFunctionViewDelegate
 -(void)tapWechatFriends {
     if (_selectedIndexPath.row == 0) {
-        [ATOMShareSDKModel postSocialShare:_askPageViewModel.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeAsk];
+        [ATOMShareSDKModel postSocialShare:_askVM.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeAsk];
     } else {
-        ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
+        DDHotDetailPageVM *model = _dataSource[_selectedIndexPath.row];
         [ATOMShareSDKModel postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeReply];
     }
 }
 -(void)tapWechatMoment {
     if (_selectedIndexPath.row == 0) {
-        [ATOMShareSDKModel postSocialShare:_askPageViewModel.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
+        [ATOMShareSDKModel postSocialShare:_askVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
     } else {
-        ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
+        DDHotDetailPageVM *model = _dataSource[_selectedIndexPath.row];
         [ATOMShareSDKModel postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeReply];
     }
 }
 -(void)tapSinaWeibo {
     if (_selectedIndexPath.row == 0) {
-        [ATOMShareSDKModel postSocialShare:_askPageViewModel.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:ATOMPageTypeAsk];
+        [ATOMShareSDKModel postSocialShare:_askVM.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:ATOMPageTypeAsk];
     } else {
-        ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
+        DDHotDetailPageVM *model = _dataSource[_selectedIndexPath.row];
         [ATOMShareSDKModel postSocialShare:model.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:ATOMPageTypeReply];
     }
 }
@@ -206,7 +206,7 @@ static NSString *CellIdentifier = @"HotDetailCell";
         [param setObject:@(0) forKey:@"status"];
     }
     if (_selectedIndexPath) {
-        ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
+        DDHotDetailPageVM *model = _dataSource[_selectedIndexPath.row];
         [ATOMCollectModel toggleCollect:param withPageType:model.type withID:model.ID withBlock:^(NSError *error) {
             if (!error) {
                 model.collected = self.shareFunctionView.collectButton.selected;
@@ -216,7 +216,7 @@ static NSString *CellIdentifier = @"HotDetailCell";
 }
 -(void)tapInvite {
     ATOMInviteViewController* ivc = [ATOMInviteViewController new];
-    ivc.askPageViewModel = _askPageViewModel;
+    ivc.askPageViewModel = _askVM;
     [self pushViewController:ivc animated:NO];
 }
 -(void)tapReport {
@@ -246,7 +246,7 @@ static NSString *CellIdentifier = @"HotDetailCell";
 //- (void)firstGetDataSource {
 //    _currentPage = 1;
 //    ATOMShowDetailOfHomePage *showDetailOfHomePage = [ATOMShowDetailOfHomePage new];
-//    NSArray *detailImageArray = [showDetailOfHomePage getDetalImagesByImageID:_askPageViewModel.ID];
+//    NSArray *detailImageArray = [showDetailOfHomePage getDetalImagesByImageID:_askVM.ID];
 //    if (!detailImageArray || detailImageArray.count == 0) { //读服务器
 //        [self getDataSource];
 //    } else { //读数据库
@@ -254,7 +254,7 @@ static NSString *CellIdentifier = @"HotDetailCell";
 //        _dataSource = [NSMutableArray array];
 //        if (_fold != 1) {
 //            ATOMHotDetailPageViewModel *model = [ATOMHotDetailPageViewModel new];
-//            [model setViewModelDataWithHomeImage:_askPageViewModel];
+//            [model setViewModelDataWithHomeImage:_askVM];
 //            [_dataSource addObject:model];
 //        }
 //        for (ATOMDetailImage *detailImage in detailImageArray) {
@@ -276,17 +276,17 @@ static NSString *CellIdentifier = @"HotDetailCell";
     [param setObject:@(5) forKey:@"size"];
     [param setObject:@(_fold) forKey:@"fold"];
     ATOMShowDetailOfHomePage *showDetailOfHomePage = [ATOMShowDetailOfHomePage new];
-    [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.askPageViewModel.ID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
+    [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.askVM.ID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
         //第一张图片为首页点击的图片，剩下的图片为回复图片
         ws.dataSource = nil;
         ws.dataSource = [NSMutableArray array];
         if (_fold != 1) {
-            ATOMHotDetailPageViewModel *model = [ATOMHotDetailPageViewModel new];
-            [model setViewModelDataWithHomeImage:ws.askPageViewModel];
+            DDHotDetailPageVM *model = [DDHotDetailPageVM new];
+            [model setViewModelDataWithHomeImage:ws.askVM];
             [ws.dataSource addObject:model];
         }
         for (ATOMDetailImage *detailImage in detailOfHomePageArray) {
-            ATOMHotDetailPageViewModel *model = [ATOMHotDetailPageViewModel new];
+            DDHotDetailPageVM *model = [DDHotDetailPageVM new];
             [model setViewModelDataWithDetailImage:detailImage];
             [ws.dataSource addObject:model];
         }
@@ -309,11 +309,11 @@ static NSString *CellIdentifier = @"HotDetailCell";
     [param setObject:@(10) forKey:@"size"];
     [param setObject:@(_fold) forKey:@"fold"];
     ATOMShowDetailOfHomePage *showDetailOfHomePage = [ATOMShowDetailOfHomePage new];
-    [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.askPageViewModel.ID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
+    [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.askVM.ID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
         for (ATOMDetailImage *detailImage in detailOfHomePageArray) {
-            ATOMHotDetailPageViewModel *model = [ATOMHotDetailPageViewModel new];
+            DDHotDetailPageVM *model = [DDHotDetailPageVM new];
             [model setViewModelDataWithDetailImage:detailImage];
-            model.labelArray = [ws.askPageViewModel.labelArray mutableCopy];
+            model.labelArray = [ws.askVM.labelArray mutableCopy];
             [ws.dataSource addObject:model];
         }
         if (detailOfHomePageArray.count == 0) {
@@ -336,10 +336,10 @@ static NSString *CellIdentifier = @"HotDetailCell";
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    if (_askPageViewModel && (self.isMovingFromParentViewController || self.isBeingDismissed)) {
+    if (_askVM && (self.isMovingFromParentViewController || self.isBeingDismissed)) {
         if(_delegate && [_delegate respondsToSelector:@selector(ATOMViewControllerDismissWithInfo:)])
         {
-            ATOMHotDetailPageViewModel *model = _dataSource[0];
+            DDHotDetailPageVM *model = _dataSource[0];
             NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithBool:model.liked],@"liked",[NSNumber numberWithBool:model.collected],@"collected",nil];
             [_delegate ATOMViewControllerDismissWithInfo:info];
         }
@@ -418,7 +418,7 @@ static NSString *CellIdentifier = @"HotDetailCell";
     CGPoint location = [gesture locationInView:_tableView];
     _selectedIndexPath = [_tableView indexPathForRowAtPoint:location];
     if (_selectedIndexPath) {
-        ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
+        DDHotDetailPageVM *model = _dataSource[_selectedIndexPath.row];
         _selectedHotDetailCell = (kfcDetailCell *)[_tableView cellForRowAtIndexPath:_selectedIndexPath];
         
         CGPoint p = [gesture locationInView:_selectedHotDetailCell];
@@ -445,19 +445,24 @@ static NSString *CellIdentifier = @"HotDetailCell";
             if (CGRectContainsPoint(_selectedHotDetailCell.likeButton.frame, p)) {
                 [_selectedHotDetailCell.likeButton toggleLike];
                     [model toggleLike];
+                if (_selectedIndexPath.row == 0) {
+                    //为了点赞第一个page，重新刷新时的数据能同步。
+                    _askVM.liked = model.liked;
+                    _askVM.likeNumber = _selectedHotDetailCell.likeButton.number;
+                }
             } else if (CGRectContainsPoint(_selectedHotDetailCell.wechatButton.frame, p)) {
                 if (_selectedIndexPath.row == 0) {
-                    [ATOMShareSDKModel postSocialShare:_askPageViewModel.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
+                    [ATOMShareSDKModel postSocialShare:_askVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
                 } else {
-                    ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
+                    DDHotDetailPageVM *model = _dataSource[_selectedIndexPath.row];
                     [ATOMShareSDKModel postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeReply];
                 }            } else if (CGRectContainsPoint(_selectedHotDetailCell.commentButton.frame, p)) {
                     
-                kfcPageVM* vm = [kfcPageVM new];
+                DDCommentPageVM* vm = [DDCommentPageVM new];
                 if (_selectedIndexPath.row != 0) {
                     [vm setCommonViewModelWithHotDetail:model];
                 } else {
-                    [vm setCommonViewModelWithAsk:_askPageViewModel];
+                    [vm setCommonViewModelWithAsk:_askVM];
                 }
                     CommentViewController* mvc = [CommentViewController new];
                     mvc.vm = vm;
@@ -483,7 +488,7 @@ static NSString *CellIdentifier = @"HotDetailCell";
     [self dismissViewControllerAnimated:YES completion:^{
         ATOMCropImageController *uwvc = [ATOMCropImageController new];
         uwvc.originImage = info[UIImagePickerControllerOriginalImage];
-        uwvc.askPageViewModel = ws.askPageViewModel;
+        uwvc.askPageViewModel = ws.askVM;
         [ws pushViewController:uwvc animated:YES];
     }];
 }
@@ -519,8 +524,10 @@ static NSString *CellIdentifier = @"HotDetailCell";
     //当从child viewcontroller 传来的liked变化的时候，toggle like.
     //to do:其实应该改变datasource的liked ,tableView reload的时候才能保持。
     [_selectedHotDetailCell.likeButton toggleLikeWhenSelectedChanged:liked];
-    ATOMHotDetailPageViewModel *model = _dataSource[_selectedIndexPath.row];
-    model.collected = collected;
+    if (_selectedIndexPath) {
+        DDHotDetailPageVM *model = _dataSource[_selectedIndexPath.row];
+        model.collected = collected;
+    }
 }
 #pragma mark - JTSImageViewControllerInteractionsDelegate
 

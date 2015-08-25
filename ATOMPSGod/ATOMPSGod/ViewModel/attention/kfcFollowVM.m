@@ -9,13 +9,13 @@
 #import "kfcFollowVM.h"
 #import "ATOMCommonImage.h"
 #import "ATOMImageTipLabel.h"
-#import "ATOMImageTipLabelViewModel.h"
+#import "DDTipLabelVM.h"
 #import "ATOMReplier.h"
 #import "ATOMReplierViewModel.h"
 #import "ATOMComment.h"
-#import "ATOMCommentViewModel.h"
+#import "DDCommentVM.h"
 #import "ATOMBaseRequest.h"
-#import "ATOMAskPageViewModel.h"
+#import "DDAskPageVM.h"
 @implementation kfcFollowVM
 
 - (instancetype)init {
@@ -64,7 +64,7 @@
     _height = commonImage.imageHeight;
     _liked = commonImage.liked;
     for (ATOMImageTipLabel *tipLabel in commonImage.tipLabelArray) {
-        ATOMImageTipLabelViewModel *model = [ATOMImageTipLabelViewModel new];
+        DDTipLabelVM *model = [DDTipLabelVM new];
         [model setViewModelData:tipLabel];
         [_labelArray addObject:model];
     }
@@ -74,15 +74,15 @@
         [_replierArray addObject:model];
     }
     for (ATOMComment *comment in commonImage.hotCommentArray) {
-        ATOMCommentViewModel *model = [ATOMCommentViewModel new];
+        DDCommentVM *model = [DDCommentVM new];
         [model setViewModelData:comment];
         [_commentArray addObject:model];
     }
 
 }
--(ATOMAskPageViewModel*)generateAskPageViewModel {
+-(DDAskPageVM*)generateAskPageViewModel {
 
-    ATOMAskPageViewModel* askPVM = [ATOMAskPageViewModel new];
+    DDAskPageVM* askPVM = [DDAskPageVM new];
     askPVM.ID = _askID;
     askPVM.userID = _userID;
     askPVM.userName = _userName;
@@ -107,9 +107,9 @@
     NSInteger one = _liked? -1:1;
     _liked = !_liked;
     [param setValue:@(status) forKey:@"status"];
-    NSString* url = _type == 1? @"ask/upask": @"reply/upreply";
-    ATOMBaseRequest* baseRequest = [ATOMBaseRequest new];
-    [baseRequest toggleLike:param withUrl:url withID:_imageID withBlock:^(NSError *error) {
+//    NSString* url = _type == 1? @"ask/upask": @"reply/upreply";
+//    ATOMBaseRequest* baseRequest = [ATOMBaseRequest new];
+    [ATOMBaseRequest toggleLike:param withPageType:_type withID:_imageID withBlock:^(NSError *error) {
         if (!error) {
             NSLog(@"Server成功toggle like");
             NSInteger number = [_likeNumber integerValue]+one;
@@ -117,5 +117,13 @@
                 NSLog(@"Server失败 toggle like");
             }
     }];
+//    [baseRequest toggleLike:param withUrl:url withID:_imageID withBlock:^(NSError *error) {
+//        if (!error) {
+//            NSLog(@"Server成功toggle like");
+//            NSInteger number = [_likeNumber integerValue]+one;
+//            [self setLikeNumber:[NSString stringWithFormat:@"%ld",(long)number]];            } else {
+//                NSLog(@"Server失败 toggle like");
+//            }
+//    }];
 }
 @end

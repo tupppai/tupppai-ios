@@ -7,10 +7,10 @@
 //
 
 #import "ATOMBaseView.h"
-#import "ATOMAskPageViewModel.h"
-#import "ATOMHotDetailPageViewModel.h"
-#import "kfcPageVM.h"
-#import "ATOMBottomCommonButton.h"
+#import "DDAskPageVM.h"
+#import "DDHotDetailPageVM.h"
+#import "DDCommentPageVM.h"
+#import "kfcButton.h"
 @interface kfcPageView : ATOMBaseView
 
 
@@ -25,12 +25,12 @@
 @property (nonatomic, strong) UIImageView *imageViewMain;
 
 @property (nonatomic, strong) UIButton *moreButton;
-@property (nonatomic, strong) ATOMBottomCommonButton *likeButton;
-@property (nonatomic, strong) ATOMBottomCommonButton *wechatButton;
-@property (nonatomic, strong) ATOMBottomCommonButton *commentButton;
+@property (nonatomic, strong) kfcButton *likeButton;
+@property (nonatomic, strong) kfcButton *wechatButton;
+@property (nonatomic, strong) kfcButton *commentButton;
 
 
-@property (nonatomic, strong) kfcPageVM *vm;
+@property (nonatomic, strong) DDCommentPageVM *vm;
 
 //+ (CGFloat)calculateHeaderViewHeight:(kfcPageVM *)viewModel;
 

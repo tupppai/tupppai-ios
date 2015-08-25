@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5C0D282D1ACA333200491452 /* ATOMShowDetailOfComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D282C1ACA333200491452 /* ATOMShowDetailOfComment.m */; };
-		5C0D28301ACA83C400491452 /* ATOMAtComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D282F1ACA83C400491452 /* ATOMAtComment.m */; };
+		5C0D28301ACA83C400491452 /* DDCommentReplyVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D282F1ACA83C400491452 /* DDCommentReplyVM.m */; };
 		5C0F04D21ADCA8E2002003AE /* ATOMFans.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C0F04D11ADCA8E2002003AE /* ATOMFans.m */; };
 		5C0F04D51ADCAD31002003AE /* ATOMCommentMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C0F04D41ADCAD31002003AE /* ATOMCommentMessage.m */; };
 		5C0F04D91ADCB049002003AE /* ATOMShowCommentMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C0F04D81ADCB049002003AE /* ATOMShowCommentMessage.m */; };
@@ -48,7 +48,7 @@
 		5C436A9F1AB07F6F00D14608 /* ATOMTopicReplyMessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C436A9E1AB07F6F00D14608 /* ATOMTopicReplyMessageTableViewCell.m */; };
 		5C4AE3EC1AAED60A0020E102 /* ATOMMyFansViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AE3EB1AAED60A0020E102 /* ATOMMyFansViewController.m */; };
 		5C4AE3EF1AAED6520020E102 /* ATOMMyFansTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AE3EE1AAED6520020E102 /* ATOMMyFansTableViewCell.m */; };
-		5C4C70461AB665F500358989 /* ATOMAskPageViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4C70451AB665F500358989 /* ATOMAskPageViewModel.m */; };
+		5C4C70461AB665F500358989 /* DDAskPageVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4C70451AB665F500358989 /* DDAskPageVM.m */; };
 		5C4C70B41AB6A60C00358989 /* ATOMHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4C70B31AB6A60C00358989 /* ATOMHTTPRequestOperationManager.m */; };
 		5C4C70C51AB6BC5200358989 /* ATOMBaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4C70C41AB6BC5200358989 /* ATOMBaseRequest.m */; };
 		5C4C70C81AB6E20800358989 /* ATOMCurrentUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4C70C71AB6E20800358989 /* ATOMCurrentUser.m */; };
@@ -119,7 +119,7 @@
 		5C5DDBD41AD4087800F4B845 /* ATOMProceedingViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5DDBD31AD4087800F4B845 /* ATOMProceedingViewModel.m */; };
 		5C5DDBD71AD40C9800F4B845 /* ATOMShowProceeding.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5DDBD61AD40C9800F4B845 /* ATOMShowProceeding.m */; };
 		5C5EF7BA1ABBB8AC00CE5B84 /* ATOMDetailImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5EF7B91ABBB8AC00CE5B84 /* ATOMDetailImage.m */; };
-		5C5EF7BD1ABBCD1900CE5B84 /* ATOMHotDetailPageViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5EF7BC1ABBCD1900CE5B84 /* ATOMHotDetailPageViewModel.m */; };
+		5C5EF7BD1ABBCD1900CE5B84 /* DDHotDetailPageVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5EF7BC1ABBCD1900CE5B84 /* DDHotDetailPageVM.m */; };
 		5C5EF7C01ABBF11E00CE5B84 /* ATOMCommentViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5EF7BF1ABBF11E00CE5B84 /* ATOMCommentViewModel.m */; };
 		5C5EF7C31ABBF23E00CE5B84 /* ATOMShowDetailOfHomePage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5EF7C21ABBF23E00CE5B84 /* ATOMShowDetailOfHomePage.m */; };
 		5C653B9B1AA96C820025814B /* BJImageCropper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C653B9A1AA96C820025814B /* BJImageCropper.m */; };
@@ -148,7 +148,7 @@
 		5C7B8AB01AFA535D00F448CD /* ATOMCommonImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7B8AAF1AFA535D00F448CD /* ATOMCommonImage.m */; };
 		5C7B8AB31AFA549D00F448CD /* kfcFollowVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7B8AB21AFA549D00F448CD /* kfcFollowVM.m */; };
 		5C7B8AB71AFA5AB700F448CD /* ATOMShowAttention.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7B8AB61AFA5AB700F448CD /* ATOMShowAttention.m */; };
-		5C8084F91AF2603D0062421C /* ATOMBottomCommonButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8084F81AF2603D0062421C /* ATOMBottomCommonButton.m */; };
+		5C8084F91AF2603D0062421C /* kfcButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8084F81AF2603D0062421C /* kfcButton.m */; };
 		5C8084FC1AF27BD30062421C /* ATOMTotalPSView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8084FB1AF27BD30062421C /* ATOMTotalPSView.m */; };
 		5C819C921AA71C1D00CDDB5B /* ATOMCommentDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C819C911AA71C1D00CDDB5B /* ATOMCommentDetailViewController.m */; };
 		5C819C951AA71FCD00CDDB5B /* ATOMCommentDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C819C941AA71FCD00CDDB5B /* ATOMCommentDetailTableViewCell.m */; };
@@ -173,7 +173,7 @@
 		5C84062C1ABA67CC00068F35 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C84062B1ABA67CC00068F35 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5C84062F1ABA6C5300068F35 /* ATOMImageTipLabelDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C84062E1ABA6C5300068F35 /* ATOMImageTipLabelDAO.m */; };
 		5C8406321ABA762900068F35 /* ATOMShowHomepage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8406311ABA762900068F35 /* ATOMShowHomepage.m */; };
-		5C8406381ABABEC500068F35 /* ATOMImageTipLabelViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8406371ABABEC500068F35 /* ATOMImageTipLabelViewModel.m */; };
+		5C8406381ABABEC500068F35 /* DDTipLabelVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8406371ABABEC500068F35 /* DDTipLabelVM.m */; };
 		5C84063B1ABADA8B00068F35 /* ATOMHomeImageDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C84063A1ABADA8B00068F35 /* ATOMHomeImageDAO.m */; };
 		5C8502351AF39B7500724AC6 /* ATOMCollectionViewLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8502341AF39B7500724AC6 /* ATOMCollectionViewLabel.m */; };
 		5C8A2A181AAF1CE20064EB1C /* ATOMMyConcernViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8A2A171AAF1CE20064EB1C /* ATOMMyConcernViewController.m */; };
@@ -186,7 +186,7 @@
 		5C9BD9EE1AA8293400715698 /* ATOMCropImageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C9BD9ED1AA8293400715698 /* ATOMCropImageController.m */; };
 		5C9BD9F41AA82F3500715698 /* ATOMOriginCropperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C9BD9F31AA82F3500715698 /* ATOMOriginCropperView.m */; };
 		5C9BDA001AA8303700715698 /* ATOMUploadWorkView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C9BD9FF1AA8303700715698 /* ATOMUploadWorkView.m */; };
-		5C9BDA081AA84D1000715698 /* CommentVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C9BDA071AA84D1000715698 /* CommentVM.m */; };
+		5C9BDA081AA84D1000715698 /* DDCommentVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C9BDA071AA84D1000715698 /* DDCommentVM.m */; };
 		5C9BDA4C1AA85E5600715698 /* box-shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C9BDA451AA85E5600715698 /* box-shadow.png */; };
 		5C9BDA4D1AA85E5600715698 /* breathe.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5C9BDA461AA85E5600715698 /* breathe.gif */; };
 		5C9BDA531AA8609800715698 /* psps.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C9BDA521AA8609800715698 /* psps.png */; };
@@ -398,10 +398,9 @@
 		E9FBCD2C1B69F92D00BF7096 /* ATOMLoginBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FBCD2B1B69F92D00BF7096 /* ATOMLoginBaseViewController.m */; };
 		E9FBCD2F1B6A042000BF7096 /* ATOMLoginCustomNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FBCD2E1B6A042000BF7096 /* ATOMLoginCustomNavigationController.m */; };
 		E9FC94D91B2F0D0C00B72C60 /* ATOMUserProfileViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FC94D81B2F0D0C00B72C60 /* ATOMUserProfileViewModel.m */; };
-		E9FD023D1B29708200FC5E17 /* kfcPageVM.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD023C1B29708200FC5E17 /* kfcPageVM.m */; };
+		E9FD023D1B29708200FC5E17 /* DDCommentPageVM.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD023C1B29708200FC5E17 /* DDCommentPageVM.m */; };
 		E9FF3FCD1B563B6D007AA3F6 /* ATOMShareSDKModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF3FCC1B563B6D007AA3F6 /* ATOMShareSDKModel.m */; };
 		E9FF3FD01B5650EB007AA3F6 /* ATOMShowUser.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF3FCF1B5650EB007AA3F6 /* ATOMShowUser.m */; };
-		E9FF3FD61B575C1C007AA3F6 /* ATOMCommonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF3FD51B575C1C007AA3F6 /* ATOMCommonModel.m */; };
 		E9FF8A3B1B71CCB70010D2C4 /* ATOMForgetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF8A3A1B71CCB70010D2C4 /* ATOMForgetPasswordViewController.m */; };
 		E9FF8A3E1B71CD480010D2C4 /* ATOMInputMobileView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF8A3D1B71CD480010D2C4 /* ATOMInputMobileView.m */; };
 		E9FF8A411B71CE610010D2C4 /* ATOMInputVerifyCodeAndPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF8A401B71CE610010D2C4 /* ATOMInputVerifyCodeAndPasswordView.m */; };
@@ -426,8 +425,8 @@
 /* Begin PBXFileReference section */
 		5C0D282B1ACA333200491452 /* ATOMShowDetailOfComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShowDetailOfComment.h; sourceTree = "<group>"; };
 		5C0D282C1ACA333200491452 /* ATOMShowDetailOfComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShowDetailOfComment.m; sourceTree = "<group>"; };
-		5C0D282E1ACA83C400491452 /* ATOMAtComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMAtComment.h; sourceTree = "<group>"; };
-		5C0D282F1ACA83C400491452 /* ATOMAtComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMAtComment.m; sourceTree = "<group>"; };
+		5C0D282E1ACA83C400491452 /* DDCommentReplyVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDCommentReplyVM.h; sourceTree = "<group>"; };
+		5C0D282F1ACA83C400491452 /* DDCommentReplyVM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDCommentReplyVM.m; sourceTree = "<group>"; };
 		5C0F04D01ADCA8E2002003AE /* ATOMFans.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMFans.h; sourceTree = "<group>"; };
 		5C0F04D11ADCA8E2002003AE /* ATOMFans.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMFans.m; sourceTree = "<group>"; };
 		5C0F04D31ADCAD31002003AE /* ATOMCommentMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMCommentMessage.h; sourceTree = "<group>"; };
@@ -506,8 +505,8 @@
 		5C4AE3EB1AAED60A0020E102 /* ATOMMyFansViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMMyFansViewController.m; sourceTree = "<group>"; };
 		5C4AE3ED1AAED6520020E102 /* ATOMMyFansTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMMyFansTableViewCell.h; sourceTree = "<group>"; };
 		5C4AE3EE1AAED6520020E102 /* ATOMMyFansTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMMyFansTableViewCell.m; sourceTree = "<group>"; };
-		5C4C70441AB665F500358989 /* ATOMAskPageViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMAskPageViewModel.h; sourceTree = "<group>"; };
-		5C4C70451AB665F500358989 /* ATOMAskPageViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMAskPageViewModel.m; sourceTree = "<group>"; };
+		5C4C70441AB665F500358989 /* DDAskPageVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAskPageVM.h; sourceTree = "<group>"; };
+		5C4C70451AB665F500358989 /* DDAskPageVM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDAskPageVM.m; sourceTree = "<group>"; };
 		5C4C70B21AB6A60C00358989 /* ATOMHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMHTTPRequestOperationManager.h; sourceTree = "<group>"; };
 		5C4C70B31AB6A60C00358989 /* ATOMHTTPRequestOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMHTTPRequestOperationManager.m; sourceTree = "<group>"; };
 		5C4C70C31AB6BC5200358989 /* ATOMBaseRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMBaseRequest.h; sourceTree = "<group>"; };
@@ -649,8 +648,8 @@
 		5C5DDBD61AD40C9800F4B845 /* ATOMShowProceeding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShowProceeding.m; sourceTree = "<group>"; };
 		5C5EF7B81ABBB8AC00CE5B84 /* ATOMDetailImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMDetailImage.h; sourceTree = "<group>"; };
 		5C5EF7B91ABBB8AC00CE5B84 /* ATOMDetailImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMDetailImage.m; sourceTree = "<group>"; };
-		5C5EF7BB1ABBCD1900CE5B84 /* ATOMHotDetailPageViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMHotDetailPageViewModel.h; sourceTree = "<group>"; };
-		5C5EF7BC1ABBCD1900CE5B84 /* ATOMHotDetailPageViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMHotDetailPageViewModel.m; sourceTree = "<group>"; };
+		5C5EF7BB1ABBCD1900CE5B84 /* DDHotDetailPageVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHotDetailPageVM.h; sourceTree = "<group>"; };
+		5C5EF7BC1ABBCD1900CE5B84 /* DDHotDetailPageVM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHotDetailPageVM.m; sourceTree = "<group>"; };
 		5C5EF7BE1ABBF11E00CE5B84 /* ATOMCommentViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMCommentViewModel.h; sourceTree = "<group>"; };
 		5C5EF7BF1ABBF11E00CE5B84 /* ATOMCommentViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMCommentViewModel.m; sourceTree = "<group>"; };
 		5C5EF7C11ABBF23E00CE5B84 /* ATOMShowDetailOfHomePage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShowDetailOfHomePage.h; sourceTree = "<group>"; };
@@ -706,8 +705,8 @@
 		5C7B8AB21AFA549D00F448CD /* kfcFollowVM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = kfcFollowVM.m; sourceTree = "<group>"; };
 		5C7B8AB51AFA5AB700F448CD /* ATOMShowAttention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShowAttention.h; sourceTree = "<group>"; };
 		5C7B8AB61AFA5AB700F448CD /* ATOMShowAttention.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShowAttention.m; sourceTree = "<group>"; };
-		5C8084F71AF2603D0062421C /* ATOMBottomCommonButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMBottomCommonButton.h; sourceTree = "<group>"; };
-		5C8084F81AF2603D0062421C /* ATOMBottomCommonButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMBottomCommonButton.m; sourceTree = "<group>"; };
+		5C8084F71AF2603D0062421C /* kfcButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kfcButton.h; sourceTree = "<group>"; };
+		5C8084F81AF2603D0062421C /* kfcButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = kfcButton.m; sourceTree = "<group>"; };
 		5C8084FA1AF27BD30062421C /* ATOMTotalPSView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMTotalPSView.h; sourceTree = "<group>"; };
 		5C8084FB1AF27BD30062421C /* ATOMTotalPSView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMTotalPSView.m; sourceTree = "<group>"; };
 		5C819C901AA71C1D00CDDB5B /* ATOMCommentDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMCommentDetailViewController.h; sourceTree = "<group>"; };
@@ -771,8 +770,8 @@
 		5C84062E1ABA6C5300068F35 /* ATOMImageTipLabelDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMImageTipLabelDAO.m; sourceTree = "<group>"; };
 		5C8406301ABA762900068F35 /* ATOMShowHomepage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShowHomepage.h; sourceTree = "<group>"; };
 		5C8406311ABA762900068F35 /* ATOMShowHomepage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShowHomepage.m; sourceTree = "<group>"; };
-		5C8406361ABABEC500068F35 /* ATOMImageTipLabelViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMImageTipLabelViewModel.h; sourceTree = "<group>"; };
-		5C8406371ABABEC500068F35 /* ATOMImageTipLabelViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMImageTipLabelViewModel.m; sourceTree = "<group>"; };
+		5C8406361ABABEC500068F35 /* DDTipLabelVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTipLabelVM.h; sourceTree = "<group>"; };
+		5C8406371ABABEC500068F35 /* DDTipLabelVM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTipLabelVM.m; sourceTree = "<group>"; };
 		5C8406391ABADA8B00068F35 /* ATOMHomeImageDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMHomeImageDAO.h; sourceTree = "<group>"; };
 		5C84063A1ABADA8B00068F35 /* ATOMHomeImageDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMHomeImageDAO.m; sourceTree = "<group>"; };
 		5C8502331AF39B7500724AC6 /* ATOMCollectionViewLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMCollectionViewLabel.h; sourceTree = "<group>"; };
@@ -797,8 +796,8 @@
 		5C9BD9F31AA82F3500715698 /* ATOMOriginCropperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMOriginCropperView.m; sourceTree = "<group>"; };
 		5C9BD9FE1AA8303700715698 /* ATOMUploadWorkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMUploadWorkView.h; sourceTree = "<group>"; };
 		5C9BD9FF1AA8303700715698 /* ATOMUploadWorkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMUploadWorkView.m; sourceTree = "<group>"; };
-		5C9BDA061AA84D1000715698 /* CommentVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentVM.h; sourceTree = "<group>"; };
-		5C9BDA071AA84D1000715698 /* CommentVM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentVM.m; sourceTree = "<group>"; };
+		5C9BDA061AA84D1000715698 /* DDCommentVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDCommentVM.h; sourceTree = "<group>"; };
+		5C9BDA071AA84D1000715698 /* DDCommentVM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDCommentVM.m; sourceTree = "<group>"; };
 		5C9BDA451AA85E5600715698 /* box-shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "box-shadow.png"; sourceTree = "<group>"; };
 		5C9BDA461AA85E5600715698 /* breathe.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = breathe.gif; sourceTree = "<group>"; };
 		5C9BDA521AA8609800715698 /* psps.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = psps.png; sourceTree = "<group>"; };
@@ -1209,14 +1208,12 @@
 		E9FBCD2E1B6A042000BF7096 /* ATOMLoginCustomNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMLoginCustomNavigationController.m; sourceTree = "<group>"; };
 		E9FC94D71B2F0D0C00B72C60 /* ATOMUserProfileViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATOMUserProfileViewModel.h; path = ATOMPSGod/Model/login/ATOMUserProfileViewModel.h; sourceTree = SOURCE_ROOT; };
 		E9FC94D81B2F0D0C00B72C60 /* ATOMUserProfileViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATOMUserProfileViewModel.m; path = ATOMPSGod/Model/login/ATOMUserProfileViewModel.m; sourceTree = SOURCE_ROOT; };
-		E9FD023B1B29708200FC5E17 /* kfcPageVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kfcPageVM.h; path = ../kfcPageVM.h; sourceTree = "<group>"; };
-		E9FD023C1B29708200FC5E17 /* kfcPageVM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = kfcPageVM.m; path = ../kfcPageVM.m; sourceTree = "<group>"; };
+		E9FD023B1B29708200FC5E17 /* DDCommentPageVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDCommentPageVM.h; path = ../DDCommentPageVM.h; sourceTree = "<group>"; };
+		E9FD023C1B29708200FC5E17 /* DDCommentPageVM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDCommentPageVM.m; path = ../DDCommentPageVM.m; sourceTree = "<group>"; };
 		E9FF3FCB1B563B6D007AA3F6 /* ATOMShareSDKModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShareSDKModel.h; sourceTree = "<group>"; };
 		E9FF3FCC1B563B6D007AA3F6 /* ATOMShareSDKModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShareSDKModel.m; sourceTree = "<group>"; };
 		E9FF3FCE1B5650EB007AA3F6 /* ATOMShowUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShowUser.h; sourceTree = "<group>"; };
 		E9FF3FCF1B5650EB007AA3F6 /* ATOMShowUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShowUser.m; sourceTree = "<group>"; };
-		E9FF3FD41B575C1C007AA3F6 /* ATOMCommonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMCommonModel.h; sourceTree = "<group>"; };
-		E9FF3FD51B575C1C007AA3F6 /* ATOMCommonModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMCommonModel.m; sourceTree = "<group>"; };
 		E9FF8A391B71CCB70010D2C4 /* ATOMForgetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMForgetPasswordViewController.h; sourceTree = "<group>"; };
 		E9FF8A3A1B71CCB70010D2C4 /* ATOMForgetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMForgetPasswordViewController.m; sourceTree = "<group>"; };
 		E9FF8A3C1B71CD480010D2C4 /* ATOMInputMobileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMInputMobileView.h; sourceTree = "<group>"; };
@@ -1287,8 +1284,6 @@
 				5C4C70B31AB6A60C00358989 /* ATOMHTTPRequestOperationManager.m */,
 				5C4C70C31AB6BC5200358989 /* ATOMBaseRequest.h */,
 				5C4C70C41AB6BC5200358989 /* ATOMBaseRequest.m */,
-				E9FF3FD41B575C1C007AA3F6 /* ATOMCommonModel.h */,
-				E9FF3FD51B575C1C007AA3F6 /* ATOMCommonModel.m */,
 				5C4C70C61AB6E20800358989 /* ATOMCurrentUser.h */,
 				5C4C70C71AB6E20800358989 /* ATOMCurrentUser.m */,
 			);
@@ -1521,8 +1516,8 @@
 				5C5A7A821ABFA8BB004A00C5 /* CommentCell.m */,
 				5C6CEF2B1AF1971300F06213 /* CommentLikeButton.h */,
 				5C6CEF2C1AF1971300F06213 /* CommentLikeButton.m */,
-				5C8084F71AF2603D0062421C /* ATOMBottomCommonButton.h */,
-				5C8084F81AF2603D0062421C /* ATOMBottomCommonButton.m */,
+				5C8084F71AF2603D0062421C /* kfcButton.h */,
+				5C8084F81AF2603D0062421C /* kfcButton.m */,
 				5C8084FA1AF27BD30062421C /* ATOMTotalPSView.h */,
 				5C8084FB1AF27BD30062421C /* ATOMTotalPSView.m */,
 			);
@@ -1719,8 +1714,8 @@
 				5C54DF281AB9810B00BDE34D /* ATOMImageTipLabel.m */,
 				5C5EF7B81ABBB8AC00CE5B84 /* ATOMDetailImage.h */,
 				5C5EF7B91ABBB8AC00CE5B84 /* ATOMDetailImage.m */,
-				5C0D282E1ACA83C400491452 /* ATOMAtComment.h */,
-				5C0D282F1ACA83C400491452 /* ATOMAtComment.m */,
+				5C0D282E1ACA83C400491452 /* DDCommentReplyVM.h */,
+				5C0D282F1ACA83C400491452 /* DDCommentReplyVM.m */,
 				5C0F04D01ADCA8E2002003AE /* ATOMFans.h */,
 				5C0F04D11ADCA8E2002003AE /* ATOMFans.m */,
 				5C0F04FB1ADD0D88002003AE /* ATOMConcern.h */,
@@ -1884,7 +1879,6 @@
 		5C9BD9E81AA8150000715698 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				E9FD023A1B296EA600FC5E17 /* common */,
 				5C9BDA011AA84CF800715698 /* follow */,
 				5C9BDA021AA84CF800715698 /* homepage */,
 				5C9BDA031AA84CF800715698 /* login */,
@@ -1907,22 +1901,22 @@
 		5C9BDA021AA84CF800715698 /* homepage */ = {
 			isa = PBXGroup;
 			children = (
-				5C4C70441AB665F500358989 /* ATOMAskPageViewModel.h */,
-				5C4C70451AB665F500358989 /* ATOMAskPageViewModel.m */,
-				E9FD023B1B29708200FC5E17 /* kfcPageVM.h */,
-				E9FD023C1B29708200FC5E17 /* kfcPageVM.m */,
-				5C5EF7BB1ABBCD1900CE5B84 /* ATOMHotDetailPageViewModel.h */,
-				5C5EF7BC1ABBCD1900CE5B84 /* ATOMHotDetailPageViewModel.m */,
-				5C9BDA061AA84D1000715698 /* CommentVM.h */,
-				5C9BDA071AA84D1000715698 /* CommentVM.m */,
-				5C8406361ABABEC500068F35 /* ATOMImageTipLabelViewModel.h */,
-				5C8406371ABABEC500068F35 /* ATOMImageTipLabelViewModel.m */,
-				5C5EF7BE1ABBF11E00CE5B84 /* ATOMCommentViewModel.h */,
-				5C5EF7BF1ABBF11E00CE5B84 /* ATOMCommentViewModel.m */,
+				5C4C70441AB665F500358989 /* DDAskPageVM.h */,
+				5C4C70451AB665F500358989 /* DDAskPageVM.m */,
+				E9FD023B1B29708200FC5E17 /* DDCommentPageVM.h */,
+				E9FD023C1B29708200FC5E17 /* DDCommentPageVM.m */,
+				5C5EF7BB1ABBCD1900CE5B84 /* DDHotDetailPageVM.h */,
+				5C5EF7BC1ABBCD1900CE5B84 /* DDHotDetailPageVM.m */,
+				5C9BDA061AA84D1000715698 /* DDCommentVM.h */,
+				5C9BDA071AA84D1000715698 /* DDCommentVM.m */,
+				5C8406361ABABEC500068F35 /* DDTipLabelVM.h */,
+				5C8406371ABABEC500068F35 /* DDTipLabelVM.m */,
 				5CD42E7B1AE389E900BACDDD /* ATOMReplierViewModel.h */,
 				5CD42E7C1AE389E900BACDDD /* ATOMReplierViewModel.m */,
 				E900AB541B4171200019BAEA /* ATOMInviteCellViewModel.h */,
 				E900AB551B4171200019BAEA /* ATOMInviteCellViewModel.m */,
+				5C5EF7BE1ABBF11E00CE5B84 /* ATOMCommentViewModel.h */,
+				5C5EF7BF1ABBF11E00CE5B84 /* ATOMCommentViewModel.m */,
 			);
 			path = homepage;
 			sourceTree = "<group>";
@@ -2880,13 +2874,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		E9FD023A1B296EA600FC5E17 /* common */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = common;
-			sourceTree = "<group>";
-		};
 		E9FF949E1B745B9D00F06819 /* introduction */ = {
 			isa = PBXGroup;
 			children = (
@@ -2952,7 +2939,7 @@
 		5CDB05B91AA3FE520089121E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = "";
+				CLASSPREFIX = DD;
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = "Shenzhen Pires Internet Technology CO.,LTD";
 				TargetAttributes = {
@@ -3058,7 +3045,6 @@
 				E900AB491B41153A0019BAEA /* AFNetworkActivityIndicatorManager.m in Sources */,
 				5C83A8891AC66F910071A024 /* POPAnimationExtras.mm in Sources */,
 				5C54DF291AB9810B00BDE34D /* ATOMImageTipLabel.m in Sources */,
-				E9FF3FD61B575C1C007AA3F6 /* ATOMCommonModel.m in Sources */,
 				5C6697AA1AAFD348001FCF8A /* ATOMMyCollectionViewController.m in Sources */,
 				E9F890CE1B86FE6B0057ECBF /* SLKTextView+SLKAdditions.m in Sources */,
 				5C4C70B41AB6A60C00358989 /* ATOMHTTPRequestOperationManager.m in Sources */,
@@ -3078,13 +3064,13 @@
 				E9F890FC1B87038F0057ECBF /* IQNSArray+Sort.m in Sources */,
 				5C67FB2D1AB2C509004EFF05 /* ATOMCustomCopperView.m in Sources */,
 				5C83A8861AC66F910071A024 /* POPAnimatableProperty.mm in Sources */,
-				5C9BDA081AA84D1000715698 /* CommentVM.m in Sources */,
+				5C9BDA081AA84D1000715698 /* DDCommentVM.m in Sources */,
 				5C67FB2A1AB2B634004EFF05 /* ATOMHeaderImageCropperView.m in Sources */,
 				E9F890D01B86FE6B0057ECBF /* UIScrollView+SLKAdditions.m in Sources */,
 				5CDB06331AA428BD0089121E /* MASViewConstraint.m in Sources */,
 				5C54DF261AB97B8400BDE34D /* ATOMComment.m in Sources */,
 				5C0F04DF1ADCEC48002003AE /* ATOMShowReplyMessage.m in Sources */,
-				5C5EF7BD1ABBCD1900CE5B84 /* ATOMHotDetailPageViewModel.m in Sources */,
+				5C5EF7BD1ABBCD1900CE5B84 /* DDHotDetailPageVM.m in Sources */,
 				5C561A821AB7FC0B0052D4D5 /* ATOMHomepageCustomTitleView.m in Sources */,
 				5C5EF7C01ABBF11E00CE5B84 /* ATOMCommentViewModel.m in Sources */,
 				5C54DF1F1AB9738E00BDE34D /* ATOMCustomNavigationController.m in Sources */,
@@ -3163,7 +3149,7 @@
 				5C4F5BCF1AA541DE00226F64 /* ATOMLoginViewController.m in Sources */,
 				E94289861B5B32A200ED26E4 /* TSBlurView.m in Sources */,
 				E99D2F5E1B1C7E8D000D7784 /* NYXProgressiveImageView.m in Sources */,
-				5C4C70461AB665F500358989 /* ATOMAskPageViewModel.m in Sources */,
+				5C4C70461AB665F500358989 /* DDAskPageVM.m in Sources */,
 				5C7B8AB01AFA535D00F448CD /* ATOMCommonImage.m in Sources */,
 				5C589A8A1B04F2AC003D828A /* ATOMCameraView.m in Sources */,
 				5C83A8911AC66F910071A024 /* POPGeometry.mm in Sources */,
@@ -3215,7 +3201,7 @@
 				5C4F5BDC1AA555F900226F64 /* HomeViewController.m in Sources */,
 				5C436A931AB074EF00D14608 /* ATOMInviteMessageTableViewCell.m in Sources */,
 				E9F891031B87038F0057ECBF /* IQSegmentedNextPrevious.m in Sources */,
-				E9FD023D1B29708200FC5E17 /* kfcPageVM.m in Sources */,
+				E9FD023D1B29708200FC5E17 /* DDCommentPageVM.m in Sources */,
 				E94B03211B7C74E500863C6F /* CommentTableViewCell.m in Sources */,
 				E9F8908F1B86C4AB0057ECBF /* FMDatabaseAdditions.m in Sources */,
 				5C559B3A1AB138C3000C5B50 /* ATOMInviteView.m in Sources */,
@@ -3271,10 +3257,10 @@
 				5C5A7A861ABFF18F004A00C5 /* ATOMDetailImageDAO.m in Sources */,
 				5C5EF7C31ABBF23E00CE5B84 /* ATOMShowDetailOfHomePage.m in Sources */,
 				E9FBCD2F1B6A042000BF7096 /* ATOMLoginCustomNavigationController.m in Sources */,
-				5C8406381ABABEC500068F35 /* ATOMImageTipLabelViewModel.m in Sources */,
+				5C8406381ABABEC500068F35 /* DDTipLabelVM.m in Sources */,
 				5C83A88E1AC66F910071A024 /* POPCGUtils.mm in Sources */,
 				5CDB06741AA47EEC0089121E /* ATOMInputVerifyCodeView.m in Sources */,
-				5C8084F91AF2603D0062421C /* ATOMBottomCommonButton.m in Sources */,
+				5C8084F91AF2603D0062421C /* kfcButton.m in Sources */,
 				E9F7C01F1B85EB4C00D97539 /* TypingIndicatorView.m in Sources */,
 				E90C7C5D1B20726400CF0E6A /* PWMascotAnimationImageView.m in Sources */,
 				5C4C70C51AB6BC5200358989 /* ATOMBaseRequest.m in Sources */,
@@ -3374,7 +3360,7 @@
 				E94B032A1B7DE6EC00863C6F /* UIColor+PSGod.m in Sources */,
 				5C9BDA001AA8303700715698 /* ATOMUploadWorkView.m in Sources */,
 				5C4F5BF61AA5BFEC00226F64 /* kfcAskCell.m in Sources */,
-				5C0D28301ACA83C400491452 /* ATOMAtComment.m in Sources */,
+				5C0D28301ACA83C400491452 /* DDCommentReplyVM.m in Sources */,
 				5C5DDBD11AD3E4B300F4B845 /* ATOMReplyViewModel.m in Sources */,
 				5C4F5BF91AA5E0B600226F64 /* HotDetailViewController.m in Sources */,
 				E99D2F591B1C7E8D000D7784 /* UIImage+Resizing.m in Sources */,

@@ -11,7 +11,6 @@
 
 @interface ATOMUploadImage : NSObject
 
-//- (NSURLSessionDataTask *)UploadImage:(NSData *)data withParam:(NSDictionary *)param andBlock:(void (^)(ATOMImage *imageInformation, NSError *error))block;
 - (NSURLSessionDataTask *)UploadImage:(NSData *)data WithBlock:(void (^)(ATOMImage *imageInformation, NSError *error))block;
 
 @end

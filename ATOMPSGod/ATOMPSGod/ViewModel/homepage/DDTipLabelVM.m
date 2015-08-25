@@ -6,10 +6,10 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMImageTipLabelViewModel.h"
+#import "DDTipLabelVM.h"
 #import "ATOMImageTipLabel.h"
 
-@implementation ATOMImageTipLabelViewModel
+@implementation DDTipLabelVM
 
 - (void)setViewModelData:(ATOMImageTipLabel *)tipLabel {
     _x = tipLabel.x;

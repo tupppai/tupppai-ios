@@ -6,19 +6,19 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMAskPageViewModel.h"
+#import "DDAskPageVM.h"
 #import "ATOMHomeImage.h"
 #import "ATOMImageTipLabel.h"
-#import "ATOMImageTipLabelViewModel.h"
+#import "DDTipLabelVM.h"
 #import "ATOMReplier.h"
 #import "ATOMReplierViewModel.h"
 #import "ATOMBaseRequest.h"
-@interface ATOMAskPageViewModel ()
+@interface DDAskPageVM ()
 
 
 @end
 
-@implementation ATOMAskPageViewModel
+@implementation DDAskPageVM
 
 - (instancetype)init {
     self = [super init];
@@ -78,7 +78,7 @@
     _width = homeImage.imageWidth;
     _height = homeImage.imageHeight;
     for (ATOMImageTipLabel *tipLabel in homeImage.tipLabelArray) {
-        ATOMImageTipLabelViewModel *model = [ATOMImageTipLabelViewModel new];
+        DDTipLabelVM *model = [DDTipLabelVM new];
         [model setViewModelData:tipLabel];
         [_labelArray addObject:model];
     }
@@ -90,8 +90,8 @@
 }
 
 
--(kfcPageVM*)generatepageDetailViewModel {
-    kfcPageVM* commonViewModel = [kfcPageVM new];
+-(DDCommentPageVM*)generatepageDetailViewModel {
+    DDCommentPageVM* commonViewModel = [DDCommentPageVM new];
     commonViewModel.pageID = _ID;
     commonViewModel.type = ATOMPageTypeAsk;
     commonViewModel.pageImageURL = _userImageURL;
@@ -107,7 +107,7 @@
     return commonViewModel;
 }
 
--(void)setViewModelWithCommon:(kfcPageVM*)commonViewModel {
+-(void)setViewModelWithCommon:(DDCommentPageVM*)commonViewModel {
     _ID = commonViewModel.pageID;
     _userImageURL = commonViewModel.pageImageURL;
     _image = commonViewModel.pageImage;
@@ -126,14 +126,11 @@
     NSInteger one = _liked? -1:1;
     _liked = !_liked;
     [param setValue:@(status) forKey:@"status"];
-    ATOMBaseRequest* baseRequest = [ATOMBaseRequest new];
-    [baseRequest toggleLike:param withUrl:@"ask/upask" withID:_ID withBlock:^(NSError *error) {
+    [ATOMBaseRequest toggleLike:param withPageType:ATOMPageTypeAsk withID:_ID withBlock:^(NSError *error) {
         if (!error) {
-            NSLog(@"Server成功toggle like");
             NSInteger number = [_likeNumber integerValue]+one;
-            [self setLikeNumber:[NSString stringWithFormat:@"%ld",(long)number]];            } else {
-                NSLog(@"Server失败 toggle like");
-            }
+            [self setLikeNumber:[NSString stringWithFormat:@"%ld",(long)number]];
+        }
     }];
 }
 

@@ -30,7 +30,6 @@
 //}
 
 - (NSURLSessionDataTask *)UploadImage:(NSData *)data WithBlock:(void (^)(ATOMImage *, NSError *))block {
-
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"image/upload" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         [formData appendPartWithFileData:data name:@"images" fileName:@"ATOMIMAGE" mimeType:@"image/png"];
     } success:^(NSURLSessionDataTask *task, id responseObject) {

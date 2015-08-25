@@ -14,7 +14,6 @@
 @implementation ATOMShowMyAsk
 - (NSURLSessionDataTask *)ShowMyAsk:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/my_ask" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"ShowMyAsk responseObject %@",responseObject);
         NSMutableArray *resultArray = [NSMutableArray array];
         NSArray *imageDataArray = [ responseObject objectForKey:@"data"];
         int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];

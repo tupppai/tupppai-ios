@@ -9,7 +9,7 @@
 #import "ATOMShareViewController.h"
 #import "ATOMShareView.h"
 #import "HotDetailViewController.h"
-#import "ATOMAskPageViewModel.h"
+#import "DDAskPageVM.h"
 #import "HomeViewController.h"
 
 @interface ATOMShareViewController ()
@@ -39,7 +39,7 @@
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)barButtonItem {
     HotDetailViewController *hdvc = [HotDetailViewController new];
-    hdvc.askPageViewModel = _askPageViewModel;
+    hdvc.askVM = _askPageViewModel;
     HomeViewController *hvc = self.navigationController.viewControllers[0];
     [self pushViewController:hdvc animated:YES];
     [self.navigationController setViewControllers:@[hvc, hdvc]];

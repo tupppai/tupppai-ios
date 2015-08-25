@@ -7,7 +7,7 @@
 //
 
 #import "CommentCell.h"
-#import "CommentVM.h"
+#import "DDCommentVM.h"
 #import "CommentLikeButton.h"
 #define leastHeight kPadding15 * 2 + kfcAvatarWidth
 @implementation CommentCell
@@ -65,12 +65,12 @@
     return actualSize;
 }
 
-+ (CGFloat)calculateCellHeightWithModel:(CommentVM *)viewModel {
++ (CGFloat)calculateCellHeightWithModel:(DDCommentVM *)viewModel {
     CGFloat height1 = [[self class] calculateCommentDeailTextSize:viewModel.text].height + kFont14 + kPadding10 + kPadding15 * 2;
     return fmaxf(height1, leastHeight);
 }
 
-- (void)setViewModel:(CommentVM *)viewModel {
+- (void)setViewModel:(DDCommentVM *)viewModel {
     _viewModel = viewModel;
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatar] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     [_userNameButton setTitle:viewModel.username forState:UIControlStateNormal];

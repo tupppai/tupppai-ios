@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 @class ATOMImageTipLabel;
 
-@interface ATOMImageTipLabelViewModel : NSObject
+@interface DDTipLabelVM : NSObject
 
 /**
  *  标签内容

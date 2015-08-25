@@ -15,7 +15,7 @@
 #import "ATOMInviteMessage.h"
 #import "ATOMInviteMessageViewModel.h"
 #import "ATOMHomeImage.h"
-#import "ATOMAskPageViewModel.h"
+#import "DDAskPageVM.h"
 #import "RefreshFooterTableView.h"
 #import "CommentViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
@@ -150,7 +150,7 @@
         //点击图片
         if (CGRectContainsPoint(cell.workImageView.frame, p)) {
             if ([viewModel.homepageViewModel.totalPSNumber integerValue] == 0) {
-                kfcPageVM* vm = [kfcPageVM new];
+                DDCommentPageVM* vm = [DDCommentPageVM new];
                 [vm setCommonViewModelWithAsk:viewModel.homepageViewModel];
                 CommentViewController* mvc = [CommentViewController new];
                 mvc.vm = vm;
@@ -158,7 +158,7 @@
                 [self pushViewController:mvc animated:YES];
             } else {
                 HotDetailViewController *hdvc = [HotDetailViewController new];
-                hdvc.askPageViewModel = viewModel.homepageViewModel;
+                hdvc.askVM = viewModel.homepageViewModel;
                 [self pushViewController:hdvc animated:YES];
             }
         } else if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {

@@ -16,7 +16,6 @@
 
 - (NSURLSessionDataTask *)ShowReplyMessage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"message/reply" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"ShowReplyMessage responseObject%@",responseObject);
         NSMutableArray *replyMessageArray = [NSMutableArray array];
         NSArray *dataArray = [ responseObject objectForKey:@"data"];
         int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];

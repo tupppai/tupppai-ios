@@ -7,10 +7,10 @@
 //
 
 #import "kfcPageView.h"
-#import "ATOMAskPageViewModel.h"
-#import "ATOMBottomCommonButton.h"
+#import "DDAskPageVM.h"
+#import "kfcButton.h"
 #import "ATOMTipButton.h"
-#import "ATOMImageTipLabelViewModel.h"
+#import "DDTipLabelVM.h"
 #import "kfcViews.h"
 #define MAXHEIGHT (SCREEN_WIDTH-kPadding15*2)*4/3
 
@@ -112,7 +112,7 @@
     }];
 }
 
--(void)setVm:(kfcPageVM *)vm {
+-(void)setVm:(DDCommentPageVM *)vm {
     _usernameLabel.text = vm.userName;
     [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     _likeButton.number = vm.likeNumber;
@@ -131,7 +131,7 @@
     }
     [self addTipLabel:vm];
 }
-- (void)addTipLabel:(kfcPageVM*)vm {
+- (void)addTipLabel:(DDCommentPageVM*)vm {
     //    移除旧的标签
     for (UIView * subView in _imageViewMain.subviews) {
         if ([subView isKindOfClass:[ATOMTipButton class]]) {
@@ -139,7 +139,7 @@
             [button removeFromSuperview];
         }
     }
-    for (ATOMImageTipLabelViewModel *labelViewModel in vm.labelArray) {
+    for (DDTipLabelVM *labelViewModel in vm.labelArray) {
         CGRect labelFrame = [labelViewModel imageTipLabelFrameByImageSize:CGSizeMake(vm.width, vm.height)];
         ATOMTipButton * button = [[ATOMTipButton alloc] initWithFrame:labelFrame];
         if (labelViewModel.labelDirection == 0) {
@@ -171,11 +171,11 @@
     if (!_bottomView) {
         _bottomView = [UIView new];
         _bottomView.backgroundColor = [UIColor clearColor];
-        _likeButton = [ATOMBottomCommonButton new];
+        _likeButton = [kfcButton new];
         _likeButton.image = [UIImage imageNamed:@"btn_comment_like_normal"];
-        _wechatButton = [ATOMBottomCommonButton new];
+        _wechatButton = [kfcButton new];
         _wechatButton.image = [UIImage imageNamed:@"icon_share_normal"];
-        _commentButton = [ATOMBottomCommonButton new];
+        _commentButton = [kfcButton new];
         _commentButton.image = [UIImage imageNamed:@"icon_comment_normal"];
         _moreButton= [UIButton new];
         [_moreButton setImage:[UIImage imageNamed:@"icon_others_normal"] forState:UIControlStateNormal];
@@ -242,11 +242,11 @@
 //    [_topView addSubview:_userNameLabel];
 //    [_topView addSubview:_psButton];
 //    
-//    _likeButton = [ATOMBottomCommonButton new];
+//    _likeButton = [kfcButton new];
 //    _likeButton.image = [UIImage imageNamed:@"btn_comment_like_normal"];
-//    _shareButton = [ATOMBottomCommonButton new];
+//    _shareButton = [kfcButton new];
 //    _shareButton.image = [UIImage imageNamed:@"icon_share_normal"];
-//    _commentButton = [ATOMBottomCommonButton new];
+//    _commentButton = [kfcButton new];
 //    _commentButton.image = [UIImage imageNamed:@"icon_comment_normal"];
 //    
 //    [_thinCenterView addSubview:_likeButton];

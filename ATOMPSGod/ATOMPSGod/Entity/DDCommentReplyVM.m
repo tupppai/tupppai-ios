@@ -6,16 +6,16 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMAtComment.h"
+#import "DDCommentReplyVM.h"
 
-@implementation ATOMAtComment
+@implementation DDCommentReplyVM
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
-             @"cid" : @"cid",
+             @"ID" : @"comment_id",
              @"uid" : @"uid",
-             @"nick" : @"nick",
-             @"content" : @"content"
+             @"username" : @"nickname",
+             @"text" : @"content"
              };
 }
 

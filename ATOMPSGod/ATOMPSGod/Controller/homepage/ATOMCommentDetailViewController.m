@@ -8,12 +8,12 @@
 
 #import "ATOMCommentDetailViewController.h"
 #import "ATOMCommentDetailTableViewCell.h"
-#import "CommentVM.h"
+#import "DDCommentVM.h"
 #import "ATOMCommentDetailView.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ZZCommentHeaderView.h"
 #import "ATOMShowDetailOfComment.h"
-#import "CommentVM.h"
+#import "DDCommentVM.h"
 #import "ATOMComment.h"
 #import "CommentLikeButton.h"
 
@@ -27,7 +27,7 @@
 @property (nonatomic, strong) NSMutableArray *recentCommentDataSource;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL canRefreshFooter;
-@property (nonatomic, strong) CommentVM *atModel;
+@property (nonatomic, strong) DDCommentVM *atModel;
 
 @end
 
@@ -75,12 +75,12 @@
     [showDetailOfComment ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
         NSLog(@"param%@hotCommentArray%@RCommentArray%@",param,hotCommentArray,recentCommentArray);
         for (ATOMComment *comment in hotCommentArray) {
-            CommentVM *model = [CommentVM new];
+            DDCommentVM *model = [DDCommentVM new];
             [model setViewModelData:comment];
             [ws.hotCommentDataSource addObject:model];
         }
         for (ATOMComment *comment in recentCommentArray) {
-            CommentVM *model = [CommentVM new];
+            DDCommentVM *model = [DDCommentVM new];
             [model setViewModelData:comment];
             [ws.recentCommentDataSource addObject:model];
         }
@@ -100,7 +100,7 @@
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
     [showDetailOfComment ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
         for (ATOMComment *comment in recentCommentArray) {
-            CommentVM *model = [CommentVM new];
+            DDCommentVM *model = [DDCommentVM new];
             [model setViewModelData:comment];
             [ws.recentCommentDataSource addObject:model];
         }
@@ -148,7 +148,7 @@
 - (void)clickSendCommentButton:(UIButton *)sender {
     [_commentDetailView hideCommentView];
     NSString *commentStr = _commentDetailView.commentText;
-    CommentVM *model = [CommentVM new];
+    DDCommentVM *model = [DDCommentVM new];
     [model setDataWithAtModel:_atModel andContent:commentStr];
     [_recentCommentDataSource insertObject:model atIndex:0];
     [_commentDetailView.commentDetailTableView reloadData];
@@ -185,7 +185,7 @@
     CGPoint location = [gesture locationInView:_commentDetailView.commentDetailTableView];
     NSIndexPath *indexPath = [_commentDetailView.commentDetailTableView indexPathForRowAtPoint:location];
     if (indexPath) {
-        CommentVM *model = (indexPath.section == 0) ? _hotCommentDataSource[indexPath.row] : _recentCommentDataSource[indexPath.row];
+        DDCommentVM *model = (indexPath.section == 0) ? _hotCommentDataSource[indexPath.row] : _recentCommentDataSource[indexPath.row];
         ATOMCommentDetailTableViewCell *cell = (ATOMCommentDetailTableViewCell *)[_commentDetailView.commentDetailTableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {

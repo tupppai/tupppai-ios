@@ -17,7 +17,7 @@
 #import "ATOMImage.h"
 #import "ATOMImageTipLabel.h"
 #import "AppDelegate.h"
-#import "ATOMImageTipLabelViewModel.h"
+#import "DDTipLabelVM.h"
 #import "HotDetailViewController.h"
 #import "HomeViewController.h"
 #import "TSMessage.h"
@@ -36,7 +36,7 @@
 @property (nonatomic, strong) NSString *currentTipLabelText;
 @property (nonatomic, assign) CGPoint currentLocation;
 @property (nonatomic, strong) ATOMTipButton *lastAddButton;
-@property (nonatomic, strong) ATOMAskPageViewModel *newAskPageViewModel;
+@property (nonatomic, strong) DDAskPageVM *newAskPageViewModel;
 @property (nonatomic, strong) ATOMImage *imageInfo;
 @property (nonatomic, strong) dispatch_semaphore_t sema ;
 @property (nonatomic, assign) BOOL imgUploadSucceed;
@@ -71,9 +71,9 @@
     return _cancelLeftBarButtonItem;
 }
 
-- (ATOMAskPageViewModel *)newAskPageViewModel {
+- (DDAskPageVM *)newAskPageViewModel {
     if (!_newAskPageViewModel) {
-        _newAskPageViewModel = [ATOMAskPageViewModel new];
+        _newAskPageViewModel = [DDAskPageVM new];
     }
     return _newAskPageViewModel;
 }
@@ -231,7 +231,7 @@
             labelDirection = 1;
         }
         if (askID == -1) {
-            ATOMImageTipLabelViewModel *label = [ATOMImageTipLabelViewModel new];
+            DDTipLabelVM *label = [DDTipLabelVM new];
             label.x = x;
             label.y = y;
             label.labelDirection = labelDirection;
@@ -254,7 +254,6 @@
 }
 //上传作品
 - (void)uploadReplyImg {
-    NSLog(@"uploadReplyImg");
     NSData *data = UIImageJPEGRepresentation(_workImage, 0.7);
     ATOMUploadImage *uploadWork = [ATOMUploadImage new];
     [uploadWork UploadImage:data WithBlock:^(ATOMImage *imageInformation, NSError *error) {
@@ -289,7 +288,7 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
 
         HotDetailViewController *hdvc = [HotDetailViewController new];
-        hdvc.askPageViewModel = ws.askPageViewModel;
+        hdvc.askVM = ws.askPageViewModel;
         hdvc.fold = 0;
         HomeViewController *hvc = self.navigationController.viewControllers[0];
         [self pushViewController:hdvc animated:YES];
@@ -339,7 +338,6 @@
 }
 - (void)uploadTipLabel:(NSInteger)imageID {
     WS(ws);
-    NSLog(@"uploadTipLabel");
     ATOMSubmitImageWithLabel *submitImageWithLabel = [ATOMSubmitImageWithLabel new];
     [submitImageWithLabel SubmitImageWithLabel:[ws getParamWithImageID:imageID AndAskID:-1] withBlock:^(NSMutableArray *labelArray, NSInteger newImageID, NSError *error) {
         [Util dismiss:self.view];

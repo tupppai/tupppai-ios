@@ -11,7 +11,7 @@
 #import "CommentTextView.h"
 #import "JGActionSheet.h"
 #import "ATOMShareFunctionView.h"
-#import "CommentVM.h"
+#import "DDCommentVM.h"
 #import "AppDelegate.h"
 #import "ATOMCropImageController.h"
 #import "CommentCell.h"
@@ -27,6 +27,8 @@
 #import "JTSImageViewController.h"
 #import "JTSImageInfo.h"
 #import "ZZCommentHeaderView.h"
+#import "DDCommentReplyVM.h"
+
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 #define DEBUG_CUSTOM_TYPING_INDICATOR 0
@@ -42,7 +44,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 @property (nonatomic, strong) UITapGestureRecognizer *tapUserNameLabelGesture;
 @property (nonatomic, strong) UITapGestureRecognizer *tapCommentTableGesture;
 @property (nonatomic, assign) BOOL canRefreshFooter;
-@property (nonatomic, strong) CommentVM *atModel;
+@property (nonatomic, strong) DDCommentVM *targetCommentVM;
 @property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
 @property (nonatomic, strong)  JGActionSheet * psActionSheet;
 @property (nonatomic, strong)  JGActionSheet * reportActionSheet;
@@ -171,44 +173,74 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 
 -(void)sendComment {
-    // This little trick validates any pending auto-correction or auto-spelling just after hitting the 'Send' button
-    [self.textView resignFirstResponder];
     
-    CommentVM *comment = [CommentVM new];
-    comment.username = [ATOMCurrentUser currentUser].username;
-    NSString* commentText = [self.textView.text copy];
-    comment.text = commentText;
-    comment.uid = [ATOMCurrentUser currentUser].uid;
-    comment.avatar = [ATOMCurrentUser currentUser].avatar;
+    [self.textView resignFirstResponder];
+    self.textView.placeholder = @"发布你的神回复..";
+    
+    
+    DDCommentVM *commentVM = [DDCommentVM new];
+    commentVM.username = [ATOMCurrentUser currentUser].username;
+    commentVM.uid = [ATOMCurrentUser currentUser].uid;
+    commentVM.avatar = [ATOMCurrentUser currentUser].avatar;
+    commentVM.originText = self.textView.text;
+    NSString* commentToShow;
+    //回复评论
+    if (_targetCommentVM) {
+        [commentVM.replyArray addObjectsFromArray:_targetCommentVM.replyArray];
+        //所要回复的评论只有一个回复人，也就是我要回复的评论已经有两个人。
+        if (commentVM.replyArray.count <= 1) {
+            commentToShow = [NSString stringWithFormat:@"%@//@%@:%@",self.textView.text,_targetCommentVM.username,_targetCommentVM.text];
+        }
+        //所要回复的评论多于一个回复人，也就是我要回复的评论已经多于两个人。
+        else {
+            DDCommentReplyVM* reply1 = commentVM.replyArray[0];
+            commentToShow = [NSString stringWithFormat:@"%@//@%@:%@",self.textView.text,_targetCommentVM.username,_targetCommentVM.originText];
+//            NSLog(@"!!!%@",commentToShow);
+
+            commentToShow = [NSString stringWithFormat:@"%@//@%@:%@",commentToShow,reply1.username,reply1.text];
+//            NSLog(@"!!!!%@",commentToShow);
+        }
+        commentVM.text = commentToShow;
+
+        DDCommentReplyVM* reply = [DDCommentReplyVM new];
+        reply.uid = _targetCommentVM.uid;
+        reply.username = _targetCommentVM.username;
+        reply.text = _targetCommentVM.originText;
+        reply.ID = _targetCommentVM.ID;
+        [commentVM.replyArray insertObject:reply atIndex:0];
+
+    }
+    //第一次评论
+    else {
+        commentVM.text  = self.textView.text;
+    }
+
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
-//    UITableViewRowAnimation rowAnimation = self.inverted ? UITableViewRowAnimationBottom : UITableViewRowAnimationTop;
     UITableViewScrollPosition scrollPosition = self.inverted ? UITableViewScrollPositionBottom : UITableViewScrollPositionTop;
-    
     [self.tableView beginUpdates];
-    [self.commentsNew insertObject:comment atIndex:0];
+    [self.commentsNew insertObject:commentVM atIndex:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
-    
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:scrollPosition animated:YES];
-    
     // Fixes the cell from blinking (because of the transform, when using translucent cells)
     // See https://github.com/slackhq/SlackTextViewController/issues/94#issuecomment-69929927
 //    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     
+
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:commentText forKey:@"content"];
+    [param setObject:self.textView.text forKey:@"content"];
     [param setObject:@(_vm.type) forKey:@"type"];
     [param setObject:@(_vm.pageID) forKey:@"target_id"];
-    [param setObject:@(0) forKey:@"for_comment"];
-    if (_atModel) {
-        [param setObject:@(_atModel.ID) forKey:@"comment_reply_to"];
+    if (_targetCommentVM) {
+        [param setObject:@(_targetCommentVM.ID) forKey:@"for_comment"];
     }
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
     [showDetailOfComment SendComment:param withBlock:^(NSInteger comment_id, NSError *error) {
-        comment.ID = comment_id;
+        commentVM.ID = comment_id;
     }];
-    _atModel = nil;
+    self.textView.text = @"";
+    _targetCommentVM = nil;
 }
 
 - (NSString *)keyForTextCaching
@@ -295,7 +327,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([tableView isEqual:self.tableView]) {
-        CommentVM* vm;
+        DDCommentVM* vm;
         if (indexPath.section == 0) {
             vm = _commentsHot[indexPath.row];
         } else if (indexPath.section == 1) {
@@ -309,10 +341,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:16.0],
                                      NSParagraphStyleAttributeName: paragraphStyle};
         
-        CGFloat width = CGRectGetWidth(tableView.frame)-kMessageTableViewCellAvatarHeight;
-        width -= 25.0;
+        CGFloat width = CGRectGetWidth(tableView.frame)-kMessageTableViewCellAvatarHeight - kPadding15*3;
         
-        CGRect titleBounds = [vm.username boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:NULL];
+        CGRect titleBounds = [vm.username boundingRectWithSize:CGSizeMake(width-100, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:NULL];
         CGRect bodyBounds = [vm.text boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:NULL];
         
         if (vm.text.length == 0) {
@@ -321,7 +352,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         
         CGFloat height = CGRectGetHeight(titleBounds);
         height += CGRectGetHeight(bodyBounds);
-        height += 40.0;
+        height += 30.0;
         
         if (height < kMessageTableViewCellMinimumHeight) {
             height = kMessageTableViewCellMinimumHeight;
@@ -359,14 +390,15 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
     if (section == 0) {
-        _atModel = _commentsHot[row];
+        _targetCommentVM = _commentsHot[row];
     } else if (section == 1) {
-        _atModel = _commentsNew[row];
+        _targetCommentVM = _commentsNew[row];
     }
-    NSString* textToEdit = [NSString stringWithFormat:@"//@%@:%@",_atModel.username,_atModel.text];
-    self.textView.text = textToEdit;
+    self.textView.placeholder = [NSString stringWithFormat:@"回复@%@:",_targetCommentVM.username];
+//    _editingText = [NSString stringWithFormat:@"//@%@:%@",_targetCommentVM.username,_targetCommentVM.text];
+//    self.textView.text = textToEdit;
     [self.textView becomeFirstResponder];
-    [self.textView setSelectedRange:NSMakeRange(0, 0)];
+//    [self.textView setSelectedRange:NSMakeRange(0, 0)];
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 
 }
@@ -377,8 +409,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 {
     
     // Since SLKTextViewController uses UIScrollViewDelegate to update a few things, it is important that if you ovveride this method, to call super.
-    NSLog(@"Navframe Height=%@",NSStringFromCGRect(self.navigationController.navigationBar.frame));
-    NSLog(@"scrollViewDidScroll");
     [super scrollViewDidScroll:scrollView];
 }
 
@@ -551,6 +581,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     _headerView.vm = _vm;
     self.tableView.tableHeaderView = _headerView;
     self.tableView.emptyDataSetSource = self;
+    self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[CommentTableViewCell class] forCellReuseIdentifier:MessengerCellIdentifier];
     self.tableView.tableFooterView = [UIView new];
@@ -585,7 +616,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [self.rightButton setImage:[UIImage imageNamed:@"btn_comment_send"] forState:UIControlStateNormal];
     [self.rightButton setTitle:@"" forState:UIControlStateNormal];
     self.textInputbar.autoHideRightButton = YES;
-    self.textInputbar.maxCharCount = 256;
+    self.textInputbar.maxCharCount = 128;
     self.textInputbar.counterStyle = SLKCounterStyleSplit;
     self.textInputbar.counterPosition = SLKCounterPositionTop;
 }
@@ -635,7 +666,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         NSInteger section = indexPath.section;
         NSInteger row = indexPath.row;
         CommentTableViewCell *cell = (CommentTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-        CommentVM *model = (section == 0) ? _commentsHot[row] : _commentsNew[row];
+        DDCommentVM *model = (section == 0) ? _commentsHot[row] : _commentsNew[row];
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.avatarView.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
@@ -723,12 +754,12 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
     [showDetailOfComment ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
         for (ATOMComment *comment in hotCommentArray) {
-            CommentVM *model = [CommentVM new];
+            DDCommentVM *model = [DDCommentVM new];
             [model setViewModelData:comment];
             [ws.commentsHot addObject:model];
         }
         for (ATOMComment *comment in recentCommentArray) {
-            CommentVM *model = [CommentVM new];
+            DDCommentVM *model = [DDCommentVM new];
             [model setViewModelData:comment];
             [ws.commentsNew addObject:model];
         }
@@ -750,7 +781,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
     [showDetailOfComment ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
         for (ATOMComment *comment in recentCommentArray) {
-            CommentVM *model = [CommentVM new];
+            DDCommentVM *model = [DDCommentVM new];
             [model setViewModelData:comment];
             [ws.commentsNew addObject:model];
         }

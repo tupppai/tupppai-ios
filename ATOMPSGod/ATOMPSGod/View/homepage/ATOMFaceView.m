@@ -34,18 +34,18 @@
             button.titleLabel.font = [UIFont fontWithName:@"AppleColorEmoji" size:29.f];
             [button setTitle:arr[column + row * 9 + page * 36] forState:UIControlStateNormal];
             button.tag = column + row * 9 + page * 36;
-            [button addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
+//            [button addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
             [self addSubview:button];
         }
     }
 }
-
-- (void)clickButton:(UIButton *)sender {
-    NSString *str = sender.titleLabel.text;
-    if ([_delegate respondsToSelector:@selector(selectFaceView:)]) {
-        [_delegate selectFace:str];
-    }
-}
+//
+//- (void)clickButton:(UIButton *)sender {
+//    NSString *str = sender.titleLabel.text;
+//    if ([_delegate respondsToSelector:@selector(selectFaceView:)]) {
+//        [_delegate selectFace:str];
+//    }
+//}
 
 
 

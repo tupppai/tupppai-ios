@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "kfcPageVM.h"
+#import "DDCommentPageVM.h"
 @class ATOMHomeImage;
-@class kfcPageVM;
-@interface ATOMAskPageViewModel : NSObject
+@class DDCommentPageVM;
+@interface DDAskPageVM : NSObject
 
 @property (nonatomic, assign) NSInteger ID;
 @property (nonatomic, assign) NSInteger userID;
@@ -33,8 +33,8 @@
 @property (nonatomic, assign) int type;
 
 - (void)setViewModelData:(ATOMHomeImage *)homeImage;
--(void)setViewModelWithCommon:(kfcPageVM*)commonViewModel;
+-(void)setViewModelWithCommon:(DDCommentPageVM*)commonViewModel;
 - (void)toggleLike;
--(kfcPageVM*)generatepageDetailViewModel;
+-(DDCommentPageVM*)generatepageDetailViewModel;
 @end
 

@@ -9,7 +9,7 @@
 #import "ATOMShowDetailOfComment.h"
 #import "ATOMHTTPRequestOperationManager.h"
 #import "ATOMComment.h"
-#import "ATOMAtComment.h"
+#import "DDCommentReplyVM.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -81,14 +81,12 @@
                 block(comment_id, nil);
             }
         } else if (ret == 0) {
-//            [Util text:@"评论失败了,请重试"];
             if (block) {
                 block(-1, nil);
             }
         }
 
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-//        [Util text:@"评论失败了,请重试"];
         if (block) {
             block(-1, error);
         }
@@ -96,9 +94,7 @@
 }
 
 - (NSURLSessionDataTask *)toggleLike:(NSDictionary *)param withID:(NSInteger)commentID withBlock:(void (^)(NSError *))block {
-    NSString* url = [NSString stringWithFormat:@"comment/upComment/%ld",(long)commentID];
-    NSLog(@"param %@ , url %@",param,url);
-    
+    NSString* url = [NSString stringWithFormat:@"comment/upComment/%ld",(long)commentID];    
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"toggleLike success");
         if (block) {

@@ -1,10 +1,10 @@
 
 #import <Foundation/Foundation.h>
 #import "kfcFollowVM.h"
-#import "ATOMAskPageViewModel.h"
-#import "ATOMHotDetailPageViewModel.h"
+#import "DDAskPageVM.h"
+#import "DDHotDetailPageVM.h"
 
-@interface kfcPageVM : NSObject
+@interface DDCommentPageVM : NSObject
 @property (nonatomic, assign) NSInteger pageID;
 //type 1 求P ，2 作品
 @property (nonatomic, assign) NSInteger askID;
@@ -26,12 +26,11 @@
 @property (nonatomic, strong) NSMutableArray *labelArray;
 
 
--(void)setCommonViewModelWithAsk:(ATOMAskPageViewModel*)model;
-//-(void)setCommonViewModelWithProduct:(ATOMHotDetailPageViewModel*)model;
+-(void)setCommonViewModelWithAsk:(DDAskPageVM*)model;
 -(void)setCommonViewModelWithFollow:(kfcFollowVM*)model;
--(void)setCommonViewModelWithHotDetail:(ATOMHotDetailPageViewModel*)model;
+-(void)setCommonViewModelWithHotDetail:(DDHotDetailPageVM*)model;
 
 - (void)toggleLike;
--(ATOMAskPageViewModel*)generateAskPageViewModel;
+-(DDAskPageVM*)generateAskPageViewModel;
 
 @end

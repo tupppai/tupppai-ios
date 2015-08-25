@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "ATOMTotalPSView.h"
 
-@class ATOMAskPageViewModel;
-@class ATOMBottomCommonButton;
+@class DDAskPageVM;
+@class kfcButton;
 
 @interface kfcHotCell : UITableViewCell
 
@@ -26,11 +26,11 @@
 @property (nonatomic, strong) UILabel *publishTimeLabel;
 
 @property (nonatomic, strong) UIButton *moreButton;
-@property (nonatomic, strong) ATOMBottomCommonButton *likeButton;
-@property (nonatomic, strong) ATOMBottomCommonButton *wechatButton;
-@property (nonatomic, strong) ATOMBottomCommonButton *commentButton;
+@property (nonatomic, strong) kfcButton *likeButton;
+@property (nonatomic, strong) kfcButton *wechatButton;
+@property (nonatomic, strong) kfcButton *commentButton;
 @property (nonatomic, strong) ATOMTotalPSView *totalPSLabel;
 @property (nonatomic, strong) NSMutableArray *repliers;
 
-- (void)configCell:(ATOMAskPageViewModel *)viewModel;
+- (void)configCell:(DDAskPageVM *)viewModel;
 @end

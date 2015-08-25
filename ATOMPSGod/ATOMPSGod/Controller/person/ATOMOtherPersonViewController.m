@@ -16,7 +16,7 @@
 #import "ATOMOtherPersonCollectionHeaderView.h"
 #import "ATOMShowOtherUser.h"
 #import "ATOMHomeImage.h"
-#import "ATOMAskPageViewModel.h"
+#import "DDAskPageVM.h"
 #import "ATOMAskViewModel.h"
 #import "ATOMReplyViewModel.h"
 #import "ATOMUser.h"
@@ -112,7 +112,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
                 [self updateUserInterface:user];
             }
             for (ATOMHomeImage *homeImage in askReturnArray) {
-                ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
+                DDAskPageVM *homepageViewModel = [DDAskPageVM new];
                 [homepageViewModel setViewModelData:homeImage];
                 ATOMAskViewModel *askViewModel = [ATOMAskViewModel new];
                 [askViewModel setViewModelData:homeImage];
@@ -120,7 +120,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
                 [ws.uploadHomeImageDataSource addObject:homepageViewModel];
             }
             for (ATOMHomeImage *homeImage in replyReturnArray) {
-                ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
+                DDAskPageVM *homepageViewModel = [DDAskPageVM new];
                 [homepageViewModel setViewModelData:homeImage];
                 ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];
                 [replyViewModel setViewModelData:homeImage];
@@ -171,7 +171,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
                 [self updateUserInterface:user];
             }
             for (ATOMHomeImage *homeImage in askReturnArray) {
-                ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
+                DDAskPageVM *homepageViewModel = [DDAskPageVM new];
                 [homepageViewModel setViewModelData:homeImage];
                     ATOMAskViewModel *askViewModel = [ATOMAskViewModel new];
                     [askViewModel setViewModelData:homeImage];
@@ -179,7 +179,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
                     [ws.uploadHomeImageDataSource addObject:homepageViewModel];
             }
             for (ATOMHomeImage *homeImage in replyReturnArray) {
-                ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
+                DDAskPageVM *homepageViewModel = [DDAskPageVM new];
                 [homepageViewModel setViewModelData:homeImage];
                     ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];
                     [replyViewModel setViewModelData:homeImage];
@@ -396,9 +396,9 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (collectionView == _otherPersonView.scrollView.otherPersonUploadCollectionView) {
         ATOMAskViewModel *askViewModel = _uploadDataSource[indexPath.row];
-        ATOMAskPageViewModel *homepageViewModel = _uploadHomeImageDataSource[indexPath.row];
+        DDAskPageVM *homepageViewModel = _uploadHomeImageDataSource[indexPath.row];
         if ([askViewModel.totalPSNumber integerValue] == 0) {
-            kfcPageVM* vm = [kfcPageVM new];
+            DDCommentPageVM* vm = [DDCommentPageVM new];
             [vm setCommonViewModelWithAsk:homepageViewModel];
             CommentViewController* mvc = [CommentViewController new];
             mvc.vm = vm;
@@ -407,14 +407,14 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
 
         } else {
             HotDetailViewController *hdvc = [HotDetailViewController new];
-            hdvc.askPageViewModel = homepageViewModel;
+            hdvc.askVM = homepageViewModel;
             [self pushViewController:hdvc animated:YES];
         }
     } else {
-        ATOMAskPageViewModel *homepageViewModel = _workHomeImageDataSource[indexPath.row];
+        DDAskPageVM *homepageViewModel = _workHomeImageDataSource[indexPath.row];
         HotDetailViewController *hdvc = [HotDetailViewController new];
         hdvc.fold = 1;
-        hdvc.askPageViewModel = homepageViewModel;
+        hdvc.askVM = homepageViewModel;
         [self pushViewController:hdvc animated:YES];
     }
 

@@ -1,5 +1,5 @@
 //
-//  ATOMCommentViewModel.m
+//  DDCommentVM.m
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/20.

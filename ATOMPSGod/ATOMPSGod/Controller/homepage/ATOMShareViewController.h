@@ -7,11 +7,11 @@
 //
 
 #import "ATOMBaseViewController.h"
-#import "kfcPageVM.h"
-@class ATOMAskPageViewModel;
+#import "DDCommentPageVM.h"
+@class DDAskPageVM;
 
 @interface ATOMShareViewController : ATOMBaseViewController
 
-@property (nonatomic, strong) ATOMAskPageViewModel *askPageViewModel;
+@property (nonatomic, strong) DDAskPageVM *askPageViewModel;
 
 @end

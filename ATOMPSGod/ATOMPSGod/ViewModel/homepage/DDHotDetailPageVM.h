@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 @class ATOMDetailImage;
-@class ATOMAskPageViewModel;
+@class DDAskPageVM;
 
-@interface ATOMHotDetailPageViewModel : NSObject
+@interface DDHotDetailPageVM : NSObject
 
 @property (nonatomic, assign) NSInteger ID;
 @property (nonatomic, assign) NSInteger askID;
@@ -32,7 +32,7 @@
 @property (nonatomic, assign) BOOL liked;
 @property (nonatomic, assign) BOOL collected;
 
-- (void)setViewModelDataWithHomeImage:(ATOMAskPageViewModel *)askPageViewModel;
+- (void)setViewModelDataWithHomeImage:(DDAskPageVM *)askPageViewModel;
 - (void)setViewModelDataWithDetailImage:(ATOMDetailImage *)detailImage;
 - (void)toggleLike;
 @end

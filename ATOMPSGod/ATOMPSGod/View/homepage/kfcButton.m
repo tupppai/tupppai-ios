@@ -1,21 +1,21 @@
 //
-//  ATOMBottomCommonButton.m
+//  kfcButton.m
 //  ATOMPSGod
 //
 //  Created by atom on 15/4/30.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMBottomCommonButton.h"
+#import "kfcButton.h"
 #import "ATOMShowHomepage.h"
-@interface ATOMBottomCommonButton ()
+@interface kfcButton ()
 
 @property (nonatomic, strong) UIColor *currentColor;
 @property (nonatomic, assign) CGFloat extralWidth;
 @property (nonatomic, strong) NSDictionary *attributeDict;
 @end
 
-@implementation ATOMBottomCommonButton
+@implementation kfcButton
 
 - (instancetype)init {
     self = [super init];

@@ -8,11 +8,11 @@
 
 #import "ATOMBaseModel.h"
 
-@interface ATOMAtComment : ATOMBaseModel;
+@interface DDCommentReplyVM : ATOMBaseModel;
 
-@property (nonatomic, assign) NSInteger cid;
+@property (nonatomic, assign) NSInteger ID;
 @property (nonatomic, assign) NSInteger uid;
-@property (nonatomic, copy) NSString *nick;
-@property (nonatomic, copy) NSString *content;
+@property (nonatomic, copy) NSString *username;
+@property (nonatomic, copy) NSString *text;
 
 @end

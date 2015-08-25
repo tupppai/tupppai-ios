@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ATOMAskPageViewModel.h"
-@class ATOMBottomCommonButton;
+#import "DDAskPageVM.h"
+@class kfcButton;
 
 @interface kfcAskCell : UITableViewCell
 
@@ -23,10 +23,10 @@
 @property (nonatomic, strong) UIImageView *imageViewMain;
 
 @property (nonatomic, strong) UIButton *moreButton;
-@property (nonatomic, strong) ATOMBottomCommonButton *likeButton;
-@property (nonatomic, strong) ATOMBottomCommonButton *wechatButton;
-@property (nonatomic, strong) ATOMBottomCommonButton *commentButton;
+@property (nonatomic, strong) kfcButton *likeButton;
+@property (nonatomic, strong) kfcButton *wechatButton;
+@property (nonatomic, strong) kfcButton *commentButton;
 
-- (void)configCell:(ATOMAskPageViewModel *)viewModel;
+- (void)configCell:(DDAskPageVM *)viewModel;
 
 @end

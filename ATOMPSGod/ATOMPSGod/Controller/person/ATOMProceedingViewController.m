@@ -12,12 +12,12 @@
 #import "HotDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMHomeImage.h"
-#import "ATOMAskPageViewModel.h"
+#import "DDAskPageVM.h"
 #import "ATOMProceedingViewModel.h"
 #import "ATOMShowProceeding.h"
 #import "RefreshFooterTableView.h"
 
-#import "ATOMCommonModel.h"
+#import "ATOMBaseRequest.h"
 #import "CommentViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -91,7 +91,7 @@
             [alertView show];
         } else if (CGRectContainsPoint(cell.userUploadImageView.frame, p)) {
 
-            ATOMAskPageViewModel* askPVM = _homeImageDataSource[indexPath.row];
+            DDAskPageVM* askPVM = _homeImageDataSource[indexPath.row];
 
             if ([askPVM.totalPSNumber integerValue] == 0) {
                 CommentViewController* mvc = [CommentViewController new];
@@ -101,7 +101,7 @@
 
             } else {
                 HotDetailViewController *hdvc = [HotDetailViewController new];
-                hdvc.askPageViewModel = askPVM;
+                hdvc.askVM = askPVM;
                 hdvc.fold = 0;
                 [self pushViewController:hdvc animated:YES];
             }
@@ -118,7 +118,7 @@
             [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.deleteButton.frame, p)) {
             NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(cell.viewModel.ID),@"id", nil];
-            [ATOMCommonModel post:param withUrl:@"user/delete_progress" withBlock:^(NSError *error,int ret) {
+            [ATOMBaseRequest post:param withUrl:@"user/delete_progress" withBlock:^(NSError *error,int ret) {
                 if (!error) {
                     [Util success:@"已删除" inView:self.view];
                 }
@@ -256,7 +256,7 @@
             [_homeImageDataSource removeAllObjects];
         }
         for (ATOMHomeImage *homeImage in resultArray) {
-            ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
+            DDAskPageVM *homepageViewModel = [DDAskPageVM new];
             [homepageViewModel setViewModelData:homeImage];
             [ws.homeImageDataSource addObject:homepageViewModel];
             ATOMProceedingViewModel *proceedingViewModel = [ATOMProceedingViewModel new];
@@ -283,7 +283,7 @@
     [showProceeding ShowProceeding:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         ////[SVProgressHUD dismiss];
         for (ATOMHomeImage *homeImage in resultArray) {
-            ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
+            DDAskPageVM *homepageViewModel = [DDAskPageVM new];
             [homepageViewModel setViewModelData:homeImage];
             [ws.homeImageDataSource addObject:homepageViewModel];
             ATOMProceedingViewModel *proceedingViewModel = [ATOMProceedingViewModel new];

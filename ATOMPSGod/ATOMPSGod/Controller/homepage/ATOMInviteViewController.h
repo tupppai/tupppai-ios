@@ -7,12 +7,12 @@
 //
 
 #import "ATOMBaseViewController.h"
-#import "ATOMAskPageViewModel.h"
+#import "DDAskPageVM.h"
 #import "ATOMRecommendUser.h"
 
 @interface ATOMInviteViewController : ATOMBaseViewController
 
-@property (nonatomic, strong) ATOMAskPageViewModel *askPageViewModel;
+@property (nonatomic, strong) DDAskPageVM *askPageViewModel;
 @property (nonatomic, strong) NSDictionary *info;
 @property (nonatomic, assign) BOOL showNext;
 

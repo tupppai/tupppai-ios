@@ -7,7 +7,7 @@
 //
 
 #import "ATOMCommentDetailTableViewCell.h"
-#import "CommentVM.h"
+#import "DDCommentVM.h"
 #import "CommentLikeButton.h"
 
 @interface ATOMCommentDetailTableViewCell ()
@@ -45,7 +45,7 @@
     return actualSize;
 }
 
-+ (CGFloat)calculateCellHeightWithModel:(CommentVM *)viewModel {
++ (CGFloat)calculateCellHeightWithModel:(DDCommentVM *)viewModel {
     CGFloat height1 = [[self class] calculateCommentDeailTextSize:viewModel.text].height + kFont14 + kPadding10 + kPadding15 * 2;
     CGFloat height2 = kPadding15 * 2 + kfcAvatarWidth;
     return fmaxf(height1, height2);
@@ -73,7 +73,7 @@
     [self addSubview:_likeButton];
 }
 
-- (void)setViewModel:(CommentVM *)viewModel {
+- (void)setViewModel:(DDCommentVM *)viewModel {
     _viewModel = viewModel;
     _userNameLabel.text = viewModel.username;
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatar] placeholderImage:[UIImage imageNamed:@"head_portrait"]];

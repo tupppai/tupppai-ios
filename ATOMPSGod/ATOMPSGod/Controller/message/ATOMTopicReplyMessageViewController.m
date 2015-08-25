@@ -15,7 +15,7 @@
 #import "ATOMReplyMessage.h"
 #import "ATOMReplyMessageViewModel.h"
 #import "ATOMHomeImage.h"
-#import "ATOMAskPageViewModel.h"
+#import "DDAskPageVM.h"
 #import "ATOMShowReplyMessage.h"
 #import "RefreshFooterTableView.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
@@ -159,7 +159,7 @@
                 [self pushViewController:mvc animated:YES];
             } else {
                 HotDetailViewController *hdvc = [HotDetailViewController new];
-                hdvc.askPageViewModel = viewModel.homepageViewModel;
+                hdvc.askVM = viewModel.homepageViewModel;
                 [self pushViewController:hdvc animated:YES];
             }
         } else if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {

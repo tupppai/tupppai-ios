@@ -7,11 +7,11 @@
 //
 
 #import "kfcDetailCell.h"
-#import "ATOMCommentViewModel.h"
-#import "ATOMHotDetailPageViewModel.h"
+#import "DDCommentVM.h"
+#import "DDHotDetailPageVM.h"
 #import "ATOMTipButton.h"
-#import "ATOMImageTipLabelViewModel.h"
-#import "ATOMBottomCommonButton.h"
+#import "DDTipLabelVM.h"
+#import "kfcButton.h"
 
 
 #define MAXHEIGHT (SCREEN_WIDTH-kPadding15*2)*4/3
@@ -144,7 +144,7 @@
     
 }
 
-- (void)configCell:(ATOMHotDetailPageViewModel *)viewModel {
+- (void)configCell:(DDHotDetailPageVM *)viewModel {
     _usernameLabel.text = viewModel.userName;
     [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     _publishTimeLabel.text = viewModel.publishTime;
@@ -210,8 +210,8 @@
         }];
     }
     for (int i = 0; i < viewModel.commentArray.count; i++) {
-        ATOMCommentViewModel *commentViewModel = viewModel.commentArray[i];
-        NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:commentViewModel.nickname,@"username",commentViewModel.content,@"comment", nil];
+        DDCommentVM *commentViewModel = viewModel.commentArray[i];
+        NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:commentViewModel.username,@"username",commentViewModel.text,@"comment", nil];
         if (i == 0) {
             _commentLabel1.info = info;
         } else if (i == 1) {
@@ -232,7 +232,7 @@
 //    }];
 
 }
-- (void)addTipLabel:(ATOMHotDetailPageViewModel*)vm {
+- (void)addTipLabel:(DDHotDetailPageVM*)vm {
     
     //    移除旧的标签
     for (UIView * subView in _imageViewMain.subviews) {
@@ -242,7 +242,7 @@
         }
     }
 
-    for (ATOMImageTipLabelViewModel *labelViewModel in vm.labelArray) {
+    for (DDTipLabelVM *labelViewModel in vm.labelArray) {
         CGRect labelFrame = [labelViewModel imageTipLabelFrameByImageSize:CGSizeMake(vm.width, vm.height)];
         ATOMTipButton * button = [[ATOMTipButton alloc] initWithFrame:labelFrame];
         if (labelViewModel.labelDirection == 0) {
@@ -275,11 +275,11 @@
     if (!_bottomView) {
         _bottomView = [UIView new];
         _bottomView.backgroundColor = [UIColor clearColor];
-        _likeButton = [ATOMBottomCommonButton new];
+        _likeButton = [kfcButton new];
         _likeButton.image = [UIImage imageNamed:@"btn_comment_like_normal"];
-        _wechatButton = [ATOMBottomCommonButton new];
+        _wechatButton = [kfcButton new];
         _wechatButton.image = [UIImage imageNamed:@"icon_share_normal"];
-        _commentButton = [ATOMBottomCommonButton new];
+        _commentButton = [kfcButton new];
         _commentButton.image = [UIImage imageNamed:@"icon_comment_normal"];
         _moreButton= [UIButton new];
         _moreButton.userInteractionEnabled = NO;

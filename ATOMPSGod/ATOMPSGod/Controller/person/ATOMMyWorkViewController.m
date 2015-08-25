@@ -11,7 +11,7 @@
 #import "HotDetailViewController.h"
 #import "ATOMShowReply.h"
 #import "ATOMHomeImage.h"
-#import "ATOMAskPageViewModel.h"
+#import "DDAskPageVM.h"
 #import "ATOMReplyViewModel.h"
 #import "PWRefreshFooterCollectionView.h"
 
@@ -70,7 +70,7 @@ static int collumnNumber = 3;
     [param setObject:@(15) forKey:@"size"];
     [ATOMShowReply ShowMyReply:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         for (ATOMHomeImage *homeImage in resultArray) {
-            ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
+            DDAskPageVM *homepageViewModel = [DDAskPageVM new];
             homepageViewModel.ID = homeImage.askID;
             [ws.homeImageDataSource addObject:homepageViewModel];
             ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];
@@ -97,7 +97,7 @@ static int collumnNumber = 3;
     [param setObject:@(15) forKey:@"size"];
     [ATOMShowReply ShowMyReply:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
         for (ATOMHomeImage *homeImage in resultArray) {
-            ATOMAskPageViewModel *homepageViewModel = [ATOMAskPageViewModel new];
+            DDAskPageVM *homepageViewModel = [DDAskPageVM new];
             [homepageViewModel setViewModelData:homeImage];
             ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];
             [replyViewModel setViewModelData:homeImage];
@@ -161,7 +161,7 @@ static int collumnNumber = 3;
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     HotDetailViewController *hdvc = [HotDetailViewController new];
-    hdvc.askPageViewModel = _homeImageDataSource[indexPath.row];
+    hdvc.askVM = _homeImageDataSource[indexPath.row];
     hdvc.fold = 1;
     [self pushViewController:hdvc animated:YES];
 }

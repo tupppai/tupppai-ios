@@ -15,11 +15,7 @@
 @implementation ATOMSubmitUserInformation
 
 - (NSURLSessionDataTask *)SubmitUserInformation:(NSDictionary *)param withBlock:(void (^)(NSError *))block {
-    [[KShareManager mascotAnimator]show];
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"user/save" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        [[KShareManager mascotAnimator]dismiss];
-        NSLog(@"SubmitUserInformation param%@",param);
-        NSLog(@"SubmitUserInformation responseObject %@ ,\n info %@",responseObject,[ responseObject objectForKey:@"info"]);
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
             if ([ responseObject objectForKey:@"data"]) {
@@ -33,7 +29,6 @@
                 if (block) {
                     block(error);
                 }
-                NSLog(@"返回的数据为空");
             }
             if (block) {
                 block(nil);
@@ -52,7 +47,6 @@
         }
 
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [[KShareManager mascotAnimator]dismiss];
         if (block) {
             block(error);
         }

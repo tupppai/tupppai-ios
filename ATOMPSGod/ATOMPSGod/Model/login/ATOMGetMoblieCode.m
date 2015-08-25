@@ -15,7 +15,6 @@
      [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/get_mobile_code" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSInteger ret = [[ responseObject objectForKey:@"ret"] integerValue];
         NSString *verifyCode = [ responseObject objectForKey:@"data"][@"code"];
-        NSLog(@"GetMobileCode param %@,response data %@",param,responseObject);
         if (block) {
             if (ret == 1) {
                 block(verifyCode, nil);

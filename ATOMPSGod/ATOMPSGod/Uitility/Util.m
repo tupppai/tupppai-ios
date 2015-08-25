@@ -7,7 +7,7 @@
 //
 
 #import "Util.h"
-#import "ATOMCommonModel.h"
+#import "ATOMBaseRequest.h"
 
 
 @implementation Util

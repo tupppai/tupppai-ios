@@ -11,7 +11,7 @@
 #import "ATOMHomeImage.h"
 #import "ATOMImageTipLabel.h"
 #import "ATOMReplier.h"
-#import "ATOMAskPageViewModel.h"
+#import "DDAskPageVM.h"
 #import "ATOMHomeImageDAO.h"
 #import "ATOMImageTipLabelDAO.h"
 #import "ATOMReplierDAO.h"

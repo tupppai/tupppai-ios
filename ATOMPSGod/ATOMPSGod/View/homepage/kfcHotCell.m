@@ -7,11 +7,11 @@
 //
 
 #import "kfcHotCell.h"
-#import "ATOMAskPageViewModel.h"
+#import "DDAskPageVM.h"
 #import "ATOMTipButton.h"
-#import "ATOMImageTipLabelViewModel.h"
+#import "DDTipLabelVM.h"
 #import "ATOMReplierViewModel.h"
-#import "ATOMBottomCommonButton.h"
+#import "kfcButton.h"
 #import "kfcViews.h"
 //#define MAXHEIGHT (SCREEN_WIDTH-kPadding15*2)*4/3
 
@@ -154,7 +154,7 @@
 
 
 
-- (void)configCell:(ATOMAskPageViewModel *)viewModel {
+- (void)configCell:(DDAskPageVM *)viewModel {
     _usernameLabel.text = viewModel.userName;
     [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     
@@ -179,7 +179,7 @@
     [self addReplier:viewModel];
 
 }
-- (void)addTipLabel:(ATOMAskPageViewModel*)vm {
+- (void)addTipLabel:(DDAskPageVM*)vm {
 //    移除旧的标签
     for (UIView * subView in _imageViewMain.subviews) {
         if ([subView isKindOfClass:[ATOMTipButton class]]) {
@@ -187,7 +187,7 @@
             [subView removeFromSuperview];
         }
     }
-    for (ATOMImageTipLabelViewModel *labelViewModel in vm.labelArray) {
+    for (DDTipLabelVM *labelViewModel in vm.labelArray) {
         CGRect labelFrame = [labelViewModel imageTipLabelFrameByImageSize:CGSizeMake(vm.width, vm.height)];
         ATOMTipButton * button = [[ATOMTipButton alloc] initWithFrame:labelFrame];
         if (labelViewModel.labelDirection == 0) {
@@ -200,7 +200,7 @@
     }
 }
 
-- (void)addReplier:(ATOMAskPageViewModel*)vm {
+- (void)addReplier:(DDAskPageVM*)vm {
     NSInteger min = MIN(vm.replierArray.count, kfcReplierDefaultQuantity);
     for (int i = 0; i < min; i++) {
         ATOMReplierViewModel *replierViewModel = vm.replierArray[i];
@@ -243,11 +243,11 @@
     if (!_bottomView) {
         _bottomView = [UIView new];
         _bottomView.backgroundColor = [UIColor clearColor];
-        _likeButton = [ATOMBottomCommonButton new];
+        _likeButton = [kfcButton new];
         _likeButton.image = [UIImage imageNamed:@"btn_comment_like_normal"];
-        _wechatButton = [ATOMBottomCommonButton new];
+        _wechatButton = [kfcButton new];
         _wechatButton.image = [UIImage imageNamed:@"icon_share_normal"];
-        _commentButton = [ATOMBottomCommonButton new];
+        _commentButton = [kfcButton new];
         _commentButton.image = [UIImage imageNamed:@"icon_comment_normal"];
         _moreButton= [UIButton new];
         _moreButton.userInteractionEnabled = NO;

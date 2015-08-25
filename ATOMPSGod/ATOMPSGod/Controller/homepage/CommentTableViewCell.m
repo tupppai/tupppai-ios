@@ -7,7 +7,7 @@
 //
 
 #import "CommentTableViewCell.h"
-
+#import "DDCommentReplyVM.h"
 @implementation CommentTableViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -62,7 +62,7 @@
 //    self.commentLabel.font = [UIFont systemFontOfSize:16.0];
 }
 
--(void)getSource:(CommentVM *)vm {
+-(void)getSource:(DDCommentVM *)vm {
     self.usernameLabel.text = vm.username;
     self.commentLabel.text = vm.text;
     self.likeButton.selected = vm.liked;

@@ -20,7 +20,8 @@
              @"content" : @"content",
              @"commentTime" : @"created_time",
              @"likeNumber" : @"up_count",
-             @"liked": @"uped"
+             @"liked": @"uped",
+             @"atCommentArray":@"at_comment"
              };
 }
 
