@@ -105,7 +105,8 @@
                                              type:SIAlertViewButtonTypeDefault
                                           handler:^(SIAlertView *alert) {
                                               NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(cell.viewModel.uid),@"uid", nil];
-                                              [ATOMFollowModel follow:param withType:YES withBlock:nil];
+                                              [ATOMFollowModel follow:param withBlock:nil];
+                                              
                                               [cell toggleInviteButtonAppearance];
                                               [self tapInviteButton:cell.inviteButton];
                                           }];

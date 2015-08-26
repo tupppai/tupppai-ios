@@ -11,12 +11,9 @@
 @implementation ATOMShowSettings
 
 + (NSURLSessionDataTask *)getPushSetting:(NSDictionary *)param withBlock:(void (^)(NSDictionary *, NSError *))block {
-    NSLog(@"getPushSetting param %@ ",param);
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager]GET:@"user/get_push_settings" parameters:param success:^(NSURLSessionDataTask *task
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager]GET:@"profile/get_push_settings" parameters:param success:^(NSURLSessionDataTask *task
 , id responseObject) {
-        NSLog(@"getPushSetting responseObject%@",responseObject);
         NSString* info = (NSString*)[ responseObject objectForKey:@"info"];
-        NSLog(@"getPushSetting info %@",info);
         int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
         if (ret == 1) {
             NSDictionary* data = [responseObject objectForKey:@"data"];
@@ -43,15 +40,11 @@
 
 
 + (NSURLSessionDataTask *)setPushSetting:(NSDictionary *)param withBlock:(void (^)(NSError *))block {
-    NSLog(@"setPushSetting param %@ ",param);
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"user/set_push_settings" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"toggleSetting param %@ responseObject%@",param,responseObject);
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"profile/set_push_settings" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
-        NSString* info = (NSString*)[ responseObject objectForKey:@"info"];
-        NSLog(@"toggleSetting info %@",info);
         if (ret == 1) {
             if (block) {
-                                block(nil);
+                block(nil);
             }
         } else {
             NSError* error = [NSError new];
@@ -63,11 +56,9 @@
         if (block) {
             block(error);
         }
-        NSLog(@"setPushSetting error %@",error);
     }];
 }
 + (NSURLSessionDataTask *)setBindSetting:(NSDictionary *)param withToggleBind:(BOOL)bind withBlock:(void (^)(NSError *))block {
-    NSLog(@"setBindSetting param %@ ",param);
     NSString* url = bind?@"auth/bind":@"auth/unbind";
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"setBindSetting param %@ responseObject%@",param,responseObject);
@@ -88,7 +79,6 @@
         if (block) {
             block(error);
         }
-        NSLog(@"setBindSetting error %@",error);
     }];
 }
 

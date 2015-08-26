@@ -58,10 +58,10 @@
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
+    [param setObject:@"follow" forKey:@"type"];
+
     ATOMShowConcernMessage *showConcernMessage = [ATOMShowConcernMessage new];
-    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showConcernMessage ShowConcernMessage:param withBlock:^(NSMutableArray *concernMessageArray, NSError *error) {
-        ////[SVProgressHUD dismiss];
         for (ATOMConcernMessage *concernMessage in concernMessageArray) {
             ATOMConcernMessageViewModel *concernMessageViewModel = [ATOMConcernMessageViewModel new];
             [concernMessageViewModel setViewModelData:concernMessage];

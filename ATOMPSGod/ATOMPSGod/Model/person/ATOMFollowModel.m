@@ -10,9 +10,8 @@
 #import "ATOMHTTPRequestOperationManager.h"
 
 @implementation ATOMFollowModel
-+ (NSURLSessionDataTask *)follow :(NSDictionary*)param withType:(BOOL)toFollow withBlock:(void (^)(NSError *))block {
-    NSString* url = toFollow == YES ? @"user/follow":@"user/unfollow";
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
++ (NSURLSessionDataTask *)follow :(NSDictionary*)param withBlock:(void (^)(NSError *))block {
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"profile/follow" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
             if (block) {

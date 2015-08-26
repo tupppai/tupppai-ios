@@ -22,7 +22,6 @@
 
 - (NSURLSessionDataTask *)openIDAuth:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(bool isRegister,NSString* info, NSError *error))block {
     [Hud activity:@""];
-    NSLog(@"判断第三平台获取的openid是否已经注册");
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:[NSString stringWithFormat:@"auth/%@",type] parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         [Hud dismiss];
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
@@ -42,6 +41,7 @@
             
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [Hud dismiss];
         if (block) {
             block(nil,nil,error);
         }
@@ -50,8 +50,9 @@
 
 - (NSURLSessionDataTask* )Login:(NSDictionary*)param withBlock:(void (^)(BOOL succeed))block{
     [Hud activity:@""];
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"user/login" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"account/login" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         [Hud dismiss];
+
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"]integerValue];
         if (ret == 1) {
             if ([ responseObject objectForKey:@"data"]) {

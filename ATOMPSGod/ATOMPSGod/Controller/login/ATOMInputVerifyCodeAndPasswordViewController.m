@@ -73,7 +73,8 @@
             NSMutableDictionary* param = [NSMutableDictionary new];
             [param setObject:_inputVerifyView.passwordTextField.text forKey:@"new_pwd"];
             [param setObject:_phoneNumber forKey:@"code"];
-            [ATOMBaseRequest post:param withUrl:@"user/reset_password" withBlock:^(NSError *error, int ret) {
+
+            [ATOMBaseRequest post:param withUrl:@"account/resetPassword" withBlock:^(NSError *error, int ret) {
                 if ( error == nil && ret == 1) {
                     [Util ShowTSMessageSuccess:@"成功设置密码"];
                     [self.navigationController popToRootViewControllerAnimated:YES];

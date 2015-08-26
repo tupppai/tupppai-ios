@@ -11,7 +11,8 @@
 #import "ATOMRecommendUser.h"
 @implementation ATOMInviteModel
 - (NSURLSessionDataTask *)showRecomendUsers:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *recommendMasters,NSMutableArray *recommendFriends, NSError *))block {
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/get_recommend_users" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    //get_masters
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"profile/get_recommend_users" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"showMasters responseObject%@",responseObject);
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
 //        NSMutableArray *recommendMasters;

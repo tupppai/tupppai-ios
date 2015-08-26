@@ -63,6 +63,8 @@
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@"time" forKey:@"sort"];
     [param setObject:@"desc" forKey:@"order"];
+    [param setObject:@"reply" forKey:@"type"];
+
     [param setObject:@(15) forKey:@"size"];
     ATOMShowReplyMessage *showReplyMessage = [ATOMShowReplyMessage new];
     ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];

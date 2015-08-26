@@ -65,6 +65,8 @@
     [param setObject:@"time" forKey:@"sort"];
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
+    [param setObject:@"comment" forKey:@"type"];
+
     ATOMShowCommentMessage *showCommentMessage = [ATOMShowCommentMessage new];
     [showCommentMessage ShowCommentMessage:param withBlock:^(NSMutableArray *commentMessageArray, NSError *error) {
         for (ATOMCommentMessage *commentMessage in commentMessageArray) {

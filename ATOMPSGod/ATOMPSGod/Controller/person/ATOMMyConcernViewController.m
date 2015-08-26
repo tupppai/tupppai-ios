@@ -157,9 +157,13 @@
 //            [self pushViewController:opvc animated:YES];
 //        } else
             if (CGRectContainsPoint(cell.attentionButton.frame, p)) {
-            cell.attentionButton.selected = !cell.attentionButton.selected;
-            NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(cell.viewModel.uid),@"uid", nil];
-            [ATOMFollowModel follow:param withType:cell.attentionButton.selected withBlock:^(NSError *error) {
+                cell.attentionButton.selected = !cell.attentionButton.selected;
+                NSMutableDictionary* param = [NSMutableDictionary new];
+                [param setObject:@(cell.viewModel.uid) forKey:@"uid"];
+                if (!cell.attentionButton.selected) {
+                    [param setObject:@0 forKey:@"status"];
+                }
+            [ATOMFollowModel follow:param withBlock:^(NSError *error) {
                 if (error) {
                     cell.attentionButton.selected = !cell.attentionButton.selected;
                 } else {
@@ -192,15 +196,15 @@
     return 0;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    if (section == 0) {
-        ATOMMyConcernTableFooterView *footerView = [ATOMMyConcernTableFooterView new];
-        return footerView;
-    } else if (section == 1) {
-        return nil;
-    }
-    return nil;
-}
+//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+//    if (section == 0) {
+//        ATOMMyConcernTableFooterView *footerView = [ATOMMyConcernTableFooterView new];
+//        return footerView;
+//    } else if (section == 1) {
+//        return nil;
+//    }
+//    return nil;
+//}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if ([tableView.dataSource tableView:tableView numberOfRowsInSection:section] == 0) {

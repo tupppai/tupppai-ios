@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface ATOMFollowModel : NSObject
-+ (NSURLSessionDataTask *)follow :(NSDictionary*)param withType:(BOOL)toFollow withBlock:(void (^)(NSError *))block;
++ (NSURLSessionDataTask *)follow :(NSDictionary*)param withBlock:(void (^)(NSError *))block;
 @end

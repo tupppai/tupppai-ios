@@ -47,7 +47,7 @@ static dispatch_once_t once;
         NSUUID *oNSUUID = [[UIDevice currentDevice] identifierForVendor];
         NSString* token = [[NSUserDefaults standardUserDefaults]stringForKey:@"devicetoken"];
         NSDictionary* param = [NSDictionary dictionaryWithObjectsAndKeys:token, @"device_token",@1,@"platform",@([[UIDevice currentDevice].systemVersion floatValue]),@"device_os",deviceName(),@"device_name",[oNSUUID UUIDString],@"device_mac",nil];
-        [ATOMBaseRequest post:param withUrl:@"user/device_token" withBlock:nil];
+        [ATOMBaseRequest post:param withUrl:@"account/updateToken" withBlock:nil];
     });
 }
 - (void)configureTabBarController {

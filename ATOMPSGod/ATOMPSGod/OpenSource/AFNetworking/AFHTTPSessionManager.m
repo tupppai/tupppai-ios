@@ -222,6 +222,9 @@
                                          success:(void (^)(NSURLSessionDataTask *, id))success
                                          failure:(void (^)(NSURLSessionDataTask *, NSError *))failure
 {
+#if DEBUG
+    NSLog(@"%@,%@,%@",method,URLString,parameters);
+#endif
     NSError *serializationError = nil;
     NSMutableURLRequest *request = [self.requestSerializer requestWithMethod:method URLString:[[NSURL URLWithString:URLString relativeToURL:self.baseURL] absoluteString] parameters:parameters error:&serializationError];
     if (serializationError) {
@@ -239,12 +242,11 @@
 
     __block NSURLSessionDataTask *dataTask = nil;
     dataTask = [self dataTaskWithRequest:request completionHandler:^(NSURLResponse * __unused response, id responseObject, NSError *error) {
+#if DEBUG
+        NSLog(@"success responseObject %@ ,error %@",responseObject,error);
+#endif
         if (error) {
             if (failure) {
-#if DEBUG
-//                [Util ShowTSMessageError:[NSString stringWithFormat:@"%@",error]];
-#endif
-
                 [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"ErrorOccurred" object:nil]];
                 failure(dataTask, error);
             }

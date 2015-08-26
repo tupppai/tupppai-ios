@@ -11,7 +11,7 @@
 
 @implementation ATOMRecordModel
 + (void)record :(NSDictionary*)param withBlock:(void (^)(NSError *,NSString*))block {
-     [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/record" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+     [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"profile/downloadFile" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
             NSString* url = [[responseObject objectForKey:@"data"]objectForKey:@"url"];

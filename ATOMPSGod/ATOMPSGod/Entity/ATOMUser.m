@@ -31,8 +31,8 @@
 //             @"locationID" : @"location",
 //             @"cityID" : @"city",
 //             @"provinceID" : @"province",
-             @"isMyFan":@"is_fellow",
-             @"isMyFollow":@"is_fans",
+             @"isMyFan":@"is_fans",
+             @"isMyFollow":@"is_fellow",
              };
 }
 + (NSDictionary *)FMDBColumnsByPropertyKey {
