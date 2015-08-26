@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMLoginBaseViewController.h"
+#import "DDLoginBaseVC.h"
 
-@interface ATOMInputVerifyCodeViewController : ATOMLoginBaseViewController
+@interface ATOMInputVerifyCodeViewController : DDLoginBaseVC
 
 @property (nonatomic, copy) NSString *verifyCode;
 

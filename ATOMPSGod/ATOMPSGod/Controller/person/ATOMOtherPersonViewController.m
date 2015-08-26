@@ -12,7 +12,7 @@
 #import "ATOMMyUploadCollectionViewCell.h"
 #import "ATOMMyFansViewController.h"
 #import "ATOMOtherPersonConcernViewController.h"
-#import "HotDetailViewController.h"
+#import "DDHotDetailVC.h"
 #import "ATOMOtherPersonCollectionHeaderView.h"
 #import "ATOMShowOtherUser.h"
 #import "ATOMHomeImage.h"
@@ -22,10 +22,10 @@
 #import "ATOMUser.h"
 #import "ATOMFollowModel.h"
 
-#import "CommentViewController.h"
+#import "DDCommentVC.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMOtherPersonViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate>
+@interface ATOMOtherPersonViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource>
 
 @property (nonatomic, strong) ATOMOtherPersonView *otherPersonView;
 @property (nonatomic, strong) NSMutableArray *uploadDataSource;
@@ -150,15 +150,15 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
-//    if ([type isEqualToString:@"upload"]) {
+    if ([type isEqualToString:@"upload"]) {
         _currentUploadPage++;
         [param setObject:@(_currentUploadPage) forKey:@"page"];
-//        [param setObject:@(ATOMPageTypeAsk) forKey:@"type"];
-//    } else if ([type isEqualToString:@"work"]) {
+        [param setObject:@(ATOMPageTypeAsk) forKey:@"type"];
+    } else if ([type isEqualToString:@"work"]) {
         _currentWorkPage++;
-//        [param setObject:@(_currentWorkPage) forKey:@"page"];
-//        [param setObject:@(ATOMPageTypeReply) forKey:@"type"];
-//    }
+        [param setObject:@(_currentWorkPage) forKey:@"page"];
+        [param setObject:@(ATOMPageTypeReply) forKey:@"type"];
+    }
     [ATOMShowOtherUser ShowOtherUser:param withBlock:^(NSMutableArray *askReturnArray, NSMutableArray *replyReturnArray, ATOMUser *user, NSError *error) {
         if (!error) {
             if (user) {
@@ -221,6 +221,8 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
     _otherPersonView.scrollView.otherPersonWorkCollectionView.dataSource = self;
     _otherPersonView.scrollView.otherPersonWorkCollectionView.psDelegate = self;
     
+    _otherPersonView.scrollView.otherPersonUploadCollectionView.emptyDataSetSource = self;
+    _otherPersonView.scrollView.otherPersonWorkCollectionView.emptyDataSetSource = self;
     [_otherPersonView.uploadHeaderView.attentionButton addTarget:self action:@selector(tapFollowButton) forControlEvents:UIControlEventTouchUpInside];
     [self registerCollection];
     [self addTargetToOtherPersonView:_otherPersonView.uploadHeaderView];
@@ -394,19 +396,19 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
         if ([askViewModel.totalPSNumber integerValue] == 0) {
             DDCommentPageVM* vm = [DDCommentPageVM new];
             [vm setCommonViewModelWithAsk:homepageViewModel];
-            CommentViewController* mvc = [CommentViewController new];
+            DDCommentVC* mvc = [DDCommentVC new];
             mvc.vm = vm;
 //            mvc.delegate = self;
             [self pushViewController:mvc animated:YES];
 
         } else {
-            HotDetailViewController *hdvc = [HotDetailViewController new];
+            DDHotDetailVC *hdvc = [DDHotDetailVC new];
             hdvc.askVM = homepageViewModel;
             [self pushViewController:hdvc animated:YES];
         }
     } else {
         DDAskPageVM *homepageViewModel = _workHomeImageDataSource[indexPath.row];
-        HotDetailViewController *hdvc = [HotDetailViewController new];
+        DDHotDetailVC *hdvc = [DDHotDetailVC new];
         hdvc.fold = 1;
         hdvc.askVM = homepageViewModel;
         [self pushViewController:hdvc animated:YES];
@@ -426,17 +428,27 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
         } else if (currentPage == 1) {
             [_otherPersonView.uploadHeaderView toggleSegmentBar:ATOMOtherPersonCollectionViewTypeReply];
             [_otherPersonView.scrollView toggleCollectionView:ATOMOtherPersonCollectionViewTypeReply];
-//            if (_isFirstEnterWorkCollectionView) {
-//                _isFirstEnterWorkCollectionView = NO;
-//                [self getDataSourceWithType:@"work"];
-//            }
+
     }
 }
 
 
 
 
-
+#pragma mark - DZNEmptyDataSetSource & delegate
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
+{
+    return [UIImage imageNamed:@"ic_cry"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text = @"";
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:kTitleSizeForEmptyDataSet],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
 
 
 

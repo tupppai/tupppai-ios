@@ -72,8 +72,7 @@
 }
 
 - (NSURLSessionDataTask *)SendComment:(NSDictionary *)param withBlock:(void (^)(NSInteger, NSError *))block {
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"comment/send_comment" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"SendComment %@,responseObject%@",param,responseObject);
+    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"comment/save" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
             NSInteger comment_id = [[ responseObject objectForKey:@"data"][@"id"] integerValue];
@@ -96,15 +95,12 @@
 - (NSURLSessionDataTask *)toggleLike:(NSDictionary *)param withID:(NSInteger)commentID withBlock:(void (^)(NSError *))block {
     NSString* url = [NSString stringWithFormat:@"comment/upComment/%ld",(long)commentID];    
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"toggleLike success");
         if (block) {
             block(nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         if (block) {
-            NSLog(@"%@",error);
             block(error);
-            NSLog(@"toggleLike failure");
         }
     }];
 }

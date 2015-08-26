@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ATOMLoginBaseViewController : UIViewController 
+@interface DDLoginBaseVC : UIViewController
 
 @end

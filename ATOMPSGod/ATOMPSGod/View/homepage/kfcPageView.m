@@ -271,12 +271,12 @@
 //    
 //    if (_pageDetailViewModel) {
 //        workImageSize = [[self class] calculateImageViewSizeWith:_pageDetailViewModel.width height:_pageDetailViewModel.height];
-//        commentSize = [_pageDetailViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                         NSStringDrawingUsesFontLeading          attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
-//        commentSize.width += kBottomCommonButtonWidth + kPadding15;
-//        shareSize = [_pageDetailViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                           NSStringDrawingUsesFontLeading            attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
-//        shareSize.width += kBottomCommonButtonWidth + kPadding15;
-//        likeSize = [_pageDetailViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kBottomCommonButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                          NSStringDrawingUsesFontLeading           attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
-//        likeSize.width += kBottomCommonButtonWidth + kPadding15;
+//        commentSize = [_pageDetailViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kfcButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                         NSStringDrawingUsesFontLeading          attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
+//        commentSize.width += kfcButtonWidth + kPadding15;
+//        shareSize = [_pageDetailViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kfcButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                           NSStringDrawingUsesFontLeading            attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
+//        shareSize.width += kfcButtonWidth + kPadding15;
+//        likeSize = [_pageDetailViewModel.commentNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, kfcButtonWidth) options:NSStringDrawingUsesLineFragmentOrigin |                                          NSStringDrawingUsesFontLeading           attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
+//        likeSize.width += kfcButtonWidth + kPadding15;
 //    }
 //    
 //    CGFloat cellHeight;
@@ -288,14 +288,14 @@
 //    _userWorkImageView.frame = CGRectMake((SCREEN_WIDTH - workImageSize.width) / 2, CGRectGetMaxY(_topView.frame), workImageSize.width, cellHeight);
 //    
 //    CGFloat thinViewHeight = 60;
-//    CGFloat bottomButtonOriginY = (thinViewHeight - kBottomCommonButtonWidth) / 2;
+//    CGFloat bottomButtonOriginY = (thinViewHeight - kfcButtonWidth) / 2;
 //    _thinCenterView.frame = CGRectMake(0, CGRectGetMaxY(_userWorkImageView.frame), SCREEN_WIDTH, thinViewHeight);
-//    _moreShareButton.frame = CGRectMake(kPadding15+1, (thinViewHeight - kBottomCommonButtonWidth) / 2, 60, kBottomCommonButtonWidth);
+//    _moreShareButton.frame = CGRectMake(kPadding15+1, (thinViewHeight - kfcButtonWidth) / 2, 60, kfcButtonWidth);
 //    _moreShareButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 30);
 //    
-//    _commentButton.frame = CGRectMake(SCREEN_WIDTH - kPadding15 - commentSize.width, bottomButtonOriginY, commentSize.width, kBottomCommonButtonWidth);
-//    _shareButton.frame = CGRectMake(CGRectGetMinX(_commentButton.frame) - kPadding20 - shareSize.width, bottomButtonOriginY, shareSize.width, kBottomCommonButtonWidth);
-//    _likeButton.frame = CGRectMake(CGRectGetMinX(_shareButton.frame) - kPadding20 - likeSize.width, bottomButtonOriginY, likeSize.width, kBottomCommonButtonWidth);
+//    _commentButton.frame = CGRectMake(SCREEN_WIDTH - kPadding15 - commentSize.width, bottomButtonOriginY, commentSize.width, kfcButtonWidth);
+//    _shareButton.frame = CGRectMake(CGRectGetMinX(_commentButton.frame) - kPadding20 - shareSize.width, bottomButtonOriginY, shareSize.width, kfcButtonWidth);
+//    _likeButton.frame = CGRectMake(CGRectGetMinX(_shareButton.frame) - kPadding20 - likeSize.width, bottomButtonOriginY, likeSize.width, kfcButtonWidth);
 //}
 //+ (CGSize)calculateImageViewSizeWith:(CGFloat)width height:(CGFloat)height {
 //    return CGSizeMake(width, height);

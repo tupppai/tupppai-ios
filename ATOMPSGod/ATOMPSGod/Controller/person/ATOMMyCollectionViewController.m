@@ -8,14 +8,14 @@
 
 #import "ATOMMyCollectionViewController.h"
 #import "ATOMMyCollectionCollectionViewCell.h"
-#import "HotDetailViewController.h"
+#import "DDHotDetailVC.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMHomeImage.h"
 #import "DDAskPageVM.h"
 #import "ATOMCollectionViewModel.h"
 #import "ATOMShowCollection.h"
 #import "PWRefreshFooterCollectionView.h"
-#import "CommentViewController.h"
+#import "DDCommentVC.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMMyCollectionViewController () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource>
@@ -163,17 +163,17 @@ static float cellWidth;
         if (CGRectContainsPoint(cell.collectionImageView.frame, p)) {
             if (cell.viewModel.type == ATOMPageTypeAsk) {
                 if (cell.viewModel.totalPSNumber == 0) {
-                    CommentViewController* mvc = [CommentViewController new];
+                    DDCommentVC* mvc = [DDCommentVC new];
                     mvc.vm = [model generatepageDetailViewModel];
                     [self pushViewController:mvc animated:YES];
                 } else {
-                    HotDetailViewController *hdvc = [HotDetailViewController new];
+                    DDHotDetailVC *hdvc = [DDHotDetailVC new];
                     hdvc.askVM = model;
                     hdvc.fold = 0;
                     [self pushViewController:hdvc animated:YES];
                 }
             } else {
-                HotDetailViewController *hdvc = [HotDetailViewController new];
+                DDHotDetailVC *hdvc = [DDHotDetailVC new];
                 hdvc.askVM = model;
                 hdvc.fold = 1;
                 [self pushViewController:hdvc animated:YES];

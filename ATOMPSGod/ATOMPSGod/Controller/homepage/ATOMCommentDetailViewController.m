@@ -11,7 +11,7 @@
 #import "DDCommentVM.h"
 #import "ATOMCommentDetailView.h"
 #import "ATOMOtherPersonViewController.h"
-#import "ZZCommentHeaderView.h"
+#import "DDCommentHeaderView.h"
 #import "ATOMShowDetailOfComment.h"
 #import "DDCommentVM.h"
 #import "ATOMComment.h"
@@ -261,13 +261,13 @@
     if ([tableView.dataSource tableView:tableView numberOfRowsInSection:section] == 0) {
         return 0;
     } else {
-        return kCommentTableViewHeaderHeight;
+        return kTableHeaderHeight;
     }
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
-    ZZCommentHeaderView *headerView = [ZZCommentHeaderView new];
+    DDCommentHeaderView *headerView = [DDCommentHeaderView new];
     if (section == 0) {
         headerView.titleLabel.text = @"最热评论";
     } else if (section == 1) {

@@ -8,7 +8,7 @@
 
 #import "ATOMConstant.h"
 
-CGFloat const kCommentTableViewHeaderHeight = 40;
+CGFloat const kTableHeaderHeight = 40;
 CGFloat const kUserHeaderButtonWidth2 = 41;
 CGFloat const kUserBigHeaderButtonWidth = 74;
 CGFloat const kShareButtonWidth = 65;
@@ -17,13 +17,13 @@ CGFloat const kPublishTimeLabelWidth = 150;
 
 
 
-CGFloat const kBottomCommonButtonWidth = 24;
+CGFloat const kfcButtonWidth = 24;
 
 CGFloat const kfcAvatarWidth = 35;
 CGFloat const kfcPSHeight = 26;
 CGFloat const kfcPSWidth = 54;
 CGFloat const kfcButtonHeight = 24;
-CGFloat const kfcButtonWidth = 32;
+//CGFloat const kfcButtonWidth = 32;
 
 CGFloat const kfcTopViewHeight = 50;
 CGFloat const kfcBottomViewHeight = 49;

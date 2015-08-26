@@ -41,8 +41,14 @@
         [_mascotImageView startAnimating];
         self.alpha = 0.9;
         [[UIApplication sharedApplication].keyWindow addSubview:self];
-    } else {
+
+        //time out
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 8 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [self dismiss];
+        });
+
     }
+    
 }
 -(void)dismiss {
     if (self) {

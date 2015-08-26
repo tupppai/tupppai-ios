@@ -12,7 +12,7 @@
 #import "ATOMLoginViewController.h"
 #import "ATOMLogin.h"
 #import "AppDelegate.h"
-#import "ATOMMainTabBarController.h"
+#import "DDTabBarController.h"
 #import "ATOMShareSDKModel.h"
 #import "EAIntroView.h"
 @interface ATOMLaunchViewController ()

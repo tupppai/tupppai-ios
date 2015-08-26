@@ -8,8 +8,8 @@
 
 #import "ATOMMyUploadViewController.h"
 #import "ATOMMyUploadCollectionViewCell.h"
-#import "HotDetailViewController.h"
-#import "CommentViewController.h"
+#import "DDHotDetailVC.h"
+#import "DDCommentVC.h"
 #import "ATOMHomeImage.h"
 #import "DDAskPageVM.h"
 #import "ATOMAskViewModel.h"
@@ -165,13 +165,13 @@ static int collumnNumber = 3;
     DDAskPageVM *homepageViewModel = _homeImageDataSource[indexPath.row];
     if ([askViewModel.totalPSNumber integerValue] == 0) {
         
-        CommentViewController* mvc = [CommentViewController new];
+        DDCommentVC* mvc = [DDCommentVC new];
         mvc.vm = [homepageViewModel generatepageDetailViewModel];;
 //        mvc.delegate = self;
         [self pushViewController:mvc animated:YES];
 
     } else {
-        HotDetailViewController *hdvc = [HotDetailViewController new];
+        DDHotDetailVC *hdvc = [DDHotDetailVC new];
         hdvc.fold = 0;
         hdvc.askVM = homepageViewModel;
         [self pushViewController:hdvc animated:YES];

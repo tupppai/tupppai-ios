@@ -93,7 +93,7 @@ static CGFloat cellHeight = 70;
     _uploadNumberLabel.text = [NSString stringWithFormat:@"%@求p", viewModel.totalAskNumber];
     _workNumberLabel.text = [NSString stringWithFormat:@"%@求p", viewModel.totalReplyNumber];
 
-    if (viewModel.isFellow) {
+    if (viewModel.isFollow) {
         //已关注
         _attentionButton.selected = YES;
     } else  {

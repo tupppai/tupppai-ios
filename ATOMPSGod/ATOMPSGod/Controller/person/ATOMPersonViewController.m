@@ -11,7 +11,7 @@
 #import "ATOMPersonTableViewCell.h"
 #import "ATOMAccountSettingViewController.h"
 #import "ATOMMyFansViewController.h"
-#import "ATOMMyConcernViewController.h"
+#import "DDMyFollowVC.h"
 #import "ATOMMyWorkViewController.h"
 #import "ATOMMyUploadViewController.h"
 #import "ATOMMyCollectionViewController.h"
@@ -197,7 +197,7 @@
         }
     } else if (section == 1) {
         if (row == 0) {
-            ATOMMyConcernViewController *mcvc = [ATOMMyConcernViewController new];
+            DDMyFollowVC *mcvc = [DDMyFollowVC new];
             [self pushViewController:mcvc animated:YES];
         } else if (row == 1) {
             ATOMAccountSettingViewController *asvc = [ATOMAccountSettingViewController new];

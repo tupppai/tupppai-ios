@@ -16,7 +16,7 @@
 #import "ATOMFollowModel.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMOtherPersonConcernViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate>
+@interface ATOMOtherPersonConcernViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource>
 
 @property (nonatomic, strong) RefreshFooterTableView *tableView;
 @property (nonatomic, strong) UIView *concernView;
@@ -58,14 +58,14 @@
     [param setObject:@(_uid) forKeyedSubscript:@"uid"];
     ATOMShowConcern *showConcern = [ATOMShowConcern new];
     [Hud activity:@"" inView:self.view];
-    [showConcern ShowOtherConcern:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
+    [showConcern GetFollow:param withBlock:^(NSMutableArray *recommend,NSMutableArray* resultArray, NSError *error) {
         [Hud dismiss:self.view];
          for (ATOMConcern *concern in resultArray) {
             ATOMConcernViewModel *concernViewModel = [ATOMConcernViewModel new];
             [concernViewModel setViewModelData:concern];
             [ws.dataSource addObject:concernViewModel];
         }
-        [ws.tableView.header endRefreshing];
+        _tableView.dataSource = self;
         [ws.tableView reloadData];
     }];
 }
@@ -80,7 +80,7 @@
     [param setObject:@(timestamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     ATOMShowConcern *showConcern = [ATOMShowConcern new];
-    [showConcern ShowOtherConcern:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
+    [showConcern GetFollow:param withBlock:^(NSMutableArray *resultArray,NSMutableArray* recommend, NSError *error) {
         for (ATOMConcern *concern in resultArray) {
             ATOMConcernViewModel *concernViewModel = [ATOMConcernViewModel new];
             [concernViewModel setViewModelData:concern];
@@ -112,8 +112,9 @@
     _tableView.tableFooterView = [UIView new];
     [_concernView addSubview:_tableView];
     _tableView.delegate = self;
-    _tableView.dataSource = self;
+    _tableView.dataSource = nil;
     _tableView.psDelegate = self;
+    _tableView.emptyDataSetSource = self;
     _tapConcernGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapConcernGesture:)];
     [_tableView addGestureRecognizer:_tapConcernGesture];
 //    [self configTableViewRefresh];
@@ -195,7 +196,19 @@
     
 }
 
-
+#pragma mark - DZNEmptyDataSetSource & delegate
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
+{
+    return [UIImage imageNamed:@"ic_cry"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text = @"还没有关注任何人,快去社区活跃吧";
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:kTitleSizeForEmptyDataSet],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
 
 @end
 

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ATOMInputVerifyCodeAndPasswordViewController : ATOMLoginBaseViewController
+@interface ATOMInputVerifyCodeAndPasswordViewController : DDLoginBaseVC
 @property (nonatomic, copy) NSString *verifyCode;
 @property (nonatomic, copy) NSString *phoneNumber;
 

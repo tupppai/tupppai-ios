@@ -4,8 +4,8 @@
 
 const CGFloat MJRefreshHeaderHeight = 44.0;
 const CGFloat MJRefreshFooterHeight = 44.0;
-const CGFloat MJRefreshFastAnimationDuration = 0.65;
-const CGFloat MJRefreshSlowAnimationDuration = 1.30;
+const CGFloat MJRefreshFastAnimationDuration = 0.2;
+const CGFloat MJRefreshSlowAnimationDuration = 0.4;
 
 NSString *const MJRefreshHeaderUpdatedTimeKey = @"MJRefreshHeaderUpdatedTimeKey";
 NSString *const MJRefreshContentOffset = @"contentOffset";

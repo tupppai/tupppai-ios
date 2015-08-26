@@ -8,8 +8,8 @@
 
 #import "ATOMProceedingViewController.h"
 #import "ATOMProceedingTableViewCell.h"
-#import "ATOMCropImageController.h"
-#import "HotDetailViewController.h"
+#import "DDCropImageVC.h"
+#import "DDHotDetailVC.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMHomeImage.h"
 #import "DDAskPageVM.h"
@@ -18,7 +18,7 @@
 #import "RefreshFooterTableView.h"
 
 #import "ATOMBaseRequest.h"
-#import "CommentViewController.h"
+#import "DDCommentVC.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMProceedingViewController () <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource>
@@ -94,13 +94,13 @@
             DDAskPageVM* askPVM = _homeImageDataSource[indexPath.row];
 
             if ([askPVM.totalPSNumber integerValue] == 0) {
-                CommentViewController* mvc = [CommentViewController new];
+                DDCommentVC* mvc = [DDCommentVC new];
                 mvc.vm = [askPVM generatepageDetailViewModel];
 //                mvc.delegate = self;
                 [self pushViewController:mvc animated:YES];
 
             } else {
-                HotDetailViewController *hdvc = [HotDetailViewController new];
+                DDHotDetailVC *hdvc = [DDHotDetailVC new];
                 hdvc.askVM = askPVM;
                 hdvc.fold = 0;
                 [self pushViewController:hdvc animated:YES];
@@ -160,7 +160,7 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     WS(ws);
     [self dismissViewControllerAnimated:YES completion:^{
-        ATOMCropImageController *uwvc = [ATOMCropImageController new];
+        DDCropImageVC *uwvc = [DDCropImageVC new];
         uwvc.originImage = info[UIImagePickerControllerOriginalImage];
         uwvc.askPageViewModel = [_homeImageDataSource objectAtIndex:_selectedIndexPath.row];
         [ws pushViewController:uwvc animated:YES];

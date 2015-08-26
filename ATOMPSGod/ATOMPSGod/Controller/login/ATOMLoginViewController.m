@@ -8,7 +8,7 @@
 
 #import "ATOMLoginViewController.h"
 #import "ATOMLoginView.h"
-#import "ATOMMainTabBarController.h"
+#import "DDTabBarController.h"
 #import "AppDelegate.h"
 #import "ATOMLogin.h"
 #import "ATOMUser.h"

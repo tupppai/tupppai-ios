@@ -12,6 +12,7 @@
 - (NSURLSessionDataTask *)getShareInfo:(NSDictionary *)param withBlock:(void (^)(ATOMShare *, NSError *))block {
     [[KShareManager mascotAnimator]show];
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"app/share" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+        [[KShareManager mascotAnimator]dismiss];
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
             ATOMShare *share = [MTLJSONAdapter modelOfClass:[ATOMShare class] fromJSONDictionary:[ responseObject objectForKey:@"data"] error:NULL];
@@ -25,28 +26,9 @@
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [[KShareManager mascotAnimator]dismiss];
-        
         if (block) {
             block(nil, error);
         }
     }];
 }
-
-//
-//-(void)shareOnWechatMoments:(NSInteger)id withPageType:(ATOMPageType)pageType {
-//    ATOMShareModel* shareModel = [ATOMShareModel new];
-//    NSMutableDictionary* param = [NSMutableDictionary new];
-//    NSString* shareTypeToServer;
-//    
-//    [param setObject:shareTypeToServer forKey:@"share_type"];
-//    [param setObject:@(pageType) forKey:@"type"];
-//    [param setObject:@(id) forKey:@"target_id"];
-//    [shareModel getShareInfo:param withBlock:^(ATOMShare *share, NSError *error) {
-//        if (share) {
-//            [ATOMShareSDKModel postSocialShareShareSdk:share withShareType:shareType];
-//        }
-//    }];
-//}
-
-
 @end

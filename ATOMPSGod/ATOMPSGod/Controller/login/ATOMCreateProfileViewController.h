@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMBaseViewController.h"
+#import "DDBaseVC.h"
 #import "ATOMUserProfileViewModel.h"
 
-@interface ATOMCreateProfileViewController : ATOMLoginBaseViewController
+@interface ATOMCreateProfileViewController : DDLoginBaseVC
 @property (nonatomic, strong) ATOMUserProfileViewModel *userProfileViewModel;
 @end

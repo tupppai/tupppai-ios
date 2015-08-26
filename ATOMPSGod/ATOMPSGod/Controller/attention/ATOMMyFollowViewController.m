@@ -9,7 +9,7 @@
 #import "ATOMMyFollowViewController.h"
 #import "kfcFollowCell.h"
 #import "ATOMCommentDetailViewController.h"
-#import "HotDetailViewController.h"
+#import "DDHotDetailVC.h"
 #import "ATOMOtherPersonViewController.h"
 #import "DDAskPageVM.h"
 #import "ATOMShowAttention.h"
@@ -24,11 +24,11 @@
 #import "JGActionSheet.h"
 #import "ATOMReportModel.h"
 #import "ATOMCollectModel.h"
-#import "ATOMInviteViewController.h"
-#import "ATOMCropImageController.h"
+#import "DDInviteVC.h"
+#import "DDCropImageVC.h"
 #import "ATOMRecordModel.h"
 #import "ATOMBaseRequest.h"
-#import "CommentViewController.h"
+#import "DDCommentVC.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
@@ -128,7 +128,7 @@ static NSString *CellIdentifier = @"MyAttentionCell";
             } else if (CGRectContainsPoint(cell.wechatButton.frame, p)) {
                 [ATOMShareSDKModel postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:vm.type];
             } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
-                CommentViewController* mvc = [CommentViewController new];
+                DDCommentVC* mvc = [DDCommentVC new];
                 DDCommentPageVM *vm = [DDCommentPageVM new];
                 [vm setCommonViewModelWithFollow:_dataSource[_selectedIndexPath.row]];
                 mvc.vm = vm;
@@ -234,7 +234,7 @@ static NSString *CellIdentifier = @"MyAttentionCell";
     WS(ws);
     [self dismissViewControllerAnimated:YES completion:^{
         kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];
-        ATOMCropImageController *uwvc = [ATOMCropImageController new];
+        DDCropImageVC *uwvc = [DDCropImageVC new];
         uwvc.originImage = info[UIImagePickerControllerOriginalImage];
         uwvc.askPageViewModel = [vm generateAskPageViewModel];
         [ws pushViewController:uwvc animated:YES];
@@ -363,7 +363,7 @@ static NSString *CellIdentifier = @"MyAttentionCell";
 }
 -(void)tapInvite {
     kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];
-    ATOMInviteViewController* ivc = [ATOMInviteViewController new];
+    DDInviteVC* ivc = [DDInviteVC new];
     NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:@(vm.imageID),@"ID",@(vm.askID),@"askID",@(vm.type),@"type", nil];
     ivc.info = info;
     [self pushViewController:ivc animated:NO];

@@ -13,7 +13,6 @@
 + (NSURLSessionDataTask *)getPushSetting:(NSDictionary *)param withBlock:(void (^)(NSDictionary *, NSError *))block {
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager]GET:@"profile/get_push_settings" parameters:param success:^(NSURLSessionDataTask *task
 , id responseObject) {
-        NSString* info = (NSString*)[ responseObject objectForKey:@"info"];
         int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
         if (ret == 1) {
             NSDictionary* data = [responseObject objectForKey:@"data"];

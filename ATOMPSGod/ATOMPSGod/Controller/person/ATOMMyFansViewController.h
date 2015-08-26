@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMBaseViewController.h"
+#import "DDBaseVC.h"
 
-@interface ATOMMyFansViewController : ATOMBaseViewController
+@interface ATOMMyFansViewController : DDBaseVC
 
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, copy) NSString *userName;

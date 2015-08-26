@@ -11,7 +11,7 @@
 #import "ATOMSubmitUserInfomation.h"
 #import "AppDelegate.h"
 //#import "ATOMLoginViewController.h"
-#import "ATOMMainTabBarController.h"
+#import "DDTabBarController.h"
 #import "ATOMGetMoblieCode.h"
 
 @interface ATOMInputVerifyCodeViewController ()

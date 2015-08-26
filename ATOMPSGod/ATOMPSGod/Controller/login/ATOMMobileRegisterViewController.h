@@ -6,8 +6,8 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMLoginBaseViewController.h"
+#import "DDLoginBaseVC.h"
 
-@interface ATOMMobileRegisterViewController : ATOMLoginBaseViewController
+@interface ATOMMobileRegisterViewController : DDLoginBaseVC
 
 @end

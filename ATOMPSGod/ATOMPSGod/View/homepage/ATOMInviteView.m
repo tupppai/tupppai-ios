@@ -7,7 +7,7 @@
 //
 
 #import "ATOMInviteView.h"
-#import "ZZCommentHeaderView.h"
+#import "DDCommentHeaderView.h"
 
 @implementation ATOMInviteView
 
@@ -25,7 +25,7 @@
     _topView.backgroundColor = [UIColor whiteColor];
     [self addSubview:_topView];
     
-    _inviteFriendView = [ZZCommentHeaderView new];
+    _inviteFriendView = [DDCommentHeaderView new];
     _inviteFriendView.titleLabel.text = @"微信邀请";
     [_topView addSubview:_inviteFriendView];
     

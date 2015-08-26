@@ -12,26 +12,30 @@
 
 @implementation ATOMShowConcern
 
-- (NSURLSessionDataTask *)ShowMyConcern:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSMutableArray *, NSError *))block {
+- (NSURLSessionDataTask *)GetFollow:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSMutableArray *, NSError *))block {
     return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"profile/follows" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
         if (ret == 1) {
-            NSMutableArray *recommendConcernArray = [NSMutableArray array];
-            NSMutableArray *myConcernArray = [NSMutableArray array];
+            
+            //返回数据
+            NSMutableArray *retRecommend = [NSMutableArray array];
+            NSMutableArray *retMine = [NSMutableArray array];
             NSDictionary* data = [responseObject objectForKey:@"data"];
+            
             if (data) {
-                NSArray *recommendDataArray = [data objectForKey:@"recommends"];
-                NSArray *myDataArray = [data objectForKey:@"felLows"];
-                for (int i = 0; i < recommendDataArray.count; i++) {
-                    ATOMConcern *concern = [MTLJSONAdapter modelOfClass:[ATOMConcern class] fromJSONDictionary:recommendDataArray[i] error:NULL];
-                    [recommendConcernArray addObject:concern];
+                NSArray *recommend = [data objectForKey:@"recommends"];
+                NSArray *mine = [data objectForKey:@"fellows"];
+                for (int i = 0; i < recommend.count; i++) {
+                    ATOMConcern *concern = [MTLJSONAdapter modelOfClass:[ATOMConcern class] fromJSONDictionary:recommend[i] error:NULL];
+                    [retRecommend addObject:concern];
                 }
-                for (int i = 0; i < myDataArray.count; i++) {
-                    ATOMConcern *concern = [MTLJSONAdapter modelOfClass:[ATOMConcern class] fromJSONDictionary:myDataArray[i] error:NULL];
-                    [myConcernArray addObject:concern];
+                for (int i = 0; i < mine.count; i++) {
+                    ATOMConcern *concern = [MTLJSONAdapter modelOfClass:[ATOMConcern class] fromJSONDictionary:mine[i] error:NULL];
+                    [retMine addObject:concern];
                 }
+                
                 if (block) {
-                    block(recommendConcernArray, myConcernArray, nil);
+                    block(retRecommend, retMine, nil);
                 }
             }
         } else {
@@ -46,31 +50,6 @@
     }];
 }
 
-- (NSURLSessionDataTask *)ShowOtherConcern:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
-
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"profile/friends" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
-        if (ret == 1) {
-            NSMutableArray *resultArray = [NSMutableArray array];
-            NSArray *dataArray = [responseObject objectForKey:@"data"];
-            for (int i = 0; i < dataArray.count; i++) {
-                ATOMConcern *concern = [MTLJSONAdapter modelOfClass:[ATOMConcern class] fromJSONDictionary:dataArray[i] error:NULL];
-                [resultArray addObject:concern];
-            }
-            if (block) {
-                block(resultArray, nil);
-            }
-        } else {
-            if (block) {
-                block(nil, nil);
-            }
-        }
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        if (block) {
-            block(nil, error);
-        }
-    }];
-}
 
 
 

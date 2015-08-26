@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ATOMMainTabBarController;
+@class DDTabBarController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, strong) UINavigationController *baseNav;
-@property (nonatomic, strong) ATOMMainTabBarController *mainTabBarController;
+@property (nonatomic, strong) DDTabBarController *mainTabBarController;
 
 + (AppDelegate *)APP;
 

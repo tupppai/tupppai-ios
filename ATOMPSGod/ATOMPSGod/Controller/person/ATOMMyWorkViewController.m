@@ -8,7 +8,7 @@
 
 #import "ATOMMyWorkViewController.h"
 #import "ATOMMyWorkCollectionViewCell.h"
-#import "HotDetailViewController.h"
+#import "DDHotDetailVC.h"
 #import "ATOMShowReply.h"
 #import "ATOMHomeImage.h"
 #import "DDAskPageVM.h"
@@ -160,7 +160,7 @@ static int collumnNumber = 3;
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    HotDetailViewController *hdvc = [HotDetailViewController new];
+    DDHotDetailVC *hdvc = [DDHotDetailVC new];
     hdvc.askVM = _homeImageDataSource[indexPath.row];
     hdvc.fold = 1;
     [self pushViewController:hdvc animated:YES];

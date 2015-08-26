@@ -254,7 +254,7 @@
                 self.updatedTime = [NSDate date];
                 
                 // 恢复inset和offset
-                [UIView animateWithDuration:MJRefreshSlowAnimationDuration delay:0.0 options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionBeginFromCurrentState animations:^{
+                [UIView animateWithDuration:MJRefreshFastAnimationDuration delay:0.0 options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionBeginFromCurrentState animations:^{
                     _scrollView.mj_insetT -= self.mj_h;
                 } completion:nil];
             }
@@ -262,7 +262,7 @@
         }
             
         case MJRefreshHeaderStateRefreshing: {
-            [UIView animateWithDuration:MJRefreshFastAnimationDuration delay:0.0 options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionBeginFromCurrentState animations:^{
+            [UIView animateWithDuration:MJRefreshSlowAnimationDuration delay:0.0 options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionBeginFromCurrentState animations:^{
                 // 增加滚动区域
                 CGFloat top = _scrollViewOriginalInset.top + self.mj_h;
                 _scrollView.mj_insetT = top;

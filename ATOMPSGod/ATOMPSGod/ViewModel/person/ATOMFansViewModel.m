@@ -19,7 +19,7 @@
     _totalFansNumber = [NSString stringWithFormat:@"%d", (int)fans.totalFansNumber];
     _totalAskNumber = [NSString stringWithFormat:@"%d", (int)fans.totalAskNumber];
     _totalReplyNumber = [NSString stringWithFormat:@"%d", (int)fans.totalReplyNumber];
-    _isFellow = fans.isFellow;
+    _isFollow = fans.isFollow;
 }
 
 @end

@@ -8,16 +8,16 @@
 
 #import "AppDelegate.h"
 #import "ATOMLaunchViewController.h"
-#import "ATOMMainTabBarController.h"
-#import "ATOMCustomNavigationController.h"
-#import "ATOMLoginCustomNavigationController.h"
+#import "DDTabBarController.h"
+#import "DDNavigationController.h"
+#import "DDLoginNavigationController.h"
 #import "ATOMIntroductionOnFirstLaunchViewController.h"
 #import "ATOMBaseDAO.h"
 #import "UMessage.h"
 #import <ShareSDK/ShareSDK.h>
 #import <ShareSDKConnector/ShareSDKConnector.h>
 #import "WXApi.h"
-#import "CommentViewController.h"
+#import "DDCommentVC.h"
 @interface AppDelegate ()
 
 @end
@@ -37,7 +37,7 @@
     [self setupShareSDK];
     [self setupUmengPush:launchOptions];
 
-    [[IQKeyboardManager sharedManager] disableInViewControllerClass:[CommentViewController class]];
+    [[IQKeyboardManager sharedManager] disableInViewControllerClass:[DDCommentVC class]];
     [[IQKeyboardManager sharedManager]setEnableAutoToolbar:NO];
     return YES;
 }
@@ -84,11 +84,11 @@
                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 ATOMIntroductionOnFirstLaunchViewController* vc = [ATOMIntroductionOnFirstLaunchViewController new];
-                self.baseNav = [[ATOMLoginCustomNavigationController alloc] initWithRootViewController:vc];
+                self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:vc];
                 self.window.rootViewController = self.baseNav;
             } else {
                 ATOMLaunchViewController *lvc = [[ATOMLaunchViewController alloc] init];
-                self.baseNav = [[ATOMLoginCustomNavigationController alloc] initWithRootViewController:lvc];
+                self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
                 self.window.rootViewController = self.baseNav;
             }
         }
@@ -112,9 +112,9 @@
     [ATOMBaseDAO new];
 }
 
-- (ATOMMainTabBarController *)mainTabBarController {
+- (DDTabBarController *)mainTabBarController {
     if (_mainTabBarController == nil) {
-        _mainTabBarController = [ATOMMainTabBarController new];
+        _mainTabBarController = [DDTabBarController new];
     }
     return _mainTabBarController;
 }
@@ -151,6 +151,7 @@
                                               redirectUri:@"https://api.weibo.com/oauth2/default.html"
                                                  authType:SSDKAuthTypeBoth];
                       break;
+                  default: break;
               }
           }
      ];

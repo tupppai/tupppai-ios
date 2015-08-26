@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMLoginBaseViewController.h"
+#import "DDLoginBaseVC.h"
 
 typedef enum {
     ATOMSignUpWechat = 0,
@@ -15,7 +15,7 @@ typedef enum {
 }ATOMSignUpType;
 
 #import <UIKit/UIKit.h>
-#import "ATOMBaseViewController.h"
-@interface ATOMLaunchViewController : ATOMLoginBaseViewController
+#import "DDBaseVC.h"
+@interface ATOMLaunchViewController : DDLoginBaseVC
 
 @end

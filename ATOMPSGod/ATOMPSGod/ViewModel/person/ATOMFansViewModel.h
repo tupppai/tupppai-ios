@@ -18,7 +18,7 @@
 @property (nonatomic, copy) NSString *totalFansNumber;
 @property (nonatomic, copy) NSString *totalAskNumber;
 @property (nonatomic, copy) NSString *totalReplyNumber;
-@property (nonatomic, assign) BOOL isFellow;
+@property (nonatomic, assign) BOOL isFollow;
 
 - (void)setViewModelData:(ATOMFans *)fans;
 

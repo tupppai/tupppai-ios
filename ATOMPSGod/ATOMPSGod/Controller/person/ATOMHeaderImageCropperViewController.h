@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMBaseViewController.h"
+#import "DDBaseVC.h"
 
 @protocol ATOMCropHeaderImageCompleteProtocol <NSObject>
 
@@ -15,7 +15,7 @@
 @end
 
 
-@interface ATOMHeaderImageCropperViewController : ATOMLoginBaseViewController
+@interface ATOMHeaderImageCropperViewController : DDLoginBaseVC
 
 @property (nonatomic, strong) UIImage *originImage;
 @property (nonatomic, weak) id <ATOMCropHeaderImageCompleteProtocol> delegate;

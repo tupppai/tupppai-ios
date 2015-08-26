@@ -20,8 +20,7 @@
              @"totalFansNumber" : @"fans_count",
              @"totalAskNumber" : @"ask_count",
              @"totalReplyNumber" : @"reply_count",
-             @"isFellow" : @"is_fellow"
+             @"isFollow" : @"is_follow"
              };
 }
-
 @end
