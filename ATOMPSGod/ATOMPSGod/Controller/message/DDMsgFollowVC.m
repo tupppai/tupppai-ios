@@ -80,6 +80,8 @@
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(timestamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
+    [param setObject:@"follow" forKey:@"type"];
+
     ATOMShowConcernMessage *showConcernMessage = [ATOMShowConcernMessage new];
     [showConcernMessage ShowConcernMessage:param withBlock:^(NSMutableArray *concernMessageArray, NSError *error) {
         for (ATOMConcernMessage *concernMessage in concernMessageArray) {

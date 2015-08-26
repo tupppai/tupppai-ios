@@ -91,6 +91,8 @@
     [param setObject:@"time" forKey:@"sort"];
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
+    [param setObject:@"reply" forKey:@"type"];
+
     ATOMShowReplyMessage *showReplyMessage = [ATOMShowReplyMessage new];
     ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showReplyMessage ShowReplyMessage:param withBlock:^(NSMutableArray *replyMessageArray, NSError *error) {

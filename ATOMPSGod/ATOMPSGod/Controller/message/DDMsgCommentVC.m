@@ -91,10 +91,9 @@
     [param setObject:@"time" forKey:@"sort"];
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
+    [param setObject:@"comment" forKey:@"type"];
     ATOMShowCommentMessage *showCommentMessage = [ATOMShowCommentMessage new];
-    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showCommentMessage ShowCommentMessage:param withBlock:^(NSMutableArray *commentMessageArray, NSError *error) {
-        ////[SVProgressHUD dismiss];
         for (ATOMCommentMessage *commentMessage in commentMessageArray) {
             ATOMCommentMessageViewModel *commentMessageViewModel = [ATOMCommentMessageViewModel new];
             [commentMessageViewModel setViewModelData:commentMessage];
