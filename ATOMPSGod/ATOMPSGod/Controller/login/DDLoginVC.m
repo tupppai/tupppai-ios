@@ -6,21 +6,21 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMLoginViewController.h"
+#import "DDLoginVC.h"
 #import "ATOMLoginView.h"
 #import "DDTabBarController.h"
 #import "AppDelegate.h"
 #import "ATOMLogin.h"
 #import "ATOMUser.h"
 #import "ATOMUserProfileViewModel.h"
-#import "ATOMCreateProfileViewController.h"
+#import "DDCreateProfileVC.h"
 #import "ATOMShareSDKModel.h"
-#import "ATOMForgetPasswordViewController.h"
-@interface ATOMLoginViewController ()
+#import "DDInputPhoneFPVC.h"
+@interface DDLoginVC ()
 @property (nonatomic, strong) ATOMLoginView *loginView;
 @end
 
-@implementation ATOMLoginViewController
+@implementation DDLoginVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -75,8 +75,8 @@
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
                 } else if (isRegister == NO) {
                     NSLog(@"未注册微博账号");
-                    [ATOMCurrentUser currentUser].signUpType = ATOMSignUpWeibo;
-                    [ATOMCurrentUser currentUser].sourceData = sourceData;
+                    [DDUserModel currentUser].signUpType = ATOMSignUpWeibo;
+                    [DDUserModel currentUser].sourceData = sourceData;
                     ATOMUserProfileViewModel* ipvm = [ATOMUserProfileViewModel new];
                     ipvm.nickName = sourceData[@"name"];
                     ipvm.province = sourceData[@"province"];
@@ -87,7 +87,7 @@
                     } else {
                         ipvm.gender = @"女";
                     }
-                    ATOMCreateProfileViewController *cpvc = [ATOMCreateProfileViewController new];
+                    DDCreateProfileVC *cpvc = [DDCreateProfileVC new];
                     cpvc.userProfileViewModel = ipvm;
                     [self.navigationController pushViewController:cpvc animated:YES];
                 }
@@ -113,8 +113,8 @@
                     [AppDelegate APP].mainTabBarController = nil;
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
                 } else if (isRegister == NO) {
-                    [ATOMCurrentUser currentUser].signUpType = ATOMSignUpWechat;
-                    [ATOMCurrentUser currentUser].sourceData = sourceData;
+                    [DDUserModel currentUser].signUpType = ATOMSignUpWechat;
+                    [DDUserModel currentUser].sourceData = sourceData;
                     ATOMUserProfileViewModel* ipvm = [ATOMUserProfileViewModel new];
                     ipvm.nickName = sourceData[@"nickname"];
                     ipvm.province = sourceData[@"province"];
@@ -125,7 +125,7 @@
                     } else {
                         ipvm.gender = @"女";
                     }
-                    ATOMCreateProfileViewController *cpvc = [ATOMCreateProfileViewController new];
+                    DDCreateProfileVC *cpvc = [DDCreateProfileVC new];
                     cpvc.userProfileViewModel = ipvm;
                     [self.navigationController pushViewController:cpvc animated:YES];
                 }
@@ -138,7 +138,7 @@
 }
 
 - (void)clickForgetPasswordButton:(UIButton *)sender {
-    ATOMForgetPasswordViewController* fpvc = [ATOMForgetPasswordViewController new];
+    DDInputPhoneFPVC* fpvc = [DDInputPhoneFPVC new];
     [self.navigationController pushViewController:fpvc animated:YES];
 }
 

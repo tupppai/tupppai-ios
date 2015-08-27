@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ATOMHTTPRequestOperationManager.h"
+#import "DDSessionManager.h"
 
 @interface ATOMShowSettings : NSObject
 + (NSURLSessionDataTask *)getPushSetting:(NSDictionary *)param withBlock:(void (^)(NSDictionary *, NSError *))block;

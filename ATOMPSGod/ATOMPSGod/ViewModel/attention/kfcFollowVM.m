@@ -14,7 +14,7 @@
 #import "ATOMReplierViewModel.h"
 #import "ATOMComment.h"
 #import "DDCommentVM.h"
-#import "ATOMBaseRequest.h"
+#import "DDBaseService.h"
 #import "DDAskPageVM.h"
 @implementation kfcFollowVM
 
@@ -22,9 +22,9 @@
     self = [super init];
     if (self) {
         _imageID = 0;
-        _userID = [ATOMCurrentUser currentUser].uid;
-        _userName = [ATOMCurrentUser currentUser].username;
-        _avatarURL = [ATOMCurrentUser currentUser].avatar;
+        _userID = [DDUserModel currentUser].uid;
+        _userName = [DDUserModel currentUser].username;
+        _avatarURL = [DDUserModel currentUser].avatar;
         NSDateFormatter *df = [NSDateFormatter new];
         [df setDateFormat:@"yyyy年MM月dd日 HH时mm分"];
         NSDate *publishDate = [NSDate date];
@@ -109,7 +109,7 @@
     [param setValue:@(status) forKey:@"status"];
 //    NSString* url = _type == 1? @"ask/upask": @"reply/upreply";
 //    ATOMBaseRequest* baseRequest = [ATOMBaseRequest new];
-    [ATOMBaseRequest toggleLike:param withPageType:_type withID:_imageID withBlock:^(NSError *error) {
+    [DDBaseService toggleLike:param withPageType:_type withID:_imageID withBlock:^(NSError *error) {
         if (!error) {
             NSLog(@"Server成功toggle like");
             NSInteger number = [_likeNumber integerValue]+one;

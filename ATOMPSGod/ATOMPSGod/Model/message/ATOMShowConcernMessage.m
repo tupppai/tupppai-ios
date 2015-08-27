@@ -7,13 +7,13 @@
 //
 
 #import "ATOMShowConcernMessage.h"
-#import "ATOMHTTPRequestOperationManager.h"
+#import "DDSessionManager.h"
 #import "ATOMConcernMessage.h"
 
 @implementation ATOMShowConcernMessage
 
 - (NSURLSessionDataTask *)ShowConcernMessage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"message/list" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[DDSessionManager shareHTTPSessionManager] GET:@"message/list" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"ShowConcernMessage responseObject%@",responseObject);
         NSMutableArray *concernMessageArray = [NSMutableArray array];
         NSArray *dataArray = [ responseObject objectForKey:@"data"];

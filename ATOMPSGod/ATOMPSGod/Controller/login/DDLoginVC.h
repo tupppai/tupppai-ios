@@ -8,6 +8,6 @@
 
 #import "DDLoginBaseVC.h"
 
-@interface ATOMLoginViewController : DDLoginBaseVC
+@interface DDLoginVC : DDLoginBaseVC
 
 @end

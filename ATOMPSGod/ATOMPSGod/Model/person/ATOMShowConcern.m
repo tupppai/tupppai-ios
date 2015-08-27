@@ -7,13 +7,13 @@
 //
 
 #import "ATOMShowConcern.h"
-#import "ATOMHTTPRequestOperationManager.h"
+#import "DDSessionManager.h"
 #import "ATOMConcern.h"
 
 @implementation ATOMShowConcern
 
 - (NSURLSessionDataTask *)GetFollow:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSMutableArray *, NSError *))block {
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"profile/follows" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[DDSessionManager shareHTTPSessionManager] GET:@"profile/follows" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
         if (ret == 1) {
             

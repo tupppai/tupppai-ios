@@ -1,35 +1,31 @@
 //
-//  ATOMInputVerifyCode.m
+//  ATOMInputVerifyCodeAndPasswordViewController.m
 //  ATOMPSGod
 //
-//  Created by atom on 15/3/2.
-//  Copyright (c) 2015年 ATOM. All rights reserved.
+//  Created by Peiwei Chen on 8/5/15.
+//  Copyright (c) 2015 ATOM. All rights reserved.
 //
 
-#import "ATOMInputVerifyCodeViewController.h"
-#import "ATOMInputVerifyCodeView.h"
-#import "ATOMSubmitUserInfomation.h"
-#import "AppDelegate.h"
-//#import "ATOMLoginViewController.h"
-#import "DDTabBarController.h"
+#import "DDInputAuthcodePwdFPVC.h"
+#import "ATOMInputVerifyCodeAndPasswordView.h"
+#import "DDBaseService.h"
 #import "ATOMGetMoblieCode.h"
 
-@interface ATOMInputVerifyCodeViewController ()
+@interface DDInputAuthcodePwdFPVC ()
 
-@property (nonatomic, strong) ATOMInputVerifyCodeView *inputVerifyView;
+@property (nonatomic, strong) ATOMInputVerifyCodeAndPasswordView *inputVerifyView;
 @property (nonatomic, strong) NSTimer *verifyTimer;
-//@property (nonatomic, strong) NSDateFormatter *df;
 @end
 
-@implementation ATOMInputVerifyCodeViewController
+@implementation DDInputAuthcodePwdFPVC
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
     [self createVerifyTimer];
 }
-
 - (void)createUI {
-    _inputVerifyView = [ATOMInputVerifyCodeView new];
+    _inputVerifyView = [ATOMInputVerifyCodeAndPasswordView new];
     self.view = _inputVerifyView;
     [_inputVerifyView.sendVerifyCodeButton addTarget:self action:@selector(clickVerifyButton:) forControlEvents:UIControlEventTouchUpInside];
     [_inputVerifyView.verifyCodeTextField becomeFirstResponder];
@@ -38,7 +34,9 @@
 }
 
 - (void)createVerifyTimer {
-    _verifyTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(runVerifyTimer) userInfo:nil repeats:YES];
+    
+    _verifyTimer = [NSTimer scheduledTimerWithTimeInterval:1.f target:self selector:@selector(runVerifyTimer) userInfo:nil repeats:YES];
+    _inputVerifyView.sendVerifyCodeButton.userInteractionEnabled = NO;
 }
 
 - (void)runVerifyTimer {
@@ -49,7 +47,6 @@
         _inputVerifyView.sendVerifyCodeButton.userInteractionEnabled = YES;
     }
 }
-
 - (void)clickVerifyButton:(UIButton *)sender {
     _inputVerifyView.sendVerifyCodeButton.userInteractionEnabled = NO;
     _inputVerifyView.lastSecond = 30;
@@ -59,7 +56,7 @@
 
 - (void)updateAuthCode {
     ATOMGetMoblieCode *getMobileCode = [ATOMGetMoblieCode new];
-    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:[ATOMCurrentUser currentUser].mobile, @"phone", nil];
+    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:[DDUserModel currentUser].mobile, @"phone", nil];
     [getMobileCode GetMobileCode:param withBlock:^(NSString *verifyCode, NSError *error) {
         if (verifyCode && !error) {
             self.verifyCode = verifyCode;
@@ -69,35 +66,39 @@
     }];
 }
 
+
 - (void)clickRightButtonItem{
-    
-    if ([_inputVerifyView.verifyCodeTextField.text isEqualToString:_verifyCode]) {
-        NSMutableDictionary *param = [[ATOMCurrentUser currentUser] dictionaryFromModel];
-        ATOMSubmitUserInformation *submitUserInformation = [ATOMSubmitUserInformation new];
-        
-        [submitUserInformation SubmitUserInformation:[param copy] withBlock:^(NSError *error) {
-            if (!error) {
-                [Util ShowTSMessageSuccess:@"👼求PS大神欢迎你的加入❗️"];
-                [self.navigationController setViewControllers:nil];
-                [AppDelegate APP].mainTabBarController = nil;
-                [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
+        if ([_inputVerifyView.verifyCodeTextField.text isEqualToString:_verifyCode]) {
+            if ([_inputVerifyView.passwordTextField.text isPassword]) {
+            NSMutableDictionary* param = [NSMutableDictionary new];
+            [param setObject:_inputVerifyView.passwordTextField.text forKey:@"new_pwd"];
+            [param setObject:_phoneNumber forKey:@"phone"];
+
+            [DDBaseService post:param withUrl:@"account/resetPassword" withBlock:^(NSError *error, int ret) {
+                if ( error == nil && ret == 1) {
+                    [Util ShowTSMessageSuccess:@"成功设置密码"];
+                    [self.navigationController popToRootViewControllerAnimated:YES];
+                } else {
+                    [Util ShowTSMessageError:@"操作失败"];
+                }
+            }];
+            } else {
+                [Util ShowTSMessageWarn:@"密码必须由6~16位的数字和字母组成"];
             }
-        }];
-    } else {
-        [Util ShowTSMessageError:@"验证码错误哦"];
+        } else {
+            [Util ShowTSMessageError:@"验证码有误"];
+        }
     }
-}
+
 - (void)clickLeftButtonItem{
     [self.navigationController popViewControllerAnimated:YES];
 }
-    
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [_verifyTimer invalidate];
     _verifyTimer = nil;
 }
 
-
-
-
 @end
+

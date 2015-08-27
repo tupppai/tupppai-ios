@@ -7,7 +7,7 @@
 //
 
 #import "ATOMLogin.h"
-#import "ATOMHTTPRequestOperationManager.h"
+#import "DDSessionManager.h"
 #import "ATOMUser.h"
 #import "ATOMUserDAO.h"
 #import "ATOMUserProfileViewModel.h"
@@ -22,7 +22,7 @@
 
 - (NSURLSessionDataTask *)openIDAuth:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(bool isRegister,NSString* info, NSError *error))block {
     [Hud activity:@""];
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:[NSString stringWithFormat:@"auth/%@",type] parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[DDSessionManager shareHTTPSessionManager] POST:[NSString stringWithFormat:@"auth/%@",type] parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         [Hud dismiss];
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
@@ -30,7 +30,7 @@
             if (isRegistered == 1) {
                 ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:[ responseObject objectForKey:@"data"][@"user_obj"] error:NULL];
                 //保存更新数据库的user,并更新currentUser
-                [[ATOMCurrentUser currentUser]saveAndUpdateUser:user];
+                [[DDUserModel currentUser]saveAndUpdateUser:user];
                 block(YES,@"登录成功",nil);
             } else {
                 if (block) {
@@ -50,7 +50,7 @@
 
 - (NSURLSessionDataTask* )Login:(NSDictionary*)param withBlock:(void (^)(BOOL succeed))block{
     [Hud activity:@""];
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"account/login" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[DDSessionManager shareHTTPSessionManager] POST:@"account/login" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         [Hud dismiss];
 
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"]integerValue];
@@ -66,7 +66,7 @@
                         [Util ShowTSMessageError:@"登录失败"];
                     }
                     //保存更新数据库的user,并更新currentUser
-                    [[ATOMCurrentUser currentUser]saveAndUpdateUser:user];
+                    [[DDUserModel currentUser]saveAndUpdateUser:user];
                     if (block) {
                         block(YES);
                     }

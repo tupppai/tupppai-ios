@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ATOMLaunchViewController.h"
+#import "DDLaunchVC.h"
 @class ATOMUser;
 
-@interface ATOMCurrentUser : NSObject
+@interface DDUserModel : NSObject
 
 
 /**
@@ -79,7 +79,7 @@
 @property (nonatomic, assign) bool bindWeibo;
 
 
-+ (ATOMCurrentUser *)currentUser;
++ (DDUserModel *)currentUser;
 
 - (NSMutableDictionary *)dictionaryFromModel;
 

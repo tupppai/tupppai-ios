@@ -29,6 +29,7 @@
     self.showsHorizontalScrollIndicator = NO;
     self.contentSize = CGSizeMake(SCREEN_WIDTH * 2, 0);
     self.pagingEnabled = YES;
+    self.scrollsToTop = NO;
 }
 
 - (void)createSubView {
@@ -41,7 +42,6 @@
     [self addSubview:_homepageHotView];
     _hotTable = [[RefreshTableView alloc] initWithFrame:_homepageHotView.bounds];
     _hotTable.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _hotTable.scrollsToTop = YES;
     [_homepageHotView addSubview:_hotTable];
 }
 
@@ -50,7 +50,6 @@
     [self addSubview:_homepageRecentView];
     _askTable = [[RefreshTableView alloc] initWithFrame:_homepageRecentView.bounds];
     _askTable.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _askTable.scrollsToTop = YES;
     [_homepageRecentView addSubview:_askTable];
 }
 

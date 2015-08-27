@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ATOMForgetPasswordViewController : DDLoginBaseVC
+@interface DDInputPhoneFPVC : DDLoginBaseVC
 
 @end

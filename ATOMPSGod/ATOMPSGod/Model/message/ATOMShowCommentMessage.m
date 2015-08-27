@@ -7,7 +7,7 @@
 //
 
 #import "ATOMShowCommentMessage.h"
-#import "ATOMHTTPRequestOperationManager.h"
+#import "DDSessionManager.h"
 #import "ATOMCommentMessage.h"
 #import "ATOMHomeImage.h"
 #import "ATOMImageTipLabel.h"
@@ -15,7 +15,7 @@
 @implementation ATOMShowCommentMessage
 
 - (NSURLSessionDataTask *)ShowCommentMessage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"message/list" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[DDSessionManager shareHTTPSessionManager] GET:@"message/list" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSMutableArray *commentMessageArray = [NSMutableArray array];
         NSArray *dataArray = [ responseObject objectForKey:@"data"];
         int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];

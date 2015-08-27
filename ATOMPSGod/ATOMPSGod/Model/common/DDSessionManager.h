@@ -1,5 +1,5 @@
 //
-//  ATOMHTTPRequestOperationManager.h
+//  DDSessionManager.h
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/16.
@@ -8,7 +8,7 @@
 
 #import "AFHTTPSessionManager.h"
 
-@interface ATOMHTTPRequestOperationManager : AFHTTPSessionManager
+@interface DDSessionManager : AFHTTPSessionManager
 
 + (instancetype)shareHTTPSessionManager;
 

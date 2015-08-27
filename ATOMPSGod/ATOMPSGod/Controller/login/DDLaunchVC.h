@@ -16,6 +16,6 @@ typedef enum {
 
 #import <UIKit/UIKit.h>
 #import "DDBaseVC.h"
-@interface ATOMLaunchViewController : DDLoginBaseVC
+@interface DDLaunchVC : DDLoginBaseVC
 
 @end

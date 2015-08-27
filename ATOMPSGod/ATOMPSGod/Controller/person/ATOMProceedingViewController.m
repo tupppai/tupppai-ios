@@ -17,7 +17,7 @@
 #import "ATOMShowProceeding.h"
 #import "RefreshFooterTableView.h"
 
-#import "ATOMBaseRequest.h"
+#import "DDBaseService.h"
 #import "DDCommentVC.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -118,7 +118,7 @@
             [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.deleteButton.frame, p)) {
             NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(cell.viewModel.ID),@"id", nil];
-            [ATOMBaseRequest post:param withUrl:@"profile/deleteDownloadRecord" withBlock:^(NSError *error,int ret) {
+            [DDBaseService post:param withUrl:@"profile/deleteDownloadRecord" withBlock:^(NSError *error,int ret) {
                 if (!error) {
                     [Hud success:@"已删除" inView:self.view];
                 }

@@ -7,12 +7,12 @@
 //
 
 #import "ATOMGetMoblieCode.h"
-#import "ATOMHTTPRequestOperationManager.h"
+#import "DDSessionManager.h"
 
 @implementation ATOMGetMoblieCode
 
 - (void)GetMobileCode:(NSDictionary *)param withBlock:(void (^)(NSString *, NSError *))block {
-     [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"account/requestAuthCode" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+     [[DDSessionManager shareHTTPSessionManager] GET:@"account/requestAuthCode" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSInteger ret = [[ responseObject objectForKey:@"ret"] integerValue];
         NSString *verifyCode = [ responseObject objectForKey:@"data"][@"code"];
         if (block) {

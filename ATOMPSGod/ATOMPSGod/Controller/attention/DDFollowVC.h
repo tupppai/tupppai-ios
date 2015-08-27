@@ -8,6 +8,6 @@
 
 #import "DDBaseVC.h"
 
-@interface ATOMMyFollowViewController : DDBaseVC
+@interface DDFollowVC : DDBaseVC
 
 @end

@@ -7,14 +7,14 @@
 //
 
 #import "ATOMShowProceeding.h"
-#import "ATOMHTTPRequestOperationManager.h"
+#import "DDSessionManager.h"
 #import "ATOMHomeImage.h"
 #import "ATOMImageTipLabel.h"
 
 @implementation ATOMShowProceeding
 
 - (NSURLSessionDataTask *)ShowProceeding:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"profile/downloaded" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[DDSessionManager shareHTTPSessionManager] GET:@"profile/downloaded" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
         if (ret == 1) {
         NSMutableArray *resultArray = [NSMutableArray array];

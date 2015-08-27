@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMCreateProfileViewController.h"
+#import "DDCreateProfileVC.h"
 #import "ATOMCreateProfileView.h"
-#import "ATOMMobileRegisterViewController.h"
+#import "DDPhoneRegisterVC.h"
 #import "ATOMHeaderImageCropperViewController.h"
 #import "ATOMUploadImage.h"
 #import "ATOMImage.h"
@@ -16,7 +16,7 @@
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMCreateProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, ATOMCropHeaderImageCompleteProtocol>
+@interface DDCreateProfileVC () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, ATOMCropHeaderImageCompleteProtocol>
 @property (nonatomic, strong) ATOMCreateProfileView *createProfileView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) UITapGestureRecognizer *tapSexViewGesture;
@@ -28,7 +28,7 @@
 
 @end
 
-@implementation ATOMCreateProfileViewController
+@implementation DDCreateProfileVC
 
 #pragma mark - Lazy Initialize
 - (JGActionSheet *)cameraActionsheet {
@@ -132,9 +132,9 @@
         _createProfileView.showSexLabel.text = _userProfileViewModel.gender;
         [_createProfileView.userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString: _userProfileViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
         _createProfileView.nicknameTextField.text = _userProfileViewModel.nickName;
-        [ATOMCurrentUser currentUser].avatar = _userProfileViewModel.avatarURL;
+        [DDUserModel currentUser].avatar = _userProfileViewModel.avatarURL;
         
-        switch ([ATOMCurrentUser currentUser].signUpType) {
+        switch ([DDUserModel currentUser].signUpType) {
                 //微信获取到的地区是名字，需要解析为ID
             case ATOMSignUpWechat:
                 _createProfileView.showAreaLabel.text = [NSString stringWithFormat:@"%@,%@",_userProfileViewModel.province,_userProfileViewModel.city];
@@ -143,12 +143,12 @@
                     if ([provinceName isEqualToString:_userProfileViewModel.province]) {
                         NSArray* cities = province[@"citys"];
                         NSString* provinceID = province[@"id"];
-                        [[ATOMCurrentUser  currentUser].region setObject:provinceID forKey:@"provinceID"];
+                        [[DDUserModel  currentUser].region setObject:provinceID forKey:@"provinceID"];
                         for (NSDictionary* city in cities) {
                             NSString* cityName = [city allValues][0];
                             if ([cityName isEqualToString:_userProfileViewModel.city]) {
                                 NSString* cityID = [city allKeys][0];
-                                [[ATOMCurrentUser  currentUser].region setObject:cityID forKey:@"cityID"];
+                                [[DDUserModel  currentUser].region setObject:cityID forKey:@"cityID"];
                             }
                         }
                     
@@ -162,12 +162,12 @@
                     if ([provinceID isEqualToString: _userProfileViewModel.province]) {
                         NSArray* cities = province[@"citys"];
                         NSString* provinceName = province[@"name"];
-                        [[ATOMCurrentUser  currentUser].region setObject:provinceID forKey:@"provinceID"];
+                        [[DDUserModel  currentUser].region setObject:provinceID forKey:@"provinceID"];
                         for (NSDictionary* city in cities) {
                             NSString* cityID = [city allKeys][0];
                             if ([cityID isEqualToString:_userProfileViewModel.city]) {
                                 NSString* cityName = [city allValues][0];
-                                [[ATOMCurrentUser currentUser].region setObject:cityID forKey:@"cityID"];
+                                [[DDUserModel currentUser].region setObject:cityID forKey:@"cityID"];
                                 _createProfileView.showAreaLabel.text = [NSString stringWithFormat:@"%@,%@",provinceName,cityName];
                             }
                         }
@@ -196,9 +196,9 @@
         [Hud text:@"请选择性别"];
         return ;
     }
-    [ATOMCurrentUser currentUser].sex = [_createProfileView tagOfCurrentSex];
-    [ATOMCurrentUser currentUser].username = str;
-    ATOMMobileRegisterViewController *mrvc = [[ATOMMobileRegisterViewController alloc] init];
+    [DDUserModel currentUser].sex = [_createProfileView tagOfCurrentSex];
+    [DDUserModel currentUser].username = str;
+    DDPhoneRegisterVC *mrvc = [[DDPhoneRegisterVC alloc] init];
     [self.navigationController pushViewController:mrvc animated:YES];
 }
 - (void)clickLeftButtonItem {
@@ -266,8 +266,8 @@
             NSLog(@"%@", error);
             return ;
         }
-        [ATOMCurrentUser currentUser].avatar = imageInfomation.imageURL;
-        [ATOMCurrentUser currentUser].avatarID = imageInfomation.imageID;
+        [DDUserModel currentUser].avatar = imageInfomation.imageURL;
+        [DDUserModel currentUser].avatarID = imageInfomation.imageID;
     }];
 }
 #pragma mark - UITextFieldDelegate
@@ -360,12 +360,15 @@
 -(void)updateAreaLabel {
     NSString* provinceName = _provinces[_selectedRowComponent1][@"name"];
     NSArray* cities = _provinces[_selectedRowComponent1][@"citys"];
-    NSString* cityName = [cities[_selectedRowComponent2] allValues][0];
+    NSString* cityName = @"";
+    if(cities.count > 0) {
+         cityName = [cities[_selectedRowComponent2] allValues][0];
+        [[DDUserModel currentUser].region setValue:[cities[_selectedRowComponent2] allKeys][0] forKey:@"cityID"];
+    }
     _createProfileView.showAreaLabel.text = [NSString stringWithFormat:@"%@,%@",provinceName,cityName];
-    [[ATOMCurrentUser currentUser].region setValue:cityName forKey:@"cityName"];
-    [[ATOMCurrentUser currentUser].region setValue:provinceName forKey:@"provinceName"];
-    [[ATOMCurrentUser currentUser].region setValue:[cities[_selectedRowComponent2] allKeys][0] forKey:@"cityID"];
-    [[ATOMCurrentUser currentUser].region setValue:_provinces[_selectedRowComponent1][@"id"] forKey:@"provinceID"];
+    [[DDUserModel currentUser].region setValue:cityName forKey:@"cityName"];
+    [[DDUserModel currentUser].region setValue:provinceName forKey:@"provinceName"];
+    [[DDUserModel currentUser].region setValue:_provinces[_selectedRowComponent1][@"id"] forKey:@"provinceID"];
 }
 //load region.csv before doing anything
 -(void)loadRegionResource {

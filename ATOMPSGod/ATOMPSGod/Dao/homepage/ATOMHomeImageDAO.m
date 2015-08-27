@@ -69,8 +69,8 @@
 - (NSArray *)selectHomeImagesWithHomeType:(ATOMHomepageViewType)homeType {
     __block NSMutableArray *muArray = [NSMutableArray array];
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
-        NSString* homeTypeStr = homeType == ATOMHomepageViewTypeHot?@"hot":@"new";
-        NSString *stmt = @"SELECT * FROM ATOMHomeImage where homePageType = ? ORDER BY uploadTime DESC LIMIT 5";
+        NSString* homeTypeStr = homeType == ATOMHomepageViewTypeHot?@"hot":@"   new";
+        NSString *stmt = @"SELECT * FROM ATOMHomeImage where homePageType = ? ORDER BY uploadTime DESC LIMIT 10";
         NSArray *param =  @[homeTypeStr];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {

@@ -7,12 +7,12 @@
 //
 
 #import "ATOMInviteModel.h"
-#import "ATOMHTTPRequestOperationManager.h"
+#import "DDSessionManager.h"
 #import "ATOMRecommendUser.h"
 @implementation ATOMInviteModel
 - (NSURLSessionDataTask *)showRecomendUsers:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *recommendMasters,NSMutableArray *recommendFriends, NSError *))block {
     //get_masters
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"profile/get_recommend_users" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[DDSessionManager shareHTTPSessionManager] GET:@"profile/get_recommend_users" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"showMasters responseObject%@",responseObject);
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
 //        NSMutableArray *recommendMasters;
@@ -56,7 +56,7 @@
 
 + (NSURLSessionDataTask *)invite:(NSDictionary *)param {
     NSLog(@"invite param%@",param);
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"invitation/invite" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[DDSessionManager shareHTTPSessionManager] GET:@"invitation/invite" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"invite responseObject%@",responseObject);
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret != 1) {

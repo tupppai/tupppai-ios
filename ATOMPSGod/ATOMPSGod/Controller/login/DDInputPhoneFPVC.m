@@ -6,17 +6,17 @@
 //  Copyright (c) 2015 ATOM. All rights reserved.
 //
 
-#import "ATOMForgetPasswordViewController.h"
-#import "ATOMInputVerifyCodeAndPasswordViewController.h"
+#import "DDInputPhoneFPVC.h"
+#import "DDInputAuthcodePwdFPVC.h"
 #import "ATOMInputMobileView.h"
 #import "ATOMGetMoblieCode.h"
-@interface ATOMForgetPasswordViewController () <UITextFieldDelegate>
+@interface DDInputPhoneFPVC () <UITextFieldDelegate>
 
 @property (nonatomic, strong) ATOMInputMobileView *inputMobileView;
 
 @end
 
-@implementation ATOMForgetPasswordViewController
+@implementation DDInputPhoneFPVC
 #pragma mark - UI
 
 - (void)viewDidLoad {
@@ -45,8 +45,8 @@
         NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:_inputMobileView.mobileTextField.text, @"phone", nil];
         [getMobileCode GetMobileCode:param withBlock:^(NSString *verifyCode, NSError *error) {
             if (verifyCode && !error) {
-                [ATOMCurrentUser currentUser].mobile = _inputMobileView.mobileTextField.text;
-                ATOMInputVerifyCodeAndPasswordViewController *ivcvc = [ATOMInputVerifyCodeAndPasswordViewController new];
+                [DDUserModel currentUser].mobile = _inputMobileView.mobileTextField.text;
+                DDInputAuthcodePwdFPVC *ivcvc = [DDInputAuthcodePwdFPVC new];
                 ivcvc.verifyCode = verifyCode;
                 ivcvc.phoneNumber = _inputMobileView.mobileTextField.text;
 

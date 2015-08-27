@@ -8,6 +8,6 @@
 
 #import "DDLoginBaseVC.h"
 
-@interface ATOMMobileRegisterViewController : DDLoginBaseVC
+@interface DDPhoneRegisterVC : DDLoginBaseVC
 
 @end

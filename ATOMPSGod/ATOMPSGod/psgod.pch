@@ -26,7 +26,7 @@
 #import "KeyboardManager.h"
 #import "AFNetworking.h"
 #import "Mantle.h"
-#import "ATOMCurrentUser.h"
+#import "DDUserModel.h"
 #import "FMDB.h"
 #import "MTLFMDBAdapter.h"
 #import "MJRefresh.h"

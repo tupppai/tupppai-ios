@@ -106,22 +106,22 @@
             cell.imageView.image = [UIImage imageNamed:@"weibo"];
             cell.textLabel.text = @"新浪微博";
             [cell addSwitch];
-            [cell.bindSwitch setOn:[ATOMCurrentUser currentUser].bindWeibo];
+            [cell.bindSwitch setOn:[DDUserModel currentUser].bindWeibo];
         } else if (row == 1) {
             cell.imageView.image = [UIImage imageNamed:@"wechat"];
             cell.textLabel.text = @"微信";
             [cell addSwitch];
-            [cell.bindSwitch setOn:[ATOMCurrentUser currentUser].bindWechat];
+            [cell.bindSwitch setOn:[DDUserModel currentUser].bindWechat];
         }
         [cell.bindSwitch addTarget:self action:@selector(toggleSwitch:) forControlEvents:UIControlEventValueChanged];
         cell.bindSwitch.tag = indexPath.row;
     } else if (section == 1) {
         cell.textLabel.text = @"手机号";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        if ([[ATOMCurrentUser currentUser].mobile isEqualToString:@"-1"]) {
+        if ([[DDUserModel currentUser].mobile isEqualToString:@"-1"]) {
             cell.phoneNumber = @"未绑定";
         } else {
-            cell.phoneNumber = [ATOMCurrentUser currentUser].mobile;
+            cell.phoneNumber = [DDUserModel currentUser].mobile;
         }
     }
    

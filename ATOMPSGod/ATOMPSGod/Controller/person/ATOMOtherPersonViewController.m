@@ -231,7 +231,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
     _isFirstEnterWorkCollectionView = YES;
     [self getDataSourceWithType:@"upload"];
     
-    if (_userID == [ATOMCurrentUser currentUser].uid) {
+    if (_userID == [DDUserModel currentUser].uid) {
         _otherPersonView.uploadHeaderView.attentionButton.hidden = YES;
     }
 }

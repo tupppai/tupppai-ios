@@ -7,7 +7,7 @@
 //
 
 #import "ATOMShowInviteMessage.h"
-#import "ATOMHTTPRequestOperationManager.h"
+#import "DDSessionManager.h"
 #import "ATOMHomeImage.h"
 #import "ATOMInviteMessage.h"
 #import "ATOMImageTipLabel.h"
@@ -15,7 +15,7 @@
 @implementation ATOMShowInviteMessage
 
 - (NSURLSessionDataTask *)ShowInviteMessage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"message/list" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[DDSessionManager shareHTTPSessionManager] GET:@"message/list" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"ShowInviteMessage responseObject%@",responseObject);
         NSMutableArray *inviteMessageArray = [NSMutableArray array];
         NSArray *dataArray = [ responseObject objectForKey:@"data"];

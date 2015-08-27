@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ATOMBaseRequest : NSObject
+@interface DDBaseService : NSObject
 + (NSURLSessionDataTask *)toggleLike:(NSDictionary *)param withPageType:(ATOMPageType)type withID:(NSInteger)ID  withBlock:(void (^)(NSError *))block;
 + (void)toggleLike:(NSDictionary *)param withType:(ATOMPageType)type withID:(NSInteger)ID  withBlock:(void (^)(NSError *))block;
 + (void)downloadImage:(NSString*)url withBlock:(void (^)(UIImage* image))block;

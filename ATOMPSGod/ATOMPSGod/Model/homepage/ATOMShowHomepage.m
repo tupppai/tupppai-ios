@@ -7,7 +7,7 @@
 //
 
 #import "ATOMShowHomepage.h"
-#import "ATOMHTTPRequestOperationManager.h"
+#import "DDSessionManager.h"
 #import "ATOMHomeImage.h"
 #import "ATOMImageTipLabel.h"
 #import "ATOMReplier.h"
@@ -60,7 +60,7 @@
 - (NSURLSessionDataTask *)toggleLike:(NSDictionary *)param withID:(NSInteger)imageID  withBlock:(void (^)(NSString *, NSError *))block {
     NSString* url = [NSString stringWithFormat:@"ask/upask/%ld",(long)imageID];
     NSLog(@"param %@, url %@",param,url);
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[DDSessionManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
             if (block) {
@@ -77,7 +77,7 @@
 }
 
 - (NSURLSessionDataTask *)ShowHomepage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"ask/index" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[DDSessionManager shareHTTPSessionManager] GET:@"ask/index" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"ShowHomepage responseObject%@",responseObject);
         NSLog(@"ShowHomepage  info%@",[responseObject objectForKey:@"info"]);
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
@@ -129,38 +129,6 @@
             [self.homeImageDAO updateHomeImage:homeImage];
         } else {
             [self.homeImageDAO insertHomeImage:homeImage];
-            
-            //！没有必要把图片存起来，AFNetworking已经cached了图片。
-            
-//            //创建HomePage目录
-//            NSFileManager *fileManager = [NSFileManager defaultManager];
-//            NSString *homePageDirectory = [PATH_OF_DOCUMENT stringByAppendingPathComponent:@"HomePage"];
-//            BOOL flag;
-//            if ([fileManager fileExistsAtPath:homePageDirectory isDirectory:&flag]) {
-//                if (flag) {
-//                    NSLog(@"HomePage directory already exists");
-//                }
-//            } else {
-//                BOOL bo = [fileManager createDirectoryAtPath:homePageDirectory withIntermediateDirectories:YES attributes:nil error:NULL];
-//                if (bo) {
-//                    NSLog(@"create HomePage directory success");
-//                } else {
-//                    NSLog(@"create HomePage directory fail");
-//                }
-//            }
-//            //将图片写入沙盒中的HomePage目录下
-//            dispatch_queue_t q = dispatch_queue_create("LoadImage", NULL);
-//            dispatch_async(q, ^{
-//                NSURL *imageURL = [NSURL URLWithString:homeImage.imageURL];
-//                NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-//                UIImage *image = [UIImage imageWithData:imageData];
-//                NSString *path = [homePageDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"ATOMIMAGE-%d.jpg", (int)homeImage.imageID]];
-//                if ([UIImageJPEGRepresentation(image, 1) writeToFile:path atomically:YES]) {
-////                    NSLog(@"write ATOMIMAGE-%d success", (int)homeImage.imageID);
-//                } else {
-//                    NSLog(@"write ATOMIMAGE-%d fail in %@", (int)homeImage.imageID, path);
-//                }
-//            });
         }
         //插入标签
         NSArray *labels = homeImage.tipLabelArray;

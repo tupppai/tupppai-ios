@@ -8,7 +8,7 @@
 
 #import "DDLoginBaseVC.h"
 
-@interface ATOMInputVerifyCodeViewController : DDLoginBaseVC
+@interface DDAuthcodeVC : DDLoginBaseVC
 
 @property (nonatomic, copy) NSString *verifyCode;
 

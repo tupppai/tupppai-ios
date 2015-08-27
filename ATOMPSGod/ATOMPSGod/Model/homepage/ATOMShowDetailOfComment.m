@@ -7,7 +7,7 @@
 //
 
 #import "ATOMShowDetailOfComment.h"
-#import "ATOMHTTPRequestOperationManager.h"
+#import "DDSessionManager.h"
 #import "ATOMComment.h"
 #import "DDCommentReplyVM.h"
 
@@ -27,7 +27,7 @@
 }
 
 - (NSURLSessionDataTask *)ShowDetailOfComment:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSMutableArray *, NSError *))block {
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"comment/index" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[DDSessionManager shareHTTPSessionManager] GET:@"comment/index" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"ShowDetailOfComment param %@,responseObject%@",param,responseObject);
         NSMutableArray *hotCommentArray = [NSMutableArray array];
         NSMutableArray *recentCommentArray = [NSMutableArray array];
@@ -72,7 +72,7 @@
 }
 
 - (NSURLSessionDataTask *)SendComment:(NSDictionary *)param withBlock:(void (^)(NSInteger, NSError *))block {
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"comment/save" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[DDSessionManager shareHTTPSessionManager] POST:@"comment/save" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
             NSInteger comment_id = [[ responseObject objectForKey:@"data"][@"id"] integerValue];
@@ -94,7 +94,7 @@
 
 - (NSURLSessionDataTask *)toggleLike:(NSDictionary *)param withID:(NSInteger)commentID withBlock:(void (^)(NSError *))block {
     NSString* url = [NSString stringWithFormat:@"comment/upComment/%ld",(long)commentID];    
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[DDSessionManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         if (block) {
             block(nil);
         }

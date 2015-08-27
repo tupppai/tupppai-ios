@@ -8,8 +8,8 @@
 
 #import "ATOMModifyPasswordViewController.h"
 #import "ATOMModifyPasswordView.h"
-#import "ATOMBaseRequest.h"
-#import "ATOMForgetPasswordViewController.h"
+#import "DDBaseService.h"
+#import "DDInputPhoneFPVC.h"
 
 @interface ATOMModifyPasswordViewController ()
 
@@ -48,7 +48,7 @@
         [param setObject:_modifyPasswordView.oldPasswordTextField.text forKey:@"old_pwd"];
         [param setObject:_modifyPasswordView.modifyPasswordTextField.text forKey:@"new_pwd"];
 
-        [ATOMBaseRequest post:param withUrl:@"profile/updatePassword" withBlock:^(NSError *error, int ret) {
+        [DDBaseService post:param withUrl:@"profile/updatePassword" withBlock:^(NSError *error, int ret) {
             if (error == nil) {
                 if (ret == 1) {
                     [Util ShowTSMessageSuccess:@"修改密码成功"];
@@ -69,7 +69,7 @@
 
 
 - (void)clickForgetPasswordButton:(UIButton *)sender {
-    ATOMForgetPasswordViewController* fpvc = [ATOMForgetPasswordViewController new];
+    DDInputPhoneFPVC* fpvc = [DDInputPhoneFPVC new];
     [self.navigationController pushViewController:fpvc animated:YES];
 }
 - (BOOL)isNewPasswordAccepted {

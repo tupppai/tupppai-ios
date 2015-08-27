@@ -12,7 +12,7 @@
 #import "DDTipLabelVM.h"
 #import "ATOMReplier.h"
 #import "ATOMReplierViewModel.h"
-#import "ATOMBaseRequest.h"
+#import "DDBaseService.h"
 @interface DDAskPageVM ()
 
 
@@ -25,9 +25,9 @@
     if (self) {
         _type = 1;
         _ID = 0;
-        _userID = [ATOMCurrentUser currentUser].uid;
-        _userName = [ATOMCurrentUser currentUser].username;
-        _avatarURL = [ATOMCurrentUser currentUser].avatar;
+        _userID = [DDUserModel currentUser].uid;
+        _userName = [DDUserModel currentUser].username;
+        _avatarURL = [DDUserModel currentUser].avatar;
         NSDateFormatter *df = [NSDateFormatter new];
         [df setDateFormat:@"MM月dd日 HH时mm分"];
         NSDate *publishDate = [NSDate date];
@@ -126,7 +126,7 @@
     NSInteger one = _liked? -1:1;
     _liked = !_liked;
     [param setValue:@(status) forKey:@"status"];
-    [ATOMBaseRequest toggleLike:param withPageType:ATOMPageTypeAsk withID:_ID withBlock:^(NSError *error) {
+    [DDBaseService toggleLike:param withPageType:ATOMPageTypeAsk withID:_ID withBlock:^(NSError *error) {
         if (!error) {
             NSInteger number = [_likeNumber integerValue]+one;
             [self setLikeNumber:[NSString stringWithFormat:@"%ld",(long)number]];

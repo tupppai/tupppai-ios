@@ -7,13 +7,13 @@
 //
 
 #import "ATOMShowReply.h"
-#import "ATOMHTTPRequestOperationManager.h"
+#import "DDSessionManager.h"
 #import "ATOMHomeImage.h"
 #import "ATOMImageTipLabel.h"
 
 @implementation ATOMShowReply
 + (NSURLSessionDataTask *)ShowMyReply:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"Profile/replies" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[DDSessionManager shareHTTPSessionManager] GET:@"Profile/replies" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSMutableArray *resultArray = [NSMutableArray array];
         NSArray *imageDataArray = [ responseObject objectForKey:@"data"];
         int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];

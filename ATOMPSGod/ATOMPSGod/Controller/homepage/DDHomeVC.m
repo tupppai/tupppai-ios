@@ -27,11 +27,11 @@
 #import "JGActionSheet.h"
 #import "ATOMReportModel.h"
 #import "ATOMRecordModel.h"
-#import "ATOMBaseRequest.h"
+#import "DDBaseService.h"
 #import "JTSImageViewController.h"
 #import "JTSImageInfo.h"
 #import "HMSegmentedControl.h"
-#import "ATOMBaseRequest.h"
+#import "DDBaseService.h"
 
 #import "DDCommentVC.h"
 #import "UITableView+FDTemplateLayoutCell.h"
@@ -68,149 +68,11 @@
 static NSString *CellIdentifier = @"HotCell";
 static NSString *CellIdentifier2 = @"AskCell";
 
-#pragma mark - GetDataSource from DB
-- (void)firstGetDataSourceFromDataBase {
-    _dataSourceOfHotTableView = [self fetchDBDataSourceWithHomeType:ATOMHomepageViewTypeHot];
-        [_scrollView.hotTable reloadData];
-
-    _dataSourceOfAskTableView = [self fetchDBDataSourceWithHomeType:ATOMHomepageViewTypeAsk];
-        [_scrollView.askTable reloadData];
-}
-#pragma mark - GetDataSource from Server
-
-//初始数据
-- (void)firstGetDataSourceOfTableViewWithHomeType:(ATOMHomepageViewType)homeType {
-    if (homeType == ATOMHomepageViewTypeHot) {
-        [_scrollView.hotTable.header beginRefreshing];
-    } else if (homeType == ATOMHomepageViewTypeAsk) {
-        [_scrollView.askTable.header beginRefreshing];
-    }
-}
-
--(NSMutableArray*)fetchDBDataSourceWithHomeType:(ATOMHomepageViewType) homeType {
-    ATOMShowHomepage *showHomepage = [ATOMShowHomepage new];
-    NSArray * homepageArray = [[showHomepage getHomeImagesWithHomeType:homeType] mutableCopy];
-   NSMutableArray* tableViewDataSource = [NSMutableArray array];
-    for (ATOMHomeImage *homeImage in homepageArray) {
-        DDAskPageVM *model = [DDAskPageVM new];
-        [model setViewModelData:homeImage];
-        [tableViewDataSource addObject:model];
-    }
-    return tableViewDataSource;
-}
-
-//获取服务器的最新数据
-- (void)getDataSourceOfTableViewWithHomeType:(NSString *)homeType {
-    WS(ws);
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    double timeStamp = [[NSDate date] timeIntervalSince1970];
-    [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
-    [param setObject:homeType forKey:@"type"];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
-    [param setObject:@"time" forKey:@"sort"];
-    [param setObject:@"desc" forKey:@"order"];
-    [param setObject:@(8) forKey:@"size"];
-    ATOMShowHomepage *showHomepage = [ATOMShowHomepage new];
-    [showHomepage ShowHomepage:param withBlock:^(NSMutableArray *homepageArray, NSError *error) {
-        if (homepageArray.count != 0 && error == nil) {
-            if ([homeType isEqualToString:@"new"]) {
-                ws.dataSourceOfAskTableView = nil;
-                ws.dataSourceOfAskTableView = [NSMutableArray array];
-                ws.currentRecentPage = 1;
-                [param setObject:@(_currentRecentPage) forKey:@"page"];
-            } else if ([homeType isEqualToString:@"hot"]) {
-                ws.dataSourceOfHotTableView = nil;
-                ws.dataSourceOfHotTableView = [NSMutableArray array];
-                ws.currentHotPage = 1;
-                [param setObject:@(_currentHotPage) forKey:@"page"];
-            }
-            
-            for (ATOMHomeImage *homeImage in homepageArray) {
-                DDAskPageVM *model = [DDAskPageVM new];
-                [model setViewModelData:homeImage];
-                if (ws.scrollView.type == ATOMHomepageViewTypeHot) {
-                    [ws.dataSourceOfHotTableView addObject:model];
-                } else if (ws.scrollView.type == ATOMHomepageViewTypeAsk) {
-                    [ws.dataSourceOfAskTableView addObject:model];
-                }
-            }
-            if (ws.scrollView.type == ATOMHomepageViewTypeHot) {
-                ws.scrollView.hotTable.noDataView.canShow = YES;
-                [ws.scrollView.hotTable reloadData];
-                [ws.scrollView.hotTable.header endRefreshing];
-            } else if (ws.scrollView.type == ATOMHomepageViewTypeAsk) {
-                ws.scrollView.askTable.noDataView.canShow = YES;
-                [ws.scrollView.askTable reloadData];
-                [ws.scrollView.askTable.header endRefreshing];
-            }
-            [showHomepage saveHomeImagesInDB:homepageArray];
-        } else {
-            [ws.scrollView.hotTable.header endRefreshing];
-            [ws.scrollView.askTable.header endRefreshing];
-        }
-
-    }];
-
-}
-
-//拉至底层刷新
-- (void)getMoreDataSourceOfTableViewWithHomeType:(NSString *)homeType {
-    WS(ws);
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    double timeStamp = [[NSDate date] timeIntervalSince1970];
-    if ([homeType isEqualToString:@"new"]) {
-        ws.currentRecentPage++;
-        [param setObject:@(ws.currentRecentPage) forKey:@"page"];
-    } else if ([homeType isEqualToString:@"hot"]) {
-        ws.currentHotPage++;
-        [param setObject:@(ws.currentHotPage) forKey:@"page"];
-    }
-    [param setObject:@(SCREEN_WIDTH - kPadding15 * 2) forKey:@"width"];
-    [param setObject:homeType forKey:@"type"];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
-    [param setObject:@"time" forKey:@"sort"];
-    [param setObject:@"desc" forKey:@"order"];
-    [param setObject:@(10) forKey:@"size"];
-    ATOMShowHomepage *showHomepage = [ATOMShowHomepage new];
-    [showHomepage ShowHomepage:param withBlock:^(NSMutableArray *homepageArray,     NSError *error) {
-        if (homepageArray && error == nil) {
-
-            for (ATOMHomeImage *homeImage in homepageArray) {
-                DDAskPageVM *model = [DDAskPageVM new];
-                [model setViewModelData:homeImage];
-                if (ws.scrollView.type == ATOMHomepageViewTypeHot) {
-                    [ws.dataSourceOfHotTableView addObject:model];
-                } else if (ws.scrollView.type == ATOMHomepageViewTypeAsk) {
-                    [ws.dataSourceOfAskTableView addObject:model];
-                }
-            }
-            if (ws.scrollView.type == ATOMHomepageViewTypeHot) {
-                [ws.scrollView.hotTable reloadData];
-                [ws.scrollView.hotTable.footer endRefreshing];
-                if (homepageArray.count == 0) {
-                    ws.canRefreshHotFooter = NO;
-                } else {
-                    ws.canRefreshHotFooter = YES;
-                }
-            } else if (ws.scrollView.type == ATOMHomepageViewTypeAsk) {
-                [ws.scrollView.askTable reloadData];
-                [ws.scrollView.askTable.footer endRefreshing];
-                if (homepageArray.count == 0) {
-                    ws.canRefreshRecentFooter = NO;
-                } else {
-                    ws.canRefreshRecentFooter = YES;
-                }
-            }
-        } else {
-        }
-    }];
-}
-
-#pragma mark - UI
+#pragma mark - life cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self createUI];
+    [self commonInit];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -222,11 +84,14 @@ static NSString *CellIdentifier2 = @"AskCell";
     [self shouldNavToHotSegment];
 }
 
-- (void)createUI {
+
+
+#pragma mark - init methods
+
+
+- (void)commonInit {
+    self.view = self.scrollView;
     [self createCustomNavigationBar];
-    _scrollView = [kfcHomeScrollView new];
-    _scrollView.delegate =self;
-    self.view = _scrollView;
     [self confighotTable];
     [self configaskTable];
     _isfirstEnterHomepageRecentView = YES;
@@ -234,9 +99,9 @@ static NSString *CellIdentifier2 = @"AskCell";
     _canRefreshRecentFooter = YES;
     [self firstGetDataSourceFromDataBase];
     [self firstGetDataSourceOfTableViewWithHomeType:ATOMHomepageViewTypeHot];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshNav1) name:@"RefreshNav1" object:nil];
 }
+
 
 - (void)confighotTable {
     _scrollView.hotTable.delegate = self;
@@ -247,6 +112,10 @@ static NSString *CellIdentifier2 = @"AskCell";
     _scrollView.hotTable.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
     _tapGestureHot = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureHot:)];
     [_scrollView.hotTable addGestureRecognizer:_tapGestureHot];
+    
+    _scrollView.hotTable.scrollsToTop = YES;
+    _scrollView.askTable.scrollsToTop = NO;
+
 }
 - (void)configaskTable {
     _scrollView.askTable.delegate = self;
@@ -268,7 +137,7 @@ static NSString *CellIdentifier2 = @"AskCell";
     [cameraButton setImage:[UIImage imageNamed:@"btn_psask_normal"] forState:UIControlStateNormal];
     [cameraButton setImage:[UIImage imageNamed:@"btn_psask_pressed"] forState:UIControlStateHighlighted];
     [cameraButton setImageEdgeInsets:UIEdgeInsetsMake(5.5, 5, 5.5, 0)];
-    [cameraButton addTarget:self action:@selector(clickCameraButton:) forControlEvents:UIControlEventTouchUpInside];
+    [cameraButton addTarget:self action:@selector(tappedCameraButton:) forControlEvents:UIControlEventTouchUpInside];
     [cameraView addSubview:cameraButton];
     UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cameraView];
     self.navigationItem.rightBarButtonItems = @[negativeSpacer, rightButtonItem];
@@ -281,9 +150,9 @@ static NSString *CellIdentifier2 = @"AskCell";
     _segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
     [_segmentedControl setIndexChangeBlock:^(NSInteger index) {
         if (index == 0) {
-            [ws clickHotTitleButton];
+            [ws tappedHotTitleButton];
         } else if (index == 1) {
-            [ws clickRecentTitleButton];
+            [ws tappedRecentTitleButton];
         }
     }];
 
@@ -291,14 +160,59 @@ static NSString *CellIdentifier2 = @"AskCell";
     self.navigationItem.titleView = _segmentedControl;
 
 }
+#pragma mark - methods
 
-#pragma mark - Click Event
+- (void)shouldNavToHotSegment {
+    BOOL shouldNav = [[NSUserDefaults standardUserDefaults]
+                      boolForKey:@"shouldNavToHotSegment"];
+    if (shouldNav) {
+        [_segmentedControl setSelectedSegmentIndex:0 animated:YES];
+        [_scrollView changeUIAccording:@"热门"];
+        [_scrollView.hotTable.header beginRefreshing];
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:@"shouldNavToHotSegment"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 
-- (void)clickHotTitleButton {
+
+- (void)shouldNavToAskSegment {
+    BOOL shouldNav = [[NSUserDefaults standardUserDefaults]
+                      boolForKey:@"shouldNavToAskSegment"];
+    if (shouldNav) {
+        [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
+        [_scrollView changeUIAccording:@"最新"];
+        [_scrollView.askTable.header beginRefreshing];
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:@"shouldNavToAskSegment"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)shouldRefreshHeader {
+    BOOL shouldRefresh = [[NSUserDefaults standardUserDefaults]boolForKey:@"tapNav1"];
+    if (shouldRefresh) {
+        if (_scrollView.type == ATOMHomepageViewTypeHot && ![_scrollView.hotTable.header isRefreshing]) {
+            [_scrollView.hotTable.header beginRefreshing];
+        } else if (_scrollView.type == ATOMHomepageViewTypeAsk && ![_scrollView.askTable.header isRefreshing]) {
+            [_scrollView.askTable.header beginRefreshing];
+        }
+    }
+}
+
+- (void)refreshNav1 {
+    if (_scrollView.type == ATOMHomepageViewTypeHot && ![_scrollView.hotTable.header isRefreshing]) {
+        [_scrollView.hotTable.header beginRefreshing];
+    } else if (_scrollView.type == ATOMHomepageViewTypeAsk && ![_scrollView.askTable.header isRefreshing]) {
+        [_scrollView.askTable.header beginRefreshing];
+    }
+}
+
+#pragma mark - event response
+
+- (void)tappedHotTitleButton {
     [_scrollView changeUIAccording:@"热门"];
 }
 
-- (void)clickRecentTitleButton {
+- (void)tappedRecentTitleButton {
     [_scrollView changeUIAccording:@"最新"];
     if (_isfirstEnterHomepageRecentView) {
         _isfirstEnterHomepageRecentView = NO;
@@ -306,11 +220,11 @@ static NSString *CellIdentifier2 = @"AskCell";
     }
 }
 
-- (void)clickCameraButton:(UIBarButtonItem *)sender {
+- (void)tappedCameraButton:(UIBarButtonItem *)sender {
     [self.cameraActionsheet showInView:[AppDelegate APP].window animated:YES];
 }
 
-- (void)dealSelectingPhotoFromAlbum {
+- (void)tapSelectPhotos {
     [[NSUserDefaults standardUserDefaults] setObject:@"Ask" forKey:@"AskOrReply"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])
@@ -385,7 +299,7 @@ static NSString *CellIdentifier2 = @"AskCell";
     [param setObject:@(_selectedVM.ID) forKey:@"target"];
     [ATOMRecordModel record:param withBlock:^(NSError *error, NSString *url) {
         if (!error) {
-            [ATOMBaseRequest downloadImage:url withBlock:^(UIImage *image) {
+            [DDBaseService downloadImage:url withBlock:^(UIImage *image) {
                 UIImageWriteToSavedPhotosAlbum(image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
             }];
         }
@@ -399,6 +313,8 @@ static NSString *CellIdentifier2 = @"AskCell";
         [Hud text:@"保存成功"];
     }
 }
+
+
 
 #pragma mark - Gesture Event
 
@@ -529,7 +445,11 @@ static NSString *CellIdentifier2 = @"AskCell";
         if (currentPage == 0) {
             [_scrollView changeUIAccording:@"热门"];
             [_segmentedControl setSelectedSegmentIndex:0 animated:YES];
+            _scrollView.hotTable.scrollsToTop = YES;
+            _scrollView.askTable.scrollsToTop = NO;
         } else if (currentPage == 1) {
+            _scrollView.hotTable.scrollsToTop = NO;
+            _scrollView.askTable.scrollsToTop = YES;
             [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
             [_scrollView changeUIAccording:@"最新"];
             if (_isfirstEnterHomepageRecentView) {
@@ -603,142 +523,147 @@ static NSString *CellIdentifier2 = @"AskCell";
 }
 
 
+#pragma mark - GetDataSource from DB
+- (void)firstGetDataSourceFromDataBase {
+    _dataSourceOfHotTableView = [self fetchDBDataSourceWithHomeType:ATOMHomepageViewTypeHot];
+    [_scrollView.hotTable reloadData];
+    
+    _dataSourceOfAskTableView = [self fetchDBDataSourceWithHomeType:ATOMHomepageViewTypeAsk];
+    [_scrollView.askTable reloadData];
+}
+#pragma mark - GetDataSource from Server
 
-#pragma mark - Lazy Initialize
-
-- (UIImagePickerController *)imagePickerController {
-    if (_imagePickerController == nil) {
-        _imagePickerController = [UIImagePickerController new];
-        _imagePickerController.delegate = self;
+//初始数据
+- (void)firstGetDataSourceOfTableViewWithHomeType:(ATOMHomepageViewType)homeType {
+    if (homeType == ATOMHomepageViewTypeHot) {
+        [_scrollView.hotTable.header beginRefreshing];
+    } else if (homeType == ATOMHomepageViewTypeAsk) {
+        [_scrollView.askTable.header beginRefreshing];
     }
-    return _imagePickerController;
 }
 
-- (ATOMShareFunctionView *)shareFunctionView {
-    if (!_shareFunctionView) {
-        _shareFunctionView = [ATOMShareFunctionView new];
-        _shareFunctionView.delegate = self;
+-(NSMutableArray*)fetchDBDataSourceWithHomeType:(ATOMHomepageViewType) homeType {
+    ATOMShowHomepage *showHomepage = [ATOMShowHomepage new];
+    NSArray * homepageArray = [[showHomepage getHomeImagesWithHomeType:homeType] mutableCopy];
+    NSMutableArray* tableViewDataSource = [NSMutableArray array];
+    for (ATOMHomeImage *homeImage in homepageArray) {
+        DDAskPageVM *model = [DDAskPageVM new];
+        [model setViewModelData:homeImage];
+        [tableViewDataSource addObject:model];
     }
-    return _shareFunctionView;
+    return tableViewDataSource;
 }
 
-- (JGActionSheet *)psActionSheet {
+//获取服务器的最新数据
+- (void)getDataSourceOfTableViewWithHomeType:(NSString *)homeType {
     WS(ws);
-    if (!_psActionSheet) {
-        _psActionSheet = [JGActionSheet new];
-        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"下载素材", @"上传作品",@"取消"] buttonStyle:JGActionSheetButtonStyleDefault];
-        [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:2];
-        NSArray *sections = @[section];
-        _psActionSheet = [JGActionSheet actionSheetWithSections:sections];
-        _psActionSheet.delegate = self;
-        [_psActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
-            [sheet dismissAnimated:YES];
-        }];
-        [_psActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
-            switch (indexPath.row) {
-                case 0:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    [ws dealDownloadWork];
-                    break;
-                case 1:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    [ws dealUploadWorksWithTag:1];
-                    break;
-                case 2:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    break;
-                default:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    break;
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    double timeStamp = [[NSDate date] timeIntervalSince1970];
+    [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
+    [param setObject:homeType forKey:@"type"];
+    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@"time" forKey:@"sort"];
+    [param setObject:@"desc" forKey:@"order"];
+    [param setObject:@(8) forKey:@"size"];
+    ATOMShowHomepage *showHomepage = [ATOMShowHomepage new];
+    [showHomepage ShowHomepage:param withBlock:^(NSMutableArray *homepageArray, NSError *error) {
+        if (homepageArray.count != 0 && error == nil) {
+            if ([homeType isEqualToString:@"new"]) {
+                ws.dataSourceOfAskTableView = nil;
+                ws.dataSourceOfAskTableView = [NSMutableArray array];
+                ws.currentRecentPage = 1;
+                [param setObject:@(_currentRecentPage) forKey:@"page"];
+            } else if ([homeType isEqualToString:@"hot"]) {
+                ws.dataSourceOfHotTableView = nil;
+                ws.dataSourceOfHotTableView = [NSMutableArray array];
+                ws.currentHotPage = 1;
+                [param setObject:@(_currentHotPage) forKey:@"page"];
             }
-        }];
-    }
-    return _psActionSheet;
-}
-
-- (JGActionSheet *)cameraActionsheet {
-    WS(ws);
-    if (!_cameraActionsheet) {
-        _cameraActionsheet = [JGActionSheet new];
-        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"求助上传", @"作品上传",@"取消"] buttonStyle:JGActionSheetButtonStyleDefault];
-        [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:2];
-        NSArray *sections = @[section];
-        _cameraActionsheet = [JGActionSheet actionSheetWithSections:sections];
-        _cameraActionsheet.delegate = self;
-        [_cameraActionsheet setOutsidePressBlock:^(JGActionSheet *sheet) {
-            [sheet dismissAnimated:YES];
-        }];
-        [_cameraActionsheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
-            switch (indexPath.row) {
-                case 0:
-                    [ws.cameraActionsheet dismissAnimated:YES];
-                    [ws dealSelectingPhotoFromAlbum];
-                    break;
-                case 1:
-                    [ws.cameraActionsheet dismissAnimated:YES];
-                    [ws dealUploadWorksWithTag:0];
-                    break;
-                case 2:
-                    [ws.cameraActionsheet dismissAnimated:YES];
-                    break;
-                default:
-                    [ws.cameraActionsheet dismissAnimated:YES];
-                    break;
-            }
-        }];
-    }
-    return _cameraActionsheet;
-}
-
-- (JGActionSheet *)reportActionSheet {
-    WS(ws);
-    if (!_reportActionSheet) {
-        _reportActionSheet = [JGActionSheet new];
-        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"色情、淫秽或低俗内容", @"广告或垃圾信息",@"违反法律法规的内容"] buttonStyle:JGActionSheetButtonStyleDefault];
-        NSArray *sections = @[section];
-        _reportActionSheet = [JGActionSheet actionSheetWithSections:sections];
-        _reportActionSheet.delegate = self;
-        [_reportActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
-            [sheet dismissAnimated:YES];
-        }];
-        [_reportActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
-            NSMutableDictionary* param = [NSMutableDictionary new];
-            [param setObject:@(ws.selectedVM.ID) forKey:@"target_id"];
-            [param setObject:@(ATOMPageTypeAsk) forKey:@"target_type"];
-            UIButton* b = section.buttons[indexPath.row];
-            switch (indexPath.row) {
-                case 0:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                case 1:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                case 2:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                default:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    break;
-            }
-            [ATOMReportModel report:param withBlock:^(NSError *error) {
-                UIView* view;
+            
+            for (ATOMHomeImage *homeImage in homepageArray) {
+                DDAskPageVM *model = [DDAskPageVM new];
+                [model setViewModelData:homeImage];
                 if (ws.scrollView.type == ATOMHomepageViewTypeHot) {
-                    view = ws.scrollView.homepageHotView;
-                } else  if (ws.scrollView.type == ATOMHomepageViewTypeAsk) {
-                    view = ws.scrollView.homepageRecentView;
+                    [ws.dataSourceOfHotTableView addObject:model];
+                } else if (ws.scrollView.type == ATOMHomepageViewTypeAsk) {
+                    [ws.dataSourceOfAskTableView addObject:model];
                 }
-                if(!error) {
-                    [Hud text:@"已举报" inView:view];
-                }
-                
-            }];
-        }];
-    }
-    return _reportActionSheet;
+            }
+            if (ws.scrollView.type == ATOMHomepageViewTypeHot) {
+                ws.scrollView.hotTable.noDataView.canShow = YES;
+                [ws.scrollView.hotTable reloadData];
+                [ws.scrollView.hotTable.header endRefreshing];
+            } else if (ws.scrollView.type == ATOMHomepageViewTypeAsk) {
+                ws.scrollView.askTable.noDataView.canShow = YES;
+                [ws.scrollView.askTable reloadData];
+                [ws.scrollView.askTable.header endRefreshing];
+            }
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                [showHomepage saveHomeImagesInDB:homepageArray];
+            });
+        } else {
+            [ws.scrollView.hotTable.header endRefreshing];
+            [ws.scrollView.askTable.header endRefreshing];
+        }
+        
+    }];
+    
 }
+
+//拉至底层刷新
+- (void)getMoreDataSourceOfTableViewWithHomeType:(NSString *)homeType {
+    WS(ws);
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    double timeStamp = [[NSDate date] timeIntervalSince1970];
+    if ([homeType isEqualToString:@"new"]) {
+        ws.currentRecentPage++;
+        [param setObject:@(ws.currentRecentPage) forKey:@"page"];
+    } else if ([homeType isEqualToString:@"hot"]) {
+        ws.currentHotPage++;
+        [param setObject:@(ws.currentHotPage) forKey:@"page"];
+    }
+    [param setObject:@(SCREEN_WIDTH - kPadding15 * 2) forKey:@"width"];
+    [param setObject:homeType forKey:@"type"];
+    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@"time" forKey:@"sort"];
+    [param setObject:@"desc" forKey:@"order"];
+    [param setObject:@(10) forKey:@"size"];
+    ATOMShowHomepage *showHomepage = [ATOMShowHomepage new];
+    [showHomepage ShowHomepage:param withBlock:^(NSMutableArray *homepageArray,     NSError *error) {
+        if (homepageArray && error == nil) {
+            
+            for (ATOMHomeImage *homeImage in homepageArray) {
+                DDAskPageVM *model = [DDAskPageVM new];
+                [model setViewModelData:homeImage];
+                if (ws.scrollView.type == ATOMHomepageViewTypeHot) {
+                    [ws.dataSourceOfHotTableView addObject:model];
+                } else if (ws.scrollView.type == ATOMHomepageViewTypeAsk) {
+                    [ws.dataSourceOfAskTableView addObject:model];
+                }
+            }
+            if (ws.scrollView.type == ATOMHomepageViewTypeHot) {
+                [ws.scrollView.hotTable reloadData];
+                [ws.scrollView.hotTable.footer endRefreshing];
+                if (homepageArray.count == 0) {
+                    ws.canRefreshHotFooter = NO;
+                } else {
+                    ws.canRefreshHotFooter = YES;
+                }
+            } else if (ws.scrollView.type == ATOMHomepageViewTypeAsk) {
+                [ws.scrollView.askTable reloadData];
+                [ws.scrollView.askTable.footer endRefreshing];
+                if (homepageArray.count == 0) {
+                    ws.canRefreshRecentFooter = NO;
+                } else {
+                    ws.canRefreshRecentFooter = YES;
+                }
+            }
+        } else {
+        }
+    }];
+}
+
+
 #pragma mark - ATOMShareFunctionViewDelegate
 -(void)tapWechatFriends {
     [ATOMShareSDKModel postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeAsk];
@@ -819,47 +744,150 @@ static NSString *CellIdentifier2 = @"AskCell";
     }
 }
 
-- (void)shouldNavToHotSegment {
-    BOOL shouldNav = [[NSUserDefaults standardUserDefaults]
-                      boolForKey:@"shouldNavToHotSegment"];
-    if (shouldNav) {
-        [_segmentedControl setSelectedSegmentIndex:0 animated:YES];
-        [_scrollView changeUIAccording:@"热门"];
-        [_scrollView.hotTable.header beginRefreshing];
+
+
+#pragma mark - Getters and Setters
+
+-(kfcHomeScrollView*)scrollView {
+    if (!_scrollView) {
+        _scrollView = [kfcHomeScrollView new];
+        _scrollView.delegate =self;
     }
-    [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:@"shouldNavToHotSegment"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    return _scrollView;
 }
 
-
-- (void)shouldNavToAskSegment {
-    BOOL shouldNav = [[NSUserDefaults standardUserDefaults]
-                            boolForKey:@"shouldNavToAskSegment"];
-    if (shouldNav) {
-        [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
-        [_scrollView changeUIAccording:@"最新"];
-        [_scrollView.askTable.header beginRefreshing];
+- (UIImagePickerController *)imagePickerController {
+    if (_imagePickerController == nil) {
+        _imagePickerController = [UIImagePickerController new];
+        _imagePickerController.delegate = self;
     }
-    [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:@"shouldNavToAskSegment"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    return _imagePickerController;
 }
 
-- (void)shouldRefreshHeader {
-   BOOL shouldRefresh = [[NSUserDefaults standardUserDefaults]boolForKey:@"tapNav1"];
-    if (shouldRefresh) {
-        if (_scrollView.type == ATOMHomepageViewTypeHot && ![_scrollView.hotTable.header isRefreshing]) {
-            [_scrollView.hotTable.header beginRefreshing];
-        } else if (_scrollView.type == ATOMHomepageViewTypeAsk && ![_scrollView.askTable.header isRefreshing]) {
-            [_scrollView.askTable.header beginRefreshing];
-        }
-}
-}
-
-- (void)refreshNav1 {
-    if (_scrollView.type == ATOMHomepageViewTypeHot && ![_scrollView.hotTable.header isRefreshing]) {
-        [_scrollView.hotTable.header beginRefreshing];
-    } else if (_scrollView.type == ATOMHomepageViewTypeAsk && ![_scrollView.askTable.header isRefreshing]) {
-        [_scrollView.askTable.header beginRefreshing];
+- (ATOMShareFunctionView *)shareFunctionView {
+    if (!_shareFunctionView) {
+        _shareFunctionView = [ATOMShareFunctionView new];
+        _shareFunctionView.delegate = self;
     }
+    return _shareFunctionView;
 }
+
+- (JGActionSheet *)psActionSheet {
+    WS(ws);
+    if (!_psActionSheet) {
+        _psActionSheet = [JGActionSheet new];
+        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"下载素材", @"上传作品",@"取消"] buttonStyle:JGActionSheetButtonStyleDefault];
+        [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:2];
+        NSArray *sections = @[section];
+        _psActionSheet = [JGActionSheet actionSheetWithSections:sections];
+        _psActionSheet.delegate = self;
+        [_psActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
+            [sheet dismissAnimated:YES];
+        }];
+        [_psActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
+            switch (indexPath.row) {
+                case 0:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    [ws dealDownloadWork];
+                    break;
+                case 1:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    [ws dealUploadWorksWithTag:1];
+                    break;
+                case 2:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    break;
+                default:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    break;
+            }
+        }];
+    }
+    return _psActionSheet;
+}
+
+- (JGActionSheet *)cameraActionsheet {
+    WS(ws);
+    if (!_cameraActionsheet) {
+        _cameraActionsheet = [JGActionSheet new];
+        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"求助上传", @"作品上传",@"取消"] buttonStyle:JGActionSheetButtonStyleDefault];
+        [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:2];
+        NSArray *sections = @[section];
+        _cameraActionsheet = [JGActionSheet actionSheetWithSections:sections];
+        _cameraActionsheet.delegate = self;
+        [_cameraActionsheet setOutsidePressBlock:^(JGActionSheet *sheet) {
+            [sheet dismissAnimated:YES];
+        }];
+        [_cameraActionsheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
+            switch (indexPath.row) {
+                case 0:
+                    [ws.cameraActionsheet dismissAnimated:YES];
+                    [ws tapSelectPhotos];
+                    break;
+                case 1:
+                    [ws.cameraActionsheet dismissAnimated:YES];
+                    [ws dealUploadWorksWithTag:0];
+                    break;
+                case 2:
+                    [ws.cameraActionsheet dismissAnimated:YES];
+                    break;
+                default:
+                    [ws.cameraActionsheet dismissAnimated:YES];
+                    break;
+            }
+        }];
+    }
+    return _cameraActionsheet;
+}
+
+- (JGActionSheet *)reportActionSheet {
+    WS(ws);
+    if (!_reportActionSheet) {
+        _reportActionSheet = [JGActionSheet new];
+        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"色情、淫秽或低俗内容", @"广告或垃圾信息",@"违反法律法规的内容"] buttonStyle:JGActionSheetButtonStyleDefault];
+        NSArray *sections = @[section];
+        _reportActionSheet = [JGActionSheet actionSheetWithSections:sections];
+        _reportActionSheet.delegate = self;
+        [_reportActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
+            [sheet dismissAnimated:YES];
+        }];
+        [_reportActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
+            NSMutableDictionary* param = [NSMutableDictionary new];
+            [param setObject:@(ws.selectedVM.ID) forKey:@"target_id"];
+            [param setObject:@(ATOMPageTypeAsk) forKey:@"target_type"];
+            UIButton* b = section.buttons[indexPath.row];
+            switch (indexPath.row) {
+                case 0:
+                    [ws.reportActionSheet dismissAnimated:YES];
+                    [param setObject:b.titleLabel.text forKey:@"content"];
+                    break;
+                case 1:
+                    [ws.reportActionSheet dismissAnimated:YES];
+                    [param setObject:b.titleLabel.text forKey:@"content"];
+                    break;
+                case 2:
+                    [ws.reportActionSheet dismissAnimated:YES];
+                    [param setObject:b.titleLabel.text forKey:@"content"];
+                    break;
+                default:
+                    [ws.reportActionSheet dismissAnimated:YES];
+                    break;
+            }
+            [ATOMReportModel report:param withBlock:^(NSError *error) {
+                UIView* view;
+                if (ws.scrollView.type == ATOMHomepageViewTypeHot) {
+                    view = ws.scrollView.homepageHotView;
+                } else  if (ws.scrollView.type == ATOMHomepageViewTypeAsk) {
+                    view = ws.scrollView.homepageRecentView;
+                }
+                if(!error) {
+                    [Hud text:@"已举报" inView:view];
+                }
+                
+            }];
+        }];
+    }
+    return _reportActionSheet;
+}
+
 @end

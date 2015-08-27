@@ -179,9 +179,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     
     
     DDCommentVM *commentVM = [DDCommentVM new];
-    commentVM.username = [ATOMCurrentUser currentUser].username;
-    commentVM.uid = [ATOMCurrentUser currentUser].uid;
-    commentVM.avatar = [ATOMCurrentUser currentUser].avatar;
+    commentVM.username = [DDUserModel currentUser].username;
+    commentVM.uid = [DDUserModel currentUser].uid;
+    commentVM.avatar = [DDUserModel currentUser].avatar;
     commentVM.originText = self.textView.text;
     NSString* commentToShow;
     //回复评论

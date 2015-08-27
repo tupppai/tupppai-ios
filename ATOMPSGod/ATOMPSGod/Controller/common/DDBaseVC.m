@@ -9,7 +9,7 @@
 #import "DDBaseVC.h"
 #import "DDHomeVC.h"
 #import "ATOMPersonViewController.h"
-#import "ATOMMyFollowViewController.h"
+#import "DDFollowVC.h"
 #import "DDMessageVC.h"
 #import "ATOMUserDAO.h"
 #import "DDLoginNavigationController.h"
@@ -57,9 +57,9 @@
                               //清空数据库用户表
                               [ATOMUserDAO clearUsers];
                               //清空当前用户
-                              [[ATOMCurrentUser currentUser]wipe];
+                              [[DDUserModel currentUser]wipe];
                               self.navigationController.viewControllers = @[];
-                              ATOMLaunchViewController *lvc = [[ATOMLaunchViewController alloc] init];
+                              DDLaunchVC *lvc = [[DDLaunchVC alloc] init];
                               [AppDelegate APP].window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
                           }];
     alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
@@ -81,7 +81,7 @@
         self.hidesBottomBarWhenPushed = NO;
     } else if ([self isKindOfClass:[ATOMPersonViewController class]]){
         self.hidesBottomBarWhenPushed = NO;
-    } else if ([self isKindOfClass:[ATOMMyFollowViewController class]]) {
+    } else if ([self isKindOfClass:[DDFollowVC class]]) {
         self.hidesBottomBarWhenPushed = NO;
     } else if ([self isKindOfClass:[DDMessageVC class]]) {
         self.hidesBottomBarWhenPushed = NO;

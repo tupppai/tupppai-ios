@@ -7,7 +7,7 @@
 //
 
 #import "ATOMShowAttention.h"
-#import "ATOMHTTPRequestOperationManager.h"
+#import "DDSessionManager.h"
 #import "ATOMReplier.h"
 #import "ATOMComment.h"
 #import "ATOMImageTipLabel.h"
@@ -16,7 +16,7 @@
 @implementation ATOMShowAttention
 
 - (NSURLSessionDataTask *)ShowAttention:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"Thread/timeline" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[DDSessionManager shareHTTPSessionManager] GET:@"Thread/timeline" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret != 1) {
             block(nil, nil);

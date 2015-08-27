@@ -9,10 +9,10 @@
 #import "DDTabBarController.h"
 #import "DDHomeVC.h"
 #import "DDMessageVC.h"
-#import "ATOMMyFollowViewController.h"
+#import "DDFollowVC.h"
 #import "ATOMPersonViewController.h"
 #import "DDNavigationController.h"
-#import "ATOMBaseRequest.h"
+#import "DDBaseService.h"
 
 @interface DDTabBarController ()<UITabBarControllerDelegate>
 @property (nonatomic, strong) DDNavigationController *nav1;
@@ -47,12 +47,12 @@ static dispatch_once_t once;
         NSUUID *oNSUUID = [[UIDevice currentDevice] identifierForVendor];
         NSString* token = [[NSUserDefaults standardUserDefaults]stringForKey:@"devicetoken"];
         NSDictionary* param = [NSDictionary dictionaryWithObjectsAndKeys:token, @"device_token",@1,@"platform",@([[UIDevice currentDevice].systemVersion floatValue]),@"device_os",deviceName(),@"device_name",[oNSUUID UUIDString],@"device_mac",nil];
-        [ATOMBaseRequest post:param withUrl:@"account/updateToken" withBlock:nil];
+        [DDBaseService post:param withUrl:@"account/updateToken" withBlock:nil];
     });
 }
 - (void)configureTabBarController {
     DDHomeVC *homePageViewController = [DDHomeVC new];
-    ATOMMyFollowViewController *myAttentionViewController = [ATOMMyFollowViewController new];
+    DDFollowVC *myAttentionViewController = [DDFollowVC new];
     DDMessageVC *myMessageViewController = [DDMessageVC new];
     ATOMPersonViewController *personViewController = [ATOMPersonViewController new];
     homePageViewController.title = @"首页";

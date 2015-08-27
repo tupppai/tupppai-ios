@@ -7,12 +7,12 @@
 //
 
 #import "ATOMReportModel.h"
-#import "ATOMHTTPRequestOperationManager.h"
+#import "DDSessionManager.h"
 
 @implementation ATOMReportModel
 
 + (NSURLSessionDataTask *)report :(NSDictionary*)param withBlock:(void (^)(NSError *))block {
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"inform/report_abuse" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[DDSessionManager shareHTTPSessionManager] POST:@"inform/report_abuse" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
             if (block) {

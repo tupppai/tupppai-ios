@@ -6,18 +6,18 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMMobileRegisterViewController.h"
+#import "DDPhoneRegisterVC.h"
 #import "ATOMMobileRegisterView.h"
-#import "ATOMInputVerifyCodeViewController.h"
+#import "DDAuthcodeVC.h"
 #import "ATOMGetMoblieCode.h"
 
-@interface ATOMMobileRegisterViewController () <UITextFieldDelegate>
+@interface DDPhoneRegisterVC () <UITextFieldDelegate>
 
 @property (nonatomic, strong) ATOMMobileRegisterView *mobileRegisterView;
 
 @end
 
-@implementation ATOMMobileRegisterViewController
+@implementation DDPhoneRegisterVC
 
 #pragma mark - UI
 
@@ -47,10 +47,10 @@
         NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:_mobileRegisterView.mobileTextField.text, @"phone", nil];
         [getMobileCode GetMobileCode:param withBlock:^(NSString *verifyCode, NSError *error) {
             if (verifyCode && !error) {
-                [ATOMCurrentUser currentUser].mobile = _mobileRegisterView.mobileTextField.text;
-                [ATOMCurrentUser currentUser].password = [_mobileRegisterView.passwordTextField.text sha1];
+                [DDUserModel currentUser].mobile = _mobileRegisterView.mobileTextField.text;
+                [DDUserModel currentUser].password = [_mobileRegisterView.passwordTextField.text sha1];
 //                NSLog(@"sha1 password%@",[ATOMCurrentUser currentUser].password);
-                ATOMInputVerifyCodeViewController *ivcvc = [ATOMInputVerifyCodeViewController new];
+                DDAuthcodeVC *ivcvc = [DDAuthcodeVC new];
                 ivcvc.verifyCode = verifyCode;
                 [self.navigationController pushViewController:ivcvc animated:YES];
             } else {

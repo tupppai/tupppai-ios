@@ -6,17 +6,17 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMCurrentUser.h"
+#import "DDUserModel.h"
 #import "ATOMUser.h"
 #import "ATOMUserDao.h"
-@implementation ATOMCurrentUser
+@implementation DDUserModel
 
 static dispatch_once_t onceToken;
-static ATOMCurrentUser *_currentUser;
+static DDUserModel *_currentUser;
 
-+ (ATOMCurrentUser *)currentUser {
++ (DDUserModel *)currentUser {
     dispatch_once(&onceToken, ^{
-        _currentUser = [ATOMCurrentUser new];
+        _currentUser = [DDUserModel new];
     });
     return _currentUser;
 }

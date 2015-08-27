@@ -6,14 +6,14 @@
 //  Copyright (c) 2015 ATOM. All rights reserved.
 //
 
-#import "ATOMIntroductionOnFirstLaunchViewController.h"
+#import "DDIntroVC.h"
 #import "EAIntroView.h"
-#import "ATOMLaunchViewController.h"
-@interface ATOMIntroductionOnFirstLaunchViewController ()<EAIntroDelegate>
+#import "DDLaunchVC.h"
+@interface DDIntroVC ()<EAIntroDelegate>
 
 @end
 
-@implementation ATOMIntroductionOnFirstLaunchViewController
+@implementation DDIntroVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -43,7 +43,7 @@
 }
 #pragma mark - EAIntroView delegate
 - (void)introDidFinish:(EAIntroView *)introView {
-    ATOMLaunchViewController* lvc = [ATOMLaunchViewController new];
+    DDLaunchVC* lvc = [DDLaunchVC new];
     self.navigationController.viewControllers = @[lvc];
 }
 

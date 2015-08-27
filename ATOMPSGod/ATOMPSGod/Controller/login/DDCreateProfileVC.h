@@ -9,6 +9,6 @@
 #import "DDBaseVC.h"
 #import "ATOMUserProfileViewModel.h"
 
-@interface ATOMCreateProfileViewController : DDLoginBaseVC
+@interface DDCreateProfileVC : DDLoginBaseVC
 @property (nonatomic, strong) ATOMUserProfileViewModel *userProfileViewModel;
 @end

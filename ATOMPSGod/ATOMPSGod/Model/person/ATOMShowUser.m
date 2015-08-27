@@ -7,17 +7,17 @@
 //
 
 #import "ATOMShowUser.h"
-#import "ATOMHTTPRequestOperationManager.h"
+#import "DDSessionManager.h"
 #import "ATOMUser.h"
 @implementation ATOMShowUser
 + (NSURLSessionDataTask *)ShowUserInfo:(void (^)(ATOMUser *, NSError *))block {
 
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"view/info" parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[DDSessionManager shareHTTPSessionManager] GET:@"view/info" parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
         if (ret == 1) {
             ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:[ responseObject objectForKey:@"data"] error:NULL];
             //保存更新数据库的user,并更新currentUser
-            [[ATOMCurrentUser currentUser]saveAndUpdateUser:user];
+            [[DDUserModel currentUser]saveAndUpdateUser:user];
             if (block) {
                 block(nil, nil);
             }

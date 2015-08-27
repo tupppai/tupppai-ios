@@ -7,11 +7,11 @@
 //
 
 #import "ATOMFollowModel.h"
-#import "ATOMHTTPRequestOperationManager.h"
+#import "DDSessionManager.h"
 
 @implementation ATOMFollowModel
 + (NSURLSessionDataTask *)follow :(NSDictionary*)param withBlock:(void (^)(NSError *))block {
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"profile/follow" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[DDSessionManager shareHTTPSessionManager] POST:@"profile/follow" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
             if (block) {

@@ -7,7 +7,7 @@
 //
 
 #import "ATOMSubmitUserInfomation.h"
-#import "ATOMHTTPRequestOperationManager.h"
+#import "DDSessionManager.h"
 #import "ATOMUser.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
@@ -16,13 +16,13 @@
 
 - (NSURLSessionDataTask *)SubmitUserInformation:(NSDictionary *)param withBlock:(void (^)(NSError *))block {
     [[KShareManager mascotAnimator]show];
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:@"account/register" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[DDSessionManager shareHTTPSessionManager] POST:@"account/register" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         [[KShareManager mascotAnimator]dismiss];
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
             if ([ responseObject objectForKey:@"data"]) {
                 ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:[ responseObject objectForKey:@"data"] error:NULL];
-                [[ATOMCurrentUser currentUser]saveAndUpdateUser:user];
+                [[DDUserModel currentUser]saveAndUpdateUser:user];
                 if (block) {
                     block(nil);
                 }

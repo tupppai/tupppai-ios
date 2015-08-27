@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ATOMIntroductionOnFirstLaunchViewController : UIViewController
+@interface DDIntroVC : UIViewController
 
 @end

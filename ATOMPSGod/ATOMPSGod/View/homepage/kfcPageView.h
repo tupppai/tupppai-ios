@@ -6,6 +6,7 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
+//评论VC的Header
 #import "ATOMBaseView.h"
 #import "DDAskPageVM.h"
 #import "DDHotDetailPageVM.h"

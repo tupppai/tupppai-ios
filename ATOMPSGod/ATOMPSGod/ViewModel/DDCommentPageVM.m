@@ -7,14 +7,14 @@
 //
 
 #import "DDCommentPageVM.h"
-#import "ATOMBaseRequest.h"
+#import "DDBaseService.h"
 @implementation DDCommentPageVM
 - (instancetype)init {
     self = [super init];
     if (self) {
         _pageID = 0;
-        _userName = [ATOMCurrentUser currentUser].username;
-        _avatarURL = [ATOMCurrentUser currentUser].avatar;
+        _userName = [DDUserModel currentUser].username;
+        _avatarURL = [DDUserModel currentUser].avatar;
         _likeNumber = @"0";
         _shareNumber = @"0";
         _commentNumber = @"0";
@@ -111,7 +111,7 @@
     NSInteger one = _liked? -1:1;
     _liked = !_liked;
     [param setValue:@(status) forKey:@"status"];
-    [ATOMBaseRequest toggleLike:param withPageType:_type withID:_pageID withBlock:^(NSError *error) {
+    [DDBaseService toggleLike:param withPageType:_type withID:_pageID withBlock:^(NSError *error) {
         if (!error) {
             NSInteger number = [_likeNumber integerValue]+one;
             [self setLikeNumber:[NSString stringWithFormat:@"%ld",(long)number]];

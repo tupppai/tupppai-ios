@@ -1,24 +1,24 @@
 //
-//  ATOMHTTPRequestOperationManager.m
+//  DDSessionManager.m
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/16.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMHTTPRequestOperationManager.h"
+#import "DDSessionManager.h"
 
-@implementation ATOMHTTPRequestOperationManager
+@implementation DDSessionManager
 
 static dispatch_once_t onceToken;
-static ATOMHTTPRequestOperationManager *_shareHTTPSessionManager = nil;
+static DDSessionManager *_shareHTTPSessionManager = nil;
 
 + (instancetype)shareHTTPSessionManager {
     dispatch_once(&onceToken, ^{
 //        NSString *baseURL = @"http://android.loiter.us/v1/";
         NSString *baseURL = @"http://api.loiter.us/";
 //        NSString *baseURL = @"http://ps.loiter.us/v1/";
-        _shareHTTPSessionManager = [[ATOMHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:baseURL]];
+        _shareHTTPSessionManager = [[DDSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseURL]];
         [_shareHTTPSessionManager.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
             switch (status) {
                 case AFNetworkReachabilityStatusUnknown:

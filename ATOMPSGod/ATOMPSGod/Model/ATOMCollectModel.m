@@ -7,7 +7,7 @@
 //
 
 #import "ATOMCollectModel.h"
-#import "ATOMHTTPRequestOperationManager.h"
+#import "DDSessionManager.h"
 
 @implementation ATOMCollectModel
 + (NSURLSessionDataTask *)toggleCollect:(NSDictionary *)param withPageType:(ATOMPageType)type withID:(NSInteger)ID withBlock:(void (^)(NSError *))block {
@@ -17,7 +17,7 @@
         }   if (type == ATOMPageTypeReply) {
             url = [NSString stringWithFormat:@"reply/collectreply/%ld",(long)ID];
         }
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[DDSessionManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
             NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
             if (ret == 1) {
                 if (block) {

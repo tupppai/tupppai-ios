@@ -7,11 +7,11 @@
 //
 
 #import "ATOMRecordModel.h"
-#import "ATOMHTTPRequestOperationManager.h"
+#import "DDSessionManager.h"
 
 @implementation ATOMRecordModel
 + (void)record :(NSDictionary*)param withBlock:(void (^)(NSError *,NSString*))block {
-     [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"profile/downloadFile" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+     [[DDSessionManager shareHTTPSessionManager] GET:@"profile/downloadFile" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
             NSString* url = [[responseObject objectForKey:@"data"]objectForKey:@"url"];
@@ -33,7 +33,7 @@
 
 //+ (void)download :(url)param withBlock:(void (^)(UIImage *image))block {
 //    NSLog(@"ATOMBaseRequest post param %@",param);
-//    [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:@"user/record" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+//    [[DDSessionManager shareHTTPSessionManager] GET:@"user/record" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
 //        NSLog(@"ATOMRecordModel get responseObject%@",responseObject);
 //        NSLog(@"ATOMRecordModel get info%@",[ responseObject objectForKey:@"info"]);
 //        NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];

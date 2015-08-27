@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMMyFollowViewController.h"
+#import "DDFollowVC.h"
 #import "kfcFollowCell.h"
 #import "ATOMCommentDetailViewController.h"
 #import "DDHotDetailVC.h"
@@ -27,13 +27,13 @@
 #import "DDInviteVC.h"
 #import "DDCropImageVC.h"
 #import "ATOMRecordModel.h"
-#import "ATOMBaseRequest.h"
+#import "DDBaseService.h"
 #import "DDCommentVC.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMMyFollowViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface DDFollowVC () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 @property (nonatomic, strong) UIView *myAttentionView;
 @property (nonatomic, strong) RefreshTableView *tableView;
@@ -49,7 +49,7 @@
 
 @end
 
-@implementation ATOMMyFollowViewController
+@implementation DDFollowVC
 static NSString *CellIdentifier = @"MyAttentionCell";
 
 
@@ -186,7 +186,7 @@ static NSString *CellIdentifier = @"MyAttentionCell";
     [param setObject:@(vm.askID) forKey:@"target"];
     [ATOMRecordModel record:param withBlock:^(NSError *error, NSString *url) {
         if (!error) {
-            [ATOMBaseRequest downloadImage:url withBlock:^(UIImage *image) {
+            [DDBaseService downloadImage:url withBlock:^(UIImage *image) {
                 UIImageWriteToSavedPhotosAlbum(image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
             }];
         }

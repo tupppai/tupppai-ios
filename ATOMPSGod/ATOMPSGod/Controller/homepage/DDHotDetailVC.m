@@ -23,7 +23,7 @@
 #import "kfcButton.h"
 #import "RefreshTableView.h"
 #import "ATOMCollectModel.h"
-#import "ATOMBaseRequest.h"
+#import "DDBaseService.h"
 #import "JGActionSheet.h"
 #import "DDInviteVC.h"
 #import "ATOMReportModel.h"

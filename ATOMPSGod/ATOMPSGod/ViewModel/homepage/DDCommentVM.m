@@ -50,10 +50,10 @@
 - (void)setDataWithAtModel:(DDCommentVM *)viewModel andContent:(NSString *)text{
     _originText = viewModel.originText;
     _replyArray = viewModel.replyArray;
-    _uid = [ATOMCurrentUser currentUser].uid;
-    _username = [ATOMCurrentUser currentUser].username;
+    _uid = [DDUserModel currentUser].uid;
+    _username = [DDUserModel currentUser].username;
     _likeNumber = @"0";
-    _avatar = [ATOMCurrentUser currentUser].avatar;
+    _avatar = [DDUserModel currentUser].avatar;
     if (viewModel) {
         _text = [NSString stringWithFormat:@"%@//@%@:%@", text, viewModel.username, viewModel.text];
     } else {

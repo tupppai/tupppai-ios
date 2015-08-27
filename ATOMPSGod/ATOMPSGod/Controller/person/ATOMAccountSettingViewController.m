@@ -176,9 +176,9 @@
                               //清空数据库用户表
                               [ATOMUserDAO clearUsers];
                               //清空当前用户
-                              [[ATOMCurrentUser currentUser]wipe];
+                              [[DDUserModel currentUser]wipe];
                               self.navigationController.viewControllers = @[];
-                              ATOMLaunchViewController *lvc = [[ATOMLaunchViewController alloc] init];
+                              DDLaunchVC *lvc = [[DDLaunchVC alloc] init];
                               [AppDelegate APP].window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
                           }];
     alertView.transitionStyle = SIAlertViewTransitionStyleBounce;

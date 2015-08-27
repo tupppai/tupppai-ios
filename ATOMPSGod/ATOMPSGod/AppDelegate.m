@@ -7,11 +7,11 @@
 //
 
 #import "AppDelegate.h"
-#import "ATOMLaunchViewController.h"
+#import "DDLaunchVC.h"
 #import "DDTabBarController.h"
 #import "DDNavigationController.h"
 #import "DDLoginNavigationController.h"
-#import "ATOMIntroductionOnFirstLaunchViewController.h"
+#import "DDIntroVC.h"
 #import "ATOMBaseDAO.h"
 #import "UMessage.h"
 #import <ShareSDK/ShareSDK.h>
@@ -74,7 +74,7 @@
 //    self.baseNav = [[ATOMLoginCustomNavigationController alloc] initWithRootViewController:vc];
 //    self.window.rootViewController = self.baseNav;
 //    [self.window makeKeyAndVisible];
-    [[ATOMCurrentUser currentUser]fetchCurrentUserInDB:^(BOOL hasCurrentUser) {
+    [[DDUserModel currentUser]fetchCurrentUserInDB:^(BOOL hasCurrentUser) {
         if (hasCurrentUser) {
             self.window.rootViewController = self.mainTabBarController;
         } else {
@@ -83,11 +83,11 @@
                 //UIPageViewController
                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
-                ATOMIntroductionOnFirstLaunchViewController* vc = [ATOMIntroductionOnFirstLaunchViewController new];
+                DDIntroVC* vc = [DDIntroVC new];
                 self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:vc];
                 self.window.rootViewController = self.baseNav;
             } else {
-                ATOMLaunchViewController *lvc = [[ATOMLaunchViewController alloc] init];
+                DDLaunchVC *lvc = [[DDLaunchVC alloc] init];
                 self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
                 self.window.rootViewController = self.baseNav;
             }

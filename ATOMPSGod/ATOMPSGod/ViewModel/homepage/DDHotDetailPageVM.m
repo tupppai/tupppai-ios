@@ -13,7 +13,7 @@
 #import "DDTipLabelVM.h"
 #import "ATOMComment.h"
 #import "DDCommentVM.h"
-#import "ATOMBaseRequest.h"
+#import "DDBaseService.h"
 @implementation DDHotDetailPageVM
 
 - (instancetype)init {
@@ -84,7 +84,7 @@
     _liked = !_liked;
     [param setValue:@(status) forKey:@"status"];
     //每一页的第一张图是HomePage
-    [ATOMBaseRequest toggleLike:param withPageType:_type withID:_ID withBlock:^(NSError *error) {
+    [DDBaseService toggleLike:param withPageType:_type withID:_ID withBlock:^(NSError *error) {
         if (!error) {
             NSInteger number = [_likeNumber integerValue]+one;
             [self setLikeNumber:[NSString stringWithFormat:@"%ld",(long)number]];

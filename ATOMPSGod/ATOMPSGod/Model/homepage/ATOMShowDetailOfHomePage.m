@@ -7,7 +7,7 @@
 //
 
 #import "ATOMShowDetailOfHomePage.h"
-#import "ATOMHTTPRequestOperationManager.h"
+#import "DDSessionManager.h"
 #import "ATOMDetailImage.h"
 #import "ATOMComment.h"
 #import "ATOMCommentDAO.h"
@@ -38,7 +38,7 @@
 
 - (NSURLSessionDataTask *)ShowDetailOfHomePage:(NSDictionary *)param withImageID:(NSInteger)imageID withBlock:(void (^)(NSMutableArray *, NSError *))block {
     NSLog(@"ShowDetailOfHomePage %@", param);
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:[NSString stringWithFormat:@"ask/show/%d", (int)imageID] parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[DDSessionManager shareHTTPSessionManager] GET:[NSString stringWithFormat:@"ask/show/%d", (int)imageID] parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         if ([ responseObject objectForKey:@"data"]) {
             NSLog(@"ask/show/%ld,responseObject%@",(long)imageID,responseObject);
             NSMutableArray *detailOfHomePageArray = [NSMutableArray array];

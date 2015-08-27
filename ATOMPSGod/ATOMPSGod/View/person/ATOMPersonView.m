@@ -27,12 +27,12 @@
     [self addSubview:_topBackGroundImageView];
     
     _userHeaderButton = [[UIButton alloc] initWithFrame:CGRectMake((SCREEN_WIDTH - kUserBigHeaderButtonWidth) / 2, kPadding25, kUserBigHeaderButtonWidth, kUserBigHeaderButtonWidth)];
-    [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[ATOMCurrentUser currentUser].avatar] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
+    [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[DDUserModel currentUser].avatar] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     _userHeaderButton.layer.cornerRadius = kUserBigHeaderButtonWidth / 2;
     _userHeaderButton.layer.masksToBounds = YES;
     [_topBackGroundImageView addSubview:_userHeaderButton];
     
-    NSString *str = [NSString stringWithFormat:@"%d", (int)[ATOMCurrentUser currentUser].fansNumber];
+    NSString *str = [NSString stringWithFormat:@"%d", (int)[DDUserModel currentUser].fansNumber];
     NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
     paragraphStyle.lineSpacing = 6;
     NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:kFont15], NSFontAttributeName, [UIColor colorWithHex:0x74c3ff], NSForegroundColorAttributeName, paragraphStyle, NSParagraphStyleAttributeName, nil];
@@ -42,7 +42,7 @@
     _fansLabel.center = CGPointMake(_fansLabel.center.x, _userHeaderButton.center.y);
     _fansLabel.userInteractionEnabled = YES;
     _fansLabel.numberOfLines = 0;
-    NSMutableAttributedString *fansLabelText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld\n粉丝", (long)[ATOMCurrentUser currentUser].fansNumber] attributes:attributeDict];
+    NSMutableAttributedString *fansLabelText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld\n粉丝", (long)[DDUserModel currentUser].fansNumber] attributes:attributeDict];
 //    [fansLabelText addAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont15], NSFontAttributeName, [UIColor colorWithHex:0xc3cbd2], NSForegroundColorAttributeName, nil] range:NSMakeRange(str.length + 1, 2)];
     _fansLabel.attributedText = fansLabelText;
     _fansLabel.minimumScaleFactor = 0.7;
@@ -53,8 +53,8 @@
     _likeLabel.center = CGPointMake(_likeLabel.center.x, _userHeaderButton.center.y);
     _likeLabel.minimumScaleFactor = 0.7;
     _likeLabel.numberOfLines = 0;
-    NSMutableAttributedString *likeLabelText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%d\n赞", (int)[ATOMCurrentUser currentUser].likeNumber] attributes:attributeDict];
-    str = [NSString stringWithFormat:@"%d", (int)[ATOMCurrentUser currentUser].likeNumber];
+    NSMutableAttributedString *likeLabelText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%d\n赞", (int)[DDUserModel currentUser].likeNumber] attributes:attributeDict];
+    str = [NSString stringWithFormat:@"%d", (int)[DDUserModel currentUser].likeNumber];
 //    [likeLabelText addAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont15], NSFontAttributeName, [UIColor colorWithHex:0xc3cbd2], NSForegroundColorAttributeName, nil] range:NSMakeRange(str.length + 1, 1)];
     _likeLabel.attributedText = likeLabelText;
     _likeLabel.textAlignment = NSTextAlignmentCenter;

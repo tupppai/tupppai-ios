@@ -6,21 +6,21 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMLaunchViewController.h"
+#import "DDLaunchVC.h"
 #import "ATOMLaunchView.h"
-#import "ATOMCreateProfileViewController.h"
-#import "ATOMLoginViewController.h"
+#import "DDCreateProfileVC.h"
+#import "DDLoginVC.h"
 #import "ATOMLogin.h"
 #import "AppDelegate.h"
 #import "DDTabBarController.h"
 #import "ATOMShareSDKModel.h"
 #import "EAIntroView.h"
-@interface ATOMLaunchViewController ()
+@interface DDLaunchVC ()
 
 @property (nonatomic, strong) ATOMLaunchView *launchView;
 @end
 
-@implementation ATOMLaunchViewController
+@implementation DDLaunchVC
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
@@ -57,8 +57,8 @@
                     [AppDelegate APP].mainTabBarController = nil;
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
                 } else if (isRegister == NO) {
-                    [ATOMCurrentUser currentUser].signUpType = ATOMSignUpWechat;
-                    [ATOMCurrentUser currentUser].sourceData = sourceData;
+                    [DDUserModel currentUser].signUpType = ATOMSignUpWechat;
+                    [DDUserModel currentUser].sourceData = sourceData;
                     ATOMUserProfileViewModel* ipvm = [ATOMUserProfileViewModel new];
                     ipvm.nickName = sourceData[@"nickname"];
                     ipvm.province = sourceData[@"province"];
@@ -69,7 +69,7 @@
                     } else {
                         ipvm.gender = @"女";
                     }
-                    ATOMCreateProfileViewController *cpvc = [ATOMCreateProfileViewController new];
+                    DDCreateProfileVC *cpvc = [DDCreateProfileVC new];
                     cpvc.userProfileViewModel = ipvm;
                     [self.navigationController pushViewController:cpvc animated:YES];
                 }
@@ -83,14 +83,14 @@
 
 - (void)clickOtherRegisterButton:(UIButton *)sender {
 
-    [ATOMCurrentUser currentUser].signUpType = ATOMSignUpMobile;
+    [DDUserModel currentUser].signUpType = ATOMSignUpMobile;
     
-    ATOMCreateProfileViewController *cpvc = [ATOMCreateProfileViewController new];
+    DDCreateProfileVC *cpvc = [DDCreateProfileVC new];
     [self.navigationController pushViewController:cpvc animated:YES];
 }
 
 - (void)clickLoginButton:(UIButton *)sender {
-    ATOMLoginViewController *lvc = [ATOMLoginViewController new];
+    DDLoginVC *lvc = [DDLoginVC new];
     [self.navigationController pushViewController:lvc animated:YES];
 }
 @end

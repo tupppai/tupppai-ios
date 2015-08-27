@@ -7,7 +7,7 @@
 //
 
 #import "Util.h"
-#import "ATOMBaseRequest.h"
+#import "DDBaseService.h"
 
 
 @implementation Util

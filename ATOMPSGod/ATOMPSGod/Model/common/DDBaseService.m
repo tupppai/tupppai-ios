@@ -6,10 +6,10 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMBaseRequest.h"
-#import "ATOMHTTPRequestOperationManager.h"
+#import "DDBaseService.h"
+#import "DDSessionManager.h"
 
-@implementation ATOMBaseRequest
+@implementation DDBaseService
 
 + (NSURLSessionDataTask *)toggleLike:(NSDictionary *)param withPageType:(ATOMPageType)type withID:(NSInteger)ID  withBlock:(void (^)(NSError *))block {
     NSString* url;
@@ -18,7 +18,7 @@
     } else if (type == ATOMPageTypeReply) {
         url = [NSString stringWithFormat:@"reply/upreply/%ld",(long)ID];
     }
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[DDSessionManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
             if (block) {
@@ -39,7 +39,7 @@
         url = [NSString stringWithFormat:@"reply/upreply/%ld",(long)ID];
     }
     
-    [ATOMBaseRequest GET:param withUrl:url withBlock:^(id responseObject) {
+    [DDBaseService GET:param withUrl:url withBlock:^(id responseObject) {
         if (responseObject) {
             block(nil);
         } else {
@@ -70,7 +70,7 @@
 
 + (NSURLSessionDataTask *)post :(NSDictionary*)param withUrl:(NSString*)url withBlock:(void (^)(NSError *error ,int ret))block {
     NSLog(@"ATOMBaseRequest post param %@",param);
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] POST:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[DDSessionManager shareHTTPSessionManager] POST:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"ATOMBaseRequest post responseObject%@",responseObject);
         NSLog(@"ATOMBaseRequest post info%@",[ responseObject objectForKey:@"info"]);
         int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
@@ -94,7 +94,7 @@
 
 + (NSURLSessionDataTask *)get :(NSDictionary*)param withUrl:(NSString*)url withBlock:(void (^)(NSError *))block {
     NSLog(@"ATOMBaseRequest post param %@",param);
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[DDSessionManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"ATOMBaseRequest post responseObject%@",responseObject);
         NSLog(@"ATOMBaseRequest post info%@",[ responseObject objectForKey:@"info"]);
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
@@ -117,7 +117,7 @@
 
 + (NSURLSessionDataTask *)GET :(NSDictionary*)param withUrl:(NSString*)url withBlock:(void (^)(id responseObject))block {
     NSLog(@"ATOMBaseRequest GET url %@ , param %@",url,param);
-    return [[ATOMHTTPRequestOperationManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[DDSessionManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"ATOMBaseRequest GET responseObject%@",responseObject);
         NSLog(@"ATOMBaseRequest GET info%@",[ responseObject objectForKey:@"info"]);
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
