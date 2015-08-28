@@ -9,7 +9,6 @@
 #import "DDPhoneRegisterVC.h"
 #import "ATOMMobileRegisterView.h"
 #import "DDAuthcodeVC.h"
-#import "ATOMGetMoblieCode.h"
 
 @interface DDPhoneRegisterVC () <UITextFieldDelegate>
 
@@ -27,7 +26,6 @@
 }
 
 - (void)createUI {
-
     _mobileRegisterView = [ATOMMobileRegisterView new];
     self.view = _mobileRegisterView;
     _mobileRegisterView.mobileTextField.delegate = self;
@@ -43,20 +41,20 @@
 }
 - (void)clickRightButtonItem {
     if ([self checkInputMessageSuccess]) {
-        ATOMGetMoblieCode *getMobileCode = [ATOMGetMoblieCode new];
         NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:_mobileRegisterView.mobileTextField.text, @"phone", nil];
-        [getMobileCode GetMobileCode:param withBlock:^(NSString *verifyCode, NSError *error) {
-            if (verifyCode && !error) {
+        [DDProfileService getAuthCode:param withBlock:^(NSString* authcode) {
+            if (authcode) {
                 [DDUserModel currentUser].mobile = _mobileRegisterView.mobileTextField.text;
                 [DDUserModel currentUser].password = [_mobileRegisterView.passwordTextField.text sha1];
-//                NSLog(@"sha1 password%@",[ATOMCurrentUser currentUser].password);
                 DDAuthcodeVC *ivcvc = [DDAuthcodeVC new];
-                ivcvc.verifyCode = verifyCode;
+                ivcvc.verifyCode = authcode;
                 [self.navigationController pushViewController:ivcvc animated:YES];
-            } else {
-                
+            }
+            else {
+                [Util ShowTSMessageError:@"无法获取到验证码"];
             }
         }];
+
     }
 }
 
@@ -80,32 +78,6 @@
     [textField resignFirstResponder];
     return YES;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

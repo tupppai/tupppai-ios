@@ -52,7 +52,6 @@
 		5C4C70B41AB6A60C00358989 /* DDSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4C70B31AB6A60C00358989 /* DDSessionManager.m */; };
 		5C4C70C51AB6BC5200358989 /* DDBaseService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4C70C41AB6BC5200358989 /* DDBaseService.m */; };
 		5C4C70C81AB6E20800358989 /* DDUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4C70C71AB6E20800358989 /* DDUserModel.m */; };
-		5C4C70D91AB6FD5700358989 /* ATOMGetMoblieCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4C70D11AB6FD5700358989 /* ATOMGetMoblieCode.m */; };
 		5C4C70DA1AB6FD5700358989 /* ATOMSubmitUserInfomation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4C70D31AB6FD5700358989 /* ATOMSubmitUserInfomation.m */; };
 		5C4C70DB1AB6FD5700358989 /* ATOMUploadImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4C70D51AB6FD5700358989 /* ATOMUploadImage.m */; };
 		5C4C70E51AB7124F00358989 /* ATOMLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4C70E41AB7124F00358989 /* ATOMLogin.m */; };
@@ -270,7 +269,6 @@
 		E93D23831B3D26320081F632 /* shareIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = E93D23821B3D26320081F632 /* shareIcon.png */; };
 		E93D23871B3FA6FB0081F632 /* ATOMShowSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D23861B3FA6FB0081F632 /* ATOMShowSettings.m */; };
 		E93ED5261B7F25F00035630B /* UITableView+FDTemplateLayoutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E93ED5251B7F25EF0035630B /* UITableView+FDTemplateLayoutCell.m */; };
-		E94289731B5B32A200ED26E4 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = E94289591B5B32A200ED26E4 /* .gitkeep */; };
 		E94289741B5B32A200ED26E4 /* NotificationBackgroundError.png in Resources */ = {isa = PBXBuildFile; fileRef = E942895A1B5B32A200ED26E4 /* NotificationBackgroundError.png */; };
 		E94289751B5B32A200ED26E4 /* NotificationBackgroundError@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E942895B1B5B32A200ED26E4 /* NotificationBackgroundError@2x.png */; };
 		E94289761B5B32A200ED26E4 /* NotificationBackgroundErrorIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = E942895C1B5B32A200ED26E4 /* NotificationBackgroundErrorIcon.png */; };
@@ -512,8 +510,6 @@
 		5C4C70C41AB6BC5200358989 /* DDBaseService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDBaseService.m; path = Model/common/DDBaseService.m; sourceTree = "<group>"; };
 		5C4C70C61AB6E20800358989 /* DDUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDUserModel.h; sourceTree = "<group>"; };
 		5C4C70C71AB6E20800358989 /* DDUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDUserModel.m; sourceTree = "<group>"; };
-		5C4C70D01AB6FD5700358989 /* ATOMGetMoblieCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMGetMoblieCode.h; sourceTree = "<group>"; };
-		5C4C70D11AB6FD5700358989 /* ATOMGetMoblieCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMGetMoblieCode.m; sourceTree = "<group>"; };
 		5C4C70D21AB6FD5700358989 /* ATOMSubmitUserInfomation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMSubmitUserInfomation.h; sourceTree = "<group>"; };
 		5C4C70D31AB6FD5700358989 /* ATOMSubmitUserInfomation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMSubmitUserInfomation.m; sourceTree = "<group>"; };
 		5C4C70D41AB6FD5700358989 /* ATOMUploadImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMUploadImage.h; sourceTree = "<group>"; };
@@ -1285,8 +1281,6 @@
 		5C4C70CF1AB6FD5700358989 /* login */ = {
 			isa = PBXGroup;
 			children = (
-				5C4C70D01AB6FD5700358989 /* ATOMGetMoblieCode.h */,
-				5C4C70D11AB6FD5700358989 /* ATOMGetMoblieCode.m */,
 				5C4C70D21AB6FD5700358989 /* ATOMSubmitUserInfomation.h */,
 				5C4C70D31AB6FD5700358989 /* ATOMSubmitUserInfomation.m */,
 				5C4C70D41AB6FD5700358989 /* ATOMUploadImage.h */,
@@ -3037,7 +3031,6 @@
 				5C561A6E1AB7C8C30052D4D5 /* MJRefresh.bundle in Resources */,
 				E94289771B5B32A200ED26E4 /* NotificationBackgroundErrorIcon@2x.png in Resources */,
 				E9F891091B87038F0057ECBF /* IQKeyboardManager.bundle in Resources */,
-				E94289731B5B32A200ED26E4 /* .gitkeep in Resources */,
 				E94289791B5B32A200ED26E4 /* NotificationBackgroundMessage@2x.png in Resources */,
 				5C9BDA4D1AA85E5600715698 /* breathe.gif in Resources */,
 				E94289831B5B32A200ED26E4 /* NotificationButtonBackground@2x.png in Resources */,
@@ -3123,7 +3116,6 @@
 				5C83A88F1AC66F910071A024 /* POPCustomAnimation.mm in Sources */,
 				5C7861161AAF4C9400E87C77 /* ATOMMyWorkViewController.m in Sources */,
 				5C54DF231AB9772000BDE34D /* ATOMHomeImage.m in Sources */,
-				5C4C70D91AB6FD5700358989 /* ATOMGetMoblieCode.m in Sources */,
 				5C5DDBD71AD40C9800F4B845 /* ATOMShowProceeding.m in Sources */,
 				E991EF0B1B735D0500025108 /* DDIntroVC.m in Sources */,
 				5C83A8931AC66F910071A024 /* POPMath.mm in Sources */,

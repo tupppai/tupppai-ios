@@ -14,9 +14,13 @@
     [[self class]GET:param withUrl:URL_PFSignProceeding withBlock:^(id responseObject) {
         if (responseObject) {
             NSString* url = [[responseObject objectForKey:@"data"]objectForKey:@"url"];
+            if (block) {
                 block(url);
+            }
         } else {
-            block(nil);
+            if (block) {
+                block(nil);
+            }
         }
     }];
 }
@@ -25,9 +29,13 @@
     [[self class]GET:nil withUrl:URL_PFGetPushSetting withBlock:^(id responseObject) {
         if (responseObject) {
             NSDictionary* data = [responseObject objectForKey:@"data"];
-            block(data);
+            if (block) {
+                block(data);
+            }
         } else {
-            block(nil);
+            if (block) {
+                block(nil);
+            }
         }
     }];
 }
@@ -37,27 +45,39 @@
     
     [[self class]POST:param withUrl:URL_PFsetPushSetting withBlock:^(id responseObject) {
         if (responseObject) {
-            block(YES);
+            if (block) {
+                block(YES);
+            }
         } else {
-            block(NO);
+            if (block) {
+                block(NO);
+            }
         }
     }];
 }
 + (void) follow :(NSDictionary*)param withBlock:(void (^)(BOOL success))block {
     [[self class]POST:param withUrl:URL_PFFollow withBlock:^(id responseObject) {
         if (responseObject) {
-            block(YES);
+            if (block) {
+                block(YES);
+            }
         } else {
-            block(NO);
+            if (block) {
+                block(NO);
+            }
         }
     }];
 }
 + (void) deleteProceeding :(NSDictionary*)param withBlock:(void (^)(BOOL success))block {
     [[self class]POST:param withUrl:URL_PFDeleteProceeding withBlock:^(id responseObject) {
         if (responseObject) {
-            block(YES);
+            if (block) {
+                block(YES);
+            }
         } else {
-            block(NO);
+            if (block) {
+                block(NO);
+            }
         }
     }];
 }
@@ -65,9 +85,13 @@
     [[self class]POST2:param withUrl:URL_PFUpdatePasswordURL withBlock:^(id responseObject) {
         if (responseObject) {
             NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
-            block(YES,ret);
+            if (block) {
+                block(YES,ret);
+            }
         } else {
-            block(NO,-1);
+            if (block) {
+                block(NO,-1);
+            }
         }
     }];
 }
@@ -77,9 +101,59 @@
 + (void) updateToken :(NSDictionary*)param withBlock:(void (^)(BOOL success))block {
     [[self class]POST:param withUrl:URL_ACUpdateToken withBlock:^(id responseObject) {
         if (responseObject) {
-            block(YES);
+            if (block) {
+                block(YES);
+            }
         } else {
-            block(NO);
+            if (block) {
+                block(NO);
+            }
+        }
+    }];
+}
+
++ (void) resetPassword :(NSDictionary*)param withBlock:(void (^)(BOOL success))block {
+    [[self class]POST:param withUrl:URL_ACResetPassword withBlock:^(id responseObject) {
+        if (responseObject) {
+            if (block) {
+                block(YES);
+            }
+        } else {
+            if (block) {
+                block(NO);
+            }
+        }
+    }];
+}
+
++ (void)getAuthCode:(NSDictionary*)param withBlock:(void (^)(NSString *authcode))block {
+    [[self class]GET:nil withUrl:URL_ACRequestAuthCode withBlock:^(id responseObject) {
+        if (responseObject) {
+            NSDictionary* data = [responseObject objectForKey:@"data"];
+            NSString* authcode = [data objectForKey:@"code"];
+            if (block && authcode) {
+                block(authcode);
+            }
+        } else {
+            if (block) {
+                block(nil);
+            }
+        }
+    }];
+}
+
+#pragma mark - Unknown
+
++ (void) postFeedBack :(NSDictionary*)param withBlock:(void (^)(BOOL success))block {
+    [[self class]POST:param withUrl:URL_UKSave withBlock:^(id responseObject) {
+        if (responseObject) {
+            if (block) {
+                block(YES);
+            }
+        } else {
+            if (block) {
+                block(NO);
+            }
         }
     }];
 }

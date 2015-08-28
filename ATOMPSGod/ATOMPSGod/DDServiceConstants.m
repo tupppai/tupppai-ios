@@ -19,10 +19,11 @@ NSString * URL_PFUpdatePasswordURL = @"profile/updatePassword";
 
 #pragma mark - Account
 NSString * URL_ACUpdateToken = @"account/updateToken";
-
+NSString * URL_ACResetPassword = @"account/resetPassword";
+NSString * URL_ACRequestAuthCode = @"account/requestAuthCode";
 
 #pragma mark - Unknown
-NSString * URL_FBSave = @"feedback/save";
+NSString * URL_UKSave = @"feedback/save";
 
 //NSString * URL_PF = @"";
 //NSString * URL_PF = @"";

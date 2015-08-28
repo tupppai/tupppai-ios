@@ -36,7 +36,6 @@
 #import "UIButton+AFNetworking.h"
 #import "POP.h"
 #import "UIViewController+ATOMTracking.h"
-#import <ShareSDK/ShareSDK.h>
 #import "MMPlaceHolder.h"
 #import "Util.h"
 #import "CommonProtocol.h"
@@ -44,6 +43,8 @@
 #import "UIColor+PSGod.h"
 #import "UIScrollView+EmptyDataSet.h"
 #import "ATOMShareSDKModel.h"
+
+#import "DDProfileService.h"
 
 #endif
 

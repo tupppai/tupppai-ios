@@ -9,7 +9,6 @@
 #import "DDInputPhoneFPVC.h"
 #import "DDInputAuthcodePwdFPVC.h"
 #import "ATOMInputMobileView.h"
-#import "ATOMGetMoblieCode.h"
 @interface DDInputPhoneFPVC () <UITextFieldDelegate>
 
 @property (nonatomic, strong) ATOMInputMobileView *inputMobileView;
@@ -41,18 +40,16 @@
 }
 - (void)clickRightButtonItem {
     if ([self checkInputMessageSuccess]) {
-        ATOMGetMoblieCode *getMobileCode = [ATOMGetMoblieCode new];
         NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:_inputMobileView.mobileTextField.text, @"phone", nil];
-        [getMobileCode GetMobileCode:param withBlock:^(NSString *verifyCode, NSError *error) {
-            if (verifyCode && !error) {
+        [DDProfileService getAuthCode:param withBlock:^(NSString* authcode) {
+            if (authcode) {
                 [DDUserModel currentUser].mobile = _inputMobileView.mobileTextField.text;
                 DDInputAuthcodePwdFPVC *ivcvc = [DDInputAuthcodePwdFPVC new];
-                ivcvc.verifyCode = verifyCode;
+                ivcvc.verifyCode = authcode;
                 ivcvc.phoneNumber = _inputMobileView.mobileTextField.text;
-
-                [self.navigationController pushViewController:ivcvc animated:YES];
-            } else {
-                
+                [self.navigationController pushViewController:ivcvc animated:YES];            }
+            else {
+                [Util ShowTSMessageError:@"无法获取到验证码"];
             }
         }];
     }

@@ -15,7 +15,6 @@
 #import "ATOMConcernViewModel.h"
 #import "ATOMShowConcern.h"
 #import "RefreshTableView.h"
-#import "ATOMFollowModel.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface DDMyFollowVC () <UITableViewDataSource, UITableViewDelegate,PWRefreshBaseTableViewDelegate>
@@ -156,14 +155,14 @@
                 if (!cell.attentionButton.selected) {
                     [param setObject:@0 forKey:@"status"];
                 }
-            [ATOMFollowModel follow:param withBlock:^(NSError *error) {
-                if (error) {
-                    cell.attentionButton.selected = !cell.attentionButton.selected;
-                } else {
-                    NSString* desc =  cell.attentionButton.selected?[NSString stringWithFormat:@"你关注了%@",cell.viewModel.userName]:[NSString stringWithFormat:@"你取消关注了%@",cell.viewModel.userName];
-                    [Hud text:desc inView:self.view];
-                }
-            }];
+                [DDProfileService follow:param withBlock:^(BOOL success) {
+                    if (!success) {
+                        cell.attentionButton.selected = !cell.attentionButton.selected;
+                    } else {
+                        NSString* desc =  cell.attentionButton.selected?[NSString stringWithFormat:@"你关注了%@",cell.viewModel.userName]:[NSString stringWithFormat:@"你取消关注了%@",cell.viewModel.userName];
+                        [Hud text:desc inView:self.view];
+                    }
+                }];
             } else {
                 ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
                 opvc.userID = model.uid;

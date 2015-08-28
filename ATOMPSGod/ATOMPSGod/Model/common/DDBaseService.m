@@ -123,7 +123,11 @@
 }
 
 + (void) POST :(NSDictionary*)param withUrl:(NSString*)url withBlock:(void (^)(id responseObject))block {
+    NSLog(@"POST  param %@",param);
      [[DDSessionManager shareHTTPSessionManager] POST:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSLog(@"POST  responseObject%@",responseObject);
+        NSLog(@"POST  info%@",[ responseObject objectForKey:@"info"]);
+         
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
             if (block) {

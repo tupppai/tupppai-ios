@@ -20,7 +20,10 @@ extern NSString *URL_PFUpdatePasswordURL;
 
 #pragma mark - Account
 extern NSString * URL_ACUpdateToken;
+extern NSString * URL_ACResetPassword;
+extern NSString * URL_ACRequestAuthCode;
 
 #pragma mark - Unknown
-extern NSString * URL_FBSave;
+extern NSString * URL_UKSave;
+
 @end

@@ -24,7 +24,10 @@
 + (void) deleteProceeding :(NSDictionary*)param withBlock:(void (^)(BOOL success))block;
 
 #pragma mark - Account
-
 + (void) updateToken :(NSDictionary*)param withBlock:(void (^)(BOOL success))block;
++ (void) resetPassword :(NSDictionary*)param withBlock:(void (^)(BOOL success))block;
++ (void)getAuthCode:(NSDictionary*)param withBlock:(void (^)(NSString *authcode))block;
+#pragma mark - Unknown
++ (void) postFeedBack :(NSDictionary*)param withBlock:(void (^)(BOOL success))block;
 
 @end

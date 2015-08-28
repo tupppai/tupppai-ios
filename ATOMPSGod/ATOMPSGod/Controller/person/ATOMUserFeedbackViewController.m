@@ -8,7 +8,6 @@
 
 #import "ATOMUserFeedbackViewController.h"
 #import "ATOMUserFeedbackView.h"
-#import "DDBaseService.h"
 @interface ATOMUserFeedbackViewController () <UITextViewDelegate, UITextFieldDelegate>
 
 @property (nonatomic, strong) ATOMUserFeedbackView *userFeedbackView;
@@ -49,10 +48,11 @@
         NSMutableDictionary *param = [NSMutableDictionary new];
         [param setObject:_userFeedbackView.feedbackTextView.text forKey:@"content"];
         [param setObject:_userFeedbackView.contactTextField.text forKey:@"contact"];
-        [DDBaseService post:param withUrl:@"feedback/save" withBlock:^(NSError *error,int ret) {
-            if (error) {
+        
+        [DDProfileService postFeedBack:param withBlock:^(BOOL success) {
+            if (!success) {
             } else {
-                [Hud success:@"感谢你的反馈💗"];
+                [Hud success:@"感谢你的反馈😊"];
                 [self.navigationController popViewControllerAnimated:YES];
             }
         }];

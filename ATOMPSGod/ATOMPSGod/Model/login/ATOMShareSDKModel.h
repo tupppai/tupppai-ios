@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <ShareSDK/ShareSDK.h>
 
 @interface ATOMShareSDKModel : NSObject
 + (void)getUserInfo:(SSDKPlatformType)type withBlock:(void (^)(NSDictionary* ))block;

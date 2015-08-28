@@ -10,15 +10,12 @@
 #import "ATOMInputVerifyCodeView.h"
 #import "ATOMSubmitUserInfomation.h"
 #import "AppDelegate.h"
-//#import "ATOMLoginViewController.h"
 #import "DDTabBarController.h"
-#import "ATOMGetMoblieCode.h"
 
 @interface DDAuthcodeVC ()
 
 @property (nonatomic, strong) ATOMInputVerifyCodeView *inputVerifyView;
 @property (nonatomic, strong) NSTimer *verifyTimer;
-//@property (nonatomic, strong) NSDateFormatter *df;
 @end
 
 @implementation DDAuthcodeVC
@@ -58,11 +55,10 @@
 }
 
 - (void)updateAuthCode {
-    ATOMGetMoblieCode *getMobileCode = [ATOMGetMoblieCode new];
     NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:[DDUserModel currentUser].mobile, @"phone", nil];
-    [getMobileCode GetMobileCode:param withBlock:^(NSString *verifyCode, NSError *error) {
-        if (verifyCode && !error) {
-            self.verifyCode = verifyCode;
+    [DDProfileService getAuthCode:param withBlock:^(NSString* authcode) {
+        if (authcode) {
+            self.verifyCode = authcode;
         } else {
             [Util ShowTSMessageError:@"无法获取到验证码"];
         }

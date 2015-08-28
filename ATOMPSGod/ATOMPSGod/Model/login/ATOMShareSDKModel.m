@@ -11,14 +11,11 @@
 //shareSDK 获取 用户手机的第三方平台的信息
 + (void)getUserInfo:(SSDKPlatformType)type withBlock:(void (^)(NSDictionary* ))block{
     [ShareSDK getUserInfo:type conditional:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
-        NSLog(@"第三平台user rawData%@ ",user.rawData);
         block(user.rawData);
     }];
 }
 + (void)authorize:(SSDKPlatformType)type withBlock:(void (^)(NSDictionary* ))block{
-
     [ShareSDK authorize:type settings:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
-        NSLog(@"第三平台user rawData%@ ",user.rawData);
         block(user.rawData);
     }];
 }

@@ -9,7 +9,6 @@
 #import "DDInputAuthcodePwdFPVC.h"
 #import "ATOMInputVerifyCodeAndPasswordView.h"
 #import "DDBaseService.h"
-#import "ATOMGetMoblieCode.h"
 
 @interface DDInputAuthcodePwdFPVC ()
 
@@ -55,12 +54,12 @@
 }
 
 - (void)updateAuthCode {
-    ATOMGetMoblieCode *getMobileCode = [ATOMGetMoblieCode new];
     NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:[DDUserModel currentUser].mobile, @"phone", nil];
-    [getMobileCode GetMobileCode:param withBlock:^(NSString *verifyCode, NSError *error) {
-        if (verifyCode && !error) {
-            self.verifyCode = verifyCode;
-        } else {
+    [DDProfileService getAuthCode:param withBlock:^(NSString* authcode) {
+        if (authcode) {
+            self.verifyCode = authcode;
+        }
+        else {
             [Util ShowTSMessageError:@"无法获取到验证码"];
         }
     }];
@@ -73,9 +72,9 @@
             NSMutableDictionary* param = [NSMutableDictionary new];
             [param setObject:_inputVerifyView.passwordTextField.text forKey:@"new_pwd"];
             [param setObject:_phoneNumber forKey:@"phone"];
-
-            [DDBaseService post:param withUrl:@"account/resetPassword" withBlock:^(NSError *error, int ret) {
-                if ( error == nil && ret == 1) {
+            
+            [DDProfileService resetPassword:param withBlock:^(BOOL success) {
+                if (success) {
                     [Util ShowTSMessageSuccess:@"成功设置密码"];
                     [self.navigationController popToRootViewControllerAnimated:YES];
                 } else {
