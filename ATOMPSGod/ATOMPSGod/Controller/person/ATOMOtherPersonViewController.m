@@ -20,8 +20,7 @@
 #import "ATOMAskViewModel.h"
 #import "ATOMReplyViewModel.h"
 #import "ATOMUser.h"
-#import "ATOMFollowModel.h"
-
+#import "DDProfileService.h"
 #import "DDCommentVC.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -293,8 +292,8 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
     if (!_otherPersonView.uploadHeaderView.attentionButton.selected) {
         [param setObject:@0 forKey:@"status"];
     }
-    [ATOMFollowModel follow:param withBlock:^(NSError *error) {
-        if (error) {
+    [DDProfileService follow:param withBlock:^(BOOL success) {
+        if (!success) {
             _otherPersonView.uploadHeaderView.attentionButton.selected = !_otherPersonView.uploadHeaderView.attentionButton.selected;
         } else {
             NSString* desc = _otherPersonView.uploadHeaderView.attentionButton.selected?[NSString stringWithFormat:@"你关注了%@",_userName]:[NSString stringWithFormat:@"你取消关注了%@",_userName];

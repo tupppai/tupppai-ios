@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ATOMMessageRemindTableViewCell : UITableViewCell
+@interface DDMsgPushSettingTableCell : UITableViewCell
 
 //@property (nonatomic, strong) UILabel *themeLabel;
 @property (nonatomic, strong) UISwitch *notificationSwitch;

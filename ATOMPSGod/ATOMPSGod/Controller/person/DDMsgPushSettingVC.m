@@ -6,17 +6,17 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMMessageRemindViewController.h"
-#import "ATOMMessageRemindTableViewCell.h"
-#import "ATOMShowSettings.h"
-@interface ATOMMessageRemindViewController () <UITableViewDelegate, UITableViewDataSource>
+#import "DDMsgPushSettingVC.h"
+#import "DDMsgPushSettingTableCell.h"
+#import "DDProfileService.h"
+@interface DDMsgPushSettingVC () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSDictionary *data;
 
 @end
 
-@implementation ATOMMessageRemindViewController
+@implementation DDMsgPushSettingVC
 
 #pragma mark - UI
 
@@ -26,11 +26,9 @@
 }
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [ATOMShowSettings getPushSetting:nil withBlock:^(NSDictionary *data, NSError *error) {
-        if (data) {
-            _data = data;
-            [_tableView reloadData];
-        }
+    [DDProfileService getPushSetting:^(NSDictionary *data) {
+        _data = data;
+        [_tableView reloadData];
     }];
 }
 - (void)createUI {
@@ -57,9 +55,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"MessageRemindCell";
-    ATOMMessageRemindTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    DDMsgPushSettingTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
-        cell = [[ATOMMessageRemindTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[DDMsgPushSettingTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         [cell.notificationSwitch addTarget:self action:@selector(toggleSwitch:) forControlEvents:UIControlEventValueChanged];
         cell.notificationSwitch.tag = indexPath.row;
     }
@@ -118,8 +116,10 @@
     } else {
         [param setObject:@0 forKey:@"value"];
     }
-    [ATOMShowSettings setPushSetting:param withBlock:^(NSError *error) {
-        if (error) {
+  
+    [DDProfileService setPushSetting:param withBlock:^(BOOL success) {
+        if (success) {
+            [Hud success:@"设置成功" inView:self.view];
         }
     }];
 }

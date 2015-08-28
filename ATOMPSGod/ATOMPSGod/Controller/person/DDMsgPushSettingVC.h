@@ -8,6 +8,6 @@
 
 #import "DDBaseVC.h"
 
-@interface ATOMMessageRemindViewController : DDBaseVC
+@interface DDMsgPushSettingVC : DDBaseVC
 
 @end

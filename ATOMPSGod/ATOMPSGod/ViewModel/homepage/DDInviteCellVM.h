@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ATOMRecommendUser.h"
-@interface ATOMInviteCellViewModel : NSObject
+#import "DDFollow.h"
+@interface DDInviteCellVM : NSObject
 @property (nonatomic, copy) NSString *avatarUrl;
 @property (nonatomic, copy) NSString* askDesc;
 @property (nonatomic, copy) NSString* fansDesc;
@@ -22,6 +22,5 @@
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, copy) NSString *username;
 
-- (void)setViewModelData:(ATOMRecommendUser *)recommendUser;
-
+- (void)setViewModelData:(DDFollow *)concern;
 @end

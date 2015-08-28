@@ -10,7 +10,7 @@
 #import "ATOMAccountSettingTableViewCell.h"
 #import "ATOMModifyPasswordViewController.h"
 #import "ATOMAccountBindingViewController.h"
-#import "ATOMMessageRemindViewController.h"
+#import "DDMsgPushSettingVC.h"
 #import "ATOMUserFeedbackViewController.h"
 #import "ATOMUserDAO.h"
 #import "ATOMHomeImageDAO.h"
@@ -139,7 +139,7 @@
     NSInteger row = indexPath.row;
     if (section == 0) {
         if (row == 0) {
-            ATOMMessageRemindViewController *mrvc = [ATOMMessageRemindViewController new];
+            DDMsgPushSettingVC *mrvc = [DDMsgPushSettingVC new];
             [self pushViewController:mrvc animated:YES];
         } else if (row == 1) {
             ATOMModifyPasswordViewController *mpvc = [ATOMModifyPasswordViewController new];

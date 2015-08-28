@@ -17,9 +17,9 @@
              @"nickname" : @"nickname",
              @"avatar" : @"avatar",
              @"sex" : @"sex",
-             @"totalFansNumber" : @"fans_count",
-             @"totalAskNumber" : @"ask_count",
-             @"totalReplyNumber" : @"reply_count",
+             @"fansCount" : @"fans_count",
+             @"askCount" : @"ask_count",
+             @"replyCount" : @"reply_count",
              @"isFollow" : @"is_follow"
              };
 }

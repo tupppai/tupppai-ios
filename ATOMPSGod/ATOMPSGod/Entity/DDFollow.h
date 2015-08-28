@@ -8,7 +8,7 @@
 
 #import "ATOMBaseModel.h"
 
-@interface ATOMConcern : ATOMBaseModel
+@interface DDFollow : ATOMBaseModel
 
 /**
  *  每一条记录的ID
@@ -27,19 +27,20 @@
 /**
  *  粉丝总数
  */
-@property (nonatomic, assign) NSInteger totalFansNumber;
+@property (nonatomic, assign) NSInteger fansCount;
 /**
  *  求P总数
  */
-@property (nonatomic, assign) NSInteger totalAskNumber;
+@property (nonatomic, assign) NSInteger askCount;
 /**
  *  回复总数
  */
-@property (nonatomic, assign) NSInteger totalReplyNumber;
+@property (nonatomic, assign) NSInteger replyCount;
 /**
  *  关注状态，0（未关注）1（已关注）2（相互关注）
  */
 @property (nonatomic, assign) bool isMyFan;
 @property (nonatomic, assign) bool isMyFollow;
+@property (nonatomic, assign) bool invited;
 
 @end

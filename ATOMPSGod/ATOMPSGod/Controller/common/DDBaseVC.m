@@ -48,7 +48,12 @@
     }
 }
 
-
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SignOut" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ErrorOccurred"object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ShowInfo" object:nil];
+    //compiler would call [super dealloc] automatically in ARC.
+}
 -(void) signOutRET {
     SIAlertView *alertView = [KShareManager signOutAlertView];
     [alertView addButtonWithTitle:@"好咯"
@@ -94,76 +99,7 @@
 }
 
 
--(void)postSocialShare:(NSInteger)id withSocialShareType:(ATOMSocialShareType)shareType withPageType:(ATOMPageType)pageType {
-//    ATOMShareModel* shareModel = [ATOMShareModel new];
-//    NSMutableDictionary* param = [NSMutableDictionary new];
-//    NSString* shareTypeToServer;
-//    
-//    if (shareType == ATOMShareTypeWechatFriends) {
-//        shareTypeToServer = @"weixin";
-//    } else if (shareType == ATOMShareTypeWechatMoments) {
-//        shareTypeToServer = @"weixin";
-//    } else if (shareType == ATOMShareTypeSinaWeibo) {
-//        shareTypeToServer = @"weibo";
-//    }
-//
-//    [param setObject:shareTypeToServer forKey:@"share_type"];
-//    [param setObject:@(pageType) forKey:@"type"];
-//    [param setObject:@(id) forKey:@"target_id"];
-//    [shareModel getShareInfo:param withBlock:^(ATOMShare *share, NSError *error) {
-//        if (share) {
-//            [ATOMShareSDKModel postSocialShareShareSdk:share withShareType:shareType];
-//        }
-//    }];
-}
-- (void)postSocialShareShareSdk:(ATOMShare*)share  withShareType:(ATOMSocialShareType)shareType {
 
-//    ShareType type;
-//    NSString* shareUrl;
-//    
-//    if ([share.type isEqualToString:@"image"]) {
-//        shareUrl = share.imageUrl;
-//    } else {
-//        shareUrl = share.url;
-//    }
-//    
-//    NSString* shareTitle;
-//    
-//    if (shareType == ATOMShareTypeWechatFriends) {
-//        type = ShareTypeWeixiSession;
-//        shareTitle = [NSString stringWithFormat:@"%@",share.title];
-//    } else if (shareType == ATOMShareTypeWechatMoments) {
-//        type = ShareTypeWeixiTimeline;
-//        shareTitle = [NSString stringWithFormat:@"%@",share.title];
-//    } else if (shareType == ATOMShareTypeSinaWeibo) {
-//        type = SSCShareTypeSinaWeibo;
-//        shareTitle = [NSString stringWithFormat:@"#求PS大神#%@!点击链接%@",share.title,shareUrl];
-//    }
-//    NSString *str=[[NSBundle mainBundle] pathForResource:@"0" ofType:@"jpg"];
-//    NSData *fileData = [NSData dataWithContentsOfFile:str];
-//    
-//    id<ISSContent> publishContent = [ShareSDK content:shareTitle //微博显示的文字
-//                                       defaultContent:share.title
-//                                                image:[ShareSDK imageWithData:fileData fileName:@"image" mimeType:@"Application/Image"]
-//                                                title:shareTitle
-//                                                  url:shareUrl
-//                                          description:share.desc
-//                                            mediaType:SSPublishContentMediaTypeImage];
-//    [ShareSDK clientShareContent:publishContent //内容对象
-//                            type:type //平台类型
-//                   statusBarTips:NO
-//                          result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {//返回事件
-//                              [[KShareManager mascotAnimator]dismiss];
-//                              if (state == SSPublishContentStateSuccess)
-//                              {
-//                                  NSLog(NSLocalizedString(@"TEXT_SHARE_SUC", @"分享成功!"));
-//                              }
-//                              else if (state == SSPublishContentStateFail)
-//                              {
-//                                  NSLog(NSLocalizedString(@"TEXT_SHARE_FAI", @"分享失败!"), [error errorCode], [error errorDescription]);
-//                              }
-//                          }];
-}
 
 
 @end

@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMMessageRemindTableViewCell.h"
+#import "DDMsgPushSettingTableCell.h"
 
-@implementation ATOMMessageRemindTableViewCell
+@implementation DDMsgPushSettingTableCell
 
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {

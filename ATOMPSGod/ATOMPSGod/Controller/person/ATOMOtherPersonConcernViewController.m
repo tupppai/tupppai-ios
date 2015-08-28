@@ -10,10 +10,10 @@
 #import "ATOMMyConcernTableViewCell.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMShowConcern.h"
-#import "ATOMConcern.h"
+#import "DDFollow.h"
+#import "DDProfileService.h"
 #import "ATOMConcernViewModel.h"
 #import "RefreshFooterTableView.h"
-#import "ATOMFollowModel.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMOtherPersonConcernViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource>
@@ -56,11 +56,10 @@
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(_uid) forKeyedSubscript:@"uid"];
-    ATOMShowConcern *showConcern = [ATOMShowConcern new];
     [Hud activity:@"" inView:self.view];
-    [showConcern GetFollow:param withBlock:^(NSMutableArray *recommend,NSMutableArray* resultArray, NSError *error) {
+    [ATOMShowConcern GetFollow:param withBlock:^(NSMutableArray *recommend,NSMutableArray* resultArray, NSError *error) {
         [Hud dismiss:self.view];
-         for (ATOMConcern *concern in resultArray) {
+         for (DDFollow *concern in resultArray) {
             ATOMConcernViewModel *concernViewModel = [ATOMConcernViewModel new];
             [concernViewModel setViewModelData:concern];
             [ws.dataSource addObject:concernViewModel];
@@ -79,9 +78,8 @@
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(timestamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    ATOMShowConcern *showConcern = [ATOMShowConcern new];
-    [showConcern GetFollow:param withBlock:^(NSMutableArray *resultArray,NSMutableArray* recommend, NSError *error) {
-        for (ATOMConcern *concern in resultArray) {
+    [ATOMShowConcern GetFollow:param withBlock:^(NSMutableArray *resultArray,NSMutableArray* recommend, NSError *error) {
+        for (DDFollow *concern in resultArray) {
             ATOMConcernViewModel *concernViewModel = [ATOMConcernViewModel new];
             [concernViewModel setViewModelData:concern];
             [ws.dataSource addObject:concernViewModel];
@@ -147,9 +145,9 @@
                 if (!cell.attentionButton.selected) {
                         [param setObject:@0 forKey:@"status"];
                     }
-                [ATOMFollowModel follow:param withBlock:^(NSError *error) {
+                [DDProfileService follow:param withBlock:^(BOOL success) {
 
-                if (error) {
+                if (!success) {
                     cell.attentionButton.selected = !cell.attentionButton.selected;
                 } else {
                     NSString* desc =  cell.attentionButton.selected?[NSString stringWithFormat:@"你关注了%@",cell.viewModel.userName]:[NSString stringWithFormat:@"你取消关注了%@",cell.viewModel.userName];

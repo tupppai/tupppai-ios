@@ -89,9 +89,9 @@ static CGFloat cellHeight = 70;
     _viewModel = viewModel;
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     _userNameLabel.text = viewModel.userName;
-    _fansNumberLabel.text = [NSString stringWithFormat:@"%@粉丝", viewModel.totalFansNumber];
-    _uploadNumberLabel.text = [NSString stringWithFormat:@"%@求p", viewModel.totalAskNumber];
-    _workNumberLabel.text = [NSString stringWithFormat:@"%@求p", viewModel.totalReplyNumber];
+    _fansNumberLabel.text = [NSString stringWithFormat:@"%@粉丝", viewModel.fansCount];
+    _uploadNumberLabel.text = [NSString stringWithFormat:@"%@求p", viewModel.askCount];
+    _workNumberLabel.text = [NSString stringWithFormat:@"%@求p", viewModel.replyCount];
 
     if (viewModel.isFollow) {
         //已关注

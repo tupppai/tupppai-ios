@@ -27,15 +27,15 @@
 /**
  *  粉丝总数
  */
-@property (nonatomic, assign) NSInteger totalFansNumber;
+@property (nonatomic, assign) NSInteger fansCount;
 /**
  *  求P总数
  */
-@property (nonatomic, assign) NSInteger totalAskNumber;
+@property (nonatomic, assign) NSInteger askCount;
 /**
  *  回复总数
  */
-@property (nonatomic, assign) NSInteger totalReplyNumber;
+@property (nonatomic, assign) NSInteger replyCount;
 /**
  *  自身是否已经关注了该用户
  */

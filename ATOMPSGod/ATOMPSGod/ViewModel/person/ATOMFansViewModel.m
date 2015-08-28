@@ -16,9 +16,9 @@
     _userName = fans.nickname;
     _userSex = fans.sex ? @"man" : @"woman";
     _avatarURL = fans.avatar;
-    _totalFansNumber = [NSString stringWithFormat:@"%d", (int)fans.totalFansNumber];
-    _totalAskNumber = [NSString stringWithFormat:@"%d", (int)fans.totalAskNumber];
-    _totalReplyNumber = [NSString stringWithFormat:@"%d", (int)fans.totalReplyNumber];
+    _fansCount = [NSString stringWithFormat:@"%d", (int)fans.fansCount];
+    _askCount = [NSString stringWithFormat:@"%d", (int)fans.askCount];
+    _replyCount = [NSString stringWithFormat:@"%d", (int)fans.replyCount];
     _isFollow = fans.isFollow;
 }
 

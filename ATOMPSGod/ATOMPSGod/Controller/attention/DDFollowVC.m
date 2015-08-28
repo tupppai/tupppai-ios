@@ -26,11 +26,10 @@
 #import "ATOMCollectModel.h"
 #import "DDInviteVC.h"
 #import "DDCropImageVC.h"
-#import "ATOMRecordModel.h"
 #import "DDBaseService.h"
 #import "DDCommentVC.h"
 #import "UITableView+FDTemplateLayoutCell.h"
-
+#import "DDProfileService.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface DDFollowVC () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
@@ -184,11 +183,13 @@ static NSString *CellIdentifier = @"MyAttentionCell";
     NSMutableDictionary* param = [NSMutableDictionary new];
     [param setObject:@"ask" forKey:@"type"];
     [param setObject:@(vm.askID) forKey:@"target"];
-    [ATOMRecordModel record:param withBlock:^(NSError *error, NSString *url) {
-        if (!error) {
-            [DDBaseService downloadImage:url withBlock:^(UIImage *image) {
-                UIImageWriteToSavedPhotosAlbum(image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
-            }];
+    
+    [DDProfileService signProceeding:param withBlock:^(NSString *imageUrl) {
+        if (imageUrl != nil) {
+            //            [DDBaseService downloadImage:imageUrl withBlock:^(UIImage *image) {
+            kfcFollowCell* cell = (kfcFollowCell *)[_tableView cellForRowAtIndexPath:_selectedIndexPath];
+            UIImageWriteToSavedPhotosAlbum(cell.imageViewMain.image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+            //            }];
         }
     }];
 }

@@ -86,7 +86,7 @@ static CGFloat cellHeight = 70;
     }
 }
 
--(void)setViewModel:(ATOMInviteCellViewModel *)viewModel {
+-(void)setViewModel:(DDInviteCellVM *)viewModel {
     _viewModel = viewModel;
     _inviteButton.selected = viewModel.invited;
     _inviteButton.tag = viewModel.uid;

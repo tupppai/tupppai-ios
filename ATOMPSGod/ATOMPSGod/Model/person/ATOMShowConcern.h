@@ -10,6 +10,6 @@
 
 @interface ATOMShowConcern : NSObject
 
-- (NSURLSessionDataTask *)GetFollow:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *recommendArray, NSMutableArray *mineArray, NSError *error))block;
++ (NSURLSessionDataTask *)GetFollow:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *recommendArray, NSMutableArray *mineArray, NSError *error))block;
 
 @end

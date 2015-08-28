@@ -17,7 +17,7 @@
 #import "ATOMShowProceeding.h"
 #import "RefreshFooterTableView.h"
 
-#import "DDBaseService.h"
+#import "DDProfileService.h"
 #import "DDCommentVC.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -86,7 +86,6 @@
                                   handler:^(SIAlertView *alert) {
                                       [self dealUploadWork];
                                   }];
-
             alertView.transitionStyle = SIAlertViewTransitionStyleFade;
             [alertView show];
         } else if (CGRectContainsPoint(cell.userUploadImageView.frame, p)) {
@@ -105,7 +104,6 @@
                 hdvc.fold = 0;
                 [self pushViewController:hdvc animated:YES];
             }
-            
         } else if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
             opvc.userID = cell.viewModel.userID;
@@ -118,14 +116,15 @@
             [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.deleteButton.frame, p)) {
             NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(cell.viewModel.ID),@"id", nil];
-            [DDBaseService post:param withUrl:@"profile/deleteDownloadRecord" withBlock:^(NSError *error,int ret) {
-                if (!error) {
+            [DDProfileService deleteProceeding:param withBlock:^(BOOL success) {
+                if (success) {
                     [Hud success:@"已删除" inView:self.view];
                 }
                 if (_dataSource.count > 0) {
                     [_dataSource removeObjectAtIndex:indexPath.row];
                 }
                 [_tableView reloadData];
+
             }];
         }
     }

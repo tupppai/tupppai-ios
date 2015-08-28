@@ -8,11 +8,11 @@
 
 #import "ATOMShowConcern.h"
 #import "DDSessionManager.h"
-#import "ATOMConcern.h"
+#import "DDFollow.h"
 
 @implementation ATOMShowConcern
 
-- (NSURLSessionDataTask *)GetFollow:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSMutableArray *, NSError *))block {
++ (NSURLSessionDataTask *)GetFollow:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSMutableArray *, NSError *))block {
     return [[DDSessionManager shareHTTPSessionManager] GET:@"profile/follows" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
         if (ret == 1) {
@@ -26,11 +26,11 @@
                 NSArray *recommend = [data objectForKey:@"recommends"];
                 NSArray *mine = [data objectForKey:@"fellows"];
                 for (int i = 0; i < recommend.count; i++) {
-                    ATOMConcern *concern = [MTLJSONAdapter modelOfClass:[ATOMConcern class] fromJSONDictionary:recommend[i] error:NULL];
+                    DDFollow *concern = [MTLJSONAdapter modelOfClass:[DDFollow class] fromJSONDictionary:recommend[i] error:NULL];
                     [retRecommend addObject:concern];
                 }
                 for (int i = 0; i < mine.count; i++) {
-                    ATOMConcern *concern = [MTLJSONAdapter modelOfClass:[ATOMConcern class] fromJSONDictionary:mine[i] error:NULL];
+                    DDFollow *concern = [MTLJSONAdapter modelOfClass:[DDFollow class] fromJSONDictionary:mine[i] error:NULL];
                     [retMine addObject:concern];
                 }
                 

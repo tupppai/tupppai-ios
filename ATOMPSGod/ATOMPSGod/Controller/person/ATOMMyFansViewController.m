@@ -12,9 +12,8 @@
 #import "ATOMShowFans.h"
 #import "ATOMFans.h"
 #import "ATOMFansViewModel.h"
-#import "ATOMFollowModel.h"
 #import "RefreshFooterTableView.h"
-
+#import "DDProfileService.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMMyFansViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate>
@@ -153,14 +152,15 @@
             if (!cell.attentionButton.selected) {
                 [param setObject:@0 forKey:@"status"];
             }
-            [ATOMFollowModel follow:param withBlock:^(NSError *error) {
-                if (error) {
+            [DDProfileService follow:param withBlock:^(BOOL success) {
+                if (!success) {
                     cell.attentionButton.selected = !cell.attentionButton.selected;
                 } else {
                     NSString* desc =  cell.attentionButton.selected?[NSString stringWithFormat:@"你关注了%@",cell.viewModel.userName]:[NSString stringWithFormat:@"你取消关注了%@",cell.viewModel.userName];
                     [Hud text:desc inView:self.view];
                 }
             }];
+            
         } else {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
             opvc.userID = viewModel.uid;

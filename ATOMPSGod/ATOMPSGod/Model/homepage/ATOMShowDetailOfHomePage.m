@@ -37,10 +37,8 @@
 }
 
 - (NSURLSessionDataTask *)ShowDetailOfHomePage:(NSDictionary *)param withImageID:(NSInteger)imageID withBlock:(void (^)(NSMutableArray *, NSError *))block {
-    NSLog(@"ShowDetailOfHomePage %@", param);
     return [[DDSessionManager shareHTTPSessionManager] GET:[NSString stringWithFormat:@"ask/show/%d", (int)imageID] parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         if ([ responseObject objectForKey:@"data"]) {
-            NSLog(@"ask/show/%ld,responseObject%@",(long)imageID,responseObject);
             NSMutableArray *detailOfHomePageArray = [NSMutableArray array];
             NSArray *imageDataArray = [ responseObject objectForKey:@"data"][@"replies"];
             NSDate *clickTime = [NSDate date];

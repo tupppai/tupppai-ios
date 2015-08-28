@@ -7,7 +7,6 @@
 //
 
 #import "DDBaseService.h"
-#import "DDSessionManager.h"
 
 @implementation DDBaseService
 
@@ -68,26 +67,15 @@
     [downloadTask resume];
 }
 
-+ (NSURLSessionDataTask *)post :(NSDictionary*)param withUrl:(NSString*)url withBlock:(void (^)(NSError *error ,int ret))block {
-    NSLog(@"ATOMBaseRequest post param %@",param);
-    return [[DDSessionManager shareHTTPSessionManager] POST:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"ATOMBaseRequest post responseObject%@",responseObject);
++ (void)POST2 :(NSDictionary*)param withUrl:(NSString*)url withBlock:(void (^)(id responseObject))block {
+     [[DDSessionManager shareHTTPSessionManager] POST:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"ATOMBaseRequest post info%@",[ responseObject objectForKey:@"info"]);
-        int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
-        if (ret == 1) {
             if (block) {
-                block(nil , ret);
+                block(responseObject);
             }
-        } else {
-            NSError* error = [NSError new];
-            if (block) {
-                block(error,ret);
-            }
-        }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"ATOMBaseRequest post failure error%@",error);
         if (block) {
-            block(error,-1);
+            block(nil);
         }
     }];
 }
@@ -115,11 +103,27 @@
     }];
 }
 
-+ (NSURLSessionDataTask *)GET :(NSDictionary*)param withUrl:(NSString*)url withBlock:(void (^)(id responseObject))block {
-    NSLog(@"ATOMBaseRequest GET url %@ , param %@",url,param);
-    return [[DDSessionManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"ATOMBaseRequest GET responseObject%@",responseObject);
-        NSLog(@"ATOMBaseRequest GET info%@",[ responseObject objectForKey:@"info"]);
++ (void)GET :(NSDictionary*)param withUrl:(NSString*)url withBlock:(void (^)(id responseObject))block {
+     [[DDSessionManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
+        if (ret == 1) {
+            if (block) {
+                block(responseObject);
+            }
+        } else {
+            if (block) {
+                block(nil);
+            }
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if (block) {
+            block(nil);
+        }
+    }];
+}
+
++ (void) POST :(NSDictionary*)param withUrl:(NSString*)url withBlock:(void (^)(id responseObject))block {
+     [[DDSessionManager shareHTTPSessionManager] POST:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
             if (block) {

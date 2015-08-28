@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMConcern.h"
+#import "DDFollow.h"
 
-@implementation ATOMConcern
+@implementation DDFollow
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
@@ -17,11 +17,12 @@
              @"nickname" : @"nickname",
              @"avatar" : @"avatar",
              @"sex" : @"sex",
-             @"totalFansNumber" : @"fans_count",
-             @"totalAskNumber" : @"ask_count",
-             @"totalReplyNumber" : @"reply_count",
+             @"fansCount" : @"fans_count",
+             @"askCount" : @"ask_count",
+             @"replyCount" : @"reply_count",
              @"isMyFan" : @"is_fan",
              @"isMyFollow":@"is_follow",
+             @"invited":@"has_invited",
              };
 }
 

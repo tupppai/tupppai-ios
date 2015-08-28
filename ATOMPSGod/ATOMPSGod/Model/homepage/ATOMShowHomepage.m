@@ -59,7 +59,6 @@
 
 - (NSURLSessionDataTask *)toggleLike:(NSDictionary *)param withID:(NSInteger)imageID  withBlock:(void (^)(NSString *, NSError *))block {
     NSString* url = [NSString stringWithFormat:@"ask/upask/%ld",(long)imageID];
-    NSLog(@"param %@, url %@",param,url);
     return [[DDSessionManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
@@ -78,8 +77,6 @@
 
 - (NSURLSessionDataTask *)ShowHomepage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
     return [[DDSessionManager shareHTTPSessionManager] GET:@"ask/index" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"ShowHomepage responseObject%@",responseObject);
-        NSLog(@"ShowHomepage  info%@",[responseObject objectForKey:@"info"]);
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret != 1) {
             block(nil, nil);
@@ -115,7 +112,6 @@
             }
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"%@",error);
         if (block) {
             block(nil, error);
         }
@@ -175,43 +171,13 @@
     [self.imageTipLabelDAO clearTipLabels];
     //清空ATOMReplier数据库
     [self.replierDAO clearReplier];
-    
-//    //删除沙盒中HomePage文件夹
-//    NSFileManager *fileManager = [NSFileManager defaultManager];
-//    NSString *directory = [NSString stringWithFormat:@"%@/HomePage", PATH_OF_DOCUMENT];
-//    NSArray *fileContents = [fileManager contentsOfDirectoryAtPath:directory error:NULL];
-//    NSEnumerator *e =[fileContents objectEnumerator];
-//    NSString *filename;
-//    while (filename = [e nextObject]) {
-//        BOOL bo = [fileManager removeItemAtPath:[directory stringByAppendingPathComponent:filename] error:NULL];
-//        if (bo) {
-//            NSLog(@"remove HomePageImage success");
-//        } else {
-//            NSLog(@"remove HomePageImage fail");
-//        }
-//    }
 }
 - (void)clearHomePagesWithHomeType:(NSString *)homeType {
-    NSLog(@"clearHomePagesWithHomeType");
     [self.homeImageDAO clearHomeImagesWithHomeType:homeType];
     //清空标签数据库
     [self.imageTipLabelDAO clearTipLabels];
     //清空ATOMReplier数据库
     [self.replierDAO clearReplier];
-    //删除沙盒中HomePage文件夹
-//    NSFileManager *fileManager = [NSFileManager defaultManager];
-//    NSString *directory = [NSString stringWithFormat:@"%@/HomePage", PATH_OF_DOCUMENT];
-//    NSArray *fileContents = [fileManager contentsOfDirectoryAtPath:directory error:NULL];
-//    NSEnumerator *e =[fileContents objectEnumerator];
-//    NSString *filename;
-//    while (filename = [e nextObject]) {
-//        BOOL bo = [fileManager removeItemAtPath:[directory stringByAppendingPathComponent:filename] error:NULL];
-//        if (bo) {
-//            NSLog(@"remove HomePageImage success");
-//        } else {
-//            NSLog(@"remove HomePageImage fail");
-//        }
-//    }
 }
 
 

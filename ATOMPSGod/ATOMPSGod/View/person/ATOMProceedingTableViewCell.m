@@ -38,7 +38,7 @@
     
     _userUploadImageView = [UIImageView new];
     [self addSubview:_userUploadImageView];
-    
+    _userUploadImageView.contentMode = UIViewContentModeScaleAspectFit;
     _timeImageView = [UIImageView new];
     _timeImageView.image = [UIImage imageNamed:@"icon_clock"];
     [self addSubview:_timeImageView];

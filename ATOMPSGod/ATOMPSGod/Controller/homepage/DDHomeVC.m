@@ -26,7 +26,7 @@
 #import "DDInviteVC.h"
 #import "JGActionSheet.h"
 #import "ATOMReportModel.h"
-#import "ATOMRecordModel.h"
+#import "DDProfileService.h"
 #import "DDBaseService.h"
 #import "JTSImageViewController.h"
 #import "JTSImageInfo.h"
@@ -83,7 +83,10 @@ static NSString *CellIdentifier2 = @"AskCell";
     [self shouldNavToAskSegment];
     [self shouldNavToHotSegment];
 }
-
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNav1" object:nil];
+    //compiler would call [super dealloc] automatically in ARC.
+}
 
 
 #pragma mark - init methods
@@ -297,20 +300,22 @@ static NSString *CellIdentifier2 = @"AskCell";
     NSMutableDictionary* param = [NSMutableDictionary new];
     [param setObject:@"ask" forKey:@"type"];
     [param setObject:@(_selectedVM.ID) forKey:@"target"];
-    [ATOMRecordModel record:param withBlock:^(NSError *error, NSString *url) {
-        if (!error) {
-            [DDBaseService downloadImage:url withBlock:^(UIImage *image) {
-                UIImageWriteToSavedPhotosAlbum(image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
-            }];
+    
+    [DDProfileService signProceeding:param withBlock:^(NSString *imageUrl) {
+        if (imageUrl != nil) {
+//            [DDBaseService downloadImage:imageUrl withBlock:^(UIImage *image) {
+            kfcAskCell* cell = (kfcAskCell *)[_scrollView.askTable cellForRowAtIndexPath:_selectedIndexPath];
+                UIImageWriteToSavedPhotosAlbum(cell.imageViewMain.image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+//            }];
         }
     }];
 }
 - (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error
   contextInfo: (void *) contextInfo {
     if(error != NULL){
-        [Hud text:@"保存失败"];
+        [Hud error:@"保存失败" inView:self.view];
     }else{
-        [Hud text:@"保存成功"];
+        [Hud success:@"保存成功" inView:self.view];
     }
 }
 
@@ -629,7 +634,7 @@ static NSString *CellIdentifier2 = @"AskCell";
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(10) forKey:@"size"];
     ATOMShowHomepage *showHomepage = [ATOMShowHomepage new];
-    [showHomepage ShowHomepage:param withBlock:^(NSMutableArray *homepageArray,     NSError *error) {
+    [showHomepage ShowHomepage:param withBlock:^(NSMutableArray *homepageArray,NSError *error) {
         if (homepageArray && error == nil) {
             
             for (ATOMHomeImage *homeImage in homepageArray) {

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class ATOMConcern;
+@class DDFollow;
 
 @interface ATOMConcernViewModel : NSObject
 
@@ -15,11 +15,11 @@
 @property (nonatomic, copy) NSString *userName;
 @property (nonatomic, copy) NSString *userSex;
 @property (nonatomic, copy) NSString *avatarURL;
-@property (nonatomic, copy) NSString *totalFansNumber;
-@property (nonatomic, copy) NSString *totalAskNumber;
-@property (nonatomic, copy) NSString *totalReplyNumber;
+@property (nonatomic, copy) NSString *fansCount;
+@property (nonatomic, copy) NSString *askCount;
+@property (nonatomic, copy) NSString *replyCount;
 @property (nonatomic, assign) NSInteger concernStatus;
 
-- (void)setViewModelData:(ATOMConcern *)concern;
+- (void)setViewModelData:(DDFollow *)concern;
 
 @end

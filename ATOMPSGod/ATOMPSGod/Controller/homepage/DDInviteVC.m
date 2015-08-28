@@ -16,9 +16,10 @@
 #import "DDHomeVC.h"
 #import "DDCommentHeaderView.h"
 #import "ATOMInviteModel.h"
-#import "ATOMInviteCellViewModel.h"
-#import "ATOMFollowModel.h"
+#import "DDInviteCellVM.h"
+#import "DDProfileService.h"
 #import "DDTabBarController.h"
+#import "ATOMShowConcern.h"
 @interface DDInviteVC () <UITableViewDelegate, UITableViewDataSource,UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) ATOMInviteView *inviteView;
@@ -36,8 +37,7 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    [self createUI];
-    [self getRecommendDataSource];
+    [self commonInit];
     if (_askPageViewModel) {
         _info = [[NSDictionary alloc]initWithObjectsAndKeys:@(_askPageViewModel.ID),@"ID",@(_askPageViewModel.ID),@"askID",@(_askPageViewModel.type),@"type", nil];
     }
@@ -51,14 +51,14 @@
     [super viewWillDisappear:animated];
 }
 
-- (void)createUI {
+- (void)commonInit {
     self.title = @"邀请";
     self.navigationItem.leftBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:[[UIView alloc] initWithFrame:CGRectZero]]];
-    if (_showNext) {
+//    if (_showNext) {
         UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
         rightButtonItem.tintColor = [UIColor whiteColor];
         self.navigationItem.rightBarButtonItem = rightButtonItem;
-    }
+//    }
     _inviteView = [ATOMInviteView new];
     self.view = _inviteView;
     [_inviteView.wxFriendCircleInviteButton addTarget:self action:@selector(clickWXFriendCircleButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -67,6 +67,8 @@
     _inviteView.inviteTableView.dataSource = nil;
     _tapInviteGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapInviteGesture:)];
     _tapInviteGesture.delegate = self;
+    _inviteView.inviteTableView.dataSource = self;
+    
     [_inviteView.inviteTableView addGestureRecognizer:_tapInviteGesture];
     [self getRecommendDataSource];
 }
@@ -105,8 +107,7 @@
                                              type:SIAlertViewButtonTypeDefault
                                           handler:^(SIAlertView *alert) {
                                               NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(cell.viewModel.uid),@"uid", nil];
-                                              [ATOMFollowModel follow:param withBlock:nil];
-                                              
+                                              [DDProfileService follow:param withBlock:nil];
                                               [cell toggleInviteButtonAppearance];
                                               [self tapInviteButton:cell.inviteButton];
                                           }];
@@ -118,19 +119,24 @@
     }
 }
 -(void)getRecommendDataSource {
-    ATOMInviteModel* inviteModel = [ATOMInviteModel new];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(3) forKey:@"size"];
-    [inviteModel showRecomendUsers:param withBlock:^(NSMutableArray *recommendMasters, NSMutableArray *recommendFriends, NSError *error) {
-        if (recommendMasters) {
-            _datasourceRecommendMaster = recommendMasters;
-        }
-        if (recommendFriends) {
-            _datasourceRecommendFriends = recommendFriends;
-        }
+    [ATOMShowConcern GetFollow:param withBlock:^(NSMutableArray *recommendArray, NSMutableArray *mineArray, NSError *error) {
+        _datasourceRecommendMaster = recommendArray;
+        _datasourceRecommendFriends = mineArray;
         [_inviteView.inviteTableView reloadData];
+
     }];
+//    [inviteModel showRecomendUsers:param withBlock:^(NSMutableArray *recommendMasters, NSMutableArray *recommendFriends, NSError *error) {
+//        if (recommendMasters) {
+//            _datasourceRecommendMaster = recommendMasters;
+//        }
+//        if (recommendFriends) {
+//            _datasourceRecommendFriends = recommendFriends;
+//        }
+//        [_inviteView.inviteTableView reloadData];
+//    }];
 }
 #pragma mark - Click Event
 
@@ -197,7 +203,7 @@
     if (!cell) {
         cell = [[InviteCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    ATOMInviteCellViewModel * cellViewModel = [ATOMInviteCellViewModel new];
+    DDInviteCellVM * cellViewModel = [DDInviteCellVM new];
     if (indexPath.section == 0) {
         [cellViewModel setViewModelData:_datasourceRecommendMaster[indexPath.row]];
         cell.viewModel = cellViewModel;

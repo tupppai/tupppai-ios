@@ -7,18 +7,18 @@
 //
 
 #import "ATOMConcernViewModel.h"
-#import "ATOMConcern.h"
+#import "DDFollow.h"
 
 @implementation ATOMConcernViewModel
 
-- (void)setViewModelData:(ATOMConcern *)concern {
+- (void)setViewModelData:(DDFollow *)concern {
     _uid = concern.uid;
     _userName = concern.nickname;
     _userSex = concern.sex ? @"man" : @"woman";
     _avatarURL = concern.avatar;
-    _totalFansNumber = [NSString stringWithFormat:@"%d", (int)concern.totalFansNumber];
-    _totalAskNumber = [NSString stringWithFormat:@"%d", (int)concern.totalAskNumber];
-    _totalReplyNumber = [NSString stringWithFormat:@"%d", (int)concern.totalReplyNumber];
+    _fansCount = [NSString stringWithFormat:@"%zd", concern.fansCount];
+    _askCount = [NSString stringWithFormat:@"%zd", concern.askCount];
+    _replyCount = [NSString stringWithFormat:@"%zd", concern.replyCount];
     if (concern.isMyFollow == YES && concern.isMyFan == YES) {
         _concernStatus = 2;
     } else if(concern.isMyFollow == YES){

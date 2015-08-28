@@ -11,7 +11,7 @@
 #import "DDCommentHeaderView.h"
 #import "ATOMMyConcernTableFooterView.h"
 #import "ATOMOtherPersonViewController.h"
-#import "ATOMConcern.h"
+#import "DDFollow.h"
 #import "ATOMConcernViewModel.h"
 #import "ATOMShowConcern.h"
 #import "RefreshTableView.h"
@@ -63,20 +63,19 @@
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    ATOMShowConcern *showConcern = [ATOMShowConcern new];
-    [showConcern GetFollow:param withBlock:^(NSMutableArray *recommendArray, NSMutableArray *mineArray, NSError *error) {
+    [ATOMShowConcern GetFollow:param withBlock:^(NSMutableArray *recommendArray, NSMutableArray *mineArray, NSError *error) {
         if (recommendArray.count != 0) {
             [ws.recommendDataSource removeAllObjects];
         }
         if (mineArray.count != 0) {
             [ws.myDataSource removeAllObjects];
         }
-        for (ATOMConcern *concern in recommendArray) {
+        for (DDFollow *concern in recommendArray) {
             ATOMConcernViewModel *concernViewModel = [ATOMConcernViewModel new];
             [concernViewModel setViewModelData:concern];
             [ws.recommendDataSource addObject:concernViewModel];
         }
-        for (ATOMConcern *concern in mineArray) {
+        for (DDFollow *concern in mineArray) {
             ATOMConcernViewModel *concernViewModel = [ATOMConcernViewModel new];
             [concernViewModel setViewModelData:concern];
             [ws.myDataSource addObject:concernViewModel];
@@ -97,9 +96,8 @@
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(timestamp) forKey:@"last_updated"];
     [param setObject:@(10) forKey:@"size"];
-    ATOMShowConcern *showConcern = [ATOMShowConcern new];
-    [showConcern GetFollow:param withBlock:^(NSMutableArray *recommendConcernArray, NSMutableArray *myConcernArray, NSError *error) {
-        for (ATOMConcern *concern in myConcernArray) {
+    [ATOMShowConcern GetFollow:param withBlock:^(NSMutableArray *recommendConcernArray, NSMutableArray *myConcernArray, NSError *error) {
+        for (DDFollow *concern in myConcernArray) {
             ATOMConcernViewModel *concernViewModel = [ATOMConcernViewModel new];
             [concernViewModel setViewModelData:concern];
             [ws.myDataSource addObject:concernViewModel];
