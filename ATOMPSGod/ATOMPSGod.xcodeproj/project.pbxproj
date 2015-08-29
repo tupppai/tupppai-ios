@@ -52,9 +52,8 @@
 		5C4C70B41AB6A60C00358989 /* DDSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4C70B31AB6A60C00358989 /* DDSessionManager.m */; };
 		5C4C70C51AB6BC5200358989 /* DDBaseService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4C70C41AB6BC5200358989 /* DDBaseService.m */; };
 		5C4C70C81AB6E20800358989 /* DDUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4C70C71AB6E20800358989 /* DDUserModel.m */; };
-		5C4C70DA1AB6FD5700358989 /* ATOMSubmitUserInfomation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4C70D31AB6FD5700358989 /* ATOMSubmitUserInfomation.m */; };
+		5C4C70DA1AB6FD5700358989 /* DDAccountModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4C70D31AB6FD5700358989 /* DDAccountModel.m */; };
 		5C4C70DB1AB6FD5700358989 /* ATOMUploadImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4C70D51AB6FD5700358989 /* ATOMUploadImage.m */; };
-		5C4C70E51AB7124F00358989 /* ATOMLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4C70E41AB7124F00358989 /* ATOMLogin.m */; };
 		5C4F5BCF1AA541DE00226F64 /* DDLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BCE1AA541DE00226F64 /* DDLoginVC.m */; };
 		5C4F5BD21AA5426700226F64 /* ATOMLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BD11AA5426700226F64 /* ATOMLoginView.m */; };
 		5C4F5BDC1AA555F900226F64 /* DDHomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BDB1AA555F900226F64 /* DDHomeVC.m */; };
@@ -396,7 +395,7 @@
 		E9FBCD2F1B6A042000BF7096 /* DDLoginNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FBCD2E1B6A042000BF7096 /* DDLoginNavigationController.m */; };
 		E9FC94D91B2F0D0C00B72C60 /* ATOMUserProfileViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FC94D81B2F0D0C00B72C60 /* ATOMUserProfileViewModel.m */; };
 		E9FD023D1B29708200FC5E17 /* DDCommentPageVM.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD023C1B29708200FC5E17 /* DDCommentPageVM.m */; };
-		E9FF3FCD1B563B6D007AA3F6 /* ATOMShareSDKModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF3FCC1B563B6D007AA3F6 /* ATOMShareSDKModel.m */; };
+		E9FF3FCD1B563B6D007AA3F6 /* DDShareSDKModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF3FCC1B563B6D007AA3F6 /* DDShareSDKModel.m */; };
 		E9FF3FD01B5650EB007AA3F6 /* ATOMShowUser.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF3FCF1B5650EB007AA3F6 /* ATOMShowUser.m */; };
 		E9FF8A3B1B71CCB70010D2C4 /* DDInputPhoneFPVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF8A3A1B71CCB70010D2C4 /* DDInputPhoneFPVC.m */; };
 		E9FF8A3E1B71CD480010D2C4 /* ATOMInputMobileView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF8A3D1B71CD480010D2C4 /* ATOMInputMobileView.m */; };
@@ -510,12 +509,10 @@
 		5C4C70C41AB6BC5200358989 /* DDBaseService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDBaseService.m; path = Model/common/DDBaseService.m; sourceTree = "<group>"; };
 		5C4C70C61AB6E20800358989 /* DDUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDUserModel.h; sourceTree = "<group>"; };
 		5C4C70C71AB6E20800358989 /* DDUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDUserModel.m; sourceTree = "<group>"; };
-		5C4C70D21AB6FD5700358989 /* ATOMSubmitUserInfomation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMSubmitUserInfomation.h; sourceTree = "<group>"; };
-		5C4C70D31AB6FD5700358989 /* ATOMSubmitUserInfomation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMSubmitUserInfomation.m; sourceTree = "<group>"; };
+		5C4C70D21AB6FD5700358989 /* DDAccountModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAccountModel.h; sourceTree = "<group>"; };
+		5C4C70D31AB6FD5700358989 /* DDAccountModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDAccountModel.m; sourceTree = "<group>"; };
 		5C4C70D41AB6FD5700358989 /* ATOMUploadImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMUploadImage.h; sourceTree = "<group>"; };
 		5C4C70D51AB6FD5700358989 /* ATOMUploadImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMUploadImage.m; sourceTree = "<group>"; };
-		5C4C70E31AB7124F00358989 /* ATOMLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMLogin.h; sourceTree = "<group>"; };
-		5C4C70E41AB7124F00358989 /* ATOMLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMLogin.m; sourceTree = "<group>"; };
 		5C4F5BCD1AA541DE00226F64 /* DDLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLoginVC.h; sourceTree = "<group>"; };
 		5C4F5BCE1AA541DE00226F64 /* DDLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLoginVC.m; sourceTree = "<group>"; };
 		5C4F5BD01AA5426700226F64 /* ATOMLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMLoginView.h; sourceTree = "<group>"; };
@@ -1202,8 +1199,8 @@
 		E9FC94D81B2F0D0C00B72C60 /* ATOMUserProfileViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATOMUserProfileViewModel.m; path = ATOMPSGod/Model/login/ATOMUserProfileViewModel.m; sourceTree = SOURCE_ROOT; };
 		E9FD023B1B29708200FC5E17 /* DDCommentPageVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDCommentPageVM.h; path = ../DDCommentPageVM.h; sourceTree = "<group>"; };
 		E9FD023C1B29708200FC5E17 /* DDCommentPageVM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDCommentPageVM.m; path = ../DDCommentPageVM.m; sourceTree = "<group>"; };
-		E9FF3FCB1B563B6D007AA3F6 /* ATOMShareSDKModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShareSDKModel.h; sourceTree = "<group>"; };
-		E9FF3FCC1B563B6D007AA3F6 /* ATOMShareSDKModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShareSDKModel.m; sourceTree = "<group>"; };
+		E9FF3FCB1B563B6D007AA3F6 /* DDShareSDKModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDShareSDKModel.h; sourceTree = "<group>"; };
+		E9FF3FCC1B563B6D007AA3F6 /* DDShareSDKModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDShareSDKModel.m; sourceTree = "<group>"; };
 		E9FF3FCE1B5650EB007AA3F6 /* ATOMShowUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShowUser.h; sourceTree = "<group>"; };
 		E9FF3FCF1B5650EB007AA3F6 /* ATOMShowUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShowUser.m; sourceTree = "<group>"; };
 		E9FF8A391B71CCB70010D2C4 /* DDInputPhoneFPVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDInputPhoneFPVC.h; sourceTree = "<group>"; };
@@ -1281,14 +1278,12 @@
 		5C4C70CF1AB6FD5700358989 /* login */ = {
 			isa = PBXGroup;
 			children = (
-				5C4C70D21AB6FD5700358989 /* ATOMSubmitUserInfomation.h */,
-				5C4C70D31AB6FD5700358989 /* ATOMSubmitUserInfomation.m */,
+				5C4C70D21AB6FD5700358989 /* DDAccountModel.h */,
+				5C4C70D31AB6FD5700358989 /* DDAccountModel.m */,
 				5C4C70D41AB6FD5700358989 /* ATOMUploadImage.h */,
 				5C4C70D51AB6FD5700358989 /* ATOMUploadImage.m */,
-				5C4C70E31AB7124F00358989 /* ATOMLogin.h */,
-				5C4C70E41AB7124F00358989 /* ATOMLogin.m */,
-				E9FF3FCB1B563B6D007AA3F6 /* ATOMShareSDKModel.h */,
-				E9FF3FCC1B563B6D007AA3F6 /* ATOMShareSDKModel.m */,
+				E9FF3FCB1B563B6D007AA3F6 /* DDShareSDKModel.h */,
+				E9FF3FCC1B563B6D007AA3F6 /* DDShareSDKModel.m */,
 			);
 			path = login;
 			sourceTree = "<group>";
@@ -1965,8 +1960,8 @@
 		5CDB05C31AA3FE520089121E /* ATOMPSGod */ = {
 			isa = PBXGroup;
 			children = (
-				E9A5B6671B903B2D0059754C /* Service */,
 				5C51B2521AB9088700F442A6 /* Framework */,
+				E9A5B6671B903B2D0059754C /* Service */,
 				5C561A4B1AB7C8210052D4D5 /* Entity */,
 				5C5619F91AB7B9AE0052D4D5 /* Dao */,
 				5CDB05EB1AA400410089121E /* Model */,
@@ -3110,7 +3105,6 @@
 				5C5DDBD41AD4087800F4B845 /* ATOMProceedingViewModel.m in Sources */,
 				E94B03231B7C74E500863C6F /* DDCommentVC.m in Sources */,
 				5C6697B31AAFE0A6001FCF8A /* ATOMProfileEditView.m in Sources */,
-				5C4C70E51AB7124F00358989 /* ATOMLogin.m in Sources */,
 				5CDB06361AA428BD0089121E /* View+MASAdditions.m in Sources */,
 				5C4F5BF31AA593E200226F64 /* kfcHotCell.m in Sources */,
 				5C83A88F1AC66F910071A024 /* POPCustomAnimation.mm in Sources */,
@@ -3197,7 +3191,7 @@
 				5CDB06061AA405A40089121E /* UIColor+iOS7.m in Sources */,
 				5C8084FC1AF27BD30062421C /* ATOMTotalPSView.m in Sources */,
 				5CDB06311AA428BD0089121E /* MASLayoutConstraint.m in Sources */,
-				5C4C70DA1AB6FD5700358989 /* ATOMSubmitUserInfomation.m in Sources */,
+				5C4C70DA1AB6FD5700358989 /* DDAccountModel.m in Sources */,
 				5C0F04EB1ADCF6D9002003AE /* ATOMShowConcernMessage.m in Sources */,
 				E99C510E1B85A2A6004CA47B /* JTSImageViewController.m in Sources */,
 				5CDF81FB1AC25AFF00321694 /* ATOMUserFeedbackViewController.m in Sources */,
@@ -3346,7 +3340,7 @@
 				5C83A88B1AC66F910071A024 /* POPAnimationTracer.mm in Sources */,
 				5C6697A71AAFD242001FCF8A /* ATOMMyUploadCollectionViewCell.m in Sources */,
 				E900AB421B41153A0019BAEA /* AFHTTPSessionManager.m in Sources */,
-				E9FF3FCD1B563B6D007AA3F6 /* ATOMShareSDKModel.m in Sources */,
+				E9FF3FCD1B563B6D007AA3F6 /* DDShareSDKModel.m in Sources */,
 				E9F891001B87038F0057ECBF /* IQUIWindow+Hierarchy.m in Sources */,
 				E9CBFF4C1B5214FB00DC8ED4 /* SIAlertView.m in Sources */,
 				5C561A501AB7C8210052D4D5 /* ATOMImage.m in Sources */,

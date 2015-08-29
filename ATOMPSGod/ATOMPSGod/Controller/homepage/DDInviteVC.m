@@ -147,13 +147,13 @@
 - (void)clickWXFriendCircleButton:(UIButton *)sender {
     NSInteger ID = [[_info objectForKey:@"ID"]integerValue];
     int type = [[_info objectForKey:@"type"]intValue];
-    [ATOMShareSDKModel postSocialShare:ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:type];
+    [DDShareSDKModel postSocialShare:ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:type];
 }
 
 - (void)clickWXFriendInviteButton:(UIButton *)sender {
     NSInteger ID = [[_info objectForKey:@"ID"]integerValue];
     int type = [[_info objectForKey:@"type"]intValue];
-    [ATOMShareSDKModel postSocialShare:ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:type];
+    [DDShareSDKModel postSocialShare:ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:type];
 }
 
 #pragma mark - UITableViewDelegate

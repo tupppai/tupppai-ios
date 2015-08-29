@@ -21,6 +21,9 @@ NSString * URL_PFUpdatePasswordURL = @"profile/updatePassword";
 NSString * URL_ACUpdateToken = @"account/updateToken";
 NSString * URL_ACResetPassword = @"account/resetPassword";
 NSString * URL_ACRequestAuthCode = @"account/requestAuthCode";
+NSString * URL_ACLogin = @"account/login";
+NSString * URL_ACRegister = @"account/register";
+NSString * URL_AC3PaAuth = @"auth/";
 
 #pragma mark - Unknown
 NSString * URL_UKSave = @"feedback/save";

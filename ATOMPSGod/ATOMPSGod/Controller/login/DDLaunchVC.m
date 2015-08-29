@@ -10,10 +10,10 @@
 #import "ATOMLaunchView.h"
 #import "DDCreateProfileVC.h"
 #import "DDLoginVC.h"
-#import "ATOMLogin.h"
+#import "DDAccountModel.h"
 #import "AppDelegate.h"
 #import "DDTabBarController.h"
-#import "ATOMShareSDKModel.h"
+#import "DDShareSDKModel.h"
 #import "EAIntroView.h"
 @interface DDLaunchVC ()
 
@@ -23,19 +23,18 @@
 @implementation DDLaunchVC
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self createUI];
+    [self commonInit];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-//    self.navigationController.navigationBarHidden = YES;
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 }
-- (void)createUI {
+- (void)commonInit {
     _launchView = [ATOMLaunchView new];
     self.view = _launchView;
     [_launchView.wxRegisterButton addTarget:self action:@selector(clickWXRegisterButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -44,19 +43,18 @@
 }
 
 - (void)clickWXRegisterButton:(UIButton *)sender {
-    
-    ATOMLogin *loginModel = [ATOMLogin new];
-    [ATOMShareSDKModel authorize:SSDKPlatformTypeWechat withBlock:^(NSDictionary *sourceData) {
+    [DDShareSDKModel authorize:SSDKPlatformTypeWechat withBlock:^(NSDictionary *sourceData) {
         if (sourceData) {
             NSString* openid = sourceData[@"openid"];
             NSMutableDictionary* param = [NSMutableDictionary new];
             [param setObject:openid forKey:@"openid"];
-            [loginModel openIDAuth:param AndType:@"weixin" withBlock:^(bool isRegister, NSString *info, NSError *error) {
-                if (isRegister) {
+            
+            [DDAccountModel DD3PartyAuth:param AndType:@"weixin" withBlock:^(bool isRegistered, NSString *info) {
+                if (isRegistered) {
                     [self.navigationController setViewControllers:nil];
                     [AppDelegate APP].mainTabBarController = nil;
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
-                } else if (isRegister == NO) {
+                } else  {
                     [DDUserModel currentUser].signUpType = ATOMSignUpWechat;
                     [DDUserModel currentUser].sourceData = sourceData;
                     ATOMUserProfileViewModel* ipvm = [ATOMUserProfileViewModel new];
@@ -73,6 +71,7 @@
                     cpvc.userProfileViewModel = ipvm;
                     [self.navigationController pushViewController:cpvc animated:YES];
                 }
+
             }];
         }
         else {

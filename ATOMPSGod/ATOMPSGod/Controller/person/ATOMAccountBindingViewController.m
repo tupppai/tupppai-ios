@@ -10,7 +10,7 @@
 #import "ATOMAccountBindingView.h"
 #import "ATOMAccountBindingTableViewCell.h"
 #import "ATOMShowSettings.h"
-#import "ATOMShareSDKModel.h"
+#import "DDShareSDKModel.h"
 #import "ATOMShowUser.h"
 @interface ATOMAccountBindingViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -152,7 +152,7 @@
     [param setObject:type forKey:@"type"];
     //1.如果想要绑定
     if (bindSwitch.on) {
-        [ATOMShareSDKModel getUserInfo:shareType withBlock:^(NSDictionary *sourceData) {
+        [DDShareSDKModel getUserInfo:shareType withBlock:^(NSDictionary *sourceData) {
             NSString* openID = [sourceData objectForKey:openIDKey];
             if (openID) {
                 [param setObject:openID forKey:@"openid"];

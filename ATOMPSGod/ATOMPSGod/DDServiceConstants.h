@@ -22,6 +22,9 @@ extern NSString *URL_PFUpdatePasswordURL;
 extern NSString * URL_ACUpdateToken;
 extern NSString * URL_ACResetPassword;
 extern NSString * URL_ACRequestAuthCode;
+extern NSString * URL_ACLogin;
+extern NSString * URL_ACRegister;
+extern NSString * URL_AC3PaAuth;
 
 #pragma mark - Unknown
 extern NSString * URL_UKSave;

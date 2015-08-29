@@ -543,13 +543,13 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 #pragma mark - ATOMShareFunctionViewDelegate
 -(void)tapWechatFriends {
-    [ATOMShareSDKModel postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:(int)_vm.type];
+    [DDShareSDKModel postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:(int)_vm.type];
 }
 -(void)tapWechatMoment {
-    [ATOMShareSDKModel postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
+    [DDShareSDKModel postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
 }
 -(void)tapSinaWeibo {
-    [ATOMShareSDKModel postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:(int)_vm.type];
+    [DDShareSDKModel postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:(int)_vm.type];
 }
 -(void)tapCollect {
     NSMutableDictionary *param = [NSMutableDictionary new];
@@ -697,7 +697,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 
 - (void)clickShareButton{
-    [ATOMShareSDKModel postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
+    [DDShareSDKModel postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
 }
 
 - (void)clickMoreShareButton {

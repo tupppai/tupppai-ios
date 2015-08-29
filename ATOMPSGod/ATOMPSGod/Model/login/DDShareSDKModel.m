@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 ATOM. All rights reserved.
 //
 
-#import "ATOMShareSDKModel.h"
-@implementation ATOMShareSDKModel
+#import "DDShareSDKModel.h"
+@implementation DDShareSDKModel
 //shareSDK 获取 用户手机的第三方平台的信息
 + (void)getUserInfo:(SSDKPlatformType)type withBlock:(void (^)(NSDictionary* ))block{
     [ShareSDK getUserInfo:type conditional:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
@@ -41,7 +41,7 @@
         }];
 }
 + (void)shareStep1:(ATOMShare*)share  withShareType:(ATOMSocialShareType)shareType {
-    NSLog(@"ATOMShare url%@,title%@,desc%@,imgurl%@",share.url,share.title,share.desc,share.imageUrl);
+//    NSLog(@"ATOMShare url%@,title%@,desc%@,imgurl%@",share.url,share.title,share.desc,share.imageUrl);
         NSString* shareUrl;
         if ([share.type isEqualToString:@"image"]) {
             shareUrl = share.imageUrl;

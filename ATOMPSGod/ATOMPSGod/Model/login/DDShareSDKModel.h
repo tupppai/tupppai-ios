@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <ShareSDK/ShareSDK.h>
 
-@interface ATOMShareSDKModel : NSObject
+@interface DDShareSDKModel : NSObject
 + (void)getUserInfo:(SSDKPlatformType)type withBlock:(void (^)(NSDictionary* ))block;
 +(void)postSocialShare:(NSInteger)id withSocialShareType:(ATOMSocialShareType)shareType withPageType:(ATOMPageType)pageType;
 + (void)authorize:(SSDKPlatformType)type withBlock:(void (^)(NSDictionary* ))block;

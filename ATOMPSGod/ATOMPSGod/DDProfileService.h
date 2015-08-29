@@ -27,6 +27,9 @@
 + (void) updateToken :(NSDictionary*)param withBlock:(void (^)(BOOL success))block;
 + (void) resetPassword :(NSDictionary*)param withBlock:(void (^)(BOOL success))block;
 + (void)getAuthCode:(NSDictionary*)param withBlock:(void (^)(NSString *authcode))block;
++ (void) ddLogin :(NSDictionary*)param withBlock:(void (^)(NSDictionary* data , NSInteger status))block;
++ (void) ddRegister :(NSDictionary*)param withBlock:(void (^)(NSDictionary* data))block;
++ (void) dd3PartyAuth :(NSDictionary*)param with3PaType:(NSString *)type withBlock:(void (^)(BOOL isRegistered,NSDictionary*userObject))block ;
 #pragma mark - Unknown
 + (void) postFeedBack :(NSDictionary*)param withBlock:(void (^)(BOOL success))block;
 

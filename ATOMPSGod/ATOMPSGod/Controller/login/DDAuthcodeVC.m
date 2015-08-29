@@ -8,7 +8,7 @@
 
 #import "DDAuthcodeVC.h"
 #import "ATOMInputVerifyCodeView.h"
-#import "ATOMSubmitUserInfomation.h"
+#import "DDAccountModel.h"
 #import "AppDelegate.h"
 #import "DDTabBarController.h"
 
@@ -69,10 +69,8 @@
     
     if ([_inputVerifyView.verifyCodeTextField.text isEqualToString:_verifyCode]) {
         NSMutableDictionary *param = [[DDUserModel currentUser] dictionaryFromModel];
-        ATOMSubmitUserInformation *submitUserInformation = [ATOMSubmitUserInformation new];
-        
-        [submitUserInformation SubmitUserInformation:[param copy] withBlock:^(NSError *error) {
-            if (!error) {
+        [DDAccountModel DDRegister:[param copy] withBlock:^(BOOL success) {
+            if (success) {
                 [Util ShowTSMessageSuccess:@"👼求PS大神欢迎你的加入❗️"];
                 [self.navigationController setViewControllers:nil];
                 [AppDelegate APP].mainTabBarController = nil;
