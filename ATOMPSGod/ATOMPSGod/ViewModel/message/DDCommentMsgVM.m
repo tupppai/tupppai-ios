@@ -6,12 +6,12 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMCommentMessageViewModel.h"
-#import "ATOMCommentMessage.h"
+#import "DDCommentMsgVM.h"
+#import "DDCommentMsg.h"
 #import "ATOMHomeImage.h"
 #import "DDAskPageVM.h"
 
-@implementation ATOMCommentMessageViewModel
+@implementation DDCommentMsgVM
 
 - (instancetype)init {
     self = [super init];
@@ -21,7 +21,7 @@
     return self;
 }
 
-- (void)setViewModelData:(ATOMCommentMessage *)commentMessage {
+- (void)setViewModelData:(DDCommentMsg *)commentMessage {
     _uid = commentMessage.uid;
     _userName = commentMessage.nickname;
     _theme = (commentMessage.type == 0) ? @"评论你" : @"回复你";

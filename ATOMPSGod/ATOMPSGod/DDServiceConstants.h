@@ -16,7 +16,7 @@ extern NSString *URL_PFGetPushSetting;
 extern NSString *URL_PFsetPushSetting;
 extern NSString *URL_PFFollow;
 extern NSString *URL_PFUpdatePasswordURL;
-
+extern NSString *URL_ACGetMyReply;
 
 #pragma mark - Account
 extern NSString * URL_ACUpdateToken;
@@ -28,5 +28,7 @@ extern NSString * URL_AC3PaAuth;
 
 #pragma mark - Unknown
 extern NSString * URL_UKSave;
+extern NSString * URL_UKGetMyInfo;
+extern NSString * URL_UKGetMsg;
 
 @end

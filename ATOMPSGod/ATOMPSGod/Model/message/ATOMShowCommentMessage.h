@@ -10,6 +10,5 @@
 
 @interface ATOMShowCommentMessage : NSObject
 
-- (NSURLSessionDataTask *)ShowCommentMessage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *commentMessageArray, NSError *error))block;
-
++ (void)getCommentMsg:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *returnArray))block;
 @end

@@ -9,6 +9,8 @@
 #import "DDAccountModel.h"
 #import "DDSessionManager.h"
 #import "ATOMUser.h"
+#import "ATOMHomeImage.h"
+#import "ATOMImageTipLabel.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -70,8 +72,40 @@
     }];
 }
 
++ (void)ShowMyReply:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *returnArray))block {
+    [DDProfileService getMyReply:param withBlock:^(NSArray *data) {
+        if (data && data.count > 0 ) {
+            NSMutableArray *returnArray = [NSMutableArray array];
+            for (int i = 0; i < data.count; i++) {
+                ATOMHomeImage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMHomeImage class] fromJSONDictionary:[data objectAtIndex:i] error:NULL];
+                homeImage.tipLabelArray = [NSMutableArray array];
+                NSArray *labelDataArray = [[data objectAtIndex:i]objectForKey:@"labels"];
+                if (labelDataArray.count > 0) {
+                    for (int j = 0; j < labelDataArray.count; j++) {
+                        ATOMImageTipLabel *tipLabel = [MTLJSONAdapter modelOfClass:[ATOMImageTipLabel class] fromJSONDictionary:[labelDataArray objectAtIndex:j] error:NULL];
+                        tipLabel.imageID = homeImage.imageID;
+                        [homeImage.tipLabelArray addObject:tipLabel];
+                    }
+                }
+                [returnArray addObject:homeImage];
+            }
+            if (block) { block(returnArray); }
+        }
+        else {
+            if (block) { block(nil); }
+        }
+    }];
+}
 
-
++ (void)DDGetUserInfoAndUpdateMe {
+    [DDProfileService ddGetMyInfo:nil withBlock:^(NSDictionary *data) {
+        if (data) {
+            ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:data error:NULL];
+            //保存更新数据库的user,并更新currentUser
+            [[DDUserModel currentUser]saveAndUpdateUser:user];
+        }
+    }];
+}
 
 
 @end

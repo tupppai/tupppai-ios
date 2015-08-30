@@ -9,7 +9,7 @@
 #import "ATOMBaseModel.h"
 @class ATOMHomeImage;
 
-@interface ATOMCommentMessage : ATOMBaseModel
+@interface DDCommentMsg : ATOMBaseModel
 
 /**
  *  每一条记录的ID

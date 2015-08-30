@@ -11,7 +11,6 @@
 #import "ATOMUser.h"
 @implementation ATOMShowUser
 + (NSURLSessionDataTask *)ShowUserInfo:(void (^)(ATOMUser *, NSError *))block {
-
     return [[DDSessionManager shareHTTPSessionManager] GET:@"view/info" parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
         if (ret == 1) {

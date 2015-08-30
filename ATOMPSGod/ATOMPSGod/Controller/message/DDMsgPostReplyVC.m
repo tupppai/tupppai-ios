@@ -16,7 +16,7 @@
 #import "ATOMReplyMessageViewModel.h"
 #import "ATOMHomeImage.h"
 #import "DDAskPageVM.h"
-#import "ATOMShowReplyMessage.h"
+#import "DDMsgReplyModel.h"
 #import "RefreshFooterTableView.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -65,7 +65,7 @@
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@"reply" forKey:@"type"];
     [param setObject:@(15) forKey:@"size"];
-    ATOMShowReplyMessage *showReplyMessage = [ATOMShowReplyMessage new];
+    DDMsgReplyModel *showReplyMessage = [DDMsgReplyModel new];
     ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showReplyMessage ShowReplyMessage:param withBlock:^(NSMutableArray *replyMessageArray, NSError *error) {
         ////[SVProgressHUD dismiss];
@@ -93,7 +93,7 @@
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@"reply" forKey:@"type"];
 
-    ATOMShowReplyMessage *showReplyMessage = [ATOMShowReplyMessage new];
+    DDMsgReplyModel *showReplyMessage = [DDMsgReplyModel new];
     ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [showReplyMessage ShowReplyMessage:param withBlock:^(NSMutableArray *replyMessageArray, NSError *error) {
         ////[SVProgressHUD dismiss];

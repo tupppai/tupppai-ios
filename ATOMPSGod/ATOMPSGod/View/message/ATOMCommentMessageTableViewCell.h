@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ATOMCommentMessageViewModel;
+@class DDCommentMsgVM;
 
 @interface ATOMCommentMessageTableViewCell : UITableViewCell
 
@@ -18,9 +18,9 @@
 @property (nonatomic, strong) UILabel *replyTimeLabel;
 @property (nonatomic, strong) UIImageView *workImageView;
 
-@property (nonatomic, strong) ATOMCommentMessageViewModel *commentMessageViewModel;
+@property (nonatomic, strong) DDCommentMsgVM *commentMessageViewModel;
 
-+ (CGFloat)calculateCellHeightWithModel:(ATOMCommentMessageViewModel *)viewModel;
++ (CGFloat)calculateCellHeightWithModel:(DDCommentMsgVM *)viewModel;
 
 
 @end

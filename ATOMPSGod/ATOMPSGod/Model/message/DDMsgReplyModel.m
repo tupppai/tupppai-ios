@@ -6,13 +6,13 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMShowReplyMessage.h"
+#import "DDMsgReplyModel.h"
 #import "DDSessionManager.h"
 #import "ATOMReplyMessage.h"
 #import "ATOMHomeImage.h"
 #import "ATOMImageTipLabel.h"
 
-@implementation ATOMShowReplyMessage
+@implementation DDMsgReplyModel
 
 - (NSURLSessionDataTask *)ShowReplyMessage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
     return [[DDSessionManager shareHTTPSessionManager] GET:@"message/list" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -46,6 +46,35 @@
         if (block) {
             block(nil, error);
         }
+    }];
+}
+
+
++ (void)getReplyMsg:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *returnArray))block {
+    
+    
+    [DDProfileService ddGetMsg:param withBlock:^(id data) {
+        if (data) {
+            NSArray *dataArray = data;
+            NSMutableArray *replyMsgArray = [NSMutableArray array];
+            for (int i = 0; i < dataArray.count; i++) {
+                ATOMReplyMessage *replyMessage = [MTLJSONAdapter modelOfClass:[ATOMReplyMessage class] fromJSONDictionary:[[dataArray objectAtIndex:i] objectForKey:@"reply"] error:NULL];
+                replyMessage.type = [[[dataArray objectAtIndex:i] objectForKey:@"type"] integerValue];
+                ATOMHomeImage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMHomeImage class] fromJSONDictionary:[[dataArray objectAtIndex:i] objectForKey:@"ask"] error:NULL];
+                homeImage.tipLabelArray = [NSMutableArray array];
+                NSArray *labelDataArray = [[[dataArray objectAtIndex:i] objectForKey:@"ask"]objectForKey:@"labels"];
+                if (labelDataArray.count) {
+                    for (int j = 0; j < labelDataArray.count; j++) {
+                        ATOMImageTipLabel *tipLabel = [MTLJSONAdapter modelOfClass:[ATOMImageTipLabel class] fromJSONDictionary:labelDataArray[j] error:NULL];
+                        tipLabel.imageID = homeImage.imageID;
+                        [homeImage.tipLabelArray addObject:tipLabel];
+                    }
+                }
+                replyMessage.homeImage = homeImage;
+                [replyMsgArray addObject:replyMessage];
+            }
+            if (block) {  block(replyMsgArray); }
+        } else {if (block) {  block(nil); }}
     }];
 }
 

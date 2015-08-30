@@ -10,6 +10,6 @@
 
 @interface ATOMShowInviteMessage : NSObject
 
-- (NSURLSessionDataTask *)ShowInviteMessage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *inviteMessageArray, NSError *error))block;
++ (void)getInviteMsg:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *returnArray))block;
 
 @end

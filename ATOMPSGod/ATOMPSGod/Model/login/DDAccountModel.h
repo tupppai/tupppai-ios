@@ -13,4 +13,6 @@
 + (void )DDRegister:(NSDictionary *)param withBlock:(void (^)(BOOL success))block ;
 + (void )DDLogin:(NSDictionary*)param withBlock:(void (^)(BOOL succeed))block ;
 + (void)DD3PartyAuth:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(bool isRegistered,NSString* info))block;
++ (void)ShowMyReply:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *returnArray))block;
++ (void)DDGetUserInfoAndUpdateMe;
 @end

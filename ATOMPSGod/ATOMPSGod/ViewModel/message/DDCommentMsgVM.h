@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-@class ATOMCommentMessage;
+@class DDCommentMsg;
 @class DDAskPageVM;
 
-@interface ATOMCommentMessageViewModel : NSObject
+@interface DDCommentMsgVM : NSObject
 
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, copy) NSString *userName;
@@ -26,6 +26,6 @@
 @property (nonatomic, assign) NSInteger type;
 @property (nonatomic, strong) DDAskPageVM *homepageViewModel;
 
-- (void)setViewModelData:(ATOMCommentMessage *)commentMessage;
+- (void)setViewModelData:(DDCommentMsg *)commentMessage;
 
 @end

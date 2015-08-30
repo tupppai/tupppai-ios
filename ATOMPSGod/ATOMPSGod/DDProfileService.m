@@ -33,7 +33,16 @@
     }];
 }
 
-
++ (void)getMyReply:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
+    [[self class]GET:nil withUrl:URL_ACGetMyReply withBlock:^(id responseObject) {
+        if (responseObject) {
+            NSArray* dataArray = [responseObject objectForKey:@"data"];
+            if (block) { block(dataArray); }
+        } else {
+            if (block) { block(nil); }
+        }
+    }];
+}
 + (void)setPushSetting:(NSDictionary *)param withBlock:(void (^) (BOOL success))block {
     
     [[self class]POST:param withUrl:URL_PFsetPushSetting withBlock:^(id responseObject) {
@@ -136,7 +145,7 @@
     }];
 }
 + (void) dd3PartyAuth :(NSDictionary*)param with3PaType:(NSString *)type withBlock:(void (^)(BOOL isRegistered,NSDictionary*userObject))block {
-    NSString* url = [NSString stringWithFormat:@"%@,%@",URL_AC3PaAuth,type];
+    NSString* url = [NSString stringWithFormat:@"%@%@",URL_AC3PaAuth,type];
     [[self class]POST:param withUrl:url withBlock:^(id responseObject) {
         if (responseObject) {
             NSDictionary *data = [ responseObject objectForKey:@"data"];
@@ -150,6 +159,7 @@
 }
 
 
+
 #pragma mark - Unknown
 
 + (void) postFeedBack :(NSDictionary*)param withBlock:(void (^)(BOOL success))block {
@@ -161,5 +171,27 @@
         }
     }];
 }
+
++ (void)ddGetMyInfo:(NSDictionary*)param withBlock:(void (^)(NSDictionary* data))block {
+    [[self class]GET:nil withUrl:URL_UKGetMyInfo withBlock:^(id responseObject) {
+        if (responseObject) {
+            NSDictionary* data = [responseObject objectForKey:@"data"];
+            if (block) { block(data); }
+        } else {
+            if (block) { block(nil); }
+        }
+    }];
+}
++ (void)ddGetMsg:(NSDictionary*)param withBlock:(void (^)(id data))block {
+    [[self class]GET:nil withUrl:URL_UKGetMsg withBlock:^(id responseObject) {
+        if (responseObject) {
+            id data = [responseObject objectForKey:@"data"];
+            if (block) { block(data); }
+        } else {
+            if (block) { block(nil); }
+        }
+    }];
+}
+
 
 @end

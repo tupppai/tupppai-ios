@@ -9,12 +9,12 @@
 #import "ATOMMyWorkViewController.h"
 #import "ATOMMyWorkCollectionViewCell.h"
 #import "DDHotDetailVC.h"
-#import "ATOMShowReply.h"
+//#import "ATOMShowReply.h"
 #import "ATOMHomeImage.h"
 #import "DDAskPageVM.h"
 #import "ATOMReplyViewModel.h"
 #import "PWRefreshFooterCollectionView.h"
-
+#import "DDAccountModel.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMMyWorkViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource>
@@ -68,7 +68,7 @@ static int collumnNumber = 3;
     [param setObject:@"time" forKey:@"sort"];
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
-    [ATOMShowReply ShowMyReply:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
+    [DDAccountModel ShowMyReply:param withBlock:^(NSMutableArray *resultArray) {
         for (ATOMHomeImage *homeImage in resultArray) {
             DDAskPageVM *homepageViewModel = [DDAskPageVM new];
             homepageViewModel.ID = homeImage.askID;
@@ -95,7 +95,8 @@ static int collumnNumber = 3;
     [param setObject:@"time" forKey:@"sort"];
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
-    [ATOMShowReply ShowMyReply:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
+    
+    [DDAccountModel ShowMyReply:param withBlock:^(NSMutableArray *resultArray) {
         for (ATOMHomeImage *homeImage in resultArray) {
             DDAskPageVM *homepageViewModel = [DDAskPageVM new];
             [homepageViewModel setViewModelData:homeImage];

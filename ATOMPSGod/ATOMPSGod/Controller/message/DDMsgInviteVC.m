@@ -67,10 +67,8 @@
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@"invite" forKey:@"type"];
 
-    ATOMShowInviteMessage *showInviteMessage = [ATOMShowInviteMessage new];
-    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-    [showInviteMessage ShowInviteMessage:param withBlock:^(NSMutableArray *inviteMessageArray, NSError *error) {
-        ////[SVProgressHUD dismiss];
+
+    [ATOMShowInviteMessage getInviteMsg:param withBlock:^(NSMutableArray *inviteMessageArray) {
         for (ATOMInviteMessage *inviteMessage in inviteMessageArray) {
             ATOMInviteMessageViewModel *inviteMessageViewModel = [ATOMInviteMessageViewModel new];
             [inviteMessageViewModel setViewModelData:inviteMessage];
@@ -93,8 +91,7 @@
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@"invite" forKey:@"type"];
-    ATOMShowInviteMessage *showInviteMessage = [ATOMShowInviteMessage new];
-    [showInviteMessage ShowInviteMessage:param withBlock:^(NSMutableArray *inviteMessageArray, NSError *error) {
+    [ATOMShowInviteMessage getInviteMsg:param withBlock:^(NSMutableArray *inviteMessageArray) {
         for (ATOMInviteMessage *inviteMessage in inviteMessageArray) {
             ATOMInviteMessageViewModel *inviteMessageViewModel = [ATOMInviteMessageViewModel new];
             [inviteMessageViewModel setViewModelData:inviteMessage];

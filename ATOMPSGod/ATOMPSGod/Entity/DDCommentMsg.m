@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMCommentMessage.h"
+#import "DDCommentMsg.h"
 
-@implementation ATOMCommentMessage
+@implementation DDCommentMsg
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{

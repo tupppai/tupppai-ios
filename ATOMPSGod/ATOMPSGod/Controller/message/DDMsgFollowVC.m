@@ -11,7 +11,7 @@
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMConcernMessage.h"
 #import "ATOMConcernMessageViewModel.h"
-#import "ATOMShowConcernMessage.h"
+#import "DDMsgFollowModel.h"
 #import "RefreshFooterTableView.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
@@ -60,8 +60,7 @@
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@"follow" forKey:@"type"];
 
-    ATOMShowConcernMessage *showConcernMessage = [ATOMShowConcernMessage new];
-    [showConcernMessage ShowConcernMessage:param withBlock:^(NSMutableArray *concernMessageArray, NSError *error) {
+    [DDMsgFollowModel getFollowMsg:param withBlock:^(NSMutableArray *concernMessageArray) {
         for (ATOMConcernMessage *concernMessage in concernMessageArray) {
             ATOMConcernMessageViewModel *concernMessageViewModel = [ATOMConcernMessageViewModel new];
             [concernMessageViewModel setViewModelData:concernMessage];
@@ -82,8 +81,7 @@
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@"follow" forKey:@"type"];
 
-    ATOMShowConcernMessage *showConcernMessage = [ATOMShowConcernMessage new];
-    [showConcernMessage ShowConcernMessage:param withBlock:^(NSMutableArray *concernMessageArray, NSError *error) {
+    [DDMsgFollowModel getFollowMsg:param withBlock:^(NSMutableArray *concernMessageArray) {
         for (ATOMConcernMessage *concernMessage in concernMessageArray) {
             ATOMConcernMessageViewModel *concernMessageViewModel = [ATOMConcernMessageViewModel new];
             [concernMessageViewModel setViewModelData:concernMessage];

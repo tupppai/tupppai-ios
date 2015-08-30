@@ -7,14 +7,14 @@
 //
 
 #import "DDMsgCommentVC.h"
-#import "ATOMCommentMessageViewModel.h"
+#import "DDCommentMsgVM.h"
 #import "ATOMCommentMessageTableViewCell.h"
 #import "DDHotDetailVC.h"
 #import "ATOMCommentDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMShowCommentMessage.h"
-#import "ATOMCommentMessage.h"
-#import "ATOMCommentMessageViewModel.h"
+#import "DDCommentMsg.h"
+#import "DDCommentMsgVM.h"
 #import "ATOMHomeImage.h"
 #import "DDAskPageVM.h"
 #import "RefreshFooterTableView.h"
@@ -67,10 +67,9 @@
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@"comment" forKey:@"type"];
 
-    ATOMShowCommentMessage *showCommentMessage = [ATOMShowCommentMessage new];
-    [showCommentMessage ShowCommentMessage:param withBlock:^(NSMutableArray *commentMessageArray, NSError *error) {
-        for (ATOMCommentMessage *commentMessage in commentMessageArray) {
-            ATOMCommentMessageViewModel *commentMessageViewModel = [ATOMCommentMessageViewModel new];
+    [ATOMShowCommentMessage getCommentMsg:param withBlock:^(NSMutableArray *commentMessageArray) {
+        for (DDCommentMsg *commentMessage in commentMessageArray) {
+            DDCommentMsgVM *commentMessageViewModel = [DDCommentMsgVM new];
             [commentMessageViewModel setViewModelData:commentMessage];
             [ws.dataSource addObject:commentMessageViewModel];
         }
@@ -92,10 +91,9 @@
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@"comment" forKey:@"type"];
-    ATOMShowCommentMessage *showCommentMessage = [ATOMShowCommentMessage new];
-    [showCommentMessage ShowCommentMessage:param withBlock:^(NSMutableArray *commentMessageArray, NSError *error) {
-        for (ATOMCommentMessage *commentMessage in commentMessageArray) {
-            ATOMCommentMessageViewModel *commentMessageViewModel = [ATOMCommentMessageViewModel new];
+    [ATOMShowCommentMessage getCommentMsg:param withBlock:^(NSMutableArray *commentMessageArray) {
+        for (DDCommentMsg *commentMessage in commentMessageArray) {
+            DDCommentMsgVM *commentMessageViewModel = [DDCommentMsgVM new];
             [commentMessageViewModel setViewModelData:commentMessage];
             [ws.dataSource addObject:commentMessageViewModel];
         }
@@ -150,7 +148,7 @@
     CGPoint location = [gesture locationInView:_tableView];
     NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:location];
     if (indexPath) {
-        ATOMCommentMessageViewModel *viewModel = _dataSource[indexPath.row];
+        DDCommentMsgVM *viewModel = _dataSource[indexPath.row];
         ATOMCommentMessageTableViewCell *cell = (ATOMCommentMessageTableViewCell *)[_tableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
         //点击图片

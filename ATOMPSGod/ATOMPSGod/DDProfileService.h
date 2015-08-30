@@ -22,6 +22,7 @@
 + (void) follow :(NSDictionary*)param withBlock:(void (^)(BOOL success))block;
 + (void) updatePassword :(NSDictionary*)param withBlock:(void (^)(BOOL success,NSInteger ret))block;
 + (void) deleteProceeding :(NSDictionary*)param withBlock:(void (^)(BOOL success))block;
++ (void)getMyReply:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block;
 
 #pragma mark - Account
 + (void) updateToken :(NSDictionary*)param withBlock:(void (^)(BOOL success))block;
@@ -32,5 +33,10 @@
 + (void) dd3PartyAuth :(NSDictionary*)param with3PaType:(NSString *)type withBlock:(void (^)(BOOL isRegistered,NSDictionary*userObject))block ;
 #pragma mark - Unknown
 + (void) postFeedBack :(NSDictionary*)param withBlock:(void (^)(BOOL success))block;
++ (void)ddGetMyInfo:(NSDictionary*)param withBlock:(void (^)(NSDictionary* data))block;
 
+/*
+ **评论通知，邀请通知，系统通知等。
+ */
++ (void)ddGetMsg:(NSDictionary*)param withBlock:(void (^)(id data))block;
 @end

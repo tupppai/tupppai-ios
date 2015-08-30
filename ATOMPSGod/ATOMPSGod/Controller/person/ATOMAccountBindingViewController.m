@@ -11,7 +11,7 @@
 #import "ATOMAccountBindingTableViewCell.h"
 #import "ATOMShowSettings.h"
 #import "DDShareSDKModel.h"
-#import "ATOMShowUser.h"
+#import "DDAccountModel.h"
 @interface ATOMAccountBindingViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) ATOMAccountBindingView *accountBindingView;
@@ -47,8 +47,7 @@
     }
 }
 -(void)viewDidDisappear:(BOOL)animated {
-    [ATOMShowUser ShowUserInfo:^(ATOMUser *user, NSError *error) {
-    }];
+    [DDAccountModel DDGetUserInfoAndUpdateMe];
 }
 
 #pragma mark - UITableViewDataSource

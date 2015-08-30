@@ -7,7 +7,7 @@
 //
 
 #import "ATOMCommentMessageTableViewCell.h"
-#import "ATOMCommentMessageViewModel.h"
+#import "DDCommentMsgVM.h"
 #import "DDAskPageVM.h"
 
 @implementation ATOMCommentMessageTableViewCell
@@ -63,11 +63,11 @@ static int padding10 = 10;
     _workImageView.frame = CGRectMake(SCREEN_WIDTH - padding10 - 75, padding10, 75, 75);
 }
 
-+ (CGFloat)calculateCellHeightWithModel:(ATOMCommentMessageViewModel *)viewModel {
++ (CGFloat)calculateCellHeightWithModel:(DDCommentMsgVM *)viewModel {
     return 95;
 }
 
-- (void)setCommentMessageViewModel:(ATOMCommentMessageViewModel *)commentMessageViewModel {
+- (void)setCommentMessageViewModel:(DDCommentMsgVM *)commentMessageViewModel {
     _commentMessageViewModel = commentMessageViewModel;
     NSInteger nameLength = _commentMessageViewModel.userName.length;
     NSRange range = {0,nameLength};

@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ATOMShowReplyMessage : NSObject
+@interface DDMsgReplyModel : NSObject
 
 - (NSURLSessionDataTask *)ShowReplyMessage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *replyMessageArray, NSError *error))block;
-
++ (void)getReplyMsg:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *returnArray))block;
 @end
