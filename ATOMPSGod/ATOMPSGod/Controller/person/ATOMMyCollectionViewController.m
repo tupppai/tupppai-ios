@@ -13,7 +13,7 @@
 #import "ATOMHomeImage.h"
 #import "DDAskPageVM.h"
 #import "ATOMCollectionViewModel.h"
-#import "ATOMShowCollection.h"
+#import "DDMyCollectionManager.h"
 #import "PWRefreshFooterCollectionView.h"
 #import "DDCommentVC.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
@@ -69,8 +69,7 @@ static float cellWidth;
     [param setObject:@"time" forKey:@"sort"];
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
-    ATOMShowCollection *showCollection = [ATOMShowCollection new];
-    [showCollection ShowCollection:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
+    [DDMyCollectionManager getMyCollection:param withBlock:^(NSMutableArray *resultArray) {
         for (ATOMHomeImage *homeImage in resultArray) {
             DDAskPageVM *homepageViewModel = [DDAskPageVM new];
             [homepageViewModel setViewModelData:homeImage];
@@ -97,10 +96,8 @@ static float cellWidth;
     [param setObject:@"time" forKey:@"sort"];
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
-    ATOMShowCollection *showCollection = [ATOMShowCollection new];
-    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-    [showCollection ShowCollection:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        ////[SVProgressHUD dismiss];
+
+    [DDMyCollectionManager getMyCollection:param withBlock:^(NSMutableArray *resultArray) {
         for (ATOMHomeImage *homeImage in resultArray) {
             DDAskPageVM *homepageViewModel = [DDAskPageVM new];
             [homepageViewModel setViewModelData:homeImage];

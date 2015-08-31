@@ -11,7 +11,7 @@
 #import "DDHotDetailVC.h"
 #import "ATOMCommentDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
-#import "ATOMShowInviteMessage.h"
+#import "DDMsgInviteModel.h"
 #import "ATOMInviteMessage.h"
 #import "ATOMInviteMessageViewModel.h"
 #import "ATOMHomeImage.h"
@@ -68,7 +68,7 @@
     [param setObject:@"invite" forKey:@"type"];
 
 
-    [ATOMShowInviteMessage getInviteMsg:param withBlock:^(NSMutableArray *inviteMessageArray) {
+    [DDMsgInviteModel getInviteMsg:param withBlock:^(NSMutableArray *inviteMessageArray) {
         for (ATOMInviteMessage *inviteMessage in inviteMessageArray) {
             ATOMInviteMessageViewModel *inviteMessageViewModel = [ATOMInviteMessageViewModel new];
             [inviteMessageViewModel setViewModelData:inviteMessage];
@@ -91,7 +91,7 @@
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@"invite" forKey:@"type"];
-    [ATOMShowInviteMessage getInviteMsg:param withBlock:^(NSMutableArray *inviteMessageArray) {
+    [DDMsgInviteModel getInviteMsg:param withBlock:^(NSMutableArray *inviteMessageArray) {
         for (ATOMInviteMessage *inviteMessage in inviteMessageArray) {
             ATOMInviteMessageViewModel *inviteMessageViewModel = [ATOMInviteMessageViewModel new];
             [inviteMessageViewModel setViewModelData:inviteMessage];

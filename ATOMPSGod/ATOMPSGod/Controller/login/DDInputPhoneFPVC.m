@@ -41,9 +41,9 @@
 - (void)clickRightButtonItem {
     if ([self checkInputMessageSuccess]) {
         NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:_inputMobileView.mobileTextField.text, @"phone", nil];
-        [DDProfileService getAuthCode:param withBlock:^(NSString* authcode) {
+        [DDService getAuthCode:param withBlock:^(NSString* authcode) {
             if (authcode) {
-                [DDUserModel currentUser].mobile = _inputMobileView.mobileTextField.text;
+                [DDUserManager currentUser].mobile = _inputMobileView.mobileTextField.text;
                 DDInputAuthcodePwdFPVC *ivcvc = [DDInputAuthcodePwdFPVC new];
                 ivcvc.verifyCode = authcode;
                 ivcvc.phoneNumber = _inputMobileView.mobileTextField.text;

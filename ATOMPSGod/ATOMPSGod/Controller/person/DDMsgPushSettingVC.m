@@ -8,7 +8,7 @@
 
 #import "DDMsgPushSettingVC.h"
 #import "DDMsgPushSettingTableCell.h"
-#import "DDProfileService.h"
+#import "DDService.h"
 @interface DDMsgPushSettingVC () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -26,7 +26,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [DDProfileService getPushSetting:^(NSDictionary *data) {
+    [DDService getPushSetting:^(NSDictionary *data) {
         _data = data;
         [_tableView reloadData];
     }];
@@ -117,7 +117,7 @@
         [param setObject:@0 forKey:@"value"];
     }
   
-    [DDProfileService setPushSetting:param withBlock:^(BOOL success) {
+    [DDService setPushSetting:param withBlock:^(BOOL success) {
         if (success) {
             [Hud success:@"设置成功" inView:self.view];
         }

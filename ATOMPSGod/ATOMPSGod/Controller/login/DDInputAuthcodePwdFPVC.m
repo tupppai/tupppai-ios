@@ -54,8 +54,8 @@
 }
 
 - (void)updateAuthCode {
-    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:[DDUserModel currentUser].mobile, @"phone", nil];
-    [DDProfileService getAuthCode:param withBlock:^(NSString* authcode) {
+    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:[DDUserManager currentUser].mobile, @"phone", nil];
+    [DDService getAuthCode:param withBlock:^(NSString* authcode) {
         if (authcode) {
             self.verifyCode = authcode;
         }
@@ -73,7 +73,7 @@
             [param setObject:_inputVerifyView.passwordTextField.text forKey:@"new_pwd"];
             [param setObject:_phoneNumber forKey:@"phone"];
             
-            [DDProfileService resetPassword:param withBlock:^(BOOL success) {
+            [DDService resetPassword:param withBlock:^(BOOL success) {
                 if (success) {
                     [Util ShowTSMessageSuccess:@"成功设置密码"];
                     [self.navigationController popToRootViewControllerAnimated:YES];

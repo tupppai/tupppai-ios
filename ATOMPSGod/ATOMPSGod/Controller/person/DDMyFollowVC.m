@@ -13,7 +13,7 @@
 #import "ATOMOtherPersonViewController.h"
 #import "DDFollow.h"
 #import "ATOMConcernViewModel.h"
-#import "ATOMShowConcern.h"
+#import "DDFollowManager.h"
 #import "RefreshTableView.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -62,7 +62,7 @@
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [ATOMShowConcern GetFollow:param withBlock:^(NSMutableArray *recommendArray, NSMutableArray *mineArray, NSError *error) {
+    [DDFollowManager getFollow:param withBlock:^(NSMutableArray *recommendArray, NSMutableArray *mineArray) {
         if (recommendArray.count != 0) {
             [ws.recommendDataSource removeAllObjects];
         }
@@ -95,7 +95,7 @@
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(timestamp) forKey:@"last_updated"];
     [param setObject:@(10) forKey:@"size"];
-    [ATOMShowConcern GetFollow:param withBlock:^(NSMutableArray *recommendConcernArray, NSMutableArray *myConcernArray, NSError *error) {
+    [DDFollowManager getFollow:param withBlock:^(NSMutableArray *recommendConcernArray, NSMutableArray *myConcernArray) {
         for (DDFollow *concern in myConcernArray) {
             ATOMConcernViewModel *concernViewModel = [ATOMConcernViewModel new];
             [concernViewModel setViewModelData:concern];
@@ -155,7 +155,7 @@
                 if (!cell.attentionButton.selected) {
                     [param setObject:@0 forKey:@"status"];
                 }
-                [DDProfileService follow:param withBlock:^(BOOL success) {
+                [DDService follow:param withBlock:^(BOOL success) {
                     if (!success) {
                         cell.attentionButton.selected = !cell.attentionButton.selected;
                     } else {

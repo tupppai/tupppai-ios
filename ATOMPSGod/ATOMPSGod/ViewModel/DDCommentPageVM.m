@@ -13,8 +13,8 @@
     self = [super init];
     if (self) {
         _pageID = 0;
-        _userName = [DDUserModel currentUser].username;
-        _avatarURL = [DDUserModel currentUser].avatar;
+        _userName = [DDUserManager currentUser].username;
+        _avatarURL = [DDUserManager currentUser].avatar;
         _likeNumber = @"0";
         _shareNumber = @"0";
         _commentNumber = @"0";

@@ -17,7 +17,7 @@
 #import "DDLoginNavigationController.h"
 #import "AppDelegate.h"
 #import "SIAlertView.h"
-#import "ATOMShowHomepage.h"
+#import "DDHomePageManager.h"
 @interface ATOMAccountSettingViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -176,7 +176,7 @@
                               //清空数据库用户表
                               [ATOMUserDAO clearUsers];
                               //清空当前用户
-                              [[DDUserModel currentUser]wipe];
+                              [[DDUserManager currentUser]wipe];
                               self.navigationController.viewControllers = @[];
                               DDLaunchVC *lvc = [[DDLaunchVC alloc] init];
                               [AppDelegate APP].window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
@@ -194,7 +194,7 @@
                              type:SIAlertViewButtonTypeDefault
                           handler:^(SIAlertView *alert) {
                               [[NSURLCache sharedURLCache]removeAllCachedResponses];
-                              ATOMShowHomepage *showHomepage = [ATOMShowHomepage new];
+                              DDHomePageManager *showHomepage = [DDHomePageManager new];
                               [showHomepage clearHomePages];
 //                              ATOMHomeImageDAO* hid = [ATOMHomeImageDAO new];
 //                              [hid clearHomeImages];

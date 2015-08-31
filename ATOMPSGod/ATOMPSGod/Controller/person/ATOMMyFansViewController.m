@@ -9,11 +9,11 @@
 #import "ATOMMyFansViewController.h"
 #import "ATOMMyFansTableViewCell.h"
 #import "ATOMOtherPersonViewController.h"
-#import "ATOMShowFans.h"
+#import "DDMyFansManager.h"
 #import "ATOMFans.h"
 #import "ATOMFansViewModel.h"
 #import "RefreshFooterTableView.h"
-#import "DDProfileService.h"
+#import "DDService.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMMyFansViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate>
@@ -32,9 +32,6 @@
 
 #pragma mark - Refresh PWRefreshBaseTableViewDelegate
 
-//- (void)configTableViewRefresh {
-//    [_tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
-//}
 -(void)didPullRefreshUp:(UITableView *)tableView {
     [self loadMoreData];
 }
@@ -60,9 +57,8 @@
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(_uid) forKeyedSubscript:@"uid"];
-    ATOMShowFans *showFans = [ATOMShowFans new];
     [Hud activity:@"" inView:self.view];
-    [showFans ShowFans:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
+    [DDMyFansManager getMyFans:param withBlock:^(NSMutableArray *resultArray) {
         [Hud dismiss:self.view];
         for (ATOMFans *fans in resultArray) {
             ATOMFansViewModel *fansViewModel = [ATOMFansViewModel new];
@@ -81,8 +77,7 @@
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(timestamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    ATOMShowFans *showFans = [ATOMShowFans new];
-    [showFans ShowFans:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
+    [DDMyFansManager getMyFans:param withBlock:^(NSMutableArray *resultArray) {
         for (ATOMFans *fans in resultArray) {
             ATOMFansViewModel *fansViewModel = [ATOMFansViewModel new];
             [fansViewModel setViewModelData:fans];
@@ -152,7 +147,7 @@
             if (!cell.attentionButton.selected) {
                 [param setObject:@0 forKey:@"status"];
             }
-            [DDProfileService follow:param withBlock:^(BOOL success) {
+            [DDService follow:param withBlock:^(BOOL success) {
                 if (!success) {
                     cell.attentionButton.selected = !cell.attentionButton.selected;
                 } else {

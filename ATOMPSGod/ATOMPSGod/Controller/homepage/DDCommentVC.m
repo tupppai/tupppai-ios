@@ -17,10 +17,10 @@
 #import "CommentCell.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMComment.h"
-#import "ATOMShowDetailOfComment.h"
+#import "DDCommentManager.h"
 #import "ATOMShareFunctionView.h"
 #import "CommentLikeButton.h"
-#import "ATOMCollectModel.h"
+#import "DDCollectManager.h"
 #import "JGActionSheet.h"
 #import "DDInviteVC.h"
 #import "ATOMReportModel.h"
@@ -179,9 +179,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     
     
     DDCommentVM *commentVM = [DDCommentVM new];
-    commentVM.username = [DDUserModel currentUser].username;
-    commentVM.uid = [DDUserModel currentUser].uid;
-    commentVM.avatar = [DDUserModel currentUser].avatar;
+    commentVM.username = [DDUserManager currentUser].username;
+    commentVM.uid = [DDUserManager currentUser].uid;
+    commentVM.avatar = [DDUserManager currentUser].avatar;
     commentVM.originText = self.textView.text;
     NSString* commentToShow;
     //回复评论
@@ -235,7 +235,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     if (_targetCommentVM) {
         [param setObject:@(_targetCommentVM.ID) forKey:@"for_comment"];
     }
-    ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
+    DDCommentManager *showDetailOfComment = [DDCommentManager new];
     [showDetailOfComment SendComment:param withBlock:^(NSInteger comment_id, NSError *error) {
         commentVM.ID = comment_id;
     }];
@@ -543,13 +543,13 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 #pragma mark - ATOMShareFunctionViewDelegate
 -(void)tapWechatFriends {
-    [DDShareSDKModel postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:(int)_vm.type];
+    [DDShareSDKManager postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:(int)_vm.type];
 }
 -(void)tapWechatMoment {
-    [DDShareSDKModel postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
+    [DDShareSDKManager postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
 }
 -(void)tapSinaWeibo {
-    [DDShareSDKModel postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:(int)_vm.type];
+    [DDShareSDKManager postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:(int)_vm.type];
 }
 -(void)tapCollect {
     NSMutableDictionary *param = [NSMutableDictionary new];
@@ -560,7 +560,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         //取消收藏
         [param setObject:@(0) forKey:@"status"];
     }
-    [ATOMCollectModel toggleCollect:param withPageType:_vm.type withID:_vm.pageID withBlock:^(NSError *error) {
+    [DDCollectManager toggleCollect:param withPageType:_vm.type withID:_vm.pageID withBlock:^(NSError *error) {
         if (!error) {
             _vm.collected = self.shareFunctionView.collectButton.selected;
         }
@@ -697,7 +697,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 
 - (void)clickShareButton{
-    [DDShareSDKModel postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
+    [DDShareSDKManager postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
 }
 
 - (void)clickMoreShareButton {
@@ -751,7 +751,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
     
-    ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
+    DDCommentManager *showDetailOfComment = [DDCommentManager new];
     [showDetailOfComment ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
         for (ATOMComment *comment in hotCommentArray) {
             DDCommentVM *model = [DDCommentVM new];
@@ -778,7 +778,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [param setObject:@(_vm.type) forKey:@"type"];
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
-    ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
+    DDCommentManager *showDetailOfComment = [DDCommentManager new];
     [showDetailOfComment ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
         for (ATOMComment *comment in recentCommentArray) {
             DDCommentVM *model = [DDCommentVM new];

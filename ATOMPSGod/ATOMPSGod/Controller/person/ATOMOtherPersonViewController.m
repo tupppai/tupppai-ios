@@ -14,13 +14,13 @@
 #import "ATOMOtherPersonConcernViewController.h"
 #import "DDHotDetailVC.h"
 #import "ATOMOtherPersonCollectionHeaderView.h"
-#import "ATOMShowOtherUser.h"
+#import "DDOtherUserManager.h"
 #import "ATOMHomeImage.h"
 #import "DDAskPageVM.h"
 #import "ATOMAskViewModel.h"
 #import "ATOMReplyViewModel.h"
 #import "ATOMUser.h"
-#import "DDProfileService.h"
+#import "DDService.h"
 #import "DDCommentVC.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -98,9 +98,8 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
 //        [param setObject:@(ATOMPageTypeReply) forKey:@"type"];
 
     [Hud activity:@"" inView:self.view];
-    [ATOMShowOtherUser ShowOtherUser:param withBlock:^(NSMutableArray *askReturnArray, NSMutableArray *replyReturnArray, ATOMUser *user, NSError *error) {
+    [DDOtherUserManager getOtherUserInfo:param withBlock:^(NSMutableArray *askReturnArray, NSMutableArray *replyReturnArray, ATOMUser *user) {
         [Hud dismiss:self.view];
-        if (!error) {
             if (user) {
                 [self updateUserInterface:user];
             }
@@ -120,7 +119,6 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
                 [ws.workDataSource addObject:replyViewModel];
                 [ws.workHomeImageDataSource addObject:homepageViewModel];
             }
-        }
         if (ws.otherPersonView.scrollView.currentType == ATOMOtherPersonCollectionViewTypeAsk) {
             [ws.otherPersonView.scrollView.otherPersonUploadCollectionView reloadData];
             [ws.otherPersonView.scrollView.otherPersonUploadCollectionView.footer endRefreshing];
@@ -158,8 +156,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
         [param setObject:@(_currentWorkPage) forKey:@"page"];
         [param setObject:@(ATOMPageTypeReply) forKey:@"type"];
     }
-    [ATOMShowOtherUser ShowOtherUser:param withBlock:^(NSMutableArray *askReturnArray, NSMutableArray *replyReturnArray, ATOMUser *user, NSError *error) {
-        if (!error) {
+    [DDOtherUserManager getOtherUserInfo:param withBlock:^(NSMutableArray *askReturnArray, NSMutableArray *replyReturnArray, ATOMUser *user) {
             if (user) {
                 [self updateUserInterface:user];
             }
@@ -179,7 +176,6 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
                     [ws.workDataSource addObject:replyViewModel];
                     [ws.workHomeImageDataSource addObject:homepageViewModel];
             }
-        }
         if (ws.otherPersonView.scrollView.currentType == ATOMOtherPersonCollectionViewTypeAsk) {
             [ws.otherPersonView.scrollView.otherPersonUploadCollectionView reloadData];
             [ws.otherPersonView.scrollView.otherPersonUploadCollectionView.footer endRefreshing];
@@ -230,7 +226,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
     _isFirstEnterWorkCollectionView = YES;
     [self getDataSourceWithType:@"upload"];
     
-    if (_userID == [DDUserModel currentUser].uid) {
+    if (_userID == [DDUserManager currentUser].uid) {
         _otherPersonView.uploadHeaderView.attentionButton.hidden = YES;
     }
 }
@@ -292,7 +288,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
     if (!_otherPersonView.uploadHeaderView.attentionButton.selected) {
         [param setObject:@0 forKey:@"status"];
     }
-    [DDProfileService follow:param withBlock:^(BOOL success) {
+    [DDService follow:param withBlock:^(BOOL success) {
         if (!success) {
             _otherPersonView.uploadHeaderView.attentionButton.selected = !_otherPersonView.uploadHeaderView.attentionButton.selected;
         } else {

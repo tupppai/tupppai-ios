@@ -62,7 +62,7 @@
                               //清空数据库用户表
                               [ATOMUserDAO clearUsers];
                               //清空当前用户
-                              [[DDUserModel currentUser]wipe];
+                              [[DDUserManager currentUser]wipe];
                               self.navigationController.viewControllers = @[];
                               DDLaunchVC *lvc = [[DDLaunchVC alloc] init];
                               [AppDelegate APP].window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];

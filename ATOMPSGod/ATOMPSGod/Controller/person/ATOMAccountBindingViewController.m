@@ -9,9 +9,8 @@
 #import "ATOMAccountBindingViewController.h"
 #import "ATOMAccountBindingView.h"
 #import "ATOMAccountBindingTableViewCell.h"
-#import "ATOMShowSettings.h"
-#import "DDShareSDKModel.h"
-#import "DDAccountModel.h"
+#import "DDMySettingsManager.h"
+#import "DDShareSDKManager.h"
 @interface ATOMAccountBindingViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) ATOMAccountBindingView *accountBindingView;
@@ -47,7 +46,7 @@
     }
 }
 -(void)viewDidDisappear:(BOOL)animated {
-    [DDAccountModel DDGetUserInfoAndUpdateMe];
+    [DDUserManager DDGetUserInfoAndUpdateMe];
 }
 
 #pragma mark - UITableViewDataSource
@@ -105,22 +104,22 @@
             cell.imageView.image = [UIImage imageNamed:@"weibo"];
             cell.textLabel.text = @"新浪微博";
             [cell addSwitch];
-            [cell.bindSwitch setOn:[DDUserModel currentUser].bindWeibo];
+            [cell.bindSwitch setOn:[DDUserManager currentUser].bindWeibo];
         } else if (row == 1) {
             cell.imageView.image = [UIImage imageNamed:@"wechat"];
             cell.textLabel.text = @"微信";
             [cell addSwitch];
-            [cell.bindSwitch setOn:[DDUserModel currentUser].bindWechat];
+            [cell.bindSwitch setOn:[DDUserManager currentUser].bindWechat];
         }
         [cell.bindSwitch addTarget:self action:@selector(toggleSwitch:) forControlEvents:UIControlEventValueChanged];
         cell.bindSwitch.tag = indexPath.row;
     } else if (section == 1) {
         cell.textLabel.text = @"手机号";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        if ([[DDUserModel currentUser].mobile isEqualToString:@"-1"]) {
+        if ([[DDUserManager currentUser].mobile isEqualToString:@"-1"]) {
             cell.phoneNumber = @"未绑定";
         } else {
-            cell.phoneNumber = [DDUserModel currentUser].mobile;
+            cell.phoneNumber = [DDUserManager currentUser].mobile;
         }
     }
    
@@ -151,12 +150,12 @@
     [param setObject:type forKey:@"type"];
     //1.如果想要绑定
     if (bindSwitch.on) {
-        [DDShareSDKModel getUserInfo:shareType withBlock:^(NSDictionary *sourceData) {
+        [DDShareSDKManager getUserInfo:shareType withBlock:^(NSDictionary *sourceData) {
             NSString* openID = [sourceData objectForKey:openIDKey];
             if (openID) {
                 [param setObject:openID forKey:@"openid"];
             }
-            [ATOMShowSettings setBindSetting:param withToggleBind:YES withBlock:^(NSError *error) {
+            [DDMySettingsManager setBindSetting:param withToggleBind:YES withBlock:^(NSError *error) {
                 if (error) {
                     //绑定失败，回到原型
                     bindSwitch.on = NO;
@@ -169,7 +168,7 @@
     }
     //2.如果想要取消绑定
     else  {
-        [ATOMShowSettings setBindSetting:param withToggleBind:NO withBlock:^(NSError *error) {
+        [DDMySettingsManager setBindSetting:param withToggleBind:NO withBlock:^(NSError *error) {
             //绑定失败，回到原型
             if (error) {
                 bindSwitch.on = YES;

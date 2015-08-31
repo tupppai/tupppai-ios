@@ -8,7 +8,7 @@
 
 #import "ATOMModifyPasswordViewController.h"
 #import "ATOMModifyPasswordView.h"
-#import "DDProfileService.h"
+#import "DDService.h"
 #import "DDInputPhoneFPVC.h"
 
 @interface ATOMModifyPasswordViewController ()
@@ -47,7 +47,7 @@
         NSMutableDictionary* param = [NSMutableDictionary new];
         [param setObject:_modifyPasswordView.oldPasswordTextField.text forKey:@"old_pwd"];
         [param setObject:_modifyPasswordView.modifyPasswordTextField.text forKey:@"new_pwd"];
-        [DDProfileService updatePassword:param withBlock:^(BOOL success, NSInteger ret) {
+        [DDService updatePassword:param withBlock:^(BOOL success, NSInteger ret) {
             if (success) {
                 if (ret == 1) {
                     [Util ShowTSMessageSuccess:@"修改密码成功"];

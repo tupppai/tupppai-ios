@@ -7,7 +7,7 @@
 //
 
 #import "CommentLikeButton.h"
-#import "ATOMShowDetailOfComment.h"
+#import "DDCommentManager.h"
 
 @interface CommentLikeButton ()
 

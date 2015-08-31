@@ -12,7 +12,7 @@
 #import "DDFollowVC.h"
 #import "ATOMPersonViewController.h"
 #import "DDNavigationController.h"
-#import "DDProfileService.h"
+#import "DDService.h"
 
 @interface DDTabBarController ()<UITabBarControllerDelegate>
 @property (nonatomic, strong) DDNavigationController *nav1;
@@ -46,8 +46,8 @@ static dispatch_once_t once;
     dispatch_once(&once, ^ {
         NSUUID *oNSUUID = [[UIDevice currentDevice] identifierForVendor];
         NSString* token = [[NSUserDefaults standardUserDefaults]stringForKey:@"devicetoken"];
-        NSDictionary* param = [NSDictionary dictionaryWithObjectsAndKeys:token, @"device_token",@1,@"platform",@([[UIDevice currentDevice].systemVersion floatValue]),@"device_os",deviceName(),@"device_name",[oNSUUID UUIDString],@"device_mac",nil];
-        [DDProfileService updateToken:param withBlock:nil];
+        NSDictionary* param = [NSDictionary dictionaryWithObjectsAndKeys:token, @"device_token",@1,@"platform",@([[UIDevice currentDevice].systemVersion floatValue]),@"device_os",deviceName(),@"device_name",[oNSUUID UUIDString],@"device_mac",nil];        
+        [DDService updateToken:param withBlock:nil];
     });
 }
 - (void)configureTabBarController {

@@ -15,18 +15,18 @@
 #import "ATOMProceedingViewController.h"
 #import "DDAskPageVM.h"
 #import "kfcHomeScrollView.h"
-#import "ATOMShowHomepage.h"
+#import "DDHomePageManager.h"
 #import "ATOMShareFunctionView.h"
 #import "AppDelegate.h"
 #import "kfcButton.h"
 #import "ATOMHomeImageDAO.h"
 #import "DDCommentPageVM.h"
-#import "ATOMShareModel.h"
-#import "ATOMCollectModel.h"
+#import "DDShareManager.h"
+#import "DDCollectManager.h"
 #import "DDInviteVC.h"
 #import "JGActionSheet.h"
 #import "ATOMReportModel.h"
-#import "DDProfileService.h"
+#import "DDService.h"
 #import "DDBaseService.h"
 #import "JTSImageViewController.h"
 #import "JTSImageInfo.h"
@@ -301,7 +301,7 @@ static NSString *CellIdentifier2 = @"AskCell";
     [param setObject:@"ask" forKey:@"type"];
     [param setObject:@(_selectedVM.ID) forKey:@"target"];
     
-    [DDProfileService signProceeding:param withBlock:^(NSString *imageUrl) {
+    [DDService signProceeding:param withBlock:^(NSString *imageUrl) {
         if (imageUrl != nil) {
 //            [DDBaseService downloadImage:imageUrl withBlock:^(UIImage *image) {
             kfcAskCell* cell = (kfcAskCell *)[_scrollView.askTable cellForRowAtIndexPath:_selectedIndexPath];
@@ -358,7 +358,7 @@ static NSString *CellIdentifier2 = @"AskCell";
                     [cell.likeButton toggleLike];
                     [_selectedVM toggleLike];
                 } else if (CGRectContainsPoint(cell.wechatButton.frame, p)) {
-                    [DDShareSDKModel postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
+                    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
                 } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
                     DDCommentPageVM* vm = [DDCommentPageVM new];
                     [vm setCommonViewModelWithAsk:_selectedVM];
@@ -408,7 +408,7 @@ static NSString *CellIdentifier2 = @"AskCell";
                     [cell.likeButton toggleLike];
                     [_selectedVM toggleLike];
                 } else if (CGRectContainsPoint(cell.wechatButton.frame, p)) {
-                    [DDShareSDKModel postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
+                    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
                 } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
                     DDCommentPageVM* vm = [DDCommentPageVM new];
                     [vm setCommonViewModelWithAsk:_selectedVM];
@@ -534,6 +534,7 @@ static NSString *CellIdentifier2 = @"AskCell";
     [_scrollView.hotTable reloadData];
     
     _dataSourceOfAskTableView = [self fetchDBDataSourceWithHomeType:ATOMHomepageViewTypeAsk];
+    NSLog(@"_dataSourceOfAskTableView %@",_dataSourceOfAskTableView);
     [_scrollView.askTable reloadData];
 }
 #pragma mark - GetDataSource from Server
@@ -548,7 +549,8 @@ static NSString *CellIdentifier2 = @"AskCell";
 }
 
 -(NSMutableArray*)fetchDBDataSourceWithHomeType:(ATOMHomepageViewType) homeType {
-    ATOMShowHomepage *showHomepage = [ATOMShowHomepage new];
+    
+    DDHomePageManager *showHomepage = [DDHomePageManager new];
     NSArray * homepageArray = [[showHomepage getHomeImagesWithHomeType:homeType] mutableCopy];
     NSMutableArray* tableViewDataSource = [NSMutableArray array];
     for (ATOMHomeImage *homeImage in homepageArray) {
@@ -570,8 +572,8 @@ static NSString *CellIdentifier2 = @"AskCell";
     [param setObject:@"time" forKey:@"sort"];
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(8) forKey:@"size"];
-    ATOMShowHomepage *showHomepage = [ATOMShowHomepage new];
-    [showHomepage ShowHomepage:param withBlock:^(NSMutableArray *homepageArray, NSError *error) {
+    DDHomePageManager *showHomepage = [DDHomePageManager new];
+    [showHomepage getHomepage:param withBlock:^(NSMutableArray *homepageArray, NSError *error) {
         if (homepageArray.count != 0 && error == nil) {
             if ([homeType isEqualToString:@"new"]) {
                 ws.dataSourceOfAskTableView = nil;
@@ -633,8 +635,8 @@ static NSString *CellIdentifier2 = @"AskCell";
     [param setObject:@"time" forKey:@"sort"];
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(10) forKey:@"size"];
-    ATOMShowHomepage *showHomepage = [ATOMShowHomepage new];
-    [showHomepage ShowHomepage:param withBlock:^(NSMutableArray *homepageArray,NSError *error) {
+    DDHomePageManager *showHomepage = [DDHomePageManager new];
+    [showHomepage getHomepage:param withBlock:^(NSMutableArray *homepageArray,NSError *error) {
         if (homepageArray && error == nil) {
             
             for (ATOMHomeImage *homeImage in homepageArray) {
@@ -664,6 +666,8 @@ static NSString *CellIdentifier2 = @"AskCell";
                 }
             }
         } else {
+            [ws.scrollView.hotTable.footer endRefreshing];
+            [ws.scrollView.askTable.footer endRefreshing];
         }
     }];
 }
@@ -671,13 +675,13 @@ static NSString *CellIdentifier2 = @"AskCell";
 
 #pragma mark - ATOMShareFunctionViewDelegate
 -(void)tapWechatFriends {
-    [DDShareSDKModel postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeAsk];
+    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeAsk];
 }
 -(void)tapWechatMoment {
-    [DDShareSDKModel postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
+    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
 }
 -(void)tapSinaWeibo {
-    [DDShareSDKModel postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:ATOMPageTypeAsk];
+    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:ATOMPageTypeAsk];
 }
 -(void)tapInvite {
     DDInviteVC* ivc = [DDInviteVC new];
@@ -693,7 +697,7 @@ static NSString *CellIdentifier2 = @"AskCell";
         //取消收藏
         [param setObject:@(0) forKey:@"status"];
     }
-    [ATOMCollectModel toggleCollect:param withPageType:ATOMPageTypeAsk withID:_selectedVM.ID withBlock:^(NSError *error) {
+    [DDCollectManager toggleCollect:param withPageType:ATOMPageTypeAsk withID:_selectedVM.ID withBlock:^(NSError *error) {
         if (!error) {
             _selectedVM.collected = self.shareFunctionView.collectButton.selected;
         }   else {

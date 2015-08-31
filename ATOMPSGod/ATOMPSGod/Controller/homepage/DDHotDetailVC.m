@@ -17,12 +17,12 @@
 #import "DDCommentVM.h"
 #import "ATOMDetailImage.h"
 #import "ATOMComment.h"
-#import "ATOMShowDetailOfHomePage.h"
+#import "DDHotDetailManager.h"
 #import "DDAskPageVM.h"
 #import "ATOMShareFunctionView.h"
 #import "kfcButton.h"
 #import "RefreshTableView.h"
-#import "ATOMCollectModel.h"
+#import "DDCollectManager.h"
 #import "DDBaseService.h"
 #import "JGActionSheet.h"
 #import "DDInviteVC.h"
@@ -174,26 +174,26 @@ static NSString *CellIdentifier = @"HotDetailCell";
 #pragma mark - ATOMShareFunctionViewDelegate
 -(void)tapWechatFriends {
     if (_selectedIndexPath.row == 0) {
-        [DDShareSDKModel postSocialShare:_askVM.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeAsk];
+        [DDShareSDKManager postSocialShare:_askVM.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeAsk];
     } else {
         DDHotDetailPageVM *model = _dataSource[_selectedIndexPath.row];
-        [DDShareSDKModel postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeReply];
+        [DDShareSDKManager postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:ATOMPageTypeReply];
     }
 }
 -(void)tapWechatMoment {
     if (_selectedIndexPath.row == 0) {
-        [DDShareSDKModel postSocialShare:_askVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
+        [DDShareSDKManager postSocialShare:_askVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
     } else {
         DDHotDetailPageVM *model = _dataSource[_selectedIndexPath.row];
-        [DDShareSDKModel postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeReply];
+        [DDShareSDKManager postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeReply];
     }
 }
 -(void)tapSinaWeibo {
     if (_selectedIndexPath.row == 0) {
-        [DDShareSDKModel postSocialShare:_askVM.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:ATOMPageTypeAsk];
+        [DDShareSDKManager postSocialShare:_askVM.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:ATOMPageTypeAsk];
     } else {
         DDHotDetailPageVM *model = _dataSource[_selectedIndexPath.row];
-        [DDShareSDKModel postSocialShare:model.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:ATOMPageTypeReply];
+        [DDShareSDKManager postSocialShare:model.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:ATOMPageTypeReply];
     }
 }
 -(void)tapCollect {
@@ -207,7 +207,7 @@ static NSString *CellIdentifier = @"HotDetailCell";
     }
     if (_selectedIndexPath) {
         DDHotDetailPageVM *model = _dataSource[_selectedIndexPath.row];
-        [ATOMCollectModel toggleCollect:param withPageType:model.type withID:model.ID withBlock:^(NSError *error) {
+        [DDCollectManager toggleCollect:param withPageType:model.type withID:model.ID withBlock:^(NSError *error) {
             if (!error) {
                 model.collected = self.shareFunctionView.collectButton.selected;
             }
@@ -275,7 +275,7 @@ static NSString *CellIdentifier = @"HotDetailCell";
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(5) forKey:@"size"];
     [param setObject:@(_fold) forKey:@"fold"];
-    ATOMShowDetailOfHomePage *showDetailOfHomePage = [ATOMShowDetailOfHomePage new];
+    DDHotDetailManager *showDetailOfHomePage = [DDHotDetailManager new];
     [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.askVM.ID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
         //第一张图片为首页点击的图片，剩下的图片为回复图片
         ws.dataSource = nil;
@@ -308,7 +308,7 @@ static NSString *CellIdentifier = @"HotDetailCell";
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
     [param setObject:@(_fold) forKey:@"fold"];
-    ATOMShowDetailOfHomePage *showDetailOfHomePage = [ATOMShowDetailOfHomePage new];
+    DDHotDetailManager *showDetailOfHomePage = [DDHotDetailManager new];
     [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.askVM.ID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
         for (ATOMDetailImage *detailImage in detailOfHomePageArray) {
             DDHotDetailPageVM *model = [DDHotDetailPageVM new];
@@ -452,10 +452,10 @@ static NSString *CellIdentifier = @"HotDetailCell";
                 }
             } else if (CGRectContainsPoint(_selectedHotDetailCell.wechatButton.frame, p)) {
                 if (_selectedIndexPath.row == 0) {
-                    [DDShareSDKModel postSocialShare:_askVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
+                    [DDShareSDKManager postSocialShare:_askVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
                 } else {
                     DDHotDetailPageVM *model = _dataSource[_selectedIndexPath.row];
-                    [DDShareSDKModel postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeReply];
+                    [DDShareSDKManager postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeReply];
                 }            } else if (CGRectContainsPoint(_selectedHotDetailCell.commentButton.frame, p)) {
                     
                 DDCommentPageVM* vm = [DDCommentPageVM new];

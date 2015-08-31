@@ -26,7 +26,7 @@
             NSArray *param = [MTLFMDBAdapter columnValues:homeImage];
             BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
             if (flag) {
-//                NSLog(@"save homeImage %ld succeed",(long)homeImage.imageID);
+                //NSLog(@"save homeImage %ld succeed",(long)homeImage.imageID);
             } else {
                 NSLog(@"save homeImage fail");
             }
@@ -43,7 +43,7 @@
             [param addObject:@(homeImage.imageID)];
             BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
             if (flag) {
-//                NSLog(@"update homeImage %ld --ok",(long)homeImage.imageID);
+                NSLog(@"update homeImage %ld --ok",(long)homeImage.imageID);
             } else {
                 NSLog(@"update homeImage fail");
             }
@@ -69,7 +69,7 @@
 - (NSArray *)selectHomeImagesWithHomeType:(ATOMHomepageViewType)homeType {
     __block NSMutableArray *muArray = [NSMutableArray array];
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
-        NSString* homeTypeStr = homeType == ATOMHomepageViewTypeHot?@"hot":@"   new";
+        NSString* homeTypeStr = homeType == ATOMHomepageViewTypeHot?@"hot":@"new";
         NSString *stmt = @"SELECT * FROM ATOMHomeImage where homePageType = ? ORDER BY uploadTime DESC LIMIT 10";
         NSArray *param =  @[homeTypeStr];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];

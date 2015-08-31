@@ -12,7 +12,7 @@
 #import "DDHotDetailVC.h"
 #import "ATOMCommentDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
-#import "ATOMShowCommentMessage.h"
+#import "DDMsgCommentModel.h"
 #import "DDCommentMsg.h"
 #import "DDCommentMsgVM.h"
 #import "ATOMHomeImage.h"
@@ -67,7 +67,7 @@
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@"comment" forKey:@"type"];
 
-    [ATOMShowCommentMessage getCommentMsg:param withBlock:^(NSMutableArray *commentMessageArray) {
+    [DDMsgCommentModel getCommentMsg:param withBlock:^(NSMutableArray *commentMessageArray) {
         for (DDCommentMsg *commentMessage in commentMessageArray) {
             DDCommentMsgVM *commentMessageViewModel = [DDCommentMsgVM new];
             [commentMessageViewModel setViewModelData:commentMessage];
@@ -91,7 +91,7 @@
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@"comment" forKey:@"type"];
-    [ATOMShowCommentMessage getCommentMsg:param withBlock:^(NSMutableArray *commentMessageArray) {
+    [DDMsgCommentModel getCommentMsg:param withBlock:^(NSMutableArray *commentMessageArray) {
         for (DDCommentMsg *commentMessage in commentMessageArray) {
             DDCommentMsgVM *commentMessageViewModel = [DDCommentMsgVM new];
             [commentMessageViewModel setViewModelData:commentMessage];

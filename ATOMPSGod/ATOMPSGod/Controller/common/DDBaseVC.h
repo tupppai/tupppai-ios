@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ATOMShare.h"
-#import "ATOMShareModel.h"
+#import "DDShareManager.h"
 typedef enum {
     ATOMNotifyTypeComment = 0,
     ATOMNotifyTypeReply,

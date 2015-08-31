@@ -25,9 +25,9 @@
     if (self) {
         _type = 1;
         _ID = 0;
-        _userID = [DDUserModel currentUser].uid;
-        _userName = [DDUserModel currentUser].username;
-        _avatarURL = [DDUserModel currentUser].avatar;
+        _userID = [DDUserManager currentUser].uid;
+        _userName = [DDUserManager currentUser].username;
+        _avatarURL = [DDUserManager currentUser].avatar;
         NSDateFormatter *df = [NSDateFormatter new];
         [df setDateFormat:@"MM月dd日 HH时mm分"];
         NSDate *publishDate = [NSDate date];

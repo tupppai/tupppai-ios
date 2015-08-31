@@ -7,7 +7,7 @@
 //
 
 #import "kfcButton.h"
-#import "ATOMShowHomepage.h"
+#import "DDHomePageManager.h"
 @interface kfcButton ()
 
 @property (nonatomic, strong) UIColor *currentColor;

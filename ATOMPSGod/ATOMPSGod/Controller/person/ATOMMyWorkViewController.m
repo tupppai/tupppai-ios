@@ -14,7 +14,7 @@
 #import "DDAskPageVM.h"
 #import "ATOMReplyViewModel.h"
 #import "PWRefreshFooterCollectionView.h"
-#import "DDAccountModel.h"
+#import "DDMyReplyManager.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMMyWorkViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource>
@@ -63,12 +63,11 @@ static int collumnNumber = 3;
     _currentPage = 1;
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-    [param setObject:@"hot" forKey:@"type"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
-    [param setObject:@"time" forKey:@"sort"];
-    [param setObject:@"desc" forKey:@"order"];
+//    [param setObject:@"time" forKey:@"sort"];
+//    [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
-    [DDAccountModel ShowMyReply:param withBlock:^(NSMutableArray *resultArray) {
+    [DDMyReplyManager getMyReply:param withBlock:^(NSMutableArray *resultArray) {
         for (ATOMHomeImage *homeImage in resultArray) {
             DDAskPageVM *homepageViewModel = [DDAskPageVM new];
             homepageViewModel.ID = homeImage.askID;
@@ -96,7 +95,7 @@ static int collumnNumber = 3;
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     
-    [DDAccountModel ShowMyReply:param withBlock:^(NSMutableArray *resultArray) {
+    [DDMyReplyManager getMyReply:param withBlock:^(NSMutableArray *resultArray) {
         for (ATOMHomeImage *homeImage in resultArray) {
             DDAskPageVM *homepageViewModel = [DDAskPageVM new];
             [homepageViewModel setViewModelData:homeImage];

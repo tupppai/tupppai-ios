@@ -8,7 +8,6 @@
 
 #import "DDAuthcodeVC.h"
 #import "ATOMInputVerifyCodeView.h"
-#import "DDAccountModel.h"
 #import "AppDelegate.h"
 #import "DDTabBarController.h"
 
@@ -55,8 +54,8 @@
 }
 
 - (void)updateAuthCode {
-    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:[DDUserModel currentUser].mobile, @"phone", nil];
-    [DDProfileService getAuthCode:param withBlock:^(NSString* authcode) {
+    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:[DDUserManager currentUser].mobile, @"phone", nil];
+    [DDService getAuthCode:param withBlock:^(NSString* authcode) {
         if (authcode) {
             self.verifyCode = authcode;
         } else {
@@ -68,8 +67,8 @@
 - (void)clickRightButtonItem{
     
     if ([_inputVerifyView.verifyCodeTextField.text isEqualToString:_verifyCode]) {
-        NSMutableDictionary *param = [[DDUserModel currentUser] dictionaryFromModel];
-        [DDAccountModel DDRegister:[param copy] withBlock:^(BOOL success) {
+        NSMutableDictionary *param = [[DDUserManager currentUser] dictionaryFromModel];
+        [DDUserManager DDRegister:[param copy] withBlock:^(BOOL success) {
             if (success) {
                 [Util ShowTSMessageSuccess:@"👼求PS大神欢迎你的加入❗️"];
                 [self.navigationController setViewControllers:nil];

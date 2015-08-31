@@ -15,11 +15,11 @@
 #import "DDAskPageVM.h"
 #import "DDHomeVC.h"
 #import "DDCommentHeaderView.h"
-#import "ATOMInviteModel.h"
+#import "DDInviteManager.h"
 #import "DDInviteCellVM.h"
-#import "DDProfileService.h"
+#import "DDService.h"
 #import "DDTabBarController.h"
-#import "ATOMShowConcern.h"
+#import "DDFollowManager.h"
 @interface DDInviteVC () <UITableViewDelegate, UITableViewDataSource,UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) ATOMInviteView *inviteView;
@@ -107,7 +107,7 @@
                                              type:SIAlertViewButtonTypeDefault
                                           handler:^(SIAlertView *alert) {
                                               NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(cell.viewModel.uid),@"uid", nil];
-                                              [DDProfileService follow:param withBlock:nil];
+                                              [DDService follow:param withBlock:nil];
                                               [cell toggleInviteButtonAppearance];
                                               [self tapInviteButton:cell.inviteButton];
                                           }];
@@ -122,7 +122,7 @@
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(3) forKey:@"size"];
-    [ATOMShowConcern GetFollow:param withBlock:^(NSMutableArray *recommendArray, NSMutableArray *mineArray, NSError *error) {
+    [DDFollowManager getFollow:param withBlock:^(NSMutableArray *recommendArray, NSMutableArray *mineArray) {
         _datasourceRecommendMaster = recommendArray;
         _datasourceRecommendFriends = mineArray;
         [_inviteView.inviteTableView reloadData];
@@ -147,13 +147,13 @@
 - (void)clickWXFriendCircleButton:(UIButton *)sender {
     NSInteger ID = [[_info objectForKey:@"ID"]integerValue];
     int type = [[_info objectForKey:@"type"]intValue];
-    [DDShareSDKModel postSocialShare:ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:type];
+    [DDShareSDKManager postSocialShare:ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:type];
 }
 
 - (void)clickWXFriendInviteButton:(UIButton *)sender {
     NSInteger ID = [[_info objectForKey:@"ID"]integerValue];
     int type = [[_info objectForKey:@"type"]intValue];
-    [DDShareSDKModel postSocialShare:ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:type];
+    [DDShareSDKManager postSocialShare:ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:type];
 }
 
 #pragma mark - UITableViewDelegate
@@ -220,7 +220,7 @@
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:@(button.tag) forKey:@"invite_uid"];
     [param setObject:@(askID) forKey:@"ask_id"];
-    [ATOMInviteModel invite:param];
+    [DDInviteManager invite:param];
 }
 //-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
 //    if([touch.view.superview isKindOfClass:[InviteCell class]]) {

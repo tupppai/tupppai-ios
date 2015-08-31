@@ -10,6 +10,6 @@
 
 @interface DDMsgReplyModel : NSObject
 
-- (NSURLSessionDataTask *)ShowReplyMessage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *replyMessageArray, NSError *error))block;
+//- (NSURLSessionDataTask *)ShowReplyMessage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *replyMessageArray, NSError *error))block;
 + (void)getReplyMsg:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *returnArray))block;
 @end

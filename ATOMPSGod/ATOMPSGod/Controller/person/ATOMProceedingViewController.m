@@ -14,10 +14,10 @@
 #import "ATOMHomeImage.h"
 #import "DDAskPageVM.h"
 #import "ATOMProceedingViewModel.h"
-#import "ATOMShowProceeding.h"
+#import "DDMyProceedingManager.h"
 #import "RefreshFooterTableView.h"
 
-#import "DDProfileService.h"
+#import "DDService.h"
 #import "DDCommentVC.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -116,7 +116,7 @@
             [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.deleteButton.frame, p)) {
             NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(cell.viewModel.ID),@"id", nil];
-            [DDProfileService deleteProceeding:param withBlock:^(BOOL success) {
+            [DDService deleteProceeding:param withBlock:^(BOOL success) {
                 if (success) {
                     [Hud success:@"已删除" inView:self.view];
                 }
@@ -248,8 +248,7 @@
     [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(10) forKey:@"size"];
-    ATOMShowProceeding *showProceeding = [ATOMShowProceeding new];
-    [showProceeding ShowProceeding:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
+    [DDMyProceedingManager getMyProceeding:param withBlock:^(NSMutableArray *resultArray) {
         if (resultArray.count) {
             [_dataSource removeAllObjects];
             [_homeImageDataSource removeAllObjects];
@@ -277,10 +276,7 @@
     [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
     [param setObject:@(timestamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    ATOMShowProceeding *showProceeding = [ATOMShowProceeding new];
-    ////[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-    [showProceeding ShowProceeding:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        ////[SVProgressHUD dismiss];
+    [DDMyProceedingManager getMyProceeding:param withBlock:^(NSMutableArray *resultArray) {
         for (ATOMHomeImage *homeImage in resultArray) {
             DDAskPageVM *homepageViewModel = [DDAskPageVM new];
             [homepageViewModel setViewModelData:homeImage];

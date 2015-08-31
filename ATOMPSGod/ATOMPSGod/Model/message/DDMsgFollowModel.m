@@ -13,7 +13,7 @@
 @implementation DDMsgFollowModel
 
 + (void)getFollowMsg:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *))block {
-    [DDProfileService ddGetMsg:param withBlock:^(id data) {
+    [DDService ddGetMsg:param withBlock:^(id data) {
         if (data) {
             NSArray *dataArray = data;
             NSMutableArray *concernMessageArray = [NSMutableArray array];

@@ -12,7 +12,7 @@
 #import "ATOMCommentDetailView.h"
 #import "ATOMOtherPersonViewController.h"
 #import "DDCommentHeaderView.h"
-#import "ATOMShowDetailOfComment.h"
+#import "DDCommentManager.h"
 #import "DDCommentVM.h"
 #import "ATOMComment.h"
 #import "CommentLikeButton.h"
@@ -71,7 +71,7 @@
     [param setObject:@(_type) forKey:@"type"];
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
-    ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
+    DDCommentManager *showDetailOfComment = [DDCommentManager new];
     [showDetailOfComment ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
         NSLog(@"param%@hotCommentArray%@RCommentArray%@",param,hotCommentArray,recentCommentArray);
         for (ATOMComment *comment in hotCommentArray) {
@@ -97,7 +97,7 @@
     [param setObject:@(_type) forKey:@"type"];
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
-    ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
+    DDCommentManager *showDetailOfComment = [DDCommentManager new];
     [showDetailOfComment ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
         for (ATOMComment *comment in recentCommentArray) {
             DDCommentVM *model = [DDCommentVM new];
@@ -165,7 +165,7 @@
     if (_atModel) {
         [param setObject:@(_atModel.ID) forKey:@"reply_to"];
     }
-    ATOMShowDetailOfComment *showDetailOfComment = [ATOMShowDetailOfComment new];
+    DDCommentManager *showDetailOfComment = [DDCommentManager new];
     [showDetailOfComment SendComment:param withBlock:^(NSInteger comment_id, NSError *error) {
         NSLog(@"comment id %ld ,error %@",(long)comment_id,error);
         model.ID = comment_id;

@@ -22,9 +22,9 @@
     self = [super init];
     if (self) {
         _imageID = 0;
-        _userID = [DDUserModel currentUser].uid;
-        _userName = [DDUserModel currentUser].username;
-        _avatarURL = [DDUserModel currentUser].avatar;
+        _userID = [DDUserManager currentUser].uid;
+        _userName = [DDUserManager currentUser].username;
+        _avatarURL = [DDUserManager currentUser].avatar;
         NSDateFormatter *df = [NSDateFormatter new];
         [df setDateFormat:@"yyyy年MM月dd日 HH时mm分"];
         NSDate *publishDate = [NSDate date];

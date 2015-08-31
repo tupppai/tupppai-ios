@@ -132,9 +132,9 @@
         _createProfileView.showSexLabel.text = _userProfileViewModel.gender;
         [_createProfileView.userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString: _userProfileViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
         _createProfileView.nicknameTextField.text = _userProfileViewModel.nickName;
-        [DDUserModel currentUser].avatar = _userProfileViewModel.avatarURL;
+        [DDUserManager currentUser].avatar = _userProfileViewModel.avatarURL;
         
-        switch ([DDUserModel currentUser].signUpType) {
+        switch ([DDUserManager currentUser].signUpType) {
                 //微信获取到的地区是名字，需要解析为ID
             case ATOMSignUpWechat:
                 _createProfileView.showAreaLabel.text = [NSString stringWithFormat:@"%@,%@",_userProfileViewModel.province,_userProfileViewModel.city];
@@ -143,12 +143,12 @@
                     if ([provinceName isEqualToString:_userProfileViewModel.province]) {
                         NSArray* cities = province[@"citys"];
                         NSString* provinceID = province[@"id"];
-                        [[DDUserModel  currentUser].region setObject:provinceID forKey:@"provinceID"];
+                        [[DDUserManager  currentUser].region setObject:provinceID forKey:@"provinceID"];
                         for (NSDictionary* city in cities) {
                             NSString* cityName = [city allValues][0];
                             if ([cityName isEqualToString:_userProfileViewModel.city]) {
                                 NSString* cityID = [city allKeys][0];
-                                [[DDUserModel  currentUser].region setObject:cityID forKey:@"cityID"];
+                                [[DDUserManager  currentUser].region setObject:cityID forKey:@"cityID"];
                             }
                         }
                     
@@ -162,12 +162,12 @@
                     if ([provinceID isEqualToString: _userProfileViewModel.province]) {
                         NSArray* cities = province[@"citys"];
                         NSString* provinceName = province[@"name"];
-                        [[DDUserModel  currentUser].region setObject:provinceID forKey:@"provinceID"];
+                        [[DDUserManager  currentUser].region setObject:provinceID forKey:@"provinceID"];
                         for (NSDictionary* city in cities) {
                             NSString* cityID = [city allKeys][0];
                             if ([cityID isEqualToString:_userProfileViewModel.city]) {
                                 NSString* cityName = [city allValues][0];
-                                [[DDUserModel currentUser].region setObject:cityID forKey:@"cityID"];
+                                [[DDUserManager currentUser].region setObject:cityID forKey:@"cityID"];
                                 _createProfileView.showAreaLabel.text = [NSString stringWithFormat:@"%@,%@",provinceName,cityName];
                             }
                         }
@@ -196,8 +196,8 @@
         [Hud text:@"请选择性别"];
         return ;
     }
-    [DDUserModel currentUser].sex = [_createProfileView tagOfCurrentSex];
-    [DDUserModel currentUser].username = str;
+    [DDUserManager currentUser].sex = [_createProfileView tagOfCurrentSex];
+    [DDUserManager currentUser].username = str;
     DDPhoneRegisterVC *mrvc = [[DDPhoneRegisterVC alloc] init];
     [self.navigationController pushViewController:mrvc animated:YES];
 }
@@ -266,8 +266,8 @@
             NSLog(@"%@", error);
             return ;
         }
-        [DDUserModel currentUser].avatar = imageInfomation.imageURL;
-        [DDUserModel currentUser].avatarID = imageInfomation.imageID;
+        [DDUserManager currentUser].avatar = imageInfomation.imageURL;
+        [DDUserManager currentUser].avatarID = imageInfomation.imageID;
     }];
 }
 #pragma mark - UITextFieldDelegate
@@ -363,12 +363,12 @@
     NSString* cityName = @"";
     if(cities.count > 0) {
          cityName = [cities[_selectedRowComponent2] allValues][0];
-        [[DDUserModel currentUser].region setValue:[cities[_selectedRowComponent2] allKeys][0] forKey:@"cityID"];
+        [[DDUserManager currentUser].region setValue:[cities[_selectedRowComponent2] allKeys][0] forKey:@"cityID"];
     }
     _createProfileView.showAreaLabel.text = [NSString stringWithFormat:@"%@,%@",provinceName,cityName];
-    [[DDUserModel currentUser].region setValue:cityName forKey:@"cityName"];
-    [[DDUserModel currentUser].region setValue:provinceName forKey:@"provinceName"];
-    [[DDUserModel currentUser].region setValue:_provinces[_selectedRowComponent1][@"id"] forKey:@"provinceID"];
+    [[DDUserManager currentUser].region setValue:cityName forKey:@"cityName"];
+    [[DDUserManager currentUser].region setValue:provinceName forKey:@"provinceName"];
+    [[DDUserManager currentUser].region setValue:_provinces[_selectedRowComponent1][@"id"] forKey:@"provinceID"];
 }
 //load region.csv before doing anything
 -(void)loadRegionResource {

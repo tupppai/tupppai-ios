@@ -33,7 +33,6 @@
     return [[DDSessionManager shareHTTPSessionManager] POST:@"image/upload" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         [formData appendPartWithFileData:data name:@"images" fileName:@"ATOMIMAGE" mimeType:@"image/png"];
     } success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"UploadImage responseObject %@",responseObject);
         ATOMImage *imageInfomation = [MTLJSONAdapter modelOfClass:[ATOMImage class] fromJSONDictionary:responseObject error:NULL];
         if (block) {
             block(imageInfomation, nil);

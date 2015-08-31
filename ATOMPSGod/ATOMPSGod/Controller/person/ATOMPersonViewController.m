@@ -95,7 +95,7 @@
     [_personView.fansLabel addGestureRecognizer:tapFansGesture];
     _personView.personTableView.delegate = self;
     _personView.personTableView.dataSource = self;
-    self.navigationItem.title = [DDUserModel currentUser].username;
+    self.navigationItem.title = [DDUserManager currentUser].username;
 }
 
 #pragma mark - Gesture Event
@@ -281,7 +281,7 @@
             NSLog(@"%@", error);
             return ;
         }
-        [DDUserModel currentUser].avatar = imageInformation.imageURL;
+        [DDUserManager currentUser].avatar = imageInformation.imageURL;
     }];
 }
 

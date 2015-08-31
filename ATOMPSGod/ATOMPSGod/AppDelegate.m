@@ -74,7 +74,7 @@
 //    self.baseNav = [[ATOMLoginCustomNavigationController alloc] initWithRootViewController:vc];
 //    self.window.rootViewController = self.baseNav;
 //    [self.window makeKeyAndVisible];
-    [[DDUserModel currentUser]fetchCurrentUserInDB:^(BOOL hasCurrentUser) {
+    [[DDUserManager currentUser]fetchCurrentUserInDB:^(BOOL hasCurrentUser) {
         if (hasCurrentUser) {
             self.window.rootViewController = self.mainTabBarController;
         } else {
@@ -223,7 +223,7 @@
                             ^{
                                 [self updateBadgeNumberForKey:@"NotifyType0" toAdd:badgeNumber];
                             },
-                        @"reply":
+                        @"post_reply":
                             ^{
                                 [self updateBadgeNumberForKey:@"NotifyType1" toAdd:badgeNumber];
                             },
@@ -240,7 +240,8 @@
                                 [self updateBadgeNumberForKey:@"NotifyType4" toAdd:badgeNumber];
                             }
                         };
-    ((CaseBlock)dic[notifyType])();
+    
+    ((CaseBlock)[dic objectForKey:notifyType])();
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"ReceiveRemoteNotification" object:nil]];
 
 }

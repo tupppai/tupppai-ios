@@ -10,11 +10,10 @@
 #import "ATOMLoginView.h"
 #import "DDTabBarController.h"
 #import "AppDelegate.h"
-#import "DDAccountModel.h"
 #import "ATOMUser.h"
 #import "ATOMUserProfileViewModel.h"
 #import "DDCreateProfileVC.h"
-#import "DDShareSDKModel.h"
+#import "DDShareSDKManager.h"
 #import "DDInputPhoneFPVC.h"
 @interface DDLoginVC ()
 @property (nonatomic, strong) ATOMLoginView *loginView;
@@ -47,7 +46,7 @@
         [Util ShowTSMessageWarn:@"密码格式有误"];
     } else {
         NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:_loginView.mobileTextField.text, @"phone", _loginView.passwordTextField.text, @"password",nil];
-        [DDAccountModel DDLogin:param withBlock:^(BOOL succeed) {
+        [DDUserManager DDLogin:param withBlock:^(BOOL succeed) {
             if (succeed) {
                 [self.navigationController setViewControllers:nil];
                 [AppDelegate APP].mainTabBarController = nil;
@@ -58,20 +57,20 @@
 }
 
 - (void)clickweiboLoginButton:(UIButton *)sender {
-    [DDShareSDKModel authorize:SSDKPlatformTypeSinaWeibo withBlock:^(NSDictionary *sourceData) {
+    [DDShareSDKManager authorize:SSDKPlatformTypeSinaWeibo withBlock:^(NSDictionary *sourceData) {
         if (sourceData) {
             NSString* openID = sourceData[@"idstr"];
             NSMutableDictionary* param = [NSMutableDictionary new];
             [param setObject:openID forKey:@"openid"];
-            [DDAccountModel DD3PartyAuth:param AndType:@"weibo" withBlock:^(bool isRegistered, NSString *info) {
+            [DDUserManager DD3PartyAuth:param AndType:@"weibo" withBlock:^(bool isRegistered, NSString *info) {
                 if (isRegistered) {
                     [Hud activity:@"" inView:self.view];
                     [self.navigationController setViewControllers:nil];
                     [AppDelegate APP].mainTabBarController = nil;
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
                 } else {
-                    [DDUserModel currentUser].signUpType = ATOMSignUpWeibo;
-                    [DDUserModel currentUser].sourceData = sourceData;
+                    [DDUserManager currentUser].signUpType = ATOMSignUpWeibo;
+                    [DDUserManager currentUser].sourceData = sourceData;
                     ATOMUserProfileViewModel* ipvm = [ATOMUserProfileViewModel new];
                     ipvm.nickName = sourceData[@"name"];
                     ipvm.province = sourceData[@"province"];
@@ -96,20 +95,20 @@
 
 }
 - (void)clickwechatLoginButton:(UIButton *)sender {
-    [DDShareSDKModel authorize:SSDKPlatformTypeWechat withBlock:^(NSDictionary *sourceData) {
+    [DDShareSDKManager authorize:SSDKPlatformTypeWechat withBlock:^(NSDictionary *sourceData) {
         if (sourceData) {
             NSString* openid = sourceData[@"openid"];
             NSMutableDictionary* param = [NSMutableDictionary new];
             [param setObject:openid forKey:@"openid"];
-            [DDAccountModel DD3PartyAuth:param AndType:@"weixin" withBlock:^(bool isRegistered, NSString *info) {
+            [DDUserManager DD3PartyAuth:param AndType:@"weixin" withBlock:^(bool isRegistered, NSString *info) {
                 if (isRegistered) {
                     [Hud activity:@"" inView:self.view];
                     [self.navigationController setViewControllers:nil];
                     [AppDelegate APP].mainTabBarController = nil;
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
                 } else {
-                    [DDUserModel currentUser].signUpType = ATOMSignUpWechat;
-                    [DDUserModel currentUser].sourceData = sourceData;
+                    [DDUserManager currentUser].signUpType = ATOMSignUpWechat;
+                    [DDUserManager currentUser].sourceData = sourceData;
                     ATOMUserProfileViewModel* ipvm = [ATOMUserProfileViewModel new];
                     ipvm.nickName = sourceData[@"nickname"];
                     ipvm.province = sourceData[@"province"];

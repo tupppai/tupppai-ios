@@ -26,7 +26,7 @@
 #import "KeyboardManager.h"
 #import "AFNetworking.h"
 #import "Mantle.h"
-#import "DDUserModel.h"
+#import "DDUserManager.h"
 #import "FMDB.h"
 #import "MTLFMDBAdapter.h"
 #import "MJRefresh.h"
@@ -42,9 +42,9 @@
 #import "KShareManager.h"
 #import "UIColor+PSGod.h"
 #import "UIScrollView+EmptyDataSet.h"
-#import "DDShareSDKModel.h"
+#import "DDShareSDKManager.h"
 
-#import "DDProfileService.h"
+#import "DDService.h"
 
 #endif
 

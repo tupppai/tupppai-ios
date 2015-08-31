@@ -23,13 +23,13 @@
 #import "AppDelegate.h"
 #import "JGActionSheet.h"
 #import "ATOMReportModel.h"
-#import "ATOMCollectModel.h"
+#import "DDCollectManager.h"
 #import "DDInviteVC.h"
 #import "DDCropImageVC.h"
 #import "DDBaseService.h"
 #import "DDCommentVC.h"
 #import "UITableView+FDTemplateLayoutCell.h"
-#import "DDProfileService.h"
+#import "DDService.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface DDFollowVC () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
@@ -125,7 +125,7 @@ static NSString *CellIdentifier = @"MyAttentionCell";
                 [cell.likeButton toggleLike];
                 [_dataSource[_selectedIndexPath.row] toggleLike];
             } else if (CGRectContainsPoint(cell.wechatButton.frame, p)) {
-                [DDShareSDKModel postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:vm.type];
+                [DDShareSDKManager postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:vm.type];
             } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
                 DDCommentVC* mvc = [DDCommentVC new];
                 DDCommentPageVM *vm = [DDCommentPageVM new];
@@ -184,7 +184,7 @@ static NSString *CellIdentifier = @"MyAttentionCell";
     [param setObject:@"ask" forKey:@"type"];
     [param setObject:@(vm.askID) forKey:@"target"];
     
-    [DDProfileService signProceeding:param withBlock:^(NSString *imageUrl) {
+    [DDService signProceeding:param withBlock:^(NSString *imageUrl) {
         if (imageUrl != nil) {
             //            [DDBaseService downloadImage:imageUrl withBlock:^(UIImage *image) {
             kfcFollowCell* cell = (kfcFollowCell *)[_tableView cellForRowAtIndexPath:_selectedIndexPath];
@@ -352,15 +352,15 @@ static NSString *CellIdentifier = @"MyAttentionCell";
 #pragma mark - ATOMShareFunctionViewDelegate
 -(void)tapWechatFriends {
     kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];
-    [DDShareSDKModel postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:vm.type];
+    [DDShareSDKManager postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:vm.type];
 }
 -(void)tapWechatMoment {
     kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];
-    [DDShareSDKModel postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:vm.type];
+    [DDShareSDKManager postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:vm.type];
 }
 -(void)tapSinaWeibo {
     kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];
-    [DDShareSDKModel postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:vm.type];
+    [DDShareSDKManager postSocialShare:vm.imageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:vm.type];
 }
 -(void)tapInvite {
     kfcFollowVM* vm = _dataSource[_selectedIndexPath.row];
@@ -379,7 +379,7 @@ static NSString *CellIdentifier = @"MyAttentionCell";
         //取消收藏
         [param setObject:@(0) forKey:@"status"];
     }
-    [ATOMCollectModel toggleCollect:param withPageType:vm.type withID:vm.imageID withBlock:^(NSError *error) {
+    [DDCollectManager toggleCollect:param withPageType:vm.type withID:vm.imageID withBlock:^(NSError *error) {
         if (!error) {
             vm.collected = self.shareFunctionView.collectButton.selected;
         } else {

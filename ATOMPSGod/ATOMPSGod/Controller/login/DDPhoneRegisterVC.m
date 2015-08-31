@@ -42,10 +42,10 @@
 - (void)clickRightButtonItem {
     if ([self checkInputMessageSuccess]) {
         NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:_mobileRegisterView.mobileTextField.text, @"phone", nil];
-        [DDProfileService getAuthCode:param withBlock:^(NSString* authcode) {
+        [DDService getAuthCode:param withBlock:^(NSString* authcode) {
             if (authcode) {
-                [DDUserModel currentUser].mobile = _mobileRegisterView.mobileTextField.text;
-                [DDUserModel currentUser].password = [_mobileRegisterView.passwordTextField.text sha1];
+                [DDUserManager currentUser].mobile = _mobileRegisterView.mobileTextField.text;
+                [DDUserManager currentUser].password = [_mobileRegisterView.passwordTextField.text sha1];
                 DDAuthcodeVC *ivcvc = [DDAuthcodeVC new];
                 ivcvc.verifyCode = authcode;
                 [self.navigationController pushViewController:ivcvc animated:YES];

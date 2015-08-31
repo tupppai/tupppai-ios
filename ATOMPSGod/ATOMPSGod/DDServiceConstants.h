@@ -16,7 +16,14 @@ extern NSString *URL_PFGetPushSetting;
 extern NSString *URL_PFsetPushSetting;
 extern NSString *URL_PFFollow;
 extern NSString *URL_PFUpdatePasswordURL;
-extern NSString *URL_ACGetMyReply;
+extern NSString *URL_PFGetMyReply;
+extern NSString *URL_PFGetMyAsk;
+extern NSString * URL_PFGetMyProceeding;
+extern NSString * URL_PFGetOtherUserInfo;
+extern NSString * URL_PFGetMyCollection;
+extern NSString * URL_PFGetMyFans;
+extern NSString * URL_PFGetMyFollow;
+
 
 #pragma mark - Account
 extern NSString * URL_ACUpdateToken;

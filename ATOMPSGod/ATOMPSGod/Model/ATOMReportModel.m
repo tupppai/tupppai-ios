@@ -19,7 +19,6 @@
                 block(nil);
             }
         } else {
-            
             if (block) {
                 block(nil);
             }

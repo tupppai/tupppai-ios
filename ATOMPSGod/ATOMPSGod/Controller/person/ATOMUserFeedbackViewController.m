@@ -49,7 +49,7 @@
         [param setObject:_userFeedbackView.feedbackTextView.text forKey:@"content"];
         [param setObject:_userFeedbackView.contactTextField.text forKey:@"contact"];
         
-        [DDProfileService postFeedBack:param withBlock:^(BOOL success) {
+        [DDService postFeedBack:param withBlock:^(BOOL success) {
             if (!success) {
             } else {
                 [Hud success:@"感谢你的反馈😊"];

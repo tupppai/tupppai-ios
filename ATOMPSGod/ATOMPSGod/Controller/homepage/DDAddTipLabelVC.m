@@ -12,7 +12,7 @@
 #import "ATOMInputTipLabelTextView.h"
 #import "DDInviteVC.h"
 #import "DDShareVC.h"
-#import "ATOMSubmitImageWithLabel.h"
+#import "DDTipLabelManager.h"
 #import "ATOMUploadImage.h"
 #import "ATOMImage.h"
 #import "ATOMImageTipLabel.h"
@@ -82,7 +82,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self commitInit];
+    [self commonInit];
     NSString *pushTypeStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"AskOrReply"];
     if ([pushTypeStr isEqualToString:@"Reply"]) {
         [self uploadReplyImg];
@@ -115,7 +115,7 @@
     }
 }
 
-- (void)commitInit {
+- (void)commonInit {
     self.title = @"填写标签内容";
     UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
     self.navigationItem.rightBarButtonItem = rightButtonItem;
@@ -275,8 +275,8 @@
 
 - (void)uploadReplyLabel:(NSInteger)imageID {
     WS(ws);
-    ATOMSubmitImageWithLabel *submitWorkWithLabel = [ATOMSubmitImageWithLabel new];
-    [submitWorkWithLabel SubmitWorkWithLabel:[ws getParamWithImageID:imageID AndAskID:ws.askPageViewModel.ID] withBlock:^(NSMutableArray *labelArray, NSError *error) {
+    DDTipLabelManager *submitWorkWithLabel = [DDTipLabelManager new];
+    [submitWorkWithLabel uploadTipLabelForReply:[ws getParamWithImageID:imageID AndAskID:ws.askPageViewModel.ID] withBlock:^(NSMutableArray *labelArray, NSError *error) {
         [Hud dismiss:self.view];
         if (error) {
             self.navigationItem.rightBarButtonItem.enabled = YES;
@@ -339,8 +339,8 @@
 }
 - (void)uploadTipLabel:(NSInteger)imageID {
     WS(ws);
-    ATOMSubmitImageWithLabel *submitImageWithLabel = [ATOMSubmitImageWithLabel new];
-    [submitImageWithLabel SubmitImageWithLabel:[ws getParamWithImageID:imageID AndAskID:-1] withBlock:^(NSMutableArray *labelArray, NSInteger newImageID, NSError *error) {
+    DDTipLabelManager *submitImageWithLabel = [DDTipLabelManager new];
+    [submitImageWithLabel uploadTipLabelForAsk:[ws getParamWithImageID:imageID AndAskID:-1] withBlock:^(NSMutableArray *labelArray, NSInteger newImageID, NSError *error) {
         [Hud dismiss:self.view];
         if (error) {
             self.navigationItem.rightBarButtonItem.enabled = YES;

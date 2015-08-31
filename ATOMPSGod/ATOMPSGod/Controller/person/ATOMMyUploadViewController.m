@@ -14,7 +14,8 @@
 #import "DDAskPageVM.h"
 #import "ATOMAskViewModel.h"
 #import "PWRefreshFooterCollectionView.h"
-#import "ATOMShowMyAsk.h"
+#import "DDMyAskManager.h"
+#import "DDMyReplyManager.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMMyUploadViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource>
@@ -65,8 +66,7 @@ static int collumnNumber = 3;
     [param setObject:@"time" forKey:@"sort"];
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
-    ATOMShowMyAsk *showMyAsk = [ATOMShowMyAsk new];
-    [showMyAsk ShowMyAsk:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
+    [DDMyAskManager getMyAsk:param withBlock:^(NSMutableArray *resultArray) {
         for (ATOMHomeImage *homeImage in resultArray) {
             DDAskPageVM *homepageViewModel = [DDAskPageVM new];
             [homepageViewModel setViewModelData:homeImage];
@@ -92,8 +92,8 @@ static int collumnNumber = 3;
     [param setObject:@"time" forKey:@"sort"];
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
-    ATOMShowMyAsk *showMyAsk = [ATOMShowMyAsk new];
-    [showMyAsk ShowMyAsk:param withBlock:^(NSMutableArray *resultArray, NSError *error) {        for (ATOMHomeImage *homeImage in resultArray) {
+    [DDMyAskManager getMyAsk:param withBlock:^(NSMutableArray *resultArray) {
+        for (ATOMHomeImage *homeImage in resultArray) {
             DDAskPageVM *homepageViewModel = [DDAskPageVM new];
             [homepageViewModel setViewModelData:homeImage];
             ATOMAskViewModel *askViewModel = [ATOMAskViewModel new];

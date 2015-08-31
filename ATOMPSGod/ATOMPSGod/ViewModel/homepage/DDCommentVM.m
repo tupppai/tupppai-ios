@@ -9,7 +9,7 @@
 #import "DDCommentVM.h"
 #import "ATOMComment.h"
 #import "DDCommentReplyVM.h"
-#import "ATOMShowDetailOfComment.h"
+#import "DDCommentManager.h"
 @implementation DDCommentVM
 
 - (instancetype)init {
@@ -50,10 +50,10 @@
 - (void)setDataWithAtModel:(DDCommentVM *)viewModel andContent:(NSString *)text{
     _originText = viewModel.originText;
     _replyArray = viewModel.replyArray;
-    _uid = [DDUserModel currentUser].uid;
-    _username = [DDUserModel currentUser].username;
+    _uid = [DDUserManager currentUser].uid;
+    _username = [DDUserManager currentUser].username;
     _likeNumber = @"0";
-    _avatar = [DDUserModel currentUser].avatar;
+    _avatar = [DDUserManager currentUser].avatar;
     if (viewModel) {
         _text = [NSString stringWithFormat:@"%@//@%@:%@", text, viewModel.username, viewModel.text];
     } else {
@@ -70,7 +70,7 @@
     _liked = !_liked;
     [param setValue:@(status) forKey:@"status"];
     
-    ATOMShowDetailOfComment * showCommentDetail = [ATOMShowDetailOfComment new];
+    DDCommentManager * showCommentDetail = [DDCommentManager new];
     [showCommentDetail toggleLike:param withID:self.ID withBlock:^(NSError *error) {
         if (!error) {
             NSInteger number = [_likeNumber integerValue]+one;

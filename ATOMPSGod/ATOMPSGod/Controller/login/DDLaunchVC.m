@@ -10,10 +10,9 @@
 #import "ATOMLaunchView.h"
 #import "DDCreateProfileVC.h"
 #import "DDLoginVC.h"
-#import "DDAccountModel.h"
 #import "AppDelegate.h"
 #import "DDTabBarController.h"
-#import "DDShareSDKModel.h"
+#import "DDShareSDKManager.h"
 #import "EAIntroView.h"
 @interface DDLaunchVC ()
 
@@ -43,20 +42,20 @@
 }
 
 - (void)clickWXRegisterButton:(UIButton *)sender {
-    [DDShareSDKModel authorize:SSDKPlatformTypeWechat withBlock:^(NSDictionary *sourceData) {
+    [DDShareSDKManager authorize:SSDKPlatformTypeWechat withBlock:^(NSDictionary *sourceData) {
         if (sourceData) {
             NSString* openid = sourceData[@"openid"];
             NSMutableDictionary* param = [NSMutableDictionary new];
             [param setObject:openid forKey:@"openid"];
             
-            [DDAccountModel DD3PartyAuth:param AndType:@"weixin" withBlock:^(bool isRegistered, NSString *info) {
+            [DDUserManager DD3PartyAuth:param AndType:@"weixin" withBlock:^(bool isRegistered, NSString *info) {
                 if (isRegistered) {
                     [self.navigationController setViewControllers:nil];
                     [AppDelegate APP].mainTabBarController = nil;
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
                 } else  {
-                    [DDUserModel currentUser].signUpType = ATOMSignUpWechat;
-                    [DDUserModel currentUser].sourceData = sourceData;
+                    [DDUserManager currentUser].signUpType = ATOMSignUpWechat;
+                    [DDUserManager currentUser].sourceData = sourceData;
                     ATOMUserProfileViewModel* ipvm = [ATOMUserProfileViewModel new];
                     ipvm.nickName = sourceData[@"nickname"];
                     ipvm.province = sourceData[@"province"];
@@ -82,7 +81,7 @@
 
 - (void)clickOtherRegisterButton:(UIButton *)sender {
 
-    [DDUserModel currentUser].signUpType = ATOMSignUpMobile;
+    [DDUserManager currentUser].signUpType = ATOMSignUpMobile;
     
     DDCreateProfileVC *cpvc = [DDCreateProfileVC new];
     [self.navigationController pushViewController:cpvc animated:YES];
