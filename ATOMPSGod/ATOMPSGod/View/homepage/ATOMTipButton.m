@@ -7,6 +7,8 @@
 //
 
 #import "ATOMTipButton.h"
+#import "DDTipLabelVM.h"
+#import "DDAskPageVM.h"
 
 @interface ATOMTipButton ()
 
@@ -37,6 +39,9 @@
     return self;
 }
 
+- (void)config:(DDAskPageVM*)askVM andVM:(DDTipLabelVM*)vm {
+    
+}
 - (NSDictionary *)attributeDic {
     if (_attributeDic == nil) {
         _attributeDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.f], NSFontAttributeName, [UIColor whiteColor], NSForegroundColorAttributeName, nil];
@@ -49,8 +54,6 @@
     [color set];
     UIBezierPath * path = [UIBezierPath bezierPath];
     
-//    UIImage *tagImage = [UIImage imageNamed:@"tag_point"];
-//    CGPoint imageOriginPoint;
     CGPoint centerControlPoint;
     CGPoint topLeftControlPoint;
     CGPoint topRightControlPoint;
@@ -60,17 +63,7 @@
     static int INTERVAL2 = 2;
     static int INTERVAL5 = 5;
     
-    if (_tipButtonType == ATOMLeftTipType) {
-        
-//        imageOriginPoint = CGPointMake(0, 7.5);
-//        [tagImage drawInRect:CGRectMake(imageOriginPoint.x, imageOriginPoint.y, 15, 15)];
-        
-//        [path moveToPoint:CGPointMake(16, 30)];
-//        [path addCurveToPoint:CGPointMake(26, 0) controlPoint1:CGPointMake(26, 28) controlPoint2:CGPointMake(21, 0)];
-//        [path addLineToPoint:CGPointMake(CGRectGetMaxX(rect) - 15, 0)];
-//        [path addArcWithCenter:CGPointMake(CGRectGetMaxX(rect) - 15, 15) radius:15 startAngle:-M_PI_2 endAngle:M_PI_2 clockwise:YES];
-//        [path closePath];
-        
+    if (_type == ATOMTipButtonTypeLeft) {        
         centerControlPoint = CGPointMake(16, CGRectGetMidY(rect));
         topLeftControlPoint = CGPointMake(30, 0);
         topRightControlPoint = CGPointMake(CGRectGetMaxX(rect), 0);
@@ -143,9 +136,9 @@
     [self setNeedsDisplay];
 }
 
-- (void)setTipButtonType:(ATOMTipButtonType)tipButtonType {
-    _tipButtonType = tipButtonType;
-    if (tipButtonType == ATOMLeftTipType) {
+- (void)setType:(ATOMTipButtonType)tipButtonType {
+    _type = tipButtonType;
+    if (tipButtonType == ATOMTipButtonTypeLeft) {
         _tagImageView.frame = CGRectMake(0, 7.5, 15, 15);
     } else {
         _tagImageView.frame = CGRectMake(CGRectGetWidth(self.frame) - 15, 7.5, 15, 15);
@@ -186,18 +179,17 @@
 - (void)changeTipLabelDirection {
     CGRect newFrame;
     ATOMTipButtonType newTipButtonType;
-    if (_tipButtonType == ATOMLeftTipType) {
+    if (_type == ATOMTipButtonTypeLeft) {
         newFrame = CGRectMake(CGOriginX(self.frame) - CGWidth(self.frame) + 15, CGOriginY(self.frame), CGWidth(self.frame), CGHeight(self.frame));
-        newTipButtonType = ATOMRightTipType;
+        newTipButtonType = ATOMTipButtonTypeRight;
     } else {
         newFrame = CGRectMake(CGOriginX(self.frame) + CGWidth(self.frame) - 15, CGOriginY(self.frame), CGWidth(self.frame), CGHeight(self.frame));
-        newTipButtonType = ATOMLeftTipType;
+        newTipButtonType = ATOMTipButtonTypeLeft;
     }
     if ([self isOverBounds:newFrame]) {
-        
     } else {
         self.frame = newFrame;
-        self.tipButtonType = newTipButtonType;
+        self.type = newTipButtonType;
     }
 }
 

@@ -17,7 +17,6 @@
 @interface DDHotDetailManager ()
 @property (nonatomic, strong) ATOMDetailImageDAO *detailImageDAO;
 @property (nonatomic, strong) ATOMCommentDAO *commentDAO;
-
 @end
 
 @implementation DDHotDetailManager
@@ -46,7 +45,6 @@
                 ATOMDetailImage *detailImage = [MTLJSONAdapter modelOfClass:[ATOMDetailImage class] fromJSONDictionary:imageDataArray[i] error:NULL];
                 detailImage.imageID = imageID;
                 detailImage.clickTime = [clickTime timeIntervalSince1970];
-                
                 detailImage.tipLabelArray = [NSMutableArray array];
                 NSArray *labelDataArray = [imageDataArray[i] objectForKey:@"labels"];
                 if (labelDataArray.count) {

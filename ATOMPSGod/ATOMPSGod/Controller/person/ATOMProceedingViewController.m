@@ -30,7 +30,7 @@
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *homeImageDataSource;
 @property (nonatomic, assign) NSInteger currentPage;
-@property (nonatomic, assign) NSIndexPath* selectedIndexPath;
+@property (nonatomic, strong) NSIndexPath* selectedIndexPath;
 
 @property (nonatomic, assign) BOOL canRefreshFooter;
 

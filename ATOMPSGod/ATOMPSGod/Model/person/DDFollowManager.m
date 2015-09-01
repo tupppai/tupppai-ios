@@ -11,7 +11,7 @@
 
 @implementation DDFollowManager
 
-+ (void )getFollow:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *recommendArray, NSMutableArray *myFollowArray))block {
++ (void)getFollow:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *recommendArray, NSMutableArray *myFollowArray))block {
     [DDService ddGetMyFollow:param withBlock:^(NSArray *recommendArray, NSArray *myFollowArray) {
         NSMutableArray *retRecommend = [NSMutableArray array];
         NSMutableArray *retMine = [NSMutableArray array];
@@ -23,7 +23,6 @@
             DDFollow *concern = [MTLJSONAdapter modelOfClass:[DDFollow class] fromJSONDictionary:myFollowArray[i] error:NULL];
             [retMine addObject:concern];
         }
-        
         if (block) {
             block(retRecommend, retMine);
         }

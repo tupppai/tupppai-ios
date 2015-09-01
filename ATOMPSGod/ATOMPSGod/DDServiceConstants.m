@@ -33,10 +33,13 @@ NSString * URL_ACRegister = @"account/register";
 NSString * URL_AC3PaAuth = @"auth/";
 
 #pragma mark - Unknown
-NSString * URL_UKSave = @"feedback/save";
+NSString * URL_UKSaveFeedback = @"feedback/save";
 NSString * URL_UKGetMyInfo = @"view/info";
 NSString * URL_UKGetMsg = @"message/list";
+NSString * URL_UKSaveAsk = @"ask/save";
+NSString * URL_UKSaveReply = @"reply/save";
 
+//@"ask/save"
 //NSString * URL_UKGetReplyMsg = @"view/info";
 //NSString * URL_UKGetFollowMsg = @"view/info";
 //NSString * URL_UKGetInviteMsg = @"view/info";

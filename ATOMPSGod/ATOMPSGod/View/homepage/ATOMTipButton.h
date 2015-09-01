@@ -9,13 +9,13 @@
 #import <UIKit/UIKit.h>
 
 typedef enum {
-    ATOMLeftTipType = 0,
-    ATOMRightTipType
+    ATOMTipButtonTypeLeft = 0,
+    ATOMTipButtonTypeRight
 } ATOMTipButtonType;
 
 @interface ATOMTipButton : UIButton
 
-@property (nonatomic, assign) ATOMTipButtonType tipButtonType;
+@property (nonatomic, assign) ATOMTipButtonType type;
 @property (nonatomic, strong) NSString *buttonText;
 
 - (void)constrainTipLabelToImageView;

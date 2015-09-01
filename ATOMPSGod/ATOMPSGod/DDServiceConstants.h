@@ -34,8 +34,11 @@ extern NSString * URL_ACRegister;
 extern NSString * URL_AC3PaAuth;
 
 #pragma mark - Unknown
-extern NSString * URL_UKSave;
+extern NSString * URL_UKSaveFeedback;
 extern NSString * URL_UKGetMyInfo;
 extern NSString * URL_UKGetMsg;
+extern NSString * URL_UKSaveAsk;
+extern NSString * URL_UKSaveReply;
+
 
 @end

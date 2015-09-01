@@ -147,13 +147,30 @@
 #pragma mark - Unknown
 
 + (void) postFeedBack :(NSDictionary*)param withBlock:(void (^)(BOOL success))block {
-    [[self class]POST:param withUrl:URL_UKSave withBlock:^(id responseObject) {
+    [[self class]POST:param withUrl:URL_UKSaveFeedback withBlock:^(id responseObject) {
         if (responseObject) {
             if (block) {block(YES);}
         } 
     }];
 }
 
++ (void)  ddSaveAsk :(NSDictionary*)param withBlock:(void (^)(NSInteger newImageID))block {
+    [[self class]POST:param withUrl:URL_UKSaveAsk withBlock:^(id responseObject) {
+        if (responseObject) {
+            NSInteger newImageID = [[[ responseObject objectForKey:@"data"]objectForKey:@"ask_id"] integerValue];
+            if (block) {block(newImageID);}
+        }
+    }];
+}
++ (void)  ddSaveReply :(NSDictionary*)param withBlock:(void (^)(BOOL success))block {
+    [[self class]POST:param withUrl:URL_UKSaveReply withBlock:^(id responseObject) {
+        if (responseObject) {
+            if (block) {block(YES);}
+        } else {
+            if (block) {block(NO);}
+        }
+    }];
+}
 + (void)ddGetMyInfo:(NSDictionary*)param withBlock:(void (^)(NSDictionary* data))block {
     [[self class]GET:param withUrl:URL_UKGetMyInfo withBlock:^(id responseObject) {
         if (responseObject) {
@@ -209,4 +226,9 @@
         }
     }];
 }
+
+
+//return [[DDSessionManager shareHTTPSessionManager] POST:@"ask/save" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+//    NSInteger newImageID = [[ responseObject objectForKey:@"data"][@"ask_id"] integerValue];
+
 @end

@@ -140,12 +140,12 @@
         }
     }
     for (DDTipLabelVM *labelViewModel in vm.labelArray) {
-        CGRect labelFrame = [labelViewModel imageTipLabelFrameByImageSize:CGSizeMake(vm.width, vm.height)];
+        CGRect labelFrame = [labelViewModel getFrame:CGSizeMake(vm.width, vm.height)];
         ATOMTipButton * button = [[ATOMTipButton alloc] initWithFrame:labelFrame];
         if (labelViewModel.labelDirection == 0) {
-            button.tipButtonType = ATOMLeftTipType;
+            button.type = ATOMTipButtonTypeLeft;
         } else {
-            button.tipButtonType = ATOMRightTipType;
+            button.type = ATOMTipButtonTypeRight;
         }
         button.buttonText = labelViewModel.content;
         [_imageViewMain addSubview:button];
@@ -370,9 +370,9 @@
 //        CGRect labelFrame = [labelViewModel imageTipLabelFrameByImageSize:CGSizeMake(_pageDetailViewModel.width, _pageDetailViewModel.height)];
 //        ATOMTipButton * button = [[ATOMTipButton alloc] initWithFrame:labelFrame];
 //        if (labelViewModel.labelDirection == 0) {
-//            button.tipButtonType = ATOMLeftTipType;
+//            button.tipButtonType = ATOMTipButtonTypeLeft;
 //        } else {
-//            button.tipButtonType = ATOMRightTipType;
+//            button.tipButtonType = ATOMTipButtonTypeRight;
 //        }
 //        button.buttonText = labelViewModel.content;
 //        [_userWorkImageView addSubview:button];

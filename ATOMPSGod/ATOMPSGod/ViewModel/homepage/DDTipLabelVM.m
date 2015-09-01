@@ -18,12 +18,17 @@
     _labelDirection = tipLabel.labelDirection;
 }
 
-- (CGRect)imageTipLabelFrameByImageSize:(CGSize)imageSize {
+- (CGRect)getFrame:(CGSize)imageSize {
     NSDictionary * attributeDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.f], NSFontAttributeName, nil];
     CGSize actualSize = [_content boundingRectWithSize:CGSizeMake(MAXFLOAT, 13) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attributeDic context:NULL].size;
     //小圆点在左边
     CGRect rect;
-    rect = CGRectMake(imageSize.width * _x, imageSize.height * _y, actualSize.width + 40, 30);
+    if (_labelDirection == 0) {
+        rect = CGRectMake(imageSize.width * _x, imageSize.height * _y - 30/2, actualSize.width + 40, 30);
+    } else if (_labelDirection ==1) {
+        rect = CGRectMake(imageSize.width * _x - actualSize.width - 40, imageSize.height * _y - 30/2 ,actualSize.width + 40, 30);
+        NSLog(@"%@ , %f ,%f",_content,imageSize.width ,_x);
+    }
     return rect;
 }
 

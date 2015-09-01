@@ -1,17 +1,16 @@
+////
+////  ATOMSubmitImageWithLabel.h
+////  ATOMPSGod
+////
+////  Created by atom on 15/3/18.
+////  Copyright (c) 2015年 ATOM. All rights reserved.
+////
 //
-//  ATOMSubmitImageWithLabel.h
-//  ATOMPSGod
+//#import <Foundation/Foundation.h>
+//@class ATOMImageTipLabel;
 //
-//  Created by atom on 15/3/18.
-//  Copyright (c) 2015年 ATOM. All rights reserved.
+//@interface DDTipLabelManager : NSObject
 //
-
-#import <Foundation/Foundation.h>
-@class ATOMImageTipLabel;
-
-@interface DDTipLabelManager : NSObject
-
-- (NSURLSessionDataTask *)uploadTipLabelForAsk:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *labelArray, NSInteger newImageID, NSError *error))block;
-- (NSURLSessionDataTask *)uploadTipLabelForReply:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *labelArray, NSError *error))block;
-
-@end
+//- (NSURLSessionDataTask *)uploadTipLabelForAsk:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *labelArray, NSInteger newImageID, NSError *error))block;
+//- (void)uploadTipLabelForReply:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block ;
+//@end

@@ -15,8 +15,6 @@
 @property (nonatomic, strong) UILabel *bigLabel;
 @property (nonatomic, strong) UILabel *smallLabel;
 @property (nonatomic, assign) int BOTTOMHEIGHT;
-
-
 @end
 
 

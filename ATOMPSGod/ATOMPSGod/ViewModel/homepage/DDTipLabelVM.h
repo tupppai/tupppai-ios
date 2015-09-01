@@ -29,6 +29,6 @@
 @property (nonatomic, assign) NSInteger labelDirection;
 
 - (void)setViewModelData:(ATOMImageTipLabel *)tipLabel;
-- (CGRect)imageTipLabelFrameByImageSize:(CGSize)imageSize;
+- (CGRect)getFrame:(CGSize)imageSize;
 
 @end
