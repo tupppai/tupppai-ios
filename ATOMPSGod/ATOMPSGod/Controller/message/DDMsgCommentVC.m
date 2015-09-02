@@ -22,7 +22,7 @@
 #import "DDCommentVC.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface DDMsgCommentVC () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource>
+@interface DDMsgCommentVC () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
 @property (nonatomic, strong) UIView *commentMessageView;
 @property (nonatomic, strong)  RefreshFooterTableView *tableView;
@@ -30,6 +30,7 @@
 @property (nonatomic, strong) UITapGestureRecognizer *tapCommentMessageGesture;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL canRefreshFooter;
+@property (nonatomic, assign) BOOL isFirst;
 
 @end
 
@@ -49,63 +50,7 @@
     }
 }
 
-#pragma mark - GetDataSource
 
-- (void)getDataSource {
-    WS(ws);
-    [[KShareManager mascotAnimator]show];
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
-    _dataSource = nil;
-    _dataSource = [NSMutableArray array];
-    _currentPage = 1;
-    [param setObject:@(_currentPage) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
-    [param setObject:@"time" forKey:@"sort"];
-    [param setObject:@"desc" forKey:@"order"];
-    [param setObject:@(15) forKey:@"size"];
-    [param setObject:@"comment" forKey:@"type"];
-
-    [DDMsgCommentModel getCommentMsg:param withBlock:^(NSMutableArray *commentMessageArray) {
-        for (DDCommentMsg *commentMessage in commentMessageArray) {
-            DDCommentMsgVM *commentMessageViewModel = [DDCommentMsgVM new];
-            [commentMessageViewModel setViewModelData:commentMessage];
-            [ws.dataSource addObject:commentMessageViewModel];
-        }
-        _tableView.dataSource = self;
-        [[KShareManager mascotAnimator]dismiss];
-        [ws.tableView reloadData];
-    }];
-}
-
-- (void)getMoreDataSource {
-    WS(ws);
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    long long timestamp = [[NSDate date] timeIntervalSince1970];
-    ws.currentPage++;
-    [param setObject:@(ws.currentPage) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-    [param setObject:@(timestamp) forKey:@"last_updated"];
-    [param setObject:@"time" forKey:@"sort"];
-    [param setObject:@"desc" forKey:@"order"];
-    [param setObject:@(15) forKey:@"size"];
-    [param setObject:@"comment" forKey:@"type"];
-    [DDMsgCommentModel getCommentMsg:param withBlock:^(NSMutableArray *commentMessageArray) {
-        for (DDCommentMsg *commentMessage in commentMessageArray) {
-            DDCommentMsgVM *commentMessageViewModel = [DDCommentMsgVM new];
-            [commentMessageViewModel setViewModelData:commentMessage];
-            [ws.dataSource addObject:commentMessageViewModel];
-        }
-        if (commentMessageArray.count == 0) {
-            ws.canRefreshFooter = NO;
-        } else {
-            ws.canRefreshFooter = YES;
-        }
-        [ws.tableView.footer endRefreshing];
-        [ws.tableView reloadData];
-    }];
-}
 
 #pragma mark - UI
 
@@ -123,14 +68,15 @@
     _tableView = [[RefreshFooterTableView alloc] initWithFrame:_commentMessageView.bounds];
     [_commentMessageView addSubview:_tableView];
     _tableView.delegate = self;
-    _tableView.dataSource = nil;
+    _tableView.dataSource = self;
     _tableView.emptyDataSetSource = self;
+    _tableView.emptyDataSetDelegate = self;
     _tableView.psDelegate = self;
     _tapCommentMessageGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCommentMessageGesture:)];
     [_tableView addGestureRecognizer:_tapCommentMessageGesture];
-//    [self configTableViewRefresh];
     _canRefreshFooter = YES;
     [self getDataSource];
+    _isFirst = YES;
 }
 
 #pragma mark - Click Event
@@ -225,9 +171,71 @@
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
+-(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
+    if (_isFirst) {
+        return NO;
+    }
+    return YES;
+}
 
+#pragma mark - GetDataSource
 
+- (void)getDataSource {
+    WS(ws);
+    [[KShareManager mascotAnimator]show];
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    _dataSource = nil;
+    _dataSource = [NSMutableArray array];
+    _currentPage = 1;
+    [param setObject:@(_currentPage) forKey:@"page"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@"time" forKey:@"sort"];
+    [param setObject:@"desc" forKey:@"order"];
+    [param setObject:@(15) forKey:@"size"];
+    [param setObject:@"comment" forKey:@"type"];
+    [DDMsgCommentModel getCommentMsg:param withBlock:^(NSMutableArray *commentMessageArray) {
+        for (DDCommentMsg *commentMessage in commentMessageArray) {
+            DDCommentMsgVM *commentMessageViewModel = [DDCommentMsgVM new];
+            [commentMessageViewModel setViewModelData:commentMessage];
+            [ws.dataSource addObject:commentMessageViewModel];
+        }
+        [[KShareManager mascotAnimator]dismiss];
+        [ws.tableView reloadData];
+        _isFirst = NO;
+        NSLog(@"_isFirst NO");
 
+    }];
+}
+
+- (void)getMoreDataSource {
+    WS(ws);
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    long long timestamp = [[NSDate date] timeIntervalSince1970];
+    ws.currentPage++;
+    [param setObject:@(ws.currentPage) forKey:@"page"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(timestamp) forKey:@"last_updated"];
+    [param setObject:@"time" forKey:@"sort"];
+    [param setObject:@"desc" forKey:@"order"];
+    [param setObject:@(15) forKey:@"size"];
+    [param setObject:@"comment" forKey:@"type"];
+    [DDMsgCommentModel getCommentMsg:param withBlock:^(NSMutableArray *commentMessageArray) {
+        for (DDCommentMsg *commentMessage in commentMessageArray) {
+            DDCommentMsgVM *commentMessageViewModel = [DDCommentMsgVM new];
+            [commentMessageViewModel setViewModelData:commentMessage];
+            [ws.dataSource addObject:commentMessageViewModel];
+        }
+        if (commentMessageArray.count == 0) {
+            ws.canRefreshFooter = NO;
+        } else {
+            ws.canRefreshFooter = YES;
+        }
+        [ws.tableView.footer endRefreshing];
+        [ws.tableView reloadData];
+    }];
+}
 
 
 

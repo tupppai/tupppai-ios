@@ -20,7 +20,7 @@
 #import "DDCommentVC.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface DDMsgInviteVC () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource>
+@interface DDMsgInviteVC () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
 @property (nonatomic, strong) UIView *inviteMessageView;
 @property (nonatomic, strong) RefreshFooterTableView *tableView;
@@ -28,6 +28,7 @@
 @property (nonatomic, strong) UITapGestureRecognizer *tapInviteMessageGesture;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL canRefreshFooter;
+@property (nonatomic, assign) BOOL isFirst;
 
 @end
 
@@ -76,6 +77,7 @@
         }
         [[KShareManager mascotAnimator]dismiss];
         [ws.tableView reloadData];
+        _isFirst = NO;
     }];
 }
 
@@ -126,9 +128,11 @@
     _tableView.dataSource = self;
     _tableView.psDelegate = self;
     _tableView.emptyDataSetSource = self;
+    _tableView.emptyDataSetDelegate = self;
     _tapInviteMessageGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapInviteMessageGesture:)];
     [_tableView addGestureRecognizer:_tapInviteMessageGesture];
     _canRefreshFooter = YES;
+    _isFirst = YES;
     [self getDataSource];
 }
 
@@ -198,20 +202,20 @@
     return 95;
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return  YES;
-}
+//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+//    return  YES;
+//}
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSInteger row = indexPath.row;
-        [_dataSource removeObjectAtIndex:row];
-        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//        if (_dataSource.count == 0) {
-//            self.view = self.noDataView;
-//        }
-    }
-}
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//        NSInteger row = indexPath.row;
+//        [_dataSource removeObjectAtIndex:row];
+//        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+////        if (_dataSource.count == 0) {
+////            self.view = self.noDataView;
+////        }
+//    }
+//}
 
 #pragma mark - DZNEmptyDataSetSource & delegate
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
@@ -230,7 +234,12 @@
 
 
 
-
+-(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
+    if (_isFirst) {
+        return NO;
+    }
+    return YES;
+}
 
 
 

@@ -16,7 +16,7 @@
 #import "RefreshFooterTableView.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMOtherPersonConcernViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource>
+@interface ATOMOtherPersonConcernViewController () < UITableViewDataSource,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
 @property (nonatomic, strong) RefreshFooterTableView *tableView;
 @property (nonatomic, strong) UIView *concernView;
@@ -24,6 +24,7 @@
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL canRefreshFooter;
+@property (nonatomic, assign) BOOL isFirst;
 
 @end
 
@@ -64,7 +65,7 @@
             [concernViewModel setViewModelData:concern];
             [ws.dataSource addObject:concernViewModel];
         }
-        _tableView.dataSource = self;
+        _isFirst = NO;
         [ws.tableView reloadData];
     }];
 }
@@ -109,14 +110,15 @@
     _tableView.backgroundColor = [UIColor colorWithHex:0xededed];
     _tableView.tableFooterView = [UIView new];
     [_concernView addSubview:_tableView];
-    _tableView.delegate = self;
-    _tableView.dataSource = nil;
+//    _tableView.delegate = self;
+    _tableView.dataSource = self;
     _tableView.psDelegate = self;
     _tableView.emptyDataSetSource = self;
+    _tableView.emptyDataSetDelegate = self;
     _tapConcernGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapConcernGesture:)];
     [_tableView addGestureRecognizer:_tapConcernGesture];
-//    [self configTableViewRefresh];
     _canRefreshFooter = YES;
+    _isFirst = YES;
     [self getDataSource];
 }
 
@@ -161,8 +163,6 @@
                 opvc.userName = viewModel.userName;
                 [self pushViewController:opvc animated:YES];
             }
-
-        
     }
 }
 
@@ -191,7 +191,6 @@
     }
     cell.viewModel = _dataSource[indexPath.row];
     return cell;
-    
 }
 
 #pragma mark - DZNEmptyDataSetSource & delegate
@@ -207,6 +206,11 @@
                                  NSForegroundColorAttributeName: [UIColor darkGrayColor]};
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
-
+-(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
+    if (_isFirst) {
+        return NO;
+    }
+    return YES;
+}
 @end
 

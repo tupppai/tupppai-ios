@@ -20,7 +20,7 @@
 #import "RefreshFooterTableView.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface DDMsgPostReplyVC () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource>
+@interface DDMsgPostReplyVC () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
 @property (nonatomic, strong) UIView *topicReplyMessageView;
 @property (nonatomic, strong) RefreshFooterTableView *tableView;
@@ -28,6 +28,7 @@
 @property (nonatomic, strong) UITapGestureRecognizer *tapTopicReplyMessageGesture;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL canRefreshFooter;
+@property (nonatomic, assign) BOOL isFirst;
 
 @end
 
@@ -71,9 +72,9 @@
             [replyMessageViewModel setViewModelData:replyMessage];
             [ws.dataSource addObject:replyMessageViewModel];
         }
-        _tableView.dataSource = self;
         [[KShareManager mascotAnimator]dismiss];
         [ws.tableView reloadData];
+        _isFirst = NO;
     }];
 }
 
@@ -123,12 +124,15 @@
     _tableView = [[RefreshFooterTableView alloc] initWithFrame:_topicReplyMessageView.bounds];
     [_topicReplyMessageView addSubview:_tableView];
     _tableView.delegate = self;
-    _tableView.dataSource = nil;
+    _tableView.dataSource = self;
     _tableView.emptyDataSetSource = self;
+    _tableView.emptyDataSetDelegate = self;
+
     _tableView.psDelegate = self;
     _tapTopicReplyMessageGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapTopicReplyMessageGesture:)];
     [_tableView addGestureRecognizer:_tapTopicReplyMessageGesture];
     _canRefreshFooter = YES;
+    _isFirst = YES;
     [self getDataSource];
 }
 
@@ -219,5 +223,10 @@
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
-
+-(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
+    if (_isFirst) {
+        return NO;
+    }
+    return YES;
+}
 @end

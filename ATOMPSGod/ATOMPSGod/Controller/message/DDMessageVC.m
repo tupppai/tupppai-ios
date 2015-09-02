@@ -17,7 +17,6 @@
 
 @property (nonatomic, strong) UIView *myMessageView;
 @property (nonatomic, strong) UITableView *tableView;
-
 @end
 
 @implementation DDMessageVC
