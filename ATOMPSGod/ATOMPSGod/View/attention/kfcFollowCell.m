@@ -15,7 +15,6 @@
 #import "DDTipLabelVM.h"
 #import "ATOMReplierViewModel.h"
 #import "DDCommentVM.h"
-#define MAXHEIGHT (SCREEN_WIDTH-kPadding15*2)*4/3
 @interface kfcFollowCell ()
 @end
 

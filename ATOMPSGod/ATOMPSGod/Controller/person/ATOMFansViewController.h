@@ -8,7 +8,7 @@
 
 #import "DDBaseVC.h"
 
-@interface ATOMMyFansViewController : DDBaseVC
+@interface ATOMFansViewController : DDBaseVC
 
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, copy) NSString *userName;

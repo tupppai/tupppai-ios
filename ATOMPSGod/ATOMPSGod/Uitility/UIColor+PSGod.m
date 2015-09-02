@@ -40,7 +40,7 @@
     return [UIFont fontWithName:kFontNameDefault size:13];
 }
 +  (UIFont *)kfcPublishType {
-    return [UIFont fontWithName:@"HelveticaNeue" size:14];
+    return [UIFont fontWithName:kFontNameDefault size:14];
 }
 +  (UIFont *)kfcPublishTimeSmall {
     return [UIFont fontWithName:kFontNameDefault size:11];
@@ -52,5 +52,24 @@
 +  (UIFont *)kfcComment {
     return [UIFont fontWithName:kFontNameDefault size:14];
 }
+
+@end
+
+
+
+@implementation UIFont (SystemFontOverride)
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-protocol-method-implementation"
+
++ (UIFont *)boldSystemFontOfSize:(CGFloat)fontSize {
+    return [UIFont fontWithName:@"STHeitiSC-Light" size:fontSize];
+}
+
++ (UIFont *)systemFontOfSize:(CGFloat)fontSize {
+    return [UIFont fontWithName:@"STHeitiSC-Light" size:fontSize];
+}
+
+#pragma clang diagnostic pop
 
 @end

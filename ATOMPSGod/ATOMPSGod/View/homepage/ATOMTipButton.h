@@ -17,6 +17,7 @@ typedef enum {
 
 @property (nonatomic, assign) ATOMTipButtonType type;
 @property (nonatomic, strong) NSString *buttonText;
+@property (nonatomic, assign) CGPoint position;
 
 - (void)constrainTipLabelToImageView;
 - (void)changeTipLabelDirection;

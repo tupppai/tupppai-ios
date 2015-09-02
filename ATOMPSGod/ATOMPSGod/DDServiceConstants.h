@@ -21,8 +21,8 @@ extern NSString *URL_PFGetMyAsk;
 extern NSString * URL_PFGetMyProceeding;
 extern NSString * URL_PFGetOtherUserInfo;
 extern NSString * URL_PFGetMyCollection;
-extern NSString * URL_PFGetMyFans;
-extern NSString * URL_PFGetMyFollow;
+extern NSString * URL_PFGetFans;
+extern NSString * URL_PFGetFollow;
 
 
 #pragma mark - Account

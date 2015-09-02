@@ -101,7 +101,7 @@
         [_image drawInRect:CGRectMake(0, 0, kfcButtonHeight, kfcButtonHeight)];
     }
   
-    [_number drawInRect:CGRectMake(kfcButtonHeight + 4, (CGHeight(rect) - 12 ) / 2 - 3,numberWidth, 12) withAttributes:self.attributeDict];
+    [_number drawInRect:CGRectMake(kfcButtonHeight + 4, (CGHeight(rect) - 6 ) / 2 - 3,numberWidth, 12) withAttributes:self.attributeDict];
 }
 
 

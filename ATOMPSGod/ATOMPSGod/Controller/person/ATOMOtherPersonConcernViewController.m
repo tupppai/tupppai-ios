@@ -7,7 +7,7 @@
 //
 
 #import "ATOMOtherPersonConcernViewController.h"
-#import "ATOMMyConcernTableViewCell.h"
+#import "DDFollowTableCell.h"
 #import "ATOMOtherPersonViewController.h"
 #import "DDFollowManager.h"
 #import "DDFollow.h"
@@ -129,7 +129,7 @@
     NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:location];
     if (indexPath) {
         ATOMConcernViewModel *viewModel = _dataSource[indexPath.row];
-        ATOMMyConcernTableViewCell *cell = (ATOMMyConcernTableViewCell *)[_tableView cellForRowAtIndexPath:indexPath];
+        DDFollowTableCell *cell = (DDFollowTableCell *)[_tableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
 //        if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
 //            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
@@ -185,9 +185,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"ConcernCell";
-    ATOMMyConcernTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    DDFollowTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
-        cell = [[ATOMMyConcernTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[DDFollowTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     cell.viewModel = _dataSource[indexPath.row];
     return cell;

@@ -12,7 +12,7 @@
 @implementation DDMyFansManager
 
 + (void)getMyFans:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *))block {
-    [DDService ddGetMyFans:param withBlock:^(NSArray *data) {
+    [DDService ddGetFans:param withBlock:^(NSArray *data) {
         NSMutableArray *resultArray = [NSMutableArray array];
         for (int i = 0; i < data.count; i++) {
             ATOMFans *fans = [MTLJSONAdapter modelOfClass:[ATOMFans class] fromJSONDictionary:data[i] error:NULL];

@@ -131,7 +131,7 @@
         
         _textView = [[class alloc] init];
         _textView.translatesAutoresizingMaskIntoConstraints = NO;
-        _textView.font = [UIFont systemFontOfSize:15.0];
+        _textView.font = [UIFont fontWithName:@"Helvetica-Light" size:15.0];
         _textView.maxNumberOfLines = [self slk_defaultNumberOfLines];
         
         _textView.typingSuggestionEnabled = YES;

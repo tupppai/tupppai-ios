@@ -28,8 +28,8 @@
 + (void)ddGetMyCollection:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block;
 + (void)ddGetMyInfo:(NSDictionary*)param withBlock:(void (^)(NSDictionary* data))block;
 + (void)ddGetOtherUserInfo:(NSDictionary*)param withBlock:(void (^)(NSDictionary* data,NSArray *askArray,NSArray *replyArray))block;
-+ (void)ddGetMyFans:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block;
-+ (void)ddGetMyFollow:(NSDictionary*)param withBlock:(void (^)(NSArray* recommendArray,NSArray* myFollowArray))block;
++ (void)ddGetFans:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block;
++ (void)ddGetFollow:(NSDictionary*)param withBlock:(void (^)(NSArray* recommendArray,NSArray* myFollowArray))block;
 
 #pragma mark - Account
 + (void) updateToken :(NSDictionary*)param withBlock:(void (^)(BOOL success))block;

@@ -39,6 +39,23 @@
     return self;
 }
 
+-(instancetype)init {
+    self = [super init];
+    if (self) {
+        _tagImageView = [UIImageView new];
+        _tagImageView.image = [UIImage imageNamed:@"tag_point"];
+        _tagImageView.contentMode = UIViewContentModeCenter;
+        _blackView = [UIView new];
+        _blackView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
+        _blackView.layer.cornerRadius = 2.5;
+        [self addSubview:_blackView];
+        _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(step)];
+        [_displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
+        [self addSubview:_tagImageView];
+    }
+    return self;
+}
+
 - (void)config:(DDAskPageVM*)askVM andVM:(DDTipLabelVM*)vm {
     
 }

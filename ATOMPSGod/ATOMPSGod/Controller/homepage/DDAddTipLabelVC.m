@@ -115,6 +115,14 @@
     [Hud activity:@"上传中.." inView:self.view];
 
     if ([pushTypeStr isEqualToString:@"Reply"]) {
+        [self issuedForReply];
+    } else if ([pushTypeStr isEqualToString:@"Ask"]) {
+        [self issuedForAsk];
+    }
+}
+
+-(void)issuedForReply {
+    
         if (_imgUploadSucceed) {
             [self uploadReplyLabel:_imageInfo.imageID];
         } else {
@@ -129,7 +137,9 @@
                 return;
             }
         }
-    } else if ([pushTypeStr isEqualToString:@"Ask"]) {
+    
+}
+-(void)issuedForAsk {
         if (_tipLabelArray.count == 0) {
             [Hud dismiss:self.view];
             [self showWarnLabel];
@@ -144,25 +154,24 @@
                 [self uploadAskTipLabel:_imageInfo.imageID];
             });
             if (_imgUploading ) {
-
+                
             } else {
                 [self uploadAskImage];
                 return;
             }
         }
-    }
 }
-
 - (void)tapCancel:(UIBarButtonItem *)sender {
     [self changeViewToOrigin];
 }
 
-- (void)clickTipLabel:(UIButton *)sender {
+- (void)tapTipLabel:(UIButton *)sender {
     _lastAddButton = (ATOMTipButton *)sender;
     if (![_addTipLabelView isOperationButtonShow]) {
         [_addTipLabelView showOperationButton];
     }
 }
+
 
 - (void)changeViewToOrigin {
     [_addTipLabelView removeTemporaryPoint];
@@ -188,10 +197,8 @@
     NSMutableDictionary *param = [NSMutableDictionary new];
     NSMutableArray *paramLabelArray = [NSMutableArray array];
     for (ATOMTipButton *tipButton in ws.tipLabelArray) {
-        //标签左上角相对图片的百分比
-        
-        CGFloat x = _currentLocation.x / CGWidth(ws.addTipLabelView.workImageView.frame);
-        CGFloat y = _currentLocation.y / CGHeight(ws.addTipLabelView.workImageView.frame);
+        CGFloat x = tipButton.position.x / CGWidth(ws.addTipLabelView.workImageView.frame);
+        CGFloat y = tipButton.position.y / CGHeight(ws.addTipLabelView.workImageView.frame);
         NSInteger labelDirection;
         if (tipButton.type ==ATOMTipButtonTypeLeft) {
             labelDirection = 0;
@@ -369,6 +376,7 @@
         _currentLocation.x = tipButton.frame.origin.x + tipButton.frame.size.width;
     }
     _currentLocation.y = tipButton.frame.origin.y+tipButton.frame.size.height/2;
+    tipButton.position = _currentLocation;
 }
 
 - (void)addTipLabelAtCurrentLocation {
@@ -387,8 +395,9 @@
     [self.tipLabelArray addObject:button];
     UIPanGestureRecognizer *panTipLabelGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panTipLabelGesture:)];
     [button addGestureRecognizer:panTipLabelGesture];
-    [button addTarget:self action:@selector(clickTipLabel:) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(tapTipLabel:) forControlEvents:UIControlEventTouchUpInside];
     [_addTipLabelView.workImageView addSubview:button];
+    button.position = _currentLocation;
 }
 
 #pragma mark - UITextFieldDelegate

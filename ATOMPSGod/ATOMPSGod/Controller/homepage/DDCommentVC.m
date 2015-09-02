@@ -581,7 +581,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     _headerView.vm = _vm;
     self.tableView.tableHeaderView = _headerView;
     self.tableView.emptyDataSetSource = self;
-    self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
+    self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[DDCommentTableCell class] forCellReuseIdentifier:MessengerCellIdentifier];
     self.tableView.tableFooterView = [UIView new];

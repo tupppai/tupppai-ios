@@ -207,16 +207,16 @@
         }
     }];
 }
-+ (void)ddGetMyFans:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
-    [[self class]GET:param withUrl:URL_PFGetMyFans withBlock:^(id responseObject) {
++ (void)ddGetFans:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
+    [[self class]GET:param withUrl:URL_PFGetFans withBlock:^(id responseObject) {
         if (responseObject) {
             NSArray* data = [responseObject objectForKey:@"data"];
             if (block) { block(data); }
         }
     }];
 }
-+ (void)ddGetMyFollow:(NSDictionary*)param withBlock:(void (^)(NSArray* recommendArray,NSArray* myFollowArray))block {
-    [[self class]GET:param withUrl:URL_PFGetMyFollow withBlock:^(id responseObject) {
++ (void)ddGetFollow:(NSDictionary*)param withBlock:(void (^)(NSArray* recommendArray,NSArray* myFollowArray))block {
+    [[self class]GET:param withUrl:URL_PFGetFollow withBlock:^(id responseObject) {
         if (responseObject) {
             NSDictionary* data = [responseObject objectForKey:@"data"];
             NSArray *recommendArray = [data objectForKey:@"recommends"];

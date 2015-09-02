@@ -10,7 +10,7 @@
 #import "ATOMOtherPersonView.h"
 #import "ATOMMyWorkCollectionViewCell.h"
 #import "ATOMMyUploadCollectionViewCell.h"
-#import "ATOMMyFansViewController.h"
+#import "ATOMFansViewController.h"
 #import "ATOMOtherPersonConcernViewController.h"
 #import "DDHotDetailVC.h"
 #import "ATOMOtherPersonCollectionHeaderView.h"
@@ -308,7 +308,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
 }
 
 - (void)tapFansGesture:(UITapGestureRecognizer *)gesture {
-    ATOMMyFansViewController *mfvc = [ATOMMyFansViewController new];
+    ATOMFansViewController *mfvc = [ATOMFansViewController new];
     mfvc.uid = _userID;
     mfvc.userName = _userName;
     [self pushViewController:mfvc animated:YES];

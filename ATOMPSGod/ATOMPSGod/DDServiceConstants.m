@@ -21,8 +21,8 @@ NSString * URL_PFGetMyAsk = @"profile/asks";
 NSString * URL_PFGetMyProceeding = @"profile/downloaded";
 NSString * URL_PFGetOtherUserInfo = @"profile/view";
 NSString * URL_PFGetMyCollection = @"Thread/subscribed";
-NSString * URL_PFGetMyFans = @"profile/fans";
-NSString * URL_PFGetMyFollow = @"profile/follows";
+NSString * URL_PFGetFans = @"profile/fans";
+NSString * URL_PFGetFollow = @"profile/follows";
 
 #pragma mark - Account
 NSString * URL_ACUpdateToken = @"account/updateToken";

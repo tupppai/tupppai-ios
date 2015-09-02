@@ -34,7 +34,9 @@
         NSString *content = comment.content;
         for (NSDictionary* dic in comment.atCommentArray) {
             DDCommentReplyVM *reply = [MTLJSONAdapter modelOfClass:[DDCommentReplyVM class] fromJSONDictionary:dic error:NULL];
-            [_replyArray addObject:reply];
+            if (reply) {
+                [_replyArray addObject:reply];
+            }
             if (_replyArray.count>2) {
                 break;
             }

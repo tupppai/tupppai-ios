@@ -59,9 +59,9 @@ CGFloat const kFont15 = 15.f;
 NSUInteger const kCommentTextViewMaxLength = 300;
 NSInteger const kLineWidth = 260;
 
-NSString * const kUserNameFont = @"HelveticaNeue-Light";
-NSString * const kPublishTimeFont = @"HelveticaNeue-Light";
-NSString * const kFontNameDefault = @"HelveticaNeue-Light";
+NSString * const kFontNameDefault = @"STHeitiSC-Light";
+NSString * const kUserNameFont = @"STHeitiSC-Light";
+NSString * const kPublishTimeFont = @"STHeitiSC-Light ";
 NSString * const kfcMaxNumberString = @"1000k+";
 
 CGFloat const kUsernameFontSize = 16.f;

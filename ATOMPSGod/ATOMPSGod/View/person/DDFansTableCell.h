@@ -1,5 +1,5 @@
 //
-//  ATOMMyConcernTableViewCell.h
+//  ATOMMyFansTableViewCell.h
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/10.
@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ATOMConcernViewModel;
+@class ATOMFansViewModel;
 
-@interface ATOMMyConcernTableViewCell : UITableViewCell
+@interface DDFansTableCell : UITableViewCell
 
 @property (nonatomic, strong) UIButton *userHeaderButton;
 @property (nonatomic, strong) UILabel *userNameLabel;
@@ -17,7 +17,7 @@
 @property (nonatomic, strong) UILabel *fansNumberLabel;
 @property (nonatomic, strong) UILabel *uploadNumberLabel;
 @property (nonatomic, strong) UILabel *workNumberLabel;
-@property (nonatomic, strong) ATOMConcernViewModel *viewModel;
 
+@property (nonatomic, strong) ATOMFansViewModel *viewModel;
 
 @end

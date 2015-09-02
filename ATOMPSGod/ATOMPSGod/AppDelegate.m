@@ -214,34 +214,34 @@
 //    NSLog(@"userinfo:%@",userInfo);
 //    [UMessage didReceiveRemoteNotification:userInfo];
     
-    NSString* notifyType = [userInfo objectForKey:@"type"];
+    NSInteger notifyType = [[userInfo objectForKey:@"type"]integerValue];
     int badgeNumber = [[[userInfo objectForKey:@"aps"]objectForKey:@"badge"]intValue];
 
     typedef void (^CaseBlock)();
     NSDictionary *dic = @{
-                        @"comment":
+                        @"1":
                             ^{
                                 [self updateBadgeNumberForKey:@"NotifyType0" toAdd:badgeNumber];
                             },
-                        @"post_reply":
+                        @"2":
                             ^{
                                 [self updateBadgeNumberForKey:@"NotifyType1" toAdd:badgeNumber];
                             },
-                        @"attention":
+                        @"3":
                             ^{
                                 [self updateBadgeNumberForKey:@"NotifyType2" toAdd:badgeNumber];
                             },
-                        @"invite":
+                        @"4":
                             ^{
                                 [self updateBadgeNumberForKey:@"NotifyType3" toAdd:badgeNumber];
                             },
-                        @"system":
+                        @"5":
                             ^{
                                 [self updateBadgeNumberForKey:@"NotifyType4" toAdd:badgeNumber];
                             }
                         };
     
-    ((CaseBlock)[dic objectForKey:notifyType])();
+    ((CaseBlock)[dic objectForKey:[NSString stringWithFormat:@"%zd",notifyType]])();
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"ReceiveRemoteNotification" object:nil]];
 
 }

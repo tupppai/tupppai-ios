@@ -24,3 +24,8 @@
 +  (UIFont *)kfcCommentUserName;
 +  (UIFont *)kfcComment;
 @end
+
+
+@interface UIFont (SystemFontOverride)
+
+@end

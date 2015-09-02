@@ -12,7 +12,7 @@
 @implementation DDFollowManager
 
 + (void)getFollow:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *recommendArray, NSMutableArray *myFollowArray))block {
-    [DDService ddGetMyFollow:param withBlock:^(NSArray *recommendArray, NSArray *myFollowArray) {
+    [DDService ddGetFollow:param withBlock:^(NSArray *recommendArray, NSArray *myFollowArray) {
         NSMutableArray *retRecommend = [NSMutableArray array];
         NSMutableArray *retMine = [NSMutableArray array];
         for (int i = 0; i < recommendArray.count; i++) {

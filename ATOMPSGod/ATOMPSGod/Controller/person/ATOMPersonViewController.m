@@ -10,7 +10,7 @@
 #import "ATOMPersonView.h"
 #import "ATOMPersonTableViewCell.h"
 #import "ATOMAccountSettingViewController.h"
-#import "ATOMMyFansViewController.h"
+#import "ATOMFansViewController.h"
 #import "DDMyFollowVC.h"
 #import "ATOMMyWorkViewController.h"
 #import "ATOMMyUploadViewController.h"
@@ -30,50 +30,11 @@
 @property (nonatomic, strong) ATOMPersonView *personView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) JGActionSheet *avatarActionSheet;
-
 @end
 
 @implementation ATOMPersonViewController
 
-#pragma mark - Lazy Initialize
 
-- (UIImagePickerController *)imagePickerController {
-    if (!_imagePickerController) {
-        _imagePickerController = [UIImagePickerController new];
-        _imagePickerController.delegate = self;
-    }
-    return _imagePickerController;
-}
-- (JGActionSheet *)avatarActionSheet {
-    WS(ws);
-    if (!_avatarActionSheet) {
-        _avatarActionSheet = [JGActionSheet new];
-        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:@"修改头像" message:nil buttonTitles:@[@"拍照",@"从相册选择",@"取消"] buttonStyle:JGActionSheetButtonStyleDefault];
-        [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:2];
-        NSArray *sections = @[section];
-        _avatarActionSheet = [JGActionSheet actionSheetWithSections:sections];
-        _avatarActionSheet.delegate = self;
-        [_avatarActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
-            [sheet dismissAnimated:YES];
-        }];
-        [_avatarActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
-            switch (indexPath.row) {
-                case 0:
-                    [ws dealTakingPhoto];
-                    [ws.avatarActionSheet dismissAnimated:YES];
-                    break;
-                case 1:
-                    [ws dealPhotoLibrary];
-                    [ws.avatarActionSheet dismissAnimated:YES];
-                    break;
-                default:
-                    [ws.avatarActionSheet dismissAnimated:YES];
-                    break;
-            }
-        }];
-    }
-    return _avatarActionSheet;
-}
 #pragma mark - UI
 
 - (void)viewDidLoad {
@@ -95,13 +56,15 @@
     [_personView.fansLabel addGestureRecognizer:tapFansGesture];
     _personView.personTableView.delegate = self;
     _personView.personTableView.dataSource = self;
-    self.navigationItem.title = [DDUserManager currentUser].username;
+    self.title = [DDUserManager currentUser].username;
 }
 
 #pragma mark - Gesture Event
 
 - (void)tapFansGesture:(UITapGestureRecognizer *)gesture {
-    ATOMMyFansViewController *mfvc = [ATOMMyFansViewController new];
+    ATOMFansViewController *mfvc = [ATOMFansViewController new];
+    mfvc.uid = [DDUserManager currentUser].uid;
+    mfvc.userName = [DDUserManager currentUser].username;
     [self pushViewController:mfvc animated:YES];
 }
 
@@ -138,7 +101,6 @@
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-//    WS(ws);
     [self dismissViewControllerAnimated:YES completion:^{
             ATOMHeaderImageCropperViewController *hicvc = [ATOMHeaderImageCropperViewController new];
             hicvc.delegate = self;
@@ -287,7 +249,45 @@
 
 
 
+#pragma mark - Lazy Initialize
 
+- (UIImagePickerController *)imagePickerController {
+    if (!_imagePickerController) {
+        _imagePickerController = [UIImagePickerController new];
+        _imagePickerController.delegate = self;
+    }
+    return _imagePickerController;
+}
+- (JGActionSheet *)avatarActionSheet {
+    WS(ws);
+    if (!_avatarActionSheet) {
+        _avatarActionSheet = [JGActionSheet new];
+        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:@"修改头像" message:nil buttonTitles:@[@"拍照",@"从相册选择",@"取消"] buttonStyle:JGActionSheetButtonStyleDefault];
+        [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:2];
+        NSArray *sections = @[section];
+        _avatarActionSheet = [JGActionSheet actionSheetWithSections:sections];
+        _avatarActionSheet.delegate = self;
+        [_avatarActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
+            [sheet dismissAnimated:YES];
+        }];
+        [_avatarActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
+            switch (indexPath.row) {
+                case 0:
+                    [ws dealTakingPhoto];
+                    [ws.avatarActionSheet dismissAnimated:YES];
+                    break;
+                case 1:
+                    [ws dealPhotoLibrary];
+                    [ws.avatarActionSheet dismissAnimated:YES];
+                    break;
+                default:
+                    [ws.avatarActionSheet dismissAnimated:YES];
+                    break;
+            }
+        }];
+    }
+    return _avatarActionSheet;
+}
 
 
 
