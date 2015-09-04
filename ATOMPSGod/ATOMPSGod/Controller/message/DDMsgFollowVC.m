@@ -68,8 +68,8 @@
             [ws.dataSource addObject:concernMessageViewModel];
         }
         [[KShareManager mascotAnimator]dismiss];
-        [ws.tableView reloadData];
         _isFirst = NO;
+        [ws.tableView reloadData];
     }];
 }
 

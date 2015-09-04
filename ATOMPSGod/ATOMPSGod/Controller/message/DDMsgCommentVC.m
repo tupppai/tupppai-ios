@@ -202,10 +202,8 @@
             [ws.dataSource addObject:commentMessageViewModel];
         }
         [[KShareManager mascotAnimator]dismiss];
-        [ws.tableView reloadData];
         _isFirst = NO;
-        NSLog(@"_isFirst NO");
-
+        [ws.tableView reloadData];
     }];
 }
 

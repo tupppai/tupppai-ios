@@ -13,10 +13,11 @@
     self = [super init];
     if (self) {
         self.frame = CGRectMake(0,0 , SCREEN_WIDTH, SCREEN_HEIGHT);
-        CAGradientLayer *gradient = [CAGradientLayer layer];
-        gradient.frame = self.bounds;
-        gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithHex:0xF7F7F7 andAlpha:0.95] CGColor], (id)[[UIColor colorWithHex:0xD7D7D7 andAlpha:0.95] CGColor], nil];
-        [self.layer insertSublayer:gradient atIndex:1];
+        self.backgroundColor = [UIColor clearColor];
+//        CAGradientLayer *gradient = [CAGradientLayer layer];
+//        gradient.frame = self.bounds;
+//        gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithHex:0xF7F7F7 andAlpha:0.95] CGColor], (id)[[UIColor colorWithHex:0xD7D7D7 andAlpha:0.95] CGColor], nil];
+//        [self.layer insertSublayer:gradient atIndex:1];
         [self createMascotImageView];
     }
     return self;
@@ -39,7 +40,7 @@
 -(void)show {
     if (self) {
         [_mascotImageView startAnimating];
-        self.alpha = 0.9;
+        self.alpha = 1.0;
         [[UIApplication sharedApplication].keyWindow addSubview:self];
 
         //time out

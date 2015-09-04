@@ -211,7 +211,7 @@
     
 //    [[NSUserDefaults standardUserDefaults]setObject:userInfo forKey:@"RemoteNoficationInfo"];
 //    
-//    NSLog(@"userinfo:%@",userInfo);
+    NSLog(@"userinfo:%@",userInfo);
 //    [UMessage didReceiveRemoteNotification:userInfo];
     
     NSInteger notifyType = [[userInfo objectForKey:@"type"]integerValue];

@@ -76,8 +76,8 @@
             [ws.dataSource addObject:inviteMessageViewModel];
         }
         [[KShareManager mascotAnimator]dismiss];
-        [ws.tableView reloadData];
         _isFirst = NO;
+        [ws.tableView reloadData];
     }];
 }
 
