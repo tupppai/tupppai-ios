@@ -20,7 +20,7 @@
     }];
 }
 
-+(void)postSocialShare:(NSInteger)id withSocialShareType:(ATOMSocialShareType)shareType withPageType:(ATOMPageType)pageType {
++(void)postSocialShare:(NSInteger)id withSocialShareType:(ATOMShareType)shareType withPageType:(ATOMPageType)pageType {
         DDShareManager* shareModel = [DDShareManager new];
         NSMutableDictionary* param = [NSMutableDictionary new];
         NSString* shareTypeToServer;
@@ -40,7 +40,7 @@
             }
         }];
 }
-+ (void)shareStep1:(ATOMShare*)share  withShareType:(ATOMSocialShareType)shareType {
++ (void)shareStep1:(ATOMShare*)share  withShareType:(ATOMShareType)shareType {
 //    NSLog(@"ATOMShare url%@,title%@,desc%@,imgurl%@",share.url,share.title,share.desc,share.imageUrl);
         NSString* shareUrl;
         if ([share.type isEqualToString:@"image"]) {

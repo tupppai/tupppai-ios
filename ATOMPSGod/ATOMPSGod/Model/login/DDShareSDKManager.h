@@ -11,6 +11,6 @@
 
 @interface DDShareSDKManager : NSObject
 + (void)getUserInfo:(SSDKPlatformType)type withBlock:(void (^)(NSDictionary* ))block;
-+(void)postSocialShare:(NSInteger)id withSocialShareType:(ATOMSocialShareType)shareType withPageType:(ATOMPageType)pageType;
++(void)postSocialShare:(NSInteger)id withSocialShareType:(ATOMShareType)shareType withPageType:(ATOMPageType)pageType;
 + (void)authorize:(SSDKPlatformType)type withBlock:(void (^)(NSDictionary* ))block;
 @end

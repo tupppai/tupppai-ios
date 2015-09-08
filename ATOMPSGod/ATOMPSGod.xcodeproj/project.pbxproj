@@ -2937,7 +2937,7 @@
 		5CDB05B91AA3FE520089121E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = DD;
+				CLASSPREFIX = pic;
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = "Shenzhen Pires Internet Technology CO.,LTD";
 				TargetAttributes = {

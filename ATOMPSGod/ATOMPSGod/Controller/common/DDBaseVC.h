@@ -9,47 +9,30 @@
 #import <UIKit/UIKit.h>
 #import "ATOMShare.h"
 #import "DDShareManager.h"
-typedef enum {
+typedef NS_ENUM(NSInteger, ATOMNotifyType) {
     ATOMNotifyTypeComment = 0,
     ATOMNotifyTypeReply,
     ATOMNotifyTypeAttention,
     ATOMNotifyTypeInvite,
     ATOMNotifyTypeSystem,
-}ATOMNotifyType;
+};
 
-typedef enum {
-    ATOMUploadWorType = 0,
-    ATOMAskType,
-    ATOMTakePhotoType
-}ATOMPSEventType;
 
-typedef enum {
-    ATOMCommentMessageType = 0,
-    ATOMInviteMessageType,
-    ATOMTopicReplyMessageType,
-    ATOMMyUploadType,
-    ATOMMyWorkType,
-    ATOMProceedingType,
-    ATOMMyCollectionType,
-    ATOMInviteType,
-    ATOMShareType
-} ATOMDetailPushType;
-
-typedef enum {
+typedef NS_ENUM(NSInteger, ATOMHomepageViewType) {
     ATOMHomepageViewTypeHot = 0,
     ATOMHomepageViewTypeAsk
-}ATOMHomepageViewType;
+};
 
-typedef enum {
+typedef NS_ENUM(NSInteger, ATOMPageType) {
     ATOMPageTypeAsk = 1,
     ATOMPageTypeReply = 2
-}ATOMPageType;
+};
 
-typedef enum {
+typedef NS_ENUM(NSInteger, ATOMShareType) {
     ATOMShareTypeWechatMoments = 0,
-    ATOMShareTypeWechatFriends ,
+    ATOMShareTypeWechatFriends,
     ATOMShareTypeSinaWeibo
-}ATOMSocialShareType;
+};
 
 @interface DDBaseVC : UIViewController
 
