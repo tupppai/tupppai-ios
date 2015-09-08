@@ -9,11 +9,11 @@
 #import "DDHomeVC.h"
 #import "kfcHotCell.h"
 #import "kfcAskCell.h"
-#import "DDHotDetailVC.h"
+#import "DDDetailPageVC.h"
 #import "DDCropImageVC.h"
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMProceedingViewController.h"
-#import "DDAskPageVM.h"
+#import "DDPageVM.h"
 #import "kfcHomeScrollView.h"
 #import "DDHomePageManager.h"
 #import "ATOMShareFunctionView.h"
@@ -35,7 +35,8 @@
 
 #import "DDCommentVC.h"
 #import "UITableView+FDTemplateLayoutCell.h"
-@class ATOMHomeImage;
+#import "PIEDetailPageVC.h"
+@class ATOMAskPage;
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 @interface DDHomeVC() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate>
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
@@ -57,7 +58,7 @@
 @property (nonatomic, strong)  JGActionSheet * reportActionSheet;
 
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
-@property (nonatomic, strong) DDAskPageVM *selectedVM;
+@property (nonatomic, strong) DDPageVM *selectedVM;
 
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
 
@@ -145,10 +146,10 @@ static NSString *CellIdentifier2 = @"AskCell";
     UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cameraView];
     self.navigationItem.rightBarButtonItems = @[negativeSpacer, rightButtonItem];
 
-    _segmentedControl = [[HMSegmentedControl alloc] initWithSectionImages:@[[UIImage imageNamed:@"btn_home_hot"], [UIImage imageNamed:@"btn_home_ask"]] sectionSelectedImages:nil];
+    _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"热门",@"求P"]];
     _segmentedControl.frame = CGRectMake(0, 120, 200, 45);
     _segmentedControl.selectionIndicatorHeight = 4.0f;
-    _segmentedControl.selectionIndicatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.2];
+    _segmentedControl.selectionIndicatorColor = [UIColor yellowColor];
     _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
     _segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
     [_segmentedControl setIndexChangeBlock:^(NSInteger index) {
@@ -334,22 +335,27 @@ static NSString *CellIdentifier2 = @"AskCell";
 
             if (CGRectContainsPoint(cell.imageViewMain.frame, p)) {
                 //进入热门详情
-                DDHotDetailVC *hdvc = [DDHotDetailVC new];
-                hdvc.delegate = self;
-                hdvc.fold = 0;
-                hdvc.askVM = _selectedVM;
-                [self pushViewController:hdvc animated:YES];
+                PIEDetailPageVC* vc = [PIEDetailPageVC new];
+                vc.pageVM = _selectedVM;
+                [self pushViewController:vc animated:YES];
+
+//                [self.navigationController pushViewController:vc animated:YES];
+//                DDDetailPageVC *hdvc = [DDDetailPageVC new];
+//                hdvc.delegate = self;
+//                hdvc.fold = 0;
+//                hdvc.askVM = _selectedVM;
+//                [self pushViewController:hdvc animated:YES];
             } else if (CGRectContainsPoint(cell.topView.frame, p)) {
                 p = [gesture locationInView:cell.topView];
                 if (CGRectContainsPoint(cell.avatarView.frame, p)) {
                     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
                     opvc.userID = _selectedVM.userID;
-                    opvc.userName = _selectedVM.userName;
+                    opvc.userName = _selectedVM.username;
                     [self pushViewController:opvc animated:YES];
                 } else if (CGRectContainsPoint(cell.usernameLabel.frame, p)) {
                     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
                     opvc.userID = _selectedVM.userID;
-                    opvc.userName = _selectedVM.userName;
+                    opvc.userName = _selectedVM.username;
                     [self pushViewController:opvc animated:YES];
                 }
             } else if (CGRectContainsPoint(cell.bottomView.frame, p)){
@@ -386,20 +392,20 @@ static NSString *CellIdentifier2 = @"AskCell";
 
             CGPoint p = [gesture locationInView:cell];
             if (CGRectContainsPoint(cell.imageViewMain.frame, p)) {
-                [self tapOnImageView:cell.imageViewMain.image withURL:_selectedVM.userImageURL];
+                [self tapOnImageView:cell.imageViewMain.image withURL:_selectedVM.imageURL];
             } else if (CGRectContainsPoint(cell.topView.frame, p)) {
                 p = [gesture locationInView:cell.topView];
                 if (CGRectContainsPoint(cell.avatarView.frame, p)) {
                     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
                     opvc.userID = _selectedVM.userID;
-                    opvc.userName = _selectedVM.userName;
+                    opvc.userName = _selectedVM.username;
                     [self pushViewController:opvc animated:YES];
                 } else if (CGRectContainsPoint(cell.psView.frame, p)) {
                     [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
                 } else if (CGRectContainsPoint(cell.usernameLabel.frame, p)) {
                     ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
                     opvc.userID = _selectedVM.userID;
-                    opvc.userName = _selectedVM.userName;
+                    opvc.userName = _selectedVM.username;
                     [self pushViewController:opvc animated:YES];
                 }
             } else if (CGRectContainsPoint(cell.bottomView.frame, p)){
@@ -553,8 +559,8 @@ static NSString *CellIdentifier2 = @"AskCell";
     DDHomePageManager *showHomepage = [DDHomePageManager new];
     NSArray * homepageArray = [[showHomepage getHomeImagesWithHomeType:homeType] mutableCopy];
     NSMutableArray* tableViewDataSource = [NSMutableArray array];
-    for (ATOMHomeImage *homeImage in homepageArray) {
-        DDAskPageVM *model = [DDAskPageVM new];
+    for (ATOMAskPage *homeImage in homepageArray) {
+        DDPageVM *model = [DDPageVM new];
         [model setViewModelData:homeImage];
         [tableViewDataSource addObject:model];
     }
@@ -587,8 +593,8 @@ static NSString *CellIdentifier2 = @"AskCell";
                 [param setObject:@(_currentHotPage) forKey:@"page"];
             }
             
-            for (ATOMHomeImage *homeImage in homepageArray) {
-                DDAskPageVM *model = [DDAskPageVM new];
+            for (ATOMAskPage *homeImage in homepageArray) {
+                DDPageVM *model = [DDPageVM new];
                 [model setViewModelData:homeImage];
                 if (ws.scrollView.type == ATOMHomepageViewTypeHot) {
                     [ws.dataSourceOfHotTableView addObject:model];
@@ -639,8 +645,8 @@ static NSString *CellIdentifier2 = @"AskCell";
     [showHomepage getHomepage:param withBlock:^(NSMutableArray *homepageArray,NSError *error) {
         if (homepageArray && error == nil) {
             
-            for (ATOMHomeImage *homeImage in homepageArray) {
-                DDAskPageVM *model = [DDAskPageVM new];
+            for (ATOMAskPage *homeImage in homepageArray) {
+                DDPageVM *model = [DDPageVM new];
                 [model setViewModelData:homeImage];
                 if (ws.scrollView.type == ATOMHomepageViewTypeHot) {
                     [ws.dataSourceOfHotTableView addObject:model];

@@ -8,19 +8,25 @@
 
 #import <Foundation/Foundation.h>
 #import "DDCommentPageVM.h"
-@class ATOMHomeImage;
+#import "ATOMDetailPage.h"
+
+@class ATOMAskPage;
 @class DDCommentPageVM;
-@interface DDAskPageVM : NSObject
+@interface DDPageVM : NSObject
 
 @property (nonatomic, assign) NSInteger ID;
+@property (nonatomic, assign) NSInteger type;
+
 @property (nonatomic, assign) NSInteger userID;
-@property (nonatomic, copy) NSString *userName;
+@property (nonatomic, copy) NSString *username;
 @property (nonatomic, copy) NSString *userSex;
 @property (nonatomic, copy) NSString *avatarURL;
+
+@property (nonatomic, strong) NSString *imageURL;
 @property (nonatomic, copy) NSString *publishTime;
-@property (nonatomic, strong) NSString *userImageURL;
-@property (nonatomic, copy) NSString *likeNumber;
-@property (nonatomic, copy) NSString *shareNumber;
+
+@property (nonatomic, copy) NSString *likeCount;
+@property (nonatomic, copy) NSString *shareCount;
 @property (nonatomic, copy) NSString *commentNumber;
 @property (nonatomic, copy) NSString *totalPSNumber;
 @property (nonatomic, assign) CGFloat width;
@@ -30,10 +36,10 @@
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, assign) BOOL liked;
 @property (nonatomic, assign) BOOL collected;
-@property (nonatomic, assign) int type;
 
-- (void)setViewModelData:(ATOMHomeImage *)homeImage;
+- (void)setViewModelData:(ATOMAskPage *)homeImage;
 -(void)setViewModelWithCommon:(DDCommentPageVM*)commonViewModel;
+- (void)setViewModelDataWithDetailPage:(ATOMDetailPage *)page;
 - (void)toggleLike;
 -(DDCommentPageVM*)generatepageDetailViewModel;
 @end

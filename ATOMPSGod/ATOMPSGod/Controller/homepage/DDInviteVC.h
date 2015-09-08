@@ -7,12 +7,12 @@
 //
 
 #import "DDBaseVC.h"
-#import "DDAskPageVM.h"
+#import "DDPageVM.h"
 #import "ATOMRecommendUser.h"
 
 @interface DDInviteVC : DDBaseVC
 
-@property (nonatomic, strong) DDAskPageVM *askPageViewModel;
+@property (nonatomic, strong) DDPageVM *askPageViewModel;
 @property (nonatomic, strong) NSDictionary *info;
 @property (nonatomic, assign) BOOL showNext;
 

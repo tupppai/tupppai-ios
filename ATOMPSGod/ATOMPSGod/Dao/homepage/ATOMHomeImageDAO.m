@@ -7,7 +7,7 @@
 //
 
 #import "ATOMHomeImageDAO.h"
-#import "ATOMHomeImage.h"
+#import "ATOMAskPage.h"
 
 @implementation ATOMHomeImageDAO
 
@@ -18,7 +18,7 @@
     return self;
 }
 
-- (void)insertHomeImage:(ATOMHomeImage *)homeImage {
+- (void)insertHomeImage:(ATOMAskPage *)homeImage {
     dispatch_queue_t q = dispatch_queue_create("insert", NULL);
     dispatch_async(q, ^{
         [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
@@ -34,7 +34,7 @@
     });
 }
 
-- (void)updateHomeImage:(ATOMHomeImage *)homeImage {
+- (void)updateHomeImage:(ATOMAskPage *)homeImage {
     dispatch_queue_t q = dispatch_queue_create("update", NULL);
     dispatch_async(q, ^{
         [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
@@ -51,14 +51,14 @@
     });
 }
 
-- (ATOMHomeImage *)selectHomeImageByImageID:(NSInteger)imageID {
-    __block ATOMHomeImage *homeImage;
+- (ATOMAskPage *)selectHomeImageByImageID:(NSInteger)imageID {
+    __block ATOMAskPage *homeImage;
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
         NSString *stmt = @"select * from ATOMHomeImage where imageID = ?";
         NSArray *param = @[@(imageID)];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {
-            homeImage = [MTLFMDBAdapter modelOfClass:[ATOMHomeImage class] fromFMResultSet:rs error:NULL];
+            homeImage = [MTLFMDBAdapter modelOfClass:[ATOMAskPage class] fromFMResultSet:rs error:NULL];
             break;
         }
         [rs close];
@@ -74,7 +74,7 @@
         NSArray *param =  @[homeTypeStr];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {
-            ATOMHomeImage *homeImage = [MTLFMDBAdapter modelOfClass:[ATOMHomeImage class] fromFMResultSet:rs error:NULL];
+            ATOMAskPage *homeImage = [MTLFMDBAdapter modelOfClass:[ATOMAskPage class] fromFMResultSet:rs error:NULL];
             [muArray addObject:homeImage];
         }
         [rs close];
@@ -87,7 +87,7 @@
         NSString *stmt = @"SELECT * FROM ATOMHomeImage ORDER BY uploadTime DESC limit 15";
         FMResultSet *rs = [db executeQuery:stmt];
         while ([rs next]) {
-            ATOMHomeImage *homeImage = [MTLFMDBAdapter modelOfClass:[ATOMHomeImage class] fromFMResultSet:rs error:NULL];
+            ATOMAskPage *homeImage = [MTLFMDBAdapter modelOfClass:[ATOMAskPage class] fromFMResultSet:rs error:NULL];
             [muArray addObject:homeImage];
         }
         [rs close];
@@ -95,14 +95,14 @@
     return [muArray copy];
 }
 
-- (BOOL)isExistHomeImage:(ATOMHomeImage *)homeImage {
+- (BOOL)isExistHomeImage:(ATOMAskPage *)homeImage {
     __block BOOL flag;
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
         NSString *stmt = @"select * from ATOMHomeImage where imageID = ?";
         NSArray *param = @[@(homeImage.imageID)];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {
-            ATOMHomeImage *homeImage = [MTLFMDBAdapter modelOfClass:[ATOMHomeImage class] fromFMResultSet:rs error:NULL];
+            ATOMAskPage *homeImage = [MTLFMDBAdapter modelOfClass:[ATOMAskPage class] fromFMResultSet:rs error:NULL];
             if (homeImage) {
                 flag = YES;
             } else {

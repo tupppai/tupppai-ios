@@ -7,10 +7,10 @@
 //
 
 #import "DDBaseVC.h"
-#import "DDAskPageVM.h"
+#import "DDPageVM.h"
 #import "DDCommentPageVM.h"
 @interface DDAddTipLabelVC : DDBaseVC
-@property (nonatomic, strong) DDAskPageVM *askPageViewModel;
+@property (nonatomic, strong) DDPageVM *askPageViewModel;
 @property (nonatomic, strong) UIImage *workImage;
 
 @end

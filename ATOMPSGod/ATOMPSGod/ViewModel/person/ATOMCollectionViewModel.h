@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class ATOMHomeImage;
+@class ATOMAskPage;
 
 @interface ATOMCollectionViewModel : NSObject
 @property (nonatomic, assign) NSInteger uid;
@@ -18,7 +18,7 @@
 @property (nonatomic, copy) NSString *imageURL;
 @property (nonatomic, assign) NSInteger totalPSNumber;
 
-- (void)setViewModelData:(ATOMHomeImage *)homeImage;
+- (void)setViewModelData:(ATOMAskPage *)homeImage;
 
 
 @end

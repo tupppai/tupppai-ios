@@ -8,7 +8,7 @@
 
 #import "ATOMTipButton.h"
 #import "DDTipLabelVM.h"
-#import "DDAskPageVM.h"
+#import "DDPageVM.h"
 
 @interface ATOMTipButton ()
 
@@ -56,7 +56,7 @@
     return self;
 }
 
-- (void)config:(DDAskPageVM*)askVM andVM:(DDTipLabelVM*)vm {
+- (void)config:(DDPageVM*)askVM andVM:(DDTipLabelVM*)vm {
     
 }
 - (NSDictionary *)attributeDic {

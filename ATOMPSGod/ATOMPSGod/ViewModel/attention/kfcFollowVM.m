@@ -15,7 +15,7 @@
 #import "ATOMComment.h"
 #import "DDCommentVM.h"
 #import "DDBaseService.h"
-#import "DDAskPageVM.h"
+#import "DDPageVM.h"
 @implementation kfcFollowVM
 
 - (instancetype)init {
@@ -80,13 +80,13 @@
     }
 
 }
--(DDAskPageVM*)generateAskPageViewModel {
+-(DDPageVM*)generateAskPageViewModel {
 
-    DDAskPageVM* askPVM = [DDAskPageVM new];
+    DDPageVM* askPVM = [DDPageVM new];
     askPVM.ID = _askID;
     askPVM.userID = _userID;
-    askPVM.userName = _userName;
-    askPVM.likeNumber = _likeNumber;
+    askPVM.username = _userName;
+    askPVM.likeCount = _likeNumber;
     askPVM.liked = _liked;
     askPVM.commentNumber = _commentNumber;
     askPVM.liked = _liked;
@@ -94,8 +94,8 @@
     askPVM.replierArray = _replierArray;
     askPVM.width = _width;
     askPVM.height = _height;
-    askPVM.userImageURL = _pageImageURL;
-    askPVM.shareNumber = _shareNumber;
+    askPVM.imageURL = _pageImageURL;
+    askPVM.shareCount = _shareNumber;
     askPVM.totalPSNumber = _totalPSNumber;
     askPVM.publishTime = _publishTime;
     askPVM.collected = _collected;

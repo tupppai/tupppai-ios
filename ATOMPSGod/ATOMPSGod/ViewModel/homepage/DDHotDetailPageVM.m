@@ -7,8 +7,8 @@
 //
 
 #import "DDHotDetailPageVM.h"
-#import "DDAskPageVM.h"
-#import "ATOMDetailImage.h"
+#import "DDPageVM.h"
+#import "ATOMDetailPage.h"
 #import "ATOMImageTipLabel.h"
 #import "DDTipLabelVM.h"
 #import "ATOMComment.h"
@@ -26,18 +26,18 @@
     return self;
 }
 
-- (void)setViewModelDataWithHomeImage:(DDAskPageVM *)askPageViewModel {
+- (void)setViewModelDataWithHomeImage:(DDPageVM *)askPageViewModel {
     _type = 1;
     _ID = askPageViewModel.ID;
     _askID = askPageViewModel.ID;
     _uid = askPageViewModel.userID;
-    _userName = askPageViewModel.userName;
+    _userName = askPageViewModel.username;
     _userSex = askPageViewModel.userSex;
-    _userImageURL = askPageViewModel.userImageURL;
+    _userImageURL = askPageViewModel.imageURL;
     _avatarURL = askPageViewModel.avatarURL;
     _publishTime = askPageViewModel.publishTime;
-    _likeNumber = askPageViewModel.likeNumber;
-    _shareNumber = askPageViewModel.shareNumber;
+    _likeNumber = askPageViewModel.likeCount;
+    _shareNumber = askPageViewModel.shareCount;
     _commentNumber = askPageViewModel.commentNumber;
     _width = askPageViewModel.width;
     _height = askPageViewModel.height;
@@ -46,7 +46,7 @@
     _collected = askPageViewModel.collected;
 }
 
-- (void)setViewModelDataWithDetailImage:(ATOMDetailImage *)detailImage {
+- (void)setViewModelDataWithDetailImage:(ATOMDetailPage *)detailImage {
     _collected = detailImage.collected;
     _type = detailImage.type;
     _ID = detailImage.detailID;

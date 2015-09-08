@@ -8,10 +8,10 @@
 
 #import "ATOMMyUploadViewController.h"
 #import "ATOMMyUploadCollectionViewCell.h"
-#import "DDHotDetailVC.h"
+#import "DDDetailPageVC.h"
 #import "DDCommentVC.h"
-#import "ATOMHomeImage.h"
-#import "DDAskPageVM.h"
+#import "ATOMAskPage.h"
+#import "DDPageVM.h"
 #import "ATOMAskViewModel.h"
 #import "PWRefreshFooterCollectionView.h"
 #import "DDMyAskManager.h"
@@ -67,8 +67,8 @@ static int collumnNumber = 3;
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     [DDMyAskManager getMyAsk:param withBlock:^(NSMutableArray *resultArray) {
-        for (ATOMHomeImage *homeImage in resultArray) {
-            DDAskPageVM *homepageViewModel = [DDAskPageVM new];
+        for (ATOMAskPage *homeImage in resultArray) {
+            DDPageVM *homepageViewModel = [DDPageVM new];
             [homepageViewModel setViewModelData:homeImage];
             ATOMAskViewModel *askViewModel = [ATOMAskViewModel new];
             [askViewModel setViewModelData:homeImage];
@@ -93,8 +93,8 @@ static int collumnNumber = 3;
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     [DDMyAskManager getMyAsk:param withBlock:^(NSMutableArray *resultArray) {
-        for (ATOMHomeImage *homeImage in resultArray) {
-            DDAskPageVM *homepageViewModel = [DDAskPageVM new];
+        for (ATOMAskPage *homeImage in resultArray) {
+            DDPageVM *homepageViewModel = [DDPageVM new];
             [homepageViewModel setViewModelData:homeImage];
             ATOMAskViewModel *askViewModel = [ATOMAskViewModel new];
             [askViewModel setViewModelData:homeImage];
@@ -162,7 +162,7 @@ static int collumnNumber = 3;
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     ATOMAskViewModel *askViewModel = _dataSource[indexPath.row];
-    DDAskPageVM *homepageViewModel = _homeImageDataSource[indexPath.row];
+    DDPageVM *homepageViewModel = _homeImageDataSource[indexPath.row];
     if ([askViewModel.totalPSNumber integerValue] == 0) {
         
         DDCommentVC* mvc = [DDCommentVC new];
@@ -171,7 +171,7 @@ static int collumnNumber = 3;
         [self pushViewController:mvc animated:YES];
 
     } else {
-        DDHotDetailVC *hdvc = [DDHotDetailVC new];
+        DDDetailPageVC *hdvc = [DDDetailPageVC new];
         hdvc.fold = 0;
         hdvc.askVM = homepageViewModel;
         [self pushViewController:hdvc animated:YES];

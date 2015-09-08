@@ -9,14 +9,14 @@
 #import "DDMsgCommentVC.h"
 #import "DDCommentMsgVM.h"
 #import "ATOMCommentMessageTableViewCell.h"
-#import "DDHotDetailVC.h"
+#import "DDDetailPageVC.h"
 #import "ATOMCommentDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
 #import "DDMsgCommentModel.h"
 #import "DDCommentMsg.h"
 #import "DDCommentMsgVM.h"
-#import "ATOMHomeImage.h"
-#import "DDAskPageVM.h"
+#import "ATOMAskPage.h"
+#import "DDPageVM.h"
 #import "RefreshFooterTableView.h"
 
 #import "DDCommentVC.h"
@@ -108,7 +108,7 @@
 
             } else {
                 //进入热门详情
-                DDHotDetailVC *hdvc = [DDHotDetailVC new];
+                DDDetailPageVC *hdvc = [DDDetailPageVC new];
                 hdvc.askVM = viewModel.homepageViewModel;
                 [self pushViewController:hdvc animated:YES];
             }

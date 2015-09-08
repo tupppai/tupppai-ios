@@ -1,73 +1,70 @@
 //
-//  ATOMHomeImage.m
+//  ATOMDetailImage.m
 //  ATOMPSGod
 //
-//  Created by atom on 15/3/18.
+//  Created by atom on 15/3/20.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMHomeImage.h"
+#import "ATOMDetailPage.h"
 
-@implementation ATOMHomeImage
+@implementation ATOMDetailPage
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
-             @"imageID" : @"id",
+             @"detailID" : @"id",
+             @"askID":@"ask_id",
              @"uid" : @"uid",
-             @"askID" : @"ask_id",
              @"nickname" : @"nickname",
              @"avatar" : @"avatar",
-             @"uploadTime" : @"create_time",
+             @"replyTime" : @"create_time",
              @"imageURL" : @"image_url",
-             @"userDescription" : @"desc",
+             @"replyDescription" : @"desc",
              @"isDownload" : @"is_download",
              @"totalPraiseNumber" : @"up_count",
              @"totalCommentNumber" : @"comment_count",
              @"totalShareNumber" : @"share_count",
              @"totalWXShareNumber" : @"weixin_share_count",
-             @"totalWorkNumber" : @"reply_count",
              @"imageWidth" : @"image_width",
              @"imageHeight" : @"image_height",
-             @"liked" :@"uped",
-             @"collected" : @"collected",
-             @"homePageType" :  @"homePageType",
-             @"type" : @"type",
+             @"liked" : @"uped",
+             @"collected":@"collected",
+             @"type":@"type",
              };
 }
 
 + (NSDictionary *)FMDBColumnsByPropertyKey {
     return @{
+             @"detailID" : @"detailID",
              @"imageID" : @"imageID",
-             @"askID" : @"askID",
              @"uid" : @"uid",
              @"nickname" : @"nickname",
              @"avatar" : @"avatar",
-             @"uploadTime" : @"uploadTime",
+             @"replyTime" : @"replyTime",
              @"imageURL" : @"imageURL",
-             @"userDescription" : @"userDescription",
+             @"replyDescription" : @"replyDescription",
              @"isDownload" : @"isDownload",
              @"totalPraiseNumber" : @"totalPraiseNumber",
              @"totalCommentNumber" : @"totalCommentNumber",
              @"totalShareNumber" : @"totalShareNumber",
              @"totalWXShareNumber" : @"totalWXShareNumber",
-             @"totalWorkNumber" : @"totalWorkNumber",
              @"imageWidth" : @"imageWidth",
              @"imageHeight" : @"imageHeight",
-             @"tipLabelArray" :@"tipLabelArray",
-             @"replierArray" : @"replierArray",
-             @"homePageType":  @"homePageType",
-             @"liked" :@"liked",
+             @"clickTime" : @"clickTime",
+             @"hotCommentArray" : @"hotCommentArray",
+             @"liked" : @"liked",
              @"collected":@"collected",
-             @"type":@"type"
+             @"type":@"type",
+             @"askID":@"askID",
              };
 }
 
 + (NSArray *)FMDBPrimaryKeys {
-    return @[@"imageID"];
+    return @[@"detailID"];
 }
 
 + (NSString *)FMDBTableName {
-    return @"ATOMHomeImage";
+    return @"ATOMDetailPage";
 }
 
 @end

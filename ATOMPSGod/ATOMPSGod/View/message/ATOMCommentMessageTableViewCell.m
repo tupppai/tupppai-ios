@@ -8,7 +8,7 @@
 
 #import "ATOMCommentMessageTableViewCell.h"
 #import "DDCommentMsgVM.h"
-#import "DDAskPageVM.h"
+#import "DDPageVM.h"
 
 @implementation ATOMCommentMessageTableViewCell
 
@@ -79,7 +79,7 @@ static int padding10 = 10;
     _replyTimeLabel.text = _commentMessageViewModel.publishTime;
     _userSexImageView.image = [UIImage imageNamed:_commentMessageViewModel.userSex];
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:commentMessageViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
-    [_workImageView setImageWithURL:[NSURL URLWithString:commentMessageViewModel.homepageViewModel.userImageURL]];
+    [_workImageView setImageWithURL:[NSURL URLWithString:commentMessageViewModel.homepageViewModel.imageURL]];
     [self setNeedsLayout];
 }
 

@@ -7,11 +7,11 @@
 //
 
 #import "ATOMReplyViewModel.h"
-#import "ATOMHomeImage.h"
+#import "ATOMAskPage.h"
 
 @implementation ATOMReplyViewModel
 
-- (void)setViewModelData:(ATOMHomeImage *)homeImage {
+- (void)setViewModelData:(ATOMAskPage *)homeImage {
     _imageURL = homeImage.imageURL;
 }
 

@@ -8,15 +8,15 @@
 
 #import "DDCommentMsgVM.h"
 #import "DDCommentMsg.h"
-#import "ATOMHomeImage.h"
-#import "DDAskPageVM.h"
+#import "ATOMAskPage.h"
+#import "DDPageVM.h"
 
 @implementation DDCommentMsgVM
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _homepageViewModel = [DDAskPageVM new];
+        _homepageViewModel = [DDPageVM new];
     }
     return self;
 }

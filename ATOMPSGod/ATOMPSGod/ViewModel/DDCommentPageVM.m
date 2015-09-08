@@ -22,21 +22,21 @@
     return self;
 }
 
--(void)setCommonViewModelWithAsk:(DDAskPageVM*)model {
+-(void)setCommonViewModelWithAsk:(DDPageVM*)model {
     _type = 1;
     _uid = model.userID;
     _askID = model.ID;
     _pageID = model.ID;
-    _pageImageURL = model.userImageURL;
-    _pageImage = model.image;
+    _pageImageURL = model.imageURL;
+//    _pageImage = model.image;
     _avatarURL = model.avatarURL;
-    _likeNumber = model.likeNumber;
-    _shareNumber = model.shareNumber;
+    _likeNumber = model.likeCount;
+    _shareNumber = model.shareCount;
     _commentNumber = model.commentNumber;
     _width = model.width;
     _height = model.height;
-    _userName = model.userName;
-    _pageImage = model.image;
+    _userName = model.username;
+//    _pageImage = model.image;
     _liked = model.liked;
     _collected = model.collected;
     _labelArray = model.labelArray;
@@ -83,23 +83,23 @@
     _labelArray = model.labelArray;
 }
 
--(DDAskPageVM*)generateAskPageViewModel {
-    DDAskPageVM* askPageViewModel = [DDAskPageVM new];
+-(DDPageVM*)generateAskPageViewModel {
+    DDPageVM* askPageViewModel = [DDPageVM new];
     if (_askID) {
         askPageViewModel.ID = _askID ;
     } else {
         askPageViewModel.ID = _pageID ;
     }
-    askPageViewModel.userImageURL = _pageImageURL;
-    askPageViewModel.image = _pageImage;
+    askPageViewModel.imageURL = _pageImageURL;
+//    askPageViewModel.image = _pageImage;
     askPageViewModel.avatarURL = _avatarURL;
-    askPageViewModel.likeNumber = _likeNumber;
-    askPageViewModel.shareNumber = _shareNumber;
+    askPageViewModel.likeCount = _likeNumber;
+    askPageViewModel.shareCount = _shareNumber;
     askPageViewModel.commentNumber = _commentNumber;
     askPageViewModel.width = _width;
     askPageViewModel.height = _height;
-    askPageViewModel.userName = _userName;
-    askPageViewModel.image = _pageImage;
+    askPageViewModel.username = _userName;
+//    askPageViewModel.image = _pageImage;
     askPageViewModel.liked = _liked;
     askPageViewModel.collected = _collected;
     askPageViewModel.labelArray = _labelArray;

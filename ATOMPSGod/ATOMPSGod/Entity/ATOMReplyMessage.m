@@ -7,7 +7,7 @@
 //
 
 #import "ATOMReplyMessage.h"
-@class ATOMHomeImage;
+@class ATOMAskPage;
 
 @implementation ATOMReplyMessage
 

@@ -8,7 +8,7 @@
 
 #import "DDMyReplyManager.h"
 #import "ATOMUser.h"
-#import "ATOMHomeImage.h"
+#import "ATOMAskPage.h"
 #import "ATOMImageTipLabel.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
@@ -19,7 +19,7 @@
     [DDService getMyReply:param withBlock:^(NSArray *data) {
             NSMutableArray *returnArray = [NSMutableArray array];
             for (int i = 0; i < data.count; i++) {
-                ATOMHomeImage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMHomeImage class] fromJSONDictionary:[data objectAtIndex:i] error:NULL];
+                ATOMAskPage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMAskPage class] fromJSONDictionary:[data objectAtIndex:i] error:NULL];
                 homeImage.tipLabelArray = [NSMutableArray array];
                 NSArray *labelDataArray = [[data objectAtIndex:i]objectForKey:@"labels"];
                 if (labelDataArray.count > 0) {

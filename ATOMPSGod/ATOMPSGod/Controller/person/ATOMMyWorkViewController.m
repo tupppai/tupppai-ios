@@ -8,10 +8,10 @@
 
 #import "ATOMMyWorkViewController.h"
 #import "ATOMMyWorkCollectionViewCell.h"
-#import "DDHotDetailVC.h"
+#import "DDDetailPageVC.h"
 //#import "ATOMShowReply.h"
-#import "ATOMHomeImage.h"
-#import "DDAskPageVM.h"
+#import "ATOMAskPage.h"
+#import "DDPageVM.h"
 #import "ATOMReplyViewModel.h"
 #import "PWRefreshFooterCollectionView.h"
 #import "DDMyReplyManager.h"
@@ -68,8 +68,8 @@ static int collumnNumber = 3;
 //    [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     [DDMyReplyManager getMyReply:param withBlock:^(NSMutableArray *resultArray) {
-        for (ATOMHomeImage *homeImage in resultArray) {
-            DDAskPageVM *homepageViewModel = [DDAskPageVM new];
+        for (ATOMAskPage *homeImage in resultArray) {
+            DDPageVM *homepageViewModel = [DDPageVM new];
             homepageViewModel.ID = homeImage.askID;
             [ws.homeImageDataSource addObject:homepageViewModel];
             ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];
@@ -96,8 +96,8 @@ static int collumnNumber = 3;
     [param setObject:@(15) forKey:@"size"];
     
     [DDMyReplyManager getMyReply:param withBlock:^(NSMutableArray *resultArray) {
-        for (ATOMHomeImage *homeImage in resultArray) {
-            DDAskPageVM *homepageViewModel = [DDAskPageVM new];
+        for (ATOMAskPage *homeImage in resultArray) {
+            DDPageVM *homepageViewModel = [DDPageVM new];
             [homepageViewModel setViewModelData:homeImage];
             ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];
             [replyViewModel setViewModelData:homeImage];
@@ -160,7 +160,7 @@ static int collumnNumber = 3;
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    DDHotDetailVC *hdvc = [DDHotDetailVC new];
+    DDDetailPageVC *hdvc = [DDDetailPageVC new];
     hdvc.askVM = _homeImageDataSource[indexPath.row];
     hdvc.fold = 1;
     [self pushViewController:hdvc animated:YES];

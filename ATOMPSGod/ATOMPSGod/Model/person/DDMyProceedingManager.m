@@ -7,7 +7,7 @@
 //
 
 #import "DDMyProceedingManager.h"
-#import "ATOMHomeImage.h"
+#import "ATOMAskPage.h"
 #import "ATOMImageTipLabel.h"
 
 @implementation DDMyProceedingManager
@@ -16,7 +16,7 @@
     [DDService getMyProceeding:param withBlock:^(NSArray *data) {
             NSMutableArray *resultArray = [NSMutableArray array];
             for (int i = 0; i < data.count; i++) {
-                ATOMHomeImage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMHomeImage class] fromJSONDictionary:data[i] error:NULL];
+                ATOMAskPage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMAskPage class] fromJSONDictionary:data[i] error:NULL];
                 homeImage.tipLabelArray = [NSMutableArray array];
                 NSArray *labelDataArray = data[i][@"labels"];
                 if (labelDataArray.count) {

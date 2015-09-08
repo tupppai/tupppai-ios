@@ -7,11 +7,11 @@
 //
 
 #import "ATOMProceedingViewModel.h"
-#import "ATOMHomeImage.h"
+#import "ATOMAskPage.h"
 
 @implementation ATOMProceedingViewModel
 
-- (void)setViewModelData:(ATOMHomeImage *)homeImage {
+- (void)setViewModelData:(ATOMAskPage *)homeImage {
     _ID = homeImage.imageID;
     _userID = homeImage.uid;
     _userName = homeImage.nickname;

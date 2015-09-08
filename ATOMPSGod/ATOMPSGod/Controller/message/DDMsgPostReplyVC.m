@@ -9,13 +9,13 @@
 #import "DDMsgPostReplyVC.h"
 #import "ATOMNoDataView.h"
 #import "ATOMTopicReplyMessageTableViewCell.h"
-#import "DDHotDetailVC.h"
+#import "DDDetailPageVC.h"
 #import "ATOMOtherPersonViewController.h"
 #import "DDCommentVC.h"
 #import "ATOMReplyMessage.h"
 #import "ATOMReplyMessageViewModel.h"
-#import "ATOMHomeImage.h"
-#import "DDAskPageVM.h"
+#import "ATOMAskPage.h"
+#import "DDPageVM.h"
 #import "DDMsgReplyModel.h"
 #import "RefreshFooterTableView.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
@@ -159,7 +159,7 @@
 //                mvc.delegate = self;
                 [self pushViewController:mvc animated:YES];
             } else {
-                DDHotDetailVC *hdvc = [DDHotDetailVC new];
+                DDDetailPageVC *hdvc = [DDDetailPageVC new];
                 hdvc.askVM = viewModel.homepageViewModel;
                 [self pushViewController:hdvc animated:YES];
             }

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ATOMTotalPSView.h"
 
-@class DDAskPageVM;
+@class DDPageVM;
 @class kfcButton;
 
 @interface kfcHotCell : UITableViewCell
@@ -32,5 +32,5 @@
 @property (nonatomic, strong) ATOMTotalPSView *totalPSLabel;
 @property (nonatomic, strong) NSMutableArray *repliers;
 
-- (void)configCell:(DDAskPageVM *)viewModel;
+- (void)configCell:(DDPageVM *)viewModel;
 @end

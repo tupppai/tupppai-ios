@@ -7,7 +7,7 @@
 //
 
 #import "kfcPageView.h"
-#import "DDAskPageVM.h"
+#import "DDPageVM.h"
 #import "kfcButton.h"
 #import "ATOMTipButton.h"
 #import "DDTipLabelVM.h"

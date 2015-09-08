@@ -8,7 +8,7 @@
 
 //评论VC的Header
 #import "ATOMBaseView.h"
-#import "DDAskPageVM.h"
+#import "DDPageVM.h"
 #import "DDHotDetailPageVM.h"
 #import "DDCommentPageVM.h"
 #import "kfcButton.h"

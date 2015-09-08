@@ -9,7 +9,7 @@
 #import "ATOMBaseModel.h"
 @class ATOMUser;
 
-@interface ATOMHomeImage : ATOMBaseModel <MTLFMDBSerializing>
+@interface ATOMAskPage : ATOMBaseModel <MTLFMDBSerializing>
 
 /**
  *  作品ID
@@ -80,38 +80,6 @@
  *  回复人数组
  */
 @property (nonatomic, strong) NSMutableArray *replierArray;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

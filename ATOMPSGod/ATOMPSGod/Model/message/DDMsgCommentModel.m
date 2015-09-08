@@ -9,7 +9,7 @@
 #import "DDMsgCommentModel.h"
 #import "DDSessionManager.h"
 #import "DDCommentMsg.h"
-#import "ATOMHomeImage.h"
+#import "ATOMAskPage.h"
 #import "ATOMImageTipLabel.h"
 
 @implementation DDMsgCommentModel
@@ -23,7 +23,7 @@
                 for (int i = 0; i < dataArray.count; i++) {
                     DDCommentMsg *commentMessage = [MTLJSONAdapter modelOfClass:[DDCommentMsg class] fromJSONDictionary:[[dataArray objectAtIndex:i] objectForKey:@"comment"] error:NULL];
                     commentMessage.type = [[[dataArray objectAtIndex:i] objectForKey:@"type"] integerValue];
-                    ATOMHomeImage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMHomeImage class] fromJSONDictionary:[[dataArray objectAtIndex:i] objectForKey:@"ask"] error:NULL];
+                    ATOMAskPage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMAskPage class] fromJSONDictionary:[[dataArray objectAtIndex:i] objectForKey:@"ask"] error:NULL];
                     homeImage.tipLabelArray = [NSMutableArray array];
                     NSArray *labelDataArray = [[[dataArray objectAtIndex:i] objectForKey:@"ask"]objectForKey:@"labels"];
                     if (labelDataArray.count) {

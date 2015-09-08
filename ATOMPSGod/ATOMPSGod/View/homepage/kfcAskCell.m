@@ -126,12 +126,12 @@
     
 }
 
-- (void)configCell:(DDAskPageVM *)viewModel {
-    _usernameLabel.text = viewModel.userName;
+- (void)configCell:(DDPageVM *)viewModel {
+    _usernameLabel.text = viewModel.username;
     [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
-    _likeButton.number = viewModel.likeNumber;
+    _likeButton.number = viewModel.likeCount;
     _likeButton.selected = viewModel.liked;
-    _wechatButton.number = viewModel.shareNumber;
+    _wechatButton.number = viewModel.shareCount;
     _commentButton.number = viewModel.commentNumber;
     [_imageViewMain mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(viewModel.height)).with.priorityHigh();
@@ -141,12 +141,12 @@
     if (viewModel.image) {
         _imageViewMain.image = viewModel.image;
     } else {
-        [_imageViewMain setImageWithURL:[NSURL URLWithString:viewModel.userImageURL] placeholderImage:[UIImage imageNamed:@"placeholderImage_1"]];
+        [_imageViewMain setImageWithURL:[NSURL URLWithString:viewModel.imageURL] placeholderImage:[UIImage imageNamed:@"placeholderImage_1"]];
     }
     [self addTipLabel:viewModel];
 }
 
-- (void)addTipLabel:(DDAskPageVM*)vm {
+- (void)addTipLabel:(DDPageVM*)vm {
     //    移除旧的标签
     for (UIView * subView in _imageViewMain.subviews) {
         if ([subView isKindOfClass:[ATOMTipButton class]]) {

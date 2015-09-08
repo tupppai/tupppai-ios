@@ -8,8 +8,8 @@
 
 #import "DDShareVC.h"
 #import "ATOMShareView.h"
-#import "DDHotDetailVC.h"
-#import "DDAskPageVM.h"
+#import "DDDetailPageVC.h"
+#import "DDPageVM.h"
 #import "DDHomeVC.h"
 
 @interface DDShareVC ()
@@ -38,7 +38,7 @@
 #pragma mark - Click Event
 
 - (void)clickRightButtonItem:(UIBarButtonItem *)barButtonItem {
-    DDHotDetailVC *hdvc = [DDHotDetailVC new];
+    DDDetailPageVC *hdvc = [DDDetailPageVC new];
     hdvc.askVM = _askPageViewModel;
     DDHomeVC *hvc = self.navigationController.viewControllers[0];
     [self pushViewController:hdvc animated:YES];

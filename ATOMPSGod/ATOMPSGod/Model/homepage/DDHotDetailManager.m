@@ -8,7 +8,7 @@
 
 #import "DDHotDetailManager.h"
 #import "DDSessionManager.h"
-#import "ATOMDetailImage.h"
+#import "ATOMDetailPage.h"
 #import "ATOMComment.h"
 #import "ATOMCommentDAO.h"
 #import "ATOMDetailImageDAO.h"
@@ -39,10 +39,10 @@
     return [[DDSessionManager shareHTTPSessionManager] GET:[NSString stringWithFormat:@"ask/show/%d", (int)imageID] parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         if ([ responseObject objectForKey:@"data"]) {
             NSMutableArray *detailOfHomePageArray = [NSMutableArray array];
-            NSArray *imageDataArray = [ responseObject objectForKey:@"data"][@"replies"];
+            NSArray *imageDataArray = [[responseObject objectForKey:@"data"] objectForKey:@"replies"];
             NSDate *clickTime = [NSDate date];
             for (int i = 0; i < imageDataArray.count; i++) {
-                ATOMDetailImage *detailImage = [MTLJSONAdapter modelOfClass:[ATOMDetailImage class] fromJSONDictionary:imageDataArray[i] error:NULL];
+                ATOMDetailPage *detailImage = [MTLJSONAdapter modelOfClass:[ATOMDetailPage class] fromJSONDictionary:imageDataArray[i] error:NULL];
                 detailImage.imageID = imageID;
                 detailImage.clickTime = [clickTime timeIntervalSince1970];
                 detailImage.tipLabelArray = [NSMutableArray array];
@@ -91,7 +91,7 @@
         [self clearPartOfDetailImages];
     }
     
-    for (ATOMDetailImage *detailImage in detailImages) {
+    for (ATOMDetailPage *detailImage in detailImages) {
         if ([self.detailImageDAO isExistDetailImage:detailImage]) {
             [self.detailImageDAO updateDetailImage:detailImage];
         } else {
@@ -113,7 +113,7 @@
     NSArray *array = [self.detailImageDAO selectDetailImagesByImageID:imageID];
     //更新点击时间
     [self updateClickTime:imageID];
-    for (ATOMDetailImage *detailImage in array) {
+    for (ATOMDetailPage *detailImage in array) {
         detailImage.hotCommentArray = [self.commentDAO selectCommentsByDetailImageID:detailImage.detailID];
     }
     return array;
@@ -146,7 +146,7 @@
         NSInteger homeImageID = [homeImageIDArray[i] integerValue];
         NSArray *detailImageArray = [self.detailImageDAO selectDetailImagesByImageID:homeImageID];
         //删除评论
-        for (ATOMDetailImage *detailImage in detailImageArray) {
+        for (ATOMDetailPage *detailImage in detailImageArray) {
             [self.commentDAO clearCommentsByDetailImageID:detailImage.detailID];
             //删除沙盒中DetailImage文件夹中对应的记录
 //            NSString *filename = [directory stringByAppendingPathComponent:[NSString stringWithFormat:@"ATOMIMAGE%d-%d.jpg", (int)detailImage.imageID, (int)detailImage.imageID]];
@@ -165,7 +165,7 @@
 - (void)updateClickTime:(NSInteger)imageID {
     NSArray *detailImageArray = [self.detailImageDAO selectDetailImagesByImageID:imageID];
     NSDate *clickTime = [NSDate date];
-    for (ATOMDetailImage *detailImage in detailImageArray) {
+    for (ATOMDetailPage *detailImage in detailImageArray) {
         detailImage.clickTime = [clickTime timeIntervalSince1970];
         [self.detailImageDAO updateDetailImage:detailImage];
     }

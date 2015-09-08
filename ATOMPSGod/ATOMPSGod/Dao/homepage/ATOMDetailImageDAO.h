@@ -7,15 +7,15 @@
 //
 
 #import "ATOMBaseDAO.h"
-@class ATOMDetailImage;
+@class ATOMDetailPage;
 
 @interface ATOMDetailImageDAO : ATOMBaseDAO
 
-- (void)insertDetailImage:(ATOMDetailImage *)detailImage;
-- (void)updateDetailImage:(ATOMDetailImage *)detailImage;
+- (void)insertDetailImage:(ATOMDetailPage *)detailImage;
+- (void)updateDetailImage:(ATOMDetailPage *)detailImage;
 - (NSArray *)selectDetailImagesByImageID:(NSInteger)imageID;
 - (NSArray *)selectHomeImageIDOrderByClickTime;
-- (BOOL)isExistDetailImage:(ATOMDetailImage *)detailImage;
+- (BOOL)isExistDetailImage:(ATOMDetailPage *)detailImage;
 - (void)clearDetailImagsByImageID:(NSInteger)imageID;
 - (NSArray *)selectDetailImages;
 

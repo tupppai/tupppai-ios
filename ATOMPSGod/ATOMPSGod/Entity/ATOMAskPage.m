@@ -1,70 +1,73 @@
 //
-//  ATOMDetailImage.m
+//  ATOMHomeImage.m
 //  ATOMPSGod
 //
-//  Created by atom on 15/3/20.
+//  Created by atom on 15/3/18.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMDetailImage.h"
+#import "ATOMAskPage.h"
 
-@implementation ATOMDetailImage
+@implementation ATOMAskPage
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
-             @"detailID" : @"id",
-             @"askID":@"ask_id",
+             @"imageID" : @"id",
              @"uid" : @"uid",
+             @"askID" : @"ask_id",
              @"nickname" : @"nickname",
              @"avatar" : @"avatar",
-             @"replyTime" : @"create_time",
+             @"uploadTime" : @"create_time",
              @"imageURL" : @"image_url",
-             @"replyDescription" : @"desc",
+             @"userDescription" : @"desc",
              @"isDownload" : @"is_download",
              @"totalPraiseNumber" : @"up_count",
              @"totalCommentNumber" : @"comment_count",
              @"totalShareNumber" : @"share_count",
              @"totalWXShareNumber" : @"weixin_share_count",
+             @"totalWorkNumber" : @"reply_count",
              @"imageWidth" : @"image_width",
              @"imageHeight" : @"image_height",
-             @"liked" : @"uped",
-             @"collected":@"collected",
-             @"type":@"type",
+             @"liked" :@"uped",
+             @"collected" : @"collected",
+             @"homePageType" :  @"homePageType",
+             @"type" : @"type",
              };
 }
 
 + (NSDictionary *)FMDBColumnsByPropertyKey {
     return @{
-             @"detailID" : @"detailID",
              @"imageID" : @"imageID",
+             @"askID" : @"askID",
              @"uid" : @"uid",
              @"nickname" : @"nickname",
              @"avatar" : @"avatar",
-             @"replyTime" : @"replyTime",
+             @"uploadTime" : @"uploadTime",
              @"imageURL" : @"imageURL",
-             @"replyDescription" : @"replyDescription",
+             @"userDescription" : @"userDescription",
              @"isDownload" : @"isDownload",
              @"totalPraiseNumber" : @"totalPraiseNumber",
              @"totalCommentNumber" : @"totalCommentNumber",
              @"totalShareNumber" : @"totalShareNumber",
              @"totalWXShareNumber" : @"totalWXShareNumber",
+             @"totalWorkNumber" : @"totalWorkNumber",
              @"imageWidth" : @"imageWidth",
              @"imageHeight" : @"imageHeight",
-             @"clickTime" : @"clickTime",
-             @"hotCommentArray" : @"hotCommentArray",
-             @"liked" : @"liked",
+             @"tipLabelArray" :@"tipLabelArray",
+             @"replierArray" : @"replierArray",
+             @"homePageType":  @"homePageType",
+             @"liked" :@"liked",
              @"collected":@"collected",
-             @"type":@"type",
-             @"askID":@"askID",
+             @"type":@"type"
              };
 }
 
 + (NSArray *)FMDBPrimaryKeys {
-    return @[@"detailID"];
+    return @[@"imageID"];
 }
 
 + (NSString *)FMDBTableName {
-    return @"ATOMDetailImage";
+    return @"ATOMAskPage";
 }
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "ATOMDetailImageDAO.h"
-#import "ATOMDetailImage.h"
+#import "ATOMDetailPage.h"
 
 @implementation ATOMDetailImageDAO
 
@@ -18,7 +18,7 @@
     return self;
 }
 
-- (void)insertDetailImage:(ATOMDetailImage *)detailImage {
+- (void)insertDetailImage:(ATOMDetailPage *)detailImage {
     dispatch_queue_t q = dispatch_queue_create("insert", NULL);
     dispatch_async(q, ^{
         [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
@@ -34,7 +34,7 @@
     });
 }
 
-- (void)updateDetailImage:(ATOMDetailImage *)detailImage {
+- (void)updateDetailImage:(ATOMDetailPage *)detailImage {
     dispatch_queue_t q = dispatch_queue_create("update", NULL);
     dispatch_async(q, ^{
         [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
@@ -58,7 +58,7 @@
         NSArray *param = @[@(imageID)];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {
-            ATOMDetailImage *detailImage = [MTLFMDBAdapter modelOfClass:[ATOMDetailImage class] fromFMResultSet:rs error:NULL];
+            ATOMDetailPage *detailImage = [MTLFMDBAdapter modelOfClass:[ATOMDetailPage class] fromFMResultSet:rs error:NULL];
             [muArray addObject:detailImage];
         }
         [rs close];
@@ -72,7 +72,7 @@
         NSString *stmt = @"select * from ATOMDetailImage";
         FMResultSet *rs = [db executeQuery:stmt];
         while ([rs next]) {
-            ATOMDetailImage *detailImage = [MTLFMDBAdapter modelOfClass:[ATOMDetailImage class] fromFMResultSet:rs error:NULL];
+            ATOMDetailPage *detailImage = [MTLFMDBAdapter modelOfClass:[ATOMDetailPage class] fromFMResultSet:rs error:NULL];
             [muArray addObject:detailImage];
         }
         [rs close];
@@ -93,14 +93,14 @@
     return [muArray copy];
 }
 
-- (BOOL)isExistDetailImage:(ATOMDetailImage *)detailImage {
+- (BOOL)isExistDetailImage:(ATOMDetailPage *)detailImage {
     __block BOOL flag;
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
         NSString *stmt = @"select * from ATOMDetailImage where detailID = ?";
         NSArray *param = @[@(detailImage.detailID)];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {
-            ATOMDetailImage *detailImage = [MTLFMDBAdapter modelOfClass:[ATOMDetailImage class] fromFMResultSet:rs error:NULL];
+            ATOMDetailPage *detailImage = [MTLFMDBAdapter modelOfClass:[ATOMDetailPage class] fromFMResultSet:rs error:NULL];
             if (detailImage) {
                 flag = YES;
             } else {

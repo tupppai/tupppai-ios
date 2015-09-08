@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DDAskPageVM.h"
+#import "DDPageVM.h"
 @class kfcButton;
 
 @interface kfcAskCell : UITableViewCell
@@ -27,6 +27,6 @@
 @property (nonatomic, strong) kfcButton *wechatButton;
 @property (nonatomic, strong) kfcButton *commentButton;
 
-- (void)configCell:(DDAskPageVM *)viewModel;
+- (void)configCell:(DDPageVM *)viewModel;
 
 @end

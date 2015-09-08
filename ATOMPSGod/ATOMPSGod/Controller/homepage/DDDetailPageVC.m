@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "DDHotDetailVC.h"
+#import "DDDetailPageVC.h"
 #import "kfcDetailCell.h"
 #import "ATOMCommentDetailViewController.h"
 #import "DDCropImageVC.h"
@@ -15,10 +15,10 @@
 #import "ATOMOtherPersonViewController.h"
 #import "DDHotDetailPageVM.h"
 #import "DDCommentVM.h"
-#import "ATOMDetailImage.h"
+#import "ATOMDetailPage.h"
 #import "ATOMComment.h"
 #import "DDHotDetailManager.h"
-#import "DDAskPageVM.h"
+#import "DDPageVM.h"
 #import "ATOMShareFunctionView.h"
 #import "kfcButton.h"
 #import "RefreshTableView.h"
@@ -34,7 +34,7 @@
 #import "DDCommentVC.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface DDHotDetailVC () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate,JTSImageViewControllerInteractionsDelegate>
+@interface DDDetailPageVC () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate,JTSImageViewControllerInteractionsDelegate>
 
 @property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
 @property (nonatomic, strong) UIView *hotDetailView;
@@ -51,8 +51,16 @@
 
 @end
 
-@implementation DDHotDetailVC
+@implementation DDDetailPageVC
 static NSString *CellIdentifier = @"HotDetailCell";
+
+-(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        
+    }
+    return self;
+}
 
 #pragma mark - Lazy Initialize
 
@@ -285,7 +293,7 @@ static NSString *CellIdentifier = @"HotDetailCell";
             [model setViewModelDataWithHomeImage:ws.askVM];
             [ws.dataSource addObject:model];
         }
-        for (ATOMDetailImage *detailImage in detailOfHomePageArray) {
+        for (ATOMDetailPage *detailImage in detailOfHomePageArray) {
             DDHotDetailPageVM *model = [DDHotDetailPageVM new];
             [model setViewModelDataWithDetailImage:detailImage];
             [ws.dataSource addObject:model];
@@ -310,7 +318,7 @@ static NSString *CellIdentifier = @"HotDetailCell";
     [param setObject:@(_fold) forKey:@"fold"];
     DDHotDetailManager *showDetailOfHomePage = [DDHotDetailManager new];
     [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.askVM.ID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
-        for (ATOMDetailImage *detailImage in detailOfHomePageArray) {
+        for (ATOMDetailPage *detailImage in detailOfHomePageArray) {
             DDHotDetailPageVM *model = [DDHotDetailPageVM new];
             [model setViewModelDataWithDetailImage:detailImage];
             model.labelArray = [ws.askVM.labelArray mutableCopy];
@@ -448,7 +456,7 @@ static NSString *CellIdentifier = @"HotDetailCell";
                 if (_selectedIndexPath.row == 0) {
                     //为了点赞第一个page，重新刷新时的数据能同步。
                     _askVM.liked = model.liked;
-                    _askVM.likeNumber = _selectedHotDetailCell.likeButton.number;
+                    _askVM.likeCount = _selectedHotDetailCell.likeButton.number;
                 }
             } else if (CGRectContainsPoint(_selectedHotDetailCell.wechatButton.frame, p)) {
                 if (_selectedIndexPath.row == 0) {

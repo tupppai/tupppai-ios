@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 //#import "ATOMAskPageViewModel.h"
 @class ATOMCommonImage;
-@class DDAskPageVM;
+@class DDPageVM;
 
 @interface kfcFollowVM : NSObject
 
@@ -37,6 +37,6 @@
 
 - (void)setViewModelData:(ATOMCommonImage *)commonImage;
 - (void)toggleLike;
--(DDAskPageVM*)generateAskPageViewModel;
+-(DDPageVM*)generateAskPageViewModel;
 
 @end

@@ -1,7 +1,7 @@
 
 #import <Foundation/Foundation.h>
 #import "kfcFollowVM.h"
-#import "DDAskPageVM.h"
+#import "DDPageVM.h"
 #import "DDHotDetailPageVM.h"
 
 @interface DDCommentPageVM : NSObject
@@ -26,11 +26,11 @@
 @property (nonatomic, strong) NSMutableArray *labelArray;
 
 
--(void)setCommonViewModelWithAsk:(DDAskPageVM*)model;
+-(void)setCommonViewModelWithAsk:(DDPageVM*)model;
 -(void)setCommonViewModelWithFollow:(kfcFollowVM*)model;
 -(void)setCommonViewModelWithHotDetail:(DDHotDetailPageVM*)model;
 
 - (void)toggleLike;
--(DDAskPageVM*)generateAskPageViewModel;
+-(DDPageVM*)generateAskPageViewModel;
 
 @end

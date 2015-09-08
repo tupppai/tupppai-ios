@@ -7,7 +7,7 @@
 //
 
 #import "kfcHotCell.h"
-#import "DDAskPageVM.h"
+#import "DDPageVM.h"
 #import "ATOMTipButton.h"
 #import "DDTipLabelVM.h"
 #import "ATOMReplierViewModel.h"
@@ -154,14 +154,14 @@
 
 
 
-- (void)configCell:(DDAskPageVM *)viewModel {
-    _usernameLabel.text = viewModel.userName;
+- (void)configCell:(DDPageVM *)viewModel {
+    _usernameLabel.text = viewModel.username;
     [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     
     _publishTimeLabel.text = viewModel.publishTime;
-    _likeButton.number = viewModel.likeNumber;
+    _likeButton.number = viewModel.likeCount;
     _likeButton.selected = viewModel.liked;
-    _wechatButton.number = viewModel.shareNumber;
+    _wechatButton.number = viewModel.shareCount;
     _commentButton.number = viewModel.commentNumber;
     _totalPSLabel.number = viewModel.totalPSNumber;
 
@@ -170,16 +170,16 @@
     }];
     [super updateConstraints];
 
-    if (viewModel.image) {
-        _imageViewMain.image = viewModel.image;
-    } else {
-        [_imageViewMain setImageWithURL:[NSURL URLWithString:viewModel.userImageURL] placeholderImage:[UIImage imageNamed:@"placeholderImage_1"]];
-    }
+//    if (viewModel.image) {
+//        _imageViewMain.image = viewModel.image;
+//    } else {
+        [_imageViewMain setImageWithURL:[NSURL URLWithString:viewModel.imageURL] placeholderImage:[UIImage imageNamed:@"placeholderImage_1"]];
+//    }
     [self addTipLabel:viewModel];
     [self addReplier:viewModel];
 
 }
-- (void)addTipLabel:(DDAskPageVM*)vm {
+- (void)addTipLabel:(DDPageVM*)vm {
 //    移除旧的标签
     for (UIView * subView in _imageViewMain.subviews) {
         if ([subView isKindOfClass:[ATOMTipButton class]]) {
@@ -200,7 +200,7 @@
     }
 }
 
-- (void)addReplier:(DDAskPageVM*)vm {
+- (void)addReplier:(DDPageVM*)vm {
     NSInteger min = MIN(vm.replierArray.count, kfcReplierDefaultQuantity);
     for (int i = 0; i < min; i++) {
         ATOMReplierViewModel *replierViewModel = vm.replierArray[i];

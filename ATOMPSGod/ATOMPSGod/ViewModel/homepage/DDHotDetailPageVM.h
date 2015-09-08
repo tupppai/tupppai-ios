@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-@class ATOMDetailImage;
-@class DDAskPageVM;
+@class ATOMDetailPage;
+@class DDPageVM;
 
 @interface DDHotDetailPageVM : NSObject
 
@@ -32,7 +32,7 @@
 @property (nonatomic, assign) BOOL liked;
 @property (nonatomic, assign) BOOL collected;
 
-- (void)setViewModelDataWithHomeImage:(DDAskPageVM *)askPageViewModel;
-- (void)setViewModelDataWithDetailImage:(ATOMDetailImage *)detailImage;
+- (void)setViewModelDataWithHomeImage:(DDPageVM *)askPageViewModel;
+- (void)setViewModelDataWithDetailImage:(ATOMDetailPage *)detailImage;
 - (void)toggleLike;
 @end

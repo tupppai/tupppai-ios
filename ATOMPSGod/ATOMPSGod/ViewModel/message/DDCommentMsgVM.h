@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 @class DDCommentMsg;
-@class DDAskPageVM;
+@class DDPageVM;
 
 @interface DDCommentMsgVM : NSObject
 
@@ -24,7 +24,7 @@
  *  1(ask) 2(reply)
  */
 @property (nonatomic, assign) NSInteger type;
-@property (nonatomic, strong) DDAskPageVM *homepageViewModel;
+@property (nonatomic, strong) DDPageVM *homepageViewModel;
 
 - (void)setViewModelData:(DDCommentMsg *)commentMessage;
 

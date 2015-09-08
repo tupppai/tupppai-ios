@@ -8,7 +8,7 @@
 
 #import "ATOMBaseModel.h"
 
-@interface ATOMDetailImage : ATOMBaseModel <MTLFMDBSerializing>
+@interface ATOMDetailPage : ATOMBaseModel <MTLFMDBSerializing>
 
 @property (nonatomic, assign) ATOMPageType type;
 /**

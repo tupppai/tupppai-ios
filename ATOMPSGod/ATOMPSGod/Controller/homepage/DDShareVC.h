@@ -8,10 +8,10 @@
 
 #import "DDBaseVC.h"
 #import "DDCommentPageVM.h"
-@class DDAskPageVM;
+@class DDPageVM;
 
 @interface DDShareVC : DDBaseVC
 
-@property (nonatomic, strong) DDAskPageVM *askPageViewModel;
+@property (nonatomic, strong) DDPageVM *askPageViewModel;
 
 @end

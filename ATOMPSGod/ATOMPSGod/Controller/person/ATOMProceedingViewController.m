@@ -9,10 +9,10 @@
 #import "ATOMProceedingViewController.h"
 #import "ATOMProceedingTableViewCell.h"
 #import "DDCropImageVC.h"
-#import "DDHotDetailVC.h"
+#import "DDDetailPageVC.h"
 #import "ATOMOtherPersonViewController.h"
-#import "ATOMHomeImage.h"
-#import "DDAskPageVM.h"
+#import "ATOMAskPage.h"
+#import "DDPageVM.h"
 #import "ATOMProceedingViewModel.h"
 #import "DDMyProceedingManager.h"
 #import "RefreshFooterTableView.h"
@@ -90,7 +90,7 @@
             [alertView show];
         } else if (CGRectContainsPoint(cell.userUploadImageView.frame, p)) {
 
-            DDAskPageVM* askPVM = _homeImageDataSource[indexPath.row];
+            DDPageVM* askPVM = _homeImageDataSource[indexPath.row];
 
             if ([askPVM.totalPSNumber integerValue] == 0) {
                 DDCommentVC* mvc = [DDCommentVC new];
@@ -99,7 +99,7 @@
                 [self pushViewController:mvc animated:YES];
 
             } else {
-                DDHotDetailVC *hdvc = [DDHotDetailVC new];
+                DDDetailPageVC *hdvc = [DDDetailPageVC new];
                 hdvc.askVM = askPVM;
                 hdvc.fold = 0;
                 [self pushViewController:hdvc animated:YES];
@@ -253,8 +253,8 @@
             [_dataSource removeAllObjects];
             [_homeImageDataSource removeAllObjects];
         }
-        for (ATOMHomeImage *homeImage in resultArray) {
-            DDAskPageVM *homepageViewModel = [DDAskPageVM new];
+        for (ATOMAskPage *homeImage in resultArray) {
+            DDPageVM *homepageViewModel = [DDPageVM new];
             [homepageViewModel setViewModelData:homeImage];
             [ws.homeImageDataSource addObject:homepageViewModel];
             ATOMProceedingViewModel *proceedingViewModel = [ATOMProceedingViewModel new];
@@ -277,8 +277,8 @@
     [param setObject:@(timestamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDMyProceedingManager getMyProceeding:param withBlock:^(NSMutableArray *resultArray) {
-        for (ATOMHomeImage *homeImage in resultArray) {
-            DDAskPageVM *homepageViewModel = [DDAskPageVM new];
+        for (ATOMAskPage *homeImage in resultArray) {
+            DDPageVM *homepageViewModel = [DDPageVM new];
             [homepageViewModel setViewModelData:homeImage];
             [ws.homeImageDataSource addObject:homepageViewModel];
             ATOMProceedingViewModel *proceedingViewModel = [ATOMProceedingViewModel new];

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DDImagePickerVC">
+            <connections>
+                <outlet property="collectionView" destination="l0L-B0-O8L" id="O19-7L-u9A"/>
+                <outlet property="selectedPhotoCountLabel" destination="Kc7-cO-7IC" id="Ktk-6W-oQO"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="l0L-B0-O8L">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="550"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="6bQ-RI-BAl">
+                        <size key="itemSize" width="100" height="100"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rQd-5K-TeE">
+                    <rect key="frame" x="0.0" y="550" width="600" height="50"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kc7-cO-7IC">
+                            <rect key="frame" x="510" y="15.5" width="20" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="bty-6D-dU0"/>
+                                <constraint firstAttribute="width" constant="20" id="uBC-hg-Fq1"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HuY-Zp-ohD">
+                            <rect key="frame" x="535" y="10" width="45" height="30"/>
+                            <state key="normal" title="下一步">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="Kc7-cO-7IC" firstAttribute="centerY" secondItem="HuY-Zp-ohD" secondAttribute="centerY" id="2vb-UZ-fyP"/>
+                        <constraint firstItem="Kc7-cO-7IC" firstAttribute="trailing" secondItem="HuY-Zp-ohD" secondAttribute="trailing" constant="-35" id="8No-YM-oOQ"/>
+                        <constraint firstAttribute="trailing" secondItem="HuY-Zp-ohD" secondAttribute="trailing" constant="20" id="CYf-0V-MHz"/>
+                        <constraint firstItem="Kc7-cO-7IC" firstAttribute="trailing" secondItem="HuY-Zp-ohD" secondAttribute="trailing" constant="-35" id="Dbf-vl-93G"/>
+                        <constraint firstAttribute="height" constant="50" id="jD9-yz-JpG"/>
+                        <constraint firstAttribute="centerY" secondItem="HuY-Zp-ohD" secondAttribute="centerY" id="ove-LT-W1o"/>
+                        <constraint firstItem="HuY-Zp-ohD" firstAttribute="leading" secondItem="Kc7-cO-7IC" secondAttribute="trailing" constant="5" id="pfd-TK-tXO"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="8No-YM-oOQ"/>
+                            <exclude reference="Dbf-vl-93G"/>
+                        </mask>
+                    </variation>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="rQd-5K-TeE" secondAttribute="bottom" id="9lc-Cz-4vt"/>
+                <constraint firstAttribute="trailing" secondItem="rQd-5K-TeE" secondAttribute="trailing" id="CuP-QN-D00"/>
+                <constraint firstItem="rQd-5K-TeE" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="GBX-zd-8XS"/>
+                <constraint firstAttribute="trailing" secondItem="l0L-B0-O8L" secondAttribute="trailing" id="UlD-D3-qMH"/>
+                <constraint firstItem="l0L-B0-O8L" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ajq-T5-bD9"/>
+                <constraint firstItem="rQd-5K-TeE" firstAttribute="top" secondItem="l0L-B0-O8L" secondAttribute="bottom" id="dXq-uZ-MXI"/>
+                <constraint firstItem="l0L-B0-O8L" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="fHn-Bl-xOd"/>
+            </constraints>
+        </view>
+    </objects>
+</document>

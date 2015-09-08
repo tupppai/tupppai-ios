@@ -7,11 +7,11 @@
 //
 
 #import "ATOMAskViewModel.h"
-#import "ATOMHomeImage.h"
+#import "ATOMAskPage.h"
 
 @implementation ATOMAskViewModel
 
-- (void)setViewModelData:(ATOMHomeImage *)homeImage {
+- (void)setViewModelData:(ATOMAskPage *)homeImage {
     _imageURL = homeImage.imageURL;
     _totalPSNumber = [NSString stringWithFormat:@"%d", (int)homeImage.totalWorkNumber];
 }

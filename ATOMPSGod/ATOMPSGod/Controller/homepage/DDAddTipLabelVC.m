@@ -17,7 +17,7 @@
 #import "ATOMImageTipLabel.h"
 #import "AppDelegate.h"
 #import "DDTipLabelVM.h"
-#import "DDHotDetailVC.h"
+#import "DDDetailPageVC.h"
 #import "DDHomeVC.h"
 #import "TSMessage.h"
 #import "DDNavigationController.h"
@@ -35,7 +35,7 @@
 @property (nonatomic, strong) NSString *currentTipLabelText;
 @property (nonatomic, assign) CGPoint currentLocation;
 @property (nonatomic, strong) ATOMTipButton *lastAddButton;
-@property (nonatomic, strong) DDAskPageVM *newAskPageViewModel;
+@property (nonatomic, strong) DDPageVM *newAskPageViewModel;
 @property (nonatomic, strong) ATOMImage *imageInfo;
 @property (nonatomic, strong) dispatch_semaphore_t sema ;
 @property (nonatomic, assign) BOOL imgUploadSucceed;
@@ -257,7 +257,7 @@
             [Hud success:@"提交作品成功"];
             [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:@"shouldNavToHotSegment"];
             [[NSUserDefaults standardUserDefaults] synchronize];
-            DDHotDetailVC *hdvc = [DDHotDetailVC new];
+            DDDetailPageVC *hdvc = [DDDetailPageVC new];
             hdvc.askVM = ws.askPageViewModel;
             hdvc.fold = 0;
             DDHomeVC *hvc = self.navigationController.viewControllers[0];
@@ -477,9 +477,9 @@
     return _cancelLeftBarButtonItem;
 }
 
-- (DDAskPageVM *)newAskPageViewModel {
+- (DDPageVM *)newAskPageViewModel {
     if (!_newAskPageViewModel) {
-        _newAskPageViewModel = [DDAskPageVM new];
+        _newAskPageViewModel = [DDPageVM new];
     }
     return _newAskPageViewModel;
 }

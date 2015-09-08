@@ -8,10 +8,10 @@
 
 #import "DDHomePageManager.h"
 #import "DDSessionManager.h"
-#import "ATOMHomeImage.h"
+#import "ATOMAskPage.h"
 #import "ATOMImageTipLabel.h"
 #import "ATOMReplier.h"
-#import "DDAskPageVM.h"
+#import "DDPageVM.h"
 #import "ATOMHomeImageDAO.h"
 #import "ATOMImageTipLabelDAO.h"
 #import "ATOMReplierDAO.h"
@@ -46,7 +46,7 @@
             NSMutableArray *homepageArray = [NSMutableArray array];
             NSArray *imageDataArray = [ responseObject objectForKey:@"data"];
             for (int i = 0; i < imageDataArray.count; i++) {
-                ATOMHomeImage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMHomeImage class] fromJSONDictionary:imageDataArray[i] error:NULL];
+                ATOMAskPage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMAskPage class] fromJSONDictionary:imageDataArray[i] error:NULL];
                 homeImage.homePageType = (NSString*)[param[@"type"] copy];
                 homeImage.tipLabelArray = [NSMutableArray array];
                 NSArray *labelDataArray = imageDataArray[i][@"labels"];
@@ -81,7 +81,7 @@
 }
 
 - (void)saveHomeImagesInDB:(NSMutableArray *)homeImages {
-    for (ATOMHomeImage *homeImage in homeImages) {
+    for (ATOMAskPage *homeImage in homeImages) {
         if ([self.homeImageDAO isExistHomeImage:homeImage]) {
             [self.homeImageDAO updateHomeImage:homeImage];
         } else {
@@ -110,7 +110,7 @@
 
 - (NSArray *)getHomeImages {
     NSArray *array = [self.homeImageDAO selectHomeImages];
-    for (ATOMHomeImage *homeImage in array) {
+    for (ATOMAskPage *homeImage in array) {
         homeImage.tipLabelArray = [self.imageTipLabelDAO selectTipLabelsByImageID:homeImage.imageID];
         homeImage.replierArray = [self.replierDAO selectReplierByImageID:homeImage.imageID];
     }
@@ -120,7 +120,7 @@
 - (NSArray *)getHomeImagesWithHomeType:(ATOMHomepageViewType)homeType {
     
     NSArray *array = [self.homeImageDAO selectHomeImagesWithHomeType:homeType];
-    for (ATOMHomeImage *homeImage in array) {
+    for (ATOMAskPage *homeImage in array) {
         homeImage.tipLabelArray = [self.imageTipLabelDAO selectTipLabelsByImageID:homeImage.imageID];
         homeImage.replierArray = [self.replierDAO selectReplierByImageID:homeImage.imageID];
     }

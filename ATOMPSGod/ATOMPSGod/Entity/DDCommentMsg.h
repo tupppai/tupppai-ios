@@ -7,7 +7,7 @@
 //
 
 #import "ATOMBaseModel.h"
-@class ATOMHomeImage;
+@class ATOMAskPage;
 
 @interface DDCommentMsg : ATOMBaseModel
 
@@ -29,6 +29,6 @@
  *  评论类型：1（ask）2（reply）
  */
 @property (nonatomic, assign) NSInteger commentType;
-@property (nonatomic, strong) ATOMHomeImage *homeImage;
+@property (nonatomic, strong) ATOMAskPage *homeImage;
 
 @end

@@ -9,7 +9,7 @@
 #import "DDMsgReplyModel.h"
 #import "DDSessionManager.h"
 #import "ATOMReplyMessage.h"
-#import "ATOMHomeImage.h"
+#import "ATOMAskPage.h"
 #import "ATOMImageTipLabel.h"
 
 @implementation DDMsgReplyModel
@@ -59,7 +59,7 @@
             for (int i = 0; i < dataArray.count; i++) {
                 ATOMReplyMessage *replyMessage = [MTLJSONAdapter modelOfClass:[ATOMReplyMessage class] fromJSONDictionary:[[dataArray objectAtIndex:i] objectForKey:@"reply"] error:NULL];
                 replyMessage.type = [[[dataArray objectAtIndex:i] objectForKey:@"type"] integerValue];
-                ATOMHomeImage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMHomeImage class] fromJSONDictionary:[[dataArray objectAtIndex:i] objectForKey:@"ask"] error:NULL];
+                ATOMAskPage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMAskPage class] fromJSONDictionary:[[dataArray objectAtIndex:i] objectForKey:@"ask"] error:NULL];
                 homeImage.tipLabelArray = [NSMutableArray array];
                 NSArray *labelDataArray = [[[dataArray objectAtIndex:i] objectForKey:@"ask"]objectForKey:@"labels"];
                 if (labelDataArray.count) {

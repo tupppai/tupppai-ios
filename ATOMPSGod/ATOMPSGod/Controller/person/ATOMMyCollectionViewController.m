@@ -8,10 +8,10 @@
 
 #import "ATOMMyCollectionViewController.h"
 #import "ATOMMyCollectionCollectionViewCell.h"
-#import "DDHotDetailVC.h"
+#import "DDDetailPageVC.h"
 #import "ATOMOtherPersonViewController.h"
-#import "ATOMHomeImage.h"
-#import "DDAskPageVM.h"
+#import "ATOMAskPage.h"
+#import "DDPageVM.h"
 #import "ATOMCollectionViewModel.h"
 #import "DDMyCollectionManager.h"
 #import "PWRefreshFooterCollectionView.h"
@@ -70,8 +70,8 @@ static float cellWidth;
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     [DDMyCollectionManager getMyCollection:param withBlock:^(NSMutableArray *resultArray) {
-        for (ATOMHomeImage *homeImage in resultArray) {
-            DDAskPageVM *homepageViewModel = [DDAskPageVM new];
+        for (ATOMAskPage *homeImage in resultArray) {
+            DDPageVM *homepageViewModel = [DDPageVM new];
             [homepageViewModel setViewModelData:homeImage];
             [ws.homeImageDataSource addObject:homepageViewModel];
             ATOMCollectionViewModel *collectionViewModel = [ATOMCollectionViewModel new];
@@ -98,8 +98,8 @@ static float cellWidth;
     [param setObject:@(15) forKey:@"size"];
 
     [DDMyCollectionManager getMyCollection:param withBlock:^(NSMutableArray *resultArray) {
-        for (ATOMHomeImage *homeImage in resultArray) {
-            DDAskPageVM *homepageViewModel = [DDAskPageVM new];
+        for (ATOMAskPage *homeImage in resultArray) {
+            DDPageVM *homepageViewModel = [DDPageVM new];
             [homepageViewModel setViewModelData:homeImage];
             [ws.homeImageDataSource addObject:homepageViewModel];
             ATOMCollectionViewModel *collectionViewModel = [ATOMCollectionViewModel new];
@@ -156,7 +156,7 @@ static float cellWidth;
     if (indexPath) {
         ATOMMyCollectionCollectionViewCell *cell = (ATOMMyCollectionCollectionViewCell *)[_collectionView cellForItemAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
-        DDAskPageVM* model = _homeImageDataSource[indexPath.row];
+        DDPageVM* model = _homeImageDataSource[indexPath.row];
         if (CGRectContainsPoint(cell.collectionImageView.frame, p)) {
             if (cell.viewModel.type == ATOMPageTypeAsk) {
                 if (cell.viewModel.totalPSNumber == 0) {
@@ -164,13 +164,13 @@ static float cellWidth;
                     mvc.vm = [model generatepageDetailViewModel];
                     [self pushViewController:mvc animated:YES];
                 } else {
-                    DDHotDetailVC *hdvc = [DDHotDetailVC new];
+                    DDDetailPageVC *hdvc = [DDDetailPageVC new];
                     hdvc.askVM = model;
                     hdvc.fold = 0;
                     [self pushViewController:hdvc animated:YES];
                 }
             } else {
-                DDHotDetailVC *hdvc = [DDHotDetailVC new];
+                DDDetailPageVC *hdvc = [DDDetailPageVC new];
                 hdvc.askVM = model;
                 hdvc.fold = 1;
                 [self pushViewController:hdvc animated:YES];

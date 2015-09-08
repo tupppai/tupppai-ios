@@ -7,13 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-@class ATOMHomeImage;
+@class ATOMAskPage;
 
 @interface ATOMAskViewModel : NSObject
 
 @property (nonatomic, copy) NSString *imageURL;
 @property (nonatomic, copy) NSString *totalPSNumber;
 
-- (void)setViewModelData:(ATOMHomeImage *)homeImage;
+- (void)setViewModelData:(ATOMAskPage *)homeImage;
 
 @end

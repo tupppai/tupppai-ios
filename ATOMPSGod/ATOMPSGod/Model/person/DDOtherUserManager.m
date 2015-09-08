@@ -7,7 +7,7 @@
 //
 
 #import "DDOtherUserManager.h"
-#import "ATOMHomeImage.h"
+#import "ATOMAskPage.h"
 #import "ATOMImageTipLabel.h"
 #import "ATOMUser.h"
 @implementation DDOtherUserManager
@@ -19,7 +19,7 @@
             NSMutableArray *replyReturnArray = [NSMutableArray array];
             ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:data error:NULL];
             for (int i = 0; i < askArray.count; i++) {
-                ATOMHomeImage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMHomeImage class] fromJSONDictionary:askArray[i] error:NULL];
+                ATOMAskPage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMAskPage class] fromJSONDictionary:askArray[i] error:NULL];
                 homeImage.tipLabelArray = [NSMutableArray array];
                 NSArray *labelDataArray = askArray[i][@"labels"];
                 if (labelDataArray.count) {
@@ -33,7 +33,7 @@
             }
             
             for (int i = 0; i < replyArray.count; i++) {
-                ATOMHomeImage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMHomeImage class] fromJSONDictionary:replyArray[i] error:NULL];
+                ATOMAskPage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMAskPage class] fromJSONDictionary:replyArray[i] error:NULL];
                 homeImage.tipLabelArray = [NSMutableArray array];
                 NSArray *labelDataArray = replyArray[i][@"labels"];
                 if (labelDataArray.count) {

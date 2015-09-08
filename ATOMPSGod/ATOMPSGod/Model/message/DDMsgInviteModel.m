@@ -8,7 +8,7 @@
 
 #import "DDMsgInviteModel.h"
 #import "DDSessionManager.h"
-#import "ATOMHomeImage.h"
+#import "ATOMAskPage.h"
 #import "ATOMInviteMessage.h"
 #import "ATOMImageTipLabel.h"
 
@@ -21,7 +21,7 @@
             NSMutableArray *inviteMessageArray = [NSMutableArray array];
             for (int i = 0; i < dataArray.count; i++) {
                 ATOMInviteMessage *inviteMessage = [MTLJSONAdapter modelOfClass:[ATOMInviteMessage class] fromJSONDictionary:[[dataArray objectAtIndex:i]objectForKey:@"inviter"] error:NULL];
-                ATOMHomeImage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMHomeImage class] fromJSONDictionary:[[dataArray objectAtIndex:i]objectForKey:@"ask"] error:NULL];
+                ATOMAskPage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMAskPage class] fromJSONDictionary:[[dataArray objectAtIndex:i]objectForKey:@"ask"] error:NULL];
                 homeImage.tipLabelArray = [NSMutableArray array];
                 NSArray *labelDataArray = [[[dataArray objectAtIndex:i]objectForKey:@"ask"]objectForKey:@"labels"];
                 if (labelDataArray.count) {

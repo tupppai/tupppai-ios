@@ -8,7 +8,7 @@
 
 #import "ATOMInviteMessageTableViewCell.h"
 #import "ATOMInviteMessageViewModel.h"
-#import "DDAskPageVM.h"
+#import "DDPageVM.h"
 
 @implementation ATOMInviteMessageTableViewCell
 
@@ -74,7 +74,7 @@ static int padding10 = 10;
     _userSexImageView.image = [UIImage imageNamed:viewModel.userSex];
     _inviteContentLabel.text = @"邀请你帮忙P图";
     _inviteTimeLabel.text = viewModel.publishTime;
-    [_workImageView setImageWithURL:[NSURL URLWithString:viewModel.homepageViewModel.userImageURL]];
+    [_workImageView setImageWithURL:[NSURL URLWithString:viewModel.homepageViewModel.imageURL]];
 }
 
 

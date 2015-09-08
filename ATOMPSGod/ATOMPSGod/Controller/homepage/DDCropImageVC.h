@@ -7,10 +7,10 @@
 //
 
 #import "DDBaseVC.h"
-@class DDAskPageVM;
+@class DDPageVM;
 @class DDCommentPageVM;
 @interface DDCropImageVC : DDBaseVC
-@property (nonatomic, strong) DDAskPageVM *askPageViewModel;
+@property (nonatomic, strong) DDPageVM *askPageViewModel;
 @property (nonatomic, strong) UIImage *originImage;
 @property (nonatomic, strong) UIImage *workImage;
 @end

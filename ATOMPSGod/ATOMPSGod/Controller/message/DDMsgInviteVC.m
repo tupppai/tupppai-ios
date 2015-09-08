@@ -8,14 +8,14 @@
 
 #import "DDMsgInviteVC.h"
 #import "ATOMInviteMessageTableViewCell.h"
-#import "DDHotDetailVC.h"
+#import "DDDetailPageVC.h"
 #import "ATOMCommentDetailViewController.h"
 #import "ATOMOtherPersonViewController.h"
 #import "DDMsgInviteModel.h"
 #import "ATOMInviteMessage.h"
 #import "ATOMInviteMessageViewModel.h"
-#import "ATOMHomeImage.h"
-#import "DDAskPageVM.h"
+#import "ATOMAskPage.h"
+#import "DDPageVM.h"
 #import "RefreshFooterTableView.h"
 #import "DDCommentVC.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
@@ -161,7 +161,7 @@
 //                mvc.delegate = self;
                 [self pushViewController:mvc animated:YES];
             } else {
-                DDHotDetailVC *hdvc = [DDHotDetailVC new];
+                DDDetailPageVC *hdvc = [DDDetailPageVC new];
                 hdvc.askVM = viewModel.homepageViewModel;
                 [self pushViewController:hdvc animated:YES];
             }
