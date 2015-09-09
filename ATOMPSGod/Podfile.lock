@@ -1,0 +1,10 @@
+PODS:
+  - IQKeyboardManager (3.3.0)
+
+DEPENDENCIES:
+  - IQKeyboardManager
+
+SPEC CHECKSUMS:
+  IQKeyboardManager: c87b6600cbfca89d1fe6e8052d936e6c20f65375
+
+COCOAPODS: 0.39.0.beta.4

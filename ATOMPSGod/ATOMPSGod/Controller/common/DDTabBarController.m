@@ -59,18 +59,20 @@ static dispatch_once_t once;
     myAttentionViewController.title = @"关注";
     myMessageViewController.title = @"消息";
     personViewController.title = @"我的";
+    
     _nav1 = [[DDNavigationController alloc] initWithRootViewController:homePageViewController];
     _nav2 = [[DDNavigationController alloc] initWithRootViewController:myAttentionViewController];
     _nav3 = [[DDNavigationController alloc] initWithRootViewController:myMessageViewController];
     _nav4 = [[DDNavigationController alloc] initWithRootViewController:personViewController];
-    _nav1.tabBarItem.image = [UIImage imageNamed:@"btn_index_normal"];
-    _nav1.tabBarItem.selectedImage = [UIImage imageNamed:@"btn_index_pressed"];
-    _nav2.tabBarItem.image = [UIImage imageNamed:@"btn_look_normal"];
-    _nav2.tabBarItem.selectedImage = [UIImage imageNamed:@"btn_look_pressed"];
-    _nav3.tabBarItem.image = [UIImage imageNamed:@"btn_info_normal"];
-    _nav3.tabBarItem.selectedImage = [UIImage imageNamed:@"btn_info_pressed"];
-    _nav4.tabBarItem.image = [UIImage imageNamed:@"btn_user_normal"];
-    _nav4.tabBarItem.selectedImage = [UIImage imageNamed:@"btn_user_pressed"];
+    
+    _nav1.tabBarItem.image = [UIImage imageNamed:@"pie_home"];
+    _nav1.tabBarItem.selectedImage = [UIImage imageNamed:@"pie_home_selected"];
+    _nav2.tabBarItem.image = [UIImage imageNamed:@"pie_follow"];
+    _nav2.tabBarItem.selectedImage = [UIImage imageNamed:@"pie_follow_selected"];
+    _nav3.tabBarItem.image = [UIImage imageNamed:@"pie_doing"];
+    _nav3.tabBarItem.selectedImage = [UIImage imageNamed:@"pie_doing_selected"];
+    _nav4.tabBarItem.image = [UIImage imageNamed:@"pie_profile"];
+    _nav4.tabBarItem.selectedImage = [UIImage imageNamed:@"pie_profile_selected"];
     
     _nav1.tabBarItem.image = [ _nav1.tabBarItem.image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     _nav1.tabBarItem.selectedImage = [ _nav1.tabBarItem.selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];

@@ -36,9 +36,13 @@
 #import "DDCommentVC.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 #import "PIEDetailPageVC.h"
+#import "QBImagePicker.h"
+#import "PIEUploadAskVC.h"
+
+//#import "QBImagePickerController.h"
 @class ATOMAskPage;
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
-@interface DDHomeVC() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate>
+@interface DDHomeVC() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate,QBImagePickerControllerDelegate>
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureHot;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureAsk;
@@ -61,6 +65,7 @@
 @property (nonatomic, strong) DDPageVM *selectedVM;
 
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
+@property (nonatomic, strong) QBImagePickerController* QBImagePickerController;
 
 @end
 
@@ -104,6 +109,9 @@ static NSString *CellIdentifier2 = @"AskCell";
     [self firstGetDataSourceFromDataBase];
     [self firstGetDataSourceOfTableViewWithHomeType:ATOMHomepageViewTypeHot];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshNav1) name:@"RefreshNav1" object:nil];
+    
+
+    
 }
 
 
@@ -233,8 +241,8 @@ static NSString *CellIdentifier2 = @"AskCell";
     [[NSUserDefaults standardUserDefaults] synchronize];
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])
     {
-        self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        [self presentViewController:_imagePickerController animated:YES completion:NULL];
+//        self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        [self presentViewController:self.QBImagePickerController animated:YES completion:NULL];
     }
     else
     {
@@ -273,28 +281,32 @@ static NSString *CellIdentifier2 = @"AskCell";
  *  @param tag 0:->进行中  1:->选择相册图片
  */
 - (void)dealUploadWorksWithTag:(NSInteger)tag {
-    [[NSUserDefaults standardUserDefaults] setObject:@"Reply" forKey:@"AskOrReply"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    if (tag == 0) {
-        ATOMProceedingViewController *pvc = [ATOMProceedingViewController new];
-        [self pushViewController:pvc animated:YES];
-    } else {
-        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])
-        {
-            self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-            [self presentViewController:_imagePickerController animated:YES completion:NULL];
-        }
-        else
-        {
-            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"😭" andMessage:@"找不到你的相册在哪"];
-            [alertView addButtonWithTitle:@"我知道了"
-                                     type:SIAlertViewButtonTypeDefault
-                                  handler:^(SIAlertView *alert) {
-                                  }];
-            alertView.transitionStyle = SIAlertViewTransitionStyleFade;
-            [alertView show];
-        }
-    }
+    
+    PIEUploadAskVC *vc = [[PIEUploadAskVC alloc] initWithNibName:@"PIEUploadAskVC" bundle:nil];
+    [self pushViewController:vc animated:YES];
+//    [self presentViewController:vc animated:YES completion:nil];
+//    [[NSUserDefaults standardUserDefaults] setObject:@"Reply" forKey:@"AskOrReply"];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
+//    if (tag == 0) {
+//        ATOMProceedingViewController *pvc = [ATOMProceedingViewController new];
+//        [self pushViewController:pvc animated:YES];
+//    } else {
+//        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])
+//        {
+//            self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+//            [self presentViewController:_imagePickerController animated:YES completion:NULL];
+//        }
+//        else
+//        {
+//            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"😭" andMessage:@"找不到你的相册在哪"];
+//            [alertView addButtonWithTitle:@"我知道了"
+//                                     type:SIAlertViewButtonTypeDefault
+//                                  handler:^(SIAlertView *alert) {
+//                                  }];
+//            alertView.transitionStyle = SIAlertViewTransitionStyleFade;
+//            [alertView show];
+//        }
+//    }
 }
 
 - (void)dealDownloadWork {
@@ -431,6 +443,23 @@ static NSString *CellIdentifier2 = @"AskCell";
         }
     }
 }
+
+#pragma mark - QBImagePickerControllerDelegate
+
+
+-(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
+    NSLog(@"Selected assets:");
+    NSLog(@"%@", assets);
+    
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+- (void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController
+{
+    NSLog(@"Canceled.");
+    
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
 
 #pragma mark - UIImagePickerControllerDelegate
 
@@ -838,6 +867,7 @@ static NSString *CellIdentifier2 = @"AskCell";
                 case 0:
                     [ws.cameraActionsheet dismissAnimated:YES];
                     [ws tapSelectPhotos];
+                    
                     break;
                 case 1:
                     [ws.cameraActionsheet dismissAnimated:YES];
@@ -903,6 +933,19 @@ static NSString *CellIdentifier2 = @"AskCell";
         }];
     }
     return _reportActionSheet;
+}
+
+- (QBImagePickerController* )QBImagePickerController {
+    if (!_QBImagePickerController) {
+        _QBImagePickerController = [QBImagePickerController new];
+        _QBImagePickerController.delegate = self;
+        _QBImagePickerController.filterType = QBImagePickerControllerFilterTypePhotos;
+        _QBImagePickerController.allowsMultipleSelection = YES;
+        _QBImagePickerController.showsNumberOfSelectedAssets = YES;
+        _QBImagePickerController.minimumNumberOfSelection = 1;
+        _QBImagePickerController.maximumNumberOfSelection = 2;
+    }
+    return _QBImagePickerController;
 }
 
 @end
