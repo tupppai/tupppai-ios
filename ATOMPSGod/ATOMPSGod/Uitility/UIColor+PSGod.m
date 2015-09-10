@@ -10,6 +10,9 @@
 
 @implementation UIColor (PSGod)
 
++  (UIColor *)pieYellowColor {
+    return [UIColor yellowColor];
+}
 //kfc means page which consists of topview,imageviewMain,bottomview,additionview,blablaaaa....
 +  (UIColor *)kfcUsername {
     return [UIColor colorWithHex:0x000000 andAlpha:0.6];
@@ -63,7 +66,7 @@
 #pragma clang diagnostic ignored "-Wobjc-protocol-method-implementation"
 
 + (UIFont *)boldSystemFontOfSize:(CGFloat)fontSize {
-    return [UIFont fontWithName:@"STHeitiSC-Light" size:fontSize];
+    return [UIFont fontWithName:@"STHeitiSC-Medium" size:fontSize];
 }
 
 + (UIFont *)systemFontOfSize:(CGFloat)fontSize {

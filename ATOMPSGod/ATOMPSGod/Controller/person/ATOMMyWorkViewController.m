@@ -15,11 +15,12 @@
 #import "ATOMReplyViewModel.h"
 #import "PWRefreshFooterCollectionView.h"
 #import "DDMyReplyManager.h"
+#import "DDTabBarController.h"
+#import "AppDelegate.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMMyWorkViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource>
 
-@property (nonatomic, strong) UIView *myWorkView;
 @property (nonatomic, strong) PWRefreshFooterCollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *homeImageDataSource;
@@ -53,7 +54,6 @@ static int collumnNumber = 3;
 
 - (void)getDataSource {
     WS(ws);
-    [[KShareManager mascotAnimator]show];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     _dataSource = nil;
@@ -64,8 +64,7 @@ static int collumnNumber = 3;
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
-//    [param setObject:@"time" forKey:@"sort"];
-//    [param setObject:@"desc" forKey:@"order"];
+
     [param setObject:@(15) forKey:@"size"];
     [DDMyReplyManager getMyReply:param withBlock:^(NSMutableArray *resultArray) {
         for (ATOMAskPage *homeImage in resultArray) {
@@ -76,7 +75,6 @@ static int collumnNumber = 3;
             replyViewModel.imageURL = homeImage.imageURL;
             [ws.dataSource addObject:replyViewModel];
         }
-        [[KShareManager mascotAnimator]dismiss];
         ws.collectionView.dataSource = self;
         [ws.collectionView reloadData];
     }];
@@ -123,17 +121,14 @@ static int collumnNumber = 3;
 
 - (void)createUI {
     self.title = @"我的作品";
-    _myWorkView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
-    _myWorkView.backgroundColor = [UIColor colorWithHex:0xededed];
     cellWidth = (SCREEN_WIDTH - (collumnNumber + 1) *padding6) / 3;
-    self.view = _myWorkView;
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.itemSize =CGSizeMake(cellWidth, cellHeight);
     flowLayout.minimumInteritemSpacing = padding6;
     flowLayout.minimumLineSpacing = padding6;
-    _collectionView = [[PWRefreshFooterCollectionView alloc] initWithFrame:CGRectInset(_myWorkView.frame, padding6, padding6) collectionViewLayout:flowLayout];
+    _collectionView = [[PWRefreshFooterCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
+    self.view = _collectionView;
     _collectionView.backgroundColor = [UIColor whiteColor];
-    [_myWorkView addSubview:_collectionView];
     _collectionView.dataSource = nil;
     _collectionView.delegate = self;
     _collectionView.psDelegate = self;
@@ -162,17 +157,18 @@ static int collumnNumber = 3;
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     DDDetailPageVC *hdvc = [DDDetailPageVC new];
     hdvc.askVM = _homeImageDataSource[indexPath.row];
-    hdvc.fold = 1;
-    [self pushViewController:hdvc animated:YES];
+    DDTabBarController* vc = (DDTabBarController *)[[AppDelegate APP]window].rootViewController;
+    UINavigationController* nav = (UINavigationController*)vc.selectedViewController ;
+    [nav pushViewController:hdvc animated:YES];
 }
 
 
 
 #pragma mark - DZNEmptyDataSetSource & delegate
-- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
-{
-    return [UIImage imageNamed:@"ic_cry"];
-}
+//- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
+//{
+//    return [UIImage imageNamed:@"ic_cry"];
+//}
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
 {
     NSString *text = @"快去帮助众生PS,成为PS大神吧";

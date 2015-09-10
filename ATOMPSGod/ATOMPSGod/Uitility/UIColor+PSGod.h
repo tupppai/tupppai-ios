@@ -8,7 +8,7 @@
 
 
 @interface UIColor(PSGod)
-
++  (UIColor *)pieYellowColor;
 +(UIColor *) kfcUsername;
 +(UIColor *)kfcPublishTime;
 +(UIColor *)kfcButton;

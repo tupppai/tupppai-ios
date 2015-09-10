@@ -12,14 +12,14 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="psps.png" translatesAutoresizingMaskIntoConstraints="NO" id="ptn-a6-DW1">
-                    <rect key="frame" x="15" y="118" width="80" height="80"/>
+                    <rect key="frame" x="10" y="118" width="80" height="80"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="80" id="X1T-d8-aUr"/>
                         <constraint firstAttribute="height" constant="80" id="YOz-8d-8vl"/>
                     </constraints>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="intro2.png" translatesAutoresizingMaskIntoConstraints="NO" id="ydL-jn-2xS">
-                    <rect key="frame" x="103" y="118" width="80" height="80"/>
+                    <rect key="frame" x="98" y="118" width="80" height="80"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="80" id="dLd-SS-g3f"/>
                         <constraint firstAttribute="width" constant="80" id="xUe-QJ-0Ge"/>
@@ -32,13 +32,13 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="同步到" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecf-Oh-f0n">
-                    <rect key="frame" x="18" y="224" width="51" height="20.5"/>
+                    <rect key="frame" x="10" y="224" width="51" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eC3-NQ-VfI">
-                    <rect key="frame" x="18" y="252.5" width="40" height="40"/>
+                    <rect key="frame" x="10" y="252.5" width="40" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="5Id-g8-R0B"/>
                         <constraint firstAttribute="width" constant="40" id="huO-XW-y1b"/>
@@ -53,7 +53,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="100" id="rUO-nD-CQo"/>
                     </constraints>
-                    <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                     <userDefinedRuntimeAttributes>
@@ -61,7 +61,7 @@
                     </userDefinedRuntimeAttributes>
                 </textView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z06-c2-6y6">
-                    <rect key="frame" x="68" y="252.5" width="40" height="40"/>
+                    <rect key="frame" x="60" y="252.5" width="40" height="40"/>
                     <state key="normal" title="moments">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -75,9 +75,9 @@
                 <constraint firstItem="z06-c2-6y6" firstAttribute="top" secondItem="eC3-NQ-VfI" secondAttribute="top" id="4Yo-8r-TQ9"/>
                 <constraint firstAttribute="trailing" secondItem="8wv-DA-9LZ" secondAttribute="trailing" constant="10" id="4aZ-Oh-3vA"/>
                 <constraint firstItem="ydL-jn-2xS" firstAttribute="leading" secondItem="ptn-a6-DW1" secondAttribute="trailing" constant="8" id="Ju7-ic-Vfw"/>
-                <constraint firstItem="ptn-a6-DW1" firstAttribute="leading" secondItem="ecf-Oh-f0n" secondAttribute="leading" constant="-3" id="LVH-tu-NEM"/>
+                <constraint firstItem="ptn-a6-DW1" firstAttribute="leading" secondItem="ecf-Oh-f0n" secondAttribute="leading" id="LVH-tu-NEM"/>
                 <constraint firstAttribute="trailing" secondItem="gtM-qO-eYk" secondAttribute="trailing" constant="20" id="RMq-Dz-nBs"/>
-                <constraint firstItem="ptn-a6-DW1" firstAttribute="leading" secondItem="8wv-DA-9LZ" secondAttribute="leading" constant="5" id="T2F-TG-9qp"/>
+                <constraint firstItem="ptn-a6-DW1" firstAttribute="leading" secondItem="8wv-DA-9LZ" secondAttribute="leading" id="T2F-TG-9qp"/>
                 <constraint firstItem="ydL-jn-2xS" firstAttribute="top" secondItem="ptn-a6-DW1" secondAttribute="top" id="UeM-dU-WgA"/>
                 <constraint firstItem="z06-c2-6y6" firstAttribute="leading" secondItem="eC3-NQ-VfI" secondAttribute="trailing" constant="10" id="Ziu-Ub-Xl3"/>
                 <constraint firstItem="eC3-NQ-VfI" firstAttribute="leading" secondItem="ecf-Oh-f0n" secondAttribute="leading" id="b5D-dR-BRS"/>

@@ -37,7 +37,7 @@
 #import "UITableView+FDTemplateLayoutCell.h"
 #import "PIEDetailPageVC.h"
 #import "QBImagePicker.h"
-#import "PIEUploadAskVC.h"
+#import "PIEUploadVC.h"
 
 //#import "QBImagePickerController.h"
 @class ATOMAskPage;
@@ -282,7 +282,7 @@ static NSString *CellIdentifier2 = @"AskCell";
  */
 - (void)dealUploadWorksWithTag:(NSInteger)tag {
     
-    PIEUploadAskVC *vc = [[PIEUploadAskVC alloc] initWithNibName:@"PIEUploadAskVC" bundle:nil];
+    PIEUploadVC *vc = [[PIEUploadVC alloc] initWithNibName:@"PIEUploadVC" bundle:nil];
     [self pushViewController:vc animated:YES];
 //    [self presentViewController:vc animated:YES completion:nil];
 //    [[NSUserDefaults standardUserDefaults] setObject:@"Reply" forKey:@"AskOrReply"];

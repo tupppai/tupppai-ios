@@ -13,7 +13,7 @@
 #import "ATOMPersonViewController.h"
 #import "DDNavigationController.h"
 #import "DDService.h"
-
+#import "PIEMeViewController.h"
 @interface DDTabBarController ()<UITabBarControllerDelegate>
 @property (nonatomic, strong) DDNavigationController *nav1;
 @property (nonatomic, strong) DDNavigationController *nav2;
@@ -40,6 +40,14 @@ static dispatch_once_t once;
 -(void)viewDidLoad {
     [super viewDidLoad];
     [self uploadDeviceInfo];
+    
+    [[UITabBarItem appearance] setTitleTextAttributes:@{   NSForegroundColorAttributeName: [UIColor blackColor],                                                           NSFontAttributeName: [UIFont systemFontOfSize:11]
+                                                                                 }
+                                             forState:UIControlStateNormal];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{   NSForegroundColorAttributeName: [UIColor blackColor],                                                           NSFontAttributeName: [UIFont systemFontOfSize:11]
+                                                           }
+                                             forState:UIControlStateSelected];
+
     self.delegate = self;
 }
 -(void)uploadDeviceInfo {
@@ -55,15 +63,17 @@ static dispatch_once_t once;
     DDFollowVC *myAttentionViewController = [DDFollowVC new];
     DDMessageVC *myMessageViewController = [DDMessageVC new];
     ATOMPersonViewController *personViewController = [ATOMPersonViewController new];
+    PIEMeViewController *vc4 = (PIEMeViewController *)[[UIStoryboard storyboardWithName:@"Me" bundle:nil] instantiateViewControllerWithIdentifier: @"PIEME"];
+
     homePageViewController.title = @"首页";
     myAttentionViewController.title = @"关注";
-    myMessageViewController.title = @"消息";
+    myMessageViewController.title = @"进行中";
     personViewController.title = @"我的";
     
     _nav1 = [[DDNavigationController alloc] initWithRootViewController:homePageViewController];
     _nav2 = [[DDNavigationController alloc] initWithRootViewController:myAttentionViewController];
     _nav3 = [[DDNavigationController alloc] initWithRootViewController:myMessageViewController];
-    _nav4 = [[DDNavigationController alloc] initWithRootViewController:personViewController];
+    _nav4 = [[DDNavigationController alloc] initWithRootViewController:vc4];
     
     _nav1.tabBarItem.image = [UIImage imageNamed:@"pie_home"];
     _nav1.tabBarItem.selectedImage = [UIImage imageNamed:@"pie_home_selected"];

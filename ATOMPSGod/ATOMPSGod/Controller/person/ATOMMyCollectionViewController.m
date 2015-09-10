@@ -20,7 +20,6 @@
 
 @interface ATOMMyCollectionViewController () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource>
 
-@property (nonatomic, strong) UIView *myWorkView;
 @property (nonatomic, strong) PWRefreshFooterCollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *homeImageDataSource;
@@ -54,7 +53,6 @@ static float cellWidth;
 
 - (void)getDataSource {
     WS(ws);
-    [[KShareManager mascotAnimator]show];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     _dataSource = nil;
@@ -64,7 +62,6 @@ static float cellWidth;
     _currentPage = 1;
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-//    [param setObject:@"new" forKey:@"type"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@"time" forKey:@"sort"];
     [param setObject:@"desc" forKey:@"order"];
@@ -78,7 +75,6 @@ static float cellWidth;
             [collectionViewModel setViewModelData:homeImage];
             [ws.dataSource addObject:collectionViewModel];
         }
-        [[KShareManager mascotAnimator]dismiss];
         _collectionView.dataSource = self;
         [ws.collectionView reloadData];
     }];
@@ -98,8 +94,8 @@ static float cellWidth;
     [param setObject:@(15) forKey:@"size"];
 
     [DDMyCollectionManager getMyCollection:param withBlock:^(NSMutableArray *resultArray) {
-        for (ATOMAskPage *homeImage in resultArray) {
-            DDPageVM *homepageViewModel = [DDPageVM new];
+        for (ATOMAskPage* homeImage in resultArray) {
+            DDPageVM* homepageViewModel = [DDPageVM new];
             [homepageViewModel setViewModelData:homeImage];
             [ws.homeImageDataSource addObject:homepageViewModel];
             ATOMCollectionViewModel *collectionViewModel = [ATOMCollectionViewModel new];
@@ -124,18 +120,16 @@ static float cellWidth;
 }
 
 - (void)createUI {
-    self.title = @"我的收藏";
-    _myWorkView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     cellWidth = (SCREEN_WIDTH - (collumnNumber - 1) *padding) / collumnNumber;
-    cellHeight = cellWidth + 50;
-    self.view = _myWorkView;
+    cellHeight = cellWidth + 30;
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.itemSize =CGSizeMake(cellWidth, cellHeight);
     flowLayout.minimumInteritemSpacing = padding;
     flowLayout.minimumLineSpacing = padding;
-    _collectionView = [[PWRefreshFooterCollectionView alloc] initWithFrame:CGRectInset(_myWorkView.frame, 0, 0) collectionViewLayout:flowLayout];
+    _collectionView = [[PWRefreshFooterCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
+    self.view = _collectionView;
+
     _collectionView.backgroundColor = [UIColor colorWithHex:0xededed];
-    [_myWorkView addSubview:_collectionView];
     _collectionView.dataSource = nil;
     _collectionView.emptyDataSetSource = self;
     _collectionView.delegate = self;
@@ -145,6 +139,7 @@ static float cellWidth;
     _tapMyCollectionGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMyCollectionGesture:)];
     [_collectionView addGestureRecognizer:_tapMyCollectionGesture];
     _canRefreshFooter = YES;
+
     [self getDataSource];
 }
 
@@ -186,8 +181,6 @@ static float cellWidth;
             opvc.userID = cell.viewModel.uid;
             [self pushViewController:opvc animated:YES];
         }
-
-        
     }
 }
 
@@ -204,11 +197,11 @@ static float cellWidth;
     return cell;
 }
 
-#pragma mark - DZNEmptyDataSetSource & delegate
-- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
-{
-    return [UIImage imageNamed:@"ic_cry"];
-}
+//#pragma mark - DZNEmptyDataSetSource & delegate
+//- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
+//{
+//    return [UIImage imageNamed:@"ic_cry"];
+//}
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
 {
     NSString *text = @"你还没有任何收藏喔:-O";

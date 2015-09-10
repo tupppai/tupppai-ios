@@ -177,7 +177,6 @@ static DDUserManager *_currentUser;
 }
 
 
-
 + (void)DD3PartyAuth:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(bool isRegistered,NSString* info))block {
     [Hud activity:@""];
     [DDService dd3PartyAuth:param with3PaType:type withBlock:^(BOOL isRegistered,NSDictionary* userObejct) {
