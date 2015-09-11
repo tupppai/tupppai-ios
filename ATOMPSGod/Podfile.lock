@@ -10,4 +10,4 @@ SPEC CHECKSUMS:
   CSStickyHeaderFlowLayout: ece83dad3a1528af8b5a25bda3aa12536624ac65
   IQKeyboardManager: c87b6600cbfca89d1fe6e8052d936e6c20f65375
 
-COCOAPODS: 0.39.0.beta.4
+COCOAPODS: 0.38.2
