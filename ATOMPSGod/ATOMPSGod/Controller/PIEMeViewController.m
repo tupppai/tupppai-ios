@@ -37,8 +37,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     
+//    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+//    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];
+////    backButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+//    [backView addSubview:backButton];
+//    [backButton setImage:[UIImage imageNamed:@"pie_setting"] forState:UIControlStateNormal];
+//    UIBarButtonItem *barBackButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backView];
+//    [backButton addTarget:self action:@selector(popCurrentController) forControlEvents:UIControlEventTouchUpInside];
+//    self.navigationItem.leftBarButtonItem = barBackButtonItem;
     [self setupViews];
     [self setupPageMenu];
     

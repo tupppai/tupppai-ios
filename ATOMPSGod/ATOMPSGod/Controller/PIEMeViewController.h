@@ -8,6 +8,6 @@
 
 #import "DDBaseVC.h"
 
-@interface PIEMeViewController : DDBaseVC
+@interface PIEMeViewController : UIViewController
 
 @end
