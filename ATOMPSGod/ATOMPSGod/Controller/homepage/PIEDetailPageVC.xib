@@ -58,8 +58,8 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YJO-Is-7zc">
                     <rect key="frame" x="0.0" y="308" width="600" height="292"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="培伟哥哥" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" translatesAutoresizingMaskIntoConstraints="NO" id="Ej0-jf-tRH">
-                            <rect key="frame" x="225" y="36" width="150" height="20.5"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="培伟哥哥" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" translatesAutoresizingMaskIntoConstraints="NO" id="Ej0-jf-tRH">
+                            <rect key="frame" x="225" y="36" width="150" height="18"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="150" id="iK4-Kv-JRf"/>
                             </constraints>
@@ -67,8 +67,8 @@
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="1小时前" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" translatesAutoresizingMaskIntoConstraints="NO" id="Tnj-17-4nM">
-                            <rect key="frame" x="225" y="64" width="150" height="18"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1小时前" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" translatesAutoresizingMaskIntoConstraints="NO" id="Tnj-17-4nM">
+                            <rect key="frame" x="225" y="62" width="150" height="16"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="150" id="SvT-0b-IKx"/>
                             </constraints>
@@ -76,8 +76,8 @@
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="我要一步一步打代码" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" translatesAutoresizingMaskIntoConstraints="NO" id="Un8-ag-rXy">
-                            <rect key="frame" x="140" y="92" width="320" height="43"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我要一步一步打代码" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" translatesAutoresizingMaskIntoConstraints="NO" id="Un8-ag-rXy">
+                            <rect key="frame" x="140" y="88" width="320" height="19.5"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="DRc-rz-RMo"/>
                                 <constraint firstAttribute="width" constant="320" id="IaP-3O-ucJ"/>
@@ -101,13 +101,13 @@
                                 </mask>
                             </variation>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F9S-X3-Axq">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F9S-X3-Axq">
                             <rect key="frame" x="100" y="222" width="40" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="40" id="rtW-mh-bRt"/>
                                 <constraint firstAttribute="height" constant="40" id="uZG-QJ-iDe"/>
                             </constraints>
-                            <state key="normal" title="点赞">
+                            <state key="normal" image="pie_like">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
@@ -169,7 +169,7 @@
                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="OYh-Cl-kdK" secondAttribute="bottom" constant="30" id="w36-DR-jsj">
                             <variation key="widthClass=compact" constant="0.0"/>
                         </constraint>
-                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="F9S-X3-Axq" secondAttribute="bottom" constant="30" id="yd7-4s-8RH">
+                        <constraint firstAttribute="bottom" secondItem="F9S-X3-Axq" secondAttribute="bottom" constant="30" id="yd7-4s-8RH">
                             <variation key="widthClass=compact" constant="0.0"/>
                         </constraint>
                     </constraints>
@@ -240,6 +240,7 @@
         </view>
     </objects>
     <resources>
+        <image name="pie_like" width="36" height="40"/>
         <image name="psps.png" width="640" height="1136"/>
     </resources>
 </document>

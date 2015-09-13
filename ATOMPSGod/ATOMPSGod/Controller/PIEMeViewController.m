@@ -37,15 +37,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-//    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
-//    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];
-////    backButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
-//    [backView addSubview:backButton];
-//    [backButton setImage:[UIImage imageNamed:@"pie_setting"] forState:UIControlStateNormal];
-//    UIBarButtonItem *barBackButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backView];
-//    [backButton addTarget:self action:@selector(popCurrentController) forControlEvents:UIControlEventTouchUpInside];
-//    self.navigationItem.leftBarButtonItem = barBackButtonItem;
+
     [self setupViews];
     [self setupPageMenu];
     
@@ -79,9 +71,9 @@
                                  CAPSPageMenuOptionBottomMenuHairlineColor: [UIColor colorWithRed:70.0/255.0 green:70.0/255.0 blue:70.0/255.0 alpha:0.0],
                                  CAPSPageMenuOptionMenuItemFont: [UIFont systemFontOfSize:13.0],
                                  CAPSPageMenuOptionMenuHeight: @(40.0),
-                                 CAPSPageMenuOptionMenuItemWidth: @(100),
+                                 CAPSPageMenuOptionMenuItemWidth: @(SCREEN_WIDTH/2 - 5),
                                  CAPSPageMenuOptionSelectedMenuItemLabelColor: [UIColor blackColor],
-//                                 CAPSPageMenuOptionCenterMenuItems: @(YES)
+                                 CAPSPageMenuOptionUseMenuLikeSegmentedControl: @(YES)
                                  };
     
     

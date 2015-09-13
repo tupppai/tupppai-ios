@@ -7,7 +7,7 @@
 //
 
 #import "DDHomeVC.h"
-#import "kfcHotCell.h"
+#import "PIEHotTableCell.h"
 #import "kfcAskCell.h"
 #import "DDDetailPageVC.h"
 #import "DDCropImageVC.h"
@@ -109,9 +109,6 @@ static NSString *CellIdentifier2 = @"AskCell";
     [self firstGetDataSourceFromDataBase];
     [self firstGetDataSourceOfTableViewWithHomeType:ATOMHomepageViewTypeHot];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshNav1) name:@"RefreshNav1" object:nil];
-    
-
-    
 }
 
 
@@ -120,7 +117,9 @@ static NSString *CellIdentifier2 = @"AskCell";
     _scrollView.hotTable.dataSource = self;
     _scrollView.hotTable.noDataView.label.text = @"网络连接断了吧-_-!";
     _scrollView.hotTable.psDelegate = self;
-    [_scrollView.hotTable registerClass:[kfcHotCell class] forCellReuseIdentifier:CellIdentifier];
+    UINib* nib = [UINib nibWithNibName:@"PIEHotTableCell" bundle:nil];
+    [_scrollView.hotTable registerNib:nib forCellReuseIdentifier:CellIdentifier];
+//    [_scrollView.hotTable registerClass:[kfcHotCell class] forCellReuseIdentifier:CellIdentifier];
     _scrollView.hotTable.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
     _tapGestureHot = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureHot:)];
     [_scrollView.hotTable addGestureRecognizer:_tapGestureHot];
@@ -341,57 +340,51 @@ static NSString *CellIdentifier2 = @"AskCell";
         CGPoint location = [gesture locationInView:_scrollView.hotTable];
         _selectedIndexPath = [_scrollView.hotTable indexPathForRowAtPoint:location];
         if (_selectedIndexPath) {
-            kfcHotCell* cell = (kfcHotCell *)[_scrollView.hotTable cellForRowAtIndexPath:_selectedIndexPath];
+            PIEHotTableCell* cell = (PIEHotTableCell *)[_scrollView.hotTable cellForRowAtIndexPath:_selectedIndexPath];
             _selectedVM = _dataSourceOfHotTableView[_selectedIndexPath.row];
             CGPoint p = [gesture locationInView:cell];
 
-            if (CGRectContainsPoint(cell.imageViewMain.frame, p)) {
+            if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                 //进入热门详情
                 PIEDetailPageVC* vc = [PIEDetailPageVC new];
                 vc.pageVM = _selectedVM;
                 [self pushViewController:vc animated:YES];
 
-//                [self.navigationController pushViewController:vc animated:YES];
-//                DDDetailPageVC *hdvc = [DDDetailPageVC new];
-//                hdvc.delegate = self;
-//                hdvc.fold = 0;
-//                hdvc.askVM = _selectedVM;
-//                [self pushViewController:hdvc animated:YES];
-            } else if (CGRectContainsPoint(cell.topView.frame, p)) {
-                p = [gesture locationInView:cell.topView];
-                if (CGRectContainsPoint(cell.avatarView.frame, p)) {
-                    ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-                    opvc.userID = _selectedVM.userID;
-                    opvc.userName = _selectedVM.username;
-                    [self pushViewController:opvc animated:YES];
-                } else if (CGRectContainsPoint(cell.usernameLabel.frame, p)) {
-                    ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-                    opvc.userID = _selectedVM.userID;
-                    opvc.userName = _selectedVM.username;
-                    [self pushViewController:opvc animated:YES];
-                }
-            } else if (CGRectContainsPoint(cell.bottomView.frame, p)){
-                p = [gesture locationInView:cell.bottomView];
-                if (CGRectContainsPoint(cell.likeButton.frame, p)) {
-                    [cell.likeButton toggleLike];
-                    [_selectedVM toggleLike];
-                } else if (CGRectContainsPoint(cell.wechatButton.frame, p)) {
-                    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
-                } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
-                    DDCommentPageVM* vm = [DDCommentPageVM new];
-                    [vm setCommonViewModelWithAsk:_selectedVM];
-                    DDCommentVC* mvc = [DDCommentVC new];
-                    mvc.vm = vm;
-                    mvc.delegate = self;
-                    [self pushViewController:mvc animated:YES];
-//                    [self presentViewController:mvc animated:YES completion:nil];
-                } else if (CGRectContainsPoint(cell.moreButton.frame, p)) {
-                    self.shareFunctionView.collectButton.selected = _selectedVM.collected;
-                    [self.shareFunctionView showInView:[AppDelegate APP].window animated:YES];
-                }
             }
+//            else if (CGRectContainsPoint(cell.topView.frame, p)) {
+//                p = [gesture locationInView:cell.topView];
+//                if (CGRectContainsPoint(cell.avatarView.frame, p)) {
+//                    ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+//                    opvc.userID = _selectedVM.userID;
+//                    opvc.userName = _selectedVM.username;
+//                    [self pushViewController:opvc animated:YES];
+//                } else if (CGRectContainsPoint(cell.usernameLabel.frame, p)) {
+//                    ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+//                    opvc.userID = _selectedVM.userID;
+//                    opvc.userName = _selectedVM.username;
+//                    [self pushViewController:opvc animated:YES];
+//                }
+//            } else if (CGRectContainsPoint(cell.bottomView.frame, p)){
+//                p = [gesture locationInView:cell.bottomView];
+//                if (CGRectContainsPoint(cell.likeButton.frame, p)) {
+//                    [cell.likeButton toggleLike];
+//                    [_selectedVM toggleLike];
+//                } else if (CGRectContainsPoint(cell.wechatButton.frame, p)) {
+//                    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
+//                } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
+//                    DDCommentPageVM* vm = [DDCommentPageVM new];
+//                    [vm setCommonViewModelWithAsk:_selectedVM];
+//                    DDCommentVC* mvc = [DDCommentVC new];
+//                    mvc.vm = vm;
+//                    mvc.delegate = self;
+//                    [self pushViewController:mvc animated:YES];
+//                } else if (CGRectContainsPoint(cell.moreButton.frame, p)) {
+//                    self.shareFunctionView.collectButton.selected = _selectedVM.collected;
+//                    [self.shareFunctionView showInView:[AppDelegate APP].window animated:YES];
+//                }
+//            }
         }
-    }
+        }
 }
 
 - (void)tapGestureAsk:(UITapGestureRecognizer *)gesture {
@@ -512,8 +505,8 @@ static NSString *CellIdentifier2 = @"AskCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_scrollView.hotTable == tableView) {
-        kfcHotCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        [cell configCell:_dataSourceOfHotTableView[indexPath.row]];
+        PIEHotTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        [cell configCell:_dataSourceOfHotTableView[indexPath.row] row:indexPath.row];
         return cell;
     } else if (_scrollView.askTable == tableView) {
         kfcAskCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier2];
@@ -528,8 +521,8 @@ static NSString *CellIdentifier2 = @"AskCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_scrollView.hotTable == tableView) {
-            return [tableView fd_heightForCellWithIdentifier:CellIdentifier  cacheByIndexPath:indexPath configuration:^(kfcHotCell *cell) {
-            [cell configCell:_dataSourceOfHotTableView[indexPath.row]];
+            return [tableView fd_heightForCellWithIdentifier:CellIdentifier  cacheByIndexPath:indexPath configuration:^(PIEHotTableCell *cell) {
+            [cell configCell:_dataSourceOfHotTableView[indexPath.row] row:indexPath.row];
         }];
     }
                 else if (_scrollView.askTable == tableView) {
@@ -545,21 +538,21 @@ static NSString *CellIdentifier2 = @"AskCell";
 
 
 -(void)ATOMViewControllerDismissWithInfo:(NSDictionary *)info {
-    bool liked = [info[@"liked"] boolValue];
-    bool collected = [info[@"collected"]boolValue];
-    if (_scrollView.type == ATOMHomepageViewTypeHot) {
-        //当从child viewcontroller 传来的liked变化的时候，toggle like.
-        //to do:其实应该改变datasource的liked ,tableView reload的时候才能保持。
-        kfcHotCell* cell= (kfcHotCell *)[_scrollView.hotTable cellForRowAtIndexPath:_selectedIndexPath];
-        [cell.likeButton toggleLikeWhenSelectedChanged:liked];
-        _selectedVM.collected = collected;
-        NSLog(@"_selectedVM.collected %d",collected);
-
-    } else if (_scrollView.type == ATOMHomepageViewTypeAsk) {
-        kfcAskCell* cell= (kfcAskCell *)[_scrollView.askTable cellForRowAtIndexPath:_selectedIndexPath];
-        [cell.likeButton toggleLikeWhenSelectedChanged:liked];
-        _selectedVM.collected = collected;
-    }
+//    bool liked = [info[@"liked"] boolValue];
+//    bool collected = [info[@"collected"]boolValue];
+//    if (_scrollView.type == ATOMHomepageViewTypeHot) {
+//        //当从child viewcontroller 传来的liked变化的时候，toggle like.
+//        //to do:其实应该改变datasource的liked ,tableView reload的时候才能保持。
+//        PIEHotTableCell* cell= (kfcHotCell *)[_scrollView.hotTable cellForRowAtIndexPath:_selectedIndexPath];
+//        [cell.likeButton toggleLikeWhenSelectedChanged:liked];
+//        _selectedVM.collected = collected;
+//        NSLog(@"_selectedVM.collected %d",collected);
+//
+//    } else if (_scrollView.type == ATOMHomepageViewTypeAsk) {
+//        kfcAskCell* cell= (kfcAskCell *)[_scrollView.askTable cellForRowAtIndexPath:_selectedIndexPath];
+//        [cell.likeButton toggleLikeWhenSelectedChanged:liked];
+//        _selectedVM.collected = collected;
+//    }
 }
 
 
