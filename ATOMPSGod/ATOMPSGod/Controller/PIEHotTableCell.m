@@ -15,16 +15,20 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    [self commonInit];
+    [self initThumbAnimateView];
+}
+- (void)commonInit {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    self.clipsToBounds = YES;
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
     _theImageView.contentMode = UIViewContentModeScaleAspectFill;
     _theImageView.clipsToBounds = YES;
-    self.clipsToBounds = YES;
-    _thumbAnimateView.hidden = YES;
-    
-    _thumbView = [PIEThumbAnimateView2 new];
+}
+- (void)initThumbAnimateView {
+    _thumbView = [PIEThumbAnimateView new];
     [self insertSubview:_thumbView aboveSubview:_theImageView];
     [self bringSubviewToFront:_thumbView];
     [_thumbView mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -34,11 +38,7 @@
         make.bottom.equalTo(_theImageView);
     }];
 }
-
 - (void)configCell:(DDPageVM *)viewModel row:(NSInteger)row{
-//    should set expandedSize before set subviewCounts
-
-    
     [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     _nameLabel.text = viewModel.username;
     _timeLabel.text = viewModel.publishTime;
@@ -60,11 +60,8 @@
     } else  {
         _thumbView.subviewCounts = 1;
     }
-    
 }
--(void)setupThumbImageView {
 
-}
 -(void)prepareForReuse {
     [super prepareForReuse];
     [_thumbView mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -76,11 +73,9 @@
 
 }
 
-- (void)toggleExpanded {
-    NSLog(@"toggleExpanded");
+- (void)animateToggleExpanded {
     [self layoutIfNeeded];
         if (_thumbView.toExpand) {
-            NSLog(@"EXPAND");
             [_thumbView mas_remakeConstraints:^(MASConstraintMaker *make) {
                 make.top.equalTo(_theImageView).with.offset(0);
                 make.leading.equalTo(_theImageView).with.offset(-1);
@@ -88,14 +83,12 @@
                 make.bottom.equalTo(_theImageView).with.offset(0);
             }];
         } else {
-            NSLog(@"SHRINK");
             [_thumbView mas_remakeConstraints:^(MASConstraintMaker *make) {
                 make.width.equalTo(@100);
                 make.height.equalTo(@100);
                 make.trailing.equalTo(_theImageView);
                 make.bottom.equalTo(_theImageView);
             }];
-
         }
     [UIView animateWithDuration:0.8 animations:^{
         [self layoutIfNeeded];

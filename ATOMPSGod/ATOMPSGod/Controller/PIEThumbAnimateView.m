@@ -1,5 +1,5 @@
 //
-//  PIEThumbAnimateView.m
+//  PIEThumbAnimateView2.m
 //  ATOMPSGod
 //
 //  Created by chenpeiwei on 9/14/15.
@@ -7,31 +7,37 @@
 //
 
 #import "PIEThumbAnimateView.h"
-@interface PIEThumbAnimateView()
 
-@end
 @implementation PIEThumbAnimateView
+-(instancetype)init {
+    self = [super init];
+    if (self) {
+        self.frame = CGRectMake(0, 0, 100, 100);
+        _toExpand = YES;
+        _shrinkedSize = CGSizeMake(100, 100);
+        _expandedSize = CGSizeMake(SCREEN_WIDTH, 300);
+        _leftView.contentMode = UIViewContentModeScaleAspectFill;
+        _rightView.contentMode = UIViewContentModeScaleAspectFill;
+        _leftView.clipsToBounds = YES;
+        _rightView.clipsToBounds = YES;
+        self.userInteractionEnabled = YES;
+        self.clipsToBounds = YES;
+        self.backgroundColor = [UIColor clearColor];
+        _leftView = [UIImageView new];
+        _leftView.image = [UIImage imageNamed:@"test1"];
+        _rightView = [UIImageView new];
+        _rightView.image = [UIImage imageNamed:@"psps"];
+        [self addSubview:_leftView];
+        [self addSubview:_rightView];
 
-
-- (void)awakeFromNib {
-    _toExpand = YES;
-    _shrinkedSize = CGSizeMake(90, 90);
-    _expandedSize = CGSizeMake(SCREEN_WIDTH, 300);
-    _leftView.contentMode = UIViewContentModeScaleAspectFill;
-    _rightView.contentMode = UIViewContentModeScaleAspectFill;
-    _leftView.clipsToBounds = YES;
-    _rightView.clipsToBounds = YES;
-    self.userInteractionEnabled = YES;
-    self.clipsToBounds = YES;
-}
--(id)initWithCoder:(NSCoder *)aDecoder {
-    if ((self = [super initWithCoder:aDecoder])) {
-       [[[NSBundle mainBundle] loadNibNamed:@"PIEThumbAnimateView" owner:self options:nil] objectAtIndex:0];
-        [self addSubview:_contentView];
-        [_contentView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.leading.equalTo(self);
-            make.trailing.equalTo(self);
+        [_rightView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self);
+            make.trailing.equalTo(self);
+            make.bottom.equalTo(self);
+        }];
+        [_leftView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self);
+            make.leading.equalTo(self);
             make.bottom.equalTo(self);
         }];
     }
@@ -40,35 +46,58 @@
 
 - (void)setSubviewCounts:(NSInteger)subviewCounts {
     if (subviewCounts == 2) {
-        [_rightView mas_updateConstraints:^(MASConstraintMaker *make) {
+        [_rightView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self);
+            make.trailing.equalTo(self);
+            make.bottom.equalTo(self);
             make.width.equalTo(self).with.multipliedBy(0.5);
         }];
-    } else {
-        [_rightView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.width.equalTo(self);
+        [_leftView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self);
+            make.leading.equalTo(self);
+            make.bottom.equalTo(self);
+            make.width.equalTo(self).with.multipliedBy(0.5);
         }];
-    }
-}
-- (void)toggleExpanded {
-    
-    if (_toExpand) {
-        [self mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.width.equalTo(@(_expandedSize.width)).with.priorityHigh();
-            make.height.equalTo(@(_expandedSize.height)).with.priorityHigh();
-        }];
-    } else {
-        [self mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.width.equalTo(@(_shrinkedSize.width)).with.priorityHigh();
-            make.height.equalTo(@(_shrinkedSize.height)).with.priorityHigh();
-        }];
-    }
-    [UIView animateWithDuration:0.8 animations:^{
-        [self layoutIfNeeded];
-    }];
-    _toExpand = !_toExpand;
-    NSLog(@"self %@",NSStringFromCGRect(self.frame));
 
+    }
+    else {
+        [_rightView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self);
+            make.trailing.equalTo(self);
+            make.bottom.equalTo(self);
+            make.width.equalTo(self).with.multipliedBy(1);
+        }];
+        [_leftView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self);
+            make.leading.equalTo(self);
+            make.bottom.equalTo(self);
+            make.width.equalTo(self).with.multipliedBy(0);
+        }];
+    }
+    [self layoutIfNeeded];
 }
+
+
+//- (void)toggleExpanded {
+//    
+//    if (_toExpand) {
+//        [self mas_updateConstraints:^(MASConstraintMaker *make) {
+//            make.width.equalTo(@(_expandedSize.width)).with.priorityHigh();
+//            make.height.equalTo(@(_expandedSize.height)).with.priorityHigh();
+//        }];
+//    } else {
+//        [self mas_updateConstraints:^(MASConstraintMaker *make) {
+//            make.width.equalTo(@(_shrinkedSize.width)).with.priorityHigh();
+//            make.height.equalTo(@(_shrinkedSize.height)).with.priorityHigh();
+//        }];
+//    }
+//    [UIView animateWithDuration:0.6 animations:^{
+//        [self layoutIfNeeded];
+//    }];
+//    _toExpand = !_toExpand;
+//    NSLog(@"self %@",NSStringFromCGRect(self.frame));
+//    
+//}
 
 
 @end

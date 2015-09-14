@@ -343,8 +343,8 @@ static NSString *CellIdentifier2 = @"AskCell";
             PIEHotTableCell* cell = (PIEHotTableCell *)[_scrollView.hotTable cellForRowAtIndexPath:_selectedIndexPath];
             _selectedVM = _dataSourceOfHotTableView[_selectedIndexPath.row];
             CGPoint p = [gesture locationInView:cell];
-            if (CGRectContainsPoint(cell.thumbAnimateView.frame, p)) {
-                [cell toggleExpanded];
+            if (CGRectContainsPoint(cell.thumbView.frame, p)) {
+                [cell animateToggleExpanded];
             }
            else  if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                 //进入热门详情
