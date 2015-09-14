@@ -21,38 +21,23 @@
     _avatarView.clipsToBounds = YES;
     _theImageView.contentMode = UIViewContentModeScaleAspectFill;
     _theImageView.clipsToBounds = YES;
+    self.clipsToBounds = YES;
+    _thumbAnimateView.hidden = YES;
     
-    _leftThumbImageView.clipsToBounds = YES;
-    _rightThumbImageView.clipsToBounds = YES;
+    _thumbView = [PIEThumbAnimateView2 new];
+    [self insertSubview:_thumbView aboveSubview:_theImageView];
+    [self bringSubviewToFront:_thumbView];
+    [_thumbView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(@100);
+        make.height.equalTo(@100);
+        make.trailing.equalTo(_theImageView);
+        make.bottom.equalTo(_theImageView);
+    }];
 }
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
-
 
 - (void)configCell:(DDPageVM *)viewModel row:(NSInteger)row{
-  
-  if (row % 2 == 1) {
-      [_rightThumbImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-          make.width.equalTo(@(50));
-      }];
-      [_leftThumbImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-          make.width.equalTo(@(50));
-      }];
+//    should set expandedSize before set subviewCounts
 
-     } else  {
-        //        _rightThumbImageView.image =
-         [_rightThumbImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-             make.width.equalTo(@(100));
-         }];
-         [_leftThumbImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-             make.width.equalTo(@(0));
-         }];
-   
-    }
     
     [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     _nameLabel.text = viewModel.username;
@@ -69,7 +54,53 @@
     _likeCountLabel.text = viewModel.likeCount;
     _likeView.highlighted = viewModel.liked;
     
-    [super updateConstraints];
+    _thumbView.expandedSize = CGSizeMake(SCREEN_WIDTH, imageViewHeight);
+    if (row % 2 == 1) {
+        _thumbView.subviewCounts = 2;
+    } else  {
+        _thumbView.subviewCounts = 1;
+    }
+    
+}
+-(void)setupThumbImageView {
+
+}
+-(void)prepareForReuse {
+    [super prepareForReuse];
+    [_thumbView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(@100);
+        make.height.equalTo(@100);
+        make.trailing.equalTo(_theImageView);
+        make.bottom.equalTo(_theImageView);
+    }];
+
 }
 
+- (void)toggleExpanded {
+    NSLog(@"toggleExpanded");
+    [self layoutIfNeeded];
+        if (_thumbView.toExpand) {
+            NSLog(@"EXPAND");
+            [_thumbView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(_theImageView).with.offset(0);
+                make.leading.equalTo(_theImageView).with.offset(-1);
+                make.trailing.equalTo(_theImageView).with.offset(0);
+                make.bottom.equalTo(_theImageView).with.offset(0);
+            }];
+        } else {
+            NSLog(@"SHRINK");
+            [_thumbView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.width.equalTo(@100);
+                make.height.equalTo(@100);
+                make.trailing.equalTo(_theImageView);
+                make.bottom.equalTo(_theImageView);
+            }];
+
+        }
+    [UIView animateWithDuration:0.8 animations:^{
+        [self layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        _thumbView.toExpand = !_thumbView.toExpand;
+    }];
+}
 @end

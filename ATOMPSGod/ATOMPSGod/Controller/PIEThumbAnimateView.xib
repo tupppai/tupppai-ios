@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PIEThumbAnimateView">
+            <connections>
+                <outlet property="contentView" destination="gxH-h5-QMx" id="fYc-s6-cl1"/>
+                <outlet property="leftView" destination="Q6D-LG-iCy" id="EuC-ip-Xk5"/>
+                <outlet property="rightView" destination="ap8-NB-uYd" id="nsN-ch-X8B"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="gxH-h5-QMx">
+            <rect key="frame" x="0.0" y="0.0" width="237" height="151"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" image="psps.png" translatesAutoresizingMaskIntoConstraints="NO" id="Q6D-LG-iCy" userLabel="leftImageView">
+                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="151"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="90" id="3Z8-jU-1pe"/>
+                        <constraint firstAttribute="width" priority="750" id="7FJ-kn-9wK"/>
+                        <constraint firstAttribute="width" constant="100" id="B0u-Vi-UXw"/>
+                        <constraint firstAttribute="width" priority="555" id="TUt-73-ATf"/>
+                        <constraint firstAttribute="width" constant="100" id="VO5-Gr-a3D"/>
+                        <constraint firstAttribute="width" id="Whc-ER-yvd"/>
+                        <constraint firstAttribute="height" constant="100" id="dN3-FF-Y56"/>
+                        <constraint firstAttribute="width" id="ykv-61-SeL"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="3Z8-jU-1pe"/>
+                            <exclude reference="7FJ-kn-9wK"/>
+                            <exclude reference="B0u-Vi-UXw"/>
+                            <exclude reference="TUt-73-ATf"/>
+                            <exclude reference="VO5-Gr-a3D"/>
+                            <exclude reference="Whc-ER-yvd"/>
+                            <exclude reference="dN3-FF-Y56"/>
+                            <exclude reference="ykv-61-SeL"/>
+                        </mask>
+                    </variation>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="test1.png" translatesAutoresizingMaskIntoConstraints="NO" id="ap8-NB-uYd" userLabel="rightImageView">
+                    <rect key="frame" x="0.0" y="0.0" width="237" height="151"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="100" id="U76-ee-6Rq"/>
+                        <constraint firstAttribute="width" constant="60" id="cHr-9F-Cdq"/>
+                        <constraint firstAttribute="width" id="cXW-Bo-Qcz"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="cXW-Bo-Qcz"/>
+                            <exclude reference="U76-ee-6Rq"/>
+                            <exclude reference="cHr-9F-Cdq"/>
+                        </mask>
+                    </variation>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Q6D-LG-iCy" firstAttribute="top" secondItem="gxH-h5-QMx" secondAttribute="top" id="DEB-qY-QxR"/>
+                <constraint firstAttribute="trailing" secondItem="ap8-NB-uYd" secondAttribute="trailing" id="DtK-hY-Ley"/>
+                <constraint firstAttribute="height" constant="90" id="Fu9-ht-QBJ"/>
+                <constraint firstItem="ap8-NB-uYd" firstAttribute="width" secondItem="gxH-h5-QMx" secondAttribute="width" id="GA9-i5-f7t"/>
+                <constraint firstItem="ap8-NB-uYd" firstAttribute="width" secondItem="gxH-h5-QMx" secondAttribute="width" priority="750" id="K5Q-TP-rqg"/>
+                <constraint firstAttribute="bottom" secondItem="Q6D-LG-iCy" secondAttribute="bottom" id="LAp-EO-zdF"/>
+                <constraint firstItem="Q6D-LG-iCy" firstAttribute="leading" secondItem="gxH-h5-QMx" secondAttribute="leading" id="QLe-Nf-7wx"/>
+                <constraint firstItem="ap8-NB-uYd" firstAttribute="leading" secondItem="Q6D-LG-iCy" secondAttribute="trailing" id="ad9-pM-Qk2"/>
+                <constraint firstItem="Q6D-LG-iCy" firstAttribute="top" secondItem="gxH-h5-QMx" secondAttribute="top" id="eE0-8j-yAf"/>
+                <constraint firstItem="ap8-NB-uYd" firstAttribute="width" secondItem="Q6D-LG-iCy" secondAttribute="width" id="gPf-a8-y98"/>
+                <constraint firstAttribute="width" constant="600" id="gl5-3l-sT7"/>
+                <constraint firstItem="ap8-NB-uYd" firstAttribute="width" secondItem="Q6D-LG-iCy" secondAttribute="width" id="lwt-ti-KjR"/>
+                <constraint firstAttribute="width" constant="90" id="obg-2e-0z8"/>
+                <constraint firstItem="ap8-NB-uYd" firstAttribute="top" secondItem="gxH-h5-QMx" secondAttribute="top" id="r7y-DI-QnY"/>
+                <constraint firstAttribute="bottom" secondItem="ap8-NB-uYd" secondAttribute="bottom" id="u9E-4Z-XUu"/>
+                <constraint firstAttribute="height" constant="1000" id="uis-5t-BfC"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="Fu9-ht-QBJ"/>
+                    <exclude reference="gl5-3l-sT7"/>
+                    <exclude reference="obg-2e-0z8"/>
+                    <exclude reference="uis-5t-BfC"/>
+                    <exclude reference="eE0-8j-yAf"/>
+                    <exclude reference="GA9-i5-f7t"/>
+                    <exclude reference="K5Q-TP-rqg"/>
+                    <exclude reference="gPf-a8-y98"/>
+                    <exclude reference="lwt-ti-KjR"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="-224.5" y="-210.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="psps.png" width="640" height="1136"/>
+        <image name="test1.png" width="478" height="472"/>
+    </resources>
+</document>

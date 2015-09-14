@@ -1,5 +1,5 @@
 //
-//  ATOMHomeImageDAO.m
+//  ATOMAskPageDAO.m
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/19.
@@ -54,7 +54,7 @@
 - (ATOMAskPage *)selectHomeImageByImageID:(NSInteger)imageID {
     __block ATOMAskPage *homeImage;
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
-        NSString *stmt = @"select * from ATOMHomeImage where imageID = ?";
+        NSString *stmt = @"select * from ATOMAskPage where imageID = ?";
         NSArray *param = @[@(imageID)];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {
@@ -70,7 +70,7 @@
     __block NSMutableArray *muArray = [NSMutableArray array];
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
         NSString* homeTypeStr = homeType == ATOMHomepageViewTypeHot?@"hot":@"new";
-        NSString *stmt = @"SELECT * FROM ATOMHomeImage where homePageType = ? ORDER BY uploadTime DESC LIMIT 10";
+        NSString *stmt = @"SELECT * FROM ATOMAskPage where homePageType = ? ORDER BY uploadTime DESC LIMIT 10";
         NSArray *param =  @[homeTypeStr];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {
@@ -84,7 +84,7 @@
 - (NSArray *)selectHomeImages {
     __block NSMutableArray *muArray = [NSMutableArray array];
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
-        NSString *stmt = @"SELECT * FROM ATOMHomeImage ORDER BY uploadTime DESC limit 15";
+        NSString *stmt = @"SELECT * FROM ATOMAskPage ORDER BY uploadTime DESC limit 15";
         FMResultSet *rs = [db executeQuery:stmt];
         while ([rs next]) {
             ATOMAskPage *homeImage = [MTLFMDBAdapter modelOfClass:[ATOMAskPage class] fromFMResultSet:rs error:NULL];
@@ -98,7 +98,7 @@
 - (BOOL)isExistHomeImage:(ATOMAskPage *)homeImage {
     __block BOOL flag;
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
-        NSString *stmt = @"select * from ATOMHomeImage where imageID = ?";
+        NSString *stmt = @"select * from ATOMAskPage where imageID = ?";
         NSArray *param = @[@(homeImage.imageID)];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {
@@ -117,7 +117,7 @@
 - (void)clearHomeImages {
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
         
-        NSString *stmt = @"delete from ATOMHomeImage";
+        NSString *stmt = @"delete from ATOMAskPage";
         BOOL flag = [db executeUpdate:stmt];
         if (flag) {
 //            NSLog(@"delete homeImage success");
@@ -128,7 +128,7 @@
 }
 - (void)clearHomeImagesWithHomeType:(NSString *)homeType {
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
-        NSString *stmt = @"delete from ATOMHomeImage where homePageType = ?";
+        NSString *stmt = @"delete from ATOMAskPage where homePageType = ?";
         NSArray *param = @[homeType];
         BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
         if (flag) {

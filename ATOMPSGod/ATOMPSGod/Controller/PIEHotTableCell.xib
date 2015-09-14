@@ -53,6 +53,14 @@
                             </mask>
                         </variation>
                     </imageView>
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hbo-PV-OZi" customClass="PIEThumbAnimateView">
+                        <rect key="frame" x="286" y="193" width="100" height="90"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" priority="750" constant="90" id="fV1-B4-R0T"/>
+                            <constraint firstAttribute="width" priority="750" constant="100" id="s1a-il-Wwb"/>
+                        </constraints>
+                    </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hot_share" translatesAutoresizingMaskIntoConstraints="NO" id="iRj-zx-Mwj">
                         <rect key="frame" x="95" y="321" width="15" height="15"/>
                         <animations/>
@@ -61,7 +69,7 @@
                             <constraint firstAttribute="height" constant="15" id="DDs-3i-H0C"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我觉得我长得真不错！" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XLA-1a-yzs">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="我觉得我长得真不错！" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XLA-1a-yzs">
                         <rect key="frame" x="8" y="291" width="370" height="13"/>
                         <animations/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
@@ -112,7 +120,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fpc-h1-rIF" userLabel="1">
                         <rect key="frame" x="350" y="320" width="6.5" height="11"/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="11"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1223" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jLC-GI-IHG" userLabel="2">
@@ -133,38 +141,6 @@
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="psps.png" translatesAutoresizingMaskIntoConstraints="NO" id="LQi-kq-cMY" userLabel="leftImageView">
-                        <rect key="frame" x="-732" y="183" width="640" height="100"/>
-                        <constraints>
-                            <constraint firstAttribute="width" priority="555" id="DUo-J8-kSr"/>
-                            <constraint firstAttribute="width" id="WSz-Da-GFm"/>
-                            <constraint firstAttribute="height" constant="100" id="Zki-Al-bVh"/>
-                            <constraint firstAttribute="width" priority="750" id="aB5-77-BHY"/>
-                            <constraint firstAttribute="width" id="q6j-Fm-W5q"/>
-                        </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="DUo-J8-kSr"/>
-                                <exclude reference="WSz-Da-GFm"/>
-                                <exclude reference="aB5-77-BHY"/>
-                                <exclude reference="q6j-Fm-W5q"/>
-                            </mask>
-                        </variation>
-                    </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="test1.png" translatesAutoresizingMaskIntoConstraints="NO" id="1Uf-Hm-8li" userLabel="rightImageView">
-                        <rect key="frame" x="-92" y="183" width="478" height="100"/>
-                        <constraints>
-                            <constraint firstAttribute="width" id="7yb-1K-GIh"/>
-                            <constraint firstAttribute="height" constant="100" id="Nq1-Tq-WcV"/>
-                            <constraint firstAttribute="width" constant="60" id="uvq-30-KoC"/>
-                        </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="7yb-1K-GIh"/>
-                                <exclude reference="uvq-30-KoC"/>
-                            </mask>
-                        </variation>
-                    </imageView>
                 </subviews>
                 <animations/>
                 <constraints>
@@ -172,18 +148,14 @@
                     <constraint firstItem="3C2-b6-uiL" firstAttribute="height" secondItem="iRj-zx-Mwj" secondAttribute="height" id="59I-DF-n2J"/>
                     <constraint firstItem="Qz0-1D-vqQ" firstAttribute="top" secondItem="tZ7-6S-wLe" secondAttribute="bottom" constant="8" id="5gv-vC-jHS"/>
                     <constraint firstItem="Qz0-1D-vqQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="5hl-X9-8WE"/>
-                    <constraint firstItem="Qz0-1D-vqQ" firstAttribute="bottom" secondItem="1Uf-Hm-8li" secondAttribute="bottom" id="64Z-l2-7VY"/>
                     <constraint firstItem="fpc-h1-rIF" firstAttribute="leading" secondItem="9pm-mC-ohz" secondAttribute="trailing" constant="2" id="9Na-pN-kfH"/>
-                    <constraint firstItem="LQi-kq-cMY" firstAttribute="bottom" secondItem="Qz0-1D-vqQ" secondAttribute="bottom" id="9wX-LY-Clf"/>
                     <constraint firstItem="Qz0-1D-vqQ" firstAttribute="top" secondItem="tZ7-6S-wLe" secondAttribute="bottom" constant="10" id="AxG-BY-xmz"/>
                     <constraint firstItem="pnn-QO-hWe" firstAttribute="leading" secondItem="iRj-zx-Mwj" secondAttribute="trailing" constant="40" id="Bog-FH-Ht3"/>
                     <constraint firstItem="pnn-QO-hWe" firstAttribute="leading" secondItem="iRj-zx-Mwj" secondAttribute="trailing" constant="30" id="Bv6-aR-RE2"/>
                     <constraint firstItem="tZ7-6S-wLe" firstAttribute="bottom" secondItem="6r6-EV-L6Y" secondAttribute="bottom" constant="1" id="D2Z-TC-VWA"/>
                     <constraint firstItem="3C2-b6-uiL" firstAttribute="leading" secondItem="pnn-QO-hWe" secondAttribute="trailing" constant="40" id="Frf-Hi-UeW"/>
-                    <constraint firstItem="Qz0-1D-vqQ" firstAttribute="trailing" secondItem="1Uf-Hm-8li" secondAttribute="trailing" id="Ha9-Vm-Tzu"/>
                     <constraint firstAttribute="trailingMargin" secondItem="9pm-mC-ohz" secondAttribute="trailing" constant="20" id="Hbr-pX-e9a"/>
                     <constraint firstItem="jLC-GI-IHG" firstAttribute="centerY" secondItem="iRj-zx-Mwj" secondAttribute="centerY" id="HhB-hV-AWQ"/>
-                    <constraint firstItem="1Uf-Hm-8li" firstAttribute="leading" secondItem="LQi-kq-cMY" secondAttribute="trailing" id="Hu1-BD-BXa"/>
                     <constraint firstItem="XLA-1a-yzs" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Lrx-5Z-lns"/>
                     <constraint firstItem="yHw-He-aWh" firstAttribute="top" secondItem="XLA-1a-yzs" secondAttribute="bottom" constant="15" id="PrL-fm-1fD"/>
                     <constraint firstItem="yHw-He-aWh" firstAttribute="centerY" secondItem="iRj-zx-Mwj" secondAttribute="centerY" id="QZ9-Fy-6C7"/>
@@ -198,6 +170,7 @@
                     <constraint firstItem="tXl-3D-7si" firstAttribute="top" secondItem="6r6-EV-L6Y" secondAttribute="top" id="eQx-PQ-ha5"/>
                     <constraint firstItem="3C2-b6-uiL" firstAttribute="leading" secondItem="Q4v-Iy-D5n" secondAttribute="trailing" constant="15" id="ep2-fR-QE1"/>
                     <constraint firstItem="pnn-QO-hWe" firstAttribute="centerY" secondItem="yHw-He-aWh" secondAttribute="centerY" id="epy-lS-vdl"/>
+                    <constraint firstItem="Qz0-1D-vqQ" firstAttribute="bottom" secondItem="hbo-PV-OZi" secondAttribute="bottom" id="etX-wJ-tC5"/>
                     <constraint firstAttribute="trailingMargin" secondItem="fpc-h1-rIF" secondAttribute="trailing" constant="-8" id="f8a-Tx-Wkb"/>
                     <constraint firstItem="9pm-mC-ohz" firstAttribute="centerY" secondItem="yHw-He-aWh" secondAttribute="centerY" id="fqo-ae-J42"/>
                     <constraint firstItem="9pm-mC-ohz" firstAttribute="top" secondItem="fpc-h1-rIF" secondAttribute="top" constant="-3" id="gSv-P4-vfd"/>
@@ -213,6 +186,7 @@
                     <constraint firstItem="pnn-QO-hWe" firstAttribute="width" secondItem="iRj-zx-Mwj" secondAttribute="width" id="rTc-jg-Sbd"/>
                     <constraint firstItem="tXl-3D-7si" firstAttribute="leading" secondItem="6r6-EV-L6Y" secondAttribute="trailing" constant="8" id="s0u-bm-8pH"/>
                     <constraint firstItem="yHw-He-aWh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="tuc-Za-jOs"/>
+                    <constraint firstItem="Qz0-1D-vqQ" firstAttribute="trailing" secondItem="hbo-PV-OZi" secondAttribute="trailing" id="uyW-Uj-xSH"/>
                     <constraint firstItem="3C2-b6-uiL" firstAttribute="centerY" secondItem="yHw-He-aWh" secondAttribute="centerY" id="wrL-WH-Yke"/>
                     <constraint firstItem="fpc-h1-rIF" firstAttribute="leading" secondItem="9pm-mC-ohz" secondAttribute="trailing" constant="-8" id="xHO-kw-iT0"/>
                     <constraint firstItem="iRj-zx-Mwj" firstAttribute="leading" secondItem="yHw-He-aWh" secondAttribute="trailing" constant="27" id="yIb-I1-oVn"/>
@@ -240,14 +214,13 @@
                 <outlet property="commentCountLabel" destination="JY9-5E-X5F" id="53P-gs-YHa"/>
                 <outlet property="commentView" destination="3C2-b6-uiL" id="Yoa-uA-xsg"/>
                 <outlet property="contentLabel" destination="XLA-1a-yzs" id="gv3-Sc-OfV"/>
-                <outlet property="leftThumbImageView" destination="LQi-kq-cMY" id="HYC-0F-vvu"/>
                 <outlet property="likeCountLabel" destination="fpc-h1-rIF" id="RHA-qa-ldA"/>
                 <outlet property="likeView" destination="9pm-mC-ohz" id="R6e-gM-UYr"/>
                 <outlet property="nameLabel" destination="tXl-3D-7si" id="ba7-jS-co7"/>
-                <outlet property="rightThumbImageView" destination="1Uf-Hm-8li" id="x7c-bG-UT9"/>
                 <outlet property="shareCountLabel" destination="jLC-GI-IHG" id="EIZ-cT-s8C"/>
                 <outlet property="shareView" destination="iRj-zx-Mwj" id="gcw-YW-zt6"/>
                 <outlet property="theImageView" destination="Qz0-1D-vqQ" id="Rbt-cP-LRF"/>
+                <outlet property="thumbAnimateView" destination="hbo-PV-OZi" id="8KN-gz-nJk"/>
                 <outlet property="timeLabel" destination="tZ7-6S-wLe" id="7Ib-Nq-Kgx"/>
             </connections>
             <point key="canvasLocation" x="247" y="519.5"/>
@@ -260,6 +233,5 @@
         <image name="hot_share" width="30" height="33"/>
         <image name="hot_star" width="31" height="30"/>
         <image name="psps.png" width="640" height="1136"/>
-        <image name="test1.png" width="478" height="472"/>
     </resources>
 </document>
