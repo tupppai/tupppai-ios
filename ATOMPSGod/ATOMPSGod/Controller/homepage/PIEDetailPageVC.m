@@ -26,19 +26,23 @@
 @implementation PIEDetailPageVC
 
 -(void)awakeFromNib {
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor blackColor];
     [self setupBlurredImage];
+    [self getDataSource];
 
+    self.view.backgroundColor = [UIColor blackColor];
     self.view.clipsToBounds = YES;
+
     _carousel.type = iCarouselTypeLinear;
     _carousel.delegate = self;
     _carousel.dataSource = self;
-    [self getDataSource];
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
+    
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -53,8 +57,7 @@
     
     dispatch_async(backgroundQueue, ^{
         //Code here is executed asynchronously
-        UIImage *theImage = [UIImage imageNamed:@"psps"];
-        
+        UIImage *theImage = _pageVM.image? :[UIImage imageNamed:@"psps"];
         //create our blurred image
         CIContext *context = [CIContext contextWithOptions:nil];
         CIImage *inputImage = [CIImage imageWithCGImage:theImage.CGImage];

@@ -35,7 +35,7 @@
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 15, 25)];
     backButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     [backView addSubview:backButton];
-    [backButton setImage:[UIImage imageNamed:@"icon_back"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"PIE_icon_back"] forState:UIControlStateNormal];
     UIBarButtonItem *barBackButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backView];
     [backButton addTarget:self action:@selector(popCurrentController) forControlEvents:UIControlEventTouchUpInside];
     _negativeSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];

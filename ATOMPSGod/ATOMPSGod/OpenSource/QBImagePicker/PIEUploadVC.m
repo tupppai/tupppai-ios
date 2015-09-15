@@ -7,8 +7,14 @@
 //
 
 #import "PIEUploadVC.h"
+#import "SZTextView.h"
 
 @interface PIEUploadVC ()
+
+@property (weak, nonatomic) IBOutlet SZTextView *inputTextView;
+@property (weak, nonatomic) IBOutlet UILabel *wordLimitLabel;
+@property (weak, nonatomic) IBOutlet UIButton *leftShareButton;
+@property (weak, nonatomic) IBOutlet UIButton *rightShareButton;
 
 @end
 

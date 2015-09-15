@@ -7,7 +7,13 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PIEUploadVC">
             <connections>
+                <outlet property="inputTextView" destination="dPM-Ue-RIs" id="a9I-o3-ufX"/>
+                <outlet property="leftImageView" destination="Fdo-Qf-OsL" id="3BN-Ca-6nX"/>
+                <outlet property="leftShareButton" destination="nV4-jD-nex" id="XVv-nX-3dE"/>
+                <outlet property="rightImageView" destination="hZk-c4-ES1" id="ueg-HN-uve"/>
+                <outlet property="rightShareButton" destination="r4m-8D-CwT" id="rRv-TL-ETP"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="wordLimitLabel" destination="HNt-Gn-RYy" id="51g-PO-5V7"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

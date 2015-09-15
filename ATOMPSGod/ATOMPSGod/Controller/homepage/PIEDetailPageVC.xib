@@ -20,11 +20,11 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="s5f-Tj-oBr" userLabel="blurView">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gaH-5k-Hr1" userLabel="iCarousel" customClass="iCarousel">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="300"/>
@@ -56,7 +56,7 @@
                     </variation>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YJO-Is-7zc">
-                    <rect key="frame" x="0.0" y="308" width="600" height="292"/>
+                    <rect key="frame" x="0.0" y="308" width="600" height="228"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="培伟哥哥" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" translatesAutoresizingMaskIntoConstraints="NO" id="Ej0-jf-tRH">
                             <rect key="frame" x="225" y="36" width="150" height="18"/>
@@ -102,7 +102,7 @@
                             </variation>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F9S-X3-Axq">
-                            <rect key="frame" x="100" y="222" width="40" height="40"/>
+                            <rect key="frame" x="100" y="158" width="40" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="40" id="rtW-mh-bRt"/>
                                 <constraint firstAttribute="height" constant="40" id="uZG-QJ-iDe"/>
@@ -112,7 +112,7 @@
                             </state>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OYh-Cl-kdK">
-                            <rect key="frame" x="460" y="222" width="40" height="40"/>
+                            <rect key="frame" x="460" y="158" width="40" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="40" id="QtT-3Z-bNq"/>
                                 <constraint firstAttribute="height" constant="40" id="eYh-Sa-DyO"/>
@@ -180,9 +180,9 @@
                             <exclude reference="cWe-Wq-4AO"/>
                             <exclude reference="gMg-0f-kY6"/>
                             <exclude reference="hw8-hh-0jT"/>
-                            <exclude reference="2vc-iU-yWu"/>
                             <exclude reference="Oij-fz-9nD"/>
                             <exclude reference="Otz-9i-giL"/>
+                            <exclude reference="2vc-iU-yWu"/>
                             <exclude reference="W2L-nE-hlR"/>
                             <exclude reference="mny-OA-a6L"/>
                             <exclude reference="w36-DR-jsj"/>
@@ -221,6 +221,7 @@
                 <constraint firstItem="s5f-Tj-oBr" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="pOw-c6-JCc"/>
                 <constraint firstAttribute="trailing" secondItem="gaH-5k-Hr1" secondAttribute="trailing" constant="158" id="ufH-nL-1Ia"/>
             </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
             <nil key="simulatedBottomBarMetrics"/>
             <variation key="default">
                 <mask key="constraints">

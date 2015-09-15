@@ -155,7 +155,10 @@ static NSString *CellIdentifier2 = @"AskCell";
 
     _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"热门",@"求P"]];
     _segmentedControl.frame = CGRectMake(0, 120, 200, 45);
+    _segmentedControl.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor darkGrayColor], NSForegroundColorAttributeName, nil];
+    _segmentedControl.selectedTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil];
     _segmentedControl.selectionIndicatorHeight = 4.0f;
+    _segmentedControl.selectionIndicatorEdgeInsets = UIEdgeInsetsMake(0, 0, -5, 0);
     _segmentedControl.selectionIndicatorColor = [UIColor yellowColor];
     _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
     _segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
@@ -349,6 +352,7 @@ static NSString *CellIdentifier2 = @"AskCell";
            else  if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                 //进入热门详情
                 PIEDetailPageVC* vc = [PIEDetailPageVC new];
+               _selectedVM.image = cell.theImageView.image;
                 vc.pageVM = _selectedVM;
                 [self pushViewController:vc animated:YES];
 

@@ -13,7 +13,6 @@
 
 @interface QBImagePickerController ()
 
-@property (nonatomic, strong) UINavigationController *albumsNavigationController;
 
 @property (nonatomic, strong) ALAssetsLibrary *assetsLibrary;
 @property (nonatomic, strong, readwrite) NSMutableOrderedSet *selectedAssetURLs;
