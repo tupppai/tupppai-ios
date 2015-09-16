@@ -33,14 +33,14 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="输入求p内容"/>
                     </userDefinedRuntimeAttributes>
                 </textView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="psps.png" translatesAutoresizingMaskIntoConstraints="NO" id="Fdo-Qf-OsL">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="psps.png" translatesAutoresizingMaskIntoConstraints="NO" id="Fdo-Qf-OsL">
                     <rect key="frame" x="12" y="70" width="60" height="60"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="60" id="J5w-ad-d14"/>
                         <constraint firstAttribute="width" constant="60" id="dX2-AG-EEi"/>
                     </constraints>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="psps.png" translatesAutoresizingMaskIntoConstraints="NO" id="hZk-c4-ES1">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="psps.png" translatesAutoresizingMaskIntoConstraints="NO" id="hZk-c4-ES1">
                     <rect key="frame" x="80" y="70" width="60" height="60"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0/18" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HNt-Gn-RYy">
@@ -61,13 +61,13 @@
                         <constraint firstAttribute="width" constant="28" id="4Ji-bW-hre"/>
                         <constraint firstAttribute="height" constant="28" id="JWG-SQ-y9i"/>
                     </constraints>
-                    <state key="normal" title="sina" image="share_sina">
+                    <state key="normal" image="weibo_big">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r4m-8D-CwT">
                     <rect key="frame" x="60" y="171" width="28" height="28"/>
-                    <state key="normal" title="moment" image="share_moments">
+                    <state key="normal" title="moment" image="moment">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
@@ -113,8 +113,8 @@
         </view>
     </objects>
     <resources>
+        <image name="moment" width="48" height="48"/>
         <image name="psps.png" width="640" height="1136"/>
-        <image name="share_moments" width="66" height="66"/>
-        <image name="share_sina" width="66" height="66"/>
+        <image name="weibo_big" width="60" height="60"/>
     </resources>
 </document>

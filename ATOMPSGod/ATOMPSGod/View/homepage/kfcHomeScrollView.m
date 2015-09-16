@@ -7,6 +7,10 @@
 //
 
 #import "kfcHomeScrollView.h"
+#import "CHTCollectionViewWaterfallLayout.h"
+#import "PIEAskCollectionCell.h"
+
+#define CELL_IDENTIFIER @"WaterfallCell"
 
 @interface kfcHomeScrollView ()
 
@@ -34,7 +38,7 @@
 
 - (void)createSubView {
     [self createHomepageHotView];
-    [self createHomepageRecentView];
+    [self createHomepageAskView];
 }
 
 - (void)createHomepageHotView {
@@ -45,12 +49,19 @@
     [_homepageHotView addSubview:_hotTable];
 }
 
-- (void)createHomepageRecentView {
-    _homepageRecentView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
-    [self addSubview:_homepageRecentView];
-    _askTable = [[RefreshTableView alloc] initWithFrame:_homepageRecentView.bounds];
-    _askTable.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [_homepageRecentView addSubview:_askTable];
+- (void)createHomepageAskView {
+    _homepageAskView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
+    [self addSubview:_homepageAskView];
+    CHTCollectionViewWaterfallLayout *layout = [[CHTCollectionViewWaterfallLayout alloc] init];
+    layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    layout.minimumColumnSpacing = 20;
+    layout.minimumInteritemSpacing = 30;
+    _collectionView = [[UICollectionView alloc] initWithFrame:_homepageAskView.bounds collectionViewLayout:layout];
+    _collectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    _collectionView.backgroundColor = [UIColor lightGrayColor];
+    [_collectionView registerClass:[PIEAskCollectionCell class]
+        forCellWithReuseIdentifier:CELL_IDENTIFIER];
+    [_homepageAskView addSubview:_collectionView];
 }
 
 - (void)changeUIAccording:(NSString *)buttonTitle {

@@ -82,24 +82,20 @@
 
 
 -(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
-//    [self dismissViewControllerAnimated:NO completion:^{
-//        [self dismissViewControllerAnimated:NO completion:^{
-            PIEUploadVC* vc = [PIEUploadVC new];
-            vc.leftImageView.image = [self getImageFromAsset:assets[0] type:ASSET_PHOTO_FULL_RESOLUTION];
-            vc.imageCount = 1;
-            if (assets.count == 2) {
-                vc.imageCount = 2;
-                vc.rightImageView.image = [self getImageFromAsset:assets[1] type:ASSET_PHOTO_FULL_RESOLUTION];
-            }
+    
+    [self.QBImagePickerController.selectedAssetURLs removeAllObjects];
+
+    NSMutableArray* imageArray = [NSMutableArray new];
+    for (ALAsset* asset in assets) {
+        [imageArray addObject:[self getImageFromAsset:asset type:ASSET_PHOTO_FULL_RESOLUTION]];
+    }
+    PIEUploadVC* vc = [PIEUploadVC new];
+    vc.imageArray = imageArray;
     [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
-//        [imagePickerController.navigationController pushViewController:vc animated:YES];
-//        UINavigationController* nav = (UINavigationController*)[AppDelegate APP].mainTabBarController.selectedViewController;
-//        [nav pushViewController:vc animated:YES];
-//        }];
-//    }];
 }
 
 -(void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController {
+    [self.QBImagePickerController.selectedAssetURLs removeAllObjects];
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 

@@ -11,7 +11,7 @@
 @class QBImagePickerController;
 @class ALAssetsGroup;
 
-@interface QBAssetsViewController : UICollectionViewController
+@interface QBAssetsViewController : DDBaseVC
 
 @property (nonatomic, weak) QBImagePickerController *imagePickerController;
 @property (nonatomic, strong) ALAssetsGroup *assetsGroup;

@@ -11,7 +11,8 @@
 @class QBImagePickerController;
 
 @interface QBAlbumsViewController : UITableViewController
-
+@property (nonatomic, copy) NSArray *assetsGroups;
 @property (nonatomic, weak) QBImagePickerController *imagePickerController;
+@property (nonatomic, assign) BOOL initPush;
 
 @end

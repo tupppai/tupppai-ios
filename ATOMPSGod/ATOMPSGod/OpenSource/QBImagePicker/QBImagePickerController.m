@@ -7,8 +7,6 @@
 //
 
 #import "QBImagePickerController.h"
-
-// ViewControllers
 #import "QBAlbumsViewController.h"
 
 @interface QBImagePickerController ()
@@ -41,7 +39,7 @@
                             ];
         self.filterType = QBImagePickerControllerFilterTypeNone;
         self.minimumNumberOfSelection = 1;
-        self.numberOfColumnsInPortrait = 4;
+        self.numberOfColumnsInPortrait = 3;
         self.numberOfColumnsInLandscape = 7;
         
         self.assetsLibrary = [ALAssetsLibrary new];
@@ -59,6 +57,8 @@
         // Set instance
         QBAlbumsViewController *albumsViewController = (QBAlbumsViewController *)self.albumsNavigationController.topViewController;
         albumsViewController.imagePickerController = self;
+        //instantly push first row ,showing photos of camera roll.
+        albumsViewController.initPush = YES;
     }
     
     return self;

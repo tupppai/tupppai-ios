@@ -8,8 +8,5 @@
 
 #import "DDBaseVC.h"
 @interface PIEUploadVC : DDBaseVC
-@property (weak, nonatomic) IBOutlet UIImageView *leftImageView;
-@property (weak, nonatomic) IBOutlet UIImageView *rightImageView;
-@property (nonatomic, assign) NSInteger imageCount;
-
+@property (nonatomic,copy) NSArray* imageArray;
 @end

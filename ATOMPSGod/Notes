@@ -1,4 +1,5 @@
 1.先是life cycle，然后是Delegate方法实现，然后是event response，然后才是getters and setters。这样后来者阅读代码时就能省力很多。
 
 2.但我还是建议尽量不要通过继承的方案来给原生对象添加功能，前面提到的Aspect方案和Category方案都可以使用。用Aspect＋load来实现重载函数，用Category来实现添加函数，当然，耍点手段用Category来添加property也是没问题的。这些方案已经覆盖了继承的全部功能，而且非常好维护，对于业务方也更加透明，何乐而不为呢。
-3.
+3.Hugging => content does not want to grow
+Compression Resistance => content does not want to shrink

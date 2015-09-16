@@ -25,8 +25,8 @@
 @interface QBAlbumsViewController ()
 
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *doneButton;
+@property (weak, nonatomic) IBOutlet UINavigationItem *backButton;
 
-@property (nonatomic, copy) NSArray *assetsGroups;
 
 @end
 
@@ -39,7 +39,12 @@
     [self setUpToolbarItems];
     
     [self updateAssetsGroupsWithCompletion:^{
-        [self.tableView reloadData];
+        if (_initPush) {
+            [self.tableView reloadData];
+            [self performSegueWithIdentifier:@"LibraryToPhoto" sender:nil];
+        } else {
+            [self.tableView reloadData];
+        }
     }];
     
     // Register observer

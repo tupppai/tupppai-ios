@@ -12,7 +12,7 @@
 // Views
 #import "QBAssetCell.h"
 #import "QBVideoIndicatorView.h"
-
+#import "PIECameraCell.h"
 // ViewControllers
 #import "QBImagePickerController.h"
 
@@ -23,9 +23,12 @@
 
 @end
 
-@interface QBAssetsViewController () <UICollectionViewDelegateFlowLayout>
+@interface QBAssetsViewController () <UICollectionViewDelegateFlowLayout,UICollectionViewDataSource,UICollectionViewDelegate>
 
-@property (nonatomic, strong) IBOutlet UIBarButtonItem *doneButton;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *backButton;
+@property (weak, nonatomic) IBOutlet UIButton *doneButton;
+@property (weak, nonatomic) IBOutlet UILabel *selectedCountLabel;
 
 @property (nonatomic, copy) NSArray *assets;
 @property (nonatomic, assign) NSUInteger numberOfAssets;
@@ -44,55 +47,48 @@
 {
     [super viewDidLoad];
     
-    [self setUpToolbarItems];
+    self.collectionView.dataSource = self;
+    self.collectionView.delegate = self;
+    self.collectionView.allowsMultipleSelection = self.imagePickerController.allowsMultipleSelection;
+    [self.collectionView registerNib:[UINib nibWithNibName:@"PIECameraCell" bundle:nil] forCellWithReuseIdentifier:@"PIECameraCell"];
     
+    _selectedCountLabel.layer.cornerRadius = _selectedCountLabel.frame.size.width/2;
+    _selectedCountLabel.clipsToBounds = YES;
     // Register observer
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(assetsLibraryChanged:)
                                                  name:ALAssetsLibraryChangedNotification
                                                object:nil];
+    [_backButton setTarget:self];
+    [_backButton setAction:@selector(tapBackButton)];
 }
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+    self.navigationController.navigationBar.barTintColor = [UIColor darkGrayColor];
+    self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
     // Configure navigation item
     self.navigationItem.title = [self.assetsGroup valueForProperty:ALAssetsGroupPropertyName];
     self.navigationItem.prompt = self.imagePickerController.prompt;
     
-    // Configure collection view
-    self.collectionView.allowsMultipleSelection = self.imagePickerController.allowsMultipleSelection;
-    
-    // Show/hide 'Done' button
-    if (self.imagePickerController.allowsMultipleSelection) {
-        [self.navigationItem setRightBarButtonItem:self.doneButton animated:NO];
-    } else {
-        [self.navigationItem setRightBarButtonItem:nil animated:NO];
-    }
-    
     [self updateDoneButtonState];
     [self updateSelectionInfo];
     
-    // Scroll to bottom
-    if (self.numberOfAssets > 0 && self.isMovingToParentViewController && !self.disableScrollToBottom) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:(self.numberOfAssets - 1) inSection:0];
-        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
-    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    
-    self.disableScrollToBottom = YES;
+    self.navigationController.navigationBar.barTintColor =[UIColor whiteColor];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
-    self.disableScrollToBottom = NO;
 }
 
 - (void)dealloc
@@ -104,6 +100,9 @@
 }
 
 
+- (void)tapBackButton {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 #pragma mark - Accessors
 
 - (void)setAssetsGroup:(ALAssetsGroup *)assetsGroup
@@ -199,41 +198,43 @@
 
 
 #pragma mark - Toolbar
-
-- (void)setUpToolbarItems
-{
-    // Space
-    UIBarButtonItem *leftSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:NULL];
-    UIBarButtonItem *rightSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:NULL];
-    
-    // Info label
-    NSDictionary *attributes = @{ NSForegroundColorAttributeName: [UIColor blackColor] };
-    UIBarButtonItem *infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:NULL];
-    infoButtonItem.enabled = NO;
-    [infoButtonItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
-    [infoButtonItem setTitleTextAttributes:attributes forState:UIControlStateDisabled];
-    
-    self.toolbarItems = @[leftSpace, infoButtonItem, rightSpace];
-}
+//
+//- (void)setUpToolbarItems
+//{
+////    // Space
+////    UIBarButtonItem *leftSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:NULL];
+////    
+////    UIBarButtonItem *middleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:NULL];
+////    
+////    // Info label
+////    NSDictionary *attributes = @{ NSForegroundColorAttributeName: [UIColor whiteColor] };
+////    UIBarButtonItem *infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStylePlain target:nil action:NULL];
+//////    infoButtonItem.enabled = NO;
+////    [infoButtonItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
+////    [infoButtonItem setTitleTextAttributes:attributes forState:UIControlStateDisabled];
+////    
+////    self.toolbarItems = @[leftSpace, middleSpace, infoButtonItem];
+//}
 
 - (void)updateSelectionInfo
 {
-    NSMutableOrderedSet *selectedAssetURLs = self.imagePickerController.selectedAssetURLs;
-    
-    if (selectedAssetURLs.count > 0) {
-        NSBundle *bundle = self.imagePickerController.assetBundle;
-        NSString *format;
-        if (selectedAssetURLs.count > 1) {
-            format = NSLocalizedStringFromTableInBundle(@"items_selected", @"QBImagePicker", bundle, nil);
-        } else {
-            format = NSLocalizedStringFromTableInBundle(@"item_selected", @"QBImagePicker", bundle, nil);
-        }
-        
-        NSString *title = [NSString stringWithFormat:format, selectedAssetURLs.count];
-        [(UIBarButtonItem *)self.toolbarItems[1] setTitle:title];
-    } else {
-        [(UIBarButtonItem *)self.toolbarItems[1] setTitle:@""];
-    }
+//    NSMutableOrderedSet *selectedAssetURLs = self.imagePickerController.selectedAssetURLs;
+    _selectedCountLabel.text = [NSString stringWithFormat:@"%zd",self.imagePickerController.selectedAssetURLs.count];
+
+//    if (selectedAssetURLs.count > 0) {
+//        NSBundle *bundle = self.imagePickerController.assetBundle;
+//        NSString *format;
+//        if (selectedAssetURLs.count > 1) {
+//            format = NSLocalizedStringFromTableInBundle(@"items_selected", @"QBImagePicker", bundle, nil);
+//        } else {
+//            format = NSLocalizedStringFromTableInBundle(@"item_selected", @"QBImagePicker", bundle, nil);
+//        }
+//        
+//        NSString *title = [NSString stringWithFormat:format, selectedAssetURLs.count];
+//        [(UIBarButtonItem *)self.toolbarItems[2] setTitle:title];
+//    } else {
+//        [(UIBarButtonItem *)self.toolbarItems[2] setTitle:@""];
+//    }
 }
 
 
@@ -258,7 +259,7 @@
         }
     }];
     
-    self.assets = assets;
+    self.assets =[[[assets reverseObjectEnumerator] allObjects] mutableCopy];
     self.numberOfAssets = numberOfAssets;
     self.numberOfPhotos = numberOfPhotos;
     self.numberOfVideos = numberOfVideos;
@@ -347,17 +348,21 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.numberOfAssets;
+    return self.numberOfAssets+1;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.item == 0) {
+        PIECameraCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PIECameraCell" forIndexPath:indexPath];
+        return cell;
+    }
     QBAssetCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AssetCell" forIndexPath:indexPath];
     cell.tag = indexPath.item;
     cell.showsOverlayViewWhenSelected = self.imagePickerController.allowsMultipleSelection;
     
     // Image
-    ALAsset *asset = self.assets[indexPath.item];
+    ALAsset *asset = self.assets[indexPath.item-1];
     UIImage *image = [UIImage imageWithCGImage:[asset thumbnail]];
     cell.imageView.image = image;
     
@@ -463,46 +468,51 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    QBImagePickerController *imagePickerController = self.imagePickerController;
-    NSMutableOrderedSet *selectedAssetURLs = imagePickerController.selectedAssetURLs;
-    
-    ALAsset *asset = self.assets[indexPath.item];
-    NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
-    
-    if (imagePickerController.allowsMultipleSelection) {
-        if ([self isAutoDeselectEnabled] && selectedAssetURLs.count > 0) {
-            // Remove previous selected asset from set
+    if (indexPath.item == 0) {
+        //go to camera
+    } else {
+        QBImagePickerController *imagePickerController = self.imagePickerController;
+        NSMutableOrderedSet *selectedAssetURLs = imagePickerController.selectedAssetURLs;
+        //first item is camera button.
+        ALAsset *asset = self.assets[indexPath.item-1];
+        NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
+        
+        if (imagePickerController.allowsMultipleSelection) {
+            if ([self isAutoDeselectEnabled] && selectedAssetURLs.count > 0) {
+                // Remove previous selected asset from set
+                [imagePickerController willChangeValueForKey:@"selectedAssetURLs"];
+                [selectedAssetURLs removeObjectAtIndex:0];
+                [imagePickerController didChangeValueForKey:@"selectedAssetURLs"];
+                
+                // Deselect previous selected asset
+                if (self.lastSelectedItemIndexPath) {
+                    [collectionView deselectItemAtIndexPath:self.lastSelectedItemIndexPath animated:NO];
+                }
+            }
+            
+            // Add asset to set
             [imagePickerController willChangeValueForKey:@"selectedAssetURLs"];
-            [selectedAssetURLs removeObjectAtIndex:0];
+            [selectedAssetURLs addObject:assetURL];
             [imagePickerController didChangeValueForKey:@"selectedAssetURLs"];
             
-            // Deselect previous selected asset
-            if (self.lastSelectedItemIndexPath) {
-                [collectionView deselectItemAtIndexPath:self.lastSelectedItemIndexPath animated:NO];
-            }
-        }
-        
-        // Add asset to set
-        [imagePickerController willChangeValueForKey:@"selectedAssetURLs"];
-        [selectedAssetURLs addObject:assetURL];
-        [imagePickerController didChangeValueForKey:@"selectedAssetURLs"];
-        
-        self.lastSelectedItemIndexPath = indexPath;
-        
-        [self updateDoneButtonState];
-        
-        if (imagePickerController.showsNumberOfSelectedAssets) {
-            [self updateSelectionInfo];
+            self.lastSelectedItemIndexPath = indexPath;
             
-            if (selectedAssetURLs.count == 1) {
-                // Show toolbar
-                [self.navigationController setToolbarHidden:NO animated:YES];
+            [self updateDoneButtonState];
+            
+            if (imagePickerController.showsNumberOfSelectedAssets) {
+                [self updateSelectionInfo];
+                
+                //            if (selectedAssetURLs.count == 1) {
+                //                // Show toolbar
+                //                [self.navigationController setToolbarHidden:NO animated:YES];
+                //            }
+            }
+        } else {
+            if ([imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didSelectAsset:)]) {
+                [imagePickerController.delegate qb_imagePickerController:imagePickerController didSelectAsset:asset];
             }
         }
-    } else {
-        if ([imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didSelectAsset:)]) {
-            [imagePickerController.delegate qb_imagePickerController:imagePickerController didSelectAsset:asset];
-        }
+
     }
 }
 
@@ -516,7 +526,7 @@
     NSMutableOrderedSet *selectedAssetURLs = imagePickerController.selectedAssetURLs;
     
     // Remove asset from set
-    ALAsset *asset = self.assets[indexPath.item];
+    ALAsset *asset = self.assets[indexPath.item-1];
     NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
     
     [imagePickerController willChangeValueForKey:@"selectedAssetURLs"];

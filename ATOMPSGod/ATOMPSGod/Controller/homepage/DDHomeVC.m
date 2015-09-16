@@ -39,10 +39,12 @@
 #import "QBImagePicker.h"
 #import "PIEUploadVC.h"
 
+#import "CHTCollectionViewWaterfallLayout.h"
+#import "PIEAskCollectionCell.h"
 //#import "QBImagePickerController.h"
 @class ATOMAskPage;
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
-@interface DDHomeVC() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate,QBImagePickerControllerDelegate>
+@interface DDHomeVC() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate,QBImagePickerControllerDelegate,CHTCollectionViewDelegateWaterfallLayout,UICollectionViewDelegate,UICollectionViewDataSource>
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureHot;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureAsk;
@@ -125,18 +127,24 @@ static NSString *CellIdentifier2 = @"AskCell";
     [_scrollView.hotTable addGestureRecognizer:_tapGestureHot];
     
     _scrollView.hotTable.scrollsToTop = YES;
-    _scrollView.askTable.scrollsToTop = NO;
+//    _scrollView.askTable.scrollsToTop = NO;
 
 }
 - (void)configaskTable {
-    _scrollView.askTable.delegate = self;
-    _scrollView.askTable.dataSource = self;
-    _scrollView.askTable.noDataView.label.text = @"网络连接断了吧-_-!";
-    _scrollView.askTable.psDelegate = self;
-    _scrollView.hotTable.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
-    [_scrollView.askTable registerClass:[kfcAskCell class] forCellReuseIdentifier:CellIdentifier2];
-    _tapGestureAsk = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureAsk:)];
-    [_scrollView.askTable addGestureRecognizer:_tapGestureAsk];
+    
+//    
+//    _scrollView.askTable.delegate = self;
+//    _scrollView.askTable.dataSource = self;
+//    _scrollView.askTable.noDataView.label.text = @"网络连接断了吧-_-!";
+//    _scrollView.askTable.psDelegate = self;
+//    _scrollView.hotTable.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
+//    [_scrollView.askTable registerClass:[kfcAskCell class] forCellReuseIdentifier:CellIdentifier2];
+//    _tapGestureAsk = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureAsk:)];
+//    [_scrollView.askTable addGestureRecognizer:_tapGestureAsk];
+    
+    _scrollView.collectionView.dataSource = self;
+    _scrollView.collectionView.delegate = self;
+    
 }
 
 - (void)createCustomNavigationBar {
@@ -636,7 +644,7 @@ static NSString *CellIdentifier2 = @"AskCell";
                 [ws.scrollView.hotTable.header endRefreshing];
             } else if (ws.scrollView.type == ATOMHomepageViewTypeAsk) {
                 ws.scrollView.askTable.noDataView.canShow = YES;
-                [ws.scrollView.askTable reloadData];
+                [ws.scrollView.collectionView reloadData];
                 [ws.scrollView.askTable.header endRefreshing];
             }
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
@@ -922,7 +930,7 @@ static NSString *CellIdentifier2 = @"AskCell";
                 if (ws.scrollView.type == ATOMHomepageViewTypeHot) {
                     view = ws.scrollView.homepageHotView;
                 } else  if (ws.scrollView.type == ATOMHomepageViewTypeAsk) {
-                    view = ws.scrollView.homepageRecentView;
+                    view = ws.scrollView.homepageAskView;
                 }
                 if(!error) {
                     [Hud text:@"已举报" inView:view];
@@ -947,4 +955,25 @@ static NSString *CellIdentifier2 = @"AskCell";
     return _QBImagePickerController;
 }
 
+
+#pragma mark - UICollectionViewDataSource
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return _dataSourceOfAskTableView.count;
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    PIEAskCollectionCell*cell =
+    (PIEAskCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"WaterfallCell"
+                                                                                forIndexPath:indexPath];
+    return cell;
+}
+#pragma mark - CHTCollectionViewDelegateWaterfallLayout
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeMake(300, 300);
+}
 @end

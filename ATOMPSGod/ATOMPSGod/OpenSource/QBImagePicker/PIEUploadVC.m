@@ -10,6 +10,8 @@
 #import "SZTextView.h"
 
 @interface PIEUploadVC ()
+@property (weak, nonatomic) IBOutlet UIImageView *leftImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *rightImageView;
 
 @property (weak, nonatomic) IBOutlet SZTextView *inputTextView;
 @property (weak, nonatomic) IBOutlet UILabel *wordLimitLabel;
@@ -24,7 +26,7 @@
     return YES;
 }
 -(void)viewWillAppear:(BOOL)animated {
-    self.navigationController.navigationBar.barTintColor =[UIColor blackColor];
+    self.navigationController.navigationBar.barTintColor =[UIColor darkGrayColor];
 }
 -(void)viewWillDisappear:(BOOL)animated {
     self.navigationController.navigationBar.barTintColor =[UIColor whiteColor];
@@ -36,7 +38,17 @@
     itemView.contentMode = UIViewContentModeScaleAspectFit;
     UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithCustomView:itemView];
     self.navigationItem.rightBarButtonItem = item;
+    
+    _leftImageView.clipsToBounds = YES;
+    _rightImageView.clipsToBounds = YES;
     // Do any additional setup after loading the view from its nib.
+    if (_imageArray.count == 1) {
+        _leftImageView.image = [_imageArray objectAtIndex:0];
+        _rightImageView.image = [UIImage imageNamed:@"plus_sign"];
+    } else if (_imageArray.count == 2) {
+        _leftImageView.image = [_imageArray objectAtIndex:0];
+        _rightImageView.image = [_imageArray objectAtIndex:1];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

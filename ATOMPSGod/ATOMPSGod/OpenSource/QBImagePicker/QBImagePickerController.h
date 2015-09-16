@@ -17,7 +17,6 @@
 - (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAsset:(ALAsset *)asset;
 - (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets;
 - (void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController;
-
 - (BOOL)qb_imagePickerController:(QBImagePickerController *)imagePickerController shouldSelectAsset:(ALAsset *)asset;
 @end
 
@@ -27,7 +26,7 @@ typedef NS_ENUM(NSUInteger, QBImagePickerControllerFilterType) {
     QBImagePickerControllerFilterTypeVideos
 };
 
-@interface QBImagePickerController : UIViewController
+@interface QBImagePickerController : DDBaseVC
 @property (nonatomic, strong) UINavigationController *albumsNavigationController;
 
 @property (nonatomic, weak) id<QBImagePickerControllerDelegate> delegate;

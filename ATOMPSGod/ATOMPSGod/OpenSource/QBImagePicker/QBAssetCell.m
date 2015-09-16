@@ -16,6 +16,13 @@
 
 @implementation QBAssetCell
 
+-(void)awakeFromNib {
+    [super awakeFromNib];
+    self.overlayView.layer.borderColor = [UIColor yellowColor].CGColor;
+    self.overlayView.layer.borderWidth = 1.0;
+    self.overlayView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
+}
+
 - (void)setSelected:(BOOL)selected
 {
     [super setSelected:selected];

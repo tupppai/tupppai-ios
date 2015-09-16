@@ -15,18 +15,17 @@
     [super awakeFromNib];
     
     // Set default values
-    self.borderWidth = 1.0;
-    self.checkmarkLineWidth = 1.2;
+    self.borderWidth = 0;
+    self.checkmarkLineWidth = 3.0;
     
-    self.borderColor = [UIColor whiteColor];
-    self.bodyColor = [UIColor colorWithRed:(20.0 / 255.0) green:(111.0 / 255.0) blue:(223.0 / 255.0) alpha:1.0];
-    self.checkmarkColor = [UIColor whiteColor];
-    
+    self.borderColor = [UIColor clearColor];
+    self.bodyColor = [UIColor colorWithHex:0xffffff andAlpha:0.9];
+    self.checkmarkColor = [UIColor lightGrayColor];
     // Set shadow
-    self.layer.shadowColor = [[UIColor grayColor] CGColor];
-    self.layer.shadowOffset = CGSizeMake(0, 0);
-    self.layer.shadowOpacity = 0.6;
-    self.layer.shadowRadius = 2.0;
+//    self.layer.shadowColor = [[UIColor clearColor] CGColor];
+//    self.layer.shadowOffset = CGSizeMake(0, 0);
+//    self.layer.shadowOpacity = 0.6;
+//    self.layer.shadowRadius = 2.0;
 }
 
 - (void)drawRect:(CGRect)rect

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="WaterfallCell" id="gTV-IL-0wX" customClass="PIEAskCollectionCell">
+            <rect key="frame" x="0.0" y="0.0" width="323" height="515"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="323" height="515"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="psps.png" translatesAutoresizingMaskIntoConstraints="NO" id="t6N-sk-Gt2">
+                        <rect key="frame" x="8" y="14" width="26" height="26"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="26" id="GLl-g0-1Tq"/>
+                            <constraint firstAttribute="width" constant="26" id="vtz-xa-srZ"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="游客" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DIa-GT-Bof">
+                        <rect key="frame" x="43" y="14" width="26" height="13"/>
+                        <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="刚刚" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UP6-ZS-j1n">
+                        <rect key="frame" x="43" y="30" width="20" height="10"/>
+                        <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="10"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pie_ask_plus" translatesAutoresizingMaskIntoConstraints="NO" id="TUz-nr-w3I">
+                        <rect key="frame" x="293" y="5" width="15" height="44"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="44" id="cGV-7E-xmD"/>
+                            <constraint firstAttribute="width" constant="15" id="mJE-vW-DkS"/>
+                        </constraints>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tSi-M5-pb6">
+                        <rect key="frame" x="0.0" y="53" width="323" height="348"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="帮我的头发p得更顺一点！！！" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sZw-7M-qG8">
+                        <rect key="frame" x="8" y="410" width="307" height="13"/>
+                        <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kZC-OW-G6f">
+                        <rect key="frame" x="136.5" y="432" width="50" height="75"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pie_ask_help" translatesAutoresizingMaskIntoConstraints="NO" id="4pT-By-Nmk">
+                                <rect key="frame" x="10" y="0.0" width="30" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="6jW-dX-F5c"/>
+                                    <constraint firstAttribute="width" constant="30" id="DqI-XS-qgL"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BANG" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SKU-78-X4k">
+                                <rect key="frame" x="11" y="53" width="29.5" height="10"/>
+                                <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="10"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="SKU-78-X4k" firstAttribute="top" secondItem="4pT-By-Nmk" secondAttribute="bottom" constant="3" id="8ot-Yp-pOb"/>
+                            <constraint firstAttribute="height" constant="75" id="O0n-Td-LDu"/>
+                            <constraint firstItem="4pT-By-Nmk" firstAttribute="top" secondItem="kZC-OW-G6f" secondAttribute="top" id="glU-Le-x7L"/>
+                            <constraint firstAttribute="width" constant="50" id="hKL-fZ-HlI"/>
+                            <constraint firstItem="4pT-By-Nmk" firstAttribute="centerX" secondItem="SKU-78-X4k" secondAttribute="centerX" id="lLX-rS-xTj"/>
+                            <constraint firstAttribute="centerX" secondItem="4pT-By-Nmk" secondAttribute="centerX" id="rWZ-Ns-OIH"/>
+                            <constraint firstItem="4pT-By-Nmk" firstAttribute="top" secondItem="kZC-OW-G6f" secondAttribute="top" id="rnI-sO-shp"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="glU-Le-x7L"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <constraints>
+                <constraint firstItem="kZC-OW-G6f" firstAttribute="top" secondItem="sZw-7M-qG8" secondAttribute="bottom" constant="9" id="3Ld-76-bvu"/>
+                <constraint firstItem="sZw-7M-qG8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leadingMargin" id="6D0-OM-ukQ"/>
+                <constraint firstItem="DIa-GT-Bof" firstAttribute="leading" secondItem="t6N-sk-Gt2" secondAttribute="trailing" constant="9" id="6Gg-N8-U1U"/>
+                <constraint firstAttribute="bottom" secondItem="kZC-OW-G6f" secondAttribute="bottom" constant="8" id="HiG-yr-FH2"/>
+                <constraint firstItem="t6N-sk-Gt2" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="topMargin" constant="6" id="P43-8Q-cBB"/>
+                <constraint firstItem="tSi-M5-pb6" firstAttribute="top" secondItem="TUz-nr-w3I" secondAttribute="bottom" constant="4" id="Sla-ha-eUL"/>
+                <constraint firstItem="kZC-OW-G6f" firstAttribute="leading" secondItem="sZw-7M-qG8" secondAttribute="trailing" constant="-178.5" id="Sz3-7O-ZDf"/>
+                <constraint firstItem="UP6-ZS-j1n" firstAttribute="top" secondItem="DIa-GT-Bof" secondAttribute="bottom" constant="8" id="TgX-0I-R68"/>
+                <constraint firstItem="UP6-ZS-j1n" firstAttribute="bottom" secondItem="t6N-sk-Gt2" secondAttribute="bottom" id="YdC-jB-Pbo"/>
+                <constraint firstItem="t6N-sk-Gt2" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leadingMargin" id="bit-nJ-sG9"/>
+                <constraint firstItem="TUz-nr-w3I" firstAttribute="centerY" secondItem="t6N-sk-Gt2" secondAttribute="centerY" id="cMU-ND-Emg"/>
+                <constraint firstItem="tSi-M5-pb6" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="clC-yz-Bzo"/>
+                <constraint firstAttribute="centerX" secondItem="kZC-OW-G6f" secondAttribute="centerX" id="jQX-Qo-JJd"/>
+                <constraint firstAttribute="trailing" secondItem="TUz-nr-w3I" secondAttribute="trailing" constant="15" id="rdS-Vc-161"/>
+                <constraint firstItem="DIa-GT-Bof" firstAttribute="leading" secondItem="UP6-ZS-j1n" secondAttribute="leading" id="t4w-9t-ap6"/>
+                <constraint firstItem="sZw-7M-qG8" firstAttribute="top" secondItem="tSi-M5-pb6" secondAttribute="bottom" constant="9" id="v5Q-xX-l9I"/>
+                <constraint firstItem="sZw-7M-qG8" firstAttribute="trailing" secondItem="gTV-IL-0wX" secondAttribute="trailingMargin" id="vg5-jr-ZHC"/>
+                <constraint firstAttribute="trailing" secondItem="tSi-M5-pb6" secondAttribute="trailing" id="w2s-jd-x8b"/>
+                <constraint firstItem="DIa-GT-Bof" firstAttribute="top" secondItem="t6N-sk-Gt2" secondAttribute="top" id="xWz-LT-5F0"/>
+                <constraint firstItem="kZC-OW-G6f" firstAttribute="top" secondItem="sZw-7M-qG8" secondAttribute="top" constant="9" id="zlA-KR-eTI"/>
+            </constraints>
+            <size key="customSize" width="323" height="515"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="TgX-0I-R68"/>
+                    <exclude reference="Sz3-7O-ZDf"/>
+                    <exclude reference="zlA-KR-eTI"/>
+                </mask>
+            </variation>
+            <connections>
+                <outlet property="avatarView" destination="t6N-sk-Gt2" id="NvF-NI-zwk"/>
+                <outlet property="bangView" destination="kZC-OW-G6f" id="Vbv-Co-8jw"/>
+                <outlet property="contentLabel" destination="sZw-7M-qG8" id="CLh-MH-Gth"/>
+                <outlet property="nameLabel" destination="DIa-GT-Bof" id="h5z-h9-mPg"/>
+                <outlet property="plusView" destination="TUz-nr-w3I" id="Nrd-Zq-hn9"/>
+                <outlet property="theImageView" destination="tSi-M5-pb6" id="A4v-dD-euL"/>
+                <outlet property="timeLabel" destination="UP6-ZS-j1n" id="1b9-dU-tFN"/>
+            </connections>
+            <point key="canvasLocation" x="473.5" y="525.5"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="pie_ask_help" width="40" height="42"/>
+        <image name="pie_ask_plus" width="24" height="25"/>
+        <image name="psps.png" width="640" height="1136"/>
+    </resources>
+</document>
