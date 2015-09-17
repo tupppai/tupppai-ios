@@ -15,6 +15,9 @@
 #import "ATOMReplier.h"
 #import "ATOMReplierViewModel.h"
 #import "DDBaseService.h"
+
+
+
 @interface DDPageVM ()
 
 @end
@@ -126,8 +129,8 @@
     _avatarURL = homeImage.avatar;
     _liked = homeImage.liked;
     _collected = homeImage.collected;
-    _width = homeImage.imageWidth;
-    _height = homeImage.imageHeight;
+    _imageWidth = homeImage.imageWidth;
+    _imageHeight = homeImage.imageHeight;
     NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:homeImage.uploadTime];
     _publishTime = [Util formatPublishTime:publishDate];
 
@@ -176,8 +179,8 @@
     _shareCount = [NSString stringWithFormat:@"%d",(int)page.totalShareNumber];
     _commentNumber = [NSString stringWithFormat:@"%d",(int)page.totalCommentNumber];
     _liked = page.liked;
-    _width = page.imageWidth;
-    _height = page.imageHeight;
+    _imageWidth = page.imageWidth;
+    _imageHeight = page.imageHeight;
     
     NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:page.replyTime];
     _publishTime = [Util formatPublishTime:publishDate];
@@ -198,8 +201,8 @@
     commonViewModel.likeNumber = _likeCount;
     commonViewModel.shareNumber = _shareCount;
     commonViewModel.commentNumber = _commentNumber;
-    commonViewModel.width = _width;
-    commonViewModel.height = _height;
+    commonViewModel.width = _imageWidth;
+    commonViewModel.height = _imageHeight;
     commonViewModel.userName = _username;
     commonViewModel.uid = _userID;
     return commonViewModel;
@@ -212,8 +215,8 @@
     _likeCount = commonViewModel.likeNumber;
     _shareCount = commonViewModel.shareNumber;
     _commentNumber = commonViewModel.commentNumber;
-    _width = commonViewModel.width;
-    _height = commonViewModel.height;
+    _imageWidth = commonViewModel.width;
+    _imageHeight = commonViewModel.height;
     _username = commonViewModel.userName;
 }
 

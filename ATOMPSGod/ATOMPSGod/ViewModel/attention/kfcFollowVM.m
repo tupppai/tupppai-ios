@@ -92,8 +92,8 @@
     askPVM.liked = _liked;
     askPVM.labelArray = _labelArray;
     askPVM.replierArray = _replierArray;
-    askPVM.width = _width;
-    askPVM.height = _height;
+    askPVM.imageWidth = _width;
+    askPVM.imageHeight = _height;
     askPVM.imageURL = _pageImageURL;
     askPVM.shareCount = _shareNumber;
     askPVM.totalPSNumber = _totalPSNumber;

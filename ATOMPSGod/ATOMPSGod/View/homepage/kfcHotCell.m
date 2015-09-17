@@ -166,7 +166,7 @@
     _totalPSLabel.number = viewModel.totalPSNumber;
 
     [_imageViewMain mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@(viewModel.height)).with.priorityHigh();
+        make.height.equalTo(@(viewModel.imageHeight)).with.priorityHigh();
     }];
     [super updateConstraints];
 
@@ -188,7 +188,7 @@
         }
     }
     for (DDTipLabelVM *labelViewModel in vm.labelArray) {
-        CGRect labelFrame = [labelViewModel getFrame:CGSizeMake(vm.width, vm.height)];
+        CGRect labelFrame = [labelViewModel getFrame:CGSizeMake(vm.imageWidth, vm.imageHeight)];
         ATOMTipButton * button = [[ATOMTipButton alloc] initWithFrame:labelFrame];
         if (labelViewModel.labelDirection == 0) {
             button.type = ATOMTipButtonTypeLeft;

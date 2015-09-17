@@ -14,7 +14,7 @@
 - (NSURLSessionDataTask *)getHomepage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *homepageArray, NSError *error))block;
 - (void)saveHomeImagesInDB:(NSMutableArray *)homeImages;
 - (NSArray *)getHomeImages;
-- (NSArray *)getHomeImagesWithHomeType:(ATOMHomepageViewType)homeType;
+- (NSArray *)getHomeImagesWithHomeType:(PIEHomeType)homeType;
 - (void)clearHomePages;
 - (void)clearHomePagesWithHomeType:(NSString *)homeType;
 

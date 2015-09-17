@@ -12,6 +12,16 @@
 
 @class ATOMAskPage;
 @class DDCommentPageVM;
+
+
+typedef NS_ENUM(NSInteger, PIEPageType) {
+    PIEPageTypeAsk = 0,
+    PIEPageTypeHot,
+    PIEPageTypeFollow
+};
+
+
+
 @interface DDPageVM : NSObject
 
 @property (nonatomic, assign) NSInteger ID;
@@ -29,8 +39,8 @@
 @property (nonatomic, copy) NSString *shareCount;
 @property (nonatomic, copy) NSString *commentNumber;
 @property (nonatomic, copy) NSString *totalPSNumber;
-@property (nonatomic, assign) CGFloat width;
-@property (nonatomic, assign) CGFloat height;
+@property (nonatomic, assign) CGFloat imageWidth;
+@property (nonatomic, assign) CGFloat imageHeight;
 @property (nonatomic, strong) NSMutableArray *labelArray;
 @property (nonatomic, strong) NSMutableArray *replierArray;
 @property (nonatomic, strong) UIImage *image;

@@ -25,10 +25,10 @@
 /**
  * 向下拉触发
  **/
--(void) didPullDownCollectionView:(PWRefreshFooterCollectionView*)collectionView;
+-(void) didPullDownCollectionView:(UICollectionView*)collectionView;
 /**
  * 拉到底部时，继续向上拉触发
- **/-(void) didPullUpCollectionViewBottom:(PWRefreshFooterCollectionView*)collectionView;
+ **/-(void) didPullUpCollectionViewBottom:(UICollectionView*)collectionView;
 @end
 
 @protocol ATOMViewControllerDelegate <NSObject>

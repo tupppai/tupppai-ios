@@ -39,8 +39,8 @@
     _likeNumber = askPageViewModel.likeCount;
     _shareNumber = askPageViewModel.shareCount;
     _commentNumber = askPageViewModel.commentNumber;
-    _width = askPageViewModel.width;
-    _height = askPageViewModel.height;
+    _width = askPageViewModel.imageWidth;
+    _height = askPageViewModel.imageHeight;
     _labelArray = [askPageViewModel.labelArray mutableCopy];
     _liked = askPageViewModel.liked;
     _collected = askPageViewModel.collected;

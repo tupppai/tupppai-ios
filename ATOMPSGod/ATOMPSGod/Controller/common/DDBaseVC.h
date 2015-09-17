@@ -18,9 +18,9 @@ typedef NS_ENUM(NSInteger, ATOMNotifyType) {
 };
 
 
-typedef NS_ENUM(NSInteger, ATOMHomepageViewType) {
-    ATOMHomepageViewTypeHot = 0,
-    ATOMHomepageViewTypeAsk
+typedef NS_ENUM(NSInteger, PIEHomeType) {
+    PIEHomeTypeHot = 0,
+    PIEHomeTypeAsk
 };
 
 typedef NS_ENUM(NSInteger, ATOMPageType) {

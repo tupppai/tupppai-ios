@@ -41,26 +41,35 @@
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tSi-M5-pb6">
-                        <rect key="frame" x="0.0" y="53" width="323" height="348"/>
+                        <rect key="frame" x="0.0" y="53" width="323" height="378"/>
+                        <color key="backgroundColor" red="0.60000002384185791" green="0.40000000596046448" blue="0.20000000298023224" alpha="0.52000000000000002" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="348" id="Ngn-Bj-NmF"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Ngn-Bj-NmF"/>
+                            </mask>
+                        </variation>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="帮我的头发p得更顺一点！！！" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sZw-7M-qG8">
-                        <rect key="frame" x="8" y="410" width="307" height="13"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" text="帮我的头发p得更顺一点！！！" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sZw-7M-qG8">
+                        <rect key="frame" x="8" y="440" width="307" height="13"/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kZC-OW-G6f">
-                        <rect key="frame" x="136.5" y="432" width="50" height="75"/>
+                        <rect key="frame" x="136" y="462" width="50" height="45"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pie_ask_help" translatesAutoresizingMaskIntoConstraints="NO" id="4pT-By-Nmk">
-                                <rect key="frame" x="10" y="0.0" width="30" height="50"/>
+                                <rect key="frame" x="15" y="0.0" width="20" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="6jW-dX-F5c"/>
-                                    <constraint firstAttribute="width" constant="30" id="DqI-XS-qgL"/>
+                                    <constraint firstAttribute="height" constant="30" id="6jW-dX-F5c"/>
+                                    <constraint firstAttribute="width" constant="20" id="DqI-XS-qgL"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BANG" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SKU-78-X4k">
-                                <rect key="frame" x="11" y="53" width="29.5" height="10"/>
+                                <rect key="frame" x="11" y="33" width="29.5" height="10"/>
                                 <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="10"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -68,7 +77,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="SKU-78-X4k" firstAttribute="top" secondItem="4pT-By-Nmk" secondAttribute="bottom" constant="3" id="8ot-Yp-pOb"/>
-                            <constraint firstAttribute="height" constant="75" id="O0n-Td-LDu"/>
+                            <constraint firstAttribute="height" constant="45" id="O0n-Td-LDu"/>
                             <constraint firstItem="4pT-By-Nmk" firstAttribute="top" secondItem="kZC-OW-G6f" secondAttribute="top" id="glU-Le-x7L"/>
                             <constraint firstAttribute="width" constant="50" id="hKL-fZ-HlI"/>
                             <constraint firstItem="4pT-By-Nmk" firstAttribute="centerX" secondItem="SKU-78-X4k" secondAttribute="centerX" id="lLX-rS-xTj"/>
@@ -84,6 +93,7 @@
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="kZC-OW-G6f" firstAttribute="top" secondItem="sZw-7M-qG8" secondAttribute="bottom" constant="9" id="3Ld-76-bvu"/>
                 <constraint firstItem="sZw-7M-qG8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leadingMargin" id="6D0-OM-ukQ"/>

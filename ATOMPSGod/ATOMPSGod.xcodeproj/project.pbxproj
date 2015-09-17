@@ -426,6 +426,7 @@
 		F4D368721BA9552B00E6C91C /* PIEAskCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D368701BA9552B00E6C91C /* PIEAskCollectionCell.m */; };
 		F4D368731BA9552B00E6C91C /* PIEAskCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4D368711BA9552B00E6C91C /* PIEAskCollectionCell.xib */; };
 		F4D368771BA9629800E6C91C /* CHTCollectionViewWaterfallLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D368761BA9629800E6C91C /* CHTCollectionViewWaterfallLayout.m */; };
+		F4FABAFD1BAA593C00F47064 /* PIERefreshCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4FABAFC1BAA593C00F47064 /* PIERefreshCollectionView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1269,6 +1270,8 @@
 		F4D368711BA9552B00E6C91C /* PIEAskCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEAskCollectionCell.xib; sourceTree = "<group>"; };
 		F4D368751BA9629800E6C91C /* CHTCollectionViewWaterfallLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHTCollectionViewWaterfallLayout.h; sourceTree = "<group>"; };
 		F4D368761BA9629800E6C91C /* CHTCollectionViewWaterfallLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHTCollectionViewWaterfallLayout.m; sourceTree = "<group>"; };
+		F4FABAFB1BAA593C00F47064 /* PIERefreshCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIERefreshCollectionView.h; sourceTree = "<group>"; };
+		F4FABAFC1BAA593C00F47064 /* PIERefreshCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIERefreshCollectionView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2617,6 +2620,8 @@
 				E9D1F88B1B203A4F0072242B /* RefreshTableView.m */,
 				E90197391B33C98600F46B78 /* RefreshFooterTableView.h */,
 				E901973A1B33C98600F46B78 /* RefreshFooterTableView.m */,
+				F4FABAFB1BAA593C00F47064 /* PIERefreshCollectionView.h */,
+				F4FABAFC1BAA593C00F47064 /* PIERefreshCollectionView.m */,
 				E901973C1B33F60500F46B78 /* PWRefreshFooterCollectionView.h */,
 				E901973D1B33F60500F46B78 /* PWRefreshFooterCollectionView.m */,
 			);
@@ -3441,6 +3446,7 @@
 				E9F890D21B86FE6B0057ECBF /* SLKInputAccessoryView.m in Sources */,
 				E99C510D1B85A2A6004CA47B /* JTSImageInfo.m in Sources */,
 				5C0F04EE1ADCFB18002003AE /* ATOMInviteMessage.m in Sources */,
+				F4FABAFD1BAA593C00F47064 /* PIERefreshCollectionView.m in Sources */,
 				E94289871B5B32A200ED26E4 /* TSMessage.m in Sources */,
 				5CEAC0301AD4D7750058037C /* ATOMCollectionViewModel.m in Sources */,
 				5C8D4ACD1ADE484A00B158AE /* ATOMOtherPersonConcernViewController.m in Sources */,

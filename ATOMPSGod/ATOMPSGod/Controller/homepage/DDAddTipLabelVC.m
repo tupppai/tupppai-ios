@@ -271,8 +271,8 @@
 - (void)uploadAskImage {
     NSData *data = UIImageJPEGRepresentation(_workImage, 1.0);
     self.newAskPageViewModel.image = [UIImage imageWithData:data];
-    self.newAskPageViewModel.width =    CGWidth(_addTipLabelView.workImageView.frame);
-    self.newAskPageViewModel.height =   CGHeight(_addTipLabelView.workImageView.frame);
+    self.newAskPageViewModel.imageWidth =    CGWidth(_addTipLabelView.workImageView.frame);
+    self.newAskPageViewModel.imageHeight =   CGHeight(_addTipLabelView.workImageView.frame);
     ATOMUploadImage *uploadImage = [ATOMUploadImage new];
     [uploadImage UploadImage:data WithBlock:^(ATOMImage *imageInformation, NSError *error) {
         _imgUploading = NO;

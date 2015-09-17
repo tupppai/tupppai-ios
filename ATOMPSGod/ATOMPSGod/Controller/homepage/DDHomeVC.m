@@ -5,10 +5,9 @@
 //  Created by atom on 15/3/3.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
-
 #import "DDHomeVC.h"
+#import "AppDelegate.h"
 #import "PIEHotTableCell.h"
-#import "kfcAskCell.h"
 #import "DDDetailPageVC.h"
 #import "DDCropImageVC.h"
 #import "ATOMOtherPersonViewController.h"
@@ -17,9 +16,6 @@
 #import "kfcHomeScrollView.h"
 #import "DDHomePageManager.h"
 #import "ATOMShareFunctionView.h"
-#import "AppDelegate.h"
-#import "kfcButton.h"
-#import "ATOMHomeImageDAO.h"
 #import "DDCommentPageVM.h"
 #import "DDShareManager.h"
 #import "DDCollectManager.h"
@@ -32,7 +28,6 @@
 #import "JTSImageInfo.h"
 #import "HMSegmentedControl.h"
 #import "DDBaseService.h"
-
 #import "DDCommentVC.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 #import "PIEDetailPageVC.h"
@@ -41,22 +36,27 @@
 
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "PIEAskCollectionCell.h"
+#import "PIERefreshCollectionView.h"
+#import "RefreshTableView.h"
 //#import "QBImagePickerController.h"
 @class ATOMAskPage;
+#define AskCellWidth (SCREEN_WIDTH - 20) / 2.0
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
-@interface DDHomeVC() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate,QBImagePickerControllerDelegate,CHTCollectionViewDelegateWaterfallLayout,UICollectionViewDelegate,UICollectionViewDataSource>
+@interface DDHomeVC() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,PWRefreshBaseCollectionViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate,QBImagePickerControllerDelegate,CHTCollectionViewDelegateWaterfallLayout,UICollectionViewDelegate,UICollectionViewDataSource>
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureHot;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureAsk;
-@property (nonatomic, strong) NSMutableArray *dataSourceOfHotTableView;
-@property (nonatomic, strong) NSMutableArray *dataSourceOfAskTableView;
-@property (nonatomic, assign) NSInteger currentHotPage;
-@property (nonatomic, assign) NSInteger currentRecentPage;
+@property (nonatomic, strong) NSMutableArray *sourceHot;
+@property (nonatomic, strong) NSMutableArray *sourceAsk;
+@property (nonatomic, assign) NSInteger currentHotIndex;
+@property (nonatomic, assign) NSInteger currentAskIndex;
+@property (nonatomic, strong) kfcHomeScrollView *scrollView;
+@property (nonatomic, strong) PIERefreshCollectionView *pieCollectionView;
+@property (nonatomic, strong) RefreshTableView *hotTable;
 
 @property (nonatomic, assign) BOOL isfirstEnterHomepageRecentView;
 @property (nonatomic, assign) BOOL canRefreshHotFooter;
 @property (nonatomic, assign) BOOL canRefreshRecentFooter;
-@property (nonatomic, strong) kfcHomeScrollView *scrollView;
 
 @property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
 @property (nonatomic, strong)  JGActionSheet * cameraActionsheet;
@@ -105,46 +105,39 @@ static NSString *CellIdentifier2 = @"AskCell";
     [self createCustomNavigationBar];
     [self confighotTable];
     [self configaskTable];
-    _isfirstEnterHomepageRecentView = YES;
     _canRefreshHotFooter = YES;
     _canRefreshRecentFooter = YES;
     [self firstGetDataSourceFromDataBase];
-    [self firstGetDataSourceOfTableViewWithHomeType:ATOMHomepageViewTypeHot];
+    [self firstGetRemoteSource:PIEHomeTypeAsk];
+    [self firstGetRemoteSource:PIEHomeTypeHot];
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshNav1) name:@"RefreshNav1" object:nil];
 }
 
 
 - (void)confighotTable {
-    _scrollView.hotTable.delegate = self;
-    _scrollView.hotTable.dataSource = self;
-    _scrollView.hotTable.noDataView.label.text = @"网络连接断了吧-_-!";
-    _scrollView.hotTable.psDelegate = self;
+    _hotTable = _scrollView.hotTable;
+    _hotTable.delegate = self;
+    _hotTable.dataSource = self;
+    _hotTable.noDataView.label.text = @"网络连接断了吧-_-!";
+    _hotTable.psDelegate = self;
     UINib* nib = [UINib nibWithNibName:@"PIEHotTableCell" bundle:nil];
-    [_scrollView.hotTable registerNib:nib forCellReuseIdentifier:CellIdentifier];
-//    [_scrollView.hotTable registerClass:[kfcHotCell class] forCellReuseIdentifier:CellIdentifier];
-    _scrollView.hotTable.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
+    [_hotTable registerNib:nib forCellReuseIdentifier:CellIdentifier];
+    _hotTable.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
     _tapGestureHot = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureHot:)];
-    [_scrollView.hotTable addGestureRecognizer:_tapGestureHot];
+    [_hotTable addGestureRecognizer:_tapGestureHot];
     
-    _scrollView.hotTable.scrollsToTop = YES;
-//    _scrollView.askTable.scrollsToTop = NO;
+    _hotTable.scrollsToTop = YES;
+    _currentHotIndex = 1;
+//    _pieCollectionView.scrollsToTop = NO;
 
 }
 - (void)configaskTable {
-    
-//    
-//    _scrollView.askTable.delegate = self;
-//    _scrollView.askTable.dataSource = self;
-//    _scrollView.askTable.noDataView.label.text = @"网络连接断了吧-_-!";
-//    _scrollView.askTable.psDelegate = self;
-//    _scrollView.hotTable.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
-//    [_scrollView.askTable registerClass:[kfcAskCell class] forCellReuseIdentifier:CellIdentifier2];
-//    _tapGestureAsk = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureAsk:)];
-//    [_scrollView.askTable addGestureRecognizer:_tapGestureAsk];
-    
-    _scrollView.collectionView.dataSource = self;
-    _scrollView.collectionView.delegate = self;
-    
+    _pieCollectionView = _scrollView.collectionView;
+    _pieCollectionView.dataSource = self;
+    _pieCollectionView.delegate = self;
+    _pieCollectionView.psDelegate = self;
+    _currentAskIndex = 1;
 }
 
 - (void)createCustomNavigationBar {
@@ -161,7 +154,7 @@ static NSString *CellIdentifier2 = @"AskCell";
     UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cameraView];
     self.navigationItem.rightBarButtonItems = @[negativeSpacer, rightButtonItem];
 
-    _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"热门",@"求P"]];
+    _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"求P",@"热门"]];
     _segmentedControl.frame = CGRectMake(0, 120, 200, 45);
     _segmentedControl.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor darkGrayColor], NSForegroundColorAttributeName, nil];
     _segmentedControl.selectedTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil];
@@ -170,11 +163,12 @@ static NSString *CellIdentifier2 = @"AskCell";
     _segmentedControl.selectionIndicatorColor = [UIColor yellowColor];
     _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
     _segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
+    
     [_segmentedControl setIndexChangeBlock:^(NSInteger index) {
         if (index == 0) {
-            [ws tappedHotTitleButton];
+            [ws tappedAskTitleButton];
         } else if (index == 1) {
-            [ws tappedRecentTitleButton];
+            [ws tappedHotTitleButton];
         }
     }];
 
@@ -189,8 +183,8 @@ static NSString *CellIdentifier2 = @"AskCell";
                       boolForKey:@"shouldNavToHotSegment"];
     if (shouldNav) {
         [_segmentedControl setSelectedSegmentIndex:0 animated:YES];
-        [_scrollView changeUIAccording:@"热门"];
-        [_scrollView.hotTable.header beginRefreshing];
+        [_scrollView toggleWithType:PIEHomeTypeHot];
+        [_hotTable.header beginRefreshing];
     }
     [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:@"shouldNavToHotSegment"];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -202,8 +196,8 @@ static NSString *CellIdentifier2 = @"AskCell";
                       boolForKey:@"shouldNavToAskSegment"];
     if (shouldNav) {
         [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
-        [_scrollView changeUIAccording:@"最新"];
-        [_scrollView.askTable.header beginRefreshing];
+        [_scrollView toggleWithType:PIEHomeTypeAsk];
+        [_pieCollectionView.header beginRefreshing];
     }
     [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:@"shouldNavToAskSegment"];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -212,34 +206,31 @@ static NSString *CellIdentifier2 = @"AskCell";
 - (void)shouldRefreshHeader {
     BOOL shouldRefresh = [[NSUserDefaults standardUserDefaults]boolForKey:@"tapNav1"];
     if (shouldRefresh) {
-        if (_scrollView.type == ATOMHomepageViewTypeHot && ![_scrollView.hotTable.header isRefreshing]) {
-            [_scrollView.hotTable.header beginRefreshing];
-        } else if (_scrollView.type == ATOMHomepageViewTypeAsk && ![_scrollView.askTable.header isRefreshing]) {
-            [_scrollView.askTable.header beginRefreshing];
+        if (_scrollView.type == PIEHomeTypeHot && ![_hotTable.header isRefreshing]) {
+            [_hotTable.header beginRefreshing];
+        } else if (_scrollView.type == PIEHomeTypeAsk && ![_pieCollectionView.header isRefreshing]) {
+            [_pieCollectionView.header beginRefreshing];
+            
         }
     }
 }
 
 - (void)refreshNav1 {
-    if (_scrollView.type == ATOMHomepageViewTypeHot && ![_scrollView.hotTable.header isRefreshing]) {
-        [_scrollView.hotTable.header beginRefreshing];
-    } else if (_scrollView.type == ATOMHomepageViewTypeAsk && ![_scrollView.askTable.header isRefreshing]) {
-        [_scrollView.askTable.header beginRefreshing];
+    if (_scrollView.type == PIEHomeTypeHot && ![_hotTable.header isRefreshing]) {
+        [_hotTable.header beginRefreshing];
+    } else if (_scrollView.type == PIEHomeTypeAsk && ![_pieCollectionView.header isRefreshing]) {
+        [_pieCollectionView.header beginRefreshing];
     }
 }
 
 #pragma mark - event response
 
 - (void)tappedHotTitleButton {
-    [_scrollView changeUIAccording:@"热门"];
+    [_scrollView toggle];
 }
 
-- (void)tappedRecentTitleButton {
-    [_scrollView changeUIAccording:@"最新"];
-    if (_isfirstEnterHomepageRecentView) {
-        _isfirstEnterHomepageRecentView = NO;
-        [self firstGetDataSourceOfTableViewWithHomeType:ATOMHomepageViewTypeAsk];
-    }
+- (void)tappedAskTitleButton {
+    [_scrollView toggle];
 }
 
 - (void)tappedCameraButton:(UIBarButtonItem *)sender {
@@ -327,8 +318,8 @@ static NSString *CellIdentifier2 = @"AskCell";
     [DDService signProceeding:param withBlock:^(NSString *imageUrl) {
         if (imageUrl != nil) {
 //            [DDBaseService downloadImage:imageUrl withBlock:^(UIImage *image) {
-            kfcAskCell* cell = (kfcAskCell *)[_scrollView.askTable cellForRowAtIndexPath:_selectedIndexPath];
-                UIImageWriteToSavedPhotosAlbum(cell.imageViewMain.image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+//            kfcAskCell* cell = (kfcAskCell *)[_pieCollectionView cellForRowAtIndexPath:_selectedIndexPath];
+//                UIImageWriteToSavedPhotosAlbum(cell.imageViewMain.image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
 //            }];
         }
     }];
@@ -347,12 +338,12 @@ static NSString *CellIdentifier2 = @"AskCell";
 #pragma mark - Gesture Event
 
 - (void)tapGestureHot:(UITapGestureRecognizer *)gesture {
-    if (_scrollView.type == ATOMHomepageViewTypeHot) {
-        CGPoint location = [gesture locationInView:_scrollView.hotTable];
-        _selectedIndexPath = [_scrollView.hotTable indexPathForRowAtPoint:location];
+    if (_scrollView.type == PIEHomeTypeHot) {
+        CGPoint location = [gesture locationInView:_hotTable];
+        _selectedIndexPath = [_hotTable indexPathForRowAtPoint:location];
         if (_selectedIndexPath) {
-            PIEHotTableCell* cell = (PIEHotTableCell *)[_scrollView.hotTable cellForRowAtIndexPath:_selectedIndexPath];
-            _selectedVM = _dataSourceOfHotTableView[_selectedIndexPath.row];
+            PIEHotTableCell* cell = (PIEHotTableCell *)[_hotTable cellForRowAtIndexPath:_selectedIndexPath];
+            _selectedVM = _sourceHot[_selectedIndexPath.row];
             CGPoint p = [gesture locationInView:cell];
             if (CGRectContainsPoint(cell.thumbView.frame, p)) {
                 [cell animateToggleExpanded];
@@ -401,69 +392,64 @@ static NSString *CellIdentifier2 = @"AskCell";
         }
 }
 
-- (void)tapGestureAsk:(UITapGestureRecognizer *)gesture {
-    if (_scrollView.type == ATOMHomepageViewTypeAsk) {
-        CGPoint location = [gesture locationInView:_scrollView.askTable];
-        NSIndexPath *indexPath = [_scrollView.askTable indexPathForRowAtPoint:location];
-        if (indexPath) {
-            kfcAskCell* cell= (kfcAskCell *)[_scrollView.askTable cellForRowAtIndexPath:indexPath];
-           _selectedVM = _dataSourceOfAskTableView[indexPath.row];
-
-            CGPoint p = [gesture locationInView:cell];
-            if (CGRectContainsPoint(cell.imageViewMain.frame, p)) {
-                [self tapOnImageView:cell.imageViewMain.image withURL:_selectedVM.imageURL];
-            } else if (CGRectContainsPoint(cell.topView.frame, p)) {
-                p = [gesture locationInView:cell.topView];
-                if (CGRectContainsPoint(cell.avatarView.frame, p)) {
-                    ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-                    opvc.userID = _selectedVM.userID;
-                    opvc.userName = _selectedVM.username;
-                    [self pushViewController:opvc animated:YES];
-                } else if (CGRectContainsPoint(cell.psView.frame, p)) {
-                    [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
-                } else if (CGRectContainsPoint(cell.usernameLabel.frame, p)) {
-                    ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-                    opvc.userID = _selectedVM.userID;
-                    opvc.userName = _selectedVM.username;
-                    [self pushViewController:opvc animated:YES];
-                }
-            } else if (CGRectContainsPoint(cell.bottomView.frame, p)){
-                p = [gesture locationInView:cell.bottomView];
-                if (CGRectContainsPoint(cell.likeButton.frame, p)) {
-                    [cell.likeButton toggleLike];
-                    [_selectedVM toggleLike];
-                } else if (CGRectContainsPoint(cell.wechatButton.frame, p)) {
-                    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
-                } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
-                    DDCommentPageVM* vm = [DDCommentPageVM new];
-                    [vm setCommonViewModelWithAsk:_selectedVM];
-                    DDCommentVC* mvc = [DDCommentVC new];
-                    mvc.vm = vm;
-                    mvc.delegate = self;
-                    [self pushViewController:mvc animated:YES];
-                } else if (CGRectContainsPoint(cell.moreButton.frame, p)) {
-                    self.shareFunctionView.collectButton.selected = _selectedVM.collected;
-                    [self.shareFunctionView showInView:[AppDelegate APP].window animated:YES];
-                }
-            }
-            
-        }
-    }
-}
+//- (void)tapGestureAsk:(UITapGestureRecognizer *)gesture {
+//    if (_scrollView.type == PIEHomeTypeAsk) {
+//        CGPoint location = [gesture locationInView:_pieCollectionView];
+//        NSIndexPath *indexPath = [_pieCollectionView indexPathForRowAtPoint:location];
+//        if (indexPath) {
+//            kfcAskCell* cell= (kfcAskCell *)[_pieCollectionView cellForRowAtIndexPath:indexPath];
+//           _selectedVM = _sourceAsk[indexPath.row];
+//
+//            CGPoint p = [gesture locationInView:cell];
+//            if (CGRectContainsPoint(cell.imageViewMain.frame, p)) {
+//                [self tapOnImageView:cell.imageViewMain.image withURL:_selectedVM.imageURL];
+//            } else if (CGRectContainsPoint(cell.topView.frame, p)) {
+//                p = [gesture locationInView:cell.topView];
+//                if (CGRectContainsPoint(cell.avatarView.frame, p)) {
+//                    ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+//                    opvc.userID = _selectedVM.userID;
+//                    opvc.userName = _selectedVM.username;
+//                    [self pushViewController:opvc animated:YES];
+//                } else if (CGRectContainsPoint(cell.psView.frame, p)) {
+//                    [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
+//                } else if (CGRectContainsPoint(cell.usernameLabel.frame, p)) {
+//                    ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+//                    opvc.userID = _selectedVM.userID;
+//                    opvc.userName = _selectedVM.username;
+//                    [self pushViewController:opvc animated:YES];
+//                }
+//            } else if (CGRectContainsPoint(cell.bottomView.frame, p)){
+//                p = [gesture locationInView:cell.bottomView];
+//                if (CGRectContainsPoint(cell.likeButton.frame, p)) {
+//                    [cell.likeButton toggleLike];
+//                    [_selectedVM toggleLike];
+//                } else if (CGRectContainsPoint(cell.wechatButton.frame, p)) {
+//                    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:ATOMPageTypeAsk];
+//                } else if (CGRectContainsPoint(cell.commentButton.frame, p)) {
+//                    DDCommentPageVM* vm = [DDCommentPageVM new];
+//                    [vm setCommonViewModelWithAsk:_selectedVM];
+//                    DDCommentVC* mvc = [DDCommentVC new];
+//                    mvc.vm = vm;
+//                    mvc.delegate = self;
+//                    [self pushViewController:mvc animated:YES];
+//                } else if (CGRectContainsPoint(cell.moreButton.frame, p)) {
+//                    self.shareFunctionView.collectButton.selected = _selectedVM.collected;
+//                    [self.shareFunctionView showInView:[AppDelegate APP].window animated:YES];
+//                }
+//            }
+//            
+//        }
+//    }
+//}
 
 #pragma mark - QBImagePickerControllerDelegate
 
 
 -(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
-    NSLog(@"Selected assets:");
-    NSLog(@"%@", assets);
-    
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 - (void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController
 {
-    NSLog(@"Canceled.");
-    
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
@@ -490,43 +476,34 @@ static NSString *CellIdentifier2 = @"AskCell";
     if (scrollView == _scrollView) {
         int currentPage = (_scrollView.contentOffset.x + CGWidth(_scrollView.frame) * 0.1) / CGWidth(_scrollView.frame);
         if (currentPage == 0) {
-            [_scrollView changeUIAccording:@"热门"];
+            [_scrollView toggleWithType:PIEHomeTypeAsk];
+            _hotTable.scrollsToTop = NO;
+            _pieCollectionView.scrollsToTop = YES;
             [_segmentedControl setSelectedSegmentIndex:0 animated:YES];
-            _scrollView.hotTable.scrollsToTop = YES;
-            _scrollView.askTable.scrollsToTop = NO;
         } else if (currentPage == 1) {
-            _scrollView.hotTable.scrollsToTop = NO;
-            _scrollView.askTable.scrollsToTop = YES;
+            [_scrollView toggleWithType:PIEHomeTypeHot];
             [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
-            [_scrollView changeUIAccording:@"最新"];
-            if (_isfirstEnterHomepageRecentView) {
-                _isfirstEnterHomepageRecentView = NO;
-                [self firstGetDataSourceOfTableViewWithHomeType:ATOMHomepageViewTypeAsk];
-            }
+            _hotTable.scrollsToTop = YES;
+            _pieCollectionView.scrollsToTop = NO;
         }
     }
 }
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (_scrollView.hotTable == tableView) {
-        return _dataSourceOfHotTableView.count;
-    } else if (_scrollView.askTable == tableView) {
-        return _dataSourceOfAskTableView.count;
+    if (_hotTable == tableView) {
+        return _sourceHot.count;
     }
     return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (_scrollView.hotTable == tableView) {
+    if (_hotTable == tableView) {
         PIEHotTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        [cell configCell:_dataSourceOfHotTableView[indexPath.row] row:indexPath.row];
+        [cell configCell:_sourceHot[indexPath.row] row:indexPath.row];
         return cell;
-    } else if (_scrollView.askTable == tableView) {
-        kfcAskCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier2];
-        [cell configCell:_dataSourceOfAskTableView[indexPath.row]];
-        return cell;
-    } else {
+    }
+    else {
         return nil;
     }
 }
@@ -534,15 +511,10 @@ static NSString *CellIdentifier2 = @"AskCell";
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (_scrollView.hotTable == tableView) {
+    if (_hotTable == tableView) {
             return [tableView fd_heightForCellWithIdentifier:CellIdentifier  cacheByIndexPath:indexPath configuration:^(PIEHotTableCell *cell) {
-            [cell configCell:_dataSourceOfHotTableView[indexPath.row] row:indexPath.row];
+            [cell configCell:_sourceHot[indexPath.row] row:indexPath.row];
         }];
-    }
-                else if (_scrollView.askTable == tableView) {
-                    return [tableView fd_heightForCellWithIdentifier:CellIdentifier2  cacheByIndexPath:indexPath configuration:^(kfcAskCell *cell) {
-                        [cell configCell:_dataSourceOfAskTableView[indexPath.row]];
-                    }];
     } else {
         return 0;
     }
@@ -554,16 +526,16 @@ static NSString *CellIdentifier2 = @"AskCell";
 -(void)ATOMViewControllerDismissWithInfo:(NSDictionary *)info {
 //    bool liked = [info[@"liked"] boolValue];
 //    bool collected = [info[@"collected"]boolValue];
-//    if (_scrollView.type == ATOMHomepageViewTypeHot) {
+//    if (_scrollView.type == PIEHomeTypeHot) {
 //        //当从child viewcontroller 传来的liked变化的时候，toggle like.
 //        //to do:其实应该改变datasource的liked ,tableView reload的时候才能保持。
-//        PIEHotTableCell* cell= (kfcHotCell *)[_scrollView.hotTable cellForRowAtIndexPath:_selectedIndexPath];
+//        PIEHotTableCell* cell= (kfcHotCell *)[_hotTable cellForRowAtIndexPath:_selectedIndexPath];
 //        [cell.likeButton toggleLikeWhenSelectedChanged:liked];
 //        _selectedVM.collected = collected;
 //        NSLog(@"_selectedVM.collected %d",collected);
 //
-//    } else if (_scrollView.type == ATOMHomepageViewTypeAsk) {
-//        kfcAskCell* cell= (kfcAskCell *)[_scrollView.askTable cellForRowAtIndexPath:_selectedIndexPath];
+//    } else if (_scrollView.type == PIEHomeTypeAsk) {
+//        kfcAskCell* cell= (kfcAskCell *)[_pieCollectionView cellForRowAtIndexPath:_selectedIndexPath];
 //        [cell.likeButton toggleLikeWhenSelectedChanged:liked];
 //        _selectedVM.collected = collected;
 //    }
@@ -572,25 +544,26 @@ static NSString *CellIdentifier2 = @"AskCell";
 
 #pragma mark - GetDataSource from DB
 - (void)firstGetDataSourceFromDataBase {
-    _dataSourceOfHotTableView = [self fetchDBDataSourceWithHomeType:ATOMHomepageViewTypeHot];
-    [_scrollView.hotTable reloadData];
     
-    _dataSourceOfAskTableView = [self fetchDBDataSourceWithHomeType:ATOMHomepageViewTypeAsk];
-    NSLog(@"_dataSourceOfAskTableView %@",_dataSourceOfAskTableView);
-    [_scrollView.askTable reloadData];
+    _sourceAsk = [self fetchDBDataSourceWithHomeType:PIEHomeTypeAsk];
+    [_pieCollectionView reloadData];
+    
+    _sourceHot = [self fetchDBDataSourceWithHomeType:PIEHomeTypeHot];
+
 }
 #pragma mark - GetDataSource from Server
 
 //初始数据
-- (void)firstGetDataSourceOfTableViewWithHomeType:(ATOMHomepageViewType)homeType {
-    if (homeType == ATOMHomepageViewTypeHot) {
-        [_scrollView.hotTable.header beginRefreshing];
-    } else if (homeType == ATOMHomepageViewTypeAsk) {
-        [_scrollView.askTable.header beginRefreshing];
+- (void)firstGetRemoteSource:(PIEHomeType)homeType {
+    if (homeType == PIEHomeTypeHot) {
+        [self getRemoteSourceWithPageType:PIEHomeTypeHot];
+    }
+    else if (homeType == PIEHomeTypeAsk) {
+        [self getRemoteSourceWithPageType:PIEHomeTypeAsk];
     }
 }
 
--(NSMutableArray*)fetchDBDataSourceWithHomeType:(ATOMHomepageViewType) homeType {
+-(NSMutableArray*)fetchDBDataSourceWithHomeType:(PIEHomeType) homeType {
     
     DDHomePageManager *showHomepage = [DDHomePageManager new];
     NSArray * homepageArray = [[showHomepage getHomeImagesWithHomeType:homeType] mutableCopy];
@@ -602,95 +575,87 @@ static NSString *CellIdentifier2 = @"AskCell";
     }
     return tableViewDataSource;
 }
-
 //获取服务器的最新数据
-- (void)getDataSourceOfTableViewWithHomeType:(NSString *)homeType {
+- (void)getRemoteSourceWithPageType:(PIEHomeType)homeType {
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary new];
     double timeStamp = [[NSDate date] timeIntervalSince1970];
-    [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
-    [param setObject:homeType forKey:@"type"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
-    [param setObject:@"time" forKey:@"sort"];
-    [param setObject:@"desc" forKey:@"order"];
-    [param setObject:@(8) forKey:@"size"];
-    DDHomePageManager *showHomepage = [DDHomePageManager new];
-    [showHomepage getHomepage:param withBlock:^(NSMutableArray *homepageArray, NSError *error) {
+    [param setObject:@(10) forKey:@"size"];
+    if (homeType == PIEHomeTypeAsk) {
+        [_pieCollectionView.footer endRefreshing];
+        [param setObject:@"new" forKey:@"type"];
+        [param setObject:@(AskCellWidth) forKey:@"width"];
+    } else if (homeType == PIEHomeTypeHot) {
+        [_hotTable.footer endRefreshing];
+        [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+        [param setObject:@"hot" forKey:@"type"];
+    }
+    DDHomePageManager *pageManager = [DDHomePageManager new];
+    [pageManager getHomepage:param withBlock:^(NSMutableArray *homepageArray, NSError *error) {
         if (homepageArray.count != 0 && error == nil) {
-            if ([homeType isEqualToString:@"new"]) {
-                ws.dataSourceOfAskTableView = nil;
-                ws.dataSourceOfAskTableView = [NSMutableArray array];
-                ws.currentRecentPage = 1;
-                [param setObject:@(_currentRecentPage) forKey:@"page"];
-            } else if ([homeType isEqualToString:@"hot"]) {
-                ws.dataSourceOfHotTableView = nil;
-                ws.dataSourceOfHotTableView = [NSMutableArray array];
-                ws.currentHotPage = 1;
-                [param setObject:@(_currentHotPage) forKey:@"page"];
+            NSMutableArray* arrayAgent = [NSMutableArray new];
+            for (ATOMAskPage *homeImage in homepageArray) {
+                DDPageVM *vm = [DDPageVM new];
+                [vm setViewModelData:homeImage];
+                [arrayAgent addObject:vm];
             }
             
-            for (ATOMAskPage *homeImage in homepageArray) {
-                DDPageVM *model = [DDPageVM new];
-                [model setViewModelData:homeImage];
-                if (ws.scrollView.type == ATOMHomepageViewTypeHot) {
-                    [ws.dataSourceOfHotTableView addObject:model];
-                } else if (ws.scrollView.type == ATOMHomepageViewTypeAsk) {
-                    [ws.dataSourceOfAskTableView addObject:model];
-                }
+            if (homeType == PIEHomeTypeHot) {
+                [ws.sourceHot removeAllObjects];
+                [ws.sourceHot addObjectsFromArray:arrayAgent] ;
+                    [ws.hotTable.header endRefreshing];
+            } else if (homeType == PIEHomeTypeAsk) {
+                [ws.sourceAsk removeAllObjects];
+                [ws.sourceAsk addObjectsFromArray:arrayAgent] ;
+                [ws.scrollView.collectionView.header endRefreshing];
             }
-            if (ws.scrollView.type == ATOMHomepageViewTypeHot) {
-                ws.scrollView.hotTable.noDataView.canShow = YES;
-                [ws.scrollView.hotTable reloadData];
-                [ws.scrollView.hotTable.header endRefreshing];
-            } else if (ws.scrollView.type == ATOMHomepageViewTypeAsk) {
-                ws.scrollView.askTable.noDataView.canShow = YES;
+            if (_scrollView.type == PIEHomeTypeAsk) {
                 [ws.scrollView.collectionView reloadData];
-                [ws.scrollView.askTable.header endRefreshing];
+            } else {
+                [ws.hotTable reloadData];
             }
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-                [showHomepage saveHomeImagesInDB:homepageArray];
+                [pageManager saveHomeImagesInDB:homepageArray];
             });
         } else {
             [ws.scrollView.hotTable.header endRefreshing];
-            [ws.scrollView.askTable.header endRefreshing];
+            [ws.scrollView.collectionView.header endRefreshing];
         }
-        
     }];
     
 }
 
 //拉至底层刷新
-- (void)getMoreDataSourceOfTableViewWithHomeType:(NSString *)homeType {
+- (void)getMoreRemoteSourceWithType:(PIEHomeType)homeType {
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary new];
-    double timeStamp = [[NSDate date] timeIntervalSince1970];
-    if ([homeType isEqualToString:@"new"]) {
-        ws.currentRecentPage++;
-        [param setObject:@(ws.currentRecentPage) forKey:@"page"];
-    } else if ([homeType isEqualToString:@"hot"]) {
-        ws.currentHotPage++;
-        [param setObject:@(ws.currentHotPage) forKey:@"page"];
+    if (homeType == PIEHomeTypeAsk) {
+        ws.currentAskIndex++;
+        [param setObject:@(ws.currentAskIndex) forKey:@"page"];
+        [param setObject:@"new" forKey:@"type"];
+        [param setObject:@(AskCellWidth) forKey:@"width"];
+    } else if (homeType == PIEHomeTypeHot) {
+        ws.currentHotIndex++;
+        [param setObject:@(ws.currentHotIndex) forKey:@"page"];
+        [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+        [param setObject:@"hot" forKey:@"type"];
     }
-    [param setObject:@(SCREEN_WIDTH - kPadding15 * 2) forKey:@"width"];
-    [param setObject:homeType forKey:@"type"];
+    double timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
-    [param setObject:@"time" forKey:@"sort"];
-    [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(10) forKey:@"size"];
-    DDHomePageManager *showHomepage = [DDHomePageManager new];
-    [showHomepage getHomepage:param withBlock:^(NSMutableArray *homepageArray,NSError *error) {
+    
+    DDHomePageManager *pageManager = [DDHomePageManager new];
+    [pageManager getHomepage:param withBlock:^(NSMutableArray *homepageArray,NSError *error) {
         if (homepageArray && error == nil) {
-            
+            NSMutableArray* arrayAgent = [NSMutableArray new];
             for (ATOMAskPage *homeImage in homepageArray) {
                 DDPageVM *model = [DDPageVM new];
                 [model setViewModelData:homeImage];
-                if (ws.scrollView.type == ATOMHomepageViewTypeHot) {
-                    [ws.dataSourceOfHotTableView addObject:model];
-                } else if (ws.scrollView.type == ATOMHomepageViewTypeAsk) {
-                    [ws.dataSourceOfAskTableView addObject:model];
-                }
+                [arrayAgent addObject:model];
             }
-            if (ws.scrollView.type == ATOMHomepageViewTypeHot) {
+            if (homeType == PIEHomeTypeHot) {
+                [_sourceHot addObjectsFromArray:arrayAgent];
                 [ws.scrollView.hotTable reloadData];
                 [ws.scrollView.hotTable.footer endRefreshing];
                 if (homepageArray.count == 0) {
@@ -698,9 +663,10 @@ static NSString *CellIdentifier2 = @"AskCell";
                 } else {
                     ws.canRefreshHotFooter = YES;
                 }
-            } else if (ws.scrollView.type == ATOMHomepageViewTypeAsk) {
-                [ws.scrollView.askTable reloadData];
-                [ws.scrollView.askTable.footer endRefreshing];
+            } else if (homeType == PIEHomeTypeAsk) {
+                [_sourceAsk addObjectsFromArray:arrayAgent];
+                [ws.scrollView.collectionView reloadData];
+                [ws.scrollView.collectionView.footer endRefreshing];
                 if (homepageArray.count == 0) {
                     ws.canRefreshRecentFooter = NO;
                 } else {
@@ -709,7 +675,7 @@ static NSString *CellIdentifier2 = @"AskCell";
             }
         } else {
             [ws.scrollView.hotTable.footer endRefreshing];
-            [ws.scrollView.askTable.footer endRefreshing];
+            [ws.scrollView.collectionView.footer endRefreshing];
         }
     }];
 }
@@ -753,49 +719,51 @@ static NSString *CellIdentifier2 = @"AskCell";
 #pragma mark - Refresh
 
 - (void)loadNewHotData {
-    [self getDataSourceOfTableViewWithHomeType:@"hot"];
+    [self getRemoteSourceWithPageType:PIEHomeTypeHot];
 }
 
 - (void)loadMoreHotData {
-    if (_canRefreshHotFooter && !_scrollView.hotTable.header.isRefreshing) {
-        [self getMoreDataSourceOfTableViewWithHomeType:@"hot"];
+    if (_canRefreshHotFooter && !_hotTable.header.isRefreshing) {
+        [self getMoreRemoteSourceWithType:PIEHomeTypeHot];
     } else {
-        [_scrollView.hotTable.footer endRefreshing];
+        [_hotTable.footer endRefreshing];
     }
 }
 
 
 - (void)loadNewRecentData {
-    [self getDataSourceOfTableViewWithHomeType:@"new"];
+    [self getRemoteSourceWithPageType:PIEHomeTypeAsk];
 }
 
 - (void)loadMoreRecentData {
-    if (_canRefreshRecentFooter && !_scrollView.askTable.header.isRefreshing) {
-        [self getMoreDataSourceOfTableViewWithHomeType:@"new"];
+    if (_canRefreshRecentFooter && !_pieCollectionView.header.isRefreshing) {
+        [self getMoreRemoteSourceWithType:PIEHomeTypeAsk];
     } else {
-        [_scrollView.askTable.footer endRefreshing];
+        [_pieCollectionView.footer endRefreshing];
     }
 }
 
 #pragma mark - PWRefreshBaseTableViewDelegate
 
 -(void)didPullRefreshDown:(UITableView *)tableView{
-    if (tableView == _scrollView.hotTable) {
+    if (tableView == _hotTable) {
         [self loadNewHotData];
-    } else if(tableView == _scrollView.askTable) {
-        [self loadNewRecentData];
     }
 }
 
 -(void)didPullRefreshUp:(UITableView *)tableView {
-    if (tableView == _scrollView.hotTable) {
+    if (tableView == _hotTable) {
         [self loadMoreHotData];
-    } else if(tableView == _scrollView.askTable) {
-        [self loadMoreRecentData];
     }
 }
 
+-(void)didPullDownCollectionView:(UICollectionView *)collectionView {
+    [self loadNewRecentData];
+}
 
+-(void)didPullUpCollectionViewBottom:(UICollectionView *)collectionView {
+    [self loadMoreRecentData];
+}
 
 #pragma mark - Getters and Setters
 
@@ -927,9 +895,9 @@ static NSString *CellIdentifier2 = @"AskCell";
             }
             [ATOMReportModel report:param withBlock:^(NSError *error) {
                 UIView* view;
-                if (ws.scrollView.type == ATOMHomepageViewTypeHot) {
+                if (ws.scrollView.type == PIEHomeTypeHot) {
                     view = ws.scrollView.homepageHotView;
-                } else  if (ws.scrollView.type == ATOMHomepageViewTypeAsk) {
+                } else  if (ws.scrollView.type == PIEHomeTypeAsk) {
                     view = ws.scrollView.homepageAskView;
                 }
                 if(!error) {
@@ -959,7 +927,7 @@ static NSString *CellIdentifier2 = @"AskCell";
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return _dataSourceOfAskTableView.count;
+    return _sourceAsk.count;
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -970,10 +938,21 @@ static NSString *CellIdentifier2 = @"AskCell";
     PIEAskCollectionCell*cell =
     (PIEAskCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"WaterfallCell"
                                                                                 forIndexPath:indexPath];
+    [cell injectSource:[_sourceAsk objectAtIndex:indexPath.row]];
     return cell;
 }
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(300, 300);
+    DDPageVM* vm =   [_sourceAsk objectAtIndex:indexPath.row];
+
+    CGFloat width;
+    CGFloat height;
+
+    width = AskCellWidth;
+    height = vm.imageHeight + 135;
+    if (height > (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/1.3) {
+        height = (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/1.3;
+    }
+    return CGSizeMake(width, height);
 }
 @end

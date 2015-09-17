@@ -33,8 +33,8 @@
     _likeNumber = model.likeCount;
     _shareNumber = model.shareCount;
     _commentNumber = model.commentNumber;
-    _width = model.width;
-    _height = model.height;
+    _width = model.imageWidth;
+    _height = model.imageHeight;
     _userName = model.username;
 //    _pageImage = model.image;
     _liked = model.liked;
@@ -96,8 +96,8 @@
     askPageViewModel.likeCount = _likeNumber;
     askPageViewModel.shareCount = _shareNumber;
     askPageViewModel.commentNumber = _commentNumber;
-    askPageViewModel.width = _width;
-    askPageViewModel.height = _height;
+    askPageViewModel.imageWidth = _width;
+    askPageViewModel.imageHeight = _height;
     askPageViewModel.username = _userName;
 //    askPageViewModel.image = _pageImage;
     askPageViewModel.liked = _liked;

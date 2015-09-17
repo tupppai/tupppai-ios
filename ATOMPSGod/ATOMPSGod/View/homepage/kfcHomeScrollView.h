@@ -8,14 +8,19 @@
 
 #import <UIKit/UIKit.h>
 #import "RefreshTableView.h"
+#import "PIERefreshCollectionView.h"
 
 @interface kfcHomeScrollView : UIScrollView
 @property (nonatomic, strong) RefreshTableView *hotTable;
-@property (nonatomic, strong) RefreshTableView *askTable;
-@property (nonatomic, strong) UICollectionView *collectionView;
+//@property (nonatomic, strong) RefreshTableView *askTable;
+@property (nonatomic, strong) PIERefreshCollectionView *collectionView;
 
 @property (nonatomic, strong) UIView *homepageHotView;
 @property (nonatomic, strong) UIView *homepageAskView;
-@property (nonatomic, assign) ATOMHomepageViewType type;
-- (void)changeUIAccording:(NSString *)buttonTitle;
+@property (nonatomic, assign) PIEHomeType type;
+- (void)toggle;
+- (void)toggleWithType:(PIEHomeType)type;
 @end
+
+
+

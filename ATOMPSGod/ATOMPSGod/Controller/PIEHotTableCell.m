@@ -43,7 +43,7 @@
     _nameLabel.text = viewModel.username;
     _timeLabel.text = viewModel.publishTime;
     [_theImageView setImageWithURL:[NSURL URLWithString:viewModel.imageURL] placeholderImage:[UIImage imageNamed:@"placeholderImage_1"]];
-    CGFloat imageViewHeight = viewModel.height <= SCREEN_HEIGHT/2 ? viewModel.height : SCREEN_HEIGHT/2;
+    CGFloat imageViewHeight = viewModel.imageHeight <= SCREEN_HEIGHT/2 ? viewModel.imageHeight : SCREEN_HEIGHT/2;
     [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(imageViewHeight)).with.priorityHigh();
     }];

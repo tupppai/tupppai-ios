@@ -37,7 +37,6 @@
         }
         return self;
 }
-#pragma mark lazy initilize
 -(void) loadMoreHotData {
     if (_psDelegate && [_psDelegate respondsToSelector:@selector(didPullUpCollectionViewBottom:)]) {
         [_psDelegate didPullUpCollectionViewBottom:self];

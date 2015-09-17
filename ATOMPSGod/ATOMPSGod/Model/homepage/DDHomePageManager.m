@@ -117,7 +117,7 @@
     return array;
 }
 
-- (NSArray *)getHomeImagesWithHomeType:(ATOMHomepageViewType)homeType {
+- (NSArray *)getHomeImagesWithHomeType:(PIEHomeType)homeType {
     
     NSArray *array = [self.homeImageDAO selectHomeImagesWithHomeType:homeType];
     for (ATOMAskPage *homeImage in array) {
