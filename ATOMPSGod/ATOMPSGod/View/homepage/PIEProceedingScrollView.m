@@ -33,7 +33,7 @@
 - (void)initSubviews {
     [self initAskCollectionView];
 //    [self initToHelpTableView];
-//    [self initDoneCollectionView];
+    [self initDoneCollectionView];
 }
 - (void)initAskCollectionView {
     CHTCollectionViewWaterfallLayout *layout = [[CHTCollectionViewWaterfallLayout alloc] init];
@@ -62,13 +62,13 @@
     layout.sectionInset = UIEdgeInsetsMake(10, 6, 0, 6);
     layout.minimumColumnSpacing = 8;
     layout.minimumInteritemSpacing = 10;
-    _doneCollectionView = [[PIERefreshCollectionView alloc] initWithFrame:CGRectMake(6, 0, SCREEN_WIDTH-12, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT) collectionViewLayout:layout];
+    _doneCollectionView = [[PIERefreshCollectionView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*2, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT) collectionViewLayout:layout];
     _doneCollectionView.toRefreshBottom = YES;
     _doneCollectionView.backgroundColor = [UIColor clearColor];
     _doneCollectionView.toRefreshTop = YES;
     _doneCollectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    UINib* nib = [UINib nibWithNibName:@"PIEAskCollectionCell" bundle:nil];
-    [_doneCollectionView registerNib:nib forCellWithReuseIdentifier:@"DoneCollectionCell"];
+    UINib* nib = [UINib nibWithNibName:@"PIEDoneCollectionViewCell" bundle:nil];
+    [_doneCollectionView registerNib:nib forCellWithReuseIdentifier:@"PIEDoneCollectionViewCell"];
     [self addSubview:_doneCollectionView];
 }
 

@@ -111,7 +111,8 @@ static NSString *CellIdentifier2 = @"AskCell";
     //set this before firstGetRemoteSource
     _canRefreshHotFooter = YES;
     _canRefreshRecentFooter = YES;
-    
+    _sourceAsk = [NSMutableArray new];
+    _sourceHot = [NSMutableArray new];
     
     [self firstGetDataSourceFromDataBase];
     [self firstGetRemoteSource:PIEHomeTypeAsk];
@@ -543,7 +544,6 @@ static NSString *CellIdentifier2 = @"AskCell";
     [_askCollectionView reloadData];
     
     _sourceHot = [self fetchDBDataSourceWithHomeType:PIEHomeTypeHot];
-
 }
 #pragma mark - GetDataSource from Server
 
@@ -577,10 +577,12 @@ static NSString *CellIdentifier2 = @"AskCell";
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(10) forKey:@"size"];
     if (homeType == PIEHomeTypeAsk) {
+        _currentAskIndex = 1;
         [_askCollectionView.footer endRefreshing];
         [param setObject:@"new" forKey:@"type"];
         [param setObject:@(AskCellWidth) forKey:@"width"];
     } else if (homeType == PIEHomeTypeHot) {
+        _currentHotIndex = 1;
         [_hotTableView.footer endRefreshing];
         [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
         [param setObject:@"hot" forKey:@"type"];
