@@ -16,6 +16,8 @@
 #import "PIEMeViewController.h"
 #import "PIECameraViewController.h"
 
+#import "PIEProceedingViewController.h"
+
 @interface DDTabBarController ()<UITabBarControllerDelegate>
 @property (nonatomic, strong) DDNavigationController *nav1;
 @property (nonatomic, strong) DDNavigationController *nav2;
@@ -63,18 +65,18 @@ static dispatch_once_t once;
 - (void)configureTabBarController {
     DDHomeVC *homePageViewController = [DDHomeVC new];
     DDFollowVC *myAttentionViewController = [DDFollowVC new];
-    DDMessageVC *myMessageViewController = [DDMessageVC new];
+    PIEProceedingViewController *proceedingViewController = [PIEProceedingViewController new];
     ATOMPersonViewController *personViewController = [ATOMPersonViewController new];
     PIEMeViewController *vc4 = (PIEMeViewController *)[[UIStoryboard storyboardWithName:@"Me" bundle:nil] instantiateViewControllerWithIdentifier: @"PIEME"];
     UIViewController* vc = [UIViewController new];
     homePageViewController.title = @"最新";
     myAttentionViewController.title = @"精选";
-    myMessageViewController.title = @"进行中";
+    proceedingViewController.title = @"进行中";
     personViewController.title = @"我的";
     
     _nav1 = [[DDNavigationController alloc] initWithRootViewController:homePageViewController];
     _nav2 = [[DDNavigationController alloc] initWithRootViewController:myAttentionViewController];
-    _nav3 = [[DDNavigationController alloc] initWithRootViewController:myMessageViewController];
+    _nav3 = [[DDNavigationController alloc] initWithRootViewController:proceedingViewController];
     _nav4 = [[DDNavigationController alloc] initWithRootViewController:vc4];
     _centerNav = [[DDNavigationController alloc] initWithRootViewController:vc];
     _preNav = _nav1;

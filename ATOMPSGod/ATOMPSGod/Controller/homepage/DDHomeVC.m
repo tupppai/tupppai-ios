@@ -46,17 +46,19 @@
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureHot;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureAsk;
+
 @property (nonatomic, strong) NSMutableArray *sourceHot;
 @property (nonatomic, strong) NSMutableArray *sourceAsk;
 @property (nonatomic, assign) NSInteger currentHotIndex;
 @property (nonatomic, assign) NSInteger currentAskIndex;
 @property (nonatomic, strong) kfcHomeScrollView *scrollView;
-@property (nonatomic, strong) PIERefreshCollectionView *pieCollectionView;
-@property (nonatomic, strong) RefreshTableView *hotTable;
-
-@property (nonatomic, assign) BOOL isfirstEnterHomepageRecentView;
+@property (nonatomic, weak) PIERefreshCollectionView *askCollectionView;
+@property (nonatomic, weak) RefreshTableView *hotTableView;
 @property (nonatomic, assign) BOOL canRefreshHotFooter;
 @property (nonatomic, assign) BOOL canRefreshRecentFooter;
+
+@property (nonatomic, assign) BOOL isfirstEnterHomepageRecentView;
+
 
 @property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
 @property (nonatomic, strong)  JGActionSheet * cameraActionsheet;
@@ -105,8 +107,12 @@ static NSString *CellIdentifier2 = @"AskCell";
     [self createCustomNavigationBar];
     [self confighotTable];
     [self configaskTable];
+    
+    //set this before firstGetRemoteSource
     _canRefreshHotFooter = YES;
     _canRefreshRecentFooter = YES;
+    
+    
     [self firstGetDataSourceFromDataBase];
     [self firstGetRemoteSource:PIEHomeTypeAsk];
     [self firstGetRemoteSource:PIEHomeTypeHot];
@@ -116,27 +122,27 @@ static NSString *CellIdentifier2 = @"AskCell";
 
 
 - (void)confighotTable {
-    _hotTable = _scrollView.hotTable;
-    _hotTable.delegate = self;
-    _hotTable.dataSource = self;
-    _hotTable.noDataView.label.text = @"网络连接断了吧-_-!";
-    _hotTable.psDelegate = self;
+    _hotTableView = _scrollView.hotTable;
+    _hotTableView.delegate = self;
+    _hotTableView.dataSource = self;
+    _hotTableView.noDataView.label.text = @"网络连接断了吧-_-!";
+    _hotTableView.psDelegate = self;
     UINib* nib = [UINib nibWithNibName:@"PIEHotTableCell" bundle:nil];
-    [_hotTable registerNib:nib forCellReuseIdentifier:CellIdentifier];
-    _hotTable.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
+    [_hotTableView registerNib:nib forCellReuseIdentifier:CellIdentifier];
+    _hotTableView.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
     _tapGestureHot = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureHot:)];
-    [_hotTable addGestureRecognizer:_tapGestureHot];
+    [_hotTableView addGestureRecognizer:_tapGestureHot];
     
-    _hotTable.scrollsToTop = YES;
+    _hotTableView.scrollsToTop = YES;
     _currentHotIndex = 1;
 //    _pieCollectionView.scrollsToTop = NO;
 
 }
 - (void)configaskTable {
-    _pieCollectionView = _scrollView.collectionView;
-    _pieCollectionView.dataSource = self;
-    _pieCollectionView.delegate = self;
-    _pieCollectionView.psDelegate = self;
+    _askCollectionView = _scrollView.collectionView;
+    _askCollectionView.dataSource = self;
+    _askCollectionView.delegate = self;
+    _askCollectionView.psDelegate = self;
     _currentAskIndex = 1;
 }
 
@@ -165,11 +171,7 @@ static NSString *CellIdentifier2 = @"AskCell";
     _segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
     
     [_segmentedControl setIndexChangeBlock:^(NSInteger index) {
-        if (index == 0) {
-            [ws tappedAskTitleButton];
-        } else if (index == 1) {
-            [ws tappedHotTitleButton];
-        }
+        [ws.scrollView toggle];
     }];
 
     _segmentedControl.backgroundColor = [UIColor clearColor];
@@ -184,7 +186,7 @@ static NSString *CellIdentifier2 = @"AskCell";
     if (shouldNav) {
         [_segmentedControl setSelectedSegmentIndex:0 animated:YES];
         [_scrollView toggleWithType:PIEHomeTypeHot];
-        [_hotTable.header beginRefreshing];
+        [_hotTableView.header beginRefreshing];
     }
     [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:@"shouldNavToHotSegment"];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -197,7 +199,7 @@ static NSString *CellIdentifier2 = @"AskCell";
     if (shouldNav) {
         [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
         [_scrollView toggleWithType:PIEHomeTypeAsk];
-        [_pieCollectionView.header beginRefreshing];
+        [_askCollectionView.header beginRefreshing];
     }
     [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:@"shouldNavToAskSegment"];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -206,32 +208,24 @@ static NSString *CellIdentifier2 = @"AskCell";
 - (void)shouldRefreshHeader {
     BOOL shouldRefresh = [[NSUserDefaults standardUserDefaults]boolForKey:@"tapNav1"];
     if (shouldRefresh) {
-        if (_scrollView.type == PIEHomeTypeHot && ![_hotTable.header isRefreshing]) {
-            [_hotTable.header beginRefreshing];
-        } else if (_scrollView.type == PIEHomeTypeAsk && ![_pieCollectionView.header isRefreshing]) {
-            [_pieCollectionView.header beginRefreshing];
+        if (_scrollView.type == PIEHomeTypeHot && ![_hotTableView.header isRefreshing]) {
+            [_hotTableView.header beginRefreshing];
+        } else if (_scrollView.type == PIEHomeTypeAsk && ![_askCollectionView.header isRefreshing]) {
+            [_askCollectionView.header beginRefreshing];
             
         }
     }
 }
 
 - (void)refreshNav1 {
-    if (_scrollView.type == PIEHomeTypeHot && ![_hotTable.header isRefreshing]) {
-        [_hotTable.header beginRefreshing];
-    } else if (_scrollView.type == PIEHomeTypeAsk && ![_pieCollectionView.header isRefreshing]) {
-        [_pieCollectionView.header beginRefreshing];
+    if (_scrollView.type == PIEHomeTypeHot && ![_hotTableView.header isRefreshing]) {
+        [_hotTableView.header beginRefreshing];
+    } else if (_scrollView.type == PIEHomeTypeAsk && ![_askCollectionView.header isRefreshing]) {
+        [_askCollectionView.header beginRefreshing];
     }
 }
 
 #pragma mark - event response
-
-- (void)tappedHotTitleButton {
-    [_scrollView toggle];
-}
-
-- (void)tappedAskTitleButton {
-    [_scrollView toggle];
-}
 
 - (void)tappedCameraButton:(UIBarButtonItem *)sender {
     [self.cameraActionsheet showInView:[AppDelegate APP].window animated:YES];
@@ -339,10 +333,10 @@ static NSString *CellIdentifier2 = @"AskCell";
 
 - (void)tapGestureHot:(UITapGestureRecognizer *)gesture {
     if (_scrollView.type == PIEHomeTypeHot) {
-        CGPoint location = [gesture locationInView:_hotTable];
-        _selectedIndexPath = [_hotTable indexPathForRowAtPoint:location];
+        CGPoint location = [gesture locationInView:_hotTableView];
+        _selectedIndexPath = [_hotTableView indexPathForRowAtPoint:location];
         if (_selectedIndexPath) {
-            PIEHotTableCell* cell = (PIEHotTableCell *)[_hotTable cellForRowAtIndexPath:_selectedIndexPath];
+            PIEHotTableCell* cell = (PIEHotTableCell *)[_hotTableView cellForRowAtIndexPath:_selectedIndexPath];
             _selectedVM = _sourceHot[_selectedIndexPath.row];
             CGPoint p = [gesture locationInView:cell];
             if (CGRectContainsPoint(cell.thumbView.frame, p)) {
@@ -477,28 +471,28 @@ static NSString *CellIdentifier2 = @"AskCell";
         int currentPage = (_scrollView.contentOffset.x + CGWidth(_scrollView.frame) * 0.1) / CGWidth(_scrollView.frame);
         if (currentPage == 0) {
             [_scrollView toggleWithType:PIEHomeTypeAsk];
-            _hotTable.scrollsToTop = NO;
-            _pieCollectionView.scrollsToTop = YES;
+            _hotTableView.scrollsToTop = NO;
+            _askCollectionView.scrollsToTop = YES;
             [_segmentedControl setSelectedSegmentIndex:0 animated:YES];
         } else if (currentPage == 1) {
             [_scrollView toggleWithType:PIEHomeTypeHot];
             [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
-            _hotTable.scrollsToTop = YES;
-            _pieCollectionView.scrollsToTop = NO;
+            _hotTableView.scrollsToTop = YES;
+            _askCollectionView.scrollsToTop = NO;
         }
     }
 }
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (_hotTable == tableView) {
+    if (_hotTableView == tableView) {
         return _sourceHot.count;
     }
     return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (_hotTable == tableView) {
+    if (_hotTableView == tableView) {
         PIEHotTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         [cell configCell:_sourceHot[indexPath.row] row:indexPath.row];
         return cell;
@@ -511,7 +505,7 @@ static NSString *CellIdentifier2 = @"AskCell";
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (_hotTable == tableView) {
+    if (_hotTableView == tableView) {
             return [tableView fd_heightForCellWithIdentifier:CellIdentifier  cacheByIndexPath:indexPath configuration:^(PIEHotTableCell *cell) {
             [cell configCell:_sourceHot[indexPath.row] row:indexPath.row];
         }];
@@ -546,7 +540,7 @@ static NSString *CellIdentifier2 = @"AskCell";
 - (void)firstGetDataSourceFromDataBase {
     
     _sourceAsk = [self fetchDBDataSourceWithHomeType:PIEHomeTypeAsk];
-    [_pieCollectionView reloadData];
+    [_askCollectionView reloadData];
     
     _sourceHot = [self fetchDBDataSourceWithHomeType:PIEHomeTypeHot];
 
@@ -583,11 +577,11 @@ static NSString *CellIdentifier2 = @"AskCell";
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(10) forKey:@"size"];
     if (homeType == PIEHomeTypeAsk) {
-        [_pieCollectionView.footer endRefreshing];
+        [_askCollectionView.footer endRefreshing];
         [param setObject:@"new" forKey:@"type"];
         [param setObject:@(AskCellWidth) forKey:@"width"];
     } else if (homeType == PIEHomeTypeHot) {
-        [_hotTable.footer endRefreshing];
+        [_hotTableView.footer endRefreshing];
         [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
         [param setObject:@"hot" forKey:@"type"];
     }
@@ -604,7 +598,7 @@ static NSString *CellIdentifier2 = @"AskCell";
             if (homeType == PIEHomeTypeHot) {
                 [ws.sourceHot removeAllObjects];
                 [ws.sourceHot addObjectsFromArray:arrayAgent] ;
-                    [ws.hotTable.header endRefreshing];
+                    [ws.hotTableView.header endRefreshing];
             } else if (homeType == PIEHomeTypeAsk) {
                 [ws.sourceAsk removeAllObjects];
                 [ws.sourceAsk addObjectsFromArray:arrayAgent] ;
@@ -613,7 +607,7 @@ static NSString *CellIdentifier2 = @"AskCell";
             if (_scrollView.type == PIEHomeTypeAsk) {
                 [ws.scrollView.collectionView reloadData];
             } else {
-                [ws.hotTable reloadData];
+                [ws.hotTableView reloadData];
             }
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
                 [pageManager saveHomeImagesInDB:homepageArray];
@@ -723,10 +717,10 @@ static NSString *CellIdentifier2 = @"AskCell";
 }
 
 - (void)loadMoreHotData {
-    if (_canRefreshHotFooter && !_hotTable.header.isRefreshing) {
+    if (_canRefreshHotFooter && !_hotTableView.header.isRefreshing) {
         [self getMoreRemoteSourceWithType:PIEHomeTypeHot];
     } else {
-        [_hotTable.footer endRefreshing];
+        [_hotTableView.footer endRefreshing];
     }
 }
 
@@ -736,23 +730,23 @@ static NSString *CellIdentifier2 = @"AskCell";
 }
 
 - (void)loadMoreRecentData {
-    if (_canRefreshRecentFooter && !_pieCollectionView.header.isRefreshing) {
+    if (_canRefreshRecentFooter && !_askCollectionView.header.isRefreshing) {
         [self getMoreRemoteSourceWithType:PIEHomeTypeAsk];
     } else {
-        [_pieCollectionView.footer endRefreshing];
+        [_askCollectionView.footer endRefreshing];
     }
 }
 
 #pragma mark - PWRefreshBaseTableViewDelegate
 
 -(void)didPullRefreshDown:(UITableView *)tableView{
-    if (tableView == _hotTable) {
+    if (tableView == _hotTableView) {
         [self loadNewHotData];
     }
 }
 
 -(void)didPullRefreshUp:(UITableView *)tableView {
-    if (tableView == _hotTable) {
+    if (tableView == _hotTableView) {
         [self loadMoreHotData];
     }
 }
@@ -896,9 +890,9 @@ static NSString *CellIdentifier2 = @"AskCell";
             [ATOMReportModel report:param withBlock:^(NSError *error) {
                 UIView* view;
                 if (ws.scrollView.type == PIEHomeTypeHot) {
-                    view = ws.scrollView.homepageHotView;
+                    view = ws.hotTableView;
                 } else  if (ws.scrollView.type == PIEHomeTypeAsk) {
-                    view = ws.scrollView.homepageAskView;
+                    view = ws.askCollectionView;
                 }
                 if(!error) {
                     [Hud text:@"已举报" inView:view];

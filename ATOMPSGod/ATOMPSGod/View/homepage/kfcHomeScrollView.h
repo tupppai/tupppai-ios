@@ -12,11 +12,7 @@
 
 @interface kfcHomeScrollView : UIScrollView
 @property (nonatomic, strong) RefreshTableView *hotTable;
-//@property (nonatomic, strong) RefreshTableView *askTable;
 @property (nonatomic, strong) PIERefreshCollectionView *collectionView;
-
-@property (nonatomic, strong) UIView *homepageHotView;
-@property (nonatomic, strong) UIView *homepageAskView;
 @property (nonatomic, assign) PIEHomeType type;
 - (void)toggle;
 - (void)toggleWithType:(PIEHomeType)type;

@@ -43,30 +43,27 @@
 }
 
 - (void)createHomepageHotView {
-    _homepageHotView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
-    _homepageHotView.backgroundColor = [UIColor clearColor];
-    [self addSubview:_homepageHotView];
-    _hotTable = [[RefreshTableView alloc] initWithFrame:_homepageHotView.bounds];
+    _hotTable = [[RefreshTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
     _hotTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     _hotTable.backgroundColor = [UIColor clearColor];
-    [_homepageHotView addSubview:_hotTable];
+    _hotTable.showsVerticalScrollIndicator = NO;
+    [self addSubview:_hotTable];
 }
 
 - (void)createHomepageAskView {
-    _homepageAskView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
-    [self addSubview:_homepageAskView];
     CHTCollectionViewWaterfallLayout *layout = [[CHTCollectionViewWaterfallLayout alloc] init];
-    layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    layout.sectionInset = UIEdgeInsetsMake(10, 6, 0, 6);
     layout.minimumColumnSpacing = 8;
     layout.minimumInteritemSpacing = 10;
-    _collectionView = [[PIERefreshCollectionView alloc] initWithFrame:CGRectMake(6, 10, SCREEN_WIDTH-12, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT) collectionViewLayout:layout];
+    _collectionView = [[PIERefreshCollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT) collectionViewLayout:layout];
     _collectionView.toRefreshBottom = YES;
     _collectionView.backgroundColor = [UIColor clearColor];
     _collectionView.toRefreshTop = YES;
     _collectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    _collectionView.showsVerticalScrollIndicator = NO;
     UINib* nib = [UINib nibWithNibName:@"PIEAskCollectionCell" bundle:nil];
     [_collectionView registerNib:nib forCellWithReuseIdentifier:CELL_IDENTIFIER];
-    [_homepageAskView addSubview:_collectionView];
+    [self addSubview:_collectionView];
 }
 
 - (void)toggle {
@@ -94,7 +91,6 @@
             self.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
         }];
     }
-
 }
 
 
