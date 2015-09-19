@@ -13,7 +13,6 @@
 - (void)awakeFromNib {
     // Initialization code
     self.layer.cornerRadius = 6;
-
     _theImageView.clipsToBounds = YES;
 }
 

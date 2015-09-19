@@ -142,14 +142,14 @@
     if (!cell) {
         cell = [[PIEToHelpTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"PIEToHelpTableViewCell"];
     }
-//    [cell inject]
+    [cell injectSource:[_sourceToHelp objectAtIndex:indexPath.row]];
     return cell;
 }
 
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 80;
+    return 150;
 }
 
 #pragma mark - UICollectionViewDataSource
