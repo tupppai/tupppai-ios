@@ -178,9 +178,7 @@ static DDUserManager *_currentUser;
 
 
 + (void)DD3PartyAuth:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(bool isRegistered,NSString* info))block {
-    [Hud activity:@""];
     [DDService dd3PartyAuth:param with3PaType:type withBlock:^(BOOL isRegistered,NSDictionary* userObejct) {
-        [Hud dismiss];
         if (isRegistered) {
             //已经注册，抓取服务器存储的user对象，更新本地user.
             ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:userObejct error:NULL];

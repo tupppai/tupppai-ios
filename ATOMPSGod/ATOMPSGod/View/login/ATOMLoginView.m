@@ -181,14 +181,14 @@
     }];
     
     [_wechatLoginButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(ws.lineView.mas_leading);
+        make.left.equalTo(ws.lineView.mas_left);
         make.top.equalTo(ws.tipLabel1.mas_bottom).with.offset(20);
         make.width.equalTo(@116);
         make.height.equalTo(@44);
     }];
     
     [_weiboLoginButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(ws.lineView.mas_trailing);
+        make.right.equalTo(ws.lineView.mas_right);
         make.top.equalTo(_wechatLoginButton.mas_top);
         make.width.equalTo(_wechatLoginButton.mas_width);
         make.height.equalTo(_wechatLoginButton.mas_height);

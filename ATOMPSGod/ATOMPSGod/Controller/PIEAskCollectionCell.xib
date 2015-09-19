@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -22,13 +22,13 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="游客" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DIa-GT-Bof">
-                        <rect key="frame" x="43" y="14" width="26" height="13"/>
+                        <rect key="frame" x="43" y="12" width="26" height="18.5"/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="刚刚" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UP6-ZS-j1n">
-                        <rect key="frame" x="43" y="30" width="20" height="10"/>
+                        <rect key="frame" x="43" y="31.5" width="20" height="14"/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="10"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -41,7 +41,7 @@
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tSi-M5-pb6">
-                        <rect key="frame" x="0.0" y="53" width="323" height="378"/>
+                        <rect key="frame" x="0.0" y="53" width="323" height="372.5"/>
                         <color key="backgroundColor" red="0.60000002384185791" green="0.40000000596046448" blue="0.20000000298023224" alpha="0.52000000000000002" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="348" id="Ngn-Bj-NmF"/>
@@ -53,7 +53,7 @@
                         </variation>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" text="帮我的头发p得更顺一点！！！" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sZw-7M-qG8">
-                        <rect key="frame" x="8" y="440" width="307" height="13"/>
+                        <rect key="frame" x="8" y="434.5" width="307" height="18.5"/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -69,7 +69,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BANG" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SKU-78-X4k">
-                                <rect key="frame" x="11" y="33" width="29.5" height="10"/>
+                                <rect key="frame" x="11.5" y="33" width="28.5" height="14"/>
                                 <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="10"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -103,23 +103,25 @@
                 <constraint firstItem="tSi-M5-pb6" firstAttribute="top" secondItem="TUz-nr-w3I" secondAttribute="bottom" constant="4" id="Sla-ha-eUL"/>
                 <constraint firstItem="kZC-OW-G6f" firstAttribute="leading" secondItem="sZw-7M-qG8" secondAttribute="trailing" constant="-178.5" id="Sz3-7O-ZDf"/>
                 <constraint firstItem="UP6-ZS-j1n" firstAttribute="top" secondItem="DIa-GT-Bof" secondAttribute="bottom" constant="8" id="TgX-0I-R68"/>
-                <constraint firstItem="UP6-ZS-j1n" firstAttribute="bottom" secondItem="t6N-sk-Gt2" secondAttribute="bottom" id="YdC-jB-Pbo"/>
+                <constraint firstItem="UP6-ZS-j1n" firstAttribute="bottom" secondItem="t6N-sk-Gt2" secondAttribute="bottom" constant="-1" id="YdC-jB-Pbo"/>
                 <constraint firstItem="t6N-sk-Gt2" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leadingMargin" id="bit-nJ-sG9"/>
                 <constraint firstItem="TUz-nr-w3I" firstAttribute="centerY" secondItem="t6N-sk-Gt2" secondAttribute="centerY" id="cMU-ND-Emg"/>
                 <constraint firstItem="tSi-M5-pb6" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="clC-yz-Bzo"/>
                 <constraint firstAttribute="centerX" secondItem="kZC-OW-G6f" secondAttribute="centerX" id="jQX-Qo-JJd"/>
                 <constraint firstAttribute="trailing" secondItem="TUz-nr-w3I" secondAttribute="trailing" constant="15" id="rdS-Vc-161"/>
+                <constraint firstItem="UP6-ZS-j1n" firstAttribute="top" secondItem="DIa-GT-Bof" secondAttribute="bottom" constant="1" id="rp6-gO-dy1"/>
                 <constraint firstItem="DIa-GT-Bof" firstAttribute="leading" secondItem="UP6-ZS-j1n" secondAttribute="leading" id="t4w-9t-ap6"/>
                 <constraint firstItem="sZw-7M-qG8" firstAttribute="top" secondItem="tSi-M5-pb6" secondAttribute="bottom" constant="9" id="v5Q-xX-l9I"/>
                 <constraint firstItem="sZw-7M-qG8" firstAttribute="trailing" secondItem="gTV-IL-0wX" secondAttribute="trailingMargin" id="vg5-jr-ZHC"/>
                 <constraint firstAttribute="trailing" secondItem="tSi-M5-pb6" secondAttribute="trailing" id="w2s-jd-x8b"/>
-                <constraint firstItem="DIa-GT-Bof" firstAttribute="top" secondItem="t6N-sk-Gt2" secondAttribute="top" id="xWz-LT-5F0"/>
+                <constraint firstItem="DIa-GT-Bof" firstAttribute="top" secondItem="t6N-sk-Gt2" secondAttribute="top" constant="-2" id="xWz-LT-5F0"/>
                 <constraint firstItem="kZC-OW-G6f" firstAttribute="top" secondItem="sZw-7M-qG8" secondAttribute="top" constant="9" id="zlA-KR-eTI"/>
             </constraints>
             <size key="customSize" width="323" height="515"/>
             <variation key="default">
                 <mask key="constraints">
                     <exclude reference="TgX-0I-R68"/>
+                    <exclude reference="YdC-jB-Pbo"/>
                     <exclude reference="Sz3-7O-ZDf"/>
                     <exclude reference="zlA-KR-eTI"/>
                 </mask>

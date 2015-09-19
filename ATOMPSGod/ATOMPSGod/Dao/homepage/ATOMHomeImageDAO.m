@@ -43,7 +43,7 @@
             [param addObject:@(homeImage.imageID)];
             BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
             if (flag) {
-                NSLog(@"update homeImage %ld --ok",(long)homeImage.imageID);
+//                NSLog(@"update homeImage %ld --ok",(long)homeImage.imageID);
             } else {
                 NSLog(@"update homeImage fail");
             }

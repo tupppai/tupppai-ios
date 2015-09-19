@@ -335,7 +335,7 @@
     
     [_cancelPickerButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(ws.sexPickerTopView.mas_left);
-        make.right.equalTo(ws.confirmPickerButton.mas_leading);
+        make.right.equalTo(ws.confirmPickerButton.mas_left);
         make.height.equalTo(@40);
         make.top.equalTo(ws.sexPickerTopView.mas_top);
     }];
@@ -389,7 +389,7 @@
     
     [_cancelRegionPickerButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(ws.regionPickerTopView.mas_left);
-        make.right.equalTo(ws.confirmRegionPickerButton.mas_leading);
+        make.right.equalTo(ws.confirmRegionPickerButton.mas_left);
         make.height.equalTo(@40);
         make.top.equalTo(ws.regionPickerTopView.mas_top);
     }];

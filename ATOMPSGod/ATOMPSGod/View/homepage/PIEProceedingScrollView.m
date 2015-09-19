@@ -32,7 +32,7 @@
 
 - (void)initSubviews {
     [self initAskCollectionView];
-//    [self initToHelpTableView];
+    [self initToHelpTableView];
     [self initDoneCollectionView];
 }
 - (void)initAskCollectionView {
@@ -54,6 +54,8 @@
     _toHelpTableView = [[RefreshTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
     _toHelpTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _toHelpTableView.backgroundColor = [UIColor clearColor];
+    UINib* nib = [UINib nibWithNibName:@"PIEToHelpTableViewCell" bundle:nil];
+    [_toHelpTableView registerNib:nib forCellReuseIdentifier:@"PIEToHelpTableViewCell"];
     [self addSubview:_toHelpTableView];
 }
 

@@ -129,12 +129,12 @@
     
     [_likeButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_bottomView);
-        make.right.equalTo(_wechatButton.mas_leading).with.offset(-kPadding10);
+        make.right.equalTo(_wechatButton.mas_left).with.offset(-kPadding10);
         make.height.equalTo(@(kfcButtonHeight));
     }];
     [_wechatButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_bottomView);
-        make.right.equalTo(_commentButton.mas_leading).with.offset(-kPadding10);
+        make.right.equalTo(_commentButton.mas_left).with.offset(-kPadding10);
         make.height.equalTo(@(kfcButtonHeight));
     }];
     [_commentButton mas_makeConstraints:^(MASConstraintMaker *make) {

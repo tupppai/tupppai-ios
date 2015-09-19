@@ -13,11 +13,14 @@
 #import "PIEMyAskCollectionCell.h"
 #import "PIEDoneCollectionViewCell.h"
 #import "DDMyAskManager.h"
+#import "DDMyProceedingManager.h"
 #import "DDPageVM.h"
+#import "PIEToHelpTableViewCell.h"
+
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 #define MyAskCellWidth (SCREEN_WIDTH - 20) / 2.0
 
-@interface PIEProceedingViewController ()<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,PWRefreshBaseCollectionViewDelegate,PWRefreshBaseTableViewDelegate,CHTCollectionViewDelegateWaterfallLayout>
+@interface PIEProceedingViewController ()<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,PWRefreshBaseCollectionViewDelegate,PWRefreshBaseTableViewDelegate,CHTCollectionViewDelegateWaterfallLayout,UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, strong) PIEProceedingScrollView *sv;
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
@@ -47,6 +50,7 @@
     
     
     [self getRemoteSourceMyAsk];
+    [self getRemoteSourceToHelp];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -71,7 +75,7 @@
 - (void)configSubviews {
     self.view = self.sv;
     [self configAskCollectionView];
-//    [self configToHelpTableView];
+    [self configToHelpTableView];
     [self configDoneCollectionView];
 }
 - (void)configAskCollectionView {
@@ -85,7 +89,9 @@
     _sv.doneCollectionView.psDelegate = self;
 }
 - (void)configToHelpTableView {
-    
+    _sv.toHelpTableView.dataSource = self;
+    _sv.toHelpTableView.delegate = self;
+    _sv.toHelpTableView.psDelegate = self;
 }
 - (void)createNavBar {
     WS(ws);
@@ -122,6 +128,28 @@
         _sv.delegate =self;
     }
     return _sv;
+}
+#pragma mark - UITableView Datasource and delegate
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return _sourceToHelp.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    PIEToHelpTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIEToHelpTableViewCell"];
+    if (!cell) {
+        cell = [[PIEToHelpTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"PIEToHelpTableViewCell"];
+    }
+//    [cell inject]
+    return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 80;
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -180,6 +208,7 @@
 
 - (void)getRemoteSourceMyAsk {
     WS(ws);
+    [ws.sv.askCollectionView.footer endRefreshing];
     _currentIndex_MyAsk = 1;
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -211,6 +240,7 @@
 
 - (void)getMoreRemoteSourceMyAsk {
     WS(ws);
+    [ws.sv.askCollectionView.header endRefreshing];
     _currentIndex_MyAsk++;
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -237,40 +267,101 @@
     }];
 }
 
+#pragma mark - GetDataSource
+
+- (void)getRemoteSourceToHelp {
+    WS(ws);
+    [_sv.toHelpTableView.footer endRefreshing];
+    _currentIndex_ToHelp = 1;
+
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    [param setObject:@(1) forKey:@"page"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(20) forKey:@"size"];
+    [DDMyProceedingManager getMyProceeding:param withBlock:^(NSMutableArray *resultArray) {
+        if (resultArray.count == 0) {
+            _canRefreshToHelpFooter = NO;
+            [ws.sv.toHelpTableView.header endRefreshing];
+        } else {
+            _canRefreshToHelpFooter = YES;
+            NSMutableArray* sourceAgent = [NSMutableArray new];
+            for (ATOMAskPage *homeImage in resultArray) {
+                DDPageVM *vm = [DDPageVM new];
+                [vm setViewModelData:homeImage];
+                [sourceAgent addObject:vm];
+            }
+            [ws.sv.toHelpTableView.header endRefreshing];
+            [ws.sourceToHelp removeAllObjects];
+            [ws.sourceToHelp addObjectsFromArray:sourceAgent];
+            [ws.sv.toHelpTableView reloadData];
+        }
+    }];
+}
+
+- (void)getMoreRemoteSourceToHelp {
+    WS(ws);
+    _currentIndex_ToHelp ++;
+    [_sv.toHelpTableView.header endRefreshing];
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    [param setObject:@(_currentIndex_ToHelp) forKey:@"page"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(20) forKey:@"size"];
+    [DDMyProceedingManager getMyProceeding:param withBlock:^(NSMutableArray *resultArray) {
+        if (resultArray.count == 0) {
+            _canRefreshToHelpFooter = NO;
+            [ws.sv.toHelpTableView.footer endRefreshing];
+        } else {
+            _canRefreshToHelpFooter = YES;
+            NSMutableArray* sourceAgent = [NSMutableArray new];
+            for (ATOMAskPage *homeImage in resultArray) {
+                DDPageVM *vm = [DDPageVM new];
+                [vm setViewModelData:homeImage];
+                [sourceAgent addObject:vm];
+            }
+            [ws.sv.toHelpTableView.footer endRefreshing];
+            [ws.sourceToHelp addObjectsFromArray:sourceAgent];
+            [ws.sv.toHelpTableView reloadData];
+        }
+    }];
+}
 
 #pragma mark - refresh delegate
 
 -(void)didPullDownCollectionView:(UICollectionView *)collectionView {
     if (collectionView == _sv.askCollectionView) {
-        if (_canRefreshAskFooter) {
-            [self getMoreRemoteSourceMyAsk];
-        } else {
-            [_sv.askCollectionView.footer endRefreshing];
-        }
+        [self getRemoteSourceMyAsk];
     } else if (collectionView == _sv.doneCollectionView) {
-        
         //to do!!
-        if (_canRefreshAskFooter) {
-            [self getMoreRemoteSourceMyAsk];
-        } else {
-            [_sv.askCollectionView.footer endRefreshing];
-        }
-
+        //        [self getRemoteSourceMyAsk];
     }
 }
 -(void)didPullUpCollectionViewBottom:(UICollectionView *)collectionView {
-    
     if (collectionView == _sv.askCollectionView) {
-        [self getRemoteSourceMyAsk];
+        if (_canRefreshAskFooter) {
+            [self getMoreRemoteSourceMyAsk];
+        } else {
+            [_sv.askCollectionView.footer endRefreshing];
+        }
     } else if (collectionView == _sv.doneCollectionView) {
-        //to do!!
-        [self getRemoteSourceMyAsk];
+        if (_canRefreshDoneFooter) {
+        } else {
+            [_sv.doneCollectionView.footer endRefreshing];
+        }
     }
 }
 -(void)didPullRefreshDown:(UITableView *)tableView {
-    
+    [self getRemoteSourceToHelp];
 }
 -(void)didPullRefreshUp:(UITableView *)tableView {
-    
+    if (_canRefreshToHelpFooter) {
+        [self getMoreRemoteSourceToHelp];
+    } else {
+        [_sv.toHelpTableView.footer endRefreshing];
+    }
+
 }
 @end

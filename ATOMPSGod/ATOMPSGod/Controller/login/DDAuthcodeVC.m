@@ -71,7 +71,7 @@
         [DDUserManager DDRegister:[param copy] withBlock:^(BOOL success) {
             if (success) {
                 [Util ShowTSMessageSuccess:@"👼求PS大神欢迎你的加入❗️"];
-                [self.navigationController setViewControllers:nil];
+                [self.navigationController setViewControllers:[NSArray new]];
                 [AppDelegate APP].mainTabBarController = nil;
                 [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
             }
