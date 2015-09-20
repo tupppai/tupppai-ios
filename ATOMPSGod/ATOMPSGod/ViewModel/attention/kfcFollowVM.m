@@ -7,7 +7,7 @@
 //
 
 #import "kfcFollowVM.h"
-#import "ATOMCommonImage.h"
+#import "PIEEliteEntity.h"
 #import "ATOMImageTipLabel.h"
 #import "DDTipLabelVM.h"
 #import "ATOMReplier.h"
@@ -41,7 +41,7 @@
     return self;
 }
 
-- (void)setViewModelData:(ATOMCommonImage *)commonImage {
+- (void)setViewModelData:(PIEEliteEntity *)commonImage {
     _collected = commonImage.collected;
     _imageID = commonImage.imageID;
     _askID = commonImage.askID;
@@ -56,10 +56,10 @@
     NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:commonImage.uploadTime];
     _publishTime = [Util formatPublishTime:publishDate];
     
-    _likeNumber = [NSString stringWithFormat:@"%d",(int)commonImage.totalPraiseNumber];
-    _shareNumber = [NSString stringWithFormat:@"%d",(int)commonImage.totalShareNumber];
-    _commentNumber = [NSString stringWithFormat:@"%d",(int)commonImage.totalCommentNumber];
-    _totalPSNumber = [NSString stringWithFormat:@"%d",(int)commonImage.totalWorkNumber];
+    _likeNumber = [NSString stringWithFormat:@"%zd",commonImage.totalPraiseNumber];
+    _shareNumber = [NSString stringWithFormat:@"%zd",commonImage.totalShareNumber];
+    _commentNumber = [NSString stringWithFormat:@"%zd",commonImage.totalCommentNumber];
+    _totalPSNumber = [NSString stringWithFormat:@"%zd",commonImage.totalWorkNumber];
     _width = commonImage.imageWidth;
     _height = commonImage.imageHeight;
     _liked = commonImage.liked;

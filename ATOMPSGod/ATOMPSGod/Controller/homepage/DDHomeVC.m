@@ -38,7 +38,7 @@
 #import "PIEAskCollectionCell.h"
 #import "PIERefreshCollectionView.h"
 #import "RefreshTableView.h"
-//#import "QBImagePickerController.h"
+
 @class ATOMAskPage;
 #define AskCellWidth (SCREEN_WIDTH - 20) / 2.0
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
@@ -75,8 +75,8 @@
 
 @implementation DDHomeVC
 
-static NSString *CellIdentifier = @"HotCell";
-static NSString *CellIdentifier2 = @"AskCell";
+static NSString *CellIdentifier = @"PIEHotTableCell";
+static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 
 #pragma mark - life cycle
 
@@ -128,7 +128,7 @@ static NSString *CellIdentifier2 = @"AskCell";
     _hotTableView.dataSource = self;
     _hotTableView.noDataView.label.text = @"网络连接断了吧-_-!";
     _hotTableView.psDelegate = self;
-    UINib* nib = [UINib nibWithNibName:@"PIEHotTableCell" bundle:nil];
+    UINib* nib = [UINib nibWithNibName:CellIdentifier bundle:nil];
     [_hotTableView registerNib:nib forCellReuseIdentifier:CellIdentifier];
     _hotTableView.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
     _tapGestureHot = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureHot:)];
@@ -144,6 +144,8 @@ static NSString *CellIdentifier2 = @"AskCell";
     _askCollectionView.dataSource = self;
     _askCollectionView.delegate = self;
     _askCollectionView.psDelegate = self;
+    UINib* nib = [UINib nibWithNibName:@"PIEAskCollectionCell" bundle:nil];
+    [_askCollectionView registerNib:nib forCellWithReuseIdentifier:CellIdentifier2];
     _currentAskIndex = 1;
 }
 
@@ -932,7 +934,7 @@ static NSString *CellIdentifier2 = @"AskCell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PIEAskCollectionCell*cell =
-    (PIEAskCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"WaterfallCell"
+    (PIEAskCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier2
                                                                                 forIndexPath:indexPath];
     [cell injectSource:[_sourceAsk objectAtIndex:indexPath.row]];
     return cell;

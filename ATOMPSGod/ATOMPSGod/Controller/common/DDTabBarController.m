@@ -9,7 +9,7 @@
 #import "DDTabBarController.h"
 #import "DDHomeVC.h"
 #import "DDMessageVC.h"
-#import "DDFollowVC.h"
+#import "PIEEliteViewController.h"
 #import "ATOMPersonViewController.h"
 #import "DDNavigationController.h"
 #import "DDService.h"
@@ -64,7 +64,7 @@ static dispatch_once_t once;
 }
 - (void)configureTabBarController {
     DDHomeVC *homePageViewController = [DDHomeVC new];
-    DDFollowVC *myAttentionViewController = [DDFollowVC new];
+    PIEEliteViewController *myAttentionViewController = [PIEEliteViewController new];
     PIEProceedingViewController *proceedingViewController = [PIEProceedingViewController new];
     ATOMPersonViewController *personViewController = [ATOMPersonViewController new];
     PIEMeViewController *vc4 = (PIEMeViewController *)[[UIStoryboard storyboardWithName:@"Me" bundle:nil] instantiateViewControllerWithIdentifier: @"PIEME"];
@@ -112,11 +112,7 @@ static dispatch_once_t once;
             [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshNav2" object:nil];
         }
     }
-    
-//    else if (viewController == _centerNav) {
-//        [self presentBlurViewController];
-//    }
-    _preNav = (DDNavigationController*)viewController;
+        _preNav = (DDNavigationController*)viewController;
 }
 
 -(BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {

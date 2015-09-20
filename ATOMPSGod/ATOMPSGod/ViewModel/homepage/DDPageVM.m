@@ -15,7 +15,7 @@
 #import "ATOMReplier.h"
 #import "ATOMReplierViewModel.h"
 #import "DDBaseService.h"
-
+#import "PIEEliteEntity.h"
 
 
 @interface DDPageVM ()
@@ -165,6 +165,34 @@
         [model setViewModelData:replier];
         [_replierArray addObject:model];
     }
+}
+
+
+- (instancetype)initWithFollowEntity:(PIEEliteEntity *)entity {
+    self = [self init];
+    if (self) {
+        _ID = entity.imageID;
+        _ID = entity.askID;
+        _type = entity.type;
+        _userID = entity.uid;
+        _username = entity.nickname;
+        _userSex = (entity.sex == 1) ? @"man" : @"woman";
+        _imageURL = entity.imageURL;
+        _avatarURL = entity.avatar;
+        
+        NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:entity.uploadTime];
+        _publishTime = [Util formatPublishTime:publishDate];
+        
+        _likeCount = [NSString stringWithFormat:@"%d",(int)entity.totalPraiseNumber];
+        _shareCount = [NSString stringWithFormat:@"%d",(int)entity.totalShareNumber];
+        _commentNumber = [NSString stringWithFormat:@"%d",(int)entity.totalCommentNumber];
+        _totalPSNumber = [NSString stringWithFormat:@"%d",(int)entity.totalWorkNumber];
+        _imageWidth = entity.imageWidth;
+        _imageHeight = entity.imageHeight;
+        _liked = entity.liked;
+        _collected = entity.collected;
+    }
+    return self;
 }
 
 - (void)setViewModelDataWithDetailPage:(ATOMDetailPage *)page {

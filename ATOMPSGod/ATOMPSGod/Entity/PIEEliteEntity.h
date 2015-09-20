@@ -8,7 +8,7 @@
 
 #import "ATOMBaseModel.h"
 
-@interface ATOMCommonImage : ATOMBaseModel
+@interface PIEEliteEntity : ATOMBaseModel
 
 /**
  *  作品ID

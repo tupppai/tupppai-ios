@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 //#import "ATOMAskPageViewModel.h"
-@class ATOMCommonImage;
+@class PIEEliteEntity;
 @class DDPageVM;
 
 @interface kfcFollowVM : NSObject
@@ -35,7 +35,7 @@
 @property (nonatomic, assign) BOOL liked;
 @property (nonatomic, assign) BOOL collected;
 
-- (void)setViewModelData:(ATOMCommonImage *)commonImage;
+- (void)setViewModelData:(PIEEliteEntity *)commonImage;
 - (void)toggleLike;
 -(DDPageVM*)generateAskPageViewModel;
 

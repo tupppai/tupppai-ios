@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMCommonImage.h"
+#import "PIEEliteEntity.h"
 
-@implementation ATOMCommonImage
+@implementation PIEEliteEntity
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
@@ -67,7 +67,7 @@
 }
 
 + (NSString *)FMDBTableName {
-    return @"ATOMCommonImage";
+    return @"PIEEliteEntity";
 }
 
 @end

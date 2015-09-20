@@ -11,7 +11,7 @@
 #import "ATOMReplier.h"
 #import "ATOMComment.h"
 #import "ATOMImageTipLabel.h"
-#import "ATOMCommonImage.h"
+#import "PIEEliteEntity.h"
 
 @implementation ATOMShowAttention
 
@@ -25,7 +25,7 @@
             NSArray *imageDataArray = [ responseObject objectForKey:@"data"];
 
             for (int i = 0; i < imageDataArray.count; i++) {
-                ATOMCommonImage *commonImage = [MTLJSONAdapter modelOfClass:[ATOMCommonImage class] fromJSONDictionary:imageDataArray[i] error:NULL];
+                PIEEliteEntity *commonImage = [MTLJSONAdapter modelOfClass:[PIEEliteEntity class] fromJSONDictionary:imageDataArray[i] error:NULL];
                 commonImage.hotCommentArray = [NSMutableArray array];
                 NSArray *hotCommentDataArray = imageDataArray[i][@"hot_comments"];
                 if (hotCommentDataArray.count) {

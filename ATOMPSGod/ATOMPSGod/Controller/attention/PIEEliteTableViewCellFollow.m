@@ -1,17 +1,14 @@
 //
-//  PIEAskCellTableViewCell.m
-//  
+//  PIEFollowTableViewCell.m
+//  ATOMPSGod
 //
-//  Created by chenpeiwei on 9/11/15.
-//
+//  Created by chenpeiwei on 9/20/15.
+//  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIEHotTableCell.h"
-@interface PIEHotTableCell()
+#import "PIEEliteTableViewCellFollow.h"
 
-@end
-
-@implementation PIEHotTableCell
+@implementation PIEEliteTableViewCellFollow
 
 - (void)awakeFromNib {
     // Initialization code
@@ -38,7 +35,7 @@
         make.bottom.equalTo(_theImageView);
     }];
 }
-- (void)configCell:(DDPageVM *)viewModel row:(NSInteger)row{
+- (void)injectSauce:(DDPageVM *)viewModel {
     [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     _nameLabel.text = viewModel.username;
     _timeLabel.text = viewModel.publishTime;
@@ -47,18 +44,15 @@
     [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(imageViewHeight)).with.priorityHigh();
     }];
+    
     _shareCountLabel.text = viewModel.shareCount;
-    _collectCountLabel.text = @"404";
     _commentCountLabel.text = viewModel.commentNumber;
     _likeCountLabel.text = viewModel.likeCount;
     _likeView.highlighted = viewModel.liked;
     
     _thumbView.expandedSize = CGSizeMake(SCREEN_WIDTH, imageViewHeight);
-    if (row % 2 == 1) {
-        _thumbView.subviewCounts = 2;
-    } else  {
-        _thumbView.subviewCounts = 1;
-    }
+    
+    _thumbView.subviewCounts = 1;
 }
 
 -(void)prepareForReuse {
@@ -69,26 +63,26 @@
         make.trailing.equalTo(_theImageView);
         make.bottom.equalTo(_theImageView);
     }];
-
+    
 }
 
 - (void)animateToggleExpanded {
     [self layoutIfNeeded];
-        if (_thumbView.toExpand) {
-            [_thumbView mas_remakeConstraints:^(MASConstraintMaker *make) {
-                make.top.equalTo(_theImageView).with.offset(0);
-                make.leading.equalTo(_theImageView).with.offset(-1);
-                make.trailing.equalTo(_theImageView).with.offset(0);
-                make.bottom.equalTo(_theImageView).with.offset(0);
-            }];
-        } else {
-            [_thumbView mas_remakeConstraints:^(MASConstraintMaker *make) {
-                make.width.equalTo(@100);
-                make.height.equalTo(@100);
-                make.trailing.equalTo(_theImageView);
-                make.bottom.equalTo(_theImageView);
-            }];
-        }
+    if (_thumbView.toExpand) {
+        [_thumbView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_theImageView).with.offset(0);
+            make.leading.equalTo(_theImageView).with.offset(-1);
+            make.trailing.equalTo(_theImageView).with.offset(0);
+            make.bottom.equalTo(_theImageView).with.offset(0);
+        }];
+    } else {
+        [_thumbView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.width.equalTo(@100);
+            make.height.equalTo(@100);
+            make.trailing.equalTo(_theImageView);
+            make.bottom.equalTo(_theImageView);
+        }];
+    }
     [UIView animateWithDuration:0.8 animations:^{
         [self layoutIfNeeded];
     } completion:^(BOOL finished) {

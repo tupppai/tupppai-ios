@@ -13,7 +13,7 @@
 #import "ATOMOtherPersonViewController.h"
 #import "DDPageVM.h"
 #import "ATOMShowAttention.h"
-#import "ATOMCommonImage.h"
+#import "PIEEliteEntity.h"
 #import "kfcFollowVM.h"
 #import "kfcButton.h"
 #import "ATOMNoDataView.h"
@@ -409,7 +409,7 @@ static NSString *CellIdentifier = @"MyAttentionCell";
         if (resultArray.count) {
             [_dataSource removeAllObjects];
         }
-        for (ATOMCommonImage *commonImage in resultArray) {
+        for (PIEEliteEntity *commonImage in resultArray) {
             kfcFollowVM * viewModel = [kfcFollowVM new];
             [viewModel setViewModelData:commonImage];
             [_dataSource addObject:viewModel];
@@ -430,7 +430,7 @@ static NSString *CellIdentifier = @"MyAttentionCell";
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     ATOMShowAttention *showAttention = [ATOMShowAttention new];
     [showAttention ShowAttention:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        for (ATOMCommonImage *commonImage in resultArray) {
+        for (PIEEliteEntity *commonImage in resultArray) {
             kfcFollowVM * viewModel = [kfcFollowVM new];
             [viewModel setViewModelData:commonImage];
             [_dataSource addObject:viewModel];

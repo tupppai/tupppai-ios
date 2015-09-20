@@ -52,5 +52,7 @@ typedef NS_ENUM(NSInteger, PIEPageType) {
 - (void)setViewModelDataWithDetailPage:(ATOMDetailPage *)page;
 - (void)toggleLike;
 -(DDCommentPageVM*)generatepageDetailViewModel;
+
+- (instancetype)initWithFollowEntity:(PIEEliteEntity *)entity;
 @end
 

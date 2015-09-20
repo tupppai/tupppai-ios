@@ -9,8 +9,6 @@
 #import "kfcHomeScrollView.h"
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "PIEAskCollectionCell.h"
-#define CELL_IDENTIFIER @"WaterfallCell"
-
 @interface kfcHomeScrollView ()
 
 @end
@@ -61,8 +59,6 @@
     _collectionView.toRefreshTop = YES;
     _collectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     _collectionView.showsVerticalScrollIndicator = NO;
-    UINib* nib = [UINib nibWithNibName:@"PIEAskCollectionCell" bundle:nil];
-    [_collectionView registerNib:nib forCellWithReuseIdentifier:CELL_IDENTIFIER];
     [self addSubview:_collectionView];
 }
 

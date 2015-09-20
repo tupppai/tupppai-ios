@@ -45,16 +45,14 @@
     _askCollectionView.backgroundColor = [UIColor clearColor];
     _askCollectionView.toRefreshTop = YES;
     _askCollectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    UINib* nib = [UINib nibWithNibName:@"PIEMyAskCollectionCell" bundle:nil];
-    [_askCollectionView registerNib:nib forCellWithReuseIdentifier:@"PIEMyAskCollectionCell"];
+
     [self addSubview:_askCollectionView];
 }
 
 - (void)initToHelpTableView {
     _toHelpTableView = [[RefreshTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
     _toHelpTableView.backgroundColor = [UIColor clearColor];
-    UINib* nib = [UINib nibWithNibName:@"PIEToHelpTableViewCell" bundle:nil];
-    [_toHelpTableView registerNib:nib forCellReuseIdentifier:@"PIEToHelpTableViewCell"];
+
     [self addSubview:_toHelpTableView];
 }
 
@@ -68,8 +66,7 @@
     _doneCollectionView.backgroundColor = [UIColor clearColor];
     _doneCollectionView.toRefreshTop = YES;
     _doneCollectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    UINib* nib = [UINib nibWithNibName:@"PIEDoneCollectionViewCell" bundle:nil];
-    [_doneCollectionView registerNib:nib forCellWithReuseIdentifier:@"PIEDoneCollectionViewCell"];
+
     [self addSubview:_doneCollectionView];
 }
 

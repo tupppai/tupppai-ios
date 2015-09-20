@@ -166,7 +166,7 @@
 		5C70715F1AC52656004B3A6A /* ATOMImageCropper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C70715E1AC52656004B3A6A /* ATOMImageCropper.m */; };
 		5C7861161AAF4C9400E87C77 /* ATOMMyWorkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7861151AAF4C9400E87C77 /* ATOMMyWorkViewController.m */; };
 		5C7861311AAF4DD200E87C77 /* bg_main@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C7861241AAF4DD200E87C77 /* bg_main@2x.png */; };
-		5C7B8AB01AFA535D00F448CD /* ATOMCommonImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7B8AAF1AFA535D00F448CD /* ATOMCommonImage.m */; };
+		5C7B8AB01AFA535D00F448CD /* PIEEliteEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7B8AAF1AFA535D00F448CD /* PIEEliteEntity.m */; };
 		5C7B8AB31AFA549D00F448CD /* kfcFollowVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7B8AB21AFA549D00F448CD /* kfcFollowVM.m */; };
 		5C7B8AB71AFA5AB700F448CD /* ATOMShowAttention.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7B8AB61AFA5AB700F448CD /* ATOMShowAttention.m */; };
 		5C8084F91AF2603D0062421C /* kfcButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8084F81AF2603D0062421C /* kfcButton.m */; };
@@ -433,6 +433,12 @@
 		F46117E11BAD1101001A6F1A /* IQToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = F46117D01BAD1101001A6F1A /* IQToolbar.m */; settings = {ASSET_TAGS = (); }; };
 		F46117E21BAD1101001A6F1A /* IQUIView+IQKeyboardToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = F46117D21BAD1101001A6F1A /* IQUIView+IQKeyboardToolbar.m */; settings = {ASSET_TAGS = (); }; };
 		F46117E31BAD1102001A6F1A /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F46117D51BAD1101001A6F1A /* IQKeyboardManager.bundle */; settings = {ASSET_TAGS = (); }; };
+		F46117E71BAE52CD001A6F1A /* PIEEliteTableViewCellFollow.m in Sources */ = {isa = PBXBuildFile; fileRef = F46117E51BAE52CD001A6F1A /* PIEEliteTableViewCellFollow.m */; settings = {ASSET_TAGS = (); }; };
+		F46117E81BAE52CD001A6F1A /* PIEEliteTableViewCellFollow.xib in Resources */ = {isa = PBXBuildFile; fileRef = F46117E61BAE52CD001A6F1A /* PIEEliteTableViewCellFollow.xib */; settings = {ASSET_TAGS = (); }; };
+		F46117EC1BAE52E1001A6F1A /* PIEEliteTableViewCellHot.m in Sources */ = {isa = PBXBuildFile; fileRef = F46117EA1BAE52E1001A6F1A /* PIEEliteTableViewCellHot.m */; settings = {ASSET_TAGS = (); }; };
+		F46117ED1BAE52E1001A6F1A /* PIEEliteTableViewCellHot.xib in Resources */ = {isa = PBXBuildFile; fileRef = F46117EB1BAE52E1001A6F1A /* PIEEliteTableViewCellHot.xib */; settings = {ASSET_TAGS = (); }; };
+		F46117F01BAE556B001A6F1A /* PIEEliteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F46117EF1BAE556B001A6F1A /* PIEEliteViewController.m */; settings = {ASSET_TAGS = (); }; };
+		F46117F31BAE558C001A6F1A /* PIEEliteScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F46117F21BAE558C001A6F1A /* PIEEliteScrollView.m */; settings = {ASSET_TAGS = (); }; };
 		F472054B1BABA5B900E0ADA0 /* PIEProceedingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F472054A1BABA5B900E0ADA0 /* PIEProceedingViewController.m */; };
 		F472054E1BABA63000E0ADA0 /* PIEProceedingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F472054D1BABA63000E0ADA0 /* PIEProceedingScrollView.m */; };
 		F47205521BABE87D00E0ADA0 /* PIEMyAskCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F47205501BABE87D00E0ADA0 /* PIEMyAskCollectionCell.m */; };
@@ -779,8 +785,8 @@
 		5C7861141AAF4C9400E87C77 /* ATOMMyWorkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMMyWorkViewController.h; sourceTree = "<group>"; };
 		5C7861151AAF4C9400E87C77 /* ATOMMyWorkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMMyWorkViewController.m; sourceTree = "<group>"; };
 		5C7861241AAF4DD200E87C77 /* bg_main@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_main@2x.png"; sourceTree = "<group>"; };
-		5C7B8AAE1AFA535D00F448CD /* ATOMCommonImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMCommonImage.h; sourceTree = "<group>"; };
-		5C7B8AAF1AFA535D00F448CD /* ATOMCommonImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMCommonImage.m; sourceTree = "<group>"; };
+		5C7B8AAE1AFA535D00F448CD /* PIEEliteEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteEntity.h; sourceTree = "<group>"; };
+		5C7B8AAF1AFA535D00F448CD /* PIEEliteEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteEntity.m; sourceTree = "<group>"; };
 		5C7B8AB11AFA549D00F448CD /* kfcFollowVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kfcFollowVM.h; sourceTree = "<group>"; };
 		5C7B8AB21AFA549D00F448CD /* kfcFollowVM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = kfcFollowVM.m; sourceTree = "<group>"; };
 		5C7B8AB51AFA5AB700F448CD /* ATOMShowAttention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShowAttention.h; sourceTree = "<group>"; };
@@ -1311,6 +1317,16 @@
 		F46117D21BAD1101001A6F1A /* IQUIView+IQKeyboardToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQUIView+IQKeyboardToolbar.m"; sourceTree = "<group>"; };
 		F46117D31BAD1101001A6F1A /* KeyboardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardManager.h; sourceTree = "<group>"; };
 		F46117D51BAD1101001A6F1A /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IQKeyboardManager.bundle; sourceTree = "<group>"; };
+		F46117E41BAE52CD001A6F1A /* PIEEliteTableViewCellFollow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteTableViewCellFollow.h; sourceTree = "<group>"; };
+		F46117E51BAE52CD001A6F1A /* PIEEliteTableViewCellFollow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteTableViewCellFollow.m; sourceTree = "<group>"; };
+		F46117E61BAE52CD001A6F1A /* PIEEliteTableViewCellFollow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEEliteTableViewCellFollow.xib; sourceTree = "<group>"; };
+		F46117E91BAE52E1001A6F1A /* PIEEliteTableViewCellHot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteTableViewCellHot.h; sourceTree = "<group>"; };
+		F46117EA1BAE52E1001A6F1A /* PIEEliteTableViewCellHot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteTableViewCellHot.m; sourceTree = "<group>"; };
+		F46117EB1BAE52E1001A6F1A /* PIEEliteTableViewCellHot.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEEliteTableViewCellHot.xib; sourceTree = "<group>"; };
+		F46117EE1BAE556B001A6F1A /* PIEEliteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteViewController.h; sourceTree = "<group>"; };
+		F46117EF1BAE556B001A6F1A /* PIEEliteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteViewController.m; sourceTree = "<group>"; };
+		F46117F11BAE558C001A6F1A /* PIEEliteScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteScrollView.h; sourceTree = "<group>"; };
+		F46117F21BAE558C001A6F1A /* PIEEliteScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteScrollView.m; sourceTree = "<group>"; };
 		F47205491BABA5B900E0ADA0 /* PIEProceedingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEProceedingViewController.h; sourceTree = "<group>"; };
 		F472054A1BABA5B900E0ADA0 /* PIEProceedingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEProceedingViewController.m; sourceTree = "<group>"; };
 		F472054C1BABA63000E0ADA0 /* PIEProceedingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIEProceedingScrollView.h; path = ../View/homepage/PIEProceedingScrollView.h; sourceTree = "<group>"; };
@@ -1504,13 +1520,23 @@
 			path = login;
 			sourceTree = "<group>";
 		};
-		5C4F5BD61AA551BF00226F64 /* Follow */ = {
+		5C4F5BD61AA551BF00226F64 /* Elite */ = {
 			isa = PBXGroup;
 			children = (
 				5C4F5BE01AA5575300226F64 /* DDFollowVC.h */,
 				5C4F5BE11AA5575300226F64 /* DDFollowVC.m */,
+				F46117F11BAE558C001A6F1A /* PIEEliteScrollView.h */,
+				F46117F21BAE558C001A6F1A /* PIEEliteScrollView.m */,
+				F46117EE1BAE556B001A6F1A /* PIEEliteViewController.h */,
+				F46117EF1BAE556B001A6F1A /* PIEEliteViewController.m */,
+				F46117E91BAE52E1001A6F1A /* PIEEliteTableViewCellHot.h */,
+				F46117EA1BAE52E1001A6F1A /* PIEEliteTableViewCellHot.m */,
+				F46117EB1BAE52E1001A6F1A /* PIEEliteTableViewCellHot.xib */,
+				F46117E41BAE52CD001A6F1A /* PIEEliteTableViewCellFollow.h */,
+				F46117E51BAE52CD001A6F1A /* PIEEliteTableViewCellFollow.m */,
+				F46117E61BAE52CD001A6F1A /* PIEEliteTableViewCellFollow.xib */,
 			);
-			name = Follow;
+			name = Elite;
 			path = attention;
 			sourceTree = "<group>";
 		};
@@ -1895,8 +1921,8 @@
 				5C0F04E41ADCF457002003AE /* ATOMConcernMessage.m */,
 				5C0F04EC1ADCFB18002003AE /* ATOMInviteMessage.h */,
 				5C0F04ED1ADCFB18002003AE /* ATOMInviteMessage.m */,
-				5C7B8AAE1AFA535D00F448CD /* ATOMCommonImage.h */,
-				5C7B8AAF1AFA535D00F448CD /* ATOMCommonImage.m */,
+				5C7B8AAE1AFA535D00F448CD /* PIEEliteEntity.h */,
+				5C7B8AAF1AFA535D00F448CD /* PIEEliteEntity.m */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -2238,7 +2264,7 @@
 				3BD5E1611BA117EA00C7383A /* Me */,
 				3BD87CFE1B9E8569003B2310 /* HotDetail */,
 				5C54DF171AB9738E00BDE34D /* common */,
-				5C4F5BD61AA551BF00226F64 /* Follow */,
+				5C4F5BD61AA551BF00226F64 /* Elite */,
 				5C4F5BD71AA551BF00226F64 /* homepage */,
 				5C4F5BD81AA551BF00226F64 /* message */,
 				5C4F5BD91AA551BF00226F64 /* person */,
@@ -3317,6 +3343,7 @@
 				F47205581BABFDFF00E0ADA0 /* PIEDoneCollectionViewCell.xib in Resources */,
 				E9FF94A51B745BAA00F06819 /* intro3.png in Resources */,
 				E93D23831B3D26320081F632 /* shareIcon.png in Resources */,
+				F46117E81BAE52CD001A6F1A /* PIEEliteTableViewCellFollow.xib in Resources */,
 				3B11C0441BA27ADB00B87165 /* PIEHotTableCell.xib in Resources */,
 				E94289821B5B32A200ED26E4 /* NotificationButtonBackground.png in Resources */,
 				E94289811B5B32A200ED26E4 /* NotificationBackgroundWarningIcon@2x.png in Resources */,
@@ -3337,6 +3364,7 @@
 				E90193721B37EE1E00E91555 /* region.csv in Resources */,
 				F40207321BA7C17C0007CE02 /* PIECameraViewController.xib in Resources */,
 				E9FF94A61B745BAA00F06819 /* intro4.png in Resources */,
+				F46117ED1BAE52E1001A6F1A /* PIEEliteTableViewCellHot.xib in Resources */,
 				E95691AC1B22E88300DA84BB /* Info.plist in Resources */,
 				E94289761B5B32A200ED26E4 /* NotificationBackgroundErrorIcon.png in Resources */,
 				5CDB05D51AA3FE520089121E /* LaunchScreen.xib in Resources */,
@@ -3405,6 +3433,7 @@
 				E94B02EE1B7B2EE300863C6F /* ATOMTextViewComment.m in Sources */,
 				E9F8908E1B86C4AB0057ECBF /* FMDatabase.m in Sources */,
 				3BE1AED01B9FE9C900CE2303 /* QBVideoIndicatorView.m in Sources */,
+				F46117F31BAE558C001A6F1A /* PIEEliteScrollView.m in Sources */,
 				E95691B61B22E88300DA84BB /* NSObject+MTLComparisonAdditions.m in Sources */,
 				5C31017E1AAE852F00EF529B /* ATOMAccountSettingTableViewCell.m in Sources */,
 				5C535CB51AF1FC8A00BF30D1 /* ATOMBaseView.m in Sources */,
@@ -3490,6 +3519,7 @@
 				5C54DF161AB9529200BDE34D /* kfcHomeScrollView.m in Sources */,
 				5C436A991AB07A7300D14608 /* ATOMConcernMessageTableViewCell.m in Sources */,
 				E93D237E1B3CFA4D0081F632 /* DDShareManager.m in Sources */,
+				F46117F01BAE556B001A6F1A /* PIEEliteViewController.m in Sources */,
 				5C6697B91AAFFD5F001FCF8A /* ATOMProceedingTableViewCell.m in Sources */,
 				3BD5E1651BA1182800C7383A /* PIEMeViewController.m in Sources */,
 				F46117D91BAD1101001A6F1A /* IQUIViewController+Additions.m in Sources */,
@@ -3508,7 +3538,7 @@
 				E94289861B5B32A200ED26E4 /* TSBlurView.m in Sources */,
 				E99D2F5E1B1C7E8D000D7784 /* NYXProgressiveImageView.m in Sources */,
 				5C4C70461AB665F500358989 /* DDPageVM.m in Sources */,
-				5C7B8AB01AFA535D00F448CD /* ATOMCommonImage.m in Sources */,
+				5C7B8AB01AFA535D00F448CD /* PIEEliteEntity.m in Sources */,
 				5C589A8A1B04F2AC003D828A /* ATOMCameraView.m in Sources */,
 				5C83A8911AC66F910071A024 /* POPGeometry.mm in Sources */,
 				E99C51101B85A2A6004CA47B /* UIApplication+JTSImageViewController.m in Sources */,
@@ -3579,6 +3609,7 @@
 				F46117E01BAD1101001A6F1A /* IQTitleBarButtonItem.m in Sources */,
 				5C0F04FA1ADD04CC002003AE /* DDMyFansManager.m in Sources */,
 				5C83A88A1AC66F910071A024 /* POPAnimationRuntime.mm in Sources */,
+				F46117EC1BAE52E1001A6F1A /* PIEEliteTableViewCellHot.m in Sources */,
 				5C819C921AA71C1D00CDDB5B /* ATOMCommentDetailViewController.m in Sources */,
 				5C5A7A831ABFA8BB004A00C5 /* CommentCell.m in Sources */,
 				5CADF3DB1AAC3C5A00FF8015 /* ATOMCommentDetailView.m in Sources */,
@@ -3751,6 +3782,7 @@
 				E95691B41B22E88300DA84BB /* NSDictionary+MTLManipulationAdditions.m in Sources */,
 				E905AF181B4E386100CB8E45 /* DDMyAskManager.m in Sources */,
 				3BDCC53E1BA0EFD4005FE00E /* PIEUploadVC.m in Sources */,
+				F46117E71BAE52CD001A6F1A /* PIEEliteTableViewCellFollow.m in Sources */,
 				E900AB471B41153A0019BAEA /* AFURLResponseSerialization.m in Sources */,
 				E9F890D31B86FE6B0057ECBF /* SLKTextInputbar.m in Sources */,
 				F46117DE1BAD1101001A6F1A /* IQTextView.m in Sources */,

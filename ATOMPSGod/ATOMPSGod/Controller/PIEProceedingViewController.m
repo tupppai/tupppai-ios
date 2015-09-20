@@ -47,15 +47,8 @@
     [self configData];
     [self createNavBar];
     [self configSubviews];
-    
-    
     [self getRemoteSourceMyAsk];
     [self getRemoteSourceToHelp];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - init methods
@@ -82,16 +75,22 @@
     _sv.askCollectionView.dataSource = self;
     _sv.askCollectionView.delegate = self;
     _sv.askCollectionView.psDelegate = self;
+    UINib* nib = [UINib nibWithNibName:@"PIEMyAskCollectionCell" bundle:nil];
+    [_sv.askCollectionView registerNib:nib forCellWithReuseIdentifier:@"PIEMyAskCollectionCell"];
 }
 - (void)configDoneCollectionView {
     _sv.doneCollectionView.dataSource = self;
     _sv.doneCollectionView.delegate = self;
     _sv.doneCollectionView.psDelegate = self;
+    UINib* nib = [UINib nibWithNibName:@"PIEDoneCollectionViewCell" bundle:nil];
+    [_sv.doneCollectionView registerNib:nib forCellWithReuseIdentifier:@"PIEDoneCollectionViewCell"];
 }
 - (void)configToHelpTableView {
     _sv.toHelpTableView.dataSource = self;
     _sv.toHelpTableView.delegate = self;
     _sv.toHelpTableView.psDelegate = self;
+    UINib* nib = [UINib nibWithNibName:@"PIEToHelpTableViewCell" bundle:nil];
+    [_sv.toHelpTableView registerNib:nib forCellReuseIdentifier:@"PIEToHelpTableViewCell"];
 }
 - (void)createNavBar {
     WS(ws);
