@@ -418,6 +418,8 @@
 		F40207411BA7C4160007CE02 /* VVBlurPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = F402073B1BA7C4160007CE02 /* VVBlurPresenter.m */; };
 		F40207421BA7C4160007CE02 /* VVBlurTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = F402073D1BA7C4160007CE02 /* VVBlurTransitioning.m */; };
 		F40207431BA7C4160007CE02 /* VVBlurViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F402073F1BA7C4160007CE02 /* VVBlurViewController.m */; };
+		F409AA841BAFBD3800736B0D /* PIEUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F409AA831BAFBD3800736B0D /* PIEUploadManager.m */; settings = {ASSET_TAGS = (); }; };
+		F409AA871BAFE39000736B0D /* PIEImageEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = F409AA861BAFE39000736B0D /* PIEImageEntity.m */; settings = {ASSET_TAGS = (); }; };
 		F41E99911BA5BBC8005010C7 /* test1.png in Resources */ = {isa = PBXBuildFile; fileRef = F41E99901BA5BBC8005010C7 /* test1.png */; };
 		F46117D61BAD1101001A6F1A /* IQNSArray+Sort.m in Sources */ = {isa = PBXBuildFile; fileRef = F46117B41BAD1101001A6F1A /* IQNSArray+Sort.m */; settings = {ASSET_TAGS = (); }; };
 		F46117D71BAD1101001A6F1A /* IQUITextFieldView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = F46117B61BAD1101001A6F1A /* IQUITextFieldView+Additions.m */; settings = {ASSET_TAGS = (); }; };
@@ -1286,6 +1288,10 @@
 		F402073D1BA7C4160007CE02 /* VVBlurTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VVBlurTransitioning.m; sourceTree = "<group>"; };
 		F402073E1BA7C4160007CE02 /* VVBlurViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VVBlurViewController.h; sourceTree = "<group>"; };
 		F402073F1BA7C4160007CE02 /* VVBlurViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VVBlurViewController.m; sourceTree = "<group>"; };
+		F409AA821BAFBD3800736B0D /* PIEUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEUploadManager.h; sourceTree = "<group>"; };
+		F409AA831BAFBD3800736B0D /* PIEUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEUploadManager.m; sourceTree = "<group>"; };
+		F409AA851BAFE39000736B0D /* PIEImageEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEImageEntity.h; sourceTree = "<group>"; };
+		F409AA861BAFE39000736B0D /* PIEImageEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEImageEntity.m; sourceTree = "<group>"; };
 		F41E99901BA5BBC8005010C7 /* test1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test1.png; sourceTree = "<group>"; };
 		F46117B31BAD1101001A6F1A /* IQNSArray+Sort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQNSArray+Sort.h"; sourceTree = "<group>"; };
 		F46117B41BAD1101001A6F1A /* IQNSArray+Sort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQNSArray+Sort.m"; sourceTree = "<group>"; };
@@ -1895,6 +1901,8 @@
 				E93D23801B3D065C0081F632 /* ATOMShare.m */,
 				5C561A4C1AB7C8210052D4D5 /* ATOMImage.h */,
 				5C561A4D1AB7C8210052D4D5 /* ATOMImage.m */,
+				F409AA851BAFE39000736B0D /* PIEImageEntity.h */,
+				F409AA861BAFE39000736B0D /* PIEImageEntity.m */,
 				5C561A4E1AB7C8210052D4D5 /* ATOMUser.h */,
 				5C561A4F1AB7C8210052D4D5 /* ATOMUser.m */,
 				5C54DF211AB9772000BDE34D /* ATOMAskPage.h */,
@@ -2286,6 +2294,8 @@
 				5C5DDBC81AD3D0C200F4B845 /* person */,
 				5C54DF2A1AB99F0900BDE34D /* homepage */,
 				5C4C70CF1AB6FD5700358989 /* login */,
+				F409AA821BAFBD3800736B0D /* PIEUploadManager.h */,
+				F409AA831BAFBD3800736B0D /* PIEUploadManager.m */,
 			);
 			name = Manager;
 			path = Model;
@@ -3479,6 +3489,7 @@
 				3BE1AECF1B9FE9C900CE2303 /* QBVideoIconView.m in Sources */,
 				5C83A8931AC66F910071A024 /* POPMath.mm in Sources */,
 				5C0F04F71ADD033D002003AE /* ATOMFansViewModel.m in Sources */,
+				F409AA841BAFBD3800736B0D /* PIEUploadManager.m in Sources */,
 				5C3101901AAEC8F900EF529B /* DDMsgPushSettingVC.m in Sources */,
 				5C54DF201AB9738E00BDE34D /* DDTabBarController.m in Sources */,
 				F47205521BABE87D00E0ADA0 /* PIEMyAskCollectionCell.m in Sources */,
@@ -3761,6 +3772,7 @@
 				E99C51111B85A2A6004CA47B /* UIImage+JTSImageEffects.m in Sources */,
 				E94B032A1B7DE6EC00863C6F /* UIColor+PSGod.m in Sources */,
 				5C9BDA001AA8303700715698 /* ATOMUploadWorkView.m in Sources */,
+				F409AA871BAFE39000736B0D /* PIEImageEntity.m in Sources */,
 				5C4F5BF61AA5BFEC00226F64 /* kfcAskCell.m in Sources */,
 				5C0D28301ACA83C400491452 /* DDCommentReplyVM.m in Sources */,
 				5C5DDBD11AD3E4B300F4B845 /* ATOMReplyViewModel.m in Sources */,

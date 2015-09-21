@@ -21,9 +21,12 @@
 + (NSString *)createReplier {
     return @"create table ATOMReplier (replierID integer, imageID integer, uid integer, nickname integer, avatar text)";
 }
++ (NSString *)createPIEImageEntity{
+    return @"create table PIEImageEntityTable (ID integer, width integer, height integer, url text)";
+}
 
 + (NSString *)createHomeImage {
-    return @"create table ATOMAskPage (imageID integer ,askID integer ,uid integer, nickname integer, avatar text, uploadTime bigint, imageURL text, userDescription text, isDownload integer, totalPraiseNumber integer, totalCommentNumber integer, totalShareNumber integer, totalWXShareNumber integer, totalWorkNumber integer, imageWidth real, imageHeight real, tipLabelArray null, replierArray null,homePageType text,liked bool,collected bool,type integer)";
+    return @"create table ATOMAskPage (imageID integer ,askID integer ,uid integer, nickname integer, avatar text, uploadTime bigint, imageURL text, userDescription text, isDownload integer, totalPraiseNumber integer, totalCommentNumber integer, totalShareNumber integer, totalWXShareNumber integer, totalWorkNumber integer, imageWidth real, imageHeight real,homePageType text,liked bool,collected bool,type integer)";
 }
 
 + (NSString *)createComment {

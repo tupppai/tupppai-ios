@@ -40,7 +40,7 @@
                             <constraint firstAttribute="width" constant="15" id="mJE-vW-DkS"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tSi-M5-pb6">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tSi-M5-pb6" userLabel="LeftImageView">
                         <rect key="frame" x="0.0" y="53" width="323" height="372.5"/>
                         <color key="backgroundColor" red="0.60000002384185791" green="0.40000000596046448" blue="0.20000000298023224" alpha="0.52000000000000002" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -51,6 +51,12 @@
                                 <exclude reference="Ngn-Bj-NmF"/>
                             </mask>
                         </variation>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HuN-1e-EeQ" userLabel="RightImageView">
+                        <rect key="frame" x="323" y="53.5" width="0.0" height="372.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" priority="750" id="Zcd-hE-Eqs"/>
+                        </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" text="帮我的头发p得更顺一点！！！" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sZw-7M-qG8">
                         <rect key="frame" x="8" y="434.5" width="307" height="18.5"/>
@@ -95,21 +101,26 @@
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="HuN-1e-EeQ" firstAttribute="leading" secondItem="tSi-M5-pb6" secondAttribute="trailing" id="0ge-MS-aFi"/>
                 <constraint firstItem="kZC-OW-G6f" firstAttribute="top" secondItem="sZw-7M-qG8" secondAttribute="bottom" constant="9" id="3Ld-76-bvu"/>
                 <constraint firstItem="sZw-7M-qG8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leadingMargin" id="6D0-OM-ukQ"/>
                 <constraint firstItem="DIa-GT-Bof" firstAttribute="leading" secondItem="t6N-sk-Gt2" secondAttribute="trailing" constant="9" id="6Gg-N8-U1U"/>
                 <constraint firstAttribute="bottom" secondItem="kZC-OW-G6f" secondAttribute="bottom" constant="8" id="HiG-yr-FH2"/>
                 <constraint firstItem="t6N-sk-Gt2" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="topMargin" constant="6" id="P43-8Q-cBB"/>
+                <constraint firstAttribute="trailing" secondItem="HuN-1e-EeQ" secondAttribute="trailing" priority="750" id="QaL-7G-72n"/>
                 <constraint firstItem="tSi-M5-pb6" firstAttribute="top" secondItem="TUz-nr-w3I" secondAttribute="bottom" constant="4" id="Sla-ha-eUL"/>
                 <constraint firstItem="kZC-OW-G6f" firstAttribute="leading" secondItem="sZw-7M-qG8" secondAttribute="trailing" constant="-178.5" id="Sz3-7O-ZDf"/>
                 <constraint firstItem="UP6-ZS-j1n" firstAttribute="top" secondItem="DIa-GT-Bof" secondAttribute="bottom" constant="8" id="TgX-0I-R68"/>
                 <constraint firstItem="UP6-ZS-j1n" firstAttribute="bottom" secondItem="t6N-sk-Gt2" secondAttribute="bottom" constant="-1" id="YdC-jB-Pbo"/>
+                <constraint firstItem="HuN-1e-EeQ" firstAttribute="top" secondItem="tSi-M5-pb6" secondAttribute="top" priority="750" id="bSZ-m7-vwm"/>
                 <constraint firstItem="t6N-sk-Gt2" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leadingMargin" id="bit-nJ-sG9"/>
                 <constraint firstItem="TUz-nr-w3I" firstAttribute="centerY" secondItem="t6N-sk-Gt2" secondAttribute="centerY" id="cMU-ND-Emg"/>
                 <constraint firstItem="tSi-M5-pb6" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="clC-yz-Bzo"/>
+                <constraint firstItem="HuN-1e-EeQ" firstAttribute="leading" secondItem="tSi-M5-pb6" secondAttribute="trailing" priority="750" id="cyd-jG-VgB"/>
                 <constraint firstAttribute="centerX" secondItem="kZC-OW-G6f" secondAttribute="centerX" id="jQX-Qo-JJd"/>
                 <constraint firstAttribute="trailing" secondItem="TUz-nr-w3I" secondAttribute="trailing" constant="15" id="rdS-Vc-161"/>
                 <constraint firstItem="UP6-ZS-j1n" firstAttribute="top" secondItem="DIa-GT-Bof" secondAttribute="bottom" constant="1" id="rp6-gO-dy1"/>
+                <constraint firstItem="HuN-1e-EeQ" firstAttribute="bottom" secondItem="tSi-M5-pb6" secondAttribute="bottom" priority="750" id="svq-Hh-a2t"/>
                 <constraint firstItem="DIa-GT-Bof" firstAttribute="leading" secondItem="UP6-ZS-j1n" secondAttribute="leading" id="t4w-9t-ap6"/>
                 <constraint firstItem="sZw-7M-qG8" firstAttribute="top" secondItem="tSi-M5-pb6" secondAttribute="bottom" constant="9" id="v5Q-xX-l9I"/>
                 <constraint firstItem="sZw-7M-qG8" firstAttribute="trailing" secondItem="gTV-IL-0wX" secondAttribute="trailingMargin" id="vg5-jr-ZHC"/>
@@ -120,8 +131,10 @@
             <size key="customSize" width="323" height="515"/>
             <variation key="default">
                 <mask key="constraints">
+                    <exclude reference="w2s-jd-x8b"/>
                     <exclude reference="TgX-0I-R68"/>
                     <exclude reference="YdC-jB-Pbo"/>
+                    <exclude reference="0ge-MS-aFi"/>
                     <exclude reference="Sz3-7O-ZDf"/>
                     <exclude reference="zlA-KR-eTI"/>
                 </mask>
@@ -130,9 +143,10 @@
                 <outlet property="avatarView" destination="t6N-sk-Gt2" id="NvF-NI-zwk"/>
                 <outlet property="bangView" destination="kZC-OW-G6f" id="Vbv-Co-8jw"/>
                 <outlet property="contentLabel" destination="sZw-7M-qG8" id="CLh-MH-Gth"/>
+                <outlet property="leftImageView" destination="tSi-M5-pb6" id="59t-NM-yq2"/>
                 <outlet property="nameLabel" destination="DIa-GT-Bof" id="h5z-h9-mPg"/>
                 <outlet property="plusView" destination="TUz-nr-w3I" id="Nrd-Zq-hn9"/>
-                <outlet property="theImageView" destination="tSi-M5-pb6" id="A4v-dD-euL"/>
+                <outlet property="rightImageView" destination="HuN-1e-EeQ" id="XPz-Ci-eLx"/>
                 <outlet property="timeLabel" destination="UP6-ZS-j1n" id="1b9-dU-tFN"/>
             </connections>
             <point key="canvasLocation" x="473.5" y="525.5"/>

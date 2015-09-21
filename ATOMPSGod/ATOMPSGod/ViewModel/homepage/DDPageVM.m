@@ -16,6 +16,7 @@
 #import "ATOMReplierViewModel.h"
 #import "DDBaseService.h"
 #import "PIEEliteEntity.h"
+#import "PIEImageEntity.h"
 
 
 @interface DDPageVM ()
@@ -42,84 +43,13 @@
         _totalPSNumber = @"0";
         _labelArray = [NSMutableArray new];
         _replierArray = [NSMutableArray new];
+        _askImageModelArray = [NSMutableArray new];
         _liked = NO;
         _collected = NO;
     }
     return self;
 }
-//- (instancetype)initWithHomePage:(ATOMAskPage *)homeImage {
-//    self = [super init];
-//    if (self) {
-//        _ID = homeImage.askID;
-//        _userID = homeImage.uid;
-//        _username = homeImage.nickname;
-//        _imageURL = homeImage.imageURL;
-//        _avatarURL = homeImage.avatar;
-//        _liked = homeImage.liked;
-//        _collected = homeImage.collected;
-//        _width = homeImage.imageWidth;
-//        _height = homeImage.imageHeight;
-//        NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:homeImage.uploadTime];
-//        _publishTime = [Util formatPublishTime:publishDate];
-//        
-//        if (homeImage.totalPraiseNumber>999999) {
-//            _likeCount = kfcMaxNumberString;
-//        } else {
-//            _likeCount = [NSString stringWithFormat:@"%zd",homeImage.totalPraiseNumber];
-//        }
-//        if (homeImage.totalShareNumber>999999) {
-//            _shareCount = kfcMaxNumberString;
-//        } else {
-//            _shareCount = [NSString stringWithFormat:@"%zd",homeImage.totalShareNumber];
-//        }
-//        if (homeImage.totalCommentNumber>999999) {
-//            _commentNumber = kfcMaxNumberString;
-//        } else {
-//            _commentNumber = [NSString stringWithFormat:@"%zd",homeImage.totalCommentNumber];
-//        }
-//        if (homeImage.totalWorkNumber>999999) {
-//            _totalPSNumber = kfcMaxNumberString;
-//        } else {
-//            _totalPSNumber = [NSString stringWithFormat:@"%zd",homeImage.totalWorkNumber];
-//        }
-//        
-//        for (ATOMImageTipLabel *tipLabel in homeImage.tipLabelArray) {
-//            DDTipLabelVM *model = [DDTipLabelVM new];
-//            [model setViewModelData:tipLabel];
-//            [_labelArray addObject:model];
-//        }
-//        for (ATOMReplier *replier in homeImage.replierArray) {
-//            ATOMReplierViewModel *model = [ATOMReplierViewModel new];
-//            [model setViewModelData:replier];
-//            [_replierArray addObject:model];
-//        }
-//    }
-//    return self;
-//}
-//- (instancetype)initWithDetailPage:(ATOMDetailPage*)page {
-//    self = [super init];
-//    if (self) {
-//        _collected = page.collected;
-//        _type = page.type;
-//        _ID = page.detailID;
-//        _userID = page.uid;
-//        _username = page.nickname;
-//        _imageURL = page.imageURL;
-//        _avatarURL = page.avatar;
-//        _likeCount = [NSString stringWithFormat:@"%d",(int)page.totalPraiseNumber];
-//        _shareCount = [NSString stringWithFormat:@"%d",(int)page.totalShareNumber];
-//        _commentNumber = [NSString stringWithFormat:@"%d",(int)page.totalCommentNumber];
-//        _liked = page.liked;
-//        _width = page.imageWidth;
-//        _height = page.imageHeight;
-//        
-//        NSDateFormatter *df = [NSDateFormatter new];
-//        [df setDateFormat:@"yyyy年MM月dd日 HH时mm分"];
-//        NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:page.replyTime];
-//        _publishTime = [Util formatPublishTime:publishDate];
-//    }
-//    return self;
-//}
+
 
 - (void)setViewModelData:(ATOMAskPage *)homeImage {
     _ID = homeImage.askID;
@@ -154,19 +84,55 @@
     } else {
         _totalPSNumber = [NSString stringWithFormat:@"%zd",homeImage.totalWorkNumber];
     }
-
-    for (ATOMImageTipLabel *tipLabel in homeImage.tipLabelArray) {
-        DDTipLabelVM *model = [DDTipLabelVM new];
-        [model setViewModelData:tipLabel];
-        [_labelArray addObject:model];
+    
+    NSMutableArray* array = [NSMutableArray new];
+    for (int i = 0; i<homeImage.askImageModelArray.count; i++) {
+        PIEImageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:homeImage.askImageModelArray[i] error:NULL];
+        [array addObject:entity];
     }
-    for (ATOMReplier *replier in homeImage.replierArray) {
-        ATOMReplierViewModel *model = [ATOMReplierViewModel new];
-        [model setViewModelData:replier];
-        [_replierArray addObject:model];
-    }
+    _askImageModelArray = array;
+    
+    
 }
+- (instancetype)initWithAskEntity:(ATOMAskPage *)entity {
+    self = [self init];
+    if (self) {
+        _ID = entity.askID;
+        _userID = entity.uid;
+        _username = entity.nickname;
+        _imageURL = entity.imageURL;
+        _avatarURL = entity.avatar;
+        _liked = entity.liked;
+        _collected = entity.collected;
+        _imageWidth = entity.imageWidth;
+        _imageHeight = entity.imageHeight;
+        NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:entity.uploadTime];
+        _publishTime = [Util formatPublishTime:publishDate];
+//        _askImageModelArray = entity.askImageModelArray;
 
+        if (entity.totalPraiseNumber>999999) {
+            _likeCount = kfcMaxNumberString;
+        } else {
+            _likeCount = [NSString stringWithFormat:@"%zd",entity.totalPraiseNumber];
+        }
+        if (entity.totalShareNumber>999999) {
+            _shareCount = kfcMaxNumberString;
+        } else {
+            _shareCount = [NSString stringWithFormat:@"%zd",entity.totalShareNumber];
+        }
+        if (entity.totalCommentNumber>999999) {
+            _commentNumber = kfcMaxNumberString;
+        } else {
+            _commentNumber = [NSString stringWithFormat:@"%zd",entity.totalCommentNumber];
+        }
+        if (entity.totalWorkNumber>999999) {
+            _totalPSNumber = kfcMaxNumberString;
+        } else {
+            _totalPSNumber = [NSString stringWithFormat:@"%zd",entity.totalWorkNumber];
+        }
+    }
+    return self;
+}
 
 - (instancetype)initWithFollowEntity:(PIEEliteEntity *)entity {
     self = [self init];

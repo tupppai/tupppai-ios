@@ -31,10 +31,8 @@ typedef NS_ENUM(NSInteger, PIEPageType) {
 @property (nonatomic, copy) NSString *username;
 @property (nonatomic, copy) NSString *userSex;
 @property (nonatomic, copy) NSString *avatarURL;
-
-@property (nonatomic, strong) NSString *imageURL;
+@property (nonatomic, copy) NSString *imageURL;
 @property (nonatomic, copy) NSString *publishTime;
-
 @property (nonatomic, copy) NSString *likeCount;
 @property (nonatomic, copy) NSString *shareCount;
 @property (nonatomic, copy) NSString *commentNumber;
@@ -47,12 +45,20 @@ typedef NS_ENUM(NSInteger, PIEPageType) {
 @property (nonatomic, assign) BOOL liked;
 @property (nonatomic, assign) BOOL collected;
 
+
+//求p 的图片对象数组
+@property (nonatomic, copy) NSArray *askImageModelArray;
+
+@property (nonatomic, strong) NSString *imageURL1;
+@property (nonatomic, strong) NSString *imageURL2;
+
+
 - (void)setViewModelData:(ATOMAskPage *)homeImage;
 -(void)setViewModelWithCommon:(DDCommentPageVM*)commonViewModel;
 - (void)setViewModelDataWithDetailPage:(ATOMDetailPage *)page;
 - (void)toggleLike;
 -(DDCommentPageVM*)generatepageDetailViewModel;
-
+- (instancetype)initWithAskEntity:(ATOMAskPage *)entity ;
 - (instancetype)initWithFollowEntity:(PIEEliteEntity *)entity;
 @end
 

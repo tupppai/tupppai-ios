@@ -10,6 +10,12 @@
 #import "MBProgressHUD.h"
 #import "TSMessage.h"
 #import <sys/utsname.h> // import it in your header or implementation file.
+#import <AssetsLibrary/AssetsLibrary.h>
+
+#define ASSET_PHOTO_THUMBNAIL           0
+#define ASSET_PHOTO_ASPECT_THUMBNAIL    1
+#define ASSET_PHOTO_SCREEN_SIZE         2
+#define ASSET_PHOTO_FULL_RESOLUTION     3
 
 @interface Util : NSObject
 +(NSString*)formatPublishTime:(NSDate*)date;
@@ -18,6 +24,8 @@
 +(void)ShowTSMessageSuccess:(NSString*)str;
 NSString* deviceName();
 +(void)showWeAreWorkingOnThisFeature;
++ (UIImage *)getImageFromAsset:(ALAsset *)asset type:(NSInteger)nType;
+
 @end
 
 @interface Hud : NSObject
@@ -31,5 +39,6 @@ NSString* deviceName();
 +(void)success:(NSString*)message;
 +(void)error:(NSString*)message inView:(UIView*)view;
 +(void)error:(NSString*)message;
+
 @end
 

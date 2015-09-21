@@ -72,6 +72,8 @@
 @property (nonatomic, assign) CGFloat imageHeight;
 
 
+@property (nonatomic, copy) NSArray *askImageModelArray;
+
 /**
  *  作品的标签数组
  */

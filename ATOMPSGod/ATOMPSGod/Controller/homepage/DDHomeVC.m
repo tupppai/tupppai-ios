@@ -545,7 +545,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     _sourceAsk = [self fetchDBDataSourceWithHomeType:PIEHomeTypeAsk];
     [_askCollectionView reloadData];
     
-    _sourceHot = [self fetchDBDataSourceWithHomeType:PIEHomeTypeHot];
+//    _sourceHot = [self fetchDBDataSourceWithHomeType:PIEHomeTypeHot];
 }
 #pragma mark - GetDataSource from Server
 

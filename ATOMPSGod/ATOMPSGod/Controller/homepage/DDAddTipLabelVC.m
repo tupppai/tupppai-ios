@@ -426,7 +426,6 @@
 -(void)showWarnLabel2 {
     [TSMessage showNotificationWithTitle:@"标签内容不能为空"
                                     type:TSMessageNotificationTypeWarning];
-    
 }
 -(void)showWarnLabel3 {
     [TSMessage showNotificationWithTitle:@"标签数量不能超过三个"

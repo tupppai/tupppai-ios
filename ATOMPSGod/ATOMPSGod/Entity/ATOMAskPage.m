@@ -32,6 +32,7 @@
              @"collected" : @"collected",
              @"homePageType" :  @"homePageType",
              @"type" : @"type",
+             @"askImageModelArray":@"uploads"
              };
 }
 
@@ -53,12 +54,10 @@
              @"totalWorkNumber" : @"totalWorkNumber",
              @"imageWidth" : @"imageWidth",
              @"imageHeight" : @"imageHeight",
-             @"tipLabelArray" :@"tipLabelArray",
-             @"replierArray" : @"replierArray",
              @"homePageType":  @"homePageType",
              @"liked" :@"liked",
              @"collected":@"collected",
-             @"type":@"type"
+             @"type":@"type",
              };
 }
 

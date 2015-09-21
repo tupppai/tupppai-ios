@@ -12,10 +12,7 @@
 #import "AppDelegate.h"
 #import "DDTabBarController.h"
 #import "DDNavigationController.h"
-#define ASSET_PHOTO_THUMBNAIL           0
-#define ASSET_PHOTO_ASPECT_THUMBNAIL    1
-#define ASSET_PHOTO_SCREEN_SIZE         2
-#define ASSET_PHOTO_FULL_RESOLUTION     3
+
 
 @interface PIECameraViewController () <QBImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *askBackgroundView;
@@ -83,14 +80,14 @@
 
 -(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
     
-    [self.QBImagePickerController.selectedAssetURLs removeAllObjects];
+//    [self.QBImagePickerController.selectedAssetURLs removeAllObjects];
 
-    NSMutableArray* imageArray = [NSMutableArray new];
+    NSMutableArray* array = [NSMutableArray new];
     for (ALAsset* asset in assets) {
-        [imageArray addObject:[self getImageFromAsset:asset type:ASSET_PHOTO_FULL_RESOLUTION]];
+        [array addObject:asset];
     }
     PIEUploadVC* vc = [PIEUploadVC new];
-    vc.imageArray = imageArray;
+    vc.assetsArray = assets;
     [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
 }
 
@@ -99,49 +96,6 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
-- (UIImage *)getImageFromAsset:(ALAsset *)asset type:(NSInteger)nType
-{
-    CGImageRef iRef = nil;
-    
-    if (nType == ASSET_PHOTO_THUMBNAIL)
-        iRef = [asset thumbnail];
-    else if (nType == ASSET_PHOTO_ASPECT_THUMBNAIL)
-        iRef = [asset aspectRatioThumbnail];
-    else if (nType == ASSET_PHOTO_SCREEN_SIZE)
-        iRef = [asset.defaultRepresentation fullScreenImage];
-    else if (nType == ASSET_PHOTO_FULL_RESOLUTION)
-    {
-        NSString *strXMP = asset.defaultRepresentation.metadata[@"AdjustmentXMP"];
-        if (strXMP == nil || [strXMP isKindOfClass:[NSNull class]])
-        {
-            iRef = [asset.defaultRepresentation fullResolutionImage];
-            return [UIImage imageWithCGImage:iRef scale:1.0 orientation:(UIImageOrientation)asset.defaultRepresentation.orientation];
-        }
-        else
-        {
-            NSData *dXMP = [strXMP dataUsingEncoding:NSUTF8StringEncoding];
-            
-            CIImage *image = [CIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage];
-            
-            NSError *error = nil;
-            NSArray *filterArray = [CIFilter filterArrayFromSerializedXMP:dXMP
-                                                         inputImageExtent:image.extent
-                                                                    error:&error];
-            if (error) {
-                NSLog(@"Error during CIFilter creation: %@", [error localizedDescription]);
-            }
-            
-            for (CIFilter *filter in filterArray) {
-                [filter setValue:image forKey:kCIInputImageKey];
-                image = [filter outputImage];
-            }
-            
-            UIImage *iImage = [UIImage imageWithCIImage:image scale:1.0 orientation:(UIImageOrientation)asset.defaultRepresentation.orientation];
-            return iImage;
-        }
-    }
-    
-    return [UIImage imageWithCGImage:iRef];
-}
+
 
 @end

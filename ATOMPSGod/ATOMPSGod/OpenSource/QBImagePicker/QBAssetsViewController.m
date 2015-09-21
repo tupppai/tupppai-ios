@@ -61,6 +61,7 @@
                                                object:nil];
     [_backButton setTarget:self];
     [_backButton setAction:@selector(tapBackButton)];
+    
 }
 
 
@@ -69,10 +70,9 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.barTintColor = [UIColor darkGrayColor];
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
-    // Configure navigation item
-    self.navigationItem.title = [self.assetsGroup valueForProperty:ALAssetsGroupPropertyName];
-    self.navigationItem.prompt = self.imagePickerController.prompt;
-    
+//    // Configure navigation item
+//    self.navigationItem.title = [self.assetsGroup valueForProperty:ALAssetsGroupPropertyName];
+//    self.navigationItem.prompt = self.imagePickerController.prompt;
     [self updateDoneButtonState];
     [self updateSelectionInfo];
     
@@ -88,7 +88,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
+
 }
 
 - (void)dealloc
@@ -361,10 +361,17 @@
     cell.tag = indexPath.item;
     cell.showsOverlayViewWhenSelected = self.imagePickerController.allowsMultipleSelection;
     
-    // Image
     ALAsset *asset = self.assets[indexPath.item-1];
-    UIImage *image = [UIImage imageWithCGImage:[asset thumbnail]];
-    cell.imageView.image = image;
+    // Image
+    UIImage * image;
+    CGImageRef iRef = nil;
+    iRef = [asset aspectRatioThumbnail];
+    if (iRef) {
+        image = [UIImage imageWithCGImage:iRef];
+    } else {
+        image = [UIImage imageWithCGImage:[asset thumbnail]];
+    }
+       cell.imageView.image = image;
     
     // Video indicator
     NSString *assetType = [asset valueForProperty:ALAssetPropertyType];

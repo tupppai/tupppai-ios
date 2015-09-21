@@ -8,5 +8,5 @@
 
 #import "DDBaseVC.h"
 @interface PIEUploadVC : DDBaseVC
-@property (nonatomic,copy) NSArray* imageArray;
+@property (nonatomic,copy) NSArray* assetsArray;
 @end

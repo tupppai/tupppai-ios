@@ -16,6 +16,8 @@
 #import "ATOMImageTipLabelDAO.h"
 #import "ATOMReplierDAO.h"
 #import "kfcHomeScrollView.h"
+
+#import "PIEImageEntity.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface DDHomePageManager ()
@@ -87,24 +89,23 @@
         } else {
             [self.homeImageDAO insertHomeImage:homeImage];
         }
-        //插入标签
-        NSArray *labels = homeImage.tipLabelArray;
-        for (ATOMImageTipLabel *label in labels) {
+        NSArray *imageEntity = homeImage.askImageModelArray;
+        for ( PIEImageEntity in imageEntity) {
             if ([self.imageTipLabelDAO isExistTipLabel:label]) {
                 [self.imageTipLabelDAO updateTipLabel:label];
             } else {
                 [self.imageTipLabelDAO insertTipLabel:label];
             }
         }
-        //插入replier
-        NSArray *repliers = homeImage.replierArray;
-        for (ATOMReplier *replier in repliers) {
-            if ([self.replierDAO isExistReplier:replier]) {
-                [self.replierDAO updateReplier:replier];
-            } else {
-                [self.replierDAO insertReplier:replier];
-            }
-        }
+//        //插入replier
+//        NSArray *repliers = homeImage.replierArray;
+//        for (ATOMReplier *replier in repliers) {
+//            if ([self.replierDAO isExistReplier:replier]) {
+//                [self.replierDAO updateReplier:replier];
+//            } else {
+//                [self.replierDAO insertReplier:replier];
+//            }
+//        }
     }
 }
 
