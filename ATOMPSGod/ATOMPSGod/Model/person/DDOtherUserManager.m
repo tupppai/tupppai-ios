@@ -7,7 +7,7 @@
 //
 
 #import "DDOtherUserManager.h"
-#import "ATOMAskPage.h"
+#import "PIEPageEntity.h"
 #import "ATOMImageTipLabel.h"
 #import "ATOMUser.h"
 @implementation DDOtherUserManager
@@ -19,30 +19,30 @@
             NSMutableArray *replyReturnArray = [NSMutableArray array];
             ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:data error:NULL];
             for (int i = 0; i < askArray.count; i++) {
-                ATOMAskPage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMAskPage class] fromJSONDictionary:askArray[i] error:NULL];
-                homeImage.tipLabelArray = [NSMutableArray array];
-                NSArray *labelDataArray = askArray[i][@"labels"];
-                if (labelDataArray.count) {
-                    for (int j = 0; j < labelDataArray.count; j++) {
-                        ATOMImageTipLabel *tipLabel = [MTLJSONAdapter modelOfClass:[ATOMImageTipLabel class] fromJSONDictionary:labelDataArray[j] error:NULL];
-                        tipLabel.imageID = homeImage.imageID;
-                        [homeImage.tipLabelArray addObject:tipLabel];
-                    }
-                }
+                PIEPageEntity *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:askArray[i] error:NULL];
+//                homeImage.tipLabelArray = [NSMutableArray array];
+//                NSArray *labelDataArray = askArray[i][@"labels"];
+//                if (labelDataArray.count) {
+//                    for (int j = 0; j < labelDataArray.count; j++) {
+//                        ATOMImageTipLabel *tipLabel = [MTLJSONAdapter modelOfClass:[ATOMImageTipLabel class] fromJSONDictionary:labelDataArray[j] error:NULL];
+//                        tipLabel.imageID = homeImage.imageID;
+//                        [homeImage.tipLabelArray addObject:tipLabel];
+//                    }
+//                }
                 [askReturnArray addObject:homeImage];
             }
             
             for (int i = 0; i < replyArray.count; i++) {
-                ATOMAskPage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMAskPage class] fromJSONDictionary:replyArray[i] error:NULL];
-                homeImage.tipLabelArray = [NSMutableArray array];
-                NSArray *labelDataArray = replyArray[i][@"labels"];
-                if (labelDataArray.count) {
-                    for (int j = 0; j < labelDataArray.count; j++) {
-                        ATOMImageTipLabel *tipLabel = [MTLJSONAdapter modelOfClass:[ATOMImageTipLabel class] fromJSONDictionary:labelDataArray[j] error:NULL];
-                        tipLabel.imageID = homeImage.imageID;
-                        [homeImage.tipLabelArray addObject:tipLabel];
-                    }
-                }
+                PIEPageEntity *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:replyArray[i] error:NULL];
+//                homeImage.tipLabelArray = [NSMutableArray array];
+//                NSArray *labelDataArray = replyArray[i][@"labels"];
+//                if (labelDataArray.count) {
+//                    for (int j = 0; j < labelDataArray.count; j++) {
+//                        ATOMImageTipLabel *tipLabel = [MTLJSONAdapter modelOfClass:[ATOMImageTipLabel class] fromJSONDictionary:labelDataArray[j] error:NULL];
+//                        tipLabel.imageID = homeImage.imageID;
+//                        [homeImage.tipLabelArray addObject:tipLabel];
+//                    }
+//                }
                 [replyReturnArray addObject:homeImage];
             }
             

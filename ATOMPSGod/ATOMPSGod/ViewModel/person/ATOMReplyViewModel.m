@@ -7,11 +7,11 @@
 //
 
 #import "ATOMReplyViewModel.h"
-#import "ATOMAskPage.h"
+#import "PIEPageEntity.h"
 
 @implementation ATOMReplyViewModel
 
-- (void)setViewModelData:(ATOMAskPage *)homeImage {
+- (void)setViewModelData:(PIEPageEntity *)homeImage {
     _imageURL = homeImage.imageURL;
 }
 

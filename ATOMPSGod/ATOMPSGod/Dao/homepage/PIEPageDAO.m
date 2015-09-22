@@ -6,10 +6,10 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMHomeImageDAO.h"
-#import "ATOMAskPage.h"
+#import "PIEPageDAO.h"
+#import "PIEPageEntity.h"
 
-@implementation ATOMHomeImageDAO
+@implementation PIEPageDAO
 
 - (instancetype)init {
     self=[super init];
@@ -18,12 +18,12 @@
     return self;
 }
 
-- (void)insertHomeImage:(ATOMAskPage *)homeImage {
+- (void)insertHomeImage:(PIEPageEntity *)page {
     dispatch_queue_t q = dispatch_queue_create("insert", NULL);
     dispatch_async(q, ^{
         [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
-            NSString *stmt = [MTLFMDBAdapter insertStatementForModel:homeImage];
-            NSArray *param = [MTLFMDBAdapter columnValues:homeImage];
+            NSString *stmt = [MTLFMDBAdapter insertStatementForModel:page];
+            NSArray *param = [MTLFMDBAdapter columnValues:page];
             BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
             if (flag) {
                 //NSLog(@"save homeImage %ld succeed",(long)homeImage.imageID);
@@ -34,16 +34,15 @@
     });
 }
 
-- (void)updateHomeImage:(ATOMAskPage *)homeImage {
+- (void)updateHomeImage:(PIEPageEntity *)page {
     dispatch_queue_t q = dispatch_queue_create("update", NULL);
     dispatch_async(q, ^{
         [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
-            NSString *stmt = [MTLFMDBAdapter updateStatementForModel:homeImage];
-            NSMutableArray *param = [[MTLFMDBAdapter columnValues:homeImage] mutableCopy];
-            [param addObject:@(homeImage.imageID)];
+            NSString *stmt = [MTLFMDBAdapter updateStatementForModel:page];
+            NSMutableArray *param = [[MTLFMDBAdapter columnValues:page] mutableCopy];
+            [param addObject:@(page.imageID)];
             BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
             if (flag) {
-//                NSLog(@"update homeImage %ld --ok",(long)homeImage.imageID);
             } else {
                 NSLog(@"update homeImage fail");
             }
@@ -51,14 +50,14 @@
     });
 }
 
-- (ATOMAskPage *)selectHomeImageByImageID:(NSInteger)imageID {
-    __block ATOMAskPage *homeImage;
+- (PIEPageEntity *)selectHomeImageByImageID:(NSInteger)imageID {
+    __block PIEPageEntity *homeImage;
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
-        NSString *stmt = @"select * from ATOMAskPage where imageID = ?";
+        NSString *stmt = @"select * from PIEPageEntity where imageID = ?";
         NSArray *param = @[@(imageID)];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {
-            homeImage = [MTLFMDBAdapter modelOfClass:[ATOMAskPage class] fromFMResultSet:rs error:NULL];
+            homeImage = [MTLFMDBAdapter modelOfClass:[PIEPageEntity class] fromFMResultSet:rs error:NULL];
             break;
         }
         [rs close];
@@ -70,11 +69,11 @@
     __block NSMutableArray *muArray = [NSMutableArray array];
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
         NSString* homeTypeStr = homeType == PIEHomeTypeHot?@"hot":@"new";
-        NSString *stmt = @"SELECT * FROM ATOMAskPage where homePageType = ? ORDER BY uploadTime DESC LIMIT 10";
+        NSString *stmt = @"SELECT * FROM PIEPageEntity where homePageType = ? ORDER BY uploadTime DESC LIMIT 10";
         NSArray *param =  @[homeTypeStr];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {
-            ATOMAskPage *homeImage = [MTLFMDBAdapter modelOfClass:[ATOMAskPage class] fromFMResultSet:rs error:NULL];
+            PIEPageEntity *homeImage = [MTLFMDBAdapter modelOfClass:[PIEPageEntity class] fromFMResultSet:rs error:NULL];
             [muArray addObject:homeImage];
         }
         [rs close];
@@ -84,10 +83,10 @@
 - (NSArray *)selectHomeImages {
     __block NSMutableArray *muArray = [NSMutableArray array];
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
-        NSString *stmt = @"SELECT * FROM ATOMAskPage ORDER BY uploadTime DESC limit 15";
+        NSString *stmt = @"SELECT * FROM PIEPageEntity ORDER BY uploadTime DESC limit 15";
         FMResultSet *rs = [db executeQuery:stmt];
         while ([rs next]) {
-            ATOMAskPage *homeImage = [MTLFMDBAdapter modelOfClass:[ATOMAskPage class] fromFMResultSet:rs error:NULL];
+            PIEPageEntity *homeImage = [MTLFMDBAdapter modelOfClass:[PIEPageEntity class] fromFMResultSet:rs error:NULL];
             [muArray addObject:homeImage];
         }
         [rs close];
@@ -95,14 +94,14 @@
     return [muArray copy];
 }
 
-- (BOOL)isExistHomeImage:(ATOMAskPage *)homeImage {
+- (BOOL)isExistHomeImage:(PIEPageEntity *)homeImage {
     __block BOOL flag;
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
-        NSString *stmt = @"select * from ATOMAskPage where imageID = ?";
+        NSString *stmt = @"select * from PIEPageEntity where imageID = ?";
         NSArray *param = @[@(homeImage.imageID)];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {
-            ATOMAskPage *homeImage = [MTLFMDBAdapter modelOfClass:[ATOMAskPage class] fromFMResultSet:rs error:NULL];
+            PIEPageEntity *homeImage = [MTLFMDBAdapter modelOfClass:[PIEPageEntity class] fromFMResultSet:rs error:NULL];
             if (homeImage) {
                 flag = YES;
             } else {
@@ -117,7 +116,7 @@
 - (void)clearHomeImages {
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
         
-        NSString *stmt = @"delete from ATOMAskPage";
+        NSString *stmt = @"delete from PIEPageEntity";
         BOOL flag = [db executeUpdate:stmt];
         if (flag) {
 //            NSLog(@"delete homeImage success");
@@ -128,7 +127,7 @@
 }
 - (void)clearHomeImagesWithHomeType:(NSString *)homeType {
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
-        NSString *stmt = @"delete from ATOMAskPage where homePageType = ?";
+        NSString *stmt = @"delete from PIEPageEntity where homePageType = ?";
         NSArray *param = @[homeType];
         BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
         if (flag) {

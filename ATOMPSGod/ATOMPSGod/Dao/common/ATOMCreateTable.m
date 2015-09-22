@@ -14,19 +14,19 @@
     return @"create table ATOMUser (uid integer, mobile text, locationID integer, nickname text, avatar text, sex integer, backgroundImage text, attentionNumber integer, fansNumber integer, likeNumber integer, uploadNumber integer, replyNumber integer, proceedingNumber integer, attentionUploadNumber integer, attentionWorkNumber integer,boundWeibo bool,boundWechat bool,cityID integer,provinceID integer,isMyFan bool,isMyFollow bool)";
 }
 
-+ (NSString *)createImageTipLabel {
-    return @"create table ATOMImageTipLabel (imageID integer, labelID integer, content text, x real, y real, labelDirection integer)";
-}
+//+ (NSString *)createImageTipLabel {
+//    return @"create table ATOMImageTipLabel (imageID integer, labelID integer, content text, x real, y real, labelDirection integer)";
+//}
 
-+ (NSString *)createReplier {
-    return @"create table ATOMReplier (replierID integer, imageID integer, uid integer, nickname integer, avatar text)";
-}
+//+ (NSString *)createPIEImageEntity {
+//    return @"create table PIEImageEntity (height integer, width integer, url text)";
+//}
 + (NSString *)createPIEImageEntity{
-    return @"create table PIEImageEntityTable (ID integer, width integer, height integer, url text)";
+    return @"create table PIEImageEntity (ID integer, width integer, height integer, url text)";
 }
 
 + (NSString *)createHomeImage {
-    return @"create table ATOMAskPage (imageID integer ,askID integer ,uid integer, nickname integer, avatar text, uploadTime bigint, imageURL text, userDescription text, isDownload integer, totalPraiseNumber integer, totalCommentNumber integer, totalShareNumber integer, totalWXShareNumber integer, totalWorkNumber integer, imageWidth real, imageHeight real,homePageType text,liked bool,collected bool,type integer)";
+    return @"create table PIEPageEntity (imageID integer ,askID integer ,uid integer, nickname integer, avatar text, uploadTime bigint, imageURL text, userDescription text, isDownload integer, totalPraiseNumber integer, totalCommentNumber integer, totalShareNumber integer, totalWXShareNumber integer, totalWorkNumber integer, imageWidth real, imageHeight real,homePageType text,liked bool,collected bool,type integer,askImageModelArray null)";
 }
 
 + (NSString *)createComment {

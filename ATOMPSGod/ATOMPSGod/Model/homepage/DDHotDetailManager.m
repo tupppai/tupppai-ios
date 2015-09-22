@@ -12,7 +12,7 @@
 #import "ATOMComment.h"
 #import "ATOMCommentDAO.h"
 #import "ATOMDetailImageDAO.h"
-#import "ATOMHomeImageDAO.h"
+#import "PIEPageDAO.h"
 #import "ATOMImageTipLabel.h"
 @interface DDHotDetailManager ()
 @property (nonatomic, strong) ATOMDetailImageDAO *detailImageDAO;

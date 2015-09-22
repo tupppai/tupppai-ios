@@ -8,7 +8,7 @@
 
 #import "DDMsgInviteModel.h"
 #import "DDSessionManager.h"
-#import "ATOMAskPage.h"
+#import "PIEPageEntity.h"
 #import "ATOMInviteMessage.h"
 #import "ATOMImageTipLabel.h"
 
@@ -21,16 +21,16 @@
             NSMutableArray *inviteMessageArray = [NSMutableArray array];
             for (int i = 0; i < dataArray.count; i++) {
                 ATOMInviteMessage *inviteMessage = [MTLJSONAdapter modelOfClass:[ATOMInviteMessage class] fromJSONDictionary:[[dataArray objectAtIndex:i]objectForKey:@"inviter"] error:NULL];
-                ATOMAskPage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMAskPage class] fromJSONDictionary:[[dataArray objectAtIndex:i]objectForKey:@"ask"] error:NULL];
-                homeImage.tipLabelArray = [NSMutableArray array];
-                NSArray *labelDataArray = [[[dataArray objectAtIndex:i]objectForKey:@"ask"]objectForKey:@"labels"];
-                if (labelDataArray.count) {
-                    for (int j = 0; j < labelDataArray.count; j++) {
-                        ATOMImageTipLabel *tipLabel = [MTLJSONAdapter modelOfClass:[ATOMImageTipLabel class] fromJSONDictionary:labelDataArray[j] error:NULL];
-                        tipLabel.imageID = homeImage.imageID;
-                        [homeImage.tipLabelArray addObject:tipLabel];
-                    }
-                }
+                PIEPageEntity *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:[[dataArray objectAtIndex:i]objectForKey:@"ask"] error:NULL];
+//                homeImage.tipLabelArray = [NSMutableArray array];
+//                NSArray *labelDataArray = [[[dataArray objectAtIndex:i]objectForKey:@"ask"]objectForKey:@"labels"];
+//                if (labelDataArray.count) {
+//                    for (int j = 0; j < labelDataArray.count; j++) {
+//                        ATOMImageTipLabel *tipLabel = [MTLJSONAdapter modelOfClass:[ATOMImageTipLabel class] fromJSONDictionary:labelDataArray[j] error:NULL];
+//                        tipLabel.imageID = homeImage.imageID;
+//                        [homeImage.tipLabelArray addObject:tipLabel];
+//                    }
+//                }
                 inviteMessage.homeImage = homeImage;
                 [inviteMessageArray addObject:inviteMessage];
             }

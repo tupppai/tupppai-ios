@@ -58,18 +58,18 @@ static FMDatabaseQueue *_fmQueue = nil;
         } else {
             NSLog(@"create Table User fail");
         }
-        flag = [db executeUpdate:[ATOMCreateTable createImageTipLabel]];
+        flag = [db executeUpdate:[ATOMCreateTable createPIEImageEntity]];
         if (flag) {
-            NSLog(@"create Table ImageTipLabel success");
+            NSLog(@" Table createPIEImageEntity success");
         } else {
-            NSLog(@"create Table ImageTipLabel fail");
+            NSLog(@" Table createPIEImageEntity fail");
         }
-        flag = [db executeUpdate:[ATOMCreateTable createReplier]];
-        if (flag) {
-            NSLog(@"create Table Replier success");
-        } else {
-            NSLog(@"create Table Replier fail");
-        }
+//        flag = [db executeUpdate:[ATOMCreateTable createReplier]];
+//        if (flag) {
+//            NSLog(@"create Table Replier success");
+//        } else {
+//            NSLog(@"create Table Replier fail");
+//        }
         flag = [db executeUpdate:[ATOMCreateTable createHomeImage]];
         if (flag) {
             NSLog(@"create Table HomeImage success");

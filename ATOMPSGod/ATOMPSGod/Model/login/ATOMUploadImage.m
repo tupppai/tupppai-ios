@@ -30,14 +30,18 @@
 //}
 
 - (NSURLSessionDataTask *)UploadImage:(NSData *)data WithBlock:(void (^)(ATOMImage *, NSError *))block {
+    NSLog(@"UploadImage");
+
     return [[DDSessionManager shareHTTPSessionManager] POST:@"image/upload" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         [formData appendPartWithFileData:data name:@"images" fileName:@"ATOMIMAGE" mimeType:@"image/png"];
     } success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSLog(@"%@",responseObject);
         ATOMImage *imageInfomation = [MTLJSONAdapter modelOfClass:[ATOMImage class] fromJSONDictionary:responseObject error:NULL];
         if (block) {
             block(imageInfomation, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"%@",error);
         if (block) {
             block(nil, error);
         }

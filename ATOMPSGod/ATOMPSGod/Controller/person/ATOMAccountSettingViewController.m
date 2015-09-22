@@ -13,7 +13,7 @@
 #import "DDMsgPushSettingVC.h"
 #import "ATOMUserFeedbackViewController.h"
 #import "ATOMUserDAO.h"
-#import "ATOMHomeImageDAO.h"
+#import "PIEPageDAO.h"
 #import "DDLoginNavigationController.h"
 #import "AppDelegate.h"
 #import "SIAlertView.h"
@@ -35,7 +35,7 @@
 }
 
 - (void)createUI {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT-TAB_HEIGHT)];
     _tableView.backgroundColor = [UIColor colorWithHex:0xF5F5F5];
     _tableView.tableFooterView = [UIView new];
     [self.view addSubview:_tableView];

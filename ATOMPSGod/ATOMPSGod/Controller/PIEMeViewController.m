@@ -12,7 +12,8 @@
 #import "RefreshTableView.h"
 #import "ATOMMyCollectionViewController.h"
 #import "ATOMMyWorkViewController.h"
-
+#import "ATOMAccountSettingViewController.h"
+#import "DDMessageVC.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface PIEMeViewController ()<PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource>
@@ -40,13 +41,22 @@
 
     [self setupViews];
     [self setupPageMenu];
-    
+    [self.navigationItem.leftBarButtonItem setTarget:self];
+    [self.navigationItem.leftBarButtonItem setAction:@selector(pushToSettingViewController)];
+    [self.navigationItem.rightBarButtonItem setTarget:self];
+    [self.navigationItem.rightBarButtonItem setAction:@selector(pushToMessageViewController)];
 }
-
+- (void)pushToSettingViewController {
+    ATOMAccountSettingViewController* vc = [ATOMAccountSettingViewController new];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+- (void)pushToMessageViewController {
+    DDMessageVC* vc = [DDMessageVC new];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 - (void)setupViews {
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
-    
     DDUserManager* user = [DDUserManager currentUser];
     [_avatarView setImageWithURL:[NSURL URLWithString:[DDUserManager currentUser].avatar]];
     _followCountLabel.text = [NSString stringWithFormat:@"%zd",user.attentionNumber];
@@ -57,7 +67,6 @@
 - (void)setupPageMenu {
     // Array to keep track of controllers in page menu
     NSMutableArray *controllerArray = [NSMutableArray array];
-    
     ATOMMyWorkViewController *controller = [ATOMMyWorkViewController new];
     controller.title = @"作品";
     [controllerArray addObject:controller];

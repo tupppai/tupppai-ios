@@ -15,7 +15,7 @@
 #import "DDDetailPageVC.h"
 #import "ATOMOtherPersonCollectionHeaderView.h"
 #import "DDOtherUserManager.h"
-#import "ATOMAskPage.h"
+#import "PIEPageEntity.h"
 #import "DDPageVM.h"
 #import "ATOMAskViewModel.h"
 #import "ATOMReplyViewModel.h"
@@ -103,7 +103,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
             if (user) {
                 [self updateUserInterface:user];
             }
-            for (ATOMAskPage *homeImage in askReturnArray) {
+            for (PIEPageEntity *homeImage in askReturnArray) {
                 DDPageVM *homepageViewModel = [DDPageVM new];
                 [homepageViewModel setViewModelData:homeImage];
                 ATOMAskViewModel *askViewModel = [ATOMAskViewModel new];
@@ -111,7 +111,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
                 [ws.uploadDataSource addObject:askViewModel];
                 [ws.uploadHomeImageDataSource addObject:homepageViewModel];
             }
-            for (ATOMAskPage *homeImage in replyReturnArray) {
+            for (PIEPageEntity *homeImage in replyReturnArray) {
                 DDPageVM *homepageViewModel = [DDPageVM new];
                 [homepageViewModel setViewModelData:homeImage];
                 ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];
@@ -160,7 +160,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
             if (user) {
                 [self updateUserInterface:user];
             }
-            for (ATOMAskPage *homeImage in askReturnArray) {
+            for (PIEPageEntity *homeImage in askReturnArray) {
                 DDPageVM *homepageViewModel = [DDPageVM new];
                 [homepageViewModel setViewModelData:homeImage];
                     ATOMAskViewModel *askViewModel = [ATOMAskViewModel new];
@@ -168,7 +168,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
                     [ws.uploadDataSource addObject:askViewModel];
                     [ws.uploadHomeImageDataSource addObject:homepageViewModel];
             }
-            for (ATOMAskPage *homeImage in replyReturnArray) {
+            for (PIEPageEntity *homeImage in replyReturnArray) {
                 DDPageVM *homepageViewModel = [DDPageVM new];
                 [homepageViewModel setViewModelData:homeImage];
                     ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];

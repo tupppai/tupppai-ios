@@ -10,7 +10,7 @@
 #import "ATOMMyCollectionCollectionViewCell.h"
 #import "DDDetailPageVC.h"
 #import "ATOMOtherPersonViewController.h"
-#import "ATOMAskPage.h"
+#import "PIEPageEntity.h"
 #import "DDPageVM.h"
 #import "ATOMCollectionViewModel.h"
 #import "DDMyCollectionManager.h"
@@ -67,7 +67,7 @@ static float cellWidth;
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     [DDMyCollectionManager getMyCollection:param withBlock:^(NSMutableArray *resultArray) {
-        for (ATOMAskPage *homeImage in resultArray) {
+        for (PIEPageEntity *homeImage in resultArray) {
             DDPageVM *homepageViewModel = [DDPageVM new];
             [homepageViewModel setViewModelData:homeImage];
             [ws.homeImageDataSource addObject:homepageViewModel];
@@ -94,7 +94,7 @@ static float cellWidth;
     [param setObject:@(15) forKey:@"size"];
 
     [DDMyCollectionManager getMyCollection:param withBlock:^(NSMutableArray *resultArray) {
-        for (ATOMAskPage* homeImage in resultArray) {
+        for (PIEPageEntity* homeImage in resultArray) {
             DDPageVM* homepageViewModel = [DDPageVM new];
             [homepageViewModel setViewModelData:homeImage];
             [ws.homeImageDataSource addObject:homepageViewModel];
@@ -128,8 +128,6 @@ static float cellWidth;
     flowLayout.minimumLineSpacing = padding;
     _collectionView = [[PWRefreshFooterCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
     self.view = _collectionView;
-
-    _collectionView.backgroundColor = [UIColor colorWithHex:0xededed];
     _collectionView.dataSource = nil;
     _collectionView.emptyDataSetSource = self;
     _collectionView.delegate = self;
@@ -139,7 +137,7 @@ static float cellWidth;
     _tapMyCollectionGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMyCollectionGesture:)];
     [_collectionView addGestureRecognizer:_tapMyCollectionGesture];
     _canRefreshFooter = YES;
-
+    self.view.backgroundColor = [UIColor whiteColor];
     [self getDataSource];
 }
 
@@ -192,7 +190,6 @@ static float cellWidth;
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ATOMMyCollectionCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:_cellIdentifier forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor whiteColor];
     cell.viewModel = _dataSource[indexPath.row];
     return cell;
 }

@@ -9,7 +9,7 @@
 #import "DDMsgReplyModel.h"
 #import "DDSessionManager.h"
 #import "ATOMReplyMessage.h"
-#import "ATOMAskPage.h"
+#import "PIEPageEntity.h"
 #import "ATOMImageTipLabel.h"
 
 @implementation DDMsgReplyModel
@@ -59,16 +59,16 @@
             for (int i = 0; i < dataArray.count; i++) {
                 ATOMReplyMessage *replyMessage = [MTLJSONAdapter modelOfClass:[ATOMReplyMessage class] fromJSONDictionary:[[dataArray objectAtIndex:i] objectForKey:@"reply"] error:NULL];
                 replyMessage.type = [[[dataArray objectAtIndex:i] objectForKey:@"type"] integerValue];
-                ATOMAskPage *homeImage = [MTLJSONAdapter modelOfClass:[ATOMAskPage class] fromJSONDictionary:[[dataArray objectAtIndex:i] objectForKey:@"ask"] error:NULL];
-                homeImage.tipLabelArray = [NSMutableArray array];
-                NSArray *labelDataArray = [[[dataArray objectAtIndex:i] objectForKey:@"ask"]objectForKey:@"labels"];
-                if (labelDataArray.count) {
-                    for (int j = 0; j < labelDataArray.count; j++) {
-                        ATOMImageTipLabel *tipLabel = [MTLJSONAdapter modelOfClass:[ATOMImageTipLabel class] fromJSONDictionary:labelDataArray[j] error:NULL];
-                        tipLabel.imageID = homeImage.imageID;
-                        [homeImage.tipLabelArray addObject:tipLabel];
-                    }
-                }
+                PIEPageEntity *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:[[dataArray objectAtIndex:i] objectForKey:@"ask"] error:NULL];
+//                homeImage.tipLabelArray = [NSMutableArray array];
+//                NSArray *labelDataArray = [[[dataArray objectAtIndex:i] objectForKey:@"ask"]objectForKey:@"labels"];
+//                if (labelDataArray.count) {
+//                    for (int j = 0; j < labelDataArray.count; j++) {
+//                        ATOMImageTipLabel *tipLabel = [MTLJSONAdapter modelOfClass:[ATOMImageTipLabel class] fromJSONDictionary:labelDataArray[j] error:NULL];
+//                        tipLabel.imageID = homeImage.imageID;
+//                        [homeImage.tipLabelArray addObject:tipLabel];
+//                    }
+//                }
                 replyMessage.homeImage = homeImage;
                 [replyMsgArray addObject:replyMessage];
             }

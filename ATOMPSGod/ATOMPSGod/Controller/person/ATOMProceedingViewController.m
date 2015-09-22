@@ -11,7 +11,7 @@
 #import "DDCropImageVC.h"
 #import "DDDetailPageVC.h"
 #import "ATOMOtherPersonViewController.h"
-#import "ATOMAskPage.h"
+#import "PIEPageEntity.h"
 #import "DDPageVM.h"
 #import "ATOMProceedingViewModel.h"
 #import "DDMyProceedingManager.h"
@@ -253,7 +253,7 @@
             [_dataSource removeAllObjects];
             [_homeImageDataSource removeAllObjects];
         }
-        for (ATOMAskPage *homeImage in resultArray) {
+        for (PIEPageEntity *homeImage in resultArray) {
             DDPageVM *homepageViewModel = [DDPageVM new];
             [homepageViewModel setViewModelData:homeImage];
             [ws.homeImageDataSource addObject:homepageViewModel];
@@ -277,7 +277,7 @@
     [param setObject:@(timestamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDMyProceedingManager getMyProceeding:param withBlock:^(NSMutableArray *resultArray) {
-        for (ATOMAskPage *homeImage in resultArray) {
+        for (PIEPageEntity *homeImage in resultArray) {
             DDPageVM *homepageViewModel = [DDPageVM new];
             [homepageViewModel setViewModelData:homeImage];
             [ws.homeImageDataSource addObject:homepageViewModel];

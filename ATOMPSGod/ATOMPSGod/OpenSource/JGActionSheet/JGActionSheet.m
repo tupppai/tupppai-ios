@@ -140,7 +140,7 @@ static BOOL disableCustomEasing = NO;
             UILabel *titleLabel = [[UILabel alloc] init];
             titleLabel.backgroundColor = [UIColor clearColor];
             titleLabel.textAlignment = NSTextAlignmentCenter;
-            titleLabel.font = [UIFont boldSystemFontOfSize:14.0f];
+            titleLabel.font = [UIFont systemFontOfSize:14.0f];
             titleLabel.textColor = [UIColor blackColor];
             titleLabel.numberOfLines = 1;
             
@@ -288,13 +288,13 @@ static BOOL disableCustomEasing = NO;
     
     if (buttonStyle == JGActionSheetButtonStyleDefault) {
         font = [UIFont boldSystemFontOfSize:17.0];
-        titleColor = [UIColor whiteColor];
-        backgroundColor = [UIColor colorWithHex:0x74C3FF];
+        titleColor = [UIColor darkGrayColor];
+        backgroundColor = [UIColor colorWithHex:0xFEF07B];
         borderColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
     }
     else if (buttonStyle == JGActionSheetButtonStyleCancel) {
         font = [UIFont boldSystemFontOfSize:17.0];
-        titleColor = [UIColor whiteColor];
+        titleColor = [UIColor darkGrayColor];
         backgroundColor = [UIColor colorWithHex:0xb5c0c8];
         borderColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
     }
@@ -480,7 +480,7 @@ static BOOL disableCustomEasing = NO;
         [_scrollViewHost addSubview:_scrollView];
         [self addSubview:_scrollViewHost];
         
-        self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.8];
+        self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.4];
         
         _sections = sections;
         

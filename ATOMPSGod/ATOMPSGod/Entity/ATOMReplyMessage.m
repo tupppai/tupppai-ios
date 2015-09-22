@@ -7,7 +7,7 @@
 //
 
 #import "ATOMReplyMessage.h"
-@class ATOMAskPage;
+@class PIEPageEntity;
 
 @implementation ATOMReplyMessage
 

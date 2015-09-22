@@ -193,39 +193,16 @@
 }
 
 - (NSDictionary *)generateParam:(NSInteger)imageID AndAskID:(NSInteger)askID{
-    WS(ws);
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    NSMutableArray *paramLabelArray = [NSMutableArray array];
-    for (ATOMTipButton *tipButton in ws.tipLabelArray) {
-        CGFloat x = tipButton.position.x / CGWidth(ws.addTipLabelView.workImageView.frame);
-        CGFloat y = tipButton.position.y / CGHeight(ws.addTipLabelView.workImageView.frame);
-        NSInteger labelDirection;
-        if (tipButton.type ==ATOMTipButtonTypeLeft) {
-            labelDirection = 0;
-        } else {
-            labelDirection = 1;
-        }
-        if (askID == -1) {
-            DDTipLabelVM *label = [DDTipLabelVM new];
-            label.x = x;
-            label.y = y;
-            label.labelDirection = labelDirection;
-            label.content = tipButton.buttonText;
-            [ws.newAskPageViewModel.labelArray addObject:label];
-        }
-        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@(x), @"x", @(y), @"y", tipButton.buttonText, @"content", @(labelDirection), @"direction", @(tipButton.tag), @"vid", nil];
-        [paramLabelArray addObject:dict];
-    }
-    [param setObject:@(imageID) forKey:@"upload_id"];
-    [param setObject:[paramLabelArray JSONString] forKey:@"labels"];
-    CGFloat scale = SCREEN_WIDTH / CGWidth(ws.addTipLabelView.workImageView.frame);
-    CGFloat ratio = CGHeight(ws.addTipLabelView.workImageView.frame) / CGWidth(ws.addTipLabelView.workImageView.frame);
-    [param setObject:@(scale) forKey:@"scale"];
-    [param setObject:@(ratio) forKey:@"ratio"];
-    if (askID != -1) {
-        [param setObject:@(askID) forKey:@"ask_id"];
-    }
-    return [param copy];
+//    WS(ws);
+//    NSArray* uploadIds = [NSArray arrayWithObjects:_imageInfo1.imageID,_im, nil]
+//    NSMutableDictionary *param = [NSMutableDictionary new];
+//
+//    [param setObject:@(_im) forKey:@"upload_ids"];
+//    
+////    if (askID != -1) {
+////        [param setObject:@(askID) forKey:@"ask_id"];
+////    }
+    return nil;
 }
 //上传作品
 - (void)uploadReplyImg {

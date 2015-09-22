@@ -10,7 +10,7 @@
 #import "ATOMMyWorkCollectionViewCell.h"
 #import "DDDetailPageVC.h"
 //#import "ATOMShowReply.h"
-#import "ATOMAskPage.h"
+#import "PIEPageEntity.h"
 #import "DDPageVM.h"
 #import "ATOMReplyViewModel.h"
 #import "PWRefreshFooterCollectionView.h"
@@ -67,7 +67,7 @@ static int collumnNumber = 3;
 
     [param setObject:@(15) forKey:@"size"];
     [DDMyReplyManager getMyReply:param withBlock:^(NSMutableArray *resultArray) {
-        for (ATOMAskPage *homeImage in resultArray) {
+        for (PIEPageEntity *homeImage in resultArray) {
             DDPageVM *homepageViewModel = [DDPageVM new];
             homepageViewModel.ID = homeImage.askID;
             [ws.homeImageDataSource addObject:homepageViewModel];
@@ -94,7 +94,7 @@ static int collumnNumber = 3;
     [param setObject:@(15) forKey:@"size"];
     
     [DDMyReplyManager getMyReply:param withBlock:^(NSMutableArray *resultArray) {
-        for (ATOMAskPage *homeImage in resultArray) {
+        for (PIEPageEntity *homeImage in resultArray) {
             DDPageVM *homepageViewModel = [DDPageVM new];
             [homepageViewModel setViewModelData:homeImage];
             ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];

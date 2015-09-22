@@ -7,11 +7,11 @@
 //
 
 #import "ATOMAskViewModel.h"
-#import "ATOMAskPage.h"
+#import "PIEPageEntity.h"
 
 @implementation ATOMAskViewModel
 
-- (void)setViewModelData:(ATOMAskPage *)homeImage {
+- (void)setViewModelData:(PIEPageEntity *)homeImage {
     _imageURL = homeImage.imageURL;
     _totalPSNumber = [NSString stringWithFormat:@"%d", (int)homeImage.totalWorkNumber];
 }

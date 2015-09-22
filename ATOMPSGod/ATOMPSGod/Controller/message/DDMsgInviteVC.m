@@ -14,7 +14,7 @@
 #import "DDMsgInviteModel.h"
 #import "ATOMInviteMessage.h"
 #import "ATOMInviteMessageViewModel.h"
-#import "ATOMAskPage.h"
+#import "PIEPageEntity.h"
 #import "DDPageVM.h"
 #import "RefreshFooterTableView.h"
 #import "DDCommentVC.h"

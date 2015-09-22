@@ -8,7 +8,7 @@
 
 #import "ATOMReplyMessageViewModel.h"
 #import "ATOMReplyMessage.h"
-#import "ATOMAskPage.h"
+#import "PIEPageEntity.h"
 #import "DDPageVM.h"
 
 @implementation ATOMReplyMessageViewModel

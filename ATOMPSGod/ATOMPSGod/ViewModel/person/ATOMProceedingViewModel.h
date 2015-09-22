@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class ATOMAskPage;
+@class PIEPageEntity;
 
 @interface ATOMProceedingViewModel : NSObject
 
@@ -21,6 +21,6 @@
 @property (nonatomic, assign) CGFloat width;
 @property (nonatomic, assign) CGFloat height;
 
-- (void)setViewModelData:(ATOMAskPage *)homeImage;
+- (void)setViewModelData:(PIEPageEntity *)homeImage;
 
 @end

@@ -8,7 +8,7 @@
 
 #import "DDPageVM.h"
 
-#import "ATOMAskPage.h"
+#import "PIEPageEntity.h"
 
 #import "ATOMImageTipLabel.h"
 #import "DDTipLabelVM.h"
@@ -51,7 +51,7 @@
 }
 
 
-- (void)setViewModelData:(ATOMAskPage *)homeImage {
+- (void)setViewModelData:(PIEPageEntity *)homeImage {
     _ID = homeImage.askID;
     _userID = homeImage.uid;
     _username = homeImage.nickname;
@@ -84,17 +84,15 @@
     } else {
         _totalPSNumber = [NSString stringWithFormat:@"%zd",homeImage.totalWorkNumber];
     }
-    
-    NSMutableArray* array = [NSMutableArray new];
-    for (int i = 0; i<homeImage.askImageModelArray.count; i++) {
-        PIEImageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:homeImage.askImageModelArray[i] error:NULL];
-        [array addObject:entity];
-    }
-    _askImageModelArray = array;
-    
-    
+//    
+//    NSMutableArray* array = [NSMutableArray new];
+//    for (int i = 0; i<homeImage.askImageModelArray.count; i++) {
+//        PIEImageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:homeImage.askImageModelArray[i] error:NULL];
+//        [array addObject:entity];
+//    }
+    _askImageModelArray = homeImage.askImageModelArray;
 }
-- (instancetype)initWithAskEntity:(ATOMAskPage *)entity {
+- (instancetype)initWithAskEntity:(PIEPageEntity *)entity {
     self = [self init];
     if (self) {
         _ID = entity.askID;

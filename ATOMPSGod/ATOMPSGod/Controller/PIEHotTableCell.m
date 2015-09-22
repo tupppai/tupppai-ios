@@ -7,6 +7,7 @@
 //
 
 #import "PIEHotTableCell.h"
+#import "PIEImageEntity.h"
 @interface PIEHotTableCell()
 
 @end
@@ -39,10 +40,12 @@
     }];
 }
 - (void)configCell:(DDPageVM *)viewModel row:(NSInteger)row{
+    
+    
     [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     _nameLabel.text = viewModel.username;
     _timeLabel.text = viewModel.publishTime;
-    [_theImageView setImageWithURL:[NSURL URLWithString:viewModel.imageURL] placeholderImage:[UIImage imageNamed:@"placeholderImage_1"]];
+    [_theImageView setImageWithURL:[NSURL URLWithString:viewModel.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
     CGFloat imageViewHeight = viewModel.imageHeight <= SCREEN_HEIGHT/2 ? viewModel.imageHeight : SCREEN_HEIGHT/2;
     [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(imageViewHeight)).with.priorityHigh();
@@ -54,10 +57,14 @@
     _likeView.highlighted = viewModel.liked;
     
     _thumbView.expandedSize = CGSizeMake(SCREEN_WIDTH, imageViewHeight);
-    if (row % 2 == 1) {
-        _thumbView.subviewCounts = 2;
-    } else  {
-        _thumbView.subviewCounts = 1;
+    _thumbView.subviewCounts = viewModel.askImageModelArray.count;
+    PIEImageEntity* entity = viewModel.askImageModelArray[0];
+    [_thumbView.rightView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+
+    if (viewModel.askImageModelArray.count == 2) {
+         entity = viewModel.askImageModelArray[1];
+        [_thumbView.leftView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+
     }
 }
 
@@ -89,7 +96,7 @@
                 make.bottom.equalTo(_theImageView);
             }];
         }
-    [UIView animateWithDuration:0.8 animations:^{
+    [UIView animateWithDuration:0.3 animations:^{
         [self layoutIfNeeded];
     } completion:^(BOOL finished) {
         _thumbView.toExpand = !_thumbView.toExpand;

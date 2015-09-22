@@ -7,7 +7,7 @@
 //
 
 #import "ATOMBaseModel.h"
-@class ATOMAskPage;
+@class PIEPageEntity;
 
 @interface ATOMInviteMessage : ATOMBaseModel
 
@@ -20,6 +20,6 @@
 @property (nonatomic, copy) NSString *avatar;
 @property (nonatomic, assign) NSInteger sex;
 @property (nonatomic, assign) long long createTime;
-@property (nonatomic, strong) ATOMAskPage *homeImage;
+@property (nonatomic, strong) PIEPageEntity *homeImage;
 
 @end

@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMAskPage.h"
+#import "PIEPageEntity.h"
 
-@implementation ATOMAskPage
+@implementation PIEPageEntity
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
@@ -58,6 +58,7 @@
              @"liked" :@"liked",
              @"collected":@"collected",
              @"type":@"type",
+             @"askImageModelArray":@"askImageModelArray",
              };
 }
 
@@ -66,7 +67,7 @@
 }
 
 + (NSString *)FMDBTableName {
-    return @"ATOMAskPage";
+    return @"PIEPageEntity";
 }
 
 @end

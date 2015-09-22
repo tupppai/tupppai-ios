@@ -7,7 +7,7 @@
 //
 
 #import "ATOMBaseModel.h"
-@class ATOMAskPage;
+@class PIEPageEntity;
 
 @interface ATOMReplyMessage : ATOMBaseModel
 
@@ -24,6 +24,6 @@
  *  消息类型：0（处理了你的图片）1（这位大神也处理了你的图片）
  */
 @property (nonatomic, assign) NSInteger type;
-@property (nonatomic, strong) ATOMAskPage *homeImage;
+@property (nonatomic, strong) PIEPageEntity *homeImage;
 
 @end

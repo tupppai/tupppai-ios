@@ -8,7 +8,7 @@
 
 #import "DDCommentMsgVM.h"
 #import "DDCommentMsg.h"
-#import "ATOMAskPage.h"
+#import "PIEPageEntity.h"
 #import "DDPageVM.h"
 
 @implementation DDCommentMsgVM

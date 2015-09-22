@@ -27,14 +27,14 @@
     if (vm.askImageModelArray.count == 2) {
         PIEImageEntity* entity1 = [vm.askImageModelArray objectAtIndex:0];
         PIEImageEntity* entity2 = [vm.askImageModelArray objectAtIndex:1];
-        [_leftImageView setImageWithURL:[NSURL URLWithString:entity1.url]];
-        [_rightImageView setImageWithURL:[NSURL URLWithString:entity2.url]];
+        [_leftImageView setImageWithURL:[NSURL URLWithString:entity1.url]placeholderImage:[UIImage imageNamed:@"cellBG"]];
+        [_rightImageView setImageWithURL:[NSURL URLWithString:entity2.url]placeholderImage:[UIImage imageNamed:@"cellBG"]];
         [_rightImageView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.width.equalTo(@(self.frame.size.width/2));
         }];
-    } else {
+    } else if (vm.askImageModelArray.count == 1) {
         PIEImageEntity* entity1 = [vm.askImageModelArray objectAtIndex:0];
-        [_leftImageView setImageWithURL:[NSURL URLWithString:entity1.url]];
+        [_leftImageView setImageWithURL:[NSURL URLWithString:entity1.url]placeholderImage:[UIImage imageNamed:@"cellBG"]];
         [_rightImageView mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.width.equalTo(@(0));
         }];

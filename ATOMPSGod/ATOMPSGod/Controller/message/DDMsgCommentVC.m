@@ -15,7 +15,7 @@
 #import "DDMsgCommentModel.h"
 #import "DDCommentMsg.h"
 #import "DDCommentMsgVM.h"
-#import "ATOMAskPage.h"
+#import "PIEPageEntity.h"
 #import "DDPageVM.h"
 #import "RefreshFooterTableView.h"
 

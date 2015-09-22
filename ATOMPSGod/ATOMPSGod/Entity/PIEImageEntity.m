@@ -31,7 +31,7 @@
 }
 
 + (NSString *)FMDBTableName {
-    return @"PIEImageEntityTable";
+    return @"PIEImageEntity";
 }
 
 @end

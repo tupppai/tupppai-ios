@@ -16,17 +16,17 @@
         _toExpand = YES;
         _shrinkedSize = CGSizeMake(100, 100);
         _expandedSize = CGSizeMake(SCREEN_WIDTH, 300);
-        _leftView.contentMode = UIViewContentModeScaleAspectFill;
-        _rightView.contentMode = UIViewContentModeScaleAspectFill;
+        _leftView.contentMode = UIViewContentModeScaleAspectFit;
+        _rightView.contentMode = UIViewContentModeScaleAspectFit;
         _leftView.clipsToBounds = YES;
         _rightView.clipsToBounds = YES;
         self.userInteractionEnabled = YES;
         self.clipsToBounds = YES;
         self.backgroundColor = [UIColor clearColor];
         _leftView = [UIImageView new];
-        _leftView.image = [UIImage imageNamed:@"test1"];
+//        _leftView.image = [UIImage imageNamed:@"test1"];
         _rightView = [UIImageView new];
-        _rightView.image = [UIImage imageNamed:@"psps"];
+//        _rightView.image = [UIImage imageNamed:@"psps"];
         [self addSubview:_leftView];
         [self addSubview:_rightView];
 
@@ -39,6 +39,7 @@
             make.top.equalTo(self);
             make.leading.equalTo(self);
             make.bottom.equalTo(self);
+            make.width.equalTo(self).with.multipliedBy(1);
         }];
     }
     return self;

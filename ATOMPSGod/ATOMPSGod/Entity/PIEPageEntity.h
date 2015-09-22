@@ -9,7 +9,7 @@
 #import "ATOMBaseModel.h"
 @class ATOMUser;
 
-@interface ATOMAskPage : ATOMBaseModel <MTLFMDBSerializing>
+@interface PIEPageEntity : ATOMBaseModel <MTLFMDBSerializing>
 
 /**
  *  作品ID
@@ -77,11 +77,11 @@
 /**
  *  作品的标签数组
  */
-@property (nonatomic, strong) NSMutableArray *tipLabelArray;
+//@property (nonatomic, strong) NSMutableArray *tipLabelArray;
 /**
  *  回复人数组
  */
-@property (nonatomic, strong) NSMutableArray *replierArray;
+//@property (nonatomic, strong) NSMutableArray *replierArray;
 
 
 

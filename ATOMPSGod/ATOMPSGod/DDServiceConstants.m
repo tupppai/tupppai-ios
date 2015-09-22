@@ -36,7 +36,7 @@ NSString * URL_AC3PaAuth = @"auth/";
 NSString * URL_UKSaveFeedback = @"feedback/save";
 NSString * URL_UKGetMyInfo = @"view/info";
 NSString * URL_UKGetMsg = @"message/list";
-NSString * URL_UKSaveAsk = @"ask/save";
+NSString * URL_UKSaveAsk = @"ask/multi";
 NSString * URL_UKSaveReply = @"reply/save";
 
 //@"ask/save"

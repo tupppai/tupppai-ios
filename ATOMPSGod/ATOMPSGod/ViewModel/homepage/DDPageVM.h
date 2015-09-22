@@ -10,7 +10,7 @@
 #import "DDCommentPageVM.h"
 #import "ATOMDetailPage.h"
 
-@class ATOMAskPage;
+@class PIEPageEntity;
 @class DDCommentPageVM;
 
 
@@ -37,6 +37,8 @@ typedef NS_ENUM(NSInteger, PIEPageType) {
 @property (nonatomic, copy) NSString *shareCount;
 @property (nonatomic, copy) NSString *commentNumber;
 @property (nonatomic, copy) NSString *totalPSNumber;
+@property (nonatomic, copy) NSString *content;
+
 @property (nonatomic, assign) CGFloat imageWidth;
 @property (nonatomic, assign) CGFloat imageHeight;
 @property (nonatomic, strong) NSMutableArray *labelArray;
@@ -53,12 +55,12 @@ typedef NS_ENUM(NSInteger, PIEPageType) {
 @property (nonatomic, strong) NSString *imageURL2;
 
 
-- (void)setViewModelData:(ATOMAskPage *)homeImage;
+- (void)setViewModelData:(PIEPageEntity *)homeImage;
 -(void)setViewModelWithCommon:(DDCommentPageVM*)commonViewModel;
 - (void)setViewModelDataWithDetailPage:(ATOMDetailPage *)page;
 - (void)toggleLike;
 -(DDCommentPageVM*)generatepageDetailViewModel;
-- (instancetype)initWithAskEntity:(ATOMAskPage *)entity ;
+- (instancetype)initWithAskEntity:(PIEPageEntity *)entity ;
 - (instancetype)initWithFollowEntity:(PIEEliteEntity *)entity;
 @end
 

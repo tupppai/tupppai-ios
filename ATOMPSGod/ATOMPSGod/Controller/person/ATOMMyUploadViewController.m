@@ -10,7 +10,7 @@
 #import "ATOMMyUploadCollectionViewCell.h"
 #import "DDDetailPageVC.h"
 #import "DDCommentVC.h"
-#import "ATOMAskPage.h"
+#import "PIEPageEntity.h"
 #import "DDPageVM.h"
 #import "ATOMAskViewModel.h"
 #import "PWRefreshFooterCollectionView.h"
@@ -67,7 +67,7 @@ static int collumnNumber = 3;
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     [DDMyAskManager getMyAsk:param withBlock:^(NSMutableArray *resultArray) {
-        for (ATOMAskPage *homeImage in resultArray) {
+        for (PIEPageEntity *homeImage in resultArray) {
             DDPageVM *homepageViewModel = [DDPageVM new];
             [homepageViewModel setViewModelData:homeImage];
             ATOMAskViewModel *askViewModel = [ATOMAskViewModel new];
@@ -93,7 +93,7 @@ static int collumnNumber = 3;
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     [DDMyAskManager getMyAsk:param withBlock:^(NSMutableArray *resultArray) {
-        for (ATOMAskPage *homeImage in resultArray) {
+        for (PIEPageEntity *homeImage in resultArray) {
             DDPageVM *homepageViewModel = [DDPageVM new];
             [homepageViewModel setViewModelData:homeImage];
             ATOMAskViewModel *askViewModel = [ATOMAskViewModel new];

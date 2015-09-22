@@ -7,13 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-@class ATOMAskPage;
+@class PIEPageEntity;
 
 @interface ATOMReplyViewModel : NSObject
 
 @property (nonatomic, copy) NSString *imageURL;
 
-- (void)setViewModelData:(ATOMAskPage *)homeImage;
+- (void)setViewModelData:(PIEPageEntity *)homeImage;
 
 
 @end

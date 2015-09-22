@@ -223,7 +223,7 @@
         } else {
             _canRefreshAskFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
-            for (ATOMAskPage *homeImage in resultArray) {
+            for (PIEPageEntity *homeImage in resultArray) {
                 DDPageVM *vm = [DDPageVM new];
                 [vm setViewModelData:homeImage];
                 [sourceAgent addObject:vm];
@@ -254,7 +254,7 @@
         } else {
             _canRefreshAskFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
-            for (ATOMAskPage *homeImage in resultArray) {
+            for (PIEPageEntity *homeImage in resultArray) {
                 DDPageVM *vm = [DDPageVM new];
                 [vm setViewModelData:homeImage];
                 [sourceAgent addObject:vm];
@@ -286,7 +286,7 @@
         } else {
             _canRefreshToHelpFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
-            for (ATOMAskPage *homeImage in resultArray) {
+            for (PIEPageEntity *homeImage in resultArray) {
                 DDPageVM *vm = [DDPageVM new];
                 [vm setViewModelData:homeImage];
                 [sourceAgent addObject:vm];
@@ -316,7 +316,7 @@
         } else {
             _canRefreshToHelpFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
-            for (ATOMAskPage *homeImage in resultArray) {
+            for (PIEPageEntity *homeImage in resultArray) {
                 DDPageVM *vm = [DDPageVM new];
                 [vm setViewModelData:homeImage];
                 [sourceAgent addObject:vm];
