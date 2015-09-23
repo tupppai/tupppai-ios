@@ -41,11 +41,11 @@
 }
 
 - (void)createHomepageHotView {
-    _hotTable = [[RefreshTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
-    _hotTable.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _hotTable.backgroundColor = [UIColor clearColor];
-    _hotTable.showsVerticalScrollIndicator = NO;
-    [self addSubview:_hotTable];
+    _replyTable = [[RefreshTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
+    _replyTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _replyTable.backgroundColor = [UIColor clearColor];
+    _replyTable.showsVerticalScrollIndicator = NO;
+    [self addSubview:_replyTable];
 }
 
 - (void)createHomepageAskView {

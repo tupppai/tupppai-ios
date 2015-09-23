@@ -79,7 +79,7 @@
     } else {
         if (_type == PIEUploadTypeAsk) {
             [self uploadAsk];
-        } else if (_type = PIEUploadTypeReply) {
+        } else if (_type == PIEUploadTypeReply) {
             [self uploadReply];
         }
     }
@@ -88,13 +88,13 @@
     [Hud activity:@"上传中" inView:self.view];
     [self uploadImage1:^(BOOL success) {
         if (success) {
-            [self uploadAskRestInfo:^(BOOL success) {
+            [self uploadReplyRestInfo:^(BOOL success) {
                 if (success) {
-                    [self setTabBarToBeRootViewController];
+                    [self dismissToHome];
                 }
             }];
         }
-    }]
+    }];
 }
 -(void) uploadAsk {
     [Hud activity:@"上传中" inView:self.view];
@@ -105,7 +105,7 @@
                     if (success) {
                         [self uploadAskRestInfo:^(BOOL success) {
                             if (success) {
-                                [self setTabBarToBeRootViewController];
+                                [self dismissToHome];
                             }
                         }];
                     }
@@ -117,7 +117,7 @@
             if (success) {
                 [self uploadAskRestInfo:^(BOOL success) {
                     if (success) {
-                        [self setTabBarToBeRootViewController];
+                        [self dismissToHome];
                     }
                 }];
             }
@@ -159,7 +159,6 @@
 }
 
 - (void)uploadAskRestInfo:(void (^) (BOOL success))block {
-    WS(ws);
     
     NSArray* uploadIds;
     if (_assetsArray.count == 2) {
@@ -173,9 +172,9 @@
 
     
     [DDService ddSaveAsk:param withBlock:^(NSInteger newImageID) {
+        [Hud dismiss:self.view];
+        [Hud dismiss];
         if (newImageID) {
-            [Hud dismiss:self.view];
-            [Hud dismiss];
             [self.view endEditing:YES];
             [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:@"shouldNavToAskSegment"];
             [[NSUserDefaults standardUserDefaults] synchronize];
@@ -190,21 +189,50 @@
                 block(YES);
             }
         } else {
+            [Hud error:@"求P失败,请重试"];
+            self.navigationItem.rightBarButtonItem.enabled = YES;
             if  (block) {
                 block(NO);
             }
-            self.navigationItem.rightBarButtonItem.enabled = YES;
-            [Hud error:@"求P失败,请检查你的网络"];
         }
     }];
 }
 
 - (void)uploadReplyRestInfo:(void (^) (BOOL success))block {
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    [param setObject:@(_imageInfo1.imageID) forKey:@"upload_id"];
+//    [param setObject:@(scale) forKey:@"scale"];
+//    [param setObject:@(ratio) forKey:@"ratio"];
+    [param setObject:@(_askIDToReply) forKey:@"ask_id"];
+    
+    [DDService ddSaveReply:param withBlock:^(BOOL success) {
+        [Hud dismiss:self.view];
+        [Hud dismiss];
+        if (success) {
+            [Hud success:@"提交作品成功"];
+//            [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:@"shouldNavToHotSegment"];
+//            [[NSUserDefaults standardUserDefaults] synchronize];
+            if  (block) {
+                block(YES);
+            }
+        } else {
+            [Hud error:@"上传作品失败,请重试"];
+            self.navigationItem.rightBarButtonItem.enabled = YES;
+            if  (block) {
+                block(NO);
+            }
+        }
+    }];
 }
-
--(void)setTabBarToBeRootViewController {
-    DDTabBarController *lvc = [[DDTabBarController alloc] init];
-    [AppDelegate APP].window.rootViewController = lvc;
+- (void)popToAlbumViewController {
+    [self.navigationController popToRootViewControllerAnimated:NO];
+}
+- (void)dismissToHome {
+    
+    [self popToAlbumViewController];
+    
+    DDTabBarController *lvc = [AppDelegate APP].mainTabBarController;
+    [lvc dismissViewControllerAnimated:NO completion:nil];
 }
 -(void)showWarnLabel {
     [TSMessage showNotificationWithTitle:@"求p内容不能为空"
@@ -226,7 +254,6 @@
 
 -(void)textViewDidChangeSelection:(UITextView *)textView {
     NSLog(@"textViewDidChangeSelection");
-
     if (textView.text.length > 18) {
         NSString *shortString = [textView.text substringToIndex:18];
         textView.text = shortString;

@@ -12,7 +12,7 @@
 #import "AppDelegate.h"
 #import "DDTabBarController.h"
 #import "DDNavigationController.h"
-
+#import "PIEProceedingViewController.h"
 
 @interface PIECameraViewController () <QBImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *askBackgroundView;
@@ -47,16 +47,18 @@
 }
 
 - (void)tapOnG1 {
-    //    [self.navigationController pushViewController:self.QBImagePickerController animated:YES];
-
-//    DDNavigationController* nav = [[DDNavigationController alloc]initWithRootViewController:self.QBImagePickerController];
-    self.QBImagePickerController.maximumNumberOfSelection = 2;
     [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
 }
 - (void)tapOnG2 {
-    self.QBImagePickerController.maximumNumberOfSelection = 1;
-    [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
-    
+    NSLog(@"tapOnG2");
+    [self dismissViewController];
+    NSLog(@"tapOnG2");
+    [[AppDelegate APP].mainTabBarController setSelectedIndex:3];
+    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+    PIEProceedingViewController* vc = (PIEProceedingViewController*)nav.topViewController;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [vc navToToHelp];
+    });
 }
 - (void)dismissViewController {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -91,9 +93,10 @@
     }
     PIEUploadVC* vc = [PIEUploadVC new];
     vc.assetsArray = assets;
-    if (imagePickerController.maximumNumberOfSelection == 1) {
-        vc.hideSecondView = YES;
-    }
+//    if (imagePickerController.maximumNumberOfSelection == 1) {
+//        vc.hideSecondView = YES;
+//        vc.type = PIEUploadTypeReply;
+//    }
     [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
 }
 

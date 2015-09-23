@@ -13,12 +13,13 @@
 - (void)awakeFromNib {
     self.layer.cornerRadius = 6;
     _theImageView.clipsToBounds = YES;
+    _contentLabel.text = @"";
 }
 
 //put a needle injecting into cell's ass.
 - (void)injectSource:(DDPageVM*)vm {
     [_theImageView setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
-    //    _contentLabel.text = @"";
+    _contentLabel.text = vm.content;
 }
 
 @end

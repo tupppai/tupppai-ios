@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3B11C0431BA27ADB00B87165 /* PIEHotTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B11C0411BA27ADB00B87165 /* PIEHotTableCell.m */; };
-		3B11C0441BA27ADB00B87165 /* PIEHotTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B11C0421BA27ADB00B87165 /* PIEHotTableCell.xib */; };
+		3B11C0431BA27ADB00B87165 /* PIEReplyTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B11C0411BA27ADB00B87165 /* PIEReplyTableCell.m */; };
+		3B11C0441BA27ADB00B87165 /* PIEReplyTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B11C0421BA27ADB00B87165 /* PIEReplyTableCell.xib */; };
 		3B2D90FE1BA03FB000D6A243 /* SZTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2D90FB1BA03FB000D6A243 /* SZTextView.m */; };
 		3B2D90FF1BA03FB000D6A243 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 3B2D90FC1BA03FB000D6A243 /* LICENSE */; };
 		3BD5E1651BA1182800C7383A /* PIEMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD5E1631BA1182800C7383A /* PIEMeViewController.m */; };
@@ -473,9 +473,9 @@
 /* Begin PBXFileReference section */
 		0A953DE79CA8C60439E63894 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		1674AE1FE3B8781057753735 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		3B11C0401BA27ADB00B87165 /* PIEHotTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEHotTableCell.h; sourceTree = "<group>"; };
-		3B11C0411BA27ADB00B87165 /* PIEHotTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEHotTableCell.m; sourceTree = "<group>"; };
-		3B11C0421BA27ADB00B87165 /* PIEHotTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEHotTableCell.xib; sourceTree = "<group>"; };
+		3B11C0401BA27ADB00B87165 /* PIEReplyTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEReplyTableCell.h; sourceTree = "<group>"; };
+		3B11C0411BA27ADB00B87165 /* PIEReplyTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEReplyTableCell.m; sourceTree = "<group>"; };
+		3B11C0421BA27ADB00B87165 /* PIEReplyTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEReplyTableCell.xib; sourceTree = "<group>"; };
 		3B2D90FA1BA03FB000D6A243 /* SZTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZTextView.h; sourceTree = "<group>"; };
 		3B2D90FB1BA03FB000D6A243 /* SZTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZTextView.m; sourceTree = "<group>"; };
 		3B2D90FC1BA03FB000D6A243 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -902,13 +902,13 @@
 		5CD42E7C1AE389E900BACDDD /* ATOMReplierViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMReplierViewModel.m; sourceTree = "<group>"; };
 		5CD42E7E1AE3901800BACDDD /* ATOMReplierDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMReplierDAO.h; sourceTree = "<group>"; };
 		5CD42E7F1AE3901800BACDDD /* ATOMReplierDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMReplierDAO.m; sourceTree = "<group>"; };
-		5CDB05C11AA3FE520089121E /* ATOMPSGod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ATOMPSGod.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5CDB05C11AA3FE520089121E /* TUPAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TUPAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CDB05C51AA3FE520089121E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5CDB05C61AA3FE520089121E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5CDB05C81AA3FE520089121E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5CDB05C91AA3FE520089121E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5CDB05D41AA3FE520089121E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		5CDB05DA1AA3FE520089121E /* ATOMPSGodTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ATOMPSGodTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5CDB05DA1AA3FE520089121E /* TUPAI.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TUPAI.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CDB05DF1AA3FE520089121E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5CDB05E01AA3FE520089121E /* ATOMPSGodTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ATOMPSGodTests.m; sourceTree = "<group>"; };
 		5CDB05F31AA405A40089121E /* Crayola.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Crayola.h; sourceTree = "<group>"; };
@@ -2199,7 +2199,7 @@
 			isa = PBXGroup;
 			children = (
 				E959A56B1B8F025500F90155 /* Notes */,
-				5CDB05C31AA3FE520089121E /* ATOMPSGod */,
+				5CDB05C31AA3FE520089121E /* TUPAI */,
 				5CDB05DD1AA3FE520089121E /* ATOMPSGodTests */,
 				5CDB05C21AA3FE520089121E /* Products */,
 				E1A2890C20795EC893C5D607 /* Pods */,
@@ -2210,13 +2210,13 @@
 		5CDB05C21AA3FE520089121E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5CDB05C11AA3FE520089121E /* ATOMPSGod.app */,
-				5CDB05DA1AA3FE520089121E /* ATOMPSGodTests.xctest */,
+				5CDB05C11AA3FE520089121E /* TUPAI.app */,
+				5CDB05DA1AA3FE520089121E /* TUPAI.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		5CDB05C31AA3FE520089121E /* ATOMPSGod */ = {
+		5CDB05C31AA3FE520089121E /* TUPAI */ = {
 			isa = PBXGroup;
 			children = (
 				5C51B2521AB9088700F442A6 /* Framework */,
@@ -2236,6 +2236,7 @@
 				E900AB5A1B450E970019BAEA /* Images.xcassets */,
 				5CDB05C41AA3FE520089121E /* Supporting Files */,
 			);
+			name = TUPAI;
 			path = ATOMPSGod;
 			sourceTree = "<group>";
 		};
@@ -3110,9 +3111,9 @@
 		F402072C1BA7C01D0007CE02 /* hot */ = {
 			isa = PBXGroup;
 			children = (
-				3B11C0401BA27ADB00B87165 /* PIEHotTableCell.h */,
-				3B11C0411BA27ADB00B87165 /* PIEHotTableCell.m */,
-				3B11C0421BA27ADB00B87165 /* PIEHotTableCell.xib */,
+				3B11C0401BA27ADB00B87165 /* PIEReplyTableCell.h */,
+				3B11C0411BA27ADB00B87165 /* PIEReplyTableCell.m */,
+				3B11C0421BA27ADB00B87165 /* PIEReplyTableCell.xib */,
 				F4D015B91BA6AF7200A28329 /* PIEThumbAnimateView.h */,
 				F4D015BA1BA6AF7200A28329 /* PIEThumbAnimateView.m */,
 			);
@@ -3271,9 +3272,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5CDB05C01AA3FE520089121E /* ATOMPSGod */ = {
+		5CDB05C01AA3FE520089121E /* TUPAI */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5CDB05E41AA3FE520089121E /* Build configuration list for PBXNativeTarget "ATOMPSGod" */;
+			buildConfigurationList = 5CDB05E41AA3FE520089121E /* Build configuration list for PBXNativeTarget "TUPAI" */;
 			buildPhases = (
 				5CDB05BD1AA3FE520089121E /* Sources */,
 				5CDB05BE1AA3FE520089121E /* Frameworks */,
@@ -3283,14 +3284,14 @@
 			);
 			dependencies = (
 			);
-			name = ATOMPSGod;
+			name = TUPAI;
 			productName = ATOMPSGod;
-			productReference = 5CDB05C11AA3FE520089121E /* ATOMPSGod.app */;
+			productReference = 5CDB05C11AA3FE520089121E /* TUPAI.app */;
 			productType = "com.apple.product-type.application";
 		};
-		5CDB05D91AA3FE520089121E /* ATOMPSGodTests */ = {
+		5CDB05D91AA3FE520089121E /* TUPAITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5CDB05E71AA3FE520089121E /* Build configuration list for PBXNativeTarget "ATOMPSGodTests" */;
+			buildConfigurationList = 5CDB05E71AA3FE520089121E /* Build configuration list for PBXNativeTarget "TUPAITests" */;
 			buildPhases = (
 				5CDB05D61AA3FE520089121E /* Sources */,
 				5CDB05D71AA3FE520089121E /* Frameworks */,
@@ -3301,9 +3302,9 @@
 			dependencies = (
 				5CDB05DC1AA3FE520089121E /* PBXTargetDependency */,
 			);
-			name = ATOMPSGodTests;
+			name = TUPAITests;
 			productName = ATOMPSGodTests;
-			productReference = 5CDB05DA1AA3FE520089121E /* ATOMPSGodTests.xctest */;
+			productReference = 5CDB05DA1AA3FE520089121E /* TUPAI.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -3327,7 +3328,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 5CDB05BC1AA3FE520089121E /* Build configuration list for PBXProject "ATOMPSGod" */;
+			buildConfigurationList = 5CDB05BC1AA3FE520089121E /* Build configuration list for PBXProject "TUPAI" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -3344,8 +3345,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5CDB05C01AA3FE520089121E /* ATOMPSGod */,
-				5CDB05D91AA3FE520089121E /* ATOMPSGodTests */,
+				5CDB05C01AA3FE520089121E /* TUPAI */,
+				5CDB05D91AA3FE520089121E /* TUPAITests */,
 			);
 		};
 /* End PBXProject section */
@@ -3361,7 +3362,7 @@
 				E93D23831B3D26320081F632 /* shareIcon.png in Resources */,
 				F462A0511BB254570058EAF4 /* plus_sign.jpg in Resources */,
 				F46117E81BAE52CD001A6F1A /* PIEEliteTableViewCellFollow.xib in Resources */,
-				3B11C0441BA27ADB00B87165 /* PIEHotTableCell.xib in Resources */,
+				3B11C0441BA27ADB00B87165 /* PIEReplyTableCell.xib in Resources */,
 				E94289821B5B32A200ED26E4 /* NotificationButtonBackground.png in Resources */,
 				E94289811B5B32A200ED26E4 /* NotificationBackgroundWarningIcon@2x.png in Resources */,
 				3BE1AECD1B9FE9C900CE2303 /* QBImagePicker.storyboard in Resources */,
@@ -3582,7 +3583,7 @@
 				5CDB06061AA405A40089121E /* UIColor+iOS7.m in Sources */,
 				5C8084FC1AF27BD30062421C /* ATOMTotalPSView.m in Sources */,
 				5CDB06311AA428BD0089121E /* MASLayoutConstraint.m in Sources */,
-				3B11C0431BA27ADB00B87165 /* PIEHotTableCell.m in Sources */,
+				3B11C0431BA27ADB00B87165 /* PIEReplyTableCell.m in Sources */,
 				3BE1AEC81B9FE9C900CE2303 /* QBAlbumCell.m in Sources */,
 				5C4C70DA1AB6FD5700358989 /* DDMyReplyManager.m in Sources */,
 				5C0F04EB1ADCF6D9002003AE /* DDMsgFollowModel.m in Sources */,
@@ -3823,7 +3824,7 @@
 /* Begin PBXTargetDependency section */
 		5CDB05DC1AA3FE520089121E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 5CDB05C01AA3FE520089121E /* ATOMPSGod */;
+			target = 5CDB05C01AA3FE520089121E /* TUPAI */;
 			targetProxy = 5CDB05DB1AA3FE520089121E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -3973,7 +3974,7 @@
 					"$(inherited)",
 					Reveal,
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TUPAI;
 				PROVISIONING_PROFILE = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				VALIDATE_PRODUCT = YES;
@@ -4014,7 +4015,7 @@
 					"$(inherited)",
 					Reveal,
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TUPAI;
 				PROVISIONING_PROFILE = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				VALIDATE_PRODUCT = NO;
@@ -4038,9 +4039,9 @@
 				);
 				INFOPLIST_FILE = ATOMPSGodTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TUPAI;
 				PROVISIONING_PROFILE = "";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ATOMPSGod.app/ATOMPSGod";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TUPAI.app/TUPAI";
 			};
 			name = Debug;
 		};
@@ -4056,9 +4057,9 @@
 				);
 				INFOPLIST_FILE = ATOMPSGodTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TUPAI;
 				PROVISIONING_PROFILE = "";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ATOMPSGod.app/ATOMPSGod";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TUPAI.app/TUPAI";
 			};
 			name = Release;
 		};
@@ -4137,7 +4138,7 @@
 					"$(inherited)",
 					Reveal,
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TUPAI;
 				PROVISIONING_PROFILE = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				VALIDATE_PRODUCT = NO;
@@ -4157,16 +4158,16 @@
 				);
 				INFOPLIST_FILE = ATOMPSGodTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TUPAI;
 				PROVISIONING_PROFILE = "";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ATOMPSGod.app/ATOMPSGod";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TUPAI.app/TUPAI";
 			};
 			name = "ad hoc distribution";
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5CDB05BC1AA3FE520089121E /* Build configuration list for PBXProject "ATOMPSGod" */ = {
+		5CDB05BC1AA3FE520089121E /* Build configuration list for PBXProject "TUPAI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5CDB05E21AA3FE520089121E /* Debug */,
@@ -4176,7 +4177,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5CDB05E41AA3FE520089121E /* Build configuration list for PBXNativeTarget "ATOMPSGod" */ = {
+		5CDB05E41AA3FE520089121E /* Build configuration list for PBXNativeTarget "TUPAI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5CDB05E51AA3FE520089121E /* Debug */,
@@ -4186,7 +4187,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5CDB05E71AA3FE520089121E /* Build configuration list for PBXNativeTarget "ATOMPSGodTests" */ = {
+		5CDB05E71AA3FE520089121E /* Build configuration list for PBXNativeTarget "TUPAITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5CDB05E81AA3FE520089121E /* Debug */,

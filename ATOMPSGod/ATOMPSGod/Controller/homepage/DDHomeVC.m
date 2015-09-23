@@ -7,7 +7,7 @@
 //
 #import "DDHomeVC.h"
 #import "AppDelegate.h"
-#import "PIEHotTableCell.h"
+#import "PIEReplyTableCell.h"
 #import "DDDetailPageVC.h"
 #import "DDCropImageVC.h"
 #import "ATOMOtherPersonViewController.h"
@@ -75,7 +75,7 @@
 
 @implementation DDHomeVC
 
-static NSString *CellIdentifier = @"PIEHotTableCell";
+static NSString *CellIdentifier = @"PIEReplyTableCell";
 static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 
 #pragma mark - life cycle
@@ -132,7 +132,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 //}
 
 - (void)confighotTable {
-    _hotTableView = _scrollView.hotTable;
+    _hotTableView = _scrollView.replyTable;
     _hotTableView.delegate = self;
     _hotTableView.dataSource = self;
     _hotTableView.noDataView.label.text = @"网络连接断了吧-_-!";
@@ -142,7 +142,6 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     _hotTableView.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
     _tapGestureHot = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureHot:)];
     [_hotTableView addGestureRecognizer:_tapGestureHot];
-    
     _hotTableView.scrollsToTop = YES;
     _currentHotIndex = 1;
 }
@@ -327,12 +326,10 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     [DDService signProceeding:param withBlock:^(NSString *imageUrl) {
         if (imageUrl != nil) {
             if (shouldDownload) {
-//                [DDBaseService downloadImage:imageUrl withBlock:^(UIImage *image) {
-                    PIEAskCollectionCell* cell = (PIEAskCollectionCell *)[_askCollectionView cellForItemAtIndexPath:_selectedIndexPath];
-                    UIImageWriteToSavedPhotosAlbum(cell.leftImageView.image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
-                    UIImageWriteToSavedPhotosAlbum(cell.rightImageView.image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+                [DDBaseService downloadImage:imageUrl withBlock:^(UIImage *image) {
+                    UIImageWriteToSavedPhotosAlbum(image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+                }];
             }
-
         }
     }];
 }
@@ -340,7 +337,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
   contextInfo: (void *) contextInfo {
     if(error != NULL){
         [Hud error:@"保存失败" inView:self.view];
-    }else{
+    } else {
         [Hud success:@"保存成功" inView:self.view];
     }
 }
@@ -354,7 +351,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
         CGPoint location = [gesture locationInView:_hotTableView];
         _selectedIndexPath = [_hotTableView indexPathForRowAtPoint:location];
         if (_selectedIndexPath) {
-            PIEHotTableCell* cell = (PIEHotTableCell *)[_hotTableView cellForRowAtIndexPath:_selectedIndexPath];
+            PIEReplyTableCell* cell = (PIEReplyTableCell *)[_hotTableView cellForRowAtIndexPath:_selectedIndexPath];
             _selectedVM = _sourceHot[_selectedIndexPath.row];
             CGPoint p = [gesture locationInView:cell];
             
@@ -539,7 +536,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_hotTableView == tableView) {
-        PIEHotTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        PIEReplyTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         [cell configCell:_sourceHot[indexPath.row] row:indexPath.row];
         return cell;
     }
@@ -552,7 +549,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_hotTableView == tableView) {
-            return [tableView fd_heightForCellWithIdentifier:CellIdentifier  cacheByIndexPath:indexPath configuration:^(PIEHotTableCell *cell) {
+            return [tableView fd_heightForCellWithIdentifier:CellIdentifier  cacheByIndexPath:indexPath configuration:^(PIEReplyTableCell *cell) {
             [cell configCell:_sourceHot[indexPath.row] row:indexPath.row];
         }];
     } else {
@@ -660,7 +657,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 //                [pageManager saveHomeImagesInDB:homepageArray];
 //            });
         } else {
-            [ws.scrollView.hotTable.header endRefreshing];
+            [ws.scrollView.replyTable.header endRefreshing];
             [ws.scrollView.collectionView.header endRefreshing];
         }
     }];
@@ -697,8 +694,8 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
             }
             if (homeType == PIEHomeTypeHot) {
                 [_sourceHot addObjectsFromArray:arrayAgent];
-                [ws.scrollView.hotTable reloadData];
-                [ws.scrollView.hotTable.footer endRefreshing];
+                [ws.scrollView.replyTable reloadData];
+                [ws.scrollView.replyTable.footer endRefreshing];
                 if (homepageArray.count == 0) {
                     ws.canRefreshHotFooter = NO;
                 } else {
@@ -715,7 +712,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
                 }
             }
         } else {
-            [ws.scrollView.hotTable.footer endRefreshing];
+            [ws.scrollView.replyTable.footer endRefreshing];
             [ws.scrollView.collectionView.footer endRefreshing];
         }
     }];

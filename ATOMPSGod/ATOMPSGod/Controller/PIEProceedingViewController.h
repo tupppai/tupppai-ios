@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HMSegmentedControl.h"
 
 @interface PIEProceedingViewController : DDBaseVC
-
+@property (nonatomic, strong) HMSegmentedControl *segmentedControl;
+- (void)navToToHelp;
 @end

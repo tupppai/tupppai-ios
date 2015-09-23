@@ -127,6 +127,7 @@ static float cellWidth;
     flowLayout.minimumInteritemSpacing = padding;
     flowLayout.minimumLineSpacing = padding;
     _collectionView = [[PWRefreshFooterCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
+    _collectionView.contentInset = UIEdgeInsetsMake(0, 0, TAB_HEIGHT*2, 0);
     self.view = _collectionView;
     _collectionView.dataSource = nil;
     _collectionView.emptyDataSetSource = self;

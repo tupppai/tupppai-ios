@@ -11,7 +11,7 @@
 #import "PIERefreshCollectionView.h"
 
 @interface kfcHomeScrollView : UIScrollView
-@property (nonatomic, strong) RefreshTableView *hotTable;
+@property (nonatomic, strong) RefreshTableView *replyTable;
 @property (nonatomic, strong) PIERefreshCollectionView *collectionView;
 @property (nonatomic, assign) PIEHomeType type;
 - (void)toggle;

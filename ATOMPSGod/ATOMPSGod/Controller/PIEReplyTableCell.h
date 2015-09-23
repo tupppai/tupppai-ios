@@ -10,7 +10,8 @@
 #import "DDPageVM.h"
 #import "PIEThumbAnimateView.h"
 
-@interface PIEHotTableCell : UITableViewCell
+//home reply
+@interface PIEReplyTableCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;

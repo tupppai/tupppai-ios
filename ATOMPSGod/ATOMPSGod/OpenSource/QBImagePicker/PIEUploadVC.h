@@ -18,4 +18,6 @@ typedef NS_ENUM(NSInteger, PIEUploadType) {
 @property (nonatomic,assign) BOOL hideSecondView;
 @property (nonatomic,assign) PIEUploadType type;
 
+@property (nonatomic,assign) NSInteger askIDToReply;
+
 @end

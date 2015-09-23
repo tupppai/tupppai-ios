@@ -6,13 +6,13 @@
 //
 //
 
-#import "PIEHotTableCell.h"
+#import "PIEReplyTableCell.h"
 #import "PIEImageEntity.h"
-@interface PIEHotTableCell()
+@interface PIEReplyTableCell()
 
 @end
 
-@implementation PIEHotTableCell
+@implementation PIEReplyTableCell
 
 - (void)awakeFromNib {
     // Initialization code
@@ -55,7 +55,7 @@
     _commentCountLabel.text = viewModel.commentNumber;
     _likeCountLabel.text = viewModel.likeCount;
     _likeView.highlighted = viewModel.liked;
-    
+    _contentLabel.text = viewModel.content;
     _thumbView.expandedSize = CGSizeMake(SCREEN_WIDTH, imageViewHeight);
     _thumbView.subviewCounts = viewModel.askImageModelArray.count;
     PIEImageEntity* entity = viewModel.askImageModelArray[0];

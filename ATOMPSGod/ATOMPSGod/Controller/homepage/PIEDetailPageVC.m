@@ -22,6 +22,8 @@
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, assign) NSInteger currentPage;
 
+@property (nonatomic, strong) DDPageVM* currentVM;
+
 @end
 
 @implementation PIEDetailPageVC
@@ -36,7 +38,6 @@
 
     self.view.backgroundColor = [UIColor blackColor];
     self.view.clipsToBounds = YES;
-
     _carousel.type = iCarouselTypeLinear;
     _carousel.delegate = self;
     _carousel.dataSource = self;
@@ -44,7 +45,6 @@
     _avatarView.clipsToBounds = YES;
     [_likeButton setImage:[UIImage imageNamed:@"pie_like_selected"] forState:UIControlStateSelected];
     [_likeButton setImage:[UIImage imageNamed:@"pie_like_selected"] forState:UIControlStateHighlighted];
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -52,7 +52,12 @@
     // Dispose of any resources that can be recreated.
 }
 - (IBAction)tapLikeButton:(id)sender {
-    NSLog(@"tapLikeButton");
+    _likeButton.selected = !_likeButton.selected;
+    [DDService toggleLikeWithType:_currentVM.type ID:_currentVM.ID like:_likeButton.selected withBlock:^(BOOL success) {
+        if (!success) {
+            _likeButton.selected = !_likeButton.selected;
+        }
+    }];
 }
 
 - (void)setupBlurredImage
@@ -160,17 +165,24 @@
     
     - (void)carouselCurrentItemIndexDidChange:(__unused iCarousel *)carousel
     {
-//        NSLog(@"Index: %@", @(self.carousel.currentItemIndex));
+        [self updateUIWithIndex:carousel.currentItemIndex];
     }
 
 
-
+-(void)updateUIWithIndex:(NSInteger)index {
+    _currentVM = [_dataSource objectAtIndex:index];
+    [_avatarView setImageWithURL:[NSURL URLWithString:_currentVM.avatarURL] placeholderImage:[UIImage new]];
+    _usernameLabel.text = _currentVM.username;
+    _timeLabel.text = _currentVM.publishTime;
+    _contentLabel.text = _currentVM.content;
+    _likeButton.selected = _currentVM.liked;
+}
 - (void)getDataSource {
     _currentPage = 1;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
     [param setObject:@(_currentPage) forKey:@"page"];
-    [param setObject:@(5) forKey:@"size"];
+    [param setObject:@(100) forKey:@"size"];
     DDHotDetailManager *showDetailOfHomePage = [DDHotDetailManager new];
     [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:_pageVM.ID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
         //第一张图片为首页点击的图片，剩下的图片为回复图片
@@ -182,33 +194,8 @@
             [model setViewModelDataWithDetailPage:detailImage];
             [_dataSource addObject:model];
         }
+        [self updateUIWithIndex:0];
         [_carousel reloadData];
     }];
 }
-
-//- (void)getMoreDataSource {
-//    WS(ws);
-//    ws.currentPage++;
-//    NSMutableDictionary *param = [NSMutableDictionary new];
-//    [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
-//    [param setObject:@(ws.currentPage) forKey:@"page"];
-//    [param setObject:@(10) forKey:@"size"];
-//    [param setObject:@(_fold) forKey:@"fold"];
-//    DDHotDetailManager *showDetailOfHomePage = [DDHotDetailManager new];
-//    [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.askVM.ID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
-//        for (ATOMDetailPage *detailImage in detailOfHomePageArray) {
-//            DDHotDetailPageVM *model = [DDHotDetailPageVM new];
-//            [model setViewModelDataWithDetailImage:detailImage];
-//            model.labelArray = [ws.askVM.labelArray mutableCopy];
-//            [ws.dataSource addObject:model];
-//        }
-//        if (detailOfHomePageArray.count == 0) {
-//            _canRefreshFooter = NO;
-//        } else {
-//            _canRefreshFooter = YES;
-//        }
-//        [ws.tableView reloadData];
-//        [ws.tableView.footer endRefreshing];
-//    }];
-//}
 @end

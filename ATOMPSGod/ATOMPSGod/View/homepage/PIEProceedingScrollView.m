@@ -73,14 +73,23 @@
 - (void)toggleWithType:(PIEProceedingType)type {
     _type = type;
     if (_type == PIEProceedingTypeAsk) {
+        _askCollectionView.scrollsToTop = YES;
+        _toHelpTableView.scrollsToTop = NO;
+        _doneCollectionView.scrollsToTop = NO;
         [UIView animateWithDuration:0.3 animations:^{
             self.contentOffset = CGPointMake(0, 0);
         }];
     } else if (_type == PIEProceedingTypeToHelp) {
+        _askCollectionView.scrollsToTop = NO;
+        _toHelpTableView.scrollsToTop = YES;
+        _doneCollectionView.scrollsToTop = NO;
         [UIView animateWithDuration:0.3 animations:^{
             self.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
         }];
     }  else if (_type == PIEProceedingTypeDone) {
+        _askCollectionView.scrollsToTop = NO;
+        _toHelpTableView.scrollsToTop = NO;
+        _doneCollectionView.scrollsToTop = YES;
         [UIView animateWithDuration:0.3 animations:^{
             self.contentOffset = CGPointMake(SCREEN_WIDTH*2, 0);
         }];

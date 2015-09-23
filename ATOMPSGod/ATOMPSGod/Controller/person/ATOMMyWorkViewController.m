@@ -132,6 +132,8 @@ static int collumnNumber = 3;
     _collectionView.dataSource = nil;
     _collectionView.delegate = self;
     _collectionView.psDelegate = self;
+    _collectionView.contentInset = UIEdgeInsetsMake(0, 0, TAB_HEIGHT*2, 0);
+
     _cellIdentifier = @"MyWorkCell";
     [_collectionView registerClass:[ATOMMyWorkCollectionViewCell class] forCellWithReuseIdentifier:_cellIdentifier];
     _canRefreshFooter = YES;
