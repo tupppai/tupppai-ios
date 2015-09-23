@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -13,6 +13,7 @@
                 <outlet property="blurView" destination="s5f-Tj-oBr" id="5CJ-8Q-jnA"/>
                 <outlet property="carousel" destination="gaH-5k-Hr1" id="9x9-0V-I8B"/>
                 <outlet property="contentLabel" destination="Un8-ag-rXy" id="FpF-va-px7"/>
+                <outlet property="likeButton" destination="F9S-X3-Axq" id="jlE-m0-WQP"/>
                 <outlet property="timeLabel" destination="Tnj-17-4nM" id="ML2-nJ-0bC"/>
                 <outlet property="usernameLabel" destination="Ej0-jf-tRH" id="R2o-Tf-H6j"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -20,7 +21,7 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+            <rect key="frame" x="0.0" y="64" width="600" height="536"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="s5f-Tj-oBr" userLabel="blurView">
@@ -59,25 +60,25 @@
                     <rect key="frame" x="0.0" y="308" width="600" height="228"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="培伟哥哥" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" translatesAutoresizingMaskIntoConstraints="NO" id="Ej0-jf-tRH">
-                            <rect key="frame" x="225" y="36" width="150" height="18"/>
+                            <rect key="frame" x="225" y="36" width="150" height="14"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="150" id="iK4-Kv-JRf"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <fontDescription key="fontDescription" name="HiraginoSans-W6" family="Hiragino Sans" pointSize="14"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1小时前" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" translatesAutoresizingMaskIntoConstraints="NO" id="Tnj-17-4nM">
-                            <rect key="frame" x="225" y="62" width="150" height="16"/>
+                            <rect key="frame" x="225" y="58" width="150" height="10"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="150" id="SvT-0b-IKx"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" name="HiraginoSans-W6" family="Hiragino Sans" pointSize="10"/>
+                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我要一步一步打代码" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" translatesAutoresizingMaskIntoConstraints="NO" id="Un8-ag-rXy">
-                            <rect key="frame" x="140" y="88" width="320" height="19.5"/>
+                            <rect key="frame" x="140" y="78" width="320" height="15"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="DRc-rz-RMo"/>
                                 <constraint firstAttribute="width" constant="320" id="IaP-3O-ucJ"/>
@@ -85,7 +86,7 @@
                                     <variation key="widthClass=compact" constant="35"/>
                                 </constraint>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <fontDescription key="fontDescription" name="HiraginoSans-W6" family="Hiragino Sans" pointSize="15"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                             <variation key="default">
@@ -101,27 +102,7 @@
                                 </mask>
                             </variation>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F9S-X3-Axq">
-                            <rect key="frame" x="100" y="158" width="40" height="40"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="40" id="rtW-mh-bRt"/>
-                                <constraint firstAttribute="height" constant="40" id="uZG-QJ-iDe"/>
-                            </constraints>
-                            <state key="normal" image="pie_like">
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OYh-Cl-kdK">
-                            <rect key="frame" x="460" y="158" width="40" height="40"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="40" id="QtT-3Z-bNq"/>
-                                <constraint firstAttribute="height" constant="40" id="eYh-Sa-DyO"/>
-                            </constraints>
-                            <state key="normal" title="操作">
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                        </button>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="psps.png" translatesAutoresizingMaskIntoConstraints="NO" id="pyi-Yf-Ai7">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="psps.png" translatesAutoresizingMaskIntoConstraints="NO" id="pyi-Yf-Ai7">
                             <rect key="frame" x="275" y="-25" width="50" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="NHx-rK-Vgx">
@@ -132,46 +113,42 @@
                                 </constraint>
                             </constraints>
                         </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F9S-X3-Axq">
+                            <rect key="frame" x="279" y="131" width="42" height="42"/>
+                            <state key="normal" image="pie_like">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="tapLikeButton:" destination="-1" eventType="touchUpInside" id="j46-1o-CV7"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" red="0.22352942824363708" green="0.18431372940540314" blue="0.058823533356189728" alpha="0.47999999999999998" colorSpace="deviceRGB"/>
                     <constraints>
                         <constraint firstAttribute="centerX" secondItem="Un8-ag-rXy" secondAttribute="centerX" id="1L8-l9-7s1"/>
                         <constraint firstItem="Ej0-jf-tRH" firstAttribute="centerX" secondItem="pyi-Yf-Ai7" secondAttribute="centerX" id="2MR-qo-2jt"/>
                         <constraint firstItem="Ej0-jf-tRH" firstAttribute="top" secondItem="YJO-Is-7zc" secondAttribute="top" constant="10" id="2vc-iU-yWu"/>
+                        <constraint firstItem="F9S-X3-Axq" firstAttribute="centerX" secondItem="YJO-Is-7zc" secondAttribute="centerX" id="9Eq-TY-pmv"/>
                         <constraint firstItem="Tnj-17-4nM" firstAttribute="top" secondItem="Ej0-jf-tRH" secondAttribute="bottom" constant="8" id="Cnq-GJ-Wx1">
                             <variation key="widthClass=compact" constant="5"/>
                         </constraint>
                         <constraint firstAttribute="centerX" secondItem="Un8-ag-rXy" secondAttribute="centerX" id="Cxj-ns-CMX"/>
-                        <constraint firstItem="F9S-X3-Axq" firstAttribute="leading" secondItem="YJO-Is-7zc" secondAttribute="leading" constant="100" id="Dkh-l1-Enq"/>
                         <constraint firstItem="pyi-Yf-Ai7" firstAttribute="top" secondItem="YJO-Is-7zc" secondAttribute="top" constant="-25" id="HHh-xY-nAr">
                             <variation key="widthClass=compact" constant="-20"/>
                         </constraint>
                         <constraint firstAttribute="trailing" secondItem="Un8-ag-rXy" secondAttribute="trailing" constant="20" id="Jg5-Ku-VZQ"/>
-                        <constraint firstItem="F9S-X3-Axq" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Un8-ag-rXy" secondAttribute="bottom" constant="20" id="Oij-fz-9nD">
-                            <variation key="widthClass=compact" constant="0.0"/>
-                        </constraint>
-                        <constraint firstAttribute="bottom" secondItem="F9S-X3-Axq" secondAttribute="bottom" priority="250" constant="30" id="Otz-9i-giL"/>
-                        <constraint firstAttribute="bottom" secondItem="OYh-Cl-kdK" secondAttribute="bottom" priority="250" constant="30" id="PLK-Y2-AW3"/>
-                        <constraint firstAttribute="trailing" secondItem="OYh-Cl-kdK" secondAttribute="trailing" constant="100" id="U78-lK-29c"/>
                         <constraint firstItem="pyi-Yf-Ai7" firstAttribute="top" secondItem="YJO-Is-7zc" secondAttribute="top" constant="-25" id="W2L-nE-hlR"/>
                         <constraint firstItem="Un8-ag-rXy" firstAttribute="top" secondItem="Tnj-17-4nM" secondAttribute="bottom" constant="10" id="aZO-j5-mFQ"/>
                         <constraint firstItem="Un8-ag-rXy" firstAttribute="leading" secondItem="YJO-Is-7zc" secondAttribute="leading" constant="20" id="cWe-Wq-4AO"/>
+                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="F9S-X3-Axq" secondAttribute="bottom" constant="20" id="csc-aF-PCo"/>
                         <constraint firstItem="Un8-ag-rXy" firstAttribute="leading" secondItem="YJO-Is-7zc" secondAttribute="leading" constant="20" id="gMg-0f-kY6"/>
                         <constraint firstAttribute="trailing" secondItem="Un8-ag-rXy" secondAttribute="trailing" constant="20" id="hw8-hh-0jT"/>
                         <constraint firstAttribute="centerX" secondItem="pyi-Yf-Ai7" secondAttribute="centerX" id="k7z-CD-kt3"/>
                         <constraint firstItem="Ej0-jf-tRH" firstAttribute="top" secondItem="pyi-Yf-Ai7" secondAttribute="bottom" constant="11" id="mkE-eI-W7F">
                             <variation key="widthClass=compact" constant="8"/>
                         </constraint>
-                        <constraint firstItem="OYh-Cl-kdK" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Un8-ag-rXy" secondAttribute="bottom" constant="20" id="mny-OA-a6L">
-                            <variation key="widthClass=compact" constant="0.0"/>
-                        </constraint>
                         <constraint firstItem="pyi-Yf-Ai7" firstAttribute="centerX" secondItem="Tnj-17-4nM" secondAttribute="centerX" id="ofJ-l8-nJL"/>
-                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="OYh-Cl-kdK" secondAttribute="bottom" constant="30" id="w36-DR-jsj">
-                            <variation key="widthClass=compact" constant="0.0"/>
-                        </constraint>
-                        <constraint firstAttribute="bottom" secondItem="F9S-X3-Axq" secondAttribute="bottom" constant="30" id="yd7-4s-8RH">
-                            <variation key="widthClass=compact" constant="0.0"/>
-                        </constraint>
+                        <constraint firstItem="F9S-X3-Axq" firstAttribute="top" secondItem="Un8-ag-rXy" secondAttribute="bottom" priority="750" constant="38" id="z1A-sb-mbE"/>
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
@@ -180,22 +157,14 @@
                             <exclude reference="cWe-Wq-4AO"/>
                             <exclude reference="gMg-0f-kY6"/>
                             <exclude reference="hw8-hh-0jT"/>
-                            <exclude reference="Oij-fz-9nD"/>
-                            <exclude reference="Otz-9i-giL"/>
                             <exclude reference="2vc-iU-yWu"/>
                             <exclude reference="W2L-nE-hlR"/>
-                            <exclude reference="mny-OA-a6L"/>
-                            <exclude reference="w36-DR-jsj"/>
                         </mask>
                     </variation>
                     <variation key="widthClass=compact">
                         <mask key="constraints">
                             <include reference="cWe-Wq-4AO"/>
                             <include reference="hw8-hh-0jT"/>
-                            <include reference="Oij-fz-9nD"/>
-                            <include reference="Otz-9i-giL"/>
-                            <include reference="mny-OA-a6L"/>
-                            <include reference="w36-DR-jsj"/>
                         </mask>
                     </variation>
                 </view>
@@ -241,7 +210,7 @@
         </view>
     </objects>
     <resources>
-        <image name="pie_like" width="36" height="40"/>
+        <image name="pie_like" width="42" height="42"/>
         <image name="psps.png" width="640" height="1136"/>
     </resources>
 </document>

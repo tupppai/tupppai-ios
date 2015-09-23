@@ -54,39 +54,60 @@
     _rightImageView.clipsToBounds = YES;
     if (_assetsArray.count == 1) {
         _leftImageView.image = [Util getImageFromAsset:[_assetsArray objectAtIndex:0] type:ASSET_PHOTO_SCREEN_SIZE];
-        _rightImageView.image = [UIImage imageNamed:@"plus_sign"];
+        _rightImageView.image = [UIImage imageNamed:@"plus_sign.jpg"];
+        UITapGestureRecognizer* tapGesure = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(iWantSelecteMorePhoto)];
+        _rightImageView.userInteractionEnabled = YES;
+        [_rightImageView addGestureRecognizer:tapGesure];
         _imageArray = [NSArray arrayWithObject:_leftImageView.image];
     } else if (_assetsArray.count == 2) {
         _leftImageView.image = [Util getImageFromAsset:[_assetsArray objectAtIndex:0] type:ASSET_PHOTO_SCREEN_SIZE];
         _rightImageView.image = [Util getImageFromAsset:[_assetsArray objectAtIndex:1] type:ASSET_PHOTO_SCREEN_SIZE];
          _imageArray = [NSArray arrayWithObjects:_leftImageView.image,_rightImageView.image,nil];
     }
+    
+    if (_hideSecondView) {
+        _rightImageView.hidden = YES;
+    }
+}
+-(void) iWantSelecteMorePhoto {
+    NSLog(@"iWantSelecteMoreOPhoto");
+    [self.navigationController popViewControllerAnimated:YES];
 }
 -(void) tapNext {
     if (_inputTextView.text.length == 0) {
             [self showWarnLabel];
     } else {
-//        NSDictionary* uploadManager = [NSDictionary dictionaryWithObjectsAndKeys:_inputTextView.text,@"text",_imageArray,@"imageArray", nil];
-//        [UIView animateWithDuration:0.2 animations:^{
-////            self.navigationController.viewControllers = @[];
-//            DDTabBarController *lvc = [[DDTabBarController alloc] init];
-//            [AppDelegate APP].window.rootViewController = lvc;
-//        }];
-        [self upload];
+        if (_type == PIEUploadTypeAsk) {
+            [self uploadAsk];
+        } else if (_type = PIEUploadTypeReply) {
+            [self uploadReply];
+        }
     }
 }
--(void) upload {
-    NSLog(@"upload");
-    NSLog(@"_imageArray.count %zd",_imageArray.count);
-
+-(void) uploadReply {
+    [Hud activity:@"上传中" inView:self.view];
+    [self uploadImage1:^(BOOL success) {
+        if (success) {
+            [self uploadAskRestInfo:^(BOOL success) {
+                if (success) {
+                    [self setTabBarToBeRootViewController];
+                }
+            }];
+        }
+    }]
+}
+-(void) uploadAsk {
+    [Hud activity:@"上传中" inView:self.view];
     if (_imageArray.count == 2) {
         [self uploadImage1:^(BOOL success) {
             if (success) {
-                [Hud success:@"第一次传图成功"];
                 [self uploadImage2:^(BOOL success) {
                     if (success) {
-                        [Hud success:@"第二次传图成功"];
-                        [self uploadMulti];
+                        [self uploadAskRestInfo:^(BOOL success) {
+                            if (success) {
+                                [self setTabBarToBeRootViewController];
+                            }
+                        }];
                     }
                 }];
             }
@@ -94,14 +115,16 @@
     } else if (_imageArray.count == 1) {
         [self uploadImage1:^(BOOL success) {
             if (success) {
-                [Hud success:@"传图成功"];
+                [self uploadAskRestInfo:^(BOOL success) {
+                    if (success) {
+                        [self setTabBarToBeRootViewController];
+                    }
+                }];
             }
         }];
     }
 }
 - (void) uploadImage2:(void (^)(BOOL success))block {
-    NSLog(@"uploadImage2");
-
     NSData *data = UIImageJPEGRepresentation(_imageArray[1], 1.0);
     ATOMUploadImage *uploadImage = [ATOMUploadImage new];
     [uploadImage UploadImage:data WithBlock:^(ATOMImage *imageInfo, NSError *error) {
@@ -119,7 +142,6 @@
 }
 
 - (void) uploadImage1:(void (^)(BOOL success))block {
-    NSLog(@"uploadImage1");
         NSData *data = UIImageJPEGRepresentation(_imageArray[0], 1.0);
         ATOMUploadImage *uploadImage = [ATOMUploadImage new];
         [uploadImage UploadImage:data WithBlock:^(ATOMImage *imageInfo, NSError *error) {
@@ -136,17 +158,27 @@
         }];
 }
 
-- (void)uploadMulti {
-    NSLog(@"uploadMulti");
-
+- (void)uploadAskRestInfo:(void (^) (BOOL success))block {
     WS(ws);
-    [DDService ddSaveAsk:[ws generateParam] withBlock:^(NSInteger newImageID) {
+    
+    NSArray* uploadIds;
+    if (_assetsArray.count == 2) {
+        uploadIds = [NSArray arrayWithObjects:@(_imageInfo1.imageID),@(_imageInfo2.imageID), nil];
+    } else {
+        uploadIds = [NSArray arrayWithObjects:@(_imageInfo1.imageID), nil];
+    }
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    [param setObject:uploadIds forKey:@"upload_ids"];
+    [param setObject:_inputTextView.text forKey:@"desc"];
+
+    
+    [DDService ddSaveAsk:param withBlock:^(NSInteger newImageID) {
         if (newImageID) {
             [Hud dismiss:self.view];
-            [Hud success:@"求P成功"];
-//            [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:@"shouldNavToAskSegment"];
-//            [[NSUserDefaults standardUserDefaults] synchronize];
-            
+            [Hud dismiss];
+            [self.view endEditing:YES];
+            [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:@"shouldNavToAskSegment"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
 //            NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithInteger:newImageID],@"ID",[NSNumber numberWithInteger:newImageID],@"askID",@(ATOMPageTypeAsk),@"type", nil];
 //            DDInviteVC *ivc = [DDInviteVC new];
 //            ws.newAskPageViewModel.ID = newImageID;
@@ -154,19 +186,25 @@
 //            ivc.info = info;
 //            ivc.showNext = YES;
 //            [self pushViewController:ivc animated:YES];
+            if  (block) {
+                block(YES);
+            }
         } else {
+            if  (block) {
+                block(NO);
+            }
             self.navigationItem.rightBarButtonItem.enabled = YES;
             [Hud error:@"求P失败,请检查你的网络"];
         }
     }];
 }
 
-- (NSDictionary *)generateParam{
-        NSArray* uploadIds = [NSArray arrayWithObjects:@(_imageInfo1.imageID),@(_imageInfo2.imageID), nil];
-        NSMutableDictionary *param = [NSMutableDictionary new];
-        [param setObject:uploadIds forKey:@"upload_ids"];
-        [param setObject:_inputTextView.text forKey:@"desc"];
-        return [param copy];
+- (void)uploadReplyRestInfo:(void (^) (BOOL success))block {
+}
+
+-(void)setTabBarToBeRootViewController {
+    DDTabBarController *lvc = [[DDTabBarController alloc] init];
+    [AppDelegate APP].window.rootViewController = lvc;
 }
 -(void)showWarnLabel {
     [TSMessage showNotificationWithTitle:@"求p内容不能为空"

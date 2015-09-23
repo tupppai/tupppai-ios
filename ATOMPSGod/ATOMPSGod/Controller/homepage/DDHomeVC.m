@@ -175,7 +175,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cameraView];
     self.navigationItem.rightBarButtonItems = @[negativeSpacer, rightButtonItem];
 
-    _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"求P",@"热门"]];
+    _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"求P",@"作品"]];
     _segmentedControl.frame = CGRectMake(0, 120, 200, 45);
     _segmentedControl.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor darkGrayColor], NSForegroundColorAttributeName, nil];
     _segmentedControl.selectedTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil];

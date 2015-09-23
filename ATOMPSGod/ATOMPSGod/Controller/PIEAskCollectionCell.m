@@ -16,6 +16,7 @@
     _avatarView.clipsToBounds = YES;
     _leftImageView.clipsToBounds = YES;
     _rightImageView.clipsToBounds = YES;
+    _contentLabel.text = @"";
 }
 
 //put a needle injecting into cell's ass.
@@ -39,6 +40,8 @@
                 make.width.equalTo(@(0));
         }];
     }
-//    _contentLabel.text = @"";
+    
+    _contentLabel.text = vm.content;
+    [self updateConstraintsIfNeeded];
 }
 @end

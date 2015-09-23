@@ -441,6 +441,7 @@
 		F46117ED1BAE52E1001A6F1A /* PIEEliteTableViewCellHot.xib in Resources */ = {isa = PBXBuildFile; fileRef = F46117EB1BAE52E1001A6F1A /* PIEEliteTableViewCellHot.xib */; settings = {ASSET_TAGS = (); }; };
 		F46117F01BAE556B001A6F1A /* PIEEliteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F46117EF1BAE556B001A6F1A /* PIEEliteViewController.m */; settings = {ASSET_TAGS = (); }; };
 		F46117F31BAE558C001A6F1A /* PIEEliteScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F46117F21BAE558C001A6F1A /* PIEEliteScrollView.m */; settings = {ASSET_TAGS = (); }; };
+		F462A0511BB254570058EAF4 /* plus_sign.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F462A0501BB254570058EAF4 /* plus_sign.jpg */; settings = {ASSET_TAGS = (); }; };
 		F472054B1BABA5B900E0ADA0 /* PIEProceedingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F472054A1BABA5B900E0ADA0 /* PIEProceedingViewController.m */; };
 		F472054E1BABA63000E0ADA0 /* PIEProceedingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F472054D1BABA63000E0ADA0 /* PIEProceedingScrollView.m */; };
 		F47205521BABE87D00E0ADA0 /* PIEMyAskCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F47205501BABE87D00E0ADA0 /* PIEMyAskCollectionCell.m */; };
@@ -1334,6 +1335,7 @@
 		F46117EF1BAE556B001A6F1A /* PIEEliteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteViewController.m; sourceTree = "<group>"; };
 		F46117F11BAE558C001A6F1A /* PIEEliteScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteScrollView.h; sourceTree = "<group>"; };
 		F46117F21BAE558C001A6F1A /* PIEEliteScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteScrollView.m; sourceTree = "<group>"; };
+		F462A0501BB254570058EAF4 /* plus_sign.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = plus_sign.jpg; sourceTree = "<group>"; };
 		F47205491BABA5B900E0ADA0 /* PIEProceedingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEProceedingViewController.h; sourceTree = "<group>"; };
 		F472054A1BABA5B900E0ADA0 /* PIEProceedingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEProceedingViewController.m; sourceTree = "<group>"; };
 		F472054C1BABA63000E0ADA0 /* PIEProceedingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIEProceedingScrollView.h; path = ../View/homepage/PIEProceedingScrollView.h; sourceTree = "<group>"; };
@@ -1997,6 +1999,7 @@
 			children = (
 				F48671021BB10204003D8A0A /* cellBG.png */,
 				E9FF949E1B745B9D00F06819 /* introduction */,
+				F462A0501BB254570058EAF4 /* plus_sign.jpg */,
 				E93D23821B3D26320081F632 /* shareIcon.png */,
 				5C7861241AAF4DD200E87C77 /* bg_main@2x.png */,
 			);
@@ -3356,6 +3359,7 @@
 				F47205581BABFDFF00E0ADA0 /* PIEDoneCollectionViewCell.xib in Resources */,
 				E9FF94A51B745BAA00F06819 /* intro3.png in Resources */,
 				E93D23831B3D26320081F632 /* shareIcon.png in Resources */,
+				F462A0511BB254570058EAF4 /* plus_sign.jpg in Resources */,
 				F46117E81BAE52CD001A6F1A /* PIEEliteTableViewCellFollow.xib in Resources */,
 				3B11C0441BA27ADB00B87165 /* PIEHotTableCell.xib in Resources */,
 				E94289821B5B32A200ED26E4 /* NotificationButtonBackground.png in Resources */,

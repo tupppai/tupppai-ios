@@ -7,6 +7,15 @@
 //
 
 #import "DDBaseVC.h"
+
+typedef NS_ENUM(NSInteger, PIEUploadType) {
+    PIEUploadTypeAsk = 0,
+    PIEUploadTypeReply
+};
+
 @interface PIEUploadVC : DDBaseVC
 @property (nonatomic,copy) NSArray* assetsArray;
+@property (nonatomic,assign) BOOL hideSecondView;
+@property (nonatomic,assign) PIEUploadType type;
+
 @end

@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 
+@property (weak, nonatomic) IBOutlet UIButton *likeButton;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, assign) NSInteger currentPage;
 
@@ -41,7 +42,8 @@
     _carousel.dataSource = self;
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
-    
+    [_likeButton setImage:[UIImage imageNamed:@"pie_like_selected"] forState:UIControlStateSelected];
+    [_likeButton setImage:[UIImage imageNamed:@"pie_like_selected"] forState:UIControlStateHighlighted];
 
 }
 
@@ -49,10 +51,13 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (IBAction)tapLikeButton:(id)sender {
+    NSLog(@"tapLikeButton");
+}
 
 - (void)setupBlurredImage
 {
-    
+    WS(ws);
     dispatch_queue_t backgroundQueue = dispatch_queue_create("com.mycompany.myqueue", 0);
     
     dispatch_async(backgroundQueue, ^{
@@ -72,7 +77,7 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
         [UIView animateWithDuration:1 animations:^{
-            self.blurView.image = [UIImage imageWithCGImage:cgImage];
+            ws.blurView.image = [UIImage imageWithCGImage:cgImage];
         }];
         });
 

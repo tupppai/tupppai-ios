@@ -63,6 +63,7 @@
     _imageHeight = homeImage.imageHeight;
     NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:homeImage.uploadTime];
     _publishTime = [Util formatPublishTime:publishDate];
+    _content = homeImage.userDescription;
 
     if (homeImage.totalPraiseNumber>999999) {
         _likeCount = kfcMaxNumberString;
@@ -106,8 +107,7 @@
         _imageHeight = entity.imageHeight;
         NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:entity.uploadTime];
         _publishTime = [Util formatPublishTime:publishDate];
-//        _askImageModelArray = entity.askImageModelArray;
-
+        _content = entity.userDescription;
         if (entity.totalPraiseNumber>999999) {
             _likeCount = kfcMaxNumberString;
         } else {
@@ -146,7 +146,7 @@
         
         NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:entity.uploadTime];
         _publishTime = [Util formatPublishTime:publishDate];
-        
+        _content = entity.userDescription;
         _likeCount = [NSString stringWithFormat:@"%d",(int)entity.totalPraiseNumber];
         _shareCount = [NSString stringWithFormat:@"%d",(int)entity.totalShareNumber];
         _commentNumber = [NSString stringWithFormat:@"%d",(int)entity.totalCommentNumber];

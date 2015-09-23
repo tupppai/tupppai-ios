@@ -50,9 +50,12 @@
     //    [self.navigationController pushViewController:self.QBImagePickerController animated:YES];
 
 //    DDNavigationController* nav = [[DDNavigationController alloc]initWithRootViewController:self.QBImagePickerController];
+    self.QBImagePickerController.maximumNumberOfSelection = 2;
     [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
 }
 - (void)tapOnG2 {
+    self.QBImagePickerController.maximumNumberOfSelection = 1;
+    [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
     
 }
 - (void)dismissViewController {
@@ -88,6 +91,9 @@
     }
     PIEUploadVC* vc = [PIEUploadVC new];
     vc.assetsArray = assets;
+    if (imagePickerController.maximumNumberOfSelection == 1) {
+        vc.hideSecondView = YES;
+    }
     [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
 }
 
