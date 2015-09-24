@@ -67,13 +67,12 @@ static int collumnNumber = 3;
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     [DDMyAskManager getMyAsk:param withBlock:^(NSMutableArray *resultArray) {
-        for (PIEPageEntity *homeImage in resultArray) {
-            DDPageVM *homepageViewModel = [DDPageVM new];
-            [homepageViewModel setViewModelData:homeImage];
+        for (PIEPageEntity *entity in resultArray) {
+            DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
             ATOMAskViewModel *askViewModel = [ATOMAskViewModel new];
-            [askViewModel setViewModelData:homeImage];
+            [askViewModel setViewModelData:entity];
             [ws.dataSource addObject:askViewModel];
-            [ws.homeImageDataSource addObject:homepageViewModel];
+            [ws.homeImageDataSource addObject:vm];
         }
         [[KShareManager mascotAnimator]dismiss];
         ws.collectionView.dataSource = self;
@@ -93,13 +92,12 @@ static int collumnNumber = 3;
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     [DDMyAskManager getMyAsk:param withBlock:^(NSMutableArray *resultArray) {
-        for (PIEPageEntity *homeImage in resultArray) {
-            DDPageVM *homepageViewModel = [DDPageVM new];
-            [homepageViewModel setViewModelData:homeImage];
+        for (PIEPageEntity *entity in resultArray) {
+            DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
             ATOMAskViewModel *askViewModel = [ATOMAskViewModel new];
-            [askViewModel setViewModelData:homeImage];
+            [askViewModel setViewModelData:entity];
             [ws.dataSource addObject:askViewModel];
-            [ws.homeImageDataSource addObject:homepageViewModel];
+            [ws.homeImageDataSource addObject:vm];
         }
         if (resultArray.count == 0) {
             ws.canRefreshFooter = NO;

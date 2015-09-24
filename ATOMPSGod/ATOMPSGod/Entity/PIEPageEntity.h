@@ -12,9 +12,9 @@
 @interface PIEPageEntity : ATOMBaseModel <MTLFMDBSerializing>
 
 /**
- *  作品ID
+ *  自己的ID
  */
-@property (nonatomic, assign) NSInteger imageID;
+@property (nonatomic, assign) NSInteger ID;
 @property (nonatomic, assign) NSInteger askID;
 @property (nonatomic, assign) bool liked;
 @property (nonatomic, assign) bool collected;
@@ -25,7 +25,7 @@
 /**
  *  求P，作品：ATOMPageTypeAsk ,ATOMPageTypeReply
  */
-@property (nonatomic, assign) int type;
+@property (nonatomic, assign) NSInteger type;
 /**
  *  求P人 ID
  */

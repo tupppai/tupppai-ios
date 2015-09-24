@@ -25,6 +25,8 @@ typedef NS_ENUM(NSInteger, PIEPageType) {
 @interface DDPageVM : NSObject
 
 @property (nonatomic, assign) NSInteger ID;
+@property (nonatomic, assign) NSInteger askID;
+
 @property (nonatomic, assign) NSInteger type;
 
 @property (nonatomic, assign) NSInteger userID;
@@ -55,12 +57,12 @@ typedef NS_ENUM(NSInteger, PIEPageType) {
 @property (nonatomic, strong) NSString *imageURL2;
 
 
-- (void)setViewModelData:(PIEPageEntity *)homeImage;
+//- (void)setViewModelData:(PIEPageEntity *)homeImage;
 -(void)setViewModelWithCommon:(DDCommentPageVM*)commonViewModel;
 - (void)setViewModelDataWithDetailPage:(ATOMDetailPage *)page;
 - (void)toggleLike;
 -(DDCommentPageVM*)generatepageDetailViewModel;
-- (instancetype)initWithAskEntity:(PIEPageEntity *)entity ;
+- (instancetype)initWithPageEntity:(PIEPageEntity *)entity ;
 - (instancetype)initWithFollowEntity:(PIEEliteEntity *)entity;
 @end
 

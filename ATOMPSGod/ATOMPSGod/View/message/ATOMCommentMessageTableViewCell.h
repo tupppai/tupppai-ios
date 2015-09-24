@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class DDCommentMsgVM;
+#import "DDCommentMsgVM.h"
 
 @interface ATOMCommentMessageTableViewCell : UITableViewCell
 

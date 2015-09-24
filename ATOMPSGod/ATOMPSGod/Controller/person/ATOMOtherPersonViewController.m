@@ -103,21 +103,19 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
             if (user) {
                 [self updateUserInterface:user];
             }
-            for (PIEPageEntity *homeImage in askReturnArray) {
-                DDPageVM *homepageViewModel = [DDPageVM new];
-                [homepageViewModel setViewModelData:homeImage];
+            for (PIEPageEntity *entity in askReturnArray) {
+                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
                 ATOMAskViewModel *askViewModel = [ATOMAskViewModel new];
-                [askViewModel setViewModelData:homeImage];
+                [askViewModel setViewModelData:entity];
                 [ws.uploadDataSource addObject:askViewModel];
-                [ws.uploadHomeImageDataSource addObject:homepageViewModel];
+                [ws.uploadHomeImageDataSource addObject:vm];
             }
-            for (PIEPageEntity *homeImage in replyReturnArray) {
-                DDPageVM *homepageViewModel = [DDPageVM new];
-                [homepageViewModel setViewModelData:homeImage];
+            for (PIEPageEntity *entity in replyReturnArray) {
+                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
                 ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];
-                [replyViewModel setViewModelData:homeImage];
+                [replyViewModel setViewModelData:entity];
                 [ws.workDataSource addObject:replyViewModel];
-                [ws.workHomeImageDataSource addObject:homepageViewModel];
+                [ws.workHomeImageDataSource addObject:vm];
             }
         if (ws.otherPersonView.scrollView.currentType == ATOMOtherPersonCollectionViewTypeAsk) {
             [ws.otherPersonView.scrollView.otherPersonUploadCollectionView reloadData];
@@ -160,21 +158,19 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
             if (user) {
                 [self updateUserInterface:user];
             }
-            for (PIEPageEntity *homeImage in askReturnArray) {
-                DDPageVM *homepageViewModel = [DDPageVM new];
-                [homepageViewModel setViewModelData:homeImage];
+            for (PIEPageEntity *entity in askReturnArray) {
+                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
                     ATOMAskViewModel *askViewModel = [ATOMAskViewModel new];
-                    [askViewModel setViewModelData:homeImage];
+                    [askViewModel setViewModelData:entity];
                     [ws.uploadDataSource addObject:askViewModel];
-                    [ws.uploadHomeImageDataSource addObject:homepageViewModel];
+                    [ws.uploadHomeImageDataSource addObject:vm];
             }
-            for (PIEPageEntity *homeImage in replyReturnArray) {
-                DDPageVM *homepageViewModel = [DDPageVM new];
-                [homepageViewModel setViewModelData:homeImage];
+            for (PIEPageEntity *entity in replyReturnArray) {
+                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
                     ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];
-                    [replyViewModel setViewModelData:homeImage];
+                    [replyViewModel setViewModelData:entity];
                     [ws.workDataSource addObject:replyViewModel];
-                    [ws.workHomeImageDataSource addObject:homepageViewModel];
+                    [ws.workHomeImageDataSource addObject:vm];
             }
         if (ws.otherPersonView.scrollView.currentType == ATOMOtherPersonCollectionViewTypeAsk) {
             [ws.otherPersonView.scrollView.otherPersonUploadCollectionView reloadData];

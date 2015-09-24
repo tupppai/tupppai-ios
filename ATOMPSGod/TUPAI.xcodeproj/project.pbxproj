@@ -420,6 +420,7 @@
 		F40207431BA7C4160007CE02 /* VVBlurViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F402073F1BA7C4160007CE02 /* VVBlurViewController.m */; };
 		F409AA871BAFE39000736B0D /* PIEImageEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = F409AA861BAFE39000736B0D /* PIEImageEntity.m */; settings = {ASSET_TAGS = (); }; };
 		F409AA8A1BB0F04C00736B0D /* PIEAskImageDao.m in Sources */ = {isa = PBXBuildFile; fileRef = F409AA891BB0F04C00736B0D /* PIEAskImageDao.m */; settings = {ASSET_TAGS = (); }; };
+		F4155D461BB3DA1300A0B045 /* PIECountLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4155D451BB3DA1300A0B045 /* PIECountLabel.m */; settings = {ASSET_TAGS = (); }; };
 		F41E99911BA5BBC8005010C7 /* test1.png in Resources */ = {isa = PBXBuildFile; fileRef = F41E99901BA5BBC8005010C7 /* test1.png */; };
 		F46117D61BAD1101001A6F1A /* IQNSArray+Sort.m in Sources */ = {isa = PBXBuildFile; fileRef = F46117B41BAD1101001A6F1A /* IQNSArray+Sort.m */; settings = {ASSET_TAGS = (); }; };
 		F46117D71BAD1101001A6F1A /* IQUITextFieldView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = F46117B61BAD1101001A6F1A /* IQUITextFieldView+Additions.m */; settings = {ASSET_TAGS = (); }; };
@@ -1294,6 +1295,8 @@
 		F409AA861BAFE39000736B0D /* PIEImageEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEImageEntity.m; sourceTree = "<group>"; };
 		F409AA881BB0F04C00736B0D /* PIEAskImageDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEAskImageDao.h; sourceTree = "<group>"; };
 		F409AA891BB0F04C00736B0D /* PIEAskImageDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEAskImageDao.m; sourceTree = "<group>"; };
+		F4155D441BB3DA1300A0B045 /* PIECountLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECountLabel.h; sourceTree = "<group>"; };
+		F4155D451BB3DA1300A0B045 /* PIECountLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECountLabel.m; sourceTree = "<group>"; };
 		F41E99901BA5BBC8005010C7 /* test1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test1.png; sourceTree = "<group>"; };
 		F46117B31BAD1101001A6F1A /* IQNSArray+Sort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQNSArray+Sort.h"; sourceTree = "<group>"; };
 		F46117B41BAD1101001A6F1A /* IQNSArray+Sort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQNSArray+Sort.m"; sourceTree = "<group>"; };
@@ -1733,6 +1736,8 @@
 				5C4F88491AB56F180042E9BA /* ATOMShareView.m */,
 				5C561A801AB7FC0B0052D4D5 /* ATOMHomepageCustomTitleView.h */,
 				5C561A811AB7FC0B0052D4D5 /* ATOMHomepageCustomTitleView.m */,
+				F4155D441BB3DA1300A0B045 /* PIECountLabel.h */,
+				F4155D451BB3DA1300A0B045 /* PIECountLabel.m */,
 			);
 			path = homepage;
 			sourceTree = "<group>";
@@ -2234,6 +2239,7 @@
 				5C6CE6B81ADBE8A10035F522 /* EmojisList.plist */,
 				5CDB05D31AA3FE520089121E /* LaunchScreen.xib */,
 				E900AB5A1B450E970019BAEA /* Images.xcassets */,
+				F40593CD1BB2BF1400EBC23F /* New Group */,
 				5CDB05C41AA3FE520089121E /* Supporting Files */,
 			);
 			name = TUPAI;
@@ -3145,6 +3151,13 @@
 			name = VVBlur;
 			sourceTree = "<group>";
 		};
+		F40593CD1BB2BF1400EBC23F /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "New Group";
+			sourceTree = "<group>";
+		};
 		F46117B11BAD1101001A6F1A /* IQKeyBoardManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -3690,6 +3703,7 @@
 				F40207401BA7C4160007CE02 /* VVBlurPresentationController.m in Sources */,
 				E9F890CF1B86FE6B0057ECBF /* UIResponder+SLKAdditions.m in Sources */,
 				E94B03221B7C74E500863C6F /* DDCommentTextView.m in Sources */,
+				F4155D461BB3DA1300A0B045 /* PIECountLabel.m in Sources */,
 				5C6697B61AAFED63001FCF8A /* ATOMProceedingViewController.m in Sources */,
 				E93ED5261B7F25F00035630B /* UITableView+FDTemplateLayoutCell.m in Sources */,
 				E900919D1B71E04E004623E4 /* DDInputAuthcodePwdFPVC.m in Sources */,

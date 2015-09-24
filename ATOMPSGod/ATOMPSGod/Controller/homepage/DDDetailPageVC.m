@@ -284,7 +284,7 @@ static NSString *CellIdentifier = @"HotDetailCell";
     [param setObject:@(5) forKey:@"size"];
     [param setObject:@(_fold) forKey:@"fold"];
     DDHotDetailManager *showDetailOfHomePage = [DDHotDetailManager new];
-    [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.askVM.ID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
+    [showDetailOfHomePage fetchAllReply:param ID:ws.askVM.ID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
         //第一张图片为首页点击的图片，剩下的图片为回复图片
         ws.dataSource = nil;
         ws.dataSource = [NSMutableArray array];
@@ -317,7 +317,7 @@ static NSString *CellIdentifier = @"HotDetailCell";
     [param setObject:@(10) forKey:@"size"];
     [param setObject:@(_fold) forKey:@"fold"];
     DDHotDetailManager *showDetailOfHomePage = [DDHotDetailManager new];
-    [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:ws.askVM.ID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
+    [showDetailOfHomePage fetchAllReply:param ID:ws.askVM.ID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
         for (ATOMDetailPage *detailImage in detailOfHomePageArray) {
             DDHotDetailPageVM *model = [DDHotDetailPageVM new];
             [model setViewModelDataWithDetailImage:detailImage];

@@ -7,7 +7,7 @@
 //
 
 #import "DDBaseVC.h"
-
+#import "DDCommentMsgVM.h"
 @interface DDMsgCommentVC : DDBaseVC
 
 @end

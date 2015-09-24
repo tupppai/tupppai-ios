@@ -13,7 +13,7 @@
 @property (nonatomic,assign)  BOOL toExpand;
 @property (nonatomic,assign)  CGSize expandedSize;
 @property (nonatomic,assign)  CGSize shrinkedSize;
-
+@property (strong, nonatomic)  UIImageView *originView;
 @property (strong, nonatomic)  UIImageView *leftView;
 @property (strong, nonatomic)  UIImageView *rightView;
 

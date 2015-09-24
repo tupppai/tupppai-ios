@@ -89,14 +89,14 @@
                             </mask>
                         </variation>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hot_like" translatesAutoresizingMaskIntoConstraints="NO" id="9pm-mC-ohz">
-                        <rect key="frame" x="338" y="317" width="20" height="22.5"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pieLike" highlightedImage="pieLike_selected" translatesAutoresizingMaskIntoConstraints="NO" id="9pm-mC-ohz">
+                        <rect key="frame" x="348" y="317" width="15" height="22.5"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="23" id="0hm-XX-BUG"/>
-                            <constraint firstAttribute="width" constant="20" id="9Xx-Wf-JNH"/>
+                            <constraint firstAttribute="width" constant="15" id="9Xx-Wf-JNH"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hot_star" translatesAutoresizingMaskIntoConstraints="NO" id="pnn-QO-hWe">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hot_star" highlightedImage="hot_star_selected" translatesAutoresizingMaskIntoConstraints="NO" id="pnn-QO-hWe">
                         <rect key="frame" x="153.5" y="321" width="15" height="15"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="10" id="6kk-Cm-ixT"/>
@@ -109,10 +109,10 @@
                             </mask>
                         </variation>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fpc-h1-rIF" userLabel="1">
-                        <rect key="frame" x="350" y="320" width="7" height="15.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fpc-h1-rIF" userLabel="1" customClass="PIECountLabel">
+                        <rect key="frame" x="363" y="317" width="7" height="15.5"/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="11"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1223" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jLC-GI-IHG" userLabel="2">
@@ -133,9 +133,17 @@
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="new_reply_follow" highlightedImage="new_reply_followed" translatesAutoresizingMaskIntoConstraints="NO" id="ov8-cU-PvT">
+                        <rect key="frame" x="316" y="7" width="54" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="54" id="OrO-pM-E56"/>
+                            <constraint firstAttribute="height" constant="32" id="Zzu-Lg-WdJ"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <animations/>
                 <constraints>
+                    <constraint firstItem="ov8-cU-PvT" firstAttribute="centerY" secondItem="6r6-EV-L6Y" secondAttribute="centerY" id="3V7-7i-7Hc"/>
                     <constraint firstItem="6r6-EV-L6Y" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="48e-Q3-bEy"/>
                     <constraint firstItem="3C2-b6-uiL" firstAttribute="height" secondItem="iRj-zx-Mwj" secondAttribute="height" id="59I-DF-n2J"/>
                     <constraint firstItem="Qz0-1D-vqQ" firstAttribute="top" secondItem="tZ7-6S-wLe" secondAttribute="bottom" constant="8" id="5gv-vC-jHS"/>
@@ -146,7 +154,7 @@
                     <constraint firstItem="pnn-QO-hWe" firstAttribute="leading" secondItem="iRj-zx-Mwj" secondAttribute="trailing" constant="30" id="Bv6-aR-RE2"/>
                     <constraint firstItem="tZ7-6S-wLe" firstAttribute="bottom" secondItem="6r6-EV-L6Y" secondAttribute="bottom" constant="1" id="D2Z-TC-VWA"/>
                     <constraint firstItem="3C2-b6-uiL" firstAttribute="leading" secondItem="pnn-QO-hWe" secondAttribute="trailing" constant="40" id="Frf-Hi-UeW"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="9pm-mC-ohz" secondAttribute="trailing" constant="20" id="Hbr-pX-e9a"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="9pm-mC-ohz" secondAttribute="trailing" constant="15" id="Hbr-pX-e9a"/>
                     <constraint firstItem="jLC-GI-IHG" firstAttribute="centerY" secondItem="iRj-zx-Mwj" secondAttribute="centerY" id="HhB-hV-AWQ"/>
                     <constraint firstItem="XLA-1a-yzs" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Lrx-5Z-lns"/>
                     <constraint firstItem="yHw-He-aWh" firstAttribute="top" secondItem="XLA-1a-yzs" secondAttribute="bottom" constant="15" id="PrL-fm-1fD"/>
@@ -164,11 +172,12 @@
                     <constraint firstItem="pnn-QO-hWe" firstAttribute="centerY" secondItem="yHw-He-aWh" secondAttribute="centerY" id="epy-lS-vdl"/>
                     <constraint firstAttribute="trailingMargin" secondItem="fpc-h1-rIF" secondAttribute="trailing" constant="-8" id="f8a-Tx-Wkb"/>
                     <constraint firstItem="9pm-mC-ohz" firstAttribute="centerY" secondItem="yHw-He-aWh" secondAttribute="centerY" id="fqo-ae-J42"/>
-                    <constraint firstItem="9pm-mC-ohz" firstAttribute="top" secondItem="fpc-h1-rIF" secondAttribute="top" constant="-3" id="gSv-P4-vfd"/>
+                    <constraint firstItem="9pm-mC-ohz" firstAttribute="top" secondItem="fpc-h1-rIF" secondAttribute="top" id="gSv-P4-vfd"/>
                     <constraint firstItem="Q4v-Iy-D5n" firstAttribute="leading" secondItem="pnn-QO-hWe" secondAttribute="trailing" constant="2" id="gXK-GU-lCb"/>
                     <constraint firstItem="JY9-5E-X5F" firstAttribute="centerY" secondItem="3C2-b6-uiL" secondAttribute="centerY" id="hhN-RA-R9d"/>
                     <constraint firstItem="6r6-EV-L6Y" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="hln-EY-fQI"/>
                     <constraint firstItem="pnn-QO-hWe" firstAttribute="leading" secondItem="jLC-GI-IHG" secondAttribute="trailing" constant="15" id="i07-5o-Aiv"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="ov8-cU-PvT" secondAttribute="trailing" constant="8" id="joG-b2-u0X"/>
                     <constraint firstItem="tXl-3D-7si" firstAttribute="leading" secondItem="tZ7-6S-wLe" secondAttribute="leading" id="k1h-lb-A0o"/>
                     <constraint firstAttribute="bottomMargin" secondItem="yHw-He-aWh" secondAttribute="bottom" id="k3T-Vu-5qR"/>
                     <constraint firstItem="3C2-b6-uiL" firstAttribute="leading" secondItem="yHw-He-aWh" secondAttribute="trailing" constant="102" id="knK-hc-WYl"/>
@@ -178,7 +187,7 @@
                     <constraint firstItem="tXl-3D-7si" firstAttribute="leading" secondItem="6r6-EV-L6Y" secondAttribute="trailing" constant="8" id="s0u-bm-8pH"/>
                     <constraint firstItem="yHw-He-aWh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="tuc-Za-jOs"/>
                     <constraint firstItem="3C2-b6-uiL" firstAttribute="centerY" secondItem="yHw-He-aWh" secondAttribute="centerY" id="wrL-WH-Yke"/>
-                    <constraint firstItem="fpc-h1-rIF" firstAttribute="leading" secondItem="9pm-mC-ohz" secondAttribute="trailing" constant="-8" id="xHO-kw-iT0"/>
+                    <constraint firstItem="fpc-h1-rIF" firstAttribute="leading" secondItem="9pm-mC-ohz" secondAttribute="trailing" id="xHO-kw-iT0"/>
                     <constraint firstItem="iRj-zx-Mwj" firstAttribute="leading" secondItem="yHw-He-aWh" secondAttribute="trailing" constant="27" id="yIb-I1-oVn"/>
                 </constraints>
                 <variation key="default">
@@ -204,7 +213,7 @@
                 <outlet property="commentCountLabel" destination="JY9-5E-X5F" id="53P-gs-YHa"/>
                 <outlet property="commentView" destination="3C2-b6-uiL" id="Yoa-uA-xsg"/>
                 <outlet property="contentLabel" destination="XLA-1a-yzs" id="gv3-Sc-OfV"/>
-                <outlet property="likeCountLabel" destination="fpc-h1-rIF" id="RHA-qa-ldA"/>
+                <outlet property="likeCountLabel" destination="fpc-h1-rIF" id="0ab-3J-4BI"/>
                 <outlet property="likeView" destination="9pm-mC-ohz" id="R6e-gM-UYr"/>
                 <outlet property="nameLabel" destination="tXl-3D-7si" id="ba7-jS-co7"/>
                 <outlet property="shareCountLabel" destination="jLC-GI-IHG" id="EIZ-cT-s8C"/>
@@ -218,9 +227,13 @@
     <resources>
         <image name="hot_allwork" width="118" height="40"/>
         <image name="hot_comment" width="31" height="28"/>
-        <image name="hot_like" width="57" height="41"/>
         <image name="hot_share" width="30" height="33"/>
         <image name="hot_star" width="31" height="30"/>
+        <image name="hot_star_selected" width="15" height="15"/>
+        <image name="new_reply_follow" width="50" height="25"/>
+        <image name="new_reply_followed" width="61" height="30"/>
+        <image name="pieLike" width="18" height="18"/>
+        <image name="pieLike_selected" width="18" height="18"/>
         <image name="psps.png" width="640" height="1136"/>
     </resources>
 </document>

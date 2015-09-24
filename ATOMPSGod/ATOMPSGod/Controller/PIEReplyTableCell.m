@@ -27,12 +27,13 @@
     _avatarView.clipsToBounds = YES;
     _theImageView.contentMode = UIViewContentModeScaleAspectFill;
     _theImageView.clipsToBounds = YES;
+    _likeCountLabel.selected = YES;
 }
 - (void)initThumbAnimateView {
     _thumbView = [PIEThumbAnimateView new];
     [self insertSubview:_thumbView aboveSubview:_theImageView];
     [self bringSubviewToFront:_thumbView];
-    [_thumbView mas_remakeConstraints:^(MASConstraintMaker *make) {
+    [_thumbView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@100);
         make.height.equalTo(@100);
         make.trailing.equalTo(_theImageView);
@@ -66,17 +67,6 @@
         [_thumbView.leftView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
 
     }
-}
-
--(void)prepareForReuse {
-    [super prepareForReuse];
-    [_thumbView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.width.equalTo(@100);
-        make.height.equalTo(@100);
-        make.trailing.equalTo(_theImageView);
-        make.bottom.equalTo(_theImageView);
-    }];
-
 }
 
 - (void)animateToggleExpanded {

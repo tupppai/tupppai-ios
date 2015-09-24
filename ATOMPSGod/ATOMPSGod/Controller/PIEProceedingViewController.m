@@ -174,8 +174,7 @@
             _canRefreshToHelpFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
             for (PIEPageEntity *homeImage in resultArray) {
-                DDPageVM *vm = [DDPageVM new];
-                [vm setViewModelData:homeImage];
+                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:homeImage];
                 [sourceAgent addObject:vm];
             }
             [ws.sv.toHelpTableView.header endRefreshing];
@@ -204,8 +203,7 @@
             _canRefreshToHelpFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
             for (PIEPageEntity *homeImage in resultArray) {
-                DDPageVM *vm = [DDPageVM new];
-                [vm setViewModelData:homeImage];
+                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:homeImage];
                 [sourceAgent addObject:vm];
             }
             [ws.sv.toHelpTableView.footer endRefreshing];
@@ -446,8 +444,7 @@
             _canRefreshAskFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
             for (PIEPageEntity *homeImage in resultArray) {
-                DDPageVM *vm = [DDPageVM new];
-                [vm setViewModelData:homeImage];
+                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:homeImage];
                 [sourceAgent addObject:vm];
             }
             
@@ -477,8 +474,7 @@
             _canRefreshAskFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
             for (PIEPageEntity *homeImage in resultArray) {
-                DDPageVM *vm = [DDPageVM new];
-                [vm setViewModelData:homeImage];
+                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:homeImage];
                 [sourceAgent addObject:vm];
             }
             [ws.sourceAsk addObjectsFromArray:sourceAgent];

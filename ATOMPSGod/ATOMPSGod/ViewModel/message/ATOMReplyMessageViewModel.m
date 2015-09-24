@@ -32,7 +32,7 @@
     [df setDateFormat:@"yyyy年MM月dd日 HH时mm分"];
     NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:replyMessage.createTime];
     _publishTime = [df stringFromDate:publishDate];
-    [_homepageViewModel setViewModelData:replyMessage.homeImage];
+   _homepageViewModel = [[DDPageVM alloc]initWithPageEntity:replyMessage.homeImage];
 }
 
 @end

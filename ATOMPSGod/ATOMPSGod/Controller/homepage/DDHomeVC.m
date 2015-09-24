@@ -616,7 +616,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     NSMutableDictionary *param = [NSMutableDictionary new];
     double timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
-    [param setObject:@(10) forKey:@"size"];
+    [param setObject:@(15) forKey:@"size"];
     if (homeType == PIEHomeTypeAsk) {
         _currentAskIndex = 1;
         [_askCollectionView.footer endRefreshing];
@@ -625,16 +625,15 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     } else if (homeType == PIEHomeTypeHot) {
         _currentHotIndex = 1;
         [_hotTableView.footer endRefreshing];
-        [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
         [param setObject:@"hot" forKey:@"type"];
+        [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     }
     DDHomePageManager *pageManager = [DDHomePageManager new];
     [pageManager getHomepage:param withBlock:^(NSMutableArray *homepageArray, NSError *error) {
         if (homepageArray.count != 0 && error == nil) {
             NSMutableArray* arrayAgent = [NSMutableArray new];
-            for (PIEPageEntity *homeImage in homepageArray) {
-                DDPageVM *vm = [DDPageVM new];
-                [vm setViewModelData:homeImage];
+            for (PIEPageEntity *entity in homepageArray) {
+                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
                 [arrayAgent addObject:vm];
             }
             if (homeType == PIEHomeTypeHot) {
@@ -688,8 +687,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
         if (homepageArray && error == nil) {
             NSMutableArray* arrayAgent = [NSMutableArray new];
             for (PIEPageEntity *homeImage in homepageArray) {
-                DDPageVM *model = [DDPageVM new];
-                [model setViewModelData:homeImage];
+                DDPageVM *model = [[DDPageVM alloc]initWithPageEntity:homeImage];
                 [arrayAgent addObject:model];
             }
             if (homeType == PIEHomeTypeHot) {

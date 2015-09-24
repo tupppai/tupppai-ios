@@ -67,12 +67,11 @@ static float cellWidth;
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     [DDMyCollectionManager getMyCollection:param withBlock:^(NSMutableArray *resultArray) {
-        for (PIEPageEntity *homeImage in resultArray) {
-            DDPageVM *homepageViewModel = [DDPageVM new];
-            [homepageViewModel setViewModelData:homeImage];
-            [ws.homeImageDataSource addObject:homepageViewModel];
+        for (PIEPageEntity *entity in resultArray) {
+            DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+            [ws.homeImageDataSource addObject:vm];
             ATOMCollectionViewModel *collectionViewModel = [ATOMCollectionViewModel new];
-            [collectionViewModel setViewModelData:homeImage];
+            [collectionViewModel setViewModelData:entity];
             [ws.dataSource addObject:collectionViewModel];
         }
         _collectionView.dataSource = self;
@@ -94,12 +93,11 @@ static float cellWidth;
     [param setObject:@(15) forKey:@"size"];
 
     [DDMyCollectionManager getMyCollection:param withBlock:^(NSMutableArray *resultArray) {
-        for (PIEPageEntity* homeImage in resultArray) {
-            DDPageVM* homepageViewModel = [DDPageVM new];
-            [homepageViewModel setViewModelData:homeImage];
-            [ws.homeImageDataSource addObject:homepageViewModel];
+        for (PIEPageEntity* entity in resultArray) {
+            DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+            [ws.homeImageDataSource addObject:vm];
             ATOMCollectionViewModel *collectionViewModel = [ATOMCollectionViewModel new];
-            [collectionViewModel setViewModelData:homeImage];
+            [collectionViewModel setViewModelData:entity];
             [ws.dataSource addObject:collectionViewModel];
         }
         if (resultArray.count == 0) {

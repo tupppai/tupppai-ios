@@ -20,10 +20,10 @@
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
 @property (weak, nonatomic) IBOutlet UILabel *followCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *fansCountLabel;
-@property (weak, nonatomic) IBOutlet UILabel *likedCountLabel;
 @property (weak, nonatomic) IBOutlet UIView *topContainerView;
 @property (weak, nonatomic) IBOutlet UIView *pageMenuContainerView;
 
+@property (weak, nonatomic) IBOutlet UILabel *likedCountLabel;
 @property (nonatomic, strong) PWRefreshFooterCollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *homeImageDataSource;

@@ -53,8 +53,10 @@
 }
 - (IBAction)tapLikeButton:(id)sender {
     _likeButton.selected = !_likeButton.selected;
-    [DDService toggleLikeWithType:_currentVM.type ID:_currentVM.ID like:_likeButton.selected withBlock:^(BOOL success) {
-        if (!success) {
+    [DDService toggleLike:_likeButton.selected ID:_currentVM.ID type:_currentVM.type  withBlock:^(BOOL success) {
+        if (success) {
+            _pageVM.liked = _likeButton.selected;
+        } else {
             _likeButton.selected = !_likeButton.selected;
         }
     }];
@@ -71,7 +73,6 @@
         //create our blurred image
         CIContext *context = [CIContext contextWithOptions:nil];
         CIImage *inputImage = [CIImage imageWithCGImage:theImage.CGImage];
-        
         //setting up Gaussian Blur (we could use one of many filters offered by Core Image)
         CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
         [filter setValue:inputImage forKey:kCIInputImageKey];
@@ -99,7 +100,6 @@
     - (UIView *)carousel:(__unused iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
     {
         DDPageVM* vm = [_dataSource objectAtIndex:index];
-
         //create new view if no view is available for recycling
         if (view == nil)
         {
@@ -183,16 +183,15 @@
     [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(100) forKey:@"size"];
-    DDHotDetailManager *showDetailOfHomePage = [DDHotDetailManager new];
-    [showDetailOfHomePage ShowDetailOfHomePage:param withImageID:_pageVM.ID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
+    DDHotDetailManager *manager = [DDHotDetailManager new];
+    [manager fetchAllReply:param ID:_pageVM.ID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
         //第一张图片为首页点击的图片，剩下的图片为回复图片
         _dataSource = nil;
         _dataSource = [NSMutableArray array];
         [_dataSource addObject:_pageVM];
-        for (ATOMDetailPage *detailImage in detailOfHomePageArray) {
-            DDPageVM *model = [DDPageVM new];
-            [model setViewModelDataWithDetailPage:detailImage];
-            [_dataSource addObject:model];
+        for (PIEPageEntity *entity in detailOfHomePageArray) {
+            DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+            [_dataSource addObject:vm];
         }
         [self updateUIWithIndex:0];
         [_carousel reloadData];

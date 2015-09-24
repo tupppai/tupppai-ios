@@ -12,7 +12,7 @@
 @implementation ATOMProceedingViewModel
 
 - (void)setViewModelData:(PIEPageEntity *)homeImage {
-    _ID = homeImage.imageID;
+    _ID = homeImage.ID;
     _userID = homeImage.uid;
     _userName = homeImage.nickname;
 //    _userSex = (homeImage.sex == 1) ? @"man" :@"woman";

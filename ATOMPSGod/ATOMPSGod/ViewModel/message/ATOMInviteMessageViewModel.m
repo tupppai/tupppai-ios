@@ -16,7 +16,6 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _homepageViewModel = [DDPageVM new];
     }
     return self;
 }
@@ -31,7 +30,8 @@
     [df setDateFormat:@"yyyy年MM月dd日 HH时mm分"];
     NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:inviteMessage.createTime];
     _publishTime = [df stringFromDate:publishDate];
-    [_homepageViewModel setViewModelData:inviteMessage.homeImage];
+    _homepageViewModel = [[DDPageVM alloc]initWithPageEntity:inviteMessage.homeImage];
+
 }
 
 @end

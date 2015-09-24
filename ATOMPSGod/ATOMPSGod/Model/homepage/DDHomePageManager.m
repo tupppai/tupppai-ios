@@ -86,7 +86,7 @@
 - (NSArray *)getHomeImages {
     NSArray *array = [self.homeImageDAO selectHomeImages];
     for (PIEPageEntity *homeImage in array) {
-        homeImage.askImageModelArray = [PIEAskImageDao selectByID:homeImage.imageID];
+        homeImage.askImageModelArray = [PIEAskImageDao selectByID:homeImage.ID];
     }
     return array;
 }
@@ -95,7 +95,7 @@
     
     NSArray *array = [self.homeImageDAO selectHomeImagesWithHomeType:homeType];
     for (PIEPageEntity *homeImage in array) {
-        homeImage.askImageModelArray = [PIEAskImageDao selectByID:homeImage.imageID];
+        homeImage.askImageModelArray = [PIEAskImageDao selectByID:homeImage.ID];
     }
     return array;
 }

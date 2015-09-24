@@ -100,25 +100,32 @@
 }
 
 + (void)GET :(NSDictionary*)param withUrl:(NSString*)url withBlock:(void (^)(id responseObject))block {
-     [[DDSessionManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
-        if (ret == 1) {
-            if (block) {
-                block(responseObject);
+    if (url) {
+        [[DDSessionManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+            NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
+            if (ret == 1) {
+                if (block) {
+                    block(responseObject);
+                }
+            } else {
+                if (block) {
+                    block(nil);
+                }
             }
-        } else {
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
             if (block) {
                 block(nil);
             }
-        }
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        if (block) {
-            block(nil);
-        }
-    }];
+        }];
+    }
+    else if (block) {
+        block(nil);
+    }
 }
 
 + (void) POST :(NSDictionary*)param withUrl:(NSString*)url withBlock:(void (^)(id responseObject))block {
+    if (url) {
+
      [[DDSessionManager shareHTTPSessionManager] POST:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
          
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
@@ -136,5 +143,8 @@
             block(nil);
         }
     }];
+    } else if (block) {
+        block(nil);
+    }
 }
 @end

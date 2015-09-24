@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DDPageVM.h"
 #import "PIEThumbAnimateView.h"
+#import "PIECountLabel.h"
 
 //home reply
 @interface PIEReplyTableCell : UITableViewCell
@@ -26,7 +27,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *shareCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *collectCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *commentCountLabel;
-@property (weak, nonatomic) IBOutlet UILabel *likeCountLabel;
+@property (weak, nonatomic) IBOutlet PIECountLabel *likeCountLabel;
+
 @property (strong, nonatomic) PIEThumbAnimateView *thumbView;
 
 - (void)configCell:(DDPageVM *)viewModel row:(NSInteger)row;

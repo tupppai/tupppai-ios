@@ -40,7 +40,7 @@
         [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
             NSString *stmt = [MTLFMDBAdapter updateStatementForModel:page];
             NSMutableArray *param = [[MTLFMDBAdapter columnValues:page] mutableCopy];
-            [param addObject:@(page.imageID)];
+            [param addObject:@(page.ID)];
             BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
             if (flag) {
             } else {
@@ -98,7 +98,7 @@
     __block BOOL flag;
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
         NSString *stmt = @"select * from PIEPageEntity where imageID = ?";
-        NSArray *param = @[@(homeImage.imageID)];
+        NSArray *param = @[@(homeImage.ID)];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {
             PIEPageEntity *homeImage = [MTLFMDBAdapter modelOfClass:[PIEPageEntity class] fromFMResultSet:rs error:NULL];

@@ -16,7 +16,11 @@
     _avatarView.clipsToBounds = YES;
     _leftImageView.clipsToBounds = YES;
     _rightImageView.clipsToBounds = YES;
+    _leftImageView.contentMode = UIViewContentModeScaleAspectFill;
+    _rightImageView.contentMode = UIViewContentModeScaleAspectFill;
     _contentLabel.text = @"";
+    _leftImageView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.4];
+    _rightImageView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.4];
 }
 
 //put a needle injecting into cell's ass.

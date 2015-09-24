@@ -94,13 +94,12 @@ static int collumnNumber = 3;
     [param setObject:@(15) forKey:@"size"];
     
     [DDMyReplyManager getMyReply:param withBlock:^(NSMutableArray *resultArray) {
-        for (PIEPageEntity *homeImage in resultArray) {
-            DDPageVM *homepageViewModel = [DDPageVM new];
-            [homepageViewModel setViewModelData:homeImage];
+        for (PIEPageEntity *entity in resultArray) {
+            DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
             ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];
-            [replyViewModel setViewModelData:homeImage];
+            [replyViewModel setViewModelData:entity];
             [ws.dataSource addObject:replyViewModel];
-            [ws.homeImageDataSource addObject:homepageViewModel];
+            [ws.homeImageDataSource addObject:vm];
         }
         if (resultArray.count == 0) {
             ws.canRefreshFooter = NO;

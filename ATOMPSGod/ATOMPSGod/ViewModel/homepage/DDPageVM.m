@@ -51,63 +51,64 @@
 }
 
 
-- (void)setViewModelData:(PIEPageEntity *)homeImage {
-    _ID = homeImage.askID;
-    _userID = homeImage.uid;
-    _username = homeImage.nickname;
-    _imageURL = homeImage.imageURL;
-    _avatarURL = homeImage.avatar;
-    _liked = homeImage.liked;
-    _collected = homeImage.collected;
-    _imageWidth = homeImage.imageWidth;
-    _imageHeight = homeImage.imageHeight;
-    NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:homeImage.uploadTime];
+- (void)setViewModelData:(PIEPageEntity *)entity {
+    _ID = entity.askID;
+    _userID = entity.uid;
+    _username = entity.nickname;
+    _imageURL = entity.imageURL;
+    _avatarURL = entity.avatar;
+    _liked = entity.liked;
+    _collected = entity.collected;
+    _imageWidth = entity.imageWidth;
+    _imageHeight = entity.imageHeight;
+    NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:entity.uploadTime];
     _publishTime = [Util formatPublishTime:publishDate];
-    _content = homeImage.userDescription;
+    _content = entity.userDescription;
+    _type = entity.type;
+    _askImageModelArray = entity.askImageModelArray;
 
-    if (homeImage.totalPraiseNumber>999999) {
+    if (entity.totalPraiseNumber>999999) {
         _likeCount = kfcMaxNumberString;
     } else {
-        _likeCount = [NSString stringWithFormat:@"%zd",homeImage.totalPraiseNumber];
+        _likeCount = [NSString stringWithFormat:@"%zd",entity.totalPraiseNumber];
     }
-    if (homeImage.totalShareNumber>999999) {
+    if (entity.totalShareNumber>999999) {
         _shareCount = kfcMaxNumberString;
     } else {
-        _shareCount = [NSString stringWithFormat:@"%zd",homeImage.totalShareNumber];
+        _shareCount = [NSString stringWithFormat:@"%zd",entity.totalShareNumber];
     }
-    if (homeImage.totalCommentNumber>999999) {
+    if (entity.totalCommentNumber>999999) {
         _commentNumber = kfcMaxNumberString;
     } else {
-        _commentNumber = [NSString stringWithFormat:@"%zd",homeImage.totalCommentNumber];
+        _commentNumber = [NSString stringWithFormat:@"%zd",entity.totalCommentNumber];
     }
-    if (homeImage.totalWorkNumber>999999) {
+    if (entity.totalWorkNumber>999999) {
         _totalPSNumber = kfcMaxNumberString;
     } else {
-        _totalPSNumber = [NSString stringWithFormat:@"%zd",homeImage.totalWorkNumber];
+        _totalPSNumber = [NSString stringWithFormat:@"%zd",entity.totalWorkNumber];
     }
-//    
-//    NSMutableArray* array = [NSMutableArray new];
-//    for (int i = 0; i<homeImage.askImageModelArray.count; i++) {
-//        PIEImageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:homeImage.askImageModelArray[i] error:NULL];
-//        [array addObject:entity];
-//    }
-    _askImageModelArray = homeImage.askImageModelArray;
+
 }
-- (instancetype)initWithAskEntity:(PIEPageEntity *)entity {
+- (instancetype)initWithPageEntity:(PIEPageEntity *)entity {
     self = [self init];
     if (self) {
-        _ID = entity.askID;
+        _ID = entity.ID;
+        _askID =entity.askID;
         _userID = entity.uid;
         _username = entity.nickname;
         _imageURL = entity.imageURL;
         _avatarURL = entity.avatar;
         _liked = entity.liked;
+        NSLog(@"%@,%d",_username,entity.liked);
         _collected = entity.collected;
         _imageWidth = entity.imageWidth;
         _imageHeight = entity.imageHeight;
         NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:entity.uploadTime];
         _publishTime = [Util formatPublishTime:publishDate];
         _content = entity.userDescription;
+        _type = entity.type;
+        _askImageModelArray = entity.askImageModelArray;
+        
         if (entity.totalPraiseNumber>999999) {
             _likeCount = kfcMaxNumberString;
         } else {
@@ -128,6 +129,7 @@
         } else {
             _totalPSNumber = [NSString stringWithFormat:@"%zd",entity.totalWorkNumber];
         }
+
     }
     return self;
 }

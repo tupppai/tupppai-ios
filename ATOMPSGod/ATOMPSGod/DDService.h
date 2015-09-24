@@ -47,5 +47,5 @@
  **评论通知，邀请通知，系统通知等。
  */
 + (void)ddGetMsg:(NSDictionary*)param withBlock:(void (^)(id data))block;
-+ (void)toggleLikeWithType:(ATOMPageType)type ID:(NSInteger)ID like:(BOOL)like  withBlock:(void (^)(BOOL success))block;
++ (void)toggleLike:(BOOL)like ID:(NSInteger)ID type:(ATOMPageType)type  withBlock:(void (^)(BOOL success))block;
 @end

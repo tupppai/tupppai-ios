@@ -14,6 +14,7 @@
 #import "ATOMDetailImageDAO.h"
 #import "PIEPageDAO.h"
 #import "ATOMImageTipLabel.h"
+#import "PIEPageEntity.h"
 @interface DDHotDetailManager ()
 @property (nonatomic, strong) ATOMDetailImageDAO *detailImageDAO;
 @property (nonatomic, strong) ATOMCommentDAO *commentDAO;
@@ -21,54 +22,32 @@
 
 @implementation DDHotDetailManager
 
-- (ATOMDetailImageDAO *)detailImageDAO {
-    if (!_detailImageDAO) {
-        _detailImageDAO = [ATOMDetailImageDAO new];
-    }
-    return _detailImageDAO;
-}
+//- (ATOMDetailImageDAO *)detailImageDAO {
+//    if (!_detailImageDAO) {
+//        _detailImageDAO = [ATOMDetailImageDAO new];
+//    }
+//    return _detailImageDAO;
+//}
 
-- (ATOMCommentDAO *)commentDAO {
-    if (!_commentDAO) {
-        _commentDAO = [ATOMCommentDAO new];
-    }
-    return _commentDAO;
-}
+//- (ATOMCommentDAO *)commentDAO {
+//    if (!_commentDAO) {
+//        _commentDAO = [ATOMCommentDAO new];
+//    }
+//    return _commentDAO;
+//}
 
-- (NSURLSessionDataTask *)ShowDetailOfHomePage:(NSDictionary *)param withImageID:(NSInteger)imageID withBlock:(void (^)(NSMutableArray *, NSError *))block {
-    return [[DDSessionManager shareHTTPSessionManager] GET:[NSString stringWithFormat:@"ask/show/%d", (int)imageID] parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+- (NSURLSessionDataTask *)fetchAllReply:(NSDictionary *)param ID:(NSInteger)replyID withBlock:(void (^)(NSMutableArray *, NSError *))block {
+    return [[DDSessionManager shareHTTPSessionManager] GET:[NSString stringWithFormat:@"ask/show/%zd",replyID] parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         if ([ responseObject objectForKey:@"data"]) {
-            NSMutableArray *detailOfHomePageArray = [NSMutableArray array];
-            NSArray *imageDataArray = [[responseObject objectForKey:@"data"] objectForKey:@"replies"];
-            NSDate *clickTime = [NSDate date];
-            for (int i = 0; i < imageDataArray.count; i++) {
-                ATOMDetailPage *detailImage = [MTLJSONAdapter modelOfClass:[ATOMDetailPage class] fromJSONDictionary:imageDataArray[i] error:NULL];
-                detailImage.imageID = imageID;
-                detailImage.clickTime = [clickTime timeIntervalSince1970];
-                detailImage.tipLabelArray = [NSMutableArray array];
-                NSArray *labelDataArray = [imageDataArray[i] objectForKey:@"labels"];
-                if (labelDataArray.count) {
-                    for (int j = 0; j < labelDataArray.count; j++) {
-                        ATOMImageTipLabel *tipLabel = [MTLJSONAdapter modelOfClass:[ATOMImageTipLabel class] fromJSONDictionary:labelDataArray[j] error:NULL];
-                        tipLabel.imageID = detailImage.imageID;
-                        [detailImage.tipLabelArray addObject:tipLabel];
-                    }
-                }
-                
-                detailImage.hotCommentArray = [NSMutableArray array];
-                NSArray *hotCommentDataArray = imageDataArray[i][@"hot_comments"];
-                if (hotCommentDataArray.count) {
-                    for (int j = 0; j < hotCommentDataArray.count; j++) {
-                        ATOMComment *comment = [MTLJSONAdapter modelOfClass:[ATOMComment class] fromJSONDictionary:hotCommentDataArray[j] error:NULL];
-                        comment.commentType = 1;
-                        comment.detailID = detailImage.detailID;
-                        [detailImage.hotCommentArray addObject:comment];
-                    }
-                }
-                [detailOfHomePageArray addObject:detailImage];
+            NSMutableArray *returnArray = [NSMutableArray array];
+            NSArray *replyArray = [[responseObject objectForKey:@"data"] objectForKey:@"replies"];
+            for (int i = 0; i < replyArray.count; i++) {
+                PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:replyArray[i] error:NULL];
+                NSLog(@"entity ID %zd",entity.ID);
+                [returnArray addObject:entity];
             }
             if (block) {
-                block(detailOfHomePageArray, nil);
+                block(returnArray, nil);
             }
         } else {
             

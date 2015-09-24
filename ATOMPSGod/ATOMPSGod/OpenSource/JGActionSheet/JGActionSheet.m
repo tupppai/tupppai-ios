@@ -246,8 +246,6 @@ static BOOL disableCustomEasing = NO;
     else {
         self.backgroundColor = [UIColor whiteColor];
 //        self.layer.cornerRadius = kHostsCornerRadius;
-        
-        
         self.layer.shadowColor = [UIColor blackColor].CGColor;
         self.layer.shadowOffset = CGSizeZero;
         self.layer.shadowRadius = kShadowRadius;

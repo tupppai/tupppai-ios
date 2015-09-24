@@ -228,18 +228,15 @@
 }
 
 
-+ (void)toggleLikeWithType:(ATOMPageType)type ID:(NSInteger)ID like:(BOOL)like  withBlock:(void (^)(BOOL success))block {
++ (void)toggleLike:(BOOL)like ID:(NSInteger)ID type:(ATOMPageType)type  withBlock:(void (^)(BOOL success))block {
     NSString* url;
-    NSMutableDictionary *param;
     if (type == ATOMPageTypeAsk) {
         url = [NSString stringWithFormat:@"ask/upask/%ld",(long)ID];
     } else if (type == ATOMPageTypeReply) {
         url = [NSString stringWithFormat:@"reply/upreply/%ld",(long)ID];
     }
-    if (like) {
-        NSInteger status = like?0:1;
-        [param setObject:@(status) forKey:@"status"];
-    }
+    NSInteger status = like?1:0;
+    NSDictionary *param = [NSDictionary dictionaryWithObject:@(status) forKey:@"status"];
     [DDBaseService GET:param withUrl:url withBlock:^(id responseObject) {
         if (responseObject) {
             block(YES);

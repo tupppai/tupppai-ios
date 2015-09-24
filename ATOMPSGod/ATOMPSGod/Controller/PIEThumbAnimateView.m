@@ -16,35 +16,62 @@
         _toExpand = YES;
         _shrinkedSize = CGSizeMake(100, 100);
         _expandedSize = CGSizeMake(SCREEN_WIDTH, 300);
-        _leftView.contentMode = UIViewContentModeScaleAspectFit;
-        _rightView.contentMode = UIViewContentModeScaleAspectFit;
-        _leftView.clipsToBounds = YES;
-        _rightView.clipsToBounds = YES;
         self.userInteractionEnabled = YES;
         self.clipsToBounds = YES;
-        self.backgroundColor = [UIColor clearColor];
-        _leftView = [UIImageView new];
-//        _leftView.image = [UIImage imageNamed:@"test1"];
-        _rightView = [UIImageView new];
-//        _rightView.image = [UIImage imageNamed:@"psps"];
-        [self addSubview:_leftView];
-        [self addSubview:_rightView];
-
-        [_rightView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self);
-            make.trailing.equalTo(self);
-            make.bottom.equalTo(self);
-        }];
-        [_leftView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self);
-            make.leading.equalTo(self);
-            make.bottom.equalTo(self);
-            make.width.equalTo(self).with.multipliedBy(1);
-        }];
+        self.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
+        [self setupSubviews];
     }
     return self;
 }
 
+- (void)setupSubviews {
+    
+    [self addSubview:self.leftView];
+    [self addSubview:self.rightView];
+    [self addSubview:self.originView];
+    
+    [_rightView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self);
+        make.trailing.equalTo(self);
+        make.bottom.equalTo(self);
+    }];
+    [_leftView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self);
+        make.leading.equalTo(self);
+        make.bottom.equalTo(self);
+        make.width.equalTo(self).with.multipliedBy(1);
+    }];
+    [_originView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self);
+        make.leading.equalTo(self);
+        make.width.equalTo(@40);
+        make.height.equalTo(@16);
+    }];
+}
+- (UIImageView*)leftView {
+    if (!_leftView) {
+        _leftView = [UIImageView new];
+        _leftView.contentMode = UIViewContentModeScaleAspectFit;
+        _leftView.clipsToBounds = YES;
+    }
+    return _leftView;
+}
+- (UIImageView*)rightView {
+    if (!_rightView) {
+        _rightView = [UIImageView new];
+        _rightView.contentMode = UIViewContentModeScaleAspectFit;
+        _rightView.clipsToBounds = YES;
+    }
+    return _rightView;
+}
+- (UIImageView*)originView {
+    if (!_originView) {
+        _originView = [UIImageView new];
+        _originView.image = [UIImage imageNamed:@"new_reply_origin"];
+        _originView.contentMode = UIViewContentModeScaleAspectFit;
+    }
+    return _originView;
+}
 - (void)setSubviewCounts:(NSInteger)subviewCounts {
     if (subviewCounts == 2) {
         [_rightView mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -79,26 +106,7 @@
 }
 
 
-//- (void)toggleExpanded {
-//    
-//    if (_toExpand) {
-//        [self mas_updateConstraints:^(MASConstraintMaker *make) {
-//            make.width.equalTo(@(_expandedSize.width)).with.priorityHigh();
-//            make.height.equalTo(@(_expandedSize.height)).with.priorityHigh();
-//        }];
-//    } else {
-//        [self mas_updateConstraints:^(MASConstraintMaker *make) {
-//            make.width.equalTo(@(_shrinkedSize.width)).with.priorityHigh();
-//            make.height.equalTo(@(_shrinkedSize.height)).with.priorityHigh();
-//        }];
-//    }
-//    [UIView animateWithDuration:0.6 animations:^{
-//        [self layoutIfNeeded];
-//    }];
-//    _toExpand = !_toExpand;
-//    NSLog(@"self %@",NSStringFromCGRect(self.frame));
-//    
-//}
+
 
 
 @end

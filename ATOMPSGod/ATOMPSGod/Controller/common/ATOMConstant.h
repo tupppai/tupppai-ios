@@ -65,7 +65,7 @@ extern NSString * const kFontNameDefault;
 extern NSString * const kUserNameFont;
 extern NSString * const kPublishTimeFont;
 
-#define kBlueColor [UIColor whiteColor]
+#define PIEColorHex 0xFEF07B
 
 
 

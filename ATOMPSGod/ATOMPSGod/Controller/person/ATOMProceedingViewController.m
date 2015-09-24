@@ -254,9 +254,8 @@
             [_homeImageDataSource removeAllObjects];
         }
         for (PIEPageEntity *homeImage in resultArray) {
-            DDPageVM *homepageViewModel = [DDPageVM new];
-            [homepageViewModel setViewModelData:homeImage];
-            [ws.homeImageDataSource addObject:homepageViewModel];
+            DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:homeImage];
+            [ws.homeImageDataSource addObject:vm];
             ATOMProceedingViewModel *proceedingViewModel = [ATOMProceedingViewModel new];
             [proceedingViewModel setViewModelData:homeImage];
             [ws.dataSource addObject:proceedingViewModel];
@@ -278,9 +277,8 @@
     [param setObject:@(15) forKey:@"size"];
     [DDMyProceedingManager getMyProceeding:param withBlock:^(NSMutableArray *resultArray) {
         for (PIEPageEntity *homeImage in resultArray) {
-            DDPageVM *homepageViewModel = [DDPageVM new];
-            [homepageViewModel setViewModelData:homeImage];
-            [ws.homeImageDataSource addObject:homepageViewModel];
+            DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:homeImage];
+            [ws.homeImageDataSource addObject:vm];
             ATOMProceedingViewModel *proceedingViewModel = [ATOMProceedingViewModel new];
             [proceedingViewModel setViewModelData:homeImage];
             [ws.dataSource addObject:proceedingViewModel];

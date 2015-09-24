@@ -35,7 +35,6 @@
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tSi-M5-pb6" userLabel="LeftImageView">
                         <rect key="frame" x="0.0" y="53" width="323" height="391"/>
-                        <color key="backgroundColor" red="0.60000002384185791" green="0.40000000596046448" blue="0.20000000298023224" alpha="0.52000000000000002" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="348" id="Ngn-Bj-NmF"/>
                         </constraints>
