@@ -10,11 +10,11 @@
 #import "DDSessionManager.h"
 
 @implementation DDCollectManager
-+ (NSURLSessionDataTask *)toggleCollect:(NSDictionary *)param withPageType:(ATOMPageType)type withID:(NSInteger)ID withBlock:(void (^)(NSError *))block {
++ (NSURLSessionDataTask *)toggleCollect:(NSDictionary *)param withPageType:(PIEPageType)type withID:(NSInteger)ID withBlock:(void (^)(NSError *))block {
         NSString* url;
-        if (type == ATOMPageTypeAsk) {
+        if (type == PIEPageTypeAsk) {
             url = [NSString stringWithFormat:@"ask/focusask/%zd",ID];
-        }   if (type == ATOMPageTypeReply) {
+        }   if (type == PIEPageTypeReply) {
             url = [NSString stringWithFormat:@"reply/collectreply/%zd",ID];
         }
     return [[DDSessionManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {

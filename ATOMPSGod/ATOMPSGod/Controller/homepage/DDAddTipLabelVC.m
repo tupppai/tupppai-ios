@@ -274,7 +274,7 @@
             [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:@"shouldNavToAskSegment"];
             [[NSUserDefaults standardUserDefaults] synchronize];
             
-            NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithInteger:newImageID],@"ID",[NSNumber numberWithInteger:newImageID],@"askID",@(ATOMPageTypeAsk),@"type", nil];
+            NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithInteger:newImageID],@"ID",[NSNumber numberWithInteger:newImageID],@"askID",@(PIEPageTypeAsk),@"type", nil];
             DDInviteVC *ivc = [DDInviteVC new];
             ws.newAskPageViewModel.ID = newImageID;
             ivc.askPageViewModel = ws.newAskPageViewModel;

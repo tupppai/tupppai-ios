@@ -87,7 +87,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
         _uploadHomeImageDataSource = [NSMutableArray array];
         _currentUploadPage = 1;
         [param setObject:@(_currentUploadPage) forKey:@"page"];
-//        [param setObject:@(ATOMPageTypeAsk) forKey:@"type"];
+//        [param setObject:@(PIEPageTypeAsk) forKey:@"type"];
     
         _workDataSource = nil;
         _workDataSource = [NSMutableArray array];
@@ -95,7 +95,7 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
         _workHomeImageDataSource = [NSMutableArray array];
         _currentWorkPage = 1;
 //        [param setObject:@(_currentWorkPage) forKey:@"page"];
-//        [param setObject:@(ATOMPageTypeReply) forKey:@"type"];
+//        [param setObject:@(PIEPageTypeReply) forKey:@"type"];
 
     [Hud activity:@"" inView:self.view];
     [DDOtherUserManager getOtherUserInfo:param withBlock:^(NSMutableArray *askReturnArray, NSMutableArray *replyReturnArray, ATOMUser *user) {
@@ -148,11 +148,11 @@ static NSString *WorkCellIdentifier = @"OtherPersonWorkCell";
     if ([type isEqualToString:@"upload"]) {
         _currentUploadPage++;
         [param setObject:@(_currentUploadPage) forKey:@"page"];
-        [param setObject:@(ATOMPageTypeAsk) forKey:@"type"];
+        [param setObject:@(PIEPageTypeAsk) forKey:@"type"];
     } else if ([type isEqualToString:@"work"]) {
         _currentWorkPage++;
         [param setObject:@(_currentWorkPage) forKey:@"page"];
-        [param setObject:@(ATOMPageTypeReply) forKey:@"type"];
+        [param setObject:@(PIEPageTypeReply) forKey:@"type"];
     }
     [DDOtherUserManager getOtherUserInfo:param withBlock:^(NSMutableArray *askReturnArray, NSMutableArray *replyReturnArray, ATOMUser *user) {
             if (user) {

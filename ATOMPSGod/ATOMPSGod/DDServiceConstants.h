@@ -40,5 +40,6 @@ extern NSString * URL_UKGetMsg;
 extern NSString * URL_UKSaveAsk;
 extern NSString * URL_UKSaveReply;
 
+extern NSString * URL_HomeGetSource;
 
 @end

@@ -8,7 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "ATOMShare.h"
-
+typedef NS_ENUM(NSInteger, ATOMShareType) {
+    ATOMShareTypeWechatMoments = 0,
+    ATOMShareTypeWechatFriends,
+    ATOMShareTypeSinaWeibo
+};
 @interface DDShareManager : NSObject
 - (NSURLSessionDataTask *)getShareInfo:(NSDictionary *)param withBlock:(void (^)(ATOMShare *, NSError *))block;
 @end

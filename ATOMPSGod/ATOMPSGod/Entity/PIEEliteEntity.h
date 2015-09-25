@@ -13,7 +13,7 @@
 /**
  *  作品ID
  */
-@property (nonatomic, assign) NSInteger imageID;
+@property (nonatomic, assign) NSInteger ID;
 /**
  *  作品对应的求PID
  */

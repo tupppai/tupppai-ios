@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "DDPageVM.h"
 #import "PIEThumbAnimateView.h"
+#import "PIEHighlightableLabel.h"
 #import "PIECountLabel.h"
-
+#import "PIEButton.h"
 //home reply
 @interface PIEReplyTableCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
@@ -19,15 +20,17 @@
 @property (weak, nonatomic) IBOutlet UIImageView *theImageView;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *allWorkView;
-@property (weak, nonatomic) IBOutlet UIImageView *shareView;
-@property (weak, nonatomic) IBOutlet UIImageView *collectView;
-@property (weak, nonatomic) IBOutlet UIImageView *commentView;
+@property (weak, nonatomic) IBOutlet PIEButton *shareView;
+@property (weak, nonatomic) IBOutlet PIEButton *collectView;
+@property (weak, nonatomic) IBOutlet PIEButton *commentView;
 @property (weak, nonatomic) IBOutlet UIImageView *likeView;
 
-@property (weak, nonatomic) IBOutlet UILabel *shareCountLabel;
-@property (weak, nonatomic) IBOutlet UILabel *collectCountLabel;
-@property (weak, nonatomic) IBOutlet UILabel *commentCountLabel;
-@property (weak, nonatomic) IBOutlet PIECountLabel *likeCountLabel;
+//@property (weak, nonatomic) IBOutlet PIECountLabel *shareCountLabel;
+//@property (weak, nonatomic) IBOutlet PIECountLabel *collectCountLabel;
+//@property (weak, nonatomic) IBOutlet PIECountLabel *commentCountLabel;
+@property (weak, nonatomic) IBOutlet PIEHighlightableLabel *likeCountLabel;
+
+
 
 @property (strong, nonatomic) PIEThumbAnimateView *thumbView;
 

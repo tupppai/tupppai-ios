@@ -14,11 +14,6 @@
 @class DDCommentPageVM;
 
 
-typedef NS_ENUM(NSInteger, PIEPageType) {
-    PIEPageTypeAsk = 0,
-    PIEPageTypeHot,
-    PIEPageTypeFollow
-};
 
 
 
@@ -39,6 +34,8 @@ typedef NS_ENUM(NSInteger, PIEPageType) {
 @property (nonatomic, copy) NSString *shareCount;
 @property (nonatomic, copy) NSString *commentNumber;
 @property (nonatomic, copy) NSString *totalPSNumber;
+@property (nonatomic, copy) NSString *collectCount;
+
 @property (nonatomic, copy) NSString *content;
 
 @property (nonatomic, assign) CGFloat imageWidth;
@@ -59,8 +56,7 @@ typedef NS_ENUM(NSInteger, PIEPageType) {
 
 //- (void)setViewModelData:(PIEPageEntity *)homeImage;
 -(void)setViewModelWithCommon:(DDCommentPageVM*)commonViewModel;
-- (void)setViewModelDataWithDetailPage:(ATOMDetailPage *)page;
-- (void)toggleLike;
+//- (void)setViewModelDataWithDetailPage:(ATOMDetailPage *)page;
 -(DDCommentPageVM*)generatepageDetailViewModel;
 - (instancetype)initWithPageEntity:(PIEPageEntity *)entity ;
 - (instancetype)initWithFollowEntity:(PIEEliteEntity *)entity;

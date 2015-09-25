@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 ATOM. All rights reserved.
 //
 
-#import "DDShareSDKManager.h"
 @implementation DDShareSDKManager
 //shareSDK 获取 用户手机的第三方平台的信息
 + (void)getUserInfo:(SSDKPlatformType)type withBlock:(void (^)(NSDictionary* ))block{
@@ -20,7 +19,7 @@
     }];
 }
 
-+(void)postSocialShare:(NSInteger)id withSocialShareType:(ATOMShareType)shareType withPageType:(ATOMPageType)pageType {
++(void)postSocialShare:(NSInteger)id withSocialShareType:(ATOMShareType)shareType withPageType:(NSInteger)pageType {
         DDShareManager* shareModel = [DDShareManager new];
         NSMutableDictionary* param = [NSMutableDictionary new];
         NSString* shareTypeToServer;

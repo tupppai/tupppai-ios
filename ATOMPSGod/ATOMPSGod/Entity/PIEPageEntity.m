@@ -26,11 +26,11 @@
              @"totalShareNumber" : @"share_count",
              @"totalWXShareNumber" : @"weixin_share_count",
              @"totalWorkNumber" : @"reply_count",
+             @"collectCount" : @"collect_count",
              @"imageWidth" : @"image_width",
              @"imageHeight" : @"image_height",
              @"liked" :@"uped",
              @"collected" : @"collected",
-             @"homePageType" :  @"homePageType",
              @"type" : @"type",
              @"askImageModelArray":@"uploads"
              };

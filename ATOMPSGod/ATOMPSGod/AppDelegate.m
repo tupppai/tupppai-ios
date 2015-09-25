@@ -59,21 +59,15 @@
          |UIRemoteNotificationTypeAlert];
     }
 #else
-    
     //register remoteNotification types (iOS 8.0以下)
     [UMessage registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge
      |UIRemoteNotificationTypeSound
      |UIRemoteNotificationTypeAlert];
     
 #endif
-    //for log
-//    [UMessage setLogEnabled:YES];
+
 }
 -(void)initializeAfterDB {
-//    ATOMIntroductionOnFirstLaunchViewController* vc = [ATOMIntroductionOnFirstLaunchViewController new];
-//    self.baseNav = [[ATOMLoginCustomNavigationController alloc] initWithRootViewController:vc];
-//    self.window.rootViewController = self.baseNav;
-//    [self.window makeKeyAndVisible];
     [[DDUserManager currentUser]fetchCurrentUserInDB:^(BOOL hasCurrentUser) {
         if (hasCurrentUser) {
             self.window.rootViewController = self.mainTabBarController;
@@ -187,7 +181,6 @@
     NSString *devicetokenString = [[[deviceToken description]
                                     stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]]
                                    stringByReplacingOccurrencesOfString:@" " withString:@""];
-//    NSLog(@"standardUserDefaults setObject");
     [[NSUserDefaults standardUserDefaults]setObject:devicetokenString forKey:@"devicetoken"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 

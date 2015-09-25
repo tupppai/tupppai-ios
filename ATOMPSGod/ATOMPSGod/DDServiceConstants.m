@@ -39,6 +39,9 @@ NSString * URL_UKGetMsg = @"message/list";
 NSString * URL_UKSaveAsk = @"ask/multi";
 NSString * URL_UKSaveReply = @"reply/save";
 
+
+NSString * URL_HomeGetSource = @"ask/index";
+
 //@"ask/save"
 //NSString * URL_UKGetReplyMsg = @"view/info";
 //NSString * URL_UKGetFollowMsg = @"view/info";

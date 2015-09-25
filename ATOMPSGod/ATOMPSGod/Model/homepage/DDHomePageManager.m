@@ -34,36 +34,31 @@
 }
 
 
-- (NSURLSessionDataTask *)getHomepage:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSError *))block {
-    return [[DDSessionManager shareHTTPSessionManager] GET:@"ask/index" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
-        if (ret != 1) {
-            block(nil, nil);
-        } else {
-            NSMutableArray *homepageArray = [NSMutableArray array];
-            NSArray *imageDataArray = [ responseObject objectForKey:@"data"];
-            for (int i = 0; i < imageDataArray.count; i++) {
-                PIEPageEntity *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:imageDataArray[i] error:NULL];
-                homeImage.homePageType = (NSString*)[param[@"type"] copy];
-                
-                NSMutableArray* array = [NSMutableArray new];
-                for (int i = 0; i<homeImage.askImageModelArray.count; i++) {
-                    PIEImageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:homeImage.askImageModelArray[i] error:NULL];
-                    [array addObject:entity];
+- (void)pullSource:(NSDictionary *)param block:(void (^)(NSMutableArray *))block {
+    [DDService ddGetHomeSource:param withBlock:^(NSArray *data) {
+        if (data) {
+            NSMutableArray *returnArray = [NSMutableArray array];
+            for (int i = 0; i < data.count; i++) {
+                PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
+                NSMutableArray* thumbArray = [NSMutableArray new];
+                for (int i = 0; i<entity.askImageModelArray.count; i++) {
+                    PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.askImageModelArray[i] error:NULL];
+                    [thumbArray addObject:entity2];
                 }
-                homeImage.askImageModelArray = array;
-                [homepageArray addObject:homeImage];
+                entity.askImageModelArray = thumbArray;
+                [returnArray addObject:entity];
             }
             if (block) {
-                block(homepageArray, nil);
+                block(returnArray);
             }
-        }
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        if (block) {
-            block(nil, error);
+        } else {
+            if (block) {
+                block(nil);
+            }
         }
     }];
 }
+
 
 - (void)saveHomeImagesInDB:(NSMutableArray *)homeImages {
     for (PIEPageEntity *homeImage in homeImages) {

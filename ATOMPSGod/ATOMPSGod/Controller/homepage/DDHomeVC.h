@@ -8,6 +8,11 @@
 
 #import "DDBaseVC.h"
 
+//typedef NS_ENUM(NSInteger, PIEPageType) {
+//    PIEPageTypeAsk = 1,
+//    PIEPageTypeReply = 2
+//};
+
 @interface DDHomeVC : DDBaseVC
 
 @end

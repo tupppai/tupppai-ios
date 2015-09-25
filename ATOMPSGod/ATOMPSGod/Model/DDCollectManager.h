@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface DDCollectManager : NSObject
-+ (NSURLSessionDataTask *)toggleCollect:(NSDictionary *)param withPageType:(ATOMPageType)type withID:(NSInteger)ID withBlock:(void (^)(NSError *))block;
++ (NSURLSessionDataTask *)toggleCollect:(NSDictionary *)param withPageType:(PIEPageType)type withID:(NSInteger)ID withBlock:(void (^)(NSError *))block;
 @end

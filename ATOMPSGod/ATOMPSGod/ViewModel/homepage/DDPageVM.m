@@ -87,6 +87,11 @@
     } else {
         _totalPSNumber = [NSString stringWithFormat:@"%zd",entity.totalWorkNumber];
     }
+    if (entity.collectCount>999999) {
+        _collectCount = kfcMaxNumberString;
+    } else {
+        _collectCount = [NSString stringWithFormat:@"%zd",entity.collectCount];
+    }
 
 }
 - (instancetype)initWithPageEntity:(PIEPageEntity *)entity {
@@ -99,7 +104,6 @@
         _imageURL = entity.imageURL;
         _avatarURL = entity.avatar;
         _liked = entity.liked;
-        NSLog(@"%@,%d",_username,entity.liked);
         _collected = entity.collected;
         _imageWidth = entity.imageWidth;
         _imageHeight = entity.imageHeight;
@@ -108,7 +112,6 @@
         _content = entity.userDescription;
         _type = entity.type;
         _askImageModelArray = entity.askImageModelArray;
-        
         if (entity.totalPraiseNumber>999999) {
             _likeCount = kfcMaxNumberString;
         } else {
@@ -129,6 +132,12 @@
         } else {
             _totalPSNumber = [NSString stringWithFormat:@"%zd",entity.totalWorkNumber];
         }
+        
+        if (entity.collectCount>999999) {
+            _collectCount = kfcMaxNumberString;
+        } else {
+            _collectCount = [NSString stringWithFormat:@"%zd",entity.collectCount];
+        }
 
     }
     return self;
@@ -137,7 +146,7 @@
 - (instancetype)initWithFollowEntity:(PIEEliteEntity *)entity {
     self = [self init];
     if (self) {
-        _ID = entity.imageID;
+        _ID = entity.ID;
         _ID = entity.askID;
         _type = entity.type;
         _userID = entity.uid;
@@ -149,10 +158,10 @@
         NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:entity.uploadTime];
         _publishTime = [Util formatPublishTime:publishDate];
         _content = entity.userDescription;
-        _likeCount = [NSString stringWithFormat:@"%d",(int)entity.totalPraiseNumber];
-        _shareCount = [NSString stringWithFormat:@"%d",(int)entity.totalShareNumber];
-        _commentNumber = [NSString stringWithFormat:@"%d",(int)entity.totalCommentNumber];
-        _totalPSNumber = [NSString stringWithFormat:@"%d",(int)entity.totalWorkNumber];
+        _likeCount = [NSString stringWithFormat:@"%zd",entity.totalPraiseNumber];
+        _shareCount = [NSString stringWithFormat:@"%zd",entity.totalShareNumber];
+        _commentNumber = [NSString stringWithFormat:@"%zd",entity.totalCommentNumber];
+        _totalPSNumber = [NSString stringWithFormat:@"%zd",entity.totalWorkNumber];
         _imageWidth = entity.imageWidth;
         _imageHeight = entity.imageHeight;
         _liked = entity.liked;
@@ -161,35 +170,11 @@
     return self;
 }
 
-- (void)setViewModelDataWithDetailPage:(ATOMDetailPage *)page {
-    _collected = page.collected;
-    _type = page.type;
-    _ID = page.detailID;
-    _userID = page.uid;
-    _username = page.nickname;
-    _imageURL = page.imageURL;
-    _avatarURL = page.avatar;
-    _likeCount = [NSString stringWithFormat:@"%d",(int)page.totalPraiseNumber];
-    _shareCount = [NSString stringWithFormat:@"%d",(int)page.totalShareNumber];
-    _commentNumber = [NSString stringWithFormat:@"%d",(int)page.totalCommentNumber];
-    _liked = page.liked;
-    _imageWidth = page.imageWidth;
-    _imageHeight = page.imageHeight;
-    
-    NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:page.replyTime];
-    _publishTime = [Util formatPublishTime:publishDate];
-
-//    NSDateFormatter *df = [NSDateFormatter new];
-//    [df setDateFormat:@"yyyy年MM月dd日 HH时mm分"];
-//    NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:page.replyTime];
-//    _publishTime = [Util formatPublishTime:publishDate];
-}
-
 
 -(DDCommentPageVM*)generatepageDetailViewModel {
     DDCommentPageVM* commonViewModel = [DDCommentPageVM new];
     commonViewModel.pageID = _ID;
-    commonViewModel.type = ATOMPageTypeAsk;
+    commonViewModel.type = PIEPageTypeAsk;
     commonViewModel.pageImageURL = _imageURL;
     commonViewModel.avatarURL = _avatarURL;
     commonViewModel.likeNumber = _likeCount;
@@ -214,19 +199,19 @@
     _username = commonViewModel.userName;
 }
 
-- (void)toggleLike {
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    NSInteger status = _liked? 0:1;
-    NSInteger one = _liked? -1:1;
-    _liked = !_liked;
-    [param setValue:@(status) forKey:@"status"];
-    [DDBaseService toggleLike:param withPageType:ATOMPageTypeAsk withID:_ID withBlock:^(NSError *error) {
-        if (!error) {
-            NSInteger number = [_likeCount integerValue]+one;
-            [self setLikeCount:[NSString stringWithFormat:@"%ld",(long)number]];
-        }
-    }];
-}
+//- (void)toggleLike {
+//    NSMutableDictionary *param = [NSMutableDictionary new];
+//    NSInteger status = _liked? 0:1;
+//    NSInteger one = _liked? -1:1;
+//    _liked = !_liked;
+//    [param setValue:@(status) forKey:@"status"];
+//    [DDBaseService toggleLike:param withPageType:PIEPageTypeAsk withID:_ID withBlock:^(NSError *error) {
+//        if (!error) {
+//            NSInteger number = [_likeCount integerValue]+one;
+//            [self setLikeCount:[NSString stringWithFormat:@"%ld",(long)number]];
+//        }
+//    }];
+//}
 
 
 

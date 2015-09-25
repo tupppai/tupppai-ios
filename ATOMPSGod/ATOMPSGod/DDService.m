@@ -12,40 +12,40 @@
 
 #pragma mark - Profile
 + (void)signProceeding :(NSDictionary*)param withBlock:(void (^)(NSString*imageUrl))block {
-    [[self class]GET:param withUrl:URL_PFSignProceeding withBlock:^(id responseObject) {
+    [[self class]GET:param url:URL_PFSignProceeding block:^(id responseObject) {
             NSString* url = [[responseObject objectForKey:@"data"]objectForKey:@"url"];
             if (block) { block(url); }
     }];
 }
 
 + (void)getPushSetting:(void (^)(NSDictionary *data))block {
-    [[self class]GET:nil withUrl:URL_PFGetPushSetting withBlock:^(id responseObject) {
+    [[self class]GET:nil url:URL_PFGetPushSetting block:^(id responseObject) {
             NSDictionary* data = [responseObject objectForKey:@"data"];
             if (block) {block(data);}
     }];
 }
 
 + (void)getMyReply:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
-    [[self class]GET:param withUrl:URL_PFGetMyReply withBlock:^(id responseObject) {
+    [[self class]GET:param url:URL_PFGetMyReply block:^(id responseObject) {
             NSArray* dataArray = [responseObject objectForKey:@"data"];
             if (block) { block(dataArray); }
     }];
 }
 + (void)getMyAsk:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
-    [[self class]GET:param withUrl:URL_PFGetMyAsk withBlock:^(id responseObject) {
+    [[self class]GET:param url:URL_PFGetMyAsk block:^(id responseObject) {
             NSArray* dataArray = [responseObject objectForKey:@"data"];
             if (block) { block(dataArray); }
     }];
 }
 + (void)getMyProceeding:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
-    [[self class]GET:param withUrl:URL_PFGetMyProceeding withBlock:^(id responseObject) {
+    [[self class]GET:param url:URL_PFGetMyProceeding block:^(id responseObject) {
             NSArray* dataArray = [responseObject objectForKey:@"data"];
             if (block) { block(dataArray); }
     }];
 }
 + (void)setPushSetting:(NSDictionary *)param withBlock:(void (^) (BOOL success))block {
     
-    [[self class]POST:param withUrl:URL_PFsetPushSetting withBlock:^(id responseObject) {
+    [[self class]POST:param url:URL_PFsetPushSetting block:^(id responseObject) {
         if (responseObject) {
             if (block) {block(YES);}
         } else {
@@ -54,7 +54,7 @@
     }];
 }
 + (void) follow :(NSDictionary*)param withBlock:(void (^)(BOOL success))block {
-    [[self class]POST:param withUrl:URL_PFFollow withBlock:^(id responseObject) {
+    [[self class]POST:param url:URL_PFFollow block:^(id responseObject) {
         if (responseObject) {
             if (block) { block(YES); }
         } else {
@@ -63,7 +63,7 @@
     }];
 }
 + (void) deleteProceeding :(NSDictionary*)param withBlock:(void (^)(BOOL success))block {
-    [[self class]POST:param withUrl:URL_PFDeleteProceeding withBlock:^(id responseObject) {
+    [[self class]POST:param url:URL_PFDeleteProceeding block:^(id responseObject) {
         if (responseObject) {
             if (block) {
                 block(YES);
@@ -74,7 +74,7 @@
     }];
 }
 + (void) updatePassword :(NSDictionary*)param withBlock:(void (^)(BOOL success,NSInteger ret))block {
-    [[self class]POST2:param withUrl:URL_PFUpdatePasswordURL withBlock:^(id responseObject) {
+    [[self class]POST:param url:URL_PFUpdatePasswordURL block:^(id responseObject) {
         if (responseObject) {
             NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
             if (block) {block(YES,ret);}
@@ -87,7 +87,7 @@
 #pragma mark - Account
 
 + (void) updateToken :(NSDictionary*)param withBlock:(void (^)(BOOL success))block {
-    [[self class]POST:param withUrl:URL_ACUpdateToken withBlock:^(id responseObject) {
+    [[self class]POST:param url:URL_ACUpdateToken block:^(id responseObject) {
         if (responseObject) {
             if (block) {block(YES);}
         } else {
@@ -97,7 +97,7 @@
 }
 
 + (void) resetPassword :(NSDictionary*)param withBlock:(void (^)(BOOL success))block {
-    [[self class]POST:param withUrl:URL_ACResetPassword withBlock:^(id responseObject) {
+    [[self class]POST:param url:URL_ACResetPassword block:^(id responseObject) {
         if (responseObject) {
             if (block) {block(YES);}
         } else {
@@ -107,7 +107,7 @@
 }
 
 + (void)getAuthCode:(NSDictionary*)param withBlock:(void (^)(NSString *authcode))block {
-    [[self class]GET:param withUrl:URL_ACRequestAuthCode withBlock:^(id responseObject) {
+    [[self class]GET:param url:URL_ACRequestAuthCode block:^(id responseObject) {
             NSDictionary* data = [responseObject objectForKey:@"data"];
             NSString* authcode = [data objectForKey:@"code"];
             if (block && authcode) { block(authcode); }
@@ -115,7 +115,7 @@
 }
 
 + (void) ddLogin :(NSDictionary*)param withBlock:(void (^)(NSDictionary* data , NSInteger status))block {
-    [[self class]POST:param withUrl:URL_ACLogin withBlock:^(id responseObject) {
+    [[self class]POST:param url:URL_ACLogin block:^(id responseObject) {
             NSDictionary* data = [responseObject objectForKey:@"data"];
             NSInteger status = [(NSString*)[data objectForKey:@"status"]integerValue];
             if (block) { block(data,status); }
@@ -123,7 +123,7 @@
 }
 
 + (void) ddRegister :(NSDictionary*)param withBlock:(void (^)(NSDictionary* data))block {
-    [[self class]POST:param withUrl:URL_ACRegister withBlock:^(id responseObject) {
+    [[self class]POST:param url:URL_ACRegister block:^(id responseObject) {
         if (responseObject) {
             NSDictionary *data = [ responseObject objectForKey:@"data"];
                 if (block) { block(data); }
@@ -132,7 +132,7 @@
 }
 + (void) dd3PartyAuth :(NSDictionary*)param with3PaType:(NSString *)type withBlock:(void (^)(BOOL isRegistered,NSDictionary*userObject))block {
     NSString* url = [NSString stringWithFormat:@"%@%@",URL_AC3PaAuth,type];
-    [[self class]POST:param withUrl:url withBlock:^(id responseObject) {
+    [[self class]POST:param url:url block:^(id responseObject) {
         if (responseObject) {
             NSDictionary *data = [ responseObject objectForKey:@"data"];
             NSInteger isRegistered = [[data objectForKey:@"is_register"] integerValue];
@@ -147,7 +147,7 @@
 #pragma mark - Unknown
 
 + (void) postFeedBack :(NSDictionary*)param withBlock:(void (^)(BOOL success))block {
-    [[self class]POST:param withUrl:URL_UKSaveFeedback withBlock:^(id responseObject) {
+    [[self class]POST:param url:URL_UKSaveFeedback block:^(id responseObject) {
         if (responseObject) {
             if (block) {block(YES);}
         } 
@@ -155,7 +155,7 @@
 }
 
 + (void)  ddSaveAsk :(NSDictionary*)param withBlock:(void (^)(NSInteger newImageID))block {
-    [[self class]POST:param withUrl:URL_UKSaveAsk withBlock:^(id responseObject) {
+    [[self class]POST:param url:URL_UKSaveAsk block:^(id responseObject) {
         if (responseObject) {
             NSInteger newImageID = [[[ responseObject objectForKey:@"data"]objectForKey:@"ask_id"] integerValue];
             if (block) {block(newImageID);}
@@ -163,7 +163,7 @@
     }];
 }
 + (void)  ddSaveReply :(NSDictionary*)param withBlock:(void (^)(BOOL success))block {
-    [[self class]POST:param withUrl:URL_UKSaveReply withBlock:^(id responseObject) {
+    [[self class]POST:param url:URL_UKSaveReply block:^(id responseObject) {
         if (responseObject) {
             if (block) {block(YES);}
         } else {
@@ -172,7 +172,7 @@
     }];
 }
 + (void)ddGetMyInfo:(NSDictionary*)param withBlock:(void (^)(NSDictionary* data))block {
-    [[self class]GET:param withUrl:URL_UKGetMyInfo withBlock:^(id responseObject) {
+    [[self class]GET:param url:URL_UKGetMyInfo block:^(id responseObject) {
         if (responseObject) {
             NSDictionary* data = [responseObject objectForKey:@"data"];
             if (block) { block(data); }
@@ -180,7 +180,7 @@
     }];
 }
 + (void)ddGetMsg:(NSDictionary*)param withBlock:(void (^)(id data))block {
-    [[self class]GET:param withUrl:URL_UKGetMsg withBlock:^(id responseObject) {
+    [[self class]GET:param url:URL_UKGetMsg block:^(id responseObject) {
         if (responseObject) {
             id data = [responseObject objectForKey:@"data"];
             if (block) { block(data); }
@@ -189,7 +189,7 @@
 }
 
 + (void)ddGetOtherUserInfo:(NSDictionary*)param withBlock:(void (^)(NSDictionary* data,NSArray *askArray,NSArray *replyArray))block {
-    [[self class]GET:param withUrl:URL_PFGetOtherUserInfo withBlock:^(id responseObject) {
+    [[self class]GET:param url:URL_PFGetOtherUserInfo block:^(id responseObject) {
         if (responseObject) {
             NSDictionary *data = [responseObject objectForKey:@"data"];
             NSArray *askArray = [data objectForKey:@"asks"];
@@ -200,7 +200,7 @@
 }
 
 + (void)ddGetMyCollection:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
-    [[self class]GET:param withUrl:URL_PFGetMyCollection withBlock:^(id responseObject) {
+    [[self class]GET:param url:URL_PFGetMyCollection block:^(id responseObject) {
         if (responseObject) {
             NSArray* data = [responseObject objectForKey:@"data"];
             if (block) { block(data); }
@@ -208,7 +208,7 @@
     }];
 }
 + (void)ddGetFans:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
-    [[self class]GET:param withUrl:URL_PFGetFans withBlock:^(id responseObject) {
+    [[self class]GET:param url:URL_PFGetFans block:^(id responseObject) {
         if (responseObject) {
             NSArray* data = [responseObject objectForKey:@"data"];
             if (block) { block(data); }
@@ -216,7 +216,7 @@
     }];
 }
 + (void)ddGetFollow:(NSDictionary*)param withBlock:(void (^)(NSArray* recommendArray,NSArray* myFollowArray))block {
-    [[self class]GET:param withUrl:URL_PFGetFollow withBlock:^(id responseObject) {
+    [[self class]GET:param url:URL_PFGetFollow block:^(id responseObject) {
         if (responseObject) {
             NSDictionary* data = [responseObject objectForKey:@"data"];
             NSArray *recommendArray = [data objectForKey:@"recommends"];
@@ -226,18 +226,29 @@
         }
     }];
 }
++ (void)ddGetHomeSource:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
+    [[self class]GET:param url:URL_HomeGetSource block:^(id responseObject) {
+        if (responseObject) {
+            NSArray* data = [responseObject objectForKey:@"data"];
+            if (block) { block(data); }
+        } else {
+            if (block) { block(nil); }
+        }
+    }];
+}
 
-
-+ (void)toggleLike:(BOOL)like ID:(NSInteger)ID type:(ATOMPageType)type  withBlock:(void (^)(BOOL success))block {
++ (void)toggleLike:(BOOL)like ID:(NSInteger)ID type:(PIEPageType)type  withBlock:(void (^)(BOOL success))block {
+    NSLog(@"toggleLike");
     NSString* url;
-    if (type == ATOMPageTypeAsk) {
+    if (type == PIEPageTypeAsk) {
         url = [NSString stringWithFormat:@"ask/upask/%ld",(long)ID];
-    } else if (type == ATOMPageTypeReply) {
+    } else if (type == PIEPageTypeReply) {
         url = [NSString stringWithFormat:@"reply/upreply/%ld",(long)ID];
     }
     NSInteger status = like?1:0;
     NSDictionary *param = [NSDictionary dictionaryWithObject:@(status) forKey:@"status"];
-    [DDBaseService GET:param withUrl:url withBlock:^(id responseObject) {
+    NSLog(@"%@ url %@",param,url);
+    [DDBaseService GET:param url:url block:^(id responseObject) {
         if (responseObject) {
             block(YES);
         } else {
@@ -245,6 +256,27 @@
         }
     }];
 }
+
++ (void)downloadImage:(NSString*)url withBlock:(void (^)(UIImage* image))block {
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    NSURL *URL = [NSURL URLWithString:url];
+    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
+        NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSCachesDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
+        return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
+    } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
+        UIImage *image = [UIImage imageWithData: [NSData dataWithContentsOfURL:filePath]];
+        if (image) {
+            block(image);
+        } else {
+            block(nil);
+        }
+        
+    }];
+    [downloadTask resume];
+}
+
 
 
 @end

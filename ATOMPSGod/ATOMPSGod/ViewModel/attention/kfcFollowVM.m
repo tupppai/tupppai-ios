@@ -43,7 +43,7 @@
 
 - (void)setViewModelData:(PIEEliteEntity *)commonImage {
     _collected = commonImage.collected;
-    _imageID = commonImage.imageID;
+    _imageID = commonImage.ID;
     _askID = commonImage.askID;
     _type = commonImage.type;
     _userID = commonImage.uid;
@@ -102,21 +102,21 @@
     return askPVM;
 }
 - (void)toggleLike{
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    NSInteger status = _liked? 0:1;
-    NSInteger one = _liked? -1:1;
-    _liked = !_liked;
-    [param setValue:@(status) forKey:@"status"];
+//    NSMutableDictionary *param = [NSMutableDictionary new];
+//    NSInteger status = _liked? 0:1;
+//    NSInteger one = _liked? -1:1;
+//    _liked = !_liked;
+//    [param setValue:@(status) forKey:@"status"];
 //    NSString* url = _type == 1? @"ask/upask": @"reply/upreply";
 //    ATOMBaseRequest* baseRequest = [ATOMBaseRequest new];
-    [DDBaseService toggleLike:param withPageType:_type withID:_imageID withBlock:^(NSError *error) {
-        if (!error) {
-            NSLog(@"Server成功toggle like");
-            NSInteger number = [_likeNumber integerValue]+one;
-            [self setLikeNumber:[NSString stringWithFormat:@"%ld",(long)number]];            } else {
-                NSLog(@"Server失败 toggle like");
-            }
-    }];
+//    [DDBaseService toggleLike:param withPageType:_type withID:_imageID withBlock:^(NSError *error) {
+//        if (!error) {
+//            NSLog(@"Server成功toggle like");
+//            NSInteger number = [_likeNumber integerValue]+one;
+//            [self setLikeNumber:[NSString stringWithFormat:@"%ld",(long)number]];            } else {
+//                NSLog(@"Server失败 toggle like");
+//            }
+//    }];
 //    [baseRequest toggleLike:param withUrl:url withID:_imageID withBlock:^(NSError *error) {
 //        if (!error) {
 //            NSLog(@"Server成功toggle like");

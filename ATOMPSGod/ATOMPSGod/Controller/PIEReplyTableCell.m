@@ -28,7 +28,10 @@
     _theImageView.contentMode = UIViewContentModeScaleAspectFill;
     _theImageView.clipsToBounds = YES;
     _likeCountLabel.selected = YES;
+    _collectView.userInteractionEnabled = YES;
 }
+
+
 - (void)initThumbAnimateView {
     _thumbView = [PIEThumbAnimateView new];
     [self insertSubview:_thumbView aboveSubview:_theImageView];
@@ -42,6 +45,11 @@
 }
 - (void)configCell:(DDPageVM *)viewModel row:(NSInteger)row{
     
+    _shareView.imageView.image = [UIImage imageNamed:@"hot_share"];
+    _collectView.imageView.image = [UIImage imageNamed:@"hot_star"];
+    _commentView.imageView.image = [UIImage imageNamed:@"hot_comment"];
+    _collectView.imageView.highlightedImage = [UIImage imageNamed:@"hot_star_selected"];
+
     
     [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     _nameLabel.text = viewModel.username;
@@ -51,17 +59,17 @@
     [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(imageViewHeight)).with.priorityHigh();
     }];
-    _shareCountLabel.text = viewModel.shareCount;
-    _collectCountLabel.text = @"404";
-    _commentCountLabel.text = viewModel.commentNumber;
+    
     _likeCountLabel.text = viewModel.likeCount;
     _likeView.highlighted = viewModel.liked;
+    _collectView.imageView.highlighted = viewModel.collected;
     _contentLabel.text = viewModel.content;
+    
+
     _thumbView.expandedSize = CGSizeMake(SCREEN_WIDTH, imageViewHeight);
     _thumbView.subviewCounts = viewModel.askImageModelArray.count;
-    PIEImageEntity* entity = viewModel.askImageModelArray[0];
+    PIEImageEntity* entity = [viewModel.askImageModelArray objectAtIndex:0];
     [_thumbView.rightView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
-
     if (viewModel.askImageModelArray.count == 2) {
          entity = viewModel.askImageModelArray[1];
         [_thumbView.leftView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];

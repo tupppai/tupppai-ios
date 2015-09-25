@@ -12,7 +12,7 @@
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
-             @"imageID" : @"id",
+             @"ID" : @"id",
              @"askID" : @"ask_id",
              @"type" : @"type",
              @"uid" : @"uid",
@@ -37,7 +37,8 @@
 
 + (NSDictionary *)FMDBColumnsByPropertyKey {
     return @{
-             @"imageID" : @"imageID",
+             @"ID" : @"ID",
+             @"askID" : @"askID",
              @"type" : @"type",
              @"uid" : @"uid",
              @"nickname" : @"nickname",

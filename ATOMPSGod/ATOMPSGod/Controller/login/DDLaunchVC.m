@@ -50,7 +50,7 @@
             
             [DDUserManager DD3PartyAuth:param AndType:@"weixin" withBlock:^(bool isRegistered, NSString *info) {
                 if (isRegistered) {
-                    [self.navigationController setViewControllers:nil];
+                    [self.navigationController setViewControllers:[NSArray array]];
                     [AppDelegate APP].mainTabBarController = nil;
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
                 } else  {

@@ -42,10 +42,16 @@
 + (void) postFeedBack :(NSDictionary*)param withBlock:(void (^)(BOOL success))block;
 + (void)  ddSaveAsk :(NSDictionary*)param withBlock:(void (^)(NSInteger newImageID))block;
 + (void)  ddSaveReply :(NSDictionary*)param withBlock:(void (^)(BOOL success))block;
++ (void)toggleLike:(BOOL)like ID:(NSInteger)ID type:(PIEPageType)type  withBlock:(void (^)(BOOL success))block;
++ (void)downloadImage:(NSString*)url withBlock:(void (^)(UIImage* image))block;
+
++ (void)ddGetHomeSource:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block;
+
 #pragma mark - Message Notification
 /*
  **评论通知，邀请通知，系统通知等。
  */
 + (void)ddGetMsg:(NSDictionary*)param withBlock:(void (^)(id data))block;
-+ (void)toggleLike:(BOOL)like ID:(NSInteger)ID type:(ATOMPageType)type  withBlock:(void (^)(BOOL success))block;
+
+
 @end

@@ -150,7 +150,7 @@ static float cellWidth;
         CGPoint p = [gesture locationInView:cell];
         DDPageVM* model = _homeImageDataSource[indexPath.row];
         if (CGRectContainsPoint(cell.collectionImageView.frame, p)) {
-            if (cell.viewModel.type == ATOMPageTypeAsk) {
+            if (cell.viewModel.type == PIEPageTypeAsk) {
                 if (cell.viewModel.totalPSNumber == 0) {
                     DDCommentVC* mvc = [DDCommentVC new];
                     mvc.vm = [model generatepageDetailViewModel];

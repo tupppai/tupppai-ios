@@ -32,7 +32,7 @@
                     for (int j = 0; j < hotCommentDataArray.count; j++) {
                         ATOMComment *comment = [MTLJSONAdapter modelOfClass:[ATOMComment class] fromJSONDictionary:hotCommentDataArray[j] error:NULL];
                         comment.commentType = 1;
-                        comment.detailID = commonImage.imageID;
+                        comment.detailID = commonImage.ID;
                         [commonImage.hotCommentArray addObject:comment];
                     }
                 }
@@ -41,7 +41,7 @@
                 if (labelDataArray.count) {
                     for (int j = 0; j < labelDataArray.count; j++) {
                         ATOMImageTipLabel *tipLabel = [MTLJSONAdapter modelOfClass:[ATOMImageTipLabel class] fromJSONDictionary:labelDataArray[j] error:NULL];
-                        tipLabel.imageID = commonImage.imageID;
+                        tipLabel.imageID = commonImage.ID;
                         [commonImage.tipLabelArray addObject:tipLabel];
                     }
                 }
@@ -50,7 +50,7 @@
                 if (replierArray.count) {
                     for (int j = 0; j < replierArray.count; j++) {
                         ATOMReplier *replier = [MTLJSONAdapter modelOfClass:[ATOMReplier class] fromJSONDictionary:replierArray[j] error:NULL];
-                        replier.imageID = commonImage.imageID;
+                        replier.imageID = commonImage.ID;
                         [commonImage.replierArray addObject:replier];
                     }
                 }

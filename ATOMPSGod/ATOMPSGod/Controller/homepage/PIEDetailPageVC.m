@@ -57,6 +57,7 @@
         if (success) {
             _pageVM.liked = _likeButton.selected;
         } else {
+            NSLog(@"return error");
             _likeButton.selected = !_likeButton.selected;
         }
     }];

@@ -1,5 +1,5 @@
 //
-//  PIECountLabel.h
+//  PIEButton.h
 //  TUPAI
 //
 //  Created by chenpeiwei on 9/25/15.
@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface PIECountLabel : UILabel
+IB_DESIGNABLE
+@interface PIEButton : UIView
+@property (nonatomic, strong) UILabel *label;
+@property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, assign) BOOL selected;
+@property (nonatomic, assign) NSInteger number;
+
 @end

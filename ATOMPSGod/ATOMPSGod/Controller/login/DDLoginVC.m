@@ -48,7 +48,7 @@
         NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:_loginView.mobileTextField.text, @"phone", _loginView.passwordTextField.text, @"password",nil];
         [DDUserManager DDLogin:param withBlock:^(BOOL succeed) {
             if (succeed) {
-                [self.navigationController setViewControllers:nil];
+                [self.navigationController setViewControllers:[NSArray array]];
                 [AppDelegate APP].mainTabBarController = nil;
                 [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
             }
@@ -65,7 +65,7 @@
             [DDUserManager DD3PartyAuth:param AndType:@"weibo" withBlock:^(bool isRegistered, NSString *info) {
                 if (isRegistered) {
                     [Hud activity:@"" inView:self.view];
-                    [self.navigationController setViewControllers:nil];
+                    [self.navigationController setViewControllers:[NSArray array]];
                     [AppDelegate APP].mainTabBarController = nil;
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
                 } else {
@@ -103,7 +103,7 @@
             [DDUserManager DD3PartyAuth:param AndType:@"weixin" withBlock:^(bool isRegistered, NSString *info) {
                 if (isRegistered) {
                     [Hud activity:@"" inView:self.view];
-                    [self.navigationController setViewControllers:nil];
+                    [self.navigationController setViewControllers:[NSArray array]];
                     [AppDelegate APP].mainTabBarController = nil;
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
                 } else {

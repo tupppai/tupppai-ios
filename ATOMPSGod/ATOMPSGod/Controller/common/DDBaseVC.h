@@ -9,13 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "ATOMShare.h"
 #import "DDShareManager.h"
-typedef NS_ENUM(NSInteger, ATOMNotifyType) {
-    ATOMNotifyTypeComment = 0,
-    ATOMNotifyTypeReply,
-    ATOMNotifyTypeAttention,
-    ATOMNotifyTypeInvite,
-    ATOMNotifyTypeSystem,
-};
 
 
 typedef NS_ENUM(NSInteger, PIEHomeType) {
@@ -23,16 +16,8 @@ typedef NS_ENUM(NSInteger, PIEHomeType) {
     PIEHomeTypeAsk
 };
 
-typedef NS_ENUM(NSInteger, ATOMPageType) {
-    ATOMPageTypeAsk = 1,
-    ATOMPageTypeReply = 2
-};
 
-typedef NS_ENUM(NSInteger, ATOMShareType) {
-    ATOMShareTypeWechatMoments = 0,
-    ATOMShareTypeWechatFriends,
-    ATOMShareTypeSinaWeibo
-};
+
 
 @interface DDBaseVC : UIViewController
 

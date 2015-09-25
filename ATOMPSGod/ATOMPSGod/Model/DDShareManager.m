@@ -10,9 +10,7 @@
 #import "DDSessionManager.h"
 @implementation DDShareManager
 - (NSURLSessionDataTask *)getShareInfo:(NSDictionary *)param withBlock:(void (^)(ATOMShare *, NSError *))block {
-    [[KShareManager mascotAnimator]show];
     return [[DDSessionManager shareHTTPSessionManager] GET:@"app/share" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        [[KShareManager mascotAnimator]dismiss];
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
             ATOMShare *share = [MTLJSONAdapter modelOfClass:[ATOMShare class] fromJSONDictionary:[ responseObject objectForKey:@"data"] error:NULL];
@@ -25,7 +23,6 @@
             }
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [[KShareManager mascotAnimator]dismiss];
         if (block) {
             block(nil, error);
         }

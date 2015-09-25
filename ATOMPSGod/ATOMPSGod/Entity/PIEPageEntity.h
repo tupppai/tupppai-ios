@@ -21,9 +21,9 @@
 /**
  *  类型：hot ,recent
  */
-@property (nonatomic, copy) NSString *homePageType;
+//@property (nonatomic, copy) NSString *homePageType;
 /**
- *  求P，作品：ATOMPageTypeAsk ,ATOMPageTypeReply
+ *  求P，作品：PIEPageTypeAsk ,PIEPageTypeReply
  */
 @property (nonatomic, assign) NSInteger type;
 /**
@@ -67,6 +67,8 @@
 /**
  *  总被P数
  */
+@property (nonatomic, assign) NSInteger collectCount;
+
 @property (nonatomic, assign) NSInteger totalWorkNumber;
 @property (nonatomic, assign) CGFloat imageWidth;
 @property (nonatomic, assign) CGFloat imageHeight;

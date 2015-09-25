@@ -22,7 +22,7 @@ static DDUserManager *_currentUser;
         _bindWechat = NO;
         _bindWeibo = NO;
         _mobile = @"-1";
-        _username = @"惹不起的雅";
+        _username = @"我";
     }
     return self;
 }
