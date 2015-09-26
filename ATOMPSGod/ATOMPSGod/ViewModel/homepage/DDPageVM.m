@@ -39,7 +39,7 @@
         _publishTime = [df stringFromDate:publishDate];
         _likeCount = @"0";
         _shareCount = @"0";
-        _commentNumber = @"0";
+        _commentCount = @"0";
         _totalPSNumber = @"0";
         _labelArray = [NSMutableArray new];
         _replierArray = [NSMutableArray new];
@@ -78,9 +78,9 @@
         _shareCount = [NSString stringWithFormat:@"%zd",entity.totalShareNumber];
     }
     if (entity.totalCommentNumber>999999) {
-        _commentNumber = kfcMaxNumberString;
+        _commentCount = kfcMaxNumberString;
     } else {
-        _commentNumber = [NSString stringWithFormat:@"%zd",entity.totalCommentNumber];
+        _commentCount = [NSString stringWithFormat:@"%zd",entity.totalCommentNumber];
     }
     if (entity.totalWorkNumber>999999) {
         _totalPSNumber = kfcMaxNumberString;
@@ -123,9 +123,9 @@
             _shareCount = [NSString stringWithFormat:@"%zd",entity.totalShareNumber];
         }
         if (entity.totalCommentNumber>999999) {
-            _commentNumber = kfcMaxNumberString;
+            _commentCount = kfcMaxNumberString;
         } else {
-            _commentNumber = [NSString stringWithFormat:@"%zd",entity.totalCommentNumber];
+            _commentCount = [NSString stringWithFormat:@"%zd",entity.totalCommentNumber];
         }
         if (entity.totalWorkNumber>999999) {
             _totalPSNumber = kfcMaxNumberString;
@@ -160,7 +160,7 @@
         _content = entity.userDescription;
         _likeCount = [NSString stringWithFormat:@"%zd",entity.totalPraiseNumber];
         _shareCount = [NSString stringWithFormat:@"%zd",entity.totalShareNumber];
-        _commentNumber = [NSString stringWithFormat:@"%zd",entity.totalCommentNumber];
+        _commentCount = [NSString stringWithFormat:@"%zd",entity.totalCommentNumber];
         _totalPSNumber = [NSString stringWithFormat:@"%zd",entity.totalWorkNumber];
         _imageWidth = entity.imageWidth;
         _imageHeight = entity.imageHeight;
@@ -179,7 +179,7 @@
     commonViewModel.avatarURL = _avatarURL;
     commonViewModel.likeNumber = _likeCount;
     commonViewModel.shareNumber = _shareCount;
-    commonViewModel.commentNumber = _commentNumber;
+    commonViewModel.commentNumber = _commentCount;
     commonViewModel.width = _imageWidth;
     commonViewModel.height = _imageHeight;
     commonViewModel.userName = _username;
@@ -193,7 +193,7 @@
     _avatarURL = commonViewModel.avatarURL;
     _likeCount = commonViewModel.likeNumber;
     _shareCount = commonViewModel.shareNumber;
-    _commentNumber = commonViewModel.commentNumber;
+    _commentCount = commonViewModel.commentNumber;
     _imageWidth = commonViewModel.width;
     _imageHeight = commonViewModel.height;
     _username = commonViewModel.userName;

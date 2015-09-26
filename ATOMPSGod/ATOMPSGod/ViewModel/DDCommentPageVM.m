@@ -32,7 +32,7 @@
     _avatarURL = model.avatarURL;
     _likeNumber = model.likeCount;
     _shareNumber = model.shareCount;
-    _commentNumber = model.commentNumber;
+    _commentNumber = model.commentCount;
     _width = model.imageWidth;
     _height = model.imageHeight;
     _userName = model.username;

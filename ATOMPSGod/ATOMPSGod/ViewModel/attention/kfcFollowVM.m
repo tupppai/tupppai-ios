@@ -88,7 +88,7 @@
     askPVM.username = _userName;
     askPVM.likeCount = _likeNumber;
     askPVM.liked = _liked;
-    askPVM.commentNumber = _commentNumber;
+    askPVM.commentCount = _commentNumber;
     askPVM.liked = _liked;
     askPVM.labelArray = _labelArray;
     askPVM.replierArray = _replierArray;

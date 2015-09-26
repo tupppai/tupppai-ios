@@ -423,7 +423,8 @@
 		F4155D461BB3DA1300A0B045 /* PIEHighlightableLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4155D451BB3DA1300A0B045 /* PIEHighlightableLabel.m */; settings = {ASSET_TAGS = (); }; };
 		F41E99911BA5BBC8005010C7 /* test1.png in Resources */ = {isa = PBXBuildFile; fileRef = F41E99901BA5BBC8005010C7 /* test1.png */; };
 		F43159C61BB52CC500DCA292 /* PIECountLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F43159C51BB52CC500DCA292 /* PIECountLabel.m */; settings = {ASSET_TAGS = (); }; };
-		F43159CD1BB5567000DCA292 /* PIEButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F43159CC1BB5567000DCA292 /* PIEButton.m */; settings = {ASSET_TAGS = (); }; };
+		F43159CD1BB5567000DCA292 /* PIEPageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F43159CC1BB5567000DCA292 /* PIEPageButton.m */; settings = {ASSET_TAGS = (); }; };
+		F45FF9AF1BB65BE6009C4203 /* PIEPageLikeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F45FF9AE1BB65BE6009C4203 /* PIEPageLikeButton.m */; settings = {ASSET_TAGS = (); }; };
 		F46117D61BAD1101001A6F1A /* IQNSArray+Sort.m in Sources */ = {isa = PBXBuildFile; fileRef = F46117B41BAD1101001A6F1A /* IQNSArray+Sort.m */; settings = {ASSET_TAGS = (); }; };
 		F46117D71BAD1101001A6F1A /* IQUITextFieldView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = F46117B61BAD1101001A6F1A /* IQUITextFieldView+Additions.m */; settings = {ASSET_TAGS = (); }; };
 		F46117D81BAD1101001A6F1A /* IQUIView+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = F46117B81BAD1101001A6F1A /* IQUIView+Hierarchy.m */; settings = {ASSET_TAGS = (); }; };
@@ -1302,8 +1303,10 @@
 		F41E99901BA5BBC8005010C7 /* test1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test1.png; sourceTree = "<group>"; };
 		F43159C41BB52CC500DCA292 /* PIECountLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECountLabel.h; sourceTree = "<group>"; };
 		F43159C51BB52CC500DCA292 /* PIECountLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECountLabel.m; sourceTree = "<group>"; };
-		F43159CB1BB5567000DCA292 /* PIEButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEButton.h; sourceTree = "<group>"; };
-		F43159CC1BB5567000DCA292 /* PIEButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEButton.m; sourceTree = "<group>"; };
+		F43159CB1BB5567000DCA292 /* PIEPageButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEPageButton.h; sourceTree = "<group>"; };
+		F43159CC1BB5567000DCA292 /* PIEPageButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEPageButton.m; sourceTree = "<group>"; };
+		F45FF9AD1BB65BE6009C4203 /* PIEPageLikeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEPageLikeButton.h; sourceTree = "<group>"; };
+		F45FF9AE1BB65BE6009C4203 /* PIEPageLikeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEPageLikeButton.m; sourceTree = "<group>"; };
 		F46117B31BAD1101001A6F1A /* IQNSArray+Sort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQNSArray+Sort.h"; sourceTree = "<group>"; };
 		F46117B41BAD1101001A6F1A /* IQNSArray+Sort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQNSArray+Sort.m"; sourceTree = "<group>"; };
 		F46117B51BAD1101001A6F1A /* IQUITextFieldView+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQUITextFieldView+Additions.h"; sourceTree = "<group>"; };
@@ -1742,7 +1745,6 @@
 				5C4F88491AB56F180042E9BA /* ATOMShareView.m */,
 				5C561A801AB7FC0B0052D4D5 /* ATOMHomepageCustomTitleView.h */,
 				5C561A811AB7FC0B0052D4D5 /* ATOMHomepageCustomTitleView.m */,
-				F43159C31BB52BF900DCA292 /* PIELabel */,
 			);
 			path = homepage;
 			sourceTree = "<group>";
@@ -3173,13 +3175,17 @@
 				F43159C51BB52CC500DCA292 /* PIECountLabel.m */,
 			);
 			name = PIELabel;
+			path = homepage;
 			sourceTree = "<group>";
 		};
 		F43159C71BB5547300DCA292 /* 2.1 */ = {
 			isa = PBXGroup;
 			children = (
-				F43159CB1BB5567000DCA292 /* PIEButton.h */,
-				F43159CC1BB5567000DCA292 /* PIEButton.m */,
+				F43159C31BB52BF900DCA292 /* PIELabel */,
+				F43159CB1BB5567000DCA292 /* PIEPageButton.h */,
+				F43159CC1BB5567000DCA292 /* PIEPageButton.m */,
+				F45FF9AD1BB65BE6009C4203 /* PIEPageLikeButton.h */,
+				F45FF9AE1BB65BE6009C4203 /* PIEPageLikeButton.m */,
 			);
 			name = 2.1;
 			sourceTree = "<group>";
@@ -3572,7 +3578,7 @@
 				5C6697A41AAFD20B001FCF8A /* ATOMMyUploadViewController.m in Sources */,
 				E99D2F551B1C7E8D000D7784 /* UIImage+Enhancing.m in Sources */,
 				5C8406321ABA762900068F35 /* DDHomePageManager.m in Sources */,
-				F43159CD1BB5567000DCA292 /* PIEButton.m in Sources */,
+				F43159CD1BB5567000DCA292 /* PIEPageButton.m in Sources */,
 				5C561A461AB7C51F0052D4D5 /* MTLFMDBAdapter.m in Sources */,
 				5C3101841AAE8D9900EF529B /* ATOMModifyPasswordView.m in Sources */,
 				5C54DF161AB9529200BDE34D /* kfcHomeScrollView.m in Sources */,
@@ -3682,6 +3688,7 @@
 				E99C510D1B85A2A6004CA47B /* JTSImageInfo.m in Sources */,
 				5C0F04EE1ADCFB18002003AE /* ATOMInviteMessage.m in Sources */,
 				F4FABAFD1BAA593C00F47064 /* PIERefreshCollectionView.m in Sources */,
+				F45FF9AF1BB65BE6009C4203 /* PIEPageLikeButton.m in Sources */,
 				E94289871B5B32A200ED26E4 /* TSMessage.m in Sources */,
 				5CEAC0301AD4D7750058037C /* ATOMCollectionViewModel.m in Sources */,
 				5C8D4ACD1ADE484A00B158AE /* ATOMOtherPersonConcernViewController.m in Sources */,

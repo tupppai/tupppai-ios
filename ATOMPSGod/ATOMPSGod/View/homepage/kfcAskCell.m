@@ -132,7 +132,7 @@
     _likeButton.number = viewModel.likeCount;
     _likeButton.selected = viewModel.liked;
     _wechatButton.number = viewModel.shareCount;
-    _commentButton.number = viewModel.commentNumber;
+    _commentButton.number = viewModel.commentCount;
     [_imageViewMain mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(viewModel.imageHeight)).with.priorityHigh();
     }];

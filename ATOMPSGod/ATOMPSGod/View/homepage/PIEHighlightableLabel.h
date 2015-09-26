@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface PIEHighlightableLabel : UILabel
+@property (nonatomic, assign) NSInteger number;
+@property (nonatomic, copy) NSString* numberString;
 @property (nonatomic, assign) BOOL selected;
 
 @end

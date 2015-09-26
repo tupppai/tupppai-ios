@@ -27,7 +27,6 @@
     _avatarView.clipsToBounds = YES;
     _theImageView.contentMode = UIViewContentModeScaleAspectFill;
     _theImageView.clipsToBounds = YES;
-    _likeCountLabel.selected = YES;
     _collectView.userInteractionEnabled = YES;
 }
 
@@ -44,13 +43,24 @@
     }];
 }
 - (void)configCell:(DDPageVM *)viewModel row:(NSInteger)row{
-    
+    _ID = viewModel.ID;
+    _askID = viewModel.askID;
     _shareView.imageView.image = [UIImage imageNamed:@"hot_share"];
-    _collectView.imageView.image = [UIImage imageNamed:@"hot_star"];
-    _commentView.imageView.image = [UIImage imageNamed:@"hot_comment"];
-    _collectView.imageView.highlightedImage = [UIImage imageNamed:@"hot_star_selected"];
+    _shareView.numberString = viewModel.shareCount;
 
+    _commentView.imageView.image = [UIImage imageNamed:@"hot_comment"];
+    _commentView.numberString = viewModel.commentCount;
     
+    _collectView.imageView.image = [UIImage imageNamed:@"hot_star"];
+    _collectView.imageView.highlightedImage = [UIImage imageNamed:@"hot_star_selected"];
+    _collectView.imageView.highlighted = viewModel.collected;
+    _collectView.numberString = viewModel.collectCount;
+    
+    _likeView.highlighted = viewModel.liked;
+    _likeView.numberString = viewModel.likeCount;
+
+    _contentLabel.text = viewModel.content;
+
     [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     _nameLabel.text = viewModel.username;
     _timeLabel.text = viewModel.publishTime;
@@ -60,12 +70,6 @@
         make.height.equalTo(@(imageViewHeight)).with.priorityHigh();
     }];
     
-    _likeCountLabel.text = viewModel.likeCount;
-    _likeView.highlighted = viewModel.liked;
-    _collectView.imageView.highlighted = viewModel.collected;
-    _contentLabel.text = viewModel.content;
-    
-
     _thumbView.expandedSize = CGSizeMake(SCREEN_WIDTH, imageViewHeight);
     _thumbView.subviewCounts = viewModel.askImageModelArray.count;
     PIEImageEntity* entity = [viewModel.askImageModelArray objectAtIndex:0];

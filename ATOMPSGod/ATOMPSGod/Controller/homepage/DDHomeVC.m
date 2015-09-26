@@ -248,8 +248,6 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     }
 }
 
-
-
 #pragma mark - Gesture Event
 
 - (void)tapGestureReply:(UITapGestureRecognizer *)gesture {
@@ -290,6 +288,11 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
             else if (CGRectContainsPoint(cell.collectView.frame, p)) {
                 [self collectReply];
             }
+            else if (CGRectContainsPoint(cell.likeView.frame, p)) {
+                [self likeReply];
+            }
+
+
             }
         }
 }
@@ -549,9 +552,10 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     ivc.askPageViewModel = _selectedVM;
     [self pushViewController:ivc animated:YES];
 }
--(void)collectReply{
+-(void)collectReply {
     PIEReplyTableCell* cell = [_hotTableView cellForRowAtIndexPath:_selectedIndexPath];
     NSMutableDictionary *param = [NSMutableDictionary new];
+    cell.collectView.selected = !cell.collectView.selected;
     if (cell.collectView.selected) {
         //收藏
         [param setObject:@(1) forKey:@"status"];
@@ -561,12 +565,34 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     }
     [DDCollectManager toggleCollect:param withPageType:PIEPageTypeReply withID:_selectedVM.ID withBlock:^(NSError *error) {
         if (!error) {
-//            _selectedVM.collected = cell.collectView.highlighted;
+            _selectedVM.collected = cell.collectView.selected;
+            _selectedVM.collectCount = cell.collectView.numberString;
         }   else {
-//            cell.collectView.highlighted = !cell.collectView.highlighted;
-//            cell.collectCountLabel.selected = !cell.collectCountLabel.selected;
+                cell.collectView.selected = !cell.collectView.selected;
         }
     }];
+}
+-(void)likeReply {
+    PIEReplyTableCell* cell = [_hotTableView cellForRowAtIndexPath:_selectedIndexPath];
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    cell.likeView.selected = !cell.likeView.selected;
+    if (cell.likeView.selected) {
+        //收藏
+        [param setObject:@(1) forKey:@"status"];
+    } else {
+        //取消收藏
+        [param setObject:@(0) forKey:@"status"];
+    }
+    
+    [DDService toggleLike:cell.likeView.selected ID:_selectedVM.ID type:_selectedVM.type  withBlock:^(BOOL success) {
+        if (success) {
+            _selectedVM.liked = cell.likeView.selected;
+        } else {
+            cell.likeView.selected = !cell.likeView.selected;
+        }
+    }];
+
+    
 }
 -(void)toggleLabel:(UILabel*)label toggle:(BOOL)toggle{
     if (toggle) {

@@ -32,7 +32,7 @@
 @property (nonatomic, copy) NSString *publishTime;
 @property (nonatomic, copy) NSString *likeCount;
 @property (nonatomic, copy) NSString *shareCount;
-@property (nonatomic, copy) NSString *commentNumber;
+@property (nonatomic, copy) NSString *commentCount;
 @property (nonatomic, copy) NSString *totalPSNumber;
 @property (nonatomic, copy) NSString *collectCount;
 

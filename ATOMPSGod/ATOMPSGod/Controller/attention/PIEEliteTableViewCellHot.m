@@ -46,7 +46,7 @@
     
     _shareCountLabel.text = viewModel.shareCount;
     _collectCountLabel.text = @"404";
-    _commentCountLabel.text = viewModel.commentNumber;
+    _commentCountLabel.text = viewModel.commentCount;
     _likeCountLabel.text = viewModel.likeCount;
     _likeView.highlighted = viewModel.liked;
     
