@@ -60,6 +60,9 @@
 @property (nonatomic, strong)  JGActionSheet * reportActionSheet;
 
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
+@property (nonatomic, strong) PIEAskCollectionCell *selectedAskCell;
+@property (nonatomic, strong) PIEReplyTableCell *selectedReplyCell;
+
 @property (nonatomic, strong) DDPageVM *selectedVM;
 
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
@@ -108,11 +111,11 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     _isFirstEnterSecondView = YES;
     _sourceAsk = [NSMutableArray new];
     _sourceHot = [NSMutableArray new];
-//    [self firstGetDataSourceFromDataBase];
+    //    [self firstGetDataSourceFromDataBase];
     [self firstGetRemoteSource:PIEHomeTypeAsk];
     [self firstGetRemoteSource:PIEHomeTypeHot];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshNav1) name:@"RefreshNav1" object:nil];
-
+    
 }
 
 - (void)confighotTable {
@@ -140,7 +143,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     
     _tapGestureAsk = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureAsk:)];
     [_askCollectionView addGestureRecognizer:_tapGestureAsk];
-
+    
     _currentAskIndex = 1;
 }
 
@@ -198,7 +201,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 #pragma mark - event response
 //
 //- (void)tapOnImageView:(UIImage*)image withURL:(NSString*)url{
-//    
+//
 //    // Create image info
 //    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
 //    if (image != nil) {
@@ -206,13 +209,13 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 //    } else {
 //        imageInfo.imageURL = [NSURL URLWithString:url];
 //    }
-//    
+//
 //    // Setup view controller
 //    JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
 //                                           initWithImageInfo:imageInfo
 //                                           mode:JTSImageViewControllerMode_Image
 //                                           backgroundStyle:JTSImageViewControllerBackgroundOption_Scaled];
-//    
+//
 //    // Present the view controller.
 //    [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOffscreen];
 ////    imageViewer.interactionsDelegate = self;
@@ -255,78 +258,82 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
         CGPoint location = [gesture locationInView:_hotTableView];
         _selectedIndexPath = [_hotTableView indexPathForRowAtPoint:location];
         if (_selectedIndexPath) {
-            PIEReplyTableCell* cell = (PIEReplyTableCell *)[_hotTableView cellForRowAtIndexPath:_selectedIndexPath];
+            _selectedReplyCell = [_hotTableView cellForRowAtIndexPath:_selectedIndexPath];
             _selectedVM = _sourceHot[_selectedIndexPath.row];
-            CGPoint p = [gesture locationInView:cell];
+            CGPoint p = [gesture locationInView:_selectedReplyCell];
             
             //点击小图
-            if (CGRectContainsPoint(cell.thumbView.frame, p)) {
-                [cell animateToggleExpanded];
+            if (CGRectContainsPoint(_selectedReplyCell.thumbView.frame, p)) {
+                [_selectedReplyCell animateToggleExpanded];
             }
             //点击大图
-           else  if (CGRectContainsPoint(cell.theImageView.frame, p)) {
+            else  if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
                 //进入热门详情
                 PIEDetailPageVC* vc = [PIEDetailPageVC new];
-               _selectedVM.image = cell.theImageView.image;
+                _selectedVM.image = _selectedReplyCell.theImageView.image;
                 vc.pageVM = _selectedVM;
                 [self pushViewController:vc animated:YES];
             }
             //点击头像
-            else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
-                    ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-                    opvc.userID = _selectedVM.userID;
-                    opvc.userName = _selectedVM.username;
-                    [self pushViewController:opvc animated:YES];
-                }
-            //点击用户名
-            else if (CGRectContainsPoint(cell.nameLabel.frame, p)) {
-                    ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-                    opvc.userID = _selectedVM.userID;
-                    opvc.userName = _selectedVM.username;
-                    [self pushViewController:opvc animated:YES];
-                }
-            else if (CGRectContainsPoint(cell.collectView.frame, p)) {
-                [self collectReply];
-            }
-            else if (CGRectContainsPoint(cell.likeView.frame, p)) {
-                [self likeReply];
-            }
-
-
-            }
-        }
-}
-
-- (void)tapGestureAsk:(UITapGestureRecognizer *)gesture {
-    if (_scrollView.type == PIEHomeTypeAsk) {
-    CGPoint location = [gesture locationInView:_askCollectionView];
-        NSIndexPath *indexPath = [_askCollectionView indexPathForItemAtPoint:location];
-        if (indexPath) {
-            PIEAskCollectionCell* cell= (PIEAskCollectionCell *)[_askCollectionView cellForItemAtIndexPath:indexPath];
-           _selectedVM = _sourceAsk[indexPath.row];
-            CGPoint p = [gesture locationInView:cell];
- 
-            //点击大图
-            if (CGRectContainsPoint(cell.leftImageView.frame, p) || CGRectContainsPoint(cell.rightImageView.frame, p)) {
-                NSLog(@"tap on imageview");
-            }
-            //点击头像
-            else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
+            else if (CGRectContainsPoint(_selectedReplyCell.avatarView.frame, p)) {
                 ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
                 opvc.userID = _selectedVM.userID;
                 opvc.userName = _selectedVM.username;
                 [self pushViewController:opvc animated:YES];
             }
-
             //点击用户名
-            else if (CGRectContainsPoint(cell.nameLabel.frame, p)) {
+            else if (CGRectContainsPoint(_selectedReplyCell.nameLabel.frame, p)) {
+                ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+                opvc.userID = _selectedVM.userID;
+                opvc.userName = _selectedVM.username;
+                [self pushViewController:opvc animated:YES];
+            }
+            else if (CGRectContainsPoint(_selectedReplyCell.collectView.frame, p)) {
+                [self collectReply];
+            }
+            else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
+                [self likeReply];
+            }
+            else if (CGRectContainsPoint(_selectedReplyCell.followView.frame, p)) {
+                NSLog(@"followView");
+                [self followReplier];
+            }
+            
+            
+        }
+    }
+}
+
+- (void)tapGestureAsk:(UITapGestureRecognizer *)gesture {
+    if (_scrollView.type == PIEHomeTypeAsk) {
+        CGPoint location = [gesture locationInView:_askCollectionView];
+        NSIndexPath *indexPath = [_askCollectionView indexPathForItemAtPoint:location];
+        if (indexPath) {
+            _selectedAskCell= (PIEAskCollectionCell *)[_askCollectionView cellForItemAtIndexPath:indexPath];
+            _selectedVM = _sourceAsk[indexPath.row];
+            CGPoint p = [gesture locationInView:_selectedAskCell];
+            
+            //点击大图
+            if (CGRectContainsPoint(_selectedAskCell.leftImageView.frame, p) || CGRectContainsPoint(_selectedAskCell.rightImageView.frame, p)) {
+                NSLog(@"tap on imageview");
+            }
+            //点击头像
+            else if (CGRectContainsPoint(_selectedAskCell.avatarView.frame, p)) {
+                ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+                opvc.userID = _selectedVM.userID;
+                opvc.userName = _selectedVM.username;
+                [self pushViewController:opvc animated:YES];
+            }
+            
+            //点击用户名
+            else if (CGRectContainsPoint(_selectedAskCell.nameLabel.frame, p)) {
                 ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
                 opvc.userID = _selectedVM.userID;
                 opvc.userName = _selectedVM.username;
                 [self pushViewController:opvc animated:YES];
             }
             //点击帮p
-            else if (CGRectContainsPoint(cell.bangView.frame, p)) {
+            else if (CGRectContainsPoint(_selectedAskCell.bangView.frame, p)) {
                 [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
             }
         }
@@ -387,7 +394,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_hotTableView == tableView) {
-            return [tableView fd_heightForCellWithIdentifier:CellIdentifier  cacheByIndexPath:indexPath configuration:^(PIEReplyTableCell *cell) {
+        return [tableView fd_heightForCellWithIdentifier:CellIdentifier  cacheByIndexPath:indexPath configuration:^(PIEReplyTableCell *cell) {
             [cell configCell:_sourceHot[indexPath.row] row:indexPath.row];
         }];
     } else {
@@ -400,10 +407,10 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 
 #pragma mark - GetDataSource from DB
 //- (void)firstGetDataSourceFromDataBase {
-//    
+//
 //    _sourceAsk = [self fetchDBDataSourceWithHomeType:PIEHomeTypeAsk];
 //    [_askCollectionView reloadData];
-//    
+//
 ////    _sourceHot = [self fetchDBDataSourceWithHomeType:PIEHomeTypeHot];
 //}
 #pragma mark - GetDataSource from Server
@@ -450,7 +457,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     DDHomePageManager *pageManager = [DDHomePageManager new];
     [pageManager pullSource:param block:^(NSMutableArray *homepageArray) {
         if (homepageArray.count) {
-
+            
             NSMutableArray* arrayAgent = [NSMutableArray new];
             for (PIEPageEntity *entity in homepageArray) {
                 DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
@@ -467,14 +474,14 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
                 [ws.askCollectionView reloadData];
                 [ws.scrollView.collectionView.header endRefreshing];
             }
-//            if (_scrollView.type == PIEHomeTypeAsk) {
-//                [ws.scrollView.collectionView reloadData];
-//            } else {
-//                [ws.hotTableView reloadData];
-//            }
-//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-//                [pageManager saveHomeImagesInDB:homepageArray];
-//            });
+            //            if (_scrollView.type == PIEHomeTypeAsk) {
+            //                [ws.scrollView.collectionView reloadData];
+            //            } else {
+            //                [ws.hotTableView reloadData];
+            //            }
+            //            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            //                [pageManager saveHomeImagesInDB:homepageArray];
+            //            });
         } else {
             [ws.scrollView.replyTable.header endRefreshing];
             [ws.scrollView.collectionView.header endRefreshing];
@@ -553,10 +560,9 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     [self pushViewController:ivc animated:YES];
 }
 -(void)collectReply {
-    PIEReplyTableCell* cell = [_hotTableView cellForRowAtIndexPath:_selectedIndexPath];
     NSMutableDictionary *param = [NSMutableDictionary new];
-    cell.collectView.selected = !cell.collectView.selected;
-    if (cell.collectView.selected) {
+    _selectedReplyCell.collectView.selected = !_selectedReplyCell.collectView.selected;
+    if (_selectedReplyCell.collectView.selected) {
         //收藏
         [param setObject:@(1) forKey:@"status"];
     } else {
@@ -565,18 +571,17 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     }
     [DDCollectManager toggleCollect:param withPageType:PIEPageTypeReply withID:_selectedVM.ID withBlock:^(NSError *error) {
         if (!error) {
-            _selectedVM.collected = cell.collectView.selected;
-            _selectedVM.collectCount = cell.collectView.numberString;
+            _selectedVM.collected = _selectedReplyCell.collectView.selected;
+            _selectedVM.collectCount = _selectedReplyCell.collectView.numberString;
         }   else {
-                cell.collectView.selected = !cell.collectView.selected;
+            _selectedReplyCell.collectView.selected = !_selectedReplyCell.collectView.selected;
         }
     }];
 }
 -(void)likeReply {
-    PIEReplyTableCell* cell = [_hotTableView cellForRowAtIndexPath:_selectedIndexPath];
     NSMutableDictionary *param = [NSMutableDictionary new];
-    cell.likeView.selected = !cell.likeView.selected;
-    if (cell.likeView.selected) {
+    _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
+    if (_selectedReplyCell.likeView.selected) {
         //收藏
         [param setObject:@(1) forKey:@"status"];
     } else {
@@ -584,16 +589,30 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
         [param setObject:@(0) forKey:@"status"];
     }
     
-    [DDService toggleLike:cell.likeView.selected ID:_selectedVM.ID type:_selectedVM.type  withBlock:^(BOOL success) {
+    [DDService toggleLike:_selectedReplyCell.likeView.selected ID:_selectedVM.ID type:_selectedVM.type  withBlock:^(BOOL success) {
         if (success) {
-            _selectedVM.liked = cell.likeView.selected;
+            _selectedVM.liked = _selectedReplyCell.likeView.selected;
         } else {
-            cell.likeView.selected = !cell.likeView.selected;
+            _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
         }
     }];
-
-    
 }
+
+-(void)followReplier {
+    
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    [param setObject:@(_selectedVM.userID) forKey:@"uid"];
+    _selectedReplyCell.followView.highlighted = !_selectedReplyCell.followView.highlighted;
+    [DDService follow:param withBlock:^(BOOL success) {
+        if (success) {
+            _selectedVM.followed = _selectedReplyCell.followView.highlighted;
+        } else {
+            _selectedReplyCell.followView.highlighted = !_selectedReplyCell.followView.highlighted;
+        }
+    }];
+}
+
+
 -(void)toggleLabel:(UILabel*)label toggle:(BOOL)toggle{
     if (toggle) {
         NSInteger count = [label.text integerValue];
@@ -668,17 +687,17 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PIEAskCollectionCell*cell =
     (PIEAskCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier2
-                                                                                forIndexPath:indexPath];
+                                                                      forIndexPath:indexPath];
     [cell injectSource:[_sourceAsk objectAtIndex:indexPath.row]];
     return cell;
 }
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     DDPageVM* vm =   [_sourceAsk objectAtIndex:indexPath.row];
-
+    
     CGFloat width;
     CGFloat height;
-
+    
     width = AskCellWidth;
     height = vm.imageHeight + 135;
     if (height > (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/1.3) {

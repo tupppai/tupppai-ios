@@ -18,6 +18,8 @@
 @property (nonatomic, assign) NSInteger askID;
 @property (nonatomic, assign) bool liked;
 @property (nonatomic, assign) bool collected;
+@property (nonatomic, assign) bool followed;
+
 /**
  *  类型：hot ,recent
  */

@@ -173,6 +173,7 @@
                 <outlet property="collectView" destination="vV8-bh-K4z" id="gpR-7x-4In"/>
                 <outlet property="commentView" destination="Wlr-Je-B2P" id="0tA-6f-e6I"/>
                 <outlet property="contentLabel" destination="XLA-1a-yzs" id="gv3-Sc-OfV"/>
+                <outlet property="followView" destination="ov8-cU-PvT" id="XGH-ND-YZL"/>
                 <outlet property="likeView" destination="tse-As-wf5" id="unS-Ya-hmy"/>
                 <outlet property="nameLabel" destination="tXl-3D-7si" id="ba7-jS-co7"/>
                 <outlet property="shareView" destination="CWC-Fy-Ux9" id="5jo-y7-e9p"/>

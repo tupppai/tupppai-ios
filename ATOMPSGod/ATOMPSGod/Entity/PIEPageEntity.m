@@ -32,7 +32,8 @@
              @"liked" :@"uped",
              @"collected" : @"collected",
              @"type" : @"type",
-             @"askImageModelArray":@"uploads"
+             @"askImageModelArray":@"uploads",
+             @"followed":@"followed",
              };
 }
 

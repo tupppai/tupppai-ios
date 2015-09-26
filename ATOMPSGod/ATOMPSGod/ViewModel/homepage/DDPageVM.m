@@ -59,6 +59,7 @@
     _avatarURL = entity.avatar;
     _liked = entity.liked;
     _collected = entity.collected;
+    _followed = entity.followed;
     _imageWidth = entity.imageWidth;
     _imageHeight = entity.imageHeight;
     NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:entity.uploadTime];
@@ -107,6 +108,8 @@
         _collected = entity.collected;
         _imageWidth = entity.imageWidth;
         _imageHeight = entity.imageHeight;
+        _followed = entity.followed;
+
         NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:entity.uploadTime];
         _publishTime = [Util formatPublishTime:publishDate];
         _content = entity.userDescription;

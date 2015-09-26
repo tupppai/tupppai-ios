@@ -45,6 +45,7 @@
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, assign) BOOL liked;
 @property (nonatomic, assign) BOOL collected;
+@property (nonatomic, assign) BOOL followed;
 
 
 //求p 的图片对象数组

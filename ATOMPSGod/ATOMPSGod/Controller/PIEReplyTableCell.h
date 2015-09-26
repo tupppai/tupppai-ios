@@ -1,6 +1,6 @@
 //
 //  PIEAskCellTableViewCell.h
-//  
+//
 //
 //  Created by chenpeiwei on 9/11/15.
 //
@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet PIEPageButton *collectView;
 @property (weak, nonatomic) IBOutlet PIEPageButton *commentView;
 @property (weak, nonatomic) IBOutlet PIEPageLikeButton *likeView;
+@property (weak, nonatomic) IBOutlet UIImageView *followView;
 
 
 @property (nonatomic, assign) NSInteger ID;

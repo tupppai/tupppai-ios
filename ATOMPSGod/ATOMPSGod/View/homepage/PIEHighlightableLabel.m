@@ -25,9 +25,10 @@
         _numberString = @"0";
         _number = 0;
         self.font = [UIFont systemFontOfSize:11];
-//        self.layer.cornerRadius = 4;
+        self.layer.cornerRadius = 5;
         self.clipsToBounds = YES;
         self.textColor = [UIColor blackColor];
+        self.textAlignment = NSTextAlignmentCenter;
     }
     return self;
 }
