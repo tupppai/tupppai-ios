@@ -275,7 +275,7 @@
         if(component == 0)
             return [_provinces count];
         else
-            return[ _provinces[_selectedRowComponent1][@"citys"] count];
+            return [[[_provinces objectAtIndex:_selectedRowComponent1]objectForKey:@"citys"] count];
 }
 
 #pragma mark - UIPickerViewDelegate
@@ -283,12 +283,13 @@
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
         if(component == 0)
         {
-            return _provinces[row][@"name"];
+            
+            return [[_provinces objectAtIndex:row]objectForKey:@"name"];
         }
         else
         {
-            NSArray* cities = _provinces[_selectedRowComponent1][@"citys"];
-            return [cities[row] allValues][0];
+            NSArray* cities = [[_provinces objectAtIndex:_selectedRowComponent1] objectForKey:@"citys"];
+            return [[[cities objectAtIndex:row] allValues]objectAtIndex:0];
         }
 }
 -(CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
@@ -309,12 +310,12 @@
 
 //updateAreaLabel and update currentUser
 -(void)updateAreaLabel {
-    NSString* provinceName = _provinces[_selectedRowComponent1][@"name"];
-    NSArray* cities = _provinces[_selectedRowComponent1][@"citys"];
+    NSString* provinceName = [[_provinces objectAtIndex:_selectedRowComponent1]objectForKey:@"name"];
+    NSArray* cities = [[_provinces objectAtIndex:_selectedRowComponent1]objectForKey:@"citys"];
     NSString* cityName = @"";
     if(cities.count > 0) {
-         cityName = [cities[_selectedRowComponent2] allValues][0];
-        [[DDUserManager currentUser].region setValue:[cities[_selectedRowComponent2] allKeys][0] forKey:@"cityID"];
+         cityName = [[cities[_selectedRowComponent2] allValues]objectAtIndex:0];
+        [[DDUserManager currentUser].region setValue:[[[cities objectAtIndex:_selectedRowComponent2] allKeys]objectAtIndex:0] forKey:@"cityID"];
     }
     _createProfileView.showAreaLabel.text = [NSString stringWithFormat:@"%@,%@",provinceName,cityName];
     [[DDUserManager currentUser].region setValue:cityName forKey:@"cityName"];
