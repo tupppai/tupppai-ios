@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ATOMBaseView.h"
+#import "HMSegmentedControl.h"
 
 @interface ATOMCreateProfileView : ATOMBaseView
 
@@ -16,31 +17,24 @@
 @property (nonatomic, strong) UIView *topView;
 @property (nonatomic, strong) UIButton *userHeaderButton;
 @property (nonatomic, strong) UITextField *nicknameTextField;
-@property (nonatomic, strong) UIView *sexView;
-@property (nonatomic, strong) UIPickerView *sexPickerView;
+@property (nonatomic, strong) HMSegmentedControl *sexSegment;
 @property (nonatomic, strong) UIPickerView *regionPickerView;
 
 @property (nonatomic, strong) UIView *areaView;
 
-@property (nonatomic, strong) UIView *sexPickerBackgroundView;
 @property (nonatomic, strong) UIView *regionPickerBackgroundView;
 
-@property (nonatomic, strong) UILabel *changeHeaderLabel;
 
 @property (nonatomic, strong) UIButton *cancelPickerButton;
 @property (nonatomic, strong) UIButton *confirmPickerButton;
 @property (nonatomic, strong) UIButton *cancelRegionPickerButton;
 @property (nonatomic, strong) UIButton *confirmRegionPickerButton;
-@property (nonatomic, strong) UILabel *showSexLabel;
 @property (nonatomic, strong) UILabel *showAreaLabel;
 @property (nonatomic, strong) UILabel *protocolLabel;
 
-- (void)showSexPickerView;
-- (void)hideSexPickerView;
+@property (nonatomic, assign) BOOL genderIsMan;
 
 - (void)showRegionPickerView;
 - (void)hideRegionPickerView;
-
-- (NSInteger)tagOfCurrentSex;
 
 @end

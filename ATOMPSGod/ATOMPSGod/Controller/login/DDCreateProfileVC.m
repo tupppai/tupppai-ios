@@ -75,12 +75,6 @@
     return _imagePickerController;
 }
 
-- (UITapGestureRecognizer *)tapSexViewGesture {
-    if (!_tapSexViewGesture) {
-        _tapSexViewGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapSexViewGesture:)];
-    }
-    return _tapSexViewGesture;
-}
 - (UITapGestureRecognizer *)tapRegionViewGesture {
     if (!_tapRegionViewGesture) {
         _tapRegionViewGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRegionViewGesture:)];
@@ -103,23 +97,16 @@
     self.view = _createProfileView;
     _createProfileView.nicknameTextField.delegate = self;
     [_createProfileView.userHeaderButton addTarget:self action:@selector(clickToManageAvatar) forControlEvents:UIControlEventTouchUpInside];
-    UITapGestureRecognizer* headerLabelTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(clickToManageAvatar)];
-    [_createProfileView.changeHeaderLabel addGestureRecognizer:headerLabelTapGesture];
     
     [_createProfileView.nextButton addTarget:self action:@selector(clickRightButtonItem) forControlEvents:UIControlEventTouchUpInside];
     [_createProfileView.backButton addTarget:self action:@selector(clickLeftButtonItem) forControlEvents:UIControlEventTouchUpInside];
 
-    [_createProfileView.sexView addGestureRecognizer:self.tapSexViewGesture];
-    _createProfileView.sexPickerView.delegate = self;
-    _createProfileView.sexPickerView.dataSource = self;
     [_createProfileView.areaView addGestureRecognizer:self.tapRegionViewGesture];
     _createProfileView.regionPickerView.delegate = self;
     _createProfileView.regionPickerView.dataSource = self;
     
     _selectedRowComponent1 = 0;
     _selectedRowComponent2 = 0;
-    
-    [_createProfileView.cancelPickerButton addTarget:self action:@selector(clickCancelPickerButton:) forControlEvents:UIControlEventTouchUpInside];
     [_createProfileView.confirmPickerButton addTarget:self action:@selector(clickConfirmPickerButton:) forControlEvents:UIControlEventTouchUpInside];
     [_createProfileView.cancelRegionPickerButton addTarget:self action:@selector(clickCancelRegionPickerButton:) forControlEvents:UIControlEventTouchUpInside];
     [_createProfileView.confirmRegionPickerButton addTarget:self action:@selector(clickConfirmRegionPickerButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -129,7 +116,7 @@
 #pragma mark - Third party sign up
 -(void)setupWithSourceData {
     if (_userProfileViewModel) {
-        _createProfileView.showSexLabel.text = _userProfileViewModel.gender;
+//        _createProfileView.showSexLabel.text = _userProfileViewModel.gender;
         [_createProfileView.userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString: _userProfileViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
         _createProfileView.nicknameTextField.text = _userProfileViewModel.nickName;
         [DDUserManager currentUser].avatar = _userProfileViewModel.avatarURL;
@@ -192,11 +179,8 @@
     } else if (str.length > 8) {
         [Hud text:@"昵称不能大于8位"];
         return ;
-    } else if ([_createProfileView tagOfCurrentSex] == -1) {
-        [Hud text:@"请选择性别"];
-        return ;
     }
-    [DDUserManager currentUser].sex = [_createProfileView tagOfCurrentSex];
+    [DDUserManager currentUser].sex = _createProfileView.genderIsMan;
     [DDUserManager currentUser].username = str;
     DDPhoneRegisterVC *mrvc = [[DDPhoneRegisterVC alloc] init];
     [self.navigationController pushViewController:mrvc animated:YES];
@@ -209,15 +193,12 @@
     [self.cameraActionsheet showInView:self.view animated:YES];
 }
 
-- (void)clickCancelPickerButton:(UIButton *)sender {
-    [_createProfileView hideSexPickerView];
-}
 
 - (void)clickConfirmPickerButton:(UIButton *)sender {
-    [_createProfileView hideSexPickerView];
-    if ( [_createProfileView.showSexLabel.text  isEqualToString: @""] || _createProfileView.showSexLabel.text == NULL) {
-        _createProfileView.showSexLabel.text = @"男";
-    }
+//    [_createProfileView hideSexPickerView];
+//    if ( [_createProfileView.showSexLabel.text  isEqualToString: @""] || _createProfileView.showSexLabel.text == NULL) {
+//        _createProfileView.showSexLabel.text = @"男";
+//    }
 }
 - (void)clickCancelRegionPickerButton:(UIButton *)sender {
     [_createProfileView hideRegionPickerView];
@@ -231,10 +212,7 @@
 
 #pragma mark - Gesture Event
 
-- (void)tapSexViewGesture:(id *)gesture {
-    [_createProfileView.nicknameTextField resignFirstResponder];
-    [_createProfileView showSexPickerView];
-}
+
 - (void)tapRegionViewGesture:(UITapGestureRecognizer *)gesture {
     [_createProfileView.nicknameTextField resignFirstResponder];
     [_createProfileView showRegionPickerView];
@@ -289,35 +267,20 @@
 #pragma mark - UIPickerViewDataSource
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    if (pickerView == _createProfileView.sexPickerView) {
-        return 1;
-    } else {
         return 2;
-    }
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    if (pickerView == _createProfileView.sexPickerView) {
-        return 2;
-    } else {
+
         if(component == 0)
             return [_provinces count];
         else
             return[ _provinces[_selectedRowComponent1][@"citys"] count];
-    }
 }
 
 #pragma mark - UIPickerViewDelegate
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    if (pickerView == _createProfileView.sexPickerView) {
-         if (row == 0) {
-            return @"男";
-        } else if (row == 1) {
-            return @"女";
-        }
-        return nil;
-    } else {
         if(component == 0)
         {
             return _provinces[row][@"name"];
@@ -327,23 +290,12 @@
             NSArray* cities = _provinces[_selectedRowComponent1][@"citys"];
             return [cities[row] allValues][0];
         }
-    }
 }
 -(CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
-    if (pickerView == _createProfileView.sexPickerView) {
-        return 30;
-    } else {
         return 25;
-    }
 }
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    if (pickerView == _createProfileView.sexPickerView) {
-        if (row == 0) {
-            _createProfileView.showSexLabel.text = @"男";
-        } else if (row == 1) {
-            _createProfileView.showSexLabel.text = @"女";
-        }
-    } else {
+
         if(component == 0) {
             _selectedRowComponent1 = row;
             [pickerView reloadComponent:1];
@@ -353,7 +305,6 @@
             _selectedRowComponent2 = row;
             [self updateAreaLabel];
         }
-    }
 }
 
 //updateAreaLabel and update currentUser

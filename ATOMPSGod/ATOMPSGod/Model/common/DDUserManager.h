@@ -37,7 +37,7 @@
 /**
  *  man:1 woman:0
  */
-@property (nonatomic, assign) NSInteger sex;
+@property (nonatomic, assign) BOOL sex;
 /**
  *  背景图url
  */

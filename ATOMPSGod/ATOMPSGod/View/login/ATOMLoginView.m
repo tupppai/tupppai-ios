@@ -35,16 +35,16 @@
     [_backButton setImage:[UIImage imageNamed:@"icon_back_login"] forState:UIControlStateNormal];
     [self addSubview:_backButton];
     
-    UILabel* backButtonLabel = [UILabel new];
-    backButtonLabel.text = @"登录";
-    backButtonLabel.textColor = kTextColor;
-    backButtonLabel.font = [UIFont systemFontOfSize:18.0];
-    [self addSubview:backButtonLabel];
+//    UILabel* backButtonLabel = [UILabel new];
+//    backButtonLabel.text = @"登录";
+//    backButtonLabel.textColor = kTextColor;
+//    backButtonLabel.font = [UIFont systemFontOfSize:18.0];
+//    [self addSubview:backButtonLabel];
 
     _mobileTextField = [UITextField new];
     _mobileTextField.placeholder = @"手机号";
     _mobileTextField.textColor = kTextColor;
-    _mobileTextField.font = [UIFont systemFontOfSize:18];
+    _mobileTextField.font = [UIFont systemFontOfSize:15];
     _mobileTextField.keyboardType = UIKeyboardTypePhonePad;
     _mobileTextField.delegate = self;
     [self addSubview:_mobileTextField];
@@ -57,7 +57,7 @@
     _passwordTextField.secureTextEntry = YES;
     _passwordTextField.placeholder = @"密码";
     _passwordTextField.textColor = kTextColor;
-    _passwordTextField.font = [UIFont systemFontOfSize:18];
+    _passwordTextField.font = [UIFont systemFontOfSize:15];
     _passwordTextField.delegate = self;
 
     [self addSubview:_passwordTextField];
@@ -67,11 +67,11 @@
     [self addSubview:passwordBottomLine];
     
     _loginButton = [UIButton new];
-    _loginButton.backgroundColor = [UIColor colorWithHex:0x74c3ff];
-    _loginButton.layer.cornerRadius = 22;
+    _loginButton.backgroundColor = [UIColor colorWithHex:PIEColorHex];
+    _loginButton.layer.cornerRadius = 15;
     _loginButton.layer.masksToBounds = YES;
     [_loginButton setTitle:@"登录" forState:UIControlStateNormal];
-    [_loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_loginButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [self addSubview:_loginButton];
     
     _forgetPasswordButton = [UIButton new];
@@ -87,10 +87,10 @@
     [self addSubview:_lineView];
     
     _tipLabel1 = [UILabel new];
-    _tipLabel1.text = @"或者";
+    _tipLabel1.text = @"第三方登录";
     _tipLabel1.backgroundColor = self.backgroundColor;
     _tipLabel1.textColor = [UIColor colorWithHex:0xB5C0C8];
-    _tipLabel1.font = [UIFont systemFontOfSize:16];
+    _tipLabel1.font = [UIFont systemFontOfSize:14];
     _tipLabel1.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_tipLabel1];
     
@@ -118,12 +118,12 @@
         make.height.equalTo(@40);
         make.width.equalTo(@40);
     }];
-    [backButtonLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(ws.mas_centerX);
-        make.centerY.equalTo(_backButton.mas_centerY);
-        make.height.equalTo(@40);
-        make.width.equalTo(@40);
-    }];
+//    [backButtonLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.equalTo(ws.mas_centerX);
+//        make.centerY.equalTo(_backButton.mas_centerY);
+//        make.height.equalTo(@40);
+//        make.width.equalTo(@40);
+//    }];
     [_mobileTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
         make.top.equalTo(_backButton.mas_top).with.offset(80);
@@ -155,8 +155,8 @@
     [_loginButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
         make.top.equalTo(ws.passwordTextField.mas_bottom).with.offset(50);
-        make.width.equalTo(@166);
-        make.height.equalTo(@44);
+        make.width.equalTo(passwordBottomLine);
+        make.height.equalTo(@35);
     }];
     
     [_forgetPasswordButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -176,7 +176,7 @@
     [_tipLabel1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
         make.centerY.equalTo(ws.lineView.mas_centerY);
-        make.width.equalTo(@50);
+        make.width.equalTo(@100);
         make.height.equalTo(@40);
     }];
     

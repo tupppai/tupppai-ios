@@ -422,6 +422,8 @@
 		F409AA8A1BB0F04C00736B0D /* PIEAskImageDao.m in Sources */ = {isa = PBXBuildFile; fileRef = F409AA891BB0F04C00736B0D /* PIEAskImageDao.m */; settings = {ASSET_TAGS = (); }; };
 		F4155D461BB3DA1300A0B045 /* PIEHighlightableLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4155D451BB3DA1300A0B045 /* PIEHighlightableLabel.m */; settings = {ASSET_TAGS = (); }; };
 		F41E99911BA5BBC8005010C7 /* test1.png in Resources */ = {isa = PBXBuildFile; fileRef = F41E99901BA5BBC8005010C7 /* test1.png */; };
+		F4310B0E1BB78D16007F8FF5 /* PIESignUpProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4310B0C1BB78D16007F8FF5 /* PIESignUpProfileViewController.m */; settings = {ASSET_TAGS = (); }; };
+		F4310B0F1BB78D16007F8FF5 /* PIESignUpProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4310B0D1BB78D16007F8FF5 /* PIESignUpProfileViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		F43159C61BB52CC500DCA292 /* PIECountLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F43159C51BB52CC500DCA292 /* PIECountLabel.m */; settings = {ASSET_TAGS = (); }; };
 		F43159CD1BB5567000DCA292 /* PIEPageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F43159CC1BB5567000DCA292 /* PIEPageButton.m */; settings = {ASSET_TAGS = (); }; };
 		F45FF9AF1BB65BE6009C4203 /* PIEPageLikeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F45FF9AE1BB65BE6009C4203 /* PIEPageLikeButton.m */; settings = {ASSET_TAGS = (); }; };
@@ -1301,6 +1303,9 @@
 		F4155D441BB3DA1300A0B045 /* PIEHighlightableLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEHighlightableLabel.h; sourceTree = "<group>"; };
 		F4155D451BB3DA1300A0B045 /* PIEHighlightableLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEHighlightableLabel.m; sourceTree = "<group>"; };
 		F41E99901BA5BBC8005010C7 /* test1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test1.png; sourceTree = "<group>"; };
+		F4310B0B1BB78D16007F8FF5 /* PIESignUpProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIESignUpProfileViewController.h; sourceTree = "<group>"; };
+		F4310B0C1BB78D16007F8FF5 /* PIESignUpProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIESignUpProfileViewController.m; sourceTree = "<group>"; };
+		F4310B0D1BB78D16007F8FF5 /* PIESignUpProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIESignUpProfileViewController.xib; sourceTree = "<group>"; };
 		F43159C41BB52CC500DCA292 /* PIECountLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECountLabel.h; sourceTree = "<group>"; };
 		F43159C51BB52CC500DCA292 /* PIECountLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECountLabel.m; sourceTree = "<group>"; };
 		F43159CB1BB5567000DCA292 /* PIEPageButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEPageButton.h; sourceTree = "<group>"; };
@@ -2479,6 +2484,11 @@
 				5CDB06631AA45C680089121E /* DDLaunchVC.m */,
 				5C4F5BCD1AA541DE00226F64 /* DDLoginVC.h */,
 				5C4F5BCE1AA541DE00226F64 /* DDLoginVC.m */,
+				5CDB06601AA45C680089121E /* DDCreateProfileVC.h */,
+				5CDB06611AA45C680089121E /* DDCreateProfileVC.m */,
+				F4310B0B1BB78D16007F8FF5 /* PIESignUpProfileViewController.h */,
+				F4310B0C1BB78D16007F8FF5 /* PIESignUpProfileViewController.m */,
+				F4310B0D1BB78D16007F8FF5 /* PIESignUpProfileViewController.xib */,
 			);
 			path = login;
 			sourceTree = "<group>";
@@ -2818,8 +2828,6 @@
 		E991EF071B735C8300025108 /* registerByPhone */ = {
 			isa = PBXGroup;
 			children = (
-				5CDB06601AA45C680089121E /* DDCreateProfileVC.h */,
-				5CDB06611AA45C680089121E /* DDCreateProfileVC.m */,
 				5CDB06641AA45C680089121E /* DDPhoneRegisterVC.h */,
 				5CDB06651AA45C680089121E /* DDPhoneRegisterVC.m */,
 				5CDB066F1AA47E760089121E /* DDAuthcodeVC.h */,
@@ -3437,6 +3445,7 @@
 				F48671031BB10204003D8A0A /* cellBG.png in Resources */,
 				E900AB5B1B450E970019BAEA /* Images.xcassets in Resources */,
 				5C7861311AAF4DD200E87C77 /* bg_main@2x.png in Resources */,
+				F4310B0F1BB78D16007F8FF5 /* PIESignUpProfileViewController.xib in Resources */,
 				5C9BDA4C1AA85E5600715698 /* box-shadow.png in Resources */,
 				E94289841B5B32A200ED26E4 /* TSMessagesDefaultDesign.json in Resources */,
 				E942897E1B5B32A200ED26E4 /* NotificationBackgroundWarning.png in Resources */,
@@ -3832,6 +3841,7 @@
 				F409AA871BAFE39000736B0D /* PIEImageEntity.m in Sources */,
 				5C4F5BF61AA5BFEC00226F64 /* kfcAskCell.m in Sources */,
 				5C0D28301ACA83C400491452 /* DDCommentReplyVM.m in Sources */,
+				F4310B0E1BB78D16007F8FF5 /* PIESignUpProfileViewController.m in Sources */,
 				5C5DDBD11AD3E4B300F4B845 /* ATOMReplyViewModel.m in Sources */,
 				5C4F5BF91AA5E0B600226F64 /* DDDetailPageVC.m in Sources */,
 				E99D2F591B1C7E8D000D7784 /* UIImage+Resizing.m in Sources */,
