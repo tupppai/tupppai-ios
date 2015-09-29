@@ -14,7 +14,7 @@
 #import "DDPageVM.h"
 #import "ATOMAskViewModel.h"
 #import "PWRefreshFooterCollectionView.h"
-#import "DDMyAskManager.h"
+#import "PIEProceedingManager.h"
 #import "DDMyReplyManager.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -66,7 +66,7 @@ static int collumnNumber = 3;
     [param setObject:@"time" forKey:@"sort"];
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
-    [DDMyAskManager getMyAsk:param withBlock:^(NSMutableArray *resultArray) {
+    [PIEProceedingManager getMyAsk:param withBlock:^(NSMutableArray *resultArray) {
         for (PIEPageEntity *entity in resultArray) {
             DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
             ATOMAskViewModel *askViewModel = [ATOMAskViewModel new];
@@ -91,7 +91,7 @@ static int collumnNumber = 3;
     [param setObject:@"time" forKey:@"sort"];
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
-    [DDMyAskManager getMyAsk:param withBlock:^(NSMutableArray *resultArray) {
+    [PIEProceedingManager getMyAsk:param withBlock:^(NSMutableArray *resultArray) {
         for (PIEPageEntity *entity in resultArray) {
             DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
             ATOMAskViewModel *askViewModel = [ATOMAskViewModel new];

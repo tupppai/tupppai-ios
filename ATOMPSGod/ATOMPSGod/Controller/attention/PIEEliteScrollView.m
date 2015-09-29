@@ -66,7 +66,7 @@
     }
 }
 
-- (void)toggleWithType:(PIEFollowScrollType)type {
+- (void)toggleWithType:(PIEPageType)type {
     _type = type;
     if (_type == PIEFollowScrollTypeFollow) {
         [UIView animateWithDuration:0.3 animations:^{

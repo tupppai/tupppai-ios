@@ -102,7 +102,7 @@
             if ([viewModel.homepageViewModel.totalPSNumber integerValue] == 0) {
                 //进入最新详情
                 DDCommentVC* mvc = [DDCommentVC new];
-                mvc.vm = [viewModel.homepageViewModel generatepageDetailViewModel];
+                mvc.vm = viewModel.homepageViewModel;
 //                mvc.delegate = self;
                 [self pushViewController:mvc animated:YES];
 
@@ -114,9 +114,7 @@
             }
         } else if (CGRectContainsPoint(cell.replyContentLabel.frame, p)) {
             DDCommentVC* mvc = [DDCommentVC new];
-            DDCommentPageVM* vm = [DDCommentPageVM new];
-            [vm setCommonViewModelWithAsk:viewModel.homepageViewModel];
-            mvc.vm = vm;
+            mvc.vm = viewModel.homepageViewModel;
             [self pushViewController:mvc animated:YES];
         } else if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];

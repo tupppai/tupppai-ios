@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 #import "PIEReplyTableCell.h"
 #import "ATOMOtherPersonViewController.h"
-#import "ATOMProceedingViewController.h"
 #import "DDPageVM.h"
 #import "kfcHomeScrollView.h"
 #import "DDHomePageManager.h"
@@ -32,6 +31,7 @@
 #import "PIEAskCollectionCell.h"
 #import "PIERefreshCollectionView.h"
 #import "RefreshTableView.h"
+#import "PIEFriendViewController.h"
 
 @class PIEPageEntity;
 #define AskCellWidth (SCREEN_WIDTH - 20) / 2.0
@@ -41,8 +41,9 @@
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureReply;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureAsk;
 
-@property (nonatomic, strong) NSMutableArray *sourceHot;
 @property (nonatomic, strong) NSMutableArray *sourceAsk;
+@property (nonatomic, strong) NSMutableArray *sourceReply;
+
 @property (nonatomic, assign) NSInteger currentHotIndex;
 @property (nonatomic, assign) NSInteger currentAskIndex;
 @property (nonatomic, strong) kfcHomeScrollView *scrollView;
@@ -110,7 +111,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     _canRefreshRecentFooter = YES;
     _isFirstEnterSecondView = YES;
     _sourceAsk = [NSMutableArray new];
-    _sourceHot = [NSMutableArray new];
+    _sourceReply = [NSMutableArray new];
     //    [self firstGetDataSourceFromDataBase];
     [self firstGetRemoteSource:PIEHomeTypeAsk];
     [self firstGetRemoteSource:PIEHomeTypeHot];
@@ -259,7 +260,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
         _selectedIndexPath = [_hotTableView indexPathForRowAtPoint:location];
         if (_selectedIndexPath) {
             _selectedReplyCell = [_hotTableView cellForRowAtIndexPath:_selectedIndexPath];
-            _selectedVM = _sourceHot[_selectedIndexPath.row];
+            _selectedVM = _sourceReply[_selectedIndexPath.row];
             CGPoint p = [gesture locationInView:_selectedReplyCell];
             
             //点击小图
@@ -283,10 +284,13 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
             }
             //点击用户名
             else if (CGRectContainsPoint(_selectedReplyCell.nameLabel.frame, p)) {
-                ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-                opvc.userID = _selectedVM.userID;
-                opvc.userName = _selectedVM.username;
-                [self pushViewController:opvc animated:YES];
+//                ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+//                opvc.userID = _selectedVM.userID;
+//                opvc.userName = _selectedVM.username;
+//                [self pushViewController:opvc animated:YES];
+                PIEFriendViewController * friendVC = [PIEFriendViewController new];
+                friendVC.pageVM = _selectedVM;
+                [self pushViewController:friendVC animated:YES];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.collectView.frame, p)) {
                 [self collectReply];
@@ -295,8 +299,12 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
                 [self likeReply];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.followView.frame, p)) {
-                NSLog(@"followView");
                 [self followReplier];
+            }
+            else if (CGRectContainsPoint(_selectedReplyCell.commentView.frame, p)) {
+                DDCommentVC* vc = [DDCommentVC new];
+                vc.vm = _selectedVM;
+                [self.navigationController pushViewController:vc animated:YES];
             }
             
             
@@ -374,7 +382,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (_hotTableView == tableView) {
-        return _sourceHot.count;
+        return _sourceReply.count;
     }
     return 0;
 }
@@ -382,7 +390,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_hotTableView == tableView) {
         PIEReplyTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        [cell configCell:_sourceHot[indexPath.row] row:indexPath.row];
+        [cell configCell:_sourceReply[indexPath.row] row:indexPath.row];
         return cell;
     }
     else {
@@ -395,7 +403,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_hotTableView == tableView) {
         return [tableView fd_heightForCellWithIdentifier:CellIdentifier  cacheByIndexPath:indexPath configuration:^(PIEReplyTableCell *cell) {
-            [cell configCell:_sourceHot[indexPath.row] row:indexPath.row];
+            [cell configCell:_sourceReply[indexPath.row] row:indexPath.row];
         }];
     } else {
         return 0;
@@ -411,7 +419,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 //    _sourceAsk = [self fetchDBDataSourceWithHomeType:PIEHomeTypeAsk];
 //    [_askCollectionView reloadData];
 //
-////    _sourceHot = [self fetchDBDataSourceWithHomeType:PIEHomeTypeHot];
+////    _sourceReply = [self fetchDBDataSourceWithHomeType:PIEHomeTypeHot];
 //}
 #pragma mark - GetDataSource from Server
 
@@ -464,8 +472,8 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
                 [arrayAgent addObject:vm];
             }
             if (homeType == PIEHomeTypeHot) {
-                [ws.sourceHot removeAllObjects];
-                [ws.sourceHot addObjectsFromArray:arrayAgent] ;
+                [ws.sourceReply removeAllObjects];
+                [ws.sourceReply addObjectsFromArray:arrayAgent] ;
                 [ws.hotTableView reloadData];
                 [ws.hotTableView.header endRefreshing];
             } else if (homeType == PIEHomeTypeAsk) {
@@ -518,7 +526,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
                 [arrayAgent addObject:model];
             }
             if (homeType == PIEHomeTypeHot) {
-                [_sourceHot addObjectsFromArray:arrayAgent];
+                [_sourceReply addObjectsFromArray:arrayAgent];
                 [ws.scrollView.replyTable reloadData];
                 [ws.scrollView.replyTable.footer endRefreshing];
                 if (homepageArray.count == 0) {

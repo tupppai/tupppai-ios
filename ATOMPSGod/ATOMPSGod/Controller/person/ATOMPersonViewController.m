@@ -16,7 +16,6 @@
 #import "ATOMMyUploadViewController.h"
 #import "ATOMMyCollectionViewController.h"
 #import "ATOMProfileEditViewController.h"
-#import "ATOMProceedingViewController.h"
 #import "ATOMHeaderImageCropperViewController.h"
 #import "ATOMUploadImage.h"
 #import "ATOMImage.h"
@@ -151,8 +150,6 @@
             ATOMMyWorkViewController *mwvc = [ATOMMyWorkViewController new];
             [self pushViewController:mwvc animated:YES];
         } else if (row == 2) {
-            ATOMProceedingViewController *pvc = [ATOMProceedingViewController new];
-            [self pushViewController:pvc animated:YES];
         } else if (row == 3) {
             ATOMMyCollectionViewController *mcvc = [ATOMMyCollectionViewController new];
             [self pushViewController:mcvc animated:YES];

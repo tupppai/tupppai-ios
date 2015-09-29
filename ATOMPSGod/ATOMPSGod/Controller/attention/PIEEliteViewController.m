@@ -12,8 +12,7 @@
 #import "PIEEliteTableViewCellFollow.h"
 #import "PIEEliteTableViewCellHot.h"
 #import "UITableView+FDTemplateLayoutCell.h"
-#import "ATOMShowAttention.h"
-
+#import "PIEEliteManager.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 static  NSString* indentifier1 = @"PIEEliteTableViewCellFollow";
@@ -41,7 +40,7 @@ static  NSString* indentifier2 = @"PIEEliteTableViewCellHot";
     [self createNavBar];
     [self configSubviews];
     [self getRemoteSourceFollow];
-
+    [self getRemoteSourceHot];
 }
 
 #pragma mark - init methods
@@ -167,15 +166,14 @@ static  NSString* indentifier2 = @"PIEEliteTableViewCellHot";
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(15) forKey:@"size"];
     
-    ATOMShowAttention *showAttention = [ATOMShowAttention new];
-    [showAttention ShowAttention:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        if (resultArray.count == 0) {
+    [PIEEliteManager getMyFollow:param withBlock:^(NSMutableArray *returnArray) {
+        if (returnArray.count == 0) {
             _canRefreshFooterFollow = NO;
             [ws.sv.tableFollow.header endRefreshing];
         } else {
             _canRefreshFooterFollow = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
-            for (PIEEliteEntity *entity in resultArray) {
+            for (PIEEliteEntity *entity in returnArray) {
                 DDPageVM *vm = [[DDPageVM alloc]initWithFollowEntity:entity];
                 [sourceAgent addObject:vm];
             }
@@ -198,15 +196,14 @@ static  NSString* indentifier2 = @"PIEEliteTableViewCellHot";
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(_currentIndex_follow) forKey:@"page"];
     [param setObject:@(15) forKey:@"size"];
-    ATOMShowAttention *showAttention = [ATOMShowAttention new];
-    [showAttention ShowAttention:param withBlock:^(NSMutableArray *resultArray, NSError *error) {
-        if (resultArray.count == 0) {
+    [PIEEliteManager getMyFollow:param withBlock:^(NSMutableArray *returnArray) {
+        if (returnArray.count == 0) {
             _canRefreshFooterFollow = NO;
             [ws.sv.tableFollow.footer endRefreshing];
         } else {
             _canRefreshFooterFollow = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
-            for (PIEEliteEntity *entity in resultArray) {
+            for (PIEEliteEntity *entity in returnArray) {
                 DDPageVM *vm = [[DDPageVM alloc]initWithFollowEntity:entity];
                 [sourceAgent addObject:vm];
             }
@@ -217,14 +214,101 @@ static  NSString* indentifier2 = @"PIEEliteTableViewCellHot";
     }];
 }
 
+
+
+- (void)getRemoteSourceHot {
+    WS(ws);
+    [ws.sv.tableHot.footer endRefreshing];
+    _currentIndex_hot = 1;
+    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(1) forKey:@"page"];
+    [param setObject:@(15) forKey:@"size"];
+    
+    [PIEEliteManager getHotPages:param withBlock:^(NSMutableArray *returnArray) {
+        if (returnArray.count == 0) {
+            _canRefreshFooterHot = NO;
+        } else {
+            _canRefreshFooterHot = YES;
+            NSMutableArray* sourceAgent = [NSMutableArray new];
+            for (PIEEliteEntity *entity in returnArray) {
+                DDPageVM *vm = [[DDPageVM alloc]initWithFollowEntity:entity];
+                [sourceAgent addObject:vm];
+            }
+            [ws.sourceHot removeAllObjects];
+            [ws.sourceHot addObjectsFromArray:sourceAgent];
+            [ws.sv.tableHot reloadData];
+        }
+        [ws.sv.tableHot.header endRefreshing];
+    }];
+}
+- (void)getMoreRemoteSourceHot {
+    WS(ws);
+    [ws.sv.tableHot.header endRefreshing];
+    _currentIndex_hot ++;
+    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(_currentIndex_hot) forKey:@"page"];
+    [param setObject:@(15) forKey:@"size"];
+    
+    [PIEEliteManager getHotPages:param withBlock:^(NSMutableArray *returnArray) {
+        if (returnArray.count == 0) {
+            _canRefreshFooterHot = NO;
+        } else {
+            _canRefreshFooterHot = YES;
+            NSMutableArray* sourceAgent = [NSMutableArray new];
+            for (PIEEliteEntity *entity in returnArray) {
+                DDPageVM *vm = [[DDPageVM alloc]initWithFollowEntity:entity];
+                [sourceAgent addObject:vm];
+            }
+            [ws.sourceHot addObjectsFromArray:sourceAgent];
+            [ws.sv.tableHot reloadData];
+        }
+        [ws.sv.tableHot.footer endRefreshing];
+    }];
+}
+
 -(void)didPullRefreshDown:(UITableView *)tableView {
-    [self getRemoteSourceFollow];
+    if (tableView == _sv.tableFollow) {
+        [self getRemoteSourceFollow];
+    } else  {
+        [self getRemoteSourceHot];
+    }
 }
 -(void)didPullRefreshUp:(UITableView *)tableView {
-    if (_canRefreshFooterFollow) {
-        [self getMoreRemoteSourceFollow];
+    if (tableView == _sv.tableFollow) {
+        if (_canRefreshFooterFollow) {
+            [self getMoreRemoteSourceFollow];
+        } else {
+            [_sv.tableFollow.footer endRefreshing];
+        }
     } else {
-        [_sv.tableFollow.footer endRefreshing];
+        if (_canRefreshFooterHot) {
+            [self getMoreRemoteSourceHot];
+        } else {
+            [_sv.tableHot.footer endRefreshing];
+        }
+    }
+}
+
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    if (scrollView == _sv) {
+        int currentPage = (scrollView.contentOffset.x + CGWidth(scrollView.frame) * 0.1) / CGWidth(scrollView.frame);
+        if (currentPage == 0) {
+            [_sv toggle];
+            _sv.tableHot.scrollsToTop = NO;
+            _sv.tableFollow.scrollsToTop = YES;
+            [_segmentedControl setSelectedSegmentIndex:0 animated:YES];
+        } else if (currentPage == 1) {
+            [_sv toggle];
+            [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
+            _sv.tableHot.scrollsToTop = YES;
+            _sv.tableFollow.scrollsToTop = NO;
+        }
     }
 }
 

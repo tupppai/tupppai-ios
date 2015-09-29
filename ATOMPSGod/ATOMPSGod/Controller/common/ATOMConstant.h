@@ -70,7 +70,8 @@ extern NSString * const kPublishTimeFont;
 typedef NS_ENUM(NSInteger, PIEPageType) {
     PIEPageTypeAsk = 1,
     PIEPageTypeReply,
-    PIEPageTypeFollow
+    PIEPageTypeEliteFollow,
+    PIEPageTypeEliteHot,
 };
 
 

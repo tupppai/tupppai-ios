@@ -46,7 +46,7 @@
         make.bottom.equalTo(self.contentView).with.offset(-kPadding10);
     }];
     [_likeButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_usernameLabel.mas_trailing).with.offset(kPadding15);
+        make.left.equalTo(_usernameLabel.mas_right).with.offset(kPadding15);
         make.top.equalTo(self.contentView).with.offset(kPadding15);
         make.right.equalTo(self.contentView).with.offset(-kPadding15);
         make.width.equalTo(@(kMessageTableViewCellAvatarHeight*2));

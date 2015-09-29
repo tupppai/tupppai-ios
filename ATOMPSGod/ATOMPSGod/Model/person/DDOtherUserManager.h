@@ -10,5 +10,7 @@
 
 @interface DDOtherUserManager : NSObject
 
-+ (void)getOtherUserInfo:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *askReturnArray,NSMutableArray *replyReturnArray,ATOMUser *user))block;
++ (void)getOtherUserInfo:(NSDictionary *)param withBlock:(void (^)(ATOMUser *user))block;
++ (void)getFriendReply:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *returnArray))block;
++ (void)getFriendAsk:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *returnArray))block ;
 @end

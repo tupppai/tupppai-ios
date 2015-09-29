@@ -37,12 +37,32 @@
             if (block) { block(dataArray); }
     }];
 }
-+ (void)getMyProceeding:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
-    [[self class]GET:param url:URL_PFGetMyProceeding block:^(id responseObject) {
++ (void)getMyToHelp:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
+    [[self class]GET:param url:URL_PFGetMyToHelp block:^(id responseObject) {
             NSArray* dataArray = [responseObject objectForKey:@"data"];
             if (block) { block(dataArray); }
     }];
 }
++ (void)getMyDone:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
+    [[self class]GET:param url:URL_PFGetMyDone block:^(id responseObject) {
+        NSArray* dataArray = [responseObject objectForKey:@"data"];
+        if (block) { block(dataArray); }
+    }];
+}
+
++ (void)getMyFollowPages:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
+    [[self class]GET:param url:URL_PFGetMyFollowPages block:^(id responseObject) {
+        NSArray* dataArray = [responseObject objectForKey:@"data"];
+        if (block) { block(dataArray); }
+    }];
+}
++ (void)getHotPages:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
+    [[self class]GET:param url:URL_PFGetHotPages block:^(id responseObject) {
+        NSArray* dataArray = [responseObject objectForKey:@"data"];
+        if (block) { block(dataArray); }
+    }];
+}
+
 + (void)setPushSetting:(NSDictionary *)param withBlock:(void (^) (BOOL success))block {
     
     [[self class]POST:param url:URL_PFsetPushSetting block:^(id responseObject) {
@@ -199,6 +219,24 @@
     }];
 }
 
+
++ (void)ddGetFriendReply:(NSDictionary*)param withBlock:(void (^)(NSArray *returnArray))block {
+    [[self class]GET:param url:URL_PFGetFriendReply block:^(id responseObject) {
+        if (responseObject) {
+            NSArray *data = [responseObject objectForKey:@"data"];
+            if (block) { block(data); }
+        }
+    }];
+}
++ (void)ddGetFriendAsk:(NSDictionary*)param withBlock:(void (^)(NSArray *returnArray))block {
+    [[self class]GET:param url:URL_PFGetFriendAsk block:^(id responseObject) {
+        if (responseObject) {
+            NSArray *data = [responseObject objectForKey:@"data"];
+            if (block) { block(data); }
+        }
+    }];
+}
+
 + (void)ddGetMyCollection:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
     [[self class]GET:param url:URL_PFGetMyCollection block:^(id responseObject) {
         if (responseObject) {
@@ -215,6 +253,7 @@
         }
     }];
 }
+
 + (void)ddGetFollow:(NSDictionary*)param withBlock:(void (^)(NSArray* recommendArray,NSArray* myFollowArray))block {
     [[self class]GET:param url:URL_PFGetFollow block:^(id responseObject) {
         if (responseObject) {

@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface DDMyAskManager : NSObject
+@interface PIEProceedingManager : NSObject
 + (void)getMyAsk:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *dataArray))block;
++ (void)getMyDone:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *dataArray))block;
++ (void)getMyToHelp:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *))block;
 @end

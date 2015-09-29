@@ -106,7 +106,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [super viewDidAppear:animated];
     
 //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        [self scrollElegantly];
+//        [self scrollElegantly];
 //    });
 }
 
@@ -117,15 +117,15 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    if ((self.isMovingFromParentViewController || self.isBeingDismissed)) {
-        if (_vm && (self.isMovingFromParentViewController || self.isBeingDismissed)) {
-            if(_delegate && [_delegate respondsToSelector:@selector(ATOMViewControllerDismissWithInfo:)])
-            {
-                NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithBool:_vm.liked],@"liked",[NSNumber numberWithBool:_vm.collected],@"collected",nil];
-                [_delegate ATOMViewControllerDismissWithInfo:info];
-            }
-        }
-    }
+//    if ((self.isMovingFromParentViewController || self.isBeingDismissed)) {
+//        if (_vm && (self.isMovingFromParentViewController || self.isBeingDismissed)) {
+//            if(_delegate && [_delegate respondsToSelector:@selector(ATOMViewControllerDismissWithInfo:)])
+//            {
+//                NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithBool:_vm.liked],@"liked",[NSNumber numberWithBool:_vm.collected],@"collected",nil];
+//                [_delegate ATOMViewControllerDismissWithInfo:info];
+//            }
+//        }
+//    }
 }
 
 
@@ -176,7 +176,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     
     [self.textView resignFirstResponder];
     self.textView.placeholder = @"发布你的神回复..";
-    
     
     DDCommentVM *commentVM = [DDCommentVM new];
     commentVM.username = [DDUserManager currentUser].username;
@@ -231,7 +230,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:self.textView.text forKey:@"content"];
     [param setObject:@(_vm.type) forKey:@"type"];
-    [param setObject:@(_vm.pageID) forKey:@"target_id"];
+    [param setObject:@(_vm.ID) forKey:@"target_id"];
     if (_targetCommentVM) {
         [param setObject:@(_targetCommentVM.ID) forKey:@"for_comment"];
     }
@@ -510,7 +509,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         }];
         [_reportActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
             NSMutableDictionary* param = [NSMutableDictionary new];
-            [param setObject:@(ws.vm.pageID) forKey:@"target_id"];
+            [param setObject:@(ws.vm.ID) forKey:@"target_id"];
             [param setObject:@(ws.vm.type) forKey:@"target_type"];
             UIButton* b = section.buttons[indexPath.row];
             switch (indexPath.row) {
@@ -542,44 +541,44 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 
 #pragma mark - ATOMShareFunctionViewDelegate
--(void)tapWechatFriends {
-    [DDShareSDKManager postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:(int)_vm.type];
-}
--(void)tapWechatMoment {
-    [DDShareSDKManager postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
-}
--(void)tapSinaWeibo {
-    [DDShareSDKManager postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:(int)_vm.type];
-}
--(void)tapCollect {
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    if (self.shareFunctionView.collectButton.selected) {
-        //收藏
-        [param setObject:@(1) forKey:@"status"];
-    } else {
-        //取消收藏
-        [param setObject:@(0) forKey:@"status"];
-    }
-    [DDCollectManager toggleCollect:param withPageType:_vm.type withID:_vm.pageID withBlock:^(NSError *error) {
-        if (!error) {
-            _vm.collected = self.shareFunctionView.collectButton.selected;
-        }
-    }];
-}
--(void)tapInvite {
-    DDInviteVC* ivc = [DDInviteVC new];
-    ivc.askPageViewModel = [_vm generateAskPageViewModel];
-    [self.navigationController pushViewController:ivc animated:NO];
-}
--(void)tapReport {
-    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
-}
+//-(void)tapWechatFriends {
+//    [DDShareSDKManager postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:(int)_vm.type];
+//}
+//-(void)tapWechatMoment {
+//    [DDShareSDKManager postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
+//}
+//-(void)tapSinaWeibo {
+//    [DDShareSDKManager postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:(int)_vm.type];
+//}
+//-(void)tapCollect {
+//    NSMutableDictionary *param = [NSMutableDictionary new];
+//    if (self.shareFunctionView.collectButton.selected) {
+//        //收藏
+//        [param setObject:@(1) forKey:@"status"];
+//    } else {
+//        //取消收藏
+//        [param setObject:@(0) forKey:@"status"];
+//    }
+//    [DDCollectManager toggleCollect:param withPageType:_vm.type withID:_vm.ID withBlock:^(NSError *error) {
+//        if (!error) {
+//            _vm.collected = self.shareFunctionView.collectButton.selected;
+//        }
+//    }];
+//}
+//-(void)tapInvite {
+//    DDInviteVC* ivc = [DDInviteVC new];
+////    ivc.askPageViewModel = [_vm generateAskPageViewModel];
+//    [self.navigationController pushViewController:ivc animated:NO];
+//}
+//-(void)tapReport {
+//    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
+//}
 #pragma mark init and config
 
 -(void)configTableView {
-    _headerView = [kfcPageView new];
-    _headerView.vm = _vm;
-    self.tableView.tableHeaderView = _headerView;
+//    _headerView = [kfcPageView new];
+//    _headerView.vm = _vm;
+//    self.tableView.tableHeaderView = _headerView;
     self.tableView.emptyDataSetSource = self;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -587,14 +586,14 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     self.tableView.tableFooterView = [UIView new];
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.showsHorizontalScrollIndicator = NO;
-    UIView *header = self.tableView.tableHeaderView;
-    [header setNeedsLayout];
-    [header layoutIfNeeded];
-    CGFloat height = [header systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-    CGRect frame = header.frame;
-    frame.size.height = height;
-    header.frame = frame;
-    self.tableView.tableHeaderView = header;
+//    UIView *header = self.tableView.tableHeaderView;
+//    [header setNeedsLayout];
+//    [header layoutIfNeeded];
+//    CGFloat height = [header systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+//    CGRect frame = header.frame;
+//    frame.size.height = height;
+//    header.frame = frame;
+//    self.tableView.tableHeaderView = header;
     
 //    UIButton* dismissBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 32,32)];
 //    [dismissBtn setImage:[UIImage imageNamed:@"ic_dismiss"] forState:UIControlStateNormal];
@@ -689,41 +688,41 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     }
 }
 }
-- (void)tapUserNameLabel {
-    ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-    opvc.userID = _vm.uid;
-    opvc.userName = _vm.userName;
-    [self.navigationController pushViewController:opvc animated:YES];
-}
+//- (void)tapUserNameLabel {
+//    ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+//    opvc.userID = _vm.userID;
+//    opvc.userName = _vm.username;
+//    [self.navigationController pushViewController:opvc animated:YES];
+//}
 
-- (void)clickShareButton{
-    [DDShareSDKManager postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
-}
+//- (void)clickShareButton{
+//    [DDShareSDKManager postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
+//}
+//
+//- (void)clickMoreShareButton {
+//    self.shareFunctionView.collectButton.selected = _vm.collected;
+//    [self.textView resignFirstResponder];
+//    [self.shareFunctionView showInView:[AppDelegate APP].window animated:YES];
+//}
 
-- (void)clickMoreShareButton {
-    self.shareFunctionView.collectButton.selected = _vm.collected;
-    [self.textView resignFirstResponder];
-    [self.shareFunctionView showInView:[AppDelegate APP].window animated:YES];
-}
-
-- (void)clickUserHeaderButton {
-    ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-    opvc.userID = _vm.uid;
-    opvc.userName = _vm.userName;
-    [self.navigationController pushViewController:opvc animated:YES];
-}
-
-- (void)clickPSButton {
-    [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
-}
-
-- (void)clickPraiseButton {
-    [_headerView.likeButton toggleLike];
-    [_vm toggleLike];
-}
-- (void)clickUserWorkImageView {
-    [self tapOnImageView:_headerView.imageViewMain.image withURL:nil];
-}
+//- (void)clickUserHeaderButton {
+//    ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+//    opvc.userID = _vm.userID;
+//    opvc.userName = _vm.username;
+//    [self.navigationController pushViewController:opvc animated:YES];
+//}
+//
+//- (void)clickPSButton {
+//    [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
+//}
+//
+//- (void)clickPraiseButton {
+//    [_headerView.likeButton toggleLike];
+//    [_vm toggleLike];
+//}
+//- (void)clickUserWorkImageView {
+//    [self tapOnImageView:_headerView.imageViewMain.image withURL:nil];
+//}
 
 #pragma mark Refresh
 
@@ -746,7 +745,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     _currentPage = 1;
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@(_vm.pageID) forKey:@"target_id"];
+    [param setObject:@(_vm.ID) forKey:@"target_id"];
     [param setObject:@(_vm.type) forKey:@"type"];
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
@@ -774,7 +773,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     WS(ws);
     _currentPage++;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@(_vm.pageID) forKey:@"target_id"];
+    [param setObject:@(_vm.ID) forKey:@"target_id"];
     [param setObject:@(_vm.type) forKey:@"type"];
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
@@ -810,15 +809,15 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    WS(ws);
-    [self dismissViewControllerAnimated:YES completion:^{
-        DDCropImageVC *uwvc = [DDCropImageVC new];
-        uwvc.originImage = info[UIImagePickerControllerOriginalImage];
-        uwvc.askPageViewModel = [ws.vm generateAskPageViewModel];
-        [ws.navigationController pushViewController:uwvc animated:YES];
-    }];
-}
+//- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+//    WS(ws);
+//    [self dismissViewControllerAnimated:YES completion:^{
+//        DDCropImageVC *uwvc = [DDCropImageVC new];
+//        uwvc.originImage = info[UIImagePickerControllerOriginalImage];
+//        uwvc.askPageViewModel = [ws.vm generateAskPageViewModel];
+//        [ws.navigationController pushViewController:uwvc animated:YES];
+//    }];
+//}
 
 - (void)dealDownloadWork {
     UIImageWriteToSavedPhotosAlbum(_headerView.imageViewMain.image

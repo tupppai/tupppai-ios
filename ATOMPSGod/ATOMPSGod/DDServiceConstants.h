@@ -18,8 +18,14 @@ extern NSString *URL_PFFollow;
 extern NSString *URL_PFUpdatePasswordURL;
 extern NSString *URL_PFGetMyReply;
 extern NSString *URL_PFGetMyAsk;
-extern NSString * URL_PFGetMyProceeding;
+extern NSString * URL_PFGetMyToHelp;
+extern NSString * URL_PFGetMyDone;
+extern NSString * URL_PFGetMyFollowPages;
+extern NSString * URL_PFGetHotPages;
 extern NSString * URL_PFGetOtherUserInfo;
+extern NSString * URL_PFGetFriendReply;
+extern NSString * URL_PFGetFriendAsk;
+
 extern NSString * URL_PFGetMyCollection;
 extern NSString * URL_PFGetFans;
 extern NSString * URL_PFGetFollow;

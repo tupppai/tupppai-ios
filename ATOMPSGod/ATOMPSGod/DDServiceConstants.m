@@ -18,8 +18,15 @@ NSString * URL_PFFollow = @"profile/follow";
 NSString * URL_PFUpdatePasswordURL = @"profile/updatePassword";
 NSString * URL_PFGetMyReply = @"profile/replies";
 NSString * URL_PFGetMyAsk = @"profile/asks";
-NSString * URL_PFGetMyProceeding = @"profile/downloaded";
+NSString * URL_PFGetMyToHelp = @"profile/downloaded";
+NSString * URL_PFGetMyDone = @"profile/done";
+NSString * URL_PFGetMyFollowPages = @"Thread/timeline";
+NSString * URL_PFGetHotPages = @"Thread/popular";
+
 NSString * URL_PFGetOtherUserInfo = @"profile/view";
+NSString * URL_PFGetFriendReply = @"profile/replies";
+NSString * URL_PFGetFriendAsk = @"profile/asks";
+
 NSString * URL_PFGetMyCollection = @"Thread/subscribed";
 NSString * URL_PFGetFans = @"profile/fans";
 NSString * URL_PFGetFollow = @"profile/follows";

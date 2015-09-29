@@ -11,7 +11,6 @@
 #import "kfcDetailCell.h"
 #import "ATOMCommentDetailViewController.h"
 #import "DDCropImageVC.h"
-#import "ATOMProceedingViewController.h"
 #import "ATOMOtherPersonViewController.h"
 #import "DDHotDetailPageVM.h"
 #import "DDCommentVM.h"

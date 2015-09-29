@@ -12,8 +12,7 @@
 @interface DDCommentVC : SLKTextViewController
 
 @property (nonatomic, strong) kfcPageView *headerView;
-@property (nonatomic, strong) DDCommentPageVM *vm;
+@property (nonatomic, strong) DDPageVM *vm;
 //回传 是否点赞 到 parent VC
 @property (nonatomic, weak)   id<ATOMViewControllerDelegate> delegate;
-
 @end

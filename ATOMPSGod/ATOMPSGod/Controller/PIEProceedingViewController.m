@@ -11,8 +11,7 @@
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "PIEMyAskCollectionCell.h"
 #import "PIEDoneCollectionViewCell.h"
-#import "DDMyAskManager.h"
-#import "DDMyProceedingManager.h"
+#import "PIEProceedingManager.h"
 #import "DDPageVM.h"
 #import "PIEToHelpTableViewCell.h"
 #import "QBImagePickerController.h"
@@ -53,6 +52,7 @@
     [self configSubviews];
     [self getRemoteSourceMyAsk];
     [self getRemoteSourceToHelp];
+    [self getRemoteSourceDone];
 }
 
 #pragma mark - init methods
@@ -153,65 +153,7 @@
     }
 }
 
-#pragma mark - GetDataSource
 
-- (void)getRemoteSourceToHelp {
-    WS(ws);
-    [_sv.toHelpTableView.footer endRefreshing];
-    _currentIndex_ToHelp = 1;
-
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
-    [param setObject:@(1) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
-    [param setObject:@(20) forKey:@"size"];
-    [DDMyProceedingManager getMyProceeding:param withBlock:^(NSMutableArray *resultArray) {
-        if (resultArray.count == 0) {
-            _canRefreshToHelpFooter = NO;
-            [ws.sv.toHelpTableView.header endRefreshing];
-        } else {
-            _canRefreshToHelpFooter = YES;
-            NSMutableArray* sourceAgent = [NSMutableArray new];
-            for (PIEPageEntity *homeImage in resultArray) {
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:homeImage];
-                [sourceAgent addObject:vm];
-            }
-            [ws.sv.toHelpTableView.header endRefreshing];
-            [ws.sourceToHelp removeAllObjects];
-            [ws.sourceToHelp addObjectsFromArray:sourceAgent];
-            [ws.sv.toHelpTableView reloadData];
-        }
-    }];
-}
-
-- (void)getMoreRemoteSourceToHelp {
-    WS(ws);
-    _currentIndex_ToHelp ++;
-    [_sv.toHelpTableView.header endRefreshing];
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
-    [param setObject:@(_currentIndex_ToHelp) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
-    [param setObject:@(20) forKey:@"size"];
-    [DDMyProceedingManager getMyProceeding:param withBlock:^(NSMutableArray *resultArray) {
-        if (resultArray.count == 0) {
-            _canRefreshToHelpFooter = NO;
-            [ws.sv.toHelpTableView.footer endRefreshing];
-        } else {
-            _canRefreshToHelpFooter = YES;
-            NSMutableArray* sourceAgent = [NSMutableArray new];
-            for (PIEPageEntity *homeImage in resultArray) {
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:homeImage];
-                [sourceAgent addObject:vm];
-            }
-            [ws.sv.toHelpTableView.footer endRefreshing];
-            [ws.sourceToHelp addObjectsFromArray:sourceAgent];
-            [ws.sv.toHelpTableView reloadData];
-        }
-    }];
-}
 
 #pragma mark - refresh delegate
 
@@ -219,8 +161,7 @@
     if (collectionView == _sv.askCollectionView) {
         [self getRemoteSourceMyAsk];
     } else if (collectionView == _sv.doneCollectionView) {
-        //to do!!
-        //        [self getRemoteSourceMyAsk];
+        [self getRemoteSourceDone];
     }
 }
 -(void)didPullUpCollectionViewBottom:(UICollectionView *)collectionView {
@@ -423,7 +364,7 @@
     }
     return CGSizeMake(width, height);}
 
-#pragma mark - GetDataSource
+#pragma mark - getRemoteSourceMyAsk
 
 - (void)getRemoteSourceMyAsk {
     WS(ws);
@@ -436,10 +377,9 @@
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     
-    [DDMyAskManager getMyAsk:param withBlock:^(NSMutableArray *resultArray) {
+    [PIEProceedingManager getMyAsk:param withBlock:^(NSMutableArray *resultArray) {
         if (resultArray.count == 0) {
             _canRefreshAskFooter = NO;
-            [ws.sv.askCollectionView.header endRefreshing];
         } else {
             _canRefreshAskFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
@@ -448,11 +388,11 @@
                 [sourceAgent addObject:vm];
             }
             
-            [ws.sv.askCollectionView.header endRefreshing];
             [ws.sourceAsk removeAllObjects];
             [ws.sourceAsk addObjectsFromArray:sourceAgent];
             [ws.sv.askCollectionView reloadData];
         }
+        [ws.sv.askCollectionView.header endRefreshing];
     }];
 }
 
@@ -466,10 +406,9 @@
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [DDMyAskManager getMyAsk:param withBlock:^(NSMutableArray *resultArray) {
+    [PIEProceedingManager getMyAsk:param withBlock:^(NSMutableArray *resultArray) {
         if (resultArray.count == 0) {
             _canRefreshAskFooter = NO;
-            [ws.sv.askCollectionView.footer endRefreshing];
         } else {
             _canRefreshAskFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
@@ -479,8 +418,126 @@
             }
             [ws.sourceAsk addObjectsFromArray:sourceAgent];
             [ws.sv.askCollectionView reloadData];
-            [ws.sv.askCollectionView.footer endRefreshing];
+        }
+        [ws.sv.askCollectionView.footer endRefreshing];
+    }];
+}
+
+#pragma mark - getRemoteSourceToHelp
+
+- (void)getRemoteSourceToHelp {
+    WS(ws);
+    [_sv.toHelpTableView.footer endRefreshing];
+    _currentIndex_ToHelp = 1;
+    
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    [param setObject:@(1) forKey:@"page"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(20) forKey:@"size"];
+    [PIEProceedingManager getMyToHelp:param withBlock:^(NSMutableArray *resultArray) {
+        if (resultArray.count == 0) {
+            _canRefreshToHelpFooter = NO;
+        } else {
+            _canRefreshToHelpFooter = YES;
+            NSMutableArray* sourceAgent = [NSMutableArray new];
+            for (PIEPageEntity *homeImage in resultArray) {
+                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:homeImage];
+                [sourceAgent addObject:vm];
+            }
+            [ws.sourceToHelp removeAllObjects];
+            [ws.sourceToHelp addObjectsFromArray:sourceAgent];
+            [ws.sv.toHelpTableView reloadData];
+        }
+        [ws.sv.toHelpTableView.header endRefreshing];
+    }];
+}
+
+- (void)getMoreRemoteSourceToHelp {
+    WS(ws);
+    _currentIndex_ToHelp ++;
+    [_sv.toHelpTableView.header endRefreshing];
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    [param setObject:@(_currentIndex_ToHelp) forKey:@"page"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(20) forKey:@"size"];
+    [PIEProceedingManager getMyToHelp:param withBlock:^(NSMutableArray *resultArray) {
+        if (resultArray.count == 0) {
+            _canRefreshToHelpFooter = NO;
+        } else {
+            _canRefreshToHelpFooter = YES;
+            NSMutableArray* sourceAgent = [NSMutableArray new];
+            for (PIEPageEntity *homeImage in resultArray) {
+                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:homeImage];
+                [sourceAgent addObject:vm];
+            }
+            [ws.sourceToHelp addObjectsFromArray:sourceAgent];
+            [ws.sv.toHelpTableView reloadData];
+        }
+        [ws.sv.toHelpTableView.footer endRefreshing];
+    }];
+}
+
+- (void)getRemoteSourceDone {
+    WS(ws);
+    [ws.sv.doneCollectionView.footer endRefreshing];
+    _currentIndex_Done = 1;
+    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [param setObject:@(1) forKey:@"page"];
+    [param setObject:@(MyAskCellWidth) forKey:@"width"];
+    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(15) forKey:@"size"];
+    
+    [PIEProceedingManager getMyDone:param withBlock:^(NSMutableArray *resultArray) {
+        if (resultArray.count == 0) {
+            _canRefreshDoneFooter = NO;
+            [ws.sv.doneCollectionView.header endRefreshing];
+        } else {
+            _canRefreshDoneFooter = YES;
+            NSMutableArray* sourceAgent = [NSMutableArray new];
+            for (PIEPageEntity *homeImage in resultArray) {
+                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:homeImage];
+                [sourceAgent addObject:vm];
+            }
+            
+            [ws.sv.doneCollectionView.header endRefreshing];
+            [ws.sourceDone removeAllObjects];
+            [ws.sourceDone addObjectsFromArray:sourceAgent];
+            [ws.sv.doneCollectionView reloadData];
         }
     }];
 }
+- (void)getMoreRemoteSourceDone {
+    WS(ws);
+    [ws.sv.doneCollectionView.header endRefreshing];
+    _currentIndex_Done++;
+    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [param setObject:@(_currentIndex_Done) forKey:@"page"];
+    [param setObject:@(MyAskCellWidth) forKey:@"width"];
+    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(15) forKey:@"size"];
+    
+    [PIEProceedingManager getMyDone:param withBlock:^(NSMutableArray *resultArray) {
+        if (resultArray.count == 0) {
+            _canRefreshDoneFooter = NO;
+            [ws.sv.doneCollectionView.footer endRefreshing];
+        } else {
+            _canRefreshDoneFooter = YES;
+            NSMutableArray* sourceAgent = [NSMutableArray new];
+            for (PIEPageEntity *homeImage in resultArray) {
+                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:homeImage];
+                [sourceAgent addObject:vm];
+            }
+            [ws.sv.doneCollectionView.footer endRefreshing];
+            [ws.sourceDone addObjectsFromArray:sourceAgent];
+            [ws.sv.doneCollectionView reloadData];
+        }
+    }];
+}
+
 @end

@@ -249,6 +249,9 @@
             if (failure) {
                 [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"ErrorOccurred" object:nil]];
                 failure(dataTask, error);
+#if DEBUG
+                [Hud error:URLString];
+#endif
             }
         } else {
             if (success) {

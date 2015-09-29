@@ -12,45 +12,58 @@
 #import "ATOMUser.h"
 @implementation DDOtherUserManager
 
-+ (void)getOtherUserInfo:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *askReturnArray,NSMutableArray *replyReturnArray,ATOMUser *user))block {
++ (void)getOtherUserInfo:(NSDictionary *)param withBlock:(void (^)(ATOMUser *user))block {
     [DDService ddGetOtherUserInfo:param withBlock:^(NSDictionary *data, NSArray *askArray, NSArray *replyArray) {
         {
-            NSMutableArray *askReturnArray = [NSMutableArray array];
-            NSMutableArray *replyReturnArray = [NSMutableArray array];
+//            NSMutableArray *askReturnArray = [NSMutableArray array];
+//            NSMutableArray *replyReturnArray = [NSMutableArray array];
             ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:data error:NULL];
-            for (int i = 0; i < askArray.count; i++) {
-                PIEPageEntity *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:askArray[i] error:NULL];
-//                homeImage.tipLabelArray = [NSMutableArray array];
-//                NSArray *labelDataArray = askArray[i][@"labels"];
-//                if (labelDataArray.count) {
-//                    for (int j = 0; j < labelDataArray.count; j++) {
-//                        ATOMImageTipLabel *tipLabel = [MTLJSONAdapter modelOfClass:[ATOMImageTipLabel class] fromJSONDictionary:labelDataArray[j] error:NULL];
-//                        tipLabel.imageID = homeImage.imageID;
-//                        [homeImage.tipLabelArray addObject:tipLabel];
-//                    }
-//                }
-                [askReturnArray addObject:homeImage];
-            }
-            
-            for (int i = 0; i < replyArray.count; i++) {
-                PIEPageEntity *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:replyArray[i] error:NULL];
-//                homeImage.tipLabelArray = [NSMutableArray array];
-//                NSArray *labelDataArray = replyArray[i][@"labels"];
-//                if (labelDataArray.count) {
-//                    for (int j = 0; j < labelDataArray.count; j++) {
-//                        ATOMImageTipLabel *tipLabel = [MTLJSONAdapter modelOfClass:[ATOMImageTipLabel class] fromJSONDictionary:labelDataArray[j] error:NULL];
-//                        tipLabel.imageID = homeImage.imageID;
-//                        [homeImage.tipLabelArray addObject:tipLabel];
-//                    }
-//                }
-                [replyReturnArray addObject:homeImage];
-            }
+//            for (int i = 0; i < askArray.count; i++) {
+//                PIEPageEntity *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:askArray[i] error:NULL];
+//                [askReturnArray addObject:homeImage];
+//            }
+//            
+//            for (int i = 0; i < replyArray.count; i++) {
+//                PIEPageEntity *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:replyArray[i] error:NULL];
+//                [replyReturnArray addObject:homeImage];
+//            }
             
             if (block) {
-                block(askReturnArray,replyReturnArray,user);
+                block(user);
             }
         }
     }];
 }
-
++ (void)getFriendReply:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *returnArray))block {
+    [DDService ddGetFriendReply:param withBlock:^(NSArray *returnArray) {
+            NSMutableArray *array = [NSMutableArray array];
+            for (int i = 0; i < returnArray.count; i++) {
+                PIEPageEntity *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:returnArray[i] error:NULL];
+                [array addObject:homeImage];
+            }
+            if (block) {
+                if (array.count > 0) {
+                    block(array);
+                } else {
+                    block (nil);
+                }
+            }
+    }];
+}
++ (void)getFriendAsk:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *returnArray))block {
+    [DDService ddGetFriendAsk:param withBlock:^(NSArray *returnArray) {
+        NSMutableArray *array = [NSMutableArray array];
+        for (int i = 0; i < returnArray.count; i++) {
+            PIEPageEntity *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:returnArray[i] error:NULL];
+            [array addObject:homeImage];
+        }
+        if (block) {
+            if (array.count > 0) {
+                block(array);
+            } else {
+                block (nil);
+            }
+        }
+    }];
+}
 @end

@@ -18,5 +18,5 @@ typedef NS_ENUM(NSInteger, PIEFollowScrollType) {
 @property (nonatomic, strong) RefreshTableView *tableHot;
 @property (nonatomic, assign) PIEFollowScrollType type;
 - (void)toggle ;
-- (void)toggleWithType:(PIEFollowScrollType)type ;
+- (void)toggleWithType:(PIEPageType)type;
 @end
