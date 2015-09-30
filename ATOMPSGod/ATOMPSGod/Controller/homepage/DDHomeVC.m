@@ -277,17 +277,12 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
             }
             //点击头像
             else if (CGRectContainsPoint(_selectedReplyCell.avatarView.frame, p)) {
-                ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-                opvc.userID = _selectedVM.userID;
-                opvc.userName = _selectedVM.username;
-                [self pushViewController:opvc animated:YES];
+                PIEFriendViewController * friendVC = [PIEFriendViewController new];
+                friendVC.pageVM = _selectedVM;
+                [self pushViewController:friendVC animated:YES];
             }
             //点击用户名
             else if (CGRectContainsPoint(_selectedReplyCell.nameLabel.frame, p)) {
-//                ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-//                opvc.userID = _selectedVM.userID;
-//                opvc.userName = _selectedVM.username;
-//                [self pushViewController:opvc animated:YES];
                 PIEFriendViewController * friendVC = [PIEFriendViewController new];
                 friendVC.pageVM = _selectedVM;
                 [self pushViewController:friendVC animated:YES];
@@ -327,18 +322,16 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
             }
             //点击头像
             else if (CGRectContainsPoint(_selectedAskCell.avatarView.frame, p)) {
-                ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-                opvc.userID = _selectedVM.userID;
-                opvc.userName = _selectedVM.username;
-                [self pushViewController:opvc animated:YES];
+                PIEFriendViewController * friendVC = [PIEFriendViewController new];
+                friendVC.pageVM = _selectedVM;
+                [self pushViewController:friendVC animated:YES];
             }
             
             //点击用户名
             else if (CGRectContainsPoint(_selectedAskCell.nameLabel.frame, p)) {
-                ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-                opvc.userID = _selectedVM.userID;
-                opvc.userName = _selectedVM.username;
-                [self pushViewController:opvc animated:YES];
+                PIEFriendViewController * friendVC = [PIEFriendViewController new];
+                friendVC.pageVM = _selectedVM;
+                [self pushViewController:friendVC animated:YES];
             }
             //点击帮p
             else if (CGRectContainsPoint(_selectedAskCell.bangView.frame, p)) {

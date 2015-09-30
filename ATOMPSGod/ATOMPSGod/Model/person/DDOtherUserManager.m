@@ -10,6 +10,7 @@
 #import "PIEPageEntity.h"
 #import "ATOMImageTipLabel.h"
 #import "ATOMUser.h"
+#import "PIEImageEntity.h"
 @implementation DDOtherUserManager
 
 + (void)getOtherUserInfo:(NSDictionary *)param withBlock:(void (^)(ATOMUser *user))block {
@@ -38,8 +39,19 @@
     [DDService ddGetFriendReply:param withBlock:^(NSArray *returnArray) {
             NSMutableArray *array = [NSMutableArray array];
             for (int i = 0; i < returnArray.count; i++) {
-                PIEPageEntity *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:returnArray[i] error:NULL];
-                [array addObject:homeImage];
+                PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:returnArray[i] error:NULL];
+                NSMutableArray* thumbArray = [NSMutableArray new];
+                for (int i = 0; i<entity.askImageModelArray.count; i++) {
+                    PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.askImageModelArray[i] error:NULL];
+                    [thumbArray addObject:entity2];
+                }
+                
+                if (thumbArray.count > 0) {
+                    entity.askImageModelArray = thumbArray;
+                } else {
+                    entity.askImageModelArray = nil;
+                }
+                [array addObject:entity];
             }
             if (block) {
                 if (array.count > 0) {
@@ -54,8 +66,14 @@
     [DDService ddGetFriendAsk:param withBlock:^(NSArray *returnArray) {
         NSMutableArray *array = [NSMutableArray array];
         for (int i = 0; i < returnArray.count; i++) {
-            PIEPageEntity *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:returnArray[i] error:NULL];
-            [array addObject:homeImage];
+            PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:returnArray[i] error:NULL];
+            NSMutableArray* thumbArray = [NSMutableArray new];
+            for (int i = 0; i<entity.askImageModelArray.count; i++) {
+                PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.askImageModelArray[i] error:NULL];
+                [thumbArray addObject:entity2];
+            }
+            entity.askImageModelArray = thumbArray;
+            [array addObject:entity];
         }
         if (block) {
             if (array.count > 0) {

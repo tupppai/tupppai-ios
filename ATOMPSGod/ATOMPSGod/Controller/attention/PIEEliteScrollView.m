@@ -27,7 +27,7 @@
     self.pagingEnabled = YES;
     self.scrollsToTop = NO;
     self.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    self.type = PIEFollowScrollTypeFollow;
+    self.type = PIEPageTypeEliteFollow;
 }
 
 - (void)createSubView {
@@ -53,13 +53,13 @@
 
 
 - (void)toggle {
-    if (_type == PIEFollowScrollTypeFollow) {
-        _type = PIEFollowScrollTypeHot;
+    if (_type == PIEPageTypeEliteFollow) {
+        _type = PIEPageTypeEliteHot;
         [UIView animateWithDuration:0.3 animations:^{
             self.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
         }];
     } else {
-        _type = PIEFollowScrollTypeFollow;
+        _type = PIEPageTypeEliteFollow;
         [UIView animateWithDuration:0.3 animations:^{
             self.contentOffset = CGPointMake(0, 0);
         }];
@@ -68,7 +68,7 @@
 
 - (void)toggleWithType:(PIEPageType)type {
     _type = type;
-    if (_type == PIEFollowScrollTypeFollow) {
+    if (_type == PIEPageTypeEliteFollow) {
         [UIView animateWithDuration:0.3 animations:^{
             self.contentOffset = CGPointMake(0, 0);
         }];

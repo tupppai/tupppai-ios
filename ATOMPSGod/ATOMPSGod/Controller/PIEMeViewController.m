@@ -80,11 +80,12 @@
                                  CAPSPageMenuOptionBottomMenuHairlineColor: [UIColor colorWithRed:70.0/255.0 green:70.0/255.0 blue:70.0/255.0 alpha:0.0],
                                  CAPSPageMenuOptionMenuItemFont: [UIFont systemFontOfSize:13.0],
                                  CAPSPageMenuOptionMenuHeight: @(40.0),
-                                 CAPSPageMenuOptionMenuItemWidth: @(SCREEN_WIDTH/2 - 5),
                                  CAPSPageMenuOptionSelectedMenuItemLabelColor: [UIColor blackColor],
-                                 CAPSPageMenuOptionUseMenuLikeSegmentedControl: @(YES)
+                                 CAPSPageMenuOptionUseMenuLikeSegmentedControl:@(YES),
+                                 CAPSPageMenuOptionSelectionIndicatorWidth:@30,
                                  };
-    
+    NSLog(@" setupPageMenu2 %f,%f", self.view.frame.size.width,SCREEN_WIDTH);
+
     
     _pageMenu = [[CAPSPageMenu alloc] initWithViewControllers:controllerArray frame:CGRectMake(0, _topContainerView.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - _topContainerView.frame.size.height) options:parameters];
     

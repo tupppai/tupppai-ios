@@ -27,7 +27,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bvf-p6-pCL" userLabel="View1">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="266.5"/>
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="218"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J7D-t2-hRQ">
                             <rect key="frame" x="224" y="127" width="10.5" height="20.5"/>
@@ -110,7 +110,7 @@
                     </variation>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZpA-KX-YfT" userLabel="View2">
-                    <rect key="frame" x="0.0" y="266" width="600" height="333.5"/>
+                    <rect key="frame" x="0.0" y="217.5" width="600" height="382"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
             </subviews>
@@ -121,7 +121,7 @@
                 <constraint firstAttribute="trailing" secondItem="bvf-p6-pCL" secondAttribute="trailing" id="Q54-Dy-jjn"/>
                 <constraint firstItem="ZpA-KX-YfT" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="YkM-bM-hA2"/>
                 <constraint firstItem="bvf-p6-pCL" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="drh-Ng-DUJ"/>
-                <constraint firstItem="bvf-p6-pCL" firstAttribute="height" secondItem="ZpA-KX-YfT" secondAttribute="height" multiplier="4:5" id="g6h-xO-H8N"/>
+                <constraint firstItem="bvf-p6-pCL" firstAttribute="height" secondItem="ZpA-KX-YfT" secondAttribute="height" multiplier="4:7" id="g6h-xO-H8N"/>
                 <constraint firstAttribute="trailing" secondItem="ZpA-KX-YfT" secondAttribute="trailing" id="kEf-Le-HQQ"/>
                 <constraint firstAttribute="bottom" secondItem="ZpA-KX-YfT" secondAttribute="bottom" id="yv2-Uj-TfD"/>
             </constraints>

@@ -11,7 +11,7 @@
 @implementation UIColor (PSGod)
 
 +  (UIColor *)pieYellowColor {
-    return [UIColor yellowColor];
+    return [UIColor colorWithHex:PIEColorHex];
 }
 //kfc means page which consists of topview,imageviewMain,bottomview,additionview,blablaaaa....
 +  (UIColor *)kfcUsername {

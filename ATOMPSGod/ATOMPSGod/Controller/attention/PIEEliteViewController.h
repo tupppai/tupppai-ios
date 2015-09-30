@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PIEEliteViewController : UIViewController
+@interface PIEEliteViewController : DDBaseVC
 
 @end

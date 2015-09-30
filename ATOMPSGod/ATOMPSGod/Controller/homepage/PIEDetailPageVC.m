@@ -8,6 +8,7 @@
 
 #import "PIEDetailPageVC.h"
 #import "DDHotDetailManager.h"
+#import "PIEFriendViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface PIEDetailPageVC ()
@@ -45,11 +46,21 @@
     _avatarView.clipsToBounds = YES;
     [_likeButton setImage:[UIImage imageNamed:@"pie_like_selected"] forState:UIControlStateSelected];
     [_likeButton setImage:[UIImage imageNamed:@"pie_like_selected"] forState:UIControlStateHighlighted];
+    
+    
+    _avatarView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapG1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToSeeFriend)];
+    [_avatarView addGestureRecognizer:tapG1];
+    
+    _usernameLabel.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapG2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToSeeFriend)];
+    [_usernameLabel addGestureRecognizer:tapG2];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)pushToSeeFriend {
+    PIEFriendViewController * friendVC = [PIEFriendViewController new];
+    friendVC.pageVM = _currentVM;
+    [self pushViewController:friendVC animated:YES];
 }
 - (IBAction)tapLikeButton:(id)sender {
     _likeButton.selected = !_likeButton.selected;

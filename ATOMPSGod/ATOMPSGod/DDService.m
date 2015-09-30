@@ -179,6 +179,8 @@
         if (responseObject) {
             NSInteger newImageID = [[[ responseObject objectForKey:@"data"]objectForKey:@"ask_id"] integerValue];
             if (block) {block(newImageID);}
+        } else {
+            if (block) {block(-1);}
         }
     }];
 }

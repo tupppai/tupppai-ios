@@ -13,7 +13,6 @@
 #import "PIEFriendReplyViewController.h"
 #import "PIEFriendAskViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
-
 @interface PIEFriendViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
 @property (weak, nonatomic) IBOutlet UIImageView *followButton;
@@ -36,8 +35,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     [self getDataSource];
     [self setupPageMenu];
+    
+    _followButton.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapG1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(follow)];
+    [_followButton addGestureRecognizer:tapG1];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -58,34 +62,31 @@
 
 - (void)setupPageMenu {
     NSMutableArray *controllerArray = [NSMutableArray array];
-    
-    PIEFriendReplyViewController *controller2 = [PIEFriendReplyViewController new];
-    controller2.title = @"求P";
-    controller2.pageVM = _pageVM;
-    [controllerArray addObject:controller2];
-
     PIEFriendReplyViewController *controller = [PIEFriendReplyViewController new];
     controller.pageVM = _pageVM;
     controller.title = @"作品";
     [controllerArray addObject:controller];
     
+    PIEFriendAskViewController *controller2 = [PIEFriendAskViewController new];
+    controller2.title = @"ta的求P";
+    controller2.pageVM = _pageVM;
+    [controllerArray addObject:controller2];
     
     NSDictionary *parameters = @{
                                  CAPSPageMenuOptionScrollMenuBackgroundColor: [UIColor whiteColor],
                                  CAPSPageMenuOptionViewBackgroundColor: [UIColor whiteColor],
-                                 CAPSPageMenuOptionSelectionIndicatorColor: [UIColor colorWithHex:PIEColorHex],
+                                 CAPSPageMenuOptionSelectionIndicatorColor: [UIColor pieYellowColor],
                                  CAPSPageMenuOptionBottomMenuHairlineColor: [UIColor colorWithRed:70.0/255.0 green:70.0/255.0 blue:70.0/255.0 alpha:0.0],
-                                 CAPSPageMenuOptionMenuItemFont: [UIFont systemFontOfSize:13.0],
+                                 CAPSPageMenuOptionMenuItemFont: [UIFont systemFontOfSize:16.0],
                                  CAPSPageMenuOptionMenuHeight: @(40.0),
-                                 CAPSPageMenuOptionMenuItemWidth: @(SCREEN_WIDTH/2 - 5),
                                  CAPSPageMenuOptionSelectedMenuItemLabelColor: [UIColor blackColor],
-                                 CAPSPageMenuOptionUseMenuLikeSegmentedControl: @(YES)
+                                 CAPSPageMenuOptionUseMenuLikeSegmentedControl:@(YES),
+                                 CAPSPageMenuOptionSelectionIndicatorWidth:@40,
                                  };
-    
    _pageMenu = [[CAPSPageMenu alloc] initWithViewControllers:controllerArray frame:CGRectMake(0, _view1.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - _view1.frame.size.height) options:parameters];
+    _pageMenu.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     [self.view addSubview:_pageMenu.view];
 }
-
 
 #pragma mark - GetDataSource
 - (void)getDataSource {

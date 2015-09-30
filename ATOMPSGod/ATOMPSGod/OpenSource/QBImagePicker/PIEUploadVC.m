@@ -49,6 +49,9 @@
     [itemView addTarget:self action:@selector(tapNext)forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithCustomView:itemView];
     self.navigationItem.rightBarButtonItem = item;
+    if (_type == PIEUploadTypeReply) {
+        _inputTextView.placeholder = @"输入作品的亮点";
+    }
     _inputTextView.delegate = self;
     _leftImageView.clipsToBounds = YES;
     _rightImageView.clipsToBounds = YES;
@@ -174,7 +177,7 @@
     [DDService ddSaveAsk:param withBlock:^(NSInteger newImageID) {
         [Hud dismiss:self.view];
         [Hud dismiss];
-        if (newImageID) {
+        if (newImageID!=-1) {
             [self.view endEditing:YES];
             [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:@"shouldNavToAskSegment"];
             [[NSUserDefaults standardUserDefaults] synchronize];
@@ -253,7 +256,6 @@
 }
 
 -(void)textViewDidChangeSelection:(UITextView *)textView {
-    NSLog(@"textViewDidChangeSelection");
     if (textView.text.length > 18) {
         NSString *shortString = [textView.text substringToIndex:18];
         textView.text = shortString;

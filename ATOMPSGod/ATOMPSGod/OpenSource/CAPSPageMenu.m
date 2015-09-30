@@ -70,7 +70,7 @@ typedef NS_ENUM(NSUInteger, CAPSPageMenuScrollDirection) {
 @end
 
 @implementation CAPSPageMenu
-NSString * const CAPSPageMenuOptionSelectionIndicatorWidth            = @"selectionIndicatorWidth";
+NSString * const CAPSPageMenuOptionSelectionIndicatorWidth              = @"selectionIndicatorWidth";
 NSString * const CAPSPageMenuOptionSelectionIndicatorHeight             = @"selectionIndicatorHeight";
 NSString * const CAPSPageMenuOptionMenuItemSeparatorWidth               = @"menuItemSeparatorWidth";
 NSString * const CAPSPageMenuOptionScrollMenuBackgroundColor            = @"scrollMenuBackgroundColor";
@@ -151,6 +151,8 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
                 _centerMenuItems = [options[key] boolValue];
             } else if ([key isEqualToString:CAPSPageMenuOptionHideTopMenuBar]) {
                 _hideTopMenuBar = [options[key] boolValue];
+            } else if ([key isEqualToString:CAPSPageMenuOptionSelectionIndicatorWidth]) {
+                _selectionIndicatorWidth = [options[key] floatValue];
             }
         }
         
@@ -406,7 +408,9 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     
     if (_useMenuLikeSegmentedControl) {
         
-        selectionIndicatorFrame = CGRectMake(0 , _menuHeight - _selectionIndicatorHeight, self.view.frame.size.width / (CGFloat)_controllerArray.count, _selectionIndicatorHeight);
+        selectionIndicatorFrame = CGRectMake(self.view.frame.size.width / (CGFloat)_controllerArray.count/2-_selectionIndicatorWidth/2 , _menuHeight - _selectionIndicatorHeight, _selectionIndicatorWidth, _selectionIndicatorHeight);
+//        selectionIndicatorFrame = CGRectMake(0 , _menuHeight - _selectionIndicatorHeight, self.view.frame.size.width / (CGFloat)_controllerArray.count, _selectionIndicatorHeight);
+
     } else if (_menuItemWidthBasedOnTitleTextWidth) {
         selectionIndicatorFrame = CGRectMake(_menuMargin, _menuHeight - _selectionIndicatorHeight, [_mutableMenuItemWidths[0] floatValue], _selectionIndicatorHeight);
     } else {
@@ -623,12 +627,16 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     if (pageIndex >= 0 && pageIndex < _controllerArray.count) {
         [UIView animateWithDuration:0.15 animations:^{
             
-            CGFloat selectionIndicatorWidth = self.selectionIndicatorView.frame.size.width;
+            CGFloat selectionIndicatorWidth = self.selectionIndicatorView.frame.size.width/(CGFloat)self.controllerArray.count;
             CGFloat selectionIndicatorX = 0.0;
             
             if (self.useMenuLikeSegmentedControl) {
-                selectionIndicatorX = (CGFloat)pageIndex * (self.view.frame.size.width / (CGFloat)self.controllerArray.count);
-                selectionIndicatorWidth = self.view.frame.size.width / (CGFloat)self.controllerArray.count;
+//                selectionIndicatorX = (CGFloat)pageIndex * (self.view.frame.size.width / (CGFloat)self.controllerArray.count);
+                selectionIndicatorX = ((CGFloat)pageIndex*2+1) * (self.view.frame.size.width / (CGFloat)self.controllerArray.count)/2 - _selectionIndicatorWidth/2;
+
+                selectionIndicatorWidth = _selectionIndicatorWidth;
+//                selectionIndicatorWidth = self.view.frame.size.width / (CGFloat)self.controllerArray.count;
+
             } else if (self.menuItemWidthBasedOnTitleTextWidth) {
                 selectionIndicatorWidth = [self.menuItemWidths[pageIndex] floatValue];
                 selectionIndicatorX += self.menuMargin;
