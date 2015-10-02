@@ -32,7 +32,7 @@
              @"liked" :@"uped",
              @"collected" : @"collected",
              @"type" : @"type",
-             @"askImageModelArray":@"uploads",
+             @"askImageModelArray":@"ask_uploads",
              @"followed":@"followed",
              };
 }

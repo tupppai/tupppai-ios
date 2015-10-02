@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMFansViewController.h"
-#import "DDFansTableCell.h"
-#import "ATOMOtherPersonViewController.h"
+#import "PIEFriendFansViewController.h"
+#import "PIEFriendFansTableCell.h"
+#import "PIEFriendViewController.h"
 #import "DDMyFansManager.h"
 #import "ATOMFans.h"
 #import "ATOMFansViewModel.h"
@@ -16,7 +16,7 @@
 #import "DDService.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMFansViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource>
+@interface PIEFriendFansViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource>
 
 @property (nonatomic, strong) RefreshFooterTableView *tableView;
 @property (nonatomic, strong) UIView *myFansView;
@@ -28,7 +28,7 @@
 
 @end
 
-@implementation ATOMFansViewController
+@implementation PIEFriendFansViewController
 
 
 #pragma mark - UI
@@ -39,15 +39,22 @@
 }
 
 - (void)createUI {
-    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"推荐关注" style:UIBarButtonItemStylePlain target:self action:@selector(showRecommendation)];
-    self.navigationItem.rightBarButtonItem = anotherButton;
-    
+    [self setupNavigationBar];
+    [self setupViews];
+    [self initValues];
+    [self getDataSource];
+}
+
+- (void) setupNavigationBar {
+//    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"推荐关注" style:UIBarButtonItemStylePlain target:self action:@selector(showRecommendation)];
+//    self.navigationItem.rightBarButtonItem = anotherButton;
     self.title = [NSString stringWithFormat:@"%@的粉丝", _uid ? _userName : @"我"];
+}
+- (void) setupViews {
     _myFansView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _myFansView;
     _tableView = [[RefreshFooterTableView alloc] initWithFrame:_myFansView.bounds];
     _tableView.backgroundColor = [UIColor colorWithHex:0xededed];
-//    _tableView.tableFooterView = [UIView new];
     [_myFansView addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -55,11 +62,10 @@
     _tableView.psDelegate = self;
     _tapMyFansGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMyFansGesture:)];
     [_tableView addGestureRecognizer:_tapMyFansGesture];
-//    [self configTableViewRefresh];
-    _canRefreshFooter = YES;
-    [self getDataSource];
 }
-
+- (void) initValues {
+    _canRefreshFooter = YES;
+}
 #pragma mark - Click Event
 -(void) showRecommendation {
     [Util showWeAreWorkingOnThisFeature];
@@ -71,15 +77,17 @@
     _selectedIndexPath = [_tableView indexPathForRowAtPoint:location];
     if (_selectedIndexPath) {
         ATOMFansViewModel *viewModel = _dataSource[_selectedIndexPath.row];
-        DDFansTableCell *cell = (DDFansTableCell *)[_tableView cellForRowAtIndexPath:_selectedIndexPath];
+        PIEFriendFansTableCell *cell = (PIEFriendFansTableCell *)[_tableView cellForRowAtIndexPath:_selectedIndexPath];
         CGPoint p = [gesture locationInView:cell];
-//        if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
-//            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-//            opvc.userID = viewModel.uid;
-//            opvc.userName = viewModel.userName;
-//            [self pushViewController:opvc animated:YES];
-//        }
-        if (CGRectContainsPoint(cell.attentionButton.frame, p)) {
+        if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
+            PIEFriendViewController *opvc = [PIEFriendViewController new];
+            DDPageVM* vm = [DDPageVM new];
+            vm.userID = viewModel.uid;
+            vm.username = viewModel.userName;
+            opvc.pageVM = vm;
+            [self pushViewController:opvc animated:YES];
+        }
+        else if (CGRectContainsPoint(cell.attentionButton.frame, p)) {
             cell.attentionButton.selected = !cell.attentionButton.selected;
             NSMutableDictionary* param = [NSMutableDictionary new];
             [param setObject:@(cell.viewModel.uid) forKey:@"uid"];
@@ -89,21 +97,19 @@
             [DDService follow:param withBlock:^(BOOL success) {
                 if (!success) {
                     cell.attentionButton.selected = !cell.attentionButton.selected;
-                } else {
-                    NSString* desc =  cell.attentionButton.selected?[NSString stringWithFormat:@"你关注了%@",cell.viewModel.userName]:[NSString stringWithFormat:@"你取消关注了%@",cell.viewModel.userName];
-                    [Hud text:desc inView:self.view];
                 }
+//                else {
+//                    NSString* desc =  cell.attentionButton.selected?[NSString stringWithFormat:@"你关注了%@",cell.viewModel.userName]:[NSString stringWithFormat:@"你取消关注了%@",cell.viewModel.userName];
+//                    [Hud text:desc inView:self.view];
+//                }
             }];
             
-        } else {
-            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-            opvc.userID = viewModel.uid;
-            opvc.userName = viewModel.userName;
-            [self pushViewController:opvc animated:YES];
         }
         
     }
 }
+
+
 
 #pragma mark - UITableViewDataSource
 
@@ -123,9 +129,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"MyFansCell";
-    DDFansTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    PIEFriendFansTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
-        cell = [[DDFansTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[PIEFriendFansTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     cell.viewModel = _dataSource[indexPath.row];
     return cell;

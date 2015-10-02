@@ -46,7 +46,10 @@
         self.number--;
     }
 }
-
+-(void)setHighlighted:(BOOL)highlighted {
+    _imageView.highlighted = highlighted;
+    _selected = highlighted;
+}
 -(void)setNumber:(NSInteger)number {
     _number = number;
     _numberString = [NSString stringWithFormat:@"%zd",number];

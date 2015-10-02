@@ -10,7 +10,7 @@
 #import "ATOMPersonView.h"
 #import "ATOMPersonTableViewCell.h"
 #import "ATOMAccountSettingViewController.h"
-#import "ATOMFansViewController.h"
+#import "PIEFriendFansViewController.h"
 #import "DDMyFollowVC.h"
 #import "ATOMMyWorkViewController.h"
 #import "ATOMMyUploadViewController.h"
@@ -61,7 +61,7 @@
 #pragma mark - Gesture Event
 
 - (void)tapFansGesture:(UITapGestureRecognizer *)gesture {
-    ATOMFansViewController *mfvc = [ATOMFansViewController new];
+    PIEFriendFansViewController *mfvc = [PIEFriendFansViewController new];
     mfvc.uid = [DDUserManager currentUser].uid;
     mfvc.userName = [DDUserManager currentUser].username;
     [self pushViewController:mfvc animated:YES];

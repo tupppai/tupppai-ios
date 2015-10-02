@@ -18,7 +18,7 @@
 #import "ATOMComment.h"
 #import "DDHotDetailManager.h"
 #import "DDPageVM.h"
-#import "ATOMShareFunctionView.h"
+#import "PIEShareFunctionView.h"
 #import "kfcButton.h"
 #import "RefreshTableView.h"
 #import "DDCollectManager.h"
@@ -35,7 +35,7 @@
 
 @interface DDDetailPageVC () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate,JTSImageViewControllerInteractionsDelegate>
 
-@property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
+@property (nonatomic, strong) PIEShareFunctionView *shareFunctionView;
 @property (nonatomic, strong) UIView *hotDetailView;
 @property (nonatomic, strong) RefreshTableView *tableView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;

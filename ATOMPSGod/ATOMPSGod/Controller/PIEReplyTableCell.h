@@ -31,6 +31,6 @@
 
 @property (strong, nonatomic) PIEThumbAnimateView *thumbView;
 
-- (void)configCell:(DDPageVM *)viewModel row:(NSInteger)row;
+- (void)injectSauce:(DDPageVM *)viewModel ;
 - (void)animateToggleExpanded ;
 @end

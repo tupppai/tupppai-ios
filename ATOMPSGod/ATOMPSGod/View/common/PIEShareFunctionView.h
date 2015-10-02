@@ -8,7 +8,7 @@
 
 #import "ATOMBaseView.h"
 
-@interface ATOMShareFunctionView : ATOMBaseView
+@interface PIEShareFunctionView : ATOMBaseView
 
 @property (nonatomic, strong) UIButton *wxButton;
 @property (nonatomic, strong) UIButton *wxFriendCircleButton;

@@ -19,6 +19,7 @@
     [self commonInit];
     [self initThumbAnimateView];
 }
+
 - (void)commonInit {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
@@ -42,7 +43,7 @@
         make.bottom.equalTo(_theImageView);
     }];
 }
-- (void)configCell:(DDPageVM *)viewModel row:(NSInteger)row{
+- (void)injectSauce:(DDPageVM *)viewModel {
     _ID = viewModel.ID;
     _askID = viewModel.askID;
     _followView.highlighted = viewModel.followed;
@@ -54,12 +55,11 @@
     
     _collectView.imageView.image = [UIImage imageNamed:@"hot_star"];
     _collectView.imageView.highlightedImage = [UIImage imageNamed:@"hot_star_selected"];
-    _collectView.imageView.highlighted = viewModel.collected;
+    _collectView.highlighted = viewModel.collected;
     _collectView.numberString = viewModel.collectCount;
     
     _likeView.highlighted = viewModel.liked;
     _likeView.numberString = viewModel.likeCount;
-    
     _contentLabel.text = viewModel.content;
     
     [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
@@ -73,12 +73,13 @@
     
     _thumbView.expandedSize = CGSizeMake(SCREEN_WIDTH, imageViewHeight);
     _thumbView.subviewCounts = viewModel.askImageModelArray.count;
-    PIEImageEntity* entity = [viewModel.askImageModelArray objectAtIndex:0];
-    [_thumbView.rightView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
-    if (viewModel.askImageModelArray.count == 2) {
-        entity = viewModel.askImageModelArray[1];
-        [_thumbView.leftView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
-        
+    if (viewModel.askImageModelArray.count > 0) {
+        PIEImageEntity* entity = [viewModel.askImageModelArray objectAtIndex:0];
+        [_thumbView.rightView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+        if (viewModel.askImageModelArray.count == 2) {
+            entity = viewModel.askImageModelArray[1];
+            [_thumbView.leftView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+        }
     }
 }
 

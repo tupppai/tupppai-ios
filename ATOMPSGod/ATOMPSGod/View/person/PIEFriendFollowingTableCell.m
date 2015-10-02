@@ -6,17 +6,17 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "DDFollowTableCell.h"
+#import "PIEFriendFollowingTableCell.h"
 #import "ATOMConcernViewModel.h"
 
-@interface DDFollowTableCell ()
+@interface PIEFriendFollowingTableCell ()
 
 @property (nonatomic, strong) UIView *dotView1;
 @property (nonatomic, strong) UIView *dotView2;
 
 @end
 
-@implementation DDFollowTableCell
+@implementation PIEFriendFollowingTableCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -45,7 +45,7 @@
     [self.userHeaderButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@(kfcAvatarWidth));
         make.height.equalTo(@(kfcAvatarWidth));
-        make.leading.equalTo(self.contentView).with.offset(kPadding15);
+        make.left.equalTo(self.contentView).with.offset(kPadding15);
         make.centerY.equalTo(self.contentView);
     }];
     [self.userNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -53,33 +53,33 @@
         make.left.equalTo(self.userHeaderButton.mas_right).with.offset(5);
     }];
     [self.fansNumberLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.equalTo(_userNameLabel);
+        make.left.equalTo(_userNameLabel);
         make.bottom.equalTo(_userHeaderButton.mas_bottom).with.offset(2);
     }];
     [self.dotView1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.equalTo(_fansNumberLabel.mas_right).with.offset(5);
+        make.left.equalTo(_fansNumberLabel.mas_right).with.offset(5);
         make.centerY.equalTo(_fansNumberLabel);
         make.width.equalTo(@(5));
         make.height.equalTo(@(5));
     }];
     [self.uploadNumberLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.equalTo(_dotView1.mas_right).with.offset(5);
+        make.left.equalTo(_dotView1.mas_right).with.offset(5);
         make.centerY.equalTo(_fansNumberLabel);
     }];
     [self.dotView2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.equalTo(_uploadNumberLabel.mas_right).with.offset(5);
+        make.left.equalTo(_uploadNumberLabel.mas_right).with.offset(5);
         make.centerY.equalTo(_fansNumberLabel);
         make.width.equalTo(@(5));
         make.height.equalTo(@(5));
     }];
     [self.workNumberLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.equalTo(_dotView2.mas_right).with.offset(5);
+        make.left.equalTo(_dotView2.mas_right).with.offset(5);
         make.centerY.equalTo(_fansNumberLabel);
     }];
     [self.attentionButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.equalTo(@(33));
+        make.width.equalTo(@(44));
         make.height.equalTo(@(27));
-        make.trailing.equalTo(self.contentView).with.offset(-kPadding15);
+        make.right.equalTo(self.contentView).with.offset(-kPadding15);
         make.centerY.equalTo(self.contentView);
     }];
 }
@@ -118,8 +118,8 @@
     if (!_attentionButton) {
         _attentionButton = [UIButton new];
         _attentionButton.userInteractionEnabled = NO;
-        [_attentionButton setBackgroundImage:[UIImage imageNamed:@"btn_addattention"] forState:UIControlStateNormal];
-        [_attentionButton setBackgroundImage:[UIImage imageNamed:@"btn_attention"] forState:UIControlStateSelected];
+        [_attentionButton setBackgroundImage:[UIImage imageNamed:@"new_reply_follow"] forState:UIControlStateNormal];
+        [_attentionButton setBackgroundImage:[UIImage imageNamed:@"new_reply_followed"] forState:UIControlStateSelected];
     }
     return _attentionButton;
 }
@@ -172,15 +172,5 @@
     }
     return _dotView2;
 }
-
-
-
-
-
-
-
-
-
-
 
 @end

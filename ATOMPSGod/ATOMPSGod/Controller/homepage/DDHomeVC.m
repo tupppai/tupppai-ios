@@ -12,7 +12,7 @@
 #import "DDPageVM.h"
 #import "kfcHomeScrollView.h"
 #import "DDHomePageManager.h"
-#import "ATOMShareFunctionView.h"
+#import "PIEShareFunctionView.h"
 #import "DDShareManager.h"
 #import "DDCollectManager.h"
 #import "DDInviteVC.h"
@@ -23,7 +23,7 @@
 #import "HMSegmentedControl.h"
 #import "DDCommentVC.h"
 #import "UITableView+FDTemplateLayoutCell.h"
-#import "PIEDetailPageVC.h"
+#import "PIEReplyCarouselViewController.h"
 #import "QBImagePicker.h"
 #import "PIEUploadVC.h"
 
@@ -32,7 +32,7 @@
 #import "PIERefreshCollectionView.h"
 #import "RefreshTableView.h"
 #import "PIEFriendViewController.h"
-
+#import "PIEReplyCollectionViewController.h"
 @class PIEPageEntity;
 #define AskCellWidth (SCREEN_WIDTH - 20) / 2.0
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
@@ -55,7 +55,7 @@
 @property (nonatomic, assign) BOOL isFirstEnterSecondView;
 
 
-@property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
+@property (nonatomic, strong) PIEShareFunctionView *shareFunctionView;
 @property (nonatomic, strong)  JGActionSheet * cameraActionsheet;
 @property (nonatomic, strong)  JGActionSheet * psActionSheet;
 @property (nonatomic, strong)  JGActionSheet * reportActionSheet;
@@ -252,6 +252,10 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     }
 }
 
+- (void)showShareFunctionView {
+    [self.shareFunctionView showInView:self.view animated:YES];
+    self.shareFunctionView.collectButton.selected = _selectedVM.collected;
+}
 #pragma mark - Gesture Event
 
 - (void)tapGestureReply:(UITapGestureRecognizer *)gesture {
@@ -270,7 +274,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
             //点击大图
             else  if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
                 //进入热门详情
-                PIEDetailPageVC* vc = [PIEDetailPageVC new];
+                PIEReplyCarouselViewController* vc = [PIEReplyCarouselViewController new];
                 _selectedVM.image = _selectedReplyCell.theImageView.image;
                 vc.pageVM = _selectedVM;
                 [self pushViewController:vc animated:YES];
@@ -296,13 +300,19 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
             else if (CGRectContainsPoint(_selectedReplyCell.followView.frame, p)) {
                 [self followReplier];
             }
+            else if (CGRectContainsPoint(_selectedReplyCell.shareView.frame, p)) {
+                [self showShareFunctionView];
+            }
             else if (CGRectContainsPoint(_selectedReplyCell.commentView.frame, p)) {
                 DDCommentVC* vc = [DDCommentVC new];
                 vc.vm = _selectedVM;
                 [self.navigationController pushViewController:vc animated:YES];
             }
-            
-            
+            else if (CGRectContainsPoint(_selectedReplyCell.allWorkView.frame, p)) {
+                PIEReplyCollectionViewController* vc = [PIEReplyCollectionViewController new];
+                vc.pageVM = _selectedVM;
+                [self pushViewController:vc animated:YES];
+            }
         }
     }
 }
@@ -318,7 +328,6 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
             
             //点击大图
             if (CGRectContainsPoint(_selectedAskCell.leftImageView.frame, p) || CGRectContainsPoint(_selectedAskCell.rightImageView.frame, p)) {
-                NSLog(@"tap on imageview");
             }
             //点击头像
             else if (CGRectContainsPoint(_selectedAskCell.avatarView.frame, p)) {
@@ -383,7 +392,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_hotTableView == tableView) {
         PIEReplyTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        [cell configCell:_sourceReply[indexPath.row] row:indexPath.row];
+        [cell injectSauce:_sourceReply[indexPath.row]];
         return cell;
     }
     else {
@@ -396,7 +405,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_hotTableView == tableView) {
         return [tableView fd_heightForCellWithIdentifier:CellIdentifier  cacheByIndexPath:indexPath configuration:^(PIEReplyTableCell *cell) {
-            [cell configCell:_sourceReply[indexPath.row] row:indexPath.row];
+            [cell injectSauce:_sourceReply[indexPath.row]];
         }];
     } else {
         return 0;
@@ -560,6 +569,12 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     ivc.askPageViewModel = _selectedVM;
     [self pushViewController:ivc animated:YES];
 }
+-(void)tapReport {
+    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
+}
+-(void)tapCollect {
+    [self collectReply];
+}
 -(void)collectReply {
     NSMutableDictionary *param = [NSMutableDictionary new];
     _selectedReplyCell.collectView.selected = !_selectedReplyCell.collectView.selected;
@@ -589,7 +604,6 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
         //取消收藏
         [param setObject:@(0) forKey:@"status"];
     }
-    
     [DDService toggleLike:_selectedReplyCell.likeView.selected ID:_selectedVM.ID type:_selectedVM.type  withBlock:^(BOOL success) {
         if (success) {
             _selectedVM.liked = _selectedReplyCell.likeView.selected;
@@ -621,9 +635,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     }
 }
 
--(void)tapReport {
-    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
-}
+
 #pragma mark - Refresh
 
 - (void)loadNewHotData {
@@ -718,9 +730,9 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     return _scrollView;
 }
 
-- (ATOMShareFunctionView *)shareFunctionView {
+- (PIEShareFunctionView *)shareFunctionView {
     if (!_shareFunctionView) {
-        _shareFunctionView = [ATOMShareFunctionView new];
+        _shareFunctionView = [PIEShareFunctionView new];
         _shareFunctionView.delegate = self;
     }
     return _shareFunctionView;

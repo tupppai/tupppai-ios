@@ -10,7 +10,7 @@
 #import "DDCommentTableCell.h"
 #import "DDCommentTextView.h"
 #import "JGActionSheet.h"
-#import "ATOMShareFunctionView.h"
+#import "PIEShareFunctionView.h"
 #import "DDCommentVM.h"
 #import "AppDelegate.h"
 #import "DDCropImageVC.h"
@@ -18,7 +18,7 @@
 #import "ATOMOtherPersonViewController.h"
 #import "ATOMComment.h"
 #import "DDCommentManager.h"
-#import "ATOMShareFunctionView.h"
+#import "PIEShareFunctionView.h"
 #import "CommentLikeButton.h"
 #import "DDCollectManager.h"
 #import "JGActionSheet.h"
@@ -45,7 +45,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 @property (nonatomic, strong) UITapGestureRecognizer *tapCommentTableGesture;
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, strong) DDCommentVM *targetCommentVM;
-@property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
+@property (nonatomic, strong) PIEShareFunctionView *shareFunctionView;
 @property (nonatomic, strong)  JGActionSheet * psActionSheet;
 @property (nonatomic, strong)  JGActionSheet * reportActionSheet;
 @property (nonatomic, strong) NSIndexPath *selectedIndexpath;
@@ -424,9 +424,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 #pragma mark - Lazy Initialize
 
-- (ATOMShareFunctionView *)shareFunctionView {
+- (PIEShareFunctionView *)shareFunctionView {
     if (!_shareFunctionView) {
-        _shareFunctionView = [ATOMShareFunctionView new];
+        _shareFunctionView = [PIEShareFunctionView new];
         _shareFunctionView.delegate = self;
     }
     return _shareFunctionView;

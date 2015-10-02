@@ -6,12 +6,13 @@
 //  Copyright (c) 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIEDetailPageVC.h"
+#import "PIEReplyCarouselViewController.h"
 #import "DDHotDetailManager.h"
 #import "PIEFriendViewController.h"
+#import "HMSegmentedControl.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface PIEDetailPageVC ()
+@interface PIEReplyCarouselViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *blurView;
 @property (weak, nonatomic) IBOutlet iCarousel *carousel;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
@@ -22,15 +23,19 @@
 @property (weak, nonatomic) IBOutlet UIButton *likeButton;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, assign) NSInteger currentPage;
-
 @property (nonatomic, strong) DDPageVM* currentVM;
+@property (nonatomic, strong) HMSegmentedControl* segmentedControl;
 
 @end
 
-@implementation PIEDetailPageVC
+@implementation PIEReplyCarouselViewController
 
 -(void)awakeFromNib {
     
+}
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationItem.titleView = self.segmentedControl;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -42,11 +47,13 @@
     _carousel.type = iCarouselTypeLinear;
     _carousel.delegate = self;
     _carousel.dataSource = self;
+    _carousel.pagingEnabled = YES;
+    _carousel.decelerationRate = 2;
+    
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
     [_likeButton setImage:[UIImage imageNamed:@"pie_like_selected"] forState:UIControlStateSelected];
     [_likeButton setImage:[UIImage imageNamed:@"pie_like_selected"] forState:UIControlStateHighlighted];
-    
     
     _avatarView.userInteractionEnabled = YES;
     UITapGestureRecognizer *tapG1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToSeeFriend)];
@@ -178,8 +185,14 @@
     - (void)carouselCurrentItemIndexDidChange:(__unused iCarousel *)carousel
     {
         [self updateUIWithIndex:carousel.currentItemIndex];
+        [self.segmentedControl setSelectedSegmentIndex:carousel.currentItemIndex];
     }
-
+- (NSInteger)numberOfPlaceholdersInCarousel:(iCarousel *)carousel {
+    return 2;
+}
+-(UIView *)carousel:(iCarousel *)carousel placeholderViewAtIndex:(NSInteger)index reusingView:(UIView *)view {
+    return [UIView new];
+}
 
 -(void)updateUIWithIndex:(NSInteger)index {
     _currentVM = [_dataSource objectAtIndex:index];
@@ -196,17 +209,58 @@
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(100) forKey:@"size"];
     DDHotDetailManager *manager = [DDHotDetailManager new];
-    [manager fetchAllReply:param ID:_pageVM.ID withBlock:^(NSMutableArray *detailOfHomePageArray, NSError *error) {
-        //第一张图片为首页点击的图片，剩下的图片为回复图片
+    [manager fetchAllReply:param ID:_pageVM.ID withBlock:^(NSMutableArray *askArray, NSMutableArray *replyArray) {
         _dataSource = nil;
         _dataSource = [NSMutableArray array];
         [_dataSource addObject:_pageVM];
-        for (PIEPageEntity *entity in detailOfHomePageArray) {
+        for (PIEPageEntity *entity in askArray) {
+            DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+            [_dataSource addObject:vm];
+        }
+        for (PIEPageEntity *entity in replyArray) {
             DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
             [_dataSource addObject:vm];
         }
         [self updateUIWithIndex:0];
+        [self updateSegmentTitles];
         [_carousel reloadData];
     }];
 }
+- (void)updateSegmentTitles {
+    WS(ws);
+    NSMutableArray* segmentDescArray = [NSMutableArray new];
+    for (int i = 1; i<= _pageVM.askImageModelArray.count; i++) {
+        NSString* desc = [NSString stringWithFormat:@"原图%d",i];
+        [segmentDescArray addObject:desc];
+    }
+    for (int i = 1; i<= _dataSource.count; i++) {
+        NSString* desc = [NSString stringWithFormat:@"P%d",i];
+        [segmentDescArray addObject:desc];
+    }
+    self.segmentedControl.sectionTitles = segmentDescArray;
+    _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+    [self.segmentedControl setIndexChangeBlock:^(NSInteger index) {
+        [ws.carousel scrollToItemAtIndex:index animated:YES];
+    }];
+    [self.segmentedControl setNeedsDisplay];
+}
+
+- (HMSegmentedControl*)segmentedControl {
+    if (!_segmentedControl) {
+    
+        _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"正在加载..."]];
+        _segmentedControl.frame = CGRectMake(0, 120, SCREEN_WIDTH, 45);
+        _segmentedControl.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor darkGrayColor], NSForegroundColorAttributeName, nil];
+        _segmentedControl.selectedTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil];
+        _segmentedControl.selectionIndicatorHeight = 4.0f;
+        _segmentedControl.selectionIndicatorEdgeInsets = UIEdgeInsetsMake(0, 0, -5, 0);
+        _segmentedControl.selectionIndicatorColor = [UIColor yellowColor];
+        _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationNone;
+        _segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
+        _segmentedControl.backgroundColor = [UIColor clearColor];
+
+    }
+    return _segmentedControl;
+}
+
 @end

@@ -362,7 +362,8 @@
     if (height > (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/1.3) {
         height = (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/1.3;
     }
-    return CGSizeMake(width, height);}
+    return CGSizeMake(width, height);
+}
 
 #pragma mark - getRemoteSourceMyAsk
 

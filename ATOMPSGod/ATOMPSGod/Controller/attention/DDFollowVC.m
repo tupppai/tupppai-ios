@@ -19,7 +19,7 @@
 #import "ATOMNoDataView.h"
 #import "RefreshTableView.h"
 #import "DDCommentPageVM.h"
-#import "ATOMShareFunctionView.h"
+#import "PIEShareFunctionView.h"
 #import "AppDelegate.h"
 #import "JGActionSheet.h"
 #import "ATOMReportModel.h"
@@ -38,7 +38,7 @@
 @property (nonatomic, strong) RefreshTableView *tableView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) UITapGestureRecognizer *tapMyAttentionGesture;
-@property (nonatomic, strong) ATOMShareFunctionView *shareFunctionView;
+@property (nonatomic, strong) PIEShareFunctionView *shareFunctionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) NSInteger canRefreshFooter;
@@ -244,9 +244,9 @@ static NSString *CellIdentifier = @"MyAttentionCell";
 
 
 #pragma mark - Lazy Initialize
-- (ATOMShareFunctionView *)shareFunctionView {
+- (PIEShareFunctionView *)shareFunctionView {
     if (!_shareFunctionView) {
-        _shareFunctionView = [ATOMShareFunctionView new];
+        _shareFunctionView = [PIEShareFunctionView new];
         _shareFunctionView.delegate = self;
     }
     return _shareFunctionView;

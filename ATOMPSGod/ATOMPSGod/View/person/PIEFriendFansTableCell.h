@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @class ATOMFansViewModel;
 
-@interface DDFansTableCell : UITableViewCell
+@interface PIEFriendFansTableCell : UITableViewCell
 
 @property (nonatomic, strong) UIButton *userHeaderButton;
 @property (nonatomic, strong) UILabel *userNameLabel;

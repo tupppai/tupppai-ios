@@ -43,12 +43,19 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self customNavigationBar];
+    [self setupViews];
+}
+
+- (void)customNavigationBar {
     UIButton* itemView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 48, 22)];
     [itemView setBackgroundImage:[UIImage imageNamed:@"pie_publish"] forState:UIControlStateNormal];  ;
     itemView.contentMode = UIViewContentModeScaleAspectFit;
     [itemView addTarget:self action:@selector(tapNext)forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithCustomView:itemView];
     self.navigationItem.rightBarButtonItem = item;
+}
+- (void)setupViews {
     if (_type == PIEUploadTypeReply) {
         _inputTextView.placeholder = @"输入作品的亮点";
     }
@@ -65,7 +72,7 @@
     } else if (_assetsArray.count == 2) {
         _leftImageView.image = [Util getImageFromAsset:[_assetsArray objectAtIndex:0] type:ASSET_PHOTO_SCREEN_SIZE];
         _rightImageView.image = [Util getImageFromAsset:[_assetsArray objectAtIndex:1] type:ASSET_PHOTO_SCREEN_SIZE];
-         _imageArray = [NSArray arrayWithObjects:_leftImageView.image,_rightImageView.image,nil];
+        _imageArray = [NSArray arrayWithObjects:_leftImageView.image,_rightImageView.image,nil];
     }
     
     if (_hideSecondView) {
@@ -73,7 +80,6 @@
     }
 }
 -(void) iWantSelecteMorePhoto {
-    NSLog(@"iWantSelecteMoreOPhoto");
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void) tapNext {
@@ -162,18 +168,25 @@
 }
 
 - (void)uploadAskRestInfo:(void (^) (BOOL success))block {
-    
     NSArray* uploadIds;
+    NSArray* ratios;
     if (_assetsArray.count == 2) {
         uploadIds = [NSArray arrayWithObjects:@(_imageInfo1.imageID),@(_imageInfo2.imageID), nil];
+        UIImage* image1 = _imageArray[0];
+        UIImage* image2 = _imageArray[1];
+        CGFloat ratio1 = image1.size.height/image1.size.width;
+        CGFloat ratio2 = image2.size.height/image2.size.width;
+        ratios = [NSArray arrayWithObjects:@(ratio1),@(ratio2), nil];
     } else {
         uploadIds = [NSArray arrayWithObjects:@(_imageInfo1.imageID), nil];
+        UIImage* image1 = _imageArray[0];
+        CGFloat ratio1 = image1.size.height/image1.size.width;
+        ratios = [NSArray arrayWithObjects:@(ratio1), nil];
     }
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:uploadIds forKey:@"upload_ids"];
+    [param setObject:ratios forKey:@"ratios"];
     [param setObject:_inputTextView.text forKey:@"desc"];
-
-    
     [DDService ddSaveAsk:param withBlock:^(NSInteger newImageID) {
         [Hud dismiss:self.view];
         [Hud dismiss];
@@ -202,19 +215,20 @@
 }
 
 - (void)uploadReplyRestInfo:(void (^) (BOOL success))block {
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    [param setObject:@(_imageInfo1.imageID) forKey:@"upload_id"];
-//    [param setObject:@(scale) forKey:@"scale"];
-//    [param setObject:@(ratio) forKey:@"ratio"];
-    [param setObject:@(_askIDToReply) forKey:@"ask_id"];
     
+    UIImage* image1 = _imageArray[0];
+    CGFloat ratio1 = image1.size.height/image1.size.width;
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    [param setObject:@(ratio1) forKey:@"ratio"];
+    [param setObject:@(_imageInfo1.imageID) forKey:@"upload_id"];
+    [param setObject:@(_askIDToReply) forKey:@"ask_id"];
     [DDService ddSaveReply:param withBlock:^(BOOL success) {
         [Hud dismiss:self.view];
         [Hud dismiss];
         if (success) {
             [Hud success:@"提交作品成功"];
-//            [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:@"shouldNavToHotSegment"];
-//            [[NSUserDefaults standardUserDefaults] synchronize];
+            [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:@"shouldNavToHotSegment"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
             if  (block) {
                 block(YES);
             }
@@ -231,9 +245,7 @@
     [self.navigationController popToRootViewControllerAnimated:NO];
 }
 - (void)dismissToHome {
-    
     [self popToAlbumViewController];
-    
     DDTabBarController *lvc = [AppDelegate APP].mainTabBarController;
     [lvc dismissViewControllerAnimated:NO completion:nil];
 }
@@ -246,14 +258,6 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.barTintColor =[UIColor darkGrayColor];
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
--(void)textViewDidChange:(UITextView *)textView {
-    NSLog(@"textViewDidChange");
-}
 
 -(void)textViewDidChangeSelection:(UITextView *)textView {
     if (textView.text.length > 18) {
@@ -262,11 +266,6 @@
     }
     _wordLimitLabel.text = [NSString stringWithFormat:@"%zd/18",_inputTextView.text.length];
 }
--(void)textViewDidBeginEditing:(UITextView *)textView {
-    NSLog(@"textViewDidBeginEditing");
-}
--(void)textViewDidEndEditing:(UITextView *)textView {
-    NSLog(@"textViewDidEndEditing");
-}
+
 
 @end

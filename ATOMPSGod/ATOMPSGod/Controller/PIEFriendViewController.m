@@ -12,6 +12,9 @@
 #import "CAPSPageMenu.h"
 #import "PIEFriendReplyViewController.h"
 #import "PIEFriendAskViewController.h"
+#import "PIEFriendFollowingViewController.h"
+#import "PIEFriendFansViewController.h"
+
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 @interface PIEFriendViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
@@ -32,33 +35,76 @@
 
 @implementation PIEFriendViewController
 
+
+-(void)awakeFromNib {
+    NSLog(@"PIEFriendViewController awakeFromNib");
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    [self setupViews];
     [self getDataSource];
     [self setupPageMenu];
-    
-    _followButton.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tapG1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(follow)];
-    [_followButton addGestureRecognizer:tapG1];
+    [self setupTapGesture];
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
-- (void)updateUserInterface:(ATOMUser*)user {
+- (void)setupViews {
+    self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
+    _avatarView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
+}
+- (void)setupTapGesture {
+    _followButton.userInteractionEnabled = YES;
+    _followCountLabel.userInteractionEnabled = YES;
+    _followDescLabel.userInteractionEnabled = YES;
+    _fansCountLabel.userInteractionEnabled = YES;
+    _fansDescLabel.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapG1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(follow)];
+    [_followButton addGestureRecognizer:tapG1];
+    UITapGestureRecognizer *tapG2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToFollowingVC)];
+    UITapGestureRecognizer *tapG22 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToFollowingVC)];
+    
+    [_followCountLabel addGestureRecognizer:tapG2];
+    [_followDescLabel addGestureRecognizer:tapG22];
+    UITapGestureRecognizer *tapG3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToFansVC)];
+    UITapGestureRecognizer *tapG33 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToFansVC)];
+    [_fansCountLabel addGestureRecognizer:tapG3];
+    [_fansDescLabel addGestureRecognizer:tapG33];
+}
+- (void)pushToFollowingVC {
+    PIEFriendFollowingViewController *opvcv = [PIEFriendFollowingViewController new];
+    opvcv.uid = _pageVM.userID;
+    opvcv.userName = _pageVM.username;
+    [self pushViewController:opvcv animated:YES];
+
+}
+- (void)pushToFansVC {
+    PIEFriendFansViewController *mfvc = [PIEFriendFansViewController new];
+    mfvc.uid = _pageVM.userID;
+    mfvc.userName = _pageVM.username;
+    [self pushViewController:mfvc animated:YES];
+}
+
+
+- (void)follow {
+    _followButton.highlighted = !_followButton.highlighted;
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    [param setObject:@(_pageVM.userID) forKey:@"uid"];
+    [DDService follow:param withBlock:^(BOOL success) {
+        if (!success) {
+            _followButton.highlighted = !_followButton.highlighted;
+        } else {
+        }
+    }];
+}
+- (void)updateUserInterface:(ATOMUser*)user {
     [_avatarView setImageWithURL:[NSURL URLWithString:user.avatar]];
     _followCountLabel.text = [NSString stringWithFormat:@"%zd",user.attentionNumber];
     _fansCountLabel.text = [NSString stringWithFormat:@"%zd",user.fansNumber];
     _likedCountLabel.text = [NSString stringWithFormat:@"%zd",user.likeNumber];
+    _followButton.highlighted = user.isMyFollow;
 }
-
 
 - (void)setupPageMenu {
     NSMutableArray *controllerArray = [NSMutableArray array];

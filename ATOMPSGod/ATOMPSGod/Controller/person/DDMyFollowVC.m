@@ -7,7 +7,7 @@
 //
 
 #import "DDMyFollowVC.h"
-#import "DDFollowTableCell.h"
+#import "PIEFriendFollowingTableCell.h"
 #import "DDCommentHeaderView.h"
 #import "ATOMMyConcernTableFooterView.h"
 #import "ATOMOtherPersonViewController.h"
@@ -146,7 +146,7 @@
     NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:location];
     if (indexPath) {
         ATOMConcernViewModel *model = (indexPath.section == 0) ? _recommendDataSource[indexPath.row] : _myDataSource[indexPath.row];
-        DDFollowTableCell *cell = (DDFollowTableCell *)[_tableView cellForRowAtIndexPath:indexPath];
+        PIEFriendFollowingTableCell *cell = (PIEFriendFollowingTableCell *)[_tableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
             if (CGRectContainsPoint(cell.attentionButton.frame, p)) {
                 cell.attentionButton.selected = !cell.attentionButton.selected;
@@ -215,9 +215,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"MyConcernCell";
-    DDFollowTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    PIEFriendFollowingTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
-        cell = [[DDFollowTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[PIEFriendFollowingTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     if (indexPath.section == 0) {
         cell.viewModel = _recommendDataSource[indexPath.row];

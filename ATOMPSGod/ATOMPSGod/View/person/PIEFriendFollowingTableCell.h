@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @class ATOMConcernViewModel;
 
-@interface DDFollowTableCell : UITableViewCell
+@interface PIEFriendFollowingTableCell : UITableViewCell
 
 @property (nonatomic, strong) UIButton *userHeaderButton;
 @property (nonatomic, strong) UILabel *userNameLabel;

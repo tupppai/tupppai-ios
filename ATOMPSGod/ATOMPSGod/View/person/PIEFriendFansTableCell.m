@@ -6,16 +6,16 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "DDFansTableCell.h"
+#import "PIEFriendFansTableCell.h"
 #import "ATOMFansViewModel.h"
 
-@interface DDFansTableCell ()
+@interface PIEFriendFansTableCell ()
 
 @property (nonatomic, strong) UIView *dotView1;
 @property (nonatomic, strong) UIView *dotView2;
 
 @end
-@implementation DDFansTableCell
+@implementation PIEFriendFansTableCell
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
@@ -77,7 +77,7 @@
         make.centerY.equalTo(_fansNumberLabel);
     }];
     [self.attentionButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.equalTo(@(33));
+        make.width.equalTo(@(43));
         make.height.equalTo(@(27));
         make.right.equalTo(self.contentView).with.offset(-kPadding15);
         make.centerY.equalTo(self.contentView);

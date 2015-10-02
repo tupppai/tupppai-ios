@@ -49,7 +49,7 @@ static NSString *CellIdentifier = @"PIEReplyTableCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_table == tableView) {
         PIEReplyTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        [cell configCell:_source[indexPath.row] row:indexPath.row];
+        [cell injectSauce:_source[indexPath.row]];
         return cell;
     }
     else {
@@ -62,7 +62,7 @@ static NSString *CellIdentifier = @"PIEReplyTableCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_table == tableView) {
         return [tableView fd_heightForCellWithIdentifier:CellIdentifier  cacheByIndexPath:indexPath configuration:^(PIEReplyTableCell *cell) {
-            [cell configCell:_source[indexPath.row] row:indexPath.row];
+            [cell injectSauce:_source[indexPath.row]];
         }];
     } else {
         return 0;

@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMShareFunctionView.h"
+#import "PIEShareFunctionView.h"
 
-@interface ATOMShareFunctionView ()
+@interface PIEShareFunctionView ()
 @property (nonatomic, strong) UIButton *cancelButton;
 @property (nonatomic, strong) UILabel *wxFriendCircleLabel;
 @property (nonatomic, strong) UILabel *wxLabel;
@@ -21,7 +21,7 @@
 @property (nonatomic, strong) UILabel *collectLabel;
 @end
 
-@implementation ATOMShareFunctionView
+@implementation PIEShareFunctionView
 
 static CGFloat BOTTOMHEIGHT = 300;
 
@@ -29,7 +29,6 @@ static CGFloat BOTTOMHEIGHT = 300;
     self = [super init];
     if (self) {
         self.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-//        self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.8];
         self.hidden = true;
         [self createSubView];
         [self configClickEvent];
@@ -39,7 +38,6 @@ static CGFloat BOTTOMHEIGHT = 300;
 - (void)createSubView {
     CGFloat labelWidth = kShareButtonWidth + kPadding10 * 2;
     CGFloat labelHeight = 30;
-    
     _bottomView = [[UIView alloc] initWithFrame:CGRectMake(kPadding5, CGRectGetMaxY(self.frame), SCREEN_WIDTH - 2 * kPadding5, BOTTOMHEIGHT)];
     _bottomView.layer.cornerRadius = 6;
     _bottomView.backgroundColor = [UIColor whiteColor];
@@ -60,13 +58,13 @@ static CGFloat BOTTOMHEIGHT = 300;
     [_bottomView addSubview:_sinaWeiboButton];
     
     _wxLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_wxButton.frame) - kPadding10, CGRectGetMaxY(_wxButton.frame), labelWidth, labelHeight)];
-    [self configCommonLabel:_wxLabel WithText:@"微信好友" AndTextColor:[UIColor colorWithHex:0xacb8c1]];
+    [self addLabelToBottomView:_wxLabel WithText:@"微信好友" AndTextColor:[UIColor colorWithHex:0xacb8c1]];
     
     _wxFriendCircleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_wxFriendCircleButton.frame) - kPadding10, CGRectGetMaxY(_wxFriendCircleButton.frame), labelWidth, labelHeight)];
-    [self configCommonLabel:_wxFriendCircleLabel WithText:@"微信朋友圈" AndTextColor:[UIColor colorWithHex:0xacb8c1]];
+    [self addLabelToBottomView:_wxFriendCircleLabel WithText:@"微信朋友圈" AndTextColor:[UIColor colorWithHex:0xacb8c1]];
     
     _sinaWeiboLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_sinaWeiboButton.frame) - kPadding10, CGRectGetMaxY(_sinaWeiboButton.frame), labelWidth, labelHeight)];
-    [self configCommonLabel:_sinaWeiboLabel WithText:@"新浪微博" AndTextColor:[UIColor colorWithHex:0xacb8c1]];
+    [self addLabelToBottomView:_sinaWeiboLabel WithText:@"新浪微博" AndTextColor:[UIColor colorWithHex:0xacb8c1]];
     
     _lineView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_wxFriendCircleLabel.frame) + kPadding5, CGWidth(_bottomView.frame), 0.5)];
     _lineView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2];
@@ -88,13 +86,13 @@ static CGFloat BOTTOMHEIGHT = 300;
     [_bottomView addSubview:_reportButton];
     
     _inviteLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_inviteButton.frame) - kPadding10, CGRectGetMaxY(_inviteButton.frame), labelWidth, labelHeight)];
-    [self configCommonLabel:_inviteLabel WithText:@"邀请" AndTextColor:[UIColor colorWithHex:0xacb8c1]];
+    [self addLabelToBottomView:_inviteLabel WithText:@"邀请" AndTextColor:[UIColor colorWithHex:0xacb8c1]];
     
     _collectLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_collectButton.frame) - kPadding10, CGRectGetMaxY(_collectButton.frame), labelWidth, labelHeight)];
-    [self configCommonLabel:_collectLabel WithText:@"收藏" AndTextColor:[UIColor colorWithHex:0xacb8c1]];
+    [self addLabelToBottomView:_collectLabel WithText:@"收藏" AndTextColor:[UIColor colorWithHex:0xacb8c1]];
     
     _reportLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_reportButton.frame) - kPadding10, CGRectGetMaxY(_reportButton.frame), labelWidth, labelHeight)];
-    [self configCommonLabel:_reportLabel WithText:@"举报" AndTextColor:[UIColor colorWithHex:0xacb8c1]];
+    [self addLabelToBottomView:_reportLabel WithText:@"举报" AndTextColor:[UIColor colorWithHex:0xacb8c1]];
     
     _cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(20, CGHeight(_bottomView.frame) - 17 - 43, CGWidth(_bottomView.frame) - 20 * 2, 50)];
     _cancelButton.backgroundColor = [UIColor colorWithHex:0xbdc7ce];
@@ -158,7 +156,7 @@ static CGFloat BOTTOMHEIGHT = 300;
     }
 }
 
-- (void)configCommonLabel:(UILabel *)label WithText:(NSString *)text AndTextColor:(UIColor *)textColor {
+- (void)addLabelToBottomView:(UILabel *)label WithText:(NSString *)text AndTextColor:(UIColor *)textColor {
     label.text = text;
     label.textColor = textColor;
     label.textAlignment = NSTextAlignmentCenter;
@@ -175,7 +173,7 @@ static CGFloat BOTTOMHEIGHT = 300;
 }
 -(void)show {
     self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.8];
-    [UIView animateWithDuration:0.35 animations:^{
+    [UIView animateWithDuration:0.2 animations:^{
         self.hidden = false;
         _bottomView.frame = CGRectMake(kPadding5, CGRectGetMaxY(self.frame)-BOTTOMHEIGHT, SCREEN_WIDTH - 2 * kPadding5, BOTTOMHEIGHT);
     } completion:^(BOOL finished) {
@@ -185,8 +183,8 @@ static CGFloat BOTTOMHEIGHT = 300;
 - (void)showInView:(UIView *)view animated:(BOOL)animated {
     self.frame = view.bounds;
     [view addSubview:self];
-    self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.8];
-    [UIView animateWithDuration:0.35 animations:^{
+    self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.4];
+    [UIView animateWithDuration:0.2 animations:^{
         self.hidden = false;
         _bottomView.frame = CGRectMake(kPadding5, CGRectGetMaxY(self.frame)-BOTTOMHEIGHT, SCREEN_WIDTH - 2 * kPadding5, BOTTOMHEIGHT);
     } completion:^(BOOL finished) {

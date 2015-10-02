@@ -36,29 +36,36 @@
 ////    return _commentDAO;
 ////}
 //
-- (NSURLSessionDataTask *)fetchAllReply:(NSDictionary *)param ID:(NSInteger)replyID withBlock:(void (^)(NSMutableArray *, NSError *))block {
+- (NSURLSessionDataTask *)fetchAllReply:(NSDictionary *)param ID:(NSInteger)replyID withBlock:(void (^)(NSMutableArray *askArrayRET, NSMutableArray *replyArrayRET))block {
     return [[DDSessionManager shareHTTPSessionManager] GET:[NSString stringWithFormat:@"ask/show/%zd",replyID] parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         if ([ responseObject objectForKey:@"data"]) {
-            NSMutableArray *returnArray = [NSMutableArray array];
+            NSMutableArray *askRETArray = [NSMutableArray array];
+            NSLog(@"askRETArray%@",askRETArray);
+            NSMutableArray *replyRETArray = [NSMutableArray array];
+
             NSArray *replyArray = [[responseObject objectForKey:@"data"] objectForKey:@"replies"];
+            NSArray *askArray = [[responseObject objectForKey:@"data"] objectForKey:@"ask"];
+            
+            for (int i = 0; i < askArray.count; i++) {
+4                [askRETArray addObject:entity];
+            }
+
             for (int i = 0; i < replyArray.count; i++) {
-                PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:replyArray[i] error:NULL];
-                NSLog(@"entity ID %zd",entity.ID);
-                [returnArray addObject:entity];
+                PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:[replyArray objectAtIndex:i] error:NULL];
+                [replyRETArray addObject:entity];
             }
             if (block) {
-                block(returnArray, nil);
+                block(askRETArray, replyRETArray);
             }
         } else {
-            
             if (block) {
                 block(nil, nil);
             }
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
+
         if (block) {
-            block(nil, error);
+            block(nil, nil);
         }
     }];
 }

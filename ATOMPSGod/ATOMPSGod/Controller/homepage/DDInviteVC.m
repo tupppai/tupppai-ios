@@ -56,7 +56,7 @@
     self.navigationItem.leftBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:[[UIView alloc] initWithFrame:CGRectZero]]];
 //    if (_showNext) {
         UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
-        rightButtonItem.tintColor = [UIColor whiteColor];
+        rightButtonItem.tintColor = [UIColor blackColor];
         self.navigationItem.rightBarButtonItem = rightButtonItem;
 //    }
     _inviteView = [ATOMInviteView new];
