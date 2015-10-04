@@ -10,8 +10,8 @@
 #import "DDOtherUserManager.h"
 #import "ATOMUser.h"
 #import "CAPSPageMenu.h"
-#import "PIEFriendReplyViewController.h"
 #import "PIEFriendAskViewController.h"
+#import "PIEFriendReplyViewController.h"
 #import "PIEFriendFollowingViewController.h"
 #import "PIEFriendFansViewController.h"
 
@@ -108,15 +108,18 @@
 
 - (void)setupPageMenu {
     NSMutableArray *controllerArray = [NSMutableArray array];
-    PIEFriendReplyViewController *controller = [PIEFriendReplyViewController new];
-    controller.pageVM = _pageVM;
-    controller.title = @"作品";
-    [controllerArray addObject:controller];
     
-    PIEFriendAskViewController *controller2 = [PIEFriendAskViewController new];
-    controller2.title = @"ta的求P";
+    PIEFriendReplyViewController *controller2 = [PIEFriendReplyViewController new];
+    controller2.title = @"作品";
     controller2.pageVM = _pageVM;
     [controllerArray addObject:controller2];
+    
+    PIEFriendAskViewController *controller = [PIEFriendAskViewController new];
+    controller.pageVM = _pageVM;
+    controller.title = @"ta的求P";
+    [controllerArray addObject:controller];
+    
+
     
     NSDictionary *parameters = @{
                                  CAPSPageMenuOptionScrollMenuBackgroundColor: [UIColor whiteColor],

@@ -454,11 +454,12 @@
 		F47205581BABFDFF00E0ADA0 /* PIEDoneCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F47205561BABFDFF00E0ADA0 /* PIEDoneCollectionViewCell.xib */; };
 		F472055C1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F472055A1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.m */; };
 		F472055D1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F472055B1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.xib */; };
+		F4AE609B1BC129ED007BCA2A /* PIEFriendReplyCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE609A1BC129ED007BCA2A /* PIEFriendReplyCollectionViewCell.m */; settings = {ASSET_TAGS = (); }; };
 		F4AE73BD1BBA770000734BCB /* PIEFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE73BB1BBA770000734BCB /* PIEFriendViewController.m */; settings = {ASSET_TAGS = (); }; };
 		F4AE73BE1BBA770000734BCB /* PIEFriendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4AE73BC1BBA770000734BCB /* PIEFriendViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		F4AE73C01BBA8B7A00734BCB /* cellBG.png in Resources */ = {isa = PBXBuildFile; fileRef = F4AE73BF1BBA8B7A00734BCB /* cellBG.png */; settings = {ASSET_TAGS = (); }; };
-		F4AE73C31BBA90D800734BCB /* PIEFriendReplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE73C21BBA90D800734BCB /* PIEFriendReplyViewController.m */; settings = {ASSET_TAGS = (); }; };
-		F4AE73C61BBA988900734BCB /* PIEFriendAskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE73C51BBA988900734BCB /* PIEFriendAskViewController.m */; settings = {ASSET_TAGS = (); }; };
+		F4AE73C31BBA90D800734BCB /* PIEFriendAskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE73C21BBA90D800734BCB /* PIEFriendAskViewController.m */; settings = {ASSET_TAGS = (); }; };
+		F4AE73C61BBA988900734BCB /* PIEFriendReplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE73C51BBA988900734BCB /* PIEFriendReplyViewController.m */; settings = {ASSET_TAGS = (); }; };
 		F4BBE7721BBE3F9D00003CDE /* PIEReplyCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE7701BBE3F9D00003CDE /* PIEReplyCollectionViewController.m */; settings = {ASSET_TAGS = (); }; };
 		F4BBE77C1BBE420400003CDE /* PIEReplyCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE77A1BBE420400003CDE /* PIEReplyCollectionCell.m */; settings = {ASSET_TAGS = (); }; };
 		F4D015BB1BA6AF7200A28329 /* PIEThumbAnimateView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D015BA1BA6AF7200A28329 /* PIEThumbAnimateView.m */; };
@@ -469,6 +470,8 @@
 		F4D368731BA9552B00E6C91C /* PIEAskCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4D368711BA9552B00E6C91C /* PIEAskCollectionCell.xib */; };
 		F4D368771BA9629800E6C91C /* CHTCollectionViewWaterfallLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D368761BA9629800E6C91C /* CHTCollectionViewWaterfallLayout.m */; };
 		F4D9F6CF1BBFDDE10023A53B /* PIEBangView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D9F6CE1BBFDDE10023A53B /* PIEBangView.m */; settings = {ASSET_TAGS = (); }; };
+		F4DC3D3F1BC131BA00DCF72F /* PIEFriendAskTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DC3D3D1BC131BA00DCF72F /* PIEFriendAskTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		F4DC3D401BC131BA00DCF72F /* PIEFriendAskTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4DC3D3E1BC131BA00DCF72F /* PIEFriendAskTableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
 		F4FABAFD1BAA593C00F47064 /* PIERefreshCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4FABAFC1BAA593C00F47064 /* PIERefreshCollectionView.m */; };
 /* End PBXBuildFile section */
 
@@ -1367,14 +1370,16 @@
 		F47205591BAC031B00E0ADA0 /* PIEToHelpTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEToHelpTableViewCell.h; sourceTree = "<group>"; };
 		F472055A1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEToHelpTableViewCell.m; sourceTree = "<group>"; };
 		F472055B1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEToHelpTableViewCell.xib; sourceTree = "<group>"; };
+		F4AE60991BC129ED007BCA2A /* PIEFriendReplyCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEFriendReplyCollectionViewCell.h; sourceTree = "<group>"; };
+		F4AE609A1BC129ED007BCA2A /* PIEFriendReplyCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEFriendReplyCollectionViewCell.m; sourceTree = "<group>"; };
 		F4AE73BA1BBA770000734BCB /* PIEFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEFriendViewController.h; sourceTree = "<group>"; };
 		F4AE73BB1BBA770000734BCB /* PIEFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEFriendViewController.m; sourceTree = "<group>"; };
 		F4AE73BC1BBA770000734BCB /* PIEFriendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEFriendViewController.xib; sourceTree = "<group>"; };
 		F4AE73BF1BBA8B7A00734BCB /* cellBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cellBG.png; sourceTree = "<group>"; };
-		F4AE73C11BBA90D800734BCB /* PIEFriendReplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEFriendReplyViewController.h; sourceTree = "<group>"; };
-		F4AE73C21BBA90D800734BCB /* PIEFriendReplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEFriendReplyViewController.m; sourceTree = "<group>"; };
-		F4AE73C41BBA988900734BCB /* PIEFriendAskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEFriendAskViewController.h; sourceTree = "<group>"; };
-		F4AE73C51BBA988900734BCB /* PIEFriendAskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEFriendAskViewController.m; sourceTree = "<group>"; };
+		F4AE73C11BBA90D800734BCB /* PIEFriendAskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEFriendAskViewController.h; sourceTree = "<group>"; };
+		F4AE73C21BBA90D800734BCB /* PIEFriendAskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEFriendAskViewController.m; sourceTree = "<group>"; };
+		F4AE73C41BBA988900734BCB /* PIEFriendReplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEFriendReplyViewController.h; sourceTree = "<group>"; };
+		F4AE73C51BBA988900734BCB /* PIEFriendReplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEFriendReplyViewController.m; sourceTree = "<group>"; };
 		F4BBE76F1BBE3F9D00003CDE /* PIEReplyCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEReplyCollectionViewController.h; sourceTree = "<group>"; };
 		F4BBE7701BBE3F9D00003CDE /* PIEReplyCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEReplyCollectionViewController.m; sourceTree = "<group>"; };
 		F4BBE7791BBE420400003CDE /* PIEReplyCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEReplyCollectionCell.h; sourceTree = "<group>"; };
@@ -1393,6 +1398,9 @@
 		F4D368761BA9629800E6C91C /* CHTCollectionViewWaterfallLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHTCollectionViewWaterfallLayout.m; sourceTree = "<group>"; };
 		F4D9F6CD1BBFDDE10023A53B /* PIEBangView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEBangView.h; sourceTree = "<group>"; };
 		F4D9F6CE1BBFDDE10023A53B /* PIEBangView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEBangView.m; sourceTree = "<group>"; };
+		F4DC3D3C1BC131BA00DCF72F /* PIEFriendAskTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEFriendAskTableViewCell.h; sourceTree = "<group>"; };
+		F4DC3D3D1BC131BA00DCF72F /* PIEFriendAskTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEFriendAskTableViewCell.m; sourceTree = "<group>"; };
+		F4DC3D3E1BC131BA00DCF72F /* PIEFriendAskTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEFriendAskTableViewCell.xib; sourceTree = "<group>"; };
 		F4FABAFB1BAA593C00F47064 /* PIERefreshCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIERefreshCollectionView.h; sourceTree = "<group>"; };
 		F4FABAFC1BAA593C00F47064 /* PIERefreshCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIERefreshCollectionView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -3305,10 +3313,15 @@
 				F4AE73BA1BBA770000734BCB /* PIEFriendViewController.h */,
 				F4AE73BB1BBA770000734BCB /* PIEFriendViewController.m */,
 				F4AE73BC1BBA770000734BCB /* PIEFriendViewController.xib */,
-				F4AE73C11BBA90D800734BCB /* PIEFriendReplyViewController.h */,
-				F4AE73C21BBA90D800734BCB /* PIEFriendReplyViewController.m */,
-				F4AE73C41BBA988900734BCB /* PIEFriendAskViewController.h */,
-				F4AE73C51BBA988900734BCB /* PIEFriendAskViewController.m */,
+				F4AE73C11BBA90D800734BCB /* PIEFriendAskViewController.h */,
+				F4AE73C21BBA90D800734BCB /* PIEFriendAskViewController.m */,
+				F4AE73C41BBA988900734BCB /* PIEFriendReplyViewController.h */,
+				F4AE73C51BBA988900734BCB /* PIEFriendReplyViewController.m */,
+				F4DC3D3C1BC131BA00DCF72F /* PIEFriendAskTableViewCell.h */,
+				F4DC3D3D1BC131BA00DCF72F /* PIEFriendAskTableViewCell.m */,
+				F4DC3D3E1BC131BA00DCF72F /* PIEFriendAskTableViewCell.xib */,
+				F4AE60991BC129ED007BCA2A /* PIEFriendReplyCollectionViewCell.h */,
+				F4AE609A1BC129ED007BCA2A /* PIEFriendReplyCollectionViewCell.m */,
 			);
 			name = friend;
 			sourceTree = "<group>";
@@ -3521,6 +3534,7 @@
 				E900AB5B1B450E970019BAEA /* Images.xcassets in Resources */,
 				5C7861311AAF4DD200E87C77 /* bg_main@2x.png in Resources */,
 				F4310B0F1BB78D16007F8FF5 /* PIESignUpProfileViewController.xib in Resources */,
+				F4DC3D401BC131BA00DCF72F /* PIEFriendAskTableViewCell.xib in Resources */,
 				F4AE73BE1BBA770000734BCB /* PIEFriendViewController.xib in Resources */,
 				5C9BDA4C1AA85E5600715698 /* box-shadow.png in Resources */,
 				E94289841B5B32A200ED26E4 /* TSMessagesDefaultDesign.json in Resources */,
@@ -3615,6 +3629,7 @@
 				5C436A841AB03BF100D14608 /* DDMsgCommentVC.m in Sources */,
 				5C54DF2D1AB99F5300BDE34D /* DDTipLabelManager.m in Sources */,
 				5CDB06031AA405A40089121E /* UIColor+Hex.m in Sources */,
+				F4AE609B1BC129ED007BCA2A /* PIEFriendReplyCollectionViewCell.m in Sources */,
 				E900AB4D1B41153A0019BAEA /* UIImageView+AFNetworking.m in Sources */,
 				5C5DDBD41AD4087800F4B845 /* ATOMProceedingViewModel.m in Sources */,
 				E94B03231B7C74E500863C6F /* DDCommentVC.m in Sources */,
@@ -3692,6 +3707,7 @@
 				5C589A8A1B04F2AC003D828A /* ATOMCameraView.m in Sources */,
 				5C83A8911AC66F910071A024 /* POPGeometry.mm in Sources */,
 				E99C51101B85A2A6004CA47B /* UIApplication+JTSImageViewController.m in Sources */,
+				F4DC3D3F1BC131BA00DCF72F /* PIEFriendAskTableViewCell.m in Sources */,
 				E901973E1B33F60500F46B78 /* PWRefreshFooterCollectionView.m in Sources */,
 				5C436A9C1AB07E5C00D14608 /* DDMsgPostReplyVC.m in Sources */,
 				F40207411BA7C4160007CE02 /* VVBlurPresenter.m in Sources */,
@@ -3746,13 +3762,13 @@
 				E9F8908F1B86C4AB0057ECBF /* FMDatabaseAdditions.m in Sources */,
 				5C559B3A1AB138C3000C5B50 /* ATOMInviteView.m in Sources */,
 				E900AB4A1B41153A0019BAEA /* UIActivityIndicatorView+AFNetworking.m in Sources */,
-				F4AE73C31BBA90D800734BCB /* PIEFriendReplyViewController.m in Sources */,
+				F4AE73C31BBA90D800734BCB /* PIEFriendAskViewController.m in Sources */,
 				F40207421BA7C4160007CE02 /* VVBlurTransitioning.m in Sources */,
 				5CDB06041AA405A40089121E /* UIColor+HSB.m in Sources */,
 				5C561A7F1AB7CAA90052D4D5 /* ATOMCreateTable.m in Sources */,
 				5C4AE3EF1AAED6520020E102 /* PIEFriendFansTableCell.m in Sources */,
 				5C9BD9F41AA82F3500715698 /* ATOMOriginCropperView.m in Sources */,
-				F4AE73C61BBA988900734BCB /* PIEFriendAskViewController.m in Sources */,
+				F4AE73C61BBA988900734BCB /* PIEFriendReplyViewController.m in Sources */,
 				E93D23811B3D065C0081F632 /* ATOMShare.m in Sources */,
 				5C535CB61AF1FC8A00BF30D1 /* ATOMNoDataView.m in Sources */,
 				F4D07A5D1BBA3AB70016A8B5 /* PIEEliteManager.m in Sources */,

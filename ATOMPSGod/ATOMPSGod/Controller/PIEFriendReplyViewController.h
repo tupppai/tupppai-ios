@@ -1,5 +1,5 @@
 //
-//  PIEFriendReplyViewController.h
+//  PIEFriendAskViewController.h
 //  TUPAI
 //
 //  Created by chenpeiwei on 9/29/15.

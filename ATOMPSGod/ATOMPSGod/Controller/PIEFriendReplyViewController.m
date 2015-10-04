@@ -1,5 +1,5 @@
 //
-//  PIEFriendReplyViewController.m
+//  PIEFriendAskViewController.m
 //  TUPAI
 //
 //  Created by chenpeiwei on 9/29/15.
@@ -8,78 +8,53 @@
 
 #import "PIEFriendReplyViewController.h"
 #import "DDOtherUserManager.h"
-#import "RefreshTableView.h"
-#import "UITableView+FDTemplateLayoutCell.h"
-#import "PIEReplyTableCell.h"
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
-static NSString *CellIdentifier = @"PIEReplyTableCell";
+#import "PIEFriendReplyCollectionViewCell.h"
+#import "PIERefreshCollectionView.h"
+#import "CHTCollectionViewWaterfallLayout.h"
 
-@interface PIEFriendReplyViewController ()<PWRefreshBaseTableViewDelegate,UITableViewDataSource,UITableViewDelegate>
+#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+
+@interface PIEFriendReplyViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,PWRefreshBaseCollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout>
 @property (nonatomic, strong) NSMutableArray *source;
 @property (nonatomic, assign) NSInteger currentIndex;
-@property (nonatomic, strong) RefreshTableView *table;
+@property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
+@property (nonatomic, strong) PIERefreshCollectionView *collectionView;
 @property (nonatomic, assign) BOOL canRefreshFooter;
+@property (nonatomic, strong) DDPageVM *selectedVM;
+
 @end
+static NSString *CellIdentifier2 = @"PIEFriendAskCollectionViewCell";
 
 @implementation PIEFriendReplyViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor clearColor];
     _source = [NSMutableArray array];
-    _currentIndex = 1;
-//    [self.view addSubview:self.table];
-    self.view = self.table;
-
     [self getRemoteSource];
-//    _tapGestureReply = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureReply:)];
-//    [_table addGestureRecognizer:_tapGestureReply];
+    [self commonInit];
+}
+
+- (void)commonInit {
+    self.view.backgroundColor = [UIColor clearColor];
+//    [self.view addSubview:self.collectionView];
+    self.view = self.collectionView;
+    _currentIndex = 1;
     
-}
-
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (_table == tableView) {
-        return _source.count;
-    }
-    return 0;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (_table == tableView) {
-        PIEReplyTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        [cell injectSauce:_source[indexPath.row]];
-        return cell;
-    }
-    else {
-        return nil;
-    }
-}
-
-#pragma mark - UITableViewDelegate
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (_table == tableView) {
-        return [tableView fd_heightForCellWithIdentifier:CellIdentifier  cacheByIndexPath:indexPath configuration:^(PIEReplyTableCell *cell) {
-            [cell injectSauce:_source[indexPath.row]];
-        }];
-    } else {
-        return 0;
-    }
+//    _tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGesture:)];
+//    [_collectionView addGestureRecognizer:_tapGesture];
 }
 
 #pragma mark - GetDataSource
 - (void)getRemoteSource {
-    _currentIndex = 1;
-    [_table.footer endRefreshing];
+    [_collectionView.footer endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(_pageVM.userID) forKey:@"uid"];
-        [param setObject:@(15) forKey:@"size"];
+    [param setObject:@(15) forKey:@"size"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(1) forKey:@"page"];
+    _currentIndex = 1;
     [DDOtherUserManager getFriendReply:param withBlock:^(NSMutableArray *returnArray) {
         NSMutableArray* arrayAgent = [NSMutableArray array];
         if (returnArray.count > 0) {
@@ -89,19 +64,14 @@ static NSString *CellIdentifier = @"PIEReplyTableCell";
             }
             [_source removeAllObjects];
             [_source addObjectsFromArray:arrayAgent];
-            [self.table reloadData];
-            _canRefreshFooter = YES;
-        } else {
-            _canRefreshFooter = NO;
         }
-        [self.table.header endRefreshing];
+        [_collectionView.header endRefreshing];
+        [_collectionView reloadData];
     }];
 }
-
-#pragma mark - GetDataSource
 - (void)getMoreRemoteSource {
-    _currentIndex++;
-    [_table.header endRefreshing];
+    _currentIndex ++;
+    [_collectionView.header endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(_pageVM.userID) forKey:@"uid"];
@@ -117,43 +87,81 @@ static NSString *CellIdentifier = @"PIEReplyTableCell";
                 [arrayAgent addObject:vm];
             }
             [_source addObjectsFromArray:arrayAgent];
-            [self.table reloadData];
-            _canRefreshFooter = YES;
-        } else {
-            _canRefreshFooter = NO;
         }
-        [self.table.footer endRefreshing];
+        [_collectionView.footer endRefreshing];
+        [_collectionView reloadData];
     }];
 }
 
--(RefreshTableView *)table {
-    if (!_table) {
-        _table = [[RefreshTableView alloc] initWithFrame:CGRectZero];
-        _table.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _table.backgroundColor = [UIColor clearColor];
-        _table.showsVerticalScrollIndicator = NO;
-        _table.delegate = self;
-        _table.dataSource = self;
-        _table.psDelegate = self;
-        UINib* nib = [UINib nibWithNibName:CellIdentifier bundle:nil];
-        [_table registerNib:nib forCellReuseIdentifier:CellIdentifier];
-        _table.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
-        _table.scrollsToTop = YES;
+-(PIERefreshCollectionView *)collectionView {
+    if (!_collectionView) {
+        CHTCollectionViewWaterfallLayout *layout = [[CHTCollectionViewWaterfallLayout alloc] init];
+        layout.sectionInset = UIEdgeInsetsMake(10, 6, 0, 6);
+        layout.minimumColumnSpacing = 8;
+        layout.minimumInteritemSpacing = 10;
+        _collectionView = [[PIERefreshCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+        _collectionView.toRefreshBottom = YES;
+        _collectionView.toRefreshTop = YES;
+        _collectionView.backgroundColor = [UIColor clearColor];
+        _collectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        _collectionView.showsVerticalScrollIndicator = NO;
+        _collectionView.dataSource = self;
+        _collectionView.delegate = self;
+        _collectionView.psDelegate = self;
+        [_collectionView registerClass:[PIEFriendReplyCollectionViewCell class] forCellWithReuseIdentifier:CellIdentifier2];
     }
-    return _table;
+    return _collectionView;
 }
+
 #pragma mark - Refresh
 
--(void)didPullRefreshDown:(UITableView *)tableView {
+-(void)didPullDownCollectionView:(UICollectionView *)collectionView {
     [self getRemoteSource];
 }
--(void)didPullRefreshUp:(UITableView *)tableView {
-    if (_canRefreshFooter && !_table.header.isRefreshing) {
+-(void)didPullUpCollectionViewBottom:(UICollectionView *)collectionView {
+    if (_canRefreshFooter && !_collectionView.header.isRefreshing) {
         [self getMoreRemoteSource];
     } else {
-        [_table.footer endRefreshing];
+        [_collectionView.footer endRefreshing];
     }
 }
 
+#pragma mark - UICollectionViewDataSource
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    NSLog(@"_source.count %zd",_source.count);
+    return _source.count;
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    PIEFriendReplyCollectionViewCell*cell =
+    (PIEFriendReplyCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier2
+                                                                      forIndexPath:indexPath];
+    if (!cell) {
+        //need this if instantiate from class instead of xib.
+        cell = [PIEFriendReplyCollectionViewCell new];
+    }
+    [cell injectSource:[_source objectAtIndex:indexPath.row]];
+    return cell;
+}
+#pragma mark - CHTCollectionViewDelegateWaterfallLayout
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    DDPageVM* vm =   [_source objectAtIndex:indexPath.row];
+    CGFloat width;
+    CGFloat height;
+    width = (SCREEN_WIDTH - 20) / 2.0;
+    height = vm.imageHeight + 135;
+    if (height > width+20) {
+        height = width+20;
+    }
+    NSLog(@"NSStringFromCGSize %@",NSStringFromCGSize(CGSizeMake(width, height)));
+
+    return CGSizeMake(width, height);
+}
 
 @end
