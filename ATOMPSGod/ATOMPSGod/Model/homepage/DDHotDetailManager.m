@@ -15,6 +15,7 @@
 #import "PIEPageDAO.h"
 #import "ATOMImageTipLabel.h"
 #import "PIEPageEntity.h"
+#import "PIEImageEntity.h"
 @interface DDHotDetailManager ()
 @property (nonatomic, strong) ATOMDetailImageDAO *detailImageDAO;
 @property (nonatomic, strong) ATOMCommentDAO *commentDAO;
@@ -38,16 +39,22 @@
 //
 - (NSURLSessionDataTask *)fetchAllReply:(NSDictionary *)param ID:(NSInteger)replyID withBlock:(void (^)(NSMutableArray *askArrayRET, NSMutableArray *replyArrayRET))block {
     return [[DDSessionManager shareHTTPSessionManager] GET:[NSString stringWithFormat:@"ask/show/%zd",replyID] parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+        
         if ([ responseObject objectForKey:@"data"]) {
             NSMutableArray *askRETArray = [NSMutableArray array];
-            NSLog(@"askRETArray%@",askRETArray);
             NSMutableArray *replyRETArray = [NSMutableArray array];
 
             NSArray *replyArray = [[responseObject objectForKey:@"data"] objectForKey:@"replies"];
-            NSArray *askArray = [[responseObject objectForKey:@"data"] objectForKey:@"ask"];
+            NSDictionary *askObject = [[responseObject objectForKey:@"data"] objectForKey:@"ask"];
+            NSArray *askImageEntities = [askObject objectForKey:@"ask_uploads"];
             
-            for (int i = 0; i < askArray.count; i++) {
-4                [askRETArray addObject:entity];
+            for (NSDictionary* object in askImageEntities) {
+                PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:askObject error:NULL];
+                PIEImageEntity* imgEntity = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:object error:NULL];
+                entity.imageURL = imgEntity.url;
+                entity.imageWidth = imgEntity.width;
+                entity.imageHeight = imgEntity.height;
+                [askRETArray addObject:entity];
             }
 
             for (int i = 0; i < replyArray.count; i++) {

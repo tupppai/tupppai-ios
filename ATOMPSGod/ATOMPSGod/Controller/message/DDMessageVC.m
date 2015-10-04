@@ -32,7 +32,9 @@
 -(void)refreshTableView {
     [_tableView reloadData];
 }
-
+-(BOOL)hidesBottomBarWhenPushed {
+    return YES;
+}
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
@@ -40,6 +42,7 @@
 
 - (void)createUI {
     self.navigationItem.title = @"我的消息";
+    self.view.backgroundColor = [UIColor whiteColor];
     _myMessageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _myMessageView;
     _tableView = [[UITableView alloc] initWithFrame:_myMessageView.bounds];
@@ -68,20 +71,20 @@
     }
     NSInteger row = indexPath.row;
     if (row == 0) {
-        cell.imageView.image = [UIImage imageNamed:@"ic_news_comment"];
+        cell.imageView.image = [UIImage imageNamed:@"notify_comment"];
         cell.imageView.frame = CGRectMake(100, 0, 0, 0);
         cell.textLabel.text = @"评论";
     } else if (row == 1) {
-        cell.imageView.image = [UIImage imageNamed:@"ic_news_draft"];
+        cell.imageView.image = [UIImage imageNamed:@"notify_reply"];
         cell.textLabel.text = @"帖子回复";
     } else if (row == 2) {
-        cell.imageView.image = [UIImage imageNamed:@"ic_news_follow"];
+        cell.imageView.image = [UIImage imageNamed:@"notify_follow"];
         cell.textLabel.text = @"关注通知";
     } else if (row == 3) {
-        cell.imageView.image = [UIImage imageNamed:@"ic_news_invite"];
+        cell.imageView.image = [UIImage imageNamed:@"notify_invite"];
         cell.textLabel.text = @"邀请通知";
     } else if (row == 4) {
-        cell.imageView.image = [UIImage imageNamed:@"ic_news_setting"];
+        cell.imageView.image = [UIImage imageNamed:@"notify_system"];
         cell.textLabel.text = @"系统通知";
     }
     NSString* badgeKey = [NSString stringWithFormat:@"NotifyType%zd",indexPath.row];

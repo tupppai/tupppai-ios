@@ -21,17 +21,10 @@
 }
 
 - (void)createSubView {
-//    _themeLabel = [UILabel new];
-//    _themeLabel.textColor = [UIColor colorWithHex:0x797979];
-//    [self addSubview:_themeLabel];
-//    [self.themeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(self).with.offset(padding28);
-//        make.centerY.equalTo(self);
-//    }];
     self.textLabel.textColor = [UIColor colorWithHex:0x797979];
     _notificationSwitch = [UISwitch new];
     self.accessoryView = _notificationSwitch;
-    _notificationSwitch.onTintColor = [UIColor colorWithHex:0x00adef];
+    _notificationSwitch.onTintColor = [UIColor colorWithHex:PIEColorHex];
 }
 
 

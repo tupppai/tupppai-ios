@@ -20,8 +20,7 @@ NSString * URL_PFGetMyReply = @"profile/replies";
 NSString * URL_PFGetMyAsk = @"profile/asks";
 NSString * URL_PFGetMyToHelp = @"profile/downloaded";
 NSString * URL_PFGetMyDone = @"profile/done";
-NSString * URL_PFGetMyFollowPages = @"Thread/timeline";
-NSString * URL_PFGetHotPages = @"Thread/popular";
+
 
 NSString * URL_PFGetOtherUserInfo = @"profile/view";
 NSString * URL_PFGetFriendReply = @"profile/replies";
@@ -46,18 +45,11 @@ NSString * URL_UKGetMsg = @"message/list";
 NSString * URL_UKSaveAsk = @"ask/multi";
 NSString * URL_UKSaveReply = @"reply/save";
 
+#pragma mark - Newest
+NSString * URL_NewestGetAsk = @"ask/index";
+NSString * URL_NewestGetReply = @"reply/index";
 
-NSString * URL_HomeGetSource = @"ask/index";
-
-//@"ask/save"
-//NSString * URL_UKGetReplyMsg = @"view/info";
-//NSString * URL_UKGetFollowMsg = @"view/info";
-//NSString * URL_UKGetInviteMsg = @"view/info";
-
-//NSString * URL_PF = @"";
-//NSString * URL_PF = @"";
-//NSString * URL_PF = @"";
-//NSString * URL_PF = @"";
-//NSString * URL_PF = @"";
-
+#pragma mark - Elite
+NSString * URL_PFGetMyFollowPages = @"Thread/timeline";
+NSString * URL_PFGetHotPages = @"Thread/popular";
 @end

@@ -6,18 +6,18 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMAccountBindingViewController.h"
+#import "PIEThirdPartyBindingViewController.h"
 #import "ATOMAccountBindingView.h"
 #import "ATOMAccountBindingTableViewCell.h"
 #import "DDMySettingsManager.h"
 #import "DDShareSDKManager.h"
-@interface ATOMAccountBindingViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface PIEThirdPartyBindingViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) ATOMAccountBindingView *accountBindingView;
 
 @end
 
-@implementation ATOMAccountBindingViewController
+@implementation PIEThirdPartyBindingViewController
 
 #pragma mark - UI
 

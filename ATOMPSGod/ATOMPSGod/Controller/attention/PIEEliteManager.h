@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PIEEliteEntity.h"
+//#import "PIEEliteEntity.h"
 @interface PIEEliteManager : NSObject
 + (void)getMyFollow:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *))block;
 + (void)getHotPages:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *))block;

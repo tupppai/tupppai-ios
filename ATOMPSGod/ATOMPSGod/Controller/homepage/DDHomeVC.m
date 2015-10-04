@@ -36,7 +36,7 @@
 @class PIEPageEntity;
 #define AskCellWidth (SCREEN_WIDTH - 20) / 2.0
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
-@interface DDHomeVC() < UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,PWRefreshBaseCollectionViewDelegate,ATOMShareFunctionViewDelegate,JGActionSheetDelegate,QBImagePickerControllerDelegate,CHTCollectionViewDelegateWaterfallLayout,UICollectionViewDelegate,UICollectionViewDataSource>
+@interface DDHomeVC() < UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,PWRefreshBaseCollectionViewDelegate,PIEShareFunctionViewDelegate,JGActionSheetDelegate,QBImagePickerControllerDelegate,CHTCollectionViewDelegateWaterfallLayout,UICollectionViewDelegate,UICollectionViewDataSource>
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureReply;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureAsk;
@@ -49,8 +49,8 @@
 @property (nonatomic, strong) kfcHomeScrollView *scrollView;
 @property (nonatomic, weak) PIERefreshCollectionView *askCollectionView;
 @property (nonatomic, weak) RefreshTableView *hotTableView;
-@property (nonatomic, assign) BOOL canRefreshHotFooter;
-@property (nonatomic, assign) BOOL canRefreshRecentFooter;
+@property (nonatomic, assign) BOOL canRefreshReplyFooter;
+@property (nonatomic, assign) BOOL canRefreshAskFooter;
 
 @property (nonatomic, assign) BOOL isFirstEnterSecondView;
 
@@ -63,7 +63,6 @@
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 @property (nonatomic, strong) PIEAskCollectionCell *selectedAskCell;
 @property (nonatomic, strong) PIEReplyTableCell *selectedReplyCell;
-
 @property (nonatomic, strong) DDPageVM *selectedVM;
 
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
@@ -107,14 +106,14 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     [self configAskView];
     
     //set this before firstGetRemoteSource
-    _canRefreshHotFooter = YES;
-    _canRefreshRecentFooter = YES;
+    _canRefreshReplyFooter = YES;
+    _canRefreshAskFooter = YES;
     _isFirstEnterSecondView = YES;
     _sourceAsk = [NSMutableArray new];
     _sourceReply = [NSMutableArray new];
     //    [self firstGetDataSourceFromDataBase];
-    [self firstGetRemoteSource:PIEHomeTypeAsk];
-    [self firstGetRemoteSource:PIEHomeTypeHot];
+    [self getRemoteAskSource];
+    [self getRemoteReplySource];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshNav1) name:@"RefreshNav1" object:nil];
     
 }
@@ -350,16 +349,16 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     }
 }
 
-#pragma mark - QBImagePickerControllerDelegate
-
-
--(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
-    [self dismissViewControllerAnimated:YES completion:NULL];
-}
-- (void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController
-{
-    [self dismissViewControllerAnimated:YES completion:NULL];
-}
+//#pragma mark - QBImagePickerControllerDelegate
+//
+//
+//-(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
+//    [self dismissViewControllerAnimated:YES completion:NULL];
+//}
+//- (void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController
+//{
+//    [self dismissViewControllerAnimated:YES completion:NULL];
+//}
 
 
 #pragma mark - UIScrollViewDelegate
@@ -424,17 +423,6 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 ////    _sourceReply = [self fetchDBDataSourceWithHomeType:PIEHomeTypeHot];
 //}
 #pragma mark - GetDataSource from Server
-
-//初始数据
-- (void)firstGetRemoteSource:(PIEHomeType)homeType {
-    if (homeType == PIEHomeTypeHot) {
-        [self getRemoteSourceWithPageType:PIEHomeTypeHot];
-    }
-    else if (homeType == PIEHomeTypeAsk) {
-        [self getRemoteSourceWithPageType:PIEHomeTypeAsk];
-    }
-}
-
 //-(NSMutableArray*)fetchDBDataSourceWithHomeType:(PIEHomeType) homeType {
 //    DDHomePageManager *showHomepage = [DDHomePageManager new];
 //    NSArray * homepageArray = [[showHomepage getHomeImagesWithHomeType:homeType] mutableCopy];
@@ -447,112 +435,123 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 //    return tableViewDataSource;
 //}
 //获取服务器的最新数据
-- (void)getRemoteSourceWithPageType:(PIEHomeType)homeType {
+- (void)getRemoteAskSource {
     WS(ws);
+    _currentAskIndex = 1;
+    [_askCollectionView.footer endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary new];
     double timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    if (homeType == PIEHomeTypeAsk) {
-        _currentAskIndex = 1;
-        [_askCollectionView.footer endRefreshing];
-        [param setObject:@"new" forKey:@"type"];
-        [param setObject:@(AskCellWidth) forKey:@"width"];
-    } else if (homeType == PIEHomeTypeHot) {
-        _currentHotIndex = 1;
-        [_hotTableView.footer endRefreshing];
-        [param setObject:@"hot" forKey:@"type"];
-        [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-    }
+    [param setObject:@"new" forKey:@"type"];
+    [param setObject:@(AskCellWidth) forKey:@"width"];
     DDHomePageManager *pageManager = [DDHomePageManager new];
-    [pageManager pullSource:param block:^(NSMutableArray *homepageArray) {
+    [pageManager pullAskSource:param block:^(NSMutableArray *homepageArray) {
         if (homepageArray.count) {
-            
             NSMutableArray* arrayAgent = [NSMutableArray new];
             for (PIEPageEntity *entity in homepageArray) {
                 DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
                 [arrayAgent addObject:vm];
             }
-            if (homeType == PIEHomeTypeHot) {
+            [ws.sourceAsk removeAllObjects];
+            [ws.sourceAsk addObjectsFromArray:arrayAgent];
+            [ws.askCollectionView reloadData];
+            _canRefreshAskFooter = YES;
+        }
+        else {
+            _canRefreshAskFooter = NO;
+        }
+        [ws.scrollView.collectionView.header endRefreshing];
+    }];
+}
+
+//拉至底层刷新
+- (void)getMoreRemoteAskSource {
+    WS(ws);
+    _currentAskIndex = 1;
+    [_askCollectionView.footer endRefreshing];
+    
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    double timeStamp = [[NSDate date] timeIntervalSince1970];
+    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(15) forKey:@"size"];
+    [param setObject:@"new" forKey:@"type"];
+    [param setObject:@(AskCellWidth) forKey:@"width"];
+    DDHomePageManager *pageManager = [DDHomePageManager new];
+    [pageManager pullAskSource:param block:^(NSMutableArray *homepageArray) {
+        if (homepageArray.count) {
+            for (PIEPageEntity *entity in homepageArray) {
+                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+                [ws.sourceAsk addObject:vm];
+            }
+            [ws.askCollectionView reloadData];
+            _canRefreshAskFooter = YES;
+        }
+        else {
+            _canRefreshAskFooter = NO;
+        }
+        [ws.scrollView.collectionView.header endRefreshing];
+    }];
+}
+
+- (void)getRemoteReplySource {
+    WS(ws);
+    _currentHotIndex = 1;
+    [_hotTableView.footer endRefreshing];
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    double timeStamp = [[NSDate date] timeIntervalSince1970];
+    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(15) forKey:@"size"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(1) forKey:@"page"];
+
+    DDHomePageManager *pageManager = [DDHomePageManager new];
+    [pageManager pullReplySource:param block:^(NSMutableArray *array) {
+        if (array.count) {
+            NSMutableArray* arrayAgent = [NSMutableArray new];
+            for (PIEPageEntity *entity in array) {
+                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+                [arrayAgent addObject:vm];
+            }
                 [ws.sourceReply removeAllObjects];
                 [ws.sourceReply addObjectsFromArray:arrayAgent] ;
                 [ws.hotTableView reloadData];
                 [ws.hotTableView.header endRefreshing];
-            } else if (homeType == PIEHomeTypeAsk) {
-                [ws.sourceAsk removeAllObjects];
-                [ws.sourceAsk addObjectsFromArray:arrayAgent];
-                [ws.askCollectionView reloadData];
-                [ws.scrollView.collectionView.header endRefreshing];
-            }
-            //            if (_scrollView.type == PIEHomeTypeAsk) {
-            //                [ws.scrollView.collectionView reloadData];
-            //            } else {
-            //                [ws.hotTableView reloadData];
-            //            }
-            //            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            //                [pageManager saveHomeImagesInDB:homepageArray];
-            //            });
-        } else {
-            [ws.scrollView.replyTable.header endRefreshing];
-            [ws.scrollView.collectionView.header endRefreshing];
+            _canRefreshReplyFooter = YES;
         }
+        else {
+            _canRefreshReplyFooter = NO;
+        }
+        [ws.hotTableView.header endRefreshing];
     }];
-    
 }
 
-//拉至底层刷新
-- (void)getMoreRemoteSourceWithType:(PIEHomeType)homeType {
+- (void)getMoreRemoteReplySource {
     WS(ws);
+    _currentHotIndex ++;
+    [_hotTableView.header endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary new];
-    if (homeType == PIEHomeTypeAsk) {
-        ws.currentAskIndex++;
-        [param setObject:@(ws.currentAskIndex) forKey:@"page"];
-        [param setObject:@"new" forKey:@"type"];
-        [param setObject:@(AskCellWidth) forKey:@"width"];
-    } else if (homeType == PIEHomeTypeHot) {
-        ws.currentHotIndex++;
-        [param setObject:@(ws.currentHotIndex) forKey:@"page"];
-        [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-        [param setObject:@"hot" forKey:@"type"];
-    }
     double timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
-    [param setObject:@(10) forKey:@"size"];
-    
+    [param setObject:@(15) forKey:@"size"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(_currentHotIndex) forKey:@"page"];
     DDHomePageManager *pageManager = [DDHomePageManager new];
-    [pageManager pullSource:param block:^(NSMutableArray *homepageArray) {
-        if (homepageArray) {
-            NSMutableArray* arrayAgent = [NSMutableArray new];
-            for (PIEPageEntity *homeImage in homepageArray) {
-                DDPageVM *model = [[DDPageVM alloc]initWithPageEntity:homeImage];
-                [arrayAgent addObject:model];
+    [pageManager pullReplySource:param block:^(NSMutableArray *array) {
+        if (array.count) {
+            for (PIEPageEntity *entity in array) {
+                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+                [ws.sourceReply  addObject:vm];
             }
-            if (homeType == PIEHomeTypeHot) {
-                [_sourceReply addObjectsFromArray:arrayAgent];
-                [ws.scrollView.replyTable reloadData];
-                [ws.scrollView.replyTable.footer endRefreshing];
-                if (homepageArray.count == 0) {
-                    ws.canRefreshHotFooter = NO;
-                } else {
-                    ws.canRefreshHotFooter = YES;
-                }
-            } else if (homeType == PIEHomeTypeAsk) {
-                [_sourceAsk addObjectsFromArray:arrayAgent];
-                [ws.scrollView.collectionView reloadData];
-                [ws.scrollView.collectionView.footer endRefreshing];
-                if (homepageArray.count == 0) {
-                    ws.canRefreshRecentFooter = NO;
-                } else {
-                    ws.canRefreshRecentFooter = YES;
-                }
-            }
-        } else {
-            [ws.scrollView.replyTable.footer endRefreshing];
-            [ws.scrollView.collectionView.footer endRefreshing];
+            [ws.hotTableView reloadData];
+            _canRefreshReplyFooter = YES;
         }
+        else {
+            _canRefreshReplyFooter = NO;
+        }
+        [ws.hotTableView.footer endRefreshing];
     }];
 }
-
 
 #pragma mark - ATOMShareFunctionViewDelegate
 -(void)tapWechatFriends {
@@ -614,10 +613,15 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 }
 
 -(void)followReplier {
-    
+    _selectedReplyCell.followView.highlighted = !_selectedReplyCell.followView.highlighted;
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:@(_selectedVM.userID) forKey:@"uid"];
-    _selectedReplyCell.followView.highlighted = !_selectedReplyCell.followView.highlighted;
+    if (_selectedReplyCell.followView.highlighted) {
+        [param setObject:@1 forKey:@"status"];
+    }
+    else {
+        [param setObject:@0 forKey:@"status"];
+    }
     [DDService follow:param withBlock:^(BOOL success) {
         if (success) {
             _selectedVM.followed = _selectedReplyCell.followView.highlighted;
@@ -628,23 +632,16 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 }
 
 
--(void)toggleLabel:(UILabel*)label toggle:(BOOL)toggle{
-    if (toggle) {
-        NSInteger count = [label.text integerValue];
-        label.text = [NSString stringWithFormat:@"%zd",count+1];
-    }
-}
-
 
 #pragma mark - Refresh
 
 - (void)loadNewHotData {
-    [self getRemoteSourceWithPageType:PIEHomeTypeHot];
+    [self getRemoteReplySource];
 }
 
 - (void)loadMoreHotData {
-    if (_canRefreshHotFooter && !_hotTableView.header.isRefreshing) {
-        [self getMoreRemoteSourceWithType:PIEHomeTypeHot];
+    if (_canRefreshReplyFooter && !_hotTableView.header.isRefreshing) {
+        [self getMoreRemoteReplySource];
     } else {
         [_hotTableView.footer endRefreshing];
     }
@@ -652,12 +649,12 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 
 
 - (void)loadNewRecentData {
-    [self getRemoteSourceWithPageType:PIEHomeTypeAsk];
+    [self getRemoteAskSource];
 }
 
 - (void)loadMoreRecentData {
-    if (_canRefreshRecentFooter && !_askCollectionView.header.isRefreshing) {
-        [self getMoreRemoteSourceWithType:PIEHomeTypeAsk];
+    if (_canRefreshAskFooter && !_askCollectionView.header.isRefreshing) {
+        [self getMoreRemoteAskSource];
     } else {
         [_askCollectionView.footer endRefreshing];
     }

@@ -22,7 +22,7 @@
 }
 -(void)addSwitch {
      _bindSwitch = [UISwitch new];
-    _bindSwitch.onTintColor = [UIColor colorWithHex:0x00adef];
+    _bindSwitch.onTintColor = [UIColor colorWithHex:PIEColorHex];
     self.accessoryView = _bindSwitch;
 }
 //- (void)createSubView {
@@ -62,12 +62,7 @@
     paragraphStyle.lineSpacing = 7.5;
     NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:17.0], NSFontAttributeName, [UIColor colorWithHex:0x797979], NSForegroundColorAttributeName, paragraphStyle, NSParagraphStyleAttributeName, nil];
     NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@",_phoneNumber] attributes:attributeDict];
-//    range.location = 0;
-//    range.length = 3;
-//    [attributeStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14.f] range:range];
-//    range.location = 4;
-//    range.length = 3;
-//    [attributeStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0xcbcbcb] range:range];
+
     UILabel* phoneLabel = [UILabel new];
     phoneLabel.attributedText = attributeStr;
     [self addSubview:phoneLabel];

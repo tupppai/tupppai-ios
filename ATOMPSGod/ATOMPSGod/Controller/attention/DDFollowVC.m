@@ -6,7 +6,6 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "DDFollowVC.h"
 #import "kfcFollowCell.h"
 #import "ATOMCommentDetailViewController.h"
 #import "DDDetailPageVC.h"
@@ -130,7 +129,7 @@ static NSString *CellIdentifier = @"MyAttentionCell";
                 DDCommentVC* mvc = [DDCommentVC new];
                 DDCommentPageVM *vm = [DDCommentPageVM new];
                 [vm setCommonViewModelWithFollow:_dataSource[_selectedIndexPath.row]];
-                mvc.vm = vm;
+//                mvc.vm = vm;
                 mvc.delegate = self;
                 [self pushViewController:mvc animated:YES];
             } else if (CGRectContainsPoint(cell.moreButton.frame, p)) {

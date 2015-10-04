@@ -35,7 +35,7 @@
 
 static NSString *MessengerCellIdentifier = @"MessengerCell";
 
-@interface DDCommentVC ()<ATOMShareFunctionViewDelegate,ATOMViewControllerDelegate,JGActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,DZNEmptyDataSetSource>
+@interface DDCommentVC ()<PIEShareFunctionViewDelegate,ATOMViewControllerDelegate,JGActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,DZNEmptyDataSetSource>
 
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) NSMutableArray *commentsHot;
@@ -94,6 +94,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [self addGestureToHeaderView];
     [self addGestureToCommentTableView];
     [self getDataSource];
+    [self.textView becomeFirstResponder];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -104,31 +105,15 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-//        [self scrollElegantly];
-//    });
 }
 
 - (void)scrollElegantly {
     [self.tableView setContentOffset:CGPointMake(0, _headerView.frame.size.height - kfcBottomViewHeight) animated:YES];
-    [self.textView becomeFirstResponder];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-//    if ((self.isMovingFromParentViewController || self.isBeingDismissed)) {
-//        if (_vm && (self.isMovingFromParentViewController || self.isBeingDismissed)) {
-//            if(_delegate && [_delegate respondsToSelector:@selector(ATOMViewControllerDismissWithInfo:)])
-//            {
-//                NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithBool:_vm.liked],@"liked",[NSNumber numberWithBool:_vm.collected],@"collected",nil];
-//                [_delegate ATOMViewControllerDismissWithInfo:info];
-//            }
-//        }
-//    }
+-(BOOL)hidesBottomBarWhenPushed {
+    return YES;
 }
-
-
 
 
 #pragma mark - Overriden Methods

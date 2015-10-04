@@ -9,8 +9,8 @@
 #import "ATOMAccountSettingViewController.h"
 #import "ATOMAccountSettingTableViewCell.h"
 #import "ATOMModifyPasswordViewController.h"
-#import "ATOMAccountBindingViewController.h"
-#import "DDMsgPushSettingVC.h"
+#import "PIEThirdPartyBindingViewController.h"
+#import "PIEMessagePushSettingViewController.h"
 #import "ATOMUserFeedbackViewController.h"
 #import "ATOMUserDAO.h"
 #import "PIEPageDAO.h"
@@ -35,7 +35,7 @@
 }
 
 - (void)createUI {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT-TAB_HEIGHT)];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     _tableView.backgroundColor = [UIColor colorWithHex:0xF5F5F5];
     _tableView.tableFooterView = [UIView new];
     [self.view addSubview:_tableView];
@@ -43,7 +43,9 @@
     _tableView.dataSource = self;
     self.title = @"账号设置";
 }
-
+-(BOOL)hidesBottomBarWhenPushed {
+    return YES;
+}
 
 #pragma mark - UITableViewDataSource
 
@@ -139,13 +141,13 @@
     NSInteger row = indexPath.row;
     if (section == 0) {
         if (row == 0) {
-            DDMsgPushSettingVC *mrvc = [DDMsgPushSettingVC new];
+            PIEMessagePushSettingViewController *mrvc = [PIEMessagePushSettingViewController new];
             [self pushViewController:mrvc animated:YES];
         } else if (row == 1) {
             ATOMModifyPasswordViewController *mpvc = [ATOMModifyPasswordViewController new];
             [self pushViewController:mpvc animated:YES];
         } else if (row == 2) {
-            ATOMAccountBindingViewController *abvc = [ATOMAccountBindingViewController new];
+            PIEThirdPartyBindingViewController *abvc = [PIEThirdPartyBindingViewController new];
             [self pushViewController:abvc animated:YES];
         }
     } else if (section == 1) {

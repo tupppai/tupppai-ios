@@ -8,6 +8,6 @@
 
 #import "DDBaseVC.h"
 
-@interface DDMsgPushSettingVC : DDBaseVC
+@interface PIEMessagePushSettingViewController : DDBaseVC
 
 @end

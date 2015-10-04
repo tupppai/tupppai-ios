@@ -41,7 +41,9 @@
     [super viewDidLoad];
     [self setupBlurredImage];
     [self getDataSource];
-
+    [self setupViews];
+}
+- (void)setupViews {
     self.view.backgroundColor = [UIColor blackColor];
     self.view.clipsToBounds = YES;
     _carousel.type = iCarouselTypeLinear;
@@ -49,6 +51,7 @@
     _carousel.dataSource = self;
     _carousel.pagingEnabled = YES;
     _carousel.decelerationRate = 2;
+    _carousel.bounces = NO;
     
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
@@ -63,7 +66,6 @@
     UITapGestureRecognizer *tapG2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToSeeFriend)];
     [_usernameLabel addGestureRecognizer:tapG2];
 }
-
 - (void)pushToSeeFriend {
     PIEFriendViewController * friendVC = [PIEFriendViewController new];
     friendVC.pageVM = _currentVM;
@@ -174,7 +176,6 @@
         }
     }
     
-#pragma mark -
 #pragma mark iCarousel taps
     
     - (void)carousel:(__unused iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index
@@ -185,7 +186,7 @@
     - (void)carouselCurrentItemIndexDidChange:(__unused iCarousel *)carousel
     {
         [self updateUIWithIndex:carousel.currentItemIndex];
-        [self.segmentedControl setSelectedSegmentIndex:carousel.currentItemIndex];
+        [self.segmentedControl setSelectedSegmentIndex:carousel.currentItemIndex animated:YES];
     }
 - (NSInteger)numberOfPlaceholdersInCarousel:(iCarousel *)carousel {
     return 2;
@@ -209,10 +210,9 @@
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(100) forKey:@"size"];
     DDHotDetailManager *manager = [DDHotDetailManager new];
-    [manager fetchAllReply:param ID:_pageVM.ID withBlock:^(NSMutableArray *askArray, NSMutableArray *replyArray) {
+    [manager fetchAllReply:param ID:_pageVM.askID withBlock:^(NSMutableArray *askArray, NSMutableArray *replyArray) {
         _dataSource = nil;
         _dataSource = [NSMutableArray array];
-        [_dataSource addObject:_pageVM];
         for (PIEPageEntity *entity in askArray) {
             DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
             [_dataSource addObject:vm];
@@ -224,30 +224,45 @@
         [self updateUIWithIndex:0];
         [self updateSegmentTitles];
         [_carousel reloadData];
+        [self initialScroll];
     }];
+}
+- (void)initialScroll {
+    for (int i =0; i < _dataSource.count; i++) {
+        DDPageVM* vm = [_dataSource objectAtIndex:i];
+        if (vm.ID == _pageVM.ID && vm.type == _pageVM.type) {
+            //must animate scroll carousel in order to scroll segment.
+            [_carousel scrollToItemAtIndex:i duration:0.05];
+        }
+    }
 }
 - (void)updateSegmentTitles {
     WS(ws);
     NSMutableArray* segmentDescArray = [NSMutableArray new];
-    for (int i = 1; i<= _pageVM.askImageModelArray.count; i++) {
-        NSString* desc = [NSString stringWithFormat:@"原图%d",i];
+    if (_pageVM.askImageModelArray.count == 1) {
+        NSString* desc = @"原图";
         [segmentDescArray addObject:desc];
     }
-    for (int i = 1; i<= _dataSource.count; i++) {
+    else {
+        for (int i = 1; i<= _pageVM.askImageModelArray.count; i++) {
+            NSString* desc = [NSString stringWithFormat:@"原图%d",i];
+            [segmentDescArray addObject:desc];
+        }
+    }
+
+    for (int i = 1; i<= _dataSource.count - _pageVM.askImageModelArray.count; i++) {
         NSString* desc = [NSString stringWithFormat:@"P%d",i];
         [segmentDescArray addObject:desc];
     }
     self.segmentedControl.sectionTitles = segmentDescArray;
-    _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
     [self.segmentedControl setIndexChangeBlock:^(NSInteger index) {
-        [ws.carousel scrollToItemAtIndex:index animated:YES];
+        [ws.carousel scrollToItemAtIndex:index animated:NO];
     }];
     [self.segmentedControl setNeedsDisplay];
 }
 
 - (HMSegmentedControl*)segmentedControl {
     if (!_segmentedControl) {
-    
         _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"正在加载..."]];
         _segmentedControl.frame = CGRectMake(0, 120, SCREEN_WIDTH, 45);
         _segmentedControl.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor darkGrayColor], NSForegroundColorAttributeName, nil];
@@ -255,7 +270,7 @@
         _segmentedControl.selectionIndicatorHeight = 4.0f;
         _segmentedControl.selectionIndicatorEdgeInsets = UIEdgeInsetsMake(0, 0, -5, 0);
         _segmentedControl.selectionIndicatorColor = [UIColor yellowColor];
-        _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationNone;
+        _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
         _segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
         _segmentedControl.backgroundColor = [UIColor clearColor];
 

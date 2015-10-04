@@ -38,7 +38,7 @@
 
 @end
 
-@protocol ATOMShareFunctionViewDelegate <NSObject>
+@protocol PIEShareFunctionViewDelegate <NSObject>
 @optional
 - (void)tapWechatFriends;
 - (void)tapWechatMoment;

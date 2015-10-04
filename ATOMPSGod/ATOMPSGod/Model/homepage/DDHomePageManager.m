@@ -34,8 +34,8 @@
 }
 
 
-- (void)pullSource:(NSDictionary *)param block:(void (^)(NSMutableArray *))block {
-    [DDService ddGetHomeSource:param withBlock:^(NSArray *data) {
+- (void)pullAskSource:(NSDictionary *)param block:(void (^)(NSMutableArray *))block {
+    [DDService ddGetNewestAsk:param withBlock:^(NSArray *data) {
         if (data) {
             NSMutableArray *returnArray = [NSMutableArray array];
             for (int i = 0; i < data.count; i++) {
@@ -58,7 +58,30 @@
         }
     }];
 }
-
+- (void)pullReplySource:(NSDictionary *)param block:(void (^)(NSMutableArray *))block {
+    [DDService ddGetNewestReply:param withBlock:^(NSArray *data) {
+        if (data) {
+            NSMutableArray *returnArray = [NSMutableArray array];
+            for (int i = 0; i < data.count; i++) {
+                PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
+                NSMutableArray* thumbArray = [NSMutableArray new];
+                for (int i = 0; i<entity.askImageModelArray.count; i++) {
+                    PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.askImageModelArray[i] error:NULL];
+                    [thumbArray addObject:entity2];
+                }
+                entity.askImageModelArray = thumbArray;
+                [returnArray addObject:entity];
+            }
+            if (block) {
+                block(returnArray);
+            }
+        } else {
+            if (block) {
+                block(nil);
+            }
+        }
+    }];
+}
 
 - (void)saveHomeImagesInDB:(NSMutableArray *)homeImages {
     for (PIEPageEntity *homeImage in homeImages) {

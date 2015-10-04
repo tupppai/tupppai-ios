@@ -7,13 +7,20 @@
 //
 
 #import "PIEEliteManager.h"
-
+#import "PIEPageEntity.h"
+#import "PIEImageEntity.h"
 @implementation PIEEliteManager
 + (void)getMyFollow:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *))block {
     [DDService getMyFollowPages:param withBlock:^(NSArray *data) {
         NSMutableArray *returnArray = [NSMutableArray array];
         for (int i = 0; i < data.count; i++) {
-            PIEEliteEntity *entity = [MTLJSONAdapter modelOfClass:[PIEEliteEntity class] fromJSONDictionary:data[i] error:NULL];
+            PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
+            NSMutableArray* thumbArray = [NSMutableArray new];
+            for (int i = 0; i<entity.askImageModelArray.count; i++) {
+                PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.askImageModelArray[i] error:NULL];
+                [thumbArray addObject:entity2];
+            }
+            entity.askImageModelArray = thumbArray;
             [returnArray addObject:entity];
         }
         if (block) {
@@ -30,7 +37,13 @@
     [DDService getHotPages:param withBlock:^(NSArray *data) {
         NSMutableArray *returnArray = [NSMutableArray array];
         for (int i = 0; i < data.count; i++) {
-            PIEEliteEntity *entity = [MTLJSONAdapter modelOfClass:[PIEEliteEntity class] fromJSONDictionary:data[i] error:NULL];
+            PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
+            NSMutableArray* thumbArray = [NSMutableArray new];
+            for (int i = 0; i<entity.askImageModelArray.count; i++) {
+                PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.askImageModelArray[i] error:NULL];
+                [thumbArray addObject:entity2];
+            }
+            entity.askImageModelArray = thumbArray;
             [returnArray addObject:entity];
         }
         if (block) {

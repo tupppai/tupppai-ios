@@ -8,6 +8,6 @@
 
 #import "DDBaseVC.h"
 
-@interface ATOMAccountBindingViewController : DDBaseVC
+@interface PIEThirdPartyBindingViewController : DDBaseVC
 
 @end

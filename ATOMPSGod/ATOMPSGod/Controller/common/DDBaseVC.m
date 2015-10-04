@@ -7,14 +7,15 @@
 //
 
 #import "DDBaseVC.h"
-#import "DDHomeVC.h"
-#import "ATOMPersonViewController.h"
-#import "DDFollowVC.h"
-#import "DDMessageVC.h"
 #import "ATOMUserDAO.h"
 #import "DDLoginNavigationController.h"
 #import "AppDelegate.h"
 #import "SIAlertView.h"
+
+#import "DDHomeVC.h"
+#import "PIEEliteViewController.h"
+#import "PIEProceedingViewController.h"
+#import "PIEMeViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self;
 
 @interface DDBaseVC ()
@@ -84,11 +85,11 @@
     [self.navigationController pushViewController:viewController animated:animated];
     if ([self isKindOfClass:[DDHomeVC class]]) {
         self.hidesBottomBarWhenPushed = NO;
-    } else if ([self isKindOfClass:[ATOMPersonViewController class]]){
+    } else if ([self isKindOfClass:[PIEEliteViewController class]]){
         self.hidesBottomBarWhenPushed = NO;
-    } else if ([self isKindOfClass:[DDFollowVC class]]) {
+    } else if ([self isKindOfClass:[PIEProceedingViewController class]]) {
         self.hidesBottomBarWhenPushed = NO;
-    } else if ([self isKindOfClass:[DDMessageVC class]]) {
+    } else if ([self isKindOfClass:[PIEMeViewController class]]) {
         self.hidesBottomBarWhenPushed = NO;
     }
 }

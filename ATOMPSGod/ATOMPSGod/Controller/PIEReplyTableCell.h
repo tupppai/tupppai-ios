@@ -24,8 +24,6 @@
 @property (weak, nonatomic) IBOutlet PIEPageButton *commentView;
 @property (weak, nonatomic) IBOutlet PIEPageLikeButton *likeView;
 @property (weak, nonatomic) IBOutlet UIImageView *followView;
-
-
 @property (nonatomic, assign) NSInteger ID;
 @property (nonatomic, assign) NSInteger askID;
 

@@ -11,7 +11,8 @@
 
 @interface DDHomePageManager : NSObject
 
-- (void)pullSource:(NSDictionary *)param block:(void (^)(NSMutableArray *))block;
+- (void)pullAskSource:(NSDictionary *)param block:(void (^)(NSMutableArray *))block;
+- (void)pullReplySource:(NSDictionary *)param block:(void (^)(NSMutableArray *))block;
 - (void)saveHomeImagesInDB:(NSMutableArray *)homeImages;
 - (NSArray *)getHomeImages;
 - (NSArray *)getHomeImagesWithHomeType:(PIEHomeType)homeType;

@@ -20,8 +20,6 @@ extern NSString *URL_PFGetMyReply;
 extern NSString *URL_PFGetMyAsk;
 extern NSString * URL_PFGetMyToHelp;
 extern NSString * URL_PFGetMyDone;
-extern NSString * URL_PFGetMyFollowPages;
-extern NSString * URL_PFGetHotPages;
 extern NSString * URL_PFGetOtherUserInfo;
 extern NSString * URL_PFGetFriendReply;
 extern NSString * URL_PFGetFriendAsk;
@@ -46,6 +44,12 @@ extern NSString * URL_UKGetMsg;
 extern NSString * URL_UKSaveAsk;
 extern NSString * URL_UKSaveReply;
 
-extern NSString * URL_HomeGetSource;
 
+#pragma mark - Newest
+extern NSString * URL_NewestGetAsk;
+extern NSString * URL_NewestGetReply;
+
+#pragma mark - Elite
+extern NSString * URL_PFGetMyFollowPages;
+extern NSString * URL_PFGetHotPages;
 @end

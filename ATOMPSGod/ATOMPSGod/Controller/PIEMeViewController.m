@@ -48,11 +48,11 @@
 }
 - (void)pushToSettingViewController {
     ATOMAccountSettingViewController* vc = [ATOMAccountSettingViewController new];
-    [self.navigationController pushViewController:vc animated:YES];
+    [self.navigationController pushViewController:vc animated:NO];
 }
 - (void)pushToMessageViewController {
     DDMessageVC* vc = [DDMessageVC new];
-    [self.navigationController pushViewController:vc animated:YES];
+    [self.navigationController pushViewController:vc animated:NO];
 }
 - (void)setupViews {
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
@@ -84,8 +84,6 @@
                                  CAPSPageMenuOptionUseMenuLikeSegmentedControl:@(YES),
                                  CAPSPageMenuOptionSelectionIndicatorWidth:@30,
                                  };
-    NSLog(@" setupPageMenu2 %f,%f", self.view.frame.size.width,SCREEN_WIDTH);
-
     
     _pageMenu = [[CAPSPageMenu alloc] initWithViewControllers:controllerArray frame:CGRectMake(0, _topContainerView.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - _topContainerView.frame.size.height) options:parameters];
     

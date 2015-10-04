@@ -64,7 +64,6 @@
 }
 
 + (void)setPushSetting:(NSDictionary *)param withBlock:(void (^) (BOOL success))block {
-    
     [[self class]POST:param url:URL_PFsetPushSetting block:^(id responseObject) {
         if (responseObject) {
             if (block) {block(YES);}
@@ -267,8 +266,19 @@
         }
     }];
 }
-+ (void)ddGetHomeSource:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
-    [[self class]GET:param url:URL_HomeGetSource block:^(id responseObject) {
++ (void)ddGetNewestAsk:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
+    [[self class]GET:param url:URL_NewestGetAsk block:^(id responseObject) {
+        if (responseObject) {
+            NSArray* data = [responseObject objectForKey:@"data"];
+            if (block) { block(data); }
+        } else {
+            if (block) { block(nil); }
+        }
+    }];
+}
+
++ (void)ddGetNewestReply:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
+    [[self class]GET:param url:URL_NewestGetReply block:^(id responseObject) {
         if (responseObject) {
             NSArray* data = [responseObject objectForKey:@"data"];
             if (block) { block(data); }
@@ -313,7 +323,6 @@
         } else {
             block(nil);
         }
-        
     }];
     [downloadTask resume];
 }

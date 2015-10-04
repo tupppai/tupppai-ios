@@ -6,17 +6,17 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "DDMsgPushSettingVC.h"
+#import "PIEMessagePushSettingViewController.h"
 #import "DDMsgPushSettingTableCell.h"
 #import "DDService.h"
-@interface DDMsgPushSettingVC () <UITableViewDelegate, UITableViewDataSource>
+@interface PIEMessagePushSettingViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSDictionary *data;
 
 @end
 
-@implementation DDMsgPushSettingVC
+@implementation PIEMessagePushSettingViewController
 
 #pragma mark - UI
 

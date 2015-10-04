@@ -35,7 +35,7 @@
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(15) forKey:@"size"];
     DDHotDetailManager *manager = [DDHotDetailManager new];
-    [manager fetchAllReply:param ID:_pageVM.ID withBlock:^(NSMutableArray *askArray, NSMutableArray *replyArray) {
+    [manager fetchAllReply:param ID:_pageVM.askID withBlock:^(NSMutableArray *askArray, NSMutableArray *replyArray) {
         if (replyArray.count>0) {
             NSMutableArray* arrayAgent = [NSMutableArray new];
             for (PIEPageEntity *entity in replyArray) {
@@ -60,7 +60,7 @@
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(15) forKey:@"size"];
     DDHotDetailManager *manager = [DDHotDetailManager new];
-    [manager fetchAllReply:param ID:_pageVM.ID withBlock:^(NSMutableArray *askArray, NSMutableArray *replyArray) {
+    [manager fetchAllReply:param ID:_pageVM.askID withBlock:^(NSMutableArray *askArray, NSMutableArray *replyArray) {
         for (PIEPageEntity *entity in replyArray) {
             if (replyArray.count>0) {
                 DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
@@ -135,14 +135,12 @@
     return nil;
 }
 
-
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     DDPageVM* vm;
     if (collectionView == _collectionView) {
         vm =   [_source objectAtIndex:indexPath.row];
     }
-    
     CGFloat width;
     CGFloat height;
     
