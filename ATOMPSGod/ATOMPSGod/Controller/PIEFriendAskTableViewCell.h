@@ -14,5 +14,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *allWorkDescLabel;
 @property (weak, nonatomic) IBOutlet iCarousel *carousel;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
-- (void)injectSource:(DDPageVM*)vm;
+- (void)injectSource:(NSArray*)array;
 @end

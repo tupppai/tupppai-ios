@@ -62,18 +62,33 @@
             }
     }];
 }
-+ (void)getFriendAsk:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *returnArray))block {
++ (void)getFriendAsk:(NSDictionary *)param withBlock:(void (^)(NSArray *returnArray))block {
     [DDService ddGetFriendAsk:param withBlock:^(NSArray *returnArray) {
         NSMutableArray *array = [NSMutableArray array];
         for (int i = 0; i < returnArray.count; i++) {
-            PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:returnArray[i] error:NULL];
-            NSMutableArray* thumbArray = [NSMutableArray new];
-            for (int i = 0; i<entity.askImageModelArray.count; i++) {
-                PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.askImageModelArray[i] error:NULL];
-                [thumbArray addObject:entity2];
+            
+            NSMutableArray * source = [NSMutableArray new];
+            NSArray* askImageDic = [[returnArray objectAtIndex:i]objectForKey:@"ask_uploads"];
+            NSMutableArray* askImageEntities = [NSMutableArray array];
+            for (NSDictionary* dic in askImageDic) {
+                PIEImageEntity* ie = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:dic error:NULL];
+                [askImageEntities addObject:ie];
             }
-            entity.askImageModelArray = thumbArray;
-            [array addObject:entity];
+            for (PIEImageEntity* ie in askImageEntities) {
+                PIEPageEntity *askEntity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:[returnArray objectAtIndex:i] error:NULL];
+                askEntity.imageWidth = ie.width;
+                askEntity.imageHeight = ie.height;
+                askEntity.imageURL = ie.url;
+                [source addObject:askEntity];
+            }
+            
+            NSArray* repliesDic = [[returnArray objectAtIndex:i]objectForKey:@"replies"];
+            for (NSDictionary* dic in repliesDic) {
+                PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:dic error:NULL];
+                [source addObject:entity];
+            }
+            [array addObject:source];
+            NSLog(@"array count %zd",array.count);
         }
         if (block) {
             if (array.count > 0) {

@@ -10,9 +10,9 @@
 #import "DDOtherUserManager.h"
 #import "RefreshTableView.h"
 #import "UITableView+FDTemplateLayoutCell.h"
-#import "PIEReplyTableCell.h"
+#import "PIEFriendAskTableViewCell.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
-static NSString *CellIdentifier = @"PIEReplyTableCell";
+static NSString *cellIdentifier = @"PIEFriendAskTableViewCell";
 
 @interface PIEFriendAskViewController ()<PWRefreshBaseTableViewDelegate,UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic, strong) NSMutableArray *source;
@@ -30,7 +30,9 @@ static NSString *CellIdentifier = @"PIEReplyTableCell";
     _currentIndex = 1;
 //    [self.view addSubview:self.table];
     self.view = self.table;
-
+    UINib* nib = [UINib nibWithNibName:@"PIEFriendAskTableViewCell" bundle:nil];
+    [self.table registerNib:nib forCellReuseIdentifier:cellIdentifier];
+    
     [self getRemoteSource];
 //    _tapGestureReply = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureReply:)];
 //    [_table addGestureRecognizer:_tapGestureReply];
@@ -41,6 +43,7 @@ static NSString *CellIdentifier = @"PIEReplyTableCell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (_table == tableView) {
+        NSLog(@"_source numberOfRowsInSection %zd",_source.count);
         return _source.count;
     }
     return 0;
@@ -48,8 +51,8 @@ static NSString *CellIdentifier = @"PIEReplyTableCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_table == tableView) {
-        PIEReplyTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        [cell injectSauce:_source[indexPath.row]];
+        PIEFriendAskTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        [cell injectSource:_source[indexPath.row]];
         return cell;
     }
     else {
@@ -61,8 +64,8 @@ static NSString *CellIdentifier = @"PIEReplyTableCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_table == tableView) {
-        return [tableView fd_heightForCellWithIdentifier:CellIdentifier  cacheByIndexPath:indexPath configuration:^(PIEReplyTableCell *cell) {
-            [cell injectSauce:_source[indexPath.row]];
+        return [tableView fd_heightForCellWithIdentifier:cellIdentifier  cacheByIndexPath:indexPath configuration:^(PIEFriendAskTableViewCell *cell) {
+            [cell injectSource:_source[indexPath.row]];
         }];
     } else {
         return 0;
@@ -80,15 +83,13 @@ static NSString *CellIdentifier = @"PIEReplyTableCell";
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(1) forKey:@"page"];
-    [DDOtherUserManager getFriendReply:param withBlock:^(NSMutableArray *returnArray) {
-        NSMutableArray* arrayAgent = [NSMutableArray array];
+    [DDOtherUserManager getFriendAsk:param withBlock:^(NSArray *returnArray) {
+        NSLog(@"returnArray %zd",returnArray.count);
         if (returnArray.count > 0) {
-            for (PIEPageEntity *entity in returnArray) {
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
-                [arrayAgent addObject:vm];
-            }
             [_source removeAllObjects];
-            [_source addObjectsFromArray:arrayAgent];
+            [_source addObjectsFromArray:returnArray];
+            NSLog(@"_source %zd",returnArray.count);
+
             [self.table reloadData];
             _canRefreshFooter = YES;
         } else {
@@ -109,14 +110,9 @@ static NSString *CellIdentifier = @"PIEReplyTableCell";
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(_currentIndex) forKey:@"page"];
-    [DDOtherUserManager getFriendReply:param withBlock:^(NSMutableArray *returnArray) {
-        NSMutableArray* arrayAgent = [NSMutableArray array];
+    [DDOtherUserManager getFriendAsk:param withBlock:^(NSArray *returnArray) {
         if (returnArray.count > 0) {
-            for (PIEPageEntity *entity in returnArray) {
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
-                [arrayAgent addObject:vm];
-            }
-            [_source addObjectsFromArray:arrayAgent];
+            [_source addObjectsFromArray:returnArray];
             [self.table reloadData];
             _canRefreshFooter = YES;
         } else {
@@ -135,8 +131,7 @@ static NSString *CellIdentifier = @"PIEReplyTableCell";
         _table.delegate = self;
         _table.dataSource = self;
         _table.psDelegate = self;
-        UINib* nib = [UINib nibWithNibName:CellIdentifier bundle:nil];
-        [_table registerNib:nib forCellReuseIdentifier:CellIdentifier];
+
         _table.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
         _table.scrollsToTop = YES;
     }

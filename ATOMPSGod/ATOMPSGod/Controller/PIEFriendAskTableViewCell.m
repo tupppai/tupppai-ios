@@ -8,14 +8,21 @@
 
 #import "PIEFriendAskTableViewCell.h"
 @interface PIEFriendAskTableViewCell()
-@property (strong, nonatomic) NSArray *source;
+@property (strong, nonatomic) NSMutableArray *source;
 
 @end
 @implementation PIEFriendAskTableViewCell
 
 - (void)awakeFromNib {
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     // Initialization code
     _carousel.delegate = self;
+    _carousel.dataSource = self;
+    _carousel.scrollSpeed = 0.05;
+    _carousel.decelerationRate = 1;
+    _carousel.bounces = NO;
+    _carousel.clipsToBounds = YES;
+    _source = [NSMutableArray new];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -25,11 +32,17 @@
 }
 
 //put a needle injecting into cell's ass.
-- (void)injectSource:(DDPageVM*)vm {
+- (void)injectSource:(NSArray*)array {
+    [_source removeAllObjects];
+    for (PIEPageEntity* entity in array) {
+        [_source addObject:[[DDPageVM alloc]initWithPageEntity:entity]];
+    }
+    DDPageVM* vm = [_source objectAtIndex:0];
     _timeLabel.text = vm.publishTime;
     _allWorkDescLabel.text = [NSString stringWithFormat:@"已有%@个作品",vm.totalPSNumber];
     _contentLabel.text = vm.content;
-    
+    [self.carousel reloadData];
+    [self.carousel scrollToOffset:-200 duration:0.05];
 }
 
 #pragma mark iCarousel methods
@@ -45,7 +58,7 @@
     //create new view if no view is available for recycling
     if (view == nil)
     {
-        CGFloat width = self.carousel.frame.size.height - 10;
+        CGFloat width = self.carousel.frame.size.height - 5;
         view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, width, width)];
         view.backgroundColor = [UIColor lightGrayColor];
         view.contentMode = UIViewContentModeScaleAspectFill;

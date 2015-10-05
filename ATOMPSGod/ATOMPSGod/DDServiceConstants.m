@@ -24,7 +24,7 @@ NSString * URL_PFGetMyDone = @"profile/done";
 
 NSString * URL_PFGetOtherUserInfo = @"profile/view";
 NSString * URL_PFGetFriendReply = @"profile/replies";
-NSString * URL_PFGetFriendAsk = @"profile/asks";
+NSString * URL_PFGetFriendAsk = @"profile/asksReplies";
 
 NSString * URL_PFGetMyCollection = @"Thread/subscribed";
 NSString * URL_PFGetFans = @"profile/fans";

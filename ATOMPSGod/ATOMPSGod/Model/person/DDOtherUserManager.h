@@ -12,5 +12,5 @@
 
 + (void)getOtherUserInfo:(NSDictionary *)param withBlock:(void (^)(ATOMUser *user))block;
 + (void)getFriendReply:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *returnArray))block;
-+ (void)getFriendAsk:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *returnArray))block ;
++ (void)getFriendAsk:(NSDictionary *)param withBlock:(void (^)(NSArray *returnArray))block;
 @end
