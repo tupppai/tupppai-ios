@@ -14,6 +14,9 @@
 #import "ATOMMyWorkViewController.h"
 #import "ATOMAccountSettingViewController.h"
 #import "DDMessageVC.h"
+
+#import "PIEFriendFollowingViewController.h"
+#import "PIEFriendFansViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface PIEMeViewController ()<PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource>
@@ -22,6 +25,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *fansCountLabel;
 @property (weak, nonatomic) IBOutlet UIView *topContainerView;
 @property (weak, nonatomic) IBOutlet UIView *pageMenuContainerView;
+@property (weak, nonatomic) IBOutlet UILabel *followView;
+@property (weak, nonatomic) IBOutlet UILabel *fansView;
 
 @property (weak, nonatomic) IBOutlet UILabel *likedCountLabel;
 @property (nonatomic, strong) PWRefreshFooterCollectionView *collectionView;
@@ -62,6 +67,38 @@
     _followCountLabel.text = [NSString stringWithFormat:@"%zd",user.attentionNumber];
     _fansCountLabel.text = [NSString stringWithFormat:@"%zd",user.fansNumber];
     _likedCountLabel.text = [NSString stringWithFormat:@"%zd",user.likeNumber];
+    [self setupTapGesture];
+}
+
+- (void)setupTapGesture {
+    _followCountLabel.userInteractionEnabled = YES;
+    _fansCountLabel.userInteractionEnabled = YES;
+    _followView.userInteractionEnabled = YES;
+    _fansView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapG2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToFollowingVC)];
+    UITapGestureRecognizer *tapG22 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToFollowingVC)];
+    
+    [_followCountLabel addGestureRecognizer:tapG2];
+    [_followView addGestureRecognizer:tapG22];
+    UITapGestureRecognizer *tapG3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToFansVC)];
+    UITapGestureRecognizer *tapG33 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToFansVC)];
+    [_fansCountLabel addGestureRecognizer:tapG3];
+    [_fansView addGestureRecognizer:tapG33];
+}
+
+
+- (void)pushToFollowingVC {
+    PIEFriendFollowingViewController *opvcv = [PIEFriendFollowingViewController new];
+    opvcv.uid = [DDUserManager currentUser].uid;
+    opvcv.userName = [DDUserManager currentUser].username;
+    [self.navigationController pushViewController:opvcv animated:YES];
+    
+}
+- (void)pushToFansVC {
+    PIEFriendFansViewController *mfvc = [PIEFriendFansViewController new];
+    mfvc.uid = [DDUserManager currentUser].uid;
+    mfvc.userName = [DDUserManager currentUser].username;
+    [self.navigationController pushViewController:mfvc animated:YES];
 }
 
 - (void)setupPageMenu {

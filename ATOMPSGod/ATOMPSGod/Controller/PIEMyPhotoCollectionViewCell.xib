@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="286" height="187"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="求P" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rgk-rp-h0q">
-                        <rect key="frame" x="10" y="8" width="21.5" height="15"/>
+                        <rect key="frame" x="0.0" y="0.0" width="21.5" height="15"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="25" id="6cM-9Z-iCc"/>
                             <constraint firstAttribute="height" constant="15" id="yMe-0X-vs4"/>
@@ -51,10 +51,10 @@
                 <constraint firstItem="U9N-I2-QvA" firstAttribute="centerX" secondItem="OkG-O3-uke" secondAttribute="centerX" id="80Y-Av-nNp"/>
                 <constraint firstAttribute="trailing" secondItem="oNe-K4-21T" secondAttribute="trailing" id="Fs3-6H-6zP"/>
                 <constraint firstAttribute="bottom" secondItem="oNe-K4-21T" secondAttribute="bottom" id="MAp-9t-YfB"/>
-                <constraint firstItem="Rgk-rp-h0q" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="MIM-iu-mrO"/>
+                <constraint firstItem="Rgk-rp-h0q" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="MIM-iu-mrO"/>
                 <constraint firstItem="oNe-K4-21T" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="PeW-Hf-Hto"/>
                 <constraint firstAttribute="bottom" secondItem="U9N-I2-QvA" secondAttribute="bottom" constant="8" id="U1T-hr-Go3"/>
-                <constraint firstItem="Rgk-rp-h0q" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="ZGK-c3-HCq"/>
+                <constraint firstItem="Rgk-rp-h0q" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="ZGK-c3-HCq"/>
                 <constraint firstItem="U9N-I2-QvA" firstAttribute="top" secondItem="OkG-O3-uke" secondAttribute="bottom" constant="4" id="e4R-Lo-pwZ"/>
                 <constraint firstAttribute="trailing" secondItem="OkG-O3-uke" secondAttribute="trailing" constant="8" id="lQ7-my-9w0"/>
                 <constraint firstItem="oNe-K4-21T" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="t2J-ya-ZdG"/>

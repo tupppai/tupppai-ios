@@ -12,15 +12,17 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    _tipLabel.layer.cornerRadius = 4;
+//    _tipLabel.layer.cornerRadius = 4;
     _tipLabel.clipsToBounds = YES;
     _tipLabel.backgroundColor = [UIColor pieYellowColor];
     _tipLabel.textColor = [UIColor darkGrayColor];
-    
+    _tipLabel.font = [UIFont boldSystemFontOfSize:12];
     _likeCountLabel.layer.cornerRadius = 4;
     _likeCountLabel.clipsToBounds = YES;
     _likeCountLabel.backgroundColor = [UIColor pieYellowColor];
     _likeCountLabel.textColor = [UIColor darkGrayColor];
+    _likeCountLabel.font = [UIFont boldSystemFontOfSize:9];
+
 }
 - (void)injectSauce:(DDPageVM*)vm {
     

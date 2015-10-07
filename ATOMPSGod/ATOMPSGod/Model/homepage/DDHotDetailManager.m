@@ -55,11 +55,14 @@
                 entity.imageWidth = imgEntity.width;
                 entity.imageHeight = imgEntity.height;
                 [askRETArray addObject:entity];
+                NSLog(@" askArray addObject");
             }
 
             for (int i = 0; i < replyArray.count; i++) {
                 PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:[replyArray objectAtIndex:i] error:NULL];
                 [replyRETArray addObject:entity];
+                NSLog(@" replyArray addObject");
+
             }
             if (block) {
                 block(askRETArray, replyRETArray);

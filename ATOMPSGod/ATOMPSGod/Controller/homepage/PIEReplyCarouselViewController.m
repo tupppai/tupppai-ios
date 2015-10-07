@@ -40,8 +40,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupBlurredImage];
-    [self getDataSource];
     [self setupViews];
+    [self getDataSource];
 }
 - (void)setupViews {
     self.view.backgroundColor = [UIColor blackColor];
@@ -115,24 +115,26 @@
     
     - (NSInteger)numberOfItemsInCarousel:(__unused iCarousel *)carousel
     {
-        return MAX(_dataSource.count,1);
+        return _dataSource.count;
     }
     
     - (UIView *)carousel:(__unused iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
     {
-        DDPageVM* vm = [_dataSource objectAtIndex:index];
-        //create new view if no view is available for recycling
-        if (view == nil)
-        {
-            CGFloat height = self.carousel.frame.size.height-80;
-            CGFloat width = MAX(height*vm.imageWidth/vm.imageHeight, 200);
-            width = MIN(width, SCREEN_WIDTH - 80);
-            view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, height, height)];
-            view.backgroundColor = [UIColor clearColor];
-            view.contentMode = UIViewContentModeScaleAspectFit;
-            view.clipsToBounds = YES;
+        if (_dataSource.count >= index+1) {
+            DDPageVM* vm = [_dataSource objectAtIndex:index];
+            //create new view if no view is available for recycling
+            if (view == nil)
+            {
+                CGFloat height = self.carousel.frame.size.height-80;
+                CGFloat width = MAX(height*vm.imageWidth/vm.imageHeight, 200);
+                width = MIN(width, SCREEN_WIDTH - 80);
+                view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, height, height)];
+                view.backgroundColor = [UIColor clearColor];
+                view.contentMode = UIViewContentModeScaleAspectFit;
+                view.clipsToBounds = YES;
+            }
+            [((UIImageView *)view) setImageWithURL:[NSURL URLWithString:vm.imageURL]];
         }
-        [((UIImageView *)view) setImageWithURL:[NSURL URLWithString:vm.imageURL]];
         return view;
     }
     
@@ -198,7 +200,7 @@
 }
 
 -(void)updateUIWithIndex:(NSInteger)index {
-    if (_dataSource) {
+    if (_dataSource.count >= index+1) {
         _currentVM = [_dataSource objectAtIndex:index];
         [_avatarView setImageWithURL:[NSURL URLWithString:_currentVM.avatarURL] placeholderImage:[UIImage new]];
         _usernameLabel.text = _currentVM.username;
@@ -217,13 +219,17 @@
     [manager fetchAllReply:param ID:_pageVM.askID withBlock:^(NSMutableArray *askArray, NSMutableArray *replyArray) {
         _dataSource = nil;
         _dataSource = [NSMutableArray array];
+        NSLog(@"%zd askArray count",askArray.count);
         for (PIEPageEntity *entity in askArray) {
             DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
             [_dataSource addObject:vm];
+            NSLog(@"_dataSource addObject %@",vm.username);
+
         }
         for (PIEPageEntity *entity in replyArray) {
             DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
             [_dataSource addObject:vm];
+            NSLog(@"_dataSource addObject %@",vm.username);
         }
         [self updateUIWithIndex:0];
         [self updateSegmentTitles];
@@ -235,20 +241,29 @@
 - (void)reorderSourceAndScroll {
     for (int i =0; i < _dataSource.count; i++) {
         DDPageVM* vm = [_dataSource objectAtIndex:i];
-        if (vm.ID == _pageVM.ID && vm.type == _pageVM.type) {
+        if (vm.ID == _pageVM.ID && _pageVM.type == PIEPageTypeReply) {
             DDPageVM* vm2 = [_dataSource objectAtIndex:i];
             [_dataSource removeObjectAtIndex:i];
-            DDPageVM* vm3 = [_dataSource objectAtIndex:1];
-            if (vm3.type == PIEPageTypeAsk) {
-                [_dataSource insertObject:vm2 atIndex:2];
-                [_carousel scrollToItemAtIndex:2 duration:0.05];
-            }
-            else {
-                [_dataSource insertObject:vm2 atIndex:1];
-                [_carousel scrollToItemAtIndex:1 duration:0.05];
+            if (_dataSource.count >= 2) {
+                DDPageVM* vm3 = [_dataSource objectAtIndex:1];
+                if (vm3.type == PIEPageTypeAsk) {
+                    [_dataSource insertObject:vm2 atIndex:2];
+                    [_carousel scrollToItemAtIndex:2 duration:0.05];
+                }
+                else {
+                    [_dataSource insertObject:vm2 atIndex:1];
+                    [_carousel scrollToItemAtIndex:1 duration:0.05];
+                }
             }
             //must animate scroll carousel in order to scroll segment.
-            
+        }
+        else if (vm.ID == _pageVM.ID) {
+            DDPageVM* vm3 = [_dataSource objectAtIndex:1];
+            if (vm3.ID == _pageVM.ID) {
+                [_carousel scrollToItemAtIndex:1 duration:0.05];
+            } else {
+                [_carousel scrollToItemAtIndex:0 duration:0.05];
+            }
         }
     }
 }

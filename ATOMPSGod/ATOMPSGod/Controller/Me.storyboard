@@ -151,7 +151,9 @@
                     <connections>
                         <outlet property="avatarView" destination="Wvc-KJ-tOw" id="Bqn-yb-xJ3"/>
                         <outlet property="fansCountLabel" destination="0f8-Kd-RTM" id="xgE-wf-vyC"/>
+                        <outlet property="fansView" destination="UHf-uB-TMZ" id="Hmv-7W-lc3"/>
                         <outlet property="followCountLabel" destination="gng-se-MP8" id="0Cp-Tm-O02"/>
+                        <outlet property="followView" destination="gx7-sZ-8Me" id="scz-qJ-RcT"/>
                         <outlet property="likedCountLabel" destination="Gy0-hx-9KW" id="xNo-3z-Wka"/>
                         <outlet property="pageMenuContainerView" destination="IoS-QI-3N9" id="Ktp-Fs-hRI"/>
                         <outlet property="topContainerView" destination="0eW-Qd-Lp1" id="BnU-jc-QkQ"/>
