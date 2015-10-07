@@ -25,8 +25,8 @@
     }];
 }
 
-+ (void)getMyReply:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
-    [[self class]GET:param url:URL_PFGetMyReply block:^(id responseObject) {
++ (void)getMyPhotos:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
+    [[self class]GET:param url:URL_PFGetMyPhotos block:^(id responseObject) {
             NSArray* dataArray = [responseObject objectForKey:@"data"];
             if (block) { block(dataArray); }
     }];

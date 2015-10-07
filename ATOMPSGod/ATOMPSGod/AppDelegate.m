@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "DDLaunchVC.h"
-#import "DDTabBarController.h"
 #import "DDNavigationController.h"
 #import "DDLoginNavigationController.h"
 #import "DDIntroVC.h"
@@ -106,9 +105,9 @@
     [ATOMBaseDAO new];
 }
 
-- (DDTabBarController *)mainTabBarController {
+- (PIETabBarController *)mainTabBarController {
     if (_mainTabBarController == nil) {
-        _mainTabBarController = [DDTabBarController new];
+        _mainTabBarController = [PIETabBarController new];
     }
     return _mainTabBarController;
 }

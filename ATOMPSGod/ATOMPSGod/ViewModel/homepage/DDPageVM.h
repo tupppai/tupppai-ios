@@ -15,8 +15,6 @@
 
 
 
-
-
 @interface DDPageVM : NSObject
 
 @property (nonatomic, assign) NSInteger ID;

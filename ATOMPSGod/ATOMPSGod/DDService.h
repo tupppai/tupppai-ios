@@ -22,7 +22,7 @@
 + (void) follow :(NSDictionary*)param withBlock:(void (^)(BOOL success))block;
 + (void) updatePassword :(NSDictionary*)param withBlock:(void (^)(BOOL success,NSInteger ret))block;
 + (void) deleteProceeding :(NSDictionary*)param withBlock:(void (^)(BOOL success))block;
-+ (void)getMyReply:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block;
++ (void)getMyPhotos:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block ;
 + (void)getMyAsk:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block;
 + (void)getMyToHelp:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block;
 + (void)getMyDone:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block;

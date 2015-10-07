@@ -27,7 +27,7 @@
     self.pagingEnabled = YES;
     self.scrollsToTop = NO;
     self.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    self.type = PIEPageTypeEliteFollow;
+    self.type = PIEPageTypeEliteHot;
 }
 
 - (void)createSubView {
@@ -37,14 +37,14 @@
 
 
 - (void)initTable1 {
-    _tableFollow = [[RefreshTableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
+    _tableFollow = [[RefreshTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
     _tableFollow.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableFollow.backgroundColor = [UIColor clearColor];
     _tableFollow.showsVerticalScrollIndicator = NO;
     [self addSubview:_tableFollow];
 }
 - (void)initTable2 {
-    _tableHot = [[RefreshTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
+    _tableHot = [[RefreshTableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
     _tableHot.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableHot.backgroundColor = [UIColor clearColor];
     _tableHot.showsVerticalScrollIndicator = NO;
@@ -56,12 +56,12 @@
     if (_type == PIEPageTypeEliteFollow) {
         _type = PIEPageTypeEliteHot;
         [UIView animateWithDuration:0.3 animations:^{
-            self.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
+            self.contentOffset = CGPointMake(0, 0);
         }];
     } else {
         _type = PIEPageTypeEliteFollow;
         [UIView animateWithDuration:0.3 animations:^{
-            self.contentOffset = CGPointMake(0, 0);
+            self.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
         }];
     }
 }
@@ -70,13 +70,21 @@
     _type = type;
     if (_type == PIEPageTypeEliteFollow) {
         [UIView animateWithDuration:0.3 animations:^{
-            self.contentOffset = CGPointMake(0, 0);
+            self.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
         }];
     } else {
         [UIView animateWithDuration:0.3 animations:^{
-            self.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
+            self.contentOffset = CGPointMake(0, 0);
         }];
     }
 }
 
+-(void)toggleType {
+    if (_type == PIEPageTypeEliteFollow) {
+        _type = PIEPageTypeEliteHot;
+    }
+    else {
+        _type = PIEPageTypeEliteFollow;
+    }
+}
 @end

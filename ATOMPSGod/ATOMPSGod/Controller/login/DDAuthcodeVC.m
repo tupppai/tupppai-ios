@@ -9,7 +9,7 @@
 #import "DDAuthcodeVC.h"
 #import "ATOMInputVerifyCodeView.h"
 #import "AppDelegate.h"
-#import "DDTabBarController.h"
+#import "PIETabBarController.h"
 
 @interface DDAuthcodeVC ()
 

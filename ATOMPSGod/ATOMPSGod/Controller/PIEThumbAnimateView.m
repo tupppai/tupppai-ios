@@ -14,8 +14,6 @@
     if (self) {
         self.frame = CGRectMake(0, 0, 100, 100);
         _toExpand = YES;
-        _shrinkedSize = CGSizeMake(100, 100);
-        _expandedSize = CGSizeMake(SCREEN_WIDTH, 300);
         self.userInteractionEnabled = YES;
         self.clipsToBounds = YES;
         self.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];

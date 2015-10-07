@@ -18,7 +18,7 @@
 #import "DDInviteManager.h"
 #import "DDInviteCellVM.h"
 #import "DDService.h"
-#import "DDTabBarController.h"
+#import "PIETabBarController.h"
 #import "DDFollowManager.h"
 @interface DDInviteVC () <UITableViewDelegate, UITableViewDataSource,UIGestureRecognizerDelegate>
 

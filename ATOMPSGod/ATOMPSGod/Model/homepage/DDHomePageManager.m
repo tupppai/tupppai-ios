@@ -109,7 +109,7 @@
     return array;
 }
 
-- (NSArray *)getHomeImagesWithHomeType:(PIEHomeType)homeType {
+- (NSArray *)getHomeImagesWithHomeType:(NSInteger)homeType {
     
     NSArray *array = [self.homeImageDAO selectHomeImagesWithHomeType:homeType];
     for (PIEPageEntity *homeImage in array) {

@@ -24,14 +24,14 @@
     _theImageView.contentMode = UIViewContentModeScaleAspectFill;
     _theImageView.clipsToBounds = YES;
     _collectView.userInteractionEnabled = YES;
+    [self.contentView addSubview:self.thumbView];
+    [self.contentView addSubview:self.bangView];
+    [self mansoryBangView];
 }
 
 
-- (void)initThumbAnimateView {
-    _thumbView = [PIEThumbAnimateView new];
-    [self insertSubview:_thumbView aboveSubview:_theImageView];
-    [self bringSubviewToFront:_thumbView];
-    [_thumbView mas_makeConstraints:^(MASConstraintMaker *make) {
+- (void)mansoryThumbAnimateView {
+    [_thumbView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@100);
         make.height.equalTo(@100);
         make.trailing.equalTo(_theImageView);
@@ -70,9 +70,9 @@
     if (viewModel.type == 2) {
         _likeView.hidden = NO;
         _bangView.hidden = YES;
-        [self initThumbAnimateView];
-        _thumbView.expandedSize = CGSizeMake(SCREEN_WIDTH, imageViewHeight);
-        _thumbView.subviewCounts = viewModel.askImageModelArray.count;
+        _thumbView.hidden = NO;
+        [self mansoryThumbAnimateView];
+        [_thumbView setSubviewCounts:viewModel.askImageModelArray.count];
         if (viewModel.askImageModelArray.count > 0) {
             PIEImageEntity* entity = [viewModel.askImageModelArray objectAtIndex:0];
             [_thumbView.rightView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
@@ -83,13 +83,17 @@
         }
     }
     else {
+        _thumbView.hidden = YES;
         _likeView.hidden = YES;
         _bangView.hidden = NO;
-        [self.contentView addSubview:self.bangView];
-        [self mansoryBangView];
     }
 }
-
+-(PIEThumbAnimateView *)thumbView {
+    if (!_thumbView) {
+        _thumbView = [PIEThumbAnimateView new];
+    }
+    return _thumbView;
+}
 - (void)mansoryBangView {
     [self.bangView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@24);

@@ -63,6 +63,12 @@
         view.backgroundColor = [UIColor lightGrayColor];
         view.contentMode = UIViewContentModeScaleAspectFill;
         view.clipsToBounds = YES;
+        if (vm.type == PIEPageTypeAsk) {
+            UIImageView* originView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 27, 12)];
+            originView.image = [UIImage imageNamed:@"new_reply_origin"];
+            originView.contentMode = UIViewContentModeScaleAspectFit;
+            [view addSubview:originView];
+        }
     }
     [((UIImageView *)view) setImageWithURL:[NSURL URLWithString:vm.imageURL]];
     return view;
@@ -121,11 +127,6 @@
 {
 
 }
-- (NSInteger)numberOfPlaceholdersInCarousel:(iCarousel *)carousel {
-    return 2;
-}
--(UIView *)carousel:(iCarousel *)carousel placeholderViewAtIndex:(NSInteger)index reusingView:(UIView *)view {
-    return [UIView new];
-}
+
 
 @end

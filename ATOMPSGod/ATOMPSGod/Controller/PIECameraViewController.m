@@ -10,7 +10,7 @@
 #import "QBImagePicker.h"
 #import "PIEUploadVC.h"
 #import "AppDelegate.h"
-#import "DDTabBarController.h"
+#import "PIETabBarController.h"
 #import "DDNavigationController.h"
 #import "PIEProceedingViewController.h"
 

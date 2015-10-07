@@ -11,6 +11,7 @@
 #import "PIEThumbAnimateView.h"
 #import "PIEPageButton.h"
 #import "PIEPageLikeButton.h"
+#import "PIEBangView.h"
 
 @interface PIEEliteFollowTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
@@ -22,7 +23,7 @@
 @property (weak, nonatomic) IBOutlet PIEPageButton *shareView;
 @property (weak, nonatomic) IBOutlet PIEPageButton *commentView;
 @property (weak, nonatomic) IBOutlet UIImageView *moreView;
-
+@property (strong, nonatomic) PIEBangView *bangView;
 @property (weak, nonatomic) IBOutlet PIEPageLikeButton *likeView;
 @property (weak, nonatomic) IBOutlet UIImageView *followView;
 @property (strong, nonatomic) PIEThumbAnimateView *thumbView;

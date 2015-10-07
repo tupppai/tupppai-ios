@@ -91,7 +91,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     [self shouldNavToHotSegment];
 }
 -(void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNav1" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_New" object:nil];
     //compiler would call [super dealloc] automatically in ARC.
 }
 
@@ -114,7 +114,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     //    [self firstGetDataSourceFromDataBase];
     [self getRemoteAskSource];
     [self getRemoteReplySource];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshNav1) name:@"RefreshNav1" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_New" object:nil];
     
 }
 
@@ -157,8 +157,8 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     BOOL shouldNav = [[NSUserDefaults standardUserDefaults]
                       boolForKey:@"shouldNavToHotSegment"];
     if (shouldNav) {
-        [_segmentedControl setSelectedSegmentIndex:0 animated:YES];
-        [_scrollView toggleWithType:PIEHomeTypeHot];
+        [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
+        [_scrollView toggleWithType:PIENewScrollTypeReply];
         [_hotTableView.header beginRefreshing];
     }
     [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:@"shouldNavToHotSegment"];
@@ -170,30 +170,30 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     BOOL shouldNav = [[NSUserDefaults standardUserDefaults]
                       boolForKey:@"shouldNavToAskSegment"];
     if (shouldNav) {
-        [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
-        [_scrollView toggleWithType:PIEHomeTypeAsk];
+        [_segmentedControl setSelectedSegmentIndex:0 animated:YES];
+        [_scrollView toggleWithType:PIENewScrollTypeAsk];
         [_askCollectionView.header beginRefreshing];
     }
     [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:@"shouldNavToAskSegment"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (void)shouldRefreshHeader {
-    BOOL shouldRefresh = [[NSUserDefaults standardUserDefaults]boolForKey:@"tapNav1"];
-    if (shouldRefresh) {
-        if (_scrollView.type == PIEHomeTypeHot && ![_hotTableView.header isRefreshing]) {
-            [_hotTableView.header beginRefreshing];
-        } else if (_scrollView.type == PIEHomeTypeAsk && ![_askCollectionView.header isRefreshing]) {
-            [_askCollectionView.header beginRefreshing];
-            
-        }
-    }
-}
+//- (void)shouldRefreshHeader {
+//    BOOL shouldRefresh = [[NSUserDefaults standardUserDefaults]boolForKey:@"tapNav1"];
+//    if (shouldRefresh) {
+//        if (_scrollView.type == PIENewScrollTypeReply && ![_hotTableView.header isRefreshing]) {
+//            [_hotTableView.header beginRefreshing];
+//        } else if (_scrollView.type == PIENewScrollTypeAsk && ![_askCollectionView.header isRefreshing]) {
+//            [_askCollectionView.header beginRefreshing];
+//            
+//        }
+//    }
+//}
 
-- (void)refreshNav1 {
-    if (_scrollView.type == PIEHomeTypeHot && ![_hotTableView.header isRefreshing]) {
+- (void)refreshHeader {
+    if (_scrollView.type == PIENewScrollTypeReply && ![_hotTableView.header isRefreshing]) {
         [_hotTableView.header beginRefreshing];
-    } else if (_scrollView.type == PIEHomeTypeAsk && ![_askCollectionView.header isRefreshing]) {
+    } else if (_scrollView.type == PIENewScrollTypeAsk && ![_askCollectionView.header isRefreshing]) {
         [_askCollectionView.header beginRefreshing];
     }
 }
@@ -258,7 +258,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 #pragma mark - Gesture Event
 
 - (void)tapGestureReply:(UITapGestureRecognizer *)gesture {
-    if (_scrollView.type == PIEHomeTypeHot) {
+    if (_scrollView.type == PIENewScrollTypeReply) {
         CGPoint location = [gesture locationInView:_hotTableView];
         _selectedIndexPath = [_hotTableView indexPathForRowAtPoint:location];
         if (_selectedIndexPath) {
@@ -317,7 +317,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 }
 
 - (void)tapGestureAsk:(UITapGestureRecognizer *)gesture {
-    if (_scrollView.type == PIEHomeTypeAsk) {
+    if (_scrollView.type == PIENewScrollTypeAsk) {
         CGPoint location = [gesture locationInView:_askCollectionView];
         NSIndexPath *indexPath = [_askCollectionView indexPathForItemAtPoint:location];
         if (indexPath) {
@@ -367,15 +367,15 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     if (scrollView == _scrollView) {
         int currentPage = (_scrollView.contentOffset.x + CGWidth(_scrollView.frame) * 0.1) / CGWidth(_scrollView.frame);
         if (currentPage == 0) {
-            [_scrollView toggleWithType:PIEHomeTypeAsk];
             _hotTableView.scrollsToTop = NO;
             _askCollectionView.scrollsToTop = YES;
             [_segmentedControl setSelectedSegmentIndex:0 animated:YES];
+            _scrollView.type = PIENewScrollTypeAsk;
         } else if (currentPage == 1) {
-            [_scrollView toggleWithType:PIEHomeTypeHot];
-            [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
             _hotTableView.scrollsToTop = YES;
             _askCollectionView.scrollsToTop = NO;
+            [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
+            _scrollView.type = PIENewScrollTypeReply;
         }
     }
 }
@@ -417,10 +417,10 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 #pragma mark - GetDataSource from DB
 //- (void)firstGetDataSourceFromDataBase {
 //
-//    _sourceAsk = [self fetchDBDataSourceWithHomeType:PIEHomeTypeAsk];
+//    _sourceAsk = [self fetchDBDataSourceWithHomeType:PIENewScrollTypeAsk];
 //    [_askCollectionView reloadData];
 //
-////    _sourceReply = [self fetchDBDataSourceWithHomeType:PIEHomeTypeHot];
+////    _sourceReply = [self fetchDBDataSourceWithHomeType:PIENewScrollTypeReply];
 //}
 #pragma mark - GetDataSource from Server
 //-(NSMutableArray*)fetchDBDataSourceWithHomeType:(PIEHomeType) homeType {
@@ -806,9 +806,9 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
             }
             [ATOMReportModel report:param withBlock:^(NSError *error) {
                 UIView* view;
-                if (ws.scrollView.type == PIEHomeTypeHot) {
+                if (ws.scrollView.type == PIENewScrollTypeReply) {
                     view = ws.hotTableView;
-                } else  if (ws.scrollView.type == PIEHomeTypeAsk) {
+                } else  if (ws.scrollView.type == PIENewScrollTypeAsk) {
                     view = ws.askCollectionView;
                 }
                 if(!error) {
@@ -849,7 +849,11 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
         _segmentedControl.backgroundColor = [UIColor clearColor];
         
         [_segmentedControl setIndexChangeBlock:^(NSInteger index) {
-            [ws.scrollView toggle];
+            if (index == 0) {
+                [ws.scrollView toggleWithType:PIENewScrollTypeAsk];
+            } else {
+                [ws.scrollView toggleWithType:PIENewScrollTypeReply];
+            }
         }];
     }
     return _segmentedControl;

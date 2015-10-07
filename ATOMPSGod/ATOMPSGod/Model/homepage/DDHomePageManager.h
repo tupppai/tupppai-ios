@@ -15,7 +15,7 @@
 - (void)pullReplySource:(NSDictionary *)param block:(void (^)(NSMutableArray *))block;
 - (void)saveHomeImagesInDB:(NSMutableArray *)homeImages;
 - (NSArray *)getHomeImages;
-- (NSArray *)getHomeImagesWithHomeType:(PIEHomeType)homeType;
+- (NSArray *)getHomeImagesWithHomeType:(NSInteger)homeType;
 - (void)clearHomePages;
 - (void)clearHomePagesWithHomeType:(NSString *)homeType;
 

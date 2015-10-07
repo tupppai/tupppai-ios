@@ -65,21 +65,21 @@
     return homeImage;
 }
 
-- (NSArray *)selectHomeImagesWithHomeType:(PIEHomeType)homeType {
-    __block NSMutableArray *muArray = [NSMutableArray array];
-    [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
-        NSString* homeTypeStr = homeType == PIEHomeTypeHot?@"hot":@"new";
-        NSString *stmt = @"SELECT * FROM PIEPageEntity where homePageType = ? ORDER BY uploadTime DESC LIMIT 10";
-        NSArray *param =  @[homeTypeStr];
-        FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
-        while ([rs next]) {
-            PIEPageEntity *homeImage = [MTLFMDBAdapter modelOfClass:[PIEPageEntity class] fromFMResultSet:rs error:NULL];
-            [muArray addObject:homeImage];
-        }
-        [rs close];
-    }];
-    return [muArray copy];
-}
+//- (NSArray *)selectHomeImagesWithHomeType:(PIEHomeType)homeType {
+//    __block NSMutableArray *muArray = [NSMutableArray array];
+//    [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
+//        NSString* homeTypeStr = homeType == PIEHomeTypeHot?@"hot":@"new";
+//        NSString *stmt = @"SELECT * FROM PIEPageEntity where homePageType = ? ORDER BY uploadTime DESC LIMIT 10";
+//        NSArray *param =  @[homeTypeStr];
+//        FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
+//        while ([rs next]) {
+//            PIEPageEntity *homeImage = [MTLFMDBAdapter modelOfClass:[PIEPageEntity class] fromFMResultSet:rs error:NULL];
+//            [muArray addObject:homeImage];
+//        }
+//        [rs close];
+//    }];
+//    return [muArray copy];
+//}
 - (NSArray *)selectHomeImages {
     __block NSMutableArray *muArray = [NSMutableArray array];
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {

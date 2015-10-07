@@ -24,21 +24,13 @@
     _avatarView.clipsToBounds = YES;
     _theImageView.contentMode = UIViewContentModeScaleAspectFill;
     _theImageView.clipsToBounds = YES;
-    _moreView.hidden = YES;
+    [self.contentView addSubview:self.thumbView];
+    [self.contentView addSubview:self.bangView];
+    [self mansoryBangView];
 }
 
 
-- (void)initThumbAnimateView {
-    _thumbView = [PIEThumbAnimateView new];
-    [self insertSubview:_thumbView aboveSubview:_theImageView];
-    [self bringSubviewToFront:_thumbView];
-    [_thumbView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.equalTo(@100);
-        make.height.equalTo(@100);
-        make.trailing.equalTo(_theImageView);
-        make.bottom.equalTo(_theImageView);
-    }];
-}
+
 - (void)injectSauce:(DDPageVM *)viewModel {
     _ID = viewModel.ID;
     _askID = viewModel.askID;
@@ -48,7 +40,7 @@
     
     _commentView.imageView.image = [UIImage imageNamed:@"hot_comment"];
     _commentView.numberString = viewModel.commentCount;
-
+    
     _likeView.highlighted = viewModel.liked;
     _likeView.numberString = viewModel.likeCount;
     _contentLabel.text = viewModel.content;
@@ -64,9 +56,11 @@
     
     //作品 type = 2 ,求p type = 1不显示ThumbAnimateView。
     if (viewModel.type == 2) {
-        [self initThumbAnimateView];
-        _thumbView.expandedSize = CGSizeMake(SCREEN_WIDTH, imageViewHeight);
-        _thumbView.subviewCounts = viewModel.askImageModelArray.count;
+        _likeView.hidden = NO;
+        _bangView.hidden = YES;
+        _thumbView.hidden = NO;
+        [self mansoryThumbAnimateView];
+        [_thumbView setSubviewCounts:viewModel.askImageModelArray.count];
         if (viewModel.askImageModelArray.count > 0) {
             PIEImageEntity* entity = [viewModel.askImageModelArray objectAtIndex:0];
             [_thumbView.rightView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
@@ -76,9 +70,29 @@
             }
         }
     }
-    
+    else {
+        _thumbView.hidden = YES;
+        _likeView.hidden = YES;
+        _bangView.hidden = NO;
+    }
 }
 
+- (void)mansoryThumbAnimateView {
+    [_thumbView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(@100);
+        make.height.equalTo(@100);
+        make.trailing.equalTo(_theImageView);
+        make.bottom.equalTo(_theImageView);
+    }];
+}
+- (void)mansoryBangView {
+    [self.bangView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(@24);
+        make.height.equalTo(@30);
+        make.right.equalTo(self.contentView.mas_right).with.offset(-15);
+        make.bottom.equalTo(self.contentView.mas_bottom).with.offset(-2);
+    }];
+}
 - (void)animateToggleExpanded {
     [self layoutIfNeeded];
     if (_thumbView.toExpand) {
@@ -101,5 +115,19 @@
     } completion:^(BOOL finished) {
         _thumbView.toExpand = !_thumbView.toExpand;
     }];
+}
+
+-(PIEThumbAnimateView *)thumbView {
+    if (!_thumbView) {
+        _thumbView = [PIEThumbAnimateView new];
+    }
+    return _thumbView;
+}
+
+-(PIEBangView *)bangView {
+    if (!_bangView) {
+        _bangView = [[PIEBangView alloc]init];
+    }
+    return _bangView;
 }
 @end

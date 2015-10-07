@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-@class DDTabBarController;
+#import "PIETabBarController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, strong) UINavigationController *baseNav;
-@property (nonatomic, strong) DDTabBarController *mainTabBarController;
+@property (nonatomic, strong) PIETabBarController *mainTabBarController;
 
 + (AppDelegate *)APP;
 

@@ -19,4 +19,5 @@
 @property (nonatomic, assign) PIEPageType type;
 - (void)toggle ;
 - (void)toggleWithType:(PIEPageType)type;
+- (void)toggleType;
 @end

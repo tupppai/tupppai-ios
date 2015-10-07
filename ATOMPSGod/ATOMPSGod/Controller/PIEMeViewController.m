@@ -68,7 +68,7 @@
     // Array to keep track of controllers in page menu
     NSMutableArray *controllerArray = [NSMutableArray array];
     ATOMMyWorkViewController *controller = [ATOMMyWorkViewController new];
-    controller.title = @"作品";
+    controller.title = @"图片";
     [controllerArray addObject:controller];
     ATOMMyCollectionViewController *controller2 = [ATOMMyCollectionViewController new];
     controller2.title = @"收藏";

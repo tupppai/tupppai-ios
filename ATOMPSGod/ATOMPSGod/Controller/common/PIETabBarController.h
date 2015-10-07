@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DDTabBarController : UITabBarController
+@interface PIETabBarController : UITabBarController
 
 @end

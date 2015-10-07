@@ -11,12 +11,6 @@
 #import "DDShareManager.h"
 
 
-typedef NS_ENUM(NSInteger, PIEHomeType) {
-    PIEHomeTypeHot = 0,
-    PIEHomeTypeAsk
-};
-
-
 
 
 @interface DDBaseVC : UIViewController

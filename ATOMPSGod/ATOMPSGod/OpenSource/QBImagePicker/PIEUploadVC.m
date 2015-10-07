@@ -10,7 +10,7 @@
 #import "SZTextView.h"
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
-#import "DDTabBarController.h"
+#import "PIETabBarController.h"
 #import "ATOMUploadImage.h"
 #import "ATOMImage.h"
 
@@ -103,6 +103,9 @@
                 }
             }];
         }
+        else {
+            [Hud dismiss:self.view];
+        }
     }];
 }
 -(void) uploadAsk {
@@ -120,7 +123,11 @@
                     }
                 }];
             }
-        }];
+            else {
+                [Hud dismiss:self.view];
+            }
+        }
+         ];
     } else if (_imageArray.count == 1) {
         [self uploadImage1:^(BOOL success) {
             if (success) {
@@ -130,6 +137,9 @@
                     }
                 }];
             }
+            else {
+                [Hud dismiss:self.view];
+            }
         }];
     }
 }
@@ -137,7 +147,7 @@
     NSData *data = UIImageJPEGRepresentation(_imageArray[1], 1.0);
     ATOMUploadImage *uploadImage = [ATOMUploadImage new];
     [uploadImage UploadImage:data WithBlock:^(ATOMImage *imageInfo, NSError *error) {
-        if (error) {
+        if (!imageInfo) {
             if (block) {
                 block(NO);
             }
@@ -154,7 +164,7 @@
         NSData *data = UIImageJPEGRepresentation(_imageArray[0], 1.0);
         ATOMUploadImage *uploadImage = [ATOMUploadImage new];
         [uploadImage UploadImage:data WithBlock:^(ATOMImage *imageInfo, NSError *error) {
-            if (error) {
+            if (!imageInfo) {
                 if (block) {
                     block(NO);
                 }
@@ -246,7 +256,7 @@
 }
 - (void)dismissToHome {
     [self popToAlbumViewController];
-    DDTabBarController *lvc = [AppDelegate APP].mainTabBarController;
+    PIETabBarController *lvc = [AppDelegate APP].mainTabBarController;
     [lvc dismissViewControllerAnimated:NO completion:nil];
 }
 -(void)showWarnLabel {

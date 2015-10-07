@@ -7,19 +7,21 @@
 //
 
 #import "ATOMMyWorkViewController.h"
-#import "ATOMMyWorkCollectionViewCell.h"
+//#import "ATOMMyWorkCollectionViewCell.h"
 #import "DDDetailPageVC.h"
-//#import "ATOMShowReply.h"
 #import "PIEPageEntity.h"
 #import "DDPageVM.h"
 #import "ATOMReplyViewModel.h"
 #import "PWRefreshFooterCollectionView.h"
 #import "DDMyReplyManager.h"
-#import "DDTabBarController.h"
+#import "PIETabBarController.h"
 #import "AppDelegate.h"
+#import "CHTCollectionViewWaterfallLayout.h"
+#import "PIEMyPhotoCollectionViewCell.h"
+
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface ATOMMyWorkViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource>
+@interface ATOMMyWorkViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,CHTCollectionViewDelegateWaterfallLayout>
 
 @property (nonatomic, strong) PWRefreshFooterCollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -32,10 +34,7 @@
 
 @implementation ATOMMyWorkViewController
 
-static int padding6 = 6;
-static float cellWidth;
-static float cellHeight = 150;
-static int collumnNumber = 3;
+
 
 #pragma mark - Refresh
 -(void)didPullUpCollectionViewBottom:(PWRefreshFooterCollectionView *)collectionView {
@@ -56,25 +55,19 @@ static int collumnNumber = 3;
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
-    _dataSource = nil;
-    _dataSource = [NSMutableArray array];
-    _homeImageDataSource = nil;
-    _homeImageDataSource = [NSMutableArray array];
     _currentPage = 1;
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
-
     [param setObject:@(15) forKey:@"size"];
-    [DDMyReplyManager getMyReply:param withBlock:^(NSMutableArray *resultArray) {
-        for (PIEPageEntity *homeImage in resultArray) {
-            DDPageVM *homepageViewModel = [DDPageVM new];
-            homepageViewModel.ID = homeImage.askID;
-            [ws.homeImageDataSource addObject:homepageViewModel];
-            ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];
-            replyViewModel.imageURL = homeImage.imageURL;
-            [ws.dataSource addObject:replyViewModel];
+    [DDMyReplyManager getMyPhotos:param withBlock:^(NSMutableArray *resultArray) {
+        NSMutableArray* arrayAgent = [NSMutableArray new];
+        for (PIEPageEntity *entity in resultArray) {
+            DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+            [arrayAgent addObject:vm];
         }
+        [ws.dataSource removeAllObjects];
+        [ws.dataSource addObjectsFromArray:arrayAgent];
         ws.collectionView.dataSource = self;
         [ws.collectionView reloadData];
     }];
@@ -93,13 +86,10 @@ static int collumnNumber = 3;
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     
-    [DDMyReplyManager getMyReply:param withBlock:^(NSMutableArray *resultArray) {
+    [DDMyReplyManager getMyPhotos:param withBlock:^(NSMutableArray *resultArray) {
         for (PIEPageEntity *entity in resultArray) {
             DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
-            ATOMReplyViewModel *replyViewModel = [ATOMReplyViewModel new];
-            [replyViewModel setViewModelData:entity];
-            [ws.dataSource addObject:replyViewModel];
-            [ws.homeImageDataSource addObject:vm];
+            [ws.dataSource addObject:vm];
         }
         if (resultArray.count == 0) {
             ws.canRefreshFooter = NO;
@@ -119,24 +109,27 @@ static int collumnNumber = 3;
 }
 
 - (void)createUI {
-    self.title = @"我的作品";
-    cellWidth = (SCREEN_WIDTH - (collumnNumber + 1) *padding6) / 3;
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.itemSize =CGSizeMake(cellWidth, cellHeight);
-    flowLayout.minimumInteritemSpacing = padding6;
-    flowLayout.minimumLineSpacing = padding6;
-    _collectionView = [[PWRefreshFooterCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
+    CHTCollectionViewWaterfallLayout *layout = [[CHTCollectionViewWaterfallLayout alloc] init];
+    layout.sectionInset = UIEdgeInsetsMake(10, 6, 0, 6);
+    layout.minimumColumnSpacing = 8;
+    layout.minimumInteritemSpacing = 10;
+    
+    _collectionView = [[PWRefreshFooterCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     self.view = _collectionView;
     _collectionView.backgroundColor = [UIColor whiteColor];
     _collectionView.dataSource = nil;
     _collectionView.delegate = self;
     _collectionView.psDelegate = self;
-    _collectionView.contentInset = UIEdgeInsetsMake(0, 0, TAB_HEIGHT*2, 0);
-
-    _cellIdentifier = @"MyWorkCell";
-    [_collectionView registerClass:[ATOMMyWorkCollectionViewCell class] forCellWithReuseIdentifier:_cellIdentifier];
-    _canRefreshFooter = YES;
     _collectionView.emptyDataSetSource = self;
+    _collectionView.contentInset = UIEdgeInsetsMake(0, 0, TAB_HEIGHT*3, 0);
+    UINib* nib = [UINib nibWithNibName:@"PIEMyPhotoCollectionViewCell" bundle:nil];
+    [_collectionView registerNib:nib forCellWithReuseIdentifier:@"PIEMyPhotoCollectionViewCell"];
+    
+    _cellIdentifier = @"PIEMyPhotoCollectionViewCell";
+//    [_collectionView registerClass:[ATOMMyWorkCollectionViewCell class] forCellWithReuseIdentifier:_cellIdentifier];
+    _canRefreshFooter = YES;
+    _dataSource = [NSMutableArray array];
+
     [self getDataSource];
 }
 
@@ -147,20 +140,16 @@ static int collumnNumber = 3;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    ATOMMyWorkCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:_cellIdentifier forIndexPath:indexPath];
-    ATOMReplyViewModel *model = _dataSource[indexPath.row];
-    [cell.workImageView setImageWithURL:[NSURL URLWithString:model.imageURL]placeholderImage:[UIImage imageNamed:@"placeholderImage_1"]];
+    PIEMyPhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:_cellIdentifier forIndexPath:indexPath];
+    DDPageVM *vm = _dataSource[indexPath.row];
+    [cell injectSauce:vm];
     return cell;
 }
 
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    DDDetailPageVC *hdvc = [DDDetailPageVC new];
-    hdvc.askVM = _homeImageDataSource[indexPath.row];
-    DDTabBarController* vc = (DDTabBarController *)[[AppDelegate APP]window].rootViewController;
-    UINavigationController* nav = (UINavigationController*)vc.selectedViewController ;
-    [nav pushViewController:hdvc animated:YES];
+
 }
 
 
@@ -180,6 +169,18 @@ static int collumnNumber = 3;
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
+#pragma mark - CHTCollectionViewDelegateWaterfallLayout
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    DDPageVM* vm = [_dataSource objectAtIndex:indexPath.row];
+    CGFloat width;
+    CGFloat height;
+    width = (SCREEN_WIDTH) /2 - 20;
+    height = vm.imageHeight/vm.imageWidth * width;
+    if (height > (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/1.3) {
+        height = (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/1.3;
+    }
+    return CGSizeMake(width, height);
+}
 
 
 

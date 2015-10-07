@@ -16,7 +16,7 @@ extern NSString *URL_PFGetPushSetting;
 extern NSString *URL_PFsetPushSetting;
 extern NSString *URL_PFFollow;
 extern NSString *URL_PFUpdatePasswordURL;
-extern NSString *URL_PFGetMyReply;
+extern NSString *URL_PFGetMyPhotos;
 extern NSString *URL_PFGetMyAsk;
 extern NSString * URL_PFGetMyToHelp;
 extern NSString * URL_PFGetMyDone;

@@ -15,7 +15,7 @@
 - (void)updateHomeImage:(PIEPageEntity *)page;
 - (PIEPageEntity *)selectHomeImageByImageID:(NSInteger)imageID;
 - (NSArray *)selectHomeImages;
-- (NSArray *)selectHomeImagesWithHomeType:(PIEHomeType)homeType;
+- (NSArray *)selectHomeImagesWithHomeType:(NSInteger)homeType;
 - (BOOL)isExistHomeImage:(PIEPageEntity *)homeImage;
 - (void)clearHomeImages;
 - (void)clearHomeImagesWithHomeType:(NSString *)homeType;

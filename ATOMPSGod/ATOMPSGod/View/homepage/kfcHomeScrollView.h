@@ -10,12 +10,18 @@
 #import "RefreshTableView.h"
 #import "PIERefreshCollectionView.h"
 
+typedef NS_ENUM(NSInteger, PIENewScrollType) {
+    PIENewScrollTypeAsk = 1,
+    PIENewScrollTypeReply = 2
+};
+
 @interface kfcHomeScrollView : UIScrollView
 @property (nonatomic, strong) RefreshTableView *replyTable;
 @property (nonatomic, strong) PIERefreshCollectionView *collectionView;
-@property (nonatomic, assign) PIEHomeType type;
+@property (nonatomic, assign) PIENewScrollType type;
 - (void)toggle;
-- (void)toggleWithType:(PIEHomeType)type;
+- (void)toggleWithType:(PIENewScrollType)type;
+- (void)toggleType;
 @end
 
 

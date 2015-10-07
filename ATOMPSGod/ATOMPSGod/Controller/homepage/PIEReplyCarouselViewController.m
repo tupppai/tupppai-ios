@@ -50,7 +50,7 @@
     _carousel.delegate = self;
     _carousel.dataSource = self;
     _carousel.pagingEnabled = YES;
-    _carousel.decelerationRate = 2;
+    _carousel.decelerationRate = 1;
     _carousel.bounces = NO;
     
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
@@ -124,10 +124,12 @@
         //create new view if no view is available for recycling
         if (view == nil)
         {
-            CGFloat width = self.carousel.frame.size.height-60;
-            view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, width, width)];
-            view.backgroundColor = [UIColor lightGrayColor];
-            view.contentMode = UIViewContentModeScaleAspectFill;
+            CGFloat height = self.carousel.frame.size.height-80;
+            CGFloat width = MAX(height*vm.imageWidth/vm.imageHeight, 200);
+            width = MIN(width, SCREEN_WIDTH - 80);
+            view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, height, height)];
+            view.backgroundColor = [UIColor clearColor];
+            view.contentMode = UIViewContentModeScaleAspectFit;
             view.clipsToBounds = YES;
         }
         [((UIImageView *)view) setImageWithURL:[NSURL URLWithString:vm.imageURL]];
@@ -148,7 +150,7 @@
             case iCarouselOptionSpacing:
             {
                 //add a bit of spacing between the item views
-                return value * 1.05f;
+                return value * 1.03f;
             }
             case iCarouselOptionFadeMax:
             {
@@ -196,12 +198,14 @@
 }
 
 -(void)updateUIWithIndex:(NSInteger)index {
-    _currentVM = [_dataSource objectAtIndex:index];
-    [_avatarView setImageWithURL:[NSURL URLWithString:_currentVM.avatarURL] placeholderImage:[UIImage new]];
-    _usernameLabel.text = _currentVM.username;
-    _timeLabel.text = _currentVM.publishTime;
-    _contentLabel.text = _currentVM.content;
-    _likeButton.selected = _currentVM.liked;
+    if (_dataSource) {
+        _currentVM = [_dataSource objectAtIndex:index];
+        [_avatarView setImageWithURL:[NSURL URLWithString:_currentVM.avatarURL] placeholderImage:[UIImage new]];
+        _usernameLabel.text = _currentVM.username;
+        _timeLabel.text = _currentVM.publishTime;
+        _contentLabel.text = _currentVM.content;
+        _likeButton.selected = _currentVM.liked;
+    }
 }
 - (void)getDataSource {
     _currentPage = 1;
@@ -224,15 +228,27 @@
         [self updateUIWithIndex:0];
         [self updateSegmentTitles];
         [_carousel reloadData];
-        [self initialScroll];
+        [self reorderSourceAndScroll];
     }];
 }
-- (void)initialScroll {
+
+- (void)reorderSourceAndScroll {
     for (int i =0; i < _dataSource.count; i++) {
         DDPageVM* vm = [_dataSource objectAtIndex:i];
         if (vm.ID == _pageVM.ID && vm.type == _pageVM.type) {
+            DDPageVM* vm2 = [_dataSource objectAtIndex:i];
+            [_dataSource removeObjectAtIndex:i];
+            DDPageVM* vm3 = [_dataSource objectAtIndex:1];
+            if (vm3.type == PIEPageTypeAsk) {
+                [_dataSource insertObject:vm2 atIndex:2];
+                [_carousel scrollToItemAtIndex:2 duration:0.05];
+            }
+            else {
+                [_dataSource insertObject:vm2 atIndex:1];
+                [_carousel scrollToItemAtIndex:1 duration:0.05];
+            }
             //must animate scroll carousel in order to scroll segment.
-            [_carousel scrollToItemAtIndex:i duration:0.05];
+            
         }
     }
 }
@@ -249,7 +265,6 @@
             [segmentDescArray addObject:desc];
         }
     }
-
     for (int i = 1; i<= _dataSource.count - _pageVM.askImageModelArray.count; i++) {
         NSString* desc = [NSString stringWithFormat:@"P%d",i];
         [segmentDescArray addObject:desc];

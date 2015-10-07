@@ -11,7 +11,7 @@
 #import "DDCreateProfileVC.h"
 #import "DDLoginVC.h"
 #import "AppDelegate.h"
-#import "DDTabBarController.h"
+#import "PIETabBarController.h"
 #import "DDShareSDKManager.h"
 #import "EAIntroView.h"
 @interface DDLaunchVC ()

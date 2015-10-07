@@ -78,6 +78,8 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
     
     _sourceFollow = [NSMutableArray new];
     _sourceHot = [NSMutableArray new];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_Elite" object:nil];
 }
 - (void)configSubviews {
     self.view = self.sv;
@@ -105,7 +107,7 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
 }
 - (void)createNavBar {
     WS(ws);
-    _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"关注",@"热门"]];
+    _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"热门",@"关注"]];
     _segmentedControl.frame = CGRectMake(0, 120, SCREEN_WIDTH-100, 45);
     _segmentedControl.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor darkGrayColor], NSForegroundColorAttributeName, nil];
     _segmentedControl.selectedTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil];
@@ -117,11 +119,23 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
     _segmentedControl.backgroundColor = [UIColor clearColor];
 
     [_segmentedControl setIndexChangeBlock:^(NSInteger index) {
-        [ws.sv toggle];
+        if (index == 0) {
+            [ws.sv toggleWithType:PIEPageTypeEliteHot];
+        }
+        else {
+            [ws.sv toggleWithType:PIEPageTypeEliteFollow];
+        }
     }];
     
     self.navigationItem.titleView = _segmentedControl;
     
+}
+- (void)refreshHeader {
+    if (_sv.type == PIEPageTypeEliteFollow && ![_sv.tableFollow.header isRefreshing]) {
+        [_sv.tableFollow.header beginRefreshing];
+    } else if (_sv.type == PIEPageTypeEliteHot && ![_sv.tableHot.header isRefreshing]) {
+        [_sv.tableHot.header beginRefreshing];
+    }
 }
 
 #pragma mark - Getters and Setters
@@ -183,8 +197,12 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
 
 #pragma mark - Gesture Event
 
+
 - (void)tapGestureFollow:(UITapGestureRecognizer *)gesture {
+    NSLog(@"tapGestureFollow");
     if (_sv.type == PIEPageTypeEliteFollow) {
+        NSLog(@"tapGestureFollow2");
+
         CGPoint location = [gesture locationInView:_sv.tableFollow];
         _selectedIndexPath = [_sv.tableFollow indexPathForRowAtPoint:location];
         if (_selectedIndexPath) {
@@ -194,6 +212,8 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
             
             //点击小图
             if (CGRectContainsPoint(_selectedFollowCell.thumbView.frame, p)) {
+                NSLog(@"tapGestureFollow3");
+
                 [_selectedFollowCell animateToggleExpanded];
             }
             //点击大图
@@ -570,15 +590,15 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
     if (scrollView == _sv) {
         int currentPage = (scrollView.contentOffset.x + CGWidth(scrollView.frame) * 0.1) / CGWidth(scrollView.frame);
         if (currentPage == 0) {
-            [_sv toggle];
             _sv.tableHot.scrollsToTop = NO;
             _sv.tableFollow.scrollsToTop = YES;
             [_segmentedControl setSelectedSegmentIndex:0 animated:YES];
+            _sv.type = PIEPageTypeEliteHot;
         } else if (currentPage == 1) {
-            [_sv toggle];
             [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
             _sv.tableHot.scrollsToTop = YES;
             _sv.tableFollow.scrollsToTop = NO;
+            _sv.type = PIEPageTypeEliteFollow;
         }
     }
 }

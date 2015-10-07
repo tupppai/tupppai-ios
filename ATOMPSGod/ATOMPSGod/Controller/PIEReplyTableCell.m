@@ -17,7 +17,6 @@
 - (void)awakeFromNib {
     // Initialization code
     [self commonInit];
-    [self initThumbAnimateView];
 }
 
 - (void)commonInit {
@@ -29,19 +28,26 @@
     _theImageView.contentMode = UIViewContentModeScaleAspectFill;
     _theImageView.clipsToBounds = YES;
     _collectView.userInteractionEnabled = YES;
+    [self configThumbAnimateView];
 }
 
 
-- (void)initThumbAnimateView {
+- (void)configThumbAnimateView {
     _thumbView = [PIEThumbAnimateView new];
-    [self insertSubview:_thumbView aboveSubview:_theImageView];
-    [self bringSubviewToFront:_thumbView];
-    [_thumbView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.contentView addSubview:_thumbView];
+    [self mansoryInitThumbAnimateView];
+}
+- (void)mansoryInitThumbAnimateView {
+    [_thumbView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@100);
         make.height.equalTo(@100);
         make.trailing.equalTo(_theImageView);
         make.bottom.equalTo(_theImageView);
     }];
+}
+-(void)prepareForReuse {
+    [super prepareForReuse];
+    [self mansoryInitThumbAnimateView];
 }
 - (void)injectSauce:(DDPageVM *)viewModel {
     _ID = viewModel.ID;

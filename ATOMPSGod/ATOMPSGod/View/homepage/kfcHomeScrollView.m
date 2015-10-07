@@ -32,7 +32,7 @@
     self.pagingEnabled = YES;
     self.scrollsToTop = NO;
     self.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    self.type = PIEHomeTypeAsk;
+    self.type = 1;
 }
 
 - (void)createSubView {
@@ -63,22 +63,22 @@
 }
 
 - (void)toggle {
-    if (_type == PIEHomeTypeAsk) {
-        _type = PIEHomeTypeHot;
+    if (_type == PIENewScrollTypeAsk) {
+        _type = PIENewScrollTypeReply;
         [UIView animateWithDuration:0.3 animations:^{
             self.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
         }];
     } else {
-        _type = PIEHomeTypeAsk;
+        _type = PIENewScrollTypeAsk;
         [UIView animateWithDuration:0.3 animations:^{
             self.contentOffset = CGPointMake(0, 0);
         }];
     }
 }
 
-- (void)toggleWithType:(PIEHomeType)type {
+- (void)toggleWithType:(PIENewScrollType)type {
     _type = type;
-    if (_type == PIEHomeTypeAsk) {
+    if (_type == PIENewScrollTypeAsk) {
         [UIView animateWithDuration:0.3 animations:^{
             self.contentOffset = CGPointMake(0, 0);
         }];
@@ -88,6 +88,12 @@
         }];
     }
 }
-
+- (void)toggleType {
+    if (_type == PIENewScrollTypeAsk) {
+        _type = PIENewScrollTypeReply;
+    } else {
+        _type = PIENewScrollTypeAsk;
+    }
+}
 
 @end

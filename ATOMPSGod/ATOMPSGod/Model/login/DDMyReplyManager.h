@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface DDMyReplyManager : NSObject
-+ (void)getMyReply:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *returnArray))block;
++ (void)getMyPhotos:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *returnArray))block;
 @end

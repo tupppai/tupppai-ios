@@ -37,14 +37,16 @@
     [DDService getHotPages:param withBlock:^(NSArray *data) {
         NSMutableArray *returnArray = [NSMutableArray array];
         for (int i = 0; i < data.count; i++) {
-            PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
-            NSMutableArray* thumbArray = [NSMutableArray new];
-            for (int i = 0; i<entity.askImageModelArray.count; i++) {
-                PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.askImageModelArray[i] error:NULL];
-                [thumbArray addObject:entity2];
+            PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:[data objectAtIndex:i] error:NULL];
+            if (entity) {
+                NSMutableArray* thumbArray = [NSMutableArray new];
+                for (int i = 0; i<entity.askImageModelArray.count; i++) {
+                    PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.askImageModelArray[i] error:NULL];
+                    [thumbArray addObject:entity2];
+                }
+                entity.askImageModelArray = thumbArray;
+                [returnArray addObject:entity];
             }
-            entity.askImageModelArray = thumbArray;
-            [returnArray addObject:entity];
         }
         if (block) {
             if (returnArray.count > 0) {
