@@ -52,7 +52,8 @@
 
 
 - (void)setViewModelData:(PIEPageEntity *)entity {
-    _ID = entity.askID;
+    _ID = entity.ID;
+    _askID =entity.askID;
     _userID = entity.uid;
     _username = entity.nickname;
     _imageURL = entity.imageURL;
