@@ -242,29 +242,29 @@
     for (int i =0; i < _dataSource.count; i++) {
         DDPageVM* vm = [_dataSource objectAtIndex:i];
         if (vm.ID == _pageVM.ID && _pageVM.type == PIEPageTypeReply) {
-            DDPageVM* vm2 = [_dataSource objectAtIndex:i];
+            DDPageVM* vmToInsert = [_dataSource objectAtIndex:i];
             [_dataSource removeObjectAtIndex:i];
             if (_dataSource.count >= 2) {
                 DDPageVM* vm3 = [_dataSource objectAtIndex:1];
                 if (vm3.type == PIEPageTypeAsk) {
-                    [_dataSource insertObject:vm2 atIndex:2];
+                    [_dataSource insertObject:vmToInsert atIndex:2];
                     [_carousel scrollToItemAtIndex:2 duration:0.05];
                 }
                 else {
-                    [_dataSource insertObject:vm2 atIndex:1];
+                    [_dataSource insertObject:vmToInsert atIndex:1];
                     [_carousel scrollToItemAtIndex:1 duration:0.05];
                 }
             }
             //must animate scroll carousel in order to scroll segment.
         }
-        else if (vm.ID == _pageVM.ID) {
-            DDPageVM* vm3 = [_dataSource objectAtIndex:1];
-            if (vm3.ID == _pageVM.ID) {
-                [_carousel scrollToItemAtIndex:1 duration:0.05];
-            } else {
-                [_carousel scrollToItemAtIndex:0 duration:0.05];
-            }
-        }
+//        else if (vm.ID == _pageVM.ID) {
+//            DDPageVM* vm3 = [_dataSource objectAtIndex:1];
+//            if (vm3.ID == _pageVM.ID) {
+//                [_carousel scrollToItemAtIndex:1 duration:0.05];
+//            } else {
+//                [_carousel scrollToItemAtIndex:0 duration:0.05];
+//            }
+//        }
     }
 }
 - (void)updateSegmentTitles {

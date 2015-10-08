@@ -18,9 +18,10 @@
     // Initialization code
     _carousel.delegate = self;
     _carousel.dataSource = self;
-    _carousel.scrollSpeed = 0.05;
-    _carousel.decelerationRate = 1;
-    _carousel.bounces = NO;
+    _carousel.bounces = YES;
+    _carousel.bounceDistance = 0.2;
+    _carousel.contentOffset = CGSizeMake(-SCREEN_WIDTH/2+ 60, 0);
+    _carousel.centerItemWhenSelected = NO;
     _carousel.clipsToBounds = YES;
     _source = [NSMutableArray new];
 }
@@ -42,7 +43,6 @@
     _allWorkDescLabel.text = [NSString stringWithFormat:@"已有%@个作品",vm.totalPSNumber];
     _contentLabel.text = vm.content;
     [self.carousel reloadData];
-    [self.carousel scrollToOffset:-200 duration:0.05];
 }
 
 #pragma mark iCarousel methods
@@ -120,12 +120,16 @@
 
 - (void)carousel:(__unused iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index
 {
-    NSLog(@"Tapped view number: %zd", index);
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[_source objectAtIndex:index] forKey:@"CellVM"];
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"tapCarouselItem"
+     object:nil userInfo:userInfo];
+
 }
 
 - (void)carouselCurrentItemIndexDidChange:(__unused iCarousel *)carousel
 {
-
+    
 }
 
 

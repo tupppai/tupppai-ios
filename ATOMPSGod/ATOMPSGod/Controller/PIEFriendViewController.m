@@ -14,7 +14,7 @@
 #import "PIEFriendReplyViewController.h"
 #import "PIEFriendFollowingViewController.h"
 #import "PIEFriendFansViewController.h"
-
+#import "PIEReplyCarouselViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 @interface PIEFriendViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
@@ -71,6 +71,19 @@
     UITapGestureRecognizer *tapG33 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToFansVC)];
     [_fansCountLabel addGestureRecognizer:tapG3];
     [_fansDescLabel addGestureRecognizer:tapG33];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveCarouselNotification:)
+                                                 name:@"tapCarouselItem"
+                                               object:nil];
+}
+
+- (void) receiveCarouselNotification:(NSNotification *) notification {
+    NSDictionary *userInfo = notification.userInfo;
+    DDPageVM *vm = [userInfo objectForKey:@"CellVM"];
+    PIEReplyCarouselViewController* vc = [PIEReplyCarouselViewController new];
+    vc.pageVM = vm;
+    [self pushViewController:vc animated:YES];
 }
 - (void)pushToFollowingVC {
     PIEFriendFollowingViewController *opvcv = [PIEFriendFollowingViewController new];

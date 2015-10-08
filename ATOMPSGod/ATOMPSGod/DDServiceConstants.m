@@ -19,12 +19,12 @@ NSString * URL_PFUpdatePasswordURL = @"profile/updatePassword";
 NSString * URL_PFGetMyPhotos = @"profile/threads";
 NSString * URL_PFGetMyAsk = @"profile/asks";
 NSString * URL_PFGetMyToHelp = @"profile/downloaded";
-NSString * URL_PFGetMyDone = @"profile/done";
+NSString * URL_PFGetMyDone = @"profile/replies";
 
 
 NSString * URL_PFGetOtherUserInfo = @"profile/view";
 NSString * URL_PFGetFriendReply = @"profile/replies";
-NSString * URL_PFGetFriendAsk = @"profile/asksReplies";
+NSString * URL_PFGetFriendAsk = @"profile/asksWithReplies";
 
 NSString * URL_PFGetMyCollection = @"Thread/subscribed";
 NSString * URL_PFGetFans = @"profile/fans";

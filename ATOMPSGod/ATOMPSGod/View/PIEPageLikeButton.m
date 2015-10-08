@@ -30,7 +30,6 @@
         make.top.equalTo(_imageView).with.offset(-3);
         make.width.greaterThanOrEqualTo(@13);
     }];
-
 }
 -(void)setHighlighted:(BOOL)highlighted {
     _highlighted = highlighted;
