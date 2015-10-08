@@ -99,7 +99,6 @@
 		5C54DF261AB97B8400BDE34D /* ATOMComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C54DF251AB97B8400BDE34D /* ATOMComment.m */; };
 		5C54DF291AB9810B00BDE34D /* ATOMImageTipLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C54DF281AB9810B00BDE34D /* ATOMImageTipLabel.m */; };
 		5C54DF2D1AB99F5300BDE34D /* DDTipLabelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C54DF2C1AB99F5300BDE34D /* DDTipLabelManager.m */; };
-		5C559B2B1AB10C93000C5B50 /* ATOMOtherPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C559B2A1AB10C93000C5B50 /* ATOMOtherPersonViewController.m */; };
 		5C559B341AB10D4E000C5B50 /* ATOMOtherPersonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C559B331AB10D4E000C5B50 /* ATOMOtherPersonView.m */; };
 		5C559B371AB13884000C5B50 /* DDInviteVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C559B361AB13884000C5B50 /* DDInviteVC.m */; };
 		5C559B3A1AB138C3000C5B50 /* ATOMInviteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C559B391AB138C3000C5B50 /* ATOMInviteView.m */; };
@@ -231,7 +230,7 @@
 		5CDB06341AA428BD0089121E /* NSArray+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB06271AA428BD0089121E /* NSArray+MASAdditions.m */; };
 		5CDB06351AA428BD0089121E /* NSLayoutConstraint+MASDebugAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB062A1AA428BD0089121E /* NSLayoutConstraint+MASDebugAdditions.m */; };
 		5CDB06361AA428BD0089121E /* View+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB062C1AA428BD0089121E /* View+MASAdditions.m */; };
-		5CDB065D1AA45C4A0089121E /* ATOMCreateProfileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB065A1AA45C4A0089121E /* ATOMCreateProfileView.m */; };
+		5CDB065D1AA45C4A0089121E /* PIECreateProfileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB065A1AA45C4A0089121E /* PIECreateProfileView.m */; };
 		5CDB065E1AA45C4A0089121E /* ATOMLaunchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB065C1AA45C4A0089121E /* ATOMLaunchView.m */; };
 		5CDB06661AA45C680089121E /* DDCreateProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB06611AA45C680089121E /* DDCreateProfileVC.m */; };
 		5CDB06671AA45C680089121E /* DDLaunchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB06631AA45C680089121E /* DDLaunchVC.m */; };
@@ -674,8 +673,6 @@
 		5C54DF281AB9810B00BDE34D /* ATOMImageTipLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMImageTipLabel.m; sourceTree = "<group>"; };
 		5C54DF2B1AB99F5300BDE34D /* DDTipLabelManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTipLabelManager.h; sourceTree = "<group>"; };
 		5C54DF2C1AB99F5300BDE34D /* DDTipLabelManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTipLabelManager.m; sourceTree = "<group>"; };
-		5C559B291AB10C93000C5B50 /* ATOMOtherPersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMOtherPersonViewController.h; sourceTree = "<group>"; };
-		5C559B2A1AB10C93000C5B50 /* ATOMOtherPersonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMOtherPersonViewController.m; sourceTree = "<group>"; };
 		5C559B321AB10D4E000C5B50 /* ATOMOtherPersonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMOtherPersonView.h; sourceTree = "<group>"; };
 		5C559B331AB10D4E000C5B50 /* ATOMOtherPersonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMOtherPersonView.m; sourceTree = "<group>"; };
 		5C559B351AB13884000C5B50 /* DDInviteVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDInviteVC.h; sourceTree = "<group>"; };
@@ -958,8 +955,8 @@
 		5CDB062B1AA428BD0089121E /* View+MASAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View+MASAdditions.h"; sourceTree = "<group>"; };
 		5CDB062C1AA428BD0089121E /* View+MASAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "View+MASAdditions.m"; sourceTree = "<group>"; };
 		5CDB062D1AA428BD0089121E /* View+MASShorthandAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View+MASShorthandAdditions.h"; sourceTree = "<group>"; };
-		5CDB06591AA45C4A0089121E /* ATOMCreateProfileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMCreateProfileView.h; sourceTree = "<group>"; };
-		5CDB065A1AA45C4A0089121E /* ATOMCreateProfileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMCreateProfileView.m; sourceTree = "<group>"; };
+		5CDB06591AA45C4A0089121E /* PIECreateProfileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECreateProfileView.h; sourceTree = "<group>"; };
+		5CDB065A1AA45C4A0089121E /* PIECreateProfileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECreateProfileView.m; sourceTree = "<group>"; };
 		5CDB065B1AA45C4A0089121E /* ATOMLaunchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMLaunchView.h; sourceTree = "<group>"; };
 		5CDB065C1AA45C4A0089121E /* ATOMLaunchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMLaunchView.m; sourceTree = "<group>"; };
 		5CDB06601AA45C680089121E /* DDCreateProfileVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDCreateProfileVC.h; sourceTree = "<group>"; };
@@ -1634,8 +1631,6 @@
 				5C6697A91AAFD348001FCF8A /* ATOMMyCollectionViewController.m */,
 				5C6697AE1AAFE025001FCF8A /* ATOMProfileEditViewController.h */,
 				5C6697AF1AAFE025001FCF8A /* ATOMProfileEditViewController.m */,
-				5C559B291AB10C93000C5B50 /* ATOMOtherPersonViewController.h */,
-				5C559B2A1AB10C93000C5B50 /* ATOMOtherPersonViewController.m */,
 				5C67FB251AB2B41F004EFF05 /* ATOMHeaderImageCropperViewController.h */,
 				5C67FB261AB2B41F004EFF05 /* ATOMHeaderImageCropperViewController.m */,
 				5CDF81F91AC25AFF00321694 /* ATOMUserFeedbackViewController.h */,
@@ -2449,8 +2444,8 @@
 		5CDB06581AA45C4A0089121E /* login */ = {
 			isa = PBXGroup;
 			children = (
-				5CDB06591AA45C4A0089121E /* ATOMCreateProfileView.h */,
-				5CDB065A1AA45C4A0089121E /* ATOMCreateProfileView.m */,
+				5CDB06591AA45C4A0089121E /* PIECreateProfileView.h */,
+				5CDB065A1AA45C4A0089121E /* PIECreateProfileView.m */,
 				5CDB065B1AA45C4A0089121E /* ATOMLaunchView.h */,
 				5CDB065C1AA45C4A0089121E /* ATOMLaunchView.m */,
 				5CDB06691AA45C920089121E /* ATOMMobileRegisterView.h */,
@@ -3674,7 +3669,6 @@
 				5C561A751AB7C8C30052D4D5 /* MJRefreshLegendFooter.m in Sources */,
 				E9F890D11B86FE6B0057ECBF /* UIView+SLKAdditions.m in Sources */,
 				E94B02F11B7B3F6A00863C6F /* ATOMFaceCollectionView.m in Sources */,
-				5C559B2B1AB10C93000C5B50 /* ATOMOtherPersonViewController.m in Sources */,
 				5C4F88471AB56E760042E9BA /* DDShareVC.m in Sources */,
 				5C4AE3EC1AAED60A0020E102 /* PIEFriendFansViewController.m in Sources */,
 				5C7B8AB31AFA549D00F448CD /* kfcFollowVM.m in Sources */,
@@ -3801,7 +3795,7 @@
 				5C819C921AA71C1D00CDDB5B /* ATOMCommentDetailViewController.m in Sources */,
 				5C5A7A831ABFA8BB004A00C5 /* CommentCell.m in Sources */,
 				5CADF3DB1AAC3C5A00FF8015 /* ATOMCommentDetailView.m in Sources */,
-				5CDB065D1AA45C4A0089121E /* ATOMCreateProfileView.m in Sources */,
+				5CDB065D1AA45C4A0089121E /* PIECreateProfileView.m in Sources */,
 				E900AB4B1B41153A0019BAEA /* UIAlertView+AFNetworking.m in Sources */,
 				5C0F04D21ADCA8E2002003AE /* ATOMFans.m in Sources */,
 				F40207431BA7C4160007CE02 /* VVBlurViewController.m in Sources */,

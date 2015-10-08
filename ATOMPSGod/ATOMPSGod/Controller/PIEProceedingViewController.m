@@ -16,7 +16,7 @@
 #import "PIEToHelpTableViewCell.h"
 #import "QBImagePickerController.h"
 #import "PIEUploadVC.h"
-#import "ATOMOtherPersonViewController.h"
+#import "PIEFriendViewController.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 #define MyAskCellWidth (SCREEN_WIDTH - 20) / 2.0
@@ -117,16 +117,14 @@
             [self deleteOneToHelp:indexPath ID:vm.ID];
         }
         else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
-            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-            opvc.userID = vm.userID;
-            opvc.userName = vm.username;
-            [self pushViewController:opvc animated:YES];
+            PIEFriendViewController *opvc = [PIEFriendViewController new];
+            opvc.pageVM =  vm;
+            [self.navigationController pushViewController:opvc animated:YES];
         }
         else if (CGRectContainsPoint(cell.nameLabel.frame, p)) {
-            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-            opvc.userID = vm.userID;
-            opvc.userName = vm.username;
-            [self pushViewController:opvc animated:YES];
+            PIEFriendViewController *opvc = [PIEFriendViewController new];
+            opvc.pageVM =  vm;
+            [self.navigationController pushViewController:opvc animated:YES];
         }
         else if (CGRectContainsPoint(cell.theImageView.frame, p)) {
             
@@ -173,6 +171,7 @@
         }
     } else if (collectionView == _sv.doneCollectionView) {
         if (_canRefreshDoneFooter) {
+            [self getMoreRemoteSourceDone];
         } else {
             [_sv.doneCollectionView.footer endRefreshing];
         }
@@ -195,23 +194,21 @@
     if (scrollView == _sv) {
         int currentPage = (scrollView.contentOffset.x + CGWidth(scrollView.frame) * 0.1) / CGWidth(scrollView.frame);
         if (currentPage == 0) {
-            [_sv toggleWithType:PIEProceedingTypeAsk];
             [_segmentedControl setSelectedSegmentIndex:0 animated:YES];
+            _sv.type = PIEProceedingTypeAsk;
         }
         else if (currentPage == 1) {
-            [_sv toggleWithType:PIEProceedingTypeToHelp];
             [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
+            _sv.type = PIEProceedingTypeToHelp;
         }
         else if (currentPage == 2) {
-            [_sv toggleWithType:PIEProceedingTypeDone];
             [_segmentedControl setSelectedSegmentIndex:2 animated:YES];
+            _sv.type = PIEProceedingTypeDone;
         }
     }
 }
 
-
 -(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
-    
     NSMutableArray* array = [NSMutableArray new];
     for (ALAsset* asset in assets) {
         [array addObject:asset];

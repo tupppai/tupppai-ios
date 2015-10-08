@@ -8,7 +8,7 @@
 
 #import "DDMsgFollowVC.h"
 #import "ATOMConcernMessageTableViewCell.h"
-#import "ATOMOtherPersonViewController.h"
+
 #import "ATOMConcernMessage.h"
 #import "ATOMConcernMessageViewModel.h"
 #import "DDMsgFollowModel.h"
@@ -142,15 +142,15 @@
         ATOMConcernMessageTableViewCell *cell = (ATOMConcernMessageTableViewCell *)[_tableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
-            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-            opvc.userID = viewModel.uid;
-            [self pushViewController:opvc animated:YES];
+            //ATOMOtherPersonViewControlle *opvc = [//ATOMOtherPersonViewControlle new];
+//            opvc.userID = viewModel.uid;
+//            [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
             p = [gesture locationInView:cell.userNameLabel];
             if (p.x <= 16 * viewModel.userName.length) {
-                ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-                opvc.userID = viewModel.uid;
-                [self pushViewController:opvc animated:YES];
+                //ATOMOtherPersonViewControlle *opvc = [//ATOMOtherPersonViewControlle new];
+//                opvc.userID = viewModel.uid;
+//                [self pushViewController:opvc animated:YES];
             }
         }
         

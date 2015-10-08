@@ -40,8 +40,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupBlurredImage];
-    [self setupViews];
     [self getDataSource];
+    [self setupViews];
 }
 - (void)setupViews {
     self.view.backgroundColor = [UIColor blackColor];
@@ -50,8 +50,8 @@
     _carousel.delegate = self;
     _carousel.dataSource = self;
     _carousel.pagingEnabled = YES;
-    _carousel.decelerationRate = 1;
-    _carousel.bounces = NO;
+    _carousel.bounces = YES;
+    _carousel.bounceDistance = 0.21;
     
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
@@ -103,95 +103,94 @@
         CGImageRef cgImage = [context createCGImage:result fromRect:[inputImage extent]];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-        [UIView animateWithDuration:1 animations:^{
-            ws.blurView.image = [UIImage imageWithCGImage:cgImage];
-        }];
+            [UIView animateWithDuration:1 animations:^{
+                ws.blurView.image = [UIImage imageWithCGImage:cgImage];
+            }];
         });
-
+        
     });
-
+    
 }
 #pragma mark iCarousel methods
-    
-    - (NSInteger)numberOfItemsInCarousel:(__unused iCarousel *)carousel
-    {
-        return _dataSource.count;
-    }
-    
-    - (UIView *)carousel:(__unused iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
-    {
-        if (_dataSource.count >= index+1) {
-            DDPageVM* vm = [_dataSource objectAtIndex:index];
-            //create new view if no view is available for recycling
-            if (view == nil)
-            {
-                CGFloat height = self.carousel.frame.size.height-80;
-                CGFloat width = MAX(height*vm.imageWidth/vm.imageHeight, 200);
-                width = MIN(width, SCREEN_WIDTH - 80);
-                view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, height, height)];
-                view.backgroundColor = [UIColor clearColor];
-                view.contentMode = UIViewContentModeScaleAspectFit;
-                view.clipsToBounds = YES;
-            }
-            [((UIImageView *)view) setImageWithURL:[NSURL URLWithString:vm.imageURL]];
-        }
-        return view;
-    }
-    
 
-    - (CGFloat)carousel:(__unused iCarousel *)carousel valueForOption:(iCarouselOption)option withDefault:(CGFloat)value
+- (NSInteger)numberOfItemsInCarousel:(__unused iCarousel *)carousel
+{
+    //must at least have 1 item so as to initalize scroll to custom index ,weird trick.
+    return MAX(_dataSource.count,1);
+}
+
+- (UIView *)carousel:(__unused iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
+{
+    DDPageVM* vm = [_dataSource objectAtIndex:index];
+    //create new view if no view is available for recycling
+    if (view == nil)
     {
-        //customize carousel display
-        switch (option)
+        CGFloat height = self.carousel.frame.size.height-80;
+        CGFloat width = MAX(height*vm.imageWidth/vm.imageHeight, 200);
+        width = MIN(width, SCREEN_WIDTH - 80);
+        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, height, height)];
+        view.backgroundColor = [UIColor clearColor];
+        view.contentMode = UIViewContentModeScaleAspectFit;
+        view.clipsToBounds = YES;
+    }
+    [((UIImageView *)view) setImageWithURL:[NSURL URLWithString:vm.imageURL]];
+    return view;
+}
+
+
+- (CGFloat)carousel:(__unused iCarousel *)carousel valueForOption:(iCarouselOption)option withDefault:(CGFloat)value
+{
+    //customize carousel display
+    switch (option)
+    {
+        case iCarouselOptionWrap:
         {
-            case iCarouselOptionWrap:
+            //normally you would hard-code this to YES or NO
+            return NO;
+        }
+        case iCarouselOptionSpacing:
+        {
+            //add a bit of spacing between the item views
+            return value * 1.03f;
+        }
+        case iCarouselOptionFadeMax:
+        {
+            if (self.carousel.type == iCarouselTypeCustom)
             {
-                //normally you would hard-code this to YES or NO
-                return NO;
+                //set opacity based on distance from camera
+                return 0.0f;
             }
-            case iCarouselOptionSpacing:
-            {
-                //add a bit of spacing between the item views
-                return value * 1.03f;
-            }
-            case iCarouselOptionFadeMax:
-            {
-                if (self.carousel.type == iCarouselTypeCustom)
-                {
-                    //set opacity based on distance from camera
-                    return 0.0f;
-                }
-                return value;
-            }
-            case iCarouselOptionShowBackfaces:
-            case iCarouselOptionRadius:
-            case iCarouselOptionAngle:
-            case iCarouselOptionArc:
-            case iCarouselOptionTilt:
-            case iCarouselOptionCount:
-            case iCarouselOptionFadeMin:
-            case iCarouselOptionFadeMinAlpha:
-            case iCarouselOptionFadeRange:
-            case iCarouselOptionOffsetMultiplier:
-            case iCarouselOptionVisibleItems:
-            {
-                return value;
-            }
+            return value;
+        }
+        case iCarouselOptionShowBackfaces:
+        case iCarouselOptionRadius:
+        case iCarouselOptionAngle:
+        case iCarouselOptionArc:
+        case iCarouselOptionTilt:
+        case iCarouselOptionCount:
+        case iCarouselOptionFadeMin:
+        case iCarouselOptionFadeMinAlpha:
+        case iCarouselOptionFadeRange:
+        case iCarouselOptionOffsetMultiplier:
+        case iCarouselOptionVisibleItems:
+        {
+            return value;
         }
     }
-    
+}
+
 #pragma mark iCarousel taps
-    
-    - (void)carousel:(__unused iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index
-    {
-        NSLog(@"Tapped view number: %zd", index);
-    }
-    
-    - (void)carouselCurrentItemIndexDidChange:(__unused iCarousel *)carousel
-    {
-        [self updateUIWithIndex:carousel.currentItemIndex];
-        [self.segmentedControl setSelectedSegmentIndex:carousel.currentItemIndex animated:YES];
-    }
+
+- (void)carousel:(__unused iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index
+{
+    NSLog(@"Tapped view number: %zd", index);
+}
+
+- (void)carouselCurrentItemIndexDidChange:(__unused iCarousel *)carousel
+{
+    [self updateUIWithIndex:carousel.currentItemIndex];
+    [self.segmentedControl setSelectedSegmentIndex:carousel.currentItemIndex animated:YES];
+}
 - (NSInteger)numberOfPlaceholdersInCarousel:(iCarousel *)carousel {
     return 2;
 }
@@ -200,7 +199,7 @@
 }
 
 -(void)updateUIWithIndex:(NSInteger)index {
-    if (_dataSource.count >= index+1) {
+    if (_dataSource) {
         _currentVM = [_dataSource objectAtIndex:index];
         [_avatarView setImageWithURL:[NSURL URLWithString:_currentVM.avatarURL] placeholderImage:[UIImage new]];
         _usernameLabel.text = _currentVM.username;
@@ -219,17 +218,13 @@
     [manager fetchAllReply:param ID:_pageVM.askID withBlock:^(NSMutableArray *askArray, NSMutableArray *replyArray) {
         _dataSource = nil;
         _dataSource = [NSMutableArray array];
-        NSLog(@"%zd askArray count",askArray.count);
         for (PIEPageEntity *entity in askArray) {
             DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
             [_dataSource addObject:vm];
-            NSLog(@"_dataSource addObject %@",vm.username);
-
         }
         for (PIEPageEntity *entity in replyArray) {
             DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
             [_dataSource addObject:vm];
-            NSLog(@"_dataSource addObject %@",vm.username);
         }
         [self updateUIWithIndex:0];
         [self updateSegmentTitles];
@@ -241,30 +236,21 @@
 - (void)reorderSourceAndScroll {
     for (int i =0; i < _dataSource.count; i++) {
         DDPageVM* vm = [_dataSource objectAtIndex:i];
-        if (vm.ID == _pageVM.ID && _pageVM.type == PIEPageTypeReply) {
-            DDPageVM* vmToInsert = [_dataSource objectAtIndex:i];
+        if (vm.ID == _pageVM.ID && vm.type == _pageVM.type && _pageVM.type == PIEPageTypeReply) {
+            DDPageVM* vm2 = [_dataSource objectAtIndex:i];
             [_dataSource removeObjectAtIndex:i];
-            if (_dataSource.count >= 2) {
-                DDPageVM* vm3 = [_dataSource objectAtIndex:1];
-                if (vm3.type == PIEPageTypeAsk) {
-                    [_dataSource insertObject:vmToInsert atIndex:2];
-                    [_carousel scrollToItemAtIndex:2 duration:0.05];
-                }
-                else {
-                    [_dataSource insertObject:vmToInsert atIndex:1];
-                    [_carousel scrollToItemAtIndex:1 duration:0.05];
-                }
+            DDPageVM* vm3 = [_dataSource objectAtIndex:1];
+            if (vm3.type == PIEPageTypeAsk) {
+                [_dataSource insertObject:vm2 atIndex:2];
+                [_carousel scrollToItemAtIndex:2 duration:0.05];
+            }
+            else {
+                [_dataSource insertObject:vm2 atIndex:1];
+                [_carousel scrollToItemAtIndex:1 duration:0.05];
             }
             //must animate scroll carousel in order to scroll segment.
+            
         }
-//        else if (vm.ID == _pageVM.ID) {
-//            DDPageVM* vm3 = [_dataSource objectAtIndex:1];
-//            if (vm3.ID == _pageVM.ID) {
-//                [_carousel scrollToItemAtIndex:1 duration:0.05];
-//            } else {
-//                [_carousel scrollToItemAtIndex:0 duration:0.05];
-//            }
-//        }
     }
 }
 - (void)updateSegmentTitles {
@@ -303,7 +289,7 @@
         _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
         _segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
         _segmentedControl.backgroundColor = [UIColor clearColor];
-
+        
     }
     return _segmentedControl;
 }

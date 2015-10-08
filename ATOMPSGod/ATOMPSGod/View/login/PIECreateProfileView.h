@@ -10,7 +10,7 @@
 #import "ATOMBaseView.h"
 #import "HMSegmentedControl.h"
 
-@interface ATOMCreateProfileView : ATOMBaseView
+@interface PIECreateProfileView : ATOMBaseView
 
 @property (nonatomic, strong) UIButton *backButton;
 @property (nonatomic, strong) UIButton *nextButton;

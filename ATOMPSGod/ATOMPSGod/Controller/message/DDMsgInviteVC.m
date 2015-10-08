@@ -10,7 +10,7 @@
 #import "ATOMInviteMessageTableViewCell.h"
 #import "DDDetailPageVC.h"
 #import "ATOMCommentDetailViewController.h"
-#import "ATOMOtherPersonViewController.h"
+
 #import "DDMsgInviteModel.h"
 #import "ATOMInviteMessage.h"
 #import "ATOMInviteMessageViewModel.h"
@@ -154,10 +154,8 @@
         //点击图片
         if (CGRectContainsPoint(cell.workImageView.frame, p)) {
             if ([viewModel.homepageViewModel.totalPSNumber integerValue] == 0) {
-                DDCommentPageVM* vm = [DDCommentPageVM new];
-                [vm setCommonViewModelWithAsk:viewModel.homepageViewModel];
                 DDCommentVC* mvc = [DDCommentVC new];
-                mvc.vm = vm;
+                mvc.vm = viewModel.homepageViewModel;
 //                mvc.delegate = self;
                 [self pushViewController:mvc animated:YES];
             } else {
@@ -166,15 +164,10 @@
                 [self pushViewController:hdvc animated:YES];
             }
         } else if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
-            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-            opvc.userID = viewModel.uid;
-            opvc.userName = viewModel.userName;
-            [self pushViewController:opvc animated:YES];
+            //ATOMOtherPersonViewControlle *opvc = [//ATOMOtherPersonViewControlle new];
+
         } else if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
-            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-            opvc.userID = viewModel.uid;
-            opvc.userName = viewModel.userName;
-            [self pushViewController:opvc animated:YES];
+
         }
         
     }

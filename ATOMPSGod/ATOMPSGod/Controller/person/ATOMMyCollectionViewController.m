@@ -9,7 +9,6 @@
 #import "ATOMMyCollectionViewController.h"
 #import "ATOMMyCollectionCollectionViewCell.h"
 #import "DDDetailPageVC.h"
-#import "ATOMOtherPersonViewController.h"
 #import "PIEPageEntity.h"
 #import "DDPageVM.h"
 #import "ATOMCollectionViewModel.h"
@@ -153,7 +152,7 @@ static float cellWidth;
             if (cell.viewModel.type == PIEPageTypeAsk) {
                 if (cell.viewModel.totalPSNumber == 0) {
                     DDCommentVC* mvc = [DDCommentVC new];
-                    mvc.vm = [model generatepageDetailViewModel];
+                    mvc.vm = model;
                     [self pushViewController:mvc animated:YES];
                 } else {
                     DDDetailPageVC *hdvc = [DDDetailPageVC new];
@@ -168,15 +167,10 @@ static float cellWidth;
                 [self pushViewController:hdvc animated:YES];
             }
         } else if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
-            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-            opvc.userName = cell.viewModel.userName;
-            opvc.userID = cell.viewModel.uid;
-            [self pushViewController:opvc animated:YES];
+
         }   else if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
-            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-            opvc.userName = cell.viewModel.userName;
-            opvc.userID = cell.viewModel.uid;
-            [self pushViewController:opvc animated:YES];
+            //ATOMOtherPersonViewControlle *opvc = [//ATOMOtherPersonViewControlle new];
+   
         }
     }
 }

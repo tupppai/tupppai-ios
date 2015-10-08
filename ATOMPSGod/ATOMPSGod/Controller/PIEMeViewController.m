@@ -63,7 +63,9 @@
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
     DDUserManager* user = [DDUserManager currentUser];
+    NSLog(@"[DDUserManager currentUser].avatar]%@",[DDUserManager currentUser].avatar);
     [_avatarView setImageWithURL:[NSURL URLWithString:[DDUserManager currentUser].avatar]];
+    
     _followCountLabel.text = [NSString stringWithFormat:@"%zd",user.attentionNumber];
     _fansCountLabel.text = [NSString stringWithFormat:@"%zd",user.fansNumber];
     _likedCountLabel.text = [NSString stringWithFormat:@"%zd",user.likeNumber];

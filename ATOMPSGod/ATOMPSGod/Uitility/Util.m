@@ -47,6 +47,10 @@ NSString* deviceName()
     return publishTime;
 }
 
++ (void) updateAvaterImage {
+    
+}
+
 +(void)ShowTSMessageError:(NSString*)str {
     [TSMessage showNotificationWithTitle:str
                                     type:TSMessageNotificationTypeError];

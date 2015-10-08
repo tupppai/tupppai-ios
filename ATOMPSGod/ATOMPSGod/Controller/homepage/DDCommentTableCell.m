@@ -57,9 +57,6 @@
 - (void)prepareForReuse
 {
     [super prepareForReuse];
-//    self.selectionStyle = UITableViewCellSelectionStyleNone;
-//    self.usernameLabel.font = [UIFont boldSystemFontOfSize:16.0];
-//    self.commentLabel.font = [UIFont systemFontOfSize:16.0];
 }
 
 -(void)getSource:(DDCommentVM *)vm {
@@ -67,7 +64,7 @@
     self.commentLabel.text = vm.text;
     self.likeButton.selected = vm.liked;
     self.likeButton.likeNumber = vm.likeNumber;
-    [self.avatarView setImageWithURL:[NSURL URLWithString:vm.avatar] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
+    [self.avatarView setImageWithURL:[NSURL URLWithString:vm.avatar]];
 }
 #pragma mark - Getters
 -(CommentLikeButton*)likeButton {
@@ -108,6 +105,7 @@
         _avatarView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
         _avatarView.layer.cornerRadius = kMessageTableViewCellAvatarHeight/2.0;
         _avatarView.layer.masksToBounds = YES;
+        [self.avatarView setImageWithURL:[NSURL URLWithString:[DDUserManager currentUser].avatar]];
     }
     return _avatarView;
 }

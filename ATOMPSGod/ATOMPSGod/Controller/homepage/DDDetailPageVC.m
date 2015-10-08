@@ -11,7 +11,7 @@
 #import "kfcDetailCell.h"
 #import "ATOMCommentDetailViewController.h"
 #import "DDCropImageVC.h"
-#import "ATOMOtherPersonViewController.h"
+
 #import "DDHotDetailPageVM.h"
 #import "DDCommentVM.h"
 #import "ATOMDetailPage.h"
@@ -33,20 +33,7 @@
 #import "DDCommentVC.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface DDDetailPageVC () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,PWRefreshBaseTableViewDelegate,ATOMViewControllerDelegate,PIEShareFunctionViewDelegate,JGActionSheetDelegate,JTSImageViewControllerInteractionsDelegate>
-
-@property (nonatomic, strong) PIEShareFunctionView *shareFunctionView;
-@property (nonatomic, strong) UIView *hotDetailView;
-@property (nonatomic, strong) RefreshTableView *tableView;
-@property (nonatomic, strong) UIImagePickerController *imagePickerController;
-@property (nonatomic, strong) UITapGestureRecognizer *tapHotDetailGesture;
-@property (nonatomic, strong) NSMutableArray *dataSource;
-@property (nonatomic, assign) NSInteger currentPage;
-@property (nonatomic, assign) BOOL canRefreshFooter;
-@property (nonatomic, strong) NSIndexPath* selectedIndexPath;
-@property (nonatomic, strong) kfcDetailCell* selectedHotDetailCell;
-@property (nonatomic, strong)  JGActionSheet * psActionSheet;
-@property (nonatomic, strong)  JGActionSheet * reportActionSheet;
+@interface DDDetailPageVC ()
 
 @end
 
@@ -435,14 +422,14 @@
 //        } else if (CGRectContainsPoint(_selectedHotDetailCell.topView.frame, p)) {
 //            p = [gesture locationInView:_selectedHotDetailCell.topView];
 //            if (CGRectContainsPoint(_selectedHotDetailCell.avatarView.frame, p)) {
-//                ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+//                //ATOMOtherPersonViewControlle *opvc = [//ATOMOtherPersonViewControlle new];
 //                opvc.userID = model.uid;
 //                opvc.userName = model.userName;
 //                [self pushViewController:opvc animated:YES];
 //            } else if (CGRectContainsPoint(_selectedHotDetailCell.psView.frame, p)) {
 //                [self.psActionSheet showInView:[AppDelegate APP].window animated:true];
 //            } else if (CGRectContainsPoint(_selectedHotDetailCell.usernameLabel.frame, p)) {
-//                ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+//                //ATOMOtherPersonViewControlle *opvc = [//ATOMOtherPersonViewControlle new];
 //                opvc.userID = model.uid;
 //                opvc.userName = model.userName;
 //                [self pushViewController:opvc animated:YES];

@@ -27,10 +27,5 @@
 
 
 -(void)setCommonViewModelWithAsk:(DDPageVM*)model;
--(void)setCommonViewModelWithFollow:(kfcFollowVM*)model;
-//-(void)setCommonViewModelWithHotDetail:(DDHotDetailPageVM*)model;
-
-- (void)toggleLike;
--(DDPageVM*)generateAskPageViewModel;
 
 @end

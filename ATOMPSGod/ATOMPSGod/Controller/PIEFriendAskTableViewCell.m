@@ -120,6 +120,8 @@
 
 - (void)carousel:(__unused iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index
 {
+    DDPageVM* vm = [_source objectAtIndex:index];
+    vm.image = ((UIImageView*)[carousel itemViewAtIndex:index]).image;
     NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[_source objectAtIndex:index] forKey:@"CellVM"];
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"tapCarouselItem"

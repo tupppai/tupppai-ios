@@ -6,20 +6,19 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMCreateProfileView.h"
+#import "PIECreateProfileView.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self;
 
-@interface ATOMCreateProfileView ()
+@interface PIECreateProfileView ()
 @property (nonatomic, strong) UIView *nicknameView;
 @property (nonatomic, strong) UIView *protocolView;
 @property (nonatomic, strong) UIView *sexPickerTopView;
 @property (nonatomic, strong) UIView *regionPickerTopView;
 @property (nonatomic, strong) UILabel *areaLabel;
 @property (nonatomic, strong) UIImageView *maskImageView;
-
 @end
 
-@implementation ATOMCreateProfileView
+@implementation PIECreateProfileView
 
 - (instancetype)init {
     self = [super init];
@@ -168,7 +167,7 @@
     [self.sexSegment mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
         make.top.equalTo(ws.userHeaderButton.mas_bottom).with.offset(5);
-        make.width.equalTo(@74);
+        make.width.equalTo(@150);
         make.height.equalTo(@50);
     }];
 }
@@ -326,13 +325,10 @@
 }
 - (HMSegmentedControl*)sexSegment {
     if (!_sexSegment) {
-        _sexSegment = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"男",@"女"]];
-        _sexSegment.frame = CGRectMake(0, 0, 200, 45);
-        _sexSegment.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor darkGrayColor], NSForegroundColorAttributeName, nil];
-        _sexSegment.selectedTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor colorWithHex:PIEColorHex], NSForegroundColorAttributeName, nil];
+        NSArray* array = [NSArray arrayWithObjects:[UIImage imageNamed:@"createprofile_gender_male"],[UIImage imageNamed:@"createprofile_gender_female"], nil];
+        NSArray* arraySelected = [NSArray arrayWithObjects:[UIImage imageNamed:@"createprofile_gender_male_selected"],[UIImage imageNamed:@"createprofile_gender_female_selected"], nil];
+        _sexSegment = [[HMSegmentedControl alloc] initWithSectionImages:array sectionSelectedImages:arraySelected];
         _sexSegment.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationNone;
-        _sexSegment.backgroundColor = [UIColor clearColor];
-        
         [_sexSegment setIndexChangeBlock:^(NSInteger index) {
             if (index == 0) {
                 _genderIsMan = YES;

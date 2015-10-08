@@ -10,7 +10,7 @@
 #import "PIEFriendFollowingTableCell.h"
 #import "DDCommentHeaderView.h"
 #import "ATOMMyConcernTableFooterView.h"
-#import "ATOMOtherPersonViewController.h"
+
 #import "DDFollow.h"
 #import "ATOMConcernViewModel.h"
 #import "DDFollowManager.h"
@@ -145,7 +145,6 @@
     CGPoint location = [gesture locationInView:_tableView];
     NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:location];
     if (indexPath) {
-        ATOMConcernViewModel *model = (indexPath.section == 0) ? _recommendDataSource[indexPath.row] : _myDataSource[indexPath.row];
         PIEFriendFollowingTableCell *cell = (PIEFriendFollowingTableCell *)[_tableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
             if (CGRectContainsPoint(cell.attentionButton.frame, p)) {
@@ -164,10 +163,7 @@
                     }
                 }];
             } else {
-                ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-                opvc.userID = model.uid;
-                opvc.userName = model.userName;
-                [self pushViewController:opvc animated:YES];
+
             }
         
     }

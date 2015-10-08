@@ -15,7 +15,7 @@
 #import "AppDelegate.h"
 #import "DDCropImageVC.h"
 #import "CommentCell.h"
-#import "ATOMOtherPersonViewController.h"
+#import "PIEFriendViewController.h"
 #import "ATOMComment.h"
 #import "DDCommentManager.h"
 #import "PIEShareFunctionView.h"
@@ -91,7 +91,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [self configTableView];
     [self configFooterRefresh];
     [self configTextInput];
-    [self addGestureToHeaderView];
     [self addGestureToCommentTableView];
     [self getDataSource];
     [self.textView becomeFirstResponder];
@@ -107,14 +106,10 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [super viewDidAppear:animated];
 }
 
-- (void)scrollElegantly {
-    [self.tableView setContentOffset:CGPointMake(0, _headerView.frame.size.height - kfcBottomViewHeight) animated:YES];
-}
 
 -(BOOL)hidesBottomBarWhenPushed {
     return YES;
 }
-
 
 #pragma mark - Overriden Methods
 
@@ -179,10 +174,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         else {
             DDCommentReplyVM* reply1 = commentVM.replyArray[0];
             commentToShow = [NSString stringWithFormat:@"%@//@%@:%@",self.textView.text,_targetCommentVM.username,_targetCommentVM.originText];
-//            NSLog(@"!!!%@",commentToShow);
-
             commentToShow = [NSString stringWithFormat:@"%@//@%@:%@",commentToShow,reply1.username,reply1.text];
-//            NSLog(@"!!!!%@",commentToShow);
         }
         commentVM.text = commentToShow;
 
@@ -201,17 +193,14 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
-    UITableViewScrollPosition scrollPosition = self.inverted ? UITableViewScrollPositionBottom : UITableViewScrollPositionTop;
     [self.tableView beginUpdates];
     [self.commentsNew insertObject:commentVM atIndex:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
-    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:scrollPosition animated:YES];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     // Fixes the cell from blinking (because of the transform, when using translucent cells)
     // See https://github.com/slackhq/SlackTextViewController/issues/94#issuecomment-69929927
 //    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    
-
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:self.textView.text forKey:@"content"];
     [param setObject:@(_vm.type) forKey:@"type"];
@@ -225,6 +214,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     }];
     self.textView.text = @"";
     _targetCommentVM = nil;
+    
 }
 
 - (NSString *)keyForTextCaching
@@ -379,10 +369,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         _targetCommentVM = _commentsNew[row];
     }
     self.textView.placeholder = [NSString stringWithFormat:@"回复@%@:",_targetCommentVM.username];
-//    _editingText = [NSString stringWithFormat:@"//@%@:%@",_targetCommentVM.username,_targetCommentVM.text];
-//    self.textView.text = textToEdit;
     [self.textView becomeFirstResponder];
-//    [self.textView setSelectedRange:NSMakeRange(0, 0)];
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 
 }
@@ -407,157 +394,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     }
     return [super textView:textView shouldChangeTextInRange:range replacementText:text];
 }
-#pragma mark - Lazy Initialize
 
-- (PIEShareFunctionView *)shareFunctionView {
-    if (!_shareFunctionView) {
-        _shareFunctionView = [PIEShareFunctionView new];
-        _shareFunctionView.delegate = self;
-    }
-    return _shareFunctionView;
-}
 
-- (UIImagePickerController *)imagePickerController {
-    if (_imagePickerController == nil) {
-        _imagePickerController = [UIImagePickerController new];
-        _imagePickerController.delegate = self;
-    }
-    return _imagePickerController;
-}
-- (JGActionSheet *)psActionSheet {
-    WS(ws);
-    if (!_psActionSheet) {
-        _psActionSheet = [JGActionSheet new];
-        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"下载素材", @"上传作品",@"取消"] buttonStyle:JGActionSheetButtonStyleDefault];
-        [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:2];
-        NSArray *sections = @[section];
-        _psActionSheet = [JGActionSheet actionSheetWithSections:sections];
-        _psActionSheet.delegate = self;
-        [_psActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
-            [sheet dismissAnimated:YES];
-        }];
-        [_psActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
-            switch (indexPath.row) {
-                case 0:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    [ws dealDownloadWork];
-                    break;
-                case 1:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    [ws dealUploadWork];
-                    break;
-                case 2:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    break;
-                default:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    break;
-            }
-        }];
-    }
-    return _psActionSheet;
-}
 
-- (void)tapOnImageView:(UIImage*)image withURL:(NSString*)url{
-    
-    // Create image info
-    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
-    if (image != nil) {
-        imageInfo.image = image;
-    } else {
-        imageInfo.imageURL = [NSURL URLWithString:url];
-    }
-    //    imageInfo.referenceRect = _selectedAskCell.userHeaderButton.frame;
-    //    imageInfo.referenceView = _selectedAskCell.userHeaderButton;
-    
-    // Setup view controller
-    JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
-                                           initWithImageInfo:imageInfo
-                                           mode:JTSImageViewControllerMode_Image
-                                           backgroundStyle:JTSImageViewControllerBackgroundOption_Scaled];
-    
-    // Present the view controller.
-    [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOffscreen];
-    //    imageViewer.interactionsDelegate = self;
-}
-
-- (JGActionSheet *)reportActionSheet {
-    WS(ws);
-    if (!_reportActionSheet) {
-        _reportActionSheet = [JGActionSheet new];
-        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"色情、淫秽或低俗内容", @"广告或垃圾信息",@"违反法律法规的内容"] buttonStyle:JGActionSheetButtonStyleDefault];
-        NSArray *sections = @[section];
-        _reportActionSheet = [JGActionSheet actionSheetWithSections:sections];
-        _reportActionSheet.delegate = self;
-        [_reportActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
-            [sheet dismissAnimated:YES];
-        }];
-        [_reportActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
-            NSMutableDictionary* param = [NSMutableDictionary new];
-            [param setObject:@(ws.vm.ID) forKey:@"target_id"];
-            [param setObject:@(ws.vm.type) forKey:@"target_type"];
-            UIButton* b = section.buttons[indexPath.row];
-            switch (indexPath.row) {
-                case 0:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                case 1:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                case 2:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                default:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    break;
-            }
-            
-            [ATOMReportModel report:param withBlock:^(NSError *error) {
-                if(!error) {
-                    [Hud text:@"已举报" inView:ws.view];
-                }
-            }];
-        }];
-    }
-    return _reportActionSheet;
-}
-
-#pragma mark - ATOMShareFunctionViewDelegate
-//-(void)tapWechatFriends {
-//    [DDShareSDKManager postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatFriends withPageType:(int)_vm.type];
-//}
-//-(void)tapWechatMoment {
-//    [DDShareSDKManager postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
-//}
-//-(void)tapSinaWeibo {
-//    [DDShareSDKManager postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:(int)_vm.type];
-//}
-//-(void)tapCollect {
-//    NSMutableDictionary *param = [NSMutableDictionary new];
-//    if (self.shareFunctionView.collectButton.selected) {
-//        //收藏
-//        [param setObject:@(1) forKey:@"status"];
-//    } else {
-//        //取消收藏
-//        [param setObject:@(0) forKey:@"status"];
-//    }
-//    [DDCollectManager toggleCollect:param withPageType:_vm.type withID:_vm.ID withBlock:^(NSError *error) {
-//        if (!error) {
-//            _vm.collected = self.shareFunctionView.collectButton.selected;
-//        }
-//    }];
-//}
-//-(void)tapInvite {
-//    DDInviteVC* ivc = [DDInviteVC new];
-////    ivc.askPageViewModel = [_vm generateAskPageViewModel];
-//    [self.navigationController pushViewController:ivc animated:NO];
-//}
-//-(void)tapReport {
-//    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
-//}
 #pragma mark init and config
 
 -(void)configTableView {
@@ -597,8 +436,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     self.shouldScrollToBottomAfterKeyboardShows = NO;
     self.inverted = NO;
 //    [self.leftButton setImage:[UIImage imageNamed:@"btn_emoji"] forState:UIControlStateNormal];
-    [self.rightButton setImage:[UIImage imageNamed:@"btn_comment_send"] forState:UIControlStateNormal];
-    [self.rightButton setTitle:@"" forState:UIControlStateNormal];
+//    [self.rightButton setImage:[UIImage imageNamed:@"btn_comment_send"] forState:UIControlStateNormal];
+    [self.rightButton setTitle:@"发送" forState:UIControlStateNormal];
     self.textInputbar.autoHideRightButton = YES;
     self.textInputbar.maxCharCount = 128;
     self.textInputbar.counterStyle = SLKCounterStyleSplit;
@@ -616,23 +455,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     _canRefreshFooter = NO;
 }
 
-- (void)addGestureToHeaderView {
-    UITapGestureRecognizer *g1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickShareButton)];
-    [_headerView.wechatButton addGestureRecognizer:g1];
-    UITapGestureRecognizer *g2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickMoreShareButton)];
-    [_headerView.moreButton addGestureRecognizer:g2];
-    UITapGestureRecognizer *g3 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickPraiseButton)];
-    [_headerView.likeButton addGestureRecognizer:g3];
-    UITapGestureRecognizer *g4 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickUserHeaderButton)];
-    [_headerView.avatarView addGestureRecognizer:g4];
-    UITapGestureRecognizer *g5 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickPSButton)];
-    [_headerView.psView addGestureRecognizer:g5];
-    UITapGestureRecognizer *g6 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickUserWorkImageView)];
-    [_headerView.imageViewMain addGestureRecognizer:g6];
-
-    _tapUserNameLabelGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapUserNameLabel)];
-    [_headerView.usernameLabel addGestureRecognizer:_tapUserNameLabelGesture];
-}
 
 - (void)addGestureToCommentTableView {
     _tapCommentTableGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCommentTable:)];
@@ -653,13 +475,15 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         DDCommentVM *model = (section == 0) ? _commentsHot[row] : _commentsNew[row];
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.avatarView.frame, p)) {
-            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-            opvc.userID = model.uid;
-            opvc.userName = model.username;
+            PIEFriendViewController *opvc = [PIEFriendViewController new];
+            DDPageVM* vm = [DDPageVM new];
+            vm.userID = model.uid;
+            vm.username = model.username;
+            opvc.pageVM = vm;
             [self.navigationController pushViewController:opvc animated:YES];
         }
 //        else if (CGRectContainsPoint(cell.usernameLabel.frame, p)) {
-//            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
+//            //ATOMOtherPersonViewControlle *opvc = [//ATOMOtherPersonViewControlle new];
 //            opvc.userID = model.uid;
 //            opvc.userName = model.username;
 //            [self pushViewController:opvc animated:YES];
@@ -673,41 +497,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     }
 }
 }
-//- (void)tapUserNameLabel {
-//    ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-//    opvc.userID = _vm.userID;
-//    opvc.userName = _vm.username;
-//    [self.navigationController pushViewController:opvc animated:YES];
-//}
-
-//- (void)clickShareButton{
-//    [DDShareSDKManager postSocialShare:_vm.pageID withSocialShareType:ATOMShareTypeWechatMoments withPageType:(int)_vm.type];
-//}
-//
-//- (void)clickMoreShareButton {
-//    self.shareFunctionView.collectButton.selected = _vm.collected;
-//    [self.textView resignFirstResponder];
-//    [self.shareFunctionView showInView:[AppDelegate APP].window animated:YES];
-//}
-
-//- (void)clickUserHeaderButton {
-//    ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-//    opvc.userID = _vm.userID;
-//    opvc.userName = _vm.username;
-//    [self.navigationController pushViewController:opvc animated:YES];
-//}
-//
-//- (void)clickPSButton {
-//    [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
-//}
-//
-//- (void)clickPraiseButton {
-//    [_headerView.likeButton toggleLike];
-//    [_vm toggleLike];
-//}
-//- (void)clickUserWorkImageView {
-//    [self tapOnImageView:_headerView.imageViewMain.image withURL:nil];
-//}
 
 #pragma mark Refresh
 
@@ -777,65 +566,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
             ws.canRefreshFooter = YES;
         }
     }];
-}
-
-#pragma mark - ATOMPSViewDelegate
-
-- (void)dealImageWithCommand:(NSString *)command {
-    if ([command isEqualToString:@"upload"]) {
-        [self dealUploadWork];
-    } else if ([command isEqualToString:@"download"]) {
-        [self dealDownloadWork];
-    }
-}
-#pragma mark - UIImagePickerControllerDelegate
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [self dismissViewControllerAnimated:YES completion:NULL];
-}
-
-//- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-//    WS(ws);
-//    [self dismissViewControllerAnimated:YES completion:^{
-//        DDCropImageVC *uwvc = [DDCropImageVC new];
-//        uwvc.originImage = info[UIImagePickerControllerOriginalImage];
-//        uwvc.askPageViewModel = [ws.vm generateAskPageViewModel];
-//        [ws.navigationController pushViewController:uwvc animated:YES];
-//    }];
-//}
-
-- (void)dealDownloadWork {
-    UIImageWriteToSavedPhotosAlbum(_headerView.imageViewMain.image
-                                   ,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
-}
-- (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error
-  contextInfo: (void *) contextInfo {
-    if(error != NULL){
-        [Hud text:@"保存失败"];
-    }else{
-        [Hud text:@"保存到相册成功"];
-    }
-}
-
-- (void)dealUploadWork {
-    [[NSUserDefaults standardUserDefaults] setObject:@"Reply" forKey:@"AskOrReply"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])
-    {
-        self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        [self presentViewController:_imagePickerController animated:YES completion:NULL];
-    }
-    else
-    {
-        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"😭" andMessage:@"找不到你的相册在哪"];
-        [alertView addButtonWithTitle:@"我知道了"
-                                 type:SIAlertViewButtonTypeDefault
-                              handler:^(SIAlertView *alert) {
-                              }];
-        alertView.transitionStyle = SIAlertViewTransitionStyleFade;
-        [alertView show];
-    }
-    
 }
 
 

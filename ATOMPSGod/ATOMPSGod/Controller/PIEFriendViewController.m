@@ -132,8 +132,6 @@
     controller.title = @"ta的求P";
     [controllerArray addObject:controller];
     
-
-    
     NSDictionary *parameters = @{
                                  CAPSPageMenuOptionScrollMenuBackgroundColor: [UIColor whiteColor],
                                  CAPSPageMenuOptionViewBackgroundColor: [UIColor whiteColor],
@@ -160,7 +158,7 @@
 //    [param setObject:@(15) forKey:@"size"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
-
+    
     [DDOtherUserManager getOtherUserInfo:param withBlock:^(ATOMUser *user) {
         if (user) {
             [self updateUserInterface:user];

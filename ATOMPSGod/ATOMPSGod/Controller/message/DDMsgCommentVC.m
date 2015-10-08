@@ -11,7 +11,7 @@
 #import "ATOMCommentMessageTableViewCell.h"
 #import "DDDetailPageVC.h"
 #import "ATOMCommentDetailViewController.h"
-#import "ATOMOtherPersonViewController.h"
+
 #import "DDMsgCommentModel.h"
 #import "DDCommentMsg.h"
 #import "DDCommentMsgVM.h"
@@ -117,15 +117,13 @@
             mvc.vm = viewModel.homepageViewModel;
             [self pushViewController:mvc animated:YES];
         } else if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
-            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-            opvc.userID = viewModel.uid;
-            [self pushViewController:opvc animated:YES];
+            //ATOMOtherPersonViewControlle *opvc = [//ATOMOtherPersonViewControlle new];
+     
         } else if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
             p = [gesture locationInView:cell.userNameLabel];
             if (p.x <= 16 * viewModel.userName.length) {
-                ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-                opvc.userID = viewModel.uid;
-                [self pushViewController:opvc animated:YES];
+                //ATOMOtherPersonViewControlle *opvc = [//ATOMOtherPersonViewControlle new];
+
             }
         }
         

@@ -8,7 +8,7 @@
 #import "DDHomeVC.h"
 #import "AppDelegate.h"
 #import "PIEReplyTableCell.h"
-#import "ATOMOtherPersonViewController.h"
+
 #import "DDPageVM.h"
 #import "kfcHomeScrollView.h"
 #import "DDHomePageManager.h"

@@ -164,7 +164,7 @@ static int collumnNumber = 3;
     if ([askViewModel.totalPSNumber integerValue] == 0) {
         
         DDCommentVC* mvc = [DDCommentVC new];
-        mvc.vm = [homepageViewModel generatepageDetailViewModel];;
+        mvc.vm = homepageViewModel;
 //        mvc.delegate = self;
         [self pushViewController:mvc animated:YES];
 

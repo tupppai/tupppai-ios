@@ -11,7 +11,7 @@
 #import "InviteCell.h"
 #import "ATOMInviteTableHeaderView.h"
 #import "DDCommentVC.h"
-#import "ATOMOtherPersonViewController.h"
+
 #import "DDPageVM.h"
 #import "DDHomeVC.h"
 #import "DDCommentHeaderView.h"
@@ -83,15 +83,10 @@
         InviteCell *cell = (InviteCell *)[_inviteView.inviteTableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
-            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-            opvc.userName = cell.viewModel.username;
-            opvc.userID = cell.viewModel.uid;
-            [self pushViewController:opvc animated:YES];
+            //ATOMOtherPersonViewControlle *opvc = [//ATOMOtherPersonViewControlle new];
         } else  if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
-            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-            [self pushViewController:opvc animated:YES];
-            opvc.userName = cell.viewModel.username;
-            opvc.userID = cell.viewModel.uid;
+            //ATOMOtherPersonViewControlle *opvc = [//ATOMOtherPersonViewControlle new];
+
         }else if (CGRectContainsPoint(cell.inviteButton.frame, p)) {
             if (!cell.inviteButton.selected) {
                 if (cell.viewModel.isFollow) {

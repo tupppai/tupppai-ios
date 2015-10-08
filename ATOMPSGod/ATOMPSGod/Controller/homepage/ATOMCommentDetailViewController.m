@@ -10,7 +10,7 @@
 #import "ATOMCommentDetailTableViewCell.h"
 #import "DDCommentVM.h"
 #import "ATOMCommentDetailView.h"
-#import "ATOMOtherPersonViewController.h"
+
 #import "DDCommentHeaderView.h"
 #import "DDCommentManager.h"
 #import "DDCommentVM.h"
@@ -189,15 +189,15 @@
         ATOMCommentDetailTableViewCell *cell = (ATOMCommentDetailTableViewCell *)[_commentDetailView.commentDetailTableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
-            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-            opvc.userID = model.uid;
-            opvc.userName = model.username;
-            [self pushViewController:opvc animated:YES];
+            //ATOMOtherPersonViewControlle *opvc = [//ATOMOtherPersonViewControlle new];
+//            opvc.userID = model.uid;
+//            opvc.userName = model.username;
+//            [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
-            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-            opvc.userID = model.uid;
-            opvc.userName = model.username;
-            [self pushViewController:opvc animated:YES];
+            //ATOMOtherPersonViewControlle *opvc = [//ATOMOtherPersonViewControlle new];
+//            opvc.userID = model.uid;
+//            opvc.userName = model.username;
+//            [self pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.likeButton.frame, p)) {
             //UI 颜色和数字
             [cell.likeButton toggleLike];

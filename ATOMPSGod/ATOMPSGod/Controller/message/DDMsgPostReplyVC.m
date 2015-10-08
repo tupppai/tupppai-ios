@@ -10,7 +10,7 @@
 #import "ATOMNoDataView.h"
 #import "ATOMTopicReplyMessageTableViewCell.h"
 #import "DDDetailPageVC.h"
-#import "ATOMOtherPersonViewController.h"
+
 #import "DDCommentVC.h"
 #import "ATOMReplyMessage.h"
 #import "ATOMReplyMessageViewModel.h"
@@ -154,23 +154,20 @@
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.workImageView.frame, p)) {
             if ([viewModel.homepageViewModel.totalPSNumber integerValue] == 0) {
-                DDCommentVC* mvc = [DDCommentVC new];
-                mvc.vm = [viewModel.homepageViewModel generatepageDetailViewModel];;
-//                mvc.delegate = self;
-                [self pushViewController:mvc animated:YES];
+//                DDCommentVC* mvc = [DDCommentVC new];
+//                mvc.vm = [viewModel.homepageViewModel generatepageDetailViewModel];;
+////                mvc.delegate = self;
+//                [self pushViewController:mvc animated:YES];
             } else {
                 DDDetailPageVC *hdvc = [DDDetailPageVC new];
                 hdvc.askVM = viewModel.homepageViewModel;
                 [self pushViewController:hdvc animated:YES];
             }
         } else if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
-            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-            opvc.userID = viewModel.uid;
-            [self pushViewController:opvc animated:YES];
+            //ATOMOtherPersonViewControlle *opvc = [//ATOMOtherPersonViewControlle new];
         } else if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
-            ATOMOtherPersonViewController *opvc = [ATOMOtherPersonViewController new];
-            opvc.userID = viewModel.uid;
-            [self pushViewController:opvc animated:YES];
+            //ATOMOtherPersonViewControlle *opvc = [//ATOMOtherPersonViewControlle new];
+
         }
     }
 }

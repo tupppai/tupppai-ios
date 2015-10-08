@@ -7,7 +7,7 @@
 //
 
 #import "DDCreateProfileVC.h"
-#import "ATOMCreateProfileView.h"
+#import "PIECreateProfileView.h"
 #import "DDPhoneRegisterVC.h"
 #import "ATOMHeaderImageCropperViewController.h"
 #import "ATOMUploadImage.h"
@@ -17,7 +17,7 @@
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface DDCreateProfileVC () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, ATOMCropHeaderImageCompleteProtocol>
-@property (nonatomic, strong) ATOMCreateProfileView *createProfileView;
+@property (nonatomic, strong) PIECreateProfileView *createProfileView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) UITapGestureRecognizer *tapSexViewGesture;
 @property (nonatomic, strong) UITapGestureRecognizer *tapRegionViewGesture;
@@ -93,7 +93,7 @@
 }
 
 - (void)createUI {
-    _createProfileView = [ATOMCreateProfileView new];
+    _createProfileView = [PIECreateProfileView new];
     self.view = _createProfileView;
     _createProfileView.nicknameTextField.delegate = self;
     [_createProfileView.userHeaderButton addTarget:self action:@selector(clickToManageAvatar) forControlEvents:UIControlEventTouchUpInside];
