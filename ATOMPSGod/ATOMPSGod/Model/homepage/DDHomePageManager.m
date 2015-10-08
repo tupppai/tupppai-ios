@@ -111,10 +111,11 @@
 
 - (NSArray *)getHomeImagesWithHomeType:(NSInteger)homeType {
     
-    NSArray *array = [self.homeImageDAO selectHomeImagesWithHomeType:homeType];
-    for (PIEPageEntity *homeImage in array) {
-        homeImage.askImageModelArray = [PIEAskImageDao selectByID:homeImage.ID];
-    }
+//    NSArray *array = [self.homeImageDAO selectHomeImagesWithHomeType:homeType];
+//    for (PIEPageEntity *homeImage in array) {
+//        homeImage.askImageModelArray = [PIEAskImageDao selectByID:homeImage.ID];
+//    }
+    NSArray *array;
     return array;
 }
 

@@ -7,7 +7,7 @@
 //
 
 #import "PIEPageButton.h"
-
+#import "POP.h"
 @implementation PIEPageButton
 
 -(void)awakeFromNib {
@@ -45,6 +45,7 @@
     } else {
         self.number--;
     }
+    [self scaleAnimation];
 }
 -(void)setHighlighted:(BOOL)highlighted {
     _imageView.highlighted = highlighted;
@@ -60,5 +61,14 @@
     _number = [numberString integerValue];
     _numberString = numberString;
     _label.text = numberString;
+}
+
+- (void)scaleAnimation
+{
+    POPSpringAnimation *scaleAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerScaleXY];
+    scaleAnimation.velocity = [NSValue valueWithCGSize:CGSizeMake(10.f, 10.f)];
+    scaleAnimation.toValue = [NSValue valueWithCGSize:CGSizeMake(1.0f, 1.0f)];
+    scaleAnimation.springBounciness = 12.0f;
+    [self.layer pop_addAnimation:scaleAnimation forKey:@"layerScaleSpringAnimation"];
 }
 @end

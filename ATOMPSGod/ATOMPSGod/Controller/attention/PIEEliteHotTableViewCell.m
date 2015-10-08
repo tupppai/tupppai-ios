@@ -126,11 +126,17 @@
             make.bottom.equalTo(_theImageView);
         }];
     }
-    [UIView animateWithDuration:0.3 animations:^{
-        [self layoutIfNeeded];
-    } completion:^(BOOL finished) {
-        _thumbView.toExpand = !_thumbView.toExpand;
-    }];
+    [UIView animateWithDuration:0.5
+                          delay:0
+         usingSpringWithDamping:0.7
+          initialSpringVelocity:0.7
+                        options:0
+                     animations:^{
+                         [self.contentView layoutIfNeeded];
+                     } completion:^(BOOL finished) {
+                         _thumbView.toExpand = !_thumbView.toExpand;
+                     }
+     ];
 }
 
 

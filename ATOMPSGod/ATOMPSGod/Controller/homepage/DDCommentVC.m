@@ -9,25 +9,15 @@
 #import "DDCommentVC.h"
 #import "DDCommentTableCell.h"
 #import "DDCommentTextView.h"
-#import "JGActionSheet.h"
-#import "PIEShareFunctionView.h"
 #import "DDCommentVM.h"
 #import "AppDelegate.h"
-#import "DDCropImageVC.h"
 #import "CommentCell.h"
 #import "PIEFriendViewController.h"
 #import "ATOMComment.h"
 #import "DDCommentManager.h"
-#import "PIEShareFunctionView.h"
 #import "CommentLikeButton.h"
-#import "DDCollectManager.h"
-#import "JGActionSheet.h"
-#import "DDInviteVC.h"
-#import "ATOMReportModel.h"
-#import "JTSImageViewController.h"
-#import "JTSImageInfo.h"
-#import "DDCommentHeaderView.h"
 #import "DDCommentReplyVM.h"
+#import "DDCommentHeaderView.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
@@ -35,19 +25,14 @@
 
 static NSString *MessengerCellIdentifier = @"MessengerCell";
 
-@interface DDCommentVC ()<PIEShareFunctionViewDelegate,ATOMViewControllerDelegate,JGActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,DZNEmptyDataSetSource>
+@interface DDCommentVC ()<DZNEmptyDataSetSource>
 
-@property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) NSMutableArray *commentsHot;
 @property (nonatomic, strong) NSMutableArray *commentsNew;
 @property (nonatomic, assign) NSInteger currentPage;
-@property (nonatomic, strong) UITapGestureRecognizer *tapUserNameLabelGesture;
 @property (nonatomic, strong) UITapGestureRecognizer *tapCommentTableGesture;
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, strong) DDCommentVM *targetCommentVM;
-@property (nonatomic, strong) PIEShareFunctionView *shareFunctionView;
-@property (nonatomic, strong)  JGActionSheet * psActionSheet;
-@property (nonatomic, strong)  JGActionSheet * reportActionSheet;
 @property (nonatomic, strong) NSIndexPath *selectedIndexpath;
 
 @end
@@ -184,7 +169,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         reply.text = _targetCommentVM.originText;
         reply.ID = _targetCommentVM.ID;
         [commentVM.replyArray insertObject:reply atIndex:0];
-
     }
     //第一次评论
     else {
@@ -438,6 +422,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 //    [self.leftButton setImage:[UIImage imageNamed:@"btn_emoji"] forState:UIControlStateNormal];
 //    [self.rightButton setImage:[UIImage imageNamed:@"btn_comment_send"] forState:UIControlStateNormal];
     [self.rightButton setTitle:@"发送" forState:UIControlStateNormal];
+    [self.rightButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     self.textInputbar.autoHideRightButton = YES;
     self.textInputbar.maxCharCount = 128;
     self.textInputbar.counterStyle = SLKCounterStyleSplit;

@@ -7,7 +7,7 @@
 //
 
 #import "PIEPageLikeButton.h"
-
+#import "POP.h"
 @implementation PIEPageLikeButton
 
 -(void)awakeFromNib {
@@ -36,6 +36,7 @@
     _selected = highlighted;
     _imageView.highlighted = highlighted;
     _label.highlighted= highlighted;
+    
 }
 
 //selected toggle color and number
@@ -44,6 +45,7 @@
     _selected = selected;
     _imageView.highlighted = selected;
     _label.selected= selected;
+    [self scaleAnimation];
 }
 
 -(void)setNumber:(NSInteger)number {
@@ -56,6 +58,35 @@
     _number = [numberString integerValue];
     _numberString = numberString;
     _label.numberString = numberString;
+}
+
+- (void)scaleToSmall
+{
+    POPBasicAnimation *scaleAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerScaleXY];
+    scaleAnimation.toValue = [NSValue valueWithCGSize:CGSizeMake(0.95f, 0.95f)];
+    [self.layer pop_addAnimation:scaleAnimation forKey:@"layerScaleSmallAnimation"];
+}
+- (void)scaleToBig
+{
+    POPBasicAnimation *scaleAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerScaleXY];
+    scaleAnimation.toValue = [NSValue valueWithCGSize:CGSizeMake(1.25f, 1.25f)];
+    [self.layer pop_addAnimation:scaleAnimation forKey:@"layerScaleBigAnimation"];
+}
+
+- (void)scaleAnimation
+{
+    POPSpringAnimation *scaleAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerScaleXY];
+    scaleAnimation.velocity = [NSValue valueWithCGSize:CGSizeMake(10.f, 10.f)];
+    scaleAnimation.toValue = [NSValue valueWithCGSize:CGSizeMake(1.0f, 1.0f)];
+    scaleAnimation.springBounciness = 12.0f;
+    [self.layer pop_addAnimation:scaleAnimation forKey:@"layerScaleSpringAnimation"];
+}
+
+- (void)scaleToDefault
+{
+    POPBasicAnimation *scaleAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerScaleXY];
+    scaleAnimation.toValue = [NSValue valueWithCGSize:CGSizeMake(1.f, 1.f)];
+    [self.layer pop_addAnimation:scaleAnimation forKey:@"layerScaleDefaultAnimation"];
 }
 
 @end
