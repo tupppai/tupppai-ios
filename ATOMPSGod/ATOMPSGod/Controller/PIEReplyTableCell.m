@@ -122,4 +122,71 @@
                      }
                          ];
 }
+
+- (void)animateThumbScale:(PIEAnimateViewType)type {
+    [self layoutIfNeeded];
+    if (_thumbView.toExpand) {
+        [_thumbView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_theImageView).with.offset(0);
+            make.leading.equalTo(_theImageView).with.offset(-1);
+            make.trailing.equalTo(_theImageView).with.offset(0);
+            make.bottom.equalTo(_theImageView).with.offset(0);
+        }];
+        
+        if (_thumbView.subviewCounts == 2) {
+            if (type == PIEAnimateViewTypeLeft) {
+                [_thumbView.rightView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    make.top.equalTo(_thumbView);
+                    make.trailing.equalTo(_thumbView);
+                    make.bottom.equalTo(_thumbView);
+                    make.width.equalTo(_thumbView).with.multipliedBy(0);
+                }];
+            } else {
+                [_thumbView.rightView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    make.top.equalTo(_thumbView);
+                    make.trailing.equalTo(_thumbView);
+                    make.bottom.equalTo(_thumbView);
+                    make.width.equalTo(_thumbView).with.multipliedBy(1);
+                }];
+            }
+        }
+    } else {
+
+        [_thumbView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.width.equalTo(@100);
+            make.height.equalTo(@100);
+            make.trailing.equalTo(_theImageView);
+            make.bottom.equalTo(_theImageView);
+        }];
+        if (_thumbView.subviewCounts == 2) {
+            [_thumbView.rightView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(_thumbView);
+                make.trailing.equalTo(_thumbView);
+                make.bottom.equalTo(_thumbView);
+                make.width.equalTo(_thumbView).with.multipliedBy(0.5);
+            }];
+//            [_thumbView.leftView mas_remakeConstraints:^(MASConstraintMaker *make) {
+//                make.top.equalTo(self);
+//                make.leading.equalTo(self);
+//                make.bottom.equalTo(self);
+//                make.trailing.equalTo(_thumbView.rightView.mas_leading);
+//            }];
+        }
+    }
+    
+    [UIView animateWithDuration:0.5
+                          delay:0
+         usingSpringWithDamping:0.7
+          initialSpringVelocity:0.7
+                        options:0
+                     animations:^{
+                         [self.contentView layoutIfNeeded];
+                     } completion:^(BOOL finished) {
+                         _thumbView.toExpand = !_thumbView.toExpand;
+                     }
+     ];
+}
+
+
+
 @end

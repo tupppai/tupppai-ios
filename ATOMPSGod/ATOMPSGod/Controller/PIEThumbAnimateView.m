@@ -32,12 +32,13 @@
         make.top.equalTo(self);
         make.trailing.equalTo(self);
         make.bottom.equalTo(self);
+        make.leading.equalTo(self);
     }];
     [_leftView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self);
         make.leading.equalTo(self);
         make.bottom.equalTo(self);
-        make.width.equalTo(self).with.multipliedBy(1);
+        make.trailing.equalTo(_rightView.mas_leading);
     }];
     [_originView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self);
@@ -71,19 +72,19 @@
     return _originView;
 }
 - (void)setSubviewCounts:(NSInteger)subviewCounts {
+    _subviewCounts = subviewCounts;
     if (subviewCounts == 2) {
         [_rightView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self);
             make.trailing.equalTo(self);
             make.bottom.equalTo(self);
-            make.leading.equalTo(_leftView.mas_trailing);
-//            make.width.equalTo(self).with.multipliedBy(0.5);
+            make.width.equalTo(self).with.multipliedBy(0.5).with.priorityLow();
         }];
         [_leftView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self);
             make.leading.equalTo(self);
             make.bottom.equalTo(self);
-            make.width.equalTo(self).with.multipliedBy(0.5);
+            make.trailing.equalTo(_rightView.mas_leading);
         }];
 
     }
@@ -92,7 +93,7 @@
             make.top.equalTo(self);
             make.trailing.equalTo(self);
             make.bottom.equalTo(self);
-            make.width.equalTo(self);
+            make.width.equalTo(self).with.multipliedBy(1);
         }];
         [_leftView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self);
