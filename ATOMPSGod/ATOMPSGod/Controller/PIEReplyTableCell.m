@@ -135,17 +135,11 @@
         
         if (_thumbView.subviewCounts == 2) {
             if (type == PIEAnimateViewTypeLeft) {
-                [_thumbView.rightView mas_remakeConstraints:^(MASConstraintMaker *make) {
-                    make.top.equalTo(_thumbView);
-                    make.trailing.equalTo(_thumbView);
-                    make.bottom.equalTo(_thumbView);
+                [_thumbView.rightView mas_updateConstraints:^(MASConstraintMaker *make) {
                     make.width.equalTo(_thumbView).with.multipliedBy(0);
                 }];
             } else {
-                [_thumbView.rightView mas_remakeConstraints:^(MASConstraintMaker *make) {
-                    make.top.equalTo(_thumbView);
-                    make.trailing.equalTo(_thumbView);
-                    make.bottom.equalTo(_thumbView);
+                [_thumbView.rightView mas_updateConstraints:^(MASConstraintMaker *make) {
                     make.width.equalTo(_thumbView).with.multipliedBy(1);
                 }];
             }
@@ -159,10 +153,7 @@
             make.bottom.equalTo(_theImageView);
         }];
         if (_thumbView.subviewCounts == 2) {
-            [_thumbView.rightView mas_remakeConstraints:^(MASConstraintMaker *make) {
-                make.top.equalTo(_thumbView);
-                make.trailing.equalTo(_thumbView);
-                make.bottom.equalTo(_thumbView);
+            [_thumbView.rightView mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.width.equalTo(_thumbView).with.multipliedBy(0.5);
             }];
 //            [_thumbView.leftView mas_remakeConstraints:^(MASConstraintMaker *make) {
