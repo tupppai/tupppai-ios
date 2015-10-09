@@ -63,8 +63,12 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
     [self configData];
     [self createNavBar];
     [self configSubviews];
-    [self getRemoteSourceFollow];
-    [self getRemoteSourceHot];
+    [self getRemoteSourceHot:^(BOOL finished) {
+        if (finished) {
+            [self getRemoteSourceFollow];
+        }
+    }];
+
 }
 
 #pragma mark - init methods
@@ -456,7 +460,7 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(1) forKey:@"page"];
-    [param setObject:@(15) forKey:@"size"];
+    [param setObject:@(5) forKey:@"size"];
     
     [PIEEliteManager getMyFollow:param withBlock:^(NSMutableArray *returnArray) {
         if (returnArray.count == 0) {
@@ -507,7 +511,7 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
 
 
 
-- (void)getRemoteSourceHot {
+- (void)getRemoteSourceHot:(void (^)(BOOL finished))block {
     WS(ws);
     [ws.sv.tableHot.footer endRefreshing];
     _currentIndex_hot = 1;
@@ -516,7 +520,7 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(1) forKey:@"page"];
-    [param setObject:@(15) forKey:@"size"];
+    [param setObject:@(8) forKey:@"size"];
     
     [PIEEliteManager getHotPages:param withBlock:^(NSMutableArray *returnArray) {
         if (returnArray.count == 0) {
@@ -533,6 +537,9 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
             [ws.sv.tableHot reloadData];
         }
         [ws.sv.tableHot.header endRefreshing];
+        if (block) {
+            block(YES);
+        }
     }];
 }
 - (void)getMoreRemoteSourceHot {
@@ -567,7 +574,7 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
     if (tableView == _sv.tableFollow) {
         [self getRemoteSourceFollow];
     } else  {
-        [self getRemoteSourceHot];
+        [self getRemoteSourceHot:nil];
     }
 }
 -(void)didPullRefreshUp:(UITableView *)tableView {

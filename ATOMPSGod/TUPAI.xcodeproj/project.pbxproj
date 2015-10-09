@@ -77,7 +77,7 @@
 		5C4C70DB1AB6FD5700358989 /* ATOMUploadImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4C70D51AB6FD5700358989 /* ATOMUploadImage.m */; };
 		5C4F5BCF1AA541DE00226F64 /* DDLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BCE1AA541DE00226F64 /* DDLoginVC.m */; };
 		5C4F5BD21AA5426700226F64 /* ATOMLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BD11AA5426700226F64 /* ATOMLoginView.m */; };
-		5C4F5BDC1AA555F900226F64 /* DDHomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BDB1AA555F900226F64 /* DDHomeVC.m */; };
+		5C4F5BDC1AA555F900226F64 /* PIENewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BDB1AA555F900226F64 /* PIENewViewController.m */; };
 		5C4F5BDF1AA556E600226F64 /* DDMessageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BDE1AA556E600226F64 /* DDMessageVC.m */; };
 		5C4F5BE51AA557AF00226F64 /* ATOMPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BE41AA557AF00226F64 /* ATOMPersonViewController.m */; };
 		5C4F5BEF1AA5893700226F64 /* UIActionSheet+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BEE1AA5893700226F64 /* UIActionSheet+Blocks.m */; };
@@ -464,6 +464,7 @@
 		F4AE73C01BBA8B7A00734BCB /* cellBG.png in Resources */ = {isa = PBXBuildFile; fileRef = F4AE73BF1BBA8B7A00734BCB /* cellBG.png */; settings = {ASSET_TAGS = (); }; };
 		F4AE73C31BBA90D800734BCB /* PIEFriendAskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE73C21BBA90D800734BCB /* PIEFriendAskViewController.m */; settings = {ASSET_TAGS = (); }; };
 		F4AE73C61BBA988900734BCB /* PIEFriendReplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE73C51BBA988900734BCB /* PIEFriendReplyViewController.m */; settings = {ASSET_TAGS = (); }; };
+		F4AFCD4B1BC79A3100027940 /* UIButton+Pop.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AFCD4A1BC79A3100027940 /* UIButton+Pop.m */; settings = {ASSET_TAGS = (); }; };
 		F4BBE7721BBE3F9D00003CDE /* PIEReplyCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE7701BBE3F9D00003CDE /* PIEReplyCollectionViewController.m */; settings = {ASSET_TAGS = (); }; };
 		F4BBE77C1BBE420400003CDE /* PIEReplyCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE77A1BBE420400003CDE /* PIEReplyCollectionCell.m */; settings = {ASSET_TAGS = (); }; };
 		F4D015BB1BA6AF7200A28329 /* PIEThumbAnimateView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D015BA1BA6AF7200A28329 /* PIEThumbAnimateView.m */; };
@@ -631,8 +632,8 @@
 		5C4F5BCE1AA541DE00226F64 /* DDLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLoginVC.m; sourceTree = "<group>"; };
 		5C4F5BD01AA5426700226F64 /* ATOMLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMLoginView.h; sourceTree = "<group>"; };
 		5C4F5BD11AA5426700226F64 /* ATOMLoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMLoginView.m; sourceTree = "<group>"; };
-		5C4F5BDA1AA555F900226F64 /* DDHomeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDHomeVC.h; path = homepage/DDHomeVC.h; sourceTree = "<group>"; };
-		5C4F5BDB1AA555F900226F64 /* DDHomeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDHomeVC.m; path = homepage/DDHomeVC.m; sourceTree = "<group>"; };
+		5C4F5BDA1AA555F900226F64 /* PIENewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIENewViewController.h; path = homepage/PIENewViewController.h; sourceTree = "<group>"; };
+		5C4F5BDB1AA555F900226F64 /* PIENewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIENewViewController.m; path = homepage/PIENewViewController.m; sourceTree = "<group>"; };
 		5C4F5BDD1AA556E600226F64 /* DDMessageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMessageVC.h; sourceTree = "<group>"; };
 		5C4F5BDE1AA556E600226F64 /* DDMessageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMessageVC.m; sourceTree = "<group>"; };
 		5C4F5BE31AA557AF00226F64 /* ATOMPersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMPersonViewController.h; sourceTree = "<group>"; };
@@ -1390,6 +1391,8 @@
 		F4AE73C21BBA90D800734BCB /* PIEFriendAskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEFriendAskViewController.m; sourceTree = "<group>"; };
 		F4AE73C41BBA988900734BCB /* PIEFriendReplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEFriendReplyViewController.h; sourceTree = "<group>"; };
 		F4AE73C51BBA988900734BCB /* PIEFriendReplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEFriendReplyViewController.m; sourceTree = "<group>"; };
+		F4AFCD491BC79A3100027940 /* UIButton+Pop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Pop.h"; sourceTree = "<group>"; };
+		F4AFCD4A1BC79A3100027940 /* UIButton+Pop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Pop.m"; sourceTree = "<group>"; };
 		F4BBE76F1BBE3F9D00003CDE /* PIEReplyCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEReplyCollectionViewController.h; sourceTree = "<group>"; };
 		F4BBE7701BBE3F9D00003CDE /* PIEReplyCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEReplyCollectionViewController.m; sourceTree = "<group>"; };
 		F4BBE7791BBE420400003CDE /* PIEReplyCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEReplyCollectionCell.h; sourceTree = "<group>"; };
@@ -1448,15 +1451,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3B0655A51BA2595A0094C46C /* Home */ = {
+		3B0655A51BA2595A0094C46C /* New */ = {
 			isa = PBXGroup;
 			children = (
-				5C4F5BDA1AA555F900226F64 /* DDHomeVC.h */,
-				5C4F5BDB1AA555F900226F64 /* DDHomeVC.m */,
+				5C4F5BDA1AA555F900226F64 /* PIENewViewController.h */,
+				5C4F5BDB1AA555F900226F64 /* PIENewViewController.m */,
 				F4D3686E1BA954EB00E6C91C /* ask */,
 				F402072C1BA7C01D0007CE02 /* reply */,
 			);
-			name = Home;
+			name = New;
 			sourceTree = "<group>";
 		};
 		3B2D8F871B9EE6F200D239F1 /* ImagePicker */ = {
@@ -2287,14 +2290,14 @@
 		5CDB05EA1AA400410089121E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				F42ED3AE1BC4FC250052A0BF /* ME */,
-				F4AE73B61BBA769000734BCB /* friend */,
-				F47205481BABA57F00E0ADA0 /* proceeding */,
-				F402072D1BA7C0380007CE02 /* Camera */,
-				3B2D8F871B9EE6F200D239F1 /* ImagePicker */,
-				3B0655A51BA2595A0094C46C /* Home */,
 				5C54DF171AB9738E00BDE34D /* common */,
 				5C4F5BD61AA551BF00226F64 /* Elite */,
+				3B0655A51BA2595A0094C46C /* New */,
+				F402072D1BA7C0380007CE02 /* Camera */,
+				F47205481BABA57F00E0ADA0 /* proceeding */,
+				F42ED3AE1BC4FC250052A0BF /* ME */,
+				F4AE73B61BBA769000734BCB /* friend */,
+				3B2D8F871B9EE6F200D239F1 /* ImagePicker */,
 				5C4F5BD71AA551BF00226F64 /* homepage */,
 				5C4F5BD81AA551BF00226F64 /* message */,
 				5C4F5BD91AA551BF00226F64 /* person */,
@@ -2324,6 +2327,7 @@
 		5CDB05EC1AA400410089121E /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				F4AFCD481BC79A0D00027940 /* UIView+Pop */,
 				F46117B11BAD1101001A6F1A /* IQKeyBoardManager */,
 				F4D368741BA9628600E6C91C /* CHTCollection */,
 				F40207371BA7C3F60007CE02 /* VVBlur */,
@@ -3350,6 +3354,15 @@
 			name = friend;
 			sourceTree = "<group>";
 		};
+		F4AFCD481BC79A0D00027940 /* UIView+Pop */ = {
+			isa = PBXGroup;
+			children = (
+				F4AFCD491BC79A3100027940 /* UIButton+Pop.h */,
+				F4AFCD4A1BC79A3100027940 /* UIButton+Pop.m */,
+			);
+			name = "UIView+Pop";
+			sourceTree = "<group>";
+		};
 		F4BBE76B1BBE327300003CDE /* fans */ = {
 			isa = PBXGroup;
 			children = (
@@ -3779,7 +3792,7 @@
 				E991EF001B735B7000025108 /* EAIntroPage.m in Sources */,
 				E95691AF1B22E88300DA84BB /* MTLModel+NSCoding.m in Sources */,
 				5C561A491AB7C7720052D4D5 /* ATOMUserDAO.m in Sources */,
-				5C4F5BDC1AA555F900226F64 /* DDHomeVC.m in Sources */,
+				5C4F5BDC1AA555F900226F64 /* PIENewViewController.m in Sources */,
 				5C436A931AB074EF00D14608 /* ATOMInviteMessageTableViewCell.m in Sources */,
 				E9FD023D1B29708200FC5E17 /* DDCommentPageVM.m in Sources */,
 				E94B03211B7C74E500863C6F /* DDCommentTableCell.m in Sources */,
@@ -3959,6 +3972,7 @@
 				5CADF3EE1AAC8A3100FF8015 /* ATOMPersonView.m in Sources */,
 				E90197351B32D2F800F46B78 /* MBProgressHUD.m in Sources */,
 				E99D2F5D1B1C7E8D000D7784 /* UIView+Screenshot.m in Sources */,
+				F4AFCD4B1BC79A3100027940 /* UIButton+Pop.m in Sources */,
 				E99C51111B85A2A6004CA47B /* UIImage+JTSImageEffects.m in Sources */,
 				E94B032A1B7DE6EC00863C6F /* UIColor+PSGod.m in Sources */,
 				5C9BDA001AA8303700715698 /* ATOMUploadWorkView.m in Sources */,

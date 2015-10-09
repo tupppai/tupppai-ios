@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
@@ -70,6 +70,7 @@
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="new_reply_follow" highlightedImage="new_reply_followed" translatesAutoresizingMaskIntoConstraints="NO" id="ov8-cU-PvT">
                         <rect key="frame" x="316" y="7" width="54" height="32"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="54" id="OrO-pM-E56"/>
                             <constraint firstAttribute="height" constant="32" id="Zzu-Lg-WdJ"/>
@@ -77,6 +78,7 @@
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CWC-Fy-Ux9" customClass="PIEPageButton">
                         <rect key="frame" x="84" y="314" width="35" height="30"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="30" id="BRk-Pn-6X1"/>
                             <constraint firstAttribute="width" priority="250" constant="35" id="JOt-nD-t8M"/>
@@ -90,6 +92,7 @@
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vV8-bh-K4z" customClass="PIEPageButton">
                         <rect key="frame" x="129" y="314" width="35" height="30"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="30" id="59F-ip-gNQ"/>
                             <constraint firstAttribute="height" constant="30" id="Uje-UQ-iV0"/>
@@ -104,6 +107,7 @@
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wlr-Je-B2P" customClass="PIEPageButton">
                         <rect key="frame" x="174" y="314" width="35" height="30"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="JaG-UI-z75"/>
                             <constraint firstAttribute="width" priority="250" constant="35" id="vsZ-N6-tSQ"/>
@@ -116,6 +120,7 @@
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tse-As-wf5" customClass="PIEPageLikeButton">
                         <rect key="frame" x="331" y="315" width="39" height="28"/>
+                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="39" id="3Iv-0v-6af"/>

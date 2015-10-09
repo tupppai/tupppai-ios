@@ -7,7 +7,7 @@
 //
 
 #import "PIETabBarController.h"
-#import "DDHomeVC.h"
+#import "PIENewViewController.h"
 #import "DDMessageVC.h"
 #import "PIEEliteViewController.h"
 #import "ATOMPersonViewController.h"
@@ -63,7 +63,7 @@ static dispatch_once_t once;
     });
 }
 - (void)configureTabBarController {
-    DDHomeVC *homePageViewController = [DDHomeVC new];
+    PIENewViewController *homePageViewController = [PIENewViewController new];
     PIEEliteViewController *myAttentionViewController = [PIEEliteViewController new];
     PIEProceedingViewController *proceedingViewController = [PIEProceedingViewController new];
     ATOMPersonViewController *personViewController = [ATOMPersonViewController new];

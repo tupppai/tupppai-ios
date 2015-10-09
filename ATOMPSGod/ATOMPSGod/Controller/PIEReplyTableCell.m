@@ -49,6 +49,7 @@
 -(void)prepareForReuse {
     [super prepareForReuse];
     [self mansoryInitThumbAnimateView];
+    _followView.hidden = NO;
 }
 - (void)injectSauce:(DDPageVM *)viewModel {
     _ID = viewModel.ID;
@@ -77,8 +78,6 @@
     [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(imageViewHeight)).with.priorityHigh();
     }];
-    
-    _thumbView.expandedSize = CGSizeMake(SCREEN_WIDTH, imageViewHeight);
     _thumbView.subviewCounts = viewModel.askImageModelArray.count;
     if (viewModel.askImageModelArray.count > 0) {
         PIEImageEntity* entity = [viewModel.askImageModelArray objectAtIndex:0];
@@ -88,6 +87,10 @@
             [_thumbView.leftView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
         }
     }
+    if (viewModel.userID == [DDUserManager currentUser].uid) {
+        _followView.hidden = YES;
+    }
+    
 }
 
 - (void)animateToggleExpanded {
@@ -120,4 +123,58 @@
                      }
                          ];
 }
+
+- (void)animateToggleExpanded:(PIEAnimateViewType)type {
+    if (_thumbView.subviewCounts == 1) {
+        [self layoutIfNeeded];
+        if (_thumbView.toExpand) {
+            [_thumbView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(_theImageView).with.offset(0);
+                make.leading.equalTo(_theImageView).with.offset(-1);
+                make.trailing.equalTo(_theImageView).with.offset(0);
+                make.bottom.equalTo(_theImageView).with.offset(0);
+            }];
+        } else {
+            [_thumbView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.width.equalTo(@100);
+                make.height.equalTo(@100);
+                make.trailing.equalTo(_theImageView);
+                make.bottom.equalTo(_theImageView);
+            }];
+        }
+        
+        [UIView animateWithDuration:0.5
+                              delay:0
+             usingSpringWithDamping:0.7
+              initialSpringVelocity:0.7
+                            options:0
+                         animations:^{
+                             [self.contentView layoutIfNeeded];
+                         } completion:^(BOOL finished) {
+                             _thumbView.toExpand = !_thumbView.toExpand;
+                         }
+         ];
+
+    }
+    if (_thumbView.subviewCounts == 2) {
+        if (type == PIEAnimateViewTypeRight) {
+            [_thumbView.rightView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(_theImageView).with.offset(0);
+                make.leading.equalTo(_theImageView).with.offset(-1);
+                make.trailing.equalTo(_theImageView).with.offset(0);
+                make.bottom.equalTo(_theImageView).with.offset(0);
+            }];
+        } else {
+            [_thumbView.rightView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.width.equalTo(@50);
+                make.height.equalTo(@100);
+                make.trailing.equalTo(_theImageView);
+                make.bottom.equalTo(_theImageView);
+            }];
+        }
+
+        }
+}
+   
+
 @end

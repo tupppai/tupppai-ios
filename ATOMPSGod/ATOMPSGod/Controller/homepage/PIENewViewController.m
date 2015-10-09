@@ -5,7 +5,7 @@
 //  Created by atom on 15/3/3.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
-#import "DDHomeVC.h"
+#import "PIENewViewController.h"
 #import "AppDelegate.h"
 #import "PIEReplyTableCell.h"
 
@@ -18,8 +18,6 @@
 #import "DDInviteVC.h"
 #import "JGActionSheet.h"
 #import "ATOMReportModel.h"
-#import "JTSImageViewController.h"
-#import "JTSImageInfo.h"
 #import "HMSegmentedControl.h"
 #import "DDCommentVC.h"
 #import "UITableView+FDTemplateLayoutCell.h"
@@ -36,7 +34,7 @@
 @class PIEPageEntity;
 #define AskCellWidth (SCREEN_WIDTH - 20) / 2.0
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
-@interface DDHomeVC() < UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,PWRefreshBaseCollectionViewDelegate,PIEShareFunctionViewDelegate,JGActionSheetDelegate,QBImagePickerControllerDelegate,CHTCollectionViewDelegateWaterfallLayout,UICollectionViewDelegate,UICollectionViewDataSource>
+@interface PIENewViewController() < UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,PWRefreshBaseCollectionViewDelegate,PIEShareFunctionViewDelegate,JGActionSheetDelegate,QBImagePickerControllerDelegate,CHTCollectionViewDelegateWaterfallLayout,UICollectionViewDelegate,UICollectionViewDataSource>
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureReply;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureAsk;
@@ -70,7 +68,7 @@
 
 @end
 
-@implementation DDHomeVC
+@implementation PIENewViewController
 
 static NSString *CellIdentifier = @"PIEReplyTableCell";
 static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
@@ -112,8 +110,11 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     _sourceAsk = [NSMutableArray new];
     _sourceReply = [NSMutableArray new];
     //    [self firstGetDataSourceFromDataBase];
-    [self getRemoteAskSource];
-    [self getRemoteReplySource];
+    [self getRemoteAskSource:^(BOOL finished) {
+        if (finished) {
+            [self getRemoteReplySource];
+        }
+    }];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_New" object:nil];
     
 }
@@ -267,7 +268,11 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
             CGPoint p = [gesture locationInView:_selectedReplyCell];
             
             //点击小图
-            if (CGRectContainsPoint(_selectedReplyCell.thumbView.frame, p)) {
+            if (CGRectContainsPoint(_selectedReplyCell.thumbView.leftView.frame, p)) {
+                [_selectedReplyCell animateToggleExpanded];
+            }
+            //点击小图
+            else if (CGRectContainsPoint(_selectedReplyCell.thumbView.rightView.frame, p)) {
                 [_selectedReplyCell animateToggleExpanded];
             }
             //点击大图
@@ -435,7 +440,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 //    return tableViewDataSource;
 //}
 //获取服务器的最新数据
-- (void)getRemoteAskSource {
+- (void)getRemoteAskSource:(void (^)(BOOL finished))block{
     WS(ws);
     _currentAskIndex = 1;
     [_askCollectionView.footer endRefreshing];
@@ -462,6 +467,9 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
             _canRefreshAskFooter = NO;
         }
         [ws.scrollView.collectionView.header endRefreshing];
+        if (block) {
+            block(YES);
+        }
     }];
 }
 
@@ -649,7 +657,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 
 
 - (void)loadNewRecentData {
-    [self getRemoteAskSource];
+    [self getRemoteAskSource:nil];
 }
 
 - (void)loadMoreRecentData {

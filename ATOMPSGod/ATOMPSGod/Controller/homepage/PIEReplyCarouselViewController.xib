@@ -121,8 +121,8 @@
                                 </constraint>
                             </constraints>
                         </imageView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F9S-X3-Axq">
-                            <rect key="frame" x="279" y="144" width="42" height="42"/>
+                        <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F9S-X3-Axq">
+                            <rect key="frame" x="279" y="126" width="42" height="42"/>
                             <animations/>
                             <state key="normal" image="pie_like">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -150,7 +150,7 @@
                         <constraint firstItem="pyi-Yf-Ai7" firstAttribute="top" secondItem="YJO-Is-7zc" secondAttribute="top" constant="-25" id="W2L-nE-hlR"/>
                         <constraint firstItem="Un8-ag-rXy" firstAttribute="top" secondItem="Tnj-17-4nM" secondAttribute="bottom" constant="8" id="aZO-j5-mFQ"/>
                         <constraint firstItem="Un8-ag-rXy" firstAttribute="leading" secondItem="YJO-Is-7zc" secondAttribute="leading" constant="20" id="cWe-Wq-4AO"/>
-                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="F9S-X3-Axq" secondAttribute="bottom" constant="20" id="csc-aF-PCo"/>
+                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="F9S-X3-Axq" secondAttribute="bottom" priority="750" constant="3" id="csc-aF-PCo"/>
                         <constraint firstItem="Un8-ag-rXy" firstAttribute="leading" secondItem="YJO-Is-7zc" secondAttribute="leading" constant="20" id="gMg-0f-kY6"/>
                         <constraint firstAttribute="trailing" secondItem="Un8-ag-rXy" secondAttribute="trailing" constant="20" id="hw8-hh-0jT"/>
                         <constraint firstAttribute="centerX" secondItem="pyi-Yf-Ai7" secondAttribute="centerX" id="k7z-CD-kt3"/>
@@ -158,7 +158,7 @@
                             <variation key="widthClass=compact" constant="8"/>
                         </constraint>
                         <constraint firstItem="pyi-Yf-Ai7" firstAttribute="centerX" secondItem="Tnj-17-4nM" secondAttribute="centerX" id="ofJ-l8-nJL"/>
-                        <constraint firstItem="F9S-X3-Axq" firstAttribute="top" secondItem="Un8-ag-rXy" secondAttribute="bottom" priority="750" constant="38" id="z1A-sb-mbE"/>
+                        <constraint firstItem="F9S-X3-Axq" firstAttribute="top" secondItem="Un8-ag-rXy" secondAttribute="bottom" priority="250" constant="20" id="z1A-sb-mbE"/>
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">

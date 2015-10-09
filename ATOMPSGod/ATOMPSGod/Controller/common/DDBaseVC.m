@@ -12,7 +12,7 @@
 #import "AppDelegate.h"
 #import "SIAlertView.h"
 
-#import "DDHomeVC.h"
+#import "PIENewViewController.h"
 #import "PIEEliteViewController.h"
 #import "PIEProceedingViewController.h"
 #import "PIEMeViewController.h"
@@ -32,11 +32,13 @@
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
-    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 15, 25)];
-    backButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
-    [backView addSubview:backButton];
+    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 40, 30)];
+    UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 30)];
+    backButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;    //this line make image align to left
+    backButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    backButton.imageView.contentMode = UIViewContentModeTopLeft;
     [backButton setImage:[UIImage imageNamed:@"PIE_icon_back"] forState:UIControlStateNormal];
+    [backView addSubview:backButton];
     UIBarButtonItem *barBackButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backView];
     [backButton addTarget:self action:@selector(popCurrentController) forControlEvents:UIControlEventTouchUpInside];
     _negativeSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
@@ -45,7 +47,9 @@
         self.navigationItem.leftBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:[[UIView alloc] initWithFrame:CGRectZero]]];
         self.navigationItem.leftBarButtonItems = nil;
     } else {
-        self.navigationItem.leftBarButtonItems = @[_negativeSpacer, barBackButtonItem];
+//        self.navigationItem.leftBarButtonItems = @[_negativeSpacer, barBackButtonItem];
+        self.navigationItem.leftBarButtonItem = barBackButtonItem;
+
     }
 }
 
@@ -83,7 +87,7 @@
     self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:viewController animated:animated];
-    if ([self isKindOfClass:[DDHomeVC class]]) {
+    if ([self isKindOfClass:[PIENewViewController class]]) {
         self.hidesBottomBarWhenPushed = NO;
     } else if ([self isKindOfClass:[PIEEliteViewController class]]){
         self.hidesBottomBarWhenPushed = NO;

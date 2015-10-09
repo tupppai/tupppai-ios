@@ -10,6 +10,7 @@
 #import "DDHotDetailManager.h"
 #import "PIEFriendViewController.h"
 #import "HMSegmentedControl.h"
+#import "UIImage+Blurring.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface PIEReplyCarouselViewController ()
@@ -57,11 +58,10 @@
     _avatarView.clipsToBounds = YES;
     [_likeButton setImage:[UIImage imageNamed:@"pie_like_selected"] forState:UIControlStateSelected];
     [_likeButton setImage:[UIImage imageNamed:@"pie_like_selected"] forState:UIControlStateHighlighted];
-    
+    _blurView.alpha = 0.3;
     _avatarView.userInteractionEnabled = YES;
     UITapGestureRecognizer *tapG1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToSeeFriend)];
     [_avatarView addGestureRecognizer:tapG1];
-    
     _usernameLabel.userInteractionEnabled = YES;
     UITapGestureRecognizer *tapG2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToSeeFriend)];
     [_usernameLabel addGestureRecognizer:tapG2];
@@ -73,6 +73,7 @@
 }
 - (IBAction)tapLikeButton:(id)sender {
     _likeButton.selected = !_likeButton.selected;
+    [_likeButton scaleAnimation];
     [DDService toggleLike:_likeButton.selected ID:_currentVM.ID type:_currentVM.type  withBlock:^(BOOL success) {
         if (success) {
             _pageVM.liked = _likeButton.selected;
@@ -85,31 +86,9 @@
 
 - (void)setupBlurredImage
 {
-    WS(ws);
-    dispatch_queue_t backgroundQueue = dispatch_queue_create("com.mycompany.myqueue", 0);
+    UIImage *theImage = _pageVM.image? :[UIImage imageNamed:@"psps"];
     
-    dispatch_async(backgroundQueue, ^{
-        //Code here is executed asynchronously
-        UIImage *theImage = _pageVM.image? :[UIImage imageNamed:@"psps"];
-        //create our blurred image
-        CIContext *context = [CIContext contextWithOptions:nil];
-        CIImage *inputImage = [CIImage imageWithCGImage:theImage.CGImage];
-        //setting up Gaussian Blur (we could use one of many filters offered by Core Image)
-        CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
-        [filter setValue:inputImage forKey:kCIInputImageKey];
-        [filter setValue:[NSNumber numberWithFloat:15.0f] forKey:@"inputRadius"];
-        CIImage *result = [filter valueForKey:kCIOutputImageKey];
-        //CIGaussianBlur has a tendency to shrink the image a little, this ensures it matches up exactly to the bounds of our original image
-        CGImageRef cgImage = [context createCGImage:result fromRect:[inputImage extent]];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [UIView animateWithDuration:1 animations:^{
-                ws.blurView.image = [UIImage imageWithCGImage:cgImage];
-            }];
-        });
-        
-    });
-    
+    self.blurView.image = [theImage gaussianBlurWithBias:1000];
 }
 #pragma mark iCarousel methods
 
@@ -239,17 +218,18 @@
         if (vm.ID == _pageVM.ID && vm.type == _pageVM.type && _pageVM.type == PIEPageTypeReply) {
             DDPageVM* vm2 = [_dataSource objectAtIndex:i];
             [_dataSource removeObjectAtIndex:i];
-            DDPageVM* vm3 = [_dataSource objectAtIndex:1];
-            if (vm3.type == PIEPageTypeAsk) {
-                [_dataSource insertObject:vm2 atIndex:2];
-                [_carousel scrollToItemAtIndex:2 duration:0.05];
-            }
-            else {
-                [_dataSource insertObject:vm2 atIndex:1];
-                [_carousel scrollToItemAtIndex:1 duration:0.05];
+            if (_dataSource.count >= 2) {
+                DDPageVM* vm3 = [_dataSource objectAtIndex:1];
+                if (vm3.type == PIEPageTypeAsk) {
+                    [_dataSource insertObject:vm2 atIndex:2];
+                    [_carousel scrollToItemAtIndex:2 duration:0.05];
+                }
+                else {
+                    [_dataSource insertObject:vm2 atIndex:1];
+                    [_carousel scrollToItemAtIndex:1 duration:0.05];
+                }
             }
             //must animate scroll carousel in order to scroll segment.
-            
         }
     }
 }

@@ -11,7 +11,11 @@
 #import "PIEThumbAnimateView.h"
 #import "PIEPageButton.h"
 #import "PIEPageLikeButton.h"
-//home reply
+typedef NS_ENUM(NSInteger, PIEAnimateViewType) {
+    PIEAnimateViewTypeLeft,
+    PIEAnimateViewTypeRight
+};
+
 @interface PIEReplyTableCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;

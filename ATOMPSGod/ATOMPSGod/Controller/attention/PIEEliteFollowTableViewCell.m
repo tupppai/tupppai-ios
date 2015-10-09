@@ -30,14 +30,16 @@
 }
 
 
-
+-(void)prepareForReuse {
+    [super prepareForReuse];
+    _followView.hidden = NO;
+}
 - (void)injectSauce:(DDPageVM *)viewModel {
     _ID = viewModel.ID;
     _askID = viewModel.askID;
     _followView.highlighted = viewModel.followed;
     _shareView.imageView.image = [UIImage imageNamed:@"hot_share"];
     _shareView.numberString = viewModel.shareCount;
-    
     _commentView.imageView.image = [UIImage imageNamed:@"hot_comment"];
     _commentView.numberString = viewModel.commentCount;
     
@@ -74,6 +76,10 @@
         _thumbView.hidden = YES;
         _likeView.hidden = YES;
         _bangView.hidden = NO;
+    }
+    
+    if (viewModel.userID == [DDUserManager currentUser].uid) {
+        _followView.hidden = YES;
     }
 }
 

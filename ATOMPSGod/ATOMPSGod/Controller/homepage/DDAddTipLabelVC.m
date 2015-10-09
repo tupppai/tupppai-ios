@@ -18,7 +18,7 @@
 #import "AppDelegate.h"
 #import "DDTipLabelVM.h"
 #import "DDDetailPageVC.h"
-#import "DDHomeVC.h"
+#import "PIENewViewController.h"
 #import "TSMessage.h"
 #import "DDNavigationController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
@@ -237,7 +237,7 @@
             DDDetailPageVC *hdvc = [DDDetailPageVC new];
             hdvc.askVM = ws.askPageViewModel;
             hdvc.fold = 0;
-            DDHomeVC *hvc = self.navigationController.viewControllers[0];
+            PIENewViewController *hvc = self.navigationController.viewControllers[0];
             [self pushViewController:hdvc animated:YES];
             [self.navigationController setViewControllers:@[hvc, hdvc]];
         }

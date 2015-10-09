@@ -38,6 +38,12 @@
         make.bottom.equalTo(_theImageView);
     }];
 }
+
+-(void)prepareForReuse {
+    [super prepareForReuse];
+    _followView.hidden = NO;
+}
+
 - (void)injectSauce:(DDPageVM *)viewModel {
     _ID = viewModel.ID;
     _askID = viewModel.askID;
@@ -86,6 +92,9 @@
         _thumbView.hidden = YES;
         _likeView.hidden = YES;
         _bangView.hidden = NO;
+    }
+    if (viewModel.userID == [DDUserManager currentUser].uid) {
+        _followView.hidden = YES;
     }
 }
 -(PIEThumbAnimateView *)thumbView {

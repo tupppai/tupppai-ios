@@ -10,7 +10,7 @@
 #import "ATOMShareView.h"
 #import "DDDetailPageVC.h"
 
-#import "DDHomeVC.h"
+#import "PIENewViewController.h"
 
 @interface DDShareVC ()
 
@@ -40,7 +40,7 @@
 - (void)clickRightButtonItem:(UIBarButtonItem *)barButtonItem {
     DDDetailPageVC *hdvc = [DDDetailPageVC new];
     hdvc.askVM = _askPageViewModel;
-    DDHomeVC *hvc = self.navigationController.viewControllers[0];
+    PIENewViewController *hvc = self.navigationController.viewControllers[0];
     [self pushViewController:hdvc animated:YES];
     [self.navigationController setViewControllers:@[hvc, hdvc]];
 }

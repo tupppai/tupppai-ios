@@ -10,6 +10,6 @@
 
 
 
-@interface DDHomeVC : DDBaseVC
+@interface PIENewViewController : DDBaseVC
 
 @end
