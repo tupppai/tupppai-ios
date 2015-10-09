@@ -8,9 +8,9 @@
 
 #import "DDHomePageManager.h"
 #import "DDSessionManager.h"
-#import "PIEPageEntity.h"
+
 #import "ATOMReplier.h"
-#import "DDPageVM.h"
+
 #import "PIEPageDAO.h"
 #import "kfcHomeScrollView.h"
 #import "PIEAskImageDao.h"

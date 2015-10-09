@@ -232,6 +232,8 @@
     [param setObject:@(ratio1) forKey:@"ratio"];
     [param setObject:@(_imageInfo1.imageID) forKey:@"upload_id"];
     [param setObject:@(_askIDToReply) forKey:@"ask_id"];
+    [param setObject:_inputTextView.text forKey:@"desc"];
+
     [DDService ddSaveReply:param withBlock:^(BOOL success) {
         [Hud dismiss:self.view];
         [Hud dismiss];

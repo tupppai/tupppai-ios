@@ -8,7 +8,7 @@
 
 #import "DDMyReplyManager.h"
 #import "ATOMUser.h"
-#import "PIEPageEntity.h"
+
 #import "ATOMImageTipLabel.h"
 
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self

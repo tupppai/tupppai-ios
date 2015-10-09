@@ -8,8 +8,8 @@
 
 #import "ATOMInviteMessageViewModel.h"
 #import "ATOMInviteMessage.h"
-#import "DDPageVM.h"
-#import "PIEPageEntity.h"
+
+
 
 @implementation ATOMInviteMessageViewModel
 

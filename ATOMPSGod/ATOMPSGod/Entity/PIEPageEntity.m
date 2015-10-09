@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "PIEPageEntity.h"
+
 
 @implementation PIEPageEntity
 
@@ -33,7 +33,7 @@
              @"collected" : @"collected",
              @"type" : @"type",
              @"askImageModelArray":@"ask_uploads",
-             @"followed":@"followed",
+             @"followed":@"is_follow",
              };
 }
 

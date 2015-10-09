@@ -7,7 +7,7 @@
 //
 
 #import "DDBaseVC.h"
-#import "DDPageVM.h"
+
 #import "DDCommentPageVM.h"
 @interface DDAddTipLabelVC : DDBaseVC
 @property (nonatomic, strong) DDPageVM *askPageViewModel;

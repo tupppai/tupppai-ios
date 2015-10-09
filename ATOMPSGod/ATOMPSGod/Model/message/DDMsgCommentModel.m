@@ -9,7 +9,7 @@
 #import "DDMsgCommentModel.h"
 #import "DDSessionManager.h"
 #import "DDCommentMsg.h"
-#import "PIEPageEntity.h"
+
 #import "ATOMImageTipLabel.h"
 
 @implementation DDMsgCommentModel

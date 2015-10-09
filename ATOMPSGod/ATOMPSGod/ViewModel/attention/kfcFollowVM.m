@@ -15,7 +15,7 @@
 #import "ATOMComment.h"
 #import "DDCommentVM.h"
 #import "DDBaseService.h"
-#import "DDPageVM.h"
+
 @implementation kfcFollowVM
 
 - (instancetype)init {

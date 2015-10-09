@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DDPageVM.h"
+
 
 @interface PIEMyAskCollectionCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *theImageView;

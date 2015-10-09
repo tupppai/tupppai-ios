@@ -12,7 +12,7 @@
 #import "ATOMInviteTableHeaderView.h"
 #import "DDCommentVC.h"
 
-#import "DDPageVM.h"
+
 #import "DDHomeVC.h"
 #import "DDCommentHeaderView.h"
 #import "DDInviteManager.h"

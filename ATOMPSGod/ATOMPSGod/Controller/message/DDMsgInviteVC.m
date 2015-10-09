@@ -14,8 +14,8 @@
 #import "DDMsgInviteModel.h"
 #import "ATOMInviteMessage.h"
 #import "ATOMInviteMessageViewModel.h"
-#import "PIEPageEntity.h"
-#import "DDPageVM.h"
+
+
 #import "RefreshFooterTableView.h"
 #import "DDCommentVC.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DDPageVM.h"
+
 @interface PIEReplyCollectionCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIImageView *likeView;

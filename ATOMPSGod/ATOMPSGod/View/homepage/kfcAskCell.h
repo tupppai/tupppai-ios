@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DDPageVM.h"
+
 @class kfcButton;
 
 @interface kfcAskCell : UITableViewCell

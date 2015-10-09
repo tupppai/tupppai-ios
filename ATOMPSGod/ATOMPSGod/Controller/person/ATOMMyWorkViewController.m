@@ -9,8 +9,8 @@
 #import "ATOMMyWorkViewController.h"
 //#import "ATOMMyWorkCollectionViewCell.h"
 #import "DDDetailPageVC.h"
-#import "PIEPageEntity.h"
-#import "DDPageVM.h"
+
+
 #import "ATOMReplyViewModel.h"
 #import "PWRefreshFooterCollectionView.h"
 #import "DDMyReplyManager.h"

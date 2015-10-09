@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DDPageVM.h"
+
 @interface PIEFriendViewController : DDBaseVC
 @property (nonatomic, strong) DDPageVM* pageVM;
 @end

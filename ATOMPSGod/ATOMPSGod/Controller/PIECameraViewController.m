@@ -12,7 +12,7 @@
 #import "AppDelegate.h"
 #import "PIETabBarController.h"
 #import "DDNavigationController.h"
-#import "PIEProceedingViewController.h"
+#import "PIEToHelpViewController.h"
 
 @interface PIECameraViewController () <QBImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *askBackgroundView;
@@ -50,15 +50,17 @@
     [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
 }
 - (void)tapOnG2 {
-    NSLog(@"tapOnG2");
-    [self dismissViewController];
-    NSLog(@"tapOnG2");
-    [[AppDelegate APP].mainTabBarController setSelectedIndex:3];
-    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-    PIEProceedingViewController* vc = (PIEProceedingViewController*)nav.topViewController;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        [vc navToToHelp];
-    });
+    [self dismissViewControllerAnimated:YES completion:^{
+        DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+        PIEToHelpViewController* vc = [PIEToHelpViewController new];
+        [nav pushViewController:vc animated:YES];
+    }];
+//    [[AppDelegate APP].mainTabBarController setSelectedIndex:3];
+//    PIEProceedingViewController* vc = (PIEProceedingViewController*)nav.topViewController;
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+//        [vc navToToHelp];
+//    });
+
 }
 - (void)dismissViewController {
     [self dismissViewControllerAnimated:YES completion:nil];

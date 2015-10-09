@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DDPageVM.h"
+
 @interface PIEDoneCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *theImageView;
 - (void)injectSauce:(DDPageVM*)vm;

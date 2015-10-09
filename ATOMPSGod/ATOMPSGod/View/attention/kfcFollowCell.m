@@ -7,7 +7,7 @@
 //
 
 #import "kfcFollowCell.h"
-#import "DDPageVM.h"
+
 #import "kfcButton.h"
 #import "ATOMTotalPSView.h"
 #import "kfcFollowVM.h"

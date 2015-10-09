@@ -7,7 +7,7 @@
 //
 
 #import "ATOMCollectionViewModel.h"
-#import "PIEPageEntity.h"
+
 
 @implementation ATOMCollectionViewModel
 

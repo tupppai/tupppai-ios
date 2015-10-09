@@ -8,7 +8,7 @@
 
 #import "ATOMInviteMessageTableViewCell.h"
 #import "ATOMInviteMessageViewModel.h"
-#import "DDPageVM.h"
+
 
 @implementation ATOMInviteMessageTableViewCell
 

@@ -7,7 +7,7 @@
 //
 
 #import "PIEProceedingManager.h"
-#import "PIEPageEntity.h"
+
 #import "ATOMImageTipLabel.h"
 
 @implementation PIEProceedingManager

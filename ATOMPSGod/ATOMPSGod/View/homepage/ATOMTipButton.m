@@ -8,7 +8,7 @@
 
 #import "ATOMTipButton.h"
 #import "DDTipLabelVM.h"
-#import "DDPageVM.h"
+
 
 @interface ATOMTipButton ()
 

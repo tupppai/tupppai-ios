@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
@@ -26,9 +26,11 @@
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="s5f-Tj-oBr" userLabel="blurView">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                    <animations/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gaH-5k-Hr1" userLabel="iCarousel" customClass="iCarousel">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="300"/>
+                    <animations/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="gaH-5k-Hr1" secondAttribute="height" multiplier="1.2" id="3Jq-LZ-nA0"/>
@@ -61,6 +63,7 @@
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="培伟哥哥" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" translatesAutoresizingMaskIntoConstraints="NO" id="Ej0-jf-tRH">
                             <rect key="frame" x="225" y="36" width="150" height="30"/>
+                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="ggh-JF-BOD"/>
                                 <constraint firstAttribute="width" constant="150" id="iK4-Kv-JRf"/>
@@ -71,6 +74,7 @@
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1小时前" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" translatesAutoresizingMaskIntoConstraints="NO" id="Tnj-17-4nM">
                             <rect key="frame" x="225" y="68" width="150" height="15"/>
+                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="150" id="SvT-0b-IKx"/>
                                 <constraint firstAttribute="height" constant="15" id="nHI-5a-PNx"/>
@@ -81,6 +85,7 @@
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我要一步一步打代码" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" translatesAutoresizingMaskIntoConstraints="NO" id="Un8-ag-rXy">
                             <rect key="frame" x="140" y="91" width="320" height="15"/>
+                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="DRc-rz-RMo"/>
                                 <constraint firstAttribute="width" constant="320" id="IaP-3O-ucJ"/>
@@ -106,6 +111,7 @@
                         </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="psps.png" translatesAutoresizingMaskIntoConstraints="NO" id="pyi-Yf-Ai7">
                             <rect key="frame" x="275" y="-25" width="50" height="50"/>
+                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="NHx-rK-Vgx">
                                     <variation key="widthClass=compact" constant="40"/>
@@ -117,6 +123,7 @@
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F9S-X3-Axq">
                             <rect key="frame" x="279" y="144" width="42" height="42"/>
+                            <animations/>
                             <state key="normal" image="pie_like">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -125,6 +132,7 @@
                             </connections>
                         </button>
                     </subviews>
+                    <animations/>
                     <color key="backgroundColor" red="0.22352942824363708" green="0.18431372940540314" blue="0.058823533356189728" alpha="0.47999999999999998" colorSpace="deviceRGB"/>
                     <constraints>
                         <constraint firstAttribute="centerX" secondItem="Un8-ag-rXy" secondAttribute="centerX" id="1L8-l9-7s1"/>
@@ -171,6 +179,7 @@
                     </variation>
                 </view>
             </subviews>
+            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="gaH-5k-Hr1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="807-PI-7hd"/>

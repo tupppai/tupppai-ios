@@ -7,7 +7,7 @@
 //
 
 #import "DDBaseVC.h"
-#import "DDPageVM.h"
+
 @interface PIEFriendAskViewController : DDBaseVC
 @property (nonatomic, strong) DDPageVM* pageVM;
 @end

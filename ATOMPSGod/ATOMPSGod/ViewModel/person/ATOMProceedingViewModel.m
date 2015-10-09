@@ -7,7 +7,7 @@
 //
 
 #import "ATOMProceedingViewModel.h"
-#import "PIEPageEntity.h"
+
 
 @implementation ATOMProceedingViewModel
 

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DDPageVM.h"
+
 @interface PIEFriendReplyCollectionViewCell : UICollectionViewCell
 @property (strong, nonatomic)  UIImageView *theImageView;
 - (void)injectSource:(DDPageVM*)vm;

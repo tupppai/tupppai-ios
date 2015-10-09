@@ -8,7 +8,7 @@
 
 #import "DDMsgInviteModel.h"
 #import "DDSessionManager.h"
-#import "PIEPageEntity.h"
+
 #import "ATOMInviteMessage.h"
 #import "ATOMImageTipLabel.h"
 

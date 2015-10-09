@@ -8,7 +8,7 @@
 
 #import "DDBaseVC.h"
 #import "DDCommentPageVM.h"
-#import "DDPageVM.h"
+
 
 @interface DDDetailPageVC : DDBaseVC
 

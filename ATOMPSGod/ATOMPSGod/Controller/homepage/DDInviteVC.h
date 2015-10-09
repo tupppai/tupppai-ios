@@ -7,7 +7,7 @@
 //
 
 #import "DDBaseVC.h"
-#import "DDPageVM.h"
+
 #import "ATOMRecommendUser.h"
 
 @interface DDInviteVC : DDBaseVC

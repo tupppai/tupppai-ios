@@ -7,7 +7,7 @@
 //
 
 #import "kfcHotCell.h"
-#import "DDPageVM.h"
+
 #import "ATOMTipButton.h"
 #import "DDTipLabelVM.h"
 #import "ATOMReplierViewModel.h"

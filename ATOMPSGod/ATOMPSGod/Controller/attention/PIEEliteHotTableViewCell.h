@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DDPageVM.h"
+
 #import "PIEThumbAnimateView.h"
 #import "PIEPageButton.h"
 #import "PIEPageLikeButton.h"

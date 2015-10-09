@@ -1,7 +1,7 @@
 
 #import <Foundation/Foundation.h>
 #import "kfcFollowVM.h"
-#import "DDPageVM.h"
+
 #import "DDHotDetailPageVM.h"
 
 @interface DDCommentPageVM : NSObject

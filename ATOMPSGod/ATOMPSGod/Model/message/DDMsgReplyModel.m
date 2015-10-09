@@ -9,7 +9,7 @@
 #import "DDMsgReplyModel.h"
 #import "DDSessionManager.h"
 #import "ATOMReplyMessage.h"
-#import "PIEPageEntity.h"
+
 #import "ATOMImageTipLabel.h"
 
 @implementation DDMsgReplyModel

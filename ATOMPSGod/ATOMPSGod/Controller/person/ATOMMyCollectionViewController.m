@@ -9,8 +9,8 @@
 #import "ATOMMyCollectionViewController.h"
 #import "ATOMMyCollectionCollectionViewCell.h"
 #import "DDDetailPageVC.h"
-#import "PIEPageEntity.h"
-#import "DDPageVM.h"
+
+
 #import "ATOMCollectionViewModel.h"
 #import "DDMyCollectionManager.h"
 #import "PWRefreshFooterCollectionView.h"

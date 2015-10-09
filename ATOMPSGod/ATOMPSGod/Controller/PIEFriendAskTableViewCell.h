@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "iCarousel.h"
-#import "DDPageVM.h"
+
 @interface PIEFriendAskTableViewCell : UITableViewCell<iCarouselDataSource,iCarouselDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *allWorkDescLabel;

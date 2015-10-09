@@ -7,7 +7,7 @@
 //
 
 #import "DDMyCollectionManager.h"
-#import "PIEPageEntity.h"
+
 #import "ATOMImageTipLabel.h"
 
 @implementation DDMyCollectionManager

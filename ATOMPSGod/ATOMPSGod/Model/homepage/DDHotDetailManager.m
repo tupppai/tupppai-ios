@@ -14,7 +14,7 @@
 #import "ATOMDetailImageDAO.h"
 #import "PIEPageDAO.h"
 #import "ATOMImageTipLabel.h"
-#import "PIEPageEntity.h"
+
 #import "PIEImageEntity.h"
 @interface DDHotDetailManager ()
 @property (nonatomic, strong) ATOMDetailImageDAO *detailImageDAO;

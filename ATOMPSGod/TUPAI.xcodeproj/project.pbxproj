@@ -447,6 +447,9 @@
 		F46117F01BAE556B001A6F1A /* PIEEliteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F46117EF1BAE556B001A6F1A /* PIEEliteViewController.m */; settings = {ASSET_TAGS = (); }; };
 		F46117F31BAE558C001A6F1A /* PIEEliteScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F46117F21BAE558C001A6F1A /* PIEEliteScrollView.m */; settings = {ASSET_TAGS = (); }; };
 		F462A0511BB254570058EAF4 /* plus_sign.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F462A0501BB254570058EAF4 /* plus_sign.jpg */; settings = {ASSET_TAGS = (); }; };
+		F46521E81BC75D1F0043D706 /* PIEToHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F46521E71BC75D1F0043D706 /* PIEToHelpViewController.m */; settings = {ASSET_TAGS = (); }; };
+		F46521EC1BC763870043D706 /* PIEToHelpTableViewCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = F46521EA1BC763870043D706 /* PIEToHelpTableViewCell2.m */; settings = {ASSET_TAGS = (); }; };
+		F46521ED1BC763870043D706 /* PIEToHelpTableViewCell2.xib in Resources */ = {isa = PBXBuildFile; fileRef = F46521EB1BC763870043D706 /* PIEToHelpTableViewCell2.xib */; settings = {ASSET_TAGS = (); }; };
 		F472054B1BABA5B900E0ADA0 /* PIEProceedingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F472054A1BABA5B900E0ADA0 /* PIEProceedingViewController.m */; };
 		F472054E1BABA63000E0ADA0 /* PIEProceedingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F472054D1BABA63000E0ADA0 /* PIEProceedingScrollView.m */; };
 		F47205521BABE87D00E0ADA0 /* PIEMyAskCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F47205501BABE87D00E0ADA0 /* PIEMyAskCollectionCell.m */; };
@@ -1359,6 +1362,11 @@
 		F46117F11BAE558C001A6F1A /* PIEEliteScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteScrollView.h; sourceTree = "<group>"; };
 		F46117F21BAE558C001A6F1A /* PIEEliteScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteScrollView.m; sourceTree = "<group>"; };
 		F462A0501BB254570058EAF4 /* plus_sign.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = plus_sign.jpg; sourceTree = "<group>"; };
+		F46521E61BC75D1F0043D706 /* PIEToHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEToHelpViewController.h; sourceTree = "<group>"; };
+		F46521E71BC75D1F0043D706 /* PIEToHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEToHelpViewController.m; sourceTree = "<group>"; };
+		F46521E91BC763870043D706 /* PIEToHelpTableViewCell2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEToHelpTableViewCell2.h; sourceTree = "<group>"; };
+		F46521EA1BC763870043D706 /* PIEToHelpTableViewCell2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEToHelpTableViewCell2.m; sourceTree = "<group>"; };
+		F46521EB1BC763870043D706 /* PIEToHelpTableViewCell2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEToHelpTableViewCell2.xib; sourceTree = "<group>"; };
 		F47205491BABA5B900E0ADA0 /* PIEProceedingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEProceedingViewController.h; sourceTree = "<group>"; };
 		F472054A1BABA5B900E0ADA0 /* PIEProceedingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEProceedingViewController.m; sourceTree = "<group>"; };
 		F472054C1BABA63000E0ADA0 /* PIEProceedingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIEProceedingScrollView.h; path = ../View/homepage/PIEProceedingScrollView.h; sourceTree = "<group>"; };
@@ -3288,9 +3296,22 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		F46521E51BC75CFE0043D706 /* ToHelp */ = {
+			isa = PBXGroup;
+			children = (
+				F46521E61BC75D1F0043D706 /* PIEToHelpViewController.h */,
+				F46521E71BC75D1F0043D706 /* PIEToHelpViewController.m */,
+				F46521E91BC763870043D706 /* PIEToHelpTableViewCell2.h */,
+				F46521EA1BC763870043D706 /* PIEToHelpTableViewCell2.m */,
+				F46521EB1BC763870043D706 /* PIEToHelpTableViewCell2.xib */,
+			);
+			name = ToHelp;
+			sourceTree = "<group>";
+		};
 		F47205481BABA57F00E0ADA0 /* proceeding */ = {
 			isa = PBXGroup;
 			children = (
+				F46521E51BC75CFE0043D706 /* ToHelp */,
 				F472054C1BABA63000E0ADA0 /* PIEProceedingScrollView.h */,
 				F472054D1BABA63000E0ADA0 /* PIEProceedingScrollView.m */,
 				F47205491BABA5B900E0ADA0 /* PIEProceedingViewController.h */,
@@ -3457,7 +3478,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = PIE;
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Shenzhen Pires Internet Technology CO.,LTD";
 				TargetAttributes = {
 					5CDB05C01AA3FE520089121E = {
@@ -3536,6 +3557,7 @@
 				E900AB5B1B450E970019BAEA /* Images.xcassets in Resources */,
 				5C7861311AAF4DD200E87C77 /* bg_main@2x.png in Resources */,
 				F4310B0F1BB78D16007F8FF5 /* PIESignUpProfileViewController.xib in Resources */,
+				F46521ED1BC763870043D706 /* PIEToHelpTableViewCell2.xib in Resources */,
 				F4DC3D401BC131BA00DCF72F /* PIEFriendAskTableViewCell.xib in Resources */,
 				F4AE73BE1BBA770000734BCB /* PIEFriendViewController.xib in Resources */,
 				5C9BDA4C1AA85E5600715698 /* box-shadow.png in Resources */,
@@ -3776,6 +3798,7 @@
 				5C535CB61AF1FC8A00BF30D1 /* ATOMNoDataView.m in Sources */,
 				F4D07A5D1BBA3AB70016A8B5 /* PIEEliteManager.m in Sources */,
 				5CDB06011AA405A40089121E /* UIColor+CIELAB.m in Sources */,
+				F46521E81BC75D1F0043D706 /* PIEToHelpViewController.m in Sources */,
 				E95691B11B22E88300DA84BB /* MTLReflection.m in Sources */,
 				E99D2F5B1B1C7E8D000D7784 /* UIImage+Saving.m in Sources */,
 				5CAB05A51ADC144000BCF24B /* ATOMFaceView.m in Sources */,
@@ -3887,6 +3910,7 @@
 				5C0F04D91ADCB049002003AE /* DDMsgCommentModel.m in Sources */,
 				5C6776B31AAC111C00320522 /* ATOMInputTipLabelTextView.m in Sources */,
 				3B2D90FE1BA03FB000D6A243 /* SZTextView.m in Sources */,
+				F46521EC1BC763870043D706 /* PIEToHelpTableViewCell2.m in Sources */,
 				E95691B01B22E88300DA84BB /* MTLModel.m in Sources */,
 				3BE1AECA1B9FE9C900CE2303 /* QBAssetCell.m in Sources */,
 				E900AB431B41153A0019BAEA /* AFNetworkReachabilityManager.m in Sources */,
@@ -4033,6 +4057,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development IOS Push Services: xyz.ipeiwei.www";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -4133,6 +4158,7 @@
 					"$(inherited)",
 					Reveal,
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.qiupsdashen.www;
 				PRODUCT_NAME = TUPAI;
 				PROVISIONING_PROFILE = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
@@ -4174,6 +4200,7 @@
 					"$(inherited)",
 					Reveal,
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.qiupsdashen.www;
 				PRODUCT_NAME = TUPAI;
 				PROVISIONING_PROFILE = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
@@ -4198,6 +4225,7 @@
 				);
 				INFOPLIST_FILE = ATOMPSGodTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "ATOM.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = TUPAI;
 				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TUPAI.app/TUPAI";
@@ -4216,6 +4244,7 @@
 				);
 				INFOPLIST_FILE = ATOMPSGodTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "ATOM.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = TUPAI;
 				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TUPAI.app/TUPAI";
@@ -4297,6 +4326,7 @@
 					"$(inherited)",
 					Reveal,
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.qiupsdashen.www;
 				PRODUCT_NAME = TUPAI;
 				PROVISIONING_PROFILE = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
@@ -4317,6 +4347,7 @@
 				);
 				INFOPLIST_FILE = ATOMPSGodTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "ATOM.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = TUPAI;
 				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TUPAI.app/TUPAI";

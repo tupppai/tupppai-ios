@@ -7,7 +7,7 @@
 //
 
 #import "DDOtherUserManager.h"
-#import "PIEPageEntity.h"
+
 #import "ATOMImageTipLabel.h"
 #import "ATOMUser.h"
 #import "PIEImageEntity.h"

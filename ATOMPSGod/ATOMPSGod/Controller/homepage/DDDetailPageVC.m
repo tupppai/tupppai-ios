@@ -17,7 +17,7 @@
 #import "ATOMDetailPage.h"
 #import "ATOMComment.h"
 #import "DDHotDetailManager.h"
-#import "DDPageVM.h"
+
 #import "PIEShareFunctionView.h"
 #import "kfcButton.h"
 #import "RefreshTableView.h"

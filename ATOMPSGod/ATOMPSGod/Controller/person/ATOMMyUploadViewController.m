@@ -10,8 +10,8 @@
 #import "ATOMMyUploadCollectionViewCell.h"
 #import "DDDetailPageVC.h"
 #import "DDCommentVC.h"
-#import "PIEPageEntity.h"
-#import "DDPageVM.h"
+
+
 #import "ATOMAskViewModel.h"
 #import "PWRefreshFooterCollectionView.h"
 #import "PIEProceedingManager.h"
