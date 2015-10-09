@@ -100,20 +100,23 @@
 
 - (UIView *)carousel:(__unused iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
 {
-    DDPageVM* vm = [_dataSource objectAtIndex:index];
-    //create new view if no view is available for recycling
-    if (view == nil)
-    {
-        CGFloat height = self.carousel.frame.size.height-80;
-        CGFloat width = MAX(height*vm.imageWidth/vm.imageHeight, 200);
-        width = MIN(width, SCREEN_WIDTH - 80);
-        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, height, height)];
-        view.backgroundColor = [UIColor clearColor];
-        view.contentMode = UIViewContentModeScaleAspectFit;
-        view.clipsToBounds = YES;
+    if (_dataSource.count > index) {
+        DDPageVM* vm = [_dataSource objectAtIndex:index];
+        //create new view if no view is available for recycling
+        if (view == nil)
+        {
+            CGFloat height = self.carousel.frame.size.height-80;
+            CGFloat width = MAX(height*vm.imageWidth/vm.imageHeight, 200);
+            width = MIN(width, SCREEN_WIDTH - 80);
+            view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, height, height)];
+            view.backgroundColor = [UIColor clearColor];
+            view.contentMode = UIViewContentModeScaleAspectFit;
+            view.clipsToBounds = YES;
+        }
+        [((UIImageView *)view) setImageWithURL:[NSURL URLWithString:vm.imageURL]];
+        return view;
     }
-    [((UIImageView *)view) setImageWithURL:[NSURL URLWithString:vm.imageURL]];
-    return view;
+    return nil;
 }
 
 
@@ -178,7 +181,7 @@
 }
 
 -(void)updateUIWithIndex:(NSInteger)index {
-    if (_dataSource) {
+    if (_dataSource.count > index) {
         _currentVM = [_dataSource objectAtIndex:index];
         [_avatarView setImageWithURL:[NSURL URLWithString:_currentVM.avatarURL] placeholderImage:[UIImage new]];
         _usernameLabel.text = _currentVM.username;

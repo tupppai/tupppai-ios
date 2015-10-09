@@ -268,13 +268,10 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
             CGPoint p = [gesture locationInView:_selectedReplyCell];
             
             //点击小图
-            if (CGRectContainsPoint(_selectedReplyCell.thumbView.leftView.frame, p)) {
+            if (CGRectContainsPoint(_selectedReplyCell.thumbView.frame, p)) {
                 [_selectedReplyCell animateToggleExpanded];
             }
-            //点击小图
-            else if (CGRectContainsPoint(_selectedReplyCell.thumbView.rightView.frame, p)) {
-                [_selectedReplyCell animateToggleExpanded];
-            }
+            
             //点击大图
             else  if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
                 //进入热门详情

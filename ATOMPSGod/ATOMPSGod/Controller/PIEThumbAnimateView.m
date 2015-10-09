@@ -76,7 +76,8 @@
             make.top.equalTo(self);
             make.trailing.equalTo(self);
             make.bottom.equalTo(self);
-            make.width.equalTo(self).with.multipliedBy(0.5);
+            make.leading.equalTo(_leftView.mas_trailing);
+//            make.width.equalTo(self).with.multipliedBy(0.5);
         }];
         [_leftView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self);
@@ -91,13 +92,13 @@
             make.top.equalTo(self);
             make.trailing.equalTo(self);
             make.bottom.equalTo(self);
-            make.width.equalTo(self).with.multipliedBy(1);
+            make.width.equalTo(self);
         }];
         [_leftView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self);
             make.leading.equalTo(self);
             make.bottom.equalTo(self);
-            make.width.equalTo(self).with.multipliedBy(0);
+            make.width.equalTo(@0);
         }];
     }
     [self layoutIfNeeded];
