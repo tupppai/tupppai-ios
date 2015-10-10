@@ -10,7 +10,5 @@
 #import "ATOMBaseView.h"
 
 @interface ATOMInputMobileView : ATOMBaseView
-@property (nonatomic, strong) UIButton *backButton;
-@property (nonatomic, strong) UIButton *nextButton;
 @property (nonatomic, strong) UITextField *mobileTextField;
 @end

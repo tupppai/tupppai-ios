@@ -166,13 +166,13 @@ static int collumnNumber = 3;
         DDCommentVC* mvc = [DDCommentVC new];
         mvc.vm = homepageViewModel;
 //        mvc.delegate = self;
-        [self pushViewController:mvc animated:YES];
+        [self.navigationController pushViewController:mvc animated:YES];
 
     } else {
         DDDetailPageVC *hdvc = [DDDetailPageVC new];
         hdvc.fold = 0;
         hdvc.askVM = homepageViewModel;
-        [self pushViewController:hdvc animated:YES];
+        [self.navigationController pushViewController:hdvc animated:YES];
     }
 }
 

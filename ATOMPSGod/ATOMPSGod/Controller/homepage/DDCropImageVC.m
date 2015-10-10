@@ -88,7 +88,7 @@
 }
 
 - (void)clickCancelButton:(UIButton *)sender {
-    [self popCurrentController];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)clickConfirmButton:(UIButton *)sender {
@@ -99,7 +99,7 @@
         atltivc.workImage = [_uploadWorkView.imageCropperView getCroppedImage];
     }
     atltivc.askPageViewModel = _askPageViewModel;
-    [self pushViewController:atltivc animated:YES];
+    [self.navigationController pushViewController:atltivc animated:YES];
 }
 
 

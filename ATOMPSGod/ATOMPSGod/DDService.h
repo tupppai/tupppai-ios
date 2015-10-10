@@ -16,6 +16,7 @@
 /*
  **标记用户下载了此素材,返回图片的url.
  */
++ (void)updateProfile :(NSDictionary*)param withBlock:(void (^)(BOOL success))block;
 + (void)signProceeding :(NSDictionary*)param withBlock:(void (^)(NSString*imageUrl))block;
 + (void)getPushSetting:(void (^)(NSDictionary *data))block;
 + (void)setPushSetting:(NSDictionary *)param withBlock:(void (^) (BOOL success))block;

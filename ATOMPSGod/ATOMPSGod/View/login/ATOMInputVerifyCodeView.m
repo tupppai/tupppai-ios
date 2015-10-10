@@ -30,21 +30,7 @@
     WS(ws);
     
     _lastSecond = 30;
-    _backButton = [UIButton new];
-    [_backButton setImage:[UIImage imageNamed:@"icon_back_login"] forState:UIControlStateNormal];
-    [self addSubview:_backButton];
-    
-    UILabel *backButtonLabel = [UILabel new];
-    backButtonLabel.text = @"输入验证码";
-    backButtonLabel.textColor = [UIColor colorWithHex:0x637685];
-    backButtonLabel.font = [UIFont systemFontOfSize:18.0];
-    [self addSubview:backButtonLabel];
-    
-    _nextButton = [UIButton new];
-    [_nextButton setTitle:@"完成注册" forState:UIControlStateNormal];
-    [_nextButton setTitleColor:[UIColor colorWithHex:0x637685] forState:UIControlStateNormal];
-    [_nextButton setTitleColor:[UIColor colorWithHex:0x637685 andAlpha:0.2] forState:UIControlStateHighlighted];
-    [self addSubview:_nextButton];
+
     
     _verifyCodeTextField = [UITextField new];
     _verifyCodeTextField.placeholder = @"输入验证码";
@@ -63,28 +49,11 @@
     UIView * BottomLine = [UIView new];
     BottomLine.backgroundColor = [UIColor colorWithWhite:0x000000 alpha:0.2];
     [self addSubview:BottomLine];
-
-    [_backButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(ws.mas_left).with.offset(kPadding15);
-        make.top.equalTo(ws.mas_top).with.offset(kPadding30);
-        make.height.equalTo(@40);
-        make.width.equalTo(@40);
-    }];
-    [backButtonLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(ws.mas_centerX);
-        make.centerY.equalTo(_backButton.mas_centerY);
-        make.height.equalTo(@40);
-    }];
-    [_nextButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(ws.mas_right).with.offset(-kPadding15);
-        make.centerY.equalTo(_backButton.mas_centerY);
-        make.height.equalTo(@40);
-    }];
     
     [_verifyCodeTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(ws.mas_left).with.offset(10);
         make.right.equalTo(ws.mas_right).with.offset(-10);
-        make.top.equalTo(_backButton.mas_top).with.offset(90);
+        make.top.equalTo(self).with.offset(90);
         make.height.equalTo(@40);
     }];
     

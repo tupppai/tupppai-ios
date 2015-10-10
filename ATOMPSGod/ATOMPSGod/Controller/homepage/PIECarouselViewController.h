@@ -9,6 +9,6 @@
 #import "DDBaseVC.h"
 #import "iCarousel.h"
 
-@interface PIEReplyCarouselViewController : DDBaseVC<iCarouselDataSource, iCarouselDelegate>
+@interface PIECarouselViewController : DDBaseVC<iCarouselDataSource, iCarouselDelegate>
 @property (nonatomic, strong) DDPageVM *pageVM;
 @end

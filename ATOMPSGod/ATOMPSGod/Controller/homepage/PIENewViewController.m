@@ -21,7 +21,7 @@
 #import "HMSegmentedControl.h"
 #import "DDCommentVC.h"
 #import "UITableView+FDTemplateLayoutCell.h"
-#import "PIEReplyCarouselViewController.h"
+#import "PIECarouselViewController.h"
 #import "QBImagePicker.h"
 #import "PIEUploadVC.h"
 
@@ -282,22 +282,22 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
             //点击大图
             else  if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
                 //进入热门详情
-                PIEReplyCarouselViewController* vc = [PIEReplyCarouselViewController new];
+                PIECarouselViewController* vc = [PIECarouselViewController new];
                 _selectedVM.image = _selectedReplyCell.theImageView.image;
                 vc.pageVM = _selectedVM;
-                [self pushViewController:vc animated:YES];
+                [self.navigationController pushViewController:vc animated:YES];
             }
             //点击头像
             else if (CGRectContainsPoint(_selectedReplyCell.avatarView.frame, p)) {
                 PIEFriendViewController * friendVC = [PIEFriendViewController new];
                 friendVC.pageVM = _selectedVM;
-                [self pushViewController:friendVC animated:YES];
+                [self.navigationController pushViewController:friendVC animated:YES];
             }
             //点击用户名
             else if (CGRectContainsPoint(_selectedReplyCell.nameLabel.frame, p)) {
                 PIEFriendViewController * friendVC = [PIEFriendViewController new];
                 friendVC.pageVM = _selectedVM;
-                [self pushViewController:friendVC animated:YES];
+                [self.navigationController pushViewController:friendVC animated:YES];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.collectView.frame, p)) {
                 [self collectReply];
@@ -319,7 +319,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
             else if (CGRectContainsPoint(_selectedReplyCell.allWorkView.frame, p)) {
                 PIEReplyCollectionViewController* vc = [PIEReplyCollectionViewController new];
                 vc.pageVM = _selectedVM;
-                [self pushViewController:vc animated:YES];
+                [self.navigationController pushViewController:vc animated:YES];
             }
         }
     }
@@ -341,14 +341,14 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
             else if (CGRectContainsPoint(_selectedAskCell.avatarView.frame, p)) {
                 PIEFriendViewController * friendVC = [PIEFriendViewController new];
                 friendVC.pageVM = _selectedVM;
-                [self pushViewController:friendVC animated:YES];
+                [self.navigationController pushViewController:friendVC animated:YES];
             }
             
             //点击用户名
             else if (CGRectContainsPoint(_selectedAskCell.nameLabel.frame, p)) {
                 PIEFriendViewController * friendVC = [PIEFriendViewController new];
                 friendVC.pageVM = _selectedVM;
-                [self pushViewController:friendVC animated:YES];
+                [self.navigationController pushViewController:friendVC animated:YES];
             }
             //点击帮p
             else if (CGRectContainsPoint(_selectedAskCell.bangView.frame, p)) {
@@ -578,7 +578,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 -(void)tapInvite {
     DDInviteVC* ivc = [DDInviteVC new];
     ivc.askPageViewModel = _selectedVM;
-    [self pushViewController:ivc animated:YES];
+    [self.navigationController pushViewController:ivc animated:YES];
 }
 -(void)tapReport {
     [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];

@@ -14,7 +14,7 @@
 #import "PIEFriendReplyViewController.h"
 #import "PIEFriendFollowingViewController.h"
 #import "PIEFriendFansViewController.h"
-#import "PIEReplyCarouselViewController.h"
+#import "PIECarouselViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 @interface PIEFriendViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
@@ -81,22 +81,22 @@
 - (void) receiveCarouselNotification:(NSNotification *) notification {
     NSDictionary *userInfo = notification.userInfo;
     DDPageVM *vm = [userInfo objectForKey:@"CellVM"];
-    PIEReplyCarouselViewController* vc = [PIEReplyCarouselViewController new];
+    PIECarouselViewController* vc = [PIECarouselViewController new];
     vc.pageVM = vm;
-    [self pushViewController:vc animated:YES];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)pushToFollowingVC {
     PIEFriendFollowingViewController *opvcv = [PIEFriendFollowingViewController new];
     opvcv.uid = _pageVM.userID;
     opvcv.userName = _pageVM.username;
-    [self pushViewController:opvcv animated:YES];
+    [self.navigationController pushViewController:opvcv animated:YES];
 
 }
 - (void)pushToFansVC {
     PIEFriendFansViewController *mfvc = [PIEFriendFansViewController new];
     mfvc.uid = _pageVM.userID;
     mfvc.userName = _pageVM.username;
-    [self pushViewController:mfvc animated:YES];
+    [self.navigationController pushViewController:mfvc animated:YES];
 }
 
 

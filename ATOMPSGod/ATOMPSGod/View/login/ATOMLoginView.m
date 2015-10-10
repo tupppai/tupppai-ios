@@ -29,17 +29,6 @@
 
 - (void)createSubView {
     WS(ws);
-    
-    self.backgroundColor = [UIColor whiteColor];
-    _backButton = [UIButton new];
-    [_backButton setImage:[UIImage imageNamed:@"icon_back_login"] forState:UIControlStateNormal];
-    [self addSubview:_backButton];
-    
-//    UILabel* backButtonLabel = [UILabel new];
-//    backButtonLabel.text = @"登录";
-//    backButtonLabel.textColor = kTextColor;
-//    backButtonLabel.font = [UIFont systemFontOfSize:18.0];
-//    [self addSubview:backButtonLabel];
 
     _mobileTextField = [UITextField new];
     _mobileTextField.placeholder = @"手机号";
@@ -112,21 +101,9 @@
     [self addSubview:_wechatLoginButton];
     [self addSubview:_weiboLoginButton];
     
-    [_backButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(ws.mas_left).with.offset(kPadding15);
-        make.top.equalTo(ws.mas_top).with.offset(kPadding30);
-        make.height.equalTo(@40);
-        make.width.equalTo(@40);
-    }];
-//    [backButtonLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerX.equalTo(ws.mas_centerX);
-//        make.centerY.equalTo(_backButton.mas_centerY);
-//        make.height.equalTo(@40);
-//        make.width.equalTo(@40);
-//    }];
     [_mobileTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
-        make.top.equalTo(_backButton.mas_top).with.offset(80);
+        make.top.equalTo(self).with.offset(80);
         make.width.equalTo(@(kLineWidth));
         make.height.equalTo(@40);
     }];

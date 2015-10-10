@@ -41,7 +41,7 @@
     DDDetailPageVC *hdvc = [DDDetailPageVC new];
     hdvc.askVM = _askPageViewModel;
     PIENewViewController *hvc = self.navigationController.viewControllers[0];
-    [self pushViewController:hdvc animated:YES];
+//    [self.navigationController pushViewController:hdvc animated:YES];
     [self.navigationController setViewControllers:@[hvc, hdvc]];
 }
 

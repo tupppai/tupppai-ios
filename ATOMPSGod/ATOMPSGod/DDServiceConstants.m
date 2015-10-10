@@ -25,10 +25,11 @@ NSString * URL_PFGetMyDone = @"profile/replies";
 NSString * URL_PFGetOtherUserInfo = @"profile/view";
 NSString * URL_PFGetFriendReply = @"profile/replies";
 NSString * URL_PFGetFriendAsk = @"profile/asksWithReplies";
-
 NSString * URL_PFGetMyCollection = @"Thread/subscribed";
 NSString * URL_PFGetFans = @"profile/fans";
 NSString * URL_PFGetFollow = @"profile/follows";
+
+NSString * URL_PFUpdateProfile = @"profile/update";
 
 #pragma mark - Account
 NSString * URL_ACUpdateToken = @"account/updateToken";

@@ -238,7 +238,7 @@
             hdvc.askVM = ws.askPageViewModel;
             hdvc.fold = 0;
             PIENewViewController *hvc = self.navigationController.viewControllers[0];
-            [self pushViewController:hdvc animated:YES];
+            [self.navigationController pushViewController:hdvc animated:YES];
             [self.navigationController setViewControllers:@[hvc, hdvc]];
         }
     }];
@@ -280,7 +280,7 @@
             ivc.askPageViewModel = ws.newAskPageViewModel;
             ivc.info = info;
             ivc.showNext = YES;
-            [self pushViewController:ivc animated:YES];
+            [self.navigationController pushViewController:ivc animated:YES];
         } else {
             self.navigationItem.rightBarButtonItem.enabled = YES;
             [Hud error:@"求P失败,请检查你的网络"];

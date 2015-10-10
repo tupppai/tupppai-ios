@@ -1,15 +1,14 @@
 //
-//  ATOMCreateProfileView.m
-//  ATOMPSGod
+//  PIEModifySelf.m
+//  TUPAI
 //
-//  Created by atom on 15/3/2.
-//  Copyright (c) 2015年 ATOM. All rights reserved.
+//  Created by chenpeiwei on 10/10/15.
+//  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
-
-#import "PIECreateProfileView.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self;
 
-@interface PIECreateProfileView ()
+#import "PIEModifySelfView.h"
+@interface PIEModifySelfView()
 @property (nonatomic, strong) UIView *nicknameView;
 @property (nonatomic, strong) UIView *protocolView;
 @property (nonatomic, strong) UIView *sexPickerTopView;
@@ -19,7 +18,7 @@
 
 @end
 
-@implementation PIECreateProfileView
+@implementation PIEModifySelfView
 
 - (instancetype)init {
     self = [super init];
@@ -28,33 +27,35 @@
         [self createSubView];
         [self createTopViewSubView];
         [self createNameSubView];
-        [self createAreaSubView];
-        [self createRegionPickerView];
+//        [self createAreaSubView];
+//        [self createRegionPickerView];
         [self createProtocolSubView];
+        [self injectSource];
     }
     return self;
 }
 
-
-
-
+- (void)injectSource {
+    [self.userHeaderButton setImageForState:UIControlStateNormal withURL:[[NSURL alloc]initWithString:[DDUserManager currentUser].avatar]];
+    self.nicknameTextField.text = [DDUserManager currentUser].username;
+    NSInteger index = [DDUserManager currentUser].sex ? 0:1;
+    [self.sexSegment setSelectedSegmentIndex:index];
+}
 - (void)createSubView {
     WS(ws);
     //top
+    self.backgroundColor = [UIColor whiteColor];
     _topView = [UIView new];
-    _topView.backgroundColor = [UIColor whiteColor];
     [self addSubview:_topView];
-
     
     _nicknameView = [UIView new];
     [self addSubview:_nicknameView];
     
-    _areaView = [UIView new];
-    [self addSubviewWithLine:_areaView];
+//    _areaView = [UIView new];
+//    [self addSubviewWithLine:_areaView];
     
     _protocolView = [UIView new];
     [self addSubviewWithLine:_protocolView];
-    
     
     [_topView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
@@ -70,17 +71,17 @@
         make.height.equalTo(@60);
     }];
     
-    [_areaView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(ws.mas_centerX);
-        make.top.equalTo(ws.nicknameView.mas_bottom);
-        make.width.equalTo(ws.nicknameView);
-        make.height.equalTo(ws.nicknameView);
-    }];
-    
+//    [_areaView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.equalTo(ws.mas_centerX);
+//        make.top.equalTo(ws.nicknameView.mas_bottom);
+//        make.width.equalTo(ws.nicknameView);
+//        make.height.equalTo(ws.nicknameView);
+//    }];
+//    
     [_protocolView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
         make.width.equalTo(ws.nicknameView);
-        make.top.equalTo(ws.areaView.mas_bottom);
+        make.bottom.equalTo(ws.nicknameView.mas_bottom);
     }];
     
 }
@@ -198,7 +199,7 @@
     UITapGestureRecognizer* tapToDismiss = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideRegionPickerView)];
     [_regionPickerBackgroundView addGestureRecognizer:tapToDismiss];
     [self addSubview:_regionPickerBackgroundView];
-
+    
     _regionPickerView.tag = 222;
     _regionPickerView = [UIPickerView new];
     _regionPickerView.backgroundColor = [UIColor whiteColor];
@@ -262,7 +263,6 @@
     }];
 }
 
-
 - (void)showRegionPickerView {
     [UIView animateWithDuration:0.2 animations:^{
         _regionPickerBackgroundView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -305,5 +305,4 @@
     }
     return _sexSegment;
 }
-
 @end

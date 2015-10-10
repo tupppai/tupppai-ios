@@ -119,16 +119,16 @@
     
     if (row == 0) {
         DDMsgCommentVC *cmvc = [DDMsgCommentVC new];
-        [self pushViewController:cmvc animated:YES];
+        [self.navigationController pushViewController:cmvc animated:YES];
     } else if (row == 1) {
         DDMsgPostReplyVC *trmvc = [DDMsgPostReplyVC new];
-        [self pushViewController:trmvc animated:YES];
+        [self.navigationController pushViewController:trmvc animated:YES];
     } else if (row == 2) {
         DDMsgFollowVC *cmvc = [DDMsgFollowVC new];
-        [self pushViewController:cmvc animated:YES];
+        [self.navigationController pushViewController:cmvc animated:YES];
     } else if (row == 3) {
         DDMsgInviteVC *imvc = [DDMsgInviteVC new];
-        [self pushViewController:imvc animated:YES];
+        [self.navigationController pushViewController:imvc animated:YES];
     } else if (row == 4) {
         [Util showWeAreWorkingOnThisFeature];
     }

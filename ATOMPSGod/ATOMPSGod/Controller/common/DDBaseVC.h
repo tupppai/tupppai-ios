@@ -14,8 +14,5 @@
 
 
 @interface DDBaseVC : UIViewController
-
 @property (nonatomic, strong) UIBarButtonItem *negativeSpacer;
-- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated;
-- (void)popCurrentController;
 @end

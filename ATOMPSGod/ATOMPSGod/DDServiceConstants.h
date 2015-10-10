@@ -23,10 +23,10 @@ extern NSString * URL_PFGetMyDone;
 extern NSString * URL_PFGetOtherUserInfo;
 extern NSString * URL_PFGetFriendReply;
 extern NSString * URL_PFGetFriendAsk;
-
 extern NSString * URL_PFGetMyCollection;
 extern NSString * URL_PFGetFans;
 extern NSString * URL_PFGetFollow;
+extern NSString * URL_PFUpdateProfile;
 
 
 #pragma mark - Account

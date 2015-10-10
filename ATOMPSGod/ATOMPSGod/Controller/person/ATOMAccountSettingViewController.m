@@ -18,6 +18,7 @@
 #import "AppDelegate.h"
 #import "SIAlertView.h"
 #import "DDHomePageManager.h"
+#import "PIEModifySelfViewController.h"
 @interface ATOMAccountSettingViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -64,25 +65,12 @@
     return 0;
 }
 
-//#pragma mark - UIScrollViewDelegate
-//
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    if (scrollView == _tableView) {
-//        CGFloat sectionHeaderHeight = 22.5;
-//        if (scrollView.contentOffset.y <= sectionHeaderHeight && scrollView.contentOffset.y >= 0) {
-//            scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
-//        } else if (scrollView.contentOffset.y >= sectionHeaderHeight) {
-//            scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
-//        }
-//    }
-//}
-
 #pragma mark - UITableViewDelegate
 
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 58;
+    return 50;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 1) {
@@ -103,17 +91,18 @@
         if (row == 0) {
             cell.textLabel.text = @"消息提醒";
         } else if (row == 1) {
-            cell.textLabel.text = @"修改密码";
+            cell.textLabel.text = @"编辑资料";
         } else if (row == 2) {
+            cell.textLabel.text = @"修改密码";
+        } else if (row == 3) {
             cell.textLabel.text = @"账号绑定";
         }
     }
     else if (section == 1) {
         if (row == 0) {
-            cell.textLabel.text = @"离线下载";
-            [cell addSwitch];
-        } else if (row == 1) {
             cell.textLabel.text = @"清除缓存";
+        } else if (row == 1) {
+            cell.textLabel.text = @"检查新版本";
         } else if (row == 2) {
             cell.textLabel.text = @"推荐应用给好友";
         } else if (row == 3) {
@@ -142,24 +131,31 @@
     if (section == 0) {
         if (row == 0) {
             PIEMessagePushSettingViewController *mrvc = [PIEMessagePushSettingViewController new];
-            [self pushViewController:mrvc animated:YES];
+            [self.navigationController pushViewController:mrvc animated:YES];
         } else if (row == 1) {
-            ATOMModifyPasswordViewController *mpvc = [ATOMModifyPasswordViewController new];
-            [self pushViewController:mpvc animated:YES];
+            PIEModifySelfViewController *mpvc = [PIEModifySelfViewController new];
+            [self.navigationController pushViewController:mpvc animated:YES];
         } else if (row == 2) {
+            ATOMModifyPasswordViewController *mpvc = [ATOMModifyPasswordViewController new];
+            [self.navigationController pushViewController:mpvc animated:YES];
+        } else if (row == 3) {
             PIEThirdPartyBindingViewController *abvc = [PIEThirdPartyBindingViewController new];
-            [self pushViewController:abvc animated:YES];
+            [self.navigationController pushViewController:abvc animated:YES];
         }
     } else if (section == 1) {
         if (row == 0) {
-        } else if (row == 1) {
             [self clearCache];
+        } else if (row == 1) {
+            //检查新版本
         } else if (row == 2) {
+            //推荐应用
         } else if (row == 3) {
             ATOMUserFeedbackViewController *ufvc = [ATOMUserFeedbackViewController new];
-            [self pushViewController:ufvc animated:YES];
+            [self.navigationController pushViewController:ufvc animated:YES];
         } else if (row == 4) {
+            //关于我们
         } else if (row == 5) {
+            //给应用评分
         }
     } else if (section == 2) {
         [self signOut];
@@ -167,12 +163,12 @@
 }
 
 -(void) signOut {
-    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"退货" andMessage:@"亲，你确定要退货吗？"];
-    [alertView addButtonWithTitle:@"不走了😊"
+    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"" andMessage:@"确定要退出登录吗"];
+    [alertView addButtonWithTitle:@"取消"
                              type:SIAlertViewButtonTypeCancel
                           handler:^(SIAlertView *alert) {
                           }];
-    [alertView addButtonWithTitle:@"很确定😭"
+    [alertView addButtonWithTitle:@"确定😭"
                              type:SIAlertViewButtonTypeDefault
                           handler:^(SIAlertView *alert) {
                               //清空数据库用户表
@@ -187,19 +183,17 @@
     [alertView show];
 }
 -(void) clearCache {
-    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"😊" andMessage:@"确定清理缓存吗？"];
+    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"😊" andMessage:@"确定要清理缓存吗？"];
     [alertView addButtonWithTitle:@"不清理"
                              type:SIAlertViewButtonTypeDestructive
                           handler:^(SIAlertView *alert) {
                           }];
-    [alertView addButtonWithTitle:@"要清理"
+    [alertView addButtonWithTitle:@"坚决清理"
                              type:SIAlertViewButtonTypeDefault
                           handler:^(SIAlertView *alert) {
                               [[NSURLCache sharedURLCache]removeAllCachedResponses];
                               DDHomePageManager *showHomepage = [DDHomePageManager new];
                               [showHomepage clearHomePages];
-//                              ATOMHomeImageDAO* hid = [ATOMHomeImageDAO new];
-//                              [hid clearHomeImages];
                               [Hud success:@"清理缓存成功" inView:self.view];
                           }];
     alertView.transitionStyle = SIAlertViewTransitionStyleDropDown;

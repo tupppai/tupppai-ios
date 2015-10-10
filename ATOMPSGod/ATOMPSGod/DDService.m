@@ -11,6 +11,15 @@
 @implementation DDService
 
 #pragma mark - Profile
+
++ (void)updateProfile :(NSDictionary*)param withBlock:(void (^)(BOOL success))block {
+    [[self class]POST:param url:URL_PFUpdateProfile block:^(id responseObject) {
+        if (responseObject) {
+            if (block) {block(YES);}
+        } else {
+            if (block) {block(NO);}
+        }    }];
+}
 + (void)signProceeding :(NSDictionary*)param withBlock:(void (^)(NSString*imageUrl))block {
     [[self class]GET:param url:URL_PFSignProceeding block:^(id responseObject) {
             NSString* url = [[responseObject objectForKey:@"data"]objectForKey:@"url"];

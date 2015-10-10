@@ -26,15 +26,13 @@
     [self createUI];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+-(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
+    UIBarButtonItem *btnDone = [[UIBarButtonItem alloc] initWithTitle:@"完成修改" style:UIBarButtonItemStyleDone target:self action:@selector(clickRightButtonItem:)];
+    self.navigationItem.rightBarButtonItem = btnDone;
 }
-
 - (void)createUI {
     self.title = @"修改密码";
-    UIBarButtonItem * rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(clickRightButtonItem:)];
-    self.navigationItem.rightBarButtonItem = rightButtonItem;
     _modifyPasswordView = [ATOMModifyPasswordView new];
     self.view = _modifyPasswordView;
     [_modifyPasswordView.forgetPasswordButton addTarget:self action:@selector(clickForgetPasswordButton:) forControlEvents:UIControlEventTouchUpInside];

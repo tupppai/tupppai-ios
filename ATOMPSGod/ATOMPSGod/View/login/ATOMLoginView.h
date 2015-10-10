@@ -10,7 +10,6 @@
 
 @interface ATOMLoginView : ATOMBaseView
 
-@property (nonatomic, strong) UIButton *backButton;
 
 @property (nonatomic, strong) UITextField *mobileTextField;
 @property (nonatomic, strong) UITextField *passwordTextField;

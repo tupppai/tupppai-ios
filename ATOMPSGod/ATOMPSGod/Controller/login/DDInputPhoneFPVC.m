@@ -27,13 +27,13 @@
     _inputMobileView = [ATOMInputMobileView new];
     self.view = _inputMobileView;
     _inputMobileView.mobileTextField.delegate = self;
-    [_inputMobileView.nextButton addTarget:self action:@selector(clickRightButtonItem) forControlEvents:UIControlEventTouchUpInside];
-    [_inputMobileView.backButton addTarget:self action:@selector(clickLeftButtonItem) forControlEvents:UIControlEventTouchUpInside];
+}
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    UIBarButtonItem *btnDone = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStyleDone target:self action:@selector(clickRightButtonItem)];
+    self.navigationItem.rightBarButtonItem = btnDone;
 }
 
--(void)viewWillAppear:(BOOL)animated {
-    self.navigationController.navigationBarHidden = YES;
-}
 #pragma mark - Click Event
 - (void)clickLeftButtonItem {
     [self.navigationController popViewControllerAnimated:YES];

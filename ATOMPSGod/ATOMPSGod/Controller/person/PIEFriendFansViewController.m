@@ -85,7 +85,7 @@
             vm.userID = viewModel.uid;
             vm.username = viewModel.userName;
             opvc.pageVM = vm;
-            [self pushViewController:opvc animated:YES];
+            [self.navigationController pushViewController:opvc animated:YES];
         }
         else if (CGRectContainsPoint(cell.attentionButton.frame, p)) {
             cell.attentionButton.selected = !cell.attentionButton.selected;
@@ -98,12 +98,7 @@
                 if (!success) {
                     cell.attentionButton.selected = !cell.attentionButton.selected;
                 }
-//                else {
-//                    NSString* desc =  cell.attentionButton.selected?[NSString stringWithFormat:@"你关注了%@",cell.viewModel.userName]:[NSString stringWithFormat:@"你取消关注了%@",cell.viewModel.userName];
-//                    [Hud text:desc inView:self.view];
-//                }
             }];
-            
         }
         
     }

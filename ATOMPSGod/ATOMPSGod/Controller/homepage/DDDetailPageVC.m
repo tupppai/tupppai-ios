@@ -211,7 +211,7 @@
 //-(void)tapInvite {
 //    DDInviteVC* ivc = [DDInviteVC new];
 //    ivc.askPageViewModel = _askVM;
-//    [self pushViewController:ivc animated:NO];
+//    [self.navigationController pushViewController:ivc animated:NO];
 //}
 //-(void)tapReport {
 //    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
@@ -425,14 +425,14 @@
 //                //ATOMOtherPersonViewControlle *opvc = [//ATOMOtherPersonViewControlle new];
 //                opvc.userID = model.uid;
 //                opvc.userName = model.userName;
-//                [self pushViewController:opvc animated:YES];
+//                [self.navigationController pushViewController:opvc animated:YES];
 //            } else if (CGRectContainsPoint(_selectedHotDetailCell.psView.frame, p)) {
 //                [self.psActionSheet showInView:[AppDelegate APP].window animated:true];
 //            } else if (CGRectContainsPoint(_selectedHotDetailCell.usernameLabel.frame, p)) {
 //                //ATOMOtherPersonViewControlle *opvc = [//ATOMOtherPersonViewControlle new];
 //                opvc.userID = model.uid;
 //                opvc.userName = model.userName;
-//                [self pushViewController:opvc animated:YES];
+//                [self.navigationController pushViewController:opvc animated:YES];
 //            }
 //        } else {
 //            p = [gesture locationInView:_selectedHotDetailCell.bottomView];
@@ -461,7 +461,7 @@
 //                    DDCommentVC* mvc = [DDCommentVC new];
 //                    mvc.vm = vm;
 //                    mvc.delegate = self;
-//                    [self pushViewController:mvc animated:YES];
+//                    [self.navigationController pushViewController:mvc animated:YES];
 //            } else if (CGRectContainsPoint(_selectedHotDetailCell.moreButton.frame, p)) {
 //                self.shareFunctionView.collectButton.selected = model.collected;
 //                [self.shareFunctionView showInView:[AppDelegate APP].window animated:YES];

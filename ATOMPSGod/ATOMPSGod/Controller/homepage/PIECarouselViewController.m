@@ -6,14 +6,14 @@
 //  Copyright (c) 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIEReplyCarouselViewController.h"
+#import "PIECarouselViewController.h"
 #import "DDHotDetailManager.h"
 #import "PIEFriendViewController.h"
 #import "HMSegmentedControl.h"
 #import "UIImage+Blurring.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface PIEReplyCarouselViewController ()
+@interface PIECarouselViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *blurView;
 @property (weak, nonatomic) IBOutlet iCarousel *carousel;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
@@ -29,7 +29,7 @@
 
 @end
 
-@implementation PIEReplyCarouselViewController
+@implementation PIECarouselViewController
 
 -(void)awakeFromNib {
     
@@ -69,7 +69,7 @@
 - (void)pushToSeeFriend {
     PIEFriendViewController * friendVC = [PIEFriendViewController new];
     friendVC.pageVM = _currentVM;
-    [self pushViewController:friendVC animated:YES];
+    [self.navigationController pushViewController:friendVC animated:YES];
 }
 - (IBAction)tapLikeButton:(id)sender {
     _likeButton.selected = !_likeButton.selected;

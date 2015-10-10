@@ -157,11 +157,11 @@
                 DDCommentVC* mvc = [DDCommentVC new];
                 mvc.vm = viewModel.homepageViewModel;
 //                mvc.delegate = self;
-                [self pushViewController:mvc animated:YES];
+                [self.navigationController pushViewController:mvc animated:YES];
             } else {
                 DDDetailPageVC *hdvc = [DDDetailPageVC new];
                 hdvc.askVM = viewModel.homepageViewModel;
-                [self pushViewController:hdvc animated:YES];
+                [self.navigationController pushViewController:hdvc animated:YES];
             }
         } else if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             //ATOMOtherPersonViewControlle *opvc = [//ATOMOtherPersonViewControlle new];

@@ -104,18 +104,18 @@
                 DDCommentVC* mvc = [DDCommentVC new];
                 mvc.vm = viewModel.homepageViewModel;
 //                mvc.delegate = self;
-                [self pushViewController:mvc animated:YES];
+                [self.navigationController pushViewController:mvc animated:YES];
 
             } else {
                 //进入热门详情
                 DDDetailPageVC *hdvc = [DDDetailPageVC new];
                 hdvc.askVM = viewModel.homepageViewModel;
-                [self pushViewController:hdvc animated:YES];
+                [self.navigationController pushViewController:hdvc animated:YES];
             }
         } else if (CGRectContainsPoint(cell.replyContentLabel.frame, p)) {
             DDCommentVC* mvc = [DDCommentVC new];
             mvc.vm = viewModel.homepageViewModel;
-            [self pushViewController:mvc animated:YES];
+            [self.navigationController pushViewController:mvc animated:YES];
         } else if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             //ATOMOtherPersonViewControlle *opvc = [//ATOMOtherPersonViewControlle new];
      

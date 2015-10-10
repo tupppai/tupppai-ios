@@ -29,58 +29,6 @@
 @end
 
 @implementation DDCreateProfileVC
-
-#pragma mark - Lazy Initialize
-- (JGActionSheet *)cameraActionsheet {
-    WS(ws);
-    if (!_cameraActionsheet) {
-        _cameraActionsheet = [JGActionSheet new];
-        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"拍照", @"从相册选择",@"取消"] buttonStyle:JGActionSheetButtonStyleDefault];
-        [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:2];
-        NSArray *sections = @[section];
-        _cameraActionsheet = [JGActionSheet actionSheetWithSections:sections];
-//        _cameraActionsheet.delegate = self;
-        [_cameraActionsheet setOutsidePressBlock:^(JGActionSheet *sheet) {
-            [sheet dismissAnimated:YES];
-        }];
-        [_cameraActionsheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
-            switch (indexPath.row) {
-                case 0:
-                    ws.imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
-                    [ws presentViewController:ws.imagePickerController animated:YES completion:NULL];
-                    [ws.cameraActionsheet dismissAnimated:YES];
-                    break;
-                case 1:
-                    ws.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-                    [ws presentViewController:ws.imagePickerController animated:YES completion:NULL];
-                    [ws.cameraActionsheet dismissAnimated:YES];
-                    break;
-                case 2:
-                    [ws.cameraActionsheet dismissAnimated:YES];
-                    break;
-                default:
-                    [ws.cameraActionsheet dismissAnimated:YES];
-                    break;
-            }
-        }];
-    }
-    return _cameraActionsheet;
-}
-
-- (UIImagePickerController *)imagePickerController {
-    if (!_imagePickerController) {
-        _imagePickerController = [UIImagePickerController new];
-        _imagePickerController.delegate = self;
-    }
-    return _imagePickerController;
-}
-
-- (UITapGestureRecognizer *)tapRegionViewGesture {
-    if (!_tapRegionViewGesture) {
-        _tapRegionViewGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRegionViewGesture:)];
-    }
-    return _tapRegionViewGesture;
-}
 #pragma mark - UI
 
 - (void)viewDidLoad {
@@ -90,6 +38,8 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    UIBarButtonItem *btnDone = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStyleDone target:self action:@selector(clickRightButtonItem)];
+    self.navigationItem.rightBarButtonItem = btnDone;
 }
 
 - (void)createUI {
@@ -98,8 +48,6 @@
     _createProfileView.nicknameTextField.delegate = self;
     [_createProfileView.userHeaderButton addTarget:self action:@selector(clickToManageAvatar) forControlEvents:UIControlEventTouchUpInside];
     
-    [_createProfileView.nextButton addTarget:self action:@selector(clickRightButtonItem) forControlEvents:UIControlEventTouchUpInside];
-    [_createProfileView.backButton addTarget:self action:@selector(clickLeftButtonItem) forControlEvents:UIControlEventTouchUpInside];
 
     [_createProfileView.areaView addGestureRecognizer:self.tapRegionViewGesture];
     _createProfileView.regionPickerView.delegate = self;
@@ -195,10 +143,7 @@
 
 
 - (void)clickConfirmPickerButton:(UIButton *)sender {
-//    [_createProfileView hideSexPickerView];
-//    if ( [_createProfileView.showSexLabel.text  isEqualToString: @""] || _createProfileView.showSexLabel.text == NULL) {
-//        _createProfileView.showSexLabel.text = @"男";
-//    }
+
 }
 - (void)clickCancelRegionPickerButton:(UIButton *)sender {
     [_createProfileView hideRegionPickerView];
@@ -333,6 +278,59 @@
         _provinces = jsonRegionObject[@"provinces"];
     }
     
+}
+
+
+#pragma mark - Lazy Initialize
+- (JGActionSheet *)cameraActionsheet {
+    WS(ws);
+    if (!_cameraActionsheet) {
+        _cameraActionsheet = [JGActionSheet new];
+        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"拍照", @"从相册选择",@"取消"] buttonStyle:JGActionSheetButtonStyleDefault];
+        [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:2];
+        NSArray *sections = @[section];
+        _cameraActionsheet = [JGActionSheet actionSheetWithSections:sections];
+        //        _cameraActionsheet.delegate = self;
+        [_cameraActionsheet setOutsidePressBlock:^(JGActionSheet *sheet) {
+            [sheet dismissAnimated:YES];
+        }];
+        [_cameraActionsheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
+            switch (indexPath.row) {
+                case 0:
+                    ws.imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+                    [ws presentViewController:ws.imagePickerController animated:YES completion:NULL];
+                    [ws.cameraActionsheet dismissAnimated:YES];
+                    break;
+                case 1:
+                    ws.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                    [ws presentViewController:ws.imagePickerController animated:YES completion:NULL];
+                    [ws.cameraActionsheet dismissAnimated:YES];
+                    break;
+                case 2:
+                    [ws.cameraActionsheet dismissAnimated:YES];
+                    break;
+                default:
+                    [ws.cameraActionsheet dismissAnimated:YES];
+                    break;
+            }
+        }];
+    }
+    return _cameraActionsheet;
+}
+
+- (UIImagePickerController *)imagePickerController {
+    if (!_imagePickerController) {
+        _imagePickerController = [UIImagePickerController new];
+        _imagePickerController.delegate = self;
+    }
+    return _imagePickerController;
+}
+
+- (UITapGestureRecognizer *)tapRegionViewGesture {
+    if (!_tapRegionViewGesture) {
+        _tapRegionViewGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRegionViewGesture:)];
+    }
+    return _tapRegionViewGesture;
 }
 
 @end

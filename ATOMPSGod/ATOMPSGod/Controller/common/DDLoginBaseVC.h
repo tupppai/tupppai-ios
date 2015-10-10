@@ -12,5 +12,4 @@
 
 #endif
 @interface DDLoginBaseVC : UIViewController
-- (void)popCurrentController;
 @end

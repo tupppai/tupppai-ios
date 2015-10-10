@@ -30,11 +30,12 @@
     self.view = _mobileRegisterView;
     _mobileRegisterView.mobileTextField.delegate = self;
     _mobileRegisterView.passwordTextField.delegate = self;
-    
-    [_mobileRegisterView.nextButton addTarget:self action:@selector(clickRightButtonItem) forControlEvents:UIControlEventTouchUpInside];
-    [_mobileRegisterView.backButton addTarget:self action:@selector(clickLeftButtonItem) forControlEvents:UIControlEventTouchUpInside];
 }
-
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    UIBarButtonItem *btnDone = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStyleDone target:self action:@selector(clickRightButtonItem)];
+    self.navigationItem.rightBarButtonItem = btnDone;
+}
 #pragma mark - Click Event
 - (void)clickLeftButtonItem {
     [self.navigationController popViewControllerAnimated:YES];

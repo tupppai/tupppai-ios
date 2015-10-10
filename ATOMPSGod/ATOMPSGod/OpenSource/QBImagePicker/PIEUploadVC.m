@@ -210,7 +210,7 @@
 //            ivc.askPageViewModel = ws.newAskPageViewModel;
 //            ivc.info = info;
 //            ivc.showNext = YES;
-//            [self pushViewController:ivc animated:YES];
+//            [self.navigationController pushViewController:ivc animated:YES];
             if  (block) {
                 block(YES);
             }

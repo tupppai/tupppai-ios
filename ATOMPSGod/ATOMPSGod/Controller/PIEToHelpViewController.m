@@ -13,7 +13,7 @@
 #import "PIEUploadVC.h"
 #import "PIEToHelpTableViewCell2.h"
 #import "PIEFriendViewController.h"
-#import "PIEReplyCarouselViewController.h"
+#import "PIECarouselViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface PIEToHelpViewController () <UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,QBImagePickerControllerDelegate>
@@ -72,7 +72,7 @@
             [self.navigationController pushViewController:opvc animated:YES];
         }
         else if (CGRectContainsPoint(cell.theImageView.frame, p)) {
-            PIEReplyCarouselViewController* vc = [PIEReplyCarouselViewController new];
+            PIECarouselViewController* vc = [PIECarouselViewController new];
             vm.image = cell.theImageView.image;
             vc.pageVM = vm;
             [self.navigationController pushViewController:vc animated:YES];

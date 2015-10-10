@@ -9,8 +9,7 @@
 #import "ATOMBaseView.h"
 
 @interface ATOMMobileRegisterView : ATOMBaseView
-@property (nonatomic, strong) UIButton *backButton;
-@property (nonatomic, strong) UIButton *nextButton;
+
 @property (nonatomic, strong) UITextField *mobileTextField;
 @property (nonatomic, strong) UITextField *passwordTextField;
 

@@ -9,8 +9,6 @@
 #import "ATOMBaseView.h"
 
 @interface ATOMInputVerifyCodeAndPasswordView : ATOMBaseView
-@property (nonatomic, strong) UIButton *backButton;
-@property (nonatomic, strong) UIButton *nextButton;
 @property (nonatomic, strong) UITextField *verifyCodeTextField;
 @property (nonatomic, strong) UITextField *passwordTextField;
 @property (nonatomic, strong) UIButton *sendVerifyCodeButton;

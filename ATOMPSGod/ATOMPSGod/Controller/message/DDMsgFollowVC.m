@@ -144,13 +144,13 @@
         if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             //ATOMOtherPersonViewControlle *opvc = [//ATOMOtherPersonViewControlle new];
 //            opvc.userID = viewModel.uid;
-//            [self pushViewController:opvc animated:YES];
+//            [self.navigationController pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
             p = [gesture locationInView:cell.userNameLabel];
             if (p.x <= 16 * viewModel.userName.length) {
                 //ATOMOtherPersonViewControlle *opvc = [//ATOMOtherPersonViewControlle new];
 //                opvc.userID = viewModel.uid;
-//                [self pushViewController:opvc animated:YES];
+//                [self.navigationController pushViewController:opvc animated:YES];
             }
         }
         

@@ -192,12 +192,12 @@
             //ATOMOtherPersonViewControlle *opvc = [//ATOMOtherPersonViewControlle new];
 //            opvc.userID = model.uid;
 //            opvc.userName = model.username;
-//            [self pushViewController:opvc animated:YES];
+//            [self.navigationController pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.userNameLabel.frame, p)) {
             //ATOMOtherPersonViewControlle *opvc = [//ATOMOtherPersonViewControlle new];
 //            opvc.userID = model.uid;
 //            opvc.userName = model.username;
-//            [self pushViewController:opvc animated:YES];
+//            [self.navigationController pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.likeButton.frame, p)) {
             //UI 颜色和数字
             [cell.likeButton toggleLike];

@@ -471,7 +471,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 //            //ATOMOtherPersonViewControlle *opvc = [//ATOMOtherPersonViewControlle new];
 //            opvc.userID = model.uid;
 //            opvc.userName = model.username;
-//            [self pushViewController:opvc animated:YES];
+//            [self.navigationController pushViewController:opvc animated:YES];
 //        }
         else if (CGRectContainsPoint(cell.likeButton.frame, p)) {
             //UI

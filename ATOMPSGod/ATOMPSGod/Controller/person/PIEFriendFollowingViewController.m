@@ -89,7 +89,7 @@
             vm.userID = viewModel.uid;
             vm.username = viewModel.userName;
             opvc.pageVM = vm;
-            [self pushViewController:opvc animated:YES];
+            [self.navigationController pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.attentionButton.frame, p)) {
             cell.attentionButton.selected = !cell.attentionButton.selected;
             NSMutableDictionary* param = [NSMutableDictionary new];

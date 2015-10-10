@@ -23,14 +23,17 @@
     [self createUI];
     [self createVerifyTimer];
 }
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    UIBarButtonItem *btnDone = [[UIBarButtonItem alloc] initWithTitle:@"完成注册" style:UIBarButtonItemStyleDone target:self action:@selector(clickRightButtonItem)];
+    self.navigationItem.rightBarButtonItem = btnDone;
+}
 
 - (void)createUI {
     _inputVerifyView = [ATOMInputVerifyCodeView new];
     self.view = _inputVerifyView;
     [_inputVerifyView.sendVerifyCodeButton addTarget:self action:@selector(clickVerifyButton:) forControlEvents:UIControlEventTouchUpInside];
     [_inputVerifyView.verifyCodeTextField becomeFirstResponder];
-    [_inputVerifyView.nextButton addTarget:self action:@selector(clickRightButtonItem) forControlEvents:UIControlEventTouchUpInside];
-    [_inputVerifyView.backButton addTarget:self action:@selector(clickLeftButtonItem) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)createVerifyTimer {

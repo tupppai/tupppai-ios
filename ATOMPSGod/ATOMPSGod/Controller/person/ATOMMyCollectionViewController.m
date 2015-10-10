@@ -153,18 +153,18 @@ static float cellWidth;
                 if (cell.viewModel.totalPSNumber == 0) {
                     DDCommentVC* mvc = [DDCommentVC new];
                     mvc.vm = model;
-                    [self pushViewController:mvc animated:YES];
+                    [self.navigationController pushViewController:mvc animated:YES];
                 } else {
                     DDDetailPageVC *hdvc = [DDDetailPageVC new];
                     hdvc.askVM = model;
                     hdvc.fold = 0;
-                    [self pushViewController:hdvc animated:YES];
+                    [self.navigationController pushViewController:hdvc animated:YES];
                 }
             } else {
                 DDDetailPageVC *hdvc = [DDDetailPageVC new];
                 hdvc.askVM = model;
                 hdvc.fold = 1;
-                [self pushViewController:hdvc animated:YES];
+                [self.navigationController pushViewController:hdvc animated:YES];
             }
         } else if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
 

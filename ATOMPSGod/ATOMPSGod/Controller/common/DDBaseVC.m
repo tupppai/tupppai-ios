@@ -26,9 +26,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self addObservers];
+    [self setupNav];
+}
+
+- (void)addObservers {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(signOutRET) name:@"SignOut" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorEccuredRET) name:@"ErrorOccurred" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showInfoRET:) name:@"ShowInfo" object:nil];
+}
+- (void)setupNav {
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
@@ -47,12 +54,9 @@
         self.navigationItem.leftBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:[[UIView alloc] initWithFrame:CGRectZero]]];
         self.navigationItem.leftBarButtonItems = nil;
     } else {
-//        self.navigationItem.leftBarButtonItems = @[_negativeSpacer, barBackButtonItem];
-        self.navigationItem.leftBarButtonItem = barBackButtonItem;
-
+        self.navigationItem.leftBarButtonItems = @[_negativeSpacer, barBackButtonItem];
     }
 }
-
 -(void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SignOut" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ErrorOccurred"object:nil];
@@ -99,10 +103,8 @@
 }
 
 - (void)popCurrentController {
-    self.navigationItem.leftBarButtonItem.title = @"";
     [self.navigationController popViewControllerAnimated:YES];
 }
-
 
 
 

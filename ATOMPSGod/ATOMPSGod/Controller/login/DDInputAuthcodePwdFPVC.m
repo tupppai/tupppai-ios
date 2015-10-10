@@ -23,13 +23,17 @@
     [self createUI];
     [self createVerifyTimer];
 }
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    UIBarButtonItem *btnDone = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(clickRightButtonItem)];
+    self.navigationItem.rightBarButtonItem = btnDone;
+}
+
 - (void)createUI {
     _inputVerifyView = [ATOMInputVerifyCodeAndPasswordView new];
     self.view = _inputVerifyView;
     [_inputVerifyView.sendVerifyCodeButton addTarget:self action:@selector(clickVerifyButton:) forControlEvents:UIControlEventTouchUpInside];
     [_inputVerifyView.verifyCodeTextField becomeFirstResponder];
-    [_inputVerifyView.nextButton addTarget:self action:@selector(clickRightButtonItem) forControlEvents:UIControlEventTouchUpInside];
-    [_inputVerifyView.backButton addTarget:self action:@selector(clickLeftButtonItem) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)createVerifyTimer {
@@ -72,7 +76,8 @@
             NSMutableDictionary* param = [NSMutableDictionary new];
             [param setObject:_inputVerifyView.passwordTextField.text forKey:@"new_pwd"];
             [param setObject:_phoneNumber forKey:@"phone"];
-            
+            [param setObject:_verifyCode forKey:@"code"];
+
             [DDService resetPassword:param withBlock:^(BOOL success) {
                 if (success) {
                     [Util ShowTSMessageSuccess:@"成功设置密码"];

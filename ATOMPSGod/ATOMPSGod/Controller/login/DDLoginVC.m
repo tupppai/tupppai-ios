@@ -30,15 +30,13 @@
     _loginView = [ATOMLoginView new];
     self.title = @"登录";
     self.view  = _loginView;
-    [_loginView.backButton addTarget:self action:@selector(clickBackButton) forControlEvents:UIControlEventTouchUpInside];
+
     [_loginView.loginButton addTarget:self action:@selector(clickLoginButton:) forControlEvents:UIControlEventTouchUpInside];
     [_loginView.weiboLoginButton addTarget:self action:@selector(clickweiboLoginButton:) forControlEvents:UIControlEventTouchUpInside];
     [_loginView.wechatLoginButton addTarget:self action:@selector(clickwechatLoginButton:) forControlEvents:UIControlEventTouchUpInside];
     [_loginView.forgetPasswordButton addTarget:self action:@selector(clickForgetPasswordButton:) forControlEvents:UIControlEventTouchUpInside];
 }
-- (void)clickBackButton {
-    [self.navigationController popViewControllerAnimated:YES];
-}
+
 - (void)clickLoginButton:(UIButton *)sender {
     if (![_loginView.mobileTextField.text isMobileNumber]) {
         [Util ShowTSMessageWarn:@"手机格式有误"];

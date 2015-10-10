@@ -12,7 +12,7 @@
 @implementation DDLoginNavigationController
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationBarHidden = YES;
+//    self.navigationBarHidden = YES;
 //    __weak typeof (self) weakSelf = self;
 //    if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
 //        self.interactivePopGestureRecognizer.delegate = weakSelf;

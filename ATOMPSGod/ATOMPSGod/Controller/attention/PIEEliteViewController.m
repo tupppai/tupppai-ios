@@ -13,7 +13,7 @@
 #import "PIEEliteHotTableViewCell.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 #import "PIEEliteManager.h"
-#import "PIEReplyCarouselViewController.h"
+#import "PIECarouselViewController.h"
 #import "PIEFriendViewController.h"
 #import "DDCommentVC.h"
 #import "DDCollectManager.h"
@@ -223,22 +223,22 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
             //点击大图
             else  if (CGRectContainsPoint(_selectedFollowCell.theImageView.frame, p)) {
                 //进入热门详情
-                PIEReplyCarouselViewController* vc = [PIEReplyCarouselViewController new];
+                PIECarouselViewController* vc = [PIECarouselViewController new];
                 _selectedVM.image = _selectedFollowCell.theImageView.image;
                 vc.pageVM = _selectedVM;
-                [self pushViewController:vc animated:YES];
+                [self.navigationController pushViewController:vc animated:YES];
             }
             //点击头像
             else if (CGRectContainsPoint(_selectedFollowCell.avatarView.frame, p)) {
                 PIEFriendViewController * friendVC = [PIEFriendViewController new];
                 friendVC.pageVM = _selectedVM;
-                [self pushViewController:friendVC animated:YES];
+                [self.navigationController pushViewController:friendVC animated:YES];
             }
             //点击用户名
             else if (CGRectContainsPoint(_selectedFollowCell.nameLabel.frame, p)) {
                 PIEFriendViewController * friendVC = [PIEFriendViewController new];
                 friendVC.pageVM = _selectedVM;
-                [self pushViewController:friendVC animated:YES];
+                [self.navigationController pushViewController:friendVC animated:YES];
             }
             else if (CGRectContainsPoint(_selectedFollowCell.moreView.frame, p)) {
 //                [self collect:_selectedFollowCell.collectView];
@@ -264,7 +264,7 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
             else if (CGRectContainsPoint(_selectedFollowCell.allWorkView.frame, p)) {
                 PIEReplyCollectionViewController* vc = [PIEReplyCollectionViewController new];
                 vc.pageVM = _selectedVM;
-                [self pushViewController:vc animated:YES];
+                [self.navigationController pushViewController:vc animated:YES];
             }
         }
     }
@@ -286,22 +286,22 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
             //点击大图
             else  if (CGRectContainsPoint(_selectedHotCell.theImageView.frame, p)) {
                 //进入热门详情
-                PIEReplyCarouselViewController* vc = [PIEReplyCarouselViewController new];
+                PIECarouselViewController* vc = [PIECarouselViewController new];
                 _selectedVM.image = _selectedHotCell.theImageView.image;
                 vc.pageVM = _selectedVM;
-                [self pushViewController:vc animated:YES];
+                [self.navigationController pushViewController:vc animated:YES];
             }
             //点击头像
             else if (CGRectContainsPoint(_selectedHotCell.avatarView.frame, p)) {
                 PIEFriendViewController * friendVC = [PIEFriendViewController new];
                 friendVC.pageVM = _selectedVM;
-                [self pushViewController:friendVC animated:YES];
+                [self.navigationController pushViewController:friendVC animated:YES];
             }
             //点击用户名
             else if (CGRectContainsPoint(_selectedHotCell.nameLabel.frame, p)) {
                 PIEFriendViewController * friendVC = [PIEFriendViewController new];
                 friendVC.pageVM = _selectedVM;
-                [self pushViewController:friendVC animated:YES];
+                [self.navigationController pushViewController:friendVC animated:YES];
             }
             else if (CGRectContainsPoint(_selectedHotCell.collectView.frame, p)) {
                 [self collect:_selectedHotCell.collectView];
@@ -327,7 +327,7 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
             else if (CGRectContainsPoint(_selectedHotCell.allWorkView.frame, p)) {
                 PIEReplyCollectionViewController* vc = [PIEReplyCollectionViewController new];
                 vc.pageVM = _selectedVM;
-                [self pushViewController:vc animated:YES];
+                [self.navigationController pushViewController:vc animated:YES];
             }
         }
     }
@@ -435,7 +435,7 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
 -(void)tapInvite {
     DDInviteVC* ivc = [DDInviteVC new];
     ivc.askPageViewModel = _selectedVM;
-    [self pushViewController:ivc animated:YES];
+    [self.navigationController pushViewController:ivc animated:YES];
 }
 -(void)tapReport {
     [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];

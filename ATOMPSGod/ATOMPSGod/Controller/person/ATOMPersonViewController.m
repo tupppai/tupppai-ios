@@ -64,7 +64,7 @@
     PIEFriendFansViewController *mfvc = [PIEFriendFansViewController new];
     mfvc.uid = [DDUserManager currentUser].uid;
     mfvc.userName = [DDUserManager currentUser].username;
-    [self pushViewController:mfvc animated:YES];
+    [self.navigationController pushViewController:mfvc animated:YES];
 }
 
 #pragma mark - Click Event
@@ -145,22 +145,22 @@
     if (section == 0) {
         if (row == 0) {
             ATOMMyUploadViewController *muvc = [ATOMMyUploadViewController new];
-            [self pushViewController:muvc animated:YES];
+            [self.navigationController pushViewController:muvc animated:YES];
         } else if (row == 1) {
             ATOMMyWorkViewController *mwvc = [ATOMMyWorkViewController new];
-            [self pushViewController:mwvc animated:YES];
+            [self.navigationController pushViewController:mwvc animated:YES];
         } else if (row == 2) {
         } else if (row == 3) {
             ATOMMyCollectionViewController *mcvc = [ATOMMyCollectionViewController new];
-            [self pushViewController:mcvc animated:YES];
+            [self.navigationController pushViewController:mcvc animated:YES];
         }
     } else if (section == 1) {
         if (row == 0) {
             DDMyFollowVC *mcvc = [DDMyFollowVC new];
-            [self pushViewController:mcvc animated:YES];
+            [self.navigationController pushViewController:mcvc animated:YES];
         } else if (row == 1) {
             ATOMAccountSettingViewController *asvc = [ATOMAccountSettingViewController new];
-            [self pushViewController:asvc animated:YES];
+            [self.navigationController pushViewController:asvc animated:YES];
         }
     }
 }
