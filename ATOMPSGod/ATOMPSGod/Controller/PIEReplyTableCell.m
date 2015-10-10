@@ -74,8 +74,8 @@
     _timeLabel.text = viewModel.publishTime;
     [_theImageView setImageWithURL:[NSURL URLWithString:viewModel.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
     CGFloat imageViewHeight = MIN(viewModel.imageHeight, SCREEN_HEIGHT/2) ;
-            imageViewHeight = MAX(imageViewHeight, 100);
-
+    imageViewHeight = MAX(imageViewHeight, 100);
+    
     [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(imageViewHeight)).with.priorityHigh();
     }];
@@ -120,7 +120,7 @@
                      } completion:^(BOOL finished) {
                          _thumbView.toExpand = !_thumbView.toExpand;
                      }
-                         ];
+     ];
 }
 
 - (void)animateThumbScale:(PIEAnimateViewType)type {
@@ -135,17 +135,23 @@
         
         if (_thumbView.subviewCounts == 2) {
             if (type == PIEAnimateViewTypeLeft) {
-                [_thumbView.rightView mas_updateConstraints:^(MASConstraintMaker *make) {
+                [_thumbView.rightView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    make.top.equalTo(_thumbView);
+                    make.trailing.equalTo(_thumbView);
+                    make.bottom.equalTo(_thumbView);
                     make.width.equalTo(_thumbView).with.multipliedBy(0);
                 }];
             } else {
-                [_thumbView.rightView mas_updateConstraints:^(MASConstraintMaker *make) {
+                [_thumbView.rightView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    make.top.equalTo(_thumbView);
+                    make.trailing.equalTo(_thumbView);
+                    make.bottom.equalTo(_thumbView);
                     make.width.equalTo(_thumbView).with.multipliedBy(1);
                 }];
             }
         }
     } else {
-
+        
         [_thumbView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.width.equalTo(@100);
             make.height.equalTo(@100);
@@ -153,15 +159,18 @@
             make.bottom.equalTo(_theImageView);
         }];
         if (_thumbView.subviewCounts == 2) {
-            [_thumbView.rightView mas_updateConstraints:^(MASConstraintMaker *make) {
+            [_thumbView.rightView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(_thumbView);
+                make.trailing.equalTo(_thumbView);
+                make.bottom.equalTo(_thumbView);
                 make.width.equalTo(_thumbView).with.multipliedBy(0.5);
             }];
-//            [_thumbView.leftView mas_remakeConstraints:^(MASConstraintMaker *make) {
-//                make.top.equalTo(self);
-//                make.leading.equalTo(self);
-//                make.bottom.equalTo(self);
-//                make.trailing.equalTo(_thumbView.rightView.mas_leading);
-//            }];
+            //            [_thumbView.leftView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            //                make.top.equalTo(self);
+            //                make.leading.equalTo(self);
+            //                make.bottom.equalTo(self);
+            //                make.trailing.equalTo(_thumbView.rightView.mas_leading);
+            //            }];
         }
     }
     

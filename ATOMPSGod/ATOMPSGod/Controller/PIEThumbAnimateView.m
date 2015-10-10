@@ -86,6 +86,7 @@
             make.bottom.equalTo(self);
             make.trailing.equalTo(_rightView.mas_leading);
         }];
+        
     }
     else {
         [_rightView mas_remakeConstraints:^(MASConstraintMaker *make) {
