@@ -34,33 +34,39 @@
     }];
 }
 
-+ (void)getMyPhotos:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
-    [[self class]GET:param url:URL_PFGetMyPhotos block:^(id responseObject) {
++ (void)getPhotos:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
+    [[self class]GET:param url:URL_PFGetPhotos block:^(id responseObject) {
             NSArray* dataArray = [responseObject objectForKey:@"data"];
             if (block) { block(dataArray); }
     }];
 }
-+ (void)getMyAsk:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
-    [[self class]GET:param url:URL_PFGetMyAsk block:^(id responseObject) {
++ (void)getAsk:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
+    [[self class]GET:param url:URL_PFGetAsk block:^(id responseObject) {
             NSArray* dataArray = [responseObject objectForKey:@"data"];
             if (block) { block(dataArray); }
     }];
 }
-+ (void)getMyToHelp:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
-    [[self class]GET:param url:URL_PFGetMyToHelp block:^(id responseObject) {
++ (void)getReply:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
+    [[self class]GET:param url:URL_PFGetReply block:^(id responseObject) {
+        NSArray* dataArray = [responseObject objectForKey:@"data"];
+        if (block) { block(dataArray); }
+    }];
+}
++ (void)getToHelp:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
+    [[self class]GET:param url:URL_PFGetToHelp block:^(id responseObject) {
             NSArray* dataArray = [responseObject objectForKey:@"data"];
             if (block) { block(dataArray); }
     }];
 }
-+ (void)getMyDone:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
-    [[self class]GET:param url:URL_PFGetMyDone block:^(id responseObject) {
++ (void)getDone:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
+    [[self class]GET:param url:URL_PFGetDone block:^(id responseObject) {
         NSArray* dataArray = [responseObject objectForKey:@"data"];
         if (block) { block(dataArray); }
     }];
 }
 
-+ (void)getMyFollowPages:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
-    [[self class]GET:param url:URL_PFGetMyFollowPages block:^(id responseObject) {
++ (void)getFollowPages:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
+    [[self class]GET:param url:URL_PFGetFollowPages block:^(id responseObject) {
         NSArray* dataArray = [responseObject objectForKey:@"data"];
         if (block) { block(dataArray); }
     }];
@@ -202,7 +208,7 @@
     }];
 }
 + (void)ddGetMyInfo:(NSDictionary*)param withBlock:(void (^)(NSDictionary* data))block {
-    [[self class]GET:param url:URL_UKGetMyInfo block:^(id responseObject) {
+    [[self class]GET:param url:URL_UKGetInfo block:^(id responseObject) {
         if (responseObject) {
             NSDictionary* data = [responseObject objectForKey:@"data"];
             if (block) { block(data); }
@@ -230,15 +236,15 @@
 }
 
 
-+ (void)ddGetFriendReply:(NSDictionary*)param withBlock:(void (^)(NSArray *returnArray))block {
-    [[self class]GET:param url:URL_PFGetFriendReply block:^(id responseObject) {
++ (void)ddGetReply:(NSDictionary*)param withBlock:(void (^)(NSArray *returnArray))block {
+    [[self class]GET:param url:URL_PFGetReply block:^(id responseObject) {
         if (responseObject) {
             NSArray *data = [responseObject objectForKey:@"data"];
             if (block) { block(data); }
         }
     }];
 }
-+ (void)ddGetFriendAsk:(NSDictionary*)param withBlock:(void (^)(NSArray *returnArray))block {
++ (void)ddGetAsk:(NSDictionary*)param withBlock:(void (^)(NSArray *returnArray))block {
     [[self class]GET:param url:URL_PFGetFriendAsk block:^(id responseObject) {
         if (responseObject) {
             NSArray *data = [responseObject objectForKey:@"data"];
@@ -247,8 +253,8 @@
     }];
 }
 
-+ (void)ddGetMyCollection:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
-    [[self class]GET:param url:URL_PFGetMyCollection block:^(id responseObject) {
++ (void)ddGetCollection:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
+    [[self class]GET:param url:URL_PFGetCollection block:^(id responseObject) {
         if (responseObject) {
             NSArray* data = [responseObject objectForKey:@"data"];
             if (block) { block(data); }
@@ -298,7 +304,6 @@
 }
 
 + (void)toggleLike:(BOOL)like ID:(NSInteger)ID type:(PIEPageType)type  withBlock:(void (^)(BOOL success))block {
-    NSLog(@"toggleLike");
     NSString* url;
     if (type == PIEPageTypeAsk) {
         url = [NSString stringWithFormat:@"ask/upask/%ld",(long)ID];
@@ -307,7 +312,6 @@
     }
     NSInteger status = like?1:0;
     NSDictionary *param = [NSDictionary dictionaryWithObject:@(status) forKey:@"status"];
-    NSLog(@"%@ url %@",param,url);
     [DDBaseService GET:param url:url block:^(id responseObject) {
         if (responseObject) {
             block(YES);

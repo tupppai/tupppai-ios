@@ -8,6 +8,6 @@
 
 #import "DDBaseVC.h"
 
-@interface ATOMMyWorkViewController : DDBaseVC
+@interface PIEMyReplyViewController : DDBaseVC
 
 @end

@@ -12,7 +12,7 @@
 
 @implementation PIEProceedingManager
 + (void)getMyAsk:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *dataArray))block {
-    [DDService getMyAsk:param withBlock:^(NSArray *data) {
+    [DDService getAsk:param withBlock:^(NSArray *data) {
             NSMutableArray *resultArray = [NSMutableArray array];
             for (int i = 0; i < data.count; i++) {
                 PIEPageEntity *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
@@ -23,7 +23,7 @@
 }
 
 + (void)getMyToHelp:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *))block {
-    [DDService getMyToHelp:param withBlock:^(NSArray *data) {
+    [DDService getToHelp:param withBlock:^(NSArray *data) {
         NSMutableArray *resultArray = [NSMutableArray array];
         for (int i = 0; i < data.count; i++) {
             PIEPageEntity *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
@@ -34,7 +34,7 @@
 }
 
 + (void)getMyDone:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *dataArray))block {
-    [DDService getMyDone:param withBlock:^(NSArray *data) {
+    [DDService getDone:param withBlock:^(NSArray *data) {
         NSMutableArray *resultArray = [NSMutableArray array];
         for (int i = 0; i < data.count; i++) {
             PIEPageEntity *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];

@@ -11,22 +11,27 @@
 #import "PIEUploadVC.h"
 #import "RefreshTableView.h"
 #import "ATOMMyCollectionViewController.h"
-#import "ATOMMyWorkViewController.h"
+#import "PIEMyReplyViewController.h"
 #import "ATOMAccountSettingViewController.h"
 #import "DDMessageVC.h"
-
+#import "UIImage+Blurring.h"
+#import "FXBlurView.h"
 #import "PIEFriendFollowingViewController.h"
 #import "PIEFriendFansViewController.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface PIEMeViewController ()<PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource>
+@property (weak, nonatomic) IBOutlet UIView *dotView2;
+@property (weak, nonatomic) IBOutlet UIView *dotView1;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
 @property (weak, nonatomic) IBOutlet UILabel *followCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *fansCountLabel;
-@property (weak, nonatomic) IBOutlet UIView *topContainerView;
+@property (weak, nonatomic) IBOutlet UIImageView *topContainerView;
 @property (weak, nonatomic) IBOutlet UIView *pageMenuContainerView;
 @property (weak, nonatomic) IBOutlet UILabel *followView;
 @property (weak, nonatomic) IBOutlet UILabel *fansView;
+@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
+@property (weak, nonatomic) IBOutlet UIView *avatarContainerView;
 
 @property (weak, nonatomic) IBOutlet UILabel *likedCountLabel;
 @property (nonatomic, strong) PWRefreshFooterCollectionView *collectionView;
@@ -51,6 +56,21 @@
     [self.navigationItem.rightBarButtonItem setTarget:self];
     [self.navigationItem.rightBarButtonItem setAction:@selector(pushToMessageViewController)];
 }
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
+                                                  forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.navigationController.navigationBar.translucent = YES;
+    self.navigationController.view.backgroundColor = [UIColor clearColor];
+    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+}
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar setBackgroundImage:nil
+                                                  forBarMetrics:UIBarMetricsDefault];
+
+}
 - (void)pushToSettingViewController {
     ATOMAccountSettingViewController* vc = [ATOMAccountSettingViewController new];
     [self.navigationController pushViewController:vc animated:NO];
@@ -60,15 +80,24 @@
     [self.navigationController pushViewController:vc animated:NO];
 }
 - (void)setupViews {
+    _dotView1.layer.cornerRadius = _dotView1.frame.size.width/2;
+    _dotView2.layer.cornerRadius = _dotView2.frame.size.width/2;
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
+    _avatarContainerView.layer.cornerRadius = _avatarContainerView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
     DDUserManager* user = [DDUserManager currentUser];
-    NSLog(@"[DDUserManager currentUser].avatar]%@",[DDUserManager currentUser].avatar);
-    [_avatarView setImageWithURL:[NSURL URLWithString:[DDUserManager currentUser].avatar]];
-    
+//    [_avatarView setImageWithURL:[NSURL URLWithString:[DDUserManager currentUser].avatar]];
+    NSURLRequest* req = [[NSURLRequest alloc]initWithURL:[NSURL URLWithString:[DDUserManager currentUser].avatar]];
+
+    [_avatarView setImageWithURLRequest:req placeholderImage:nil success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nonnull response, UIImage * _Nonnull image) {
+        _avatarView.image = image;
+        _topContainerView.image = [image blurredImageWithRadius:40 iterations:1 tintColor:nil];
+    } failure:nil];
+    _usernameLabel.text = user.username;
     _followCountLabel.text = [NSString stringWithFormat:@"%zd",user.attentionNumber];
     _fansCountLabel.text = [NSString stringWithFormat:@"%zd",user.fansNumber];
     _likedCountLabel.text = [NSString stringWithFormat:@"%zd",user.likeNumber];
+    
     [self setupTapGesture];
 }
 
@@ -106,8 +135,8 @@
 - (void)setupPageMenu {
     // Array to keep track of controllers in page menu
     NSMutableArray *controllerArray = [NSMutableArray array];
-    ATOMMyWorkViewController *controller = [ATOMMyWorkViewController new];
-    controller.title = @"图片";
+    PIEMyReplyViewController *controller = [PIEMyReplyViewController new];
+    controller.title = @"作品";
     [controllerArray addObject:controller];
     ATOMMyCollectionViewController *controller2 = [ATOMMyCollectionViewController new];
     controller2.title = @"收藏";

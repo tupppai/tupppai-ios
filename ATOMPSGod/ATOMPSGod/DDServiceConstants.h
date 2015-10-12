@@ -16,14 +16,14 @@ extern NSString *URL_PFGetPushSetting;
 extern NSString *URL_PFsetPushSetting;
 extern NSString *URL_PFFollow;
 extern NSString *URL_PFUpdatePasswordURL;
-extern NSString *URL_PFGetMyPhotos;
-extern NSString *URL_PFGetMyAsk;
-extern NSString * URL_PFGetMyToHelp;
-extern NSString * URL_PFGetMyDone;
+extern NSString *URL_PFGetPhotos;
+extern NSString *URL_PFGetAsk;
+extern NSString * URL_PFGetToHelp;
+extern NSString * URL_PFGetDone;
 extern NSString * URL_PFGetOtherUserInfo;
-extern NSString * URL_PFGetFriendReply;
+extern NSString * URL_PFGetReply;
 extern NSString * URL_PFGetFriendAsk;
-extern NSString * URL_PFGetMyCollection;
+extern NSString * URL_PFGetCollection;
 extern NSString * URL_PFGetFans;
 extern NSString * URL_PFGetFollow;
 extern NSString * URL_PFUpdateProfile;
@@ -39,7 +39,7 @@ extern NSString * URL_AC3PaAuth;
 
 #pragma mark - Unknown
 extern NSString * URL_UKSaveFeedback;
-extern NSString * URL_UKGetMyInfo;
+extern NSString * URL_UKGetInfo;
 extern NSString * URL_UKGetMsg;
 extern NSString * URL_UKSaveAsk;
 extern NSString * URL_UKSaveReply;
@@ -50,6 +50,6 @@ extern NSString * URL_NewestGetAsk;
 extern NSString * URL_NewestGetReply;
 
 #pragma mark - Elite
-extern NSString * URL_PFGetMyFollowPages;
+extern NSString * URL_PFGetFollowPages;
 extern NSString * URL_PFGetHotPages;
 @end

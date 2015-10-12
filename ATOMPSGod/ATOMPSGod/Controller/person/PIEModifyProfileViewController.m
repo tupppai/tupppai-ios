@@ -6,7 +6,7 @@
 //  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIEModifySelfViewController.h"
+#import "PIEModifyProfileViewController.h"
 #import "PIEModifySelfView.h"
 #import "DDPhoneRegisterVC.h"
 #import "ATOMHeaderImageCropperViewController.h"
@@ -15,7 +15,7 @@
 #import "JGActionSheet.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
-@interface PIEModifySelfViewController ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, ATOMCropHeaderImageCompleteProtocol>
+@interface PIEModifyProfileViewController ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate , ATOMCropHeaderImageCompleteProtocol>
 @property (nonatomic, strong) PIEModifySelfView *createProfileView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) UITapGestureRecognizer *tapSexViewGesture;
@@ -31,7 +31,7 @@
 
 @end
 
-@implementation PIEModifySelfViewController
+@implementation PIEModifyProfileViewController
 
 
 #pragma mark - UI

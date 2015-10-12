@@ -16,16 +16,16 @@ NSString * URL_PFGetPushSetting= @"profile/get_push_settings";
 NSString * URL_PFsetPushSetting = @"profile/set_push_settings";
 NSString * URL_PFFollow = @"profile/follow";
 NSString * URL_PFUpdatePasswordURL = @"profile/updatePassword";
-NSString * URL_PFGetMyPhotos = @"profile/threads";
-NSString * URL_PFGetMyAsk = @"profile/asks";
-NSString * URL_PFGetMyToHelp = @"profile/downloaded";
-NSString * URL_PFGetMyDone = @"profile/replies";
+NSString * URL_PFGetPhotos = @"profile/threads";
+NSString * URL_PFGetAsk = @"profile/asks";
+NSString * URL_PFGetToHelp = @"profile/downloaded";
+NSString * URL_PFGetDone = @"profile/replies";
 
 
 NSString * URL_PFGetOtherUserInfo = @"profile/view";
-NSString * URL_PFGetFriendReply = @"profile/replies";
+NSString * URL_PFGetReply = @"profile/replies";
 NSString * URL_PFGetFriendAsk = @"profile/asksWithReplies";
-NSString * URL_PFGetMyCollection = @"Thread/subscribed";
+NSString * URL_PFGetCollection = @"Thread/subscribed";
 NSString * URL_PFGetFans = @"profile/fans";
 NSString * URL_PFGetFollow = @"profile/follows";
 
@@ -41,7 +41,7 @@ NSString * URL_AC3PaAuth = @"auth/";
 
 #pragma mark - Unknown
 NSString * URL_UKSaveFeedback = @"feedback/save";
-NSString * URL_UKGetMyInfo = @"view/info";
+NSString * URL_UKGetInfo = @"view/info";
 NSString * URL_UKGetMsg = @"message/list";
 NSString * URL_UKSaveAsk = @"ask/multi";
 NSString * URL_UKSaveReply = @"reply/save";
@@ -51,6 +51,6 @@ NSString * URL_NewestGetAsk = @"ask/index";
 NSString * URL_NewestGetReply = @"reply/index";
 
 #pragma mark - Elite
-NSString * URL_PFGetMyFollowPages = @"Thread/timeline";
+NSString * URL_PFGetFollowPages = @"Thread/timeline";
 NSString * URL_PFGetHotPages = @"Thread/popular";
 @end

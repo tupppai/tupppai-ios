@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PIEMyPhotoCollectionViewCell : UICollectionViewCell
-@property (weak, nonatomic) IBOutlet UILabel *tipLabel;
+@interface PIEMyReplyCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *theImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *likeView;
 @property (weak, nonatomic) IBOutlet UILabel *likeCountLabel;

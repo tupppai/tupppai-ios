@@ -15,7 +15,7 @@
 #import "ATOMAskViewModel.h"
 #import "PWRefreshFooterCollectionView.h"
 #import "PIEProceedingManager.h"
-#import "DDMyReplyManager.h"
+#import "DDPageManager.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMMyUploadViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource>

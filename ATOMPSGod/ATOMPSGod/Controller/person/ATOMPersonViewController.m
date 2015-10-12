@@ -12,7 +12,7 @@
 #import "ATOMAccountSettingViewController.h"
 #import "PIEFriendFansViewController.h"
 #import "DDMyFollowVC.h"
-#import "ATOMMyWorkViewController.h"
+#import "PIEMyReplyViewController.h"
 #import "ATOMMyUploadViewController.h"
 #import "ATOMMyCollectionViewController.h"
 #import "ATOMProfileEditViewController.h"
@@ -147,7 +147,7 @@
             ATOMMyUploadViewController *muvc = [ATOMMyUploadViewController new];
             [self.navigationController pushViewController:muvc animated:YES];
         } else if (row == 1) {
-            ATOMMyWorkViewController *mwvc = [ATOMMyWorkViewController new];
+            PIEMyReplyViewController *mwvc = [PIEMyReplyViewController new];
             [self.navigationController pushViewController:mwvc animated:YES];
         } else if (row == 2) {
         } else if (row == 3) {

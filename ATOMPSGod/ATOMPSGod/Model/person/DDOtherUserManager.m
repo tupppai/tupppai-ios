@@ -36,7 +36,7 @@
     }];
 }
 + (void)getFriendReply:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *returnArray))block {
-    [DDService ddGetFriendReply:param withBlock:^(NSArray *returnArray) {
+    [DDService ddGetReply:param withBlock:^(NSArray *returnArray) {
             NSMutableArray *array = [NSMutableArray array];
             for (int i = 0; i < returnArray.count; i++) {
                 PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:returnArray[i] error:NULL];
@@ -63,7 +63,7 @@
     }];
 }
 + (void)getFriendAsk:(NSDictionary *)param withBlock:(void (^)(NSArray *returnArray))block {
-    [DDService ddGetFriendAsk:param withBlock:^(NSArray *returnArray) {
+    [DDService ddGetAsk:param withBlock:^(NSArray *returnArray) {
         NSMutableArray *array = [NSMutableArray array];
         for (int i = 0; i < returnArray.count; i++) {
             

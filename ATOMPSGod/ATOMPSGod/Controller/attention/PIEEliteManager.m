@@ -11,7 +11,7 @@
 #import "PIEImageEntity.h"
 @implementation PIEEliteManager
 + (void)getMyFollow:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *))block {
-    [DDService getMyFollowPages:param withBlock:^(NSArray *data) {
+    [DDService getFollowPages:param withBlock:^(NSArray *data) {
         NSMutableArray *returnArray = [NSMutableArray array];
         for (int i = 0; i < data.count; i++) {
             PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];

@@ -18,7 +18,7 @@
 #import "AppDelegate.h"
 #import "SIAlertView.h"
 #import "DDHomePageManager.h"
-#import "PIEModifySelfViewController.h"
+#import "PIEModifyProfileViewController.h"
 @interface ATOMAccountSettingViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -133,7 +133,7 @@
             PIEMessagePushSettingViewController *mrvc = [PIEMessagePushSettingViewController new];
             [self.navigationController pushViewController:mrvc animated:YES];
         } else if (row == 1) {
-            PIEModifySelfViewController *mpvc = [PIEModifySelfViewController new];
+            PIEModifyProfileViewController *mpvc = [PIEModifyProfileViewController new];
             [self.navigationController pushViewController:mpvc animated:YES];
         } else if (row == 2) {
             ATOMModifyPasswordViewController *mpvc = [ATOMModifyPasswordViewController new];

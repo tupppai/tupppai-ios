@@ -7,13 +7,13 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PIEDoneCollectionViewCell" id="gTV-IL-0wX" customClass="PIEDoneCollectionViewCell">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PIEMyAskCollectionViewCell" id="Ls9-Dv-Ypb" customClass="PIEMyAskCollectionViewCell">
             <rect key="frame" x="0.0" y="0.0" width="228" height="195"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="228" height="195"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zmT-Q6-Pza">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SDH-g3-e0C">
                         <rect key="frame" x="0.0" y="0.0" width="228" height="195"/>
                         <animations/>
                     </imageView>
@@ -23,16 +23,16 @@
             </view>
             <animations/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="zmT-Q6-Pza" secondAttribute="trailing" id="POp-bv-5HQ"/>
-                <constraint firstItem="zmT-Q6-Pza" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="gBU-zH-O1H"/>
-                <constraint firstItem="zmT-Q6-Pza" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="gEu-Lg-14W"/>
-                <constraint firstAttribute="bottom" secondItem="zmT-Q6-Pza" secondAttribute="bottom" id="tWI-3H-Z8z"/>
+                <constraint firstItem="SDH-g3-e0C" firstAttribute="leading" secondItem="Ls9-Dv-Ypb" secondAttribute="leading" id="B7B-Sz-HQm"/>
+                <constraint firstItem="SDH-g3-e0C" firstAttribute="top" secondItem="Ls9-Dv-Ypb" secondAttribute="top" id="c0p-uR-3VY"/>
+                <constraint firstAttribute="bottom" secondItem="SDH-g3-e0C" secondAttribute="bottom" id="cZT-ox-3KF"/>
+                <constraint firstAttribute="trailing" secondItem="SDH-g3-e0C" secondAttribute="trailing" id="uRv-ua-rEP"/>
             </constraints>
             <size key="customSize" width="228" height="195"/>
             <connections>
-                <outlet property="theImageView" destination="zmT-Q6-Pza" id="IoH-f5-P70"/>
+                <outlet property="theImageView" destination="SDH-g3-e0C" id="UuP-j9-GxU"/>
             </connections>
-            <point key="canvasLocation" x="230" y="240.5"/>
+            <point key="canvasLocation" x="268" y="197.5"/>
         </collectionViewCell>
     </objects>
 </document>

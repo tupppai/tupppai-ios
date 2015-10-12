@@ -9,6 +9,6 @@
 #import "DDBaseVC.h"
 #import "ATOMUserProfileViewModel.h"
 
-@interface PIEModifySelfViewController : DDBaseVC
+@interface PIEModifyProfileViewController : DDBaseVC
 @property (nonatomic, strong) ATOMUserProfileViewModel *userProfileViewModel;
 @end
