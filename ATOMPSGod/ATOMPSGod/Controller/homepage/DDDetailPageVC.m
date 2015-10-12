@@ -31,7 +31,7 @@
 #import "JTSImageInfo.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 #import "DDCommentVC.h"
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+
 
 @interface DDDetailPageVC ()
 

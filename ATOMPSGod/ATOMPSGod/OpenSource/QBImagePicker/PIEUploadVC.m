@@ -14,7 +14,7 @@
 #import "ATOMUploadImage.h"
 #import "ATOMImage.h"
 
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+
 
 @interface PIEUploadVC ()<UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *leftImageView;

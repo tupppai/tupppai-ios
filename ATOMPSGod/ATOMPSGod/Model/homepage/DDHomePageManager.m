@@ -15,7 +15,7 @@
 #import "kfcHomeScrollView.h"
 #import "PIEAskImageDao.h"
 #import "PIEImageEntity.h"
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+
 
 @interface DDHomePageManager ()
 

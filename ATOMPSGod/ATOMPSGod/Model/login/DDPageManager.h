@@ -13,4 +13,5 @@
 + (void)getAsk:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *returnArray))block ;
 + (void)getReply:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *returnArray))block;
 + (void)getCollection:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *))block;
++ (void)getAskWithReplies:(NSDictionary *)param withBlock:(void (^)(NSArray *returnArray))block;
 @end

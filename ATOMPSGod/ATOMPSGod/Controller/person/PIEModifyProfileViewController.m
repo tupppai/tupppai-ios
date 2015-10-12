@@ -13,7 +13,7 @@
 #import "ATOMUploadImage.h"
 #import "ATOMImage.h"
 #import "JGActionSheet.h"
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+
 
 @interface PIEModifyProfileViewController ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate , ATOMCropHeaderImageCompleteProtocol>
 @property (nonatomic, strong) PIEModifySelfView *createProfileView;

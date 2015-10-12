@@ -8,7 +8,7 @@
 
 #import "ATOMLoginView.h"
 
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self;
+;
 
 @interface ATOMLoginView ()<UITextFieldDelegate>
 

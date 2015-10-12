@@ -15,7 +15,7 @@
 #import "PIEFriendFollowingViewController.h"
 #import "PIEFriendFansViewController.h"
 #import "PIECarouselViewController.h"
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+
 @interface PIEFriendViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
 @property (weak, nonatomic) IBOutlet UIImageView *followButton;
@@ -37,7 +37,6 @@
 
 
 -(void)awakeFromNib {
-    NSLog(@"PIEFriendViewController awakeFromNib");
 }
 
 - (void)viewDidLoad {
@@ -85,6 +84,7 @@
     vc.pageVM = vm;
     [self.navigationController pushViewController:vc animated:YES];
 }
+
 - (void)pushToFollowingVC {
     PIEFriendFollowingViewController *opvcv = [PIEFriendFollowingViewController new];
     opvcv.uid = _pageVM.userID;

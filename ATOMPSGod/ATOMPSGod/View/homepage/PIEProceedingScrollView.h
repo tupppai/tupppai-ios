@@ -16,7 +16,8 @@ typedef NS_ENUM(NSInteger, PIEProceedingType) {
     PIEProceedingTypeDone
 };
 @interface PIEProceedingScrollView : UIScrollView
-@property (nonatomic, strong) PIERefreshCollectionView *askCollectionView;
+//@property (nonatomic, strong) PIERefreshCollectionView *askCollectionView;
+@property (nonatomic, strong) RefreshTableView *askTableView;
 @property (nonatomic, strong) RefreshTableView *toHelpTableView;
 @property (nonatomic, strong) PIERefreshCollectionView *doneCollectionView;
 @property (nonatomic, assign) PIEProceedingType type;

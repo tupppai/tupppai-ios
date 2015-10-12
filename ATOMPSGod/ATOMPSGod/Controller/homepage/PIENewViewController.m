@@ -33,7 +33,7 @@
 #import "PIEReplyCollectionViewController.h"
 @class PIEPageEntity;
 #define AskCellWidth (SCREEN_WIDTH - 20) / 2.0
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+
 @interface PIENewViewController() < UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,PWRefreshBaseCollectionViewDelegate,PIEShareFunctionViewDelegate,JGActionSheetDelegate,QBImagePickerControllerDelegate,CHTCollectionViewDelegateWaterfallLayout,UICollectionViewDelegate,UICollectionViewDataSource>
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureReply;

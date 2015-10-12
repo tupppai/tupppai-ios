@@ -14,7 +14,7 @@
 #import "DDMsgFollowModel.h"
 #import "RefreshFooterTableView.h"
 
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+
 
 @interface DDMsgFollowVC () <UITableViewDataSource, UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 

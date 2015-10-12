@@ -15,7 +15,7 @@
 #import "ATOMConcernViewModel.h"
 #import "DDFollowManager.h"
 #import "RefreshTableView.h"
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+
 
 @interface DDMyFollowVC () <UITableViewDataSource, UITableViewDelegate,PWRefreshBaseTableViewDelegate>
 

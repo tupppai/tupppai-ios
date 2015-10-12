@@ -14,7 +14,7 @@
 #import "PIEToHelpTableViewCell2.h"
 #import "PIEFriendViewController.h"
 #import "PIECarouselViewController.h"
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+
 
 @interface PIEToHelpViewController () <UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,QBImagePickerControllerDelegate>
 @property (nonatomic, strong) NSMutableArray *sourceToHelp;

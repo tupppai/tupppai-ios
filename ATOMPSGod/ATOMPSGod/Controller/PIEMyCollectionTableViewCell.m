@@ -12,6 +12,12 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    _pageImageView.contentMode = UIViewContentModeScaleToFill;
+    _likeButton.hidden = YES;
+    _cornerLabel.hidden = YES;
+    _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
+    _avatarView.clipsToBounds = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -19,6 +25,16 @@
     // Configure the view for the selected state
 }
 - (void)injectSauce:(DDPageVM*)vm {
+    if (vm.type == PIEPageTypeAsk) {
+        _cornerLabel.hidden = NO;
+        _likeButton.hidden = YES;
+    }
+    else if (vm.type == PIEPageTypeReply) {
+        _likeButton.hidden = NO;
+        _likeButton.highlighted = vm.liked;
+        _likeButton.numberString = vm.likeCount;
+        _cornerLabel.hidden = YES;
+    }
     [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarURL]];
     [_pageImageView setImageWithURL:[NSURL URLWithString:vm.imageURL]];
     _nameLabel.text = vm.username;

@@ -1,57 +1,50 @@
 //
-//  ATOMMyWorkViewController.m
-//  ATOMPSGod
+//  PIEMyAskViewController.m
+//  TUPAI
 //
-//  Created by atom on 15/3/11.
-//  Copyright (c) 2015年 ATOM. All rights reserved.
+//  Created by chenpeiwei on 10/12/15.
+//  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIEMyReplyViewController.h"
-//#import "ATOMMyWorkCollectionViewCell.h"
-#import "DDDetailPageVC.h"
-
-
-#import "ATOMReplyViewModel.h"
-#import "PWRefreshFooterCollectionView.h"
+#import "PIEMyAskViewController.h"
+#import "PIERefreshCollectionView.h"
 #import "DDPageManager.h"
 #import "PIETabBarController.h"
 #import "AppDelegate.h"
 #import "CHTCollectionViewWaterfallLayout.h"
-#import "PIEMyReplyCollectionViewCell.h"
-
-
-
-@interface PIEMyReplyViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,CHTCollectionViewDelegateWaterfallLayout>
-
-@property (nonatomic, strong) PWRefreshFooterCollectionView *collectionView;
+#import "PIEMyAskCollectionViewCell.h"
+#import "PIECarouselViewController.h"
+@interface PIEMyAskViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,CHTCollectionViewDelegateWaterfallLayout>
+@property (nonatomic, strong) PIERefreshCollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *homeImageDataSource;
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, assign) NSInteger currentPage;
-
 @end
 
-@implementation PIEMyReplyViewController
+@implementation PIEMyAskViewController
 
 
 
 #pragma mark - Refresh
--(void)didPullUpCollectionViewBottom:(PWRefreshFooterCollectionView *)collectionView {
-    [self loadMoreData];
+-(void)didPullDownCollectionView:(UICollectionView *)collectionView {
+    [self getDataSource];
 }
-- (void)loadMoreData {
+-(void)didPullUpCollectionViewBottom:(UICollectionView *)collectionView {
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
         [_collectionView.footer endRefreshing];
     }
-    
 }
+
+
 
 #pragma mark - GetDataSource
 
 - (void)getDataSource {
     WS(ws);
+    [ws.collectionView.footer endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     _currentPage = 1;
@@ -59,7 +52,7 @@
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [DDPageManager getReply:param withBlock:^(NSMutableArray *resultArray) {
+    [DDPageManager getAsk:param withBlock:^(NSMutableArray *resultArray) {
         NSMutableArray* arrayAgent = [NSMutableArray new];
         for (PIEPageEntity *entity in resultArray) {
             DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
@@ -67,25 +60,23 @@
         }
         [ws.dataSource removeAllObjects];
         [ws.dataSource addObjectsFromArray:arrayAgent];
-        ws.collectionView.dataSource = self;
         [ws.collectionView reloadData];
+        [ws.collectionView.header endRefreshing];
     }];
 }
 
 - (void)getMoreDataSource {
     WS(ws);
+    [ws.collectionView.header endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timestamp = [[NSDate date] timeIntervalSince1970];
     ws.currentPage++;
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-    [param setObject:@"hot" forKey:@"type"];
     [param setObject:@(timestamp) forKey:@"last_updated"];
-    [param setObject:@"time" forKey:@"sort"];
-    [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];
     
-    [DDPageManager getReply:param withBlock:^(NSMutableArray *resultArray) {
+    [DDPageManager getAsk:param withBlock:^(NSMutableArray *resultArray) {
         for (PIEPageEntity *entity in resultArray) {
             DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
             [ws.dataSource addObject:vm];
@@ -109,24 +100,25 @@
 
 - (void)createUI {
     CHTCollectionViewWaterfallLayout *layout = [[CHTCollectionViewWaterfallLayout alloc] init];
-    layout.sectionInset = UIEdgeInsetsMake(10, 6, 0, 6);
+    layout.sectionInset = UIEdgeInsetsMake(10, 6, 0, 5);
     layout.minimumColumnSpacing = 8;
-    layout.minimumInteritemSpacing = 10;
+    layout.minimumInteritemSpacing = 6;
     
-    _collectionView = [[PWRefreshFooterCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+    _collectionView = [[PIERefreshCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     self.view = _collectionView;
-    _collectionView.backgroundColor = [UIColor whiteColor];
-    _collectionView.dataSource = nil;
+    _collectionView.toRefreshBottom = YES;
+    _collectionView.toRefreshTop = YES;
+    _collectionView.backgroundColor = [UIColor clearColor];
+    _collectionView.dataSource = self;
     _collectionView.delegate = self;
     _collectionView.psDelegate = self;
     _collectionView.emptyDataSetSource = self;
-    
-    _collectionView.contentInset = UIEdgeInsetsMake(0, 0, TAB_HEIGHT*3, 0);
-    UINib* nib = [UINib nibWithNibName:@"PIEMyReplyCollectionViewCell" bundle:nil];
-    [_collectionView registerNib:nib forCellWithReuseIdentifier:@"PIEMyReplyCollectionViewCell"];
+    _collectionView.contentInset = UIEdgeInsetsMake(0, 0, TAB_HEIGHT*2.5, 0);
+    UINib* nib = [UINib nibWithNibName:@"PIEMyAskCollectionViewCell" bundle:nil];
+    [_collectionView registerNib:nib forCellWithReuseIdentifier:@"PIEMyAskCollectionViewCell"];
     _canRefreshFooter = YES;
     _dataSource = [NSMutableArray array];
-
+    
     [self getDataSource];
 }
 
@@ -137,7 +129,7 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    PIEMyReplyCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PIEMyReplyCollectionViewCell" forIndexPath:indexPath];
+    PIEMyAskCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PIEMyAskCollectionViewCell" forIndexPath:indexPath];
     DDPageVM *vm = _dataSource[indexPath.row];
     [cell injectSauce:vm];
     return cell;
@@ -146,7 +138,11 @@
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-
+    NSLog(@"didSelectItemAtIndexPath");
+    PIECarouselViewController* vc = [PIECarouselViewController new];
+    vc.pageVM = [_dataSource objectAtIndex:indexPath.row];
+    [self presentViewController:vc animated:YES completion:nil];
+//    [self.navigationController pushViewController:vc animated:YES];
 }
 
 
@@ -158,7 +154,7 @@
 //}
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
 {
-    NSString *text = @"快去帮助众生PS,成为PS大神吧";
+    NSString *text = @"快去求P吧";
     
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:kTitleSizeForEmptyDataSet],
                                  NSForegroundColorAttributeName: [UIColor darkGrayColor]};
@@ -168,17 +164,17 @@
 
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    DDPageVM* vm = [_dataSource objectAtIndex:indexPath.row];
+//    DDPageVM* vm = [_dataSource objectAtIndex:indexPath.row];
     CGFloat width;
     CGFloat height;
     width = (SCREEN_WIDTH) /2 - 20;
-    height = vm.imageHeight/vm.imageWidth * width;
-    if (height > (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/1.3) {
-        height = (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/1.3;
-    }
+    height = width;
+//    height = vm.imageHeight/vm.imageWidth * width;
+//    if (height > (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/1.3) {
+//        height = (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/1.3;
+//    }
     return CGSizeMake(width, height);
 }
-
 
 
 @end

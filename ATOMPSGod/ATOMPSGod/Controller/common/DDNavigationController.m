@@ -24,6 +24,27 @@
         self.delegate = self;
     }
     [self setCommonNavigationStyle];
+    [self setupNav];
+}
+- (void)setupNav {
+    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
+    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 40, 30)];
+    UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 30)];
+    backButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;    //this line make image align to left
+    backButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    backButton.imageView.contentMode = UIViewContentModeTopLeft;
+    [backButton setImage:[UIImage imageNamed:@"PIE_icon_back"] forState:UIControlStateNormal];
+    [backView addSubview:backButton];
+    UIBarButtonItem *barBackButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backView];
+    [backButton addTarget:self action:@selector(popCurrentController) forControlEvents:UIControlEventTouchUpInside];
+    if (self.viewControllers.count == 1) {
+        self.navigationItem.leftBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:[[UIView alloc] initWithFrame:CGRectZero]]];
+        self.navigationItem.leftBarButtonItems = nil;
+    } else {
+        self.navigationItem.leftBarButtonItems = @[ barBackButtonItem];
+    }
 }
 
 - (void)setCommonNavigationStyle {

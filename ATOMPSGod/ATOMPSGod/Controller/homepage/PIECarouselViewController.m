@@ -11,7 +11,7 @@
 #import "PIEFriendViewController.h"
 #import "HMSegmentedControl.h"
 #import "UIImage+Blurring.h"
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+
 
 @interface PIECarouselViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *blurView;
@@ -30,7 +30,9 @@
 @end
 
 @implementation PIECarouselViewController
-
+-(BOOL)hidesBottomBarWhenPushed {
+    return YES;
+}
 -(void)awakeFromNib {
     
 }

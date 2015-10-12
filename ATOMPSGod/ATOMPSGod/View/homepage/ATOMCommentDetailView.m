@@ -9,7 +9,7 @@
 #import "ATOMCommentDetailView.h"
 #import "ATOMFaceView.h"
 
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+
 
 @interface ATOMCommentDetailView () <UIScrollViewDelegate>
 

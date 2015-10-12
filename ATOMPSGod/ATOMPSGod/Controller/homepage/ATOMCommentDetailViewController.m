@@ -17,7 +17,7 @@
 #import "ATOMComment.h"
 #import "CommentLikeButton.h"
 
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+
 
 @interface ATOMCommentDetailViewController() <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate,PWRefreshBaseTableViewDelegate>
 

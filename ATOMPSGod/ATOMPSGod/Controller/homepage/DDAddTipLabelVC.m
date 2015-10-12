@@ -21,7 +21,7 @@
 #import "PIENewViewController.h"
 #import "TSMessage.h"
 #import "DDNavigationController.h"
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+
 
 @interface DDAddTipLabelVC () <UITextFieldDelegate, UIGestureRecognizerDelegate>
 

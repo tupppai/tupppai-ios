@@ -14,7 +14,7 @@
 #import "DDService.h"
 #import "ATOMConcernViewModel.h"
 #import "RefreshFooterTableView.h"
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+
 
 @interface PIEFriendFollowingViewController () < UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 

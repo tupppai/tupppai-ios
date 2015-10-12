@@ -12,6 +12,11 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    self.layer.cornerRadius = 8;
 }
-
+- (void)injectSauce:(DDPageVM*)vm {
+    
+    [_pageImgaeView setImageWithURL:[NSURL URLWithString:vm.imageURL]placeholderImage:[UIImage imageNamed:@"cellBG"]];
+    
+}
 @end

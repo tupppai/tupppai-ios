@@ -11,7 +11,7 @@
 #import "ATOMComment.h"
 #import "DDCommentReplyVM.h"
 
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+
 
 @interface DDCommentManager ()
 

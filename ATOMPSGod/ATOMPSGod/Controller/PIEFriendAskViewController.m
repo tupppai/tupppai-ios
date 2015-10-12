@@ -11,7 +11,7 @@
 #import "RefreshTableView.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 #import "PIEFriendAskTableViewCell.h"
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+#import "DDPageManager.h"
 static NSString *cellIdentifier = @"PIEFriendAskTableViewCell";
 
 @interface PIEFriendAskViewController ()<PWRefreshBaseTableViewDelegate,UITableViewDataSource,UITableViewDelegate>
@@ -83,13 +83,10 @@ static NSString *cellIdentifier = @"PIEFriendAskTableViewCell";
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(1) forKey:@"page"];
-    [DDOtherUserManager getFriendAsk:param withBlock:^(NSArray *returnArray) {
-        NSLog(@"returnArray %zd",returnArray.count);
+    [DDPageManager getAskWithReplies:param withBlock:^(NSArray *returnArray) {
         if (returnArray.count > 0) {
             [_source removeAllObjects];
             [_source addObjectsFromArray:returnArray];
-            NSLog(@"_source %zd",returnArray.count);
-
             [self.table reloadData];
             _canRefreshFooter = YES;
         } else {
@@ -110,7 +107,7 @@ static NSString *cellIdentifier = @"PIEFriendAskTableViewCell";
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(_currentIndex) forKey:@"page"];
-    [DDOtherUserManager getFriendAsk:param withBlock:^(NSArray *returnArray) {
+    [DDPageManager getAskWithReplies:param withBlock:^(NSArray *returnArray) {
         if (returnArray.count > 0) {
             [_source addObjectsFromArray:returnArray];
             [self.table reloadData];

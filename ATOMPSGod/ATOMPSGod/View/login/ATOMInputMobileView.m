@@ -7,7 +7,7 @@
 //
 
 #import "ATOMInputMobileView.h"
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self;
+;
 @implementation ATOMInputMobileView
 
 - (instancetype)init {

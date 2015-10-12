@@ -24,7 +24,7 @@
 #import "ATOMReportModel.h"
 #import "DDInviteVC.h"
 
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+
 
 static  NSString* indentifier1 = @"PIEEliteFollowTableViewCell";
 static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";

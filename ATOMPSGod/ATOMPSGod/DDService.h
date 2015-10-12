@@ -34,7 +34,7 @@
 + (void)ddGetMyInfo:(NSDictionary*)param withBlock:(void (^)(NSDictionary* data))block;
 + (void)ddGetOtherUserInfo:(NSDictionary*)param withBlock:(void (^)(NSDictionary* data,NSArray *askArray,NSArray *replyArray))block;
 + (void)ddGetReply:(NSDictionary*)param withBlock:(void (^)(NSArray *returnArray))block;
-+ (void)ddGetAsk:(NSDictionary*)param withBlock:(void (^)(NSArray *returnArray))block;
++ (void)ddGetAskWithReplies:(NSDictionary*)param withBlock:(void (^)(NSArray *returnArray))block;
 + (void)ddGetFans:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block;
 + (void)ddGetFollow:(NSDictionary*)param withBlock:(void (^)(NSArray* recommendArray,NSArray* myFollowArray))block;
 

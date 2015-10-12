@@ -18,7 +18,7 @@
 
 #import "DDMsgReplyModel.h"
 #import "RefreshFooterTableView.h"
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+
 
 @interface DDMsgPostReplyVC () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 

@@ -25,4 +25,6 @@
 #define SEXRADIUS 15
 
 #define _S(number) (number*[ATOMBaseView scaleInView])
+#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+
 #endif

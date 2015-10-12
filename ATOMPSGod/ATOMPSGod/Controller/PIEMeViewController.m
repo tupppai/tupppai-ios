@@ -10,7 +10,7 @@
 #import "CAPSPageMenu.h"
 #import "PIEUploadVC.h"
 #import "RefreshTableView.h"
-#import "ATOMMyCollectionViewController.h"
+#import "PIEMyCollectionViewController.h"
 #import "PIEMyReplyViewController.h"
 #import "ATOMAccountSettingViewController.h"
 #import "DDMessageVC.h"
@@ -18,7 +18,7 @@
 #import "FXBlurView.h"
 #import "PIEFriendFollowingViewController.h"
 #import "PIEFriendFansViewController.h"
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+#import "PIEMyAskViewController.h"
 
 @interface PIEMeViewController ()<PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource>
 @property (weak, nonatomic) IBOutlet UIView *dotView2;
@@ -134,11 +134,17 @@
 
 - (void)setupPageMenu {
     // Array to keep track of controllers in page menu
+    
     NSMutableArray *controllerArray = [NSMutableArray array];
+    PIEMyAskViewController *controller3 = [PIEMyAskViewController new];
+    controller3.title = @"求P";
+    [controllerArray addObject:controller3];
+
     PIEMyReplyViewController *controller = [PIEMyReplyViewController new];
     controller.title = @"作品";
     [controllerArray addObject:controller];
-    ATOMMyCollectionViewController *controller2 = [ATOMMyCollectionViewController new];
+    
+    PIEMyCollectionViewController *controller2 = [PIEMyCollectionViewController new];
     controller2.title = @"收藏";
     [controllerArray addObject:controller2];
     NSDictionary *parameters = @{
@@ -154,7 +160,7 @@
                                  };
     
     _pageMenu = [[CAPSPageMenu alloc] initWithViewControllers:controllerArray frame:CGRectMake(0, _topContainerView.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - _topContainerView.frame.size.height) options:parameters];
-    
+    _pageMenu.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     [self.view addSubview:_pageMenu.view];
 }
 - (void)didReceiveMemoryWarning {

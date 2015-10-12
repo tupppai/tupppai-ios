@@ -7,7 +7,7 @@
 //
 
 #import "PIECreateProfileView.h"
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self;
+;
 
 @interface PIECreateProfileView ()
 @property (nonatomic, strong) UIView *nicknameView;

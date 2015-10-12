@@ -8,7 +8,7 @@
 
 #import "ATOMModifyPasswordView.h"
 
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self;
+;
 
 @interface ATOMModifyPasswordView ()
 

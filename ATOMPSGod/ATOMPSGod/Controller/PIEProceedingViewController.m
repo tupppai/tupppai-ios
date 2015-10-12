@@ -17,8 +17,9 @@
 #import "QBImagePickerController.h"
 #import "PIEUploadVC.h"
 #import "PIEFriendViewController.h"
-
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+#import "DDPageManager.h"
+#import "PIEProceedingAskTableViewCell.h"
+#import "PIECarouselViewController.h"
 #define MyAskCellWidth (SCREEN_WIDTH - 20) / 2.0
 
 @interface PIEProceedingViewController ()<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,PWRefreshBaseCollectionViewDelegate,PWRefreshBaseTableViewDelegate,CHTCollectionViewDelegateWaterfallLayout,UITableViewDataSource,UITableViewDelegate,QBImagePickerControllerDelegate>
@@ -53,6 +54,19 @@
     [self getRemoteSourceMyAsk];
     [self getRemoteSourceToHelp];
     [self getRemoteSourceDone];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveCarouselNotification:)
+                                                 name:@"tapCarouselItem_proceeding"
+                                               object:nil];
+}
+
+- (void) receiveCarouselNotification:(NSNotification *) notification {
+    NSDictionary *userInfo = notification.userInfo;
+    DDPageVM *vm = [userInfo objectForKey:@"CellVM"];
+    PIECarouselViewController* vc = [PIECarouselViewController new];
+    vc.pageVM = vm;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - init methods
@@ -76,11 +90,11 @@
     [self configDoneCollectionView];
 }
 - (void)configAskCollectionView {
-    _sv.askCollectionView.dataSource = self;
-    _sv.askCollectionView.delegate = self;
-    _sv.askCollectionView.psDelegate = self;
-    UINib* nib = [UINib nibWithNibName:@"PIEMyAskCollectionCell" bundle:nil];
-    [_sv.askCollectionView registerNib:nib forCellWithReuseIdentifier:@"PIEMyAskCollectionCell"];
+    _sv.askTableView.dataSource = self;
+    _sv.askTableView.delegate = self;
+    _sv.askTableView.psDelegate = self;
+    UINib* nib = [UINib nibWithNibName:@"PIEProceedingAskTableViewCell" bundle:nil];
+    [_sv.askTableView registerNib:nib forCellReuseIdentifier:@"PIEProceedingAskTableViewCell"];
 }
 - (void)configDoneCollectionView {
     _sv.doneCollectionView.dataSource = self;
@@ -156,20 +170,12 @@
 #pragma mark - refresh delegate
 
 -(void)didPullDownCollectionView:(UICollectionView *)collectionView {
-    if (collectionView == _sv.askCollectionView) {
-        [self getRemoteSourceMyAsk];
-    } else if (collectionView == _sv.doneCollectionView) {
+        if (collectionView == _sv.doneCollectionView) {
         [self getRemoteSourceDone];
     }
 }
 -(void)didPullUpCollectionViewBottom:(UICollectionView *)collectionView {
-    if (collectionView == _sv.askCollectionView) {
-        if (_canRefreshAskFooter) {
-            [self getMoreRemoteSourceMyAsk];
-        } else {
-            [_sv.askCollectionView.footer endRefreshing];
-        }
-    } else if (collectionView == _sv.doneCollectionView) {
+    if (collectionView == _sv.doneCollectionView) {
         if (_canRefreshDoneFooter) {
             [self getMoreRemoteSourceDone];
         } else {
@@ -178,14 +184,27 @@
     }
 }
 -(void)didPullRefreshDown:(UITableView *)tableView {
-    [self getRemoteSourceToHelp];
+    if (tableView == _sv.askTableView) {
+        [self getRemoteSourceMyAsk];
+    } else if (tableView == _sv.toHelpTableView) {
+        [self getRemoteSourceToHelp];
+    }
 }
 -(void)didPullRefreshUp:(UITableView *)tableView {
-    if (_canRefreshToHelpFooter) {
-        [self getMoreRemoteSourceToHelp];
-    } else {
-        [_sv.toHelpTableView.footer endRefreshing];
+    if (tableView == _sv.askTableView) {
+        if (_canRefreshAskFooter) {
+            [self getMoreRemoteSourceMyAsk];
+        } else {
+            [_sv.toHelpTableView.footer endRefreshing];
+        }
+    } else if (tableView == _sv.toHelpTableView) {
+        if (_canRefreshToHelpFooter) {
+            [self getMoreRemoteSourceToHelp];
+        } else {
+            [_sv.toHelpTableView.footer endRefreshing];
+        }
     }
+
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -291,30 +310,49 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _sourceToHelp.count;
+    if (tableView == _sv.askTableView) {
+        return _sourceAsk.count;
+    }
+    else if (tableView == _sv.toHelpTableView) {
+        return _sourceToHelp.count;
+    } else {
+        return 0;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    PIEToHelpTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIEToHelpTableViewCell"];
-    if (!cell) {
-        cell = [[PIEToHelpTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"PIEToHelpTableViewCell"];
+    if (tableView == _sv.askTableView) {
+        PIEProceedingAskTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIEProceedingAskTableViewCell"];
+        [cell injectSource:[_sourceAsk objectAtIndex:indexPath.row]];
+        return cell;
     }
-    [cell injectSource:[_sourceToHelp objectAtIndex:indexPath.row]];
-    return cell;
+    else if (tableView == _sv.toHelpTableView) {
+        PIEToHelpTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIEToHelpTableViewCell"];
+        [cell injectSource:[_sourceToHelp objectAtIndex:indexPath.row]];
+        return cell;
+    }
+        return nil;
+    
 }
 
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 150;
+    if (tableView == _sv.askTableView) {
+        return 180;
+    }
+    else if (tableView == _sv.toHelpTableView) {
+        return 150;
+    }
+    else {
+        return 0;
+    }
 }
 
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    if (collectionView == _sv.askCollectionView) {
-        return _sourceAsk.count;
-    } else if (collectionView == _sv.doneCollectionView) {
+    if (collectionView == _sv.doneCollectionView) {
         return _sourceDone.count;
     }
     return 0;
@@ -325,13 +363,7 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (collectionView == _sv.askCollectionView) {
-        PIEMyAskCollectionCell *cell =
-        (PIEMyAskCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PIEMyAskCollectionCell"
-                                                                            forIndexPath:indexPath];
-        [cell injectSource:[_sourceAsk objectAtIndex:indexPath.row]];
-        return cell;
-    } else if (collectionView == _sv.doneCollectionView) {
+    if (collectionView == _sv.doneCollectionView) {
         PIEDoneCollectionViewCell *cell =
         (PIEDoneCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PIEDoneCollectionViewCell"
                                                                                forIndexPath:indexPath];
@@ -345,9 +377,7 @@
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     DDPageVM* vm;
-    if (collectionView == _sv.askCollectionView) {
-        vm =   [_sourceAsk objectAtIndex:indexPath.row];
-    } else if (collectionView == _sv.doneCollectionView) {
+    if (collectionView == _sv.doneCollectionView) {
         vm =   [_sourceDone objectAtIndex:indexPath.row];
     }
     
@@ -366,7 +396,7 @@
 
 - (void)getRemoteSourceMyAsk {
     WS(ws);
-    [ws.sv.askCollectionView.footer endRefreshing];
+    [ws.sv.askTableView.footer endRefreshing];
     _currentIndex_MyAsk = 1;
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -374,29 +404,22 @@
     [param setObject:@(MyAskCellWidth) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    
-    [PIEProceedingManager getMyAsk:param withBlock:^(NSMutableArray *resultArray) {
-        if (resultArray.count == 0) {
+    [DDPageManager getAskWithReplies:param withBlock:^(NSArray *returnArray) {
+        if (returnArray.count == 0) {
             _canRefreshAskFooter = NO;
         } else {
             _canRefreshAskFooter = YES;
-            NSMutableArray* sourceAgent = [NSMutableArray new];
-            for (PIEPageEntity *homeImage in resultArray) {
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:homeImage];
-                [sourceAgent addObject:vm];
-            }
-            
             [ws.sourceAsk removeAllObjects];
-            [ws.sourceAsk addObjectsFromArray:sourceAgent];
-            [ws.sv.askCollectionView reloadData];
+            [ws.sourceAsk addObjectsFromArray:returnArray];
+            [ws.sv.askTableView reloadData];
         }
-        [ws.sv.askCollectionView.header endRefreshing];
+        [ws.sv.askTableView.header endRefreshing];
     }];
 }
 
 - (void)getMoreRemoteSourceMyAsk {
     WS(ws);
-    [ws.sv.askCollectionView.header endRefreshing];
+    [ws.sv.askTableView.header endRefreshing];
     _currentIndex_MyAsk++;
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -404,21 +427,17 @@
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [PIEProceedingManager getMyAsk:param withBlock:^(NSMutableArray *resultArray) {
-        if (resultArray.count == 0) {
+    [DDPageManager getAskWithReplies:param withBlock:^(NSArray *returnArray) {
+        if (returnArray.count == 0) {
             _canRefreshAskFooter = NO;
         } else {
             _canRefreshAskFooter = YES;
-            NSMutableArray* sourceAgent = [NSMutableArray new];
-            for (PIEPageEntity *homeImage in resultArray) {
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:homeImage];
-                [sourceAgent addObject:vm];
-            }
-            [ws.sourceAsk addObjectsFromArray:sourceAgent];
-            [ws.sv.askCollectionView reloadData];
+            [ws.sourceAsk addObjectsFromArray:returnArray];
+            [ws.sv.askTableView reloadData];
         }
-        [ws.sv.askCollectionView.footer endRefreshing];
+        [ws.sv.askTableView.footer endRefreshing];
     }];
+
 }
 
 #pragma mark - getRemoteSourceToHelp

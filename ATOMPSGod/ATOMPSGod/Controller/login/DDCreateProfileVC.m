@@ -14,7 +14,7 @@
 #import "ATOMImage.h"
 #import "JGActionSheet.h"
 
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+
 
 @interface DDCreateProfileVC () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, ATOMCropHeaderImageCompleteProtocol>
 @property (nonatomic, strong) PIECreateProfileView *createProfileView;

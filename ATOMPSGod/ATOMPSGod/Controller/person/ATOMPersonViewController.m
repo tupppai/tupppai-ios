@@ -22,7 +22,7 @@
 #import "JGActionSheet.h"
 #import "AppDelegate.h"
 
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+
 
 @interface ATOMPersonViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ATOMCropHeaderImageCompleteProtocol,JGActionSheetDelegate>
 

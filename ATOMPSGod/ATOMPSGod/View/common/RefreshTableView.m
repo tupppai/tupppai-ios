@@ -34,7 +34,6 @@
         self.gifFooter.refreshingImages = animatedImages;
         self.footer.stateHidden = YES;
         self.tableFooterView = [UIView new];
-    
     }
     return self;
 }

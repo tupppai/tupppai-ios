@@ -36,17 +36,23 @@
     [self initDoneCollectionView];
 }
 - (void)initAskCollectionView {
-    CHTCollectionViewWaterfallLayout *layout = [[CHTCollectionViewWaterfallLayout alloc] init];
-    layout.sectionInset = UIEdgeInsetsMake(10, 6, 0, 6);
-    layout.minimumColumnSpacing = 8;
-    layout.minimumInteritemSpacing = 10;
-    _askCollectionView = [[PIERefreshCollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT) collectionViewLayout:layout];
-    _askCollectionView.toRefreshBottom = YES;
-    _askCollectionView.backgroundColor = [UIColor clearColor];
-    _askCollectionView.toRefreshTop = YES;
-    _askCollectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-
-    [self addSubview:_askCollectionView];
+//    CHTCollectionViewWaterfallLayout *layout = [[CHTCollectionViewWaterfallLayout alloc] init];
+//    layout.sectionInset = UIEdgeInsetsMake(10, 6, 0, 6);
+//    layout.minimumColumnSpacing = 8;
+//    layout.minimumInteritemSpacing = 10;
+//    _askCollectionView = [[PIERefreshCollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT) collectionViewLayout:layout];
+//    _askCollectionView.toRefreshBottom = YES;
+//    _askCollectionView.backgroundColor = [UIColor clearColor];
+//    _askCollectionView.toRefreshTop = YES;
+//    _askCollectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+//
+//    [self addSubview:_askCollectionView];
+    
+    
+    _askTableView = [[RefreshTableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
+    _askTableView.backgroundColor = [UIColor clearColor];
+    [self addSubview:_askTableView];
+    
 }
 
 - (void)initToHelpTableView {
@@ -73,21 +79,21 @@
 - (void)toggleWithType:(PIEProceedingType)type {
     _type = type;
     if (_type == PIEProceedingTypeAsk) {
-        _askCollectionView.scrollsToTop = YES;
+        _askTableView.scrollsToTop = YES;
         _toHelpTableView.scrollsToTop = NO;
         _doneCollectionView.scrollsToTop = NO;
         [UIView animateWithDuration:0.3 animations:^{
             self.contentOffset = CGPointMake(0, 0);
         }];
     } else if (_type == PIEProceedingTypeToHelp) {
-        _askCollectionView.scrollsToTop = NO;
+        _askTableView.scrollsToTop = NO;
         _toHelpTableView.scrollsToTop = YES;
         _doneCollectionView.scrollsToTop = NO;
         [UIView animateWithDuration:0.3 animations:^{
             self.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
         }];
     }  else if (_type == PIEProceedingTypeDone) {
-        _askCollectionView.scrollsToTop = NO;
+        _askTableView.scrollsToTop = NO;
         _toHelpTableView.scrollsToTop = NO;
         _doneCollectionView.scrollsToTop = YES;
         [UIView animateWithDuration:0.3 animations:^{

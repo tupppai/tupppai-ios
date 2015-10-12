@@ -19,7 +19,7 @@
 #import "DDCommentReplyVM.h"
 #import "DDCommentHeaderView.h"
 
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+
 
 #define DEBUG_CUSTOM_TYPING_INDICATOR 0
 

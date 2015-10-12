@@ -14,7 +14,7 @@
 #import "ATOMFansViewModel.h"
 #import "RefreshFooterTableView.h"
 #import "DDService.h"
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
+
 
 @interface PIEFriendFansViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource>
 

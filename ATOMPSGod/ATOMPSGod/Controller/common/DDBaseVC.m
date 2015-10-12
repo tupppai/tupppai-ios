@@ -16,7 +16,7 @@
 #import "PIEEliteViewController.h"
 #import "PIEProceedingViewController.h"
 #import "PIEMeViewController.h"
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self;
+;
 
 @interface DDBaseVC ()
 
@@ -27,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self addObservers];
-    [self setupNav];
+//    [self setupNav];
 }
 
 - (void)addObservers {

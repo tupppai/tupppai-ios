@@ -16,5 +16,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *cornerLabel;
 @property (weak, nonatomic) IBOutlet PIEPageLikeButton *likeButton;
-
+- (void)injectSauce:(DDPageVM*)vm;
 @end

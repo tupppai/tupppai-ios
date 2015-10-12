@@ -5,7 +5,7 @@
 //  Created by chenpeiwei on 10/10/15.
 //  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
-#define WS(weakSelf) __weak __typeof(&*self)weakSelf = self;
+;
 
 #import "PIEModifySelfView.h"
 @interface PIEModifySelfView()
