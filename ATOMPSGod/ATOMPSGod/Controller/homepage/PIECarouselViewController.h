@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "DDBaseVC.h"
+//#import "DDBaseVC.h"
 #import "iCarousel.h"
 
 @interface PIECarouselViewController : DDBaseVC<iCarouselDataSource, iCarouselDelegate>

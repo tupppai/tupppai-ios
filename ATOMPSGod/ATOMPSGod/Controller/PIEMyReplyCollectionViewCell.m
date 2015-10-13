@@ -12,6 +12,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    self.layer.cornerRadius = 8;
 //    _tipLabel.layer.cornerRadius = 4;
 }
 - (void)injectSauce:(DDPageVM*)vm {

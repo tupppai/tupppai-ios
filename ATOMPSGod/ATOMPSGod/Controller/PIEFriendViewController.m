@@ -71,18 +71,6 @@
     [_fansCountLabel addGestureRecognizer:tapG3];
     [_fansDescLabel addGestureRecognizer:tapG33];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(receiveCarouselNotification:)
-                                                 name:@"tapCarouselItem"
-                                               object:nil];
-}
-
-- (void) receiveCarouselNotification:(NSNotification *) notification {
-    NSDictionary *userInfo = notification.userInfo;
-    DDPageVM *vm = [userInfo objectForKey:@"CellVM"];
-    PIECarouselViewController* vc = [PIECarouselViewController new];
-    vc.pageVM = vm;
-    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)pushToFollowingVC {

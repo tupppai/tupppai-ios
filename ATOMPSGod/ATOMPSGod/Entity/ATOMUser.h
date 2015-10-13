@@ -12,9 +12,9 @@
 /**
  *  用户唯一ID
  */
-@property (nonatomic, assign) int uid;
-@property (nonatomic, assign) bool boundWeibo;
-@property (nonatomic, assign) bool boundWechat;
+@property (nonatomic, assign) NSInteger uid;
+@property (nonatomic, assign) bool bindWeibo;
+@property (nonatomic, assign) bool bindWechat;
 
 /**
  *  此用户是否我的粉丝

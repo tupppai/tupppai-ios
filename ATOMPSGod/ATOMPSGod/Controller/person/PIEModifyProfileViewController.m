@@ -19,7 +19,7 @@
 @property (nonatomic, strong) PIEModifySelfView *createProfileView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) UITapGestureRecognizer *tapSexViewGesture;
-@property (nonatomic, strong) UITapGestureRecognizer *tapRegionViewGesture;
+//@property (nonatomic, strong) UITapGestureRecognizer *tapRegionViewGesture;
 @property (nonatomic, assign) NSInteger selectedRowComponent1;
 @property (nonatomic, assign) NSInteger selectedRowComponent2;
 @property (nonatomic, strong) NSArray* provinces;
@@ -86,6 +86,8 @@
                 //use reactive cocoa to update all avatar view.
                 [DDUserManager currentUser].avatar = _avatar;
             }
+            
+            [DDUserManager saveCurrentUserToDB];
             [self.navigationController popViewControllerAnimated:YES];
         } else {
             [Hud error:@"修改失败" inView:self.view];
@@ -289,10 +291,5 @@
     return _imagePickerController;
 }
 
-- (UITapGestureRecognizer *)tapRegionViewGesture {
-    if (!_tapRegionViewGesture) {
-        _tapRegionViewGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRegionViewGesture:)];
-    }
-    return _tapRegionViewGesture;
-}
+
 @end

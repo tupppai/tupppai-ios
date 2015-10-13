@@ -43,7 +43,6 @@ static NSString *cellIdentifier = @"PIEFriendAskTableViewCell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (_table == tableView) {
-        NSLog(@"_source numberOfRowsInSection %zd",_source.count);
         return _source.count;
     }
     return 0;

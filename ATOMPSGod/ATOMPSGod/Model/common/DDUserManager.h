@@ -86,10 +86,10 @@
 - (void)setCurrentUser:(ATOMUser *)user;
 -(void)tellMeEveryThingAboutYou;
 - (void)saveAndUpdateUser:(ATOMUser *)user;
--(void)fetchCurrentUserInDB:(void (^)(BOOL))block;
++(void)fetchUserInDBToCurrentUser:(void (^)(BOOL))block;
 -(void)wipe;
 
-
++ (void)saveCurrentUserToDB;
 + (void)DDGetUserInfoAndUpdateMe;
 + (void )DDRegister:(NSDictionary *)param withBlock:(void (^)(BOOL success))block ;
 + (void )DDLogin:(NSDictionary*)param withBlock:(void (^)(BOOL succeed))block ;

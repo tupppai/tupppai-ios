@@ -20,6 +20,9 @@
 #import "DDPageManager.h"
 #import "PIEProceedingAskTableViewCell.h"
 #import "PIECarouselViewController.h"
+#import "DDNavigationController.h"
+#import "AppDelegate.h"
+
 #define MyAskCellWidth (SCREEN_WIDTH - 20) / 2.0
 
 @interface PIEProceedingViewController ()<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,PWRefreshBaseCollectionViewDelegate,PWRefreshBaseTableViewDelegate,CHTCollectionViewDelegateWaterfallLayout,UITableViewDataSource,UITableViewDelegate,QBImagePickerControllerDelegate>
@@ -54,19 +57,7 @@
     [self getRemoteSourceMyAsk];
     [self getRemoteSourceToHelp];
     [self getRemoteSourceDone];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(receiveCarouselNotification:)
-                                                 name:@"tapCarouselItem_proceeding"
-                                               object:nil];
-}
 
-- (void) receiveCarouselNotification:(NSNotification *) notification {
-    NSDictionary *userInfo = notification.userInfo;
-    DDPageVM *vm = [userInfo objectForKey:@"CellVM"];
-    PIECarouselViewController* vc = [PIECarouselViewController new];
-    vc.pageVM = vm;
-    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - init methods
@@ -141,7 +132,10 @@
             [self.navigationController pushViewController:opvc animated:YES];
         }
         else if (CGRectContainsPoint(cell.theImageView.frame, p)) {
-            
+            PIECarouselViewController* vc = [PIECarouselViewController new];
+            vc.pageVM = vm;
+            DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+            [nav pushViewController:vc animated:YES ];
         }
     }
 }
@@ -195,7 +189,7 @@
         if (_canRefreshAskFooter) {
             [self getMoreRemoteSourceMyAsk];
         } else {
-            [_sv.toHelpTableView.footer endRefreshing];
+            [_sv.askTableView.footer endRefreshing];
         }
     } else if (tableView == _sv.toHelpTableView) {
         if (_canRefreshToHelpFooter) {
@@ -371,6 +365,14 @@
         return cell;
     }
     return nil;
+}
+
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    PIECarouselViewController* vc = [PIECarouselViewController new];
+    vc.pageVM = [_sourceDone objectAtIndex:indexPath.row];
+    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+    [nav pushViewController:vc animated:YES ];
 }
 
 

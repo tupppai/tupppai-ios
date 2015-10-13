@@ -73,7 +73,6 @@
         }
         else if (CGRectContainsPoint(cell.theImageView.frame, p)) {
             PIECarouselViewController* vc = [PIECarouselViewController new];
-            vm.image = cell.theImageView.image;
             vc.pageVM = vm;
             [self.navigationController pushViewController:vc animated:YES];
         } else {

@@ -7,6 +7,9 @@
 //
 
 #import "PIEProceedingAskTableViewCell.h"
+#import "PIECarouselViewController.h"
+#import "DDNavigationController.h"
+#import "AppDelegate.h"
 @interface PIEProceedingAskTableViewCell()<iCarouselDataSource,iCarouselDelegate>
 @property (strong, nonatomic) NSMutableArray *source;
 @end
@@ -120,13 +123,10 @@
 
 - (void)carousel:(__unused iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index
 {
-    DDPageVM* vm = [_source objectAtIndex:index];
-    vm.image = ((UIImageView*)[carousel itemViewAtIndex:index]).image;
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[_source objectAtIndex:index] forKey:@"CellVM"];
-    [[NSNotificationCenter defaultCenter]
-     postNotificationName:@"tapCarouselItem_proceeding"
-     object:nil userInfo:userInfo];
-    
+    PIECarouselViewController* vc = [PIECarouselViewController new];
+    vc.pageVM = [_source objectAtIndex:index];
+    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+    [nav pushViewController:vc animated:YES ];
 }
 
 - (void)carouselCurrentItemIndexDidChange:(__unused iCarousel *)carousel

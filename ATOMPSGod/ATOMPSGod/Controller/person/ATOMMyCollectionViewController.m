@@ -15,6 +15,9 @@
 #import "DDMyCollectionManager.h"
 #import "PWRefreshFooterCollectionView.h"
 #import "DDCommentVC.h"
+#import "DDNavigationController.h"
+#import "PIECarouselViewController.h"
+#import "AppDelegate.h"
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
 
 @interface ATOMMyCollectionViewController () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource>
@@ -185,6 +188,12 @@ static float cellWidth;
     ATOMMyCollectionCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:_cellIdentifier forIndexPath:indexPath];
     cell.viewModel = _dataSource[indexPath.row];
     return cell;
+}
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    PIECarouselViewController* vc = [PIECarouselViewController new];
+    vc.pageVM = [_dataSource objectAtIndex:indexPath.row];
+    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+    [nav pushViewController:vc animated:YES ];
 }
 
 //#pragma mark - DZNEmptyDataSetSource & delegate

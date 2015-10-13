@@ -189,7 +189,6 @@ static CGFloat BOTTOMHEIGHT = 300;
         _bottomView.frame = CGRectMake(kPadding5, CGRectGetMaxY(self.frame)-BOTTOMHEIGHT, SCREEN_WIDTH - 2 * kPadding5, BOTTOMHEIGHT);
     } completion:^(BOOL finished) {
     }];
-    
 }
 - (void)clickCancelButton:(UIButton *)sender {
     [self dismiss];

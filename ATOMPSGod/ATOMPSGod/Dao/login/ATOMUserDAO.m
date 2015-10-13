@@ -34,7 +34,7 @@
     });
 }
 
-+ (ATOMUser *)selectUserByUID:(int)uid {
++ (ATOMUser *)selectUserByUID:(NSInteger)uid {
     NSLog(@"selectUserByUID");
     __block ATOMUser *user;
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
@@ -77,7 +77,7 @@
     __block BOOL flag = false;
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
         NSString *stmt = @"select * from ATOMUser where uid = ?";
-        NSNumber* uid = [NSNumber numberWithInt:user.uid];
+        NSNumber* uid = [NSNumber numberWithInteger:user.uid];
 //        NSArray *param = @[uid];
 //        FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         FMResultSet *rs = [db executeQuery:stmt,uid];

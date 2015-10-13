@@ -27,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self addObservers];
-//    [self setupNav];
+    [self setupNav];
 }
 
 - (void)addObservers {
@@ -87,20 +87,20 @@
     [Hud text:info inView:self.view];
 }
 
-- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
-    self.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:viewController animated:animated];
-    if ([self isKindOfClass:[PIENewViewController class]]) {
-        self.hidesBottomBarWhenPushed = NO;
-    } else if ([self isKindOfClass:[PIEEliteViewController class]]){
-        self.hidesBottomBarWhenPushed = NO;
-    } else if ([self isKindOfClass:[PIEProceedingViewController class]]) {
-        self.hidesBottomBarWhenPushed = NO;
-    } else if ([self isKindOfClass:[PIEMeViewController class]]) {
-        self.hidesBottomBarWhenPushed = NO;
-    }
-}
+//- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
+//    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+//    self.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:viewController animated:animated];
+//    if ([self isKindOfClass:[PIENewViewController class]]) {
+//        self.hidesBottomBarWhenPushed = NO;
+//    } else if ([self isKindOfClass:[PIEEliteViewController class]]){
+//        self.hidesBottomBarWhenPushed = NO;
+//    } else if ([self isKindOfClass:[PIEProceedingViewController class]]) {
+//        self.hidesBottomBarWhenPushed = NO;
+//    } else if ([self isKindOfClass:[PIEMeViewController class]]) {
+//        self.hidesBottomBarWhenPushed = NO;
+//    }
+//}
 
 - (void)popCurrentController {
     [self.navigationController popViewControllerAnimated:YES];

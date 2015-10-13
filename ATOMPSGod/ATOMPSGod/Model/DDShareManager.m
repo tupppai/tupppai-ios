@@ -9,6 +9,7 @@
 #import "DDShareManager.h"
 #import "DDSessionManager.h"
 @implementation DDShareManager
+
 - (NSURLSessionDataTask *)getShareInfo:(NSDictionary *)param withBlock:(void (^)(ATOMShare *, NSError *))block {
     return [[DDSessionManager shareHTTPSessionManager] GET:@"app/share" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];

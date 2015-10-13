@@ -10,8 +10,7 @@
 #import "DDHotDetailManager.h"
 #import "PIEFriendViewController.h"
 #import "HMSegmentedControl.h"
-#import "UIImage+Blurring.h"
-
+#import "FXBlurView.h"
 
 @interface PIECarouselViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *blurView;
@@ -60,7 +59,6 @@
     _avatarView.clipsToBounds = YES;
     [_likeButton setImage:[UIImage imageNamed:@"pie_like_selected"] forState:UIControlStateSelected];
     [_likeButton setImage:[UIImage imageNamed:@"pie_like_selected"] forState:UIControlStateHighlighted];
-    _blurView.alpha = 0.3;
     _avatarView.userInteractionEnabled = YES;
     UITapGestureRecognizer *tapG1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToSeeFriend)];
     [_avatarView addGestureRecognizer:tapG1];
@@ -88,9 +86,14 @@
 
 - (void)setupBlurredImage
 {
-    UIImage *theImage = _pageVM.image? :[UIImage imageNamed:@"psps"];
-    
-    self.blurView.image = [theImage gaussianBlurWithBias:1000];
+    [DDService downloadImage:_pageVM.imageURL withBlock:^(UIImage *image) {
+        if (image) {
+            self.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+        } else {
+            
+        }
+    }];
+
 }
 #pragma mark iCarousel methods
 

@@ -12,7 +12,7 @@
 @implementation DDUserManager
 
 static dispatch_once_t onceToken;
-static DDUserManager *_currentUser;
+static  DDUserManager* _currentUser;
 
 - (instancetype)init
 {
@@ -68,10 +68,10 @@ static DDUserManager *_currentUser;
     return [dict mutableCopy];
 }
 
+
 - (void)setCurrentUser:(ATOMUser *)user {
     _uid = user.uid;
     _mobile = user.mobile;
-    _password = @"";
     _username = user.nickname;
     _sex = user.sex;
     _avatar = user.avatar;
@@ -85,8 +85,32 @@ static DDUserManager *_currentUser;
     _proceedingNumber = user.proceedingNumber;
     _attentionUploadNumber = user.attentionUploadNumber;
     _attentionWorkNumber = user.attentionWorkNumber;
-    _bindWechat = user.boundWechat;
-    _bindWeibo = user.boundWeibo;
+    _bindWechat = user.bindWechat;
+    _bindWeibo = user.bindWeibo;
+}
+
+//embarrassing
++ (void)saveCurrentUserToDB {
+    ATOMUser* user = [ATOMUser new];
+    DDUserManager* cUser = [DDUserManager currentUser];
+    user.uid = cUser.uid;
+    user.mobile = cUser.mobile;
+    user.nickname = cUser.username;
+    user.sex = cUser.sex;
+    user.avatar = cUser.avatar;
+    user.locationID = cUser.locationID;
+    user.backgroundImage = cUser.backgroundImage;
+    user.attentionNumber = cUser.attentionNumber;
+    user.fansNumber = cUser.fansNumber;
+    user.likeNumber = cUser.likeNumber;
+    user.uploadNumber = cUser.uploadNumber;
+    user.replyNumber = cUser.replyNumber;
+    user.proceedingNumber = cUser.proceedingNumber;
+    user.attentionUploadNumber = cUser.attentionUploadNumber;
+    user.attentionWorkNumber = cUser.attentionWorkNumber;
+    user.bindWechat = cUser.bindWechat;
+    user.bindWeibo = cUser.bindWeibo;
+    [ATOMUserDAO updateUser:user];
 }
 
 -(void)tellMeEveryThingAboutYou {
@@ -114,11 +138,10 @@ static DDUserManager *_currentUser;
     self.bindWeibo = NO;
 }
 
--(void)fetchCurrentUserInDB:(void (^)(BOOL))block {
++(void)fetchUserInDBToCurrentUser:(void (^)(BOOL))block {
   [ATOMUserDAO fetchUser:^(ATOMUser *user) {
       if (user) {
-          [user NSLogSelf];
-          [self setCurrentUser:user];
+          [[DDUserManager currentUser] setCurrentUser:user];
           if (block) {
               block(YES);
           }

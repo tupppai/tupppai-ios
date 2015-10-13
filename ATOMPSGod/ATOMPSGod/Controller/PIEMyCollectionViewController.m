@@ -10,6 +10,10 @@
 #import "RefreshTableView.h"
 #import "DDPageManager.h"
 #import "PIEMyCollectionTableViewCell.h"
+#import "PIECarouselViewController.h"
+#import "DDNavigationController.h"
+#import "AppDelegate.h"
+
 @interface PIEMyCollectionViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate>
 @property (nonatomic, strong)  RefreshTableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -26,7 +30,9 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.psDelegate = self;
+    _tableView.backgroundColor = [UIColor clearColor];
     self.view = _tableView;
+    
     UINib* nib = [UINib nibWithNibName:@"PIEMyCollectionTableViewCell" bundle:nil];
     [_tableView registerNib:nib forCellReuseIdentifier:@"PIEMyCollectionTableViewCell"];
     _canRefreshFooter = YES;
@@ -53,6 +59,12 @@
     return 100;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    PIECarouselViewController* vc = [PIECarouselViewController new];
+    vc.pageVM = [_dataSource objectAtIndex:indexPath.row];
+    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+    [nav pushViewController:vc animated:YES ];
+}
 -(void)didPullRefreshDown:(UITableView *)tableView {
     [self getDataSource];
 }

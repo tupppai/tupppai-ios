@@ -19,7 +19,8 @@
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "PIEMyReplyCollectionViewCell.h"
 
-
+#import "DDNavigationController.h"
+#import "PIECarouselViewController.h"
 
 @interface PIEMyReplyViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,CHTCollectionViewDelegateWaterfallLayout>
 
@@ -115,7 +116,7 @@
     
     _collectionView = [[PWRefreshFooterCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     self.view = _collectionView;
-    _collectionView.backgroundColor = [UIColor whiteColor];
+    _collectionView.backgroundColor = [UIColor clearColor];
     _collectionView.dataSource = nil;
     _collectionView.delegate = self;
     _collectionView.psDelegate = self;
@@ -146,7 +147,10 @@
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-
+    PIECarouselViewController* vc = [PIECarouselViewController new];
+    vc.pageVM = [_dataSource objectAtIndex:indexPath.row];
+    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+    [nav pushViewController:vc animated:YES ];
 }
 
 

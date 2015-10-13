@@ -24,7 +24,7 @@
 #import "ATOMReportModel.h"
 #import "DDInviteVC.h"
 
-
+#import "PIEShareView.h"
 
 static  NSString* indentifier1 = @"PIEEliteFollowTableViewCell";
 static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
@@ -69,6 +69,8 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
         }
     }];
 
+    PIEShareView* shareView = [PIEShareView new];
+    [shareView show];
 }
 
 #pragma mark - init methods

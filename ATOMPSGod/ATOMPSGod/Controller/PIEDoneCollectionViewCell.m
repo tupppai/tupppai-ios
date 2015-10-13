@@ -18,8 +18,7 @@
 
 //put a needle injecting juicy sauce into cell's ass.
 - (void)injectSauce:(DDPageVM*)vm {
-    [_theImageView setImageWithURL:[NSURL URLWithString:vm.imageURL]];
-    //    _contentLabel.text = @"";
+    [_theImageView setImageWithURL:[NSURL URLWithString:vm.imageURL]placeholderImage:[UIImage imageNamed:@"cellBG"]];
 }
 
 @end

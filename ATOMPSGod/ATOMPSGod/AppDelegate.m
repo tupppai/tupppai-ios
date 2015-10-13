@@ -67,8 +67,8 @@
 
 }
 -(void)initializeAfterDB {
-    [[DDUserManager currentUser]fetchCurrentUserInDB:^(BOOL hasCurrentUser) {
-        if (hasCurrentUser) {
+    [DDUserManager fetchUserInDBToCurrentUser:^(BOOL success) {
+        if (success) {
             self.window.rootViewController = self.mainTabBarController;
         } else {
             if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])

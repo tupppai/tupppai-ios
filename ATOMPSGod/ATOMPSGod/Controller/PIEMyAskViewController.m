@@ -14,6 +14,7 @@
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "PIEMyAskCollectionViewCell.h"
 #import "PIECarouselViewController.h"
+#import "DDNavigationController.h"
 @interface PIEMyAskViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,CHTCollectionViewDelegateWaterfallLayout>
 @property (nonatomic, strong) PIERefreshCollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -138,11 +139,15 @@
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"didSelectItemAtIndexPath");
+
+//    PIECarousel2ViewController* vc = [PIECarousel2ViewController new];
+//    vc.pageVM = [_dataSource objectAtIndex:indexPath.row];
+//    DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc];
+//    [nav presentViewController:nav2 animated:YES completion:nil];
     PIECarouselViewController* vc = [PIECarouselViewController new];
     vc.pageVM = [_dataSource objectAtIndex:indexPath.row];
-    [self presentViewController:vc animated:YES completion:nil];
-//    [self.navigationController pushViewController:vc animated:YES];
+    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+    [nav pushViewController:vc animated:YES ];
 }
 
 

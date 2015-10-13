@@ -64,7 +64,14 @@
     _rightImageView.clipsToBounds = YES;
     if (_assetsArray.count == 1) {
         _leftImageView.image = [Util getImageFromAsset:[_assetsArray objectAtIndex:0] type:ASSET_PHOTO_SCREEN_SIZE];
-        _rightImageView.image = [UIImage imageNamed:@"plus_sign.jpg"];
+        UIImageView* maskImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 20, 20)];
+        maskImageView.image =  [UIImage imageNamed:@"pie_upload_plus"];
+        maskImageView.backgroundColor = [UIColor clearColor];
+        maskImageView.contentMode = UIViewContentModeScaleAspectFit;
+        [self.view addSubview:maskImageView];
+        maskImageView.center = _rightImageView.center;
+        _rightImageView.layer.borderWidth = 0.5;
+        _rightImageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
         UITapGestureRecognizer* tapGesure = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(iWantSelecteMorePhoto)];
         _rightImageView.userInteractionEnabled = YES;
         [_rightImageView addGestureRecognizer:tapGesure];

@@ -35,8 +35,9 @@
         _likeButton.numberString = vm.likeCount;
         _cornerLabel.hidden = YES;
     }
-    [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarURL]];
-    [_pageImageView setImageWithURL:[NSURL URLWithString:vm.imageURL]];
+    
+    [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarURL]placeholderImage:[UIImage imageNamed:@"cellBG"]];
+    [_pageImageView setImageWithURL:[NSURL URLWithString:vm.imageURL]placeholderImage:[UIImage imageNamed:@"cellBG"]];
     _nameLabel.text = vm.username;
     _contentLabel.text = vm.content;
     _cornerLabel.text = @"已有%zd个帮P,马上参与PK";

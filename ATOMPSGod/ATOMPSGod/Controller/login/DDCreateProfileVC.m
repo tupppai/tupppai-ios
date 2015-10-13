@@ -78,12 +78,12 @@
                     if ([provinceName isEqualToString:_userProfileViewModel.province]) {
                         NSArray* cities = province[@"citys"];
                         NSString* provinceID = province[@"id"];
-                        [[DDUserManager  currentUser].region setObject:provinceID forKey:@"provinceID"];
+                        [[DDUserManager currentUser].region setObject:provinceID forKey:@"provinceID"];
                         for (NSDictionary* city in cities) {
                             NSString* cityName = [city allValues][0];
                             if ([cityName isEqualToString:_userProfileViewModel.city]) {
                                 NSString* cityID = [city allKeys][0];
-                                [[DDUserManager  currentUser].region setObject:cityID forKey:@"cityID"];
+                                [[DDUserManager currentUser].region setObject:cityID forKey:@"cityID"];
                             }
                         }
                     
@@ -97,7 +97,7 @@
                     if ([provinceID isEqualToString: _userProfileViewModel.province]) {
                         NSArray* cities = province[@"citys"];
                         NSString* provinceName = province[@"name"];
-                        [[DDUserManager  currentUser].region setObject:provinceID forKey:@"provinceID"];
+                        [[DDUserManager currentUser].region setObject:provinceID forKey:@"provinceID"];
                         for (NSDictionary* city in cities) {
                             NSString* cityID = [city allKeys][0];
                             if ([cityID isEqualToString:_userProfileViewModel.city]) {
