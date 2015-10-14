@@ -39,7 +39,7 @@
     __block ATOMUser *user;
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
         NSString *stmt = @"select * from ATOMUser where uid = ?";
-        NSNumber* uid_ns = [NSNumber numberWithInt:uid];
+        NSNumber* uid_ns = [NSNumber numberWithInteger:uid];
         NSArray *param = @[uid_ns];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {

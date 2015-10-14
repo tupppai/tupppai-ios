@@ -42,17 +42,17 @@
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
-                            <exclude reference="wrH-Bw-Md5"/>
+                            <exclude reference="Od1-2o-Fh4"/>
                             <exclude reference="cft-M4-Ik0"/>
                             <exclude reference="qxg-dk-jnB"/>
-                            <exclude reference="Od1-2o-Fh4"/>
+                            <exclude reference="wrH-Bw-Md5"/>
                         </mask>
                     </variation>
                     <variation key="widthClass=compact">
                         <mask key="constraints">
-                            <exclude reference="wrH-Bw-Md5"/>
-                            <exclude reference="qxg-dk-jnB"/>
                             <exclude reference="Od1-2o-Fh4"/>
+                            <exclude reference="qxg-dk-jnB"/>
+                            <exclude reference="wrH-Bw-Md5"/>
                             <exclude reference="zLw-xu-DIV"/>
                         </mask>
                     </variation>
@@ -97,14 +97,14 @@
                             <nil key="highlightedColor"/>
                             <variation key="default">
                                 <mask key="constraints">
-                                    <exclude reference="tLO-ic-eBQ"/>
                                     <exclude reference="Gsv-QZ-32L"/>
+                                    <exclude reference="tLO-ic-eBQ"/>
                                 </mask>
                             </variation>
                             <variation key="widthClass=compact">
                                 <mask key="constraints">
-                                    <exclude reference="edc-tF-IQd"/>
                                     <include reference="Gsv-QZ-32L"/>
+                                    <exclude reference="edc-tF-IQd"/>
                                 </mask>
                             </variation>
                         </label>
@@ -158,11 +158,11 @@
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
-                            <exclude reference="Up3-Tf-dTh"/>
-                            <exclude reference="BlU-h7-nBk"/>
                             <exclude reference="9Q2-2c-KEQ"/>
-                            <exclude reference="jCc-gL-tFM"/>
+                            <exclude reference="BlU-h7-nBk"/>
                             <exclude reference="Fri-P6-gfv"/>
+                            <exclude reference="Up3-Tf-dTh"/>
+                            <exclude reference="jCc-gL-tFM"/>
                             <exclude reference="3FX-z0-hcB"/>
                             <exclude reference="Hoz-Dt-fHo"/>
                         </mask>
@@ -201,17 +201,17 @@
             <nil key="simulatedBottomBarMetrics"/>
             <variation key="default">
                 <mask key="constraints">
-                    <exclude reference="yiE-By-hk7"/>
-                    <exclude reference="lex-Go-Krj"/>
                     <exclude reference="5qR-1n-LBB"/>
                     <exclude reference="KVC-bZ-l51"/>
+                    <exclude reference="lex-Go-Krj"/>
                     <exclude reference="y7e-qr-T1B"/>
+                    <exclude reference="yiE-By-hk7"/>
                 </mask>
             </variation>
             <variation key="widthClass=compact">
                 <mask key="constraints">
-                    <exclude reference="yiE-By-hk7"/>
                     <include reference="KVC-bZ-l51"/>
+                    <exclude reference="yiE-By-hk7"/>
                 </mask>
             </variation>
         </view>

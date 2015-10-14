@@ -7,7 +7,7 @@
 //
 
 #import "PIEMyCollectionViewController.h"
-#import "RefreshTableView.h"
+#import "PIERefreshTableView.h"
 #import "DDPageManager.h"
 #import "PIEMyCollectionTableViewCell.h"
 #import "PIECarouselViewController.h"
@@ -15,7 +15,7 @@
 #import "AppDelegate.h"
 
 @interface PIEMyCollectionViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate>
-@property (nonatomic, strong)  RefreshTableView *tableView;
+@property (nonatomic, strong)  PIERefreshTableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) UITapGestureRecognizer *tapMyCollectionGesture;
 @property (nonatomic, assign) NSInteger currentPage;
@@ -26,7 +26,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _tableView = [RefreshTableView new];
+    _tableView = [PIERefreshTableView new];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.psDelegate = self;

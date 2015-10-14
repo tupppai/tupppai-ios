@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PIERefreshCollectionView.h"
-#import "RefreshTableView.h"
+#import "PIERefreshTableView.h"
 
 typedef NS_ENUM(NSInteger, PIEProceedingType) {
     PIEProceedingTypeAsk = 0,
@@ -17,8 +17,8 @@ typedef NS_ENUM(NSInteger, PIEProceedingType) {
 };
 @interface PIEProceedingScrollView : UIScrollView
 //@property (nonatomic, strong) PIERefreshCollectionView *askCollectionView;
-@property (nonatomic, strong) RefreshTableView *askTableView;
-@property (nonatomic, strong) RefreshTableView *toHelpTableView;
+@property (nonatomic, strong) PIERefreshTableView *askTableView;
+@property (nonatomic, strong) PIERefreshTableView *toHelpTableView;
 @property (nonatomic, strong) PIERefreshCollectionView *doneCollectionView;
 @property (nonatomic, assign) PIEProceedingType type;
 - (void)toggleWithType:(PIEProceedingType)type;

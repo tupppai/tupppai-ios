@@ -41,7 +41,7 @@
 }
 
 - (void)createHomepageHotView {
-    _replyTable = [[RefreshTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
+    _replyTable = [[PIERefreshTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
     _replyTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     _replyTable.backgroundColor = [UIColor clearColor];
     _replyTable.showsVerticalScrollIndicator = NO;

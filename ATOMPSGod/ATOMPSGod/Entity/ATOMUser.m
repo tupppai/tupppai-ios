@@ -25,7 +25,7 @@
              @"proceedingNumber" : @"inprogress_count",
              @"attentionUploadNumber" : @"focus_count",
              @"attentionWorkNumber" : @"collection_count",
-             @"mobile" : @"is_bound_mobile",
+             @"mobile" : @"phone",
              @"bindWeibo" : @"is_bound_weibo",
              @"bindWechat" : @"is_bound_weixin",
 //             @"locationID" : @"location",

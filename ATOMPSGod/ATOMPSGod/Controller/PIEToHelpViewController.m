@@ -8,7 +8,7 @@
 
 #import "PIEToHelpViewController.h"
 #import "QBImagePickerController.h"
-#import "RefreshTableView.h"
+#import "PIERefreshTableView.h"
 #import "PIEProceedingManager.h"
 #import "PIEUploadVC.h"
 #import "PIEToHelpTableViewCell2.h"
@@ -22,7 +22,7 @@
 @property (nonatomic, assign) BOOL canRefreshToHelpFooter;
 @property (nonatomic, strong) NSIndexPath* selectedIndexPath;
 @property (nonatomic, strong) QBImagePickerController* QBImagePickerController;
-@property (nonatomic, strong) RefreshTableView *toHelpTableView;
+@property (nonatomic, strong) PIERefreshTableView *toHelpTableView;
 
 @end
 
@@ -36,7 +36,7 @@
     _currentIndex_ToHelp = 1;
     _sourceToHelp = [NSMutableArray new];
     
-    _toHelpTableView = [[RefreshTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
+    _toHelpTableView = [[PIERefreshTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
     _toHelpTableView.backgroundColor = [UIColor clearColor];
     _toHelpTableView.dataSource = self;
     _toHelpTableView.delegate = self;

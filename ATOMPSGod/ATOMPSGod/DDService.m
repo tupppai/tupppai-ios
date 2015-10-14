@@ -223,6 +223,14 @@
         }
     }];
 }
++ (void)ddGetNotifications:(NSDictionary*)param withBlock:(void (^)(id data))block {
+    [[self class]GET:param url:URL_NotiGetNotifications block:^(id responseObject) {
+        if (responseObject) {
+            id data = [responseObject objectForKey:@"data"];
+            if (block) { block(data); }
+        }
+    }];
+}
 
 + (void)ddGetOtherUserInfo:(NSDictionary*)param withBlock:(void (^)(NSDictionary* data,NSArray *askArray,NSArray *replyArray))block {
     [[self class]GET:param url:URL_PFGetOtherUserInfo block:^(id responseObject) {

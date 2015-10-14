@@ -21,14 +21,14 @@
 
 - (void)mansory {
     [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.equalTo(self);
+        make.width.equalTo(self).multipliedBy(0.4);
         make.height.equalTo(self.imageView.mas_width);
         make.top.equalTo(self);
         make.centerX.equalTo(self);
     }];
     [self.label mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(self);
-        make.height.equalTo(@25);
+        make.height.equalTo(@30);
         make.top.equalTo(self.imageView.mas_bottom);
         make.centerX.equalTo(self);
     }];
@@ -45,7 +45,7 @@
     if (!_label) {
         _label = [UILabel new];
         _label.textAlignment = NSTextAlignmentCenter;
-        _label.font = [UIFont systemFontOfSize:11];
+        _label.font = [UIFont systemFontOfSize:12];
         _label.textColor = [UIColor darkGrayColor];
         _label.adjustsFontSizeToFitWidth = YES;
     }

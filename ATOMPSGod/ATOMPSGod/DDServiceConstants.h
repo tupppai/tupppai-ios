@@ -52,4 +52,8 @@ extern NSString * URL_NewestGetReply;
 #pragma mark - Elite
 extern NSString * URL_PFGetFollowPages;
 extern NSString * URL_PFGetHotPages;
+
+#pragma mark - Notification
+extern NSString * URL_NotiGetNotifications;
+
 @end

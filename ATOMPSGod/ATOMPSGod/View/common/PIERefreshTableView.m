@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 ATOM. All rights reserved.
 //
 
-#import "RefreshTableView.h"
+#import "PIERefreshTableView.h"
 
-@implementation RefreshTableView
+@implementation PIERefreshTableView
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -38,15 +38,15 @@
     return self;
 }
 
-#pragma mark lazy initilize
-- (ATOMNoDataView *)noDataView {
-    if (!_noDataView) {
-        _noDataView = [ATOMNoDataView new];
-        [self addSubview:_noDataView];
-        _noDataView.frame = CGRectMake(CGRectGetMidX(self.bounds)-self.bounds.size.width/4, CGRectGetMidY(self.bounds)-self.bounds.size.height/4, self.bounds.size.width/2, self.bounds.size.height/2);
-    }
-    return _noDataView;
-}
+//#pragma mark lazy initilize
+//- (ATOMNoDataView *)noDataView {
+//    if (!_noDataView) {
+//        _noDataView = [ATOMNoDataView new];
+//        [self addSubview:_noDataView];
+//        _noDataView.frame = CGRectMake(CGRectGetMidX(self.bounds)-self.bounds.size.width/4, CGRectGetMidY(self.bounds)-self.bounds.size.height/4, self.bounds.size.width/2, self.bounds.size.height/2);
+//    }
+//    return _noDataView;
+//}
 -(void) loadNewHotData {
     if (_psDelegate && [_psDelegate respondsToSelector:@selector(didPullRefreshDown:)]) {
         [_psDelegate didPullRefreshDown:self];
@@ -57,20 +57,20 @@
         [_psDelegate didPullRefreshUp:self];
     }}
 
--(void)reloadData {
-    [super reloadData];
-    if (self.noDataView.canShow) {
-        if (self) {
-            for (int i = 0; i < [self numberOfSections]; i++) {
-                if ([self numberOfRowsInSection:i] > 0) {
-                    self.noDataView.hidden = true;
-                    break;
-                }
-                self.noDataView.hidden = false;
-            }
-        }
-    }
-}
+//-(void)reloadData {
+//    [super reloadData];
+//    if (self.noDataView.canShow) {
+//        if (self) {
+//            for (int i = 0; i < [self numberOfSections]; i++) {
+//                if ([self numberOfRowsInSection:i] > 0) {
+//                    self.noDataView.hidden = true;
+//                    break;
+//                }
+//                self.noDataView.hidden = false;
+//            }
+//        }
+//    }
+//}
 
 
 @end

@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RefreshFooterTableView.h"
+#import "PIERefreshFooterTableView.h"
 @interface ATOMCommentDetailView : UIScrollView
 
-@property (nonatomic, strong) RefreshFooterTableView* commentDetailTableView;
+@property (nonatomic, strong) PIERefreshFooterTableView* commentDetailTableView;
 @property (nonatomic, strong) UIButton *sendCommentButton;
 @property (nonatomic, strong) UITextView *commentTextView;
 @property (nonatomic, strong) UIButton *faceButton;

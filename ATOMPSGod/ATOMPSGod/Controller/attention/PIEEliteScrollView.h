@@ -7,15 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RefreshTableView.h"
+#import "PIERefreshTableView.h"
 
 //typedef NS_ENUM(NSInteger, PIEFollowScrollType) {
 //    PIEFollowScrollTypeFollow = 0,
 //    PIEFollowScrollTypeHot
 //};
 @interface PIEEliteScrollView : UIScrollView
-@property (nonatomic, strong) RefreshTableView *tableFollow;
-@property (nonatomic, strong) RefreshTableView *tableHot;
+@property (nonatomic, strong) PIERefreshTableView *tableFollow;
+@property (nonatomic, strong) PIERefreshTableView *tableHot;
 @property (nonatomic, assign) PIEPageType type;
 - (void)toggle ;
 - (void)toggleWithType:(PIEPageType)type;

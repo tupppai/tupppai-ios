@@ -7,7 +7,7 @@
 //
 
 #import "PIESharesheetView.h"
-
+#import "POP.h"
 @implementation PIESharesheetView
 
 -(instancetype)init {
@@ -20,7 +20,7 @@
         
         [self addSubview:self.cancelLabel];
         [self.cancelLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(_icon5.mas_bottom).with.offset(10);
+            make.top.equalTo(_icon5.mas_bottom).with.offset(30);
             make.leading.equalTo(_icon1);
             make.trailing.equalTo(_icon4);
             make.height.equalTo(@40);
@@ -40,8 +40,8 @@
                   @[@"微信朋友",@"pie_share_wechatfriends"],
                   @[@"QQ好友",@"pie_share_qqfriends"],
                   @[@"复制链接",@"pie_share_copylinks"],
-                  @[@"QQ好友",@"pie_share_report"],
-                  @[@"QQ好友",@"pie_share_collect"], nil];
+                  @[@"举报",@"pie_share_report"],
+                  @[@"收藏",@"pie_share_collect"], nil];
 }
 - (void)generateIcons {
     _icon1 = [PIEShareIcon new];
@@ -81,11 +81,11 @@
 
 }
 - (void)mansoryIcons {
-    CGFloat itemWidth = 30;
-    CGFloat itemHeight = 50;
+    CGFloat itemWidth = 60;
+    CGFloat itemHeight = 40;
 
-    CGFloat rowGap = 20;
-    CGFloat columnGap = ( SCREEN_WIDTH*0.95 -  itemWidth*4 ) / 4;
+    CGFloat rowGap = 30;
+    CGFloat columnGap = ( SCREEN_WIDTH*0.98 -  itemWidth*4 ) / 4;
 
     [_icon1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@(itemWidth));
@@ -150,33 +150,10 @@
         _cancelLabel.layer.cornerRadius = 10;
         _cancelLabel.clipsToBounds = YES;
         _cancelLabel.textAlignment = NSTextAlignmentCenter;
+        _cancelLabel.userInteractionEnabled = YES;
     }
     return _cancelLabel;
 }
--(void)dismiss {
-    self.backgroundColor = [UIColor clearColor];
-    [UIView animateWithDuration:0.35 animations:^{
-    } completion:^(BOOL finished) {
-        self.hidden = YES;
-    }];
-}
--(void)show {
-    self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.8];
-    [UIView animateWithDuration:0.2 animations:^{
-        self.hidden = false;
-    } completion:^(BOOL finished) {
-    }];
-}
 
-- (void)showInView:(UIView *)view animated:(BOOL)animated {
-    self.frame = view.bounds;
-    [view addSubview:self];
-    self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.4];
-    [UIView animateWithDuration:0.2 animations:^{
-        self.hidden = false;
-    } completion:^(BOOL finished) {
-    }];
-    
-}
 
 @end

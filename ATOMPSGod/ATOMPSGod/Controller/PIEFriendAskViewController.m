@@ -8,7 +8,7 @@
 
 #import "PIEFriendAskViewController.h"
 #import "DDOtherUserManager.h"
-#import "RefreshTableView.h"
+#import "PIERefreshTableView.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 #import "PIEFriendAskTableViewCell.h"
 #import "DDPageManager.h"
@@ -17,7 +17,7 @@ static NSString *cellIdentifier = @"PIEFriendAskTableViewCell";
 @interface PIEFriendAskViewController ()<PWRefreshBaseTableViewDelegate,UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic, strong) NSMutableArray *source;
 @property (nonatomic, assign) NSInteger currentIndex;
-@property (nonatomic, strong) RefreshTableView *table;
+@property (nonatomic, strong) PIERefreshTableView *table;
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @end
 
@@ -118,9 +118,9 @@ static NSString *cellIdentifier = @"PIEFriendAskTableViewCell";
     }];
 }
 
--(RefreshTableView *)table {
+-(PIERefreshTableView *)table {
     if (!_table) {
-        _table = [[RefreshTableView alloc] initWithFrame:CGRectZero];
+        _table = [[PIERefreshTableView alloc] initWithFrame:CGRectZero];
         _table.separatorStyle = UITableViewCellSeparatorStyleNone;
         _table.backgroundColor = [UIColor clearColor];
         _table.showsVerticalScrollIndicator = NO;

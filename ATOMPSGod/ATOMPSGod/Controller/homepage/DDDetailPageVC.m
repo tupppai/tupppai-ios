@@ -20,7 +20,7 @@
 
 #import "PIEShareFunctionView.h"
 #import "kfcButton.h"
-#import "RefreshTableView.h"
+#import "PIERefreshTableView.h"
 #import "DDCollectManager.h"
 #import "DDBaseService.h"
 #import "JGActionSheet.h"

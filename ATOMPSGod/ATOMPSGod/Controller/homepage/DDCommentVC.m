@@ -78,7 +78,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [self configTextInput];
     [self addGestureToCommentTableView];
     [self getDataSource];
-    [self.textView becomeFirstResponder];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -89,8 +88,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-}
+    [self.textView becomeFirstResponder];
 
+}
 
 -(BOOL)hidesBottomBarWhenPushed {
     return YES;

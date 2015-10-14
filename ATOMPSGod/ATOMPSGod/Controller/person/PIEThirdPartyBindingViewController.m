@@ -59,7 +59,7 @@
     if (section == 0) {
         return 2;
     } else if (section == 1) {
-        return 1;
+        return 3;
     }
     return 0;
 }
@@ -70,27 +70,29 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
         return 60;
 }
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    
-    NSArray* list = @[@"社交账号绑定",@"手机号绑定"];
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 35)];
-    /* Create custom view to display section header... */
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, SCREEN_WIDTH-30, 35)];
-    [label setFont:[UIFont fontWithName:@"Hiragino Sans GB W3" size:kFont14]];
-    NSString *string = [list objectAtIndex:section];
-    view.backgroundColor = [UIColor colorWithRed:247/255.0f green:247/255.0f blue:247/255.0f alpha:1.0f];
-    label.backgroundColor = [UIColor clearColor];
-    label.textColor = [UIColor colorWithHex:0x637685];
-    /* Section header is in 0th index... */
-    [label setText:string];
-    [view addSubview:label];
-    return view;
-}
-
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 35;
 }
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSString *sectionName;
+    switch (section)
+    {
+        case 0:
+            sectionName = @"登录账号";
+            break;
+        case 1:
+            sectionName = @"社交账号绑定";
+            break;
+        default:
+            sectionName = @"";
+            break;
+    }
+    return sectionName;
+}
+
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"AccountBindingCell";
     ATOMAccountBindingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -99,13 +101,14 @@
     }
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
-    if (section == 0) {
+    if (section == 1) {
         if (row == 0) {
             cell.imageView.image = [UIImage imageNamed:@"weibo"];
             cell.textLabel.text = @"新浪微博";
             [cell addSwitch];
             [cell.bindSwitch setOn:[DDUserManager currentUser].bindWeibo];
-        } else if (row == 1) {
+        }
+        else if (row == 1) {
             cell.imageView.image = [UIImage imageNamed:@"wechat"];
             cell.textLabel.text = @"微信";
             [cell addSwitch];
@@ -113,13 +116,26 @@
         }
         [cell.bindSwitch addTarget:self action:@selector(toggleSwitch:) forControlEvents:UIControlEventValueChanged];
         cell.bindSwitch.tag = indexPath.row;
-    } else if (section == 1) {
-        cell.textLabel.text = @"手机号";
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        if ([[DDUserManager currentUser].mobile isEqualToString:@"-1"]) {
-            cell.phoneNumber = @"未绑定";
-        } else {
-            cell.phoneNumber = [DDUserManager currentUser].mobile;
+    } else if (section == 0) {
+        if (row == 0) {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 40, 25)];
+            label.adjustsFontSizeToFitWidth = YES;
+            NSString* phoneDesc ;
+            if ([[DDUserManager currentUser].mobile isEqualToString:@"-1"] || ![DDUserManager currentUser].mobile) {
+                label.text = @"未绑定";
+                 phoneDesc = @"手机号";
+            } else {
+                label.text = @"已绑定";
+                phoneDesc = [NSString stringWithFormat:@"手机号%@",[DDUserManager currentUser].mobile];
+            }
+            cell.textLabel.textColor = [UIColor lightGrayColor];
+            cell.accessoryView = label;
+            cell.textLabel.text = phoneDesc;
+        }
+        else if (row == 1) {
+            cell.textLabel.text = @"修改密码";
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
     }
    

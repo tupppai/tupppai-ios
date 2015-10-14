@@ -17,7 +17,7 @@
 #import "PIEFriendViewController.h"
 #import "DDCommentVC.h"
 #import "DDCollectManager.h"
-#import "PIEShareFunctionView.h"
+    //#import "PIEShareFunctionView.h"
 #import "PIEReplyCollectionViewController.h"
 #import "JGActionSheet.h"
 #import "AppDelegate.h"
@@ -29,7 +29,7 @@
 static  NSString* indentifier1 = @"PIEEliteFollowTableViewCell";
 static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
 
-@interface PIEEliteViewController ()<UITableViewDelegate,UITableViewDataSource,PWRefreshBaseTableViewDelegate,UIScrollViewDelegate,PIEShareFunctionViewDelegate,JGActionSheetDelegate>
+@interface PIEEliteViewController ()<UITableViewDelegate,UITableViewDataSource,PWRefreshBaseTableViewDelegate,UIScrollViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate>
 @property (nonatomic, strong) PIEEliteScrollView *sv;
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
 
@@ -50,7 +50,7 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
 @property (nonatomic, strong) PIEEliteHotTableViewCell *selectedHotCell;
 @property (nonatomic, strong) DDPageVM *selectedVM;
 
-@property (nonatomic, strong) PIEShareFunctionView *shareFunctionView;
+//@property (nonatomic, strong) PIEShareFunctionView *shareFunctionView;
 @property (nonatomic, strong)  JGActionSheet * psActionSheet;
 @property (nonatomic, strong)  JGActionSheet * reportActionSheet;
 
@@ -68,11 +68,12 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
             [self getRemoteSourceFollow];
         }
     }];
-
-    PIEShareView* shareView = [PIEShareView new];
-    [shareView show];
 }
 
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [KShareManager shareView].delegate = self;
+}
 #pragma mark - init methods
 
 - (void)configData {
@@ -205,21 +206,15 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
 
 
 - (void)tapGestureFollow:(UITapGestureRecognizer *)gesture {
-    NSLog(@"tapGestureFollow");
     if (_sv.type == PIEPageTypeEliteFollow) {
-        NSLog(@"tapGestureFollow2");
-
         CGPoint location = [gesture locationInView:_sv.tableFollow];
         _selectedIndexPath = [_sv.tableFollow indexPathForRowAtPoint:location];
         if (_selectedIndexPath) {
             _selectedFollowCell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
             _selectedVM = _sourceFollow[_selectedIndexPath.row];
             CGPoint p = [gesture locationInView:_selectedFollowCell];
-            
             //点击小图
             if (CGRectContainsPoint(_selectedFollowCell.thumbView.frame, p)) {
-                NSLog(@"tapGestureFollow3");
-
                 [_selectedFollowCell animateToggleExpanded];
             }
             //点击大图
@@ -256,7 +251,7 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
                 [self follow:_selectedFollowCell.followView];
             }
             else if (CGRectContainsPoint(_selectedFollowCell.shareView.frame, p)) {
-                [self showShareFunctionView];
+                [self showShareView];
             }
             else if (CGRectContainsPoint(_selectedFollowCell.commentView.frame, p)) {
                 DDCommentVC* vc = [DDCommentVC new];
@@ -319,7 +314,7 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
                 [self follow:_selectedHotCell.followView];
             }
             else if (CGRectContainsPoint(_selectedHotCell.shareView.frame, p)) {
-                [self showShareFunctionView];
+                [self showShareView];
             }
             else if (CGRectContainsPoint(_selectedHotCell.commentView.frame, p)) {
                 DDCommentVC* vc = [DDCommentVC new];
@@ -337,9 +332,8 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
 
 
 
-- (void)showShareFunctionView {
-    [self.shareFunctionView showInView:self.view animated:YES];
-    self.shareFunctionView.collectButton.selected = _selectedVM.collected;
+- (void)showShareView {
+    [[KShareManager shareView]show];
 }
 
 -(void)follow:(UIImageView*)followView {
@@ -424,32 +418,63 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
     }
 }
 
-#pragma mark - ATOMShareFunctionViewDelegate
--(void)tapWechatFriends {
-    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:PIEPageTypeAsk];
-}
--(void)tapWechatMoment {
-    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:PIEPageTypeAsk];
-}
--(void)tapSinaWeibo {
+#pragma mark - ATOMShareViewDelegate
+//-(void)tapWechatFriends {
+//    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:PIEPageTypeAsk];
+//}
+//-(void)tapWechatMoment {
+//    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:PIEPageTypeAsk];
+//}
+//-(void)tapSinaWeibo {
+//    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:PIEPageTypeAsk];
+//}
+//-(void)tapInvite {
+//    DDInviteVC* ivc = [DDInviteVC new];
+//    ivc.askPageViewModel = _selectedVM;
+//    [self.navigationController pushViewController:ivc animated:YES];
+//}
+//-(void)tapReport {
+//    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
+//}
+//-(void)tapCollect {
+//    if (_sv.type == PIEPageTypeEliteHot) {
+//        [self collect:_selectedHotCell.collectView];
+//    } else {
+//        [self collect:nil];
+//    }
+//}
+
+-(void)tapShare1 {
     [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:PIEPageTypeAsk];
 }
--(void)tapInvite {
-    DDInviteVC* ivc = [DDInviteVC new];
-    ivc.askPageViewModel = _selectedVM;
-    [self.navigationController pushViewController:ivc animated:YES];
+-(void)tapShare2 {
+    
 }
--(void)tapReport {
+-(void)tapShare3 {
+    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:PIEPageTypeAsk];
+}
+-(void)tapShare4 {
+        [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:PIEPageTypeAsk];
+}
+-(void)tapShare5 {
+    
+}
+-(void)tapShare6 {
+    
+}
+-(void)tapShare7 {
     [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
 }
--(void)tapCollect {
+-(void)tapShare8 {
     if (_sv.type == PIEPageTypeEliteHot) {
         [self collect:_selectedHotCell.collectView];
     } else {
         [self collect:nil];
     }
 }
-
+-(void)tapShareCancel {
+    [[KShareManager shareView]dismiss];
+}
 
 #pragma mark - getDataSource
 
@@ -690,12 +715,12 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
 }
 
 
-- (PIEShareFunctionView *)shareFunctionView {
-    if (!_shareFunctionView) {
-        _shareFunctionView = [PIEShareFunctionView new];
-        _shareFunctionView.delegate = self;
-    }
-    return _shareFunctionView;
-}
+//- (PIEShareFunctionView *)shareFunctionView {
+//    if (!_shareFunctionView) {
+//        _shareFunctionView = [PIEShareFunctionView new];
+//        _shareFunctionView.delegate = self;
+//    }
+//    return _shareFunctionView;
+//}
 
 @end

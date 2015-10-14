@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "PIESharesheetView.h"
-#import "FXBlurView.h"
-@interface PIEShareView : FXBlurView
+@interface PIEShareView:UIView
 @property (strong, nonatomic) PIESharesheetView *shareSheetView;
+@property (nonatomic, weak) id<PIEShareViewDelegate> delegate;
+
 - (void)showInView:(UIView *)view animated:(BOOL)animated;
 - (void)show;
 -(void)dismiss;

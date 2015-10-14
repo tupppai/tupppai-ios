@@ -12,7 +12,7 @@
 
 #import "kfcHomeScrollView.h"
 #import "DDHomePageManager.h"
-#import "PIEShareFunctionView.h"
+#import "PIEShareView.h"
 #import "DDShareManager.h"
 #import "DDCollectManager.h"
 #import "DDInviteVC.h"
@@ -28,13 +28,13 @@
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "PIEAskCollectionCell.h"
 #import "PIERefreshCollectionView.h"
-#import "RefreshTableView.h"
+#import "PIERefreshTableView.h"
 #import "PIEFriendViewController.h"
 #import "PIEReplyCollectionViewController.h"
 @class PIEPageEntity;
 #define AskCellWidth (SCREEN_WIDTH - 20) / 2.0
 
-@interface PIENewViewController() < UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,PWRefreshBaseCollectionViewDelegate,PIEShareFunctionViewDelegate,JGActionSheetDelegate,QBImagePickerControllerDelegate,CHTCollectionViewDelegateWaterfallLayout,UICollectionViewDelegate,UICollectionViewDataSource>
+@interface PIENewViewController() < UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,PWRefreshBaseCollectionViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,QBImagePickerControllerDelegate,CHTCollectionViewDelegateWaterfallLayout,UICollectionViewDelegate,UICollectionViewDataSource>
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureReply;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureAsk;
@@ -46,14 +46,13 @@
 @property (nonatomic, assign) NSInteger currentAskIndex;
 @property (nonatomic, strong) kfcHomeScrollView *scrollView;
 @property (nonatomic, weak) PIERefreshCollectionView *askCollectionView;
-@property (nonatomic, weak) RefreshTableView *hotTableView;
+@property (nonatomic, weak) PIERefreshTableView *hotTableView;
 @property (nonatomic, assign) BOOL canRefreshReplyFooter;
 @property (nonatomic, assign) BOOL canRefreshAskFooter;
 
 @property (nonatomic, assign) BOOL isFirstEnterSecondView;
 
-
-@property (nonatomic, strong) PIEShareFunctionView *shareFunctionView;
+//@property (nonatomic, strong) PIEShareFunctionView *shareFunctionView;
 @property (nonatomic, strong)  JGActionSheet * cameraActionsheet;
 @property (nonatomic, strong)  JGActionSheet * psActionSheet;
 @property (nonatomic, strong)  JGActionSheet * reportActionSheet;
@@ -85,6 +84,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     self.navigationController.navigationBarHidden = NO;
 }
 -(void)viewDidAppear:(BOOL)animated {
+    [KShareManager shareView].delegate = self;
     [self shouldNavToAskSegment];
     [self shouldNavToHotSegment];
 }
@@ -123,7 +123,6 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     _hotTableView = _scrollView.replyTable;
     _hotTableView.delegate = self;
     _hotTableView.dataSource = self;
-    _hotTableView.noDataView.label.text = @"网络连接断了吧-_-!";
     _hotTableView.psDelegate = self;
     UINib* nib = [UINib nibWithNibName:CellIdentifier bundle:nil];
     [_hotTableView registerNib:nib forCellReuseIdentifier:CellIdentifier];
@@ -252,10 +251,13 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     }
 }
 
-- (void)showShareFunctionView {
-    [self.shareFunctionView showInView:self.view animated:YES];
-    self.shareFunctionView.collectButton.selected = _selectedVM.collected;
+- (void)showShareView {
+    [[KShareManager shareView]show];
 }
+//- (void)showShareFunctionView {
+//    [self.shareFunctionView showInView:self.view animated:YES];
+//    self.shareFunctionView.collectButton.selected = _selectedVM.collected;
+//}
 #pragma mark - Gesture Event
 
 - (void)tapGestureReply:(UITapGestureRecognizer *)gesture {
@@ -309,7 +311,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
                 [self followReplier];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.shareView.frame, p)) {
-                [self showShareFunctionView];
+                [self showShareView];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.commentView.frame, p)) {
                 DDCommentVC* vc = [DDCommentVC new];
@@ -565,27 +567,65 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     }];
 }
 
-#pragma mark - ATOMShareFunctionViewDelegate
--(void)tapWechatFriends {
-    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:PIEPageTypeAsk];
+#pragma mark - ATOMShareViewDelegate
+//-(void)tapWechatFriends {
+//    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:PIEPageTypeAsk];
+//}
+//-(void)tapWechatMoment {
+//    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:PIEPageTypeAsk];
+//}
+//-(void)tapSinaWeibo {
+//    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:PIEPageTypeAsk];
+//}
+//-(void)tapInvite {
+//    DDInviteVC* ivc = [DDInviteVC new];
+//    ivc.askPageViewModel = _selectedVM;
+//    [self.navigationController pushViewController:ivc animated:YES];
+//}
+//-(void)tapReport {
+//    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
+//}
+//-(void)tapCollect {
+//    [self collectReply];
+//}
+
+
+//sina
+-(void)tapShare1 {
+    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:PIEPageTypeReply];
+    NSLog(@"tapShare1");
 }
--(void)tapWechatMoment {
-    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:PIEPageTypeAsk];
+//qqzone
+-(void)tapShare2 {
+    
 }
--(void)tapSinaWeibo {
-    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:PIEPageTypeAsk];
+//wechat moments
+-(void)tapShare3 {
+    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:PIEPageTypeReply];
 }
--(void)tapInvite {
-    DDInviteVC* ivc = [DDInviteVC new];
-    ivc.askPageViewModel = _selectedVM;
-    [self.navigationController pushViewController:ivc animated:YES];
+//wechat friends
+-(void)tapShare4 {
+    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:PIEPageTypeReply];
 }
--(void)tapReport {
+-(void)tapShare5 {
+    
+}
+-(void)tapShare6 {
+    
+}
+-(void)tapShare7 {
     [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
 }
--(void)tapCollect {
+-(void)tapShare8 {
     [self collectReply];
 }
+-(void)tapShareCancel {
+    [[KShareManager shareView]dismiss];
+}
+
+
+
+
 -(void)collectReply {
     NSMutableDictionary *param = [NSMutableDictionary new];
     _selectedReplyCell.collectView.selected = !_selectedReplyCell.collectView.selected;
@@ -605,6 +645,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
         }
     }];
 }
+
 -(void)likeReply {
     NSMutableDictionary *param = [NSMutableDictionary new];
     _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
@@ -739,13 +780,13 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     return _scrollView;
 }
 
-- (PIEShareFunctionView *)shareFunctionView {
-    if (!_shareFunctionView) {
-        _shareFunctionView = [PIEShareFunctionView new];
-        _shareFunctionView.delegate = self;
-    }
-    return _shareFunctionView;
-}
+//- (PIEShareFunctionView *)shareFunctionView {
+//    if (!_shareFunctionView) {
+//        _shareFunctionView = [PIEShareFunctionView new];
+//        _shareFunctionView.delegate = self;
+//    }
+//    return _shareFunctionView;
+//}
 
 - (JGActionSheet *)psActionSheet {
     WS(ws);

@@ -39,11 +39,14 @@
     
     _bg1.userInteractionEnabled = YES;
     _bg2.userInteractionEnabled = YES;
+    
+    UITapGestureRecognizer* tapG = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissViewController)];
+    [self.view addGestureRecognizer:tapG];
+
     UITapGestureRecognizer* tapG1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnG1)];
     UITapGestureRecognizer* tapG2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnG2)];
     [_bg1 addGestureRecognizer:tapG1];
     [_bg2 addGestureRecognizer:tapG2];
-
 }
 
 - (void)tapOnG1 {
@@ -55,11 +58,6 @@
         PIEToHelpViewController* vc = [PIEToHelpViewController new];
         [nav pushViewController:vc animated:YES];
     }];
-//    [[AppDelegate APP].mainTabBarController setSelectedIndex:3];
-//    PIEProceedingViewController* vc = (PIEProceedingViewController*)nav.topViewController;
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-//        [vc navToToHelp];
-//    });
 
 }
 - (void)dismissViewController {

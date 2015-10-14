@@ -12,14 +12,14 @@
 #import "ATOMConcernMessage.h"
 #import "ATOMConcernMessageViewModel.h"
 #import "DDMsgFollowModel.h"
-#import "RefreshFooterTableView.h"
+#import "PIERefreshFooterTableView.h"
 
 
 
 @interface DDMsgFollowVC () <UITableViewDataSource, UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
 @property (nonatomic, strong) UIView *concernMessageView;
-@property (nonatomic, strong) RefreshFooterTableView *tableView;
+@property (nonatomic, strong) PIERefreshFooterTableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) UITapGestureRecognizer *tapConcernMessageGesture;
 @property (nonatomic, assign) NSInteger currentPage;
@@ -112,7 +112,7 @@
 //    self.navigationItem.rightBarButtonItem = rightButtonItem;
     _concernMessageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _concernMessageView;
-    _tableView = [[RefreshFooterTableView alloc] initWithFrame:_concernMessageView.bounds];
+    _tableView = [[PIERefreshFooterTableView alloc] initWithFrame:_concernMessageView.bounds];
     [_concernMessageView addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;

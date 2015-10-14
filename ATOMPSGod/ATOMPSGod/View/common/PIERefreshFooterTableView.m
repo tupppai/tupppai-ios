@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 ATOM. All rights reserved.
 //
 
-#import "RefreshFooterTableView.h"
+#import "PIERefreshFooterTableView.h"
 
-@implementation RefreshFooterTableView
+@implementation PIERefreshFooterTableView
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {

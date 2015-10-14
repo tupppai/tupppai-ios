@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RefreshTableView.h"
+#import "PIERefreshTableView.h"
 #import "PIERefreshCollectionView.h"
 
 typedef NS_ENUM(NSInteger, PIENewScrollType) {
@@ -16,7 +16,7 @@ typedef NS_ENUM(NSInteger, PIENewScrollType) {
 };
 
 @interface kfcHomeScrollView : UIScrollView
-@property (nonatomic, strong) RefreshTableView *replyTable;
+@property (nonatomic, strong) PIERefreshTableView *replyTable;
 @property (nonatomic, strong) PIERefreshCollectionView *collectionView;
 @property (nonatomic, assign) PIENewScrollType type;
 - (void)toggle;

@@ -12,13 +12,13 @@
 #import "DDMyFansManager.h"
 #import "ATOMFans.h"
 #import "ATOMFansViewModel.h"
-#import "RefreshFooterTableView.h"
+#import "PIERefreshFooterTableView.h"
 #import "DDService.h"
 
 
 @interface PIEFriendFansViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource>
 
-@property (nonatomic, strong) RefreshFooterTableView *tableView;
+@property (nonatomic, strong) PIERefreshFooterTableView *tableView;
 @property (nonatomic, strong) UIView *myFansView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapMyFansGesture;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -53,7 +53,7 @@
 - (void) setupViews {
     _myFansView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _myFansView;
-    _tableView = [[RefreshFooterTableView alloc] initWithFrame:_myFansView.bounds];
+    _tableView = [[PIERefreshFooterTableView alloc] initWithFrame:_myFansView.bounds];
     _tableView.backgroundColor = [UIColor colorWithHex:0xededed];
     [_myFansView addSubview:_tableView];
     _tableView.delegate = self;

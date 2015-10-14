@@ -62,6 +62,7 @@
  **评论通知，邀请通知，系统通知等。
  */
 + (void)ddGetMsg:(NSDictionary*)param withBlock:(void (^)(id data))block;
++ (void)ddGetNotifications:(NSDictionary*)param withBlock:(void (^)(id data))block;
 
 
 @end

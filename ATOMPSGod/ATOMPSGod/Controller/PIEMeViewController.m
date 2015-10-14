@@ -9,7 +9,7 @@
 #import "PIEMeViewController.h"
 #import "CAPSPageMenu.h"
 #import "PIEUploadVC.h"
-#import "RefreshTableView.h"
+#import "PIERefreshTableView.h"
 #import "PIEMyCollectionViewController.h"
 #import "PIEMyReplyViewController.h"
 #import "ATOMAccountSettingViewController.h"
@@ -20,6 +20,8 @@
 #import "PIEFriendFansViewController.h"
 #import "PIEMyAskViewController.h"
 
+
+#import "PIENotificationViewController.h"
 @interface PIEMeViewController ()<PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource>
 @property (weak, nonatomic) IBOutlet UIView *dotView2;
 @property (weak, nonatomic) IBOutlet UIView *dotView1;
@@ -76,7 +78,7 @@
     [self.navigationController pushViewController:vc animated:NO];
 }
 - (void)pushToMessageViewController {
-    DDMessageVC* vc = [DDMessageVC new];
+    PIENotificationViewController* vc = [PIENotificationViewController new];
     [self.navigationController pushViewController:vc animated:NO];
 }
 - (void)setupViews {

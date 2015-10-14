@@ -53,4 +53,9 @@ NSString * URL_NewestGetReply = @"reply/index";
 #pragma mark - Elite
 NSString * URL_PFGetFollowPages = @"Thread/timeline";
 NSString * URL_PFGetHotPages = @"Thread/popular";
+
+#pragma mark - Notification
+NSString * URL_NotiGetNotifications = @"message/index";
+
+
 @end

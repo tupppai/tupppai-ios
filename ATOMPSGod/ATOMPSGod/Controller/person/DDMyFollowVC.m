@@ -14,13 +14,13 @@
 #import "DDFollow.h"
 #import "ATOMConcernViewModel.h"
 #import "DDFollowManager.h"
-#import "RefreshTableView.h"
+#import "PIERefreshTableView.h"
 
 
 @interface DDMyFollowVC () <UITableViewDataSource, UITableViewDelegate,PWRefreshBaseTableViewDelegate>
 
 @property (nonatomic, strong) UIView *myConcernView;
-@property (nonatomic, strong) RefreshTableView *tableView;
+@property (nonatomic, strong) PIERefreshTableView *tableView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapMyConcernGesutre;
 @property (nonatomic, strong) NSMutableArray *recommendDataSource;
 @property (nonatomic, strong) NSMutableArray *myDataSource;
@@ -122,7 +122,7 @@
     self.title = [NSString stringWithFormat:@"%@的关注", _uid ? _userName : @"我"];
     _myConcernView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _myConcernView;
-    _tableView = [[RefreshTableView alloc] initWithFrame:_myConcernView.bounds];
+    _tableView = [[PIERefreshTableView alloc] initWithFrame:_myConcernView.bounds];
     [_myConcernView addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = nil;

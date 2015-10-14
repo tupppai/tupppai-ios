@@ -13,12 +13,12 @@
 #import "DDFollow.h"
 #import "DDService.h"
 #import "ATOMConcernViewModel.h"
-#import "RefreshFooterTableView.h"
+#import "PIERefreshFooterTableView.h"
 
 
 @interface PIEFriendFollowingViewController () < UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
-@property (nonatomic, strong) RefreshFooterTableView *tableView;
+@property (nonatomic, strong) PIERefreshFooterTableView *tableView;
 @property (nonatomic, strong) UIView *concernView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapConcernGesture;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -56,7 +56,7 @@
     self.title = [NSString stringWithFormat:@"%@的关注", _userName];
     _concernView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _concernView;
-    _tableView = [[RefreshFooterTableView alloc] initWithFrame:_concernView.bounds];
+    _tableView = [[PIERefreshFooterTableView alloc] initWithFrame:_concernView.bounds];
     _tableView.backgroundColor = [UIColor colorWithHex:0xededed];
     _tableView.tableFooterView = [UIView new];
     [_concernView addSubview:_tableView];

@@ -49,14 +49,14 @@
 //    [self addSubview:_askCollectionView];
     
     
-    _askTableView = [[RefreshTableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
+    _askTableView = [[PIERefreshTableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
     _askTableView.backgroundColor = [UIColor clearColor];
     [self addSubview:_askTableView];
     
 }
 
 - (void)initToHelpTableView {
-    _toHelpTableView = [[RefreshTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
+    _toHelpTableView = [[PIERefreshTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
     _toHelpTableView.backgroundColor = [UIColor clearColor];
 
     [self addSubview:_toHelpTableView];
