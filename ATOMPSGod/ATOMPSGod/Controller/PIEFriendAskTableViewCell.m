@@ -23,11 +23,14 @@
     _carousel.delegate = self;
     _carousel.dataSource = self;
     _carousel.bounces = YES;
-    _carousel.bounceDistance = 0.2;
-    _carousel.contentOffset = CGSizeMake(-SCREEN_WIDTH/2+ 60, 0);
+    _carousel.bounceDistance = 1;
+    _carousel.contentOffset = CGSizeMake((-SCREEN_WIDTH+ self.carousel.frame.size.height + 30) /2, 0);
     _carousel.centerItemWhenSelected = NO;
     _carousel.clipsToBounds = YES;
     _source = [NSMutableArray new];
+    
+    _contentLabel.textColor = [UIColor colorWithHex:0x50484B andAlpha:1];
+    _allWorkDescLabel.textColor = [UIColor colorWithHex:0xFEAA2B andAlpha:1];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -45,7 +48,7 @@
     DDPageVM* vm = [_source objectAtIndex:0];
     _timeLabel.text = vm.publishTime;
     _allWorkDescLabel.text = [NSString stringWithFormat:@"已有%@个作品",vm.totalPSNumber];
-    _contentLabel.text = vm.content;
+    _contentLabel.text = [NSString stringWithFormat:@"要求:%@",vm.content];
     [self.carousel reloadData];
 }
 
@@ -62,14 +65,15 @@
     //create new view if no view is available for recycling
     if (view == nil)
     {
-        CGFloat width = self.carousel.frame.size.height - 5;
+        CGFloat width = self.carousel.frame.size.height;
         view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, width, width)];
         view.backgroundColor = [UIColor lightGrayColor];
         view.contentMode = UIViewContentModeScaleAspectFill;
+        view.layer.cornerRadius = 3.0;
         view.clipsToBounds = YES;
         if (vm.type == PIEPageTypeAsk) {
-            UIImageView* originView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 27, 12)];
-            originView.image = [UIImage imageNamed:@"new_reply_origin"];
+            UIImageView* originView = [[UIImageView alloc]initWithFrame:CGRectMake(-4, 0, 37, 16)];
+            originView.image = [UIImage imageNamed:@"pie_origin"];
             originView.contentMode = UIViewContentModeScaleAspectFit;
             [view addSubview:originView];
         }
@@ -92,7 +96,7 @@
         case iCarouselOptionSpacing:
         {
             //add a bit of spacing between the item views
-            return value * 1.05f;
+            return value * 1.1f;
         }
         case iCarouselOptionFadeMax:
         {

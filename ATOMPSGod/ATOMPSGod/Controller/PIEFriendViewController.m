@@ -35,10 +35,30 @@
 
 @implementation PIEFriendViewController
 
-
--(void)awakeFromNib {
+-(BOOL)hidesBottomBarWhenPushed {
+    return YES;
 }
+-(void)awakeFromNib {
+    NSLog(@"PIEFriendViewController awakeFromNib");
 
+}
+-(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        NSLog(@"PIEFriendViewController initWithNibName");
+
+
+    }
+    return self;
+}
+-(instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        NSLog(@" PIEFriendViewController initWithCoder");
+        //setup subviews here is not working,since loadView is not called,loadView is done when viewDidload is called ,put code in viewDidload.
+    }
+    return self;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -52,6 +72,19 @@
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
     _avatarView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
+    
+    _followCountLabel.textColor = [UIColor colorWithHex:0x4A4A4A andAlpha:1.0];
+    _fansCountLabel.textColor = [UIColor colorWithHex:0x4A4A4A andAlpha:1.0];
+    _likedCountLabel.textColor = [UIColor colorWithHex:0x4A4A4A andAlpha:1.0];
+
+    _followCountLabel.font = [UIFont boldSystemFontOfSize:15];
+    _fansCountLabel.font = [UIFont boldSystemFontOfSize:15];
+    _likedCountLabel.font = [UIFont boldSystemFontOfSize:15];
+//    
+    _fansDescLabel.font = [UIFont systemFontOfSize:14];
+    _followCountLabel.font = [UIFont systemFontOfSize:14];
+    _likedDescLabel.font = [UIFont systemFontOfSize:14];
+
 }
 - (void)setupTapGesture {
     _followButton.userInteractionEnabled = YES;
@@ -125,11 +158,11 @@
                                  CAPSPageMenuOptionViewBackgroundColor: [UIColor whiteColor],
                                  CAPSPageMenuOptionSelectionIndicatorColor: [UIColor pieYellowColor],
                                  CAPSPageMenuOptionBottomMenuHairlineColor: [UIColor colorWithRed:70.0/255.0 green:70.0/255.0 blue:70.0/255.0 alpha:0.0],
-                                 CAPSPageMenuOptionMenuItemFont: [UIFont systemFontOfSize:16.0],
+                                 CAPSPageMenuOptionMenuItemFont: [UIFont boldSystemFontOfSize:14],
                                  CAPSPageMenuOptionMenuHeight: @(40.0),
                                  CAPSPageMenuOptionSelectedMenuItemLabelColor: [UIColor blackColor],
                                  CAPSPageMenuOptionUseMenuLikeSegmentedControl:@(YES),
-                                 CAPSPageMenuOptionSelectionIndicatorWidth:@40,
+                                 CAPSPageMenuOptionSelectionIndicatorWidth:@66,
                                  };
    _pageMenu = [[CAPSPageMenu alloc] initWithViewControllers:controllerArray frame:CGRectMake(0, _view1.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - _view1.frame.size.height) options:parameters];
     _pageMenu.view.backgroundColor = [UIColor groupTableViewBackgroundColor];

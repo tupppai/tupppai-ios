@@ -118,7 +118,7 @@
         _attentionButton.userInteractionEnabled = NO;
         [_attentionButton setImage:[UIImage imageNamed:@"new_reply_follow"] forState:UIControlStateNormal];
         [_attentionButton setImage:[UIImage imageNamed:@"new_reply_followed"] forState:UIControlStateSelected];
-        _attentionButton.contentMode = UIViewContentModeScaleAspectFit;
+        _attentionButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
     }
     return _attentionButton;
 }

@@ -60,19 +60,19 @@
 
 
 
-@implementation UIFont (SystemFontOverride)
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wobjc-protocol-method-implementation"
-
-+ (UIFont *)boldSystemFontOfSize:(CGFloat)fontSize {
-    return [UIFont fontWithName:@"STHeitiSC-Medium" size:fontSize];
-}
-
-+ (UIFont *)systemFontOfSize:(CGFloat)fontSize {
-    return [UIFont fontWithName:@"STHeitiSC-Light" size:fontSize];
-}
-
-#pragma clang diagnostic pop
-
-@end
+//@implementation UIFont (SystemFontOverride)
+//
+//#pragma clang diagnostic push
+//#pragma clang diagnostic ignored "-Wobjc-protocol-method-implementation"
+//
+//+ (UIFont *)boldSystemFontOfSize:(CGFloat)fontSize {
+//    return [UIFont fontWithName:@"STHeitiSC-Medium" size:fontSize];
+//}
+//
+//+ (UIFont *)systemFontOfSize:(CGFloat)fontSize {
+//    return [UIFont fontWithName:@"STHeitiSC-Light" size:fontSize];
+//}
+//
+//#pragma clang diagnostic pop
+//
+//@end

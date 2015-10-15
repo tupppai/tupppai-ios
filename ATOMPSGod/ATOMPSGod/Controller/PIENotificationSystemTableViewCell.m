@@ -11,7 +11,8 @@
 @implementation PIENotificationSystemTableViewCell
 
 - (void)awakeFromNib {
-    // Initialization code
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.separatorInset = UIEdgeInsetsMake(0, 45, 0, 10);
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

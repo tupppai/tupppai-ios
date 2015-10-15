@@ -12,9 +12,13 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.separatorInset = UIEdgeInsetsMake(0, 45, 0, 10);
     _replyLabel.textColor = [UIColor colorWithHex:0xFF6D3F andAlpha:0.9];
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
-    _avatarView.clipsToBounds = YES;}
+    _avatarView.clipsToBounds = YES;
+    _pageImageView.clipsToBounds = YES;
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

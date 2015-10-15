@@ -16,22 +16,29 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pie_notification_system" translatesAutoresizingMaskIntoConstraints="NO" id="Cd6-my-Hwk">
-                        <rect key="frame" x="8" y="8" width="30" height="30"/>
+                        <rect key="frame" x="14" y="12" width="30" height="30"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="lMb-W1-ghS"/>
                             <constraint firstAttribute="width" constant="30" id="yfP-Ln-LQH"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mfc-a4-9oa">
-                        <rect key="frame" x="46" y="25" width="37.5" height="18"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="系统通知" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wbD-tW-3bP">
+                        <rect key="frame" x="82" y="12" width="52" height="16"/>
                         <animations/>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mfc-a4-9oa">
+                        <rect key="frame" x="52" y="34" width="26.5" height="12"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5Y-6t-xYW">
-                        <rect key="frame" x="46" y="53" width="42" height="21"/>
+                        <rect key="frame" x="52" y="54" width="42" height="21"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="Hvg-Bc-zzp"/>
@@ -41,11 +48,11 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="系统通知" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wbD-tW-3bP">
-                        <rect key="frame" x="46" y="8" width="52" height="16"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="图派" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F9e-HI-W3C">
+                        <rect key="frame" x="52" y="12" width="26" height="16"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -53,13 +60,33 @@
                 <constraints>
                     <constraint firstItem="wbD-tW-3bP" firstAttribute="leading" secondItem="Cd6-my-Hwk" secondAttribute="trailing" constant="8" id="3Vn-5N-fQQ"/>
                     <constraint firstItem="mfc-a4-9oa" firstAttribute="leading" secondItem="wbD-tW-3bP" secondAttribute="leading" id="5Tf-4V-mfT"/>
+                    <constraint firstItem="f5Y-6t-xYW" firstAttribute="leading" secondItem="mfc-a4-9oa" secondAttribute="leading" id="9yP-gz-jlf"/>
+                    <constraint firstItem="F9e-HI-W3C" firstAttribute="leading" secondItem="Cd6-my-Hwk" secondAttribute="trailing" constant="8" id="Aph-lB-c7K"/>
                     <constraint firstItem="wbD-tW-3bP" firstAttribute="top" secondItem="Cd6-my-Hwk" secondAttribute="top" id="CmC-06-9hC"/>
-                    <constraint firstItem="Cd6-my-Hwk" firstAttribute="top" secondItem="CfD-et-r6Y" secondAttribute="topMargin" id="Iz0-Km-ouq"/>
+                    <constraint firstItem="F9e-HI-W3C" firstAttribute="top" secondItem="Cd6-my-Hwk" secondAttribute="top" id="F1Z-P1-jhy"/>
+                    <constraint firstItem="mfc-a4-9oa" firstAttribute="leading" secondItem="F9e-HI-W3C" secondAttribute="leading" id="Glf-Oe-7s3"/>
+                    <constraint firstItem="Cd6-my-Hwk" firstAttribute="top" secondItem="CfD-et-r6Y" secondAttribute="topMargin" constant="4" id="Iz0-Km-ouq"/>
                     <constraint firstItem="mfc-a4-9oa" firstAttribute="top" secondItem="wbD-tW-3bP" secondAttribute="bottom" constant="1" id="Jpk-n6-h1n"/>
-                    <constraint firstItem="Cd6-my-Hwk" firstAttribute="leading" secondItem="CfD-et-r6Y" secondAttribute="leadingMargin" id="Jsq-h9-G2l"/>
+                    <constraint firstItem="Cd6-my-Hwk" firstAttribute="leading" secondItem="CfD-et-r6Y" secondAttribute="leadingMargin" constant="6" id="Jsq-h9-G2l"/>
                     <constraint firstItem="f5Y-6t-xYW" firstAttribute="leading" secondItem="mfc-a4-9oa" secondAttribute="leading" id="KFf-nx-UXT"/>
+                    <constraint firstItem="wbD-tW-3bP" firstAttribute="leading" secondItem="F9e-HI-W3C" secondAttribute="trailing" constant="4" id="ODL-jx-ldb"/>
+                    <constraint firstItem="wbD-tW-3bP" firstAttribute="top" secondItem="F9e-HI-W3C" secondAttribute="top" id="Twt-Se-xjX"/>
                     <constraint firstItem="f5Y-6t-xYW" firstAttribute="top" secondItem="mfc-a4-9oa" secondAttribute="bottom" constant="10" id="Vk3-9w-Nfq"/>
+                    <constraint firstItem="f5Y-6t-xYW" firstAttribute="top" secondItem="mfc-a4-9oa" secondAttribute="bottom" constant="8" id="WXk-Gn-zUV"/>
+                    <constraint firstItem="f5Y-6t-xYW" firstAttribute="centerX" secondItem="mfc-a4-9oa" secondAttribute="centerX" id="cU1-ZL-Vpw"/>
+                    <constraint firstItem="mfc-a4-9oa" firstAttribute="top" secondItem="F9e-HI-W3C" secondAttribute="bottom" constant="6" id="roj-pk-iIg"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="5Tf-4V-mfT"/>
+                        <exclude reference="Jpk-n6-h1n"/>
+                        <exclude reference="KFf-nx-UXT"/>
+                        <exclude reference="Vk3-9w-Nfq"/>
+                        <exclude reference="cU1-ZL-Vpw"/>
+                        <exclude reference="3Vn-5N-fQQ"/>
+                        <exclude reference="CmC-06-9hC"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <animations/>
             <connections>

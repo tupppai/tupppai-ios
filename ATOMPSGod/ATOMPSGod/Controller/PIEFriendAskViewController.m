@@ -63,9 +63,10 @@ static NSString *cellIdentifier = @"PIEFriendAskTableViewCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_table == tableView) {
-        return [tableView fd_heightForCellWithIdentifier:cellIdentifier  cacheByIndexPath:indexPath configuration:^(PIEFriendAskTableViewCell *cell) {
-            [cell injectSource:_source[indexPath.row]];
-        }];
+//        return [tableView fd_heightForCellWithIdentifier:cellIdentifier  cacheByIndexPath:indexPath configuration:^(PIEFriendAskTableViewCell *cell) {
+//            [cell injectSource:_source[indexPath.row]];
+//        }];
+        return 168;
     } else {
         return 0;
     }

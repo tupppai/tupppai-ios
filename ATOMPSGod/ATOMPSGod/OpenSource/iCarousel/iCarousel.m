@@ -1119,7 +1119,7 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
     }
     _offsetMultiplier = [self valueForOption:iCarouselOptionOffsetMultiplier withDefault:_offsetMultiplier];
 
-    //align
+//    align
     if (!_scrolling && !_decelerating && !_autoscroll)
     {
         if (_scrollToItemBoundary)

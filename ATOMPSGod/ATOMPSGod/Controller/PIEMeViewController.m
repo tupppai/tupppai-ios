@@ -154,7 +154,7 @@
                                  CAPSPageMenuOptionViewBackgroundColor: [UIColor whiteColor],
                                  CAPSPageMenuOptionSelectionIndicatorColor: [UIColor pieYellowColor],
                                  CAPSPageMenuOptionBottomMenuHairlineColor: [UIColor colorWithRed:70.0/255.0 green:70.0/255.0 blue:70.0/255.0 alpha:0.0],
-                                 CAPSPageMenuOptionMenuItemFont: [UIFont systemFontOfSize:13.0],
+                                 CAPSPageMenuOptionMenuItemFont: [UIFont boldSystemFontOfSize:15.0],
                                  CAPSPageMenuOptionMenuHeight: @(40.0),
                                  CAPSPageMenuOptionSelectedMenuItemLabelColor: [UIColor blackColor],
                                  CAPSPageMenuOptionUseMenuLikeSegmentedControl:@(YES),

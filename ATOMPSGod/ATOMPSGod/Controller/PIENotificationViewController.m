@@ -20,15 +20,20 @@
 @interface PIENotificationViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate>
 @property (nonatomic, strong) NSMutableArray *source;
 @property (nonatomic, strong) PIERefreshTableView *tableView;
+@property (nonatomic, assign) NSInteger currentIndex;
+@property (nonatomic, assign) BOOL canRefreshFooter;
 
 @end
 
 @implementation PIENotificationViewController
-
+-(BOOL)hidesBottomBarWhenPushed {
+    return YES;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     _source = [NSMutableArray array];
+    _canRefreshFooter = YES;
     self.view = self.tableView;
     [self getDataSource];
 
@@ -36,24 +41,65 @@
 
 #pragma mark - GetDataSource
 - (void)getDataSource {
+    _currentIndex = 1;
+    [self.tableView.footer endRefreshing];
     WS(ws);
-    NSLog(@"getDataSource PIENotificationViewController");
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
-//    _currentPage = 1;
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [PIENotificationManager getNotifications:param block:^(NSArray *source) {
-        ws.source = [source mutableCopy];
-        [ws.tableView reloadData];
+        if (source.count>0) {
+            ws.source = [source mutableCopy];
+            [ws.tableView reloadData];
+            _canRefreshFooter = YES;
+        }
+        else {
+            _canRefreshFooter = NO;
+        }
+        [self.tableView.header endRefreshing];
     }];
 }
 
+#pragma mark - GetDataSource
+- (void)getMoreDataSource {
+    [self.tableView.header endRefreshing];
+    _currentIndex++;
+    WS(ws);
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    [param setObject:@(_currentIndex) forKey:@"page"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(15) forKey:@"size"];
+    [PIENotificationManager getNotifications:param block:^(NSArray *source) {
+        if (source.count>0) {
+            [ws.source addObjectsFromArray:source];
+            [ws.tableView reloadData];
+            _canRefreshFooter = YES;
+        }
+        else {
+            _canRefreshFooter = NO;
+        }
+        [self.tableView.footer endRefreshing];
+    }];
+}
+
+-(void)didPullRefreshDown:(UITableView *)tableView {
+    [self getDataSource];
+}
+-(void)didPullRefreshUp:(UITableView *)tableView {
+    if (_canRefreshFooter) {
+        [self getMoreDataSource];
+    } else {
+        [self.tableView.footer endRefreshing];
+    }
+}
 -(PIERefreshTableView *)tableView {
     if (!_tableView) {
-        _tableView = [[PIERefreshTableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-TAB_HEIGHT-NAV_HEIGHT)];
+        _tableView = [PIERefreshTableView new];
         _tableView.dataSource = self;
         _tableView.delegate = self;
         _tableView.psDelegate = self;
@@ -84,7 +130,6 @@
                 PIENotificationCommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIENotificationCommentTableViewCell"];
                 [cell injectSauce:vm];
                 return cell;
-                
                 break;
             }
             case PIENotificationTypeFollow:
@@ -92,7 +137,6 @@
                 PIENotificationFollowTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIENotificationFollowTableViewCell"];
                 [cell injectSauce:vm];
                 return cell;
-                
                 break;
             }
             case PIENotificationTypeLike:
@@ -145,7 +189,6 @@
         default:
             break;
     }
-    NSLog(@"return 0");
     return 0;
 
 }
