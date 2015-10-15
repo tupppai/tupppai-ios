@@ -33,10 +33,7 @@
         _userID = [DDUserManager currentUser].uid;
         _username = [DDUserManager currentUser].username;
         _avatarURL = [DDUserManager currentUser].avatar;
-        NSDateFormatter *df = [NSDateFormatter new];
-        [df setDateFormat:@"MM月dd日 HH时mm分"];
-        NSDate *publishDate = [NSDate date];
-        _publishTime = [df stringFromDate:publishDate];
+        _publishTime = @"刚刚";
         _likeCount = @"0";
         _shareCount = @"0";
         _commentCount = @"0";

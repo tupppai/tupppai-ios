@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "PIENotificationVM.h"
 @interface PIENotificationSystemTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
-@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
+- (void)injectSauce:(PIENotificationVM*)vm;
 @end

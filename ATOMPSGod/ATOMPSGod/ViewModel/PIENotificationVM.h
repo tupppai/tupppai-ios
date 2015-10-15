@@ -1,15 +1,21 @@
 //
-//  PIENotificationEntity.h
+//  PIENotificationVM.h
 //  TUPAI
 //
-//  Created by chenpeiwei on 10/14/15.
+//  Created by chenpeiwei on 10/15/15.
 //  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "ATOMBaseModel.h"
-
-@interface PIENotificationEntity : ATOMBaseModel
-
+#import <Foundation/Foundation.h>
+#import "PIENotificationEntity.h"
+typedef NS_ENUM(NSInteger, PIENotificationType) {
+    PIENotificationTypeSystem = 0,
+    PIENotificationTypeComment = 1,
+    PIENotificationTypeReply = 2,
+    PIENotificationTypeFollow = 3,
+    PIENotificationTypeLike = 5,
+};
+@interface PIENotificationVM : NSObject
 @property (nonatomic, copy) NSString *avatarUrl;
 @property (nonatomic, assign) NSInteger commentId;
 @property (nonatomic, copy) NSString *content;
@@ -22,6 +28,9 @@
 @property (nonatomic, assign) NSInteger type;
 @property (nonatomic, assign) NSInteger askID;
 @property (nonatomic, assign) NSInteger replyID;
-@property (nonatomic, assign) long long time;
+@property (nonatomic, copy) NSString *time;
+
+- (instancetype)initWithEntity:(PIENotificationEntity *)entity ;
 
 @end
+

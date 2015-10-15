@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface PIENotificationManager : NSObject
-
++ (void)getNotifications:(NSDictionary *)param block:(void (^)(NSArray *))block;
 @end

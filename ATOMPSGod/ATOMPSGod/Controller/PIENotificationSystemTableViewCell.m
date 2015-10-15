@@ -19,5 +19,8 @@
 
     // Configure the view for the selected state
 }
-
+- (void)injectSauce:(PIENotificationVM*)vm {
+    _timeLabel.text = vm.time;
+    _contentLabel.text = vm.content;
+}
 @end

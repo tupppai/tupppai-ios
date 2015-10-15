@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PIENotificationSystemTableViewCell" rowHeight="100" id="fC4-LT-SSc" customClass="PIENotificationSystemTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="354" height="100"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fC4-LT-SSc" id="CfD-et-r6Y">
+                <rect key="frame" x="0.0" y="0.0" width="354" height="99.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pie_notification_system" translatesAutoresizingMaskIntoConstraints="NO" id="Cd6-my-Hwk">
+                        <rect key="frame" x="8" y="8" width="30" height="30"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="lMb-W1-ghS"/>
+                            <constraint firstAttribute="width" constant="30" id="yfP-Ln-LQH"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mfc-a4-9oa">
+                        <rect key="frame" x="46" y="25" width="37.5" height="18"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5Y-6t-xYW">
+                        <rect key="frame" x="46" y="53" width="42" height="21"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="Hvg-Bc-zzp"/>
+                            <constraint firstAttribute="width" constant="42" id="dTp-wI-d7L"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="系统通知" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wbD-tW-3bP">
+                        <rect key="frame" x="46" y="8" width="52" height="16"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <animations/>
+                <constraints>
+                    <constraint firstItem="wbD-tW-3bP" firstAttribute="leading" secondItem="Cd6-my-Hwk" secondAttribute="trailing" constant="8" id="3Vn-5N-fQQ"/>
+                    <constraint firstItem="mfc-a4-9oa" firstAttribute="leading" secondItem="wbD-tW-3bP" secondAttribute="leading" id="5Tf-4V-mfT"/>
+                    <constraint firstItem="wbD-tW-3bP" firstAttribute="top" secondItem="Cd6-my-Hwk" secondAttribute="top" id="CmC-06-9hC"/>
+                    <constraint firstItem="Cd6-my-Hwk" firstAttribute="top" secondItem="CfD-et-r6Y" secondAttribute="topMargin" id="Iz0-Km-ouq"/>
+                    <constraint firstItem="mfc-a4-9oa" firstAttribute="top" secondItem="wbD-tW-3bP" secondAttribute="bottom" constant="1" id="Jpk-n6-h1n"/>
+                    <constraint firstItem="Cd6-my-Hwk" firstAttribute="leading" secondItem="CfD-et-r6Y" secondAttribute="leadingMargin" id="Jsq-h9-G2l"/>
+                    <constraint firstItem="f5Y-6t-xYW" firstAttribute="leading" secondItem="mfc-a4-9oa" secondAttribute="leading" id="KFf-nx-UXT"/>
+                    <constraint firstItem="f5Y-6t-xYW" firstAttribute="top" secondItem="mfc-a4-9oa" secondAttribute="bottom" constant="10" id="Vk3-9w-Nfq"/>
+                </constraints>
+            </tableViewCellContentView>
+            <animations/>
+            <connections>
+                <outlet property="avatarView" destination="Cd6-my-Hwk" id="qcM-va-YQo"/>
+                <outlet property="contentLabel" destination="f5Y-6t-xYW" id="gmR-ew-S7n"/>
+                <outlet property="timeLabel" destination="mfc-a4-9oa" id="Ry5-BU-eWw"/>
+            </connections>
+            <point key="canvasLocation" x="448" y="181"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="pie_notification_system" width="30" height="30"/>
+    </resources>
+</document>
