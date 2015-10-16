@@ -12,7 +12,7 @@
 #import "PIERefreshTableView.h"
 #import "PIEMyCollectionViewController.h"
 #import "PIEMyReplyViewController.h"
-#import "ATOMAccountSettingViewController.h"
+#import "PIESettingsViewController.h"
 #import "DDMessageVC.h"
 #import "UIImage+Blurring.h"
 #import "FXBlurView.h"
@@ -74,7 +74,7 @@
 
 }
 - (void)pushToSettingViewController {
-    ATOMAccountSettingViewController* vc = [ATOMAccountSettingViewController new];
+    PIESettingsViewController* vc = [PIESettingsViewController new];
     [self.navigationController pushViewController:vc animated:NO];
 }
 - (void)pushToMessageViewController {
@@ -153,7 +153,7 @@
                                  CAPSPageMenuOptionScrollMenuBackgroundColor: [UIColor whiteColor],
                                  CAPSPageMenuOptionViewBackgroundColor: [UIColor whiteColor],
                                  CAPSPageMenuOptionSelectionIndicatorColor: [UIColor pieYellowColor],
-                                 CAPSPageMenuOptionBottomMenuHairlineColor: [UIColor colorWithRed:70.0/255.0 green:70.0/255.0 blue:70.0/255.0 alpha:0.0],
+                                 CAPSPageMenuOptionBottomMenuHairlineColor: [UIColor lightGrayColor],
                                  CAPSPageMenuOptionMenuItemFont: [UIFont boldSystemFontOfSize:15.0],
                                  CAPSPageMenuOptionMenuHeight: @(40.0),
                                  CAPSPageMenuOptionSelectedMenuItemLabelColor: [UIColor blackColor],

@@ -37,14 +37,14 @@
 
 
 - (void)initTable1 {
-    _tableFollow = [[PIERefreshTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
+    _tableFollow = [[PIERefreshTableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
     _tableFollow.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableFollow.backgroundColor = [UIColor clearColor];
     _tableFollow.showsVerticalScrollIndicator = NO;
     [self addSubview:_tableFollow];
 }
 - (void)initTable2 {
-    _tableHot = [[PIERefreshTableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
+    _tableHot = [[PIERefreshTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
     _tableHot.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableHot.backgroundColor = [UIColor clearColor];
     _tableHot.showsVerticalScrollIndicator = NO;
@@ -70,11 +70,11 @@
     _type = type;
     if (_type == PIEPageTypeEliteFollow) {
         [UIView animateWithDuration:0.3 animations:^{
-            self.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
+            self.contentOffset = CGPointMake(0, 0);
         }];
     } else {
         [UIView animateWithDuration:0.3 animations:^{
-            self.contentOffset = CGPointMake(0, 0);
+            self.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
         }];
     }
 }

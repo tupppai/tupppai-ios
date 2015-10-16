@@ -50,6 +50,7 @@
     
     
     _askTableView = [[PIERefreshTableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
+    _askTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _askTableView.backgroundColor = [UIColor clearColor];
     [self addSubview:_askTableView];
     

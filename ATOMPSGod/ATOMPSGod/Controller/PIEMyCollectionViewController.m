@@ -31,6 +31,7 @@
     _tableView.dataSource = self;
     _tableView.psDelegate = self;
     _tableView.backgroundColor = [UIColor clearColor];
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.view = _tableView;
     
     UINib* nib = [UINib nibWithNibName:@"PIEMyCollectionTableViewCell" bundle:nil];

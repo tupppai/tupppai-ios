@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
@@ -17,18 +17,21 @@
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="沉沉" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aZb-hb-bm7">
                         <rect key="frame" x="46" y="8" width="28" height="20"/>
+                        <animations/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="14"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="刚刚" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GcQ-B3-IKG">
                         <rect key="frame" x="46" y="25" width="20" height="14"/>
+                        <animations/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="10"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="psps.png" translatesAutoresizingMaskIntoConstraints="NO" id="2gQ-Ez-W2B">
                         <rect key="frame" x="8" y="8" width="30" height="30"/>
+                        <animations/>
                         <rect key="contentStretch" x="1" y="1" width="1" height="1"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="e2v-zx-yb3"/>
@@ -37,6 +40,7 @@
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5YF-yd-MLa">
                         <rect key="frame" x="0.0" y="47" width="386" height="230.5"/>
+                        <animations/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="228" id="8n4-tL-jxv"/>
@@ -51,12 +55,14 @@
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="我觉得我长得真不错！" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IuB-jz-HwL">
                         <rect key="frame" x="8" y="285" width="370" height="18.5"/>
+                        <animations/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hot_allwork" translatesAutoresizingMaskIntoConstraints="NO" id="pJT-EO-FWk">
+                    <imageView userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hot_allwork" translatesAutoresizingMaskIntoConstraints="NO" id="pJT-EO-FWk">
                         <rect key="frame" x="8" y="319" width="60" height="19"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="19" id="HQA-at-NA4"/>
                             <constraint firstAttribute="width" constant="60" id="TWq-Ah-D7s"/>
@@ -64,6 +70,7 @@
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="new_reply_follow" highlightedImage="new_reply_followed" translatesAutoresizingMaskIntoConstraints="NO" id="ihB-dK-iEr">
                         <rect key="frame" x="316" y="7" width="54" height="32"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="54" id="YO8-5A-kbb"/>
                             <constraint firstAttribute="height" constant="32" id="Zz4-RQ-cQi"/>
@@ -71,6 +78,7 @@
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ryq-dA-lT5" customClass="PIEPageButton">
                         <rect key="frame" x="84" y="314" width="35" height="30"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="1SO-Xs-l0z"/>
                             <constraint firstAttribute="width" constant="30" id="CHn-XG-M3c"/>
@@ -84,6 +92,7 @@
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OlW-fw-ss0" customClass="PIEPageButton">
                         <rect key="frame" x="129" y="314" width="35" height="30"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" priority="250" constant="35" id="kLv-Sr-NfJ"/>
                             <constraint firstAttribute="width" constant="30" id="sEi-6e-T26"/>
@@ -98,6 +107,7 @@
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kYU-9X-mbd" customClass="PIEPageButton">
                         <rect key="frame" x="174" y="314" width="35" height="30"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" priority="250" constant="35" id="Aju-Ww-pXu"/>
                             <constraint firstAttribute="height" constant="15" id="ccj-uj-Q0t"/>
@@ -110,6 +120,7 @@
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QZj-Nq-te3" customClass="PIEPageLikeButton">
                         <rect key="frame" x="331" y="315" width="39" height="28"/>
+                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="39" id="eeK-E4-jPc"/>
@@ -117,6 +128,7 @@
                         </constraints>
                     </view>
                 </subviews>
+                <animations/>
                 <constraints>
                     <constraint firstItem="2gQ-Ez-W2B" firstAttribute="top" secondItem="OCD-ib-KWD" secondAttribute="topMargin" id="4Bi-FO-JjW"/>
                     <constraint firstItem="aZb-hb-bm7" firstAttribute="leading" secondItem="2gQ-Ez-W2B" secondAttribute="trailing" constant="8" id="8Pd-Ij-Irr"/>
@@ -159,6 +171,7 @@
                     </mask>
                 </variation>
             </tableViewCellContentView>
+            <animations/>
             <connections>
                 <outlet property="allWorkView" destination="pJT-EO-FWk" id="mbW-02-SMZ"/>
                 <outlet property="avatarView" destination="2gQ-Ez-W2B" id="Kn0-TN-KGK"/>
@@ -176,9 +189,9 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="hot_allwork" width="118" height="40"/>
+        <image name="hot_allwork" width="53" height="23"/>
         <image name="new_reply_follow" width="50" height="25"/>
-        <image name="new_reply_followed" width="61" height="30"/>
+        <image name="new_reply_followed" width="58" height="28"/>
         <image name="psps.png" width="640" height="1136"/>
     </resources>
 </document>

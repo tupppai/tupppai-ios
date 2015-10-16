@@ -18,6 +18,17 @@
     }
     return self;
 }
+
+//init from nib
+-(instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self addSubview:self.bangView];
+        [self addSubview:self.label];
+        [self mansoryViews];
+    }
+    return self;
+}
 -(UIImageView *)bangView {
     if (!_bangView) {
         _bangView = [UIImageView new];
@@ -42,8 +53,7 @@
         make.height.equalTo(self).multipliedBy(0.6);
     }];
     [self.label mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self);
-        make.right.equalTo(self);
+        make.centerX.equalTo(self.bangView);
         make.bottom.equalTo(self);
         make.top.equalTo(self.bangView.mas_bottom);
     }];

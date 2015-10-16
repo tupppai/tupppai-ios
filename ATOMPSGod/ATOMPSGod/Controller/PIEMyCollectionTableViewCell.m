@@ -14,11 +14,10 @@
     // Initialization code
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     _likeView.hidden = YES;
-    _cornerLabel.hidden = YES;
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
     _pageImageView.clipsToBounds = YES;
-    _cornerLabel.textColor = [UIColor colorWithHex:0xFEAA2B andAlpha:1.0];
+    self.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -27,15 +26,14 @@
 }
 - (void)injectSauce:(DDPageVM*)vm {
     if (vm.type == PIEPageTypeAsk) {
-        _cornerLabel.hidden = NO;
         _likeView.hidden = YES;
+        _likeCountLabel.hidden = YES;
         _originView.image = [UIImage imageNamed:@"pie_origin"];
     }
     else if (vm.type == PIEPageTypeReply) {
         _likeView.hidden = NO;
-//        _likeButton.highlighted = vm.liked;
-//        _likeButton.numberString = vm.likeCount;
-        _cornerLabel.hidden = YES;
+        _likeCountLabel.hidden = NO;
+        _likeCountLabel.text = vm.likeCount;
         _originView.image = [UIImage imageNamed:@"pie_reply"];
     }
     
@@ -43,7 +41,6 @@
     [_pageImageView setImageWithURL:[NSURL URLWithString:vm.imageURL]placeholderImage:[UIImage imageNamed:@"cellBG"]];
     _nameLabel.text = vm.username;
     _contentLabel.text = vm.content;
-    _cornerLabel.text = [NSString stringWithFormat:@"已有%@个帮P,马上参与PK",vm.totalPSNumber];
 }
 
 @end

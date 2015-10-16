@@ -128,7 +128,7 @@ static NSString *cellIdentifier = @"PIEFriendAskTableViewCell";
         _table.delegate = self;
         _table.dataSource = self;
         _table.psDelegate = self;
-
+        _table.separatorStyle = UITableViewCellSeparatorStyleNone;
         _table.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
         _table.scrollsToTop = YES;
     }

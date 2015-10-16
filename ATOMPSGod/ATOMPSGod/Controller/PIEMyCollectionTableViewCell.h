@@ -13,8 +13,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
-@property (weak, nonatomic) IBOutlet UILabel *cornerLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *likeView;
 @property (weak, nonatomic) IBOutlet UIImageView *originView;
+@property (weak, nonatomic) IBOutlet UILabel *likeCountLabel;
 - (void)injectSauce:(DDPageVM*)vm;
 @end

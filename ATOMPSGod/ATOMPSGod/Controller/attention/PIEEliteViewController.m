@@ -25,6 +25,12 @@
 #import "DDInviteVC.h"
 
 #import "PIEShareView.h"
+#import "PIEEliteAskTableViewCell.h"
+#import "PIEEliteReplyTableViewCell.h"
+
+static  NSString* indentifier3 = @"PIEEliteAskTableViewCell";
+static  NSString* indentifier4 = @"PIEEliteReplyTableViewCell";
+
 
 static  NSString* indentifier1 = @"PIEEliteFollowTableViewCell";
 static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
@@ -46,7 +52,7 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureFollow;
 
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
-@property (nonatomic, strong) PIEEliteFollowTableViewCell *selectedFollowCell;
+@property (nonatomic, strong) UITableViewCell *selectedFollowCell;
 @property (nonatomic, strong) PIEEliteHotTableViewCell *selectedHotCell;
 @property (nonatomic, strong) DDPageVM *selectedVM;
 
@@ -99,10 +105,15 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
     _sv.tableFollow.psDelegate = self;
     UINib* nib = [UINib nibWithNibName:indentifier1 bundle:nil];
     [_sv.tableFollow registerNib:nib forCellReuseIdentifier:indentifier1];
+    
+    UINib* nib2 = [UINib nibWithNibName:indentifier3 bundle:nil];
+    [_sv.tableFollow registerNib:nib2 forCellReuseIdentifier:indentifier3];
+    UINib* nib3 = [UINib nibWithNibName:indentifier4 bundle:nil];
+    [_sv.tableFollow registerNib:nib3 forCellReuseIdentifier:indentifier4];
+    
     _tapGestureFollow = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureFollow:)];
     [_sv.tableFollow addGestureRecognizer:_tapGestureFollow];
 }
-
 - (void)configTableViewHot {
     _sv.tableHot.dataSource = self;
     _sv.tableHot.delegate = self;
@@ -114,7 +125,7 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
 }
 - (void)createNavBar {
     WS(ws);
-    _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"热门",@"关注"]];
+    _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"关注",@"热门"]];
     _segmentedControl.frame = CGRectMake(0, 120, SCREEN_WIDTH-100, 45);
     _segmentedControl.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor darkGrayColor], NSForegroundColorAttributeName, nil];
     _segmentedControl.selectedTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil];
@@ -127,15 +138,13 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
 
     [_segmentedControl setIndexChangeBlock:^(NSInteger index) {
         if (index == 0) {
-            [ws.sv toggleWithType:PIEPageTypeEliteHot];
-        }
-        else {
             [ws.sv toggleWithType:PIEPageTypeEliteFollow];
         }
+        else {
+            [ws.sv toggleWithType:PIEPageTypeEliteHot];
+        }
     }];
-    
     self.navigationItem.titleView = _segmentedControl;
-    
 }
 - (void)refreshHeader {
     if (_sv.type == PIEPageTypeEliteFollow && ![_sv.tableFollow.header isRefreshing]) {
@@ -169,12 +178,17 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == _sv.tableFollow) {
-        PIEEliteFollowTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:indentifier1];
-        if (!cell) {
-            cell = [[PIEEliteFollowTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier1];
+        DDPageVM* vm = [_sourceFollow objectAtIndex:indexPath.row];
+        if (vm.type == PIEPageTypeAsk) {
+            PIEEliteAskTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:indentifier3];
+            [cell injectSauce:vm];
+            return cell;
         }
-        [cell injectSauce:[_sourceFollow objectAtIndex:indexPath.row]];
-        return cell;
+        else {
+            PIEEliteReplyTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:indentifier4];
+            [cell injectSauce:vm];
+            return cell;
+        }
     } else if (tableView == _sv.tableHot) {
         PIEEliteHotTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:indentifier2];
         if (!cell) {
@@ -210,58 +224,110 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
         CGPoint location = [gesture locationInView:_sv.tableFollow];
         _selectedIndexPath = [_sv.tableFollow indexPathForRowAtPoint:location];
         if (_selectedIndexPath) {
-            _selectedFollowCell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
             _selectedVM = _sourceFollow[_selectedIndexPath.row];
-            CGPoint p = [gesture locationInView:_selectedFollowCell];
-            //点击小图
-            if (CGRectContainsPoint(_selectedFollowCell.thumbView.frame, p)) {
-                [_selectedFollowCell animateToggleExpanded];
-            }
-            //点击大图
-            else  if (CGRectContainsPoint(_selectedFollowCell.theImageView.frame, p)) {
-                //进入热门详情
-                PIECarouselViewController* vc = [PIECarouselViewController new];
-                _selectedVM.image = _selectedFollowCell.theImageView.image;
-                vc.pageVM = _selectedVM;
-                [self.navigationController pushViewController:vc animated:YES];
-            }
-            //点击头像
-            else if (CGRectContainsPoint(_selectedFollowCell.avatarView.frame, p)) {
-                PIEFriendViewController * friendVC = [PIEFriendViewController new];
-                friendVC.pageVM = _selectedVM;
-                [self.navigationController pushViewController:friendVC animated:YES];
-            }
-            //点击用户名
-            else if (CGRectContainsPoint(_selectedFollowCell.nameLabel.frame, p)) {
-                PIEFriendViewController * friendVC = [PIEFriendViewController new];
-                friendVC.pageVM = _selectedVM;
-                [self.navigationController pushViewController:friendVC animated:YES];
-            }
-            else if (CGRectContainsPoint(_selectedFollowCell.moreView.frame, p)) {
-//                [self collect:_selectedFollowCell.collectView];
-            }
-            else if (CGRectContainsPoint(_selectedFollowCell.likeView.frame, p)) {
-                if (_selectedVM.type == 2) {
-                    [self like:_selectedFollowCell.likeView];
-                } else {
-                    [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
+            
+            
+            //关注  求p
+
+            if (_selectedVM.type == PIEPageTypeAsk) {
+                PIEEliteAskTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
+                CGPoint p = [gesture locationInView:cell];
+                //点击小图
+                //点击大图
+                if (CGRectContainsPoint(cell.theImageView.frame, p)) {
+                    //进入热门详情
+                    PIECarouselViewController* vc = [PIECarouselViewController new];
+                    _selectedVM.image = cell.theImageView.image;
+                    vc.pageVM = _selectedVM;
+                    [self.navigationController pushViewController:vc animated:YES];
                 }
+                //点击头像
+                else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
+                    PIEFriendViewController * friendVC = [PIEFriendViewController new];
+                    friendVC.pageVM = _selectedVM;
+                    [self.navigationController pushViewController:friendVC animated:YES];
+                }
+                //点击用户名
+                else if (CGRectContainsPoint(cell.nameLabel.frame, p)) {
+                    PIEFriendViewController * friendVC = [PIEFriendViewController new];
+                    friendVC.pageVM = _selectedVM;
+                    [self.navigationController pushViewController:friendVC animated:YES];
+                }
+                else if (CGRectContainsPoint(cell.bangView.frame, p)) {
+                        [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
+                }
+                else if (CGRectContainsPoint(cell.followView.frame, p)) {
+                    [self follow:cell.followView];
+                }
+                else if (CGRectContainsPoint(cell.shareView.frame, p)) {
+                    [self showShareView];
+                }
+               
+                else if (CGRectContainsPoint(cell.commentView.frame, p)) {
+                    DDCommentVC* vc = [DDCommentVC new];
+                    vc.vm = _selectedVM;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+                else if (CGRectContainsPoint(cell.allWorkView.frame, p)) {
+                    PIEReplyCollectionViewController* vc = [PIEReplyCollectionViewController new];
+                    vc.pageVM = _selectedVM;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+
             }
-            else if (CGRectContainsPoint(_selectedFollowCell.followView.frame, p)) {
-                [self follow:_selectedFollowCell.followView];
-            }
-            else if (CGRectContainsPoint(_selectedFollowCell.shareView.frame, p)) {
-                [self showShareView];
-            }
-            else if (CGRectContainsPoint(_selectedFollowCell.commentView.frame, p)) {
-                DDCommentVC* vc = [DDCommentVC new];
-                vc.vm = _selectedVM;
-                [self.navigationController pushViewController:vc animated:YES];
-            }
-            else if (CGRectContainsPoint(_selectedFollowCell.allWorkView.frame, p)) {
-                PIEReplyCollectionViewController* vc = [PIEReplyCollectionViewController new];
-                vc.pageVM = _selectedVM;
-                [self.navigationController pushViewController:vc animated:YES];
+            
+            
+            //关注  作品
+            
+            else {
+                PIEEliteReplyTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
+                CGPoint p = [gesture locationInView:cell];
+                //点击小图
+                if (CGRectContainsPoint(cell.thumbView.frame, p)) {
+                    [cell animateToggleExpanded];
+                }
+                //点击大图
+                else  if (CGRectContainsPoint(cell.theImageView.frame, p)) {
+                    //进入热门详情
+                    PIECarouselViewController* vc = [PIECarouselViewController new];
+                    _selectedVM.image = cell.theImageView.image;
+                    vc.pageVM = _selectedVM;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+                //点击头像
+                else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
+                    PIEFriendViewController * friendVC = [PIEFriendViewController new];
+                    friendVC.pageVM = _selectedVM;
+                    [self.navigationController pushViewController:friendVC animated:YES];
+                }
+                //点击用户名
+                else if (CGRectContainsPoint(cell.nameLabel.frame, p)) {
+                    PIEFriendViewController * friendVC = [PIEFriendViewController new];
+                    friendVC.pageVM = _selectedVM;
+                    [self.navigationController pushViewController:friendVC animated:YES];
+                }
+                else if (CGRectContainsPoint(cell.likeView.frame, p)) {
+                        [self like:cell.likeView];
+                }
+                else if (CGRectContainsPoint(cell.followView.frame, p)) {
+                    [self follow:cell.followView];
+                }
+                else if (CGRectContainsPoint(cell.shareView.frame, p)) {
+                    [self showShareView];
+                }
+                else if (CGRectContainsPoint(cell.collectView.frame, p)) {
+                    [self collect:cell.collectView];
+                }
+                else if (CGRectContainsPoint(cell.commentView.frame, p)) {
+                    DDCommentVC* vc = [DDCommentVC new];
+                    vc.vm = _selectedVM;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+                else if (CGRectContainsPoint(cell.allWorkView.frame, p)) {
+                    PIEReplyCollectionViewController* vc = [PIEReplyCollectionViewController new];
+                    vc.pageVM = _selectedVM;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
             }
         }
     }
@@ -275,7 +341,6 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
             _selectedHotCell = [_sv.tableHot cellForRowAtIndexPath:_selectedIndexPath];
             _selectedVM = _sourceHot[_selectedIndexPath.row];
             CGPoint p = [gesture locationInView:_selectedHotCell];
-            
             //点击小图
             if (CGRectContainsPoint(_selectedHotCell.thumbView.frame, p)) {
                 [_selectedHotCell animateToggleExpanded];
@@ -419,30 +484,6 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
 }
 
 #pragma mark - ATOMShareViewDelegate
-//-(void)tapWechatFriends {
-//    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:PIEPageTypeAsk];
-//}
-//-(void)tapWechatMoment {
-//    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:PIEPageTypeAsk];
-//}
-//-(void)tapSinaWeibo {
-//    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:PIEPageTypeAsk];
-//}
-//-(void)tapInvite {
-//    DDInviteVC* ivc = [DDInviteVC new];
-//    ivc.askPageViewModel = _selectedVM;
-//    [self.navigationController pushViewController:ivc animated:YES];
-//}
-//-(void)tapReport {
-//    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
-//}
-//-(void)tapCollect {
-//    if (_sv.type == PIEPageTypeEliteHot) {
-//        [self collect:_selectedHotCell.collectView];
-//    } else {
-//        [self collect:nil];
-//    }
-//}
 
 -(void)tapShare1 {
     [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:PIEPageTypeAsk];
@@ -627,12 +668,12 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
             _sv.tableHot.scrollsToTop = NO;
             _sv.tableFollow.scrollsToTop = YES;
             [_segmentedControl setSelectedSegmentIndex:0 animated:YES];
-            _sv.type = PIEPageTypeEliteHot;
+            _sv.type = PIEPageTypeEliteFollow;
         } else if (currentPage == 1) {
             [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
             _sv.tableHot.scrollsToTop = YES;
             _sv.tableFollow.scrollsToTop = NO;
-            _sv.type = PIEPageTypeEliteFollow;
+            _sv.type = PIEPageTypeEliteHot;
         }
     }
 }

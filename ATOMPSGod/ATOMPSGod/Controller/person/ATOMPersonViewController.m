@@ -9,7 +9,7 @@
 #import "ATOMPersonViewController.h"
 #import "ATOMPersonView.h"
 #import "ATOMPersonTableViewCell.h"
-#import "ATOMAccountSettingViewController.h"
+#import "PIESettingViewController.h"
 #import "PIEFriendFansViewController.h"
 #import "DDMyFollowVC.h"
 #import "PIEMyReplyViewController.h"
@@ -159,7 +159,7 @@
             DDMyFollowVC *mcvc = [DDMyFollowVC new];
             [self.navigationController pushViewController:mcvc animated:YES];
         } else if (row == 1) {
-            ATOMAccountSettingViewController *asvc = [ATOMAccountSettingViewController new];
+            PIESettingViewController *asvc = [PIESettingViewController new];
             [self.navigationController pushViewController:asvc animated:YES];
         }
     }

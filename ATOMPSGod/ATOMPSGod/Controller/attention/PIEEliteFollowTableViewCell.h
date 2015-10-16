@@ -22,7 +22,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *allWorkView;
 @property (weak, nonatomic) IBOutlet PIEPageButton *shareView;
 @property (weak, nonatomic) IBOutlet PIEPageButton *commentView;
-@property (weak, nonatomic) IBOutlet UIImageView *moreView;
 @property (strong, nonatomic) PIEBangView *bangView;
 @property (weak, nonatomic) IBOutlet PIEPageLikeButton *likeView;
 @property (weak, nonatomic) IBOutlet UIImageView *followView;

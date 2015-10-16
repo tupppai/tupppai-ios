@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
@@ -17,18 +17,21 @@
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="沉沉" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0cj-Rt-UQH">
                         <rect key="frame" x="46" y="8" width="28" height="20"/>
+                        <animations/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="14"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="刚刚" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gXF-mO-DcQ">
                         <rect key="frame" x="46" y="25" width="20" height="14"/>
+                        <animations/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="10"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="psps.png" translatesAutoresizingMaskIntoConstraints="NO" id="MGI-Ft-Av2">
                         <rect key="frame" x="8" y="8" width="30" height="30"/>
+                        <animations/>
                         <rect key="contentStretch" x="1" y="1" width="1" height="1"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="XS4-IA-jVz"/>
@@ -37,6 +40,7 @@
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bQE-pq-3Kr">
                         <rect key="frame" x="0.0" y="47" width="386" height="241.5"/>
+                        <animations/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="228" id="2l6-5P-P2W"/>
@@ -51,12 +55,14 @@
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zAc-gV-H6M">
                         <rect key="frame" x="8" y="296" width="370" height="0.0"/>
+                        <animations/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="new_reply_follow" highlightedImage="new_reply_followed" translatesAutoresizingMaskIntoConstraints="NO" id="wAn-Oe-b2c">
                         <rect key="frame" x="316" y="7" width="54" height="32"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="32" id="0O4-ru-oLF"/>
                             <constraint firstAttribute="width" constant="54" id="oxi-yt-rfn"/>
@@ -64,6 +70,7 @@
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lO2-Yy-O3H" customClass="PIEPageButton">
                         <rect key="frame" x="13" y="307" width="35" height="30"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="fLQ-1T-Y7c"/>
                             <constraint firstAttribute="width" constant="30" id="j2R-Ld-JNR"/>
@@ -77,6 +84,7 @@
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zT9-Pc-8ZL" customClass="PIEPageButton">
                         <rect key="frame" x="58" y="307" width="35" height="30"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" priority="250" constant="35" id="1he-j5-Yet"/>
                             <constraint firstAttribute="width" constant="30" id="ZKE-z6-2is"/>
@@ -91,20 +99,15 @@
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AI4-KJ-o95" customClass="PIEPageLikeButton">
                         <rect key="frame" x="331" y="308" width="39" height="28"/>
+                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="28" id="2MZ-4J-XBd"/>
                             <constraint firstAttribute="width" constant="39" id="tbf-cd-HDA"/>
                         </constraints>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pie_more" translatesAutoresizingMaskIntoConstraints="NO" id="aXs-mx-BVI">
-                        <rect key="frame" x="121" y="313" width="26" height="24"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="24" id="FFU-oH-TYP"/>
-                            <constraint firstAttribute="width" constant="26" id="FuX-Wg-CTT"/>
-                        </constraints>
-                    </imageView>
                 </subviews>
+                <animations/>
                 <constraints>
                     <constraint firstItem="gXF-mO-DcQ" firstAttribute="top" secondItem="0cj-Rt-UQH" secondAttribute="bottom" constant="5" id="047-3r-I8o"/>
                     <constraint firstAttribute="trailingMargin" secondItem="zAc-gV-H6M" secondAttribute="trailing" id="3Gi-mN-aCz"/>
@@ -116,7 +119,6 @@
                     <constraint firstItem="lO2-Yy-O3H" firstAttribute="leading" secondItem="dbN-XG-RLZ" secondAttribute="leadingMargin" constant="5" id="9zb-Ig-1ad"/>
                     <constraint firstItem="0cj-Rt-UQH" firstAttribute="leading" secondItem="gXF-mO-DcQ" secondAttribute="leading" id="D5j-7h-GbX"/>
                     <constraint firstItem="zT9-Pc-8ZL" firstAttribute="centerY" secondItem="lO2-Yy-O3H" secondAttribute="centerY" id="LoR-5R-gUT"/>
-                    <constraint firstItem="aXs-mx-BVI" firstAttribute="centerY" secondItem="zT9-Pc-8ZL" secondAttribute="centerY" constant="3" id="MxP-64-E0T"/>
                     <constraint firstItem="MGI-Ft-Av2" firstAttribute="top" secondItem="gXF-mO-DcQ" secondAttribute="top" constant="-4" id="QLw-1j-6UH"/>
                     <constraint firstItem="0cj-Rt-UQH" firstAttribute="top" secondItem="MGI-Ft-Av2" secondAttribute="top" id="RV1-Ws-ZCd"/>
                     <constraint firstAttribute="trailingMargin" secondItem="wAn-Oe-b2c" secondAttribute="trailing" constant="8" id="SAV-aH-qBp"/>
@@ -124,7 +126,6 @@
                     <constraint firstAttribute="bottomMargin" secondItem="lO2-Yy-O3H" secondAttribute="bottom" constant="1" id="WZ4-J6-Sj2"/>
                     <constraint firstItem="gXF-mO-DcQ" firstAttribute="bottom" secondItem="MGI-Ft-Av2" secondAttribute="bottom" constant="1" id="ZwB-ds-Wdr"/>
                     <constraint firstItem="wAn-Oe-b2c" firstAttribute="centerY" secondItem="MGI-Ft-Av2" secondAttribute="centerY" id="aFy-5T-x5A"/>
-                    <constraint firstItem="aXs-mx-BVI" firstAttribute="leading" secondItem="zT9-Pc-8ZL" secondAttribute="trailing" constant="28" id="aIX-wZ-xU1"/>
                     <constraint firstItem="AI4-KJ-o95" firstAttribute="centerY" secondItem="lO2-Yy-O3H" secondAttribute="centerY" id="bxB-77-XDe"/>
                     <constraint firstAttribute="trailing" secondItem="bQE-pq-3Kr" secondAttribute="trailing" id="fZO-YC-Bcz"/>
                     <constraint firstItem="zT9-Pc-8ZL" firstAttribute="height" secondItem="lO2-Yy-O3H" secondAttribute="height" id="mgA-QA-3AY"/>
@@ -144,13 +145,13 @@
                     </mask>
                 </variation>
             </tableViewCellContentView>
+            <animations/>
             <connections>
                 <outlet property="avatarView" destination="MGI-Ft-Av2" id="538-r4-DoY"/>
                 <outlet property="commentView" destination="lO2-Yy-O3H" id="5BM-sx-xFq"/>
                 <outlet property="contentLabel" destination="zAc-gV-H6M" id="HX8-b9-wFe"/>
                 <outlet property="followView" destination="wAn-Oe-b2c" id="ISq-j4-qjP"/>
                 <outlet property="likeView" destination="AI4-KJ-o95" id="gZw-M6-sAU"/>
-                <outlet property="moreView" destination="aXs-mx-BVI" id="WOI-dl-Xds"/>
                 <outlet property="nameLabel" destination="0cj-Rt-UQH" id="vwq-61-y1n"/>
                 <outlet property="shareView" destination="zT9-Pc-8ZL" id="ORC-e2-zbW"/>
                 <outlet property="theImageView" destination="bQE-pq-3Kr" id="Igs-Cf-Ciq"/>
@@ -161,8 +162,7 @@
     </objects>
     <resources>
         <image name="new_reply_follow" width="50" height="25"/>
-        <image name="new_reply_followed" width="61" height="30"/>
-        <image name="pie_more" width="32" height="8"/>
+        <image name="new_reply_followed" width="58" height="28"/>
         <image name="psps.png" width="640" height="1136"/>
     </resources>
 </document>

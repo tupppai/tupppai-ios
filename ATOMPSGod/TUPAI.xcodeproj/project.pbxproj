@@ -46,8 +46,8 @@
 		5C0F04FA1ADD04CC002003AE /* DDMyFansManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C0F04F91ADD04CC002003AE /* DDMyFansManager.m */; };
 		5C0F04FD1ADD0D88002003AE /* DDFollow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C0F04FC1ADD0D88002003AE /* DDFollow.m */; };
 		5C3101781AAE751100EF529B /* ATOMPersonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3101771AAE751100EF529B /* ATOMPersonTableViewCell.m */; };
-		5C31017B1AAE84C600EF529B /* ATOMAccountSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C31017A1AAE84C600EF529B /* ATOMAccountSettingViewController.m */; };
-		5C31017E1AAE852F00EF529B /* ATOMAccountSettingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C31017D1AAE852F00EF529B /* ATOMAccountSettingTableViewCell.m */; };
+		5C31017B1AAE84C600EF529B /* PIESettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C31017A1AAE84C600EF529B /* PIESettingViewController.m */; };
+		5C31017E1AAE852F00EF529B /* PIESettingsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C31017D1AAE852F00EF529B /* PIESettingsTableViewCell.m */; };
 		5C3101811AAE8D4300EF529B /* ATOMModifyPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3101801AAE8D4300EF529B /* ATOMModifyPasswordViewController.m */; };
 		5C3101841AAE8D9900EF529B /* ATOMModifyPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3101831AAE8D9900EF529B /* ATOMModifyPasswordView.m */; };
 		5C3101871AAE9B0F00EF529B /* PIEThirdPartyBindingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3101861AAE9B0F00EF529B /* PIEThirdPartyBindingViewController.m */; };
@@ -456,6 +456,13 @@
 		F47205581BABFDFF00E0ADA0 /* PIEDoneCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F47205561BABFDFF00E0ADA0 /* PIEDoneCollectionViewCell.xib */; };
 		F472055C1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F472055A1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.m */; };
 		F472055D1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F472055B1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.xib */; };
+		F499E4491BD0E41100E5F178 /* PIESettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F499E4481BD0E41100E5F178 /* PIESettingsViewController.m */; settings = {ASSET_TAGS = (); }; };
+		F499E44F1BD0E90100E5F178 /* PIESignOutTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F499E44E1BD0E90100E5F178 /* PIESignOutTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		F499E4511BD0EAC300E5F178 /* PIESignOutTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F499E4501BD0EAC300E5F178 /* PIESignOutTableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
+		F499E4551BD0F69100E5F178 /* PIEEliteReplyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F499E4531BD0F69100E5F178 /* PIEEliteReplyTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		F499E4561BD0F69100E5F178 /* PIEEliteReplyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F499E4541BD0F69100E5F178 /* PIEEliteReplyTableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
+		F499E45A1BD0F6A100E5F178 /* PIEEliteAskTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F499E4581BD0F6A100E5F178 /* PIEEliteAskTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		F499E45B1BD0F6A100E5F178 /* PIEEliteAskTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F499E4591BD0F6A100E5F178 /* PIEEliteAskTableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
 		F4AE609B1BC129ED007BCA2A /* PIEFriendReplyCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE609A1BC129ED007BCA2A /* PIEFriendReplyCollectionViewCell.m */; settings = {ASSET_TAGS = (); }; };
 		F4AE73BD1BBA770000734BCB /* PIEFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE73BB1BBA770000734BCB /* PIEFriendViewController.m */; settings = {ASSET_TAGS = (); }; };
 		F4AE73BE1BBA770000734BCB /* PIEFriendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4AE73BC1BBA770000734BCB /* PIEFriendViewController.xib */; settings = {ASSET_TAGS = (); }; };
@@ -463,6 +470,7 @@
 		F4AE73C31BBA90D800734BCB /* PIEFriendAskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE73C21BBA90D800734BCB /* PIEFriendAskViewController.m */; settings = {ASSET_TAGS = (); }; };
 		F4AE73C61BBA988900734BCB /* PIEFriendReplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE73C51BBA988900734BCB /* PIEFriendReplyViewController.m */; settings = {ASSET_TAGS = (); }; };
 		F4AFCD4B1BC79A3100027940 /* UIButton+Pop.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AFCD4A1BC79A3100027940 /* UIButton+Pop.m */; settings = {ASSET_TAGS = (); }; };
+		F4BB27BF1BD0AD8200C50F58 /* PIEImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BB27BE1BD0AD8200C50F58 /* PIEImageView.m */; settings = {ASSET_TAGS = (); }; };
 		F4BBE7721BBE3F9D00003CDE /* PIEReplyCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE7701BBE3F9D00003CDE /* PIEReplyCollectionViewController.m */; settings = {ASSET_TAGS = (); }; };
 		F4BBE77C1BBE420400003CDE /* PIEReplyCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE77A1BBE420400003CDE /* PIEReplyCollectionCell.m */; settings = {ASSET_TAGS = (); }; };
 		F4D015BB1BA6AF7200A28329 /* PIEThumbAnimateView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D015BA1BA6AF7200A28329 /* PIEThumbAnimateView.m */; };
@@ -472,6 +480,7 @@
 		F4D368721BA9552B00E6C91C /* PIEAskCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D368701BA9552B00E6C91C /* PIEAskCollectionCell.m */; };
 		F4D368731BA9552B00E6C91C /* PIEAskCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4D368711BA9552B00E6C91C /* PIEAskCollectionCell.xib */; };
 		F4D368771BA9629800E6C91C /* CHTCollectionViewWaterfallLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D368761BA9629800E6C91C /* CHTCollectionViewWaterfallLayout.m */; };
+		F4D3A3B01BD09227009760E8 /* SwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D3A3AF1BD09227009760E8 /* SwipeView.m */; settings = {ASSET_TAGS = (); }; };
 		F4D9F6CF1BBFDDE10023A53B /* PIEBangView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D9F6CE1BBFDDE10023A53B /* PIEBangView.m */; settings = {ASSET_TAGS = (); }; };
 		F4DC3D3F1BC131BA00DCF72F /* PIEFriendAskTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DC3D3D1BC131BA00DCF72F /* PIEFriendAskTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
 		F4DC3D401BC131BA00DCF72F /* PIEFriendAskTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4DC3D3E1BC131BA00DCF72F /* PIEFriendAskTableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
@@ -598,10 +607,10 @@
 		5C0F04FC1ADD0D88002003AE /* DDFollow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDFollow.m; sourceTree = "<group>"; };
 		5C3101761AAE751100EF529B /* ATOMPersonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMPersonTableViewCell.h; sourceTree = "<group>"; };
 		5C3101771AAE751100EF529B /* ATOMPersonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMPersonTableViewCell.m; sourceTree = "<group>"; };
-		5C3101791AAE84C600EF529B /* ATOMAccountSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMAccountSettingViewController.h; sourceTree = "<group>"; };
-		5C31017A1AAE84C600EF529B /* ATOMAccountSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMAccountSettingViewController.m; sourceTree = "<group>"; };
-		5C31017C1AAE852F00EF529B /* ATOMAccountSettingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMAccountSettingTableViewCell.h; sourceTree = "<group>"; };
-		5C31017D1AAE852F00EF529B /* ATOMAccountSettingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMAccountSettingTableViewCell.m; sourceTree = "<group>"; };
+		5C3101791AAE84C600EF529B /* PIESettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIESettingViewController.h; path = person/PIESettingViewController.h; sourceTree = "<group>"; };
+		5C31017A1AAE84C600EF529B /* PIESettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIESettingViewController.m; path = person/PIESettingViewController.m; sourceTree = "<group>"; };
+		5C31017C1AAE852F00EF529B /* PIESettingsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIESettingsTableViewCell.h; path = ../View/person/PIESettingsTableViewCell.h; sourceTree = "<group>"; };
+		5C31017D1AAE852F00EF529B /* PIESettingsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIESettingsTableViewCell.m; path = ../View/person/PIESettingsTableViewCell.m; sourceTree = "<group>"; };
 		5C31017F1AAE8D4300EF529B /* ATOMModifyPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMModifyPasswordViewController.h; sourceTree = "<group>"; };
 		5C3101801AAE8D4300EF529B /* ATOMModifyPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMModifyPasswordViewController.m; sourceTree = "<group>"; };
 		5C3101821AAE8D9900EF529B /* ATOMModifyPasswordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMModifyPasswordView.h; sourceTree = "<group>"; };
@@ -1407,6 +1416,17 @@
 		F47205591BAC031B00E0ADA0 /* PIEToHelpTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEToHelpTableViewCell.h; sourceTree = "<group>"; };
 		F472055A1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEToHelpTableViewCell.m; sourceTree = "<group>"; };
 		F472055B1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEToHelpTableViewCell.xib; sourceTree = "<group>"; };
+		F499E4471BD0E41000E5F178 /* PIESettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIESettingsViewController.h; sourceTree = "<group>"; };
+		F499E4481BD0E41100E5F178 /* PIESettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIESettingsViewController.m; sourceTree = "<group>"; };
+		F499E44D1BD0E90100E5F178 /* PIESignOutTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIESignOutTableViewCell.h; sourceTree = "<group>"; };
+		F499E44E1BD0E90100E5F178 /* PIESignOutTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIESignOutTableViewCell.m; sourceTree = "<group>"; };
+		F499E4501BD0EAC300E5F178 /* PIESignOutTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIESignOutTableViewCell.xib; sourceTree = "<group>"; };
+		F499E4521BD0F69100E5F178 /* PIEEliteReplyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteReplyTableViewCell.h; sourceTree = "<group>"; };
+		F499E4531BD0F69100E5F178 /* PIEEliteReplyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteReplyTableViewCell.m; sourceTree = "<group>"; };
+		F499E4541BD0F69100E5F178 /* PIEEliteReplyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEEliteReplyTableViewCell.xib; sourceTree = "<group>"; };
+		F499E4571BD0F6A100E5F178 /* PIEEliteAskTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteAskTableViewCell.h; sourceTree = "<group>"; };
+		F499E4581BD0F6A100E5F178 /* PIEEliteAskTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteAskTableViewCell.m; sourceTree = "<group>"; };
+		F499E4591BD0F6A100E5F178 /* PIEEliteAskTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEEliteAskTableViewCell.xib; sourceTree = "<group>"; };
 		F4AE60991BC129ED007BCA2A /* PIEFriendReplyCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEFriendReplyCollectionViewCell.h; sourceTree = "<group>"; };
 		F4AE609A1BC129ED007BCA2A /* PIEFriendReplyCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEFriendReplyCollectionViewCell.m; sourceTree = "<group>"; };
 		F4AE73BA1BBA770000734BCB /* PIEFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEFriendViewController.h; sourceTree = "<group>"; };
@@ -1419,6 +1439,8 @@
 		F4AE73C51BBA988900734BCB /* PIEFriendReplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEFriendReplyViewController.m; sourceTree = "<group>"; };
 		F4AFCD491BC79A3100027940 /* UIButton+Pop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Pop.h"; sourceTree = "<group>"; };
 		F4AFCD4A1BC79A3100027940 /* UIButton+Pop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Pop.m"; sourceTree = "<group>"; };
+		F4BB27BD1BD0AD8200C50F58 /* PIEImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEImageView.h; sourceTree = "<group>"; };
+		F4BB27BE1BD0AD8200C50F58 /* PIEImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEImageView.m; sourceTree = "<group>"; };
 		F4BBE76F1BBE3F9D00003CDE /* PIEReplyCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEReplyCollectionViewController.h; sourceTree = "<group>"; };
 		F4BBE7701BBE3F9D00003CDE /* PIEReplyCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEReplyCollectionViewController.m; sourceTree = "<group>"; };
 		F4BBE7791BBE420400003CDE /* PIEReplyCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEReplyCollectionCell.h; sourceTree = "<group>"; };
@@ -1435,6 +1457,8 @@
 		F4D368711BA9552B00E6C91C /* PIEAskCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEAskCollectionCell.xib; sourceTree = "<group>"; };
 		F4D368751BA9629800E6C91C /* CHTCollectionViewWaterfallLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHTCollectionViewWaterfallLayout.h; sourceTree = "<group>"; };
 		F4D368761BA9629800E6C91C /* CHTCollectionViewWaterfallLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHTCollectionViewWaterfallLayout.m; sourceTree = "<group>"; };
+		F4D3A3AE1BD09227009760E8 /* SwipeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipeView.h; sourceTree = "<group>"; };
+		F4D3A3AF1BD09227009760E8 /* SwipeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipeView.m; sourceTree = "<group>"; };
 		F4D9F6CD1BBFDDE10023A53B /* PIEBangView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIEBangView.h; path = homepage/PIEBangView.h; sourceTree = "<group>"; };
 		F4D9F6CE1BBFDDE10023A53B /* PIEBangView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIEBangView.m; path = homepage/PIEBangView.m; sourceTree = "<group>"; };
 		F4DC3D3C1BC131BA00DCF72F /* PIEFriendAskTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEFriendAskTableViewCell.h; sourceTree = "<group>"; };
@@ -1702,8 +1726,6 @@
 				5C6697A91AAFD348001FCF8A /* ATOMMyCollectionViewController.m */,
 				5C4F5BE31AA557AF00226F64 /* ATOMPersonViewController.h */,
 				5C4F5BE41AA557AF00226F64 /* ATOMPersonViewController.m */,
-				5C3101791AAE84C600EF529B /* ATOMAccountSettingViewController.h */,
-				5C31017A1AAE84C600EF529B /* ATOMAccountSettingViewController.m */,
 				5C31017F1AAE8D4300EF529B /* ATOMModifyPasswordViewController.h */,
 				5C3101801AAE8D4300EF529B /* ATOMModifyPasswordViewController.m */,
 				5C3101851AAE9B0F00EF529B /* PIEThirdPartyBindingViewController.h */,
@@ -1759,8 +1781,6 @@
 				E905AF141B4D052100CB8E45 /* ATOMPersonPageScrollView.m */,
 				5C3101761AAE751100EF529B /* ATOMPersonTableViewCell.h */,
 				5C3101771AAE751100EF529B /* ATOMPersonTableViewCell.m */,
-				5C31017C1AAE852F00EF529B /* ATOMAccountSettingTableViewCell.h */,
-				5C31017D1AAE852F00EF529B /* ATOMAccountSettingTableViewCell.m */,
 				5C3101821AAE8D9900EF529B /* ATOMModifyPasswordView.h */,
 				5C3101831AAE8D9900EF529B /* ATOMModifyPasswordView.m */,
 				5C3101881AAE9B5700EF529B /* ATOMAccountBindingView.h */,
@@ -2404,6 +2424,7 @@
 		5CDB05EC1AA400410089121E /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				F4D3A3AD1BD09227009760E8 /* SwipeView */,
 				F4F72BEB1BCB4EF7002FF05A /* FXBlurView */,
 				F46117B11BAD1101001A6F1A /* IQKeyBoardManager */,
 				F4D368741BA9628600E6C91C /* CHTCollection */,
@@ -3245,6 +3266,7 @@
 		F42ED3AE1BC4FC250052A0BF /* ME */ = {
 			isa = PBXGroup;
 			children = (
+				F499E4461BD0E3E000E5F178 /* settings */,
 				F4F72BEF1BCB6921002FF05A /* MyAsk */,
 				F42ED3B41BC4FC670052A0BF /* MyReply */,
 				F4F72BF81BCB6AAB002FF05A /* MyCollection */,
@@ -3300,6 +3322,8 @@
 				F45FF9AE1BB65BE6009C4203 /* PIEPageLikeButton.m */,
 				F4D9F6CD1BBFDDE10023A53B /* PIEBangView.h */,
 				F4D9F6CE1BBFDDE10023A53B /* PIEBangView.m */,
+				F4BB27BD1BD0AD8200C50F58 /* PIEImageView.h */,
+				F4BB27BE1BD0AD8200C50F58 /* PIEImageView.m */,
 			);
 			name = 2.1;
 			sourceTree = "<group>";
@@ -3417,6 +3441,22 @@
 			name = proceeding;
 			sourceTree = "<group>";
 		};
+		F499E4461BD0E3E000E5F178 /* settings */ = {
+			isa = PBXGroup;
+			children = (
+				5C3101791AAE84C600EF529B /* PIESettingViewController.h */,
+				5C31017A1AAE84C600EF529B /* PIESettingViewController.m */,
+				F499E4471BD0E41000E5F178 /* PIESettingsViewController.h */,
+				F499E4481BD0E41100E5F178 /* PIESettingsViewController.m */,
+				5C31017C1AAE852F00EF529B /* PIESettingsTableViewCell.h */,
+				5C31017D1AAE852F00EF529B /* PIESettingsTableViewCell.m */,
+				F499E4501BD0EAC300E5F178 /* PIESignOutTableViewCell.xib */,
+				F499E44D1BD0E90100E5F178 /* PIESignOutTableViewCell.h */,
+				F499E44E1BD0E90100E5F178 /* PIESignOutTableViewCell.m */,
+			);
+			name = settings;
+			sourceTree = "<group>";
+		};
 		F4AE73B61BBA769000734BCB /* friend */ = {
 			isa = PBXGroup;
 			children = (
@@ -3514,6 +3554,15 @@
 			name = CHTCollection;
 			sourceTree = "<group>";
 		};
+		F4D3A3AD1BD09227009760E8 /* SwipeView */ = {
+			isa = PBXGroup;
+			children = (
+				F4D3A3AE1BD09227009760E8 /* SwipeView.h */,
+				F4D3A3AF1BD09227009760E8 /* SwipeView.m */,
+			);
+			path = SwipeView;
+			sourceTree = "<group>";
+		};
 		F4D9F6C81BBFC5310023A53B /* hot */ = {
 			isa = PBXGroup;
 			children = (
@@ -3530,6 +3579,12 @@
 				F46117E41BAE52CD001A6F1A /* PIEEliteFollowTableViewCell.h */,
 				F46117E51BAE52CD001A6F1A /* PIEEliteFollowTableViewCell.m */,
 				F46117E61BAE52CD001A6F1A /* PIEEliteFollowTableViewCell.xib */,
+				F499E4521BD0F69100E5F178 /* PIEEliteReplyTableViewCell.h */,
+				F499E4531BD0F69100E5F178 /* PIEEliteReplyTableViewCell.m */,
+				F499E4541BD0F69100E5F178 /* PIEEliteReplyTableViewCell.xib */,
+				F499E4571BD0F6A100E5F178 /* PIEEliteAskTableViewCell.h */,
+				F499E4581BD0F6A100E5F178 /* PIEEliteAskTableViewCell.m */,
+				F499E4591BD0F6A100E5F178 /* PIEEliteAskTableViewCell.xib */,
 			);
 			name = follow;
 			sourceTree = "<group>";
@@ -3777,6 +3832,7 @@
 				E9FF94A61B745BAA00F06819 /* intro4.png in Resources */,
 				F46117ED1BAE52E1001A6F1A /* PIEEliteHotTableViewCell.xib in Resources */,
 				E95691AC1B22E88300DA84BB /* Info.plist in Resources */,
+				F499E4561BD0F69100E5F178 /* PIEEliteReplyTableViewCell.xib in Resources */,
 				E94289761B5B32A200ED26E4 /* NotificationBackgroundErrorIcon.png in Resources */,
 				5CDB05D51AA3FE520089121E /* LaunchScreen.xib in Resources */,
 				E94289851B5B32A200ED26E4 /* .gitkeep in Resources */,
@@ -3791,6 +3847,7 @@
 				F4DC3D401BC131BA00DCF72F /* PIEFriendAskTableViewCell.xib in Resources */,
 				F4AE73BE1BBA770000734BCB /* PIEFriendViewController.xib in Resources */,
 				5C9BDA4C1AA85E5600715698 /* box-shadow.png in Resources */,
+				F499E4511BD0EAC300E5F178 /* PIESignOutTableViewCell.xib in Resources */,
 				F42ED3B91BC4FC9E0052A0BF /* PIEMyReplyCollectionViewCell.xib in Resources */,
 				E94289841B5B32A200ED26E4 /* TSMessagesDefaultDesign.json in Resources */,
 				E942897E1B5B32A200ED26E4 /* NotificationBackgroundWarning.png in Resources */,
@@ -3811,6 +3868,7 @@
 				F42ED3B31BC4FC3B0052A0BF /* Me.storyboard in Resources */,
 				E94289831B5B32A200ED26E4 /* NotificationButtonBackground@2x.png in Resources */,
 				E959A56C1B8F025500F90155 /* Notes in Resources */,
+				F499E45B1BD0F6A100E5F178 /* PIEEliteAskTableViewCell.xib in Resources */,
 				E99C51381B85ACFA004CA47B /* WeiboSDK.bundle in Resources */,
 				F4D3686D1BA909E300E6C91C /* PIECameraCell.xib in Resources */,
 				E99C513B1B85ACFA004CA47B /* ShareSDK.bundle in Resources */,
@@ -3856,10 +3914,11 @@
 				E900AB411B41153A0019BAEA /* AFHTTPRequestOperationManager.m in Sources */,
 				E94B02EE1B7B2EE300863C6F /* ATOMTextViewComment.m in Sources */,
 				E9F8908E1B86C4AB0057ECBF /* FMDatabase.m in Sources */,
+				F4D3A3B01BD09227009760E8 /* SwipeView.m in Sources */,
 				3BE1AED01B9FE9C900CE2303 /* QBVideoIndicatorView.m in Sources */,
 				F46117F31BAE558C001A6F1A /* PIEEliteScrollView.m in Sources */,
 				E95691B61B22E88300DA84BB /* NSObject+MTLComparisonAdditions.m in Sources */,
-				5C31017E1AAE852F00EF529B /* ATOMAccountSettingTableViewCell.m in Sources */,
+				5C31017E1AAE852F00EF529B /* PIESettingsTableViewCell.m in Sources */,
 				5C535CB51AF1FC8A00BF30D1 /* ATOMBaseView.m in Sources */,
 				5C5A7A891ABFF1A7004A00C5 /* ATOMCommentDAO.m in Sources */,
 				E9ED35861B80F62F00B93BE5 /* UIScrollView+EmptyDataSet.m in Sources */,
@@ -3886,6 +3945,7 @@
 				3BE1AECC1B9FE9C900CE2303 /* QBCheckmarkView.m in Sources */,
 				5C5DDBCB1AD3D0DC00F4B845 /* DDOtherUserManager.m in Sources */,
 				E900AB4C1B41153A0019BAEA /* UIButton+AFNetworking.m in Sources */,
+				F499E45A1BD0F6A100E5F178 /* PIEEliteAskTableViewCell.m in Sources */,
 				5CDB06711AA47E760089121E /* DDAuthcodeVC.m in Sources */,
 				E99D2F5F1B1C7E8D000D7784 /* NYXImagesHelper.m in Sources */,
 				5C436A841AB03BF100D14608 /* DDMsgCommentVC.m in Sources */,
@@ -3996,6 +4056,7 @@
 				5C8084FC1AF27BD30062421C /* ATOMTotalPSView.m in Sources */,
 				5CDB06311AA428BD0089121E /* MASLayoutConstraint.m in Sources */,
 				3B11C0431BA27ADB00B87165 /* PIEReplyTableCell.m in Sources */,
+				F499E4491BD0E41100E5F178 /* PIESettingsViewController.m in Sources */,
 				3BE1AEC81B9FE9C900CE2303 /* QBAlbumCell.m in Sources */,
 				5C4C70DA1AB6FD5700358989 /* DDPageManager.m in Sources */,
 				5C0F04EB1ADCF6D9002003AE /* DDMsgFollowModel.m in Sources */,
@@ -4056,6 +4117,7 @@
 				5CDB065D1AA45C4A0089121E /* PIECreateProfileView.m in Sources */,
 				E900AB4B1B41153A0019BAEA /* UIAlertView+AFNetworking.m in Sources */,
 				5C0F04D21ADCA8E2002003AE /* ATOMFans.m in Sources */,
+				F499E4551BD0F69100E5F178 /* PIEEliteReplyTableViewCell.m in Sources */,
 				F40207431BA7C4160007CE02 /* VVBlurViewController.m in Sources */,
 				F4F72C041BCB8F08002FF05A /* PIEMyCollectionViewController.m in Sources */,
 				F46117DB1BAD1101001A6F1A /* IQKeyboardManager.m in Sources */,
@@ -4163,6 +4225,7 @@
 				F46521EC1BC763870043D706 /* PIEToHelpTableViewCell2.m in Sources */,
 				E95691B01B22E88300DA84BB /* MTLModel.m in Sources */,
 				F4F72C0E1BCBA25E002FF05A /* PIEProceedingAskTableViewCell.m in Sources */,
+				F499E44F1BD0E90100E5F178 /* PIESignOutTableViewCell.m in Sources */,
 				3BE1AECA1B9FE9C900CE2303 /* QBAssetCell.m in Sources */,
 				E900AB431B41153A0019BAEA /* AFNetworkReachabilityManager.m in Sources */,
 				5C436A9F1AB07F6F00D14608 /* ATOMTopicReplyMessageTableViewCell.m in Sources */,
@@ -4229,7 +4292,8 @@
 				E9D1F88C1B203A4F0072242B /* PIERefreshTableView.m in Sources */,
 				5CDB062F1AA428BD0089121E /* MASConstraint.m in Sources */,
 				5C561A791AB7C8C30052D4D5 /* UIView+MJExtension.m in Sources */,
-				5C31017B1AAE84C600EF529B /* ATOMAccountSettingViewController.m in Sources */,
+				5C31017B1AAE84C600EF529B /* PIESettingViewController.m in Sources */,
+				F4BB27BF1BD0AD8200C50F58 /* PIEImageView.m in Sources */,
 				E979013A1B4A6494003FB0B5 /* ATOMReportModel.m in Sources */,
 				E900AB4E1B41153A0019BAEA /* UIProgressView+AFNetworking.m in Sources */,
 				E942898B1B5B374B00ED26E4 /* HexColors.m in Sources */,

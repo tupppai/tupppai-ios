@@ -7,13 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "iCarousel.h"
+//#import "iCarousel.h"
+#import "SwipeView.h"
+#import "PIEImageView.h"
 
-@interface PIEProceedingAskTableViewCell : UITableViewCell
+@interface PIEProceedingAskTableViewCell : UITableViewCell<SwipeViewDelegate,SwipeViewDataSource>
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *allWorkDescLabel;
-@property (weak, nonatomic) IBOutlet iCarousel *carousel;
+@property (weak, nonatomic) IBOutlet SwipeView *swipeView;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
-- (void)injectSource:(NSArray*)array;
 
+@property (weak, nonatomic) IBOutlet PIEImageView *originView1;
+@property (weak, nonatomic) IBOutlet PIEImageView *originView2;
+- (void)injectSource:(NSArray*)array;
 @end

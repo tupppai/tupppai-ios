@@ -78,13 +78,15 @@
                 askEntity.imageWidth = ie.width;
                 askEntity.imageHeight = ie.height;
                 askEntity.imageURL = ie.url;
-                [source addObject:askEntity];
+                DDPageVM* vm = [[DDPageVM alloc]initWithPageEntity:askEntity];
+                [source addObject:vm];
             }
             
             NSArray* repliesDic = [[returnArray objectAtIndex:i]objectForKey:@"replies"];
             for (NSDictionary* dic in repliesDic) {
                 PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:dic error:NULL];
-                [source addObject:entity];
+                DDPageVM* vm = [[DDPageVM alloc]initWithPageEntity:entity];
+                [source addObject:vm];
             }
             [array addObject:source];
         }
