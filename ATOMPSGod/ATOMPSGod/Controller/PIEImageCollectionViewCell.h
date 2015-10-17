@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PIEMyAskCollectionViewCell : UICollectionViewCell
+@interface PIEImageCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *pageImgaeView;
 - (void)injectSauce:(DDPageVM*)vm;
 @end

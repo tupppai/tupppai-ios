@@ -92,8 +92,8 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="wXu-e9-v0o"/>
                                 <exclude reference="siZ-aV-XDk"/>
+                                <exclude reference="wXu-e9-v0o"/>
                             </mask>
                         </variation>
                     </view>

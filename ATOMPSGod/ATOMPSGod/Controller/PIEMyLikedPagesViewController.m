@@ -1,12 +1,15 @@
 //
-//  PIEMyAskViewController.m
+//  PIEMyLikedPagesViewController.m
 //  TUPAI
 //
-//  Created by chenpeiwei on 10/12/15.
+//  Created by chenpeiwei on 10/17/15.
 //  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIEMyAskViewController.h"
+#import "PIEMyLikedPagesViewController.h"
+
+
+
 #import "PIERefreshCollectionView.h"
 #import "DDPageManager.h"
 #import "PIETabBarController.h"
@@ -15,7 +18,7 @@
 #import "PIEImageCollectionViewCell.h"
 #import "PIECarouselViewController.h"
 #import "DDNavigationController.h"
-@interface PIEMyAskViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,CHTCollectionViewDelegateWaterfallLayout>
+@interface PIEMyLikedPagesViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,CHTCollectionViewDelegateWaterfallLayout>
 @property (nonatomic, strong) PIERefreshCollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *homeImageDataSource;
@@ -23,7 +26,7 @@
 @property (nonatomic, assign) NSInteger currentPage;
 @end
 
-@implementation PIEMyAskViewController
+@implementation PIEMyLikedPagesViewController
 
 
 
@@ -139,11 +142,11 @@
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-
-//    PIECarousel2ViewController* vc = [PIECarousel2ViewController new];
-//    vc.pageVM = [_dataSource objectAtIndex:indexPath.row];
-//    DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc];
-//    [nav presentViewController:nav2 animated:YES completion:nil];
+    
+    //    PIECarousel2ViewController* vc = [PIECarousel2ViewController new];
+    //    vc.pageVM = [_dataSource objectAtIndex:indexPath.row];
+    //    DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc];
+    //    [nav presentViewController:nav2 animated:YES completion:nil];
     PIECarouselViewController* vc = [PIECarouselViewController new];
     vc.pageVM = [_dataSource objectAtIndex:indexPath.row];
     DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
@@ -159,7 +162,7 @@
 //}
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
 {
-    NSString *text = @"快去求P吧";
+    NSString *text = @"还没有赞过的页面喔";
     
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:kTitleSizeForEmptyDataSet],
                                  NSForegroundColorAttributeName: [UIColor darkGrayColor]};
@@ -169,17 +172,15 @@
 
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-//    DDPageVM* vm = [_dataSource objectAtIndex:indexPath.row];
+    //    DDPageVM* vm = [_dataSource objectAtIndex:indexPath.row];
     CGFloat width;
     CGFloat height;
     width = (SCREEN_WIDTH) /2 - 20;
     height = width;
-//    height = vm.imageHeight/vm.imageWidth * width;
-//    if (height > (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/1.3) {
-//        height = (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/1.3;
-//    }
+    //    height = vm.imageHeight/vm.imageWidth * width;
+    //    if (height > (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/1.3) {
+    //        height = (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/1.3;
+    //    }
     return CGSizeMake(width, height);
 }
-
-
 @end

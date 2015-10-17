@@ -228,7 +228,6 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
             
             
             //关注  求p
-
             if (_selectedVM.type == PIEPageTypeAsk) {
                 PIEEliteAskTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
                 CGPoint p = [gesture locationInView:cell];
@@ -275,7 +274,6 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
                 }
 
             }
-            
             
             //关注  作品
             

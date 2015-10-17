@@ -27,14 +27,13 @@
     self.pagingEnabled = YES;
     self.scrollsToTop = NO;
     self.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    self.type = PIEPageTypeEliteHot;
+    self.type = PIEPageTypeEliteFollow;
 }
 
 - (void)createSubView {
     [self initTable1];
     [self initTable2];
 }
-
 
 - (void)initTable1 {
     _tableFollow = [[PIERefreshTableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
