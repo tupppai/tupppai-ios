@@ -619,7 +619,7 @@ static BOOL disableCustomEasing = NO;
 
 - (void)layoutForVisible:(BOOL)visible {
     UIView *viewToModify = _scrollViewHost;
-    
+    //可见
     if (visible) {
         self.backgroundColor = _realBGColor;
         
@@ -631,6 +631,7 @@ static BOOL disableCustomEasing = NO;
             viewToModify.frame = _finalContentFrame;
         }
     }
+    //不可见
     else {
         super.backgroundColor = [UIColor clearColor];
         

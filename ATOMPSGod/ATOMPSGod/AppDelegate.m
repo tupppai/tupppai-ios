@@ -70,15 +70,11 @@
 }
 -(void)initializeAfterDB {
     
-    PIELaunchViewController *lvc = [[PIELaunchViewController alloc] init];
-    self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
-    self.window.rootViewController = self.baseNav;
-    [self.window makeKeyAndVisible];
-//
-//    [DDUserManager fetchUserInDBToCurrentUser:^(BOOL success) {
-//        if (success) {
-//            self.window.rootViewController = self.mainTabBarController;
-//        } else {
+
+    [DDUserManager fetchUserInDBToCurrentUser:^(BOOL success) {
+        if (success) {
+            self.window.rootViewController = self.mainTabBarController;
+        } else {
 //            if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
 //            {
 //                //UIPageViewController
@@ -88,13 +84,13 @@
 //                self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:vc];
 //                self.window.rootViewController = self.baseNav;
 //            } else {
-//                PIELaunchViewController *lvc = [[PIELaunchViewController alloc] init];
-//                self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
-//                self.window.rootViewController = self.baseNav;
+                PIELaunchViewController *lvc = [[PIELaunchViewController alloc] init];
+                self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
+                self.window.rootViewController = self.baseNav;
 //            }
-//        }
-//        [self.window makeKeyAndVisible];
-//    }];
+        }
+        [self.window makeKeyAndVisible];
+    }];
 }
 
 -(void)setupNotification {

@@ -56,9 +56,9 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
 @property (nonatomic, strong) PIEEliteHotTableViewCell *selectedHotCell;
 @property (nonatomic, strong) DDPageVM *selectedVM;
 
-//@property (nonatomic, strong) PIEShareFunctionView *shareFunctionView;
 @property (nonatomic, strong)  JGActionSheet * psActionSheet;
 @property (nonatomic, strong)  JGActionSheet * reportActionSheet;
+@property (nonatomic, strong)  PIEShareView * shareView;
 
 @end
 
@@ -370,7 +370,7 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
                 if (_selectedVM.type == 2) {
                     [self like:_selectedHotCell.likeView];
                 } else {
-                    [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
+                    [self.psActionSheet showInView:[AppDelegate APP].window animated:NO];
                 }
             }
             else if (CGRectContainsPoint(_selectedHotCell.followView.frame, p)) {
@@ -395,8 +395,13 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
 
 
 
+
+
 - (void)showShareView {
-    [[KShareManager shareView]show];
+//    [[KShareManager shareView]show];
+//    PIEShareView *shareView = [PIEShareView new];
+//    [shareView show];
+    [self.shareView showInView:_sv animated:YES];
 }
 
 -(void)follow:(UIImageView*)followView {
@@ -676,6 +681,12 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
     }
 }
 
+-(PIEShareView *)shareView {
+    if (!_shareView) {
+        _shareView = [PIEShareView new];
+    }
+    return _shareView;
+}
 - (JGActionSheet *)psActionSheet {
     WS(ws);
     if (!_psActionSheet) {

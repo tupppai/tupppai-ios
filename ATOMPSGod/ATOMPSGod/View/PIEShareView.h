@@ -10,6 +10,7 @@
 #import "PIESharesheetView.h"
 @interface PIEShareView:UIView
 @property (strong, nonatomic) PIESharesheetView *shareSheetView;
+
 @property (nonatomic, weak) id<PIEShareViewDelegate> delegate;
 
 - (void)showInView:(UIView *)view animated:(BOOL)animated;

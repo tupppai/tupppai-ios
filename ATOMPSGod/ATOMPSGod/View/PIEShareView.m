@@ -14,12 +14,13 @@
 -(instancetype)init {
     self = [super init];
     if (self) {
+        self.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
         [self addSubview:self.shareSheetView];
         [self.shareSheetView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.width.equalTo(self).with.multipliedBy(0.98);
             make.height.equalTo(@240);
             make.centerX.equalTo(self);
-            make.bottom.equalTo(self);
+            make.bottom.equalTo(self).with.offset(200).with.priorityHigh();
         }];
         [self configClickEvent];
     }
@@ -112,42 +113,47 @@
 - (void)showInView:(UIView *)view animated:(BOOL)animated {
     self.frame = view.bounds;
     [view addSubview:self];
-    self.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
     [UIView animateWithDuration:0.2 animations:^{
-        self.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        [self.shareSheetView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(self).with.offset(0).with.priorityHigh();
+        }];
     } completion:^(BOOL finished) {
     }];
 }
 
 - (void)show {
+    self.frame = [AppDelegate APP].window.bounds;
+    [[AppDelegate APP].window addSubview:self];
     
-    [UIView animateWithDuration:0.5
+    [UIView animateWithDuration:10
                           delay:0
          usingSpringWithDamping:0.8
           initialSpringVelocity:0.7
                         options:0
                      animations:^{
-                         self.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-                     } completion:^(BOOL finished) {
-                         
-                         [UIView animateWithDuration:0.2 animations:^{
-                             self.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
+                         NSLog(@"amimating");
+                         [self.shareSheetView mas_updateConstraints:^(MASConstraintMaker *make) {
+                             make.bottom.equalTo(self).with.offset(0).with.priorityHigh();
                          }];
+                     } completion:^(BOOL finished) {
+                         if (finished) {
+                             NSLog(@"finished");
+                         }
                      }
      ];
     
-//    [UIView animateWithDuration:0.1 delay:0 usingSpringWithDamping:10 initialSpringVelocity:10 options:UIViewAnimationOptionCurveEaseIn animations:^{
-//        self.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-//    } completion:^(BOOL finished) {
-//        self.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
-//    }];
-
-}
+    
+    }
 -(void)dismiss {
-    self.backgroundColor = [UIColor clearColor];
+    NSLog(@"dismiss");
     [UIView animateWithDuration:0.35 animations:^{
-        self.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT);
+//        [self.shareSheetView mas_updateConstraints:^(MASConstraintMaker *make) {
+//            make.bottom.equalTo(self).with.offset(-240).with.priorityHigh();
+//        }];
     } completion:^(BOOL finished) {
+        if (finished) {
+            [self removeFromSuperview];
+        }
     }];
 }
 @end

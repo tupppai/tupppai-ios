@@ -33,8 +33,10 @@ static PIEShareView *shareView;
 +(PIEShareView *)shareView {
     dispatch_once(&onceToken3, ^{
         shareView = [PIEShareView new];
-        [[AppDelegate APP].window addSubview:shareView];
+//        [[AppDelegate APP].window addSubview:shareView];
     });
     return shareView;
 }
+
+
 @end
