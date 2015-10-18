@@ -153,7 +153,7 @@
                                  CAPSPageMenuOptionScrollMenuBackgroundColor: [UIColor whiteColor],
                                  CAPSPageMenuOptionViewBackgroundColor: [UIColor whiteColor],
                                  CAPSPageMenuOptionSelectionIndicatorColor: [UIColor pieYellowColor],
-                                 CAPSPageMenuOptionBottomMenuHairlineColor: [UIColor lightGrayColor],
+                                 CAPSPageMenuOptionBottomMenuHairlineColor: [UIColor colorWithHex:0x000000 andAlpha:0.1],
                                  CAPSPageMenuOptionMenuItemFont: [UIFont boldSystemFontOfSize:15.0],
                                  CAPSPageMenuOptionMenuHeight: @(40.0),
                                  CAPSPageMenuOptionSelectedMenuItemLabelColor: [UIColor blackColor],

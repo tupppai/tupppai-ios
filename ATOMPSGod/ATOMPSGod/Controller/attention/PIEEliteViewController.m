@@ -398,10 +398,7 @@ static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
 
 
 - (void)showShareView {
-//    [[KShareManager shareView]show];
-//    PIEShareView *shareView = [PIEShareView new];
-//    [shareView show];
-    [self.shareView showInView:_sv animated:YES];
+    [self.shareView show];
 }
 
 -(void)follow:(UIImageView*)followView {
