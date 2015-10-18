@@ -120,11 +120,6 @@
 }
 
 - (void)show {
-//    [UIView animateWithDuration:0.2 animations:^{
-//        self.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-//    } completion:^(BOOL finished) {
-//        self.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
-//    }];
     
     [UIView animateWithDuration:0.5
                           delay:0

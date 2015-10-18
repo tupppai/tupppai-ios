@@ -11,9 +11,8 @@
 #import "DDCreateProfileVC.h"
 #import "DDLoginVC.h"
 #import "AppDelegate.h"
-#import "PIETabBarController.h"
 #import "DDShareSDKManager.h"
-#import "EAIntroView.h"
+
 @interface DDLaunchVC ()
 
 @property (nonatomic, strong) ATOMLaunchView *launchView;
@@ -72,7 +71,6 @@
                     cpvc.userProfileViewModel = ipvm;
                     [self.navigationController pushViewController:cpvc animated:YES];
                 }
-
             }];
         }
         else {

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PIELaunchViewController">
+            <connections>
+                <outlet property="hasAccountLabel" destination="Loj-q4-zII" id="Lmn-5m-YXB"/>
+                <outlet property="otherWayLabel" destination="0jb-V6-kin" id="MvZ-67-8r8"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="weiboContainerView" destination="dmV-WO-gyV" id="oEc-8p-PpH"/>
+                <outlet property="weiboSignUpLabel" destination="992-pa-dMy" id="qMY-bS-tci"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pie_launch_logo" translatesAutoresizingMaskIntoConstraints="NO" id="kvp-G7-d6k">
+                    <rect key="frame" x="271.5" y="101" width="56" height="56"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="56" id="10R-XI-VMU"/>
+                        <constraint firstAttribute="width" constant="56" id="JR6-in-TYO"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="其他方式注册" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0jb-V6-kin">
+                    <rect key="frame" x="147" y="515" width="147" height="45"/>
+                    <animations/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="147" id="eQZ-Ql-0k9"/>
+                        <constraint firstAttribute="height" constant="45" id="lRD-ca-dgf"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已有帐号登录" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Loj-q4-zII">
+                    <rect key="frame" x="305" y="515" width="147" height="45"/>
+                    <animations/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="147" id="M6c-nv-vjh"/>
+                        <constraint firstAttribute="height" constant="45" id="cEp-tW-0Of"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dmV-WO-gyV">
+                    <rect key="frame" x="147" y="459" width="305" height="45"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="微博注册" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="992-pa-dMy">
+                            <rect key="frame" x="139.5" y="14" width="56" height="17"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                            <color key="textColor" red="0.050519876182079315" green="0.071342848241329193" blue="0.021582378074526787" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pie_launch_weibo" translatesAutoresizingMaskIntoConstraints="NO" id="usb-KK-cf2">
+                            <rect key="frame" x="107" y="5" width="19" height="35"/>
+                            <animations/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="19" id="Q3o-fJ-9Rz"/>
+                                <constraint firstAttribute="height" constant="35" id="v8D-ON-GtR"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <animations/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="992-pa-dMy" firstAttribute="centerX" secondItem="dmV-WO-gyV" secondAttribute="centerX" constant="15" id="4Ec-ai-4XJ"/>
+                        <constraint firstAttribute="width" constant="305" id="JYm-CA-dVo"/>
+                        <constraint firstItem="usb-KK-cf2" firstAttribute="centerY" secondItem="992-pa-dMy" secondAttribute="centerY" id="nan-pv-lwq"/>
+                        <constraint firstItem="992-pa-dMy" firstAttribute="leading" secondItem="usb-KK-cf2" secondAttribute="trailing" constant="13.5" id="srw-Ky-6iY"/>
+                        <constraint firstAttribute="height" constant="45" id="yfc-Xx-2dX"/>
+                        <constraint firstItem="992-pa-dMy" firstAttribute="centerY" secondItem="dmV-WO-gyV" secondAttribute="centerY" id="zsY-rB-Wez"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="kvp-G7-d6k" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="2uL-4a-mMp"/>
+                <constraint firstItem="kvp-G7-d6k" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="101" id="EzG-Du-67e"/>
+                <constraint firstItem="dmV-WO-gyV" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="G7L-QY-jXJ"/>
+                <constraint firstItem="0jb-V6-kin" firstAttribute="top" secondItem="dmV-WO-gyV" secondAttribute="bottom" constant="11" id="I5y-bn-AeP"/>
+                <constraint firstItem="0jb-V6-kin" firstAttribute="leading" secondItem="dmV-WO-gyV" secondAttribute="leading" id="JR2-Gh-xdE"/>
+                <constraint firstItem="0jb-V6-kin" firstAttribute="trailing" secondItem="dmV-WO-gyV" secondAttribute="centerX" id="PDi-aY-B2z"/>
+                <constraint firstItem="Loj-q4-zII" firstAttribute="centerY" secondItem="0jb-V6-kin" secondAttribute="centerY" id="Uzr-Pp-BjW"/>
+                <constraint firstAttribute="bottom" secondItem="0jb-V6-kin" secondAttribute="bottom" constant="40" id="X46-py-a74"/>
+                <constraint firstItem="Loj-q4-zII" firstAttribute="trailing" secondItem="dmV-WO-gyV" secondAttribute="trailing" id="m1A-wp-2Rn"/>
+                <constraint firstItem="Loj-q4-zII" firstAttribute="leading" secondItem="dmV-WO-gyV" secondAttribute="centerX" constant="10" id="pKU-tJ-HV3"/>
+                <constraint firstItem="Loj-q4-zII" firstAttribute="centerY" secondItem="0jb-V6-kin" secondAttribute="centerY" id="y3R-Wm-lD2"/>
+            </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="PDi-aY-B2z"/>
+                    <exclude reference="pKU-tJ-HV3"/>
+                    <exclude reference="y3R-Wm-lD2"/>
+                </mask>
+            </variation>
+        </view>
+    </objects>
+    <resources>
+        <image name="pie_launch_logo" width="56" height="56"/>
+        <image name="pie_launch_weibo" width="20" height="16"/>
+    </resources>
+</document>

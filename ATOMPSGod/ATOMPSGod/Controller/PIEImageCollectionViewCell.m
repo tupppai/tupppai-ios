@@ -8,7 +8,7 @@
 
 #import "PIEImageCollectionViewCell.h"
 
-@implementation PIEMyAskCollectionViewCell
+@implementation PIEImageCollectionViewCell
 
 - (void)awakeFromNib {
     // Initialization code

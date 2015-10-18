@@ -50,7 +50,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     [self setupViews];
     [self setupPageMenu];
     [self.navigationItem.leftBarButtonItem setTarget:self];
@@ -66,6 +65,7 @@
     self.navigationController.navigationBar.translucent = YES;
     self.navigationController.view.backgroundColor = [UIColor clearColor];
     self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+    
 }
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
