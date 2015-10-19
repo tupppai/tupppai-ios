@@ -78,6 +78,19 @@
     }];
 }
 
++ (void)getCommentedPages:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
+    [[self class]GET:param url:URL_PFGetCommentedPages block:^(id responseObject) {
+        NSArray* dataArray = [responseObject objectForKey:@"data"];
+        if (block) { block(dataArray); }
+    }];
+}
++ (void)getLikedPages:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
+    [[self class]GET:param url:URL_PFGetLikedPages block:^(id responseObject) {
+        NSArray* dataArray = [responseObject objectForKey:@"data"];
+        if (block) { block(dataArray); }
+    }];
+}
+
 + (void)setPushSetting:(NSDictionary *)param withBlock:(void (^) (BOOL success))block {
     [[self class]POST:param url:URL_PFsetPushSetting block:^(id responseObject) {
         if (responseObject) {

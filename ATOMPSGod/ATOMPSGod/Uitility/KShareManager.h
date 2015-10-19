@@ -9,9 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "PWMascotAnimationImageView.h"
 #import "SIAlertView.h"
-#import "PIEShareView.h"
 @interface KShareManager : NSObject
 + (PWMascotAnimationView *)mascotAnimator;
 + (SIAlertView *)signOutAlertView;
-+ (PIEShareView *)shareView;
 @end

@@ -62,7 +62,7 @@
                     <rect key="frame" x="0.0" y="308" width="600" height="228"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="培伟哥哥" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" translatesAutoresizingMaskIntoConstraints="NO" id="Ej0-jf-tRH">
-                            <rect key="frame" x="225" y="36" width="150" height="30"/>
+                            <rect key="frame" x="225" y="40" width="150" height="14"/>
                             <animations/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="ggh-JF-BOD"/>
@@ -71,20 +71,25 @@
                             <fontDescription key="fontDescription" name="HiraginoSans-W6" family="Hiragino Sans" pointSize="14"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="ggh-JF-BOD"/>
+                                </mask>
+                            </variation>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1小时前" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" translatesAutoresizingMaskIntoConstraints="NO" id="Tnj-17-4nM">
-                            <rect key="frame" x="225" y="68" width="150" height="15"/>
+                            <rect key="frame" x="225" y="59" width="150" height="15"/>
                             <animations/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="150" id="SvT-0b-IKx"/>
                                 <constraint firstAttribute="height" constant="15" id="nHI-5a-PNx"/>
                             </constraints>
-                            <fontDescription key="fontDescription" name="HiraginoSans-W6" family="Hiragino Sans" pointSize="9"/>
+                            <fontDescription key="fontDescription" name="HiraginoSans-W6" family="Hiragino Sans" pointSize="10"/>
                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我要一步一步打代码" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" translatesAutoresizingMaskIntoConstraints="NO" id="Un8-ag-rXy">
-                            <rect key="frame" x="140" y="91" width="320" height="15"/>
+                            <rect key="frame" x="140" y="86" width="320" height="15"/>
                             <animations/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="DRc-rz-RMo"/>
@@ -109,20 +114,20 @@
                                 </mask>
                             </variation>
                         </label>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="psps.png" translatesAutoresizingMaskIntoConstraints="NO" id="pyi-Yf-Ai7">
-                            <rect key="frame" x="275" y="-25" width="50" height="50"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="psps.png" translatesAutoresizingMaskIntoConstraints="NO" id="pyi-Yf-Ai7">
+                            <rect key="frame" x="268" y="-32" width="64" height="64"/>
                             <animations/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="50" id="NHx-rK-Vgx">
+                                <constraint firstAttribute="height" constant="64" id="NHx-rK-Vgx">
                                     <variation key="widthClass=compact" constant="40"/>
                                 </constraint>
-                                <constraint firstAttribute="width" constant="50" id="bQu-Xp-SWJ">
+                                <constraint firstAttribute="width" constant="64" id="bQu-Xp-SWJ">
                                     <variation key="widthClass=compact" constant="40"/>
                                 </constraint>
                             </constraints>
                         </imageView>
-                        <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F9S-X3-Axq">
-                            <rect key="frame" x="279" y="126" width="42" height="42"/>
+                        <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F9S-X3-Axq">
+                            <rect key="frame" x="279" y="156" width="42" height="42"/>
                             <animations/>
                             <state key="normal" image="pie_like">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -139,26 +144,32 @@
                         <constraint firstItem="Ej0-jf-tRH" firstAttribute="centerX" secondItem="pyi-Yf-Ai7" secondAttribute="centerX" id="2MR-qo-2jt"/>
                         <constraint firstItem="Ej0-jf-tRH" firstAttribute="top" secondItem="YJO-Is-7zc" secondAttribute="top" constant="10" id="2vc-iU-yWu"/>
                         <constraint firstItem="F9S-X3-Axq" firstAttribute="centerX" secondItem="YJO-Is-7zc" secondAttribute="centerX" id="9Eq-TY-pmv"/>
-                        <constraint firstItem="Tnj-17-4nM" firstAttribute="top" secondItem="Ej0-jf-tRH" secondAttribute="bottom" constant="2" id="Cnq-GJ-Wx1">
+                        <constraint firstItem="Tnj-17-4nM" firstAttribute="top" secondItem="Ej0-jf-tRH" secondAttribute="bottom" constant="5" id="Cnq-GJ-Wx1">
                             <variation key="widthClass=compact" constant="5"/>
                         </constraint>
                         <constraint firstAttribute="centerX" secondItem="Un8-ag-rXy" secondAttribute="centerX" id="Cxj-ns-CMX"/>
-                        <constraint firstItem="pyi-Yf-Ai7" firstAttribute="top" secondItem="YJO-Is-7zc" secondAttribute="top" constant="-25" id="HHh-xY-nAr">
+                        <constraint firstItem="Un8-ag-rXy" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Tnj-17-4nM" secondAttribute="bottom" constant="1" id="DTP-bR-LKN"/>
+                        <constraint firstItem="pyi-Yf-Ai7" firstAttribute="top" secondItem="YJO-Is-7zc" secondAttribute="top" constant="-32" id="HHh-xY-nAr">
                             <variation key="widthClass=compact" constant="-20"/>
                         </constraint>
                         <constraint firstAttribute="trailing" secondItem="Un8-ag-rXy" secondAttribute="trailing" constant="20" id="Jg5-Ku-VZQ"/>
+                        <constraint firstItem="F9S-X3-Axq" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Un8-ag-rXy" secondAttribute="bottom" id="Put-1P-sgJ"/>
+                        <constraint firstAttribute="bottom" secondItem="F9S-X3-Axq" secondAttribute="bottom" priority="250" constant="30" id="QOu-h8-XRw"/>
                         <constraint firstItem="pyi-Yf-Ai7" firstAttribute="top" secondItem="YJO-Is-7zc" secondAttribute="top" constant="-25" id="W2L-nE-hlR"/>
-                        <constraint firstItem="Un8-ag-rXy" firstAttribute="top" secondItem="Tnj-17-4nM" secondAttribute="bottom" constant="8" id="aZO-j5-mFQ"/>
+                        <constraint firstItem="Un8-ag-rXy" firstAttribute="top" secondItem="Tnj-17-4nM" secondAttribute="bottom" priority="250" constant="12" id="aZO-j5-mFQ"/>
+                        <constraint firstItem="Ej0-jf-tRH" firstAttribute="top" relation="greaterThanOrEqual" secondItem="pyi-Yf-Ai7" secondAttribute="bottom" constant="1" id="bef-Qd-5EL"/>
                         <constraint firstItem="Un8-ag-rXy" firstAttribute="leading" secondItem="YJO-Is-7zc" secondAttribute="leading" constant="20" id="cWe-Wq-4AO"/>
-                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="F9S-X3-Axq" secondAttribute="bottom" priority="750" constant="3" id="csc-aF-PCo"/>
+                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="F9S-X3-Axq" secondAttribute="bottom" constant="3" id="csc-aF-PCo"/>
+                        <constraint firstItem="F9S-X3-Axq" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Un8-ag-rXy" secondAttribute="bottom" id="d3J-hy-Ts5"/>
+                        <constraint firstAttribute="bottom" secondItem="F9S-X3-Axq" secondAttribute="bottom" priority="250" constant="20" id="dw1-Wy-8Kt"/>
                         <constraint firstItem="Un8-ag-rXy" firstAttribute="leading" secondItem="YJO-Is-7zc" secondAttribute="leading" constant="20" id="gMg-0f-kY6"/>
                         <constraint firstAttribute="trailing" secondItem="Un8-ag-rXy" secondAttribute="trailing" constant="20" id="hw8-hh-0jT"/>
                         <constraint firstAttribute="centerX" secondItem="pyi-Yf-Ai7" secondAttribute="centerX" id="k7z-CD-kt3"/>
-                        <constraint firstItem="Ej0-jf-tRH" firstAttribute="top" secondItem="pyi-Yf-Ai7" secondAttribute="bottom" constant="11" id="mkE-eI-W7F">
+                        <constraint firstItem="Ej0-jf-tRH" firstAttribute="top" secondItem="pyi-Yf-Ai7" secondAttribute="bottom" priority="250" constant="8" id="mkE-eI-W7F">
                             <variation key="widthClass=compact" constant="8"/>
                         </constraint>
                         <constraint firstItem="pyi-Yf-Ai7" firstAttribute="centerX" secondItem="Tnj-17-4nM" secondAttribute="centerX" id="ofJ-l8-nJL"/>
-                        <constraint firstItem="F9S-X3-Axq" firstAttribute="top" secondItem="Un8-ag-rXy" secondAttribute="bottom" priority="250" constant="20" id="z1A-sb-mbE"/>
+                        <constraint firstItem="F9S-X3-Axq" firstAttribute="top" secondItem="Un8-ag-rXy" secondAttribute="bottom" priority="250" constant="10" id="z1A-sb-mbE"/>
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
@@ -169,6 +180,9 @@
                             <exclude reference="hw8-hh-0jT"/>
                             <exclude reference="2vc-iU-yWu"/>
                             <exclude reference="W2L-nE-hlR"/>
+                            <exclude reference="d3J-hy-Ts5"/>
+                            <exclude reference="dw1-Wy-8Kt"/>
+                            <exclude reference="z1A-sb-mbE"/>
                         </mask>
                     </variation>
                     <variation key="widthClass=compact">

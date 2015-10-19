@@ -6,14 +6,14 @@
 //
 //
 
-#import "PIEReplyTableCell.h"
+#import "PIENewReplyTableCell.h"
 #import "PIEImageEntity.h"
 #import "POP.h"
-@interface PIEReplyTableCell()
+@interface PIENewReplyTableCell()
 
 @end
 
-@implementation PIEReplyTableCell
+@implementation PIENewReplyTableCell
 
 - (void)awakeFromNib {
     // Initialization code
@@ -165,12 +165,6 @@
                 make.bottom.equalTo(_thumbView);
                 make.width.equalTo(_thumbView).with.multipliedBy(0.5);
             }];
-            //            [_thumbView.leftView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            //                make.top.equalTo(self);
-            //                make.leading.equalTo(self);
-            //                make.bottom.equalTo(self);
-            //                make.trailing.equalTo(_thumbView.rightView.mas_leading);
-            //            }];
         }
     }
     

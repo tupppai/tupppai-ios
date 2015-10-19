@@ -8,7 +8,7 @@
 
 #import "kfcHomeScrollView.h"
 #import "CHTCollectionViewWaterfallLayout.h"
-#import "PIEAskCollectionCell.h"
+#import "PIENewAskCollectionCell.h"
 @interface kfcHomeScrollView ()
 
 @end

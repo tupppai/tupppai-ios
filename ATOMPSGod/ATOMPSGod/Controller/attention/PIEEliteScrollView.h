@@ -9,10 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "PIERefreshTableView.h"
 
-//typedef NS_ENUM(NSInteger, PIEFollowScrollType) {
-//    PIEFollowScrollTypeFollow = 0,
-//    PIEFollowScrollTypeHot
-//};
 @interface PIEEliteScrollView : UIScrollView
 @property (nonatomic, strong) PIERefreshTableView *tableFollow;
 @property (nonatomic, strong) PIERefreshTableView *tableHot;

@@ -12,6 +12,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    _pageImageView.clipsToBounds = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -23,7 +24,8 @@
 - (void)injectSauce:(DDPageVM* )vm {
     _usernameLabel.text = vm.username;
     _timeLabel.text = vm.publishTime;
-    _contentLabel.text = vm.content;
+    _contentLabel.text = [NSString stringWithFormat:@"你评论了ta: %@",vm.content];
     [_pageImageView setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+    
 }
 @end

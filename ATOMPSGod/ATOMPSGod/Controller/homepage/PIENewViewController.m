@@ -7,7 +7,7 @@
 //
 #import "PIENewViewController.h"
 #import "AppDelegate.h"
-#import "PIEReplyTableCell.h"
+#import "PIENewReplyTableCell.h"
 
 
 #import "kfcHomeScrollView.h"
@@ -26,7 +26,7 @@
 #import "PIEUploadVC.h"
 
 #import "CHTCollectionViewWaterfallLayout.h"
-#import "PIEAskCollectionCell.h"
+#import "PIENewAskCollectionCell.h"
 #import "PIERefreshCollectionView.h"
 #import "PIERefreshTableView.h"
 #import "PIEFriendViewController.h"
@@ -58,9 +58,10 @@
 @property (nonatomic, strong)  JGActionSheet * reportActionSheet;
 
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
-@property (nonatomic, strong) PIEAskCollectionCell *selectedAskCell;
-@property (nonatomic, strong) PIEReplyTableCell *selectedReplyCell;
+@property (nonatomic, strong) PIENewAskCollectionCell *selectedAskCell;
+@property (nonatomic, strong) PIENewReplyTableCell *selectedReplyCell;
 @property (nonatomic, strong) DDPageVM *selectedVM;
+@property (nonatomic, strong) PIEShareView *shareView;
 
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
 @property (nonatomic, strong) QBImagePickerController* QBImagePickerController;
@@ -69,8 +70,8 @@
 
 @implementation PIENewViewController
 
-static NSString *CellIdentifier = @"PIEReplyTableCell";
-static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
+static NSString *CellIdentifier = @"PIENewReplyTableCell";
+static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
 #pragma mark - life cycle
 
@@ -84,7 +85,6 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     self.navigationController.navigationBarHidden = NO;
 }
 -(void)viewDidAppear:(BOOL)animated {
-    [KShareManager shareView].delegate = self;
     [self shouldNavToAskSegment];
     [self shouldNavToHotSegment];
 }
@@ -138,7 +138,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     _askCollectionView.dataSource = self;
     _askCollectionView.delegate = self;
     _askCollectionView.psDelegate = self;
-    UINib* nib = [UINib nibWithNibName:@"PIEAskCollectionCell" bundle:nil];
+    UINib* nib = [UINib nibWithNibName:CellIdentifier2 bundle:nil];
     [_askCollectionView registerNib:nib forCellWithReuseIdentifier:CellIdentifier2];
     
     _tapGestureAsk = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureAsk:)];
@@ -252,7 +252,15 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 }
 
 - (void)showShareView {
-    [[KShareManager shareView]show];
+    [self.shareView show];
+    
+}
+-(PIEShareView *)shareView {
+    if (!_shareView) {
+        _shareView = [PIEShareView new];
+        _shareView.delegate = self;
+    }
+    return _shareView;
 }
 //- (void)showShareFunctionView {
 //    [self.shareFunctionView showInView:self.view animated:YES];
@@ -302,6 +310,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
                 [self.navigationController pushViewController:friendVC animated:YES];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.collectView.frame, p)) {
+                //should write this logic in viewModel
                 [self collectReply];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
@@ -332,7 +341,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
         CGPoint location = [gesture locationInView:_askCollectionView];
         NSIndexPath *indexPath = [_askCollectionView indexPathForItemAtPoint:location];
         if (indexPath) {
-            _selectedAskCell= (PIEAskCollectionCell *)[_askCollectionView cellForItemAtIndexPath:indexPath];
+            _selectedAskCell= (PIENewAskCollectionCell *)[_askCollectionView cellForItemAtIndexPath:indexPath];
             _selectedVM = _sourceAsk[indexPath.row];
             CGPoint p = [gesture locationInView:_selectedAskCell];
             
@@ -401,7 +410,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_hotTableView == tableView) {
-        PIEReplyTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        PIENewReplyTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         [cell injectSauce:_sourceReply[indexPath.row]];
         return cell;
     }
@@ -414,7 +423,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_hotTableView == tableView) {
-        return [tableView fd_heightForCellWithIdentifier:CellIdentifier  cacheByIndexPath:indexPath configuration:^(PIEReplyTableCell *cell) {
+        return [tableView fd_heightForCellWithIdentifier:CellIdentifier  cacheByIndexPath:indexPath configuration:^(PIENewReplyTableCell *cell) {
             [cell injectSauce:_sourceReply[indexPath.row]];
         }];
     } else {
@@ -620,7 +629,7 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
     [self collectReply];
 }
 -(void)tapShareCancel {
-    [[KShareManager shareView]dismiss];
+    [self.shareView dismiss];
 }
 
 
@@ -748,8 +757,8 @@ static NSString *CellIdentifier2 = @"PIEAskCollectionCell";
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    PIEAskCollectionCell*cell =
-    (PIEAskCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier2
+    PIENewAskCollectionCell*cell =
+    (PIENewAskCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier2
                                                                       forIndexPath:indexPath];
     [cell injectSource:[_sourceAsk objectAtIndex:indexPath.row]];
     return cell;

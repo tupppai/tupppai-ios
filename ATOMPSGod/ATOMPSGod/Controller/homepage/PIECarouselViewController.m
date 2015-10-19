@@ -11,8 +11,9 @@
 #import "PIEFriendViewController.h"
 #import "HMSegmentedControl.h"
 #import "FXBlurView.h"
-
-@interface PIECarouselViewController ()
+#import "DDCommentVC.h"
+#import "JGActionSheet.h"
+@interface PIECarouselViewController ()<JGActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *blurView;
 @property (weak, nonatomic) IBOutlet iCarousel *carousel;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
@@ -25,6 +26,7 @@
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, strong) DDPageVM* currentVM;
 @property (nonatomic, strong) HMSegmentedControl* segmentedControl;
+@property (nonatomic, strong)  JGActionSheet * psActionSheet;
 
 @end
 
@@ -54,11 +56,9 @@
     _carousel.pagingEnabled = YES;
     _carousel.bounces = YES;
     _carousel.bounceDistance = 0.21;
-    
-    _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
+    [_likeButton setImage:[UIImage imageNamed:@"pie_carousel_ask"] forState:UIControlStateNormal];
+    _avatarView.layer.cornerRadius = 20;
     _avatarView.clipsToBounds = YES;
-    [_likeButton setImage:[UIImage imageNamed:@"pie_like_selected"] forState:UIControlStateSelected];
-    [_likeButton setImage:[UIImage imageNamed:@"pie_like_selected"] forState:UIControlStateHighlighted];
     _avatarView.userInteractionEnabled = YES;
     UITapGestureRecognizer *tapG1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToSeeFriend)];
     [_avatarView addGestureRecognizer:tapG1];
@@ -72,16 +72,21 @@
     [self.navigationController pushViewController:friendVC animated:YES];
 }
 - (IBAction)tapLikeButton:(id)sender {
-    _likeButton.selected = !_likeButton.selected;
-    [_likeButton scaleAnimation];
-    [DDService toggleLike:_likeButton.selected ID:_currentVM.ID type:_currentVM.type  withBlock:^(BOOL success) {
-        if (success) {
-            _pageVM.liked = _likeButton.selected;
-        } else {
-            NSLog(@"return error");
-            _likeButton.selected = !_likeButton.selected;
-        }
-    }];
+    if (_currentVM.type == PIEPageTypeReply) {
+        _likeButton.selected = !_likeButton.selected;
+        [_likeButton scaleAnimation];
+        [DDService toggleLike:_likeButton.selected ID:_currentVM.ID type:_currentVM.type  withBlock:^(BOOL success) {
+            if (success) {
+                _pageVM.liked = _likeButton.selected;
+            } else {
+                _likeButton.selected = !_likeButton.selected;
+            }
+        }];
+    }
+    else {
+        [self.psActionSheet showInView:self.view animated:YES];
+    }
+
 }
 
 - (void)setupBlurredImage
@@ -170,7 +175,9 @@
 
 - (void)carousel:(__unused iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index
 {
-    NSLog(@"Tapped view number: %zd", index);
+    DDCommentVC* vc = [DDCommentVC new];
+    vc.vm = _currentVM;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)carouselCurrentItemIndexDidChange:(__unused iCarousel *)carousel
@@ -193,6 +200,15 @@
         _timeLabel.text = _currentVM.publishTime;
         _contentLabel.text = _currentVM.content;
         _likeButton.selected = _currentVM.liked;
+        if (_currentVM.type == PIEPageTypeAsk) {
+            [_likeButton setImage:[UIImage imageNamed:@"pie_carousel_ask"] forState:UIControlStateNormal];
+            [_likeButton setImage:[UIImage imageNamed:@"pie_carousel_ask"] forState:UIControlStateHighlighted];
+            [_likeButton setImage:[UIImage imageNamed:@"pie_carousel_ask"] forState:UIControlStateSelected];
+        } else {
+            [_likeButton setImage:[UIImage imageNamed:@"pie_like_selected"] forState:UIControlStateSelected];
+            [_likeButton setImage:[UIImage imageNamed:@"pie_like_selected"] forState:UIControlStateHighlighted];
+        }
+        
     }
 }
 - (void)getDataSource {
@@ -213,7 +229,7 @@
             DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
             [_dataSource addObject:vm];
         }
-        [self updateUIWithIndex:0];
+//        [self updateUIWithIndex:0];
         [self updateSegmentTitles];
         [_carousel reloadData];
         [self reorderSourceAndScroll];
@@ -240,6 +256,7 @@
             //must animate scroll carousel in order to scroll segment.
         }
     }
+
 }
 - (void)updateSegmentTitles {
     WS(ws);
@@ -282,4 +299,63 @@
     return _segmentedControl;
 }
 
+
+- (JGActionSheet *)psActionSheet {
+    WS(ws);
+    if (!_psActionSheet) {
+        _psActionSheet = [JGActionSheet new];
+        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"下载图片，马上帮P", @"塞入“进行中”,暂不下载",@"取消"] buttonStyle:JGActionSheetButtonStyleDefault];
+        [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:2];
+        NSArray *sections = @[section];
+        _psActionSheet = [JGActionSheet actionSheetWithSections:sections];
+        _psActionSheet.delegate = self;
+        [_psActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
+            [sheet dismissAnimated:YES];
+        }];
+        [_psActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
+            switch (indexPath.row) {
+                case 0:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    [ws help:YES];
+                    break;
+                case 1:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    [ws help:NO];
+                    break;
+                case 2:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    break;
+                default:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    break;
+            }
+        }];
+    }
+    return _psActionSheet;
+}
+
+- (void)help:(BOOL)shouldDownload {
+    NSMutableDictionary* param = [NSMutableDictionary new];
+    [param setObject:@"ask" forKey:@"type"];
+    [param setObject:@(_currentVM.askID) forKey:@"target"];
+    
+    [DDService signProceeding:param withBlock:^(NSString *imageUrl) {
+        if (imageUrl != nil) {
+            if (shouldDownload) {
+                [DDService downloadImage:imageUrl withBlock:^(UIImage *image) {
+                    UIImageWriteToSavedPhotosAlbum(image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+                }];
+            }
+        }
+    }];
+}
+
+- (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error
+  contextInfo: (void *) contextInfo {
+    if(error != NULL){
+        [Hud error:@"保存失败" inView:self.view];
+    } else {
+        [Hud success:@"保存成功" inView:self.view];
+    }
+}
 @end

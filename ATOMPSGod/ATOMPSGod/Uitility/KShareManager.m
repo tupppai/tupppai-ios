@@ -11,11 +11,9 @@
 @implementation KShareManager
 static dispatch_once_t onceToken;
 static dispatch_once_t onceToken2;
-static dispatch_once_t onceToken3;
 
 static PWMascotAnimationView *mascotAnimator;
 static SIAlertView *signOutAlertView;
-static PIEShareView *shareView;
 
 + (PWMascotAnimationView *)mascotAnimator {
     dispatch_once(&onceToken, ^{
@@ -29,14 +27,5 @@ static PIEShareView *shareView;
     });
     return signOutAlertView;
 }
-
-+(PIEShareView *)shareView {
-    dispatch_once(&onceToken3, ^{
-        shareView = [PIEShareView new];
-//        [[AppDelegate APP].window addSubview:shareView];
-    });
-    return shareView;
-}
-
 
 @end

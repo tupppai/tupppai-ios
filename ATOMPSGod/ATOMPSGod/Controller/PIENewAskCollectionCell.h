@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PIEAskCollectionCell : UICollectionViewCell
+@interface PIENewAskCollectionCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;

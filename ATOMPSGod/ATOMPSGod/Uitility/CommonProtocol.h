@@ -49,16 +49,5 @@
 @end
 
 
-@protocol PIEShareViewDelegate <NSObject>
-@optional
-- (void)tapShare1;
-- (void)tapShare2;
-- (void)tapShare3;
-- (void)tapShare4;
-- (void)tapShare5;
-- (void)tapShare6;
-- (void)tapShare7;
-- (void)tapShare8;
-- (void)tapShareCancel;
-@end
+
 

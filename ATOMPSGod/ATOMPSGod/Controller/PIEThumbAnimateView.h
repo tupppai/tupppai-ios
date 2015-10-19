@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+typedef NS_ENUM(NSInteger, PIEAnimateViewType) {
+    PIEAnimateViewTypeLeft,
+    PIEAnimateViewTypeRight
+};
 @interface PIEThumbAnimateView : UIView
 @property (nonatomic,assign)  NSInteger subviewCounts;
 @property (nonatomic,assign)  BOOL toExpand;

@@ -11,7 +11,7 @@
 #import "DDLoginNavigationController.h"
 #import "AppDelegate.h"
 #import "SIAlertView.h"
-
+#import "PIELaunchViewController.h"
 #import "PIENewViewController.h"
 #import "PIEEliteViewController.h"
 #import "PIEProceedingViewController.h"
@@ -73,7 +73,7 @@
                               //清空当前用户
                               [[DDUserManager currentUser]wipe];
                               self.navigationController.viewControllers = @[];
-                              DDLaunchVC *lvc = [[DDLaunchVC alloc] init];
+                              PIELaunchViewController *lvc = [[PIELaunchViewController alloc] init];
                               [AppDelegate APP].window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
                           }];
     alertView.transitionStyle = SIAlertViewTransitionStyleBounce;

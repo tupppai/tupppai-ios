@@ -21,8 +21,9 @@
 #import "SIAlertView.h"
 #import "DDHomePageManager.h"
 #import "PIEModifyProfileViewController.h"
-
+#import "PIEMyCommentedPageViewController.h"
 #import "PIESignOutTableViewCell.h"
+#import "PIEMyLikedPagesViewController.h"
 @interface PIESettingsViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -159,14 +160,18 @@
 
         } else if (row == 1) {
             //我赞过的
+            PIEMyLikedPagesViewController * vc = [PIEMyLikedPagesViewController new];
+            [self.navigationController pushViewController:vc animated:YES];
         } else if (row == 2) {
             //我评论过的
+            PIEMyCommentedPageViewController* vc = [PIEMyCommentedPageViewController new];
+            [self.navigationController pushViewController:vc animated:YES];
         }
     } else if (section == 2) {
         
         if (row == 0) {
-            PIEMessagePushSettingViewController *mrvc = [PIEMessagePushSettingViewController new];
-            [self.navigationController pushViewController:mrvc animated:YES];
+//            PIEMessagePushSettingViewController *mrvc = [PIEMessagePushSettingViewController new];
+//            [self.navigationController pushViewController:mrvc animated:YES];
         } else if (row == 1) {
             [self clearCache];
         } else if (row == 2) {
@@ -202,7 +207,7 @@
                               //清空当前用户
                               [[DDUserManager currentUser]wipe];
                               self.navigationController.viewControllers = @[];
-                              DDLaunchVC *lvc = [[DDLaunchVC alloc] init];
+                              PIELaunchViewController *lvc = [[PIELaunchViewController alloc] init];
                               [AppDelegate APP].window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
                           }];
     alertView.transitionStyle = SIAlertViewTransitionStyleBounce;

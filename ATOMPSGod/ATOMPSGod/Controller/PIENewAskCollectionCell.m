@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIEAskCollectionCell.h"
+#import "PIENewAskCollectionCell.h"
 #import "PIEImageEntity.h"
-@implementation PIEAskCollectionCell
+@implementation PIENewAskCollectionCell
 
 - (void)awakeFromNib {
     self.layer.cornerRadius = 6;

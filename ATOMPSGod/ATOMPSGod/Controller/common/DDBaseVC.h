@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ATOMShare.h"
-#import "DDShareManager.h"
+//#import "ATOMShare.h"
+//#import "DDShareManager.h"
 
 
 

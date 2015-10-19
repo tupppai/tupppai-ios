@@ -11,6 +11,7 @@
 #import "ATOMAccountBindingTableViewCell.h"
 #import "DDMySettingsManager.h"
 #import "DDShareSDKManager.h"
+#import "ATOMModifyPasswordViewController.h"
 @interface PIEThirdPartyBindingViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) ATOMAccountBindingView *accountBindingView;
@@ -71,7 +72,7 @@
         return 60;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 35;
+    return 40;
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
@@ -91,7 +92,11 @@
     return sectionName;
 }
 
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0 && indexPath.row == 1) {
+        [self.navigationController pushViewController:[ATOMModifyPasswordViewController new] animated:YES];
+    }
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"AccountBindingCell";
@@ -103,17 +108,24 @@
     NSInteger row = indexPath.row;
     if (section == 1) {
         if (row == 0) {
-            cell.imageView.image = [UIImage imageNamed:@"weibo"];
+            cell.imageView.image = [UIImage imageNamed:@"pie_binding_sinaweibo"];
             cell.textLabel.text = @"新浪微博";
             [cell addSwitch];
             [cell.bindSwitch setOn:[DDUserManager currentUser].bindWeibo];
         }
         else if (row == 1) {
-            cell.imageView.image = [UIImage imageNamed:@"wechat"];
+            cell.imageView.image = [UIImage imageNamed:@"pie_binding_wechat"];
             cell.textLabel.text = @"微信";
             [cell addSwitch];
             [cell.bindSwitch setOn:[DDUserManager currentUser].bindWechat];
         }
+        else if (row == 2) {
+            cell.imageView.image = [UIImage imageNamed:@"pie_binding_qq"];
+            cell.textLabel.text = @"QQ";
+            [cell addSwitch];
+            [cell.bindSwitch setOn:[DDUserManager currentUser].bindWechat];
+        }
+
         [cell.bindSwitch addTarget:self action:@selector(toggleSwitch:) forControlEvents:UIControlEventValueChanged];
         cell.bindSwitch.tag = indexPath.row;
     } else if (section == 0) {
@@ -135,7 +147,11 @@
         }
         else if (row == 1) {
             cell.textLabel.text = @"修改密码";
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            UIImageView* indicatorView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 10, 14)];
+            indicatorView.contentMode = UIViewContentModeScaleAspectFit;
+            indicatorView.image = [UIImage imageNamed:@"pie_next"];
+            cell.accessoryView = indicatorView;
         }
     }
    

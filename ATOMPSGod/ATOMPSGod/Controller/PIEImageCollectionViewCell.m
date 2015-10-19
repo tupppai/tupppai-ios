@@ -12,7 +12,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    self.layer.cornerRadius = 8;
+    self.layer.cornerRadius = 4;
 }
 - (void)injectSauce:(DDPageVM*)vm {
     

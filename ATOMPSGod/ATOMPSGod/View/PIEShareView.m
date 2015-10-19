@@ -15,8 +15,8 @@
     self = [super init];
     if (self) {
         self.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.3];
-        [self addSubview:self.shareSheetView];
-        [self.shareSheetView mas_makeConstraints:^(MASConstraintMaker *make) {
+        [self addSubview:self.sheetView];
+        [self.sheetView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.width.equalTo(self).with.multipliedBy(0.98);
             make.height.equalTo(@240);
             make.centerX.equalTo(self);
@@ -27,36 +27,36 @@
     return self;
 }
 
--(PIESharesheetView *)shareSheetView {
-    if (!_shareSheetView) {
-        _shareSheetView = [PIESharesheetView new];
+-(PIESharesheetView *)sheetView {
+    if (!_sheetView) {
+        _sheetView = [PIESharesheetView new];
     }
-    return _shareSheetView;
+    return _sheetView;
 }
 -(void)configClickEvent {
     
     UITapGestureRecognizer* tapGes = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnSelf:)];
     [self addGestureRecognizer:tapGes];
     UITapGestureRecognizer* tapGes1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapGes1:)];
-    [self.shareSheetView.icon1 addGestureRecognizer:tapGes1];
+    [self.sheetView.icon1 addGestureRecognizer:tapGes1];
 
     UITapGestureRecognizer* tapGes2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapGes2:)];
-    [self.shareSheetView.icon2 addGestureRecognizer:tapGes2];
+    [self.sheetView.icon2 addGestureRecognizer:tapGes2];
     UITapGestureRecognizer* tapGes3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapGes3:)];
-    [self.shareSheetView.icon3 addGestureRecognizer:tapGes3];
+    [self.sheetView.icon3 addGestureRecognizer:tapGes3];
     UITapGestureRecognizer* tapGes4 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapGes4:)];
-    [self.shareSheetView.icon4 addGestureRecognizer:tapGes4];
+    [self.sheetView.icon4 addGestureRecognizer:tapGes4];
     UITapGestureRecognizer* tapGes5 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapGes5:)];
-    [self.shareSheetView.icon5 addGestureRecognizer:tapGes5];
+    [self.sheetView.icon5 addGestureRecognizer:tapGes5];
     UITapGestureRecognizer* tapGes6 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapGes6:)];
-    [self.shareSheetView.icon6 addGestureRecognizer:tapGes6];
+    [self.sheetView.icon6 addGestureRecognizer:tapGes6];
     UITapGestureRecognizer* tapGes7 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapGes7:)];
-    [self.shareSheetView.icon7 addGestureRecognizer:tapGes7];
+    [self.sheetView.icon7 addGestureRecognizer:tapGes7];
     UITapGestureRecognizer* tapGes8 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapGes8:)];
-    [self.shareSheetView.icon8 addGestureRecognizer:tapGes8];
+    [self.sheetView.icon8 addGestureRecognizer:tapGes8];
     
     UITapGestureRecognizer* tapGesCancel = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapGesCancel:)];
-    [self.shareSheetView.cancelLabel addGestureRecognizer:tapGesCancel];
+    [self.sheetView.cancelLabel addGestureRecognizer:tapGesCancel];
     
 }
 - (void)tapOnSelf:(UIGestureRecognizer*)gesture {
@@ -117,7 +117,7 @@
     [view addSubview:self];
     
     [self layoutIfNeeded];
-    [self.shareSheetView mas_updateConstraints:^(MASConstraintMaker *make) {
+    [self.sheetView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self).with.offset(0).with.priorityHigh();
     }];
     
@@ -143,7 +143,7 @@
     self.frame = [AppDelegate APP].window.bounds;
     [[AppDelegate APP].window addSubview:self];
     [self layoutIfNeeded];
-    [self.shareSheetView mas_updateConstraints:^(MASConstraintMaker *make) {
+    [self.sheetView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self).with.offset(0).with.priorityHigh();
     }];
     
@@ -164,11 +164,11 @@
     
     }
 -(void)dismiss {
-    [self.shareSheetView mas_updateConstraints:^(MASConstraintMaker *make) {
+    [self.sheetView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self).with.offset(240).with.priorityHigh();
     }];
     [UIView animateWithDuration:0.35 animations:^{
-        [self.shareSheetView layoutIfNeeded];
+        [self.sheetView layoutIfNeeded];
     } completion:^(BOOL finished) {
         if (finished) {
             [self removeFromSuperview];

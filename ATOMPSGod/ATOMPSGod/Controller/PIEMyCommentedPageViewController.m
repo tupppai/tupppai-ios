@@ -25,6 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view = self.tableView;
+    [self getDataSource];
 }
 
 - (void)initData {
@@ -61,6 +62,7 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     PIECarouselViewController* vc = [PIECarouselViewController new];
     vc.pageVM = [_dataSource objectAtIndex:indexPath.row];
     DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
@@ -89,14 +91,8 @@
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [DDPageManager getCollection:param withBlock:^(NSMutableArray *resultArray) {
-        NSMutableArray* arrayAgent = [NSMutableArray new];
-        for (PIEPageEntity *entity in resultArray) {
-            DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
-            [arrayAgent addObject:vm];
-        }
-        [_dataSource removeAllObjects];
-        [_dataSource addObjectsFromArray:arrayAgent];
+    [DDPageManager getCommentedPages:param withBlock:^(NSMutableArray *resultArray) {
+        _dataSource = resultArray;
         [ws.tableView reloadData];
         [ws.tableView.header endRefreshing];
         if (resultArray.count == 0) {
@@ -117,11 +113,8 @@
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [DDPageManager getCollection:param withBlock:^(NSMutableArray *resultArray) {
-        for (PIEPageEntity *entity in resultArray) {
-            DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
-            [_dataSource addObject:vm];
-        }
+    [DDPageManager getCommentedPages:param withBlock:^(NSMutableArray *resultArray) {
+        [_dataSource addObjectsFromArray:resultArray];
         [ws.tableView reloadData];
         [ws.tableView.footer endRefreshing];
         if (resultArray.count == 0) {

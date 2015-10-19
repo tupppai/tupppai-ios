@@ -61,6 +61,41 @@
     }];
 }
 
+
++ (void)getCommentedPages:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *))block {
+    [DDService getCommentedPages:param withBlock:^(NSArray* data) {
+        NSMutableArray *resultArray = [NSMutableArray array];
+        for (int i = 0; i < data.count; i++) {
+            PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
+            DDPageVM* vm = [[DDPageVM alloc]initWithPageEntity:entity];
+            [resultArray addObject:vm];
+        }
+        if (block && resultArray.count > 0) {
+            block(resultArray);
+        }
+        else {
+            block(nil);
+        }
+    }];
+}
+
++ (void)getLikedPages:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *))block {
+    [DDService getLikedPages:param withBlock:^(NSArray* data) {
+        NSMutableArray *resultArray = [NSMutableArray array];
+        for (int i = 0; i < data.count; i++) {
+            PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
+            DDPageVM* vm = [[DDPageVM alloc]initWithPageEntity:entity];
+            [resultArray addObject:vm];
+        }
+        if (block && resultArray.count > 0) {
+            block(resultArray);
+        }
+        else {
+            block(nil);
+        }
+    }];
+}
+
 + (void)getAskWithReplies:(NSDictionary *)param withBlock:(void (^)(NSArray *returnArray))block {
     [DDService ddGetAskWithReplies:param withBlock:^(NSArray *returnArray) {
         NSMutableArray *array = [NSMutableArray array];

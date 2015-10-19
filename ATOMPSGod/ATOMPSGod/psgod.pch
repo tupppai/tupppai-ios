@@ -39,6 +39,8 @@
 #import "KShareManager.h"
 #import "UIColor+PSGod.h"
 
+#import "DDBaseVC.h"
+
 #import "UIScrollView+EmptyDataSet.h"
 #import "DDShareSDKManager.h"
 #import "DDService.h"

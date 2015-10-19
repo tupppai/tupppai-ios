@@ -13,6 +13,7 @@
 #import "PIEBangView.h"
 
 @interface PIEEliteHotReplyTableViewCell : UITableViewCell
+
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
@@ -30,4 +31,5 @@
 @property (nonatomic, assign) NSInteger askID;
 - (void)injectSauce:(DDPageVM *)viewModel;
 - (void)animateToggleExpanded ;
+- (void)animateThumbScale:(PIEAnimateViewType)type;
 @end

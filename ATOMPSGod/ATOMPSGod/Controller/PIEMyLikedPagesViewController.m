@@ -56,16 +56,16 @@
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [DDPageManager getAsk:param withBlock:^(NSMutableArray *resultArray) {
-        NSMutableArray* arrayAgent = [NSMutableArray new];
-        for (PIEPageEntity *entity in resultArray) {
-            DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
-            [arrayAgent addObject:vm];
-        }
-        [ws.dataSource removeAllObjects];
-        [ws.dataSource addObjectsFromArray:arrayAgent];
+    [DDPageManager getLikedPages:param withBlock:^(NSMutableArray *resultArray) {
+        ws.dataSource = resultArray;
         [ws.collectionView reloadData];
         [ws.collectionView.header endRefreshing];
+        
+        if (resultArray.count == 0) {
+            ws.canRefreshFooter = NO;
+        } else {
+            ws.canRefreshFooter = YES;
+        }
     }];
 }
 
@@ -80,11 +80,11 @@
     [param setObject:@(timestamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     
+
     [DDPageManager getAsk:param withBlock:^(NSMutableArray *resultArray) {
-        for (PIEPageEntity *entity in resultArray) {
-            DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
-            [ws.dataSource addObject:vm];
-        }
+
+        [ws.dataSource addObjectsFromArray:resultArray];
+
         if (resultArray.count == 0) {
             ws.canRefreshFooter = NO;
         } else {
@@ -103,16 +103,17 @@
 }
 
 - (void)createUI {
+    self.title = @"我赞过的";
     CHTCollectionViewWaterfallLayout *layout = [[CHTCollectionViewWaterfallLayout alloc] init];
-    layout.sectionInset = UIEdgeInsetsMake(10, 6, 0, 5);
-    layout.minimumColumnSpacing = 8;
-    layout.minimumInteritemSpacing = 6;
-    
+    layout.sectionInset = UIEdgeInsetsMake(4, 6, 0, 6);
+    layout.minimumColumnSpacing = 4;
+    layout.minimumInteritemSpacing = 4;
+    layout.columnCount = 3;
     _collectionView = [[PIERefreshCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     self.view = _collectionView;
     _collectionView.toRefreshBottom = YES;
     _collectionView.toRefreshTop = YES;
-    _collectionView.backgroundColor = [UIColor clearColor];
+    _collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     _collectionView.dataSource = self;
     _collectionView.delegate = self;
     _collectionView.psDelegate = self;
@@ -143,10 +144,6 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    //    PIECarousel2ViewController* vc = [PIECarousel2ViewController new];
-    //    vc.pageVM = [_dataSource objectAtIndex:indexPath.row];
-    //    DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc];
-    //    [nav presentViewController:nav2 animated:YES completion:nil];
     PIECarouselViewController* vc = [PIECarouselViewController new];
     vc.pageVM = [_dataSource objectAtIndex:indexPath.row];
     DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
@@ -172,15 +169,11 @@
 
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    //    DDPageVM* vm = [_dataSource objectAtIndex:indexPath.row];
     CGFloat width;
     CGFloat height;
-    width = (SCREEN_WIDTH) /2 - 20;
+    width = (SCREEN_WIDTH) / 4 - 30;
     height = width;
-    //    height = vm.imageHeight/vm.imageWidth * width;
-    //    if (height > (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/1.3) {
-    //        height = (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/1.3;
-    //    }
+
     return CGSizeMake(width, height);
 }
 @end

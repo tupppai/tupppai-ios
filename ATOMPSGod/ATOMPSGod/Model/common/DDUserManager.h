@@ -7,8 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DDLaunchVC.h"
+#import "PIELaunchViewController.h"
 @class ATOMUser;
+
+typedef enum {
+    ATOMSignUpWechat = 0,
+    ATOMSignUpWeibo,
+    ATOMSignUpMobile
+}ATOMSignUpType;
 
 @interface DDUserManager : NSObject
 

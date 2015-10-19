@@ -8,8 +8,22 @@
 
 #import <UIKit/UIKit.h>
 #import "PIESharesheetView.h"
+
+@protocol PIEShareViewDelegate <NSObject>
+@optional
+- (void)tapShare1;
+- (void)tapShare2;
+- (void)tapShare3;
+- (void)tapShare4;
+- (void)tapShare5;
+- (void)tapShare6;
+- (void)tapShare7;
+- (void)tapShare8;
+- (void)tapShareCancel;
+@end
+
 @interface PIEShareView:UIView
-@property (strong, nonatomic) PIESharesheetView *shareSheetView;
+@property (strong, nonatomic) PIESharesheetView *sheetView;
 
 @property (nonatomic, weak) id<PIEShareViewDelegate> delegate;
 

@@ -38,21 +38,6 @@
                             <constraint firstAttribute="height" constant="30" id="xwd-7C-gR3"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cg3-rv-3zG">
-                        <rect key="frame" x="0.0" y="47" width="386" height="230.5"/>
-                        <animations/>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="228" id="Niq-Tv-rA3"/>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="250" id="Ss6-WD-bB1"/>
-                        </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="Ss6-WD-bB1"/>
-                                <exclude reference="Niq-Tv-rA3"/>
-                            </mask>
-                        </variation>
-                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="我觉得我长得真不错！" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O1g-xB-hP3">
                         <rect key="frame" x="8" y="285" width="370" height="18.5"/>
                         <animations/>
@@ -127,6 +112,21 @@
                             <constraint firstAttribute="height" constant="28" id="z4l-O1-j55"/>
                         </constraints>
                     </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cg3-rv-3zG">
+                        <rect key="frame" x="0.0" y="47" width="386" height="230.5"/>
+                        <animations/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="228" id="Niq-Tv-rA3"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="250" id="Ss6-WD-bB1"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Niq-Tv-rA3"/>
+                                <exclude reference="Ss6-WD-bB1"/>
+                            </mask>
+                        </variation>
+                    </imageView>
                 </subviews>
                 <animations/>
                 <constraints>

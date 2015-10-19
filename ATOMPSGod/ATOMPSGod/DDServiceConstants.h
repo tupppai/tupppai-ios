@@ -27,6 +27,9 @@ extern NSString * URL_PFGetCollection;
 extern NSString * URL_PFGetFans;
 extern NSString * URL_PFGetFollow;
 extern NSString * URL_PFUpdateProfile;
+extern NSString * URL_PFGetCommentedPages;
+extern NSString * URL_PFGetLikedPages;
+
 
 
 #pragma mark - Account

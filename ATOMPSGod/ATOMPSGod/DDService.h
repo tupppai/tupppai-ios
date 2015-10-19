@@ -37,7 +37,8 @@
 + (void)ddGetAskWithReplies:(NSDictionary*)param withBlock:(void (^)(NSArray *returnArray))block;
 + (void)ddGetFans:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block;
 + (void)ddGetFollow:(NSDictionary*)param withBlock:(void (^)(NSArray* recommendArray,NSArray* myFollowArray))block;
-
++ (void)getCommentedPages:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block;
++ (void)getLikedPages:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block;
 #pragma mark - Account
 + (void) updateToken :(NSDictionary*)param withBlock:(void (^)(BOOL success))block;
 + (void) resetPassword :(NSDictionary*)param withBlock:(void (^)(BOOL success))block;

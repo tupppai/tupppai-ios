@@ -8,7 +8,7 @@
 
 #import "DDIntroVC.h"
 #import "EAIntroView.h"
-#import "DDLaunchVC.h"
+#import "PIELaunchViewController.h"
 @interface DDIntroVC ()<EAIntroDelegate>
 
 @end
@@ -43,7 +43,7 @@
 }
 #pragma mark - EAIntroView delegate
 - (void)introDidFinish:(EAIntroView *)introView {
-    DDLaunchVC* lvc = [DDLaunchVC new];
+    PIELaunchViewController* lvc = [PIELaunchViewController new];
     self.navigationController.viewControllers = @[lvc];
 }
 

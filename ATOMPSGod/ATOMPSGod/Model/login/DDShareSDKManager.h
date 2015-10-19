@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <ShareSDK/ShareSDK.h>
-#import "DDShareSDKManager.h"
+#import "DDShareManager.h"
 
 @interface DDShareSDKManager : NSObject
 + (void)getUserInfo:(SSDKPlatformType)type withBlock:(void (^)(NSDictionary* ))block;

@@ -8,11 +8,6 @@
 
 #import "DDLoginBaseVC.h"
 
-typedef enum {
-    ATOMSignUpWechat = 0,
-    ATOMSignUpWeibo,
-    ATOMSignUpMobile
-}ATOMSignUpType;
 
 #import <UIKit/UIKit.h>
 #import "DDBaseVC.h"

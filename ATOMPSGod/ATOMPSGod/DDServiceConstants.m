@@ -20,6 +20,8 @@ NSString * URL_PFGetPhotos = @"profile/threads";
 NSString * URL_PFGetAsk = @"profile/asks";
 NSString * URL_PFGetToHelp = @"profile/downloaded";
 NSString * URL_PFGetDone = @"profile/replies";
+NSString * URL_PFGetCommentedPages = @"profile/comments";
+NSString * URL_PFGetLikedPages = @"profile/uped";
 
 
 NSString * URL_PFGetOtherUserInfo = @"profile/view";

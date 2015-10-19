@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "DDLaunchVC.h"
+#import "PIELaunchViewController.h"
 #import "DDNavigationController.h"
 #import "DDLoginNavigationController.h"
 #import "DDIntroVC.h"
@@ -18,7 +18,6 @@
 #import "WXApi.h"
 #import "DDCommentVC.h"
 
-#import "PIELaunchViewController.h"
 @interface AppDelegate ()
 
 @end
