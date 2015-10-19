@@ -40,12 +40,13 @@
 - (NSURLSessionDataTask *)fetchAllReply:(NSDictionary *)param ID:(NSInteger)replyID withBlock:(void (^)(NSMutableArray *askArrayRET, NSMutableArray *replyArrayRET))block {
     return [[DDSessionManager shareHTTPSessionManager] GET:[NSString stringWithFormat:@"ask/show/%zd",replyID] parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
         
-        if ([ responseObject objectForKey:@"data"]) {
+        NSDictionary* data = [ responseObject objectForKey:@"data"];
+        if (data.count > 0) {
             NSMutableArray *askRETArray = [NSMutableArray array];
             NSMutableArray *replyRETArray = [NSMutableArray array];
-
-            NSArray *replyArray = [[responseObject objectForKey:@"data"] objectForKey:@"replies"];
-            NSDictionary *askObject = [[responseObject objectForKey:@"data"] objectForKey:@"ask"];
+            
+            NSArray *replyArray = [data objectForKey:@"replies"];
+            NSDictionary *askObject = [data objectForKey:@"ask"];
             NSArray *askImageEntities = [askObject objectForKey:@"ask_uploads"];
             
             for (NSDictionary* object in askImageEntities) {

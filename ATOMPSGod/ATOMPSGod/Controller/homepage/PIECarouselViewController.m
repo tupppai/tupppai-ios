@@ -218,21 +218,32 @@
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(100) forKey:@"size"];
     DDHotDetailManager *manager = [DDHotDetailManager new];
-    [manager fetchAllReply:param ID:_pageVM.askID withBlock:^(NSMutableArray *askArray, NSMutableArray *replyArray) {
+    
+    NSInteger ID;
+    if (_pageVM.type == PIEPageTypeAsk) {
+        ID = _pageVM.ID;
+    } else {
+        ID = _pageVM.askID;
+    }
+    [manager fetchAllReply:param ID:ID withBlock:^(NSMutableArray *askArray, NSMutableArray *replyArray) {
         _dataSource = nil;
         _dataSource = [NSMutableArray array];
-        for (PIEPageEntity *entity in askArray) {
-            DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
-            [_dataSource addObject:vm];
+        
+        if (askArray.count > 0) {
+            for (PIEPageEntity *entity in askArray) {
+                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+                [_dataSource addObject:vm];
+            }
+            for (PIEPageEntity *entity in replyArray) {
+                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+                [_dataSource addObject:vm];
+            }
+    //        [self updateUIWithIndex:0];
+            [self updateSegmentTitles];
+            [_carousel reloadData];
+            [self reorderSourceAndScroll];
         }
-        for (PIEPageEntity *entity in replyArray) {
-            DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
-            [_dataSource addObject:vm];
-        }
-//        [self updateUIWithIndex:0];
-        [self updateSegmentTitles];
-        [_carousel reloadData];
-        [self reorderSourceAndScroll];
+
     }];
 }
 

@@ -66,8 +66,10 @@
     [DDService getCommentedPages:param withBlock:^(NSArray* data) {
         NSMutableArray *resultArray = [NSMutableArray array];
         for (int i = 0; i < data.count; i++) {
-            PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
+            NSDictionary* dic = [data objectAtIndex:i];
+            PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:[dic objectForKey:@"thread"] error:NULL];
             DDPageVM* vm = [[DDPageVM alloc]initWithPageEntity:entity];
+            vm.content = [dic objectForKey:@"content"];
             [resultArray addObject:vm];
         }
         if (block && resultArray.count > 0) {

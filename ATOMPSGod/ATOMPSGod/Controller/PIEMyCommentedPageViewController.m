@@ -25,6 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view = self.tableView;
+    self.title = @"我评论过的";
     [self getDataSource];
 }
 
