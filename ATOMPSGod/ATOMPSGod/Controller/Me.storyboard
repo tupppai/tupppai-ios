@@ -131,7 +131,7 @@
                                     <constraint firstItem="quq-3A-g9a" firstAttribute="top" secondItem="yAp-sS-H6c" secondAttribute="bottom" constant="5" id="0x3-0d-MnJ"/>
                                     <constraint firstItem="UHf-uB-TMZ" firstAttribute="leading" secondItem="gng-se-MP8" secondAttribute="trailing" constant="37" id="2GM-3n-ndj"/>
                                     <constraint firstItem="gx7-sZ-8Me" firstAttribute="centerY" secondItem="UHf-uB-TMZ" secondAttribute="centerY" id="2GN-nd-JgD"/>
-                                    <constraint firstAttribute="height" constant="140" id="52r-Xc-219"/>
+                                    <constraint firstAttribute="height" priority="750" constant="140" id="52r-Xc-219"/>
                                     <constraint firstItem="0f8-Kd-RTM" firstAttribute="leading" secondItem="UHf-uB-TMZ" secondAttribute="trailing" constant="2" id="5bV-H0-Kxt"/>
                                     <constraint firstItem="JTg-Op-4Qr" firstAttribute="centerY" secondItem="qzW-PX-U7Y" secondAttribute="centerY" id="5uf-6d-DHq"/>
                                     <constraint firstItem="0f8-Kd-RTM" firstAttribute="top" secondItem="0eW-Qd-Lp1" secondAttribute="top" constant="20" id="7JD-jn-9lz"/>
@@ -185,6 +185,7 @@
                                 <rect key="frame" x="-8" y="140" width="616" height="460"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
                             </view>
                         </subviews>
                         <animations/>

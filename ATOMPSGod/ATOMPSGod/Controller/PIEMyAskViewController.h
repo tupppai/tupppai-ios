@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PIERefreshCollectionView.h"
 
 @interface PIEMyAskViewController : DDBaseVC
+@property (nonatomic, strong) PIERefreshCollectionView *collectionView;
 
 @end

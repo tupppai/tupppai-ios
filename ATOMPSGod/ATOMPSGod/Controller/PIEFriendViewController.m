@@ -28,6 +28,8 @@
 
 @property (weak, nonatomic) IBOutlet UIView *view1;
 @property (weak, nonatomic) IBOutlet UIView *view2;
+@property (nonatomic,assign) CGFloat startPanLocationY;
+
 
 @property (nonatomic) CAPSPageMenu *pageMenu;
 
@@ -104,6 +106,15 @@
     [_fansCountLabel addGestureRecognizer:tapG3];
     [_fansDescLabel addGestureRecognizer:tapG33];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(scrollUp)
+                                                 name:@"PIEFriendScrollUp"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(scrollDown)
+                                                 name:@"PIEFriendScrollDown"
+                                               object:nil];
+    
 }
 
 - (void)pushToFollowingVC {
@@ -167,6 +178,40 @@
    _pageMenu = [[CAPSPageMenu alloc] initWithViewControllers:controllerArray frame:CGRectMake(0, _view1.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - _view1.frame.size.height) options:parameters];
     _pageMenu.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     [self.view addSubview:_pageMenu.view];
+    UIPanGestureRecognizer* panGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panGesture:)];
+    [_pageMenu.view addGestureRecognizer:panGesture];
+}
+- (void)panGesture:(UIPanGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        _startPanLocationY = [sender locationInView:self.view].y;
+    }
+    if (_pageMenu.view.frame.origin.y >= 0 && _pageMenu.view.frame.origin.y <= 180) {
+        
+        CGFloat dif = [sender locationInView:self.view].y - _startPanLocationY;
+        CGFloat y = _pageMenu.view.frame.origin.y +  dif ;
+        y = MIN(y, 140);
+        y = MAX(y, 0);
+        
+        _pageMenu.view.frame = CGRectMake(0, y, SCREEN_WIDTH, SCREEN_HEIGHT);
+        _startPanLocationY = [sender locationInView:self.view].y;
+
+    }
+}
+
+- (void)scrollUp {
+    if (_pageMenu.view.frame.origin.y != 0) {
+        [UIView animateWithDuration:0.5 animations:^{
+            _pageMenu.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        }];
+    }
+    
+}
+- (void)scrollDown {
+    if (_pageMenu.view.frame.origin.y != 180) {
+        [UIView animateWithDuration:0.5 animations:^{
+            _pageMenu.view.frame = CGRectMake(0, 180, SCREEN_WIDTH, SCREEN_HEIGHT);
+        }];
+    }
 }
 
 #pragma mark - GetDataSource

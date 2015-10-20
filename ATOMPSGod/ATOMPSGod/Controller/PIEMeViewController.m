@@ -22,7 +22,7 @@
 
 
 #import "PIENotificationViewController.h"
-@interface PIEMeViewController ()<PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource>
+@interface PIEMeViewController ()<PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,CAPSPageMenuDelegate>
 @property (weak, nonatomic) IBOutlet UIView *dotView2;
 @property (weak, nonatomic) IBOutlet UIView *dotView1;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
@@ -42,6 +42,7 @@
 
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL canRefreshFooter;
+@property (nonatomic, assign) CGPoint startPanLocation;
 
 @property (nonatomic) CAPSPageMenu *pageMenu;
 @end
@@ -56,6 +57,15 @@
     [self.navigationItem.leftBarButtonItem setAction:@selector(pushToSettingViewController)];
     [self.navigationItem.rightBarButtonItem setTarget:self];
     [self.navigationItem.rightBarButtonItem setAction:@selector(pushToMessageViewController)];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(scrollUp)
+                                                 name:@"PIEMeScrollUp"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(scrollDown)
+                                                 name:@"PIEMeScrollDown"
+                                               object:nil];
 }
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -163,23 +173,42 @@
     
     _pageMenu = [[CAPSPageMenu alloc] initWithViewControllers:controllerArray frame:CGRectMake(0, _topContainerView.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - _topContainerView.frame.size.height) options:parameters];
     _pageMenu.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    _pageMenu.delegate = self;
     [self.view addSubview:_pageMenu.view];
-    
-    UISwipeGestureRecognizer* swipeUpwardGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeUpward)];
-    swipeUpwardGesture.direction = UISwipeGestureRecognizerDirectionUp;
-    [controller3.view addGestureRecognizer:swipeUpwardGesture];
-    
-//    UIPanGestureRecognizer* panGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(pan)];
-    
-//    [controller3.view addGestureRecognizer:panGesture];
-
+    UIPanGestureRecognizer* panGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panGesture:)];
+    [_pageMenu.view addGestureRecognizer:panGesture];
+}
+- (void)panGesture:(UIPanGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        _startPanLocation = [sender locationInView:self.view];
+    }
+    if (_pageMenu.view.frame.origin.y >= 0 && _pageMenu.view.frame.origin.y <= 140) {
+        
+        CGFloat dif = [sender locationInView:self.view].y - _startPanLocation.y;
+        CGFloat y = _pageMenu.view.frame.origin.y +  dif ;
+        y = MIN(y, 140);
+        y = MAX(y, 0);
+       
+        _pageMenu.view.frame = CGRectMake(0, y, SCREEN_WIDTH, SCREEN_HEIGHT);
+        
+        _startPanLocation = [sender locationInView:self.view];
+    }
+}
+- (void)scrollUp {
+    if (_pageMenu.view.frame.origin.y != 0) {
+        [UIView animateWithDuration:0.5 animations:^{
+            _pageMenu.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        }];
+    }
 
 }
-//- (void) pan {
-//    [Hud text:@"pan"];
-//}
-- (void) swipeUpward {
-    [Hud text:@"swipeUpward"];
+- (void)scrollDown {
+    if (_pageMenu.view.frame.origin.y != 140) {
+        [UIView animateWithDuration:0.5 animations:^{
+            _pageMenu.view.frame = CGRectMake(0, 140, SCREEN_WIDTH, SCREEN_HEIGHT);
+        }];
+    }
 }
+
 
 @end

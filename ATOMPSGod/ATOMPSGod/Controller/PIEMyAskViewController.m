@@ -7,7 +7,6 @@
 //
 
 #import "PIEMyAskViewController.h"
-#import "PIERefreshCollectionView.h"
 #import "DDPageManager.h"
 #import "PIETabBarController.h"
 #import "AppDelegate.h"
@@ -16,11 +15,11 @@
 #import "PIECarouselViewController.h"
 #import "DDNavigationController.h"
 @interface PIEMyAskViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,CHTCollectionViewDelegateWaterfallLayout>
-@property (nonatomic, strong) PIERefreshCollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *homeImageDataSource;
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, assign) NSInteger currentPage;
+
 @end
 
 @implementation PIEMyAskViewController
@@ -136,14 +135,24 @@
     return cell;
 }
 
+
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    CGFloat startContentOffsetY = scrollView.contentOffset.y;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (startContentOffsetY > scrollView.contentOffset.y ) {
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"PIEMeScrollDown" object:nil];
+        }
+        else if (startContentOffsetY < scrollView.contentOffset.y)
+        {
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"PIEMeScrollUp" object:nil];
+        }
+    });
+}
+
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
-//    PIECarousel2ViewController* vc = [PIECarousel2ViewController new];
-//    vc.pageVM = [_dataSource objectAtIndex:indexPath.row];
-//    DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc];
-//    [nav presentViewController:nav2 animated:YES completion:nil];
     PIECarouselViewController* vc = [PIECarouselViewController new];
     vc.pageVM = [_dataSource objectAtIndex:indexPath.row];
     DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;

@@ -146,6 +146,18 @@ static NSString *cellIdentifier = @"PIEFriendAskTableViewCell";
         [_table.footer endRefreshing];
     }
 }
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    CGFloat startContentOffsetY = scrollView.contentOffset.y;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (startContentOffsetY > scrollView.contentOffset.y ) {
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"PIEFriendScrollDown" object:nil];
+        }
+        else if (startContentOffsetY < scrollView.contentOffset.y)
+        {
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"PIEFriendScrollUp" object:nil];
+        }
+    });
+}
 
 
 @end
