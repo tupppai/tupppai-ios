@@ -31,7 +31,9 @@
 @implementation PIEFriendFollowingViewController
 
 #pragma mark - Refresh
-
+-(BOOL)hidesBottomBarWhenPushed {
+    return YES;
+}
 -(void)didPullRefreshUp:(UITableView *)tableView {
     [self loadMoreData];
 }

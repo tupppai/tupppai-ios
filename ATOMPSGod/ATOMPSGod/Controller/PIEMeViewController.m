@@ -141,7 +141,7 @@
     PIEMyAskViewController *controller3 = [PIEMyAskViewController new];
     controller3.title = @"求P";
     [controllerArray addObject:controller3];
-
+    
     PIEMyReplyViewController *controller = [PIEMyReplyViewController new];
     controller.title = @"作品";
     [controllerArray addObject:controller];
@@ -164,22 +164,22 @@
     _pageMenu = [[CAPSPageMenu alloc] initWithViewControllers:controllerArray frame:CGRectMake(0, _topContainerView.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - _topContainerView.frame.size.height) options:parameters];
     _pageMenu.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     [self.view addSubview:_pageMenu.view];
+    
+    UISwipeGestureRecognizer* swipeUpwardGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeUpward)];
+    swipeUpwardGesture.direction = UISwipeGestureRecognizerDirectionUp;
+    [controller3.view addGestureRecognizer:swipeUpwardGesture];
+    
+//    UIPanGestureRecognizer* panGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(pan)];
+    
+//    [controller3.view addGestureRecognizer:panGesture];
+
+
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+//- (void) pan {
+//    [Hud text:@"pan"];
+//}
+- (void) swipeUpward {
+    [Hud text:@"swipeUpward"];
 }
-
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

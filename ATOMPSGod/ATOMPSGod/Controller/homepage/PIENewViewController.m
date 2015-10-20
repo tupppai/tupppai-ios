@@ -347,6 +347,9 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
             
             //点击大图
             if (CGRectContainsPoint(_selectedAskCell.leftImageView.frame, p) || CGRectContainsPoint(_selectedAskCell.rightImageView.frame, p)) {
+                PIECarouselViewController* vc = [PIECarouselViewController new];
+                vc.pageVM = _selectedVM;
+                [self.navigationController pushViewController:vc animated:YES];
             }
             //点击头像
             else if (CGRectContainsPoint(_selectedAskCell.avatarView.frame, p)) {

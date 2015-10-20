@@ -6,8 +6,8 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
-@interface UIViewController (ATOMTracking)
-
-@end
+//#import <UIKit/UIKit.h>
+//
+//@interface UIViewController (ATOMTracking)
+//
+//@end

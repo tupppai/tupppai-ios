@@ -13,7 +13,7 @@
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
 #import "DDPageManager.h"
-
+#import "DDCommentVC.h"
 @interface PIEMyCommentedPageViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate>
 @property (nonatomic,strong) PIERefreshTableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -64,10 +64,12 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    PIECarouselViewController* vc = [PIECarouselViewController new];
-    vc.pageVM = [_dataSource objectAtIndex:indexPath.row];
+//    PIECarouselViewController* vc = [PIECarouselViewController new];
     DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+    DDCommentVC* vc = [DDCommentVC new];
+    vc.vm = [_dataSource objectAtIndex:indexPath.row];
     [nav pushViewController:vc animated:YES ];
+
 }
 -(void)didPullRefreshDown:(UITableView *)tableView {
     [self getDataSource];

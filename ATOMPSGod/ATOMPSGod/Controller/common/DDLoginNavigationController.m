@@ -18,6 +18,7 @@
 //        self.interactivePopGestureRecognizer.delegate = weakSelf;
 //        self.delegate = self;
 //    }
+    [self setCommonNavigationStyle];
 }
 
 #pragma mark - UINavigationControllerDelegate
@@ -31,5 +32,11 @@
 //            self.interactivePopGestureRecognizer.enabled = YES;
 //        }
 //    }
+}
+
+- (void)setCommonNavigationStyle {
+    [self.navigationBar setBarTintColor:[UIColor whiteColor]];
+    [self.navigationBar setTintColor:[UIColor blackColor]];
+    [self.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor], NSForegroundColorAttributeName,[UIFont boldSystemFontOfSize:14],NSFontAttributeName, nil]];
 }
 @end

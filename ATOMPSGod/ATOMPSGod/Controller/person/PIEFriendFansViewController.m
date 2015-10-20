@@ -32,7 +32,9 @@
 
 
 #pragma mark - UI
-
+-(BOOL)hidesBottomBarWhenPushed {
+    return YES;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];

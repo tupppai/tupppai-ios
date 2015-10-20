@@ -167,7 +167,7 @@
     [self.sheetView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self).with.offset(240).with.priorityHigh();
     }];
-    [UIView animateWithDuration:0.35 animations:^{
+    [UIView animateWithDuration:0.20 animations:^{
         [self.sheetView layoutIfNeeded];
     } completion:^(BOOL finished) {
         if (finished) {

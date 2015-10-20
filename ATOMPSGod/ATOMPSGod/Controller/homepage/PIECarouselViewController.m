@@ -56,7 +56,6 @@
     _carousel.pagingEnabled = YES;
     _carousel.bounces = YES;
     _carousel.bounceDistance = 0.21;
-    [_likeButton setImage:[UIImage imageNamed:@"pie_carousel_ask"] forState:UIControlStateNormal];
     _avatarView.layer.cornerRadius = 20;
     _avatarView.clipsToBounds = YES;
     _avatarView.userInteractionEnabled = YES;
@@ -204,9 +203,12 @@
             [_likeButton setImage:[UIImage imageNamed:@"pie_carousel_ask"] forState:UIControlStateNormal];
             [_likeButton setImage:[UIImage imageNamed:@"pie_carousel_ask"] forState:UIControlStateHighlighted];
             [_likeButton setImage:[UIImage imageNamed:@"pie_carousel_ask"] forState:UIControlStateSelected];
+
         } else {
-            [_likeButton setImage:[UIImage imageNamed:@"pie_like_selected"] forState:UIControlStateSelected];
+            [_likeButton setImage:[UIImage imageNamed:@"pie_like"] forState:UIControlStateNormal];
             [_likeButton setImage:[UIImage imageNamed:@"pie_like_selected"] forState:UIControlStateHighlighted];
+            [_likeButton setImage:[UIImage imageNamed:@"pie_like_selected"] forState:UIControlStateSelected];
+
         }
         
     }
@@ -238,7 +240,7 @@
                 DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
                 [_dataSource addObject:vm];
             }
-    //        [self updateUIWithIndex:0];
+            [self updateUIWithIndex:0];
             [self updateSegmentTitles];
             [_carousel reloadData];
             [self reorderSourceAndScroll];
