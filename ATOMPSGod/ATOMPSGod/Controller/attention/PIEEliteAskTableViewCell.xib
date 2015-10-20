@@ -39,7 +39,7 @@
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1RB-Q4-adE">
-                        <rect key="frame" x="0.0" y="47" width="386" height="241.5"/>
+                        <rect key="frame" x="0.0" y="47" width="386" height="222.5"/>
                         <animations/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -54,7 +54,7 @@
                         </variation>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uh0-Nk-WwP">
-                        <rect key="frame" x="8" y="296" width="370" height="0.0"/>
+                        <rect key="frame" x="8" y="277" width="370" height="0.0"/>
                         <animations/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -69,7 +69,7 @@
                         </constraints>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GKG-Pm-OL3" customClass="PIEPageButton">
-                        <rect key="frame" x="13" y="307" width="35" height="30"/>
+                        <rect key="frame" x="13" y="288" width="35" height="30"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="30" id="9cv-Lq-925"/>
@@ -83,7 +83,7 @@
                         </variation>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fmz-Ws-G9O" customClass="PIEPageButton">
-                        <rect key="frame" x="58" y="307" width="35" height="30"/>
+                        <rect key="frame" x="58" y="288" width="35" height="30"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="siZ-aV-XDk"/>
@@ -98,11 +98,19 @@
                         </variation>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8gN-It-V5K" customClass="PIEBangView">
-                        <rect key="frame" x="331" y="308" width="39" height="28"/>
+                        <rect key="frame" x="331" y="289" width="39" height="28"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="39" id="pY6-4J-gyj"/>
                             <constraint firstAttribute="height" constant="28" id="wUk-P3-JSw"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="INN-E4-qSW">
+                        <rect key="frame" x="0.0" y="335" width="386" height="11"/>
+                        <animations/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="11" id="GFu-DV-luO"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -115,6 +123,8 @@
                     <constraint firstAttribute="trailingMargin" secondItem="8gN-It-V5K" secondAttribute="trailing" constant="8" id="HZS-Cu-K5M"/>
                     <constraint firstItem="fmz-Ws-G9O" firstAttribute="leading" secondItem="GKG-Pm-OL3" secondAttribute="trailing" constant="10" id="IM1-HP-eHx"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Uh0-Nk-WwP" secondAttribute="trailing" id="QOK-3A-Xc5"/>
+                    <constraint firstItem="INN-E4-qSW" firstAttribute="top" secondItem="GKG-Pm-OL3" secondAttribute="bottom" constant="17" id="Shn-zc-7pi"/>
+                    <constraint firstAttribute="bottom" secondItem="INN-E4-qSW" secondAttribute="bottom" id="Shr-gw-Igq"/>
                     <constraint firstItem="Uh0-Nk-WwP" firstAttribute="top" secondItem="1RB-Q4-adE" secondAttribute="bottom" constant="8" id="W8M-hC-pmz"/>
                     <constraint firstItem="Uh0-Nk-WwP" firstAttribute="leading" secondItem="vxa-2U-rDu" secondAttribute="leadingMargin" id="Xa4-Ou-rXF"/>
                     <constraint firstItem="YEQ-gZ-upE" firstAttribute="leading" secondItem="vxa-2U-rDu" secondAttribute="leadingMargin" id="YhR-tk-Nn0"/>
@@ -127,6 +137,8 @@
                     <constraint firstItem="LFV-Bb-iYb" firstAttribute="top" secondItem="YEQ-gZ-upE" secondAttribute="top" id="hfE-HL-MPt"/>
                     <constraint firstItem="1RB-Q4-adE" firstAttribute="top" secondItem="xwi-w4-KPE" secondAttribute="bottom" constant="10" id="k9t-4y-Ayh"/>
                     <constraint firstAttribute="bottomMargin" secondItem="GKG-Pm-OL3" secondAttribute="bottom" constant="1" id="kEs-Sm-XNb"/>
+                    <constraint firstItem="INN-E4-qSW" firstAttribute="leading" secondItem="vxa-2U-rDu" secondAttribute="leading" id="kFa-ph-L9I"/>
+                    <constraint firstAttribute="trailing" secondItem="INN-E4-qSW" secondAttribute="trailing" id="kXK-mX-HHr"/>
                     <constraint firstItem="8gN-It-V5K" firstAttribute="centerY" secondItem="GKG-Pm-OL3" secondAttribute="centerY" id="kdI-s5-EFe"/>
                     <constraint firstItem="1RB-Q4-adE" firstAttribute="top" secondItem="xwi-w4-KPE" secondAttribute="bottom" constant="8" id="ooK-Xm-vc7"/>
                     <constraint firstAttribute="trailing" secondItem="1RB-Q4-adE" secondAttribute="trailing" id="sZ8-8d-T6q"/>
@@ -141,6 +153,7 @@
                         <exclude reference="k9t-4y-Ayh"/>
                         <exclude reference="D4K-an-mb6"/>
                         <exclude reference="a2v-hl-McI"/>
+                        <exclude reference="kEs-Sm-XNb"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>

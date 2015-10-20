@@ -28,8 +28,8 @@
     if (toRefreshBottom) {
         [self addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreHotData)];
         NSMutableArray *animatedImages = [NSMutableArray array];
-        for (int i = 1; i<=3; i++) {
-            UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"loading_%ddot", i]];
+        for (int i = 1; i<=6; i++) {
+            UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"pie_loading_%d", i]];
             [animatedImages addObject:image];
         }
         self.gifFooter.refreshingImages = animatedImages;
@@ -43,17 +43,16 @@
     if (toRefreshTop) {
         [self addGifHeaderWithRefreshingTarget:self refreshingAction:@selector(loadNewHotData)];
         NSMutableArray *animatedImages = [NSMutableArray array];
-        for (int i = 1; i<=3; i++) {
-            UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"loading_%ddot", i]];
+        for (int i = 1; i<=6; i++) {
+            UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"pie_loading_%d", i]];
             [animatedImages addObject:image];
         }
-        UIImageView* mascotImageView = [[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/2 + 30, -30, 40, 30)];
-        mascotImageView.image = [UIImage imageNamed:@"loading_mascot"];
-        [self addSubview:mascotImageView];
-        UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, -1, SCREEN_WIDTH, 1)];
-        line.backgroundColor = [UIColor colorWithHex:0xf5f5f5 andAlpha:0.8];
-        [self addSubview:line];
-        [self.gifHeader setImages:animatedImages forState:MJRefreshHeaderStateIdle];
+        NSMutableArray *idleImages = [NSMutableArray array];
+        for (int i = 1; i<=7; i++) {
+            UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"pie_loading%d", i]];
+            [idleImages addObject:image];
+        }
+        [self.gifHeader setImages:idleImages forState:MJRefreshHeaderStateIdle];
         [self.gifHeader setImages:animatedImages forState:MJRefreshHeaderStateRefreshing];
         self.header.updatedTimeHidden = YES;
         self.header.stateHidden = YES;

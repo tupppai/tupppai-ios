@@ -14,11 +14,11 @@
     if (self) {
         [self addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreHotData)];
         NSMutableArray *animatedImages = [NSMutableArray array];
-        for (int i = 1; i<=3; i++) {
-            UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"loading_%ddot", i]];
+        for (int i = 1; i<=6; i++) {
+            UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"pie_loading_%d", i]];
             [animatedImages addObject:image];
         }
-        self.gifFooter.refreshingImages = animatedImages;
+      self.gifFooter.refreshingImages = animatedImages;
         self.footer.stateHidden = YES;
         self.tableFooterView = [UIView new];
     }
