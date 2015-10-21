@@ -14,5 +14,5 @@
 
 
 @interface DDBaseVC : UIViewController
-@property (nonatomic, strong) UIBarButtonItem *negativeSpacer;
+//@property (nonatomic, strong) UIBarButtonItem *negativeSpacer;
 @end

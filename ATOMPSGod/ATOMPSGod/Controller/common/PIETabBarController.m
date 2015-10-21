@@ -58,7 +58,7 @@ static dispatch_once_t once;
     dispatch_once(&once, ^ {
         NSUUID *oNSUUID = [[UIDevice currentDevice] identifierForVendor];
         NSString* token = [[NSUserDefaults standardUserDefaults]stringForKey:@"devicetoken"];
-        NSDictionary* param = [NSDictionary dictionaryWithObjectsAndKeys:token, @"device_token",@1,@"platform",@([[UIDevice currentDevice].systemVersion floatValue]),@"device_os",deviceName(),@"device_name",[oNSUUID UUIDString],@"device_mac",nil];        
+        NSDictionary* param = [NSDictionary dictionaryWithObjectsAndKeys:token, @"device_token",@1,@"platform",@([[UIDevice currentDevice].systemVersion floatValue]),@"device_os",deviceName(),@"device_name",[oNSUUID UUIDString],@"device_mac",@"2.1",@"version",nil];
         [DDService updateToken:param withBlock:nil];
     });
 }
@@ -91,7 +91,7 @@ static dispatch_once_t once;
     _navigation_me.tabBarItem.selectedImage = [UIImage imageNamed:@"pie_profile_selected"];
     
     _centerNav.tabBarItem.image = [UIImage imageNamed:@"pie_thirdTab_selected"];
-
+    
     _navigation_new.tabBarItem.image = [ _navigation_new.tabBarItem.image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     _navigation_new.tabBarItem.selectedImage = [ _navigation_new.tabBarItem.selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     _navigation_elite.tabBarItem.image = [ _navigation_elite.tabBarItem.image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
@@ -101,6 +101,7 @@ static dispatch_once_t once;
     _navigation_me.tabBarItem.image = [ _navigation_me.tabBarItem.image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     _navigation_me.tabBarItem.selectedImage = [ _navigation_me.tabBarItem.selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     _centerNav.tabBarItem.image = [ _centerNav.tabBarItem.image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    [_centerNav.tabBarItem setImageInsets:UIEdgeInsetsMake(5, 0, -5, 0)];
     self.viewControllers = [NSArray arrayWithObjects:_navigation_elite, _navigation_new,_centerNav,_navigation_proceeding, _navigation_me, nil];
 }
 -(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
