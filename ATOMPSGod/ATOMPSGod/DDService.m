@@ -11,6 +11,15 @@
 @implementation DDService
 
 #pragma mark - Profile
++ (void)editAsk :(NSDictionary*)param withBlock:(void (^)(BOOL success))block {
+    [[self class]POST:param url:URL_UKEditAsk block:^(id responseObject) {
+        if (responseObject) {
+            if (block) {block(YES);}
+        } else {
+            if (block) {block(NO);}
+        }    }];
+
+}
 
 + (void)updateProfile :(NSDictionary*)param withBlock:(void (^)(BOOL success))block {
     [[self class]POST:param url:URL_PFUpdateProfile block:^(id responseObject) {

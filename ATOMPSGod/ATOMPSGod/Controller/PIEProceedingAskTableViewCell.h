@@ -16,8 +16,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *allWorkDescLabel;
 @property (weak, nonatomic) IBOutlet SwipeView *swipeView;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
+@property (weak, nonatomic) IBOutlet UITextField *contentTextField;
+@property (weak, nonatomic) IBOutlet UIButton *editButton;
 
 @property (weak, nonatomic) IBOutlet PIEImageView *originView1;
 @property (weak, nonatomic) IBOutlet PIEImageView *originView2;
+
+
 - (void)injectSource:(NSArray*)array;
 @end

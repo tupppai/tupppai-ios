@@ -32,12 +32,13 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"选择帮P任务";
     _canRefreshToHelpFooter = YES;
     _currentIndex_ToHelp = 1;
     _sourceToHelp = [NSMutableArray new];
     
     _toHelpTableView = [[PIERefreshTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
-    _toHelpTableView.backgroundColor = [UIColor clearColor];
+    _toHelpTableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     _toHelpTableView.dataSource = self;
     _toHelpTableView.delegate = self;
     _toHelpTableView.psDelegate = self;
@@ -58,10 +59,11 @@
         PIEToHelpTableViewCell2 *cell = (PIEToHelpTableViewCell2 *)[_toHelpTableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
 
-        if (CGRectContainsPoint(cell.deleteView.frame, p)) {
-            [self deleteOneToHelp:indexPath ID:vm.ID];
-        }
-        else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
+//        if (CGRectContainsPoint(cell.deleteView.frame, p)) {
+//            [self deleteOneToHelp:indexPath ID:vm.ID];
+//        }
+//        else
+            if (CGRectContainsPoint(cell.avatarView.frame, p)) {
             PIEFriendViewController *opvc = [PIEFriendViewController new];
             opvc.pageVM =  vm;
             [self.navigationController pushViewController:opvc animated:YES];
@@ -81,16 +83,16 @@
     }
 }
 
-- (void)deleteOneToHelp :(NSIndexPath*)indexPath ID:(NSInteger)ID {
-    NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(ID),@"id", nil];
-    [DDService deleteProceeding:param withBlock:^(BOOL success) {
-        if (success) {
-            [Hud success:@"删除了一条帮p" inView:_toHelpTableView];
-        }
-        [_sourceToHelp removeObjectAtIndex:indexPath.row];
-        [_toHelpTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    }];
-}
+//- (void)deleteOneToHelp :(NSIndexPath*)indexPath ID:(NSInteger)ID {
+//    NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(ID),@"id", nil];
+//    [DDService deleteProceeding:param withBlock:^(BOOL success) {
+//        if (success) {
+//            [Hud success:@"删除了一条帮p" inView:_toHelpTableView];
+//        }
+//        [_sourceToHelp removeObjectAtIndex:indexPath.row];
+//        [_toHelpTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//    }];
+//}
 
 #pragma mark - getRemoteSourceToHelp
 

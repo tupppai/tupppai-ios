@@ -25,11 +25,6 @@
     _swipeView.dataSource = self;
     _swipeView.delegate = self;
     _swipeView.bounces = YES;
-    //    _swipeView.wrapEnabled = YES;
-    //    _swipeView.autoscroll = 0.1;
-    //    _swipeView.pagingEnabled = YES;
-    //    _swipeView.itemsPerPage = 5;
-    //    _swipeView.truncateFinalPage = YES;
     
     _originView1.thumbImageView.image = [UIImage imageNamed:@"pie_origin"];
     _originView2.thumbImageView.image = [UIImage imageNamed:@"pie_origin"];
@@ -40,9 +35,34 @@
     [self.originView2 addGestureRecognizer:tapOnAsk2];
     
     _contentLabel.textColor = [UIColor colorWithHex:0x50484B andAlpha:1];
+    _contentTextField.textColor = [UIColor colorWithHex:0x50484B andAlpha:1];
     _allWorkDescLabel.textColor = [UIColor colorWithHex:0xFEAA2B andAlpha:1];
+    _contentTextField.enabled = NO;
+    [_editButton setTitleColor:[UIColor colorWithHex:0xff6d3f] forState:UIControlStateSelected];
+    [_editButton setImage:[UIImage new] forState:UIControlStateSelected];
+    [_editButton setTitle:@"确定" forState:UIControlStateSelected];
+    _editButton.titleLabel.font = [UIFont systemFontOfSize:14.0];
+    [_editButton addTarget:self action:@selector(editAsk) forControlEvents:UIControlEventTouchUpInside];
 }
 
+- (void)editAsk {
+    if (_editButton.state == UIControlStateHighlighted) {
+        _editButton.selected = YES;
+        _contentTextField.enabled = YES;
+        [_contentTextField becomeFirstResponder];
+    } else  {
+        _editButton.selected = NO;
+        _contentTextField.enabled = NO;
+        NSMutableDictionary* param = [NSMutableDictionary new];
+        [param setObject:_contentTextField.text forKey:@"desc"];
+        [param setObject:@(_vmAsk1.askID) forKey:@"ask_id"];
+        [DDService editAsk:param withBlock:^(BOOL success) {
+            if (!success) {
+                _contentTextField.text = _vmAsk1.content;
+            }
+        }];
+    }
+}
 - (void)tapOnAsk1 {
     if (_vmAsk1) {
         PIECarouselViewController* vc = [PIECarouselViewController new];
@@ -87,8 +107,8 @@
     }
     _timeLabel.text = _vmAsk1.publishTime;
     _allWorkDescLabel.text = [NSString stringWithFormat:@"已有%@个作品",_vmAsk1.totalPSNumber];
-    _contentLabel.text = [NSString stringWithFormat:@"要求:%@",_vmAsk1.content];
-    
+//    _contentLabel.text = [NSString stringWithFormat:@"要求:%@",_vmAsk1.content];
+    _contentTextField.text = _vmAsk1.content;
     [self.swipeView reloadData];
     
 }

@@ -52,6 +52,7 @@
 + (void)  ddSaveReply :(NSDictionary*)param withBlock:(void (^)(BOOL success))block;
 + (void)toggleLike:(BOOL)like ID:(NSInteger)ID type:(PIEPageType)type  withBlock:(void (^)(BOOL success))block;
 + (void)downloadImage:(NSString*)url withBlock:(void (^)(UIImage* image))block;
++ (void)editAsk :(NSDictionary*)param withBlock:(void (^)(BOOL success))block;
 
 
 #pragma mark - Newest 最新

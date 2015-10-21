@@ -15,6 +15,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *paticipantLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *deleteView;
+//@property (weak, nonatomic) IBOutlet UIImageView *deleteView;
 - (void)injectSource:(DDPageVM*)vm;
 @end

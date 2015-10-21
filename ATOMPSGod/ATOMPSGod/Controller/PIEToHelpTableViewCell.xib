@@ -45,8 +45,8 @@
                             <constraint firstAttribute="height" constant="80" id="jBc-gw-vdS"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8N2-R2-1zk">
-                        <rect key="frame" x="96" y="46" width="370" height="0.0"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8N2-R2-1zk">
+                        <rect key="frame" x="96" y="46" width="370" height="64"/>
                         <animations/>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -101,6 +101,7 @@
                     <constraint firstItem="dJb-NP-nLF" firstAttribute="top" secondItem="Lbh-Lf-Jft" secondAttribute="bottom" constant="10" id="VAI-LG-dVL"/>
                     <constraint firstItem="ndz-zu-xAp" firstAttribute="leading" secondItem="sYa-tU-P7O" secondAttribute="leading" id="WfY-MM-LDr"/>
                     <constraint firstItem="F8M-lF-NuA" firstAttribute="leading" secondItem="BR1-nB-eCk" secondAttribute="leading" id="Wx6-5S-HWI"/>
+                    <constraint firstItem="eWC-f6-5xK" firstAttribute="top" secondItem="8N2-R2-1zk" secondAttribute="bottom" priority="750" constant="2" id="YCG-ca-Vac"/>
                     <constraint firstItem="eWC-f6-5xK" firstAttribute="bottom" secondItem="ndz-zu-xAp" secondAttribute="bottom" id="Zc7-i1-hWJ"/>
                     <constraint firstItem="dB2-fX-Iuy" firstAttribute="top" secondItem="dJb-NP-nLF" secondAttribute="bottom" constant="16" id="anm-s8-G4D"/>
                     <constraint firstItem="sYa-tU-P7O" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="deQ-Qv-egB"/>

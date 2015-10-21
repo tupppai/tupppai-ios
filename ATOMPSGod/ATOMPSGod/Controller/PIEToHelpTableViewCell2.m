@@ -14,8 +14,9 @@
     // Initialization code
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
+    _theImageView.clipsToBounds = YES;
 //    self.selectionStyle = UITableViewCellSelectionStyleNone;
-    self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    self.accessoryType = UITableViewCellAccessoryNone;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

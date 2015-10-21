@@ -56,6 +56,8 @@
     _weiboContainerView.layer.borderColor = [UIColor colorWithHex:0x50484B].CGColor;
     _otherWayLabel.layer.borderColor = [UIColor colorWithHex:0x50484B].CGColor;
     _hasAccountLabel.layer.borderColor = [UIColor colorWithHex:0x50484B].CGColor;
+    _hasAccountLabel.backgroundColor = [UIColor colorWithHex:0xffffff andAlpha:0.7];
+    _hasAccountLabel.clipsToBounds = YES;
     
     _otherWayLabel.highlightedTextColor = [UIColor whiteColor];
     _hasAccountLabel.highlightedTextColor = [UIColor whiteColor];

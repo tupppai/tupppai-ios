@@ -251,7 +251,7 @@
 
 - (void)createNavBar {
     WS(ws);
-    _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"求P",@"帮P",@"已完成"]];
+    _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"我的求P",@"我的帮P",@"已完成"]];
     _segmentedControl.frame = CGRectMake(0, 120, SCREEN_WIDTH-100, 45);
     _segmentedControl.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor darkGrayColor], NSForegroundColorAttributeName, nil];
     _segmentedControl.selectedTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil];

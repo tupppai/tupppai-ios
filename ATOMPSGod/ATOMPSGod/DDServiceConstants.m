@@ -47,6 +47,7 @@ NSString * URL_UKGetInfo = @"view/info";
 NSString * URL_UKGetMsg = @"message/list";
 NSString * URL_UKSaveAsk = @"ask/multi";
 NSString * URL_UKSaveReply = @"reply/save";
+NSString * URL_UKEditAsk = @"ask/edit";
 
 #pragma mark - Newest
 NSString * URL_NewestGetAsk = @"ask/index";
