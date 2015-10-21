@@ -9,5 +9,5 @@
 #import "DDBaseVC.h"
 
 @interface PIEMeViewController : UIViewController
-
+-(void)updateAvatar;
 @end

@@ -81,7 +81,14 @@
     [super viewWillDisappear:animated];
     [self.navigationController.navigationBar setBackgroundImage:nil
                                                   forBarMetrics:UIBarMetricsDefault];
-
+}
+-(void)updateAvatar {
+    NSURLRequest* req = [[NSURLRequest alloc]initWithURL:[NSURL URLWithString:[DDUserManager currentUser].avatar]];
+    
+    [_avatarView setImageWithURLRequest:req placeholderImage:nil success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nonnull response, UIImage * _Nonnull image) {
+        _avatarView.image = image;
+        _topContainerView.image = [image blurredImageWithRadius:40 iterations:1 tintColor:nil];
+    } failure:nil];
 }
 - (void)pushToSettingViewController {
     PIESettingsViewController* vc = [PIESettingsViewController new];
@@ -98,18 +105,11 @@
     _avatarContainerView.layer.cornerRadius = _avatarContainerView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
     DDUserManager* user = [DDUserManager currentUser];
-//    [_avatarView setImageWithURL:[NSURL URLWithString:[DDUserManager currentUser].avatar]];
-    NSURLRequest* req = [[NSURLRequest alloc]initWithURL:[NSURL URLWithString:[DDUserManager currentUser].avatar]];
-
-    [_avatarView setImageWithURLRequest:req placeholderImage:nil success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nonnull response, UIImage * _Nonnull image) {
-        _avatarView.image = image;
-        _topContainerView.image = [image blurredImageWithRadius:40 iterations:1 tintColor:nil];
-    } failure:nil];
     _usernameLabel.text = user.username;
     _followCountLabel.text = [NSString stringWithFormat:@"%zd",user.attentionNumber];
     _fansCountLabel.text = [NSString stringWithFormat:@"%zd",user.fansNumber];
     _likedCountLabel.text = [NSString stringWithFormat:@"%zd",user.likeNumber];
-    
+    [self updateAvatar];
     [self setupTapGesture];
 }
 

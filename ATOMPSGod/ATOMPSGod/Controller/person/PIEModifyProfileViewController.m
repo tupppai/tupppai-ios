@@ -13,7 +13,9 @@
 #import "ATOMUploadImage.h"
 #import "ATOMImage.h"
 #import "JGActionSheet.h"
-
+#import "AppDelegate.h"
+#import "DDNavigationController.h"
+#import "PIEMeViewController.h"
 
 @interface PIEModifyProfileViewController ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate , ATOMCropHeaderImageCompleteProtocol>
 @property (nonatomic, strong) PIEModifySelfView *createProfileView;
@@ -86,9 +88,13 @@
                 //use reactive cocoa to update all avatar view.
                 [DDUserManager currentUser].avatar = _avatar;
             }
-            
             [DDUserManager saveCurrentUserToDB];
+            
+            DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+            PIEMeViewController* mevc = [nav.viewControllers firstObject];
+            [mevc updateAvatar];
             [self.navigationController popViewControllerAnimated:YES];
+            
         } else {
             [Hud error:@"修改失败" inView:self.view];
         }

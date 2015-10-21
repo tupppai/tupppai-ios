@@ -195,10 +195,8 @@
         CGFloat y = _pageMenu.view.frame.origin.y +  dif ;
         y = MIN(y, 180);
         y = MAX(y, 0);
-        
         _pageMenu.view.frame = CGRectMake(0, y, SCREEN_WIDTH, SCREEN_HEIGHT);
         _startPanLocationY = [sender locationInView:self.view].y;
-
     }
 }
 
