@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PIEPageLikeButton.h"
 
 @interface PIEReplyCollectionCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
@@ -15,6 +16,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (nonatomic, assign) NSInteger ID;
 @property (nonatomic, assign) PIEPageType type;
+//@property (weak, nonatomic) IBOutlet UILabel *likeCountLabel;
+@property (weak, nonatomic) IBOutlet PIEPageLikeButton *likeButton;
+@property (nonatomic, strong) DDPageVM *viewModel;
 
 - (void)injectSauce:(DDPageVM *)viewModel;
 @end

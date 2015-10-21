@@ -57,5 +57,7 @@
 -(DDCommentPageVM*)generatepageDetailViewModel;
 - (instancetype)initWithPageEntity:(PIEPageEntity *)entity ;
 - (instancetype)initWithFollowEntity:(PIEEliteEntity *)entity;
+
+- (void)toggleLike:(void (^)(BOOL success))block ;
 @end
 

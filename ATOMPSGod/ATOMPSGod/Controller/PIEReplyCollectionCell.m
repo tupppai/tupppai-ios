@@ -16,23 +16,33 @@
     _avatarView.clipsToBounds = YES;
     self.backgroundColor = [UIColor whiteColor];
     self.layer.cornerRadius = 8;
-    _likeView.userInteractionEnabled = YES;
     UITapGestureRecognizer* tapGesLike = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(like)];
-    [_likeView addGestureRecognizer:tapGesLike];
+    [_likeButton addGestureRecognizer:tapGesLike];
+    _imageView.clipsToBounds = YES;
 }
 - (void)injectSauce:(DDPageVM *)viewModel {
+    _viewModel = viewModel;
     [_imageView setImageWithURL:[NSURL URLWithString:viewModel.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
     [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
     _usernameLabel.text = viewModel.username;
     _ID = viewModel.ID;
     _type = viewModel.type;
-    _likeView.highlighted = viewModel.liked;
+    _likeButton.highlighted = viewModel.liked;
+    _likeButton.numberString = viewModel.likeCount;
 }
 - (void)like {
-    _likeView.highlighted = !_likeView.highlighted;
-    [DDService toggleLike:_likeView.highlighted ID:_ID type:_type withBlock:^(BOOL success) {
+    _likeButton.selected = !_likeButton.selected;
+    [DDService toggleLike:_likeButton.selected ID:_ID type:_type withBlock:^(BOOL success) {
         if (!success) {
-            _likeView.highlighted = !_likeView.highlighted;
+            _likeButton.selected = !_likeButton.selected;
+        } else {
+            
+            if (_likeButton.selected) {
+                _viewModel.likeCount = [NSString stringWithFormat:@"%zd",_viewModel.likeCount.integerValue + 1];
+            } else {
+                _viewModel.likeCount = [NSString stringWithFormat:@"%zd",_viewModel.likeCount.integerValue - 1];
+            }
+            _viewModel.liked = _likeButton.selected;
         }
     }];
 }

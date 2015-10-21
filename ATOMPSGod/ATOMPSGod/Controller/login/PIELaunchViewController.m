@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *weiboSignUpLabel;
 @property (weak, nonatomic) IBOutlet UILabel *otherWayLabel;
 @property (weak, nonatomic) IBOutlet UILabel *hasAccountLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *logoView;
 @property (nonatomic,strong) PIESignUpView* signUpView;
 @end
 
@@ -51,11 +52,11 @@
     
     _weiboContainerView.layer.borderWidth = 0.5;
     _otherWayLabel.layer.borderWidth = 0.5;
-    _hasAccountLabel.layer.borderWidth = 0.5;
+//    _hasAccountLabel.layer.borderWidth = 0.5;
     
     _weiboContainerView.layer.borderColor = [UIColor colorWithHex:0x50484B].CGColor;
     _otherWayLabel.layer.borderColor = [UIColor colorWithHex:0x50484B].CGColor;
-    _hasAccountLabel.layer.borderColor = [UIColor colorWithHex:0x50484B].CGColor;
+//    _hasAccountLabel.layer.borderColor = [UIColor colorWithHex:0x50484B].CGColor;
     _hasAccountLabel.backgroundColor = [UIColor colorWithHex:0xffffff andAlpha:0.7];
     _hasAccountLabel.clipsToBounds = YES;
     
@@ -92,6 +93,16 @@
                                                   forBarMetrics:UIBarMetricsDefault];
 }
 
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+//    [_logoView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self).with.offset(50).with.priorityHigh();
+//    }];
+//    [UIView animateWithDuration:2 animations:^{
+//        [self.view layoutIfNeeded];
+//    }];
+    
+}
 - (void)tap1 {
     [DDShareSDKManager authorize:SSDKPlatformTypeSinaWeibo withBlock:^(NSDictionary *sourceData) {
         if (sourceData) {

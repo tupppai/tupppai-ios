@@ -16,7 +16,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="T6T-1x-ryS">
-                        <rect key="frame" x="8" y="8" width="25" height="25"/>
+                        <rect key="frame" x="8" y="6" width="25" height="25"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="25" id="Cjr-zj-vJO"/>
@@ -24,34 +24,34 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5JV-PE-0Yh">
-                        <rect key="frame" x="41" y="20.5" width="201" height="0.0"/>
+                        <rect key="frame" x="37" y="18" width="245" height="0.0"/>
                         <animations/>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OZP-Ga-yYx">
-                        <rect key="frame" x="0.0" y="40" width="292" height="248"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OZP-Ga-yYx">
+                        <rect key="frame" x="0.0" y="37" width="292" height="251"/>
                         <animations/>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ErX-Hn-nxd">
                         <rect key="frame" x="0.0" y="288" width="292" height="40"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pieLike" highlightedImage="pieLike_selected" translatesAutoresizingMaskIntoConstraints="NO" id="PbA-DQ-gwb">
-                                <rect key="frame" x="225" y="8" width="47" height="24"/>
+                            <view contentMode="right" translatesAutoresizingMaskIntoConstraints="NO" id="AUF-B3-vey" customClass="PIEPageLikeButton">
+                                <rect key="frame" x="234" y="9.5" width="50" height="21"/>
                                 <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="24" id="VfD-oE-1Gs"/>
-                                    <constraint firstAttribute="width" constant="47" id="dTk-qk-mu9"/>
+                                    <constraint firstAttribute="height" constant="21" id="0I2-9F-KcQ"/>
+                                    <constraint firstAttribute="width" constant="50" id="Zmd-Pm-JDt"/>
                                 </constraints>
-                            </imageView>
+                            </view>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="6Vp-IZ-kTq"/>
-                            <constraint firstItem="PbA-DQ-gwb" firstAttribute="centerY" secondItem="ErX-Hn-nxd" secondAttribute="centerY" id="HG3-86-6Bd"/>
-                            <constraint firstAttribute="trailing" secondItem="PbA-DQ-gwb" secondAttribute="trailing" constant="20" id="ZHf-j0-Xyv"/>
+                            <constraint firstItem="AUF-B3-vey" firstAttribute="centerY" secondItem="ErX-Hn-nxd" secondAttribute="centerY" id="GMP-7g-5Np"/>
+                            <constraint firstAttribute="trailing" secondItem="AUF-B3-vey" secondAttribute="trailing" constant="8" id="u9S-0t-3Gy"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -60,15 +60,15 @@
             </view>
             <animations/>
             <constraints>
-                <constraint firstItem="T6T-1x-ryS" firstAttribute="top" secondItem="Hux-uY-nfQ" secondAttribute="topMargin" id="34E-QU-kWM"/>
-                <constraint firstItem="5JV-PE-0Yh" firstAttribute="leading" secondItem="T6T-1x-ryS" secondAttribute="trailing" constant="8" id="Ij2-Yb-P6b"/>
-                <constraint firstAttribute="trailing" secondItem="5JV-PE-0Yh" secondAttribute="trailing" constant="50" id="MuA-st-weW"/>
+                <constraint firstItem="T6T-1x-ryS" firstAttribute="top" secondItem="Hux-uY-nfQ" secondAttribute="top" constant="6" id="34E-QU-kWM"/>
+                <constraint firstItem="5JV-PE-0Yh" firstAttribute="leading" secondItem="T6T-1x-ryS" secondAttribute="trailing" constant="4" id="Ij2-Yb-P6b"/>
+                <constraint firstAttribute="trailing" secondItem="5JV-PE-0Yh" secondAttribute="trailing" constant="10" id="MuA-st-weW"/>
                 <constraint firstItem="OZP-Ga-yYx" firstAttribute="leading" secondItem="Hux-uY-nfQ" secondAttribute="leading" id="NiE-0W-7kL"/>
                 <constraint firstItem="ErX-Hn-nxd" firstAttribute="top" secondItem="OZP-Ga-yYx" secondAttribute="bottom" id="T1X-tP-6Ec"/>
                 <constraint firstAttribute="bottom" secondItem="ErX-Hn-nxd" secondAttribute="bottom" id="Wen-pN-fH9"/>
                 <constraint firstAttribute="trailing" secondItem="ErX-Hn-nxd" secondAttribute="trailing" id="eJu-TR-fIB"/>
                 <constraint firstItem="ErX-Hn-nxd" firstAttribute="leading" secondItem="Hux-uY-nfQ" secondAttribute="leading" id="hKo-92-la3"/>
-                <constraint firstItem="OZP-Ga-yYx" firstAttribute="top" secondItem="T6T-1x-ryS" secondAttribute="bottom" constant="7" id="i3p-Ld-dwC"/>
+                <constraint firstItem="OZP-Ga-yYx" firstAttribute="top" secondItem="T6T-1x-ryS" secondAttribute="bottom" constant="6" id="i3p-Ld-dwC"/>
                 <constraint firstItem="5JV-PE-0Yh" firstAttribute="centerY" secondItem="T6T-1x-ryS" secondAttribute="centerY" id="mFl-RF-NSB"/>
                 <constraint firstAttribute="trailing" secondItem="OZP-Ga-yYx" secondAttribute="trailing" id="tKt-B8-fe5"/>
                 <constraint firstItem="T6T-1x-ryS" firstAttribute="leading" secondItem="Hux-uY-nfQ" secondAttribute="leadingMargin" id="yqn-Yo-2i5"/>
@@ -77,14 +77,10 @@
             <connections>
                 <outlet property="avatarView" destination="T6T-1x-ryS" id="2Bu-Kb-sxO"/>
                 <outlet property="imageView" destination="OZP-Ga-yYx" id="TR2-Ex-kK3"/>
-                <outlet property="likeView" destination="PbA-DQ-gwb" id="8WG-ML-amo"/>
+                <outlet property="likeButton" destination="AUF-B3-vey" id="mKh-01-NER"/>
                 <outlet property="usernameLabel" destination="5JV-PE-0Yh" id="8PR-jI-V9W"/>
             </connections>
             <point key="canvasLocation" x="608" y="590"/>
         </collectionViewCell>
     </objects>
-    <resources>
-        <image name="pieLike" width="18" height="18"/>
-        <image name="pieLike_selected" width="18" height="18"/>
-    </resources>
 </document>

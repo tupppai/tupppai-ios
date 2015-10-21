@@ -200,19 +200,29 @@
     _username = commonViewModel.userName;
 }
 
-//- (void)toggleLike {
-//    NSMutableDictionary *param = [NSMutableDictionary new];
-//    NSInteger status = _liked? 0:1;
-//    NSInteger one = _liked? -1:1;
-//    _liked = !_liked;
-//    [param setValue:@(status) forKey:@"status"];
-//    [DDBaseService toggleLike:param withPageType:PIEPageTypeAsk withID:_ID withBlock:^(NSError *error) {
-//        if (!error) {
-//            NSInteger number = [_likeCount integerValue]+one;
-//            [self setLikeCount:[NSString stringWithFormat:@"%ld",(long)number]];
-//        }
-//    }];
-//}
+- (void)toggleLike:(void (^)(BOOL success))block  {
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    _liked = !_liked;
+    if (_liked) {
+        _likeCount = [NSString stringWithFormat:@"%zd", _likeCount.integerValue+1];
+        [param setObject:@(1) forKey:@"status"];
+    } else {
+        _likeCount = [NSString stringWithFormat:@"%zd", _likeCount.integerValue-1];
+        [param setObject:@(0) forKey:@"status"];
+    }
+    [DDService toggleLike:_liked ID:self.ID type:self.type  withBlock:^(BOOL success) {
+        if (success) {
+        } else {
+            if (_liked) {
+                _likeCount = [NSString stringWithFormat:@"%zd", _likeCount.integerValue-1];
+            } else {
+                _likeCount = [NSString stringWithFormat:@"%zd", _likeCount.integerValue+1];
+            }
+            _liked = !_liked;
+        }
+    }];
+
+}
 
 
 

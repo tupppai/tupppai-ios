@@ -315,6 +315,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
             }
             else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
                 [self likeReply];
+//                [_selectedVM toggleLike:nil];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.followView.frame, p)) {
                 [self followReplier];
@@ -659,18 +660,15 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 }
 
 -(void)likeReply {
-    NSMutableDictionary *param = [NSMutableDictionary new];
     _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
-    if (_selectedReplyCell.likeView.selected) {
-        //收藏
-        [param setObject:@(1) forKey:@"status"];
-    } else {
-        //取消收藏
-        [param setObject:@(0) forKey:@"status"];
-    }
     [DDService toggleLike:_selectedReplyCell.likeView.selected ID:_selectedVM.ID type:_selectedVM.type  withBlock:^(BOOL success) {
         if (success) {
             _selectedVM.liked = _selectedReplyCell.likeView.selected;
+            if (_selectedReplyCell.likeView.selected) {
+                _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue + 1];
+            } else {
+                _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue - 1];
+            }
         } else {
             _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
         }

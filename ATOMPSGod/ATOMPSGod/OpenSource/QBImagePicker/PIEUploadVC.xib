@@ -13,6 +13,7 @@
                 <outlet property="leftShareButton" destination="nV4-jD-nex" id="XVv-nX-3dE"/>
                 <outlet property="rightImageView" destination="hZk-c4-ES1" id="ueg-HN-uve"/>
                 <outlet property="rightShareButton" destination="r4m-8D-CwT" id="rRv-TL-ETP"/>
+                <outlet property="shareBanner" destination="imo-xj-Aio" id="bET-HV-lPY"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="wordLimitLabel" destination="HNt-Gn-RYy" id="51g-PO-5V7"/>
             </connections>

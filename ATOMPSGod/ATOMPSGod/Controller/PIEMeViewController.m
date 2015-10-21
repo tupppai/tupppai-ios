@@ -14,7 +14,7 @@
 #import "PIEMyReplyViewController.h"
 #import "PIESettingsViewController.h"
 #import "DDMessageVC.h"
-#import "UIImage+Blurring.h"
+//#import "UIImage+Blurring.h"
 #import "FXBlurView.h"
 #import "PIEFriendFollowingViewController.h"
 #import "PIEFriendFansViewController.h"
@@ -190,7 +190,6 @@
         y = MAX(y, 0);
        
         _pageMenu.view.frame = CGRectMake(0, y, SCREEN_WIDTH, SCREEN_HEIGHT);
-        
         _startPanLocation = [sender locationInView:self.view];
     }
 }

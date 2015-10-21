@@ -15,7 +15,7 @@
 #import "PIEFriendFollowingViewController.h"
 #import "PIEFriendFansViewController.h"
 #import "PIECarouselViewController.h"
-
+#import "FXBlurView.h"
 @interface PIEFriendViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
 @property (weak, nonatomic) IBOutlet UIImageView *followButton;
@@ -29,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet UIView *view1;
 @property (weak, nonatomic) IBOutlet UIView *view2;
 @property (nonatomic,assign) CGFloat startPanLocationY;
+@property (weak, nonatomic) IBOutlet UIImageView *blurView;
 
 
 @property (nonatomic) CAPSPageMenu *pageMenu;
@@ -86,6 +87,8 @@
     _fansDescLabel.font = [UIFont systemFontOfSize:14];
     _followCountLabel.font = [UIFont systemFontOfSize:14];
     _likedDescLabel.font = [UIFont systemFontOfSize:14];
+    _blurView.contentMode = UIViewContentModeScaleAspectFill;
+    _blurView.clipsToBounds = YES;
 
 }
 - (void)setupTapGesture {
@@ -144,6 +147,7 @@
     }];
 }
 - (void)updateUserInterface:(ATOMUser*)user {
+    self.title = user.nickname;
     [_avatarView setImageWithURL:[NSURL URLWithString:user.avatar]];
     _followCountLabel.text = [NSString stringWithFormat:@"%zd",user.attentionNumber];
     _fansCountLabel.text = [NSString stringWithFormat:@"%zd",user.fansNumber];
@@ -189,7 +193,7 @@
         
         CGFloat dif = [sender locationInView:self.view].y - _startPanLocationY;
         CGFloat y = _pageMenu.view.frame.origin.y +  dif ;
-        y = MIN(y, 140);
+        y = MIN(y, 180);
         y = MAX(y, 0);
         
         _pageMenu.view.frame = CGRectMake(0, y, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -228,8 +232,11 @@
     [DDOtherUserManager getOtherUserInfo:param withBlock:^(ATOMUser *user) {
         if (user) {
             [self updateUserInterface:user];
+            _blurView.image = [_avatarView.image blurredImageWithRadius:40 iterations:1 tintColor:nil];
+            
         }
     }];
+    
 }
 
 

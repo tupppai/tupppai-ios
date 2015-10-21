@@ -23,6 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"其它作品";
     self.view = self.collectionView;
     _source = [NSMutableArray array];
     _canRefreshFoot = YES;
