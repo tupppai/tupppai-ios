@@ -8,9 +8,9 @@
 
 @implementation DDShareSDKManager
 //shareSDK 获取 用户手机的第三方平台的信息
-+ (void)getUserInfo:(SSDKPlatformType)type withBlock:(void (^)(NSDictionary* ))block{
++ (void)getUserInfo:(SSDKPlatformType)type withBlock:(void (^)(NSString* openId ))block{
     [ShareSDK getUserInfo:type conditional:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
-        block(user.rawData);
+        block(user.uid);
     }];
 }
 + (void)authorize:(SSDKPlatformType)type withBlock:(void (^)(NSDictionary* ))block{

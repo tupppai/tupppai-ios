@@ -123,7 +123,7 @@
             cell.imageView.image = [UIImage imageNamed:@"pie_binding_qq"];
             cell.textLabel.text = @"QQ";
             [cell addSwitch];
-            [cell.bindSwitch setOn:[DDUserManager currentUser].bindWechat];
+            [cell.bindSwitch setOn:[DDUserManager currentUser].bindQQ];
         }
 
         [cell.bindSwitch addTarget:self action:@selector(toggleSwitch:) forControlEvents:UIControlEventValueChanged];
@@ -162,18 +162,23 @@
 -(void)toggleSwitch:(id)sender {
     UISwitch *bindSwitch = sender;
     NSString *type;
-    NSString* openIDKey;
+//    NSString* openIDKey;
     int shareType = 99;
     switch (bindSwitch.tag) {
         case 0:
             type = @"weibo";
             shareType = SSDKPlatformTypeSinaWeibo;
-            openIDKey = @"idstr";
+//            openIDKey = @"idstr";
             break;
         case 1:
             type = @"weixin";
             shareType = SSDKPlatformTypeWechat;
-            openIDKey = @"openid";
+//            openIDKey = @"openid";
+            break;
+        case 2:
+            type = @"qq";
+            shareType = SSDKPlatformTypeQQ;
+//            openIDKey = @"openid";
             break;
         default:
             break;
@@ -182,10 +187,9 @@
     [param setObject:type forKey:@"type"];
     //1.如果想要绑定
     if (bindSwitch.on) {
-        [DDShareSDKManager getUserInfo:shareType withBlock:^(NSDictionary *sourceData) {
-            NSString* openID = [sourceData objectForKey:openIDKey];
-            if (openID) {
-                [param setObject:openID forKey:@"openid"];
+        [DDShareSDKManager getUserInfo:shareType withBlock:^(NSString *openId) {
+            if (openId) {
+                [param setObject:openId forKey:@"openid"];
             }
             [DDMySettingsManager setBindSetting:param withToggleBind:YES withBlock:^(NSError *error) {
                 if (error) {

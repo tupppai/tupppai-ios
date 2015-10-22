@@ -2383,6 +2383,7 @@
 				5C6CE6B81ADBE8A10035F522 /* EmojisList.plist */,
 				5CDB05D31AA3FE520089121E /* LaunchScreen.xib */,
 				E900AB5A1B450E970019BAEA /* Images.xcassets */,
+				F40C8BD61BD8DED10016068F /* New Group */,
 				5CDB05C41AA3FE520089121E /* Supporting Files */,
 			);
 			name = TUPAI;
@@ -3248,6 +3249,13 @@
 				F402073F1BA7C4160007CE02 /* VVBlurViewController.m */,
 			);
 			name = VVBlur;
+			sourceTree = "<group>";
+		};
+		F40C8BD61BD8DED10016068F /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "New Group";
 			sourceTree = "<group>";
 		};
 		F428F01A1BD331DD00318AC2 /* launch */ = {

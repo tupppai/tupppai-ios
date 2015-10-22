@@ -46,7 +46,6 @@
     _icon1 = [PIEShareIcon new];
     _icon2 = [PIEShareIcon new];
     _icon3 = [PIEShareIcon new];
-
     
     [self addSubview:_icon1];
     [self addSubview:_icon2];
@@ -61,9 +60,8 @@
         NSString* labelName = [[_infoArray objectAtIndex:i]objectAtIndex:0];
         NSString* imageName = [[_infoArray objectAtIndex:i]objectAtIndex:1];
         icon.label.text = labelName;
-        icon.imageView.image = [UIImage imageNamed:imageName];
+        [icon setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
     }
-    
 }
 - (void)mansoryIcons {
     CGFloat itemWidth = 80;

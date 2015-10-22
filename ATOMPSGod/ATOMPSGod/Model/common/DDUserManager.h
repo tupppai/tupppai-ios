@@ -83,6 +83,7 @@ typedef enum {
 @property (nonatomic, assign) NSInteger avatarID;
 @property (nonatomic, assign) bool bindWechat;
 @property (nonatomic, assign) bool bindWeibo;
+@property (nonatomic, assign) bool bindQQ;
 
 
 + (DDUserManager *)currentUser;
