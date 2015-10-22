@@ -9,7 +9,7 @@
 #import "DDHotDetailManager.h"
 #import "DDSessionManager.h"
 #import "ATOMDetailPage.h"
-#import "ATOMComment.h"
+#import "PIECommentEntity.h"
 #import "ATOMCommentDAO.h"
 #import "ATOMDetailImageDAO.h"
 #import "PIEPageDAO.h"

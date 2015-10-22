@@ -7,7 +7,7 @@
 //
 
 #import "ATOMCommentDAO.h"
-#import "ATOMComment.h"
+#import "PIECommentEntity.h"
 
 @implementation ATOMCommentDAO
 
@@ -18,7 +18,7 @@
     return self;
 }
 
-- (void)insertComment:(ATOMComment *)comment {
+- (void)insertComment:(PIECommentEntity *)comment {
     dispatch_queue_t q = dispatch_queue_create("insert", NULL);
     dispatch_async(q, ^{
         [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
@@ -34,7 +34,7 @@
     });
 }
 
-- (void)updateComment:(ATOMComment *)comment {
+- (void)updateComment:(PIECommentEntity *)comment {
     dispatch_queue_t q = dispatch_queue_create("update", NULL);
     dispatch_async(q, ^{
         [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
@@ -51,14 +51,14 @@
     });
 }
 
-- (ATOMComment *)selectCommentByCommentID:(NSInteger)commentID {
-    __block ATOMComment *comment;
+- (PIECommentEntity *)selectCommentByCommentID:(NSInteger)commentID {
+    __block PIECommentEntity *comment;
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
         NSString *stmt = @"select * from ATOMComment where cid = ?";
         NSArray *param = @[@(commentID)];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {
-            comment = [MTLFMDBAdapter modelOfClass:[ATOMComment class] fromFMResultSet:rs error:NULL];
+            comment = [MTLFMDBAdapter modelOfClass:[PIECommentEntity class] fromFMResultSet:rs error:NULL];
             break;
         }
         [rs close];
@@ -73,7 +73,7 @@
         NSArray *param = @[@(detailImageID)];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {
-            ATOMComment * comment = [MTLFMDBAdapter modelOfClass:[ATOMComment class] fromFMResultSet:rs error:NULL];
+            PIECommentEntity * comment = [MTLFMDBAdapter modelOfClass:[PIECommentEntity class] fromFMResultSet:rs error:NULL];
             [muArray addObject:comment];
         }
         [rs close];
@@ -88,7 +88,7 @@
         NSArray *param = @[@(homeImageID)];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {
-            ATOMComment * comment = [MTLFMDBAdapter modelOfClass:[ATOMComment class] fromFMResultSet:rs error:NULL];
+            PIECommentEntity * comment = [MTLFMDBAdapter modelOfClass:[PIECommentEntity class] fromFMResultSet:rs error:NULL];
             [muArray addObject:comment];
         }
         [rs close];
@@ -96,14 +96,14 @@
     return [muArray mutableCopy];
 }
 
-- (BOOL)isExistComment:(ATOMComment *)comment {
+- (BOOL)isExistComment:(PIECommentEntity *)comment {
     __block BOOL flag;
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
         NSString *stmt = @"select * from ATOMComment where cid = ?";
         NSArray *param = @[@(comment.cid)];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {
-            ATOMComment *comment = [MTLFMDBAdapter modelOfClass:[ATOMComment class] fromFMResultSet:rs error:NULL];
+            PIECommentEntity *comment = [MTLFMDBAdapter modelOfClass:[PIECommentEntity class] fromFMResultSet:rs error:NULL];
             if (comment) {
                 flag = YES;
             } else {

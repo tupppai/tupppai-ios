@@ -7,16 +7,16 @@
 //
 
 #import "ATOMBaseDAO.h"
-@class ATOMComment;
+@class PIECommentEntity;
 
 @interface ATOMCommentDAO : ATOMBaseDAO
 
-- (void)insertComment:(ATOMComment *)comment;
-- (void)updateComment:(ATOMComment *)comment;
-- (ATOMComment *)selectCommentByCommentID:(NSInteger)commentID;
+- (void)insertComment:(PIECommentEntity *)comment;
+- (void)updateComment:(PIECommentEntity *)comment;
+- (PIECommentEntity *)selectCommentByCommentID:(NSInteger)commentID;
 - (NSMutableArray *)selectCommentsByDetailImageID:(NSInteger)detailImageID;
 - (NSMutableArray *)selectCommentsByHomeImageID:(NSInteger)homeImageID;
-- (BOOL)isExistComment:(ATOMComment *)comment;
+- (BOOL)isExistComment:(PIECommentEntity *)comment;
 - (void)clearCommentsByDetailImageID:(NSInteger)detailImageID;
 
 @end

@@ -14,7 +14,7 @@
 #import "DDCommentHeaderView.h"
 #import "DDCommentManager.h"
 #import "DDCommentVM.h"
-#import "ATOMComment.h"
+#import "PIECommentEntity.h"
 #import "CommentLikeButton.h"
 
 
@@ -74,12 +74,12 @@
     DDCommentManager *showDetailOfComment = [DDCommentManager new];
     [showDetailOfComment ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
         NSLog(@"param%@hotCommentArray%@RCommentArray%@",param,hotCommentArray,recentCommentArray);
-        for (ATOMComment *comment in hotCommentArray) {
+        for (PIECommentEntity *comment in hotCommentArray) {
             DDCommentVM *model = [DDCommentVM new];
             [model setViewModelData:comment];
             [ws.hotCommentDataSource addObject:model];
         }
-        for (ATOMComment *comment in recentCommentArray) {
+        for (PIECommentEntity *comment in recentCommentArray) {
             DDCommentVM *model = [DDCommentVM new];
             [model setViewModelData:comment];
             [ws.recentCommentDataSource addObject:model];
@@ -99,7 +99,7 @@
     [param setObject:@(10) forKey:@"size"];
     DDCommentManager *showDetailOfComment = [DDCommentManager new];
     [showDetailOfComment ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
-        for (ATOMComment *comment in recentCommentArray) {
+        for (PIECommentEntity *comment in recentCommentArray) {
             DDCommentVM *model = [DDCommentVM new];
             [model setViewModelData:comment];
             [ws.recentCommentDataSource addObject:model];

@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMComment.h"
+#import "PIECommentEntity.h"
 
-@implementation ATOMComment
+@implementation PIECommentEntity
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
@@ -48,7 +48,7 @@
 }
 
 + (NSString *)FMDBTableName {
-    return @"ATOMComment";
+    return @"PIECommentEntity";
 }
 
 @end

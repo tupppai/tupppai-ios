@@ -7,11 +7,11 @@
 //
 
 #import "ATOMCommentViewModel.h"
-#import "ATOMComment.h"
+#import "PIECommentEntity.h"
 
 @implementation ATOMCommentViewModel
 
-- (void)setViewModelData:(ATOMComment *)comment {
+- (void)setViewModelData:(PIECommentEntity *)comment {
     _nickname = comment.nickname;
     _content = comment.content;
 }

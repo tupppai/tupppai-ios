@@ -80,12 +80,12 @@
         make.height.equalTo(@(imageViewHeight)).with.priorityHigh();
     }];
     
-    _thumbView.subviewCounts = viewModel.askImageModelArray.count;
-    if (viewModel.askImageModelArray.count > 0) {
-        PIEImageEntity* entity = [viewModel.askImageModelArray objectAtIndex:0];
+    _thumbView.subviewCounts = viewModel.thumbEntityArray.count;
+    if (viewModel.thumbEntityArray.count > 0) {
+        PIEImageEntity* entity = [viewModel.thumbEntityArray objectAtIndex:0];
         [_thumbView.rightView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
-        if (viewModel.askImageModelArray.count == 2) {
-            entity = viewModel.askImageModelArray[1];
+        if (viewModel.thumbEntityArray.count == 2) {
+            entity = viewModel.thumbEntityArray[1];
             [_thumbView.leftView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
         }
     }

@@ -40,7 +40,7 @@
         _totalPSNumber = @"0";
         _labelArray = [NSMutableArray new];
         _replierArray = [NSMutableArray new];
-        _askImageModelArray = [NSMutableArray new];
+        _thumbEntityArray = [NSMutableArray new];
         _liked = NO;
         _collected = NO;
     }
@@ -60,12 +60,12 @@
     _followed = entity.followed;
     _imageWidth = entity.imageWidth;
     _imageHeight = entity.imageHeight;
+    _thumbEntityArray = entity.thumbEntityArray;
+    _hotCommentEntityArray = entity.hotCommentEntityArray;
     NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:entity.uploadTime];
     _publishTime = [Util formatPublishTime:publishDate];
     _content = entity.userDescription;
     _type = entity.type;
-    _askImageModelArray = entity.askImageModelArray;
-
     if (entity.totalPraiseNumber>999999) {
         _likeCount = kfcMaxNumberString;
     } else {
@@ -112,7 +112,8 @@
         _publishTime = [Util formatPublishTime:publishDate];
         _content = entity.userDescription;
         _type = entity.type;
-        _askImageModelArray = entity.askImageModelArray;
+        _thumbEntityArray = entity.thumbEntityArray;
+        _hotCommentEntityArray = entity.hotCommentEntityArray;
         if (entity.totalPraiseNumber>999999) {
             _likeCount = kfcMaxNumberString;
         } else {

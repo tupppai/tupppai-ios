@@ -32,7 +32,8 @@
              @"liked" :@"uped",
              @"collected" : @"collected",
              @"type" : @"type",
-             @"askImageModelArray":@"ask_uploads",
+             @"thumbEntityArray":@"ask_uploads",
+             @"hotCommentEntityArray":@"hot_comments",
              @"followed":@"is_follow",
              };
 }
@@ -59,7 +60,7 @@
              @"liked" :@"liked",
              @"collected":@"collected",
              @"type":@"type",
-             @"askImageModelArray":@"askImageModelArray",
+             @"thumbEntityArray":@"thumbEntityArray",
              };
 }
 

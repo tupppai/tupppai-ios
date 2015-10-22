@@ -1,15 +1,16 @@
 //
-//  PIEEliteAskTableViewCell.m
+//  PIEEliteHotAskTableViewCell.m
 //  TUPAI
 //
-//  Created by chenpeiwei on 10/16/15.
+//  Created by chenpeiwei on 10/22/15.
 //  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIEEliteAskTableViewCell.h"
+#import "PIEEliteHotAskTableViewCell.h"
 #import "PIEImageEntity.h"
+#import "PIECommentEntity.h"
+@implementation PIEEliteHotAskTableViewCell
 
-@implementation PIEEliteAskTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code
@@ -30,6 +31,11 @@
 -(void)prepareForReuse {
     [super prepareForReuse];
     _followView.hidden = NO;
+    _commentLabel2.text = @"";
+    _commentLabel1.text = @"";
+    [_commentLabel2 mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(_gapView.mas_top).with.offset(0).priorityHigh();
+    }];
 }
 - (void)injectSauce:(DDPageVM *)viewModel {
     _ID = viewModel.ID;
@@ -50,13 +56,25 @@
         make.height.equalTo(@(imageViewHeight)).with.priorityHigh();
     }];
     
-
+    if (viewModel.hotCommentEntityArray.count > 0) {
+        PIECommentEntity* commentEntity1  = viewModel.hotCommentEntityArray[0];
+        _commentLabel1.text = [NSString stringWithFormat:@"%@: %@",commentEntity1.nickname,commentEntity1.content];
+        
+        if (viewModel.hotCommentEntityArray.count == 1) {
+            //            [_commentLabel1 mas_updateConstraints:^(MASConstraintMaker *make) {
+            //                make.bottom.equalTo(_commentLabel2.mas_top).with.offset(-14).with.priorityHigh();
+            //            }];
+        } else {
+            PIECommentEntity* commentEntity2  = viewModel.hotCommentEntityArray[1];
+            _commentLabel2.text = [NSString stringWithFormat:@"%@: %@",commentEntity2.nickname,commentEntity2.content];
+            [_commentLabel2 mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.bottom.equalTo(_gapView.mas_top).with.offset(-14).with.priorityHigh();
+            }];
+        }
+    }
+    
     if (viewModel.userID == [DDUserManager currentUser].uid) {
         _followView.hidden = YES;
     }
 }
-
-
-
-
 @end

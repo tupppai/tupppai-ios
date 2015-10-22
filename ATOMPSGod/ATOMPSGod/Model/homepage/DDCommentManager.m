@@ -8,7 +8,7 @@
 
 #import "DDCommentManager.h"
 #import "DDSessionManager.h"
-#import "ATOMComment.h"
+#import "PIECommentEntity.h"
 #import "DDCommentReplyVM.h"
 
 
@@ -28,7 +28,6 @@
 
 - (NSURLSessionDataTask *)ShowDetailOfComment:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *, NSMutableArray *, NSError *))block {
     return [[DDSessionManager shareHTTPSessionManager] GET:@"comment/index" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"ShowDetailOfComment param %@,responseObject%@",param,responseObject);
         NSMutableArray *hotCommentArray = [NSMutableArray array];
         NSMutableArray *recentCommentArray = [NSMutableArray array];
         NSArray* data = [ responseObject objectForKey:@"data"];
@@ -36,7 +35,7 @@
             NSArray *hotCommentDataArray = [ responseObject objectForKey:@"data"][@"hot_comments"];
             NSArray *recentCommentDataArray = [ responseObject objectForKey:@"data"][@"new_comments"];
             for (int i = 0; i < hotCommentDataArray.count; i++) {
-                ATOMComment *comment = [MTLJSONAdapter modelOfClass:[ATOMComment class] fromJSONDictionary:hotCommentDataArray[i] error:NULL];
+                PIECommentEntity *comment = [MTLJSONAdapter modelOfClass:[PIECommentEntity class] fromJSONDictionary:hotCommentDataArray[i] error:NULL];
                 comment.commentType = [param[@"type"] integerValue];
                 comment.imageID = [param[@"target_id"] integerValue];
                 if (comment) {
@@ -44,7 +43,7 @@
                 }
             }
             for (int i = 0; i < recentCommentDataArray.count; i++) {
-                ATOMComment *comment = [MTLJSONAdapter modelOfClass:[ATOMComment class] fromJSONDictionary:recentCommentDataArray[i] error:NULL];
+                PIECommentEntity *comment = [MTLJSONAdapter modelOfClass:[PIECommentEntity class] fromJSONDictionary:recentCommentDataArray[i] error:NULL];
                 comment.commentType = [param[@"type"] integerValue];
                 comment.imageID = [param[@"target_id"] integerValue];
     //            comment.atCommentArray = [NSMutableArray array];

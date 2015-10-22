@@ -9,7 +9,7 @@
 #import "ATOMShowAttention.h"
 #import "DDSessionManager.h"
 #import "ATOMReplier.h"
-#import "ATOMComment.h"
+#import "PIECommentEntity.h"
 #import "ATOMImageTipLabel.h"
 #import "PIEEliteEntity.h"
 

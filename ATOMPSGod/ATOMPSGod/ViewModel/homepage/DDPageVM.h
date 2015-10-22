@@ -47,7 +47,8 @@
 
 
 //求p 的图片对象数组
-@property (nonatomic, copy) NSArray *askImageModelArray;
+@property (nonatomic, copy) NSArray *thumbEntityArray;
+@property (nonatomic, copy) NSArray *hotCommentEntityArray;
 
 @property (nonatomic, strong) NSString *imageURL1;
 @property (nonatomic, strong) NSString *imageURL2;

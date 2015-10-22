@@ -13,7 +13,7 @@
 #import "AppDelegate.h"
 #import "CommentCell.h"
 #import "PIEFriendViewController.h"
-#import "ATOMComment.h"
+#import "PIECommentEntity.h"
 #import "DDCommentManager.h"
 #import "CommentLikeButton.h"
 #import "DDCommentReplyVM.h"
@@ -226,7 +226,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
     [super didCancelTextEditing:sender];
 }
-
+-(void)didPasteMediaContent:(NSDictionary *)userInfo {
+    NSLog(@"didPasteMediaContent%@",userInfo);
+}
 - (BOOL)canPressRightButton
 {
     return [super canPressRightButton];
@@ -509,14 +511,14 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
     
-    DDCommentManager *showDetailOfComment = [DDCommentManager new];
-    [showDetailOfComment ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
-        for (ATOMComment *comment in hotCommentArray) {
+    DDCommentManager *commentManager = [DDCommentManager new];
+    [commentManager ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
+        for (PIECommentEntity *comment in hotCommentArray) {
             DDCommentVM *model = [DDCommentVM new];
             [model setViewModelData:comment];
             [ws.commentsHot addObject:model];
         }
-        for (ATOMComment *comment in recentCommentArray) {
+        for (PIECommentEntity *comment in recentCommentArray) {
             DDCommentVM *model = [DDCommentVM new];
             [model setViewModelData:comment];
             [ws.commentsNew addObject:model];
@@ -536,9 +538,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [param setObject:@(_vm.type) forKey:@"type"];
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
-    DDCommentManager *showDetailOfComment = [DDCommentManager new];
-    [showDetailOfComment ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
-        for (ATOMComment *comment in recentCommentArray) {
+    DDCommentManager *commentManager = [DDCommentManager new];
+    [commentManager ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
+        for (PIECommentEntity *comment in recentCommentArray) {
             DDCommentVM *model = [DDCommentVM new];
             [model setViewModelData:comment];
             [ws.commentsNew addObject:model];

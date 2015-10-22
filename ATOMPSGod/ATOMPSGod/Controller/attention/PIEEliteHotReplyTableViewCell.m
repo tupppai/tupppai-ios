@@ -8,7 +8,12 @@
 
 #import "PIEEliteHotReplyTableViewCell.h"
 #import "PIEImageEntity.h"
+#import "PIECommentEntity.h"
 
+@interface PIEEliteHotReplyTableViewCell()
+@property (weak, nonatomic) IBOutlet UIView *gapView;
+
+@end
 @implementation PIEEliteHotReplyTableViewCell
 - (void)awakeFromNib {
     // Initialization code
@@ -40,6 +45,21 @@
 -(void)prepareForReuse {
     [super prepareForReuse];
     _followView.hidden = NO;
+//    [_commentLabel1 mas_updateConstraints:^(MASConstraintMaker *make) {
+//        make.height.equalTo(@0).with.priorityHigh();
+//    }];
+//    [_commentLabel2 mas_updateConstraints:^(MASConstraintMaker *make) {
+//        make.height.equalTo(@0).with.priorityHigh();
+//    }];
+//    [_commentLabel1 mas_updateConstraints:^(MASConstraintMaker *make) {
+//        make.bottom.equalTo(_commentLabel2.mas_top).with.offset(-5).with.priorityHigh();
+//    }];
+    _commentLabel2.text = @"";
+    _commentLabel1.text = @"";
+    [_commentLabel2 mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(_gapView.mas_top).with.offset(0).priorityHigh();
+    }];
+
 }
 
 - (void)injectSauce:(DDPageVM *)viewModel {
@@ -70,16 +90,33 @@
         make.height.equalTo(@(imageViewHeight)).with.priorityHigh();
     }];
     
-    //作品 type = 2 ,求p type = 1不显示ThumbAnimateView。
+    if (viewModel.hotCommentEntityArray.count > 0) {
+        PIECommentEntity* commentEntity1  = viewModel.hotCommentEntityArray[0];
+        _commentLabel1.text = [NSString stringWithFormat:@"%@: %@",commentEntity1.nickname,commentEntity1.content];
+
+        if (viewModel.hotCommentEntityArray.count == 1) {
+//            [_commentLabel1 mas_updateConstraints:^(MASConstraintMaker *make) {
+//                make.bottom.equalTo(_commentLabel2.mas_top).with.offset(-14).with.priorityHigh();
+//            }];
+        } else {
+            PIECommentEntity* commentEntity2  = viewModel.hotCommentEntityArray[1];
+            _commentLabel2.text = [NSString stringWithFormat:@"%@: %@",commentEntity2.nickname,commentEntity2.content];
+            [_commentLabel2 mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.bottom.equalTo(_gapView.mas_top).with.offset(-14).with.priorityHigh();
+            }];
+        }
+    }
+    
+    //作品的 小图 初始化
     if (viewModel.type == 2) {
         _thumbView.hidden = NO;
         [self mansoryThumbAnimateView];
-        [_thumbView setSubviewCounts:viewModel.askImageModelArray.count];
-        if (viewModel.askImageModelArray.count > 0) {
-            PIEImageEntity* entity = [viewModel.askImageModelArray objectAtIndex:0];
+        [_thumbView setSubviewCounts:viewModel.thumbEntityArray.count];
+        if (viewModel.thumbEntityArray.count > 0) {
+            PIEImageEntity* entity = [viewModel.thumbEntityArray objectAtIndex:0];
             [_thumbView.rightView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
-            if (viewModel.askImageModelArray.count == 2) {
-                entity = viewModel.askImageModelArray[1];
+            if (viewModel.thumbEntityArray.count == 2) {
+                entity = viewModel.thumbEntityArray[1];
                 [_thumbView.leftView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
             }
         }
@@ -87,9 +124,14 @@
     else {
         _thumbView.hidden = YES;
     }
+    
+    
     if (viewModel.userID == [DDUserManager currentUser].uid) {
         _followView.hidden = YES;
     }
+    
+    
+    
 }
 -(PIEThumbAnimateView *)thumbView {
     if (!_thumbView) {

@@ -7,7 +7,7 @@
 //
 
 #import "PIEEliteManager.h"
-
+#import "PIECommentEntity.h"
 #import "PIEImageEntity.h"
 @implementation PIEEliteManager
 + (void)getMyFollow:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *))block {
@@ -16,11 +16,11 @@
         for (int i = 0; i < data.count; i++) {
             PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
             NSMutableArray* thumbArray = [NSMutableArray new];
-            for (int i = 0; i<entity.askImageModelArray.count; i++) {
-                PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.askImageModelArray[i] error:NULL];
+            for (int i = 0; i<entity.thumbEntityArray.count; i++) {
+                PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.thumbEntityArray[i] error:NULL];
                 [thumbArray addObject:entity2];
             }
-            entity.askImageModelArray = thumbArray;
+            entity.thumbEntityArray = thumbArray;
             [returnArray addObject:entity];
         }
         if (block) {
@@ -40,12 +40,21 @@
             PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:[data objectAtIndex:i] error:NULL];
             if (entity) {
                 NSMutableArray* thumbArray = [NSMutableArray new];
-                for (int i = 0; i<entity.askImageModelArray.count; i++) {
-                    PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.askImageModelArray[i] error:NULL];
+                for (int i = 0; i<entity.thumbEntityArray.count; i++) {
+                    PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.thumbEntityArray[i] error:NULL];
                     [thumbArray addObject:entity2];
                 }
-                entity.askImageModelArray = thumbArray;
-                [returnArray addObject:entity];
+                entity.thumbEntityArray = thumbArray;
+                
+                NSMutableArray* commentEntityArray = [NSMutableArray new];
+
+                for (int i = 0; i<entity.hotCommentEntityArray.count; i++) {
+                    PIECommentEntity *commentEntity = [MTLJSONAdapter modelOfClass:[PIECommentEntity class] fromJSONDictionary:                    entity.hotCommentEntityArray[i] error:NULL];
+                    [commentEntityArray addObject:commentEntity];
+                }
+                entity.hotCommentEntityArray = commentEntityArray;
+                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+                [returnArray addObject:vm];
             }
         }
         if (block) {

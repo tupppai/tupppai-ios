@@ -27,12 +27,14 @@
 #import "PIEEliteAskTableViewCell.h"
 #import "PIEEliteReplyTableViewCell.h"
 #import "PIEEliteHotReplyTableViewCell.h"
-
+#import "PIEEliteHotAskTableViewCell.h"
 static  NSString* askIndentifier = @"PIEEliteAskTableViewCell";
 static  NSString* replyIndentifier = @"PIEEliteReplyTableViewCell";
 
 
 static  NSString* hotReplyIndentifier = @"PIEEliteHotReplyTableViewCell";
+static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
+
 //static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
 
 @interface PIEEliteViewController ()<UITableViewDelegate,UITableViewDataSource,PWRefreshBaseTableViewDelegate,UIScrollViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate>
@@ -116,8 +118,8 @@ static  NSString* hotReplyIndentifier = @"PIEEliteHotReplyTableViewCell";
     
     UINib* nib = [UINib nibWithNibName:hotReplyIndentifier bundle:nil];
     [_sv.tableHot registerNib:nib forCellReuseIdentifier:hotReplyIndentifier];
-    UINib* nib2 = [UINib nibWithNibName:askIndentifier bundle:nil];
-    [_sv.tableHot registerNib:nib2 forCellReuseIdentifier:askIndentifier];
+    UINib* nib2 = [UINib nibWithNibName:hotAskIndentifier bundle:nil];
+    [_sv.tableHot registerNib:nib2 forCellReuseIdentifier:hotAskIndentifier];
 
     _tapGestureHot = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureHot:)];
     [_sv.tableHot addGestureRecognizer:_tapGestureHot];
@@ -191,7 +193,7 @@ static  NSString* hotReplyIndentifier = @"PIEEliteHotReplyTableViewCell";
     } else if (tableView == _sv.tableHot) {
         DDPageVM* vm = [_sourceHot objectAtIndex:indexPath.row];
         if (vm.type == PIEPageTypeAsk) {
-            PIEEliteAskTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:askIndentifier];
+            PIEEliteHotAskTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:hotAskIndentifier];
             [cell injectSauce:vm];
             return cell;
         }
@@ -223,7 +225,7 @@ static  NSString* hotReplyIndentifier = @"PIEEliteHotReplyTableViewCell";
     } else if (tableView == _sv.tableHot) {
         DDPageVM* vm = [_sourceHot objectAtIndex:indexPath.row];
         if (vm.type == PIEPageTypeAsk) {
-            return [tableView fd_heightForCellWithIdentifier:askIndentifier  cacheByIndexPath:indexPath configuration:^(PIEEliteAskTableViewCell *cell) {
+            return [tableView fd_heightForCellWithIdentifier:hotAskIndentifier  cacheByIndexPath:indexPath configuration:^(PIEEliteHotAskTableViewCell *cell) {
                 [cell injectSauce:[_sourceHot objectAtIndex:indexPath.row]];
             }];
             
@@ -371,7 +373,7 @@ static  NSString* hotReplyIndentifier = @"PIEEliteHotReplyTableViewCell";
             
             if (_selectedVM.type == PIEPageTypeAsk) {
                 
-                PIEEliteAskTableViewCell* cell = [_sv.tableHot cellForRowAtIndexPath:_selectedIndexPath];
+                PIEEliteHotAskTableViewCell* cell = [_sv.tableHot cellForRowAtIndexPath:_selectedIndexPath];
                 CGPoint p = [gesture locationInView:cell];
                 //点击小图
                 //点击大图
@@ -692,13 +694,13 @@ static  NSString* hotReplyIndentifier = @"PIEEliteHotReplyTableViewCell";
             _canRefreshFooterHot = NO;
         } else {
             _canRefreshFooterHot = YES;
-            NSMutableArray* sourceAgent = [NSMutableArray new];
-            for (PIEPageEntity *entity in returnArray) {
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
-                [sourceAgent addObject:vm];
-            }
+//            NSMutableArray* sourceAgent = [NSMutableArray new];
+//            for (PIEPageEntity *entity in returnArray) {
+//                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+//                [sourceAgent addObject:vm];
+//            }
             [ws.sourceHot removeAllObjects];
-            [ws.sourceHot addObjectsFromArray:sourceAgent];
+            [ws.sourceHot addObjectsFromArray:returnArray];
             [ws.sv.tableHot reloadData];
         }
         [ws.sv.tableHot.header endRefreshing];
@@ -723,12 +725,7 @@ static  NSString* hotReplyIndentifier = @"PIEEliteHotReplyTableViewCell";
             _canRefreshFooterHot = NO;
         } else {
             _canRefreshFooterHot = YES;
-            NSMutableArray* sourceAgent = [NSMutableArray new];
-            for (PIEPageEntity *entity in returnArray) {
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
-                [sourceAgent addObject:vm];
-            }
-            [ws.sourceHot addObjectsFromArray:sourceAgent];
+            [ws.sourceHot addObjectsFromArray:returnArray];
             [ws.sv.tableHot reloadData];
         }
         [ws.sv.tableHot.footer endRefreshing];

@@ -274,17 +274,17 @@
 - (void)updateSegmentTitles {
     WS(ws);
     NSMutableArray* segmentDescArray = [NSMutableArray new];
-    if (_pageVM.askImageModelArray.count == 1) {
+    if (_pageVM.thumbEntityArray.count == 1) {
         NSString* desc = @"原图";
         [segmentDescArray addObject:desc];
     }
     else {
-        for (int i = 1; i<= _pageVM.askImageModelArray.count; i++) {
+        for (int i = 1; i<= _pageVM.thumbEntityArray.count; i++) {
             NSString* desc = [NSString stringWithFormat:@"原图%d",i];
             [segmentDescArray addObject:desc];
         }
     }
-    for (int i = 1; i<= _dataSource.count - _pageVM.askImageModelArray.count; i++) {
+    for (int i = 1; i<= _dataSource.count - _pageVM.thumbEntityArray.count; i++) {
         NSString* desc = [NSString stringWithFormat:@"P%d",i];
         [segmentDescArray addObject:desc];
     }

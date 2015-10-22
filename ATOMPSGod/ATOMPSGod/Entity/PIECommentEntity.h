@@ -8,7 +8,7 @@
 
 #import "ATOMBaseModel.h"
 
-@interface ATOMComment : ATOMBaseModel <MTLFMDBSerializing>
+@interface PIECommentEntity : ATOMBaseModel <MTLFMDBSerializing>
 
 /**
  *  求P ID

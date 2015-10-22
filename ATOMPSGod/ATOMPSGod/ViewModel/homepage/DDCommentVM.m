@@ -7,7 +7,7 @@
 //
 
 #import "DDCommentVM.h"
-#import "ATOMComment.h"
+#import "PIECommentEntity.h"
 #import "DDCommentReplyVM.h"
 #import "DDCommentManager.h"
 @implementation DDCommentVM
@@ -23,7 +23,7 @@
     return self;
 }
 
-- (void)setViewModelData:(ATOMComment *)comment {
+- (void)setViewModelData:(PIECommentEntity *)comment {
     _originText = comment.content;
     _uid = comment.uid;
     _username = comment.nickname;

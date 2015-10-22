@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class ATOMComment;
+@class PIECommentEntity;
 
 @interface DDCommentVM : NSObject
 
@@ -28,7 +28,7 @@
 @property (nonatomic, assign) BOOL liked;
 @property (nonatomic, strong) NSMutableArray* replyArray;
 
-- (void)setViewModelData:(ATOMComment *)comment;
+- (void)setViewModelData:(PIECommentEntity *)comment;
 - (void)setDataWithAtModel:(DDCommentVM *)viewModel andContent:(NSString *)content;
 - (void)toggleLike;
 

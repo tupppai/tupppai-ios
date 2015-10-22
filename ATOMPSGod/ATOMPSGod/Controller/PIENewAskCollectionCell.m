@@ -29,16 +29,16 @@
     _nameLabel.text = vm.username;
     _timeLabel.text = vm.publishTime;
    
-    if (vm.askImageModelArray.count == 2) {
-        PIEImageEntity* entity1 = [vm.askImageModelArray objectAtIndex:0];
-        PIEImageEntity* entity2 = [vm.askImageModelArray objectAtIndex:1];
+    if (vm.thumbEntityArray.count == 2) {
+        PIEImageEntity* entity1 = [vm.thumbEntityArray objectAtIndex:0];
+        PIEImageEntity* entity2 = [vm.thumbEntityArray objectAtIndex:1];
         [_leftImageView setImageWithURL:[NSURL URLWithString:entity1.url]placeholderImage:[UIImage imageNamed:@"cellBG"]];
         [_rightImageView setImageWithURL:[NSURL URLWithString:entity2.url]placeholderImage:[UIImage imageNamed:@"cellBG"]];
         [_rightImageView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.width.equalTo(@(self.frame.size.width/2));
         }];
-    } else if (vm.askImageModelArray.count == 1) {
-        PIEImageEntity* entity1 = [vm.askImageModelArray objectAtIndex:0];
+    } else if (vm.thumbEntityArray.count == 1) {
+        PIEImageEntity* entity1 = [vm.thumbEntityArray objectAtIndex:0];
         [_leftImageView setImageWithURL:[NSURL URLWithString:entity1.url]placeholderImage:[UIImage imageNamed:@"cellBG"]];
         [_rightImageView mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.width.equalTo(@(0));

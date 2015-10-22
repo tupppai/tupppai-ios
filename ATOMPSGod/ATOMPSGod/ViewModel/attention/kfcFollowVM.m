@@ -12,7 +12,7 @@
 #import "DDTipLabelVM.h"
 #import "ATOMReplier.h"
 #import "ATOMReplierViewModel.h"
-#import "ATOMComment.h"
+#import "PIECommentEntity.h"
 #import "DDCommentVM.h"
 #import "DDBaseService.h"
 
@@ -73,7 +73,7 @@
         [model setViewModelData:replier];
         [_replierArray addObject:model];
     }
-    for (ATOMComment *comment in commonImage.hotCommentArray) {
+    for (PIECommentEntity *comment in commonImage.hotCommentArray) {
         DDCommentVM *model = [DDCommentVM new];
         [model setViewModelData:comment];
         [_commentArray addObject:model];

@@ -15,7 +15,7 @@
 #import "DDHotDetailPageVM.h"
 #import "DDCommentVM.h"
 #import "ATOMDetailPage.h"
-#import "ATOMComment.h"
+#import "PIECommentEntity.h"
 #import "DDHotDetailManager.h"
 
 #import "PIEShareFunctionView.h"

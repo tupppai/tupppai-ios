@@ -7,12 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-@class ATOMComment;
+@class PIECommentEntity;
 
 @interface ATOMCommentViewModel : NSObject
 
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *content;
-- (void)setViewModelData:(ATOMComment *)comment;
+- (void)setViewModelData:(PIECommentEntity *)comment;
 
 @end

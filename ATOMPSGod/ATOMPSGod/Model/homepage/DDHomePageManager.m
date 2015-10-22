@@ -41,11 +41,11 @@
             for (int i = 0; i < data.count; i++) {
                 PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
                 NSMutableArray* thumbArray = [NSMutableArray new];
-                for (int i = 0; i<entity.askImageModelArray.count; i++) {
-                    PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.askImageModelArray[i] error:NULL];
+                for (int i = 0; i<entity.thumbEntityArray.count; i++) {
+                    PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.thumbEntityArray[i] error:NULL];
                     [thumbArray addObject:entity2];
                 }
-                entity.askImageModelArray = thumbArray;
+                entity.thumbEntityArray = thumbArray;
                 [returnArray addObject:entity];
             }
             if (block) {
@@ -65,11 +65,11 @@
             for (int i = 0; i < data.count; i++) {
                 PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
                 NSMutableArray* thumbArray = [NSMutableArray new];
-                for (int i = 0; i<entity.askImageModelArray.count; i++) {
-                    PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.askImageModelArray[i] error:NULL];
+                for (int i = 0; i<entity.thumbEntityArray.count; i++) {
+                    PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.thumbEntityArray[i] error:NULL];
                     [thumbArray addObject:entity2];
                 }
-                entity.askImageModelArray = thumbArray;
+                entity.thumbEntityArray = thumbArray;
                 [returnArray addObject:entity];
             }
             if (block) {
@@ -90,7 +90,7 @@
         } else {
             [self.homeImageDAO insertHomeImage:homeImage];
         }
-        NSArray *imageEntities = homeImage.askImageModelArray;
+        NSArray *imageEntities = homeImage.thumbEntityArray;
         for ( PIEImageEntity * entity in imageEntities) {
             if ([PIEAskImageDao isExist:entity]) {
                 [PIEAskImageDao update:entity];
@@ -104,7 +104,7 @@
 - (NSArray *)getHomeImages {
     NSArray *array = [self.homeImageDAO selectHomeImages];
     for (PIEPageEntity *homeImage in array) {
-        homeImage.askImageModelArray = [PIEAskImageDao selectByID:homeImage.ID];
+        homeImage.thumbEntityArray = [PIEAskImageDao selectByID:homeImage.ID];
     }
     return array;
 }
@@ -113,7 +113,7 @@
     
 //    NSArray *array = [self.homeImageDAO selectHomeImagesWithHomeType:homeType];
 //    for (PIEPageEntity *homeImage in array) {
-//        homeImage.askImageModelArray = [PIEAskImageDao selectByID:homeImage.ID];
+//        homeImage.thumbEntityArray = [PIEAskImageDao selectByID:homeImage.ID];
 //    }
     NSArray *array;
     return array;
