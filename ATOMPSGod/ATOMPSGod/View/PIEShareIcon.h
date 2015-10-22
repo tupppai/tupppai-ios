@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PIEShareIcon : UIView
-@property (strong, nonatomic) UIImageView *imageView;
+@interface PIEShareIcon : UIButton
+//@property (strong, nonatomic) UIImageView *imageView;
 @property (strong, nonatomic) UILabel *label;
 @end

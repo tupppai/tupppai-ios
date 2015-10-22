@@ -69,11 +69,8 @@ static  NSString* hotReplyIndentifier = @"PIEEliteHotReplyTableViewCell";
     [self configData];
     [self createNavBar];
     [self configSubviews];
-    [self getRemoteSourceHot:^(BOOL finished) {
-        if (finished) {
-            [self getRemoteSourceFollow];
-        }
-    }];
+    [self firstGetRemoteSourceHot:nil];
+    [self firstGetRemoteSourceFollow:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -572,19 +569,24 @@ static  NSString* hotReplyIndentifier = @"PIEEliteHotReplyTableViewCell";
 
 #pragma mark - ATOMShareViewDelegate
 
+//sina
 -(void)tapShare1 {
-    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:PIEPageTypeAsk];
+    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:_selectedVM.type];
 }
+//qqzone
 -(void)tapShare2 {
-    
+    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeQQZone withPageType:_selectedVM.type];
 }
+//wechat moments
 -(void)tapShare3 {
-    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:PIEPageTypeAsk];
+    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:_selectedVM.type];
 }
+//wechat friends
 -(void)tapShare4 {
-        [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:PIEPageTypeAsk];
+    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:_selectedVM.type];
 }
 -(void)tapShare5 {
+    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeQQFriends withPageType:_selectedVM.type];
     
 }
 -(void)tapShare6 {
@@ -595,13 +597,17 @@ static  NSString* hotReplyIndentifier = @"PIEEliteHotReplyTableViewCell";
 }
 -(void)tapShare8 {
     if (_sv.type == PIEPageTypeEliteHot) {
-//        [self collect:_selectedHotCell.collectView];
+        //        [self collect:_selectedHotCell.collectView];
     } else {
         [self collect:nil];
     }
 }
+
 -(void)tapShareCancel {
+    [self.shareView dismiss];
 }
+
+
 
 #pragma mark - getDataSource
 
@@ -663,7 +669,12 @@ static  NSString* hotReplyIndentifier = @"PIEEliteHotReplyTableViewCell";
     }];
 }
 
-
+- (void)firstGetRemoteSourceHot:(void (^)(BOOL finished))block {
+    [_sv.tableHot.header beginRefreshing];
+}
+- (void)firstGetRemoteSourceFollow:(void (^)(BOOL finished))block {
+    [_sv.tableFollow.header beginRefreshing];
+}
 
 - (void)getRemoteSourceHot:(void (^)(BOOL finished))block {
     WS(ws);
@@ -767,6 +778,7 @@ static  NSString* hotReplyIndentifier = @"PIEEliteHotReplyTableViewCell";
 -(PIEShareView *)shareView {
     if (!_shareView) {
         _shareView = [PIEShareView new];
+        _shareView.delegate = self;
     }
     return _shareView;
 }

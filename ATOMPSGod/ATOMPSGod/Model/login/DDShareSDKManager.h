@@ -14,4 +14,5 @@
 + (void)getUserInfo:(SSDKPlatformType)type withBlock:(void (^)(NSDictionary* ))block;
 +(void)postSocialShare:(NSInteger)id withSocialShareType:(ATOMShareType)shareType withPageType:(NSInteger)pageType;
 + (void)authorize:(SSDKPlatformType)type withBlock:(void (^)(NSDictionary* ))block;
++ (void)authorize2:(SSDKPlatformType)type withBlock:(void (^)(SSDKUser* user ))block;
 @end

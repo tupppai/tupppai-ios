@@ -262,10 +262,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     }
     return _shareView;
 }
-//- (void)showShareFunctionView {
-//    [self.shareFunctionView showInView:self.view animated:YES];
-//    self.shareFunctionView.collectButton.selected = _selectedVM.collected;
-//}
 #pragma mark - Gesture Event
 
 - (void)tapGestureReply:(UITapGestureRecognizer *)gesture {
@@ -376,13 +372,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 //#pragma mark - QBImagePickerControllerDelegate
 //
 //
-//-(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
-//    [self dismissViewControllerAnimated:YES completion:NULL];
-//}
-//- (void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController
-//{
-//    [self dismissViewControllerAnimated:YES completion:NULL];
-//}
+
 
 
 #pragma mark - UIScrollViewDelegate
@@ -605,22 +595,22 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
 //sina
 -(void)tapShare1 {
-    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:PIEPageTypeReply];
+    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:_selectedVM.type];
 }
 //qqzone
 -(void)tapShare2 {
-    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeQQZone withPageType:PIEPageTypeReply];
+    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeQQZone withPageType:_selectedVM.type];
 }
 //wechat moments
 -(void)tapShare3 {
-    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:PIEPageTypeReply];
+    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:_selectedVM.type];
 }
 //wechat friends
 -(void)tapShare4 {
-    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:PIEPageTypeReply];
+    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:_selectedVM.type];
 }
 -(void)tapShare5 {
-    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeQQFriends withPageType:PIEPageTypeReply];
+    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeQQFriends withPageType:_selectedVM.type];
     
 }
 -(void)tapShare6 {
@@ -632,6 +622,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 -(void)tapShare8 {
     [self collectReply];
 }
+
 -(void)tapShareCancel {
     [self.shareView dismiss];
 }

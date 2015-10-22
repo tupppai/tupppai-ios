@@ -15,10 +15,18 @@
 }
 + (void)authorize:(SSDKPlatformType)type withBlock:(void (^)(NSDictionary* ))block{
     [ShareSDK authorize:type settings:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
-        block(user.rawData);
+        if (state == SSDKResponseStateSuccess) {
+            block(user.rawData);
+        }
     }];
 }
-
++ (void)authorize2:(SSDKPlatformType)type withBlock:(void (^)(SSDKUser* user ))block{
+    [ShareSDK authorize:type settings:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
+        if (state == SSDKResponseStateSuccess) {
+            block(user);
+        }
+    }];
+}
 +(void)postSocialShare:(NSInteger)id withSocialShareType:(ATOMShareType)shareType withPageType:(NSInteger)pageType {
         DDShareManager* shareModel = [DDShareManager new];
         NSMutableDictionary* param = [NSMutableDictionary new];
@@ -30,9 +38,9 @@
         } else if (shareType == ATOMShareTypeSinaWeibo) {
             shareTypeToServer = @"weibo";
         }  else if (shareType == ATOMShareTypeQQFriends) {
-            shareTypeToServer = @"weixin";
+            shareTypeToServer = @"qqzone";
         } else if (shareType == ATOMShareTypeQQZone) {
-            shareTypeToServer = @"weibo";
+            shareTypeToServer = @"qqfriends";
         }
     
         [param setObject:shareTypeToServer forKey:@"share_type"];
@@ -58,6 +66,9 @@
     NSURL* imageUrl = [[NSURL alloc]initWithString:[NSString stringWithFormat:@"%@",share.imageUrl]];
 
     NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+    //注释产生 微博自动分享
+    [shareParams SSDKEnableUseClientShare];
+
         if (shareType == ATOMShareTypeWechatFriends) {
             shareTitle = [NSString stringWithFormat:@"%@",share.title];
             [shareParams SSDKSetupWeChatParamsByText:share.desc title:shareTitle url:sUrl thumbImage:imageUrl image:img musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeWebPage forPlatformSubType:SSDKPlatformSubTypeWechatSession];
@@ -68,15 +79,15 @@
             [shareParams SSDKSetupWeChatParamsByText:share.desc title:shareTitle url:sUrl thumbImage:imageUrl image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeWebPage forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
             [self shareStep2:SSDKPlatformSubTypeWechatTimeline withShareParams:shareParams];
         } else if (shareType == ATOMShareTypeSinaWeibo) {
-            shareTitle = [NSString stringWithFormat:@"\"%@,%@\" ! 求PS大神显灵，还不快戳",share.title,share.desc];
+            shareTitle = [NSString stringWithFormat:@"强哥爱众人%@,%@",share.title,share.desc];
             [shareParams SSDKSetupSinaWeiboShareParamsByText:shareTitle title:shareTitle image:img url:sUrl latitude:0 longitude:0 objectID:nil type:SSDKContentTypeImage];
             [self shareStep2:SSDKPlatformTypeSinaWeibo withShareParams:shareParams];
         } else if (shareType == ATOMShareTypeQQFriends) {
-            [shareParams SSDKSetupQQParamsByText:@"良辰爱你" title:@"" url:sUrl thumbImage:imageUrl image:imageUrl type:SSDKContentTypeText forPlatformSubType:SSDKPlatformSubTypeQQFriend];
+            [shareParams SSDKSetupQQParamsByText:@"强哥爱众人" title:@"" url:sUrl thumbImage:imageUrl image:imageUrl type:SSDKContentTypeText forPlatformSubType:SSDKPlatformSubTypeQQFriend];
             [self shareStep2:SSDKPlatformSubTypeQQFriend withShareParams:shareParams];
         } else if (shareType == ATOMShareTypeQQZone) {
-            [shareParams SSDKSetupQQParamsByText:@"良辰爱你" title:@"" url:sUrl thumbImage:imageUrl image:imageUrl type:SSDKContentTypeText forPlatformSubType:SSDKPlatformSubTypeQZone];
-            [self shareStep2:SSDKPlatformTypeQQ withShareParams:shareParams];
+            [shareParams SSDKSetupQQParamsByText:@"强哥爱众人" title:@"ss" url:sUrl thumbImage:imageUrl image:imageUrl type:SSDKContentTypeWebPage forPlatformSubType:SSDKPlatformSubTypeQZone];
+                [self shareStep2:SSDKPlatformSubTypeQZone withShareParams:shareParams];
         }
 }
 
@@ -85,29 +96,13 @@
     [ShareSDK share:platformType
          parameters:shareParams
      onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
-         
          switch (state) {
              case SSDKResponseStateSuccess:
              {
-                 [Util ShowTSMessageSuccess:@"分享成功"];
                  break;
              }
              case SSDKResponseStateFail:
              {
-
-#if DEBUG
-                 NSString* errorMsg = [error.userInfo objectForKey:@"error_message"];
-
-                                  UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"分享失败"
-                                                                                      message:[NSString stringWithFormat:@"%@", errorMsg]
-                                                                                     delegate:nil
-                                                                            cancelButtonTitle:@"确定"
-                                                                            otherButtonTitles:nil];
-                                  [alertView show];
-#else
-                 [Util ShowTSMessageError:@"分享失败"];
-#endif
-
                  break;
              }
              case SSDKResponseStateCancel:

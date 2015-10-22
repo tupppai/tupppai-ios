@@ -18,6 +18,7 @@
 #import <TencentOpenAPI/TencentOAuth.h>
 #import <TencentOpenAPI/QQApiInterface.h>
 #import "WXApi.h"
+#import "WeiboSDK.h"
 #import "DDCommentVC.h"
 
 @interface AppDelegate ()
@@ -128,11 +129,16 @@
                      {
                          case SSDKPlatformTypeWechat:
                              [ShareSDKConnector connectWeChat:[WXApi class]];
+                             NSLog(@"wechat1");
+
                              break;
                          case SSDKPlatformTypeQQ:
                              [ShareSDKConnector connectQQ:[QQApiInterface class] tencentOAuthClass:[TencentOAuth class]];
                              break;
-
+                         case SSDKPlatformTypeSinaWeibo:
+                             [ShareSDKConnector connectWeibo:[WeiboSDK class]];
+                             NSLog(@"weibo1");
+                             break;
                          default:
                              break;
                      }
@@ -143,14 +149,18 @@
               {
                 
                   case SSDKPlatformTypeWechat:
+                      NSLog(@"wechat2");
+
                       [appInfo SSDKSetupWeChatByAppId:@"wx86ff6f67a2b9b4b8" appSecret:@"c2da31fda3acf1c09c40ee25772b6ca5"];
                       break;
                   case SSDKPlatformTypeSinaWeibo:
+                      NSLog(@"weibo2");
                       //设置新浪微博应用信息,其中authType设置为使用SSO＋Web形式授权
                       [appInfo SSDKSetupSinaWeiboByAppKey:@"882276088"
                                                 appSecret:@"454f67c8e6d29b770d701e9272bc5ee7"
                                               redirectUri:@"https://api.weibo.com/oauth2/default.html"
                                                  authType:SSDKAuthTypeBoth];
+                      break;
                     case SSDKPlatformTypeQQ:
                       [appInfo SSDKSetupQQByAppId:@"1104845173" appKey:@"66J8VPEAzAO3yQt4" authType:SSDKAuthTypeBoth];
                       break;
@@ -158,8 +168,6 @@
               }
           }
      ];
-    
-
 }
 
 
@@ -192,8 +200,6 @@
                                    stringByReplacingOccurrencesOfString:@" " withString:@""];
     [[NSUserDefaults standardUserDefaults]setObject:devicetokenString forKey:@"devicetoken"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-
-    NSLog(@"devicetokenString%@", devicetokenString);
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{

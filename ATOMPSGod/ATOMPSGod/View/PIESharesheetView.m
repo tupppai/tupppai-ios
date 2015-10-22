@@ -70,21 +70,21 @@
     [_iconArray addObject:_icon6];
     [_iconArray addObject:_icon7];
     [_iconArray addObject:_icon8];
-
+    
     for (int i = 0;i < _iconArray.count;i++) {
         PIEShareIcon* icon = [_iconArray objectAtIndex:i];
         NSString* labelName = [[_infoArray objectAtIndex:i]objectAtIndex:0];
         NSString* imageName = [[_infoArray objectAtIndex:i]objectAtIndex:1];
         icon.label.text = labelName;
-        icon.imageView.image = [UIImage imageNamed:imageName];
+//        [icon setTitle:labelName forState:UIControlStateNormal];
+        [icon setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
     }
-
 }
 - (void)mansoryIcons {
     CGFloat itemWidth = 60;
-    CGFloat itemHeight = 40;
+    CGFloat itemHeight = 50;
 
-    CGFloat rowGap = 30;
+    CGFloat rowGap = 20;
     CGFloat columnGap = ( SCREEN_WIDTH*0.98 -  itemWidth*4 ) / 4;
 
     [_icon1 mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -151,6 +151,7 @@
         _cancelLabel.clipsToBounds = YES;
         _cancelLabel.textAlignment = NSTextAlignmentCenter;
         _cancelLabel.userInteractionEnabled = YES;
+        _cancelLabel.highlightedTextColor = [UIColor whiteColor];
     }
     return _cancelLabel;
 }
