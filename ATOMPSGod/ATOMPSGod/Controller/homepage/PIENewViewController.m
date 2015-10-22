@@ -606,11 +606,10 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 //sina
 -(void)tapShare1 {
     [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:PIEPageTypeReply];
-    NSLog(@"tapShare1");
 }
 //qqzone
 -(void)tapShare2 {
-    
+    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeQQZone withPageType:PIEPageTypeReply];
 }
 //wechat moments
 -(void)tapShare3 {
@@ -621,6 +620,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:PIEPageTypeReply];
 }
 -(void)tapShare5 {
+    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeQQFriends withPageType:PIEPageTypeReply];
     
 }
 -(void)tapShare6 {
@@ -789,14 +789,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     }
     return _scrollView;
 }
-
-//- (PIEShareFunctionView *)shareFunctionView {
-//    if (!_shareFunctionView) {
-//        _shareFunctionView = [PIEShareFunctionView new];
-//        _shareFunctionView.delegate = self;
-//    }
-//    return _shareFunctionView;
-//}
 
 - (JGActionSheet *)psActionSheet {
     WS(ws);

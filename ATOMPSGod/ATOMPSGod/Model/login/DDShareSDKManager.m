@@ -29,7 +29,12 @@
             shareTypeToServer = @"weixin";
         } else if (shareType == ATOMShareTypeSinaWeibo) {
             shareTypeToServer = @"weibo";
+        }  else if (shareType == ATOMShareTypeQQFriends) {
+            shareTypeToServer = @"weixin";
+        } else if (shareType == ATOMShareTypeQQZone) {
+            shareTypeToServer = @"weibo";
         }
+    
         [param setObject:shareTypeToServer forKey:@"share_type"];
         [param setObject:@(pageType) forKey:@"type"];
         [param setObject:@(id) forKey:@"target_id"];
@@ -66,6 +71,12 @@
             shareTitle = [NSString stringWithFormat:@"\"%@,%@\" ! 求PS大神显灵，还不快戳",share.title,share.desc];
             [shareParams SSDKSetupSinaWeiboShareParamsByText:shareTitle title:shareTitle image:img url:sUrl latitude:0 longitude:0 objectID:nil type:SSDKContentTypeImage];
             [self shareStep2:SSDKPlatformTypeSinaWeibo withShareParams:shareParams];
+        } else if (shareType == ATOMShareTypeQQFriends) {
+            [shareParams SSDKSetupQQParamsByText:@"良辰爱你" title:@"" url:sUrl thumbImage:imageUrl image:imageUrl type:SSDKContentTypeText forPlatformSubType:SSDKPlatformSubTypeQQFriend];
+            [self shareStep2:SSDKPlatformSubTypeQQFriend withShareParams:shareParams];
+        } else if (shareType == ATOMShareTypeQQZone) {
+            [shareParams SSDKSetupQQParamsByText:@"良辰爱你" title:@"" url:sUrl thumbImage:imageUrl image:imageUrl type:SSDKContentTypeText forPlatformSubType:SSDKPlatformSubTypeQZone];
+            [self shareStep2:SSDKPlatformTypeQQ withShareParams:shareParams];
         }
 }
 

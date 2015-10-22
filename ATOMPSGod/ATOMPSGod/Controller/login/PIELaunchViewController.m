@@ -104,40 +104,41 @@
     
 }
 - (void)tap1 {
-    [DDShareSDKManager authorize:SSDKPlatformTypeSinaWeibo withBlock:^(NSDictionary *sourceData) {
-        if (sourceData) {
-            NSString* openID = sourceData[@"idstr"];
-            NSMutableDictionary* param = [NSMutableDictionary new];
-            [param setObject:openID forKey:@"openid"];
-            [DDUserManager DD3PartyAuth:param AndType:@"weibo" withBlock:^(bool isRegistered, NSString *info) {
-                if (isRegistered) {
-                    [Hud activity:@"" inView:self.view];
-                    [self.navigationController setViewControllers:[NSArray array]];
-                    [AppDelegate APP].mainTabBarController = nil;
-                    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
-                } else {
-                    [DDUserManager currentUser].signUpType = ATOMSignUpWeibo;
-                    [DDUserManager currentUser].sourceData = sourceData;
-                    ATOMUserProfileViewModel* ipvm = [ATOMUserProfileViewModel new];
-                    ipvm.nickName = sourceData[@"name"];
-                    ipvm.province = sourceData[@"province"];
-                    ipvm.city = sourceData[@"city"];
-                    ipvm.avatarURL = sourceData[@"avatar_large"];
-                    if ([(NSString*)sourceData[@"gender"] isEqualToString:@"m"]) {
-                        ipvm.gender = @"男";
-                    } else {
-                        ipvm.gender = @"女";
-                    }
-                    DDCreateProfileVC *cpvc = [DDCreateProfileVC new];
-                    cpvc.userProfileViewModel = ipvm;
-                    [self.navigationController pushViewController:cpvc animated:YES];
-                }
-                
-            }];
-        }
-        else {
-            NSLog(@"获取不到第三平台的数据");
-        }
+    [DDShareSDKManager authorize:SSDKPlatformTypeQQ withBlock:^(NSDictionary *sourceData) {
+        NSLog(@"sourceData%@",sourceData);
+//        if (sourceData) {
+//            NSString* openID = sourceData[@"idstr"];
+//            NSMutableDictionary* param = [NSMutableDictionary new];
+//            [param setObject:openID forKey:@"openid"];
+//            [DDUserManager DD3PartyAuth:param AndType:@"weibo" withBlock:^(bool isRegistered, NSString *info) {
+//                if (isRegistered) {
+//                    [Hud activity:@"" inView:self.view];
+//                    [self.navigationController setViewControllers:[NSArray array]];
+//                    [AppDelegate APP].mainTabBarController = nil;
+//                    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
+//                } else {
+//                    [DDUserManager currentUser].signUpType = ATOMSignUpWeibo;
+//                    [DDUserManager currentUser].sourceData = sourceData;
+//                    ATOMUserProfileViewModel* ipvm = [ATOMUserProfileViewModel new];
+//                    ipvm.nickName = sourceData[@"name"];
+//                    ipvm.province = sourceData[@"province"];
+//                    ipvm.city = sourceData[@"city"];
+//                    ipvm.avatarURL = sourceData[@"avatar_large"];
+//                    if ([(NSString*)sourceData[@"gender"] isEqualToString:@"m"]) {
+//                        ipvm.gender = @"男";
+//                    } else {
+//                        ipvm.gender = @"女";
+//                    }
+//                    DDCreateProfileVC *cpvc = [DDCreateProfileVC new];
+//                    cpvc.userProfileViewModel = ipvm;
+//                    [self.navigationController pushViewController:cpvc animated:YES];
+//                }
+//                
+//            }];
+//        }
+//        else {
+//            NSLog(@"获取不到第三平台的数据");
+//        }
     }];
 }
 - (void)tap2 {
@@ -154,7 +155,23 @@
 }
 
 -(void)tapSignUp1 {
-    
+//    city = "";
+//    figureurl = "http://qzapp.qlogo.cn/qzapp/1104845173/B99F88799E87E3669EBE02251557209B/30";
+//    "figureurl_1" = "http://qzapp.qlogo.cn/qzapp/1104845173/B99F88799E87E3669EBE02251557209B/50";
+//    "figureurl_2" = "http://qzapp.qlogo.cn/qzapp/1104845173/B99F88799E87E3669EBE02251557209B/100";
+//    "figureurl_qq_1" = "http://q.qlogo.cn/qqapp/1104845173/B99F88799E87E3669EBE02251557209B/40";
+//    "figureurl_qq_2" = "http://q.qlogo.cn/qqapp/1104845173/B99F88799E87E3669EBE02251557209B/100";
+//    gender = "\U7537";
+//    "is_lost" = 0;
+//    "is_yellow_vip" = 0;
+//    "is_yellow_year_vip" = 0;
+//    level = 0;
+//    msg = "";
+//    nickname = "\U6c42ps\U5927\U795e";
+//    province = "";
+//    ret = 0;
+//    vip = 0;
+//    "yellow_vip_level" = 0;
 }
 -(void)tapSignUp2 {
     [self.signUpView dismiss];

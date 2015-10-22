@@ -15,6 +15,8 @@
 #import "UMessage.h"
 #import <ShareSDK/ShareSDK.h>
 #import <ShareSDKConnector/ShareSDKConnector.h>
+#import <TencentOpenAPI/TencentOAuth.h>
+#import <TencentOpenAPI/QQApiInterface.h>
 #import "WXApi.h"
 #import "DDCommentVC.h"
 
@@ -119,7 +121,7 @@
 
 - (void)setupShareSDK {
     [ShareSDK registerApp:@"65b1ce491325"
-          activePlatforms:@[@(SSDKPlatformTypeWechat), @(SSDKPlatformTypeSinaWeibo)]
+          activePlatforms:@[@(SSDKPlatformTypeWechat), @(SSDKPlatformTypeSinaWeibo),@(SSDKPlatformTypeQQ)]
                  onImport:^(SSDKPlatformType platformType) {
                      
                      switch (platformType)
@@ -127,7 +129,10 @@
                          case SSDKPlatformTypeWechat:
                              [ShareSDKConnector connectWeChat:[WXApi class]];
                              break;
-                             
+                         case SSDKPlatformTypeQQ:
+                             [ShareSDKConnector connectQQ:[QQApiInterface class] tencentOAuthClass:[TencentOAuth class]];
+                             break;
+
                          default:
                              break;
                      }
@@ -146,6 +151,8 @@
                                                 appSecret:@"454f67c8e6d29b770d701e9272bc5ee7"
                                               redirectUri:@"https://api.weibo.com/oauth2/default.html"
                                                  authType:SSDKAuthTypeBoth];
+                    case SSDKPlatformTypeQQ:
+                      [appInfo SSDKSetupQQByAppId:@"1104845173" appKey:@"66J8VPEAzAO3yQt4" authType:SSDKAuthTypeBoth];
                       break;
                   default: break;
               }

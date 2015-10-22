@@ -28,6 +28,8 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>wx86ff6f67a2b9b4b8</string>
+				<string>tencent1104845173</string>
+				<string>QQ41DA9975</string>
 				<string>wb882276088</string>
 			</array>
 		</dict>
@@ -36,11 +38,23 @@
 	<string>1.0</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>mqqOpensdkSSoLogin</string>
+		<string>mqqopensdkapiV2</string>
+		<string>mqqopensdkapiV3</string>
+		<string>wtloginmqq2</string>
+		<string>mqq</string>
+		<string>mqqapi</string>
+		<string>mqzoneopensdk</string>
+		<string>mqzoneopensdkapi</string>
+		<string>mqzoneopensdkapi19</string>
+		<string>mqzoneopensdkapiV2</string>
+		<string>mqqwpa</string>
+		<string>mqzone</string>
 		<string>wechat</string>
 		<string>weixin</string>
 		<string>sinaweibo</string>
-		<string>sinaweibohd</string>
 		<string>sinaweibosso</string>
+		<string>sinaweibohd</string>
 		<string>sinaweibohdsso</string>
 		<string>weibosdk</string>
 		<string>weibosdk2.5</string>

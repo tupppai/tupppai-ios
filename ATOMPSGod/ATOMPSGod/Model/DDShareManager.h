@@ -11,7 +11,9 @@
 typedef NS_ENUM(NSInteger, ATOMShareType) {
     ATOMShareTypeWechatMoments = 0,
     ATOMShareTypeWechatFriends,
-    ATOMShareTypeSinaWeibo
+    ATOMShareTypeSinaWeibo,
+    ATOMShareTypeQQZone,
+    ATOMShareTypeQQFriends,
 };
 @interface DDShareManager : NSObject
 - (NSURLSessionDataTask *)getShareInfo:(NSDictionary *)param withBlock:(void (^)(ATOMShare *, NSError *))block;
