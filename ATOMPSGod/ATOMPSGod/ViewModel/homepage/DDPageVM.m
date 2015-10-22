@@ -188,17 +188,6 @@
     return commonViewModel;
 }
 
--(void)setViewModelWithCommon:(DDCommentPageVM*)commonViewModel {
-    _ID = commonViewModel.pageID;
-    _imageURL = commonViewModel.pageImageURL;
-    _avatarURL = commonViewModel.avatarURL;
-    _likeCount = commonViewModel.likeNumber;
-    _shareCount = commonViewModel.shareNumber;
-    _commentCount = commonViewModel.commentNumber;
-    _imageWidth = commonViewModel.width;
-    _imageHeight = commonViewModel.height;
-    _username = commonViewModel.userName;
-}
 
 - (void)toggleLike:(void (^)(BOOL success))block  {
     NSMutableDictionary *param = [NSMutableDictionary new];

@@ -24,6 +24,8 @@
 @property (weak, nonatomic) IBOutlet PIEPageButton *collectView;
 @property (weak, nonatomic) IBOutlet PIEPageButton *commentView;
 @property (weak, nonatomic) IBOutlet PIEPageLikeButton *likeView;
+@property (weak, nonatomic) IBOutlet UILabel *commentLabel1;
+@property (weak, nonatomic) IBOutlet UILabel *commentLabel2;
 
 @property (weak, nonatomic) IBOutlet UIImageView *followView;
 @property (strong, nonatomic) PIEThumbAnimateView *thumbView;

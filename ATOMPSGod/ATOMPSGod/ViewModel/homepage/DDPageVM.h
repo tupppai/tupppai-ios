@@ -53,7 +53,6 @@
 @property (nonatomic, strong) NSString *imageURL2;
 
 
--(void)setViewModelWithCommon:(DDCommentPageVM*)commonViewModel;
 -(DDCommentPageVM*)generatepageDetailViewModel;
 - (instancetype)initWithPageEntity:(PIEPageEntity *)entity ;
 - (instancetype)initWithFollowEntity:(PIEEliteEntity *)entity;

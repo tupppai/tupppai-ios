@@ -8,11 +8,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PIEEliteHotReplyTableViewCell" rowHeight="377" id="l60-Q2-HDX" customClass="PIEEliteHotReplyTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="386" height="377"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PIEEliteHotReplyTableViewCell" rowHeight="422" id="l60-Q2-HDX" customClass="PIEEliteHotReplyTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="386" height="422"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l60-Q2-HDX" id="r7k-a1-VTN">
-                <rect key="frame" x="0.0" y="0.0" width="386" height="376.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="386" height="421.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="沉沉" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kwf-rd-ff2">
@@ -39,14 +39,14 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="我觉得我长得真不错！" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O1g-xB-hP3">
-                        <rect key="frame" x="8" y="289" width="370" height="18.5"/>
+                        <rect key="frame" x="8" y="307" width="370" height="18.5"/>
                         <animations/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hot_allwork" translatesAutoresizingMaskIntoConstraints="NO" id="VBu-vK-E8O">
-                        <rect key="frame" x="8" y="323" width="60" height="19"/>
+                        <rect key="frame" x="8" y="341" width="60" height="19"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="60" id="RRM-DT-Q94"/>
@@ -62,7 +62,7 @@
                         </constraints>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hvb-nQ-yFa" customClass="PIEPageButton">
-                        <rect key="frame" x="84" y="318" width="35" height="30"/>
+                        <rect key="frame" x="84" y="336" width="35" height="30"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="30" id="3or-Wn-enX"/>
@@ -76,7 +76,7 @@
                         </variation>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DU7-cv-TGA" customClass="PIEPageButton">
-                        <rect key="frame" x="129" y="318" width="35" height="30"/>
+                        <rect key="frame" x="129" y="336" width="35" height="30"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="width" priority="250" constant="35" id="JhG-eR-QDx"/>
@@ -91,7 +91,7 @@
                         </variation>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sgj-ub-LZu" customClass="PIEPageButton">
-                        <rect key="frame" x="174" y="318" width="35" height="30"/>
+                        <rect key="frame" x="174" y="336" width="35" height="30"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="TbX-9K-7Fx"/>
@@ -104,7 +104,7 @@
                         </variation>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jc3-XI-5t8" customClass="PIEPageLikeButton">
-                        <rect key="frame" x="331" y="319" width="39" height="28"/>
+                        <rect key="frame" x="331" y="337" width="39" height="28"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -113,7 +113,7 @@
                         </constraints>
                     </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cg3-rv-3zG">
-                        <rect key="frame" x="0.0" y="47" width="386" height="234.5"/>
+                        <rect key="frame" x="0.0" y="47" width="386" height="252.5"/>
                         <animations/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -128,13 +128,33 @@
                         </variation>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jz8-n6-016">
-                        <rect key="frame" x="0.0" y="365" width="386" height="11"/>
+                        <rect key="frame" x="0.0" y="410" width="386" height="11"/>
                         <animations/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="11" id="XAs-RP-Pzk"/>
                         </constraints>
                     </view>
+                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="comment2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nKA-JB-Smk">
+                        <rect key="frame" x="8" y="394" width="65" height="16"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="height" priority="750" id="ch2-P0-c3w"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="comment1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nz0-bb-Mel">
+                        <rect key="frame" x="8" y="370" width="63" height="16"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="height" priority="750" id="3ax-9W-qCf"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <animations/>
                 <constraints>
@@ -152,8 +172,10 @@
                     <constraint firstItem="cg3-rv-3zG" firstAttribute="leading" secondItem="r7k-a1-VTN" secondAttribute="leading" id="Ad3-em-PKB"/>
                     <constraint firstAttribute="trailing" secondItem="jz8-n6-016" secondAttribute="trailing" id="BaB-Gf-RmL"/>
                     <constraint firstItem="cg3-rv-3zG" firstAttribute="top" secondItem="Tok-nD-ynb" secondAttribute="bottom" constant="8" id="BgA-xo-jzX"/>
+                    <constraint firstItem="Nz0-bb-Mel" firstAttribute="top" secondItem="VBu-vK-E8O" secondAttribute="bottom" constant="10" id="C3Z-fu-ali"/>
                     <constraint firstItem="Sgj-ub-LZu" firstAttribute="leading" secondItem="DU7-cv-TGA" secondAttribute="trailing" constant="10" id="ECW-aK-peh"/>
                     <constraint firstItem="DU7-cv-TGA" firstAttribute="leading" secondItem="hvb-nQ-yFa" secondAttribute="trailing" constant="10" id="FIx-QV-zyj"/>
+                    <constraint firstItem="nKA-JB-Smk" firstAttribute="leading" secondItem="Nz0-bb-Mel" secondAttribute="leading" id="LPf-NG-SHW"/>
                     <constraint firstItem="DU7-cv-TGA" firstAttribute="centerY" secondItem="hvb-nQ-yFa" secondAttribute="centerY" id="Pwm-Jz-jW4"/>
                     <constraint firstAttribute="trailingMargin" secondItem="4B8-5j-F6n" secondAttribute="trailing" constant="8" id="R8D-Hf-fIr"/>
                     <constraint firstItem="O1g-xB-hP3" firstAttribute="top" secondItem="cg3-rv-3zG" secondAttribute="bottom" constant="8" id="TBE-mu-uKa"/>
@@ -165,10 +187,13 @@
                     <constraint firstItem="Jc3-XI-5t8" firstAttribute="centerY" secondItem="hvb-nQ-yFa" secondAttribute="centerY" id="bPX-UQ-gTa"/>
                     <constraint firstItem="cg3-rv-3zG" firstAttribute="top" secondItem="Tok-nD-ynb" secondAttribute="bottom" constant="10" id="bha-sY-ykG"/>
                     <constraint firstItem="fJb-ve-xhh" firstAttribute="top" secondItem="Tok-nD-ynb" secondAttribute="top" constant="-4" id="cM6-if-MLz"/>
+                    <constraint firstItem="nKA-JB-Smk" firstAttribute="top" secondItem="Nz0-bb-Mel" secondAttribute="bottom" constant="8" id="cwK-1m-Keh"/>
                     <constraint firstItem="DU7-cv-TGA" firstAttribute="height" secondItem="hvb-nQ-yFa" secondAttribute="height" id="iVE-bQ-4fk"/>
                     <constraint firstItem="Sgj-ub-LZu" firstAttribute="height" secondItem="DU7-cv-TGA" secondAttribute="height" id="k9a-Jt-dsT"/>
                     <constraint firstItem="fJb-ve-xhh" firstAttribute="leading" secondItem="r7k-a1-VTN" secondAttribute="leadingMargin" id="kPw-mK-JAr"/>
                     <constraint firstItem="hvb-nQ-yFa" firstAttribute="centerY" secondItem="VBu-vK-E8O" secondAttribute="centerY" id="lHH-qb-1XC"/>
+                    <constraint firstItem="Nz0-bb-Mel" firstAttribute="leading" secondItem="VBu-vK-E8O" secondAttribute="leading" id="qLE-bR-kWC"/>
+                    <constraint firstItem="jz8-n6-016" firstAttribute="top" secondItem="nKA-JB-Smk" secondAttribute="bottom" priority="750" id="rqN-UP-vRJ"/>
                     <constraint firstItem="Tok-nD-ynb" firstAttribute="top" secondItem="kwf-rd-ff2" secondAttribute="bottom" constant="5" id="ucl-Ki-9rk"/>
                     <constraint firstAttribute="bottomMargin" secondItem="VBu-vK-E8O" secondAttribute="bottom" id="vNY-Rb-g1X"/>
                     <constraint firstAttribute="trailing" secondItem="cg3-rv-3zG" secondAttribute="trailing" id="wO2-hK-tqj"/>
@@ -181,6 +206,7 @@
                         <exclude reference="ucl-Ki-9rk"/>
                         <exclude reference="vNY-Rb-g1X"/>
                         <exclude reference="6VD-Ip-fhb"/>
+                        <exclude reference="7hE-wE-Zc7"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>
@@ -189,6 +215,8 @@
                 <outlet property="allWorkView" destination="VBu-vK-E8O" id="ptQ-3C-t0M"/>
                 <outlet property="avatarView" destination="fJb-ve-xhh" id="w1l-zw-97G"/>
                 <outlet property="collectView" destination="DU7-cv-TGA" id="PBV-3X-RYv"/>
+                <outlet property="commentLabel1" destination="Nz0-bb-Mel" id="QJV-CI-Uhh"/>
+                <outlet property="commentLabel2" destination="nKA-JB-Smk" id="jfl-J5-NMF"/>
                 <outlet property="commentView" destination="Sgj-ub-LZu" id="aJu-7o-E02"/>
                 <outlet property="contentLabel" destination="O1g-xB-hP3" id="PQj-rR-Ya6"/>
                 <outlet property="followView" destination="4B8-5j-F6n" id="7rt-kE-h1m"/>
@@ -198,12 +226,12 @@
                 <outlet property="theImageView" destination="cg3-rv-3zG" id="dHy-Xc-Yw2"/>
                 <outlet property="timeLabel" destination="Tok-nD-ynb" id="IG7-lo-SrW"/>
             </connections>
-            <point key="canvasLocation" x="247" y="534.5"/>
+            <point key="canvasLocation" x="247" y="557"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="hot_allwork" width="53" height="23"/>
-        <image name="new_reply_follow" width="50" height="25"/>
+        <image name="new_reply_follow" width="58" height="28"/>
         <image name="new_reply_followed" width="58" height="28"/>
         <image name="psps.png" width="640" height="1136"/>
     </resources>
