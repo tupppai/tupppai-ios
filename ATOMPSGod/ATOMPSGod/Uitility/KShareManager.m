@@ -13,7 +13,7 @@ static dispatch_once_t onceToken;
 static dispatch_once_t onceToken2;
 
 static PWMascotAnimationView *mascotAnimator;
-static SIAlertView *signOutAlertView;
+static SIAlertView *NetworkErrorOccurredAlertView;
 
 + (PWMascotAnimationView *)mascotAnimator {
     dispatch_once(&onceToken, ^{
@@ -21,11 +21,11 @@ static SIAlertView *signOutAlertView;
     });
     return mascotAnimator;
 }
-+ (SIAlertView *)signOutAlertView {
++ (SIAlertView *)NetworkErrorOccurredAlertView {
     dispatch_once(&onceToken2, ^{
-        signOutAlertView = [[SIAlertView alloc] initWithTitle:@"大神来通知" andMessage:@"为了更好为你服务，请重新登录"];
+        NetworkErrorOccurredAlertView = [[SIAlertView alloc] initWithTitle:@"大神来通知" andMessage:@"为了更好为你服务，请重新登录"];
     });
-    return signOutAlertView;
+    return NetworkErrorOccurredAlertView;
 }
 
 @end

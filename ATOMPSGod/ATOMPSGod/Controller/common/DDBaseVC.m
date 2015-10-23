@@ -31,9 +31,9 @@
 }
 
 - (void)addObservers {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(signOutRET) name:@"SignOut" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorEccuredRET) name:@"ErrorOccurred" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showInfoRET:) name:@"ShowInfo" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorOccuredRET) name:@"NetworkErrorCall" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NetworkSignOutRET) name:@"NetworkSignOutCall" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showInfoRET:) name:@"NetworkShowInfoCall" object:nil];
 }
 - (void)setupNav {
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
@@ -54,13 +54,13 @@
     }
 }
 -(void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SignOut" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ErrorOccurred"object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ShowInfo" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkSignOutCall" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkSignOutCall"object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkShowInfoCall" object:nil];
     //compiler would call [super dealloc] automatically in ARC.
 }
--(void) signOutRET {
-    SIAlertView *alertView = [KShareManager signOutAlertView];
+-(void) NetworkSignOutRET {
+    SIAlertView *alertView = [KShareManager NetworkErrorOccurredAlertView];
     [alertView addButtonWithTitle:@"好咯"
                              type:SIAlertViewButtonTypeDefault
                           handler:^(SIAlertView *alert) {
@@ -75,7 +75,7 @@
     alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
     [alertView show];
 }
--(void) errorEccuredRET {
+-(void) errorOccuredRET {
     [Hud text:@"出现未知错误" inView:self.view];
 }
 -(void) showInfoRET:(NSNotification *)notification {

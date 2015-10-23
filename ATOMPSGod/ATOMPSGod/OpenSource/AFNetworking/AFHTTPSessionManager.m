@@ -20,10 +20,12 @@
 // THE SOFTWARE.
 
 #import "AFHTTPSessionManager.h"
-#if (defined(__IPHONE_OS_VERSION_MAX_ALLOWED) && __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000) || (defined(__MAC_OS_X_VERSION_MAX_ALLOWED) && __MAC_OS_X_VERSION_MAX_ALLOWED >= 1090)
+
+#if (defined(__IPHONE_OS_VERSION_MAX_ALLOWED) && __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000) || (defined(__MAC_OS_X_VERSION_MAX_ALLOWED) && __MAC_OS_X_VERSION_MAX_ALLOWED >= 1090) || TARGET_WATCH_OS
 
 #import "AFURLRequestSerialization.h"
 #import "AFURLResponseSerialization.h"
+
 #import <Availability.h>
 #import <Security/Security.h>
 
@@ -35,8 +37,10 @@
 #import <netdb.h>
 #endif
 
-#if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
+#if TARGET_OS_IOS
 #import <UIKit/UIKit.h>
+#elif TARGET_OS_WATCH
+#import <WatchKit/WatchKit.h>
 #endif
 
 @interface AFHTTPSessionManager ()
@@ -247,25 +251,20 @@
 #endif
         if (error) {
             if (failure) {
-                [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"ErrorOccurred" object:nil]];
                 failure(dataTask, error);
-#if DEBUG
-                [Hud error:URLString];
-#endif
+                [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkErrorCall" object:nil]];
             }
         } else {
             if (success) {
                 success(dataTask, responseObject);
                 int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
                 if (ret == 2) {
-                    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"SignOut" object:nil]];
+                    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkSignOutCall" object:nil]];
                 } else if (ret != 1) {
                     NSString* info = [responseObject objectForKey:@"info"];
                     NSDictionary* userInfo = [NSDictionary dictionaryWithObject:info forKey:@"info"];
-                    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"ShowInfo" object:nil userInfo:userInfo]];
+                    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkShowInfoCall" object:nil userInfo:userInfo]];
                 }
-
-               
             }
         }
     }];
@@ -306,6 +305,10 @@
 
     self.requestSerializer = [decoder decodeObjectOfClass:[AFHTTPRequestSerializer class] forKey:NSStringFromSelector(@selector(requestSerializer))];
     self.responseSerializer = [decoder decodeObjectOfClass:[AFHTTPResponseSerializer class] forKey:NSStringFromSelector(@selector(responseSerializer))];
+    AFSecurityPolicy *decodedPolicy = [decoder decodeObjectOfClass:[AFSecurityPolicy class] forKey:NSStringFromSelector(@selector(securityPolicy))];
+    if (decodedPolicy) {
+        self.securityPolicy = decodedPolicy;
+    }
 
     return self;
 }
@@ -321,6 +324,7 @@
     }
     [coder encodeObject:self.requestSerializer forKey:NSStringFromSelector(@selector(requestSerializer))];
     [coder encodeObject:self.responseSerializer forKey:NSStringFromSelector(@selector(responseSerializer))];
+    [coder encodeObject:self.securityPolicy forKey:NSStringFromSelector(@selector(securityPolicy))];
 }
 
 #pragma mark - NSCopying
@@ -330,7 +334,7 @@
 
     HTTPClient.requestSerializer = [self.requestSerializer copyWithZone:zone];
     HTTPClient.responseSerializer = [self.responseSerializer copyWithZone:zone];
-
+    HTTPClient.securityPolicy = [self.securityPolicy copyWithZone:zone];
     return HTTPClient;
 }
 

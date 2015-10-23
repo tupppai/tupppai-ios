@@ -187,13 +187,13 @@
         } else if (row == 1) {
             //关于我们
         } else if (row == 2) {
-            [self signOut];
+            [self SignOut];
         }
     }
 
 }
 
--(void) signOut {
+-(void) SignOut {
     SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"" andMessage:@"确定要退出登录吗"];
     [alertView addButtonWithTitle:@"取消"
                              type:SIAlertViewButtonTypeCancel

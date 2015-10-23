@@ -11,5 +11,5 @@
 #import "SIAlertView.h"
 @interface KShareManager : NSObject
 + (PWMascotAnimationView *)mascotAnimator;
-+ (SIAlertView *)signOutAlertView;
++ (SIAlertView *)NetworkErrorOccurredAlertView;
 @end

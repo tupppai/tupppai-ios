@@ -10,8 +10,8 @@
 
 @implementation DDLoginBaseVC
 -(void)viewDidLoad {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorEccuredRET) name:@"ErrorOccurred" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showInfoRET:) name:@"ShowInfo" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorOccuredRET) name:@"NetworkErrorCall" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showInfoRET:) name:@"NetworkShowInfoCall" object:nil];
     [self setupNav];
 }
 
@@ -34,7 +34,7 @@
     }
 }
 
--(void) errorEccuredRET {
+-(void) errorOccuredRET {
     [Hud text:@"出现未知错误" inView:self.view];
 }
 -(void) showInfoRET:(NSNotification *)notification {
