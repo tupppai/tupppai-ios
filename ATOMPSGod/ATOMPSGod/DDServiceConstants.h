@@ -39,6 +39,7 @@ extern NSString * URL_ACRequestAuthCode;
 extern NSString * URL_ACLogin;
 extern NSString * URL_ACRegister;
 extern NSString * URL_AC3PaAuth;
+extern NSString * URL_ACHasRegistered;
 
 #pragma mark - Unknown
 extern NSString * URL_UKSaveFeedback;

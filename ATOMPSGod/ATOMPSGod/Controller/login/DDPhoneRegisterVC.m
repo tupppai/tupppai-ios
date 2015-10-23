@@ -13,7 +13,7 @@
 @interface DDPhoneRegisterVC () <UITextFieldDelegate>
 
 @property (nonatomic, strong) ATOMMobileRegisterView *mobileRegisterView;
-
+@property (nonatomic, assign) BOOL flag;
 @end
 
 @implementation DDPhoneRegisterVC
@@ -30,6 +30,7 @@
     self.view = _mobileRegisterView;
     _mobileRegisterView.mobileTextField.delegate = self;
     _mobileRegisterView.passwordTextField.delegate = self;
+    _flag = YES;
 }
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -41,36 +42,47 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)clickRightButtonItem {
-    if ([self checkInputMessageSuccess]) {
-        NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:_mobileRegisterView.mobileTextField.text, @"phone", nil];
-        [DDService getAuthCode:param withBlock:^(NSString* authcode) {
-            if (authcode) {
-                [DDUserManager currentUser].mobile = _mobileRegisterView.mobileTextField.text;
-                [DDUserManager currentUser].password = [_mobileRegisterView.passwordTextField.text sha1];
-                DDAuthcodeVC *ivcvc = [DDAuthcodeVC new];
-                ivcvc.verifyCode = authcode;
-                [self.navigationController pushViewController:ivcvc animated:YES];
-            }
-            else {
-                [Util ShowTSMessageError:@"无法获取到验证码"];
-            }
-        }];
-
-    }
+   [self checkInputMessageSuccess:^(BOOL canNext) {
+       if (canNext) {
+           NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:_mobileRegisterView.mobileTextField.text, @"phone", nil];
+           [DDService getAuthCode:param withBlock:^(NSString* authcode) {
+               if (authcode) {
+                   [DDUserManager currentUser].mobile = _mobileRegisterView.mobileTextField.text;
+                   [DDUserManager currentUser].password = [_mobileRegisterView.passwordTextField.text sha1];
+                   DDAuthcodeVC *ivcvc = [DDAuthcodeVC new];
+                   ivcvc.verifyCode = authcode;
+                   [self.navigationController pushViewController:ivcvc animated:YES];
+               }
+               else {
+                   [Util ShowTSMessageError:@"无法获取到验证码"];
+               }
+           }];
+       }
+   }];
 }
 
-- (BOOL)checkInputMessageSuccess {
-    BOOL flag = YES;
+- (BOOL)checkInputMessageSuccess:(void (^)(BOOL canNext))block {
     NSString *mobileStr = _mobileRegisterView.mobileTextField.text;
     NSString *passwordStr = _mobileRegisterView.passwordTextField.text;
     if (![mobileStr isMobileNumber]) {
-        flag = NO;
+        if (block) { block(NO);}
         [Util ShowTSMessageWarn:@"请输入正确的手机号"];
-    } else if (![passwordStr isPassword]) {
-        [Util ShowTSMessageWarn:@"密码必须由6~16的位的数字和字母组成"];
-        flag = NO;
+    } else {
+        NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:_mobileRegisterView.mobileTextField.text,@"phone", nil];
+        [DDService checkPhoneRegistration:param withBlock:^(BOOL isRegistered) {
+            if (isRegistered) {
+                [Util ShowTSMessageWarn:@"此手机号已注册"];
+                if (block) { block(NO);}
+            } else if (![passwordStr isPassword]) {
+                [Util ShowTSMessageWarn:@"密码必须由6~16的位的数字和字母组成"];
+                if (block) { block(NO);}
+            }
+            else {
+                if (block) { block(YES);}
+            }
+        }];
     }
-    return flag;
+    return _flag;
 }
 
 #pragma UITextFieldDelegate
@@ -80,7 +92,25 @@
     return YES;
 }
 
-
+-(void)textFieldDidEndEditing:(UITextField *)textField {
+    if (textField == _mobileRegisterView.mobileTextField && ![_mobileRegisterView.mobileTextField.text  isEqualToString: @""]) {
+        NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:_mobileRegisterView.mobileTextField.text,@"phone", nil];
+        if (![_mobileRegisterView.mobileTextField.text isMobileNumber]) {
+            [Util ShowTSMessageWarn:@"请输入正确的手机号"];
+        } else {
+            [DDService checkPhoneRegistration:param withBlock:^(BOOL isRegistered) {
+                if (isRegistered) {
+                    [Util ShowTSMessageWarn:@"此手机号已注册"];
+                }
+            }];
+        }
+    }
+    else if (textField == _mobileRegisterView.passwordTextField && ![_mobileRegisterView.passwordTextField.text  isEqualToString: @""]) {
+        if (![_mobileRegisterView.passwordTextField.text isPassword]) {
+            [Util ShowTSMessageWarn:@"密码必须由6~16的位的数字和字母组成"];
+        }
+    }
+}
 
 
 

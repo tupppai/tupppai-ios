@@ -40,6 +40,7 @@ NSString * URL_ACRequestAuthCode = @"account/requestAuthCode";
 NSString * URL_ACLogin = @"account/login";
 NSString * URL_ACRegister = @"account/register";
 NSString * URL_AC3PaAuth = @"auth/";
+NSString * URL_ACHasRegistered = @"account/hasRegistered";
 
 #pragma mark - Unknown
 NSString * URL_UKSaveFeedback = @"feedback/save";

@@ -46,6 +46,7 @@
 + (void) ddLogin :(NSDictionary*)param withBlock:(void (^)(NSDictionary* data , NSInteger status))block;
 + (void) ddRegister :(NSDictionary*)param withBlock:(void (^)(NSDictionary* data))block;
 + (void) dd3PartyAuth :(NSDictionary*)param with3PaType:(NSString *)type withBlock:(void (^)(BOOL isRegistered,NSDictionary*userObject))block ;
++ (void) checkPhoneRegistration:(NSDictionary*)param withBlock:(void (^)(BOOL isRegistered))block;
 #pragma mark - Unknown
 + (void) postFeedBack :(NSDictionary*)param withBlock:(void (^)(BOOL success))block;
 + (void)  ddSaveAsk :(NSDictionary*)param withBlock:(void (^)(NSInteger newImageID))block;
@@ -53,7 +54,6 @@
 + (void)toggleLike:(BOOL)like ID:(NSInteger)ID type:(PIEPageType)type  withBlock:(void (^)(BOOL success))block;
 + (void)downloadImage:(NSString*)url withBlock:(void (^)(UIImage* image))block;
 + (void)editAsk :(NSDictionary*)param withBlock:(void (^)(BOOL success))block;
-
 
 #pragma mark - Newest 最新
 + (void)ddGetNewestAsk:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block;

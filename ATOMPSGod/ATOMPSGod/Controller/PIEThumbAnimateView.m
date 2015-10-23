@@ -16,7 +16,8 @@
         _toExpand = YES;
         self.userInteractionEnabled = YES;
         self.clipsToBounds = YES;
-        self.backgroundColor = [UIColor colorWithHex:0xffffff andAlpha:0.95];
+//        self.backgroundColor = [UIColor colorWithHex:0xffffff andAlpha:0.95];
+        self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"pattern5"]];
         [self setupSubviews];
     }
     return self;

@@ -197,8 +197,29 @@
         }
     }];
 }
+//+ (void) checkPhoneRegistration:(NSDictionary*)param withBlock:(void (^)(NSNumber* isRegistered))block {
+//    [[self class]GET:param url:URL_ACHasRegistered block:^(id responseObject) {
+//        if (responseObject) {
+//            NSDictionary *data = [ responseObject objectForKey:@"data"];
+//            NSNumber* isRegistered = [data objectForKey:@"is_register"];
+//            if (block) {
+//                block(isRegistered);
+//            }
+//        }
+//    }];
+//}
 
-
++ (void)checkPhoneRegistration:(NSDictionary*)param withBlock:(void (^)(BOOL isRegistered))block {
+    [[self class]GET:param url:URL_ACHasRegistered block:^(id responseObject) {
+        if (responseObject) {
+            NSDictionary *data = [ responseObject objectForKey:@"data"];
+            BOOL isRegistered = [[data objectForKey:@"has_registered"]boolValue];
+            if (block) {
+                block(isRegistered);
+            }
+        }
+    }];
+}
 
 #pragma mark - Unknown
 
