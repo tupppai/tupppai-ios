@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--我的-->
@@ -181,30 +180,14 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IoS-QI-3N9" userLabel="pageMenuContainer">
-                                <rect key="frame" x="-8" y="140" width="616" height="460"/>
-                                <animations/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <gestureRecognizers/>
-                            </view>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="IoS-QI-3N9" firstAttribute="top" secondItem="0eW-Qd-Lp1" secondAttribute="bottom" id="23g-7B-bCx"/>
                             <constraint firstItem="0eW-Qd-Lp1" firstAttribute="leading" secondItem="aKi-VC-fjx" secondAttribute="leading" id="ER5-eQ-OY0"/>
-                            <constraint firstAttribute="trailing" secondItem="IoS-QI-3N9" secondAttribute="trailingMargin" id="MFk-BS-Rir"/>
-                            <constraint firstItem="IoS-QI-3N9" firstAttribute="leadingMargin" secondItem="aKi-VC-fjx" secondAttribute="leading" id="Sep-9W-en9"/>
-                            <constraint firstItem="SFg-JV-i4z" firstAttribute="top" secondItem="IoS-QI-3N9" secondAttribute="bottom" id="UIe-sk-vGz"/>
                             <constraint firstItem="0eW-Qd-Lp1" firstAttribute="top" secondItem="aKi-VC-fjx" secondAttribute="top" constant="-20" id="WbR-8e-fAu"/>
-                            <constraint firstItem="SFg-JV-i4z" firstAttribute="top" secondItem="IoS-QI-3N9" secondAttribute="bottom" id="dAn-aK-9K8"/>
                             <constraint firstAttribute="trailing" secondItem="0eW-Qd-Lp1" secondAttribute="trailing" id="i5d-dP-eod"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="dAn-aK-9K8"/>
-                            </mask>
-                        </variation>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="Zde-u9-5Xv">
@@ -222,7 +205,6 @@
                         <outlet property="followCountLabel" destination="gng-se-MP8" id="0Cp-Tm-O02"/>
                         <outlet property="followView" destination="gx7-sZ-8Me" id="scz-qJ-RcT"/>
                         <outlet property="likedCountLabel" destination="Gy0-hx-9KW" id="xNo-3z-Wka"/>
-                        <outlet property="pageMenuContainerView" destination="IoS-QI-3N9" id="Ktp-Fs-hRI"/>
                         <outlet property="topContainerView" destination="0eW-Qd-Lp1" id="BnU-jc-QkQ"/>
                         <outlet property="usernameLabel" destination="quq-3A-g9a" id="Mz4-Iu-gA7"/>
                     </connections>

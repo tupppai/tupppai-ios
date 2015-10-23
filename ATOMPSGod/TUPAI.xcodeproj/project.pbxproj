@@ -3227,7 +3227,6 @@
 		F42ED3AE1BC4FC250052A0BF /* ME */ = {
 			isa = PBXGroup;
 			children = (
-				F45ECF461BD1DC0A00417A75 /* MyCommented */,
 				F499E4461BD0E3E000E5F178 /* settings */,
 				F4F72BEF1BCB6921002FF05A /* MyAsk */,
 				F42ED3B41BC4FC670052A0BF /* MyReply */,
@@ -3236,8 +3235,6 @@
 				F42ED3B21BC4FC3B0052A0BF /* Me.storyboard */,
 				F42ED3AF1BC4FC2D0052A0BF /* PIEMeViewController.h */,
 				F42ED3B01BC4FC2D0052A0BF /* PIEMeViewController.m */,
-				F45ECF4F1BD1E39500417A75 /* PIEMyLikedPagesViewController.h */,
-				F45ECF501BD1E39500417A75 /* PIEMyLikedPagesViewController.m */,
 			);
 			name = ME;
 			sourceTree = "<group>";
@@ -3512,6 +3509,9 @@
 		F499E4461BD0E3E000E5F178 /* settings */ = {
 			isa = PBXGroup;
 			children = (
+				F45ECF461BD1DC0A00417A75 /* MyCommented */,
+				F45ECF4F1BD1E39500417A75 /* PIEMyLikedPagesViewController.h */,
+				F45ECF501BD1E39500417A75 /* PIEMyLikedPagesViewController.m */,
 				5C3101791AAE84C600EF529B /* PIESettingViewController.h */,
 				5C31017A1AAE84C600EF529B /* PIESettingViewController.m */,
 				F499E4471BD0E41000E5F178 /* PIESettingsViewController.h */,
