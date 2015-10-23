@@ -40,6 +40,7 @@
                         <rect key="frame" x="0.0" y="53" width="323" height="391"/>
                         <animations/>
                         <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="130" id="6DR-iK-E7b"/>
                             <constraint firstAttribute="height" constant="348" id="Ngn-Bj-NmF"/>
                         </constraints>
                         <variation key="default">

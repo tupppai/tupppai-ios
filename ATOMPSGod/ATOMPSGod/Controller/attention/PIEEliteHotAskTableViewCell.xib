@@ -44,6 +44,7 @@
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="250" id="CnQ-Ff-byW"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="S07-7Q-NG5"/>
                             <constraint firstAttribute="height" constant="228" id="p26-Xc-pQF"/>
                         </constraints>
                         <variation key="default">

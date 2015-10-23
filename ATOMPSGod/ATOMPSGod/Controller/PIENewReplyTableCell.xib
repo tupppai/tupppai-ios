@@ -45,6 +45,7 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="228" id="Jfg-pO-BAf"/>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="250" id="gMw-YD-3py"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="iKR-Qi-VEQ"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -130,7 +131,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OK5-wj-zoL">
                         <rect key="frame" x="0.0" y="380" width="386" height="11"/>
                         <animations/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="11" id="AE5-KO-7L1"/>
                         </constraints>
@@ -203,7 +204,7 @@
     </objects>
     <resources>
         <image name="hot_allwork" width="53" height="23"/>
-        <image name="new_reply_follow" width="50" height="25"/>
+        <image name="new_reply_follow" width="58" height="28"/>
         <image name="new_reply_followed" width="58" height="28"/>
         <image name="psps.png" width="640" height="1136"/>
     </resources>

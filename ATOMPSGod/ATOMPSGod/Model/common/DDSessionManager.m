@@ -46,12 +46,22 @@ static DDSessionManager *_shareHTTPSessionManager = nil;
     });
     return _shareHTTPSessionManager;
 }
+-(NSURLSessionDataTask *)GET:(NSString *)URLString parameters:(id)parameters success:(void (^)(NSURLSessionDataTask * _Nonnull, id _Nonnull))success failure:(void (^)(NSURLSessionDataTask * _Nonnull, NSError * _Nonnull))failure {
+    
+    
+    
+   return  [super GET:URLString parameters:parameters success:success failure:failure];
+    
+}
 
+-(NSURLSessionDataTask *)dataTaskWithRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLResponse * _Nonnull, id _Nonnull, NSError * _Nonnull))completionHandler {
+    return [super dataTaskWithRequest:request completionHandler:completionHandler];
+}
 
-
-
-
-
+-(NSURLSessionDataTask *)POST:(NSString *)URLString parameters:(id)parameters constructingBodyWithBlock:(void (^)(id<AFMultipartFormData> _Nonnull))block success:(void (^)(NSURLSessionDataTask * _Nonnull, id _Nonnull))success failure:(void (^)(NSURLSessionDataTask * _Nonnull, NSError * _Nonnull))failure {
+    
+   return [super POST:URLString parameters:parameters constructingBodyWithBlock:block success:success failure:failure];
+}
 
 
 

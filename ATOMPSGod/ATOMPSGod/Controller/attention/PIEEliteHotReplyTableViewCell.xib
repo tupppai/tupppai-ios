@@ -118,6 +118,7 @@
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="228" id="Niq-Tv-rA3"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="Ntv-Uy-Xh6"/>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="250" id="Ss6-WD-bB1"/>
                         </constraints>
                         <variation key="default">

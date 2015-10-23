@@ -43,6 +43,7 @@
                         <animations/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="45g-oY-zmU"/>
                             <constraint firstAttribute="height" constant="228" id="fQ8-ev-oet"/>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="250" id="qH3-VX-SzQ"/>
                         </constraints>
