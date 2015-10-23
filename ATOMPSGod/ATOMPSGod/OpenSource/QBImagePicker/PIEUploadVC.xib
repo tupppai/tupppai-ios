@@ -57,10 +57,10 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="imo-xj-Aio">
-                    <rect key="frame" x="0.0" y="304" width="600" height="56"/>
+                    <rect key="frame" x="0.0" y="304" width="600" height="296"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nV4-jD-nex">
-                            <rect key="frame" x="449" y="14" width="28" height="28.5"/>
+                            <rect key="frame" x="449" y="4" width="28" height="28.5"/>
                             <animations/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="28" id="Zit-6x-9F5"/>
@@ -71,7 +71,7 @@
                             </state>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r4m-8D-CwT">
-                            <rect key="frame" x="503" y="14" width="28" height="28.5"/>
+                            <rect key="frame" x="503" y="4" width="28" height="28.5"/>
                             <animations/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="28" id="7us-Px-kOu"/>
@@ -82,7 +82,7 @@
                             </state>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lTF-ke-gQE">
-                            <rect key="frame" x="557" y="14" width="28" height="28.5"/>
+                            <rect key="frame" x="557" y="4" width="28" height="28.5"/>
                             <animations/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="28" id="cKE-qL-QfB"/>
@@ -93,7 +93,7 @@
                             </state>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="同步到" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T0r-oS-s0Z">
-                            <rect key="frame" x="8" y="18" width="48" height="19.5"/>
+                            <rect key="frame" x="8" y="8" width="48" height="19.5"/>
                             <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -105,6 +105,7 @@
                     <constraints>
                         <constraint firstItem="nV4-jD-nex" firstAttribute="centerY" secondItem="T0r-oS-s0Z" secondAttribute="centerY" id="2fe-AG-gy3"/>
                         <constraint firstItem="T0r-oS-s0Z" firstAttribute="leading" secondItem="imo-xj-Aio" secondAttribute="leadingMargin" id="68t-20-vS8"/>
+                        <constraint firstItem="T0r-oS-s0Z" firstAttribute="top" secondItem="imo-xj-Aio" secondAttribute="top" constant="8" id="K50-aK-Elb"/>
                         <constraint firstItem="r4m-8D-CwT" firstAttribute="centerY" secondItem="T0r-oS-s0Z" secondAttribute="centerY" id="LYU-Ez-V2i"/>
                         <constraint firstItem="T0r-oS-s0Z" firstAttribute="centerY" secondItem="imo-xj-Aio" secondAttribute="centerY" id="Lmi-02-GZB"/>
                         <constraint firstAttribute="height" constant="56" id="Qhl-tf-wet"/>
@@ -116,7 +117,9 @@
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
+                            <exclude reference="Qhl-tf-wet"/>
                             <exclude reference="Lmi-02-GZB"/>
+                            <exclude reference="qZN-MK-qp6"/>
                         </mask>
                     </variation>
                 </view>
@@ -124,6 +127,7 @@
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="imo-xj-Aio" secondAttribute="bottom" id="4QS-Zv-h7N"/>
                 <constraint firstItem="hZk-c4-ES1" firstAttribute="height" secondItem="Fdo-Qf-OsL" secondAttribute="height" id="AeS-Cv-n88"/>
                 <constraint firstItem="dPM-Ue-RIs" firstAttribute="centerX" secondItem="Fdo-Qf-OsL" secondAttribute="centerX" id="B9t-Ua-Tcl"/>
                 <constraint firstItem="Fdo-Qf-OsL" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="10" id="Bgd-pd-PWy"/>

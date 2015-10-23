@@ -75,7 +75,7 @@
     self.navigationController.navigationBar.translucent = YES;
     self.navigationController.view.backgroundColor = [UIColor clearColor];
     self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
-    
+    self.edgesForExtendedLayout = UIRectEdgeAll;
 }
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -182,29 +182,29 @@
     if (sender.state == UIGestureRecognizerStateBegan) {
         _startPanLocation = [sender locationInView:self.view];
     }
-    if (_pageMenu.view.frame.origin.y >= 0 && _pageMenu.view.frame.origin.y <= 140) {
+    if (_pageMenu.view.frame.origin.y >= 60 && _pageMenu.view.frame.origin.y <= 220) {
         
         CGFloat dif = [sender locationInView:self.view].y - _startPanLocation.y;
         CGFloat y = _pageMenu.view.frame.origin.y +  dif ;
-        y = MIN(y, 140);
-        y = MAX(y, 0);
+        y = MIN(y, 220);
+        y = MAX(y, 60);
        
         _pageMenu.view.frame = CGRectMake(0, y, SCREEN_WIDTH, SCREEN_HEIGHT);
         _startPanLocation = [sender locationInView:self.view];
     }
 }
 - (void)scrollUp {
-    if (_pageMenu.view.frame.origin.y != 0) {
+    if (_pageMenu.view.frame.origin.y != 60) {
         [UIView animateWithDuration:0.5 animations:^{
-            _pageMenu.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+            _pageMenu.view.frame = CGRectMake(0, 60, SCREEN_WIDTH, SCREEN_HEIGHT);
         }];
     }
 
 }
 - (void)scrollDown {
-    if (_pageMenu.view.frame.origin.y != 140) {
+    if (_pageMenu.view.frame.origin.y != 220) {
         [UIView animateWithDuration:0.5 animations:^{
-            _pageMenu.view.frame = CGRectMake(0, 140, SCREEN_WIDTH, SCREEN_HEIGHT);
+            _pageMenu.view.frame = CGRectMake(0, 220, SCREEN_WIDTH, SCREEN_HEIGHT);
         }];
     }
 }

@@ -31,6 +31,7 @@ NSString* deviceName();
 @interface Hud : NSObject
 +(void)text:(NSString*)message;
 +(void)text:(NSString*)message inView:(UIView*)view;
++(void)customText:(NSString*)message inView:(UIView*)view;
 +(void)activity:(NSString*)message;
 +(void)activity:(NSString*)message inView:(UIView*)view;
 +(void)dismiss;

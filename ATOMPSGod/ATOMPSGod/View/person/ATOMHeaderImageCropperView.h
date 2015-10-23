@@ -10,8 +10,8 @@
 @class BJImageCropper;
 
 @interface ATOMHeaderImageCropperView : ATOMBaseView
-@property (nonatomic, strong) UIButton *cancelButton;
-@property (nonatomic, strong) UIButton *confirmButton;
+//@property (nonatomic, strong) UIButton *cancelButton;
+//@property (nonatomic, strong) UIButton *confirmButton;
 @property (nonatomic, strong) BJImageCropper *imageCropperView;
 @property (nonatomic, strong) UIImage *originImage;
 @property (nonatomic, strong) UIImage *cropperImage;

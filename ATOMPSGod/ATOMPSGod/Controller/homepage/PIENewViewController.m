@@ -245,15 +245,17 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
                     UIImageWriteToSavedPhotosAlbum(image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
                 }];
             }
+            else {
+                [Hud customText:@"添加成功\n在“进行中”等你下载咯!" inView:self.view];
+            }
         }
     }];
 }
 - (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error
   contextInfo: (void *) contextInfo {
     if(error != NULL){
-        [Hud error:@"保存失败" inView:self.view];
     } else {
-        [Hud success:@"保存成功" inView:self.view];
+        [Hud customText:@"下载成功\n我猜你会用美图秀秀来P?" inView:self.view];
     }
 }
 
@@ -796,7 +798,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     WS(ws);
     if (!_psActionSheet) {
         _psActionSheet = [JGActionSheet new];
-        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"下载图片，马上帮P", @"塞入“进行中”,暂不下载",@"取消"] buttonStyle:JGActionSheetButtonStyleDefault];
+        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"下载图片帮P", @"添加至进行中",@"取消"] buttonStyle:JGActionSheetButtonStyleDefault];
         [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:2];
         NSArray *sections = @[section];
         _psActionSheet = [JGActionSheet actionSheetWithSections:sections];

@@ -12,7 +12,7 @@
 
 
 #import "ATOMReplyViewModel.h"
-#import "PWRefreshFooterCollectionView.h"
+#import "PIERefreshCollectionView.h"
 #import "DDPageManager.h"
 #import "PIETabBarController.h"
 #import "AppDelegate.h"
@@ -24,7 +24,7 @@
 
 @interface PIEMyReplyViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,CHTCollectionViewDelegateWaterfallLayout>
 
-@property (nonatomic, strong) PWRefreshFooterCollectionView *collectionView;
+@property (nonatomic, strong) PIERefreshCollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *homeImageDataSource;
 @property (nonatomic, assign) BOOL canRefreshFooter;
@@ -37,8 +37,13 @@
 
 
 #pragma mark - Refresh
--(void)didPullUpCollectionViewBottom:(PWRefreshFooterCollectionView *)collectionView {
+
+-(void)didPullUpCollectionViewBottom:(UICollectionView *)collectionView {
     [self loadMoreData];
+
+}
+-(void)didPullDownCollectionView:(UICollectionView *)collectionView {
+    [self getDataSource];
 }
 - (void)loadMoreData {
     if (_canRefreshFooter) {
@@ -53,6 +58,8 @@
 
 - (void)getDataSource {
     WS(ws);
+    [ws.collectionView.footer endRefreshing];
+
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     _currentPage = 1;
@@ -68,13 +75,14 @@
         }
         [ws.dataSource removeAllObjects];
         [ws.dataSource addObjectsFromArray:arrayAgent];
-        ws.collectionView.dataSource = self;
         [ws.collectionView reloadData];
+        [ws.collectionView.header endRefreshing];
     }];
 }
 
 - (void)getMoreDataSource {
     WS(ws);
+    [ws.collectionView.header endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timestamp = [[NSDate date] timeIntervalSince1970];
     ws.currentPage++;
@@ -114,10 +122,12 @@
     layout.minimumColumnSpacing = 8;
     layout.minimumInteritemSpacing = 10;
     
-    _collectionView = [[PWRefreshFooterCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+    _collectionView = [[PIERefreshCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     self.view = _collectionView;
     _collectionView.backgroundColor = [UIColor clearColor];
-    _collectionView.dataSource = nil;
+    _collectionView.dataSource = self;
+    _collectionView.toRefreshBottom = YES;
+    _collectionView.toRefreshTop = YES;
     _collectionView.delegate = self;
     _collectionView.psDelegate = self;
     _collectionView.emptyDataSetSource = self;

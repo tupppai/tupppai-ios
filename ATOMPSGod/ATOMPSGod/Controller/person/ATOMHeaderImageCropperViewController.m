@@ -22,11 +22,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"裁剪头像";
     [self createUI];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"选取" style:UIBarButtonItemStyleDone target:self action:@selector(clickRightButtonItem:)];
+    self.navigationItem.rightBarButtonItem = anotherButton;
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.delegate = self;
     }
@@ -51,8 +54,8 @@
     _headerImageCropperView = [ATOMHeaderImageCropperView new];
     self.view = _headerImageCropperView;
     _headerImageCropperView.originImage = _originImage;
-    [_headerImageCropperView.cancelButton addTarget:self action:@selector(clickLeftButtonItem:) forControlEvents:UIControlEventTouchUpInside];
-    [_headerImageCropperView.confirmButton addTarget:self action:@selector(clickRightButtonItem:) forControlEvents:UIControlEventTouchUpInside];
+//    [_headerImageCropperView.cancelButton addTarget:self action:@selector(clickLeftButtonItem:) forControlEvents:UIControlEventTouchUpInside];
+//    [_headerImageCropperView.confirmButton addTarget:self action:@selector(clickRightButtonItem:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark - Click Event

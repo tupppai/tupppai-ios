@@ -131,7 +131,8 @@ NSString* deviceName()
     // Configure for text only and offset down
     hud.mode = MBProgressHUDModeText;
     hud.labelText = message;
-    hud.margin = 10.f;
+    hud.margin = 30.f;
+    hud.cornerRadius = 4;
     hud.removeFromSuperViewOnHide = YES;
     [hud hide:YES afterDelay:1];
     }
@@ -142,12 +143,24 @@ NSString* deviceName()
         // Configure for text only and offset down
         hud.mode = MBProgressHUDModeText;
         hud.labelText = message;
-        hud.margin = 10.f;
+        hud.margin = 30.f;
+        hud.cornerRadius = 4;
         hud.removeFromSuperViewOnHide = YES;
         [hud hide:YES afterDelay:1];
     }
 }
-
++(void)customText:(NSString*)message inView:(UIView*)view {
+    if (view) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
+        // Configure for text only and offset down
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = message;
+        hud.margin = 30.f;
+        hud.cornerRadius = 4;
+        hud.removeFromSuperViewOnHide = YES;
+        [hud hide:YES afterDelay:1];
+    }
+}
 +(void)activity:(NSString*)message {
     if ([UIApplication sharedApplication].keyWindow) {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];

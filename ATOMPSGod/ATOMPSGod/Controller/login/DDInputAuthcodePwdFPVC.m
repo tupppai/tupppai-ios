@@ -80,7 +80,7 @@
 
             [DDService resetPassword:param withBlock:^(BOOL success) {
                 if (success) {
-                    [Util ShowTSMessageSuccess:@"成功设置密码"];
+                    [Hud success:@"成功设置密码"];
                     [self.navigationController popToRootViewControllerAnimated:YES];
                 } else {
                     [Util ShowTSMessageError:@"操作失败"];

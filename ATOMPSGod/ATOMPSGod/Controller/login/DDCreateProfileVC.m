@@ -13,7 +13,7 @@
 #import "ATOMUploadImage.h"
 #import "ATOMImage.h"
 #import "JGActionSheet.h"
-
+#import "DDLoginNavigationController.h"
 
 
 @interface DDCreateProfileVC () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, ATOMCropHeaderImageCompleteProtocol>
@@ -172,9 +172,10 @@
     WS(ws);
     [self dismissViewControllerAnimated:YES completion:^{
         ATOMHeaderImageCropperViewController *hicvc = [ATOMHeaderImageCropperViewController new];
+        DDLoginNavigationController* nav = [[DDLoginNavigationController alloc]initWithRootViewController:hicvc];
         hicvc.delegate = ws;
         hicvc.originImage = info[UIImagePickerControllerOriginalImage];
-        [self.navigationController presentViewController:hicvc animated:NO completion:nil];
+        [self presentViewController:nav animated:YES completion:nil];
     }];
 }
 
@@ -186,7 +187,6 @@
     ATOMUploadImage *uploadImage = [ATOMUploadImage new];
     [uploadImage UploadImage:data WithBlock:^(ATOMImage *imageInfomation, NSError *error) {
         if (error) {
-            NSLog(@"%@", error);
             return ;
         }
         [DDUserManager currentUser].avatar = imageInfomation.imageURL;

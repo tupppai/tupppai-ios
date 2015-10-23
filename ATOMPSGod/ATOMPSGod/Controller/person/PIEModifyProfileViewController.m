@@ -142,9 +142,10 @@
     WS(ws);
     [self dismissViewControllerAnimated:YES completion:^{
         ATOMHeaderImageCropperViewController *hicvc = [ATOMHeaderImageCropperViewController new];
+        DDNavigationController* nav = [[DDNavigationController alloc]initWithRootViewController:hicvc];
         hicvc.delegate = ws;
         hicvc.originImage = info[UIImagePickerControllerOriginalImage];
-        [self.navigationController presentViewController:hicvc animated:NO completion:nil];
+        [self.navigationController presentViewController:nav animated:NO completion:nil];
     }];
 }
 
