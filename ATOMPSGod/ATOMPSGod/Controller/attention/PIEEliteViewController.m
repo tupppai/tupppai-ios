@@ -52,6 +52,8 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureHot;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureFollow;
+@property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureHot;
+@property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureFollow;
 
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 //@property (nonatomic, strong) UITableViewCell *selectedFollowCell;
@@ -96,6 +98,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     self.view = self.sv;
     [self configTableViewFollow];
     [self configTableViewHot];
+    [self setupGestures];
 }
 - (void)configTableViewFollow {
     _sv.tableFollow.dataSource = self;
@@ -106,10 +109,23 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     [_sv.tableFollow registerNib:nib2 forCellReuseIdentifier:askIndentifier];
     UINib* nib3 = [UINib nibWithNibName:replyIndentifier bundle:nil];
     [_sv.tableFollow registerNib:nib3 forCellReuseIdentifier:replyIndentifier];
+
+}
+- (void)setupGestures {
     
     _tapGestureFollow = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureFollow:)];
     [_sv.tableFollow addGestureRecognizer:_tapGestureFollow];
+    
+    _tapGestureHot = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureHot:)];
+    [_sv.tableHot addGestureRecognizer:_tapGestureHot];
+    _longPressGestureHot = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnHot:)];
+    [_sv.tableHot addGestureRecognizer:_longPressGestureHot];
+    
+    _longPressGestureFollow = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnFollow:)];
+    [_sv.tableFollow addGestureRecognizer:_longPressGestureFollow];
+    
 }
+
 - (void)configTableViewHot {
     
     _sv.tableHot.dataSource = self;
@@ -121,8 +137,6 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     UINib* nib2 = [UINib nibWithNibName:hotAskIndentifier bundle:nil];
     [_sv.tableHot registerNib:nib2 forCellReuseIdentifier:hotAskIndentifier];
 
-    _tapGestureHot = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureHot:)];
-    [_sv.tableHot addGestureRecognizer:_tapGestureHot];
 }
 - (void)createNavBar {
     WS(ws);
@@ -240,10 +254,37 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
         return 0;
     }
 }
-
 #pragma mark - Gesture Event
 
-
+- (void)longPressOnFollow:(UILongPressGestureRecognizer *)gesture {
+    if (_sv.type == PIEPageTypeEliteFollow) {
+        CGPoint location = [gesture locationInView:_sv.tableFollow];
+        _selectedIndexPath = [_sv.tableFollow indexPathForRowAtPoint:location];
+        if (_selectedIndexPath) {
+            //关注  求p
+            _selectedVM = _sourceFollow[_selectedIndexPath.row];
+            
+            if (_selectedVM.type == PIEPageTypeAsk) {
+                
+                PIEEliteAskTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
+                CGPoint p = [gesture locationInView:cell];
+                if (CGRectContainsPoint(cell.theImageView.frame, p)) {
+                    //进入热门详情
+                    [self showShareView];
+                }
+            }
+            
+            //关注  作品
+            else {
+                PIEEliteReplyTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
+                CGPoint p = [gesture locationInView:cell];
+                if (CGRectContainsPoint(cell.theImageView.frame, p)) {
+                    [self showShareView];
+                }
+            }
+        }
+    }
+}
 - (void)tapGestureFollow:(UITapGestureRecognizer *)gesture {
     if (_sv.type == PIEPageTypeEliteFollow) {
         CGPoint location = [gesture locationInView:_sv.tableFollow];
@@ -362,7 +403,37 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
         }
     }
 }
+- (void)longPressOnHot:(UILongPressGestureRecognizer *)gesture {
+    if (_sv.type == PIEPageTypeEliteHot) {
+        CGPoint location = [gesture locationInView:_sv.tableHot];
+        _selectedIndexPath = [_sv.tableHot indexPathForRowAtPoint:location];
+        if (_selectedIndexPath) {
+            //关注  求p
+            _selectedVM = _sourceHot[_selectedIndexPath.row];
+            
+            if (_selectedVM.type == PIEPageTypeAsk) {
+                
+                PIEEliteHotAskTableViewCell* cell = [_sv.tableHot cellForRowAtIndexPath:_selectedIndexPath];
+                CGPoint p = [gesture locationInView:cell];
+                if (CGRectContainsPoint(cell.theImageView.frame, p)) {
+                    [self showShareView];
+                }
+            }
+            //关注  作品
+            
+            else {
+                PIEEliteHotReplyTableViewCell* cell = [_sv.tableHot cellForRowAtIndexPath:_selectedIndexPath];
+                CGPoint p = [gesture locationInView:cell];
+                //点击大图
+                  if (CGRectContainsPoint(cell.theImageView.frame, p)) {
+                      [self showShareView];
+                }
 
+            }
+        }
+    }
+
+}
 - (void)tapGestureHot:(UITapGestureRecognizer *)gesture {
     if (_sv.type == PIEPageTypeEliteHot) {
         CGPoint location = [gesture locationInView:_sv.tableHot];

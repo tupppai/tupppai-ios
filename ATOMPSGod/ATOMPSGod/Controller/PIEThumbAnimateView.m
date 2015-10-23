@@ -16,7 +16,7 @@
         _toExpand = YES;
         self.userInteractionEnabled = YES;
         self.clipsToBounds = YES;
-        self.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
+        self.backgroundColor = [UIColor colorWithHex:0xffffff andAlpha:0.95];
         [self setupSubviews];
     }
     return self;
@@ -66,7 +66,7 @@
 - (UIImageView*)originView {
     if (!_originView) {
         _originView = [UIImageView new];
-        _originView.image = [UIImage imageNamed:@"new_reply_origin"];
+        _originView.image = [UIImage imageNamed:@"pie_origin"];
         _originView.contentMode = UIViewContentModeScaleAspectFit;
     }
     return _originView;

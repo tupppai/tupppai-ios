@@ -22,8 +22,6 @@
 #import "DDCommentVC.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 #import "PIECarouselViewController.h"
-#import "QBImagePicker.h"
-#import "PIEUploadVC.h"
 
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "PIENewAskCollectionCell.h"
@@ -34,10 +32,12 @@
 @class PIEPageEntity;
 #define AskCellWidth (SCREEN_WIDTH - 20) / 2.0
 
-@interface PIENewViewController() < UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,PWRefreshBaseCollectionViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,QBImagePickerControllerDelegate,CHTCollectionViewDelegateWaterfallLayout,UICollectionViewDelegate,UICollectionViewDataSource>
+@interface PIENewViewController() < UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,PWRefreshBaseCollectionViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,CHTCollectionViewDelegateWaterfallLayout,UICollectionViewDelegate,UICollectionViewDataSource>
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureReply;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureAsk;
+@property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureAsk;
+@property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureReply;
 
 @property (nonatomic, strong) NSMutableArray *sourceAsk;
 @property (nonatomic, strong) NSMutableArray *sourceReply;
@@ -64,7 +64,6 @@
 @property (nonatomic, strong) PIEShareView *shareView;
 
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
-@property (nonatomic, strong) QBImagePickerController* QBImagePickerController;
 
 @end
 
@@ -102,7 +101,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [self createCustomNavigationBar];
     [self confighotTable];
     [self configAskView];
-    
+    [self setupGestures];
     //set this before firstGetRemoteSource
     _canRefreshReplyFooter = YES;
     _canRefreshAskFooter = YES;
@@ -116,7 +115,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         }
     }];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_New" object:nil];
-    
 }
 
 - (void)confighotTable {
@@ -127,10 +125,22 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     UINib* nib = [UINib nibWithNibName:CellIdentifier bundle:nil];
     [_hotTableView registerNib:nib forCellReuseIdentifier:CellIdentifier];
     _hotTableView.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
-    _tapGestureReply = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureReply:)];
-    [_hotTableView addGestureRecognizer:_tapGestureReply];
+
     _hotTableView.scrollsToTop = YES;
     _currentHotIndex = 1;
+}
+- (void)setupGestures {
+    _tapGestureReply = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureReply:)];
+    [_hotTableView addGestureRecognizer:_tapGestureReply];
+    _tapGestureAsk = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureAsk:)];
+    [_askCollectionView addGestureRecognizer:_tapGestureAsk];
+    
+    _longPressGestureAsk = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnAsk:)];
+    [_askCollectionView addGestureRecognizer:_longPressGestureAsk];
+    
+    _longPressGestureReply = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnReply:)];
+    [_hotTableView addGestureRecognizer:_longPressGestureReply];
+
 }
 
 - (void)configAskView {
@@ -140,10 +150,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     _askCollectionView.psDelegate = self;
     UINib* nib = [UINib nibWithNibName:CellIdentifier2 bundle:nil];
     [_askCollectionView registerNib:nib forCellWithReuseIdentifier:CellIdentifier2];
-    
-    _tapGestureAsk = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureAsk:)];
-    [_askCollectionView addGestureRecognizer:_tapGestureAsk];
-    
     _currentAskIndex = 1;
 }
 
@@ -307,11 +313,10 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
             }
             else if (CGRectContainsPoint(_selectedReplyCell.collectView.frame, p)) {
                 //should write this logic in viewModel
-                [self collectReply];
+                [self collectPage];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
                 [self likeReply];
-//                [_selectedVM toggleLike:nil];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.followView.frame, p)) {
                 [self followReplier];
@@ -332,7 +337,38 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         }
     }
 }
+- (void)longPressOnReply:(UILongPressGestureRecognizer *)gesture {
+    if (_scrollView.type == PIENewScrollTypeReply) {
+        CGPoint location = [gesture locationInView:_hotTableView];
+        _selectedIndexPath = [_hotTableView indexPathForRowAtPoint:location];
+        if (_selectedIndexPath) {
+            _selectedReplyCell = [_hotTableView cellForRowAtIndexPath:_selectedIndexPath];
+            _selectedVM = _sourceReply[_selectedIndexPath.row];
+            CGPoint p = [gesture locationInView:_selectedReplyCell];
+            
+            //点击大图
+             if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
+                 [self showShareView];
+            }
+        }
+    }
 
+}
+- (void)longPressOnAsk:(UILongPressGestureRecognizer *)gesture {
+    if (_scrollView.type == PIENewScrollTypeAsk) {
+        CGPoint location = [gesture locationInView:_askCollectionView];
+        NSIndexPath *indexPath = [_askCollectionView indexPathForItemAtPoint:location];
+        if (indexPath) {
+            _selectedAskCell= (PIENewAskCollectionCell *)[_askCollectionView cellForItemAtIndexPath:indexPath];
+            _selectedVM = _sourceAsk[indexPath.row];
+            CGPoint p = [gesture locationInView:_selectedAskCell];
+            //点击大图
+            if (CGRectContainsPoint(_selectedAskCell.leftImageView.frame, p) || CGRectContainsPoint(_selectedAskCell.rightImageView.frame, p)) {
+                [self showShareView];
+            }
+        }
+    }
+}
 - (void)tapGestureAsk:(UITapGestureRecognizer *)gesture {
     if (_scrollView.type == PIENewScrollTypeAsk) {
         CGPoint location = [gesture locationInView:_askCollectionView];
@@ -368,11 +404,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         }
     }
 }
-
-//#pragma mark - QBImagePickerControllerDelegate
-//
-//
-
 
 
 #pragma mark - UIScrollViewDelegate
@@ -571,26 +602,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 }
 
 #pragma mark - ATOMShareViewDelegate
-//-(void)tapWechatFriends {
-//    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:PIEPageTypeAsk];
-//}
-//-(void)tapWechatMoment {
-//    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:PIEPageTypeAsk];
-//}
-//-(void)tapSinaWeibo {
-//    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:PIEPageTypeAsk];
-//}
-//-(void)tapInvite {
-//    DDInviteVC* ivc = [DDInviteVC new];
-//    ivc.askPageViewModel = _selectedVM;
-//    [self.navigationController pushViewController:ivc animated:YES];
-//}
-//-(void)tapReport {
-//    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
-//}
-//-(void)tapCollect {
-//    [self collectReply];
-//}
 
 
 //sina
@@ -620,7 +631,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
 }
 -(void)tapShare8 {
-    [self collectReply];
+    [self collectPage];
 }
 
 -(void)tapShareCancel {
@@ -630,7 +641,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
 
 
--(void)collectReply {
+-(void)collectPage {
     NSMutableDictionary *param = [NSMutableDictionary new];
     _selectedReplyCell.collectView.selected = !_selectedReplyCell.collectView.selected;
     if (_selectedReplyCell.collectView.selected) {
@@ -640,7 +651,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         //取消收藏
         [param setObject:@(0) forKey:@"status"];
     }
-    [DDCollectManager toggleCollect:param withPageType:PIEPageTypeReply withID:_selectedVM.ID withBlock:^(NSError *error) {
+    [DDCollectManager toggleCollect:param withPageType:_selectedVM.type withID:_selectedVM.ID withBlock:^(NSError *error) {
         if (!error) {
             _selectedVM.collected = _selectedReplyCell.collectView.selected;
             _selectedVM.collectCount = _selectedReplyCell.collectView.numberString;
@@ -867,18 +878,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     return _reportActionSheet;
 }
 
-- (QBImagePickerController* )QBImagePickerController {
-    if (!_QBImagePickerController) {
-        _QBImagePickerController = [QBImagePickerController new];
-        _QBImagePickerController.delegate = self;
-        _QBImagePickerController.filterType = QBImagePickerControllerFilterTypePhotos;
-        _QBImagePickerController.allowsMultipleSelection = YES;
-        _QBImagePickerController.showsNumberOfSelectedAssets = YES;
-        _QBImagePickerController.minimumNumberOfSelection = 1;
-        _QBImagePickerController.maximumNumberOfSelection = 2;
-    }
-    return _QBImagePickerController;
-}
+
 
 - (HMSegmentedControl*)segmentedControl {
     WS(ws);
