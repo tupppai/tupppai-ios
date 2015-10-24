@@ -28,7 +28,7 @@
 }
 
 - (void)createUI {
-    self.title = @"账号绑定";
+    self.title = @"帐号绑定";
     _accountBindingView = [ATOMAccountBindingView new];
     self.view = _accountBindingView;
     _accountBindingView.accountBindingTableView.scrollEnabled = NO;
@@ -74,23 +74,45 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 40;
 }
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    NSString *sectionName;
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,40)];
+    view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 100,40)];
+    label.backgroundColor = [UIColor clearColor];
+    [view addSubview:label];
+
+    label.font = [UIFont boldSystemFontOfSize:13];
     switch (section)
     {
         case 0:
-            sectionName = @"登录账号";
+            label.text = @"登录账号";
             break;
         case 1:
-            sectionName = @"社交账号绑定";
+            label.text  = @"社交账号绑定";
             break;
         default:
-            sectionName = @"";
             break;
     }
-    return sectionName;
+    return view;
+
 }
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+//{
+//    NSString *sectionName;
+//    switch (section)
+//    {
+//        case 0:
+//            sectionName = @"登录账号";
+//            break;
+//        case 1:
+//            sectionName = @"社交账号绑定";
+//            break;
+//        default:
+//            sectionName = @"";
+//            break;
+//    }
+//    return sectionName;
+//}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0 && indexPath.row == 1) {
@@ -133,13 +155,17 @@
             cell.accessoryType = UITableViewCellAccessoryNone;
             UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 40, 25)];
             label.adjustsFontSizeToFitWidth = YES;
+            label.textColor = [UIColor lightGrayColor];
+            label.font = [UIFont systemFontOfSize:14.0];
             NSString* phoneDesc ;
             if ([[DDUserManager currentUser].mobile isEqualToString:@"-1"] || ![DDUserManager currentUser].mobile) {
                 label.text = @"未绑定";
                  phoneDesc = @"手机号";
             } else {
                 label.text = @"已绑定";
-                phoneDesc = [NSString stringWithFormat:@"手机号%@",[DDUserManager currentUser].mobile];
+                
+                cell.phoneNumber = [DDUserManager currentUser].mobile;
+                phoneDesc = @"手机号";
             }
             cell.textLabel.textColor = [UIColor lightGrayColor];
             cell.accessoryView = label;
@@ -190,7 +216,6 @@
         [DDShareSDKManager getUserInfo:shareType withBlock:^(NSString *openId) {
             if (openId) {
                 [param setObject:openId forKey:@"openid"];
-            }
             [DDMySettingsManager setBindSetting:param withToggleBind:YES withBlock:^(NSError *error) {
                 if (error) {
                     //绑定失败，回到原型
@@ -199,6 +224,11 @@
                     [Hud success:@"绑定成功" inView:self.view];
                 }
             }];
+            }
+            else {
+                bindSwitch.on = NO;
+            }
+
 
         }];
     }

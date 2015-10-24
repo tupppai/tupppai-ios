@@ -15,7 +15,8 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        self.textLabel.textColor = [UIColor darkGrayColor];
+        self.textLabel.textColor = [UIColor blackColor];
+        self.textLabel.font = [UIFont systemFontOfSize:15.0];
     }
     return self;
 }
@@ -31,7 +32,7 @@
     _phoneNumber = [phoneNumber stringByReplacingCharactersInRange:range withString:@"****"];
     NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
     paragraphStyle.lineSpacing = 7.5;
-    NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:17.0], NSFontAttributeName, [UIColor colorWithHex:0x797979], NSForegroundColorAttributeName, paragraphStyle, NSParagraphStyleAttributeName, nil];
+    NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15.0], NSFontAttributeName, [UIColor lightGrayColor], NSForegroundColorAttributeName, paragraphStyle, NSParagraphStyleAttributeName, nil];
     NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@",_phoneNumber] attributes:attributeDict];
 
     UILabel* phoneLabel = [UILabel new];
@@ -39,7 +40,7 @@
     [self addSubview:phoneLabel];
     [phoneLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.mas_centerY);
-        make.right.equalTo(self.mas_right).with.offset(-10);
+        make.left.equalTo(self).with.offset(80);
         make.width.equalTo(@200);
         make.height.equalTo(@20);
     }];

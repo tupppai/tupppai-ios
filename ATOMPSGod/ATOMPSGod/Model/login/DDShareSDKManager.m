@@ -10,7 +10,12 @@
 //shareSDK 获取 用户手机的第三方平台的信息
 + (void)getUserInfo:(SSDKPlatformType)type withBlock:(void (^)(NSString* openId ))block{
     [ShareSDK getUserInfo:type conditional:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
-        block(user.uid);
+        if (state == SSDKResponseStateSuccess) {
+            NSLog(@"SSDKResponseStateSuccess");
+            block(user.uid);
+        } else {
+            block(nil);
+        }
     }];
 }
 + (void)authorize:(SSDKPlatformType)type withBlock:(void (^)(NSDictionary* ))block{

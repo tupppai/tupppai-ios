@@ -95,7 +95,7 @@
         } else if (row == 2) {
             cell.textLabel.text = @"修改密码";
         } else if (row == 3) {
-            cell.textLabel.text = @"账号绑定";
+            cell.textLabel.text = @"帐号安全";
         }
     }
     else if (section == 1) {

@@ -11,6 +11,7 @@
                 <outlet property="loginLabel" destination="ldl-W0-kNF" id="rbG-8q-m1w"/>
                 <outlet property="passwordTextfield" destination="cHh-zq-v92" id="cQd-iL-MiB"/>
                 <outlet property="phoneTextfield" destination="6Ff-6L-VIy" id="p9I-xt-SXL"/>
+                <outlet property="socialTipLabel" destination="M4c-0S-0D4" id="chm-c7-ThP"/>
                 <outlet property="socialView1" destination="iiH-Qe-oDr" id="k09-bL-oYn"/>
                 <outlet property="socialView2" destination="pV9-rd-Mow" id="qzh-aW-stJ"/>
                 <outlet property="socialView3" destination="dm4-Iu-Exo" id="e1r-QQ-5YI"/>
@@ -29,27 +30,27 @@
                         <constraint firstAttribute="width" constant="288" id="KtN-Ht-SJh"/>
                         <constraint firstAttribute="height" constant="30" id="ngv-hi-dAy"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                 </textField>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="密码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cHh-zq-v92">
                     <rect key="frame" x="156" y="114" width="288" height="30"/>
                     <animations/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                    <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                 </textField>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dgS-JO-Jih" userLabel="line1">
+                <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dgS-JO-Jih" userLabel="line1">
                     <rect key="frame" x="156" y="89" width="288" height="1"/>
                     <animations/>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="eY7-KP-ioa"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Gs-bj-pji" userLabel="line2">
+                <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Gs-bj-pji" userLabel="line2">
                     <rect key="frame" x="156" y="145" width="288" height="1"/>
                     <animations/>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="abo-Ee-63i"/>
                     </constraints>
@@ -61,14 +62,13 @@
                         <constraint firstAttribute="width" constant="267" id="5dB-29-NRh"/>
                         <constraint firstAttribute="height" constant="36" id="L2h-fq-EEz"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SmW-5u-Fzg">
+                <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SmW-5u-Fzg">
                     <rect key="frame" x="167" y="294.5" width="88" height="1"/>
                     <animations/>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="88" id="AXT-t3-LNk"/>
                         <constraint firstAttribute="height" constant="1" id="T7N-d6-62L"/>
@@ -78,7 +78,7 @@
                     <rect key="frame" x="261" y="287" width="78" height="16"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pie_social_sinaweibo" translatesAutoresizingMaskIntoConstraints="NO" id="pV9-rd-Mow">
@@ -101,13 +101,13 @@
                     <rect key="frame" x="392" y="154" width="52" height="16"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JE2-As-NBI">
+                <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JE2-As-NBI">
                     <rect key="frame" x="345" y="294.5" width="88" height="1"/>
                     <animations/>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="4Rc-4I-mIP"/>
                         <constraint firstAttribute="width" constant="88" id="7gh-IP-ZLN"/>

@@ -23,19 +23,25 @@
 @property (weak, nonatomic) IBOutlet UIImageView *socialView1;
 @property (weak, nonatomic) IBOutlet UIImageView *socialView3;
 @property (weak, nonatomic) IBOutlet UILabel *forgetLabel;
+@property (weak, nonatomic) IBOutlet UILabel *socialTipLabel;
 
 @end
 
 @implementation PIELoginViewController
+-(void)awakeFromNib {
 
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.title = @"登录";
     _socialView1.userInteractionEnabled = YES;
     _socialView2.userInteractionEnabled = YES;
     _socialView3.userInteractionEnabled = YES;
     _loginLabel.userInteractionEnabled = YES;
     _forgetLabel.userInteractionEnabled = YES;
+    _loginLabel.textColor = [UIColor colorWithHex:0x4A4A4A];
+
+
     UITapGestureRecognizer* tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tap1)];
     UITapGestureRecognizer* tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tap2)];
     UITapGestureRecognizer* tap3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tap3)];
