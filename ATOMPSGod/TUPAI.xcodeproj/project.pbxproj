@@ -508,6 +508,8 @@
 		F4E5F6031BD9D2E100AB8B31 /* UIProgressView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E5F5F01BD9D2E100AB8B31 /* UIProgressView+AFNetworking.m */; settings = {ASSET_TAGS = (); }; };
 		F4E5F6041BD9D2E100AB8B31 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E5F5F21BD9D2E100AB8B31 /* UIRefreshControl+AFNetworking.m */; settings = {ASSET_TAGS = (); }; };
 		F4E5F6051BD9D2E100AB8B31 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E5F5F41BD9D2E100AB8B31 /* UIWebView+AFNetworking.m */; settings = {ASSET_TAGS = (); }; };
+		F4E680631BDC73F500A4F199 /* PIEProceedingShareSheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E680621BDC73F500A4F199 /* PIEProceedingShareSheetView.m */; settings = {ASSET_TAGS = (); }; };
+		F4E680661BDC744C00A4F199 /* PIEProceedingShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E680651BDC744C00A4F199 /* PIEProceedingShareView.m */; settings = {ASSET_TAGS = (); }; };
 		F4EC10F81BCE58EE002D1DCF /* PIENotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EC10F71BCE58EE002D1DCF /* PIENotificationViewController.m */; settings = {ASSET_TAGS = (); }; };
 		F4EC10FC1BCE591A002D1DCF /* PIENotificationCommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EC10FA1BCE591A002D1DCF /* PIENotificationCommentTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
 		F4EC10FD1BCE591A002D1DCF /* PIENotificationCommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4EC10FB1BCE591A002D1DCF /* PIENotificationCommentTableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
@@ -1520,6 +1522,10 @@
 		F4E5F5F21BD9D2E100AB8B31 /* UIRefreshControl+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIRefreshControl+AFNetworking.m"; sourceTree = "<group>"; };
 		F4E5F5F31BD9D2E100AB8B31 /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
 		F4E5F5F41BD9D2E100AB8B31 /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
+		F4E680611BDC73F500A4F199 /* PIEProceedingShareSheetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEProceedingShareSheetView.h; sourceTree = "<group>"; };
+		F4E680621BDC73F500A4F199 /* PIEProceedingShareSheetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEProceedingShareSheetView.m; sourceTree = "<group>"; };
+		F4E680641BDC744C00A4F199 /* PIEProceedingShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEProceedingShareView.h; sourceTree = "<group>"; };
+		F4E680651BDC744C00A4F199 /* PIEProceedingShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEProceedingShareView.m; sourceTree = "<group>"; };
 		F4EC10F61BCE58EE002D1DCF /* PIENotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIENotificationViewController.h; sourceTree = "<group>"; };
 		F4EC10F71BCE58EE002D1DCF /* PIENotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENotificationViewController.m; sourceTree = "<group>"; };
 		F4EC10F91BCE591A002D1DCF /* PIENotificationCommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIENotificationCommentTableViewCell.h; sourceTree = "<group>"; };
@@ -3703,6 +3709,39 @@
 			path = "UIKit+AFNetworking";
 			sourceTree = "<group>";
 		};
+		F4E6805E1BDC73CC00A4F199 /* signup */ = {
+			isa = PBXGroup;
+			children = (
+				F4E530901BD49AE800FAA65D /* PIESignUpView.h */,
+				F4E530911BD49AE800FAA65D /* PIESignUpView.m */,
+				F4E5308D1BD4985400FAA65D /* PIESignUpSheetView.h */,
+				F4E5308E1BD4985400FAA65D /* PIESignUpSheetView.m */,
+			);
+			name = signup;
+			sourceTree = "<group>";
+		};
+		F4E6805F1BDC73D700A4F199 /* share */ = {
+			isa = PBXGroup;
+			children = (
+				F4F72C211BCD13D6002FF05A /* PIEShareView.h */,
+				F4F72C221BCD13D6002FF05A /* PIEShareView.m */,
+				F4F72C1B1BCCFB2A002FF05A /* PIESharesheetView.h */,
+				F4F72C1C1BCCFB2A002FF05A /* PIESharesheetView.m */,
+			);
+			name = share;
+			sourceTree = "<group>";
+		};
+		F4E680601BDC73DE00A4F199 /* proceeding */ = {
+			isa = PBXGroup;
+			children = (
+				F4E680641BDC744C00A4F199 /* PIEProceedingShareView.h */,
+				F4E680651BDC744C00A4F199 /* PIEProceedingShareView.m */,
+				F4E680611BDC73F500A4F199 /* PIEProceedingShareSheetView.h */,
+				F4E680621BDC73F500A4F199 /* PIEProceedingShareSheetView.m */,
+			);
+			name = proceeding;
+			sourceTree = "<group>";
+		};
 		F4EC10F51BCE57C3002D1DCF /* notification */ = {
 			isa = PBXGroup;
 			children = (
@@ -3818,14 +3857,9 @@
 		F4F72C241BCD1ABC002FF05A /* shareView */ = {
 			isa = PBXGroup;
 			children = (
-				F4F72C211BCD13D6002FF05A /* PIEShareView.h */,
-				F4F72C221BCD13D6002FF05A /* PIEShareView.m */,
-				F4F72C1B1BCCFB2A002FF05A /* PIESharesheetView.h */,
-				F4F72C1C1BCCFB2A002FF05A /* PIESharesheetView.m */,
-				F4E530901BD49AE800FAA65D /* PIESignUpView.h */,
-				F4E530911BD49AE800FAA65D /* PIESignUpView.m */,
-				F4E5308D1BD4985400FAA65D /* PIESignUpSheetView.h */,
-				F4E5308E1BD4985400FAA65D /* PIESignUpSheetView.m */,
+				F4E680601BDC73DE00A4F199 /* proceeding */,
+				F4E6805F1BDC73D700A4F199 /* share */,
+				F4E6805E1BDC73CC00A4F199 /* signup */,
 				F4F72C1E1BCCFB7B002FF05A /* PIEShareIcon.h */,
 				F4F72C1F1BCCFB7B002FF05A /* PIEShareIcon.m */,
 			);
@@ -4302,6 +4336,7 @@
 				F46117DD1BAD1101001A6F1A /* IQSegmentedNextPrevious.m in Sources */,
 				E94B032D1B7DE7D300863C6F /* kfcViews.m in Sources */,
 				5CDB06051AA405A40089121E /* UIColor+HSL.m in Sources */,
+				F4E680631BDC73F500A4F199 /* PIEProceedingShareSheetView.m in Sources */,
 				E9D739131B79F200008CE562 /* BadgeStyle.m in Sources */,
 				5C535CBA1AF1FCEC00BF30D1 /* ATOMPSView.m in Sources */,
 				5C8A2A241AAF31B30064EB1C /* ATOMMyConcernTableFooterView.m in Sources */,
@@ -4320,6 +4355,7 @@
 				F472055C1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.m in Sources */,
 				5C0F04D51ADCAD31002003AE /* DDCommentMsg.m in Sources */,
 				F4E5F5FC1BD9D2E100AB8B31 /* AFURLResponseSerialization.m in Sources */,
+				F4E680661BDC744C00A4F199 /* PIEProceedingShareView.m in Sources */,
 				5C819C951AA71FCD00CDDB5B /* ATOMCommentDetailTableViewCell.m in Sources */,
 				F4EC11071BCE59B5002D1DCF /* PIENotificationLikeTableViewCell.m in Sources */,
 				F4F72C1D1BCCFB2A002FF05A /* PIESharesheetView.m in Sources */,

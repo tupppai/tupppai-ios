@@ -122,7 +122,7 @@
             view.contentMode = UIViewContentModeScaleAspectFit;
             view.clipsToBounds = YES;
         }
-        [((UIImageView *)view) setImageWithURL:[NSURL URLWithString:vm.imageURL]];
+        [((UIImageView *)view) setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
         return view;
     }
     return nil;

@@ -147,8 +147,8 @@
     
     width = (SCREEN_WIDTH - 20) / 2.0;
     height = vm.imageHeight + 46;
-    if (height > (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/1.3) {
-        height = (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/1.3;
+    if (height > (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/2) {
+        height = (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/2;
     }
     return CGSizeMake(width, height);
 }

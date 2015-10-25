@@ -22,10 +22,10 @@
 #import "PIECarouselViewController.h"
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
-
+#import "PIEProceedingShareView.h"
 #define MyAskCellWidth (SCREEN_WIDTH - 20) / 2.0
 
-@interface PIEProceedingViewController ()<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,PWRefreshBaseCollectionViewDelegate,PWRefreshBaseTableViewDelegate,CHTCollectionViewDelegateWaterfallLayout,UITableViewDataSource,UITableViewDelegate,QBImagePickerControllerDelegate>
+@interface PIEProceedingViewController ()<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,PWRefreshBaseCollectionViewDelegate,PWRefreshBaseTableViewDelegate,CHTCollectionViewDelegateWaterfallLayout,UITableViewDataSource,UITableViewDelegate,QBImagePickerControllerDelegate,PIEProceedingShareViewDelegate>
 
 @property (nonatomic, strong) PIEProceedingScrollView *sv;
 
@@ -42,7 +42,13 @@
 @property (nonatomic, assign) BOOL canRefreshDoneFooter;
 
 @property (nonatomic, strong) NSIndexPath* selectedIndexPath;
+@property (nonatomic, strong) DDPageVM* selectedVM;
+
 @property (nonatomic, strong) QBImagePickerController* QBImagePickerController;
+@property (nonatomic, strong) PIEProceedingShareView *shareView;
+
+@property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureAsk;
+@property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureToHelp;
 
 @end
 
@@ -79,6 +85,7 @@
     [self configAskCollectionView];
     [self configToHelpTableView];
     [self configDoneCollectionView];
+    [self setupGestures];
 }
 - (void)configAskCollectionView {
     _sv.askTableView.dataSource = self;
@@ -100,8 +107,37 @@
     _sv.toHelpTableView.psDelegate = self;
     UINib* nib = [UINib nibWithNibName:@"PIEToHelpTableViewCell" bundle:nil];
     [_sv.toHelpTableView registerNib:nib forCellReuseIdentifier:@"PIEToHelpTableViewCell"];
+}
+- (void)setupGestures {
     UITapGestureRecognizer* tapToHelpTableViewGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapToHelpTableViewGesture:)];
     [_sv.toHelpTableView addGestureRecognizer:tapToHelpTableViewGesture];
+
+    _longPressGestureAsk = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnAsk:)];
+    _longPressGestureToHelp = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnToHelp:)];
+    [_sv.toHelpTableView addGestureRecognizer:_longPressGestureToHelp];
+    [_sv.askTableView addGestureRecognizer:_longPressGestureAsk];
+
+    
+}
+- (void)longPressOnAsk:(UILongPressGestureRecognizer *)gesture {
+    CGPoint location = [gesture locationInView:_sv.askTableView];
+    NSIndexPath *indexPath = [_sv.askTableView indexPathForRowAtPoint:location];
+    _selectedIndexPath = indexPath;
+    _selectedVM = [_sourceAsk objectAtIndex:indexPath.row];
+    if (indexPath) {
+        //点击图片
+        [self showShareView];
+    }
+}
+- (void)longPressOnToHelp:(UILongPressGestureRecognizer *)gesture {
+    CGPoint location = [gesture locationInView:_sv.toHelpTableView];
+    NSIndexPath *indexPath = [_sv.toHelpTableView indexPathForRowAtPoint:location];
+    _selectedIndexPath = indexPath;
+    _selectedVM = [_sourceToHelp objectAtIndex:indexPath.row];
+    if (indexPath) {
+        //点击图片
+        [self showShareView];
+    }
 }
 - (void)tapToHelpTableViewGesture:(UITapGestureRecognizer *)gesture {
     CGPoint location = [gesture locationInView:_sv.toHelpTableView];
@@ -297,7 +333,17 @@
     return _QBImagePickerController;
 }
 
-
+- (void)showShareView {
+    [self.shareView show];
+    
+}
+-(PIEProceedingShareView *)shareView {
+    if (!_shareView) {
+        _shareView = [PIEProceedingShareView new];
+        _shareView.delegate = self;
+    }
+    return _shareView;
+}
 
 #pragma mark - UITableView Datasource and delegate
 
@@ -558,5 +604,36 @@
         }
     }];
 }
+#pragma mark - ATOMShareViewDelegate
 
+
+//sina
+-(void)tapShare1 {
+    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:_selectedVM.type];
+}
+//qqzone
+-(void)tapShare2 {
+    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeQQZone withPageType:_selectedVM.type];
+}
+//wechat moments
+-(void)tapShare3 {
+    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:_selectedVM.type];
+}
+//wechat friends
+-(void)tapShare4 {
+    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:_selectedVM.type];
+}
+-(void)tapShare5 {
+    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeQQFriends withPageType:_selectedVM.type];
+    
+}
+-(void)tapShare6 {
+    
+}
+-(void)tapShare7 {
+}
+
+-(void)tapShareCancel {
+    [self.shareView dismiss];
+}
 @end

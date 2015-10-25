@@ -1,15 +1,16 @@
 //
-//  PIEShareView.h
+//  PIEProceedingShareView.h
 //  TUPAI
 //
-//  Created by chenpeiwei on 10/13/15.
+//  Created by chenpeiwei on 10/25/15.
 //  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "PIESharesheetView.h"
+#import "PIEProceedingShareSheetView.h"
 
-@protocol PIEShareViewDelegate <NSObject>
+
+@protocol PIEProceedingShareViewDelegate <NSObject>
 @optional
 - (void)tapShare1;
 - (void)tapShare2;
@@ -18,14 +19,16 @@
 - (void)tapShare5;
 - (void)tapShare6;
 - (void)tapShare7;
-- (void)tapShare8;
 - (void)tapShareCancel;
 @end
 
-@interface PIEShareView:UIView
-@property (strong, nonatomic) PIESharesheetView *sheetView;
-@property (nonatomic, weak) id<PIEShareViewDelegate> delegate;
+
+@interface PIEProceedingShareView : UIView
+
+@property (strong, nonatomic) PIEProceedingShareSheetView *sheetView;
+@property (nonatomic, weak) id<PIEProceedingShareViewDelegate> delegate;
 - (void)showInView:(UIView *)view animated:(BOOL)animated;
 - (void)show;
 -(void)dismiss;
+
 @end

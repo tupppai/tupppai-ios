@@ -11,9 +11,9 @@
 #import "PIENotificationManager.h"
 #import "PIENotificationVM.h"
 
-#import "PIENotificationSystemTableViewCell.h"
+//#import "PIENotificationSystemTableViewCell.h"
 #import "PIENotificationReplyTableViewCell.h"
-#import "PIENotificationLikeTableViewCell.h"
+//#import "PIENotificationLikeTableViewCell.h"
 #import "PIENotificationFollowTableViewCell.h"
 #import "PIENotificationCommentTableViewCell.h"
 
@@ -35,8 +35,8 @@
     _source = [NSMutableArray array];
     _canRefreshFooter = YES;
     self.view = self.tableView;
-    [self getDataSource];
-
+//    [self getDataSource];
+    [self.tableView.header beginRefreshing];
 }
 
 #pragma mark - GetDataSource
@@ -104,96 +104,148 @@
         _tableView.delegate = self;
         _tableView.psDelegate = self;
         UINib* nib  = [UINib nibWithNibName:@"PIENotificationCommentTableViewCell" bundle:nil];
-        UINib* nib2 = [UINib nibWithNibName:@"PIENotificationLikeTableViewCell" bundle:nil];
+//        UINib* nib2 = [UINib nibWithNibName:@"PIENotificationLikeTableViewCell" bundle:nil];
         UINib* nib3 = [UINib nibWithNibName:@"PIENotificationFollowTableViewCell" bundle:nil];
         UINib* nib4 = [UINib nibWithNibName:@"PIENotificationReplyTableViewCell" bundle:nil];
-        UINib* nib5 = [UINib nibWithNibName:@"PIENotificationSystemTableViewCell" bundle:nil];
+//        UINib* nib5 = [UINib nibWithNibName:@"PIENotificationSystemTableViewCell" bundle:nil];
         [_tableView registerNib:nib  forCellReuseIdentifier:@"PIENotificationCommentTableViewCell"];
-        [_tableView registerNib:nib2 forCellReuseIdentifier:@"PIENotificationLikeTableViewCell"];
+//        [_tableView registerNib:nib2 forCellReuseIdentifier:@"PIENotificationLikeTableViewCell"];
         [_tableView registerNib:nib3 forCellReuseIdentifier:@"PIENotificationFollowTableViewCell"];
         [_tableView registerNib:nib4 forCellReuseIdentifier:@"PIENotificationReplyTableViewCell"];
-        [_tableView registerNib:nib5 forCellReuseIdentifier:@"PIENotificationSystemTableViewCell"];
+//        [_tableView registerNib:nib5 forCellReuseIdentifier:@"PIENotificationSystemTableViewCell"];
     }
     return _tableView;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (_source.count > indexPath.row) {
-        PIENotificationVM* vm = [_source objectAtIndex:indexPath.row];
-        switch (vm.type) {
-            case PIENotificationTypeComment:
-            {
-                PIENotificationCommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIENotificationCommentTableViewCell"];
-                [cell injectSauce:vm];
-                return cell;
-                break;
+    if (indexPath.section == 1) {
+        if (_source.count > indexPath.row) {
+            PIENotificationVM* vm = [_source objectAtIndex:indexPath.row];
+            switch (vm.type) {
+                case PIENotificationTypeComment:
+                {
+                    PIENotificationCommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIENotificationCommentTableViewCell"];
+                    [cell injectSauce:vm];
+                    return cell;
+                    break;
+                }
+                case PIENotificationTypeFollow:
+                {
+                    PIENotificationFollowTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIENotificationFollowTableViewCell"];
+                    [cell injectSauce:vm];
+                    return cell;
+                    break;
+                }
+                    //            case PIENotificationTypeLike:
+                    //            {
+                    //                PIENotificationLikeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIENotificationLikeTableViewCell"];
+                    //                [cell injectSauce:vm];
+                    //                return cell;
+                    //                break;
+                    //            }
+                case PIENotificationTypeReply:
+                {
+                    PIENotificationReplyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIENotificationReplyTableViewCell"];
+                    [cell injectSauce:vm];
+                    return cell;
+                    break;
+                }
+                    //            case PIENotificationTypeSystem:
+                    //            {
+                    //                PIENotificationSystemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIENotificationSystemTableViewCell"];
+                    //                [cell injectSauce:vm];
+                    //                return cell;
+                    //                break;
+                    //                
+                    //            }
+                default:
+                    return nil;
+                    break;
             }
-            case PIENotificationTypeFollow:
-            {
-                PIENotificationFollowTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIENotificationFollowTableViewCell"];
-                [cell injectSauce:vm];
-                return cell;
-                break;
-            }
-            case PIENotificationTypeLike:
-            {
-                PIENotificationLikeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIENotificationLikeTableViewCell"];
-                [cell injectSauce:vm];
-                return cell;
-                break;
-            }
-            case PIENotificationTypeReply:
-            {
-                PIENotificationReplyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIENotificationReplyTableViewCell"];
-                [cell injectSauce:vm];
-                return cell;
-                break;
-            }
-            case PIENotificationTypeSystem:
-            {
-                PIENotificationSystemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIENotificationSystemTableViewCell"];
-                [cell injectSauce:vm];
-                return cell;
-                break;
-                
-            }
-            default:
-                break;
         }
+    }
+    else {
+
+        UITableViewCell* cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"defaultCell"];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        if (indexPath.row == 0) {
+            cell.imageView.image = [UIImage imageNamed:@"notify_system"];
+            cell.textLabel.text = @"系统消息";
+        }    else if (indexPath.row == 1) {
+            cell.imageView.image = [UIImage imageNamed:@"pieLike_selected"];
+            cell.textLabel.text = @"收到的赞";
+        }
+
+        return cell;
     }
     return nil;
 }
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    PIENotificationVM* vm = [_source objectAtIndex:indexPath.row];
-    switch (vm.type) {
-        case PIENotificationTypeComment:
-             return 109;
-            break;
-        case PIENotificationTypeFollow:
-            return 60;
-            break;
-        case PIENotificationTypeLike:
-            return 60;
-            break;
-        case PIENotificationTypeReply:
-            return 105;
-            break;
-        case PIENotificationTypeSystem:
-            return 100;
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 1) {
+        return 40;
+    }else {
+        return 0;
+    }
+}
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,40)];
+    view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 100,40)];
+    label.backgroundColor = [UIColor clearColor];
+    [view addSubview:label];
+    
+    label.font = [UIFont boldSystemFontOfSize:13];
+    switch (section)
+    {
+        case 1:
+            label.text  = @"最近消息";
             break;
         default:
             break;
+    }
+    return view;
+    
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 1) {
+        PIENotificationVM* vm = [_source objectAtIndex:indexPath.row];
+        switch (vm.type) {
+            case PIENotificationTypeComment:
+                return 109;
+                break;
+            case PIENotificationTypeFollow:
+                return 60;
+                break;
+                //        case PIENotificationTypeLike:
+                //            return 0;
+                //            break;
+            case PIENotificationTypeReply:
+                return 105;
+                break;
+                //        case PIENotificationTypeSystem:
+                //            return 0;
+                //            break;
+            default:
+                return 105;
+                break;
+        }
+    }
+    else {
+        return 50;
     }
     return 0;
 
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _source.count;
+    if (section == 0) {
+        return 2;
+    } else {
+        return _source.count;
+    }
 }
 
 

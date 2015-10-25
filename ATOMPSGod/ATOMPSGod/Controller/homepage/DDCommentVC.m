@@ -18,14 +18,15 @@
 #import "CommentLikeButton.h"
 #import "DDCommentReplyVM.h"
 #import "DDCommentHeaderView.h"
-
-
+#import "PIEShareView.h"
+#import "JGActionSheet.h"
+#import "ATOMReportModel.h"
 
 #define DEBUG_CUSTOM_TYPING_INDICATOR 0
 
 static NSString *MessengerCellIdentifier = @"MessengerCell";
 
-@interface DDCommentVC ()<DZNEmptyDataSetSource>
+@interface DDCommentVC ()<DZNEmptyDataSetSource,PIEShareViewDelegate,JGActionSheetDelegate>
 
 @property (nonatomic, strong) NSMutableArray *commentsHot;
 @property (nonatomic, strong) NSMutableArray *commentsNew;
@@ -34,6 +35,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, strong) DDCommentVM *targetCommentVM;
 @property (nonatomic, strong) NSIndexPath *selectedIndexpath;
+@property (nonatomic, strong) PIEShareView *shareView;
+@property (nonatomic, strong)  JGActionSheet * psActionSheet;
+@property (nonatomic, strong)  JGActionSheet * reportActionSheet;
 
 @end
 
@@ -73,6 +77,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = @"浏览图片";
     [self configTableView];
     [self configFooterRefresh];
     [self configTextInput];
@@ -386,9 +391,10 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 #pragma mark init and config
 
 -(void)configTableView {
-//    _headerView = [kfcPageView new];
-//    _headerView.vm = _vm;
-//    self.tableView.tableHeaderView = _headerView;
+    
+
+    self.tableView.tableHeaderView = self.headerView;
+    
     self.tableView.emptyDataSetSource = self;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -396,21 +402,15 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     self.tableView.tableFooterView = [UIView new];
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.showsHorizontalScrollIndicator = NO;
-//    UIView *header = self.tableView.tableHeaderView;
-//    [header setNeedsLayout];
-//    [header layoutIfNeeded];
-//    CGFloat height = [header systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-//    CGRect frame = header.frame;
-//    frame.size.height = height;
-//    header.frame = frame;
-//    self.tableView.tableHeaderView = header;
     
-//    UIButton* dismissBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 32,32)];
-//    [dismissBtn setImage:[UIImage imageNamed:@"ic_dismiss"] forState:UIControlStateNormal];
-//    dismissBtn.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.7];
-//    [dismissBtn addTarget:self action:@selector(dismissSelf) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:dismissBtn];
-//    [self.view bringSubviewToFront:dismissBtn];
+    UIView *header = self.tableView.tableHeaderView;
+    [header setNeedsLayout];
+    [header layoutIfNeeded];
+    CGFloat height = [header systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    CGRect frame = header.frame;
+    frame.size.height = height;
+    header.frame = frame;
+    self.tableView.tableHeaderView = header;
 }
 - (void) dismissSelf {
     [self dismissViewControllerAnimated:NO completion:nil];
@@ -443,12 +443,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 
 
-- (void)addGestureToCommentTableView {
-    _tapCommentTableGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCommentTable:)];
-    _tapCommentTableGesture.cancelsTouchesInView = NO;
-    [self.tableView addGestureRecognizer:_tapCommentTableGesture];
-}
-
 #pragma mark - tap Event
 
 - (void)tapCommentTable:(UITapGestureRecognizer *)gesture {
@@ -469,12 +463,14 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
             opvc.pageVM = vm;
             [self.navigationController pushViewController:opvc animated:YES];
         }
-//        else if (CGRectContainsPoint(cell.usernameLabel.frame, p)) {
-//            //ATOMOtherPersonViewControlle *opvc = [//ATOMOtherPersonViewControlle new];
-//            opvc.userID = model.uid;
-//            opvc.userName = model.username;
-//            [self.navigationController pushViewController:opvc animated:YES];
-//        }
+        else if (CGRectContainsPoint(cell.usernameLabel.frame, p)) {
+            PIEFriendViewController *opvc = [PIEFriendViewController new];
+            DDPageVM* vm = [DDPageVM new];
+            vm.userID = model.uid;
+            vm.username = model.username;
+            opvc.pageVM = vm;
+            [self.navigationController pushViewController:opvc animated:YES];
+        }
         else if (CGRectContainsPoint(cell.likeButton.frame, p)) {
             //UI
             [cell.likeButton toggleLike];
@@ -566,6 +562,240 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
                                  NSForegroundColorAttributeName: [UIColor darkGrayColor]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+
+
+#pragma mark - headerView
+
+-(kfcPageView *)headerView {
+    if (!_headerView) {
+        _headerView = [kfcPageView new];
+        _headerView.vm = _vm;
+        
+        UITapGestureRecognizer* tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap1)];
+        UITapGestureRecognizer* tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap2)];
+        UITapGestureRecognizer* tap3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap3)];
+        UITapGestureRecognizer* tap5 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap5)];
+        UITapGestureRecognizer* tap6 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapHelp)];
+        UITapGestureRecognizer* tap7 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapLike)];
+        
+        [_headerView.avatarView addGestureRecognizer:tap1];
+        [_headerView.usernameLabel addGestureRecognizer:tap2];
+        [_headerView.imageViewMain addGestureRecognizer:tap3];
+        [_headerView.shareButton addGestureRecognizer:tap5];
+        [_headerView.bangView addGestureRecognizer:tap6];
+        [_headerView.likeButton addGestureRecognizer:tap7];
+        
+    }
+    return _headerView;
+}
+
+- (void) didTap1 {
+    PIEFriendViewController *opvc = [PIEFriendViewController new];
+    opvc.pageVM = _vm;
+    [self.navigationController pushViewController:opvc animated:YES];
+}
+- (void) didTap2 {
+    PIEFriendViewController *opvc = [PIEFriendViewController new];
+    opvc.pageVM = _vm;
+    [self.navigationController pushViewController:opvc animated:YES];
+}
+- (void) didTap3 {
+}
+
+- (void) didTap5 {
+    [self showShareView];
+}
+- (void) didTapHelp {
+    [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
+}
+- (void) didTapLike {
+    _headerView.likeButton.selected = !_headerView.likeButton.selected;
+    [DDService toggleLike:_headerView.likeButton.selected ID:_vm.ID type:_vm.type  withBlock:^(BOOL success) {
+        if (success) {
+            _vm.liked =  _headerView.likeButton.selected;
+            if ( _headerView.likeButton.selected) {
+                _vm.likeCount = [NSString stringWithFormat:@"%zd",_vm.likeCount.integerValue + 1];
+            } else {
+                _vm.likeCount = [NSString stringWithFormat:@"%zd",_vm.likeCount.integerValue - 1];
+            }
+        } else {
+            _headerView.likeButton.selected = !_headerView.likeButton.selected;
+        }
+    }];
+}
+
+
+
+#pragma mark - ATOMShareViewDelegate
+//sina
+-(void)tapShare1 {
+    [DDShareSDKManager postSocialShare:_vm.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:_vm.type];
+}
+//qqzone
+-(void)tapShare2 {
+    [DDShareSDKManager postSocialShare:_vm.ID withSocialShareType:ATOMShareTypeQQZone withPageType:_vm.type];
+}
+//wechat moments
+-(void)tapShare3 {
+    [DDShareSDKManager postSocialShare:_vm.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:_vm.type];
+}
+//wechat friends
+-(void)tapShare4 {
+    [DDShareSDKManager postSocialShare:_vm.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:_vm.type];
+}
+-(void)tapShare5 {
+    [DDShareSDKManager postSocialShare:_vm.ID withSocialShareType:ATOMShareTypeQQFriends withPageType:_vm.type];
+}
+-(void)tapShare6 {
+    
+}
+-(void)tapShare7 {
+    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
+}
+-(void)tapShare8 {
+    [self collectPage];
+}
+
+-(void)tapShareCancel {
+    [self.shareView dismiss];
+}
+
+- (void)addGestureToCommentTableView {
+    _tapCommentTableGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCommentTable:)];
+    _tapCommentTableGesture.cancelsTouchesInView = NO;
+    [self.tableView addGestureRecognizer:_tapCommentTableGesture];
+}
+- (void)showShareView {
+    [self.shareView show];
+}
+-(void)collectPage {
+    //    NSMutableDictionary *param = [NSMutableDictionary new];
+    //    _selectedReplyCell.collectView.selected = !_selectedReplyCell.collectView.selected;
+    //    if (_selectedReplyCell.collectView.selected) {
+    //        //收藏
+    //        [param setObject:@(1) forKey:@"status"];
+    //    } else {
+    //        //取消收藏
+    //        [param setObject:@(0) forKey:@"status"];
+    //    }
+    //    [DDCollectManager toggleCollect:param withPageType:_selectedVM.type withID:_selectedVM.ID withBlock:^(NSError *error) {
+    //        if (!error) {
+    //            _selectedVM.collected = _selectedReplyCell.collectView.selected;
+    //            _selectedVM.collectCount = _selectedReplyCell.collectView.numberString;
+    //        }   else {
+    //            _selectedReplyCell.collectView.selected = !_selectedReplyCell.collectView.selected;
+    //        }
+    //    }];
+}
+- (JGActionSheet *)psActionSheet {
+    WS(ws);
+    if (!_psActionSheet) {
+        _psActionSheet = [JGActionSheet new];
+        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"下载图片帮P", @"添加至进行中",@"取消"] buttonStyle:JGActionSheetButtonStyleDefault];
+        [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:2];
+        NSArray *sections = @[section];
+        _psActionSheet = [JGActionSheet actionSheetWithSections:sections];
+        _psActionSheet.delegate = self;
+        [_psActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
+            [sheet dismissAnimated:YES];
+        }];
+        [_psActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
+            switch (indexPath.row) {
+                case 0:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    [ws help:YES];
+                    break;
+                case 1:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    [ws help:NO];
+                    break;
+                case 2:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    break;
+                default:
+                    [ws.psActionSheet dismissAnimated:YES];
+                    break;
+            }
+        }];
+    }
+    return _psActionSheet;
+}
+- (void)help:(BOOL)shouldDownload {
+    NSMutableDictionary* param = [NSMutableDictionary new];
+    [param setObject:@(_vm.ID) forKey:@"target"];
+    [param setObject:@"ask" forKey:@"type"];
+    
+    [DDService signProceeding:param withBlock:^(NSString *imageUrl) {
+        if (imageUrl != nil) {
+            if (shouldDownload) {
+                [DDService downloadImage:imageUrl withBlock:^(UIImage *image) {
+                    UIImageWriteToSavedPhotosAlbum(image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+                }];
+            }
+            else {
+                [Hud customText:@"添加成功\n在“进行中”等你下载咯!" inView:self.view];
+            }
+        }
+    }];
+}
+- (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error
+  contextInfo: (void *) contextInfo {
+    if(error != NULL){
+    } else {
+        [Hud customText:@"下载成功\n我猜你会用美图秀秀来P?" inView:self.view];
+    }
+}
+-(PIEShareView *)shareView {
+    if (!_shareView) {
+        _shareView = [PIEShareView new];
+        _shareView.delegate = self;
+    }
+    return _shareView;
+}
+- (JGActionSheet *)reportActionSheet {
+    WS(ws);
+    if (!_reportActionSheet) {
+        _reportActionSheet = [JGActionSheet new];
+        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"色情、淫秽或低俗内容", @"广告或垃圾信息",@"违反法律法规的内容"] buttonStyle:JGActionSheetButtonStyleDefault];
+        NSArray *sections = @[section];
+        _reportActionSheet = [JGActionSheet actionSheetWithSections:sections];
+        _reportActionSheet.delegate = self;
+        [_reportActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
+            [sheet dismissAnimated:YES];
+        }];
+        [_reportActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
+            NSMutableDictionary* param = [NSMutableDictionary new];
+            [param setObject:@(ws.vm.ID) forKey:@"target_id"];
+            [param setObject:@(ws.vm.type) forKey:@"target_type"];
+            UIButton* b = section.buttons[indexPath.row];
+            switch (indexPath.row) {
+                case 0:
+                    [ws.reportActionSheet dismissAnimated:YES];
+                    [param setObject:b.titleLabel.text forKey:@"content"];
+                    break;
+                case 1:
+                    [ws.reportActionSheet dismissAnimated:YES];
+                    [param setObject:b.titleLabel.text forKey:@"content"];
+                    break;
+                case 2:
+                    [ws.reportActionSheet dismissAnimated:YES];
+                    [param setObject:b.titleLabel.text forKey:@"content"];
+                    break;
+                default:
+                    [ws.reportActionSheet dismissAnimated:YES];
+                    break;
+            }
+            [ATOMReportModel report:param withBlock:^(NSError *error) {
+                if(!error) {
+                    [Hud text:@"已举报" inView:ws.view];
+                }
+                
+            }];
+        }];
+    }
+    return _reportActionSheet;
 }
 
 

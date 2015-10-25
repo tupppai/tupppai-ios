@@ -31,6 +31,31 @@
         make.width.greaterThanOrEqualTo(@13);
     }];
 }
+-(instancetype)init {
+    self = [super init];
+    if (self) {
+        _selected = NO;
+        _imageView = [UIImageView new];
+        _imageView.contentMode = UIViewContentModeScaleAspectFit;
+        _label = [PIEHighlightableLabel new];
+        [self addSubview:_imageView];
+        [self addSubview:_label];
+        _imageView.image = [UIImage imageNamed:@"pieLike"];
+        _imageView.highlightedImage = [UIImage imageNamed:@"pieLike_selected"];
+        [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.width.equalTo(@15);
+            make.height.equalTo(@15);
+            make.leading.equalTo(self);
+            make.centerY.equalTo(self);
+        }];
+        [_label mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.leading.equalTo(_imageView.mas_trailing).with.offset(1);
+            make.top.equalTo(_imageView).with.offset(-3);
+            make.width.greaterThanOrEqualTo(@13);
+        }];
+    }
+    return self;
+}
 -(void)setHighlighted:(BOOL)highlighted {
     _highlighted = highlighted;
     _selected = highlighted;

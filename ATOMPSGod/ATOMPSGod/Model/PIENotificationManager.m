@@ -18,7 +18,9 @@
             for (NSDictionary* dic in dataArray) {
                 PIENotificationEntity* entity = [MTLJSONAdapter modelOfClass:[PIENotificationEntity class] fromJSONDictionary:dic error:NULL];
                 PIENotificationVM* vm = [[PIENotificationVM alloc]initWithEntity:entity];
-                [returnArray addObject:vm];
+                if (vm.type != PIENotificationTypeLike && vm.type != PIENotificationTypeSystem) {
+                    [returnArray addObject:vm];
+                }
             }
             if (dataArray.count > 0) {
                 if (block) {block(returnArray);}

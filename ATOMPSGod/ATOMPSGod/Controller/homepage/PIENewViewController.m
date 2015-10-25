@@ -136,9 +136,10 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [_askCollectionView addGestureRecognizer:_tapGestureAsk];
     
     _longPressGestureAsk = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnAsk:)];
+    _longPressGestureReply = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnReply:)];
+
     [_askCollectionView addGestureRecognizer:_longPressGestureAsk];
     
-    _longPressGestureReply = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnReply:)];
     [_hotTableView addGestureRecognizer:_longPressGestureReply];
 
 }
@@ -604,8 +605,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 }
 
 #pragma mark - ATOMShareViewDelegate
-
-
 //sina
 -(void)tapShare1 {
     [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:_selectedVM.type];
@@ -624,7 +623,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 }
 -(void)tapShare5 {
     [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeQQFriends withPageType:_selectedVM.type];
-    
 }
 -(void)tapShare6 {
     
@@ -639,8 +637,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 -(void)tapShareCancel {
     [self.shareView dismiss];
 }
-
-
 
 
 -(void)collectPage {

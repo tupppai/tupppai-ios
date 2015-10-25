@@ -37,6 +37,35 @@
     }];
 }
 
+-(instancetype)init {
+    self = [super init];
+    if (self) {
+        _number = 0;
+        _selected = NO;
+        _imageView = [UIImageView new];
+        _label = [UILabel new];
+        _label.text = @"0";
+        _label.font = [UIFont systemFontOfSize:13];
+        _label.textColor = [UIColor lightGrayColor];
+        [self addSubview:_imageView];
+        [self addSubview:_label];
+        
+        _imageView.contentMode = UIViewContentModeScaleAspectFit;
+        
+        [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.width.equalTo(@14);
+            make.height.equalTo(@14);
+            make.leading.equalTo(self);
+            make.centerY.equalTo(self);
+        }];
+        [_label mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.leading.equalTo(_imageView.mas_trailing).with.offset(2);
+            make.centerY.equalTo(_imageView);
+            make.right.equalTo(self);
+        }];
+    }
+    return self;
+}
 -(void)setSelected:(BOOL)selected {
     _imageView.highlighted = selected;
     _selected = selected;
