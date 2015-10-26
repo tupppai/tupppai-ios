@@ -67,9 +67,9 @@
         NSMutableArray *resultArray = [NSMutableArray array];
         for (int i = 0; i < data.count; i++) {
             NSDictionary* dic = [data objectAtIndex:i];
-            PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:[dic objectForKey:@"thread"] error:NULL];
+            PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:dic error:NULL];
             DDPageVM* vm = [[DDPageVM alloc]initWithPageEntity:entity];
-            vm.content = [dic objectForKey:@"content"];
+            vm.content = entity.comment;
             [resultArray addObject:vm];
         }
         if (block && resultArray.count > 0) {

@@ -35,6 +35,7 @@
              @"thumbEntityArray":@"ask_uploads",
              @"hotCommentEntityArray":@"hot_comments",
              @"followed":@"is_follow",
+             @"comment" : @"content",
              };
 }
 

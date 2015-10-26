@@ -24,7 +24,7 @@
 - (void)injectSauce:(DDPageVM* )vm {
     _usernameLabel.text = vm.username;
     _timeLabel.text = vm.publishTime;
-    _contentLabel.text = [NSString stringWithFormat:@"你评论了ta: %@",vm.content];
+    _contentLabel.text = [NSString stringWithFormat:@"你评论了%@: %@",vm.username,vm.content];
     [_pageImageView setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
     
 }

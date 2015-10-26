@@ -140,7 +140,6 @@
         } else {
             _collectCount = [NSString stringWithFormat:@"%zd",entity.collectCount];
         }
-
     }
     return self;
 }

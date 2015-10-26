@@ -78,6 +78,7 @@
 
 @property (nonatomic, copy) NSArray *thumbEntityArray;
 @property (nonatomic, copy) NSArray *hotCommentEntityArray;
+@property (nonatomic, copy) NSString *comment;
 
 /**
  *  作品的标签数组
