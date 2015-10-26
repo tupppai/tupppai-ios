@@ -50,6 +50,7 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="HE4-R7-PCb"/>
+                                <exclude reference="MBV-hA-luS"/>
                                 <exclude reference="qAg-eN-KlF"/>
                             </mask>
                         </variation>

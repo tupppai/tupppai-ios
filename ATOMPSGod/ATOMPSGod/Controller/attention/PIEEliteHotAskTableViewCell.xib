@@ -50,6 +50,7 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="CnQ-Ff-byW"/>
+                                <exclude reference="S07-7Q-NG5"/>
                                 <exclude reference="p26-Xc-pQF"/>
                             </mask>
                         </variation>

@@ -199,7 +199,6 @@
             _pageMenu.view.frame = CGRectMake(0, 60, SCREEN_WIDTH, SCREEN_HEIGHT);
         }];
     }
-
 }
 - (void)scrollDown {
     if (_pageMenu.view.frame.origin.y != 220) {

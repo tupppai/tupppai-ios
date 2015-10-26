@@ -21,12 +21,16 @@
 #import "PIEShareView.h"
 #import "JGActionSheet.h"
 #import "ATOMReportModel.h"
+#import "DDCollectManager.h"
+
+#import "JTSImageViewController.h"
+#import "JTSImageInfo.h"
 
 #define DEBUG_CUSTOM_TYPING_INDICATOR 0
 
 static NSString *MessengerCellIdentifier = @"MessengerCell";
 
-@interface DDCommentVC ()<DZNEmptyDataSetSource,PIEShareViewDelegate,JGActionSheetDelegate>
+@interface DDCommentVC ()<DZNEmptyDataSetSource,PIEShareViewDelegate,JGActionSheetDelegate,JTSImageViewControllerInteractionsDelegate>
 
 @property (nonatomic, strong) NSMutableArray *commentsHot;
 @property (nonatomic, strong) NSMutableArray *commentsNew;
@@ -391,12 +395,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 #pragma mark init and config
 
 -(void)configTableView {
-    
-
     self.tableView.tableHeaderView = self.headerView;
-    
     self.tableView.emptyDataSetSource = self;
-    self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+    self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag|UIScrollViewKeyboardDismissModeInteractive;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[DDCommentTableCell class] forCellReuseIdentifier:MessengerCellIdentifier];
     self.tableView.tableFooterView = [UIView new];
@@ -579,14 +580,12 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         UITapGestureRecognizer* tap5 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap5)];
         UITapGestureRecognizer* tap6 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapHelp)];
         UITapGestureRecognizer* tap7 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapLike)];
-        
         [_headerView.avatarView addGestureRecognizer:tap1];
         [_headerView.usernameLabel addGestureRecognizer:tap2];
         [_headerView.imageViewMain addGestureRecognizer:tap3];
         [_headerView.shareButton addGestureRecognizer:tap5];
         [_headerView.bangView addGestureRecognizer:tap6];
         [_headerView.likeButton addGestureRecognizer:tap7];
-        
     }
     return _headerView;
 }
@@ -602,6 +601,26 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [self.navigationController pushViewController:opvc animated:YES];
 }
 - (void) didTap3 {
+    
+        // Create image info
+        JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+        if (_headerView.imageViewMain.image != nil) {
+            imageInfo.image = _headerView.imageViewMain.image;
+        } else {
+            imageInfo.imageURL = [NSURL URLWithString:_vm.imageURL];
+        }
+    //    imageInfo.referenceRect = _selectedHotDetailCell.userHeaderButton.frame;
+    //    imageInfo.referenceView = _selectedHotDetailCell.userHeaderButton;
+    
+        // Setup view controller
+        JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
+                                               initWithImageInfo:imageInfo
+                                               mode:JTSImageViewControllerMode_Image
+                                               backgroundStyle:JTSImageViewControllerBackgroundOption_Scaled];
+    
+        // Present the view controller.
+        [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOriginalPosition];
+        imageViewer.interactionsDelegate = self;
 }
 
 - (void) didTap5 {
@@ -655,7 +674,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
 }
 -(void)tapShare8 {
-    [self collectPage];
+    [self collect];
 }
 
 -(void)tapShareCancel {
@@ -670,24 +689,27 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)showShareView {
     [self.shareView show];
 }
--(void)collectPage {
-    //    NSMutableDictionary *param = [NSMutableDictionary new];
-    //    _selectedReplyCell.collectView.selected = !_selectedReplyCell.collectView.selected;
-    //    if (_selectedReplyCell.collectView.selected) {
-    //        //收藏
-    //        [param setObject:@(1) forKey:@"status"];
-    //    } else {
-    //        //取消收藏
-    //        [param setObject:@(0) forKey:@"status"];
-    //    }
-    //    [DDCollectManager toggleCollect:param withPageType:_selectedVM.type withID:_selectedVM.ID withBlock:^(NSError *error) {
-    //        if (!error) {
-    //            _selectedVM.collected = _selectedReplyCell.collectView.selected;
-    //            _selectedVM.collectCount = _selectedReplyCell.collectView.numberString;
-    //        }   else {
-    //            _selectedReplyCell.collectView.selected = !_selectedReplyCell.collectView.selected;
-    //        }
-    //    }];
+-(void)collect {
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    _vm.collected = !_vm.collected;
+    if (_vm.collected) {
+        //收藏
+        [param setObject:@(1) forKey:@"status"];
+    } else {
+        //取消收藏
+        [param setObject:@(0) forKey:@"status"];
+    }
+    [DDCollectManager toggleCollect:param withPageType:_vm.type withID:_vm.ID withBlock:^(NSError *error) {
+        if (!error) {
+            if (  _vm.collected ) {
+                [Hud textWithLightBackground:@"收藏成功"];
+            } else {
+                [Hud textWithLightBackground:@"取消收藏成功"];
+            }
+        }   else {
+            _vm.collected = !_vm.collected;
+        }
+    }];
 }
 - (JGActionSheet *)psActionSheet {
     WS(ws);

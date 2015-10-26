@@ -45,7 +45,7 @@
                             <constraint firstAttribute="height" constant="80" id="hK3-kf-1PE"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5jl-sT-Hmm">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="5jl-sT-Hmm">
                         <rect key="frame" x="96" y="46" width="405" height="61"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>

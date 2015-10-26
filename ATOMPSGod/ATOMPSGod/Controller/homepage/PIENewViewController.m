@@ -22,7 +22,6 @@
 #import "DDCommentVC.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 #import "PIECarouselViewController.h"
-
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "PIENewAskCollectionCell.h"
 #import "PIERefreshCollectionView.h"
@@ -316,7 +315,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
             }
             else if (CGRectContainsPoint(_selectedReplyCell.collectView.frame, p)) {
                 //should write this logic in viewModel
-                [self collectPage];
+                [self collectReply];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
                 [self likeReply];
@@ -383,8 +382,10 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
             
             //点击大图
             if (CGRectContainsPoint(_selectedAskCell.leftImageView.frame, p) || CGRectContainsPoint(_selectedAskCell.rightImageView.frame, p)) {
-                PIECarouselViewController* vc = [PIECarouselViewController new];
-                vc.pageVM = _selectedVM;
+                DDCommentVC* vc = [DDCommentVC new];
+                vc.vm = _selectedVM;
+//                PIECarouselViewController* vc = [PIECarouselViewController new];
+//                vc.pageVM = _selectedVM;
                 [self.navigationController pushViewController:vc animated:YES];
             }
             //点击头像
@@ -631,7 +632,11 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
 }
 -(void)tapShare8 {
-    [self collectPage];
+    if (_selectedVM.type == PIEPageTypeAsk) {
+        [self collectAsk];
+    } else {
+        [self collectReply];
+    }
 }
 
 -(void)tapShareCancel {
@@ -639,7 +644,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 }
 
 
--(void)collectPage {
+-(void)collectReply {
     NSMutableDictionary *param = [NSMutableDictionary new];
     _selectedReplyCell.collectView.selected = !_selectedReplyCell.collectView.selected;
     if (_selectedReplyCell.collectView.selected) {
@@ -655,6 +660,28 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
             _selectedVM.collectCount = _selectedReplyCell.collectView.numberString;
         }   else {
             _selectedReplyCell.collectView.selected = !_selectedReplyCell.collectView.selected;
+        }
+    }];
+}
+-(void)collectAsk {
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    _selectedVM.collected = !_selectedVM.collected;
+    if (_selectedVM.collected) {
+        //收藏
+        [param setObject:@(1) forKey:@"status"];
+    } else {
+        //取消收藏
+        [param setObject:@(0) forKey:@"status"];
+    }
+    [DDCollectManager toggleCollect:param withPageType:_selectedVM.type withID:_selectedVM.ID withBlock:^(NSError *error) {
+        if (!error) {
+            if (  _selectedVM.collected) {
+                [Hud textWithLightBackground:@"收藏成功"];
+            } else {
+                [Hud textWithLightBackground:@"取消收藏成功"];
+            }
+        }   else {
+            _selectedVM.collected = !_selectedVM.collected;
         }
     }];
 }
@@ -773,6 +800,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     
     width = AskCellWidth;
     height = vm.imageHeight + 135;
+    height = MAX(height, 270);
     if (height > (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/1.3) {
         height = (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/1.3;
     }

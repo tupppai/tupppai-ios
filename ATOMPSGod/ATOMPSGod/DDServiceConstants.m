@@ -60,6 +60,4 @@ NSString * URL_PFGetHotPages = @"Thread/popular";
 
 #pragma mark - Notification
 NSString * URL_NotiGetNotifications = @"message/index";
-
-
 @end

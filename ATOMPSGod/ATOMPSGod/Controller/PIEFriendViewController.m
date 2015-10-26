@@ -76,14 +76,9 @@
     _avatarView.clipsToBounds = YES;
     _avatarView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
     
-    _followCountLabel.textColor = [UIColor colorWithHex:0x4A4A4A andAlpha:1.0];
-    _fansCountLabel.textColor = [UIColor colorWithHex:0x4A4A4A andAlpha:1.0];
-    _likedCountLabel.textColor = [UIColor colorWithHex:0x4A4A4A andAlpha:1.0];
-
     _followCountLabel.font = [UIFont boldSystemFontOfSize:15];
     _fansCountLabel.font = [UIFont boldSystemFontOfSize:15];
     _likedCountLabel.font = [UIFont boldSystemFontOfSize:15];
-//    
     _fansDescLabel.font = [UIFont systemFontOfSize:14];
     _followCountLabel.font = [UIFont systemFontOfSize:14];
     _likedDescLabel.font = [UIFont systemFontOfSize:14];

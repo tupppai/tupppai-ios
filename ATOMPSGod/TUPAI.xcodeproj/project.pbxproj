@@ -318,12 +318,6 @@
 		E991EF051B735C2E00025108 /* EARestrictedScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E991EF041B735C2E00025108 /* EARestrictedScrollView.m */; };
 		E991EF0B1B735D0500025108 /* DDIntroVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E991EF0A1B735D0500025108 /* DDIntroVC.m */; };
 		E991EF0D1B7371D200025108 /* bg1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E991EF0C1B7371D200025108 /* bg1@2x.png */; };
-		E99C510C1B85A2A6004CA47B /* JTSAnimatedGIFUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = E99C51011B85A2A6004CA47B /* JTSAnimatedGIFUtility.m */; };
-		E99C510D1B85A2A6004CA47B /* JTSImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = E99C51031B85A2A6004CA47B /* JTSImageInfo.m */; };
-		E99C510E1B85A2A6004CA47B /* JTSImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E99C51051B85A2A6004CA47B /* JTSImageViewController.m */; };
-		E99C510F1B85A2A6004CA47B /* JTSSimpleImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = E99C51071B85A2A6004CA47B /* JTSSimpleImageDownloader.m */; };
-		E99C51101B85A2A6004CA47B /* UIApplication+JTSImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E99C51091B85A2A6004CA47B /* UIApplication+JTSImageViewController.m */; };
-		E99C51111B85A2A6004CA47B /* UIImage+JTSImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = E99C510B1B85A2A6004CA47B /* UIImage+JTSImageEffects.m */; };
 		E99C51131B85A40A004CA47B /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E99C51121B85A409004CA47B /* libc++.dylib */; };
 		E99C51151B85A40E004CA47B /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E99C51141B85A40E004CA47B /* libsqlite3.0.dylib */; };
 		E99C51171B85A4CB004CA47B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E99C51161B85A4CB004CA47B /* libz.dylib */; };
@@ -393,6 +387,14 @@
 		F41366951BBE73D900EE0C4E /* PIEReplyCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F41366941BBE73D900EE0C4E /* PIEReplyCollectionCell.xib */; settings = {ASSET_TAGS = (); }; };
 		F4155D461BB3DA1300A0B045 /* PIEHighlightableLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4155D451BB3DA1300A0B045 /* PIEHighlightableLabel.m */; settings = {ASSET_TAGS = (); }; };
 		F41E99911BA5BBC8005010C7 /* test1.png in Resources */ = {isa = PBXBuildFile; fileRef = F41E99901BA5BBC8005010C7 /* test1.png */; };
+		F41FF0E31BDDFCE800566A12 /* JTSAnimatedGIFUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F41FF0D81BDDFCE800566A12 /* JTSAnimatedGIFUtility.m */; settings = {ASSET_TAGS = (); }; };
+		F41FF0E41BDDFCE800566A12 /* JTSImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F41FF0DA1BDDFCE800566A12 /* JTSImageInfo.m */; settings = {ASSET_TAGS = (); }; };
+		F41FF0E51BDDFCE800566A12 /* JTSImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F41FF0DC1BDDFCE800566A12 /* JTSImageViewController.m */; settings = {ASSET_TAGS = (); }; };
+		F41FF0E61BDDFCE800566A12 /* JTSSimpleImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = F41FF0DE1BDDFCE800566A12 /* JTSSimpleImageDownloader.m */; settings = {ASSET_TAGS = (); }; };
+		F41FF0E71BDDFCE800566A12 /* UIApplication+JTSImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F41FF0E01BDDFCE800566A12 /* UIApplication+JTSImageViewController.m */; settings = {ASSET_TAGS = (); }; };
+		F41FF0E81BDDFCE800566A12 /* UIImage+JTSImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = F41FF0E21BDDFCE800566A12 /* UIImage+JTSImageEffects.m */; settings = {ASSET_TAGS = (); }; };
+		F41FF0EB1BDE231200566A12 /* PIENotificationSystemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F41FF0EA1BDE231200566A12 /* PIENotificationSystemViewController.m */; settings = {ASSET_TAGS = (); }; };
+		F41FF0EE1BDE269A00566A12 /* PIENotificationLikedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F41FF0ED1BDE269A00566A12 /* PIENotificationLikedViewController.m */; settings = {ASSET_TAGS = (); }; };
 		F428F01E1BD331EF00318AC2 /* PIELaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F428F01C1BD331EF00318AC2 /* PIELaunchViewController.m */; settings = {ASSET_TAGS = (); }; };
 		F428F01F1BD331EF00318AC2 /* PIELaunchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F428F01D1BD331EF00318AC2 /* PIELaunchViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		F42ED3B11BC4FC2D0052A0BF /* PIEMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42ED3B01BC4FC2D0052A0BF /* PIEMeViewController.m */; settings = {ASSET_TAGS = (); }; };
@@ -1176,18 +1178,6 @@
 		E991EF091B735D0500025108 /* DDIntroVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDIntroVC.h; sourceTree = "<group>"; };
 		E991EF0A1B735D0500025108 /* DDIntroVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDIntroVC.m; sourceTree = "<group>"; };
 		E991EF0C1B7371D200025108 /* bg1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg1@2x.png"; sourceTree = "<group>"; };
-		E99C51001B85A2A6004CA47B /* JTSAnimatedGIFUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSAnimatedGIFUtility.h; sourceTree = "<group>"; };
-		E99C51011B85A2A6004CA47B /* JTSAnimatedGIFUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSAnimatedGIFUtility.m; sourceTree = "<group>"; };
-		E99C51021B85A2A6004CA47B /* JTSImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSImageInfo.h; sourceTree = "<group>"; };
-		E99C51031B85A2A6004CA47B /* JTSImageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSImageInfo.m; sourceTree = "<group>"; };
-		E99C51041B85A2A6004CA47B /* JTSImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSImageViewController.h; sourceTree = "<group>"; };
-		E99C51051B85A2A6004CA47B /* JTSImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSImageViewController.m; sourceTree = "<group>"; };
-		E99C51061B85A2A6004CA47B /* JTSSimpleImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSSimpleImageDownloader.h; sourceTree = "<group>"; };
-		E99C51071B85A2A6004CA47B /* JTSSimpleImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSSimpleImageDownloader.m; sourceTree = "<group>"; };
-		E99C51081B85A2A6004CA47B /* UIApplication+JTSImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+JTSImageViewController.h"; sourceTree = "<group>"; };
-		E99C51091B85A2A6004CA47B /* UIApplication+JTSImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+JTSImageViewController.m"; sourceTree = "<group>"; };
-		E99C510A1B85A2A6004CA47B /* UIImage+JTSImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+JTSImageEffects.h"; sourceTree = "<group>"; };
-		E99C510B1B85A2A6004CA47B /* UIImage+JTSImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+JTSImageEffects.m"; sourceTree = "<group>"; };
 		E99C51121B85A409004CA47B /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		E99C51141B85A40E004CA47B /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		E99C51161B85A4CB004CA47B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -1313,6 +1303,22 @@
 		F4155D441BB3DA1300A0B045 /* PIEHighlightableLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEHighlightableLabel.h; sourceTree = "<group>"; };
 		F4155D451BB3DA1300A0B045 /* PIEHighlightableLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEHighlightableLabel.m; sourceTree = "<group>"; };
 		F41E99901BA5BBC8005010C7 /* test1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test1.png; sourceTree = "<group>"; };
+		F41FF0D71BDDFCE800566A12 /* JTSAnimatedGIFUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSAnimatedGIFUtility.h; sourceTree = "<group>"; };
+		F41FF0D81BDDFCE800566A12 /* JTSAnimatedGIFUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSAnimatedGIFUtility.m; sourceTree = "<group>"; };
+		F41FF0D91BDDFCE800566A12 /* JTSImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSImageInfo.h; sourceTree = "<group>"; };
+		F41FF0DA1BDDFCE800566A12 /* JTSImageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSImageInfo.m; sourceTree = "<group>"; };
+		F41FF0DB1BDDFCE800566A12 /* JTSImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSImageViewController.h; sourceTree = "<group>"; };
+		F41FF0DC1BDDFCE800566A12 /* JTSImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSImageViewController.m; sourceTree = "<group>"; };
+		F41FF0DD1BDDFCE800566A12 /* JTSSimpleImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSSimpleImageDownloader.h; sourceTree = "<group>"; };
+		F41FF0DE1BDDFCE800566A12 /* JTSSimpleImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSSimpleImageDownloader.m; sourceTree = "<group>"; };
+		F41FF0DF1BDDFCE800566A12 /* UIApplication+JTSImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+JTSImageViewController.h"; sourceTree = "<group>"; };
+		F41FF0E01BDDFCE800566A12 /* UIApplication+JTSImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+JTSImageViewController.m"; sourceTree = "<group>"; };
+		F41FF0E11BDDFCE800566A12 /* UIImage+JTSImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+JTSImageEffects.h"; sourceTree = "<group>"; };
+		F41FF0E21BDDFCE800566A12 /* UIImage+JTSImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+JTSImageEffects.m"; sourceTree = "<group>"; };
+		F41FF0E91BDE231200566A12 /* PIENotificationSystemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIENotificationSystemViewController.h; sourceTree = "<group>"; };
+		F41FF0EA1BDE231200566A12 /* PIENotificationSystemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENotificationSystemViewController.m; sourceTree = "<group>"; };
+		F41FF0EC1BDE269A00566A12 /* PIENotificationLikedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIENotificationLikedViewController.h; sourceTree = "<group>"; };
+		F41FF0ED1BDE269A00566A12 /* PIENotificationLikedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENotificationLikedViewController.m; sourceTree = "<group>"; };
 		F428F01B1BD331EF00318AC2 /* PIELaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIELaunchViewController.h; sourceTree = "<group>"; };
 		F428F01C1BD331EF00318AC2 /* PIELaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIELaunchViewController.m; sourceTree = "<group>"; };
 		F428F01D1BD331EF00318AC2 /* PIELaunchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIELaunchViewController.xib; sourceTree = "<group>"; };
@@ -2490,6 +2496,7 @@
 		5CDB05EC1AA400410089121E /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				F41FF0D61BDDFCE800566A12 /* JTS */,
 				F4E5F5CE1BD9D2E100AB8B31 /* AFNetworking */,
 				F4E5F5E21BD9D2E100AB8B31 /* UIKit+AFNetworking */,
 				F45D8F841BD87CFD005946E8 /* socialShare */,
@@ -2511,7 +2518,6 @@
 				E94289571B5B32A200ED26E4 /* TSMessage */,
 				E9CBFF451B5214FB00DC8ED4 /* SIAlertView */,
 				E97901331B48EB51003FB0B5 /* JGActionSheet */,
-				E99C50FF1B85A2A6004CA47B /* JTS */,
 				E9E19D711B37E1DF004B9910 /* MBProgressHUD */,
 				E95691881B22E88300DA84BB /* Mantle */,
 				5C83A84B1AC66F910071A024 /* pop */,
@@ -2963,25 +2969,6 @@
 			name = forgetPasswordBabe;
 			sourceTree = "<group>";
 		};
-		E99C50FF1B85A2A6004CA47B /* JTS */ = {
-			isa = PBXGroup;
-			children = (
-				E99C51001B85A2A6004CA47B /* JTSAnimatedGIFUtility.h */,
-				E99C51011B85A2A6004CA47B /* JTSAnimatedGIFUtility.m */,
-				E99C51021B85A2A6004CA47B /* JTSImageInfo.h */,
-				E99C51031B85A2A6004CA47B /* JTSImageInfo.m */,
-				E99C51041B85A2A6004CA47B /* JTSImageViewController.h */,
-				E99C51051B85A2A6004CA47B /* JTSImageViewController.m */,
-				E99C51061B85A2A6004CA47B /* JTSSimpleImageDownloader.h */,
-				E99C51071B85A2A6004CA47B /* JTSSimpleImageDownloader.m */,
-				E99C51081B85A2A6004CA47B /* UIApplication+JTSImageViewController.h */,
-				E99C51091B85A2A6004CA47B /* UIApplication+JTSImageViewController.m */,
-				E99C510A1B85A2A6004CA47B /* UIImage+JTSImageEffects.h */,
-				E99C510B1B85A2A6004CA47B /* UIImage+JTSImageEffects.m */,
-			);
-			path = JTS;
-			sourceTree = "<group>";
-		};
 		E99D2F371B1C7E8D000D7784 /* NSYImagesKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -3225,6 +3212,25 @@
 				F402073F1BA7C4160007CE02 /* VVBlurViewController.m */,
 			);
 			name = VVBlur;
+			sourceTree = "<group>";
+		};
+		F41FF0D61BDDFCE800566A12 /* JTS */ = {
+			isa = PBXGroup;
+			children = (
+				F41FF0D71BDDFCE800566A12 /* JTSAnimatedGIFUtility.h */,
+				F41FF0D81BDDFCE800566A12 /* JTSAnimatedGIFUtility.m */,
+				F41FF0D91BDDFCE800566A12 /* JTSImageInfo.h */,
+				F41FF0DA1BDDFCE800566A12 /* JTSImageInfo.m */,
+				F41FF0DB1BDDFCE800566A12 /* JTSImageViewController.h */,
+				F41FF0DC1BDDFCE800566A12 /* JTSImageViewController.m */,
+				F41FF0DD1BDDFCE800566A12 /* JTSSimpleImageDownloader.h */,
+				F41FF0DE1BDDFCE800566A12 /* JTSSimpleImageDownloader.m */,
+				F41FF0DF1BDDFCE800566A12 /* UIApplication+JTSImageViewController.h */,
+				F41FF0E01BDDFCE800566A12 /* UIApplication+JTSImageViewController.m */,
+				F41FF0E11BDDFCE800566A12 /* UIImage+JTSImageEffects.h */,
+				F41FF0E21BDDFCE800566A12 /* UIImage+JTSImageEffects.m */,
+			);
+			path = JTS;
 			sourceTree = "<group>";
 		};
 		F428F01A1BD331DD00318AC2 /* launch */ = {
@@ -3762,6 +3768,10 @@
 				F4EC110F1BCE5A73002D1DCF /* PIENotificationReplyTableViewCell.m */,
 				F4EC11131BCE5B9E002D1DCF /* PIENotificationSystemTableViewCell.h */,
 				F4EC11141BCE5B9E002D1DCF /* PIENotificationSystemTableViewCell.m */,
+				F41FF0E91BDE231200566A12 /* PIENotificationSystemViewController.h */,
+				F41FF0EC1BDE269A00566A12 /* PIENotificationLikedViewController.h */,
+				F41FF0ED1BDE269A00566A12 /* PIENotificationLikedViewController.m */,
+				F41FF0EA1BDE231200566A12 /* PIENotificationSystemViewController.m */,
 			);
 			name = notification;
 			sourceTree = "<group>";
@@ -4085,7 +4095,9 @@
 				F4E5F5FB1BD9D2E100AB8B31 /* AFURLRequestSerialization.m in Sources */,
 				E9ED35861B80F62F00B93BE5 /* UIScrollView+EmptyDataSet.m in Sources */,
 				F4D9F6CF1BBFDDE10023A53B /* PIEBangView.m in Sources */,
+				F41FF0E31BDDFCE800566A12 /* JTSAnimatedGIFUtility.m in Sources */,
 				5C67FB2D1AB2C509004EFF05 /* ATOMCustomCopperView.m in Sources */,
+				F41FF0E61BDDFCE800566A12 /* JTSSimpleImageDownloader.m in Sources */,
 				5C83A8861AC66F910071A024 /* POPAnimatableProperty.mm in Sources */,
 				5C9BDA081AA84D1000715698 /* DDCommentVM.m in Sources */,
 				5C67FB2A1AB2B634004EFF05 /* ATOMHeaderImageCropperView.m in Sources */,
@@ -4096,12 +4108,12 @@
 				5C5EF7BD1ABBCD1900CE5B84 /* DDHotDetailPageVM.m in Sources */,
 				5C561A821AB7FC0B0052D4D5 /* ATOMHomepageCustomTitleView.m in Sources */,
 				5C5EF7C01ABBF11E00CE5B84 /* ATOMCommentViewModel.m in Sources */,
+				F41FF0E71BDDFCE800566A12 /* UIApplication+JTSImageViewController.m in Sources */,
 				5C54DF1F1AB9738E00BDE34D /* DDNavigationController.m in Sources */,
 				5C83A8971AC66F910071A024 /* TransformationMatrix.cpp in Sources */,
 				F4E5F6031BD9D2E100AB8B31 /* UIProgressView+AFNetworking.m in Sources */,
 				5CEAC0331AD4F9540058037C /* DDMyCollectionManager.m in Sources */,
 				5C436A8A1AB03FA800D14608 /* DDCommentMsgVM.m in Sources */,
-				E99C510C1B85A2A6004CA47B /* JTSAnimatedGIFUtility.m in Sources */,
 				F4F72C201BCCFB7B002FF05A /* PIEShareIcon.m in Sources */,
 				3BD87D081B9E8888003B2310 /* PIECarouselViewController.m in Sources */,
 				5C436A7E1AB0249F00D14608 /* kfcFollowCell.m in Sources */,
@@ -4158,6 +4170,7 @@
 				5C83A8951AC66F910071A024 /* POPSpringAnimation.mm in Sources */,
 				E9F890D61B86FE6B0057ECBF /* SLKTypingIndicatorView.m in Sources */,
 				3BE1AEC91B9FE9C900CE2303 /* QBAlbumsViewController.m in Sources */,
+				F41FF0EE1BDE269A00566A12 /* PIENotificationLikedViewController.m in Sources */,
 				5CDB06321AA428BD0089121E /* MASViewAttribute.m in Sources */,
 				E99D2F5A1B1C7E8D000D7784 /* UIImage+Rotating.m in Sources */,
 				5C436A901AB0723700D14608 /* DDMsgInviteVC.m in Sources */,
@@ -4174,7 +4187,6 @@
 				F46117F01BAE556B001A6F1A /* PIEEliteViewController.m in Sources */,
 				5C6697B91AAFFD5F001FCF8A /* ATOMProceedingTableViewCell.m in Sources */,
 				F46117D91BAD1101001A6F1A /* IQUIViewController+Additions.m in Sources */,
-				E99C510F1B85A2A6004CA47B /* JTSSimpleImageDownloader.m in Sources */,
 				5C436A961AB0799900D14608 /* DDMsgFollowVC.m in Sources */,
 				3BE1AECE1B9FE9C900CE2303 /* QBImagePickerController.m in Sources */,
 				5CDB06301AA428BD0089121E /* MASConstraintMaker.m in Sources */,
@@ -4192,7 +4204,6 @@
 				5C7B8AB01AFA535D00F448CD /* PIEEliteEntity.m in Sources */,
 				5C589A8A1B04F2AC003D828A /* ATOMCameraView.m in Sources */,
 				5C83A8911AC66F910071A024 /* POPGeometry.mm in Sources */,
-				E99C51101B85A2A6004CA47B /* UIApplication+JTSImageViewController.m in Sources */,
 				F4DC3D3F1BC131BA00DCF72F /* PIEFriendAskTableViewCell.m in Sources */,
 				E901973E1B33F60500F46B78 /* PWRefreshFooterCollectionView.m in Sources */,
 				5C436A9C1AB07E5C00D14608 /* DDMsgPostReplyVC.m in Sources */,
@@ -4218,6 +4229,7 @@
 				F4EC11111BCE5A73002D1DCF /* PIENotificationReplyTableViewCell.m in Sources */,
 				5CDB06061AA405A40089121E /* UIColor+iOS7.m in Sources */,
 				5C8084FC1AF27BD30062421C /* ATOMTotalPSView.m in Sources */,
+				F41FF0EB1BDE231200566A12 /* PIENotificationSystemViewController.m in Sources */,
 				5CDB06311AA428BD0089121E /* MASLayoutConstraint.m in Sources */,
 				3B11C0431BA27ADB00B87165 /* PIENewReplyTableCell.m in Sources */,
 				F499E4491BD0E41100E5F178 /* PIESettingsViewController.m in Sources */,
@@ -4225,7 +4237,6 @@
 				3BE1AEC81B9FE9C900CE2303 /* QBAlbumCell.m in Sources */,
 				5C4C70DA1AB6FD5700358989 /* DDPageManager.m in Sources */,
 				5C0F04EB1ADCF6D9002003AE /* DDMsgFollowModel.m in Sources */,
-				E99C510E1B85A2A6004CA47B /* JTSImageViewController.m in Sources */,
 				5CDF81FB1AC25AFF00321694 /* ATOMUserFeedbackViewController.m in Sources */,
 				5C561A511AB7C8210052D4D5 /* ATOMUser.m in Sources */,
 				5C4F5BDF1AA556E600226F64 /* DDMessageVC.m in Sources */,
@@ -4246,6 +4257,7 @@
 				5CDB06671AA45C680089121E /* DDLaunchVC.m in Sources */,
 				E991EF001B735B7000025108 /* EAIntroPage.m in Sources */,
 				E95691AF1B22E88300DA84BB /* MTLModel+NSCoding.m in Sources */,
+				F41FF0E81BDDFCE800566A12 /* UIImage+JTSImageEffects.m in Sources */,
 				5C561A491AB7C7720052D4D5 /* ATOMUserDAO.m in Sources */,
 				5C4F5BDC1AA555F900226F64 /* PIENewViewController.m in Sources */,
 				F4F72C081BCB994B002FF05A /* PIEMyAskViewController.m in Sources */,
@@ -4287,7 +4299,6 @@
 				5C559B371AB13884000C5B50 /* DDInviteVC.m in Sources */,
 				F4E5F5FA1BD9D2E100AB8B31 /* AFURLConnectionOperation.m in Sources */,
 				E9F890D21B86FE6B0057ECBF /* SLKInputAccessoryView.m in Sources */,
-				E99C510D1B85A2A6004CA47B /* JTSImageInfo.m in Sources */,
 				5C0F04EE1ADCFB18002003AE /* ATOMInviteMessage.m in Sources */,
 				F4FABAFD1BAA593C00F47064 /* PIERefreshCollectionView.m in Sources */,
 				F4EC111C1BCE6B9A002D1DCF /* PIENotificationManager.m in Sources */,
@@ -4336,6 +4347,7 @@
 				F46117DD1BAD1101001A6F1A /* IQSegmentedNextPrevious.m in Sources */,
 				E94B032D1B7DE7D300863C6F /* kfcViews.m in Sources */,
 				5CDB06051AA405A40089121E /* UIColor+HSL.m in Sources */,
+				F41FF0E41BDDFCE800566A12 /* JTSImageInfo.m in Sources */,
 				F4E680631BDC73F500A4F199 /* PIEProceedingShareSheetView.m in Sources */,
 				E9D739131B79F200008CE562 /* BadgeStyle.m in Sources */,
 				5C535CBA1AF1FCEC00BF30D1 /* ATOMPSView.m in Sources */,
@@ -4447,7 +4459,6 @@
 				E90197351B32D2F800F46B78 /* MBProgressHUD.m in Sources */,
 				E99D2F5D1B1C7E8D000D7784 /* UIView+Screenshot.m in Sources */,
 				F4AFCD4B1BC79A3100027940 /* UIButton+Pop.m in Sources */,
-				E99C51111B85A2A6004CA47B /* UIImage+JTSImageEffects.m in Sources */,
 				E94B032A1B7DE6EC00863C6F /* UIColor+PSGod.m in Sources */,
 				5C9BDA001AA8303700715698 /* ATOMUploadWorkView.m in Sources */,
 				F409AA871BAFE39000736B0D /* PIEImageEntity.m in Sources */,
@@ -4459,6 +4470,7 @@
 				F4F72BFF1BCB6CD6002FF05A /* PIEMyCollectionTableViewCell.m in Sources */,
 				E99D2F591B1C7E8D000D7784 /* UIImage+Resizing.m in Sources */,
 				5C0F04F11ADCFC11002003AE /* ATOMInviteMessageViewModel.m in Sources */,
+				F41FF0E51BDDFCE800566A12 /* JTSImageViewController.m in Sources */,
 				E95691B21B22E88300DA84BB /* MTLValueTransformer.m in Sources */,
 				E9D1F88C1B203A4F0072242B /* PIERefreshTableView.m in Sources */,
 				5CDB062F1AA428BD0089121E /* MASConstraint.m in Sources */,

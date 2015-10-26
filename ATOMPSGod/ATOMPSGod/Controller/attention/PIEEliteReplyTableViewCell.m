@@ -66,6 +66,8 @@
     _timeLabel.text = viewModel.publishTime;
     [_theImageView setImageWithURL:[NSURL URLWithString:viewModel.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
     CGFloat imageViewHeight = viewModel.imageHeight <= SCREEN_HEIGHT/2 ? viewModel.imageHeight : SCREEN_HEIGHT/2;
+    imageViewHeight = MAX(200, imageViewHeight);
+
     [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(imageViewHeight)).with.priorityHigh();
     }];

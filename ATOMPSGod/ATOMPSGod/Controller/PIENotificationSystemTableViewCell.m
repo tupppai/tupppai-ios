@@ -23,5 +23,6 @@
 - (void)injectSauce:(PIENotificationVM*)vm {
     _timeLabel.text = vm.time;
     _contentLabel.text = vm.content;
+    [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarUrl]];
 }
 @end

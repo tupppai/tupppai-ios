@@ -87,7 +87,7 @@
 - (void)setViewModel:(ATOMFansViewModel *)viewModel {
     
     _viewModel = viewModel;
-    [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
+    [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
     _userNameLabel.text = viewModel.userName;
     _fansNumberLabel.text = [NSString stringWithFormat:@"%@粉丝", viewModel.fansCount];
     _uploadNumberLabel.text = [NSString stringWithFormat:@"%@求P", viewModel.askCount];

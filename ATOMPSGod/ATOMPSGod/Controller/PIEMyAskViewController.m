@@ -14,11 +14,12 @@
 #import "PIEImageCollectionViewCell.h"
 #import "PIECarouselViewController.h"
 #import "DDNavigationController.h"
-@interface PIEMyAskViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,CHTCollectionViewDelegateWaterfallLayout>
+@interface PIEMyAskViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,CHTCollectionViewDelegateWaterfallLayout,DZNEmptyDataSetDelegate>
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *homeImageDataSource;
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, assign) NSInteger currentPage;
+@property (nonatomic, assign) BOOL isfirstLoading;
 
 @end
 
@@ -60,6 +61,7 @@
         }
         [ws.dataSource removeAllObjects];
         [ws.dataSource addObjectsFromArray:arrayAgent];
+        ws.isfirstLoading = NO;//should set to NO before reloadData
         [ws.collectionView reloadData];
         [ws.collectionView.header endRefreshing];
     }];
@@ -105,7 +107,15 @@
     layout.minimumInteritemSpacing = 6;
     
     _collectionView = [[PIERefreshCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
-    self.view = _collectionView;
+    [self.view addSubview: _collectionView];
+    
+    [_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view);
+        make.bottom.equalTo(self.view);
+        make.left.equalTo(self.view);
+        make.right.equalTo(self.view);
+    }];
+
     _collectionView.toRefreshBottom = YES;
     _collectionView.toRefreshTop = YES;
     _collectionView.backgroundColor = [UIColor clearColor];
@@ -113,12 +123,13 @@
     _collectionView.delegate = self;
     _collectionView.psDelegate = self;
     _collectionView.emptyDataSetSource = self;
-    _collectionView.contentInset = UIEdgeInsetsMake(0, 0, TAB_HEIGHT*2.5, 0);
+    _collectionView.emptyDataSetDelegate = self;
+    _collectionView.contentInset = UIEdgeInsetsMake(0, 0, 200, 0);
     UINib* nib = [UINib nibWithNibName:@"PIEImageCollectionViewCell" bundle:nil];
     [_collectionView registerNib:nib forCellWithReuseIdentifier:@"PIEImageCollectionViewCell"];
     _canRefreshFooter = YES;
     _dataSource = [NSMutableArray array];
-    
+    _isfirstLoading = YES;
     [self getDataSource];
 }
 
@@ -162,20 +173,24 @@
 
 
 #pragma mark - DZNEmptyDataSetSource & delegate
-//- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
-//{
-//    return [UIImage imageNamed:@"ic_cry"];
-//}
+
+
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
 {
-    NSString *text = @"快去求P吧";
+    NSString *text = @"还没发布过呢";
     
-    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:kTitleSizeForEmptyDataSet],
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
                                  NSForegroundColorAttributeName: [UIColor darkGrayColor]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
+-(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
+    return !_isfirstLoading;
+}
+-(BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
+    return YES;
+}
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
 //    DDPageVM* vm = [_dataSource objectAtIndex:indexPath.row];

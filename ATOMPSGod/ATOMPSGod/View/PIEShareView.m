@@ -27,6 +27,9 @@
     return self;
 }
 
+- (void)toggleCollect_Icon8 {
+    self.sheetView.icon8.highlighted = !self.sheetView.icon8.highlighted;
+}
 -(PIESharesheetView *)sheetView {
     if (!_sheetView) {
         _sheetView = [PIESharesheetView new];

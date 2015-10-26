@@ -16,6 +16,8 @@
 //#import "PIENotificationLikeTableViewCell.h"
 #import "PIENotificationFollowTableViewCell.h"
 #import "PIENotificationCommentTableViewCell.h"
+#import "PIENotificationSystemViewController.h"
+#import "PIENotificationLikedViewController.h"
 
 @interface PIENotificationViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate>
 @property (nonatomic, strong) NSMutableArray *source;
@@ -195,6 +197,7 @@
     UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,40)];
     view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 100,40)];
+    label.textColor = [UIColor lightGrayColor];
     label.backgroundColor = [UIColor clearColor];
     [view addSubview:label];
     
@@ -248,6 +251,18 @@
     }
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            PIENotificationSystemViewController* vc = [PIENotificationSystemViewController new];
+            [self.navigationController pushViewController:vc animated:YES];
+        } else if (indexPath.row == 1) {
+            PIENotificationLikedViewController* vc = [PIENotificationLikedViewController new];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
 
+    }
+}
 
 @end

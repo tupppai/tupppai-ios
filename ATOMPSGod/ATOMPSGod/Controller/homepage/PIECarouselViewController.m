@@ -222,10 +222,10 @@
     DDHotDetailManager *manager = [DDHotDetailManager new];
     
     NSInteger ID;
-    if (_pageVM.type == PIEPageTypeAsk) {
-        ID = _pageVM.ID;
-    } else {
+    if (_pageVM.askID) {
         ID = _pageVM.askID;
+    } else {
+        ID = _pageVM.ID;
     }
     [manager fetchAllReply:param ID:ID withBlock:^(NSMutableArray *askArray, NSMutableArray *replyArray) {
         _dataSource = nil;

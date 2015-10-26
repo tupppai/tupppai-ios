@@ -76,7 +76,6 @@
         NSString* labelName = [[_infoArray objectAtIndex:i]objectAtIndex:0];
         NSString* imageName = [[_infoArray objectAtIndex:i]objectAtIndex:1];
         icon.label.text = labelName;
-//        [icon setTitle:labelName forState:UIControlStateNormal];
         [icon setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
     }
 }

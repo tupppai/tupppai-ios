@@ -387,7 +387,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                     [self showShareView];
                 }
                 else if (CGRectContainsPoint(cell.collectView.frame, p)) {
-                    [self collect:cell.collectView];
+                    [self collect:cell.collectView shouldShowHud:NO];
                 }
                 else if (CGRectContainsPoint(cell.commentView.frame, p)) {
                     DDCommentVC* vc = [DDCommentVC new];
@@ -535,7 +535,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                     [self showShareView];
                 }
                 else if (CGRectContainsPoint(cell.collectView.frame, p)) {
-                    [self collect:cell.collectView];
+                    [self collect:cell.collectView shouldShowHud:NO];
                 }
                 else if (CGRectContainsPoint(cell.commentView.frame, p)) {
                     DDCommentVC* vc = [DDCommentVC new];
@@ -579,7 +579,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
         }
     }];
 }
--(void)collect:(PIEPageButton*) collectView {
+-(void)collect:(PIEPageButton*) collectView shouldShowHud:(BOOL)shouldShowHud {
     NSMutableDictionary *param = [NSMutableDictionary new];
     collectView.selected = !collectView.selected;
     if (collectView.selected) {
@@ -591,10 +591,40 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     }
     [DDCollectManager toggleCollect:param withPageType:_selectedVM.type withID:_selectedVM.ID withBlock:^(NSError *error) {
         if (!error) {
+            if (shouldShowHud) {
+                if (  _selectedVM.collected) {
+                    [Hud textWithLightBackground:@"收藏成功"];
+                } else {
+                    [Hud textWithLightBackground:@"取消收藏成功"];
+                }
+            }
             _selectedVM.collected = collectView.selected;
             _selectedVM.collectCount = collectView.numberString;
         }   else {
             collectView.selected = !collectView.selected;
+        }
+    }];
+}
+
+-(void)collectAsk {
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    _selectedVM.collected = !_selectedVM.collected;
+    if (_selectedVM.collected) {
+        //收藏
+        [param setObject:@(1) forKey:@"status"];
+    } else {
+        //取消收藏
+        [param setObject:@(0) forKey:@"status"];
+    }
+    [DDCollectManager toggleCollect:param withPageType:_selectedVM.type withID:_selectedVM.ID withBlock:^(NSError *error) {
+        if (!error) {
+            if (  _selectedVM.collected) {
+                [Hud textWithLightBackground:@"收藏成功"];
+            } else {
+                [Hud textWithLightBackground:@"取消收藏成功"];
+            }
+        }   else {
+            _selectedVM.collected = !_selectedVM.collected;
         }
     }];
 }
@@ -673,9 +703,19 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 }
 -(void)tapShare8 {
     if (_sv.type == PIEPageTypeEliteHot) {
-        //        [self collect:_selectedHotCell.collectView];
+        if (_selectedVM.type == PIEPageTypeAsk) {
+            [self collectAsk];
+        } else {
+            PIEEliteHotReplyTableViewCell* cell = [_sv.tableHot cellForRowAtIndexPath:_selectedIndexPath];
+            [self collect:cell.collectView shouldShowHud:YES];
+        }
     } else {
-        [self collect:nil];
+        if (_selectedVM.type == PIEPageTypeAsk) {
+            [self collectAsk];
+        } else {
+            PIEEliteReplyTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
+            [self collect:cell.collectView shouldShowHud:YES];
+        }
     }
 }
 

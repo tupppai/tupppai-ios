@@ -9,7 +9,7 @@
 #import "PIEEliteHotReplyTableViewCell.h"
 #import "PIEImageEntity.h"
 #import "PIECommentEntity.h"
-
+#import "FXBlurView.h"
 @interface PIEEliteHotReplyTableViewCell()
 @property (weak, nonatomic) IBOutlet UIView *gapView;
 
@@ -85,7 +85,9 @@
     _nameLabel.text = viewModel.username;
     _timeLabel.text = viewModel.publishTime;
     [_theImageView setImageWithURL:[NSURL URLWithString:viewModel.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+    
     CGFloat imageViewHeight = viewModel.imageHeight <= SCREEN_HEIGHT/2 ? viewModel.imageHeight : SCREEN_HEIGHT/2;
+    imageViewHeight = MAX(200, imageViewHeight);
     [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(imageViewHeight)).with.priorityHigh();
     }];

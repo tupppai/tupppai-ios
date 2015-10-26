@@ -49,6 +49,7 @@
     self.navigationItem.rightBarButtonItem = btnDone;
 }
 - (void)createUI {
+    self.title = @"资料编辑";
     _createProfileView = [PIEModifySelfView new];
     self.view = _createProfileView;
     

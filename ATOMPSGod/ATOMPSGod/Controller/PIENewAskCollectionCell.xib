@@ -45,6 +45,7 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="6DR-iK-E7b"/>
                                 <exclude reference="Ngn-Bj-NmF"/>
                             </mask>
                         </variation>

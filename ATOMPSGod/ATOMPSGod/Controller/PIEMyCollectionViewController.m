@@ -14,12 +14,14 @@
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
 
-@interface PIEMyCollectionViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate>
+@interface PIEMyCollectionViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (nonatomic, strong)  PIERefreshTableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) UITapGestureRecognizer *tapMyCollectionGesture;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL canRefreshFooter;
+@property (nonatomic, assign) BOOL isfirstLoading;
+
 @end
 
 @implementation PIEMyCollectionViewController
@@ -32,14 +34,23 @@
     _tableView.psDelegate = self;
     _tableView.backgroundColor = [UIColor clearColor];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    self.view = _tableView;
-    
+    _tableView.emptyDataSetDelegate = self;
+    _tableView.emptyDataSetSource = self;
+    _tableView.contentInset = UIEdgeInsetsMake(0, 0, 100, 0);
+    [self.view addSubview: _tableView];
+    [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view);
+        make.bottom.equalTo(self.view);
+        make.left.equalTo(self.view);
+        make.right.equalTo(self.view);
+    }];
     UINib* nib = [UINib nibWithNibName:@"PIEMyCollectionTableViewCell" bundle:nil];
     [_tableView registerNib:nib forCellReuseIdentifier:@"PIEMyCollectionTableViewCell"];
     _canRefreshFooter = YES;
     _currentPage = 1;
     _dataSource = [NSMutableArray array];
-    [self getDataSource];
+    _isfirstLoading = YES;
+    [self.tableView.header beginRefreshing];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -99,6 +110,7 @@
         }
         [_dataSource removeAllObjects];
         [_dataSource addObjectsFromArray:arrayAgent];
+        ws.isfirstLoading = NO;
         [ws.tableView reloadData];
         [ws.tableView.header endRefreshing];
         if (resultArray.count == 0) {
@@ -146,4 +158,26 @@
         }
     });
 }
+
+#pragma mark - DZNEmptyDataSetSource & delegate
+//- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
+//{
+//    return [UIImage imageNamed:@"ic_cry"];
+//}
+-(BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
+    return YES;
+}
+-(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
+    return !_isfirstLoading;
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text = @"还没收藏呢";
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
 @end

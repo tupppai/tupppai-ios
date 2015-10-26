@@ -50,6 +50,7 @@
 }
 
 - (void)customNavigationBar {
+    self.title = @"发布预览";
     UIButton* itemView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 48, 22)];
     [itemView setBackgroundImage:[UIImage imageNamed:@"pie_publish"] forState:UIControlStateNormal];  ;
     itemView.contentMode = UIViewContentModeScaleAspectFit;

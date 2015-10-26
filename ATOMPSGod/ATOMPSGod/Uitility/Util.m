@@ -137,6 +137,20 @@ NSString* deviceName()
     [hud hide:YES afterDelay:1];
     }
 }
++(void)textWithLightBackground:(NSString*)message {
+    if ([UIApplication sharedApplication].keyWindow) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+        hud.color = [UIColor colorWithHex:0xffffff andAlpha:0.5];
+        // Configure for text only and offset down
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = message;
+        hud.margin = 30.f;
+        hud.cornerRadius = 4;
+        hud.removeFromSuperViewOnHide = YES;
+        [hud hide:YES afterDelay:1];
+    }
+}
+
 +(void)text:(NSString*)message inView:(UIView*)view {
     if (view) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];

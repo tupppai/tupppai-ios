@@ -51,6 +51,7 @@
                             <mask key="constraints">
                                 <exclude reference="Jfg-pO-BAf"/>
                                 <exclude reference="gMw-YD-3py"/>
+                                <exclude reference="iKR-Qi-VEQ"/>
                             </mask>
                         </variation>
                     </imageView>

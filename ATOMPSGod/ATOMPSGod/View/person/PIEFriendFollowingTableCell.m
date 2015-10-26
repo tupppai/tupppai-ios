@@ -77,7 +77,7 @@
         make.centerY.equalTo(_fansNumberLabel);
     }];
     [self.attentionButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.equalTo(@(44));
+        make.width.equalTo(@(43));
         make.height.equalTo(@(27));
         make.right.equalTo(self.contentView).with.offset(-kPadding15);
         make.centerY.equalTo(self.contentView);
@@ -89,7 +89,7 @@
 
 - (void)setViewModel:(ATOMConcernViewModel *)viewModel {
     _viewModel = viewModel;
-    [self.userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
+    [self.userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
     self.userNameLabel.text = viewModel.userName;
     self.fansNumberLabel.text = [NSString stringWithFormat:@"%@粉丝",viewModel.fansCount];
     self.uploadNumberLabel.text = [NSString stringWithFormat:@"%@求p", viewModel.askCount];
@@ -97,7 +97,7 @@
     if (viewModel.concernStatus == 1) {
         self.attentionButton.selected = YES;
     } else if (viewModel.concernStatus == 2) {
-        [self.attentionButton setBackgroundImage:[UIImage imageNamed:@"btn_mutualattention"] forState:UIControlStateSelected];
+        [self.attentionButton setImage:[UIImage imageNamed:@"btn_mutualattention"] forState:UIControlStateSelected];
         self.attentionButton.selected = YES;
     }
     [self setNeedsLayout];
@@ -110,7 +110,7 @@
         _userHeaderButton.userInteractionEnabled = NO;
         _userHeaderButton.layer.cornerRadius = kfcAvatarWidth / 2;
         _userHeaderButton.layer.masksToBounds = YES;
-        [_userHeaderButton setBackgroundImage:[UIImage imageNamed:@"head_portrait"] forState:UIControlStateNormal];
+        [_userHeaderButton setBackgroundImage:[UIImage imageNamed:@"cellBG"] forState:UIControlStateNormal];
     }
     return _userHeaderButton;
 }
@@ -118,9 +118,11 @@
     if (!_attentionButton) {
         _attentionButton = [UIButton new];
         _attentionButton.userInteractionEnabled = NO;
-        [_attentionButton setBackgroundImage:[UIImage imageNamed:@"new_reply_follow"] forState:UIControlStateNormal];
-        [_attentionButton setBackgroundImage:[UIImage imageNamed:@"new_reply_followed"] forState:UIControlStateSelected];
+        [_attentionButton setImage:[UIImage imageNamed:@"new_reply_follow"] forState:UIControlStateNormal];
+        [_attentionButton setImage:[UIImage imageNamed:@"new_reply_followed"] forState:UIControlStateSelected];
         _attentionButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
+
+        
     }
     return _attentionButton;
 }

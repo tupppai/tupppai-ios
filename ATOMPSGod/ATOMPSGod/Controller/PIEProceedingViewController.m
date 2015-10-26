@@ -434,9 +434,9 @@
     
     width = MyAskCellWidth;
     height = vm.imageHeight + 46;
-    if (height > (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/1.3) {
-        height = (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/1.3;
-    }
+    height = MAX(height, 50);
+    height = MIN(height, 200);
+
     return CGSizeMake(width, height);
 }
 
@@ -449,7 +449,7 @@
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(1) forKey:@"page"];
-    [param setObject:@(MyAskCellWidth) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH/2) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getAskWithReplies:param withBlock:^(NSArray *returnArray) {
@@ -553,7 +553,7 @@
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(1) forKey:@"page"];
-    [param setObject:@(MyAskCellWidth) forKey:@"width"];
+//    [param setObject:@(SCREEN_WIDTH/2) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     
@@ -583,7 +583,7 @@
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_currentIndex_Done) forKey:@"page"];
-    [param setObject:@(MyAskCellWidth) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH/2) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     

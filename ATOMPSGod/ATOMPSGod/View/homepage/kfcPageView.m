@@ -105,21 +105,28 @@
 
 
 -(void)setVm:(DDPageVM *)vm {
-    [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
-    _usernameLabel.text = vm.username;
-    _timeLabel.text = vm.publishTime;
-    [_imageViewMain setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
-    _commentButton.numberString = vm.commentCount;
-    _shareButton.numberString = vm.shareCount;
-    _contentLabel.text = vm.content;
-    _likeButton.numberString = vm.likeCount;
-    _likeButton.highlighted = vm.liked;
-    if (vm.type == PIEPageTypeAsk) {
-        _bangView.hidden = NO;
-        _likeButton.hidden = YES;
-    } else {
+    if (vm) {
+        [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
+        _usernameLabel.text = vm.username;
+        _timeLabel.text = vm.publishTime;
+        [_imageViewMain setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+        _commentButton.numberString = vm.commentCount;
+        _shareButton.numberString = vm.shareCount;
+        _contentLabel.text = vm.content;
+        _likeButton.numberString = vm.likeCount;
+        _likeButton.highlighted = vm.liked;
+        if (vm.type == PIEPageTypeAsk) {
+            _bangView.hidden = NO;
+            _likeButton.hidden = YES;
+        } else {
+            _bangView.hidden = YES;
+            _likeButton.hidden = NO;
+        }
+    }
+    else {
         _bangView.hidden = YES;
-        _likeButton.hidden = NO;
+        _likeButton.hidden = YES;
+        _imageViewMain.image = [UIImage imageNamed:@"cellBG"];
     }
 }
 

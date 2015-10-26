@@ -22,13 +22,14 @@
 #import "DDNavigationController.h"
 #import "PIECarouselViewController.h"
 
-@interface PIEMyReplyViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,CHTCollectionViewDelegateWaterfallLayout>
+@interface PIEMyReplyViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,CHTCollectionViewDelegateWaterfallLayout>
 
 @property (nonatomic, strong) PIERefreshCollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *homeImageDataSource;
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, assign) NSInteger currentPage;
+@property (nonatomic, assign) BOOL isfirstLoading;
 
 @end
 
@@ -75,8 +76,10 @@
         }
         [ws.dataSource removeAllObjects];
         [ws.dataSource addObjectsFromArray:arrayAgent];
+        ws.isfirstLoading = NO;
         [ws.collectionView reloadData];
         [ws.collectionView.header endRefreshing];
+        
     }];
 }
 
@@ -123,7 +126,15 @@
     layout.minimumInteritemSpacing = 10;
     
     _collectionView = [[PIERefreshCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
-    self.view = _collectionView;
+    [self.view addSubview: _collectionView];
+    
+    [_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view);
+        make.bottom.equalTo(self.view);
+        make.left.equalTo(self.view);
+        make.right.equalTo(self.view);
+    }];
+
     _collectionView.backgroundColor = [UIColor clearColor];
     _collectionView.dataSource = self;
     _collectionView.toRefreshBottom = YES;
@@ -131,14 +142,14 @@
     _collectionView.delegate = self;
     _collectionView.psDelegate = self;
     _collectionView.emptyDataSetSource = self;
-    
-    _collectionView.contentInset = UIEdgeInsetsMake(0, 0, TAB_HEIGHT*3, 0);
+    _collectionView.emptyDataSetDelegate = self;
+    _collectionView.contentInset = UIEdgeInsetsMake(0, 0, 200, 0);
     UINib* nib = [UINib nibWithNibName:@"PIEMyReplyCollectionViewCell" bundle:nil];
     [_collectionView registerNib:nib forCellWithReuseIdentifier:@"PIEMyReplyCollectionViewCell"];
     _canRefreshFooter = YES;
     _dataSource = [NSMutableArray array];
-
-    [self getDataSource];
+    _isfirstLoading = YES;
+    [self.collectionView.header beginRefreshing];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -170,11 +181,17 @@
 //{
 //    return [UIImage imageNamed:@"ic_cry"];
 //}
+-(BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
+    return YES;
+}
+-(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
+    return !_isfirstLoading;
+}
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
 {
-    NSString *text = @"快去帮助众生PS,成为PS大神吧";
+    NSString *text = @"还没上传过呢";
     
-    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:kTitleSizeForEmptyDataSet],
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
                                  NSForegroundColorAttributeName: [UIColor darkGrayColor]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];

@@ -124,6 +124,7 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="Niq-Tv-rA3"/>
+                                <exclude reference="Ntv-Uy-Xh6"/>
                                 <exclude reference="Ss6-WD-bB1"/>
                             </mask>
                         </variation>
