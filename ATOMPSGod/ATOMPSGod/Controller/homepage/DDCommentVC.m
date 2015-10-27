@@ -46,6 +46,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 @end
 
 @implementation DDCommentVC
+static dispatch_once_t onceToken;
 
 - (id)init
 {
@@ -97,8 +98,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self.textView becomeFirstResponder];
-
+    dispatch_once(&onceToken, ^{
+        [self.textView becomeFirstResponder];
+    });
 }
 
 -(BOOL)hidesBottomBarWhenPushed {

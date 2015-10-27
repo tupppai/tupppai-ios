@@ -267,7 +267,7 @@
     vc.hideSecondView = YES;
     vc.type = PIEUploadTypeReply;
     DDPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath.row];
-    vc.askIDToReply = vm.ID;
+    vc.askIDToReply = vm.askID;
     [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
 }
 

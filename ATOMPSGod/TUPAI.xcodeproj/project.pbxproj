@@ -476,6 +476,7 @@
 		F4BB27BF1BD0AD8200C50F58 /* PIEImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BB27BE1BD0AD8200C50F58 /* PIEImageView.m */; settings = {ASSET_TAGS = (); }; };
 		F4BBE7721BBE3F9D00003CDE /* PIEReplyCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE7701BBE3F9D00003CDE /* PIEReplyCollectionViewController.m */; settings = {ASSET_TAGS = (); }; };
 		F4BBE77C1BBE420400003CDE /* PIEReplyCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE77A1BBE420400003CDE /* PIEReplyCollectionCell.m */; settings = {ASSET_TAGS = (); }; };
+		F4BDF4CB1BDF345100DA3575 /* BBBadgeBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BDF4CA1BDF345100DA3575 /* BBBadgeBarButtonItem.m */; settings = {ASSET_TAGS = (); }; };
 		F4D015BB1BA6AF7200A28329 /* PIEThumbAnimateView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D015BA1BA6AF7200A28329 /* PIEThumbAnimateView.m */; };
 		F4D07A5D1BBA3AB70016A8B5 /* PIEEliteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D07A5C1BBA3AB70016A8B5 /* PIEEliteManager.m */; settings = {ASSET_TAGS = (); }; };
 		F4D3686C1BA909E300E6C91C /* PIECameraCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D3686A1BA909E300E6C91C /* PIECameraCell.m */; };
@@ -1462,6 +1463,8 @@
 		F4BBE7701BBE3F9D00003CDE /* PIEReplyCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEReplyCollectionViewController.m; sourceTree = "<group>"; };
 		F4BBE7791BBE420400003CDE /* PIEReplyCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEReplyCollectionCell.h; sourceTree = "<group>"; };
 		F4BBE77A1BBE420400003CDE /* PIEReplyCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEReplyCollectionCell.m; sourceTree = "<group>"; };
+		F4BDF4C91BDF345100DA3575 /* BBBadgeBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBBadgeBarButtonItem.h; sourceTree = "<group>"; };
+		F4BDF4CA1BDF345100DA3575 /* BBBadgeBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBBadgeBarButtonItem.m; sourceTree = "<group>"; };
 		F4D015B91BA6AF7200A28329 /* PIEThumbAnimateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEThumbAnimateView.h; sourceTree = "<group>"; };
 		F4D015BA1BA6AF7200A28329 /* PIEThumbAnimateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEThumbAnimateView.m; sourceTree = "<group>"; };
 		F4D07A5B1BBA3AB70016A8B5 /* PIEEliteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteManager.h; sourceTree = "<group>"; };
@@ -2496,6 +2499,7 @@
 		5CDB05EC1AA400410089121E /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				F4BDF4C81BDF345100DA3575 /* BBBadgeBarButtonItem */,
 				F41FF0D61BDDFCE800566A12 /* JTS */,
 				F4E5F5CE1BD9D2E100AB8B31 /* AFNetworking */,
 				F4E5F5E21BD9D2E100AB8B31 /* UIKit+AFNetworking */,
@@ -3619,6 +3623,15 @@
 			name = collection;
 			sourceTree = "<group>";
 		};
+		F4BDF4C81BDF345100DA3575 /* BBBadgeBarButtonItem */ = {
+			isa = PBXGroup;
+			children = (
+				F4BDF4C91BDF345100DA3575 /* BBBadgeBarButtonItem.h */,
+				F4BDF4CA1BDF345100DA3575 /* BBBadgeBarButtonItem.m */,
+			);
+			path = BBBadgeBarButtonItem;
+			sourceTree = "<group>";
+		};
 		F4D3686E1BA954EB00E6C91C /* ask */ = {
 			isa = PBXGroup;
 			children = (
@@ -3927,6 +3940,11 @@
 					5CDB05C01AA3FE520089121E = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = 2PU4QHZLMM;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					5CDB05D91AA3FE520089121E = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -4423,6 +4441,7 @@
 				E9F890D41B86FE6B0057ECBF /* SLKTextView.m in Sources */,
 				5CDB06661AA45C680089121E /* DDCreateProfileVC.m in Sources */,
 				5C7B8AB71AFA5AB700F448CD /* ATOMShowAttention.m in Sources */,
+				F4BDF4CB1BDF345100DA3575 /* BBBadgeBarButtonItem.m in Sources */,
 				5C653B9B1AA96C820025814B /* BJImageCropper.m in Sources */,
 				F4E5F5F61BD9D2E100AB8B31 /* AFHTTPRequestOperationManager.m in Sources */,
 				5C83A88B1AC66F910071A024 /* POPAnimationTracer.mm in Sources */,

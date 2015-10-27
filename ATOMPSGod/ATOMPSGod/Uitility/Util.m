@@ -12,6 +12,12 @@
 
 @implementation Util
 
+//+(void)uploadDeviceInfo {
+//    NSUUID *oNSUUID = [[UIDevice currentDevice] identifierForVendor];
+//    NSString* token = [[NSUserDefaults standardUserDefaults]stringForKey:@"devicetoken"];
+//    NSDictionary* param = [NSDictionary dictionaryWithObjectsAndKeys:token, @"device_token",@1,@"platform",@([[UIDevice currentDevice].systemVersion floatValue]),@"device_os",deviceName(),@"device_name",[oNSUUID UUIDString],@"device_mac",@"2.1",@"version",nil];
+//    [DDService updateToken:param withBlock:nil];
+//}
 
 NSString* deviceName()
 {

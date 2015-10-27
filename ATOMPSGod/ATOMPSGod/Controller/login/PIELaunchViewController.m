@@ -116,6 +116,7 @@
                     [self.navigationController setViewControllers:[NSArray array]];
                     [AppDelegate APP].mainTabBarController = nil;
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
+                    ;
                 } else {
                     [DDUserManager currentUser].signUpType = ATOMSignUpWeibo;
                     [DDUserManager currentUser].sourceData = sourceData;
@@ -166,6 +167,7 @@
                     [self.navigationController setViewControllers:[NSArray array]];
                     [AppDelegate APP].mainTabBarController = nil;
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
+                    ;
                 } else {
                     [DDUserManager currentUser].signUpType = ATOMSignUpWeibo;
                     [DDUserManager currentUser].sourceData = sdkUser.rawData;
@@ -201,6 +203,7 @@
                     [self.navigationController setViewControllers:[NSArray array]];
                     [AppDelegate APP].mainTabBarController = nil;
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
+                    ;
                 } else  {
                     [DDUserManager currentUser].signUpType = ATOMSignUpWechat;
                     [DDUserManager currentUser].sourceData = sourceData;

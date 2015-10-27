@@ -198,8 +198,16 @@
     NSString *devicetokenString = [[[deviceToken description]
                                     stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]]
                                    stringByReplacingOccurrencesOfString:@" " withString:@""];
-    [[NSUserDefaults standardUserDefaults]setObject:devicetokenString forKey:@"devicetoken"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [self uploadDeviceInfo:devicetokenString];
+
+//    [[NSUserDefaults standardUserDefaults]setObject:devicetokenString forKey:@"devicetoken"];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+- (void)uploadDeviceInfo:(NSString*)token {
+    NSUUID *oNSUUID = [[UIDevice currentDevice] identifierForVendor];
+    NSDictionary* param = [NSDictionary dictionaryWithObjectsAndKeys:token, @"device_token",@1,@"platform",@([[UIDevice currentDevice].systemVersion floatValue]),@"device_os",deviceName(),@"device_name",[oNSUUID UUIDString],@"device_mac",@"2.1",@"version",nil];
+    [DDService updateToken:param withBlock:nil];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
@@ -215,42 +223,24 @@
 //    p = 0;
 //    type = invite;
 //}
-    // 处理推送消息
     
-//    [[NSUserDefaults standardUserDefaults]setObject:userInfo forKey:@"RemoteNoficationInfo"];
-//    
     NSLog(@"userinfo:%@",userInfo);
 //    [UMessage didReceiveRemoteNotification:userInfo];
     
     NSInteger notifyType = [[userInfo objectForKey:@"type"]integerValue];
     int badgeNumber = [[[userInfo objectForKey:@"aps"]objectForKey:@"badge"]intValue];
-
-    typedef void (^CaseBlock)();
-    NSDictionary *dic = @{
-                        @"1":
-                            ^{
-                                [self updateBadgeNumberForKey:@"NotifyType0" toAdd:badgeNumber];
-                            },
-                        @"2":
-                            ^{
-                                [self updateBadgeNumberForKey:@"NotifyType1" toAdd:badgeNumber];
-                            },
-                        @"3":
-                            ^{
-                                [self updateBadgeNumberForKey:@"NotifyType2" toAdd:badgeNumber];
-                            },
-                        @"4":
-                            ^{
-                                [self updateBadgeNumberForKey:@"NotifyType3" toAdd:badgeNumber];
-                            },
-                        @"5":
-                            ^{
-                                [self updateBadgeNumberForKey:@"NotifyType4" toAdd:badgeNumber];
-                            }
-                        };
+    if (notifyType == 0) {
+        [self updateBadgeNumberForKey:@"NotificationSystem" toAdd:badgeNumber];
+    } else if (notifyType == 5) {
+        [self updateBadgeNumberForKey:@"NotificationLike" toAdd:badgeNumber];
+    } else {
+        [self updateBadgeNumberForKey:@"NotificationOthers" toAdd:badgeNumber];
+    }
     
-    ((CaseBlock)[dic objectForKey:[NSString stringWithFormat:@"%zd",notifyType]])();
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"ReceiveRemoteNotification" object:nil]];
+    
+   DDNavigationController* nav = [[self.mainTabBarController viewControllers] objectAtIndex:4];
+    nav.tabBarItem.badgeValue = @"•";
 
 }
 

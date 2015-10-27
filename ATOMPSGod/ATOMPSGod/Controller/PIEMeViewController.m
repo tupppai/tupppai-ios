@@ -66,6 +66,8 @@
                                              selector:@selector(scrollDown)
                                                  name:@"PIEMeScrollDown"
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ReceiveRemoteNotification) name:@"ReceiveRemoteNotification" object:nil];
+
 }
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -81,6 +83,9 @@
     [super viewWillDisappear:animated];
     [self.navigationController.navigationBar setBackgroundImage:nil
                                                   forBarMetrics:UIBarMetricsDefault];
+}
+- (void) ReceiveRemoteNotification {
+    [self.navigationItem.rightBarButtonItem setImage:[UIImage imageNamed:@"cellBG"]];
 }
 -(void)updateAvatar {
     NSURLRequest* req = [[NSURLRequest alloc]initWithURL:[NSURL URLWithString:[DDUserManager currentUser].avatar]];
