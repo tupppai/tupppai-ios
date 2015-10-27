@@ -31,12 +31,15 @@
 @class PIEPageEntity;
 #define AskCellWidth (SCREEN_WIDTH - 20) / 2.0
 
-@interface PIENewViewController() < UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,PWRefreshBaseCollectionViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,CHTCollectionViewDelegateWaterfallLayout,UICollectionViewDelegate,UICollectionViewDataSource>
+@interface PIENewViewController() < UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,PWRefreshBaseCollectionViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,CHTCollectionViewDelegateWaterfallLayout,UICollectionViewDelegate,UICollectionViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureReply;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureAsk;
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureAsk;
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureReply;
+
+@property (nonatomic, assign) BOOL isfirstLoadingAsk;
+@property (nonatomic, assign) BOOL isfirstLoadingReply;
 
 @property (nonatomic, strong) NSMutableArray *sourceAsk;
 @property (nonatomic, strong) NSMutableArray *sourceReply;
@@ -61,7 +64,6 @@
 @property (nonatomic, strong) PIENewReplyTableCell *selectedReplyCell;
 @property (nonatomic, strong) DDPageVM *selectedVM;
 @property (nonatomic, strong) PIEShareView *shareView;
-
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
 
 @end
@@ -105,6 +107,10 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     _canRefreshReplyFooter = YES;
     _canRefreshAskFooter = YES;
     _isFirstEnterSecondView = YES;
+    
+    _isfirstLoadingAsk = YES;
+    _isfirstLoadingReply = YES;
+    
     _sourceAsk = [NSMutableArray new];
     _sourceReply = [NSMutableArray new];
     //    [self firstGetDataSourceFromDataBase];
@@ -121,6 +127,8 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     _hotTableView.delegate = self;
     _hotTableView.dataSource = self;
     _hotTableView.psDelegate = self;
+    _hotTableView.emptyDataSetSource = self;
+    _hotTableView.emptyDataSetDelegate = self;
     UINib* nib = [UINib nibWithNibName:CellIdentifier bundle:nil];
     [_hotTableView registerNib:nib forCellReuseIdentifier:CellIdentifier];
     _hotTableView.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
@@ -147,6 +155,8 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     _askCollectionView = _scrollView.collectionView;
     _askCollectionView.dataSource = self;
     _askCollectionView.delegate = self;
+    _askCollectionView.emptyDataSetDelegate = self;
+    _askCollectionView.emptyDataSetSource = self;
     _askCollectionView.psDelegate = self;
     UINib* nib = [UINib nibWithNibName:CellIdentifier2 bundle:nil];
     [_askCollectionView registerNib:nib forCellWithReuseIdentifier:CellIdentifier2];
@@ -184,17 +194,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-//- (void)shouldRefreshHeader {
-//    BOOL shouldRefresh = [[NSUserDefaults standardUserDefaults]boolForKey:@"tapNav1"];
-//    if (shouldRefresh) {
-//        if (_scrollView.type == PIENewScrollTypeReply && ![_hotTableView.header isRefreshing]) {
-//            [_hotTableView.header beginRefreshing];
-//        } else if (_scrollView.type == PIENewScrollTypeAsk && ![_askCollectionView.header isRefreshing]) {
-//            [_askCollectionView.header beginRefreshing];
-//            
-//        }
-//    }
-//}
 
 - (void)refreshHeader {
     if (_scrollView.type == PIENewScrollTypeReply && ![_hotTableView.header isRefreshing]) {
@@ -205,32 +204,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 }
 
 #pragma mark - event response
-//
-//- (void)tapOnImageView:(UIImage*)image withURL:(NSString*)url{
-//
-//    // Create image info
-//    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
-//    if (image != nil) {
-//        imageInfo.image = image;
-//    } else {
-//        imageInfo.imageURL = [NSURL URLWithString:url];
-//    }
-//
-//    // Setup view controller
-//    JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
-//                                           initWithImageInfo:imageInfo
-//                                           mode:JTSImageViewControllerMode_Image
-//                                           backgroundStyle:JTSImageViewControllerBackgroundOption_Scaled];
-//
-//    // Present the view controller.
-//    [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOffscreen];
-////    imageViewer.interactionsDelegate = self;
-//}
-/**
- *  上传作品
- *
- *  @param tag 0:->进行中  1:->选择相册图片
- */
+
 
 
 - (void)help:(BOOL)shouldDownload {
@@ -486,6 +460,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 //获取服务器的最新数据
 - (void)getRemoteAskSource:(void (^)(BOOL finished))block{
     WS(ws);
+    [ws.scrollView.collectionView.footer endRefreshing];
     _currentAskIndex = 1;
     [_askCollectionView.footer endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary new];
@@ -496,6 +471,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [param setObject:@(AskCellWidth) forKey:@"width"];
     DDHomePageManager *pageManager = [DDHomePageManager new];
     [pageManager pullAskSource:param block:^(NSMutableArray *homepageArray) {
+        ws.isfirstLoadingAsk = NO;
         if (homepageArray.count) {
             NSMutableArray* arrayAgent = [NSMutableArray new];
             for (PIEPageEntity *entity in homepageArray) {
@@ -504,12 +480,12 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
             }
             [ws.sourceAsk removeAllObjects];
             [ws.sourceAsk addObjectsFromArray:arrayAgent];
-            [ws.askCollectionView reloadData];
             _canRefreshAskFooter = YES;
         }
         else {
             _canRefreshAskFooter = NO;
         }
+        [ws.askCollectionView reloadData];
         [ws.scrollView.collectionView.header endRefreshing];
         if (block) {
             block(YES);
@@ -520,9 +496,8 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 //拉至底层刷新
 - (void)getMoreRemoteAskSource {
     WS(ws);
+    [ws.scrollView.collectionView.header endRefreshing];
     _currentAskIndex = 1;
-    [_askCollectionView.footer endRefreshing];
-    
     NSMutableDictionary *param = [NSMutableDictionary new];
     double timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
@@ -536,13 +511,13 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
                 DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
                 [ws.sourceAsk addObject:vm];
             }
-            [ws.askCollectionView reloadData];
             _canRefreshAskFooter = YES;
         }
         else {
             _canRefreshAskFooter = NO;
         }
-        [ws.scrollView.collectionView.header endRefreshing];
+        [ws.askCollectionView reloadData];
+        [ws.scrollView.collectionView.footer endRefreshing];
     }];
 }
 
@@ -559,6 +534,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
     DDHomePageManager *pageManager = [DDHomePageManager new];
     [pageManager pullReplySource:param block:^(NSMutableArray *array) {
+        ws.isfirstLoadingReply = NO;
         if (array.count) {
             NSMutableArray* arrayAgent = [NSMutableArray new];
             for (PIEPageEntity *entity in array) {
@@ -567,13 +543,12 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
             }
                 [ws.sourceReply removeAllObjects];
                 [ws.sourceReply addObjectsFromArray:arrayAgent] ;
-                [ws.hotTableView reloadData];
-                [ws.hotTableView.header endRefreshing];
-            _canRefreshReplyFooter = YES;
+                _canRefreshReplyFooter = YES;
         }
         else {
             _canRefreshReplyFooter = NO;
         }
+        [ws.hotTableView reloadData];
         [ws.hotTableView.header endRefreshing];
     }];
 }
@@ -595,12 +570,12 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
                 DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
                 [ws.sourceReply  addObject:vm];
             }
-            [ws.hotTableView reloadData];
             _canRefreshReplyFooter = YES;
         }
         else {
             _canRefreshReplyFooter = NO;
         }
+        [ws.hotTableView reloadData];
         [ws.hotTableView.footer endRefreshing];
     }];
 }
@@ -608,22 +583,22 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 #pragma mark - ATOMShareViewDelegate
 //sina
 -(void)tapShare1 {
-    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:_selectedVM.type];
+    [DDShareSDKManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeSinaWeibo withPageType:_selectedVM.type];
 }
 //qqzone
 -(void)tapShare2 {
-    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeQQZone withPageType:_selectedVM.type];
+    [DDShareSDKManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQZone withPageType:_selectedVM.type];
 }
 //wechat moments
 -(void)tapShare3 {
-    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:_selectedVM.type];
+    [DDShareSDKManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatMoments withPageType:_selectedVM.type];
 }
 //wechat friends
 -(void)tapShare4 {
-    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:_selectedVM.type];
+    [DDShareSDKManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatFriends withPageType:_selectedVM.type];
 }
 -(void)tapShare5 {
-    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeQQFriends withPageType:_selectedVM.type];
+    [DDShareSDKManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQFriends withPageType:_selectedVM.type];
 }
 -(void)tapShare6 {
     
@@ -807,6 +782,33 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     return CGSizeMake(width, height);
 }
 
+#pragma mark - DZNEmptyDataSetSource & delegate
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text ;
+    if (scrollView == _scrollView.collectionView) {
+        text = @"你是不可能看到这段文字的\n如果你看到了\n这个时候......\n我们的服务器工程师正在卷文件走人";
+    } else if (scrollView == _scrollView.replyTable) {
+        text = @"你是不可能看到这段文字的\n如果你看到了\n这个时候......\n我们的服务器工程师正在卷文件走人";
+    }
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+-(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
+    if (scrollView == _scrollView.collectionView) {
+        return !_isfirstLoadingAsk;
+    } else if (scrollView == _scrollView.replyTable) {
+        return !_isfirstLoadingReply;
+    }
+    return NO;
+}
+-(BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
+    return YES;
+}
+
 
 #pragma mark - Getters and Setters
 
@@ -930,4 +932,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     }
     return _segmentedControl;
 }
+
+
+
 @end

@@ -297,10 +297,8 @@
 }
 + (void)ddGetAskWithReplies:(NSDictionary*)param withBlock:(void (^)(NSArray *returnArray))block {
     [[self class]GET:param url:URL_PFGetFriendAsk block:^(id responseObject) {
-        if (responseObject) {
             NSArray *data = [responseObject objectForKey:@"data"];
             if (block) { block(data); }
-        }
     }];
 }
 

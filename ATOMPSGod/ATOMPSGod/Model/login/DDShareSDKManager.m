@@ -11,7 +11,6 @@
 + (void)getUserInfo:(SSDKPlatformType)type withBlock:(void (^)(NSString* openId ))block{
     [ShareSDK getUserInfo:type conditional:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
         if (state == SSDKResponseStateSuccess) {
-            NSLog(@"SSDKResponseStateSuccess");
             block(user.uid);
         } else {
             block(nil);
@@ -56,6 +55,42 @@
                 [self shareStep1:share withShareType:shareType];
             }
         }];
+}
++(void)postSocialShare2:(DDPageVM*)vm withSocialShareType:(ATOMShareType)shareType withPageType:(NSInteger)pageType {
+
+    
+    NSString* shareTitle;
+    
+    UIImage* img = [UIImage imageNamed:@"psps"];
+    NSURL* sUrl = [[NSURL alloc]initWithString:[NSString stringWithFormat:@"%@",@"http://zhuanlan.zhihu.com/guaiwanju/20298145"]];
+    NSURL* imageUrl = [[NSURL alloc]initWithString:[NSString stringWithFormat:@"%@",vm.imageURL]];
+    
+    NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+    //注释产生 微博自动分享
+    [shareParams SSDKEnableUseClientShare];
+    shareTitle = [NSString stringWithFormat:@"%@",vm.content];
+    if ([shareTitle isEqualToString:@""]) {
+        shareTitle = @"help";
+    }
+    if (shareType == ATOMShareTypeWechatFriends) {
+        [shareParams SSDKSetupWeChatParamsByText:@"图派" title:shareTitle url:sUrl thumbImage:imageUrl image:img musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeWebPage forPlatformSubType:SSDKPlatformSubTypeWechatSession];
+        [self shareStep2:SSDKPlatformTypeWechat withShareParams:shareParams];
+        
+    } else if (shareType == ATOMShareTypeWechatMoments) {
+        [shareParams SSDKSetupWeChatParamsByText:@"图派" title:shareTitle url:sUrl thumbImage:imageUrl image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeWebPage forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
+        [self shareStep2:SSDKPlatformSubTypeWechatTimeline withShareParams:shareParams];
+    } else if (shareType == ATOMShareTypeSinaWeibo) {
+        [shareParams SSDKSetupSinaWeiboShareParamsByText:@"图派" title:shareTitle image:img url:sUrl latitude:0 longitude:0 objectID:nil type:SSDKContentTypeWebPage];
+        [self shareStep2:SSDKPlatformTypeSinaWeibo withShareParams:shareParams];
+    } else if (shareType == ATOMShareTypeQQFriends) {
+        [shareParams SSDKSetupQQParamsByText:@"图派" title:shareTitle url:sUrl thumbImage:imageUrl image:imageUrl type:SSDKContentTypeWebPage forPlatformSubType:SSDKPlatformSubTypeQQFriend];
+        [self shareStep2:SSDKPlatformSubTypeQQFriend withShareParams:shareParams];
+    } else if (shareType == ATOMShareTypeQQZone) {
+        [shareParams SSDKSetupQQParamsByText:@"图派" title:shareTitle url:sUrl thumbImage:imageUrl image:imageUrl type:SSDKContentTypeWebPage forPlatformSubType:SSDKPlatformSubTypeQZone];
+        [self shareStep2:SSDKPlatformSubTypeQZone withShareParams:shareParams];
+    }
+
+
 }
 + (void)shareStep1:(ATOMShare*)share  withShareType:(ATOMShareType)shareType {
 //    NSLog(@"ATOMShare url%@,title%@,desc%@,imgurl%@",share.url,share.title,share.desc,share.imageUrl);

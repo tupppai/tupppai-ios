@@ -16,7 +16,7 @@
 @property (nonatomic, strong) UIButton *userNameButton;
 //@property (nonatomic, strong) UILabel *userNameLabel;
 @property (nonatomic, strong) UILabel *userCommentDetailLabel;
-@property (nonatomic, strong) CommentLikeButton *likeButton;
+//@property (nonatomic, strong) CommentLikeButton *likeButton;
 
 @property (nonatomic, strong) DDCommentVM *viewModel;
 

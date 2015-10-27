@@ -18,7 +18,7 @@
 #import "PIENotificationCommentTableViewCell.h"
 #import "PIENotificationSystemViewController.h"
 #import "PIENotificationLikedViewController.h"
-
+#import "PIENotificationTypeTableViewCell.h"
 @interface PIENotificationViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate>
 @property (nonatomic, strong) NSMutableArray *source;
 @property (nonatomic, strong) PIERefreshTableView *tableView;
@@ -33,14 +33,21 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     _source = [NSMutableArray array];
     _canRefreshFooter = YES;
     self.view = self.tableView;
-//    [self getDataSource];
     [self.tableView.header beginRefreshing];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTableView) name:@"updateNoticationStatus" object:nil];
 }
-
+-(void)refreshTableView {
+    [_tableView reloadData];
+}
+-(void)viewWillDisappear:(BOOL)animated {
+    [[NSUserDefaults standardUserDefaults]setObject:@(NO) forKey:@"NotificationNew"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    
+}
 #pragma mark - GetDataSource
 - (void)getDataSource {
     _currentIndex = 1;
@@ -172,14 +179,16 @@
     }
     else {
 
-        UITableViewCell* cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"defaultCell"];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        PIENotificationTypeTableViewCell* cell = [[PIENotificationTypeTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"defaultCell"];
+//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         if (indexPath.row == 0) {
             cell.imageView.image = [UIImage imageNamed:@"notify_system"];
             cell.textLabel.text = @"系统消息";
+            cell.badgeNumber = [[[NSUserDefaults standardUserDefaults]objectForKey:@"NotificationSystem"]integerValue];
         }    else if (indexPath.row == 1) {
             cell.imageView.image = [UIImage imageNamed:@"pieLike_selected"];
             cell.textLabel.text = @"收到的赞";
+            cell.badgeNumber = [[[NSUserDefaults standardUserDefaults]objectForKey:@"NotificationLike"]integerValue];
         }
 
         return cell;
@@ -252,7 +261,25 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (self.navigationController.topViewController != self) {
+        return;
+    }
+    NSInteger row = indexPath.row;
+    NSString* badgeKey;
+    if (row == 0 ) {
+        badgeKey = @"NotificationSystem";
+    } else     if (row == 1 ) {
+        badgeKey = @"NotificationLike";
+    }
+    [[NSUserDefaults standardUserDefaults]setObject:@(0) forKey:badgeKey];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    PIENotificationTypeTableViewCell *cell = (PIENotificationTypeTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+    cell.badgeNumber = 0;
+    [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             PIENotificationSystemViewController* vc = [PIENotificationSystemViewController new];
@@ -261,7 +288,6 @@
             PIENotificationLikedViewController* vc = [PIENotificationLikedViewController new];
             [self.navigationController pushViewController:vc animated:YES];
         }
-
     }
 }
 

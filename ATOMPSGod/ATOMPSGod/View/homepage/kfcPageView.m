@@ -67,7 +67,7 @@
         make.top.equalTo(_timeLabel.mas_bottom).with.offset(20);
         make.left.equalTo(self).with.offset(0);
         make.right.equalTo(self).with.offset(0);
-        make.height.equalTo(@(300));
+//        make.height.equalTo(@(SCREEN_WIDTH));
     }];
     [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_imageViewMain.mas_bottom).with.offset(10);
@@ -110,6 +110,15 @@
         _usernameLabel.text = vm.username;
         _timeLabel.text = vm.publishTime;
         [_imageViewMain setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+        CGFloat height = vm.imageHeight/vm.imageWidth *SCREEN_WIDTH;
+        if (height > 100) {
+            [_imageViewMain mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.height.equalTo(@(height));
+            }];
+        } else {
+            _imageViewMain.contentMode = UIViewContentModeScaleAspectFit;
+        }
+
         _commentButton.numberString = vm.commentCount;
         _shareButton.numberString = vm.shareCount;
         _contentLabel.text = vm.content;
@@ -169,8 +178,8 @@
 -(UIImageView*)imageViewMain {
     if (!_imageViewMain) {
         _imageViewMain = [UIImageView new];
-        _imageViewMain.contentMode = UIViewContentModeScaleAspectFill;
-        _imageViewMain.clipsToBounds = YES;
+//        _imageViewMain.contentMode = UIViewContentModeScaleAspectFit;
+//        _imageViewMain.clipsToBounds = YES;
         _imageViewMain.userInteractionEnabled = YES;
     }
     return _imageViewMain;

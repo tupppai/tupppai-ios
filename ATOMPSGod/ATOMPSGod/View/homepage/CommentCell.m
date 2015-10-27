@@ -8,7 +8,7 @@
 
 #import "CommentCell.h"
 #import "DDCommentVM.h"
-#import "CommentLikeButton.h"
+//#import "CommentLikeButton.h"
 #define leastHeight kPadding15 * 2 + kfcAvatarWidth
 @implementation CommentCell
 
@@ -44,8 +44,8 @@
     _userCommentDetailLabel.textColor = [UIColor colorWithHex:0x969696];
     [self addSubview:_userCommentDetailLabel];
     
-    _likeButton = [CommentLikeButton new];
-    [self addSubview:_likeButton];
+//    _likeButton = [CommentLikeButton new];
+//    [self addSubview:_likeButton];
 }
 
 - (void)layoutSubviews {
@@ -56,7 +56,7 @@
     _userCommentDetailLabel.frame = CGRectMake(CGRectGetMaxX(_userHeaderButton.frame) + kPadding15, CGRectGetMaxY(_userNameButton.frame) + kPadding10, commentDetailTextSize.width, commentDetailTextSize.   height);
     CGSize size = [_viewModel.likeNumber boundingRectWithSize:CGSizeMake(MAXFLOAT, 13) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:[NSDictionary            dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont10], NSFontAttributeName, nil] context:NULL].size;
     size.width += 14 + kPadding5 * 2 + 2;;
-    _likeButton.frame = CGRectMake(SCREEN_WIDTH - kPadding15 - size.width - kPadding5, 0, size.width, leastHeight);
+//    _likeButton.frame = CGRectMake(SCREEN_WIDTH - kPadding15 - size.width - kPadding5, 0, size.width, leastHeight);
 }
 
 + (CGSize)calculateCommentDeailTextSize:(NSString *)commentDetailStr {
@@ -72,11 +72,11 @@
 
 - (void)setViewModel:(DDCommentVM *)viewModel {
     _viewModel = viewModel;
-    [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatar] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
+    [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatar] placeholderImage:[UIImage imageNamed:@"cellBG"]];
     [_userNameButton setTitle:viewModel.username forState:UIControlStateNormal];
     _userCommentDetailLabel.text = viewModel.text;
-    _likeButton.likeNumber = _viewModel.likeNumber;
-    _likeButton.selected = _viewModel.liked;
+//    _likeButton.likeNumber = _viewModel.likeNumber;
+//    _likeButton.selected = _viewModel.liked;
     [self setNeedsLayout];
 }
 

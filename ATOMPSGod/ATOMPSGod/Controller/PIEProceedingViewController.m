@@ -25,9 +25,13 @@
 #import "PIEProceedingShareView.h"
 #define MyAskCellWidth (SCREEN_WIDTH - 20) / 2.0
 
-@interface PIEProceedingViewController ()<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,PWRefreshBaseCollectionViewDelegate,PWRefreshBaseTableViewDelegate,CHTCollectionViewDelegateWaterfallLayout,UITableViewDataSource,UITableViewDelegate,QBImagePickerControllerDelegate,PIEProceedingShareViewDelegate>
+@interface PIEProceedingViewController ()<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,PWRefreshBaseCollectionViewDelegate,PWRefreshBaseTableViewDelegate,CHTCollectionViewDelegateWaterfallLayout,UITableViewDataSource,UITableViewDelegate,QBImagePickerControllerDelegate,PIEProceedingShareViewDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 
 @property (nonatomic, strong) PIEProceedingScrollView *sv;
+
+@property (nonatomic, assign) BOOL isfirstLoadingAsk;
+@property (nonatomic, assign) BOOL isfirstLoadingToHelp;
+@property (nonatomic, assign) BOOL isfirstLoadingDone;
 
 @property (nonatomic, strong) NSMutableArray *sourceAsk;
 @property (nonatomic, strong) NSMutableArray *sourceToHelp;
@@ -72,6 +76,12 @@
     _canRefreshAskFooter = YES;
     _canRefreshToHelpFooter = YES;
     _canRefreshDoneFooter = YES;
+    
+    _isfirstLoadingAsk = YES;
+    _isfirstLoadingToHelp = YES;
+    _isfirstLoadingDone = YES;
+
+    
     _currentIndex_MyAsk = 1;
     _currentIndex_ToHelp = 1;
     _currentIndex_Done = 1;
@@ -91,6 +101,8 @@
     _sv.askTableView.dataSource = self;
     _sv.askTableView.delegate = self;
     _sv.askTableView.psDelegate = self;
+    _sv.askTableView.emptyDataSetDelegate = self;
+    _sv.askTableView.emptyDataSetSource = self;
     UINib* nib = [UINib nibWithNibName:@"PIEProceedingAskTableViewCell" bundle:nil];
     [_sv.askTableView registerNib:nib forCellReuseIdentifier:@"PIEProceedingAskTableViewCell"];
 }
@@ -98,6 +110,8 @@
     _sv.doneCollectionView.dataSource = self;
     _sv.doneCollectionView.delegate = self;
     _sv.doneCollectionView.psDelegate = self;
+    _sv.doneCollectionView.emptyDataSetSource = self;
+    _sv.doneCollectionView.emptyDataSetDelegate = self;
     UINib* nib = [UINib nibWithNibName:@"PIEDoneCollectionViewCell" bundle:nil];
     [_sv.doneCollectionView registerNib:nib forCellWithReuseIdentifier:@"PIEDoneCollectionViewCell"];
 }
@@ -105,6 +119,8 @@
     _sv.toHelpTableView.dataSource = self;
     _sv.toHelpTableView.delegate = self;
     _sv.toHelpTableView.psDelegate = self;
+    _sv.toHelpTableView.emptyDataSetDelegate = self;
+    _sv.toHelpTableView.emptyDataSetSource = self;
     UINib* nib = [UINib nibWithNibName:@"PIEToHelpTableViewCell" bundle:nil];
     [_sv.toHelpTableView registerNib:nib forCellReuseIdentifier:@"PIEToHelpTableViewCell"];
 }
@@ -453,14 +469,15 @@
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getAskWithReplies:param withBlock:^(NSArray *returnArray) {
+        ws.isfirstLoadingAsk = NO;
         if (returnArray.count == 0) {
             _canRefreshAskFooter = NO;
         } else {
             _canRefreshAskFooter = YES;
             [ws.sourceAsk removeAllObjects];
             [ws.sourceAsk addObjectsFromArray:returnArray];
-            [ws.sv.askTableView reloadData];
         }
+        [ws.sv.askTableView reloadData];
         [ws.sv.askTableView.header endRefreshing];
     }];
 }
@@ -481,8 +498,8 @@
         } else {
             _canRefreshAskFooter = YES;
             [ws.sourceAsk addObjectsFromArray:returnArray];
-            [ws.sv.askTableView reloadData];
         }
+        [ws.sv.askTableView reloadData];
         [ws.sv.askTableView.footer endRefreshing];
     }];
 
@@ -502,6 +519,7 @@
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(20) forKey:@"size"];
     [PIEProceedingManager getMyToHelp:param withBlock:^(NSMutableArray *resultArray) {
+        ws.isfirstLoadingToHelp = NO;
         if (resultArray.count == 0) {
             _canRefreshToHelpFooter = NO;
         } else {
@@ -513,8 +531,8 @@
             }
             [ws.sourceToHelp removeAllObjects];
             [ws.sourceToHelp addObjectsFromArray:sourceAgent];
-            [ws.sv.toHelpTableView reloadData];
         }
+        [ws.sv.toHelpTableView reloadData];
         [ws.sv.toHelpTableView.header endRefreshing];
     }];
 }
@@ -540,8 +558,8 @@
                 [sourceAgent addObject:vm];
             }
             [ws.sourceToHelp addObjectsFromArray:sourceAgent];
-            [ws.sv.toHelpTableView reloadData];
         }
+        [ws.sv.toHelpTableView reloadData];
         [ws.sv.toHelpTableView.footer endRefreshing];
     }];
 }
@@ -558,9 +576,9 @@
     [param setObject:@(15) forKey:@"size"];
     
     [PIEProceedingManager getMyDone:param withBlock:^(NSMutableArray *resultArray) {
+        ws.isfirstLoadingDone = NO;
         if (resultArray.count == 0) {
             _canRefreshDoneFooter = NO;
-            [ws.sv.doneCollectionView.header endRefreshing];
         } else {
             _canRefreshDoneFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
@@ -569,11 +587,12 @@
                 [sourceAgent addObject:vm];
             }
             
-            [ws.sv.doneCollectionView.header endRefreshing];
             [ws.sourceDone removeAllObjects];
             [ws.sourceDone addObjectsFromArray:sourceAgent];
-            [ws.sv.doneCollectionView reloadData];
         }
+        [ws.sv.doneCollectionView.header endRefreshing];
+        [ws.sv.doneCollectionView reloadData];
+
     }];
 }
 - (void)getMoreRemoteSourceDone {
@@ -590,7 +609,6 @@
     [PIEProceedingManager getMyDone:param withBlock:^(NSMutableArray *resultArray) {
         if (resultArray.count == 0) {
             _canRefreshDoneFooter = NO;
-            [ws.sv.doneCollectionView.footer endRefreshing];
         } else {
             _canRefreshDoneFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
@@ -598,10 +616,12 @@
                 DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:homeImage];
                 [sourceAgent addObject:vm];
             }
-            [ws.sv.doneCollectionView.footer endRefreshing];
             [ws.sourceDone addObjectsFromArray:sourceAgent];
-            [ws.sv.doneCollectionView reloadData];
         }
+        [ws.sv.doneCollectionView.footer endRefreshing];
+
+        [ws.sv.doneCollectionView reloadData];
+
     }];
 }
 #pragma mark - ATOMShareViewDelegate
@@ -609,31 +629,75 @@
 
 //sina
 -(void)tapShare1 {
-    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:_selectedVM.type];
+    [self.shareView dismiss];
+    [DDShareSDKManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeSinaWeibo withPageType:_selectedVM.type];
 }
 //qqzone
 -(void)tapShare2 {
-    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeQQZone withPageType:_selectedVM.type];
+    [self.shareView dismiss];
+    [DDShareSDKManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQZone withPageType:_selectedVM.type];
 }
 //wechat moments
 -(void)tapShare3 {
-    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:_selectedVM.type];
+    [self.shareView dismiss];
+    [DDShareSDKManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatMoments withPageType:_selectedVM.type];
 }
 //wechat friends
 -(void)tapShare4 {
-    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:_selectedVM.type];
+    [self.shareView dismiss];
+    [DDShareSDKManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatFriends withPageType:_selectedVM.type];
 }
 -(void)tapShare5 {
-    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeQQFriends withPageType:_selectedVM.type];
+    [self.shareView dismiss];
+    [DDShareSDKManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQFriends withPageType:_selectedVM.type];
     
 }
 -(void)tapShare6 {
     
 }
 -(void)tapShare7 {
+    [self.shareView dismiss];
+    if (_sv.type == PIEProceedingTypeToHelp) {
+        DDPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath.row];
+        [self deleteOneToHelp:_selectedIndexPath ID:vm.ID];
+    }
 }
 
 -(void)tapShareCancel {
     [self.shareView dismiss];
 }
+
+#pragma mark - DZNEmptyDataSetSource & delegate
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    
+    NSString *text ;
+    if (scrollView == _sv.askTableView) {
+       text = @"还没发布求P,赶快发布召唤大神，六子你以为我们在拍龙珠啊";
+    } else if (scrollView == _sv.toHelpTableView) {
+        text = @"还没认领帮P?就这样少了个炫（装）技（B）的机会咯？";
+    } else if (scrollView == _sv.doneCollectionView) {
+        text = @"还没内容呀，加把劲啊啊啊马上来上传";
+    }
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+-(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
+    if (scrollView == _sv.askTableView) {
+        return !_isfirstLoadingAsk;
+    } else if (scrollView == _sv.toHelpTableView) {
+        return !_isfirstLoadingToHelp;
+    } else if (scrollView == _sv.doneCollectionView) {
+        return !_isfirstLoadingDone;
+    }
+    return NO;
+}
+-(BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
+    return YES;
+}
+
 @end

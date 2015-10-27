@@ -30,7 +30,7 @@
 
 static NSString *MessengerCellIdentifier = @"MessengerCell";
 
-@interface DDCommentVC ()<DZNEmptyDataSetSource,PIEShareViewDelegate,JGActionSheetDelegate,JTSImageViewControllerInteractionsDelegate>
+@interface DDCommentVC ()<DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,PIEShareViewDelegate,JGActionSheetDelegate,JTSImageViewControllerInteractionsDelegate>
 
 @property (nonatomic, strong) NSMutableArray *commentsHot;
 @property (nonatomic, strong) NSMutableArray *commentsNew;
@@ -101,8 +101,15 @@ static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         [self.textView becomeFirstResponder];
     });
+    [self scrollElegant];
 }
+- (void)scrollElegant {
+    [UIView animateWithDuration:0.7 animations:^{
+        self.tableView.contentOffset = CGPointMake(0, _headerView.frame.size.height - 52);
+    } completion:^(BOOL finished) {
+    }];
 
+}
 -(BOOL)hidesBottomBarWhenPushed {
     return YES;
 }
@@ -399,6 +406,7 @@ static dispatch_once_t onceToken;
 -(void)configTableView {
     self.tableView.tableHeaderView = self.headerView;
     self.tableView.emptyDataSetSource = self;
+    self.tableView.emptyDataSetDelegate = self;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag|UIScrollViewKeyboardDismissModeInteractive;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[DDCommentTableCell class] forCellReuseIdentifier:MessengerCellIdentifier];
@@ -474,13 +482,13 @@ static dispatch_once_t onceToken;
             opvc.pageVM = vm;
             [self.navigationController pushViewController:opvc animated:YES];
         }
-        else if (CGRectContainsPoint(cell.likeButton.frame, p)) {
-            //UI
-            [cell.likeButton toggleLike];
-            //Network
-            [model toggleLike];
-
-    }
+//        else if (CGRectContainsPoint(cell.likeButton.frame, p)) {
+//            //UI
+//            [cell.likeButton toggleLike];
+//            //Network
+//            [model toggleLike];
+//
+//    }
 }
 }
 
@@ -567,7 +575,9 @@ static dispatch_once_t onceToken;
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
-
+-(BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
+    return YES;
+}
 
 #pragma mark - headerView
 
@@ -603,7 +613,7 @@ static dispatch_once_t onceToken;
     [self.navigationController pushViewController:opvc animated:YES];
 }
 - (void) didTap3 {
-    
+    [self.textView resignFirstResponder];
         // Create image info
         JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
         if (_headerView.imageViewMain.image != nil) {
@@ -621,7 +631,7 @@ static dispatch_once_t onceToken;
                                                backgroundStyle:JTSImageViewControllerBackgroundOption_Scaled];
     
         // Present the view controller.
-        [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOriginalPosition];
+        [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOffscreen];
         imageViewer.interactionsDelegate = self;
 }
 
@@ -652,22 +662,22 @@ static dispatch_once_t onceToken;
 #pragma mark - ATOMShareViewDelegate
 //sina
 -(void)tapShare1 {
-    [DDShareSDKManager postSocialShare:_vm.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:_vm.type];
+    [DDShareSDKManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeSinaWeibo withPageType:_vm.type];
 }
 //qqzone
 -(void)tapShare2 {
-    [DDShareSDKManager postSocialShare:_vm.ID withSocialShareType:ATOMShareTypeQQZone withPageType:_vm.type];
+    [DDShareSDKManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeQQZone withPageType:_vm.type];
 }
 //wechat moments
 -(void)tapShare3 {
-    [DDShareSDKManager postSocialShare:_vm.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:_vm.type];
+    [DDShareSDKManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeWechatMoments withPageType:_vm.type];
 }
 //wechat friends
 -(void)tapShare4 {
-    [DDShareSDKManager postSocialShare:_vm.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:_vm.type];
+    [DDShareSDKManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeWechatFriends withPageType:_vm.type];
 }
 -(void)tapShare5 {
-    [DDShareSDKManager postSocialShare:_vm.ID withSocialShareType:ATOMShareTypeQQFriends withPageType:_vm.type];
+    [DDShareSDKManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeQQFriends withPageType:_vm.type];
 }
 -(void)tapShare6 {
     

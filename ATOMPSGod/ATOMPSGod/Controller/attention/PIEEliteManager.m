@@ -24,11 +24,7 @@
             [returnArray addObject:entity];
         }
         if (block) {
-            if (returnArray.count > 0) {
-                block(returnArray);
-            } else {
-                block(nil);
-            }
+            block(returnArray);
         }
     }];
 }

@@ -20,7 +20,7 @@
 #import "PIEFriendFansViewController.h"
 #import "PIEMyAskViewController.h"
 
-
+#import "BBBadgeBarButtonItem.h"
 #import "PIENotificationViewController.h"
 @interface PIEMeViewController ()<PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,CAPSPageMenuDelegate>
 @property (weak, nonatomic) IBOutlet UIView *dotView2;
@@ -53,10 +53,25 @@
     [super viewDidLoad];
     [self setupViews];
     [self setupPageMenu];
-    [self.navigationItem.leftBarButtonItem setTarget:self];
-    [self.navigationItem.leftBarButtonItem setAction:@selector(pushToSettingViewController)];
-    [self.navigationItem.rightBarButtonItem setTarget:self];
-    [self.navigationItem.rightBarButtonItem setAction:@selector(pushToMessageViewController)];
+    
+    UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
+    backButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [backButton setImage:[UIImage imageNamed:@"pie_message"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"pie_message_new"] forState:UIControlStateSelected];
+//    backButton.backgroundColor = [UIColor clearColor];
+    [backButton addTarget:self action:@selector(pushToMessageViewController) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *barBackButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    self.navigationItem.rightBarButtonItem =  barBackButtonItem;
+    
+    
+    UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
+    buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [buttonLeft setImage:[UIImage imageNamed:@"pie_setting"] forState:UIControlStateNormal];
+//    buttonLeft.backgroundColor = [UIColor clearColor];
+    [buttonLeft addTarget:self action:@selector(pushToSettingViewController) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonLeft];
+    self.navigationItem.leftBarButtonItem =  buttonItem;
+
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(scrollUp)
@@ -66,11 +81,15 @@
                                              selector:@selector(scrollDown)
                                                  name:@"PIEMeScrollDown"
                                                object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ReceiveRemoteNotification) name:@"ReceiveRemoteNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateNoticationStatus)
+                                                 name:@"updateNoticationStatus"
+                                               object:nil];
 
 }
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
                                                   forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [UIImage new];
@@ -78,15 +97,26 @@
     self.navigationController.view.backgroundColor = [UIColor clearColor];
     self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
     self.edgesForExtendedLayout = UIRectEdgeAll;
+    [self updateNoticationStatus];
 }
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.navigationController.navigationBar setBackgroundImage:nil
                                                   forBarMetrics:UIBarMetricsDefault];
 }
-- (void) ReceiveRemoteNotification {
-    [self.navigationItem.rightBarButtonItem setImage:[UIImage imageNamed:@"cellBG"]];
+
+- (void)updateNoticationStatus {
+    if ( [[[NSUserDefaults standardUserDefaults]objectForKey:@"NotificationNew"]boolValue]) {
+        UIButton *btn =  self.navigationItem.rightBarButtonItem.customView;
+        btn.selected = YES;
+        self.tabBarItem.badgeValue = @"";
+    } else {
+        UIButton *btn =  self.navigationItem.rightBarButtonItem.customView;
+        btn.selected = NO;
+        self.navigationController.tabBarItem.badgeValue = nil;
+    }
 }
+
 -(void)updateAvatar {
     NSURLRequest* req = [[NSURLRequest alloc]initWithURL:[NSURL URLWithString:[DDUserManager currentUser].avatar]];
     

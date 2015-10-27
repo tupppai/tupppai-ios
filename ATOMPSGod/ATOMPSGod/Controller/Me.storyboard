@@ -191,7 +191,6 @@
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="Zde-u9-5Xv">
-                        <barButtonItem key="leftBarButtonItem" image="pie_setting" id="2uI-EU-E55"/>
                         <barButtonItem key="rightBarButtonItem" image="pie_message" id="Akv-fg-yFt"/>
                     </navigationItem>
                     <nil key="simulatedTopBarMetrics"/>
@@ -235,6 +234,5 @@
     </scenes>
     <resources>
         <image name="pie_message" width="20" height="15"/>
-        <image name="pie_setting" width="20" height="20"/>
     </resources>
 </document>

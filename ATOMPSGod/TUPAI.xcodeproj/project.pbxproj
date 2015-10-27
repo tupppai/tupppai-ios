@@ -57,7 +57,7 @@
 		5C3101931AAEC9D800EF529B /* DDMsgPushSettingTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3101921AAEC9D800EF529B /* DDMsgPushSettingTableCell.m */; };
 		5C3E0CE51ABEB052006C9175 /* kfcPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3E0CE41ABEB052006C9175 /* kfcPageView.m */; };
 		5C436A7E1AB0249F00D14608 /* kfcFollowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C436A7D1AB0249F00D14608 /* kfcFollowCell.m */; };
-		5C436A811AB02E7300D14608 /* ATOMMyMessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C436A801AB02E7300D14608 /* ATOMMyMessageTableViewCell.m */; };
+		5C436A811AB02E7300D14608 /* PIENotificationTypeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C436A801AB02E7300D14608 /* PIENotificationTypeTableViewCell.m */; };
 		5C436A841AB03BF100D14608 /* DDMsgCommentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C436A831AB03BF100D14608 /* DDMsgCommentVC.m */; };
 		5C436A871AB03E5900D14608 /* ATOMCommentMessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C436A861AB03E5900D14608 /* ATOMCommentMessageTableViewCell.m */; };
 		5C436A8A1AB03FA800D14608 /* DDCommentMsgVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C436A891AB03FA800D14608 /* DDCommentMsgVM.m */; };
@@ -655,8 +655,8 @@
 		5C3E0CE41ABEB052006C9175 /* kfcPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = kfcPageView.m; path = ../homepage/kfcPageView.m; sourceTree = "<group>"; };
 		5C436A7C1AB0249F00D14608 /* kfcFollowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kfcFollowCell.h; sourceTree = "<group>"; };
 		5C436A7D1AB0249F00D14608 /* kfcFollowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = kfcFollowCell.m; sourceTree = "<group>"; };
-		5C436A7F1AB02E7300D14608 /* ATOMMyMessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMMyMessageTableViewCell.h; sourceTree = "<group>"; };
-		5C436A801AB02E7300D14608 /* ATOMMyMessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMMyMessageTableViewCell.m; sourceTree = "<group>"; };
+		5C436A7F1AB02E7300D14608 /* PIENotificationTypeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIENotificationTypeTableViewCell.h; sourceTree = "<group>"; };
+		5C436A801AB02E7300D14608 /* PIENotificationTypeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENotificationTypeTableViewCell.m; sourceTree = "<group>"; };
 		5C436A821AB03BF100D14608 /* DDMsgCommentVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMsgCommentVC.h; sourceTree = "<group>"; };
 		5C436A831AB03BF100D14608 /* DDMsgCommentVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMsgCommentVC.m; sourceTree = "<group>"; };
 		5C436A851AB03E5900D14608 /* ATOMCommentMessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMCommentMessageTableViewCell.h; sourceTree = "<group>"; };
@@ -1830,8 +1830,8 @@
 		5C4F5BE81AA5752B00226F64 /* message */ = {
 			isa = PBXGroup;
 			children = (
-				5C436A7F1AB02E7300D14608 /* ATOMMyMessageTableViewCell.h */,
-				5C436A801AB02E7300D14608 /* ATOMMyMessageTableViewCell.m */,
+				5C436A7F1AB02E7300D14608 /* PIENotificationTypeTableViewCell.h */,
+				5C436A801AB02E7300D14608 /* PIENotificationTypeTableViewCell.m */,
 				5C436A851AB03E5900D14608 /* ATOMCommentMessageTableViewCell.h */,
 				5C436A861AB03E5900D14608 /* ATOMCommentMessageTableViewCell.m */,
 				5C436A911AB074EF00D14608 /* ATOMInviteMessageTableViewCell.h */,
@@ -4379,7 +4379,7 @@
 				E93ED5261B7F25F00035630B /* UITableView+FDTemplateLayoutCell.m in Sources */,
 				E900919D1B71E04E004623E4 /* DDInputAuthcodePwdFPVC.m in Sources */,
 				5C6CEF2A1AF18BA800F06213 /* ATOMConstant.m in Sources */,
-				5C436A811AB02E7300D14608 /* ATOMMyMessageTableViewCell.m in Sources */,
+				5C436A811AB02E7300D14608 /* PIENotificationTypeTableViewCell.m in Sources */,
 				F4E5F6001BD9D2E100AB8B31 /* UIAlertView+AFNetworking.m in Sources */,
 				3BE1AECB1B9FE9C900CE2303 /* QBAssetsViewController.m in Sources */,
 				F472055C1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.m in Sources */,

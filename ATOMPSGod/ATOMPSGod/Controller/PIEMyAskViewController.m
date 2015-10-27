@@ -173,8 +173,6 @@
 
 
 #pragma mark - DZNEmptyDataSetSource & delegate
-
-
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
 {
     NSString *text = @"还没发布过呢";

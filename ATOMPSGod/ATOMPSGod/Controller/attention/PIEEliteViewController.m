@@ -37,12 +37,15 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
 //static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
 
-@interface PIEEliteViewController ()<UITableViewDelegate,UITableViewDataSource,PWRefreshBaseTableViewDelegate,UIScrollViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate>
+@interface PIEEliteViewController ()<UITableViewDelegate,UITableViewDataSource,PWRefreshBaseTableViewDelegate,UIScrollViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (nonatomic, strong) PIEEliteScrollView *sv;
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
 
 @property (nonatomic, strong) NSMutableArray *sourceFollow;
 @property (nonatomic, strong) NSMutableArray *sourceHot;
+
+@property (nonatomic, assign) BOOL isfirstLoadingFollow;
+@property (nonatomic, assign) BOOL isfirstLoadingHot;
 
 @property (nonatomic, assign) NSInteger currentIndex_follow;
 @property (nonatomic, assign) NSInteger currentIndex_hot;
@@ -89,6 +92,9 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     _currentIndex_follow = 1;
     _currentIndex_hot = 1;
     
+    _isfirstLoadingFollow = YES;
+    _isfirstLoadingHot = YES;
+    
     _sourceFollow = [NSMutableArray new];
     _sourceHot = [NSMutableArray new];
     
@@ -104,12 +110,26 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     _sv.tableFollow.dataSource = self;
     _sv.tableFollow.delegate = self;
     _sv.tableFollow.psDelegate = self;
-    
+    _sv.tableFollow.emptyDataSetSource = self;
+    _sv.tableFollow.emptyDataSetDelegate = self;
     UINib* nib2 = [UINib nibWithNibName:askIndentifier bundle:nil];
     [_sv.tableFollow registerNib:nib2 forCellReuseIdentifier:askIndentifier];
     UINib* nib3 = [UINib nibWithNibName:replyIndentifier bundle:nil];
     [_sv.tableFollow registerNib:nib3 forCellReuseIdentifier:replyIndentifier];
 
+}
+- (void)configTableViewHot {
+    
+    _sv.tableHot.dataSource = self;
+    _sv.tableHot.delegate = self;
+    _sv.tableHot.psDelegate = self;
+    _sv.tableHot.emptyDataSetDelegate = self;
+    _sv.tableHot.emptyDataSetSource = self;
+    UINib* nib = [UINib nibWithNibName:hotReplyIndentifier bundle:nil];
+    [_sv.tableHot registerNib:nib forCellReuseIdentifier:hotReplyIndentifier];
+    UINib* nib2 = [UINib nibWithNibName:hotAskIndentifier bundle:nil];
+    [_sv.tableHot registerNib:nib2 forCellReuseIdentifier:hotAskIndentifier];
+    
 }
 - (void)setupGestures {
     
@@ -126,18 +146,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     
 }
 
-- (void)configTableViewHot {
-    
-    _sv.tableHot.dataSource = self;
-    _sv.tableHot.delegate = self;
-    _sv.tableHot.psDelegate = self;
-    
-    UINib* nib = [UINib nibWithNibName:hotReplyIndentifier bundle:nil];
-    [_sv.tableHot registerNib:nib forCellReuseIdentifier:hotReplyIndentifier];
-    UINib* nib2 = [UINib nibWithNibName:hotAskIndentifier bundle:nil];
-    [_sv.tableHot registerNib:nib2 forCellReuseIdentifier:hotAskIndentifier];
 
-}
 - (void)createNavBar {
     WS(ws);
     _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"热门",@"关注"]];
@@ -649,8 +658,9 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
 - (void)help:(BOOL)shouldDownload {
     NSMutableDictionary* param = [NSMutableDictionary new];
-    [param setObject:@"ask" forKey:@"type"];
     [param setObject:@(_selectedVM.ID) forKey:@"target"];
+    [param setObject:@"ask" forKey:@"type"];
+    
     [DDService signProceeding:param withBlock:^(NSString *imageUrl) {
         if (imageUrl != nil) {
             if (shouldDownload) {
@@ -659,40 +669,38 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                 }];
             }
             else {
-                [Hud customText:@"添加成功\n在“进行中”等你下载咯!" inView:self.view];
+                [Hud customText:@"添加成功\n在“进行中”等你下载咯!" inView:[AppDelegate APP].window];
             }
         }
     }];
-
 }
 - (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error
   contextInfo: (void *) contextInfo {
     if(error != NULL){
     } else {
-        [Hud customText:@"下载成功\n我猜你会用美图秀秀来P?" inView:self.view];
+        [Hud customText:@"下载成功\n我猜你会用美图秀秀来P?" inView:[AppDelegate APP].window];
     }
 }
-
 #pragma mark - ATOMShareViewDelegate
 
 //sina
 -(void)tapShare1 {
-    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:_selectedVM.type];
+    [DDShareSDKManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeSinaWeibo withPageType:_selectedVM.type];
 }
 //qqzone
 -(void)tapShare2 {
-    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeQQZone withPageType:_selectedVM.type];
+    [DDShareSDKManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQZone withPageType:_selectedVM.type];
 }
 //wechat moments
 -(void)tapShare3 {
-    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:_selectedVM.type];
+    [DDShareSDKManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatMoments withPageType:_selectedVM.type];
 }
 //wechat friends
 -(void)tapShare4 {
-    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:_selectedVM.type];
+    [DDShareSDKManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatFriends withPageType:_selectedVM.type];
 }
 -(void)tapShare5 {
-    [DDShareSDKManager postSocialShare:_selectedVM.ID withSocialShareType:ATOMShareTypeQQFriends withPageType:_selectedVM.type];
+    [DDShareSDKManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQFriends withPageType:_selectedVM.type];
     
 }
 -(void)tapShare6 {
@@ -736,24 +744,25 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(1) forKey:@"page"];
-    [param setObject:@(5) forKey:@"size"];
+    [param setObject:@(10) forKey:@"size"];
     
     [PIEEliteManager getMyFollow:param withBlock:^(NSMutableArray *returnArray) {
+        NSLog(@"getMyFollow8778 returnArray %@",returnArray);
+        ws.isfirstLoadingFollow = NO;
         if (returnArray.count == 0) {
             _canRefreshFooterFollow = NO;
-            [ws.sv.tableFollow.header endRefreshing];
         } else {
             _canRefreshFooterFollow = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
             for (PIEPageEntity *entity in returnArray) {
                 DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
                 [sourceAgent addObject:vm];
+                [ws.sourceFollow removeAllObjects];
+                [ws.sourceFollow addObjectsFromArray:sourceAgent];
             }
-            [ws.sv.tableFollow.header endRefreshing];
-            [ws.sourceFollow removeAllObjects];
-            [ws.sourceFollow addObjectsFromArray:sourceAgent];
-            [ws.sv.tableFollow reloadData];
         }
+        [ws.sv.tableFollow.header endRefreshing];
+        [ws.sv.tableFollow reloadData];
     }];
 }
 
@@ -770,7 +779,6 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     [PIEEliteManager getMyFollow:param withBlock:^(NSMutableArray *returnArray) {
         if (returnArray.count == 0) {
             _canRefreshFooterFollow = NO;
-            [ws.sv.tableFollow.footer endRefreshing];
         } else {
             _canRefreshFooterFollow = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
@@ -778,10 +786,10 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                 DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
                 [sourceAgent addObject:vm];
             }
-            [ws.sv.tableFollow.footer endRefreshing];
             [ws.sourceFollow addObjectsFromArray:sourceAgent];
-            [ws.sv.tableFollow reloadData];
         }
+        [ws.sv.tableFollow reloadData];
+        [ws.sv.tableFollow.footer endRefreshing];
     }];
 }
 
@@ -804,19 +812,15 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     [param setObject:@(8) forKey:@"size"];
     
     [PIEEliteManager getHotPages:param withBlock:^(NSMutableArray *returnArray) {
+        ws.isfirstLoadingHot = NO;
         if (returnArray.count == 0) {
             _canRefreshFooterHot = NO;
         } else {
             _canRefreshFooterHot = YES;
-//            NSMutableArray* sourceAgent = [NSMutableArray new];
-//            for (PIEPageEntity *entity in returnArray) {
-//                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
-//                [sourceAgent addObject:vm];
-//            }
             [ws.sourceHot removeAllObjects];
             [ws.sourceHot addObjectsFromArray:returnArray];
-            [ws.sv.tableHot reloadData];
         }
+        [ws.sv.tableHot reloadData];
         [ws.sv.tableHot.header endRefreshing];
         if (block) {
             block(YES);
@@ -840,8 +844,8 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
         } else {
             _canRefreshFooterHot = YES;
             [ws.sourceHot addObjectsFromArray:returnArray];
-            [ws.sv.tableHot reloadData];
         }
+        [ws.sv.tableHot reloadData];
         [ws.sv.tableHot.footer endRefreshing];
     }];
 }
@@ -968,6 +972,33 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
         }];
     }
     return _reportActionSheet;
+}
+
+#pragma mark - DZNEmptyDataSetSource & delegate
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text ;
+    if (scrollView == _sv.tableHot) {
+        text = @"你是不可能看到这段文字的\n如果你看到了\n这个时候......\n我们的运营工程师正在卷文件走人";
+    } else if (scrollView == _sv.tableFollow) {
+        text = @"赶快去关注些大神吧，这里应该给一些大神的作品和大神的列表";
+    }
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+-(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
+    if (scrollView == _sv.tableHot) {
+        return !_isfirstLoadingHot;
+    } else if (scrollView == _sv.tableFollow) {
+        return !_isfirstLoadingFollow;
+    }
+    return NO;
+}
+-(BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
+    return YES;
 }
 
 

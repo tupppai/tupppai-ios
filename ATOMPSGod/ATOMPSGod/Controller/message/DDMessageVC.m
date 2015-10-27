@@ -7,7 +7,7 @@
 //
 
 #import "DDMessageVC.h"
-#import "ATOMMyMessageTableViewCell.h"
+#import "PIENotificationTypeTableViewCell.h"
 #import "DDMsgCommentVC.h"
 #import "DDMsgInviteVC.h"
 #import "DDMsgFollowVC.h"
@@ -65,9 +65,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"MyMessageCell";
-    ATOMMyMessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    PIENotificationTypeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
-        cell = [[ATOMMyMessageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[PIENotificationTypeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     NSInteger row = indexPath.row;
     if (row == 0) {
@@ -89,7 +89,6 @@
     }
     NSString* badgeKey = [NSString stringWithFormat:@"NotifyType%zd",indexPath.row];
     cell.badgeNumber = [[[NSUserDefaults standardUserDefaults]objectForKey:badgeKey]intValue];
-    NSLog(@"number %d badgeKey %@",[[[NSUserDefaults standardUserDefaults]objectForKey:badgeKey]intValue],badgeKey);
     return cell;
 }
 
@@ -113,7 +112,7 @@
     NSString* badgeKey = [NSString stringWithFormat:@"NotifyType%zd",row];
     [[NSUserDefaults standardUserDefaults]setObject:@(0) forKey:badgeKey];
     [[NSUserDefaults standardUserDefaults]synchronize];
-    ATOMMyMessageTableViewCell *cell = (ATOMMyMessageTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+    PIENotificationTypeTableViewCell *cell = (PIENotificationTypeTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
     cell.badgeNumber = 0;
     [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     

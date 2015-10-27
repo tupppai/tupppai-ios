@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ATOMMyMessageTableViewCell : UITableViewCell
-@property (nonatomic, assign) int badgeNumber;
+@interface PIENotificationTypeTableViewCell : UITableViewCell
+@property (nonatomic, assign) NSInteger badgeNumber;
 @end

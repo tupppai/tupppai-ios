@@ -27,7 +27,7 @@
     [self.contentView addSubview:self.avatarView];
     [self.contentView addSubview:self.usernameLabel];
     [self.contentView addSubview:self.commentLabel];
-    [self.contentView addSubview:self.likeButton];
+//    [self.contentView addSubview:self.likeButton];
 
     [_avatarView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView).with.offset(kPadding15);
@@ -45,13 +45,13 @@
         make.right.equalTo(self.contentView).with.offset(-kPadding15);
         make.bottom.equalTo(self.contentView).with.offset(-kPadding10);
     }];
-    [_likeButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_usernameLabel.mas_right).with.offset(kPadding15);
-        make.top.equalTo(self.contentView).with.offset(kPadding15);
-        make.right.equalTo(self.contentView).with.offset(-kPadding15);
-        make.width.equalTo(@(kMessageTableViewCellAvatarHeight*2));
-        make.bottom.equalTo(_commentLabel.mas_top);
-    }];
+//    [_likeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(_usernameLabel.mas_right).with.offset(kPadding15);
+//        make.top.equalTo(self.contentView).with.offset(kPadding15);
+//        make.right.equalTo(self.contentView).with.offset(-kPadding15);
+//        make.width.equalTo(@(kMessageTableViewCellAvatarHeight*2));
+//        make.bottom.equalTo(_commentLabel.mas_top);
+//    }];
 }
 
 - (void)prepareForReuse
@@ -62,24 +62,24 @@
 -(void)getSource:(DDCommentVM *)vm {
     self.usernameLabel.text = vm.username;
     self.commentLabel.text = vm.text;
-    self.likeButton.selected = vm.liked;
-    self.likeButton.likeNumber = vm.likeNumber;
+//    self.likeButton.selected = vm.liked;
+//    self.likeButton.likeNumber = vm.likeNumber;
     [self.avatarView setImageWithURL:[NSURL URLWithString:vm.avatar]];
 }
-#pragma mark - Getters
--(CommentLikeButton*)likeButton {
-    if (!_likeButton) {
-        _likeButton = [CommentLikeButton new];
-        }
-    return _likeButton;
-}
+//#pragma mark - Getters
+//-(CommentLikeButton*)likeButton {
+//    if (!_likeButton) {
+//        _likeButton = [CommentLikeButton new];
+//        }
+//    return _likeButton;
+//}
 - (UILabel *)usernameLabel
 {
     if (!_usernameLabel) {
         _usernameLabel = [UILabel new];
         _usernameLabel.backgroundColor = [UIColor clearColor];
         _usernameLabel.numberOfLines = 0;
-        _usernameLabel.font = [UIFont boldSystemFontOfSize:16.0];
+        _usernameLabel.font = [UIFont systemFontOfSize:14.0];
         _usernameLabel.textColor = [UIColor grayColor];
     }
     return _usernameLabel;

@@ -102,7 +102,6 @@
     [DDService ddGetAskWithReplies:param withBlock:^(NSArray *returnArray) {
         NSMutableArray *array = [NSMutableArray array];
         for (int i = 0; i < returnArray.count; i++) {
-            
             NSMutableArray * source = [NSMutableArray new];
             NSArray* askImageDic = [[returnArray objectAtIndex:i]objectForKey:@"ask_uploads"];
             NSMutableArray* askImageEntities = [NSMutableArray array];

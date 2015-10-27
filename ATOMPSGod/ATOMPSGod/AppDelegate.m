@@ -226,27 +226,34 @@
     
     NSLog(@"userinfo:%@",userInfo);
 //    [UMessage didReceiveRemoteNotification:userInfo];
-    
     NSInteger notifyType = [[userInfo objectForKey:@"type"]integerValue];
-    int badgeNumber = [[[userInfo objectForKey:@"aps"]objectForKey:@"badge"]intValue];
+//    int badgeNumber = [[[userInfo objectForKey:@"aps"]objectForKey:@"badge"]intValue];
+
+    [self updateBadgeNumberForKey:@"NotificationAll" toAdd:1];
     if (notifyType == 0) {
-        [self updateBadgeNumberForKey:@"NotificationSystem" toAdd:badgeNumber];
+        [self updateBadgeNumberForKey:@"NotificationSystem" toAdd:1];
     } else if (notifyType == 5) {
-        [self updateBadgeNumberForKey:@"NotificationLike" toAdd:badgeNumber];
+        [self updateBadgeNumberForKey:@"NotificationLike" toAdd:1];
     } else {
-        [self updateBadgeNumberForKey:@"NotificationOthers" toAdd:badgeNumber];
+        [self updateBadgeNumberForKey:@"NotificationOthers" toAdd:1];
     }
     
-    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"ReceiveRemoteNotification" object:nil]];
-    
    DDNavigationController* nav = [[self.mainTabBarController viewControllers] objectAtIndex:4];
-    nav.tabBarItem.badgeValue = @"•";
+    nav.tabBarItem.badgeValue = @"";
+    
+    [[NSUserDefaults standardUserDefaults]setObject:@(YES) forKey:@"NotificationNew"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    
+    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"updateNoticationStatus" object:nil]];
 
 }
 
 -(void)updateBadgeNumberForKey:(NSString*)key toAdd:(int)badgeNumber {
-    int currentBadgeNumber = [[[NSUserDefaults standardUserDefaults]objectForKey:key]intValue];
-    int newBadgeNumber = currentBadgeNumber + badgeNumber;
+    NSNumber* currentBadgeNumber = [[NSUserDefaults standardUserDefaults]objectForKey:key];
+    if (!currentBadgeNumber) {
+        currentBadgeNumber = @(0);
+    }
+    NSInteger newBadgeNumber = [currentBadgeNumber integerValue] + badgeNumber;
     [[NSUserDefaults standardUserDefaults]setObject:@(newBadgeNumber) forKey:key];
     [[NSUserDefaults standardUserDefaults]synchronize];
 }
