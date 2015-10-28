@@ -18,6 +18,7 @@
 
 @class SLKTextViewController;
 @class SLKTextView;
+@class SLKInputAccessoryView;
 
 typedef NS_ENUM(NSUInteger, SLKCounterStyle) {
     SLKCounterStyleNone,
@@ -44,6 +45,9 @@ typedef NS_ENUM(NSUInteger, SLKCounterPosition) {
  For iPad           (>=768pts): 8 lines
  */
 @property (nonatomic, strong) SLKTextView *textView;
+
+/** The custom input accessory view, used as empty achor view to detect the keyboard frame. */
+@property (nonatomic, strong) SLKInputAccessoryView *inputAccessoryView;
 
 /** The left action button action. */
 @property (nonatomic, strong) UIButton *leftButton;
@@ -90,10 +94,10 @@ typedef NS_ENUM(NSUInteger, SLKCounterPosition) {
 @property (nonatomic, strong) UILabel *editorTitle;
 
 /** The 'cancel' button displayed left in the accessoryView. */
-@property (nonatomic, strong) UIButton *editortLeftButton;
+@property (nonatomic, strong) UIButton *editorLeftButton;
 
 /** The 'accept' button displayed right in the accessoryView. */
-@property (nonatomic, strong) UIButton *editortRightButton;
+@property (nonatomic, strong) UIButton *editorRightButton;
 
 /** The accessory view's maximum height. Default is 38 pts. */
 @property (nonatomic, assign) CGFloat editorContentViewHeight;

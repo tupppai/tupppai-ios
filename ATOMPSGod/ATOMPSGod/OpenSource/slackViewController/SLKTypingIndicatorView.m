@@ -109,8 +109,7 @@
 
 - (UILabel *)textLabel
 {
-    if (!_textLabel)
-    {
+    if (!_textLabel) {
         _textLabel = [UILabel new];
         _textLabel.translatesAutoresizingMaskIntoConstraints = NO;
         _textLabel.backgroundColor = [UIColor clearColor];
@@ -234,7 +233,9 @@
     
     [self.usernames addObject:username];
     
-    self.textLabel.attributedText = [self attributedString];
+    NSAttributedString *attributedString = [self attributedString];
+    
+    self.textLabel.attributedText = attributedString;
     
     self.visible = YES;
 }

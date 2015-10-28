@@ -462,7 +462,7 @@
     WS(ws);
     [ws.sv.askTableView.footer endRefreshing];
     _currentIndex_MyAsk = 1;
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    NSInteger timeStamp = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH/2) forKey:@"width"];
@@ -486,7 +486,7 @@
     WS(ws);
     [ws.sv.askTableView.header endRefreshing];
     _currentIndex_MyAsk++;
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    NSInteger timeStamp = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_currentIndex_MyAsk) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
@@ -513,7 +513,7 @@
     _currentIndex_ToHelp = 1;
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    NSInteger timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
@@ -542,7 +542,7 @@
     _currentIndex_ToHelp ++;
     [_sv.toHelpTableView.header endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    NSInteger timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(_currentIndex_ToHelp) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
@@ -568,7 +568,7 @@
     WS(ws);
     [ws.sv.doneCollectionView.footer endRefreshing];
     _currentIndex_Done = 1;
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    NSInteger timeStamp = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(1) forKey:@"page"];
 //    [param setObject:@(SCREEN_WIDTH/2) forKey:@"width"];
@@ -599,7 +599,7 @@
     WS(ws);
     [ws.sv.doneCollectionView.header endRefreshing];
     _currentIndex_Done++;
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    NSInteger timeStamp = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_currentIndex_Done) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH/2) forKey:@"width"];

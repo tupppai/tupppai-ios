@@ -464,10 +464,11 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     _currentAskIndex = 1;
     [_askCollectionView.footer endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary new];
-    double timeStamp = [[NSDate date] timeIntervalSince1970];
+    NSInteger timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@"new" forKey:@"type"];
+    [param setObject:@(1) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     DDHomePageManager *pageManager = [DDHomePageManager new];
     [pageManager pullAskSource:param block:^(NSMutableArray *homepageArray) {
@@ -497,13 +498,14 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 - (void)getMoreRemoteAskSource {
     WS(ws);
     [ws.scrollView.collectionView.header endRefreshing];
-    _currentAskIndex = 1;
+    _currentAskIndex++;
     NSMutableDictionary *param = [NSMutableDictionary new];
-    double timeStamp = [[NSDate date] timeIntervalSince1970];
+    NSInteger timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@"new" forKey:@"type"];
-    [param setObject:@(AskCellWidth) forKey:@"width"];
+    [param setObject:@(_currentAskIndex) forKey:@"page"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     DDHomePageManager *pageManager = [DDHomePageManager new];
     [pageManager pullAskSource:param block:^(NSMutableArray *homepageArray) {
         if (homepageArray.count) {
@@ -526,7 +528,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     _currentHotIndex = 1;
     [_hotTableView.footer endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary new];
-    double timeStamp = [[NSDate date] timeIntervalSince1970];
+    NSInteger timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
@@ -558,7 +560,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     _currentHotIndex ++;
     [_hotTableView.header endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary new];
-    double timeStamp = [[NSDate date] timeIntervalSince1970];
+    NSInteger timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
