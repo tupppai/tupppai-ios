@@ -157,7 +157,7 @@
 
 -(void)tapSignUp1 {
     
-    [Util betaTestWarning];
+    [Util warningBetaTest];
 //    [self.signUpView dismiss];
 //    [DDShareSDKManager authorize2:SSDKPlatformTypeQQ withBlock:^(SSDKUser *sdkUser) {
 //            NSString* openID = sdkUser.uid;

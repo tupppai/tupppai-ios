@@ -12,13 +12,13 @@
 
 @implementation Util
 
-+ (void)betaTestWarning {
-    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"亲爱的顶级测试用户" andMessage:@"测试阶段QQ注册暂不可用"];
++ (void)warningBetaTest {
+    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"亲爱的顶级测试用户" andMessage:@"测试阶段此功能暂不可用，如果你有什么强烈的需求建议，请联系我们\n运营妹妹的邮箱：liuzi@tupppai.com"];
     [alertView addButtonWithTitle:@"朕知道了"
                              type:SIAlertViewButtonTypeCancel
                           handler:^(SIAlertView *alert) {
                           }];
-    alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
+    alertView.transitionStyle = SIAlertViewTransitionStyleDropDown;
     [alertView show];
 }
 

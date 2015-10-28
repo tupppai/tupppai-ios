@@ -32,7 +32,7 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.psDelegate = self;
-    _tableView.backgroundColor = [UIColor clearColor];
+    _tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     _tableView.emptyDataSetDelegate = self;
     _tableView.emptyDataSetSource = self;
@@ -160,10 +160,9 @@
 }
 
 #pragma mark - DZNEmptyDataSetSource & delegate
-//- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
-//{
-//    return [UIImage imageNamed:@"ic_cry"];
-//}
+-(UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"pie_empty"];
+}
 -(BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
     return YES;
 }

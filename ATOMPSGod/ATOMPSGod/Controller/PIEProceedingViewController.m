@@ -668,6 +668,10 @@
 }
 
 #pragma mark - DZNEmptyDataSetSource & delegate
+-(UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"pie_empty"];
+}
+
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
 {
     

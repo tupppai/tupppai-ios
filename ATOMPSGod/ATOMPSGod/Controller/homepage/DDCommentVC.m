@@ -22,7 +22,7 @@
 #import "JGActionSheet.h"
 #import "ATOMReportModel.h"
 #import "DDCollectManager.h"
-
+#import "PIEImageEntity.h"
 #import "JTSImageViewController.h"
 #import "JTSImageInfo.h"
 
@@ -42,11 +42,11 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 @property (nonatomic, strong) PIEShareView *shareView;
 @property (nonatomic, strong)  JGActionSheet * psActionSheet;
 @property (nonatomic, strong)  JGActionSheet * reportActionSheet;
+@property (nonatomic, assign)  BOOL isFirstLoading;
 
 @end
 
 @implementation DDCommentVC
-static dispatch_once_t onceToken;
 
 - (id)init
 {
@@ -87,6 +87,7 @@ static dispatch_once_t onceToken;
     [self configFooterRefresh];
     [self configTextInput];
     [self addGestureToCommentTableView];
+    _isFirstLoading = YES;
     [self getDataSource];
 }
 
@@ -98,12 +99,14 @@ static dispatch_once_t onceToken;
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    dispatch_once(&onceToken, ^{
+    if (_isFirstLoading) {
         [self.textView becomeFirstResponder];
-    });
-    [self scrollElegant];
+        [self scrollElegant];
+        _isFirstLoading = NO;
+    }
 }
 - (void)scrollElegant {
+    
     [UIView animateWithDuration:0.7 animations:^{
         self.tableView.contentOffset = CGPointMake(0, _headerView.frame.size.height - 52);
     } completion:^(BOOL finished) {
@@ -596,12 +599,15 @@ static dispatch_once_t onceToken;
         UITapGestureRecognizer* tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap1)];
         UITapGestureRecognizer* tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap2)];
         UITapGestureRecognizer* tap3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap3)];
+        UITapGestureRecognizer* tap4 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap4)];
+
         UITapGestureRecognizer* tap5 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap5)];
         UITapGestureRecognizer* tap6 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapHelp)];
         UITapGestureRecognizer* tap7 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapLike)];
         [_headerView.avatarView addGestureRecognizer:tap1];
         [_headerView.usernameLabel addGestureRecognizer:tap2];
         [_headerView.imageViewMain addGestureRecognizer:tap3];
+        [_headerView.imageViewRight addGestureRecognizer:tap4];
         [_headerView.shareButton addGestureRecognizer:tap5];
         [_headerView.bangView addGestureRecognizer:tap6];
         [_headerView.likeButton addGestureRecognizer:tap7];
@@ -641,7 +647,31 @@ static dispatch_once_t onceToken;
         [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOffscreen];
         imageViewer.interactionsDelegate = self;
 }
-
+- (void) didTap4 {
+    [self.textView resignFirstResponder];
+    // Create image info
+    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+    if (_headerView.imageViewMain.image != nil) {
+        imageInfo.image = _headerView.imageViewRight.image;
+    } else {
+        if (_vm.thumbEntityArray.count >= 2) {
+            PIEImageEntity* imgEntity = _vm.thumbEntityArray[1];
+            imageInfo.imageURL = [NSURL URLWithString:imgEntity.url];
+        }
+    }
+    //    imageInfo.referenceRect = _selectedHotDetailCell.userHeaderButton.frame;
+    //    imageInfo.referenceView = _selectedHotDetailCell.userHeaderButton;
+    
+    // Setup view controller
+    JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
+                                           initWithImageInfo:imageInfo
+                                           mode:JTSImageViewControllerMode_Image
+                                           backgroundStyle:JTSImageViewControllerBackgroundOption_Scaled];
+    
+    // Present the view controller.
+    [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOffscreen];
+    imageViewer.interactionsDelegate = self;
+}
 - (void) didTap5 {
     [self showShareView];
 }

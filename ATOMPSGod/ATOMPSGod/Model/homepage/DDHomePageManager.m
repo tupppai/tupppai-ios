@@ -46,7 +46,8 @@
                     [thumbArray addObject:entity2];
                 }
                 entity.thumbEntityArray = thumbArray;
-                [returnArray addObject:entity];
+                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+                [returnArray addObject:vm];
             }
             if (block) {
                 block(returnArray);
@@ -70,7 +71,8 @@
                     [thumbArray addObject:entity2];
                 }
                 entity.thumbEntityArray = thumbArray;
-                [returnArray addObject:entity];
+                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+                [returnArray addObject:vm];
             }
             if (block) {
                 block(returnArray);

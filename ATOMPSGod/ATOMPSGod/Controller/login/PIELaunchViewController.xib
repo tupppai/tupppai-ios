@@ -22,7 +22,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pie_launch_logo" translatesAutoresizingMaskIntoConstraints="NO" id="kvp-G7-d6k">
-                    <rect key="frame" x="271.5" y="150" width="56" height="56"/>
+                    <rect key="frame" x="271.5" y="50" width="56" height="56"/>
                     <animations/>
                     <constraints>
                         <constraint firstAttribute="height" constant="56" id="10R-XI-VMU"/>
@@ -86,7 +86,7 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="kvp-G7-d6k" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="2uL-4a-mMp"/>
-                <constraint firstItem="kvp-G7-d6k" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" priority="750" constant="150" id="EzG-Du-67e"/>
+                <constraint firstItem="kvp-G7-d6k" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" priority="750" constant="50" id="EzG-Du-67e"/>
                 <constraint firstItem="dmV-WO-gyV" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="G7L-QY-jXJ"/>
                 <constraint firstItem="0jb-V6-kin" firstAttribute="top" secondItem="dmV-WO-gyV" secondAttribute="bottom" constant="11" id="I5y-bn-AeP"/>
                 <constraint firstItem="0jb-V6-kin" firstAttribute="leading" secondItem="dmV-WO-gyV" secondAttribute="leading" id="JR2-Gh-xdE"/>

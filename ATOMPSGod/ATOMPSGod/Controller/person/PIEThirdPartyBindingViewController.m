@@ -47,7 +47,7 @@
     }
 }
 -(void)viewDidDisappear:(BOOL)animated {
-    [DDUserManager DDGetUserInfoAndUpdateMe];
+    [DDUserManager saveCurrentUserToDB];
 }
 
 #pragma mark - UITableViewDataSource
@@ -96,23 +96,6 @@
     return view;
 
 }
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-//{
-//    NSString *sectionName;
-//    switch (section)
-//    {
-//        case 0:
-//            sectionName = @"登录账号";
-//            break;
-//        case 1:
-//            sectionName = @"社交账号绑定";
-//            break;
-//        default:
-//            sectionName = @"";
-//            break;
-//    }
-//    return sectionName;
-//}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0 && indexPath.row == 1) {
@@ -188,23 +171,19 @@
 -(void)toggleSwitch:(id)sender {
     UISwitch *bindSwitch = sender;
     NSString *type;
-//    NSString* openIDKey;
     int shareType = 99;
     switch (bindSwitch.tag) {
         case 0:
             type = @"weibo";
             shareType = SSDKPlatformTypeSinaWeibo;
-//            openIDKey = @"idstr";
             break;
         case 1:
             type = @"weixin";
             shareType = SSDKPlatformTypeWechat;
-//            openIDKey = @"openid";
             break;
         case 2:
             type = @"qq";
             shareType = SSDKPlatformTypeQQ;
-//            openIDKey = @"openid";
             break;
         default:
             break;
@@ -221,6 +200,20 @@
                     //绑定失败，回到原型
                     bindSwitch.on = NO;
                 }else {
+                    switch (bindSwitch.tag) {
+                        case 0:
+                            [DDUserManager currentUser].bindWeibo = YES;
+
+                            break;
+                        case 1:
+                            [DDUserManager currentUser].bindWechat = YES;
+                            break;
+                        case 2:
+                            [DDUserManager currentUser].bindQQ = YES;
+                            break;
+                        default:
+                            break;
+                    }
                     [Hud success:@"绑定成功" inView:self.view];
                 }
             }];
@@ -239,6 +232,20 @@
             if (error) {
                 bindSwitch.on = YES;
             } else {
+                switch (bindSwitch.tag) {
+                    case 0:
+                        [DDUserManager currentUser].bindWeibo = NO;
+                        
+                        break;
+                    case 1:
+                        [DDUserManager currentUser].bindWechat = NO;
+                        break;
+                    case 2:
+                        [DDUserManager currentUser].bindQQ = NO;
+                        break;
+                    default:
+                        break;
+                }
                 [Hud success:@"已解绑" inView:self.view];
             }
         }];

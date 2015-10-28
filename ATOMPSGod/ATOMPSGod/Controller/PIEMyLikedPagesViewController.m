@@ -18,12 +18,13 @@
 #import "PIEImageCollectionViewCell.h"
 #import "PIECarouselViewController.h"
 #import "DDNavigationController.h"
-@interface PIEMyLikedPagesViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,CHTCollectionViewDelegateWaterfallLayout>
+@interface PIEMyLikedPagesViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,CHTCollectionViewDelegateWaterfallLayout,DZNEmptyDataSetDelegate>
 @property (nonatomic, strong) PIERefreshCollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *homeImageDataSource;
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, assign) NSInteger currentPage;
+@property (nonatomic, assign) BOOL isfirstLoading;
 @end
 
 @implementation PIEMyLikedPagesViewController
@@ -58,6 +59,7 @@
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getLikedPages:param withBlock:^(NSMutableArray *resultArray) {
         ws.dataSource = resultArray;
+        ws.isfirstLoading = NO;//should set to NO before reloadData
         [ws.collectionView reloadData];
         [ws.collectionView.header endRefreshing];
         
@@ -118,12 +120,14 @@
     _collectionView.delegate = self;
     _collectionView.psDelegate = self;
     _collectionView.emptyDataSetSource = self;
+    _collectionView.emptyDataSetDelegate = self;
     _collectionView.contentInset = UIEdgeInsetsMake(0, 0, TAB_HEIGHT*2.5, 0);
     UINib* nib = [UINib nibWithNibName:@"PIEImageCollectionViewCell" bundle:nil];
     [_collectionView registerNib:nib forCellWithReuseIdentifier:@"PIEImageCollectionViewCell"];
     _canRefreshFooter = YES;
     _dataSource = [NSMutableArray array];
-    
+    _isfirstLoading = YES;
+
     [self getDataSource];
 }
 
@@ -153,18 +157,25 @@
 
 
 #pragma mark - DZNEmptyDataSetSource & delegate
-//- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
-//{
-//    return [UIImage imageNamed:@"ic_cry"];
-//}
+#pragma mark - DZNEmptyDataSetSource & delegate
+-(UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"pie_empty"];
+}
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
 {
-    NSString *text = @"还没有赞过的页面喔";
+    NSString *text = @"还没有赞过别人哦";
     
-    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:kTitleSizeForEmptyDataSet],
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
                                  NSForegroundColorAttributeName: [UIColor darkGrayColor]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+-(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
+    return !_isfirstLoading;
+}
+-(BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
+    return YES;
 }
 
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout

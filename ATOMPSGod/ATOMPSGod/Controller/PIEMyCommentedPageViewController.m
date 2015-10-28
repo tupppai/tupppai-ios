@@ -14,11 +14,13 @@
 #import "AppDelegate.h"
 #import "DDPageManager.h"
 #import "DDCommentVC.h"
-@interface PIEMyCommentedPageViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate>
+@interface PIEMyCommentedPageViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 @property (nonatomic,strong) PIERefreshTableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL canRefreshFooter;
+@property (nonatomic, assign) BOOL isfirstLoading;
+
 @end
 
 @implementation PIEMyCommentedPageViewController
@@ -32,6 +34,7 @@
 - (void)initData {
     _currentPage = 1;
     _canRefreshFooter = YES;
+    _isfirstLoading = YES;
     _dataSource = [NSMutableArray new];
 }
 
@@ -41,6 +44,8 @@
         _tableView.dataSource = self;
         _tableView.delegate = self;
         _tableView.psDelegate = self;
+        _tableView.emptyDataSetSource = self;
+        _tableView.emptyDataSetDelegate = self;
         UINib* nib = [UINib nibWithNibName:@"PIEMyCommentedPageTableViewCell" bundle:nil];
         [_tableView registerNib:nib forCellReuseIdentifier:@"PIEMyCommentedPageTableViewCell"];
     }
@@ -95,6 +100,7 @@
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getCommentedPages:param withBlock:^(NSMutableArray *resultArray) {
+        ws.isfirstLoading = NO;//should set to NO before reloadData
         _dataSource = resultArray;
         [ws.tableView reloadData];
         [ws.tableView.header endRefreshing];
@@ -128,5 +134,25 @@
     }];
 }
 
+#pragma mark - DZNEmptyDataSetSource & delegate
+-(UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"pie_empty"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text = @"还没有评论过别人哦";
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+-(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
+    return !_isfirstLoading;
+}
+-(BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
+    return YES;
+}
 
 @end

@@ -289,7 +289,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
             }
             else if (CGRectContainsPoint(_selectedReplyCell.collectView.frame, p)) {
                 //should write this logic in viewModel
-                [self collectReply];
+                [self collect:_selectedReplyCell.collectView shouldShowHud:NO];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
                 [self likeReply];
@@ -467,20 +467,13 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     NSInteger timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [param setObject:@"new" forKey:@"type"];
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     DDHomePageManager *pageManager = [DDHomePageManager new];
     [pageManager pullAskSource:param block:^(NSMutableArray *homepageArray) {
         ws.isfirstLoadingAsk = NO;
         if (homepageArray.count) {
-            NSMutableArray* arrayAgent = [NSMutableArray new];
-            for (PIEPageEntity *entity in homepageArray) {
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
-                [arrayAgent addObject:vm];
-            }
-            [ws.sourceAsk removeAllObjects];
-            [ws.sourceAsk addObjectsFromArray:arrayAgent];
+            [ws.sourceAsk addObjectsFromArray:homepageArray];
             _canRefreshAskFooter = YES;
         }
         else {
@@ -503,16 +496,12 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     NSInteger timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [param setObject:@"new" forKey:@"type"];
     [param setObject:@(_currentAskIndex) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     DDHomePageManager *pageManager = [DDHomePageManager new];
     [pageManager pullAskSource:param block:^(NSMutableArray *homepageArray) {
         if (homepageArray.count) {
-            for (PIEPageEntity *entity in homepageArray) {
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
-                [ws.sourceAsk addObject:vm];
-            }
+            [ws.sourceAsk addObjectsFromArray:homepageArray];
             _canRefreshAskFooter = YES;
         }
         else {
@@ -538,13 +527,8 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [pageManager pullReplySource:param block:^(NSMutableArray *array) {
         ws.isfirstLoadingReply = NO;
         if (array.count) {
-            NSMutableArray* arrayAgent = [NSMutableArray new];
-            for (PIEPageEntity *entity in array) {
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
-                [arrayAgent addObject:vm];
-            }
                 [ws.sourceReply removeAllObjects];
-                [ws.sourceReply addObjectsFromArray:arrayAgent] ;
+                [ws.sourceReply addObjectsFromArray:array] ;
                 _canRefreshReplyFooter = YES;
         }
         else {
@@ -568,10 +552,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     DDHomePageManager *pageManager = [DDHomePageManager new];
     [pageManager pullReplySource:param block:^(NSMutableArray *array) {
         if (array.count) {
-            for (PIEPageEntity *entity in array) {
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
-                [ws.sourceReply  addObject:vm];
-            }
+            [ws.sourceReply addObjectsFromArray:array] ;
             _canRefreshReplyFooter = YES;
         }
         else {
@@ -609,11 +590,19 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
 }
 -(void)tapShare8 {
-    if (_selectedVM.type == PIEPageTypeAsk) {
-        [self collectAsk];
+    if (_scrollView.type == PIENewScrollTypeAsk) {
+        if (_selectedVM.type == PIEPageTypeAsk) {
+            [self collectAsk];
+        }
     } else {
-        [self collectReply];
+        if (_selectedVM.type == PIEPageTypeAsk) {
+            [self collectAsk];
+        } else {
+            PIENewReplyTableCell* cell = [_scrollView.replyTable cellForRowAtIndexPath:_selectedIndexPath];
+            [self collect:cell.collectView shouldShowHud:YES];
+        }
     }
+
 }
 
 -(void)tapShareCancel {
@@ -621,10 +610,10 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 }
 
 
--(void)collectReply {
+-(void)collect:(PIEPageButton*) collectView shouldShowHud:(BOOL)shouldShowHud {
     NSMutableDictionary *param = [NSMutableDictionary new];
-    _selectedReplyCell.collectView.selected = !_selectedReplyCell.collectView.selected;
-    if (_selectedReplyCell.collectView.selected) {
+    collectView.selected = !collectView.selected;
+    if (collectView.selected) {
         //收藏
         [param setObject:@(1) forKey:@"status"];
     } else {
@@ -633,13 +622,21 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     }
     [DDCollectManager toggleCollect:param withPageType:_selectedVM.type withID:_selectedVM.ID withBlock:^(NSError *error) {
         if (!error) {
-            _selectedVM.collected = _selectedReplyCell.collectView.selected;
-            _selectedVM.collectCount = _selectedReplyCell.collectView.numberString;
+            if (shouldShowHud) {
+                if (  collectView.selected) {
+                    [Hud textWithLightBackground:@"收藏成功"];
+                } else {
+                    [Hud textWithLightBackground:@"取消收藏成功"];
+                }
+            }
+            _selectedVM.collected = collectView.selected;
+            _selectedVM.collectCount = collectView.numberString;
         }   else {
-            _selectedReplyCell.collectView.selected = !_selectedReplyCell.collectView.selected;
+            collectView.selected = !collectView.selected;
         }
     }];
 }
+
 -(void)collectAsk {
     NSMutableDictionary *param = [NSMutableDictionary new];
     _selectedVM.collected = !_selectedVM.collected;
@@ -785,6 +782,9 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 }
 
 #pragma mark - DZNEmptyDataSetSource & delegate
+-(UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"pie_empty"];
+}
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
 {
     NSString *text ;

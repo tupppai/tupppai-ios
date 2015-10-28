@@ -177,10 +177,9 @@
 
 
 #pragma mark - DZNEmptyDataSetSource & delegate
-//- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
-//{
-//    return [UIImage imageNamed:@"ic_cry"];
-//}
+-(UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"pie_empty"];
+}
 -(BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
     return YES;
 }

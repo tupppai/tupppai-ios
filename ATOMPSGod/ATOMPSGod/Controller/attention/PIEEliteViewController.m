@@ -10,7 +10,6 @@
 #import "PIEEliteScrollView.h"
 #import "HMSegmentedControl.h"
 #import "PIEEliteFollowTableViewCell.h"
-//#import "PIEEliteHotTableViewCell.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 #import "PIEEliteManager.h"
 #import "PIECarouselViewController.h"
@@ -601,7 +600,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     [DDCollectManager toggleCollect:param withPageType:_selectedVM.type withID:_selectedVM.ID withBlock:^(NSError *error) {
         if (!error) {
             if (shouldShowHud) {
-                if (  _selectedVM.collected) {
+                if (  collectView.selected) {
                     [Hud textWithLightBackground:@"收藏成功"];
                 } else {
                     [Hud textWithLightBackground:@"取消收藏成功"];
@@ -974,6 +973,9 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 }
 
 #pragma mark - DZNEmptyDataSetSource & delegate
+-(UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"pie_empty"];
+}
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
 {
     NSString *text ;

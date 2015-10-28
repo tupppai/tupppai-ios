@@ -180,21 +180,17 @@
 
 + (void) ddRegister :(NSDictionary*)param withBlock:(void (^)(NSDictionary* data))block {
     [[self class]POST:param url:URL_ACRegister block:^(id responseObject) {
-        if (responseObject) {
             NSDictionary *data = [ responseObject objectForKey:@"data"];
                 if (block) { block(data); }
-        }
     }];
 }
 + (void) dd3PartyAuth :(NSDictionary*)param with3PaType:(NSString *)type withBlock:(void (^)(BOOL isRegistered,NSDictionary*userObject))block {
     NSString* url = [NSString stringWithFormat:@"%@%@",URL_AC3PaAuth,type];
     [[self class]POST:param url:url block:^(id responseObject) {
-        if (responseObject) {
             NSDictionary *data = [ responseObject objectForKey:@"data"];
             NSInteger isRegistered = [[data objectForKey:@"is_register"] integerValue];
             NSDictionary* userObject = [data objectForKey:@"user_obj"];
             if (block) { block(isRegistered,userObject); }
-        }
     }];
 }
 //+ (void) checkPhoneRegistration:(NSDictionary*)param withBlock:(void (^)(NSNumber* isRegistered))block {
@@ -211,13 +207,11 @@
 
 + (void)checkPhoneRegistration:(NSDictionary*)param withBlock:(void (^)(BOOL isRegistered))block {
     [[self class]GET:param url:URL_ACHasRegistered block:^(id responseObject) {
-        if (responseObject) {
             NSDictionary *data = [ responseObject objectForKey:@"data"];
             BOOL isRegistered = [[data objectForKey:@"has_registered"]boolValue];
             if (block) {
                 block(isRegistered);
             }
-        }
     }];
 }
 
@@ -227,7 +221,9 @@
     [[self class]POST:param url:URL_UKSaveFeedback block:^(id responseObject) {
         if (responseObject) {
             if (block) {block(YES);}
-        } 
+        } else {
+            if (block) {block(NO);}
+        }
     }];
 }
 
@@ -252,47 +248,37 @@
 }
 + (void)ddGetMyInfo:(NSDictionary*)param withBlock:(void (^)(NSDictionary* data))block {
     [[self class]GET:param url:URL_UKGetInfo block:^(id responseObject) {
-        if (responseObject) {
             NSDictionary* data = [responseObject objectForKey:@"data"];
             if (block) { block(data); }
-        } 
     }];
 }
 + (void)ddGetMsg:(NSDictionary*)param withBlock:(void (^)(id data))block {
     [[self class]GET:param url:URL_UKGetMsg block:^(id responseObject) {
-        if (responseObject) {
             id data = [responseObject objectForKey:@"data"];
             if (block) { block(data); }
-        }
     }];
 }
 + (void)ddGetNotifications:(NSDictionary*)param withBlock:(void (^)(id data))block {
     [[self class]GET:param url:URL_NotiGetNotifications block:^(id responseObject) {
-        if (responseObject) {
             id data = [responseObject objectForKey:@"data"];
             if (block) { block(data); }
-        }
     }];
 }
 
 + (void)ddGetOtherUserInfo:(NSDictionary*)param withBlock:(void (^)(NSDictionary* data,NSArray *askArray,NSArray *replyArray))block {
     [[self class]GET:param url:URL_PFGetOtherUserInfo block:^(id responseObject) {
-        if (responseObject) {
             NSDictionary *data = [responseObject objectForKey:@"data"];
             NSArray *askArray = [data objectForKey:@"asks"];
             NSArray *replyArray = [data objectForKey:@"replies"];
             if (block) { block(data,askArray,replyArray); }
-        }
     }];
 }
 
 
 + (void)ddGetReply:(NSDictionary*)param withBlock:(void (^)(NSArray *returnArray))block {
     [[self class]GET:param url:URL_PFGetReply block:^(id responseObject) {
-        if (responseObject) {
             NSArray *data = [responseObject objectForKey:@"data"];
             if (block) { block(data); }
-        }
     }];
 }
 + (void)ddGetAskWithReplies:(NSDictionary*)param withBlock:(void (^)(NSArray *returnArray))block {
@@ -304,30 +290,24 @@
 
 + (void)ddGetCollection:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
     [[self class]GET:param url:URL_PFGetCollection block:^(id responseObject) {
-        if (responseObject) {
             NSArray* data = [responseObject objectForKey:@"data"];
             if (block) { block(data); }
-        }
     }];
 }
 + (void)ddGetFans:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
     [[self class]GET:param url:URL_PFGetFans block:^(id responseObject) {
-        if (responseObject) {
             NSArray* data = [responseObject objectForKey:@"data"];
             if (block) { block(data); }
-        }
     }];
 }
 
 + (void)ddGetFollow:(NSDictionary*)param withBlock:(void (^)(NSArray* recommendArray,NSArray* myFollowArray))block {
     [[self class]GET:param url:URL_PFGetFollow block:^(id responseObject) {
-        if (responseObject) {
             NSDictionary* data = [responseObject objectForKey:@"data"];
             NSArray *recommendArray = [data objectForKey:@"recommends"];
             NSArray *myFollowArray = [data objectForKey:@"fellows"];
 
             if (block) { block(recommendArray,myFollowArray); }
-        }
     }];
 }
 + (void)ddGetNewestAsk:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {

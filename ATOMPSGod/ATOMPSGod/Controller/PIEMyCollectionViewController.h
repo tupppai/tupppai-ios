@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PIEMyCollectionViewController : UIViewController
+@interface PIEMyCollectionViewController : DDBaseVC
 
 @end

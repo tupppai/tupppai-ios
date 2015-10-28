@@ -78,7 +78,7 @@
 }
 - (void)tap1 {
     
-    [Util betaTestWarning];
+    [Util warningBetaTest];
 
 //    [DDShareSDKManager authorize2:SSDKPlatformTypeQQ withBlock:^(SSDKUser *sdkUser) {
 //        NSString* openID = sdkUser.uid;

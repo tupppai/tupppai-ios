@@ -23,6 +23,7 @@
 @property (nonatomic, strong) UILabel *usernameLabel;
 @property (nonatomic, strong) UILabel *timeLabel;
 @property (nonatomic, strong) UIImageView *imageViewMain;
+@property (nonatomic, strong) UIImageView *imageViewRight;
 @property (nonatomic, strong) UILabel *contentLabel;
 @property (nonatomic, strong) PIEPageButton *commentButton;
 @property (nonatomic, strong) PIEPageButton *shareButton;
