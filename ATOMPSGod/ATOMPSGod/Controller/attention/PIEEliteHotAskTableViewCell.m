@@ -9,6 +9,11 @@
 #import "PIEEliteHotAskTableViewCell.h"
 #import "PIEImageEntity.h"
 #import "PIECommentEntity.h"
+
+@interface PIEEliteHotAskTableViewCell()
+@property (nonatomic, strong) UIImageView* blurView;
+@end
+
 @implementation PIEEliteHotAskTableViewCell
 
 
@@ -23,10 +28,27 @@
     self.clipsToBounds = YES;
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
-    _theImageView.contentMode = UIViewContentModeScaleAspectFill;
+    _theImageView.contentMode = UIViewContentModeScaleAspectFit;
+    _theImageView.backgroundColor = [UIColor clearColor];
     _theImageView.clipsToBounds = YES;
+    
+    [self.contentView insertSubview:self.blurView belowSubview:_theImageView];
+    [self.blurView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.theImageView);
+        make.bottom.equalTo(self.theImageView);
+        make.leading.equalTo(self.theImageView);
+        make.trailing.equalTo(self.theImageView);
+    }];
 }
 
+-(UIImageView *)blurView {
+    if (!_blurView) {
+        _blurView = [UIImageView new];
+        _blurView.contentMode = UIViewContentModeScaleAspectFill;
+        _blurView.clipsToBounds = YES;
+    }
+    return _blurView;
+}
 
 -(void)prepareForReuse {
     [super prepareForReuse];
@@ -38,6 +60,7 @@
     }];
 }
 - (void)injectSauce:(DDPageVM *)viewModel {
+    WS(ws);
     _ID = viewModel.ID;
     _askID = viewModel.askID;
     _followView.highlighted = viewModel.followed;
@@ -50,11 +73,18 @@
     [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
     _nameLabel.text = viewModel.username;
     _timeLabel.text = viewModel.publishTime;
-    [_theImageView setImageWithURL:[NSURL URLWithString:viewModel.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
-    CGFloat imageViewHeight = viewModel.imageHeight <= SCREEN_HEIGHT/2 ? viewModel.imageHeight : SCREEN_HEIGHT/2;
-    imageViewHeight = MAX(200, imageViewHeight);
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:viewModel.imageURL]];
+    [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
+    [_theImageView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellBG"] success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull image) {
+        ws.theImageView.image = image;
+        ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+    } failure:nil];
+    
+//    CGFloat imageViewHeight = viewModel.imageHeight <= SCREEN_HEIGHT/2 ? viewModel.imageHeight : SCREEN_HEIGHT/2;
+//    imageViewHeight = MAX(200, imageViewHeight);
     [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@(imageViewHeight)).with.priorityHigh();
+        make.height.equalTo(@(SCREEN_WIDTH)).with.priorityHigh();
     }];
     
     if (viewModel.hotCommentEntityArray.count > 0) {

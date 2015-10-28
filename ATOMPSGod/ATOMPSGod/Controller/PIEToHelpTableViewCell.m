@@ -27,7 +27,7 @@
 //put a needle injecting into cell's ass.
 - (void)injectSource:(DDPageVM*)vm {
     [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarURL]];
-    [_theImageView setImageWithURL:[NSURL URLWithString:vm.imageURL]];
+    [_theImageView setImageWithURL:[NSURL URLWithString:vm.imageURL]placeholderImage:[UIImage imageNamed:@"cellBG"]];
     _nameLabel.text = vm.username;
     _timeLabel.text = vm.publishTime;
     _paticipantLabel.text = [NSString stringWithFormat:@"已有%@人帮p,马上参与pk!",vm.totalPSNumber];
