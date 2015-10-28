@@ -26,15 +26,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self addObservers];
     [self setupNav];
 }
-
-- (void)addObservers {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorOccuredRET) name:@"NetworkErrorCall" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NetworkSignOutRET) name:@"NetworkSignOutCall" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showInfoRET:) name:@"NetworkShowInfoCall" object:nil];
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self addObservers];
 }
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self removeObservers];
+}
+
+
 - (void)setupNav {
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
@@ -53,12 +56,17 @@
         self.navigationItem.leftBarButtonItems = @[ barBackButtonItem];
     }
 }
--(void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkSignOutCall" object:nil];
+- (void)addObservers {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorOccuredRET) name:@"NetworkErrorCall" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NetworkSignOutRET) name:@"NetworkSignOutCall" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showInfoRET:) name:@"NetworkShowInfoCall" object:nil];
+}
+- (void)removeObservers {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkErrorCall" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkSignOutCall"object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkShowInfoCall" object:nil];
-    //compiler would call [super dealloc] automatically in ARC.
 }
+
 -(void) NetworkSignOutRET {
     SIAlertView *alertView = [KShareManager NetworkErrorOccurredAlertView];
     [alertView addButtonWithTitle:@"好咯"
@@ -76,6 +84,7 @@
     [alertView show];
 }
 -(void) errorOccuredRET {
+    NSLog(@"DDBaseVC errorOccuredRET");
     [Hud text:@"出现未知错误" inView:self.view];
 }
 -(void) showInfoRET:(NSNotification *)notification {

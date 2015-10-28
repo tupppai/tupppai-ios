@@ -57,14 +57,12 @@
 - (void)getMoreRemoteSource {
     _currentPage ++;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(15) forKey:@"size"];
     DDHotDetailManager *manager = [DDHotDetailManager new];
     [manager fetchAllReply:param ID:_pageVM.askID withBlock:^(NSMutableArray *askArray, NSMutableArray *replyArray) {
-//        for (PIEPageEntity *entity in replyArray) {
             if (replyArray.count>0) {
-//                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
                 [_source addObjectsFromArray:replyArray];
                 [self.collectionView reloadData];
                 _canRefreshFoot = YES;

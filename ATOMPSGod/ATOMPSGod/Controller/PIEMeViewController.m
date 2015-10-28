@@ -14,14 +14,13 @@
 #import "PIEMyReplyViewController.h"
 #import "PIESettingsViewController.h"
 #import "DDMessageVC.h"
-//#import "UIImage+Blurring.h"
 #import "FXBlurView.h"
-#import "PIEFriendFollowingViewController.h"
-#import "PIEFriendFansViewController.h"
 #import "PIEMyAskViewController.h"
 
 #import "BBBadgeBarButtonItem.h"
 #import "PIENotificationViewController.h"
+#import "PIEMyFollowViewController.h"
+#import "PIEMyFansViewController.h"
 @interface PIEMeViewController ()<PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,CAPSPageMenuDelegate>
 @property (weak, nonatomic) IBOutlet UIView *dotView2;
 @property (weak, nonatomic) IBOutlet UIView *dotView1;
@@ -166,16 +165,11 @@
 
 
 - (void)pushToFollowingVC {
-    PIEFriendFollowingViewController *opvcv = [PIEFriendFollowingViewController new];
-    opvcv.uid = [DDUserManager currentUser].uid;
-    opvcv.userName = [DDUserManager currentUser].username;
+    PIEMyFollowViewController *opvcv = [PIEMyFollowViewController new];
     [self.navigationController pushViewController:opvcv animated:YES];
-    
 }
 - (void)pushToFansVC {
-    PIEFriendFansViewController *mfvc = [PIEFriendFansViewController new];
-    mfvc.uid = [DDUserManager currentUser].uid;
-    mfvc.userName = [DDUserManager currentUser].username;
+    PIEMyFansViewController *mfvc = [PIEMyFansViewController new];
     [self.navigationController pushViewController:mfvc animated:YES];
 }
 

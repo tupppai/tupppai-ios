@@ -14,11 +14,13 @@
 #import "DDPageManager.h"
 static NSString *cellIdentifier = @"PIEFriendAskTableViewCell";
 
-@interface PIEFriendAskViewController ()<PWRefreshBaseTableViewDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface PIEFriendAskViewController ()<PWRefreshBaseTableViewDelegate,UITableViewDataSource,UITableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 @property (nonatomic, strong) NSMutableArray *source;
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, strong) PIERefreshTableView *table;
 @property (nonatomic, assign) BOOL canRefreshFooter;
+@property (nonatomic, assign) BOOL isfirstLoading;
+
 @end
 
 @implementation PIEFriendAskViewController
@@ -28,14 +30,13 @@ static NSString *cellIdentifier = @"PIEFriendAskTableViewCell";
     self.view.backgroundColor = [UIColor clearColor];
     _source = [NSMutableArray array];
     _currentIndex = 1;
-//    [self.view addSubview:self.table];
     self.view = self.table;
     UINib* nib = [UINib nibWithNibName:@"PIEFriendAskTableViewCell" bundle:nil];
     [self.table registerNib:nib forCellReuseIdentifier:cellIdentifier];
-    
+    self.table.emptyDataSetSource = self;
+    self.table.emptyDataSetDelegate = self;
+    _isfirstLoading = YES;
     [self getRemoteSource];
-//    _tapGestureReply = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureReply:)];
-//    [_table addGestureRecognizer:_tapGestureReply];
     
 }
 
@@ -63,9 +64,6 @@ static NSString *cellIdentifier = @"PIEFriendAskTableViewCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_table == tableView) {
-//        return [tableView fd_heightForCellWithIdentifier:cellIdentifier  cacheByIndexPath:indexPath configuration:^(PIEFriendAskTableViewCell *cell) {
-//            [cell injectSource:_source[indexPath.row]];
-//        }];
         return 168;
     } else {
         return 0;
@@ -79,19 +77,20 @@ static NSString *cellIdentifier = @"PIEFriendAskTableViewCell";
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(_pageVM.userID) forKey:@"uid"];
-        [param setObject:@(15) forKey:@"size"];
+    [param setObject:@(15) forKey:@"size"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(1) forKey:@"page"];
     [DDPageManager getAskWithReplies:param withBlock:^(NSArray *returnArray) {
+        _isfirstLoading = NO;
         if (returnArray.count > 0) {
             [_source removeAllObjects];
             [_source addObjectsFromArray:returnArray];
-            [self.table reloadData];
             _canRefreshFooter = YES;
         } else {
             _canRefreshFooter = NO;
         }
+        [self.table reloadData];
         [self.table.header endRefreshing];
     }];
 }
@@ -110,11 +109,11 @@ static NSString *cellIdentifier = @"PIEFriendAskTableViewCell";
     [DDPageManager getAskWithReplies:param withBlock:^(NSArray *returnArray) {
         if (returnArray.count > 0) {
             [_source addObjectsFromArray:returnArray];
-            [self.table reloadData];
             _canRefreshFooter = YES;
         } else {
             _canRefreshFooter = NO;
         }
+        [self.table reloadData];
         [self.table.footer endRefreshing];
     }];
 }
@@ -158,6 +157,25 @@ static NSString *cellIdentifier = @"PIEFriendAskTableViewCell";
         }
     });
 }
+#pragma mark - DZNEmptyDataSetSource & delegate
+-(UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"pie_empty"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text = @"他竟然还没有求P哦～";
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
 
+-(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
+    return !_isfirstLoading;
+}
+-(BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
+    return YES;
+}
 
 @end

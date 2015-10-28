@@ -80,8 +80,8 @@ NSString* deviceName()
 
 
 +(void)showWeAreWorkingOnThisFeature {
-    SIAlertView* alertView = [[SIAlertView alloc]initWithTitle:@"敬请期待" andMessage:@"产品爷正在催程序狗正在写代码"];
-    [alertView addButtonWithTitle:@"我知道了" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
+    SIAlertView* alertView = [[SIAlertView alloc]initWithTitle:@"敬请期待" andMessage:@"我们正在设计此功能"];
+    [alertView addButtonWithTitle:@"朕知道了" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
         [alertView dismissAnimated:YES];
     }];
     [alertView show];

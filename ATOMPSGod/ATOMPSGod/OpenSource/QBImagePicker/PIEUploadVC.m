@@ -61,7 +61,9 @@
 - (void)setupViews {
     _shareBanner.hidden = YES;
     if (_type == PIEUploadTypeReply) {
-        _inputTextView.placeholder = @"输入作品的亮点";
+        _inputTextView.placeholder = @"输入你想对观众说的吧";
+    } else  {
+        _inputTextView.placeholder = @"写下你的图片需求吧";
     }
     _inputTextView.delegate = self;
     _leftImageView.clipsToBounds = YES;

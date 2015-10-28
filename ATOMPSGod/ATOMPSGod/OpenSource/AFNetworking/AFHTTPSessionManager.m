@@ -248,10 +248,12 @@
     dataTask = [self dataTaskWithRequest:request completionHandler:^(NSURLResponse * __unused response, id responseObject, NSError *error) {
 #if DEBUG
         NSLog(@"success responseObject %@ ,error %@",responseObject,error);
+        
 #endif
         if (error) {
             if (failure) {
                 failure(dataTask, error);
+                NSLog(@"NetworkErrorCall");
                 [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkErrorCall" object:nil]];
             }
         } else {

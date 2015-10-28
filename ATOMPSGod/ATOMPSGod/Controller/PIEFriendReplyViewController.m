@@ -14,13 +14,14 @@
 
 
 
-@interface PIEFriendReplyViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,PWRefreshBaseCollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout>
+@interface PIEFriendReplyViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,PWRefreshBaseCollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (nonatomic, strong) NSMutableArray *source;
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 @property (nonatomic, strong) PIERefreshCollectionView *collectionView;
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, strong) DDPageVM *selectedVM;
+@property (nonatomic, assign) BOOL isfirstLoading;
 
 @end
 static NSString *CellIdentifier2 = @"PIEFriendAskCollectionViewCell";
@@ -30,18 +31,15 @@ static NSString *CellIdentifier2 = @"PIEFriendAskCollectionViewCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     _source = [NSMutableArray array];
-    [self getRemoteSource];
     [self commonInit];
+    [self getRemoteSource];
 }
 
 - (void)commonInit {
     self.view.backgroundColor = [UIColor clearColor];
-//    [self.view addSubview:self.collectionView];
     self.view = self.collectionView;
     _currentIndex = 1;
-    
-//    _tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGesture:)];
-//    [_collectionView addGestureRecognizer:_tapGesture];
+    _isfirstLoading = YES;
 }
 
 #pragma mark - GetDataSource
@@ -56,6 +54,7 @@ static NSString *CellIdentifier2 = @"PIEFriendAskCollectionViewCell";
     [param setObject:@(1) forKey:@"page"];
     _currentIndex = 1;
     [DDOtherUserManager getFriendReply:param withBlock:^(NSMutableArray *returnArray) {
+        _isfirstLoading = NO;//should set to NO before reloadData
         NSMutableArray* arrayAgent = [NSMutableArray array];
         if (returnArray.count > 0) {
             for (PIEPageEntity *entity in returnArray) {
@@ -103,6 +102,8 @@ static NSString *CellIdentifier2 = @"PIEFriendAskCollectionViewCell";
         _collectionView.toRefreshBottom = YES;
         _collectionView.toRefreshTop = YES;
         _collectionView.backgroundColor = [UIColor clearColor];
+        _collectionView.emptyDataSetDelegate = self;
+        _collectionView.emptyDataSetSource = self;
         _collectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         _collectionView.showsVerticalScrollIndicator = NO;
         _collectionView.dataSource = self;
@@ -159,8 +160,6 @@ static NSString *CellIdentifier2 = @"PIEFriendAskCollectionViewCell";
     if (height > width+20) {
         height = width+20;
     }
-    NSLog(@"NSStringFromCGSize %@",NSStringFromCGSize(CGSizeMake(width, height)));
-
     return CGSizeMake(width, height);
 }
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
@@ -174,5 +173,25 @@ static NSString *CellIdentifier2 = @"PIEFriendAskCollectionViewCell";
             [[NSNotificationCenter defaultCenter]postNotificationName:@"PIEFriendScrollUp" object:nil];
         }
     });
+}
+#pragma mark - DZNEmptyDataSetSource & delegate
+-(UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"pie_empty"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text = @"他还没有观众所期待的作品";
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+-(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
+    return !_isfirstLoading;
+}
+-(BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
+    return YES;
 }
 @end

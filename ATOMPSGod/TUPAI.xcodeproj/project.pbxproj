@@ -395,6 +395,8 @@
 		F4275A151BE0786400BBE7E4 /* UIResponder+SLKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F4275A0A1BE0786400BBE7E4 /* UIResponder+SLKAdditions.m */; settings = {ASSET_TAGS = (); }; };
 		F4275A161BE0786400BBE7E4 /* UIScrollView+SLKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F4275A0C1BE0786400BBE7E4 /* UIScrollView+SLKAdditions.m */; settings = {ASSET_TAGS = (); }; };
 		F4275A171BE0786400BBE7E4 /* UIView+SLKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F4275A0E1BE0786400BBE7E4 /* UIView+SLKAdditions.m */; settings = {ASSET_TAGS = (); }; };
+		F4275A1A1BE0B9E400BBE7E4 /* PIEMyFansViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4275A191BE0B9E400BBE7E4 /* PIEMyFansViewController.m */; settings = {ASSET_TAGS = (); }; };
+		F4275A1D1BE0B9ED00BBE7E4 /* PIEMyFollowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4275A1C1BE0B9ED00BBE7E4 /* PIEMyFollowViewController.m */; settings = {ASSET_TAGS = (); }; };
 		F428F01E1BD331EF00318AC2 /* PIELaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F428F01C1BD331EF00318AC2 /* PIELaunchViewController.m */; settings = {ASSET_TAGS = (); }; };
 		F428F01F1BD331EF00318AC2 /* PIELaunchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F428F01D1BD331EF00318AC2 /* PIELaunchViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		F42ED3B11BC4FC2D0052A0BF /* PIEMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42ED3B01BC4FC2D0052A0BF /* PIEMeViewController.m */; settings = {ASSET_TAGS = (); }; };
@@ -1320,6 +1322,10 @@
 		F4275A0C1BE0786400BBE7E4 /* UIScrollView+SLKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SLKAdditions.m"; sourceTree = "<group>"; };
 		F4275A0D1BE0786400BBE7E4 /* UIView+SLKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SLKAdditions.h"; sourceTree = "<group>"; };
 		F4275A0E1BE0786400BBE7E4 /* UIView+SLKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SLKAdditions.m"; sourceTree = "<group>"; };
+		F4275A181BE0B9E400BBE7E4 /* PIEMyFansViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEMyFansViewController.h; sourceTree = "<group>"; };
+		F4275A191BE0B9E400BBE7E4 /* PIEMyFansViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEMyFansViewController.m; sourceTree = "<group>"; };
+		F4275A1B1BE0B9ED00BBE7E4 /* PIEMyFollowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEMyFollowViewController.h; sourceTree = "<group>"; };
+		F4275A1C1BE0B9ED00BBE7E4 /* PIEMyFollowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEMyFollowViewController.m; sourceTree = "<group>"; };
 		F428F01B1BD331EF00318AC2 /* PIELaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIELaunchViewController.h; sourceTree = "<group>"; };
 		F428F01C1BD331EF00318AC2 /* PIELaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIELaunchViewController.m; sourceTree = "<group>"; };
 		F428F01D1BD331EF00318AC2 /* PIELaunchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIELaunchViewController.xib; sourceTree = "<group>"; };
@@ -3241,6 +3247,10 @@
 				F42ED3B21BC4FC3B0052A0BF /* Me.storyboard */,
 				F42ED3AF1BC4FC2D0052A0BF /* PIEMeViewController.h */,
 				F42ED3B01BC4FC2D0052A0BF /* PIEMeViewController.m */,
+				F4275A181BE0B9E400BBE7E4 /* PIEMyFansViewController.h */,
+				F4275A191BE0B9E400BBE7E4 /* PIEMyFansViewController.m */,
+				F4275A1B1BE0B9ED00BBE7E4 /* PIEMyFollowViewController.h */,
+				F4275A1C1BE0B9ED00BBE7E4 /* PIEMyFollowViewController.m */,
 			);
 			name = ME;
 			sourceTree = "<group>";
@@ -4166,6 +4176,7 @@
 				5C3101871AAE9B0F00EF529B /* PIEThirdPartyBindingViewController.m in Sources */,
 				E9A5B66D1B9040310059754C /* DDServiceConstants.m in Sources */,
 				5C561A711AB7C8C30052D4D5 /* MJRefreshFooter.m in Sources */,
+				F4275A1A1BE0B9E400BBE7E4 /* PIEMyFansViewController.m in Sources */,
 				F46117D81BAD1101001A6F1A /* IQUIView+Hierarchy.m in Sources */,
 				5CD42E7A1AE37F7500BACDDD /* ATOMReplier.m in Sources */,
 				5C83A8951AC66F910071A024 /* POPSpringAnimation.mm in Sources */,
@@ -4231,6 +4242,7 @@
 				5C83A88D1AC66F910071A024 /* POPBasicAnimation.mm in Sources */,
 				F4EC11111BCE5A73002D1DCF /* PIENotificationReplyTableViewCell.m in Sources */,
 				5CDB06061AA405A40089121E /* UIColor+iOS7.m in Sources */,
+				F4275A1D1BE0B9ED00BBE7E4 /* PIEMyFollowViewController.m in Sources */,
 				5C8084FC1AF27BD30062421C /* ATOMTotalPSView.m in Sources */,
 				F41FF0EB1BDE231200566A12 /* PIENotificationSystemViewController.m in Sources */,
 				5CDB06311AA428BD0089121E /* MASLayoutConstraint.m in Sources */,

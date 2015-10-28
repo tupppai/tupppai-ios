@@ -24,7 +24,7 @@
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL canRefreshFooter;
-@property (nonatomic, assign) BOOL isFirst;
+@property (nonatomic, assign) BOOL isfirstLoading;
 
 @end
 
@@ -70,7 +70,7 @@
     _tapConcernGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapConcernGesture:)];
     [_tableView addGestureRecognizer:_tapConcernGesture];
     _canRefreshFooter = YES;
-    _isFirst = YES;
+    _isfirstLoading = YES;
     [self getDataSource];
 }
 
@@ -103,10 +103,6 @@
                     if (!success) {
                         cell.attentionButton.selected = !cell.attentionButton.selected;
                     }
-//                    else {
-//                        NSString* desc =  cell.attentionButton.selected?[NSString stringWithFormat:@"你关注了%@",cell.viewModel.userName]:[NSString stringWithFormat:@"你取消关注了%@",cell.viewModel.userName];
-//                        [Hud text:desc inView:self.view];
-//                    }
             }];
 
             }
@@ -141,22 +137,23 @@
 }
 
 #pragma mark - DZNEmptyDataSetSource & delegate
-- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
-{
-    return [UIImage imageNamed:@"ic_cry"];
+-(UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"pie_empty"];
 }
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
 {
-    NSString *text = @"还没有关注任何人,快去社区活跃吧";
+    NSString *text = @"他还没有关注的人";
     
-    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:kTitleSizeForEmptyDataSet],
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
                                  NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
+
 -(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
-    if (_isFirst) {
-        return NO;
-    }
+    return !_isfirstLoading;
+}
+-(BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
     return YES;
 }
 
@@ -181,7 +178,7 @@
             [concernViewModel setViewModelData:concern];
             [ws.dataSource addObject:concernViewModel];
         }
-        _isFirst = NO;
+        ws.isfirstLoading = NO;
         [ws.tableView reloadData];
     }];
 }

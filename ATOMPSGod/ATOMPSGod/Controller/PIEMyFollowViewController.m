@@ -1,88 +1,89 @@
 //
-//  ATOMMyFansViewController.m
+//  ATOMOtherPersonConcernViewController.m
 //  ATOMPSGod
 //
-//  Created by atom on 15/3/10.
+//  Created by atom on 15/4/15.
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "PIEFriendFansViewController.h"
-#import "PIEFriendFansTableCell.h"
+#import "PIEMyFollowViewController.h"
+#import "PIEFriendFollowingTableCell.h"
 #import "PIEFriendViewController.h"
-#import "DDMyFansManager.h"
-#import "ATOMFans.h"
-#import "ATOMFansViewModel.h"
-#import "PIERefreshFooterTableView.h"
+#import "DDFollowManager.h"
+#import "DDFollow.h"
 #import "DDService.h"
+#import "ATOMConcernViewModel.h"
+#import "PIERefreshFooterTableView.h"
 
 
-@interface PIEFriendFansViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
+@interface PIEMyFollowViewController () < UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
 @property (nonatomic, strong) PIERefreshFooterTableView *tableView;
-@property (nonatomic, strong) UIView *myFansView;
-@property (nonatomic, strong) UITapGestureRecognizer *tapMyFansGesture;
+@property (nonatomic, strong) UIView *concernView;
+@property (nonatomic, strong) UITapGestureRecognizer *tapConcernGesture;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL canRefreshFooter;
-@property (nonatomic, assign) NSIndexPath* selectedIndexPath;
 @property (nonatomic, assign) BOOL isfirstLoading;
 
 @end
 
-@implementation PIEFriendFansViewController
+@implementation PIEMyFollowViewController
 
-
-#pragma mark - UI
+#pragma mark - Refresh
 -(BOOL)hidesBottomBarWhenPushed {
     return YES;
 }
+-(void)didPullRefreshUp:(UITableView *)tableView {
+    [self loadMoreData];
+}
+
+- (void)loadMoreData {
+    if (_canRefreshFooter) {
+        [self getMoreDataSource];
+    } else {
+        [_tableView.footer endRefreshing];
+    }
+}
+
+
+#pragma mark - UI
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
 }
 
 - (void)createUI {
-    [self setupNavigationBar];
-    [self setupViews];
-    [self initValues];
+    self.title = @"我的关注";
+    _concernView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
+    self.view = _concernView;
+    _tableView = [[PIERefreshFooterTableView alloc] initWithFrame:_concernView.bounds];
+    _tableView.backgroundColor = [UIColor colorWithHex:0xededed];
+    _tableView.tableFooterView = [UIView new];
+    [_concernView addSubview:_tableView];
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
+    _tableView.psDelegate = self;
+    _tableView.emptyDataSetSource = self;
+    _tableView.emptyDataSetDelegate = self;
+    _tapConcernGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapConcernGesture:)];
+    [_tableView addGestureRecognizer:_tapConcernGesture];
+    _canRefreshFooter = YES;
+    _isfirstLoading = YES;
     [self getDataSource];
 }
 
-- (void) setupNavigationBar {
-//    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"推荐关注" style:UIBarButtonItemStylePlain target:self action:@selector(showRecommendation)];
-//    self.navigationItem.rightBarButtonItem = anotherButton;
-    self.title = [NSString stringWithFormat:@"%@的粉丝", _uid ? _userName : @"我"];
-}
-- (void) setupViews {
-    _myFansView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
-    self.view = _myFansView;
-    _tableView = [[PIERefreshFooterTableView alloc] initWithFrame:_myFansView.bounds];
-    _tableView.backgroundColor = [UIColor colorWithHex:0xededed];
-    [_myFansView addSubview:_tableView];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.emptyDataSetSource = self;
-    _tableView.emptyDataSetDelegate = self;
-    _tableView.psDelegate = self;
-    _tapMyFansGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMyFansGesture:)];
-    [_tableView addGestureRecognizer:_tapMyFansGesture];
-}
-- (void) initValues {
-    _isfirstLoading = YES;
-    _canRefreshFooter = YES;
-}
 #pragma mark - Click Event
--(void) showRecommendation {
-    [Util showWeAreWorkingOnThisFeature];
-}
+
 #pragma mark - Gesture Event
 
-- (void)tapMyFansGesture:(UITapGestureRecognizer *)gesture {
+- (void)tapConcernGesture:(UITapGestureRecognizer *)gesture {
     CGPoint location = [gesture locationInView:_tableView];
-    _selectedIndexPath = [_tableView indexPathForRowAtPoint:location];
-    if (_selectedIndexPath) {
-        ATOMFansViewModel *viewModel = _dataSource[_selectedIndexPath.row];
-        PIEFriendFansTableCell *cell = (PIEFriendFansTableCell *)[_tableView cellForRowAtIndexPath:_selectedIndexPath];
+    NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:location];
+    if (indexPath) {
+        ATOMConcernViewModel *viewModel = _dataSource[indexPath.row];
+        PIEFriendFollowingTableCell *cell = (PIEFriendFollowingTableCell *)[_tableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             PIEFriendViewController *opvc = [PIEFriendViewController new];
@@ -91,8 +92,7 @@
             vm.username = viewModel.userName;
             opvc.pageVM = vm;
             [self.navigationController pushViewController:opvc animated:YES];
-        }
-        else if (CGRectContainsPoint(cell.attentionButton.frame, p)) {
+        } else if (CGRectContainsPoint(cell.attentionButton.frame, p)) {
             cell.attentionButton.selected = !cell.attentionButton.selected;
             NSMutableDictionary* param = [NSMutableDictionary new];
             [param setObject:@(cell.viewModel.uid) forKey:@"uid"];
@@ -104,12 +104,10 @@
                     cell.attentionButton.selected = !cell.attentionButton.selected;
                 }
             }];
+            
         }
-        
     }
 }
-
-
 
 #pragma mark - UITableViewDataSource
 
@@ -123,15 +121,16 @@
 
 #pragma mark - UITableViewDelegate
 
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 65;
+    return 60;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"MyFansCell";
-    PIEFriendFansTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *CellIdentifier = @"ConcernCell";
+    PIEFriendFollowingTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
-        cell = [[PIEFriendFansTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[PIEFriendFollowingTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     cell.viewModel = _dataSource[indexPath.row];
     return cell;
@@ -143,7 +142,7 @@
 }
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
 {
-    NSString *text = @"ta还没有粉丝，可以做ta的第一个粉丝哦";
+    NSString *text = @"还没有关注的人，快去关注些大神吧";
     
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
                                  NSForegroundColorAttributeName: [UIColor darkGrayColor]};
@@ -158,20 +157,6 @@
     return YES;
 }
 
-#pragma mark - Refresh PWRefreshBaseTableViewDelegate
-
--(void)didPullRefreshUp:(UITableView *)tableView {
-    [self loadMoreData];
-}
-
-- (void)loadMoreData {
-    if (_canRefreshFooter) {
-        [self getMoreDataSource];
-    } else {
-        [_tableView.footer endRefreshing];
-    }
-}
-
 #pragma mark - GetDataSource
 
 - (void)getDataSource {
@@ -184,16 +169,16 @@
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [param setObject:@(_uid) forKeyedSubscript:@"uid"];
+    [param setObject:@([DDUserManager currentUser].uid) forKeyedSubscript:@"uid"];
     [Hud activity:@"" inView:self.view];
-    [DDMyFansManager getMyFans:param withBlock:^(NSMutableArray *resultArray) {
-        ws.isfirstLoading = NO;
+    [DDFollowManager getFollow:param withBlock:^(NSMutableArray *recommend,NSMutableArray* resultArray) {
         [Hud dismiss:self.view];
-        for (ATOMFans *fans in resultArray) {
-            ATOMFansViewModel *fansViewModel = [ATOMFansViewModel new];
-            [fansViewModel setViewModelData:fans];
-            [ws.dataSource addObject:fansViewModel];
+        for (DDFollow *concern in resultArray) {
+            ATOMConcernViewModel *concernViewModel = [ATOMConcernViewModel new];
+            [concernViewModel setViewModelData:concern];
+            [ws.dataSource addObject:concernViewModel];
         }
+        ws.isfirstLoading = NO;
         [ws.tableView reloadData];
     }];
 }
@@ -203,15 +188,15 @@
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timestamp = [[NSDate date] timeIntervalSince1970];
     ws.currentPage++;
+    [param setObject:@([DDUserManager currentUser].uid) forKeyedSubscript:@"uid"];
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(timestamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [param setObject:@(_uid) forKeyedSubscript:@"uid"];
-    [DDMyFansManager getMyFans:param withBlock:^(NSMutableArray *resultArray) {
-        for (ATOMFans *fans in resultArray) {
-            ATOMFansViewModel *fansViewModel = [ATOMFansViewModel new];
-            [fansViewModel setViewModelData:fans];
-            [ws.dataSource addObject:fansViewModel];
+    [DDFollowManager getFollow:param withBlock:^(NSMutableArray *resultArray,NSMutableArray* recommend) {
+        for (DDFollow *concern in resultArray) {
+            ATOMConcernViewModel *concernViewModel = [ATOMConcernViewModel new];
+            [concernViewModel setViewModelData:concern];
+            [ws.dataSource addObject:concernViewModel];
         }
         if (resultArray.count == 0) {
             ws.canRefreshFooter = NO;
@@ -224,3 +209,4 @@
 }
 
 @end
+

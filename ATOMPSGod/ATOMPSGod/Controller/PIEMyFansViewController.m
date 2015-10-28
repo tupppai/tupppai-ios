@@ -1,12 +1,12 @@
 //
-//  ATOMMyFansViewController.m
-//  ATOMPSGod
+//  PIEMyFansViewController.m
+//  TUPAI
 //
-//  Created by atom on 15/3/10.
-//  Copyright (c) 2015年 ATOM. All rights reserved.
+//  Created by chenpeiwei on 10/28/15.
+//  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIEFriendFansViewController.h"
+#import "PIEMyFansViewController.h"
 #import "PIEFriendFansTableCell.h"
 #import "PIEFriendViewController.h"
 #import "DDMyFansManager.h"
@@ -16,7 +16,7 @@
 #import "DDService.h"
 
 
-@interface PIEFriendFansViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
+@interface PIEMyFansViewController () <UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
 @property (nonatomic, strong) PIERefreshFooterTableView *tableView;
 @property (nonatomic, strong) UIView *myFansView;
@@ -29,7 +29,7 @@
 
 @end
 
-@implementation PIEFriendFansViewController
+@implementation PIEMyFansViewController
 
 
 #pragma mark - UI
@@ -49,15 +49,13 @@
 }
 
 - (void) setupNavigationBar {
-//    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"推荐关注" style:UIBarButtonItemStylePlain target:self action:@selector(showRecommendation)];
-//    self.navigationItem.rightBarButtonItem = anotherButton;
-    self.title = [NSString stringWithFormat:@"%@的粉丝", _uid ? _userName : @"我"];
+    self.title = @"我的粉丝";
 }
 - (void) setupViews {
     _myFansView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     self.view = _myFansView;
     _tableView = [[PIERefreshFooterTableView alloc] initWithFrame:_myFansView.bounds];
-    _tableView.backgroundColor = [UIColor colorWithHex:0xededed];
+    _tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     [_myFansView addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -143,7 +141,7 @@
 }
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
 {
-    NSString *text = @"ta还没有粉丝，可以做ta的第一个粉丝哦";
+    NSString *text = @"快去活跃一下就有粉丝咯～";
     
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
                                  NSForegroundColorAttributeName: [UIColor darkGrayColor]};
@@ -184,7 +182,7 @@
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [param setObject:@(_uid) forKeyedSubscript:@"uid"];
+    [param setObject:@([DDUserManager currentUser].uid) forKeyedSubscript:@"uid"];
     [Hud activity:@"" inView:self.view];
     [DDMyFansManager getMyFans:param withBlock:^(NSMutableArray *resultArray) {
         ws.isfirstLoading = NO;
@@ -201,12 +199,12 @@
 - (void)getMoreDataSource {
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    long long timestamp = [[NSDate date] timeIntervalSince1970];
+    long long timeStamp = [[NSDate date] timeIntervalSince1970];
     ws.currentPage++;
     [param setObject:@(ws.currentPage) forKey:@"page"];
-    [param setObject:@(timestamp) forKey:@"last_updated"];
+    [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [param setObject:@(_uid) forKeyedSubscript:@"uid"];
+    [param setObject:@([DDUserManager currentUser].uid) forKeyedSubscript:@"uid"];
     [DDMyFansManager getMyFans:param withBlock:^(NSMutableArray *resultArray) {
         for (ATOMFans *fans in resultArray) {
             ATOMFansViewModel *fansViewModel = [ATOMFansViewModel new];
