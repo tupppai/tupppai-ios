@@ -6,10 +6,10 @@
 //  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIEEliteAskTableViewCell.h"
+#import "PIEEliteFollowAskTableViewCell.h"
 #import "PIEImageEntity.h"
 
-@implementation PIEEliteAskTableViewCell
+@implementation PIEEliteFollowAskTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code

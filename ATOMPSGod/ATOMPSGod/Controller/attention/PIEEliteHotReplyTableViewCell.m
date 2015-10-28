@@ -63,6 +63,7 @@
 }
 
 - (void)injectSauce:(DDPageVM *)viewModel {
+    WS(ws);
     _ID = viewModel.ID;
     _askID = viewModel.askID;
     _followView.highlighted = viewModel.followed;
@@ -87,7 +88,9 @@
     [_theImageView setImageWithURL:[NSURL URLWithString:viewModel.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
     
     CGFloat imageViewHeight = viewModel.imageHeight <= SCREEN_HEIGHT/2 ? viewModel.imageHeight : SCREEN_HEIGHT/2;
-    imageViewHeight = MAX(200, imageViewHeight);
+    imageViewHeight = MAX(100, imageViewHeight);
+    imageViewHeight = MIN(SCREEN_WIDTH, imageViewHeight);
+
     [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(imageViewHeight)).with.priorityHigh();
     }];
@@ -109,24 +112,30 @@
         }
     }
     
-    //作品的 小图 初始化
-    if (viewModel.type == 2) {
-        _thumbView.hidden = NO;
         [self mansoryThumbAnimateView];
         [_thumbView setSubviewCounts:viewModel.thumbEntityArray.count];
-        if (viewModel.thumbEntityArray.count > 0) {
-            PIEImageEntity* entity = [viewModel.thumbEntityArray objectAtIndex:0];
-            [_thumbView.rightView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
-            if (viewModel.thumbEntityArray.count == 2) {
-                entity = viewModel.thumbEntityArray[1];
-                [_thumbView.leftView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
-            }
+    
+    if (viewModel.thumbEntityArray.count > 0) {
+        PIEImageEntity* entity = [viewModel.thumbEntityArray objectAtIndex:0];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:entity.url]];
+        [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
+        [self.thumbView.rightView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellBG"] success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull image) {
+            ws.thumbView.rightView.image = image;
+            ws.thumbView.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+        } failure:nil];
+        if (viewModel.thumbEntityArray.count == 2) {
+            entity = viewModel.thumbEntityArray[1];
+            [_thumbView.leftView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
         }
     }
     else {
-        _thumbView.hidden = YES;
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:viewModel.imageURL]];
+        [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
+        [self.thumbView.rightView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellBG"] success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull image) {
+            ws.thumbView.rightView.image = image;
+            ws.thumbView.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+        } failure:nil];
     }
-    
     
     if (viewModel.userID == [DDUserManager currentUser].uid) {
         _followView.hidden = YES;

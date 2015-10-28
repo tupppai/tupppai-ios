@@ -22,11 +22,19 @@
     return self;
 }
 
+
 - (void)setupSubviews {
-    
+    [self addSubview:self.blurView];
     [self addSubview:self.leftView];
     [self addSubview:self.rightView];
     [self addSubview:self.originView];
+    
+    [self.blurView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self);
+        make.trailing.equalTo(self);
+        make.bottom.equalTo(self);
+        make.leading.equalTo(self);
+    }];
     
     [_rightView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self);
@@ -46,6 +54,17 @@
         make.width.equalTo(@40);
         make.height.equalTo(@16);
     }];
+}
+
+
+
+-(UIImageView *)blurView {
+    if (!_blurView) {
+        _blurView = [UIImageView new];
+        _blurView.contentMode = UIViewContentModeScaleAspectFill;
+        _blurView.clipsToBounds = YES;
+    }
+    return _blurView;
 }
 - (UIImageView*)leftView {
     if (!_leftView) {

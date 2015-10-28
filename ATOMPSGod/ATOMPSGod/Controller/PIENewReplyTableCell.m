@@ -51,6 +51,8 @@
     [self mansoryInitThumbAnimateView];
 }
 - (void)injectSauce:(DDPageVM *)viewModel {
+    WS(ws);
+
     _ID = viewModel.ID;
     _askID = viewModel.askID;
     _followView.highlighted = viewModel.followed;
@@ -74,20 +76,33 @@
     _timeLabel.text = viewModel.publishTime;
     [_theImageView setImageWithURL:[NSURL URLWithString:viewModel.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
     CGFloat imageViewHeight = MIN(viewModel.imageHeight, SCREEN_HEIGHT/2) ;
-    imageViewHeight = MAX(imageViewHeight, 200);
-    
+    imageViewHeight = MAX(100,imageViewHeight);
+    imageViewHeight = MIN(SCREEN_WIDTH, imageViewHeight);
+
     [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(imageViewHeight)).with.priorityHigh();
     }];
-    
     _thumbView.subviewCounts = viewModel.thumbEntityArray.count;
     if (viewModel.thumbEntityArray.count > 0) {
         PIEImageEntity* entity = [viewModel.thumbEntityArray objectAtIndex:0];
-        [_thumbView.rightView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:entity.url]];
+        [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
+        [self.thumbView.rightView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellBG"] success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull image) {
+            ws.thumbView.rightView.image = image;
+            ws.thumbView.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+        } failure:nil];
         if (viewModel.thumbEntityArray.count == 2) {
             entity = viewModel.thumbEntityArray[1];
             [_thumbView.leftView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
         }
+    }
+    else {
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:viewModel.imageURL]];
+        [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
+        [self.thumbView.rightView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellBG"] success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull image) {
+            ws.thumbView.rightView.image = image;
+            ws.thumbView.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+        } failure:nil];
     }
 }
 

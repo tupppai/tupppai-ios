@@ -1,5 +1,5 @@
 //
-//  PIEEliteAskTableViewCell.h
+//  PIEEliteReplyTableViewCell.h
 //  TUPAI
 //
 //  Created by chenpeiwei on 10/16/15.
@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "PIEThumbAnimateView.h"
 #import "PIEPageButton.h"
-//#import "PIEPageLikeButton.h"
+#import "PIEPageLikeButton.h"
 #import "PIEBangView.h"
 
-@interface PIEEliteAskTableViewCell : UITableViewCell
+
+@interface PIEEliteFollowReplyTableViewCell : UITableViewCell
+
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
@@ -20,13 +22,15 @@
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *allWorkView;
 @property (weak, nonatomic) IBOutlet PIEPageButton *shareView;
+@property (weak, nonatomic) IBOutlet PIEPageButton *collectView;
 @property (weak, nonatomic) IBOutlet PIEPageButton *commentView;
-@property (weak, nonatomic) IBOutlet PIEBangView *bangView;
+@property (weak, nonatomic) IBOutlet PIEPageLikeButton *likeView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *followView;
-//@property (strong, nonatomic) PIEThumbAnimateView *thumbView;
+@property (strong, nonatomic) PIEThumbAnimateView *thumbView;
 @property (nonatomic, assign) NSInteger ID;
 @property (nonatomic, assign) NSInteger askID;
 - (void)injectSauce:(DDPageVM *)viewModel;
-//- (void)animateToggleExpanded ;
+- (void)animateToggleExpanded ;
+- (void)animateThumbScale:(PIEAnimateViewType)type;
 @end

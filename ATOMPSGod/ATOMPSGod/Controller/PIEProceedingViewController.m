@@ -205,9 +205,9 @@
 - (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error
   contextInfo: (void *) contextInfo {
     if(error != NULL){
-        [Hud error:@"保存失败" inView:self.view];
+        [Hud customText:@"下载出错" inView:[AppDelegate APP].window];
     } else {
-        [Hud success:@"已保存到相册" inView:self.view];
+        [Hud customText:@"下载成功\n我猜你会用美图秀秀来P?" inView:[AppDelegate APP].window];
     }
 }
 

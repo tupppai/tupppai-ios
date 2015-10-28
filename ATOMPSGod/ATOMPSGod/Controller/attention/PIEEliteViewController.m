@@ -9,7 +9,6 @@
 #import "PIEEliteViewController.h"
 #import "PIEEliteScrollView.h"
 #import "HMSegmentedControl.h"
-#import "PIEEliteFollowTableViewCell.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 #import "PIEEliteManager.h"
 #import "PIECarouselViewController.h"
@@ -23,13 +22,12 @@
 #import "DDInviteVC.h"
 
 #import "PIEShareView.h"
-#import "PIEEliteAskTableViewCell.h"
-#import "PIEEliteReplyTableViewCell.h"
+#import "PIEEliteFollowAskTableViewCell.h"
+#import "PIEEliteFollowReplyTableViewCell.h"
 #import "PIEEliteHotReplyTableViewCell.h"
 #import "PIEEliteHotAskTableViewCell.h"
-static  NSString* askIndentifier = @"PIEEliteAskTableViewCell";
-static  NSString* replyIndentifier = @"PIEEliteReplyTableViewCell";
-
+static  NSString* askIndentifier = @"PIEEliteFollowAskTableViewCell";
+static  NSString* replyIndentifier = @"PIEEliteFollowReplyTableViewCell";
 
 static  NSString* hotReplyIndentifier = @"PIEEliteHotReplyTableViewCell";
 static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
@@ -203,12 +201,12 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     if (tableView == _sv.tableFollow) {
         DDPageVM* vm = [_sourceFollow objectAtIndex:indexPath.row];
         if (vm.type == PIEPageTypeAsk) {
-            PIEEliteAskTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:askIndentifier];
+            PIEEliteFollowAskTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:askIndentifier];
             [cell injectSauce:vm];
             return cell;
         }
         else {
-            PIEEliteReplyTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:replyIndentifier];
+            PIEEliteFollowReplyTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:replyIndentifier];
             [cell injectSauce:vm];
             return cell;
         }
@@ -234,13 +232,13 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     if (tableView == _sv.tableFollow) {
         DDPageVM* vm = [_sourceFollow objectAtIndex:indexPath.row];
         if (vm.type == PIEPageTypeAsk) {
-            return [tableView fd_heightForCellWithIdentifier:askIndentifier  cacheByIndexPath:indexPath configuration:^(PIEEliteAskTableViewCell *cell) {
+            return [tableView fd_heightForCellWithIdentifier:askIndentifier  cacheByIndexPath:indexPath configuration:^(PIEEliteFollowAskTableViewCell *cell) {
                 [cell injectSauce:[_sourceFollow objectAtIndex:indexPath.row]];
             }];
 
         }
         else {
-            return [tableView fd_heightForCellWithIdentifier:replyIndentifier  cacheByIndexPath:indexPath configuration:^(PIEEliteReplyTableViewCell *cell) {
+            return [tableView fd_heightForCellWithIdentifier:replyIndentifier  cacheByIndexPath:indexPath configuration:^(PIEEliteFollowReplyTableViewCell *cell) {
                 [cell injectSauce:[_sourceFollow objectAtIndex:indexPath.row]];
             }];
         }
@@ -274,7 +272,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
             
             if (_selectedVM.type == PIEPageTypeAsk) {
                 
-                PIEEliteAskTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
+                PIEEliteFollowAskTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
                 CGPoint p = [gesture locationInView:cell];
                 if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                     //进入热门详情
@@ -284,7 +282,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
             
             //关注  作品
             else {
-                PIEEliteReplyTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
+                PIEEliteFollowReplyTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
                 CGPoint p = [gesture locationInView:cell];
                 if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                     [self showShareView];
@@ -303,7 +301,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
             if (_selectedVM.type == PIEPageTypeAsk) {
 
-                PIEEliteAskTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
+                PIEEliteFollowAskTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
                 CGPoint p = [gesture locationInView:cell];
                 //点击小图
                 //点击大图
@@ -352,7 +350,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
             //关注  作品
             
             else {
-                PIEEliteReplyTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
+                PIEEliteFollowReplyTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
                 CGPoint p = [gesture locationInView:cell];
                 //点击小图
                 //点击小图
@@ -720,7 +718,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
         if (_selectedVM.type == PIEPageTypeAsk) {
             [self collectAsk];
         } else {
-            PIEEliteReplyTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
+            PIEEliteFollowReplyTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
             [self collect:cell.collectView shouldShowHud:YES];
         }
     }

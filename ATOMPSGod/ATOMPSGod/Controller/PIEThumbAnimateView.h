@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FXBlurView.h"
+
 typedef NS_ENUM(NSInteger, PIEAnimateViewType) {
     PIEAnimateViewTypeLeft,
     PIEAnimateViewTypeRight
@@ -14,6 +16,7 @@ typedef NS_ENUM(NSInteger, PIEAnimateViewType) {
 @interface PIEThumbAnimateView : UIView
 @property (nonatomic,assign)  NSInteger subviewCounts;
 @property (nonatomic,assign)  BOOL toExpand;
+@property (strong, nonatomic)  UIImageView *blurView;
 @property (strong, nonatomic)  UIImageView *originView;
 @property (strong, nonatomic)  UIImageView *leftView;
 @property (strong, nonatomic)  UIImageView *rightView;
