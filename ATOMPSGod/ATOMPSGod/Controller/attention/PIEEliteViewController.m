@@ -747,7 +747,6 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     [param setObject:@(10) forKey:@"size"];
     
     [PIEEliteManager getMyFollow:param withBlock:^(NSMutableArray *returnArray) {
-        NSLog(@"getMyFollow8778 returnArray %@",returnArray);
         ws.isfirstLoadingFollow = NO;
         if (returnArray.count == 0) {
             _canRefreshFooterFollow = NO;

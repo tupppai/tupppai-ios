@@ -59,6 +59,9 @@
     _avatarView.layer.cornerRadius = 20;
     _avatarView.clipsToBounds = YES;
     _avatarView.userInteractionEnabled = YES;
+    
+    _dataSource = [NSMutableArray array];
+
     UITapGestureRecognizer *tapG1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToSeeFriend)];
     [_avatarView addGestureRecognizer:tapG1];
     _usernameLabel.userInteractionEnabled = YES;
@@ -110,6 +113,7 @@
 - (UIView *)carousel:(__unused iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
 {
     if (_dataSource.count > index) {
+
         DDPageVM* vm = [_dataSource objectAtIndex:index];
         //create new view if no view is available for recycling
         if (view == nil)
@@ -228,34 +232,30 @@
         ID = _pageVM.ID;
     }
     [manager fetchAllReply:param ID:ID withBlock:^(NSMutableArray *askArray, NSMutableArray *replyArray) {
-        _dataSource = nil;
-        _dataSource = [NSMutableArray array];
-        
-        if (askArray.count > 0) {
-            for (PIEPageEntity *entity in askArray) {
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
-                [_dataSource addObject:vm];
-            }
-            for (PIEPageEntity *entity in replyArray) {
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
-                [_dataSource addObject:vm];
-            }
+
+            [self.dataSource removeAllObjects];
+            [self.dataSource addObjectsFromArray:askArray];
+            [self.dataSource addObjectsFromArray: replyArray];
+
             [self updateUIWithIndex:0];
             [self updateSegmentTitles];
+            
             [_carousel reloadData];
-            [self reorderSourceAndScroll];
-        }
+//            [self reorderSourceAndScroll];
 
     }];
 }
 
 - (void)reorderSourceAndScroll {
+
     for (int i =0; i < _dataSource.count; i++) {
         DDPageVM* vm = [_dataSource objectAtIndex:i];
         if (vm.ID == _pageVM.ID && vm.type == _pageVM.type && _pageVM.type == PIEPageTypeReply) {
-            DDPageVM* vm2 = [_dataSource objectAtIndex:i];
-            [_dataSource removeObjectAtIndex:i];
             if (_dataSource.count >= 2) {
+                
+                DDPageVM* vm2 = [_dataSource objectAtIndex:i];
+                [_dataSource removeObjectAtIndex:i];
+                
                 DDPageVM* vm3 = [_dataSource objectAtIndex:1];
                 if (vm3.type == PIEPageTypeAsk) {
                     [_dataSource insertObject:vm2 atIndex:2];

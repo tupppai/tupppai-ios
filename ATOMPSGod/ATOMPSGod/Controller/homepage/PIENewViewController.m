@@ -468,7 +468,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@"new" forKey:@"type"];
-    [param setObject:@(AskCellWidth) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     DDHomePageManager *pageManager = [DDHomePageManager new];
     [pageManager pullAskSource:param block:^(NSMutableArray *homepageArray) {
         ws.isfirstLoadingAsk = NO;

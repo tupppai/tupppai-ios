@@ -12,12 +12,16 @@
 
 @implementation Util
 
-//+(void)uploadDeviceInfo {
-//    NSUUID *oNSUUID = [[UIDevice currentDevice] identifierForVendor];
-//    NSString* token = [[NSUserDefaults standardUserDefaults]stringForKey:@"devicetoken"];
-//    NSDictionary* param = [NSDictionary dictionaryWithObjectsAndKeys:token, @"device_token",@1,@"platform",@([[UIDevice currentDevice].systemVersion floatValue]),@"device_os",deviceName(),@"device_name",[oNSUUID UUIDString],@"device_mac",@"2.1",@"version",nil];
-//    [DDService updateToken:param withBlock:nil];
-//}
++ (void)betaTestWarning {
+    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"亲爱的顶级测试用户" andMessage:@"测试阶段QQ注册暂不可用"];
+    [alertView addButtonWithTitle:@"朕知道了"
+                             type:SIAlertViewButtonTypeCancel
+                          handler:^(SIAlertView *alert) {
+                          }];
+    alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
+    [alertView show];
+}
+
 
 NSString* deviceName()
 {

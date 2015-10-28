@@ -38,13 +38,13 @@
     DDHotDetailManager *manager = [DDHotDetailManager new];
     [manager fetchAllReply:param ID:_pageVM.askID withBlock:^(NSMutableArray *askArray, NSMutableArray *replyArray) {
         if (replyArray.count>0) {
-            NSMutableArray* arrayAgent = [NSMutableArray new];
-            for (PIEPageEntity *entity in replyArray) {
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
-                [arrayAgent addObject:vm];
-            }
+//            NSMutableArray* arrayAgent = [NSMutableArray new];
+//            for (PIEPageEntity *entity in replyArray) {
+//                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+//                [arrayAgent addObject:vm];
+//            }
             [_source removeAllObjects];
-            [_source addObjectsFromArray:arrayAgent];
+            [_source addObjectsFromArray:replyArray];
             [self.collectionView reloadData];
             _canRefreshFoot = YES;
         }
@@ -62,17 +62,17 @@
     [param setObject:@(15) forKey:@"size"];
     DDHotDetailManager *manager = [DDHotDetailManager new];
     [manager fetchAllReply:param ID:_pageVM.askID withBlock:^(NSMutableArray *askArray, NSMutableArray *replyArray) {
-        for (PIEPageEntity *entity in replyArray) {
+//        for (PIEPageEntity *entity in replyArray) {
             if (replyArray.count>0) {
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
-                [_source addObject:vm];
+//                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+                [_source addObjectsFromArray:replyArray];
                 [self.collectionView reloadData];
                 _canRefreshFoot = YES;
             }
             else {
                 _canRefreshFoot = NO;
             }
-        }
+//        }
         [self.collectionView.footer endRefreshing];
     }];
 }

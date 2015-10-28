@@ -55,12 +55,16 @@
                 entity.imageURL = imgEntity.url;
                 entity.imageWidth = imgEntity.width;
                 entity.imageHeight = imgEntity.height;
-                [askRETArray addObject:entity];
+                
+                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+                [askRETArray addObject:vm];
+
             }
 
             for (int i = 0; i < replyArray.count; i++) {
                 PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:[replyArray objectAtIndex:i] error:NULL];
-                [replyRETArray addObject:entity];
+                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+                [replyRETArray addObject:vm];
 
             }
             if (block) {

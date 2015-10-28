@@ -18,7 +18,7 @@
 #define ASSET_PHOTO_FULL_RESOLUTION     3
 
 @interface Util : NSObject
-+(void)uploadDeviceInfo;
++ (void)betaTestWarning;
 +(NSString*)formatPublishTime:(NSDate*)date;
 +(void)ShowTSMessageError:(NSString*)str;
 +(void)ShowTSMessageWarn:(NSString*)str;

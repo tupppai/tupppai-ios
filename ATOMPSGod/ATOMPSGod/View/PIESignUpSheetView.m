@@ -46,7 +46,6 @@
     _icon1 = [PIEShareIcon new];
     _icon2 = [PIEShareIcon new];
     _icon3 = [PIEShareIcon new];
-    
     [self addSubview:_icon1];
     [self addSubview:_icon2];
     [self addSubview:_icon3];
