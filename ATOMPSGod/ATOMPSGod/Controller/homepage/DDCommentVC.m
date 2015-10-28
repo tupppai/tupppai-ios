@@ -119,6 +119,7 @@ static dispatch_once_t onceToken;
 //don't ignore babe --peiwei.
 - (BOOL)ignoreTextInputbarAdjustment
 {
+    [super ignoreTextInputbarAdjustment];
     return NO;
 }
 
@@ -261,6 +262,10 @@ static dispatch_once_t onceToken;
 #endif
 }
 
+-(void)didPressReturnKey:(id)sender {
+    [self sendComment];
+    [super didPressReturnKey:sender];
+}
 
 
 
@@ -393,9 +398,9 @@ static dispatch_once_t onceToken;
 /** UITextViewDelegate */
 - (BOOL)textView:(SLKTextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    if ([text isEqualToString:@"\n"]) {
-        [self sendComment];
-    }
+//    if ([text isEqualToString:@"\n"]) {
+//        [self sendComment];
+//    }
     return [super textView:textView shouldChangeTextInRange:range replacementText:text];
 }
 
@@ -440,6 +445,7 @@ static dispatch_once_t onceToken;
     self.textInputbar.maxCharCount = 128;
     self.textInputbar.counterStyle = SLKCounterStyleSplit;
     self.textInputbar.counterPosition = SLKCounterPositionTop;
+    self.shouldClearTextAtRightButtonPress = YES;
 }
 - (void)configFooterRefresh {
     [self.tableView addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
@@ -491,6 +497,7 @@ static dispatch_once_t onceToken;
 //    }
 }
 }
+
 
 #pragma mark Refresh
 

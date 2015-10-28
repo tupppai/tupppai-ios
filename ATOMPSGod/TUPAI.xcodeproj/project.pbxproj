@@ -4641,9 +4641,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/ATOMPSGod/Framework",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource",
-					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/libraries",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/QQSDK",
-					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries",
 				);
 				GCC_PREFIX_HEADER = ./ATOMPSGod/psgod.pch;
 				INFOPLIST_FILE = ATOMPSGod/Info.plist;
@@ -4653,8 +4651,6 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/UMessage_Sdk_1.1.0",
-					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/libraries/extends/SinaWeiboSDK",
-					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/libraries/extends/WeChatSDK",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/SinaWeiboSDK",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/WeChatSDK",
 				);
@@ -4688,9 +4684,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/ATOMPSGod/Framework",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource",
-					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/libraries",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/QQSDK",
-					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries",
 				);
 				GCC_PREFIX_HEADER = ./ATOMPSGod/psgod.pch;
 				INFOPLIST_FILE = ATOMPSGod/Info.plist;
@@ -4700,8 +4694,6 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/UMessage_Sdk_1.1.0",
-					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/libraries/extends/SinaWeiboSDK",
-					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/libraries/extends/WeChatSDK",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/SinaWeiboSDK",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/WeChatSDK",
 				);
@@ -4819,9 +4811,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/ATOMPSGod/Framework",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource",
-					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/libraries",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/QQSDK",
-					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries",
 				);
 				GCC_PREFIX_HEADER = ./ATOMPSGod/psgod.pch;
 				INFOPLIST_FILE = ATOMPSGod/Info.plist;
@@ -4831,8 +4821,6 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/UMessage_Sdk_1.1.0",
-					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/libraries/extends/SinaWeiboSDK",
-					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/libraries/extends/WeChatSDK",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/SinaWeiboSDK",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/WeChatSDK",
 				);
