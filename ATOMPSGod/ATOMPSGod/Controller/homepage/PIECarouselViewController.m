@@ -186,13 +186,67 @@
 - (void)carouselCurrentItemIndexDidChange:(__unused iCarousel *)carousel
 {
     [self updateUIWithIndex:carousel.currentItemIndex];
-    [self.segmentedControl setSelectedSegmentIndex:carousel.currentItemIndex animated:YES];
 }
 - (NSInteger)numberOfPlaceholdersInCarousel:(iCarousel *)carousel {
     return 2;
 }
 -(UIView *)carousel:(iCarousel *)carousel placeholderViewAtIndex:(NSInteger)index reusingView:(UIView *)view {
     return [UIView new];
+}
+- (void)updateSegment:(NSInteger)index {
+    WS(ws);
+    //务必要_currentVM更新之后才调用此函数
+    //thumbEntityArray.count 即 有count张原图
+    NSMutableArray* segmentDescArray = [NSMutableArray new];
+    //如果此时滚到ask
+    if (_currentVM.type == PIEPageTypeAsk) {
+        if (index == 1) {
+            NSString* desc = @"原图(2/2)";
+            [segmentDescArray addObject:desc];
+        }
+        else {
+            if (_pageVM.thumbEntityArray.count == 1) {
+                NSString* desc = @"原图";
+                [segmentDescArray addObject:desc];
+            }
+            else {
+                NSString* desc = @"原图(1/2)";
+                [segmentDescArray addObject:desc];
+            }
+         }
+        NSString* desc = [NSString stringWithFormat:@"作品(%zd)",_dataSource.count - _pageVM.thumbEntityArray.count];
+        [segmentDescArray addObject:desc];
+    }
+    else {
+        //如果此时滚到reply
+        if (_pageVM.thumbEntityArray.count == 1) {
+            NSString* desc = @"原图";
+            [segmentDescArray addObject:desc];
+        }
+        else {
+            NSString* desc = @"原图(2)";
+            [segmentDescArray addObject:desc];
+            
+            //有两张原图, index - 1 ,即目前第index-1个作品
+            index = index - 1;
+        }
+        
+        NSString* desc = [NSString stringWithFormat:@"作品(%zd/%zd)",index,_dataSource.count - _pageVM.thumbEntityArray.count];
+        [segmentDescArray addObject:desc];
+    }
+    
+    //每一次都要更新一次
+    self.segmentedControl.sectionTitles = segmentDescArray;
+    [self.segmentedControl setNeedsDisplay];
+    
+    //让segment 随着 carousel滚动 而滚动
+    if (_currentVM.type == PIEPageTypeAsk) {
+        [self.segmentedControl setSelectedSegmentIndex:0 animated:YES];
+    } else {
+        [self.segmentedControl setSelectedSegmentIndex:1 animated:YES];
+    }
+    
+    
 }
 
 -(void)updateUIWithIndex:(NSInteger)index {
@@ -216,6 +270,8 @@
         }
         
     }
+    
+    [self updateSegment:index];
 }
 - (void)getDataSource {
     _currentPage = 1;
@@ -236,34 +292,30 @@
             [self.dataSource removeAllObjects];
             [self.dataSource addObjectsFromArray:askArray];
             [self.dataSource addObjectsFromArray: replyArray];
-
             [self updateUIWithIndex:0];
-            [self updateSegmentTitles];
-            
+            [self initSegmentTitles];
             [_carousel reloadData];
-//            [self reorderSourceAndScroll];
+            [self reorderSourceAndScroll];
 
     }];
 }
 
 - (void)reorderSourceAndScroll {
-
+//初始化，把传进来的vm重组，放在原图的下一位，被滚动到此位置。
     for (int i =0; i < _dataSource.count; i++) {
         DDPageVM* vm = [_dataSource objectAtIndex:i];
+        //找出与传进来的pageVM匹配的vm
         if (vm.ID == _pageVM.ID && vm.type == _pageVM.type && _pageVM.type == PIEPageTypeReply) {
             if (_dataSource.count >= 2) {
-                
-                DDPageVM* vm2 = [_dataSource objectAtIndex:i];
+                DDPageVM* vmToCheck = [_dataSource objectAtIndex:1];
                 [_dataSource removeObjectAtIndex:i];
-                
-                DDPageVM* vm3 = [_dataSource objectAtIndex:1];
-                if (vm3.type == PIEPageTypeAsk) {
-                    [_dataSource insertObject:vm2 atIndex:2];
-                    [_carousel scrollToItemAtIndex:2 duration:0.05];
+                if (vmToCheck.type == PIEPageTypeAsk) {
+                    [_dataSource insertObject:vm atIndex:2];
+                    [_carousel scrollToItemAtIndex:2 duration:0];
                 }
                 else {
-                    [_dataSource insertObject:vm2 atIndex:1];
-                    [_carousel scrollToItemAtIndex:1 duration:0.05];
+                    [_dataSource insertObject:vm atIndex:1];
+                    [_carousel scrollToItemAtIndex:1 duration:0];
                 }
             }
             //must animate scroll carousel in order to scroll segment.
@@ -271,7 +323,8 @@
     }
 
 }
-- (void)updateSegmentTitles {
+- (void)initSegmentTitles {
+
     WS(ws);
     NSMutableArray* segmentDescArray = [NSMutableArray new];
     if (_pageVM.thumbEntityArray.count == 1) {
@@ -279,25 +332,36 @@
         [segmentDescArray addObject:desc];
     }
     else {
-        for (int i = 1; i<= _pageVM.thumbEntityArray.count; i++) {
-            NSString* desc = [NSString stringWithFormat:@"原图%d",i];
+            NSString* desc = @"原图(2)";
             [segmentDescArray addObject:desc];
-        }
     }
-    for (int i = 1; i<= _dataSource.count - _pageVM.thumbEntityArray.count; i++) {
-        NSString* desc = [NSString stringWithFormat:@"P%d",i];
-        [segmentDescArray addObject:desc];
-    }
+    
+    NSString* desc = [NSString stringWithFormat:@"作品(%zd)",_dataSource.count - _pageVM.thumbEntityArray.count];
+    [segmentDescArray addObject:desc];
+    
     self.segmentedControl.sectionTitles = segmentDescArray;
+    
     [self.segmentedControl setIndexChangeBlock:^(NSInteger index) {
-        [ws.carousel scrollToItemAtIndex:index animated:NO];
+        if (index == 0) {
+            [ws.carousel scrollToItemAtIndex:0 animated:NO];
+        }
+        else {
+          
+            if (_pageVM.thumbEntityArray.count >= 2 && _dataSource.count >= 3) {
+                [ws.carousel scrollToItemAtIndex:2 animated:NO];
+            }
+            else if (_pageVM.thumbEntityArray.count == 1 && _dataSource.count >= 2){
+                [ws.carousel scrollToItemAtIndex:1 animated:NO];
+            }
+        }
+        
     }];
     [self.segmentedControl setNeedsDisplay];
 }
 
 - (HMSegmentedControl*)segmentedControl {
     if (!_segmentedControl) {
-        _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"正在加载..."]];
+        _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"原图",@"作品"]];
         _segmentedControl.frame = CGRectMake(0, 120, SCREEN_WIDTH, 45);
         _segmentedControl.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor darkGrayColor], NSForegroundColorAttributeName, nil];
         _segmentedControl.selectedTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil];
