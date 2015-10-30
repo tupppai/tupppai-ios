@@ -50,7 +50,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -63,6 +63,8 @@
     }
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
+    cell.textLabel.textColor = [UIColor blackColor];
+    cell.textLabel.font = [UIFont systemFontOfSize:15];
     if (section == 0) {
         if (row == 0) {
             cell.textLabel.text = @"评论";
@@ -70,13 +72,15 @@
         } else if (row == 1) {
             cell.textLabel.text = @"帖子回复";
             cell.notificationSwitch.on = [[_data objectForKey:@"reply"]boolValue];
-        } else if (row == 2) {
-            cell.textLabel.text = @"关注通知";
-            cell.notificationSwitch.on = [[_data objectForKey:@"follow"]boolValue];
-        } else if (row == 3) {
-            cell.textLabel.text = @"邀请通知";
-            cell.notificationSwitch.on = [[_data objectForKey:@"invite"]boolValue];
-        } else if (row == 4) {
+        }
+//        else if (row == 2) {
+//            cell.textLabel.text = @"关注通知";
+//            cell.notificationSwitch.on = [[_data objectForKey:@"follow"]boolValue];
+//        } else if (row == 3) {
+//            cell.textLabel.text = @"邀请通知";
+//            cell.notificationSwitch.on = [[_data objectForKey:@"invite"]boolValue];
+//        }
+        else if (row == 2) {
             cell.notificationSwitch.on = [[_data objectForKey:@"system"]boolValue];
             cell.textLabel.text = @"系统通知";
         }
@@ -95,13 +99,13 @@
         case 1:
             type = @"reply";
             break;
+//        case 2:
+//            type = @"follow";
+//            break;
+//        case 3:
+//            type = @"invite";
+//            break;
         case 2:
-            type = @"follow";
-            break;
-        case 3:
-            type = @"invite";
-            break;
-        case 4:
             type = @"system";
             break;
         default:
@@ -124,22 +128,22 @@
     }];
 }
 #pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (scrollView == _tableView) {
-        CGFloat sectionHeaderHeight = 22.5;
-        if (scrollView.contentOffset.y <= sectionHeaderHeight && scrollView.contentOffset.y >= 0) {
-            scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
-        } else if (scrollView.contentOffset.y >= sectionHeaderHeight) {
-            scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
-        }
-    }
-}
+//
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    if (scrollView == _tableView) {
+//        CGFloat sectionHeaderHeight = 22.5;
+//        if (scrollView.contentOffset.y <= sectionHeaderHeight && scrollView.contentOffset.y >= 0) {
+//            scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+//        } else if (scrollView.contentOffset.y >= sectionHeaderHeight) {
+//            scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
+//        }
+//    }
+//}
 
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 60;
+    return 64;
 }
 
 

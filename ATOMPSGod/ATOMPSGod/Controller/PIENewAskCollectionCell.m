@@ -12,15 +12,17 @@
 
 - (void)awakeFromNib {
     self.layer.cornerRadius = 6;
+    self.backgroundColor = [UIColor whiteColor];
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
     _leftImageView.clipsToBounds = YES;
     _rightImageView.clipsToBounds = YES;
     _leftImageView.contentMode = UIViewContentModeScaleAspectFill;
     _rightImageView.contentMode = UIViewContentModeScaleAspectFill;
+
     _contentLabel.text = @"";
-    _leftImageView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.4];
-    _rightImageView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.4];
+//    _leftImageView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.4];
+//    _rightImageView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.4];
 }
 
 //put a needle injecting into cell's ass.
@@ -37,6 +39,7 @@
         [_rightImageView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.width.equalTo(@(self.frame.size.width/2));
         }];
+
     } else if (vm.thumbEntityArray.count == 1) {
         PIEImageEntity* entity1 = [vm.thumbEntityArray objectAtIndex:0];
         [_leftImageView setImageWithURL:[NSURL URLWithString:entity1.url]placeholderImage:[UIImage imageNamed:@"cellBG"]];
@@ -44,7 +47,6 @@
                 make.width.equalTo(@(0));
         }];
     }
-    
     _contentLabel.text = vm.content;
     [self updateConstraintsIfNeeded];
 }

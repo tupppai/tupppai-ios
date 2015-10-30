@@ -194,7 +194,6 @@
     return [UIView new];
 }
 - (void)updateSegment:(NSInteger)index {
-    WS(ws);
     //务必要_currentVM更新之后才调用此函数
     //thumbEntityArray.count 即 有count张原图
     NSMutableArray* segmentDescArray = [NSMutableArray new];

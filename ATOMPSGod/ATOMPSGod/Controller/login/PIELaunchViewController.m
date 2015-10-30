@@ -104,7 +104,7 @@
     
 }
 - (void)tap1 {
-    [DDShareSDKManager authorize:SSDKPlatformTypeSinaWeibo withBlock:^(NSDictionary *sourceData) {
+    [DDShareManager authorize:SSDKPlatformTypeSinaWeibo withBlock:^(NSDictionary *sourceData) {
         
         if (sourceData) {
             NSString* openID = sourceData[@"idstr"];
@@ -159,7 +159,7 @@
     
     [Util warningBetaTest];
 //    [self.signUpView dismiss];
-//    [DDShareSDKManager authorize2:SSDKPlatformTypeQQ withBlock:^(SSDKUser *sdkUser) {
+//    [DDShareManager authorize2:SSDKPlatformTypeQQ withBlock:^(SSDKUser *sdkUser) {
 //            NSString* openID = sdkUser.uid;
 //            NSMutableDictionary* param = [NSMutableDictionary new];
 //            [param setObject:openID forKey:@"openid"];
@@ -194,7 +194,7 @@
 }
 -(void)tapSignUp2 {
     [self.signUpView dismiss];
-    [DDShareSDKManager authorize:SSDKPlatformTypeWechat withBlock:^(NSDictionary *sourceData) {
+    [DDShareManager authorize:SSDKPlatformTypeWechat withBlock:^(NSDictionary *sourceData) {
         if (sourceData) {
             NSString* openid = sourceData[@"openid"];
             NSMutableDictionary* param = [NSMutableDictionary new];

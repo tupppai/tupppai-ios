@@ -77,13 +77,15 @@
     } else if (row == 1) {
         cell.imageView.image = [UIImage imageNamed:@"notify_reply"];
         cell.textLabel.text = @"帖子回复";
-    } else if (row == 2) {
+    }
+    else if (row == 2) {
         cell.imageView.image = [UIImage imageNamed:@"notify_follow"];
         cell.textLabel.text = @"关注通知";
     } else if (row == 3) {
         cell.imageView.image = [UIImage imageNamed:@"notify_invite"];
         cell.textLabel.text = @"邀请通知";
-    } else if (row == 4) {
+    }
+    else if (row == 4) {
         cell.imageView.image = [UIImage imageNamed:@"notify_system"];
         cell.textLabel.text = @"系统通知";
     }

@@ -112,8 +112,8 @@
     {
         CGFloat width = self.swipeView.frame.size.height;
         view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width+10, width)];
-        view.contentMode = UIViewContentModeScaleAspectFill;
         UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, width, width)];
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
         imageView.layer.cornerRadius = 3.0;
         imageView.clipsToBounds = YES;
         [view addSubview:imageView];

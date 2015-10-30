@@ -16,7 +16,7 @@
     if (self) {
 //        self.layer.cornerRadius = 10;
         _theImageView = [UIImageView new];
-        _theImageView.layer.cornerRadius = 10;
+        _theImageView.layer.cornerRadius = 6;
         _theImageView.clipsToBounds = YES;
         _theImageView.contentMode = UIViewContentModeScaleAspectFill;
         [self addSubview:_theImageView];

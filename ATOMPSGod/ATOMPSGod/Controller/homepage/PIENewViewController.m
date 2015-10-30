@@ -29,7 +29,6 @@
 #import "PIEFriendViewController.h"
 #import "PIEReplyCollectionViewController.h"
 @class PIEPageEntity;
-#define AskCellWidth (SCREEN_WIDTH - 20) / 2.0
 
 @interface PIENewViewController() < UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,PWRefreshBaseCollectionViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,CHTCollectionViewDelegateWaterfallLayout,UICollectionViewDelegate,UICollectionViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
@@ -566,22 +565,22 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 #pragma mark - ATOMShareViewDelegate
 //sina
 -(void)tapShare1 {
-    [DDShareSDKManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeSinaWeibo withPageType:_selectedVM.type];
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeSinaWeibo ];
 }
 //qqzone
 -(void)tapShare2 {
-    [DDShareSDKManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQZone withPageType:_selectedVM.type];
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQZone ];
 }
 //wechat moments
 -(void)tapShare3 {
-    [DDShareSDKManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatMoments withPageType:_selectedVM.type];
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatMoments ];
 }
 //wechat friends
 -(void)tapShare4 {
-    [DDShareSDKManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatFriends withPageType:_selectedVM.type];
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatFriends ];
 }
 -(void)tapShare5 {
-    [DDShareSDKManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQFriends withPageType:_selectedVM.type];
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQFriends ];
 }
 -(void)tapShare6 {
     
@@ -772,12 +771,10 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     CGFloat width;
     CGFloat height;
     
-    width = AskCellWidth;
-    height = vm.imageHeight + 135;
-    height = MAX(height, 270);
-    if (height > (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/1.3) {
-        height = (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/1.3;
-    }
+    width = (SCREEN_WIDTH - 20) / 2.0;
+    height = vm.imageHeight/vm.imageWidth * width + 100;
+    height = MAX(270,height);
+    height = MIN(SCREEN_HEIGHT/2, height);
     return CGSizeMake(width, height);
 }
 

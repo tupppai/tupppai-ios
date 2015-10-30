@@ -11,14 +11,14 @@
 
 @interface PIEReplyCollectionCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
-@property (weak, nonatomic) IBOutlet UIImageView *likeView;
+//@property (weak, nonatomic) IBOutlet UIImageView *likeView;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (nonatomic, assign) NSInteger ID;
 @property (nonatomic, assign) PIEPageType type;
-//@property (weak, nonatomic) IBOutlet UILabel *likeCountLabel;
 @property (weak, nonatomic) IBOutlet PIEPageLikeButton *likeButton;
 @property (nonatomic, strong) DDPageVM *viewModel;
+@property (weak, nonatomic) IBOutlet UIView *bottomView;
 
 - (void)injectSauce:(DDPageVM *)viewModel;
 @end

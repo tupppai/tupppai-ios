@@ -55,7 +55,7 @@
 }
 
 - (void)clickweiboLoginButton:(UIButton *)sender {
-    [DDShareSDKManager authorize:SSDKPlatformTypeSinaWeibo withBlock:^(NSDictionary *sourceData) {
+    [DDShareManager authorize:SSDKPlatformTypeSinaWeibo withBlock:^(NSDictionary *sourceData) {
         if (sourceData) {
             NSString* openID = sourceData[@"idstr"];
             NSMutableDictionary* param = [NSMutableDictionary new];
@@ -93,7 +93,7 @@
 
 }
 - (void)clickwechatLoginButton:(UIButton *)sender {
-    [DDShareSDKManager authorize:SSDKPlatformTypeWechat withBlock:^(NSDictionary *sourceData) {
+    [DDShareManager authorize:SSDKPlatformTypeWechat withBlock:^(NSDictionary *sourceData) {
         if (sourceData) {
             NSString* openid = sourceData[@"openid"];
             NSMutableDictionary* param = [NSMutableDictionary new];

@@ -261,34 +261,33 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    if (self.navigationController.topViewController != self) {
-        return;
-    }
-    NSInteger row = indexPath.row;
-    NSString* badgeKey;
-    if (row == 0 ) {
-        badgeKey = @"NotificationSystem";
-    } else     if (row == 1 ) {
-        badgeKey = @"NotificationLike";
-    }
-    [[NSUserDefaults standardUserDefaults]setObject:@(0) forKey:badgeKey];
-    [[NSUserDefaults standardUserDefaults]synchronize];
-    PIENotificationTypeTableViewCell *cell = (PIENotificationTypeTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
-    cell.badgeNumber = 0;
-    [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    
     if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            PIENotificationSystemViewController* vc = [PIENotificationSystemViewController new];
-            [self.navigationController pushViewController:vc animated:YES];
-        } else if (indexPath.row == 1) {
-            PIENotificationLikedViewController* vc = [PIENotificationLikedViewController new];
-            [self.navigationController pushViewController:vc animated:YES];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        if (self.navigationController.topViewController != self) {
+            return;
         }
+        NSInteger row = indexPath.row;
+        NSString* badgeKey;
+        if (row == 0 ) {
+            badgeKey = @"NotificationSystem";
+        } else     if (row == 1 ) {
+            badgeKey = @"NotificationLike";
+        }
+        [[NSUserDefaults standardUserDefaults]setObject:@(0) forKey:badgeKey];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+        PIENotificationTypeTableViewCell *cell = (PIENotificationTypeTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+        cell.badgeNumber = 0;
+        [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+            if (indexPath.row == 0) {
+                PIENotificationSystemViewController* vc = [PIENotificationSystemViewController new];
+                [self.navigationController pushViewController:vc animated:YES];
+            } else if (indexPath.row == 1) {
+                PIENotificationLikedViewController* vc = [PIENotificationLikedViewController new];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
     }
+
 }
 
 @end

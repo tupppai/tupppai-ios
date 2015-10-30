@@ -168,26 +168,26 @@
 //#pragma mark - ATOMShareFunctionViewDelegate
 //-(void)tapWechatFriends {
 //    if (_selectedIndexPath.row == 0) {
-//        [DDShareSDKManager postSocialShare:_askVM.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:PIEPageTypeAsk];
+//        [DDShareManager postSocialShare:_askVM.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:PIEPageTypeAsk];
 //    } else {
 //        DDHotDetailPageVM *model = _dataSource[_selectedIndexPath.row];
-//        [DDShareSDKManager postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:PIEPageTypeReply];
+//        [DDShareManager postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatFriends withPageType:PIEPageTypeReply];
 //    }
 //}
 //-(void)tapWechatMoment {
 //    if (_selectedIndexPath.row == 0) {
-//        [DDShareSDKManager postSocialShare:_askVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:PIEPageTypeAsk];
+//        [DDShareManager postSocialShare:_askVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:PIEPageTypeAsk];
 //    } else {
 //        DDHotDetailPageVM *model = _dataSource[_selectedIndexPath.row];
-//        [DDShareSDKManager postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:PIEPageTypeReply];
+//        [DDShareManager postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:PIEPageTypeReply];
 //    }
 //}
 //-(void)tapSinaWeibo {
 //    if (_selectedIndexPath.row == 0) {
-//        [DDShareSDKManager postSocialShare:_askVM.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:PIEPageTypeAsk];
+//        [DDShareManager postSocialShare:_askVM.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:PIEPageTypeAsk];
 //    } else {
 //        DDHotDetailPageVM *model = _dataSource[_selectedIndexPath.row];
-//        [DDShareSDKManager postSocialShare:model.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:PIEPageTypeReply];
+//        [DDShareManager postSocialShare:model.ID withSocialShareType:ATOMShareTypeSinaWeibo withPageType:PIEPageTypeReply];
 //    }
 //}
 //-(void)tapCollect {
@@ -446,10 +446,10 @@
 //                }
 //            } else if (CGRectContainsPoint(_selectedHotDetailCell.wechatButton.frame, p)) {
 //                if (_selectedIndexPath.row == 0) {
-//                    [DDShareSDKManager postSocialShare:_askVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:PIEPageTypeAsk];
+//                    [DDShareManager postSocialShare:_askVM.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:PIEPageTypeAsk];
 //                } else {
 //                    DDHotDetailPageVM *model = _dataSource[_selectedIndexPath.row];
-//                    [DDShareSDKManager postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:PIEPageTypeReply];
+//                    [DDShareManager postSocialShare:model.ID withSocialShareType:ATOMShareTypeWechatMoments withPageType:PIEPageTypeReply];
 //                }            } else if (CGRectContainsPoint(_selectedHotDetailCell.commentButton.frame, p)) {
 //                    
 //                DDCommentPageVM* vm = [DDCommentPageVM new];

@@ -16,9 +16,8 @@
     _avatarView.clipsToBounds = YES;
     self.backgroundColor = [UIColor whiteColor];
     self.layer.cornerRadius = 8;
-    UITapGestureRecognizer* tapGesLike = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(like)];
-    [_likeButton addGestureRecognizer:tapGesLike];
     _imageView.clipsToBounds = YES;
+    _imageView.contentMode = UIViewContentModeScaleAspectFill;
 }
 - (void)injectSauce:(DDPageVM *)viewModel {
     _viewModel = viewModel;
@@ -30,20 +29,5 @@
     _likeButton.highlighted = viewModel.liked;
     _likeButton.numberString = viewModel.likeCount;
 }
-- (void)like {
-    _likeButton.selected = !_likeButton.selected;
-    [DDService toggleLike:_likeButton.selected ID:_ID type:_type withBlock:^(BOOL success) {
-        if (!success) {
-            _likeButton.selected = !_likeButton.selected;
-        } else {
-            
-            if (_likeButton.selected) {
-                _viewModel.likeCount = [NSString stringWithFormat:@"%zd",_viewModel.likeCount.integerValue + 1];
-            } else {
-                _viewModel.likeCount = [NSString stringWithFormat:@"%zd",_viewModel.likeCount.integerValue - 1];
-            }
-            _viewModel.liked = _likeButton.selected;
-        }
-    }];
-}
+
 @end

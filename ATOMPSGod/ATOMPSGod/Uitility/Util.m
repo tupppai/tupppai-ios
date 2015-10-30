@@ -22,6 +22,11 @@
     [alertView show];
 }
 
++ (void)copyIntoPasteboard:(NSString*)string {
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    pasteboard.string = string;
+    [Hud success:@"成功复制到粘贴板"];
+}
 
 NSString* deviceName()
 {

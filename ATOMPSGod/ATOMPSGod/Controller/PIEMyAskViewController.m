@@ -115,7 +115,7 @@
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
     }];
-
+    _collectionView.showsVerticalScrollIndicator = NO;
     _collectionView.toRefreshBottom = YES;
     _collectionView.toRefreshTop = YES;
     _collectionView.backgroundColor = [UIColor clearColor];
@@ -124,7 +124,6 @@
     _collectionView.psDelegate = self;
     _collectionView.emptyDataSetSource = self;
     _collectionView.emptyDataSetDelegate = self;
-    _collectionView.contentInset = UIEdgeInsetsMake(0, 0, 200, 0);
     UINib* nib = [UINib nibWithNibName:@"PIEImageCollectionViewCell" bundle:nil];
     [_collectionView registerNib:nib forCellWithReuseIdentifier:@"PIEImageCollectionViewCell"];
     _canRefreshFooter = YES;

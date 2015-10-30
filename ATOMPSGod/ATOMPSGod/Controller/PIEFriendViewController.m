@@ -25,6 +25,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *followDescLabel;
 @property (weak, nonatomic) IBOutlet UILabel *fansDescLabel;
 @property (weak, nonatomic) IBOutlet UILabel *likedDescLabel;
+@property (weak, nonatomic) IBOutlet UIView *dotView2;
+@property (weak, nonatomic) IBOutlet UIView *dotView1;
 
 @property (weak, nonatomic) IBOutlet UIView *view1;
 @property (weak, nonatomic) IBOutlet UIView *view2;
@@ -57,7 +59,6 @@
 -(instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        NSLog(@" PIEFriendViewController initWithCoder");
         //setup subviews here is not working,since loadView is not called,loadView is done when viewDidload is called ,put code in viewDidload.
     }
     return self;
@@ -75,13 +76,14 @@
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
     _avatarView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
-    
-    _followCountLabel.font = [UIFont boldSystemFontOfSize:15];
-    _fansCountLabel.font = [UIFont boldSystemFontOfSize:15];
-    _likedCountLabel.font = [UIFont boldSystemFontOfSize:15];
-    _fansDescLabel.font = [UIFont systemFontOfSize:14];
-    _followCountLabel.font = [UIFont systemFontOfSize:14];
-    _likedDescLabel.font = [UIFont systemFontOfSize:14];
+    _dotView1.layer.cornerRadius = _dotView1.frame.size.width/2;
+    _dotView2.layer.cornerRadius = _dotView2.frame.size.width/2;
+//    _followCountLabel.font = [UIFont boldSystemFontOfSize:15];
+//    _fansCountLabel.font = [UIFont boldSystemFontOfSize:15];
+//    _likedCountLabel.font = [UIFont boldSystemFontOfSize:15];
+//    _fansDescLabel.font = [UIFont systemFontOfSize:14];
+//    _followCountLabel.font = [UIFont systemFontOfSize:14];
+//    _likedDescLabel.font = [UIFont systemFontOfSize:14];
     _blurView.contentMode = UIViewContentModeScaleAspectFill;
     _blurView.clipsToBounds = YES;
 
@@ -143,7 +145,11 @@
 }
 - (void)updateUserInterface:(ATOMUser*)user {
     self.title = user.nickname;
-    [_avatarView setImageWithURL:[NSURL URLWithString:user.avatar]];
+//    [_avatarView setImageWithURL:[NSURL URLWithString:user.avatar]];
+    [DDService downloadImage:user.avatar withBlock:^(UIImage *image) {
+        _avatarView.image = image;
+        _blurView.image = [image blurredImageWithRadius:40 iterations:1 tintColor:nil];
+    }];
     _followCountLabel.text = [NSString stringWithFormat:@"%zd",user.attentionNumber];
     _fansCountLabel.text = [NSString stringWithFormat:@"%zd",user.fansNumber];
     _likedCountLabel.text = [NSString stringWithFormat:@"%zd",user.likeNumber];
@@ -174,39 +180,55 @@
                                  CAPSPageMenuOptionUseMenuLikeSegmentedControl:@(YES),
                                  CAPSPageMenuOptionSelectionIndicatorWidth:@66,
                                  };
-   _pageMenu = [[CAPSPageMenu alloc] initWithViewControllers:controllerArray frame:CGRectMake(0, _view1.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - _view1.frame.size.height) options:parameters];
+//    (0, _view1.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - _view1.frame.size.height)
+   _pageMenu = [[CAPSPageMenu alloc] initWithViewControllers:controllerArray frame:CGRectMake(0, 0, SCREEN_WIDTH, 100) options:parameters];
     _pageMenu.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    _pageMenu.view.layer.borderColor = [UIColor colorWithHex:0x000000 andAlpha:0.1].CGColor;
+    _pageMenu.view.layer.borderWidth = 0.5;
     [self.view addSubview:_pageMenu.view];
-    UIPanGestureRecognizer* panGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panGesture:)];
-    [_pageMenu.view addGestureRecognizer:panGesture];
+    [_pageMenu.view mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view1.mas_bottom).with.priorityHigh();
+        make.left.equalTo(self.view);
+        make.right.equalTo(self.view);
+        make.bottom.equalTo(self.view);
+    }];
+    
+//    UIPanGestureRecognizer* panGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panGesture:)];
+//    [_pageMenu.view addGestureRecognizer:panGesture];
 }
-- (void)panGesture:(UIPanGestureRecognizer *)sender {
-    if (sender.state == UIGestureRecognizerStateBegan) {
-        _startPanLocationY = [sender locationInView:self.view].y;
-    }
-    if (_pageMenu.view.frame.origin.y >= 0 && _pageMenu.view.frame.origin.y <= 180) {
-        
-        CGFloat dif = [sender locationInView:self.view].y - _startPanLocationY;
-        CGFloat y = _pageMenu.view.frame.origin.y +  dif ;
-        y = MIN(y, 180);
-        y = MAX(y, 0);
-        _pageMenu.view.frame = CGRectMake(0, y, SCREEN_WIDTH, SCREEN_HEIGHT);
-        _startPanLocationY = [sender locationInView:self.view].y;
-    }
-}
+//- (void)panGesture:(UIPanGestureRecognizer *)sender {
+//    if (sender.state == UIGestureRecognizerStateBegan) {
+//        _startPanLocationY = [sender locationInView:self.view].y;
+//    }
+//    if (_pageMenu.view.frame.origin.y >= 0 && _pageMenu.view.frame.origin.y <= 180) {
+//        
+//        CGFloat dif = [sender locationInView:self.view].y - _startPanLocationY;
+//        CGFloat y = _pageMenu.view.frame.origin.y +  dif ;
+//        y = MIN(y, 180);
+//        y = MAX(y, 0);
+//        _pageMenu.view.frame = CGRectMake(0, y, SCREEN_WIDTH, SCREEN_HEIGHT-NAV_HEIGHT-y);
+//        _startPanLocationY = [sender locationInView:self.view].y;
+//    }
+//}
 
 - (void)scrollUp {
+
     if (_pageMenu.view.frame.origin.y != 0) {
+        [self.pageMenu.view mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view1.mas_bottom).with.offset(-self.view1.frame.size.height).with.priorityHigh();
+        }];
         [UIView animateWithDuration:0.5 animations:^{
-            _pageMenu.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+            [self.pageMenu.view layoutIfNeeded];
         }];
     }
-    
 }
 - (void)scrollDown {
-    if (_pageMenu.view.frame.origin.y != 180) {
+    if (_pageMenu.view.frame.origin.y != self.view1.frame.size.height) {
+        [self.pageMenu.view mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view1.mas_bottom).with.offset(0).with.priorityHigh();
+        }];
         [UIView animateWithDuration:0.5 animations:^{
-            _pageMenu.view.frame = CGRectMake(0, 180, SCREEN_WIDTH, SCREEN_HEIGHT);
+            [self.pageMenu.view layoutIfNeeded];
         }];
     }
 }
@@ -225,8 +247,6 @@
     [DDOtherUserManager getOtherUserInfo:param withBlock:^(ATOMUser *user) {
         if (user) {
             [self updateUserInterface:user];
-            _blurView.image = [_avatarView.image blurredImageWithRadius:40 iterations:1 tintColor:nil];
-            
         }
     }];
     

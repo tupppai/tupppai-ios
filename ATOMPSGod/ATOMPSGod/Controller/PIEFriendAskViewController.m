@@ -30,7 +30,13 @@ static NSString *cellIdentifier = @"PIEFriendAskTableViewCell";
     self.view.backgroundColor = [UIColor clearColor];
     _source = [NSMutableArray array];
     _currentIndex = 1;
-    self.view = self.table;
+    [self.view addSubview: self.table];
+    [self.table mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view);
+        make.bottom.equalTo(self.view);
+        make.left.equalTo(self.view);
+        make.right.equalTo(self.view);
+    }];
     UINib* nib = [UINib nibWithNibName:@"PIEFriendAskTableViewCell" bundle:nil];
     [self.table registerNib:nib forCellReuseIdentifier:cellIdentifier];
     self.table.emptyDataSetSource = self;
@@ -122,13 +128,12 @@ static NSString *cellIdentifier = @"PIEFriendAskTableViewCell";
     if (!_table) {
         _table = [[PIERefreshTableView alloc] initWithFrame:CGRectZero];
         _table.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _table.backgroundColor = [UIColor clearColor];
+        _table.backgroundColor = [UIColor groupTableViewBackgroundColor];
         _table.showsVerticalScrollIndicator = NO;
         _table.delegate = self;
         _table.dataSource = self;
         _table.psDelegate = self;
         _table.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _table.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
         _table.scrollsToTop = YES;
     }
     return _table;

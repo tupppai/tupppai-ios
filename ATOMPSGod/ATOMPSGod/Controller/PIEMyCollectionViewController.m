@@ -36,7 +36,7 @@
     _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     _tableView.emptyDataSetDelegate = self;
     _tableView.emptyDataSetSource = self;
-    _tableView.contentInset = UIEdgeInsetsMake(0, 0, 100, 0);
+    _tableView.showsVerticalScrollIndicator = NO;
     [self.view addSubview: _tableView];
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view);

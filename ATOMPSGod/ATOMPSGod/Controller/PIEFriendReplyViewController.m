@@ -11,18 +11,16 @@
 #import "PIEFriendReplyCollectionViewCell.h"
 #import "PIERefreshCollectionView.h"
 #import "CHTCollectionViewWaterfallLayout.h"
-
-
-
+#import "PIECarouselViewController.h"
+#import "DDNavigationController.h"
+#import "AppDelegate.h"
 @interface PIEFriendReplyViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,PWRefreshBaseCollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (nonatomic, strong) NSMutableArray *source;
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 @property (nonatomic, strong) PIERefreshCollectionView *collectionView;
 @property (nonatomic, assign) BOOL canRefreshFooter;
-@property (nonatomic, strong) DDPageVM *selectedVM;
 @property (nonatomic, assign) BOOL isfirstLoading;
-
 @end
 static NSString *CellIdentifier2 = @"PIEFriendAskCollectionViewCell";
 
@@ -30,16 +28,25 @@ static NSString *CellIdentifier2 = @"PIEFriendAskCollectionViewCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _source = [NSMutableArray array];
     [self commonInit];
     [self getRemoteSource];
 }
 
 - (void)commonInit {
     self.view.backgroundColor = [UIColor clearColor];
-    self.view = self.collectionView;
+    _source = [NSMutableArray array];
     _currentIndex = 1;
     _isfirstLoading = YES;
+    
+    [self.view addSubview: self.collectionView];
+    
+    [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view);
+        make.bottom.equalTo(self.view);
+        make.left.equalTo(self.view);
+        make.right.equalTo(self.view);
+    }];
+
 }
 
 #pragma mark - GetDataSource
@@ -56,13 +63,18 @@ static NSString *CellIdentifier2 = @"PIEFriendAskCollectionViewCell";
     [DDOtherUserManager getFriendReply:param withBlock:^(NSMutableArray *returnArray) {
         _isfirstLoading = NO;//should set to NO before reloadData
         NSMutableArray* arrayAgent = [NSMutableArray array];
-        if (returnArray.count > 0) {
+        if (returnArray.count) {
+            _canRefreshFooter = YES;
             for (PIEPageEntity *entity in returnArray) {
                 DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+                NSLog(@"NAME %@",vm.username);
                 [arrayAgent addObject:vm];
             }
             [_source removeAllObjects];
             [_source addObjectsFromArray:arrayAgent];
+        }
+        else {
+            _canRefreshFooter = NO;
         }
         [_collectionView.header endRefreshing];
         [_collectionView reloadData];
@@ -80,12 +92,16 @@ static NSString *CellIdentifier2 = @"PIEFriendAskCollectionViewCell";
     [param setObject:@(_currentIndex) forKey:@"page"];
     [DDOtherUserManager getFriendReply:param withBlock:^(NSMutableArray *returnArray) {
         NSMutableArray* arrayAgent = [NSMutableArray array];
-        if (returnArray.count > 0) {
+        if (returnArray.count) {
+            _canRefreshFooter = YES;
             for (PIEPageEntity *entity in returnArray) {
                 DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
                 [arrayAgent addObject:vm];
             }
             [_source addObjectsFromArray:arrayAgent];
+        }
+        else {
+            _canRefreshFooter = NO;
         }
         [_collectionView.footer endRefreshing];
         [_collectionView reloadData];
@@ -101,7 +117,7 @@ static NSString *CellIdentifier2 = @"PIEFriendAskCollectionViewCell";
         _collectionView = [[PIERefreshCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
         _collectionView.toRefreshBottom = YES;
         _collectionView.toRefreshTop = YES;
-        _collectionView.backgroundColor = [UIColor clearColor];
+        _collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
         _collectionView.emptyDataSetDelegate = self;
         _collectionView.emptyDataSetSource = self;
         _collectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
@@ -130,7 +146,6 @@ static NSString *CellIdentifier2 = @"PIEFriendAskCollectionViewCell";
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    NSLog(@"_source.count %zd",_source.count);
     return _source.count;
 }
 
@@ -152,15 +167,15 @@ static NSString *CellIdentifier2 = @"PIEFriendAskCollectionViewCell";
 }
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    DDPageVM* vm =   [_source objectAtIndex:indexPath.row];
+    DDPageVM* vm = [_source objectAtIndex:indexPath.row];
     CGFloat width;
     CGFloat height;
-    width = (SCREEN_WIDTH - 20) / 2.0;
-    height = vm.imageHeight + 135;
-    if (height > width+20) {
-        height = width+20;
-    }
+    width = (SCREEN_WIDTH) /2 - 20;
+    height = vm.imageHeight/vm.imageWidth * width;
+    height = MAX(80, height);
+    height = MIN(SCREEN_HEIGHT/2, height);
     return CGSizeMake(width, height);
+
 }
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     CGFloat startContentOffsetY = scrollView.contentOffset.y;
@@ -186,6 +201,13 @@ static NSString *CellIdentifier2 = @"PIEFriendAskCollectionViewCell";
                                  NSForegroundColorAttributeName: [UIColor darkGrayColor]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    DDPageVM* vm = [_source objectAtIndex:indexPath.row];
+    PIECarouselViewController* vc = [PIECarouselViewController new];
+    vc.pageVM = vm;
+    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+    [nav pushViewController:vc animated:YES ];
 }
 
 -(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {

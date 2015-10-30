@@ -11,12 +11,15 @@
 #import "PIERefreshCollectionView.h"
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "PIEReplyCollectionCell.h"
+#import "PIECarouselViewController.h"
+#import "PIEFriendViewController.h"
 @interface PIEReplyCollectionViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout,PWRefreshBaseCollectionViewDelegate>
 @property (nonatomic, strong) NSMutableArray *source;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL canRefreshFoot;
-@property (nonatomic, strong) DDPageVM* currentVM;
 @property (nonatomic, strong) PIERefreshCollectionView* collectionView;
+@property (nonatomic, strong) NSIndexPath* selectedIndexPath;
+
 @end
 
 @implementation PIEReplyCollectionViewController
@@ -91,9 +94,61 @@
         _collectionView.psDelegate = self;
         UINib* nib = [UINib nibWithNibName:@"PIEReplyCollectionCell" bundle:nil];
         [_collectionView registerNib:nib forCellWithReuseIdentifier:@"PIEReplyCollectionCell"];
+        
+        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnCollectionView:)];
+        [_collectionView addGestureRecognizer:tapGesture];
+
     }
     return _collectionView;
 }
+- (void)tapOnCollectionView:(UITapGestureRecognizer *)gesture {
+        CGPoint location = [gesture locationInView:self.collectionView];
+        _selectedIndexPath = [self.collectionView indexPathForItemAtPoint:location];
+    
+        if (_selectedIndexPath) {
+            DDPageVM* vm = [_source objectAtIndex:_selectedIndexPath.row];
+            PIEReplyCollectionCell* cell = (PIEReplyCollectionCell*)[self.collectionView cellForItemAtIndexPath:_selectedIndexPath];
+            CGPoint p = [gesture locationInView:cell];
+            if (CGRectContainsPoint(cell.avatarView.frame, p) || CGRectContainsPoint(cell.usernameLabel.frame, p)) {
+                PIEFriendViewController* vc = [PIEFriendViewController new];
+                vc.pageVM = vm;
+                [self.navigationController pushViewController:vc animated:YES];
+            } else if (CGRectContainsPoint(cell.imageView.frame, p)) {
+                PIECarouselViewController* vc = [PIECarouselViewController new];
+                vc.pageVM = vm;
+                [self.navigationController pushViewController:vc animated:YES];
+            } else {
+                CGPoint q = [gesture locationInView:cell.bottomView];
+                if (CGRectContainsPoint(cell.likeButton.frame, q)) {
+                    [self like];
+                }
+            }
+    
+            
+        }
+}
+
+- (void)like {
+    NSLog(@"like");
+    DDPageVM* vm = [_source objectAtIndex:_selectedIndexPath.row];
+    PIEReplyCollectionCell* cell = (PIEReplyCollectionCell*)[self.collectionView cellForItemAtIndexPath:_selectedIndexPath];
+
+    cell.likeButton.selected = !cell.likeButton.selected;
+    [DDService toggleLike:cell.likeButton.selected ID:vm.ID type:vm.type withBlock:^(BOOL success) {
+        if (!success) {
+            cell.likeButton.selected = !cell.likeButton.selected;
+        } else {
+            
+            if (cell.likeButton.selected) {
+                vm.likeCount = [NSString stringWithFormat:@"%zd",vm.likeCount.integerValue + 1];
+            } else {
+                vm.likeCount = [NSString stringWithFormat:@"%zd",vm.likeCount.integerValue - 1];
+            }
+            vm.liked = cell.likeButton.selected;
+        }
+    }];
+}
+
 #pragma mark - refresh delegate
 
 -(void)didPullDownCollectionView:(UICollectionView *)collectionView {
@@ -133,21 +188,19 @@
     }
     return nil;
 }
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+
+}
 
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    DDPageVM* vm;
-    if (collectionView == _collectionView) {
-        vm =   [_source objectAtIndex:indexPath.row];
-    }
+    DDPageVM* vm = [_source objectAtIndex:indexPath.row];
     CGFloat width;
     CGFloat height;
-    
-    width = (SCREEN_WIDTH - 20) / 2.0;
-    height = vm.imageHeight + 46;
-    if (height > (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/2) {
-        height = (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/2;
-    }
+    width = (SCREEN_WIDTH) /2 - 20;
+    height = vm.imageHeight/vm.imageWidth * width  + 70;
+    height = MAX(150, height);
+    height = MIN(SCREEN_HEIGHT/2, height);
     return CGSizeMake(width, height);
 }
 @end

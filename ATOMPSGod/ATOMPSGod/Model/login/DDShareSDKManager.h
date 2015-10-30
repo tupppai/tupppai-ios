@@ -12,9 +12,11 @@
 #import "DDPageVM.h"
 
 @interface DDShareSDKManager : NSObject
-+ (void)getUserInfo:(SSDKPlatformType)type withBlock:(void (^)(NSString* openId ))block;
-+(void)postSocialShare:(NSInteger)id withSocialShareType:(ATOMShareType)shareType withPageType:(NSInteger)pageType;
-+(void)postSocialShare2:(DDPageVM*)vm withSocialShareType:(ATOMShareType)shareType withPageType:(NSInteger)pageType;
-+ (void)authorize:(SSDKPlatformType)type withBlock:(void (^)(NSDictionary* ))block;
-+ (void)authorize2:(SSDKPlatformType)type withBlock:(void (^)(SSDKUser* user ))block;
+//+ (void)getUserInfo:(SSDKPlatformType)type withBlock:(void (^)(NSString* openId ))block;
+//
+//+(void)postSocialShare:(NSInteger)id withSocialShareType:(ATOMShareType)shareType withPageType:(NSInteger)pageType;//to delete
+//+(void)postSocialShare2:(DDPageVM*)vm withSocialShareType:(ATOMShareType)shareType;
+//+ (void)authorize:(SSDKPlatformType)type withBlock:(void (^)(NSDictionary* ))block;//to delete
+//+ (void)authorize2:(SSDKPlatformType)type withBlock:(void (^)(SSDKUser* user ))block;
+//+ (void)getRemoteShareInfo:(DDPageVM*)vm withSocialShareType:(ATOMShareType)shareType withBlock:(void (^)(ATOMShare* share))block;
 @end

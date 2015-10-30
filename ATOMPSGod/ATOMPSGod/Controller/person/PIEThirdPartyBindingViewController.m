@@ -192,7 +192,7 @@
     [param setObject:type forKey:@"type"];
     //1.如果想要绑定
     if (bindSwitch.on) {
-        [DDShareSDKManager getUserInfo:shareType withBlock:^(NSString *openId) {
+        [DDShareManager getUserInfo:shareType withBlock:^(NSString *openId) {
             if (openId) {
                 [param setObject:openId forKey:@"openid"];
             [DDMySettingsManager setBindSetting:param withToggleBind:YES withBlock:^(NSError *error) {

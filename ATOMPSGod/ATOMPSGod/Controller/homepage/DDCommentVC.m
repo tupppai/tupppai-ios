@@ -673,6 +673,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     imageViewer.interactionsDelegate = self;
 }
 - (void) didTap5 {
+    [self.textView resignFirstResponder];
     [self showShareView];
 }
 - (void) didTapHelp {
@@ -699,22 +700,22 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 #pragma mark - ATOMShareViewDelegate
 //sina
 -(void)tapShare1 {
-    [DDShareSDKManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeSinaWeibo withPageType:_vm.type];
+    [DDShareManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeSinaWeibo];
 }
 //qqzone
 -(void)tapShare2 {
-    [DDShareSDKManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeQQZone withPageType:_vm.type];
+    [DDShareManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeQQZone ];
 }
 //wechat moments
 -(void)tapShare3 {
-    [DDShareSDKManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeWechatMoments withPageType:_vm.type];
+    [DDShareManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeWechatMoments ];
 }
 //wechat friends
 -(void)tapShare4 {
-    [DDShareSDKManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeWechatFriends withPageType:_vm.type];
+    [DDShareManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeWechatFriends ];
 }
 -(void)tapShare5 {
-    [DDShareSDKManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeQQFriends withPageType:_vm.type];
+    [DDShareManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeQQFriends ];
 }
 -(void)tapShare6 {
     
@@ -748,7 +749,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         //取消收藏
         [param setObject:@(0) forKey:@"status"];
     }
-    [DDCollectManager toggleCollect:param withPageType:_vm.type withID:_vm.ID withBlock:^(NSError *error) {
+    [DDCollectManager toggleCollect:param withPageType:_vm.type withID:_vm.ID  withBlock:^(NSError *error) {
         if (!error) {
             if (  _vm.collected ) {
                 [Hud textWithLightBackground:@"收藏成功"];

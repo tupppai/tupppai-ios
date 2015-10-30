@@ -134,7 +134,7 @@
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
     }];
-
+    _collectionView.showsVerticalScrollIndicator = NO;
     _collectionView.backgroundColor = [UIColor clearColor];
     _collectionView.dataSource = self;
     _collectionView.toRefreshBottom = YES;
@@ -143,7 +143,6 @@
     _collectionView.psDelegate = self;
     _collectionView.emptyDataSetSource = self;
     _collectionView.emptyDataSetDelegate = self;
-    _collectionView.contentInset = UIEdgeInsetsMake(0, 0, 200, 0);
     UINib* nib = [UINib nibWithNibName:@"PIEMyReplyCollectionViewCell" bundle:nil];
     [_collectionView registerNib:nib forCellWithReuseIdentifier:@"PIEMyReplyCollectionViewCell"];
     _canRefreshFooter = YES;
@@ -203,9 +202,9 @@
     CGFloat height;
     width = (SCREEN_WIDTH) /2 - 20;
     height = vm.imageHeight/vm.imageWidth * width;
-    if (height > (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/1.3) {
-        height = (SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT)/1.3;
-    }
+    height = MAX(150, height);
+    height = MIN(SCREEN_HEIGHT/2, height);
+
     return CGSizeMake(width, height);
 }
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {

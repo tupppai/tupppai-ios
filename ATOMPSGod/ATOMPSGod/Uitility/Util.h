@@ -26,7 +26,7 @@
 NSString* deviceName();
 +(void)showWeAreWorkingOnThisFeature;
 + (UIImage *)getImageFromAsset:(ALAsset *)asset type:(NSInteger)nType;
-
++ (void)copyIntoPasteboard:(NSString*)string;
 @end
 
 @interface Hud : NSObject

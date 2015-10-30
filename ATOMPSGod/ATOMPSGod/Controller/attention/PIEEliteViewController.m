@@ -50,10 +50,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 @property (nonatomic, assign) BOOL canRefreshFooterFollow;
 @property (nonatomic, assign) BOOL canRefreshFooterHot;
 
-@property (nonatomic, strong) UITapGestureRecognizer *tapGestureHot;
-@property (nonatomic, strong) UITapGestureRecognizer *tapGestureFollow;
-@property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureHot;
-@property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureFollow;
+
 
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 //@property (nonatomic, strong) UITableViewCell *selectedFollowCell;
@@ -130,16 +127,16 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 }
 - (void)setupGestures {
     
-    _tapGestureFollow = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureFollow:)];
-    [_sv.tableFollow addGestureRecognizer:_tapGestureFollow];
+    UITapGestureRecognizer* tapGestureFollow = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureFollow:)];
+    [_sv.tableFollow addGestureRecognizer:tapGestureFollow];
     
-    _tapGestureHot = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureHot:)];
-    [_sv.tableHot addGestureRecognizer:_tapGestureHot];
-    _longPressGestureHot = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnHot:)];
-    [_sv.tableHot addGestureRecognizer:_longPressGestureHot];
+    UITapGestureRecognizer* tapGestureHot = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureHot:)];
+    [_sv.tableHot addGestureRecognizer:tapGestureHot];
+    UILongPressGestureRecognizer* longPressGestureHot = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnHot:)];
+    [_sv.tableHot addGestureRecognizer:longPressGestureHot];
     
-    _longPressGestureFollow = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnFollow:)];
-    [_sv.tableFollow addGestureRecognizer:_longPressGestureFollow];
+    UILongPressGestureRecognizer* longPressGestureFollow = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnFollow:)];
+    [_sv.tableFollow addGestureRecognizer:longPressGestureFollow];
     
 }
 
@@ -303,8 +300,6 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
                 PIEEliteFollowAskTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
                 CGPoint p = [gesture locationInView:cell];
-                //点击小图
-                //点击大图
                 if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                     //进入热门详情
                     PIECarouselViewController* vc = [PIECarouselViewController new];
@@ -682,26 +677,25 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
 //sina
 -(void)tapShare1 {
-    [DDShareSDKManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeSinaWeibo withPageType:_selectedVM.type];
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeSinaWeibo ];
 }
 //qqzone
 -(void)tapShare2 {
-    [DDShareSDKManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQZone withPageType:_selectedVM.type];
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQZone ];
 }
 //wechat moments
 -(void)tapShare3 {
-    [DDShareSDKManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatMoments withPageType:_selectedVM.type];
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatMoments ];
 }
 //wechat friends
 -(void)tapShare4 {
-    [DDShareSDKManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatFriends withPageType:_selectedVM.type];
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatFriends ];
 }
 -(void)tapShare5 {
-    [DDShareSDKManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQFriends withPageType:_selectedVM.type];
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQFriends ];
     
 }
 -(void)tapShare6 {
-    
 }
 -(void)tapShare7 {
     [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];

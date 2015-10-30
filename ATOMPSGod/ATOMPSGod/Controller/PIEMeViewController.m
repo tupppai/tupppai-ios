@@ -117,12 +117,10 @@
 }
 
 -(void)updateAvatar {
-    NSURLRequest* req = [[NSURLRequest alloc]initWithURL:[NSURL URLWithString:[DDUserManager currentUser].avatar]];
-    
-    [_avatarView setImageWithURLRequest:req placeholderImage:nil success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nonnull response, UIImage * _Nonnull image) {
-        _avatarView.image = image;
-        _topContainerView.image = [image blurredImageWithRadius:40 iterations:1 tintColor:nil];
-    } failure:nil];
+        [DDService downloadImage:[DDUserManager currentUser].avatar withBlock:^(UIImage *image) {
+            _avatarView.image = image;
+            _topContainerView.image = [image blurredImageWithRadius:40 iterations:1 tintColor:nil];
+    }];
 }
 - (void)pushToSettingViewController {
     PIESettingsViewController* vc = [PIESettingsViewController new];
@@ -200,41 +198,58 @@
                                  CAPSPageMenuOptionSelectionIndicatorWidth:@30,
                                  };
     
-    _pageMenu = [[CAPSPageMenu alloc] initWithViewControllers:controllerArray frame:CGRectMake(0, _topContainerView.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - _topContainerView.frame.size.height) options:parameters];
+    _pageMenu = [[CAPSPageMenu alloc] initWithViewControllers:controllerArray frame:CGRectMake(0, 0, SCREEN_WIDTH, 100) options:parameters];
     _pageMenu.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    _pageMenu.delegate = self;
+    _pageMenu.view.layer.borderColor = [UIColor colorWithHex:0x000000 andAlpha:0.1].CGColor;
+    _pageMenu.view.layer.borderWidth = 0.5;
     [self.view addSubview:_pageMenu.view];
-    UIPanGestureRecognizer* panGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panGesture:)];
-    [_pageMenu.view addGestureRecognizer:panGesture];
+    [_pageMenu.view mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.topContainerView.mas_bottom).with.priorityHigh();
+        make.left.equalTo(self.view);
+        make.right.equalTo(self.view);
+        make.bottom.equalTo(self.view);
+    }];
+
+    
+//    UIPanGestureRecognizer* panGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panGesture:)];
+//    [_pageMenu.view addGestureRecognizer:panGesture];
 }
-- (void)panGesture:(UIPanGestureRecognizer *)sender {
-    if (sender.state == UIGestureRecognizerStateBegan) {
-        _startPanLocation = [sender locationInView:self.view];
-    }
-    if (_pageMenu.view.frame.origin.y >= 60 && _pageMenu.view.frame.origin.y <= 220) {
-        
-        CGFloat dif = [sender locationInView:self.view].y - _startPanLocation.y;
-        CGFloat y = _pageMenu.view.frame.origin.y +  dif ;
-        y = MIN(y, 220);
-        y = MAX(y, 60);
-       
-        _pageMenu.view.frame = CGRectMake(0, y, SCREEN_WIDTH, SCREEN_HEIGHT);
-        _startPanLocation = [sender locationInView:self.view];
-    }
-}
+//- (void)panGesture:(UIPanGestureRecognizer *)sender {
+//    if (sender.state == UIGestureRecognizerStateBegan) {
+//        _startPanLocation = [sender locationInView:self.view];
+//    }
+//    if (_pageMenu.view.frame.origin.y >= 60 && _pageMenu.view.frame.origin.y <= 220) {
+//        
+//        CGFloat dif = [sender locationInView:self.view].y - _startPanLocation.y;
+//        CGFloat y = _pageMenu.view.frame.origin.y +  dif ;
+//        y = MIN(y, 220);
+//        y = MAX(y, 60);
+//       
+//        _pageMenu.view.frame = CGRectMake(0, y, SCREEN_WIDTH, SCREEN_HEIGHT-y);
+//        _startPanLocation = [sender locationInView:self.view];
+//    }
+//}
 - (void)scrollUp {
     if (_pageMenu.view.frame.origin.y != 60) {
+        [self.pageMenu.view mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.topContainerView.mas_bottom).with.offset(-self.topContainerView.frame.size.height+60).with.priorityHigh();
+        }];
         [UIView animateWithDuration:0.5 animations:^{
-            _pageMenu.view.frame = CGRectMake(0, 60, SCREEN_WIDTH, SCREEN_HEIGHT);
+            [self.pageMenu.view layoutIfNeeded];
         }];
     }
+
 }
 - (void)scrollDown {
-    if (_pageMenu.view.frame.origin.y != 220) {
+    if (_pageMenu.view.frame.origin.y != self.topContainerView.frame.size.height) {
+        [self.pageMenu.view mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.topContainerView.mas_bottom).with.offset(0).with.priorityHigh();
+        }];
         [UIView animateWithDuration:0.5 animations:^{
-            _pageMenu.view.frame = CGRectMake(0, 220, SCREEN_WIDTH, SCREEN_HEIGHT);
+            [self.pageMenu.view layoutIfNeeded];
         }];
     }
+
 }
 
 

@@ -287,7 +287,12 @@
             if (block) { block(data); }
     }];
 }
-
++ (void)getShareInfo:(NSDictionary*)param withBlock:(void (^)(NSDictionary *))block {
+    [[self class]GET:param url:URL_UKGetShare block:^(id responseObject) {
+        NSDictionary *data = [responseObject objectForKey:@"data"];
+        if (block) { block(data);}
+    }];
+}
 + (void)ddGetCollection:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
     [[self class]GET:param url:URL_PFGetCollection block:^(id responseObject) {
             NSArray* data = [responseObject objectForKey:@"data"];
