@@ -44,6 +44,7 @@
     [_tableView reloadData];
 }
 -(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     [[NSUserDefaults standardUserDefaults]setObject:@(NO) forKey:@"NotificationNew"];
     [[NSUserDefaults standardUserDefaults]synchronize];
     

@@ -101,14 +101,15 @@
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getCommentedPages:param withBlock:^(NSMutableArray *resultArray) {
         ws.isfirstLoading = NO;//should set to NO before reloadData
-        _dataSource = resultArray;
-        [ws.tableView reloadData];
-        [ws.tableView.header endRefreshing];
-        if (resultArray.count == 0) {
+        if (resultArray.count <= 0) {
             ws.canRefreshFooter = NO;
         } else {
+            _dataSource = resultArray;
             ws.canRefreshFooter = YES;
         }
+        [ws.tableView reloadData];
+        [ws.tableView.header endRefreshing];
+
     }];
 }
 
@@ -123,14 +124,15 @@
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getCommentedPages:param withBlock:^(NSMutableArray *resultArray) {
-        [_dataSource addObjectsFromArray:resultArray];
-        [ws.tableView reloadData];
-        [ws.tableView.footer endRefreshing];
-        if (resultArray.count == 0) {
+
+        if (resultArray.count <= 0) {
             ws.canRefreshFooter = NO;
         } else {
+            [_dataSource addObjectsFromArray:resultArray];
             ws.canRefreshFooter = YES;
         }
+        [ws.tableView reloadData];
+        [ws.tableView.footer endRefreshing];
     }];
 }
 

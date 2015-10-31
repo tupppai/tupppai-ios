@@ -44,7 +44,7 @@
 
 + (void)getRemoteShareInfo:(DDPageVM*)vm withSocialShareType:(ATOMShareType)shareType withBlock:(void (^)(ATOMShare* share))block {
     NSMutableDictionary* param = [NSMutableDictionary new];
-    NSString* shareTypeToServer;
+    NSString* shareTypeToServer = @"";
     if (shareType == ATOMShareTypeWechatFriends) {
         shareTypeToServer = @"wechat_friend";
     } else if (shareType == ATOMShareTypeWechatMoments) {

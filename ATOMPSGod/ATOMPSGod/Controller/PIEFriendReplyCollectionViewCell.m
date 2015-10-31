@@ -11,30 +11,22 @@
 
 @implementation PIEFriendReplyCollectionViewCell
 
--(instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-//        self.layer.cornerRadius = 10;
-        _theImageView = [UIImageView new];
-        _theImageView.layer.cornerRadius = 6;
-        _theImageView.clipsToBounds = YES;
-        _theImageView.contentMode = UIViewContentModeScaleAspectFill;
-        [self addSubview:_theImageView];
-        [_theImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self);
-            make.right.equalTo(self);
-            make.top.equalTo(self);
-            make.bottom.equalTo(self);
-        }];
-    }
-    return self;
 
+- (void)awakeFromNib {
+    // Initialization code
+    self.layer.cornerRadius = 6;
+    
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = _blurBottomView.bounds;
+    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithHex:0x000000 andAlpha:0.3] CGColor], (id)[[UIColor colorWithHex:0xffffff andAlpha:0.3] CGColor], nil];
+    [_blurBottomView.layer insertSublayer:gradient atIndex:0];
+    //    _tipLabel.layer.cornerRadius = 4;
 }
-
-//put a needle injecting into cell's ass.
 - (void)injectSource:(DDPageVM*)vm {
-
+    
     [_theImageView setImageWithURL:[NSURL URLWithString:vm.imageURL]placeholderImage:[UIImage imageNamed:@"cellBG"]];
-
+    
+    _likeCountLabel.text = vm.likeCount;
 }
+
 @end

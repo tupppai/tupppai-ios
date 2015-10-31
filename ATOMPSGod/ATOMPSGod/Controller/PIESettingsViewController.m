@@ -8,9 +8,7 @@
 
 #import "PIESettingsViewController.h"
 
-#import "PIESettingViewController.h"
 #import "PIESettingsTableViewCell.h"
-#import "ATOMModifyPasswordViewController.h"
 #import "PIEThirdPartyBindingViewController.h"
 #import "PIEMessagePushSettingViewController.h"
 #import "ATOMUserFeedbackViewController.h"
@@ -66,7 +64,7 @@
     } else if (section == 1) {
         return 3;
     } else if (section ==2) {
-        return 4;
+        return 3;
     } else if (section ==3) {
         return 3;
     }
@@ -121,9 +119,11 @@
                 cell.textLabel.text = @"版本更新";
             } else if (row == 1) {
                 cell.textLabel.text = @"清理缓存";
-            } else if (row == 2) {
-                cell.textLabel.text = @"推荐应用给好友";
-            } else if (row == 3) {
+            }
+//            else if (row == 2) {
+//                cell.textLabel.text = @"推荐应用给好友";
+//            }
+            else if (row == 2) {
                 cell.textLabel.text = @"给图派评分";
             }
         }
@@ -175,9 +175,6 @@
         } else if (row == 1) {
             [self clearCache];
         } else if (row == 2) {
-            //推荐应用
-        } else if (row == 3) {
-            //给应用评分
         }
     }
     else if (section == 3) {

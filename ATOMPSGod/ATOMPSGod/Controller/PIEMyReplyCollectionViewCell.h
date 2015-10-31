@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface PIEMyReplyCollectionViewCell : UICollectionViewCell
+@property (weak, nonatomic) IBOutlet UIView *blurBottomView;
 @property (weak, nonatomic) IBOutlet UIImageView *theImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *likeView;
 @property (weak, nonatomic) IBOutlet UILabel *likeCountLabel;

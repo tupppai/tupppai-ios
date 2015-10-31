@@ -89,7 +89,7 @@
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:viewModel.imageURL]];
     [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
-    [_theImageView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellBG"] success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull image) {
+    [_theImageView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellBG"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
         ws.theImageView.image = image;
         ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
     } failure:nil];
@@ -124,7 +124,7 @@
         PIEImageEntity* entity = [viewModel.thumbEntityArray objectAtIndex:0];
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:entity.url]];
         [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
-        [self.thumbView.rightView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellBG"] success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull image) {
+        [self.thumbView.rightView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellBG"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
             ws.thumbView.rightView.image = image;
             ws.thumbView.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
         } failure:nil];
@@ -136,7 +136,7 @@
     else {
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:viewModel.imageURL]];
         [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
-        [self.thumbView.rightView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellBG"] success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull image) {
+        [self.thumbView.rightView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellBG"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
             ws.thumbView.rightView.image = image;
             ws.thumbView.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
         } failure:nil];

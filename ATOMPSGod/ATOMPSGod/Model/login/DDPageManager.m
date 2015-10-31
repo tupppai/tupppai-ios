@@ -75,9 +75,6 @@
         if (block && resultArray.count > 0) {
             block(resultArray);
         }
-        else {
-            block(nil);
-        }
     }];
 }
 
@@ -91,9 +88,6 @@
         }
         if (block && resultArray.count > 0) {
             block(resultArray);
-        }
-        else {
-            block(nil);
         }
     }];
 }

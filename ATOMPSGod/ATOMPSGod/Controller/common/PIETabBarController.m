@@ -10,7 +10,6 @@
 #import "PIENewViewController.h"
 #import "DDMessageVC.h"
 #import "PIEEliteViewController.h"
-#import "ATOMPersonViewController.h"
 #import "DDNavigationController.h"
 #import "DDService.h"
 #import "PIEMeViewController.h"
@@ -66,14 +65,12 @@ static dispatch_once_t once;
     PIENewViewController *homePageViewController = [PIENewViewController new];
     PIEEliteViewController *myAttentionViewController = [PIEEliteViewController new];
     PIEProceedingViewController *proceedingViewController = [PIEProceedingViewController new];
-    ATOMPersonViewController *personViewController = [ATOMPersonViewController new];
     PIEMeViewController *vc4 = (PIEMeViewController *)[[UIStoryboard storyboardWithName:@"Me" bundle:nil] instantiateViewControllerWithIdentifier: @"PIEME"];
     UIViewController* vc = [UIViewController new];
     homePageViewController.title = @"最新";
     myAttentionViewController.title = @"首页";
     proceedingViewController.title = @"进行中";
-    personViewController.title = @"我的";
-    
+    vc4.title = @"我的";
     _navigation_new = [[DDNavigationController alloc] initWithRootViewController:homePageViewController];
     _navigation_elite = [[DDNavigationController alloc] initWithRootViewController:myAttentionViewController];
     _navigation_proceeding = [[DDNavigationController alloc] initWithRootViewController:proceedingViewController];

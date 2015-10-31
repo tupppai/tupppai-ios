@@ -12,7 +12,12 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    self.layer.cornerRadius = 8;
+    self.layer.cornerRadius = 6;
+    
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = _blurBottomView.bounds;
+    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithHex:0x000000 andAlpha:0.3] CGColor], (id)[[UIColor colorWithHex:0xffffff andAlpha:0.3] CGColor], nil];
+    [_blurBottomView.layer insertSublayer:gradient atIndex:0];
 //    _tipLabel.layer.cornerRadius = 4;
 }
 - (void)injectSauce:(DDPageVM*)vm {

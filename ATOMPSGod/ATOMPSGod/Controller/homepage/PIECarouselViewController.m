@@ -119,8 +119,8 @@
         if (view == nil)
         {
             CGFloat height = self.carousel.frame.size.height-80;
-            CGFloat width = MAX(height*vm.imageWidth/vm.imageHeight, 200);
-            width = MIN(width, SCREEN_WIDTH - 80);
+//            CGFloat width = MAX(height*vm.imageWidth/vm.imageHeight, 200);
+//            width = MIN(width, SCREEN_WIDTH - 80);
             view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, height, height)];
             view.backgroundColor = [UIColor clearColor];
             view.contentMode = UIViewContentModeScaleAspectFit;

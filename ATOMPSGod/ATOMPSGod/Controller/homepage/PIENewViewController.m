@@ -84,6 +84,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     self.navigationController.navigationBarHidden = NO;
 }
 -(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     [self shouldNavToAskSegment];
     [self shouldNavToHotSegment];
 }

@@ -22,7 +22,7 @@
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, assign) BOOL isfirstLoading;
 @end
-static NSString *CellIdentifier2 = @"PIEFriendAskCollectionViewCell";
+static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
 
 @implementation PIEFriendReplyViewController
 
@@ -125,7 +125,9 @@ static NSString *CellIdentifier2 = @"PIEFriendAskCollectionViewCell";
         _collectionView.dataSource = self;
         _collectionView.delegate = self;
         _collectionView.psDelegate = self;
-        [_collectionView registerClass:[PIEFriendReplyCollectionViewCell class] forCellWithReuseIdentifier:CellIdentifier2];
+//        [_collectionView registerClass:[PIEFriendReplyCollectionViewCell class] forCellWithReuseIdentifier:CellIdentifier2];
+        UINib* nib = [UINib nibWithNibName:@"PIEFriendReplyCollectionViewCell" bundle:nil];
+        [_collectionView registerNib:nib forCellWithReuseIdentifier:CellIdentifier];
     }
     return _collectionView;
 }
@@ -156,12 +158,12 @@ static NSString *CellIdentifier2 = @"PIEFriendAskCollectionViewCell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     PIEFriendReplyCollectionViewCell*cell =
-    (PIEFriendReplyCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier2
+    (PIEFriendReplyCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PIEFriendReplyCollectionViewCell"
                                                                       forIndexPath:indexPath];
-    if (!cell) {
-        //need this if instantiate from class instead of xib.
-        cell = [PIEFriendReplyCollectionViewCell new];
-    }
+//    if (!cell) {
+//        //need this if instantiate from class instead of xib.
+//        cell = [PIEFriendReplyCollectionViewCell new];
+//    }
     [cell injectSource:[_source objectAtIndex:indexPath.row]];
     return cell;
 }

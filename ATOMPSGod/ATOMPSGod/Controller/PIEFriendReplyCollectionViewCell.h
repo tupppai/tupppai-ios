@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "PIEPageLikeButton.h"
 @interface PIEFriendReplyCollectionViewCell : UICollectionViewCell
-@property (strong, nonatomic)  UIImageView *theImageView;
+@property (weak, nonatomic) IBOutlet UIView *blurBottomView;
+@property (weak, nonatomic) IBOutlet UIImageView *theImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *likeView;
+@property (weak, nonatomic) IBOutlet UILabel *likeCountLabel;
 - (void)injectSource:(DDPageVM*)vm;
 @end

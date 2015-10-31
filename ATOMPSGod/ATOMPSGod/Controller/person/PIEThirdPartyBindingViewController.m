@@ -11,7 +11,7 @@
 #import "ATOMAccountBindingTableViewCell.h"
 #import "DDMySettingsManager.h"
 #import "DDShareSDKManager.h"
-#import "ATOMModifyPasswordViewController.h"
+#import "PIEModifyPasswordViewController.h"
 @interface PIEThirdPartyBindingViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) ATOMAccountBindingView *accountBindingView;
@@ -47,6 +47,7 @@
     }
 }
 -(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
     [DDUserManager saveCurrentUserToDB];
 }
 
@@ -99,7 +100,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0 && indexPath.row == 1) {
-        [self.navigationController pushViewController:[ATOMModifyPasswordViewController new] animated:YES];
+        [self.navigationController pushViewController:[PIEModifyPasswordViewController new] animated:YES];
     }
 }
 
@@ -170,7 +171,7 @@
 
 -(void)toggleSwitch:(id)sender {
     UISwitch *bindSwitch = sender;
-    NSString *type;
+    NSString *type = @"";
     int shareType = 99;
     switch (bindSwitch.tag) {
         case 0:

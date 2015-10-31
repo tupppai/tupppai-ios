@@ -91,7 +91,7 @@
 
 -(void)toggleSwitch:(id)sender {
     UISwitch *notificationSwitch = sender;
-    NSString *type;
+    NSString *type = @"";
     switch (notificationSwitch.tag) {
         case 0:
             type = @"comment";

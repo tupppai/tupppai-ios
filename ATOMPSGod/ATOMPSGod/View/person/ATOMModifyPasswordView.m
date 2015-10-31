@@ -32,20 +32,20 @@
     _oldPasswordTextField = [UITextField new];
     _oldPasswordTextField.secureTextEntry = YES;
     _oldPasswordTextField.placeholder = @"输入旧密码";
-    _oldPasswordTextField.font = [UIFont systemFontOfSize:19];
+    _oldPasswordTextField.font = [UIFont systemFontOfSize:15];
     [self addSubview:_oldPasswordTextField];
 
     
     _modifyPasswordTextField = [UITextField new];
     _modifyPasswordTextField.secureTextEntry = YES;
     _modifyPasswordTextField.placeholder = @"输入新密码";
-    _modifyPasswordTextField.font = [UIFont systemFontOfSize:19];
+    _modifyPasswordTextField.font = [UIFont systemFontOfSize:15];
     [self addSubview:_modifyPasswordTextField];
 
     _confirmPasswordTextField = [UITextField new];
     _confirmPasswordTextField.secureTextEntry = YES;
     _confirmPasswordTextField.placeholder = @"再次输入新密码";
-    _confirmPasswordTextField.font = [UIFont systemFontOfSize:19];
+    _confirmPasswordTextField.font = [UIFont systemFontOfSize:15];
     [self addSubview:_confirmPasswordTextField];
 
     _forgetPasswordButton = [UIButton new];
@@ -57,34 +57,37 @@
     
     [_oldPasswordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
-        make.top.equalTo(ws).with.offset(40);
-        make.width.equalTo(@250);
+        make.top.equalTo(ws).with.offset(10);
+        make.left.equalTo(self).with.offset(20);
+        make.right.equalTo(self).with.offset(-20);
         make.height.equalTo(@50);
     }];
     
     [_modifyPasswordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
         make.top.equalTo(ws.oldPasswordTextField.mas_bottom).with.offset(20);
-        make.width.equalTo(ws.oldPasswordTextField);
+        make.left.equalTo(self).with.offset(20);
+        make.right.equalTo(self).with.offset(-20);
         make.height.equalTo(ws.oldPasswordTextField);
     }];
     
     [_confirmPasswordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
         make.top.equalTo(ws.modifyPasswordTextField.mas_bottom).with.offset(20);
-        make.width.equalTo(ws.oldPasswordTextField);
+        make.left.equalTo(self).with.offset(20);
+        make.right.equalTo(self).with.offset(-20);
         make.height.equalTo(ws.oldPasswordTextField);
     }];
     
     CALayer *bottomBorder = [CALayer layer];
-    bottomBorder.frame = CGRectMake(0, 40, kLineWidth, 0.5);
+    bottomBorder.frame = CGRectMake(0, 40, SCREEN_WIDTH - 40, 0.5);
     bottomBorder.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2].CGColor;
     
     CALayer *bottomBorder2 = [CALayer layer];
-    bottomBorder2.frame = CGRectMake(0, 40, kLineWidth, 0.5);
+    bottomBorder2.frame = CGRectMake(0, 40, SCREEN_WIDTH - 40, 0.5);
     bottomBorder2.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2].CGColor;
     CALayer *bottomBorder3 = [CALayer layer];
-    bottomBorder3.frame = CGRectMake(0, 40, kLineWidth, 0.5);
+    bottomBorder3.frame = CGRectMake(0, 40, SCREEN_WIDTH - 40, 0.5);
     bottomBorder3.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2].CGColor;
     
     [_oldPasswordTextField.layer addSublayer:bottomBorder];

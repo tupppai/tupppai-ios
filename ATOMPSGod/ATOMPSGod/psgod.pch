@@ -6,6 +6,12 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
+//fix build issue of AFNetworking
+#if !defined(TARGET_OS_IOS)
+#define TARGET_OS_IOS TARGET_OS_IPHONE
+#endif
+
+
 #ifndef ATOMPSGod_psgod_pch
 #define ATOMPSGod_psgod_pch
 
