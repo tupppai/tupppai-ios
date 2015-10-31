@@ -646,8 +646,8 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     NSString* text = vm.content;
     width = (SCREEN_WIDTH - 20) / 2.0;
     
-    CGSize size = [text boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12], NSFontAttributeName, nil] context:NULL].size;
-    height = vm.imageHeight/vm.imageWidth * width + 124 + (size.height+5);
+    CGSize size = [text boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:12], NSFontAttributeName, nil] context:NULL].size;
+    height = vm.imageHeight/vm.imageWidth * width + 124 + (size.height+10);
     height = MAX(200,height);
     height = MIN(SCREEN_HEIGHT/1.5, height);
 
