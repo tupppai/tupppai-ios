@@ -12,7 +12,7 @@
 #import "ATOMUser.h"
 #import "ATOMUserProfileViewModel.h"
 #import "DDCreateProfileVC.h"
-#import "DDShareSDKManager.h"
+
 #import "DDInputPhoneFPVC.h"
 
 @interface PIELoginViewController ()

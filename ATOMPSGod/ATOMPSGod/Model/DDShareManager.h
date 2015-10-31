@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "ATOMShare.h"
 #import "DDPageVM.h"
-
+#import <ShareSDK/ShareSDK.h>
 
 //qq空间只能webpage ,其它均能传image
 typedef NS_ENUM(NSInteger, ATOMShareType) {

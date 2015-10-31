@@ -28,6 +28,7 @@
 #import "PIERefreshTableView.h"
 #import "PIEFriendViewController.h"
 #import "PIEReplyCollectionViewController.h"
+
 @class PIEPageEntity;
 
 @interface PIENewViewController() < UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,PWRefreshBaseCollectionViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,CHTCollectionViewDelegateWaterfallLayout,UICollectionViewDelegate,UICollectionViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
@@ -114,11 +115,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     _sourceAsk = [NSMutableArray new];
     _sourceReply = [NSMutableArray new];
     //    [self firstGetDataSourceFromDataBase];
-    [self getRemoteAskSource:^(BOOL finished) {
-        if (finished) {
-            [self getRemoteReplySource];
-        }
-    }];
+    [self firstGetSourceIfEmpty_ask];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_New" object:nil];
 }
 
@@ -244,144 +241,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     }
     return _shareView;
 }
-#pragma mark - Gesture Event
 
-- (void)tapGestureReply:(UITapGestureRecognizer *)gesture {
-    if (_scrollView.type == PIENewScrollTypeReply) {
-        CGPoint location = [gesture locationInView:_hotTableView];
-        _selectedIndexPath = [_hotTableView indexPathForRowAtPoint:location];
-        if (_selectedIndexPath) {
-            _selectedReplyCell = [_hotTableView cellForRowAtIndexPath:_selectedIndexPath];
-            _selectedVM = _sourceReply[_selectedIndexPath.row];
-            CGPoint p = [gesture locationInView:_selectedReplyCell];
-            
-            //点击小图
-            if (CGRectContainsPoint(_selectedReplyCell.thumbView.frame, p)) {
-                CGPoint pp = [gesture locationInView:_selectedReplyCell.thumbView];
-                if (CGRectContainsPoint(_selectedReplyCell.thumbView.leftView.frame,pp)) {
-                    [_selectedReplyCell animateThumbScale:PIEAnimateViewTypeLeft];
-                }
-                else if (CGRectContainsPoint(_selectedReplyCell.thumbView.rightView.frame,pp)) {
-                    [_selectedReplyCell animateThumbScale:PIEAnimateViewTypeRight];
-                }
-
-            }
-            
-            //点击大图
-            else  if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
-                //进入热门详情
-                PIECarouselViewController* vc = [PIECarouselViewController new];
-                _selectedVM.image = _selectedReplyCell.theImageView.image;
-                vc.pageVM = _selectedVM;
-                [self.navigationController pushViewController:vc animated:YES];
-            }
-            //点击头像
-            else if (CGRectContainsPoint(_selectedReplyCell.avatarView.frame, p)) {
-                PIEFriendViewController * friendVC = [PIEFriendViewController new];
-                friendVC.pageVM = _selectedVM;
-                [self.navigationController pushViewController:friendVC animated:YES];
-            }
-            //点击用户名
-            else if (CGRectContainsPoint(_selectedReplyCell.nameLabel.frame, p)) {
-                PIEFriendViewController * friendVC = [PIEFriendViewController new];
-                friendVC.pageVM = _selectedVM;
-                [self.navigationController pushViewController:friendVC animated:YES];
-            }
-            else if (CGRectContainsPoint(_selectedReplyCell.collectView.frame, p)) {
-                //should write this logic in viewModel
-                [self collect:_selectedReplyCell.collectView shouldShowHud:NO];
-            }
-            else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
-                [self likeReply];
-            }
-            else if (CGRectContainsPoint(_selectedReplyCell.followView.frame, p)) {
-                [self followReplier];
-            }
-            else if (CGRectContainsPoint(_selectedReplyCell.shareView.frame, p)) {
-                [self showShareView];
-            }
-            else if (CGRectContainsPoint(_selectedReplyCell.commentView.frame, p)) {
-                DDCommentVC* vc = [DDCommentVC new];
-                vc.vm = _selectedVM;
-                [self.navigationController pushViewController:vc animated:YES];
-            }
-            else if (CGRectContainsPoint(_selectedReplyCell.allWorkView.frame, p)) {
-                PIEReplyCollectionViewController* vc = [PIEReplyCollectionViewController new];
-                vc.pageVM = _selectedVM;
-                [self.navigationController pushViewController:vc animated:YES];
-            }
-        }
-    }
-}
-- (void)longPressOnReply:(UILongPressGestureRecognizer *)gesture {
-    if (_scrollView.type == PIENewScrollTypeReply) {
-        CGPoint location = [gesture locationInView:_hotTableView];
-        _selectedIndexPath = [_hotTableView indexPathForRowAtPoint:location];
-        if (_selectedIndexPath) {
-            _selectedReplyCell = [_hotTableView cellForRowAtIndexPath:_selectedIndexPath];
-            _selectedVM = _sourceReply[_selectedIndexPath.row];
-            CGPoint p = [gesture locationInView:_selectedReplyCell];
-            
-            //点击大图
-             if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
-                 [self showShareView];
-            }
-        }
-    }
-
-}
-- (void)longPressOnAsk:(UILongPressGestureRecognizer *)gesture {
-    if (_scrollView.type == PIENewScrollTypeAsk) {
-        CGPoint location = [gesture locationInView:_askCollectionView];
-        NSIndexPath *indexPath = [_askCollectionView indexPathForItemAtPoint:location];
-        if (indexPath) {
-            _selectedAskCell= (PIENewAskCollectionCell *)[_askCollectionView cellForItemAtIndexPath:indexPath];
-            _selectedVM = _sourceAsk[indexPath.row];
-            CGPoint p = [gesture locationInView:_selectedAskCell];
-            //点击大图
-            if (CGRectContainsPoint(_selectedAskCell.leftImageView.frame, p) || CGRectContainsPoint(_selectedAskCell.rightImageView.frame, p)) {
-                [self showShareView];
-            }
-        }
-    }
-}
-- (void)tapGestureAsk:(UITapGestureRecognizer *)gesture {
-    if (_scrollView.type == PIENewScrollTypeAsk) {
-        CGPoint location = [gesture locationInView:_askCollectionView];
-        NSIndexPath *indexPath = [_askCollectionView indexPathForItemAtPoint:location];
-        if (indexPath) {
-            _selectedAskCell= (PIENewAskCollectionCell *)[_askCollectionView cellForItemAtIndexPath:indexPath];
-            _selectedVM = _sourceAsk[indexPath.row];
-            CGPoint p = [gesture locationInView:_selectedAskCell];
-            
-            //点击大图
-            if (CGRectContainsPoint(_selectedAskCell.leftImageView.frame, p) || CGRectContainsPoint(_selectedAskCell.rightImageView.frame, p)) {
-                DDCommentVC* vc = [DDCommentVC new];
-                vc.vm = _selectedVM;
-//                PIECarouselViewController* vc = [PIECarouselViewController new];
-//                vc.pageVM = _selectedVM;
-                [self.navigationController pushViewController:vc animated:YES];
-            }
-            //点击头像
-            else if (CGRectContainsPoint(_selectedAskCell.avatarView.frame, p)) {
-                PIEFriendViewController * friendVC = [PIEFriendViewController new];
-                friendVC.pageVM = _selectedVM;
-                [self.navigationController pushViewController:friendVC animated:YES];
-            }
-            
-            //点击用户名
-            else if (CGRectContainsPoint(_selectedAskCell.nameLabel.frame, p)) {
-                PIEFriendViewController * friendVC = [PIEFriendViewController new];
-                friendVC.pageVM = _selectedVM;
-                [self.navigationController pushViewController:friendVC animated:YES];
-            }
-            //点击帮p
-            else if (CGRectContainsPoint(_selectedAskCell.bangView.frame, p)) {
-                [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
-            }
-        }
-    }
-}
 
 
 #pragma mark - UIScrollViewDelegate
@@ -394,11 +254,13 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
             _askCollectionView.scrollsToTop = YES;
             [_segmentedControl setSelectedSegmentIndex:0 animated:YES];
             _scrollView.type = PIENewScrollTypeAsk;
+            [self firstGetSourceIfEmpty_ask];
         } else if (currentPage == 1) {
             _hotTableView.scrollsToTop = YES;
             _askCollectionView.scrollsToTop = NO;
             [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
             _scrollView.type = PIENewScrollTypeReply;
+            [self firstGetSourceIfEmpty_Reply];
         }
     }
 }
@@ -457,6 +319,17 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 //    }
 //    return tableViewDataSource;
 //}
+
+- (void)firstGetSourceIfEmpty_ask {
+    if (_sourceAsk.count <= 0 || _isfirstLoadingAsk) {
+        [self.askCollectionView.header beginRefreshing];
+    }
+}
+- (void)firstGetSourceIfEmpty_Reply {
+    if (_sourceReply.count <= 0 || _isfirstLoadingReply) {
+        [self.hotTableView.header beginRefreshing];
+    }
+}
 //获取服务器的最新数据
 - (void)getRemoteAskSource:(void (^)(BOOL finished))block{
     WS(ws);
@@ -768,15 +641,18 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     DDPageVM* vm =   [_sourceAsk objectAtIndex:indexPath.row];
-    
     CGFloat width;
     CGFloat height;
-    
+    NSString* text = vm.content;
     width = (SCREEN_WIDTH - 20) / 2.0;
-    height = vm.imageHeight/vm.imageWidth * width + 100;
-    height = MAX(270,height);
-    height = MIN(SCREEN_HEIGHT/2, height);
+    
+    CGSize size = [text boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12], NSFontAttributeName, nil] context:NULL].size;
+    height = vm.imageHeight/vm.imageWidth * width + 124 + (size.height+5);
+    height = MAX(200,height);
+    height = MIN(SCREEN_HEIGHT/1.5, height);
+
     return CGSizeMake(width, height);
+    
 }
 
 #pragma mark - DZNEmptyDataSetSource & delegate
@@ -925,14 +801,153 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         [_segmentedControl setIndexChangeBlock:^(NSInteger index) {
             if (index == 0) {
                 [ws.scrollView toggleWithType:PIENewScrollTypeAsk];
+                [ws firstGetSourceIfEmpty_ask];
             } else {
                 [ws.scrollView toggleWithType:PIENewScrollTypeReply];
+                [ws firstGetSourceIfEmpty_Reply];
             }
         }];
     }
     return _segmentedControl;
 }
 
+#pragma mark - Gesture Event
 
+- (void)tapGestureReply:(UITapGestureRecognizer *)gesture {
+    if (_scrollView.type == PIENewScrollTypeReply) {
+        CGPoint location = [gesture locationInView:_hotTableView];
+        _selectedIndexPath = [_hotTableView indexPathForRowAtPoint:location];
+        if (_selectedIndexPath) {
+            _selectedReplyCell = [_hotTableView cellForRowAtIndexPath:_selectedIndexPath];
+            _selectedVM = _sourceReply[_selectedIndexPath.row];
+            CGPoint p = [gesture locationInView:_selectedReplyCell];
+            
+            //点击小图
+            if (CGRectContainsPoint(_selectedReplyCell.thumbView.frame, p)) {
+                CGPoint pp = [gesture locationInView:_selectedReplyCell.thumbView];
+                if (CGRectContainsPoint(_selectedReplyCell.thumbView.leftView.frame,pp)) {
+                    [_selectedReplyCell animateThumbScale:PIEAnimateViewTypeLeft];
+                }
+                else if (CGRectContainsPoint(_selectedReplyCell.thumbView.rightView.frame,pp)) {
+                    [_selectedReplyCell animateThumbScale:PIEAnimateViewTypeRight];
+                }
+                
+            }
+            
+            //点击大图
+            else  if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
+                //进入热门详情
+                PIECarouselViewController* vc = [PIECarouselViewController new];
+                _selectedVM.image = _selectedReplyCell.theImageView.image;
+                vc.pageVM = _selectedVM;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            //点击头像
+            else if (CGRectContainsPoint(_selectedReplyCell.avatarView.frame, p)) {
+                PIEFriendViewController * friendVC = [PIEFriendViewController new];
+                friendVC.pageVM = _selectedVM;
+                [self.navigationController pushViewController:friendVC animated:YES];
+            }
+            //点击用户名
+            else if (CGRectContainsPoint(_selectedReplyCell.nameLabel.frame, p)) {
+                PIEFriendViewController * friendVC = [PIEFriendViewController new];
+                friendVC.pageVM = _selectedVM;
+                [self.navigationController pushViewController:friendVC animated:YES];
+            }
+            else if (CGRectContainsPoint(_selectedReplyCell.collectView.frame, p)) {
+                //should write this logic in viewModel
+                [self collect:_selectedReplyCell.collectView shouldShowHud:NO];
+            }
+            else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
+                [self likeReply];
+            }
+            else if (CGRectContainsPoint(_selectedReplyCell.followView.frame, p)) {
+                [self followReplier];
+            }
+            else if (CGRectContainsPoint(_selectedReplyCell.shareView.frame, p)) {
+                [self showShareView];
+            }
+            else if (CGRectContainsPoint(_selectedReplyCell.commentView.frame, p)) {
+                DDCommentVC* vc = [DDCommentVC new];
+                vc.vm = _selectedVM;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            else if (CGRectContainsPoint(_selectedReplyCell.allWorkView.frame, p)) {
+                PIEReplyCollectionViewController* vc = [PIEReplyCollectionViewController new];
+                vc.pageVM = _selectedVM;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
+    }
+}
+- (void)longPressOnReply:(UILongPressGestureRecognizer *)gesture {
+    if (_scrollView.type == PIENewScrollTypeReply) {
+        CGPoint location = [gesture locationInView:_hotTableView];
+        _selectedIndexPath = [_hotTableView indexPathForRowAtPoint:location];
+        if (_selectedIndexPath) {
+            _selectedReplyCell = [_hotTableView cellForRowAtIndexPath:_selectedIndexPath];
+            _selectedVM = _sourceReply[_selectedIndexPath.row];
+            CGPoint p = [gesture locationInView:_selectedReplyCell];
+            
+            //点击大图
+            if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
+                [self showShareView];
+            }
+        }
+    }
+    
+}
+- (void)longPressOnAsk:(UILongPressGestureRecognizer *)gesture {
+    if (_scrollView.type == PIENewScrollTypeAsk) {
+        CGPoint location = [gesture locationInView:_askCollectionView];
+        NSIndexPath *indexPath = [_askCollectionView indexPathForItemAtPoint:location];
+        if (indexPath) {
+            _selectedAskCell= (PIENewAskCollectionCell *)[_askCollectionView cellForItemAtIndexPath:indexPath];
+            _selectedVM = _sourceAsk[indexPath.row];
+            CGPoint p = [gesture locationInView:_selectedAskCell];
+            //点击大图
+            if (CGRectContainsPoint(_selectedAskCell.leftImageView.frame, p) || CGRectContainsPoint(_selectedAskCell.rightImageView.frame, p)) {
+                [self showShareView];
+            }
+        }
+    }
+}
+- (void)tapGestureAsk:(UITapGestureRecognizer *)gesture {
+    if (_scrollView.type == PIENewScrollTypeAsk) {
+        CGPoint location = [gesture locationInView:_askCollectionView];
+        NSIndexPath *indexPath = [_askCollectionView indexPathForItemAtPoint:location];
+        if (indexPath) {
+            _selectedAskCell= (PIENewAskCollectionCell *)[_askCollectionView cellForItemAtIndexPath:indexPath];
+            _selectedVM = _sourceAsk[indexPath.row];
+            CGPoint p = [gesture locationInView:_selectedAskCell];
+            
+            //点击大图
+            if (CGRectContainsPoint(_selectedAskCell.leftImageView.frame, p) || CGRectContainsPoint(_selectedAskCell.rightImageView.frame, p)) {
+                DDCommentVC* vc = [DDCommentVC new];
+                vc.vm = _selectedVM;
+                //                PIECarouselViewController* vc = [PIECarouselViewController new];
+                //                vc.pageVM = _selectedVM;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            //点击头像
+            else if (CGRectContainsPoint(_selectedAskCell.avatarView.frame, p)) {
+                PIEFriendViewController * friendVC = [PIEFriendViewController new];
+                friendVC.pageVM = _selectedVM;
+                [self.navigationController pushViewController:friendVC animated:YES];
+            }
+            
+            //点击用户名
+            else if (CGRectContainsPoint(_selectedAskCell.nameLabel.frame, p)) {
+                PIEFriendViewController * friendVC = [PIEFriendViewController new];
+                friendVC.pageVM = _selectedVM;
+                [self.navigationController pushViewController:friendVC animated:YES];
+            }
+            //点击帮p
+            else if (CGRectContainsPoint(_selectedAskCell.bangView.frame, p)) {
+                [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
+            }
+        }
+    }
+}
 
 @end

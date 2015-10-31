@@ -64,12 +64,25 @@
     [self configData];
     [self createNavBar];
     [self configSubviews];
-    [self getRemoteSourceMyAsk];
-    [self getRemoteSourceToHelp];
-    [self getRemoteSourceDone];
-
+    
+    [self getSourceIfEmpty_ask];
 }
 
+- (void)getSourceIfEmpty_ask {
+    if (_sourceAsk.count <= 0 || _isfirstLoadingAsk) {
+        [self.sv.askTableView.header beginRefreshing];
+    }
+}
+- (void)getSourceIfEmpty_toHelp {
+    if (_sourceToHelp.count <= 0 || _isfirstLoadingToHelp) {
+        [self.sv.toHelpTableView.header beginRefreshing];
+    }
+}
+- (void)getSourceIfEmpty_done {
+    if (_sourceDone.count <= 0 || _isfirstLoadingDone) {
+        [self.sv.doneCollectionView.header beginRefreshing];
+    }
+}
 #pragma mark - init methods
 
 - (void)configData {
@@ -261,14 +274,18 @@
         if (currentPage == 0) {
             [_segmentedControl setSelectedSegmentIndex:0 animated:YES];
             _sv.type = PIEProceedingTypeAsk;
+            [self getSourceIfEmpty_ask];
         }
         else if (currentPage == 1) {
             [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
             _sv.type = PIEProceedingTypeToHelp;
+            [self getSourceIfEmpty_toHelp];
         }
         else if (currentPage == 2) {
             [_segmentedControl setSelectedSegmentIndex:2 animated:YES];
             _sv.type = PIEProceedingTypeDone;
+            [self getSourceIfEmpty_done];
+
         }
     }
 }
@@ -315,10 +332,13 @@
     [_segmentedControl setIndexChangeBlock:^(NSInteger index) {
         if (index == 0) {
             [ws.sv toggleWithType:PIEProceedingTypeAsk];
+            [ws getSourceIfEmpty_ask];
         } else if (index == 1) {
             [ws.sv toggleWithType:PIEProceedingTypeToHelp];
+            [ws getSourceIfEmpty_toHelp];
         } else if (index == 2) {
             [ws.sv toggleWithType:PIEProceedingTypeDone];
+            [ws getSourceIfEmpty_done];
         }
     }];
     

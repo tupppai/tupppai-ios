@@ -26,8 +26,8 @@
 #import "MacroUtils.h"
 #import "ATOMConstant.h"
 #import "Masonry.h"
-#import "UIAlertView+Blocks.h"
-#import "UIActionSheet+Blocks.h"
+//#import "UIAlertView+Blocks.h"
+//#import "UIActionSheet+Blocks.h"
 #import "KeyboardManager.h"
 #import "AFNetworking.h"
 #import "Mantle.h"
@@ -48,13 +48,12 @@
 #import "DDBaseVC.h"
 
 #import "UIScrollView+EmptyDataSet.h"
-#import "DDShareSDKManager.h"
+#import "DDShareManager.h"
 #import "DDService.h"
 
 #import "PIEPageEntity.h"
 #import "DDPageVM.h"
 #import "UIButton+Pop.h"
-
 #endif
 
 

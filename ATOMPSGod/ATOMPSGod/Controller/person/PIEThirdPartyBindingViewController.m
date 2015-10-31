@@ -10,7 +10,7 @@
 #import "ATOMAccountBindingView.h"
 #import "ATOMAccountBindingTableViewCell.h"
 #import "DDMySettingsManager.h"
-#import "DDShareSDKManager.h"
+
 #import "PIEModifyPasswordViewController.h"
 @interface PIEThirdPartyBindingViewController () <UITableViewDelegate, UITableViewDataSource>
 

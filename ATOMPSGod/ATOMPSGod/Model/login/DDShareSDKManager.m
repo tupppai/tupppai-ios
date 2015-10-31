@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 ATOM. All rights reserved.
 //
 
-@implementation DDShareSDKManager
+//@implementation DDShareSDKManager : NSObject
 ////shareSDK 获取 用户手机的第三方平台的信息
 //+ (void)getUserInfo:(SSDKPlatformType)type withBlock:(void (^)(NSString* openId ))block{
 //    [ShareSDK getUserInfo:type conditional:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
@@ -193,4 +193,4 @@
 //        [self shareStep2:SSDKPlatformSubTypeQZone withShareParams:shareParams];
 //    }
 //}
-@end
+//@end
