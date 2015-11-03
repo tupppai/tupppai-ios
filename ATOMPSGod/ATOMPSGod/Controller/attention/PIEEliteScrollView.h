@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "PIERefreshTableView.h"
-
+#import "SwipeView.h"
 @interface PIEEliteScrollView : UIScrollView
 @property (nonatomic, strong) PIERefreshTableView *tableFollow;
 @property (nonatomic, strong) PIERefreshTableView *tableHot;
+@property (nonatomic, strong) SwipeView *swipeView;
+
 @property (nonatomic, assign) PIEPageType type;
 - (void)toggle ;
 - (void)toggleWithType:(PIEPageType)type;

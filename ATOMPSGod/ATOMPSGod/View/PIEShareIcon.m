@@ -19,7 +19,7 @@
 //        self.titleLabel.font = [UIFont systemFontOfSize:12];
 //        self.titleLabel.adjustsFontSizeToFitWidth = YES;
 //        self.titleLabel.textAlignment = NSTextAlignmentCenter;
-//        self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        self.imageView.contentMode = UIViewContentModeScaleAspectFit;
 //        self.imageView.backgroundColor = [UIColor grayColor];
 //        self.titleLabel.backgroundColor = [UIColor greenColor];
         [self addSubview:self.label];
@@ -71,6 +71,7 @@
 //    // Move the image to the top and center it horizontally
     CGRect imageFrame = self.imageView.frame;
     imageFrame.origin.y = 0;
+    imageFrame.size = CGSizeMake(30,25);
 //    imageFrame.origin.x = (self.frame.size.width / 2) - (imageFrame.size.width / 2);
 //    imageFrame.size.height = imageFrame.size.width;
     self.imageView.frame = imageFrame;

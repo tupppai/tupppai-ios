@@ -49,6 +49,8 @@ extern NSString * URL_UKSaveAsk;
 extern NSString * URL_UKSaveReply;
 extern NSString * URL_UKEditAsk;
 extern NSString * URL_UKGetShare;
+extern NSString * URL_UKGetUserSearch;
+extern NSString * URL_UKGetContentSearch;
 
 #pragma mark - Newest
 extern NSString * URL_NewestGetAsk;

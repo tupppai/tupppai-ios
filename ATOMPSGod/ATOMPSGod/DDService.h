@@ -55,6 +55,8 @@
 + (void)downloadImage:(NSString*)url withBlock:(void (^)(UIImage* image))block;
 + (void)editAsk :(NSDictionary*)param withBlock:(void (^)(BOOL success))block;
 + (void)getShareInfo:(NSDictionary*)param withBlock:(void (^)(NSDictionary *))block;
++ (void)ddGetSearchContentResult:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block;
++ (void)ddGetSearchUserResult:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block ;
 #pragma mark - Newest 最新
 + (void)ddGetNewestAsk:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block;
 + (void)ddGetNewestReply:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block;

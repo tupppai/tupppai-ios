@@ -47,4 +47,8 @@ NSString * URL_NewestGetReply = @"reply/index";
 NSString * URL_PFGetFollowPages = @"Thread/timeline";
 NSString * URL_PFGetHotPages = @"Thread/popular";
 NSString * URL_NotiGetNotifications = @"message/index";
+
+NSString * URL_UKGetUserSearch = @"user/search";
+NSString * URL_UKGetContentSearch = @"thread/search";
+
 @end

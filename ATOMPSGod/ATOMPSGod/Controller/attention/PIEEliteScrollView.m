@@ -48,8 +48,23 @@
     _tableHot.backgroundColor = [UIColor clearColor];
     _tableHot.showsVerticalScrollIndicator = NO;
     [self addSubview:_tableHot];
+    _tableHot.tableHeaderView = self.swipeView;
+    
+}
+- (void) onTimer
+{
+    [self.swipeView scrollByNumberOfItems:1 duration:0.5];
 }
 
+-(SwipeView *)swipeView {
+    if (!_swipeView) {
+        _swipeView = [[SwipeView alloc]initWithFrame:CGRectMake(0, 0, _tableHot.bounds.size.width, 167)];
+        _swipeView.backgroundColor = [UIColor clearColor];
+        _swipeView.wrapEnabled = YES;
+        [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
+    }
+    return _swipeView;
+}
 
 - (void)toggle {
     if (_type == PIEPageTypeEliteFollow) {

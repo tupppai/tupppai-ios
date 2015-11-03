@@ -26,6 +26,7 @@
 #import "PIEEliteFollowReplyTableViewCell.h"
 #import "PIEEliteHotReplyTableViewCell.h"
 #import "PIEEliteHotAskTableViewCell.h"
+#import "PIESearchViewController.h"
 static  NSString* askIndentifier = @"PIEEliteFollowAskTableViewCell";
 static  NSString* replyIndentifier = @"PIEEliteFollowReplyTableViewCell";
 
@@ -34,7 +35,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
 //static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
 
-@interface PIEEliteViewController ()<UITableViewDelegate,UITableViewDataSource,PWRefreshBaseTableViewDelegate,UIScrollViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
+@interface PIEEliteViewController ()<UITableViewDelegate,UITableViewDataSource,PWRefreshBaseTableViewDelegate,UIScrollViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource,SwipeViewDelegate,SwipeViewDataSource>
 @property (nonatomic, strong) PIEEliteScrollView *sv;
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
 
@@ -122,6 +123,8 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     [_sv.tableHot registerNib:nib forCellReuseIdentifier:hotReplyIndentifier];
     UINib* nib2 = [UINib nibWithNibName:hotAskIndentifier bundle:nil];
     [_sv.tableHot registerNib:nib2 forCellReuseIdentifier:hotAskIndentifier];
+    _sv.swipeView.dataSource = self;
+    _sv.swipeView.delegate = self;
     
 }
 - (void)setupGestures {
@@ -164,6 +167,18 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
         }
     }];
     self.navigationItem.titleView = _segmentedControl;
+    
+    UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
+    backButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [backButton setImage:[UIImage imageNamed:@"pie_search"] forState:UIControlStateNormal];
+    UIBarButtonItem *barBackButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    [backButton addTarget:self action:@selector(search) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.navigationItem.rightBarButtonItem = barBackButtonItem;
+    
+}
+- (void) search {
+        [self presentViewController:[PIESearchViewController new] animated:NO completion:nil];
 }
 - (void)refreshHeader {
     if (_sv.type == PIEPageTypeEliteFollow && ![_sv.tableFollow.header isRefreshing]) {
@@ -182,6 +197,52 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     }
     return _sv;
 }
+#pragma mark iCarousel methods
+
+
+- (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
+{
+    return 3;
+}
+
+- (UIView *)swipeView:(SwipeView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
+{
+    if (!view)
+    {
+        CGFloat width = _sv.swipeView.frame.size.width;
+        view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width+10, width)];
+        UIImageView* imageView = [[UIImageView alloc] initWithFrame:view.bounds];
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
+        imageView.clipsToBounds = YES;
+        [view addSubview:imageView];
+    }
+//    DDPageVM* vm = [_source objectAtIndex:index];
+    for (UIView *subView in view.subviews){
+        if([subView isKindOfClass:[UIImageView class]]){
+            UIImageView *imageView = (UIImageView *)subView;
+//            [imageView setImageWithURL:[NSURL URLWithString:vm.imageURL]];
+            if (index == 0) {
+                imageView.image = [UIImage imageNamed:@"psps"];
+            } else if (index == 1) {
+                imageView.image = [UIImage imageNamed:@"bg1@2x"];
+            } else if (index == 2) {
+                imageView.image = [UIImage imageNamed:@"intro1"];
+            }
+
+        }
+    }
+    ;
+    return view;
+}
+
+-(void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index {
+//    PIECarouselViewController* vc = [PIECarouselViewController new];
+//    vc.pageVM = [_source objectAtIndex:index];
+//    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+//    [nav pushViewController:vc animated:YES ];
+}
+
+
 #pragma mark - UITableView Datasource and delegate
 
 #pragma mark - UITableViewDataSource

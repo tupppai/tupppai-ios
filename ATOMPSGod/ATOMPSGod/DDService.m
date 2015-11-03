@@ -258,6 +258,19 @@
             if (block) { block(data); }
     }];
 }
+
++ (void)ddGetSearchContentResult:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
+    [[self class]GET:param url:URL_UKGetContentSearch block:^(id responseObject) {
+        id data = [responseObject objectForKey:@"data"];
+        if (block) { block(data); }
+    }];
+}
++ (void)ddGetSearchUserResult:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
+    [[self class]GET:param url:URL_UKGetUserSearch block:^(id responseObject) {
+        id data = [responseObject objectForKey:@"data"];
+        if (block) { block(data); }
+    }];
+}
 + (void)ddGetNotifications:(NSDictionary*)param withBlock:(void (^)(id data))block {
     [[self class]GET:param url:URL_NotiGetNotifications block:^(id responseObject) {
             id data = [responseObject objectForKey:@"data"];
