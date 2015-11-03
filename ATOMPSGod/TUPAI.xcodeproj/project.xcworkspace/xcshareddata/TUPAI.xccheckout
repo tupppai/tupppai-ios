@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>6BA638D2-A670-484D-981C-6EA4E7912435</string>
 	<key>IDESourceControlProjectName</key>
-	<string>TUPAI</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>9CCA68C2F3D60ADE696D19164A43041C762D86F3</key>
 		<string>https://git.oschina.net/gatesanye/psgod-ios.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ATOMPSGod/TUPAI.xcodeproj</string>
+	<string>ATOMPSGod/TUPAI.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>9CCA68C2F3D60ADE696D19164A43041C762D86F3</key>

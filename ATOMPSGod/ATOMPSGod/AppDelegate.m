@@ -39,10 +39,24 @@
     [self initializeAfterDB];
     [self setupShareSDK];
     [self setupUmengPush:launchOptions];
-
+    [self setupBarButtonItem];
+    
     [[IQKeyboardManager sharedManager] disableInViewControllerClass:[DDCommentVC class]];
     [[IQKeyboardManager sharedManager]setEnableAutoToolbar:NO];
     return YES;
+}
+- (void)setupBarButtonItem {
+    NSShadow *shadow = [[NSShadow alloc] init];
+    shadow.shadowOffset = CGSizeMake(0.0, 1.0);
+    shadow.shadowColor = [UIColor whiteColor];
+    
+    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil]
+     setTitleTextAttributes:
+     @{NSForegroundColorAttributeName:[UIColor blackColor],
+       NSShadowAttributeName:shadow,
+       NSFontAttributeName:[UIFont systemFontOfSize:15.0]
+       }
+     forState:UIControlStateNormal];
 }
 -(void)setupUmengPush:(NSDictionary *)launchOptions {
     //set AppKey and AppSecret

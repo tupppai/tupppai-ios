@@ -11,7 +11,7 @@
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
 #import "PIETabBarController.h"
-#import "ATOMUploadImage.h"
+#import "PIEUploadManager.h"
 #import "ATOMImage.h"
 
 
@@ -25,7 +25,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *leftShareButton;
 @property (weak, nonatomic) IBOutlet UIButton *rightShareButton;
 
-@property (strong, nonatomic) NSArray *imageArray;
+@property (strong, nonatomic) NSMutableArray *imageArray;
 @property (nonatomic, strong) ATOMImage *imageInfo1;
 @property (nonatomic, strong) ATOMImage *imageInfo2;
 
@@ -68,17 +68,26 @@
     _inputTextView.delegate = self;
     _leftImageView.clipsToBounds = YES;
     _rightImageView.clipsToBounds = YES;
+    _imageArray = [NSMutableArray array];
+    
     if (_assetsArray.count == 1) {
         _leftImageView.image = [Util getImageFromAsset:[_assetsArray objectAtIndex:0] type:ASSET_PHOTO_SCREEN_SIZE];
         _rightImageView.image = [UIImage imageNamed:@"pie_upload_plus"];
         UITapGestureRecognizer* tapGesure = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(iWantSelecteMorePhoto)];
         _rightImageView.userInteractionEnabled = YES;
         [_rightImageView addGestureRecognizer:tapGesure];
-        _imageArray = [NSArray arrayWithObject:_leftImageView.image];
+        NSData* data1 = UIImagePNGRepresentation(_leftImageView.image);
+        [_imageArray addObject:UIImagePNGRepresentation(_leftImageView.image)];
+        NSLog(@"data size %zd",data1.length);
     } else if (_assetsArray.count == 2) {
         _leftImageView.image = [Util getImageFromAsset:[_assetsArray objectAtIndex:0] type:ASSET_PHOTO_SCREEN_SIZE];
         _rightImageView.image = [Util getImageFromAsset:[_assetsArray objectAtIndex:1] type:ASSET_PHOTO_SCREEN_SIZE];
-        _imageArray = [NSArray arrayWithObjects:_leftImageView.image,_rightImageView.image,nil];
+        NSData* data1 = UIImagePNGRepresentation(_leftImageView.image);
+        NSData* data2 = UIImagePNGRepresentation(_rightImageView.image);
+
+        [_imageArray addObjectsFromArray:[NSArray arrayWithObjects:UIImagePNGRepresentation(_leftImageView.image),UIImagePNGRepresentation(_rightImageView.image),nil]];
+        NSLog(@"data size %zd , size2 %zd",data1.length,data2.length);
+
     }
     
     if (_hideSecondView) {
@@ -89,15 +98,27 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void) tapNext {
-    if (_inputTextView.text.length == 0) {
-            [self showWarnLabel];
-    } else {
+    
+    
+//    if (_inputTextView.text.length == 0) {
+//            [self showWarnLabel];
+//    } else {
         if (_type == PIEUploadTypeAsk) {
-            [self uploadAsk];
+            [_imageArray insertObject:@"ask" atIndex:0];
         } else if (_type == PIEUploadTypeReply) {
-            [self uploadReply];
+            [_imageArray insertObject:@"reply" atIndex:0];
         }
-    }
+//    }
+
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *yourArrayFileName = [documentsDirectory stringByAppendingPathComponent:@"ToUpload.dat"];
+    [_imageArray writeToFile:yourArrayFileName atomically:YES];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:@"shouldDoUploadJob"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"UploadRightNow" object:nil];
+    [self backToPIENewViewController];
 }
 -(void) uploadReply {
     [Hud activity:@"上传中" inView:self.view];
@@ -115,43 +136,52 @@
     }];
 }
 -(void) uploadAsk {
-    [Hud activity:@"上传中" inView:self.view];
-    if (_imageArray.count == 2) {
-        [self uploadImage1:^(BOOL success) {
-            if (success) {
-                [self uploadImage2:^(BOOL success) {
-                    if (success) {
-                        [self uploadAskRestInfo:^(BOOL success) {
-                            if (success) {
-                                [self dismissToHome];
-                            }
-                        }];
-                    }
-                }];
-            }
-            else {
-                [Hud dismiss:self.view];
-            }
-        }
-         ];
-    } else if (_imageArray.count == 1) {
-        [self uploadImage1:^(BOOL success) {
-            if (success) {
-                [self uploadAskRestInfo:^(BOOL success) {
-                    if (success) {
-                        [self dismissToHome];
-                    }
-                }];
-            }
-            else {
-                [Hud dismiss:self.view];
-            }
-        }];
-    }
+    
+//    [Hud activity:@"上传中" inView:self.view];
+//    if (_imageArray.count == 2) {
+//        [self uploadImage1:^(BOOL success) {
+//            if (success) {
+//                [self uploadImage2:^(BOOL success) {
+//                    if (success) {
+//                        [self uploadAskRestInfo:^(BOOL success) {
+//                            if (success) {
+//                                [self dismissToHome];
+//                            }
+//                        }];
+//                    }
+//                }];
+//            }
+//            else {
+//                [Hud dismiss:self.view];
+//            }
+//        }
+//         ];
+//    } else if (_imageArray.count == 1) {
+//        [self uploadImage1:^(BOOL success) {
+//            if (success) {
+//                [self uploadAskRestInfo:^(BOOL success) {
+//                    if (success) {
+//                        [self dismissToHome];
+//                    }
+//                }];
+//            }
+//            else {
+//                [Hud dismiss:self.view];
+//            }
+//        }];
+//    }
 }
+
+- (void)backToPIENewViewController {
+    PIETabBarController *lvc = [AppDelegate APP].mainTabBarController;
+    [lvc dismissViewControllerAnimated:YES completion:nil];
+    [lvc.selectedViewController popToRootViewControllerAnimated:YES];
+    [lvc setSelectedIndex:1];
+}
+
 - (void) uploadImage2:(void (^)(BOOL success))block {
     NSData *data = UIImageJPEGRepresentation(_imageArray[1], 1.0);
-    ATOMUploadImage *uploadImage = [ATOMUploadImage new];
+    PIEUploadManager *uploadImage = [PIEUploadManager new];
     [uploadImage UploadImage:data WithBlock:^(ATOMImage *imageInfo, NSError *error) {
         if (!imageInfo) {
             if (block) {
@@ -168,7 +198,7 @@
 
 - (void) uploadImage1:(void (^)(BOOL success))block {
         NSData *data = UIImageJPEGRepresentation(_imageArray[0], 1.0);
-        ATOMUploadImage *uploadImage = [ATOMUploadImage new];
+        PIEUploadManager *uploadImage = [PIEUploadManager new];
         [uploadImage UploadImage:data WithBlock:^(ATOMImage *imageInfo, NSError *error) {
             if (!imageInfo) {
                 if (block) {
@@ -210,13 +240,6 @@
             [self.view endEditing:YES];
             [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:@"shouldNavToAskSegment"];
             [[NSUserDefaults standardUserDefaults] synchronize];
-//            NSDictionary* info = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithInteger:newImageID],@"ID",[NSNumber numberWithInteger:newImageID],@"askID",@(PIEPageTypeAsk),@"type", nil];
-//            DDInviteVC *ivc = [DDInviteVC new];
-//            ws.newAskPageViewModel.ID = newImageID;
-//            ivc.askPageViewModel = ws.newAskPageViewModel;
-//            ivc.info = info;
-//            ivc.showNext = YES;
-//            [self.navigationController pushViewController:ivc animated:YES];
             if  (block) {
                 block(YES);
             }

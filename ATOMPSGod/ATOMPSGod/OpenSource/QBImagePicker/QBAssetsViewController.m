@@ -70,9 +70,6 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.barTintColor = [UIColor darkGrayColor];
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
-//    // Configure navigation item
-//    self.navigationItem.title = [self.assetsGroup valueForProperty:ALAssetsGroupPropertyName];
-//    self.navigationItem.prompt = self.imagePickerController.prompt;
     [self updateDoneButtonState];
     [self updateSelectionInfo];
     

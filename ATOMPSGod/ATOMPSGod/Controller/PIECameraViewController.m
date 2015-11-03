@@ -58,7 +58,6 @@
         PIEToHelpViewController* vc = [PIEToHelpViewController new];
         [nav pushViewController:vc animated:YES];
     }];
-
 }
 - (void)dismissViewController {
     [self dismissViewControllerAnimated:YES completion:nil];

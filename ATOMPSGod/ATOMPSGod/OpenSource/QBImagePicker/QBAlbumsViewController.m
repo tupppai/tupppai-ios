@@ -54,8 +54,15 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
     
+    [super viewWillAppear:animated];
+    UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
+    backButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [backButton setImage:[UIImage imageNamed:@"PIE_icon_back"] forState:UIControlStateNormal];
+    UIBarButtonItem *barBackButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    [backButton addTarget:self action:@selector(dismissVC) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItems = @[ barBackButtonItem];
+
     // Configure navigation item
 //    self.navigationItem.title = NSLocalizedStringFromTableInBundle(@"title", @"QBImagePicker", self.imagePickerController.assetBundle, nil);
 //    self.navigationItem.prompt = self.imagePickerController.prompt;
@@ -64,6 +71,9 @@
 //    [self updateSelectionInfo];
 }
 
+- (void)dismissVC {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 - (void)dealloc
 {
     // Remove observer

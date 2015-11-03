@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -113,7 +113,7 @@
                     </tableView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Photos" id="4t5-uF-MRQ">
-                        <barButtonItem key="leftBarButtonItem" image="PIE_icon_back" id="cbn-Ia-Fnc">
+                        <barButtonItem key="leftBarButtonItem" image="PIE_icon_back" style="done" id="cbn-Ia-Fnc">
                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="cancel:" destination="zDO-wM-OC0" id="9hi-Vy-Xfp"/>

@@ -27,4 +27,5 @@ typedef NS_ENUM(NSInteger, ATOMShareType) {
 + (void)authorize:(SSDKPlatformType)type withBlock:(void (^)(NSDictionary* ))block;//to delete
 + (void)authorize2:(SSDKPlatformType)type withBlock:(void (^)(SSDKUser* user ))block;
 + (void)getRemoteShareInfo:(DDPageVM*)vm withSocialShareType:(ATOMShareType)shareType withBlock:(void (^)(ATOMShare* share))block;
++(void)copy:(DDPageVM*)vm;
 @end

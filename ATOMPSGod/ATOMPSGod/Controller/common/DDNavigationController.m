@@ -29,7 +29,7 @@
 - (void)setCommonNavigationStyle {
     [self.navigationBar setBarTintColor:[UIColor whiteColor]];
     [self.navigationBar setTintColor:[UIColor blackColor]];
-    [self.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor], NSForegroundColorAttributeName,[UIFont boldSystemFontOfSize:14],NSFontAttributeName, nil]];
+    [self.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor], NSForegroundColorAttributeName,[UIFont systemFontOfSize:16],NSFontAttributeName, nil]];
 }
 
 -(UIStatusBarStyle)preferredStatusBarStyle {

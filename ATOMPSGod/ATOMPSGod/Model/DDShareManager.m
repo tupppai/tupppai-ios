@@ -67,6 +67,14 @@
         }
     }];
 }
+
++(void)copy:(DDPageVM*)vm {
+    [self getRemoteShareInfo:vm withSocialShareType:ATOMShareTypeCopyLinks withBlock:^(ATOMShare *share) {
+        UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+        pasteboard.string = share.url;
+        [Hud success:@"成功复制到粘贴板"];
+    }];
+}
 +(void)postSocialShare2:(DDPageVM*)vm withSocialShareType:(ATOMShareType)shareType{
     
     //先获取服务器传输过来的信息

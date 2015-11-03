@@ -253,7 +253,6 @@
         if (error) {
             if (failure) {
                 failure(dataTask, error);
-                NSLog(@"NetworkErrorCall");
                 [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkErrorCall" object:nil]];
             }
         } else {

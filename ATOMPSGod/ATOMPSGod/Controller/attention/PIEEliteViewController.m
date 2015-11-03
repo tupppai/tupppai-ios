@@ -401,6 +401,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     
 }
 -(void)tapShare6 {
+    [DDShareManager copy:_selectedVM];
 }
 -(void)tapShare7 {
     [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];

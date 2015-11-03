@@ -124,6 +124,6 @@ static dispatch_once_t once;
 - (void)presentBlurViewController {
     PIECameraViewController *pvc = [PIECameraViewController new];
     pvc.blurStyle = UIBlurEffectStyleDark;
-    [_preNav presentViewController:pvc animated:YES completion:nil];
+    [self presentViewController:pvc animated:YES completion:nil];
 }
 @end

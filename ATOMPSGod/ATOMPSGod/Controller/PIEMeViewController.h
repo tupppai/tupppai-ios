@@ -8,6 +8,6 @@
 
 #import "DDBaseVC.h"
 
-@interface PIEMeViewController : UIViewController
+@interface PIEMeViewController : DDBaseVC
 -(void)updateAvatar;
 @end

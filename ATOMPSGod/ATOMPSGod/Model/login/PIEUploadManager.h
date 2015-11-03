@@ -9,8 +9,9 @@
 #import <Foundation/Foundation.h>
 @class ATOMImage;
 
-@interface ATOMUploadImage : NSObject
+@interface PIEUploadManager : NSObject
 
 - (NSURLSessionDataTask *)UploadImage:(NSData *)data WithBlock:(void (^)(ATOMImage *imageInformation, NSError *error))block;
+- (void)upload:(void (^)(CGFloat percentage,BOOL success))block ;
 
 @end

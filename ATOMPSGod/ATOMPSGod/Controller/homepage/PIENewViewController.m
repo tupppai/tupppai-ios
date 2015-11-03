@@ -29,6 +29,11 @@
 #import "PIEFriendViewController.h"
 #import "PIEReplyCollectionViewController.h"
 
+#import "MRNavigationBarProgressView.h"
+#import "MRProgressView+AFNetworking.h"
+
+#import "PIEUploadManager.h"
+#import "MMPlaceHolder.h"
 @class PIEPageEntity;
 
 @interface PIENewViewController() < UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,PWRefreshBaseCollectionViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,CHTCollectionViewDelegateWaterfallLayout,UICollectionViewDelegate,UICollectionViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
@@ -65,6 +70,7 @@
 @property (nonatomic, strong) DDPageVM *selectedVM;
 @property (nonatomic, strong) PIEShareView *shareView;
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
+@property (nonatomic, strong)  MRNavigationBarProgressView* progressView;
 
 @end
 
@@ -78,6 +84,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self commonInit];
+    [self shouldDoUploadJob];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -88,7 +95,9 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [super viewDidAppear:animated];
     [self shouldNavToAskSegment];
     [self shouldNavToHotSegment];
+    //tricks
 }
+
 -(void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_New" object:nil];
     //compiler would call [super dealloc] automatically in ARC.
@@ -114,9 +123,19 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     
     _sourceAsk = [NSMutableArray new];
     _sourceReply = [NSMutableArray new];
-    //    [self firstGetDataSourceFromDataBase];
+    
     [self firstGetSourceIfEmpty_ask];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_New" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldDoUploadJob) name:@"UploadRightNow" object:nil];
+}
+
+- (void) PleaseDoTheUploadProcess {
+    [[PIEUploadManager new] upload:^(CGFloat percentage,BOOL success) {
+        [_progressView setProgress:percentage animated:YES];
+        if (success) {
+//            NSLog(@"PIENewViewController 接受到成功信息");
+        }
+    }];
 }
 
 - (void)confighotTable {
@@ -129,7 +148,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     UINib* nib = [UINib nibWithNibName:CellIdentifier bundle:nil];
     [_hotTableView registerNib:nib forCellReuseIdentifier:CellIdentifier];
     _hotTableView.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
-
     _hotTableView.scrollsToTop = YES;
     _currentHotIndex = 1;
 }
@@ -179,6 +197,18 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 }
 
 
+- (void)shouldDoUploadJob {
+    _progressView = [MRNavigationBarProgressView progressViewForNavigationController:self.navigationController];
+    _progressView.progressTintColor = [UIColor pieYellowColor];
+
+    BOOL should = [[NSUserDefaults standardUserDefaults]
+                      boolForKey:@"shouldDoUploadJob"];
+    if (should) {
+        [self PleaseDoTheUploadProcess];
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:@"shouldDoUploadJob"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 - (void)shouldNavToAskSegment {
     BOOL shouldNav = [[NSUserDefaults standardUserDefaults]
                       boolForKey:@"shouldNavToAskSegment"];
@@ -439,6 +469,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 #pragma mark - ATOMShareViewDelegate
 //sina
 -(void)tapShare1 {
+
     [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeSinaWeibo ];
 }
 //qqzone
@@ -457,7 +488,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQFriends ];
 }
 -(void)tapShare6 {
-    
+    [DDShareManager copy:_selectedVM];
 }
 -(void)tapShare7 {
     [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
@@ -635,6 +666,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     PIENewAskCollectionCell*cell =
     (PIENewAskCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier2
                                                                       forIndexPath:indexPath];
+//    [cell showPlaceHolderWithAllSubviews];
     [cell injectSource:[_sourceAsk objectAtIndex:indexPath.row]];
     return cell;
 }
@@ -646,11 +678,14 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     NSString* text = vm.content;
     width = (SCREEN_WIDTH - 20) / 2.0;
     
+//    text = @"abcd";
+//    CGSize size1 = [text boundingRectWithSize:CGSizeMake(width,100) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:12]} context:nil].size;
+
     CGSize size = [text boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:12], NSFontAttributeName, nil] context:NULL].size;
-    height = vm.imageHeight/vm.imageWidth * width + 124 + (size.height+10);
+    NSLog(@"size.height %zd",size.height);
+    height = vm.imageHeight/vm.imageWidth * width + 124 + (16+10);
     height = MAX(200,height);
     height = MIN(SCREEN_HEIGHT/1.5, height);
-
     return CGSizeMake(width, height);
     
 }
@@ -730,8 +765,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     return _psActionSheet;
 }
 
-
-
 - (JGActionSheet *)reportActionSheet {
     WS(ws);
     if (!_reportActionSheet) {
@@ -792,7 +825,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         _segmentedControl.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor darkGrayColor], NSForegroundColorAttributeName, nil];
         _segmentedControl.selectedTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil];
         _segmentedControl.selectionIndicatorHeight = 4.0f;
-        _segmentedControl.selectionIndicatorEdgeInsets = UIEdgeInsetsMake(0, 0, -5, 0);
+        _segmentedControl.selectionIndicatorEdgeInsets = UIEdgeInsetsMake(0, 0, -2, 0);
         _segmentedControl.selectionIndicatorColor = [UIColor yellowColor];
         _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
         _segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;

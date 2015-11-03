@@ -301,6 +301,10 @@
     vc.type = PIEUploadTypeReply;
     DDPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath.row];
     vc.askIDToReply = vm.askID;
+    
+    [[NSUserDefaults standardUserDefaults] setObject:@(vm.askID) forKey:@"AskIDToReply"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
 }
 

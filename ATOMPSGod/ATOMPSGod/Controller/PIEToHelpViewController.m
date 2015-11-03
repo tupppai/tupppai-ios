@@ -14,8 +14,8 @@
 #import "PIEToHelpTableViewCell2.h"
 #import "PIEFriendViewController.h"
 #import "PIECarouselViewController.h"
-
-
+#import "DDNavigationController.h"
+#import "AppDelegate.h"
 @interface PIEToHelpViewController () <UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,QBImagePickerControllerDelegate>
 @property (nonatomic, strong) NSMutableArray *sourceToHelp;
 @property (nonatomic, assign) NSInteger currentIndex_ToHelp;
@@ -77,7 +77,8 @@
             vc.pageVM = vm;
             [self.navigationController pushViewController:vc animated:YES];
         } else {
-            [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
+//            DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+            [[AppDelegate APP].mainTabBarController presentViewController:self.QBImagePickerController animated:YES completion:nil];
         }
     }
 }
@@ -175,6 +176,9 @@
     vc.type = PIEUploadTypeReply;
     DDPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath.row];
     vc.askIDToReply = vm.askID;
+    [[NSUserDefaults standardUserDefaults] setObject:@(vm.askID) forKey:@"AskIDToReply"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
     [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
 }
 

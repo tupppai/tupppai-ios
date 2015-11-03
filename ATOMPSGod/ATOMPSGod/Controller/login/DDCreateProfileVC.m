@@ -10,7 +10,7 @@
 #import "PIECreateProfileView.h"
 #import "DDPhoneRegisterVC.h"
 #import "ATOMHeaderImageCropperViewController.h"
-#import "ATOMUploadImage.h"
+#import "PIEUploadManager.h"
 #import "ATOMImage.h"
 #import "JGActionSheet.h"
 #import "DDLoginNavigationController.h"
@@ -184,7 +184,7 @@
 - (void)cropHeaderImageCompleteWith:(UIImage *)image {
     NSData *data = UIImageJPEGRepresentation(image, 0.2);
     [_createProfileView.userHeaderButton setBackgroundImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
-    ATOMUploadImage *uploadImage = [ATOMUploadImage new];
+    PIEUploadManager *uploadImage = [PIEUploadManager new];
     [uploadImage UploadImage:data WithBlock:^(ATOMImage *imageInfomation, NSError *error) {
         if (error) {
             return ;

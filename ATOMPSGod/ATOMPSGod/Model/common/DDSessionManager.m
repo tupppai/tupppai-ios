@@ -19,29 +19,29 @@ static DDSessionManager *_shareHTTPSessionManager = nil;
         NSString *baseURL = @"http://api.loiter.us/";
 //        NSString *baseURL = @"http://api.qiupsdashen.com/";
         _shareHTTPSessionManager = [[DDSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseURL]];
-        [_shareHTTPSessionManager.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
-            switch (status) {
-                case AFNetworkReachabilityStatusUnknown:
-                    NSLog(@"未知网络");
-                    break;
-                case AFNetworkReachabilityStatusNotReachable:
-                    NSLog(@"网络连接失败");
-                    break;
-                case AFNetworkReachabilityStatusReachableViaWWAN:
-                    NSLog(@"3G网络已连接");
-                    break;
-                case AFNetworkReachabilityStatusReachableViaWiFi:
-                    NSLog(@"WiFi网络已连接");
-                    break;
-                default:
-                    break;
-            }
-        }];
-        [_shareHTTPSessionManager.reachabilityManager startMonitoring];
+//        [_shareHTTPSessionManager.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+//            switch (status) {
+//                case AFNetworkReachabilityStatusUnknown:
+//                    NSLog(@"未知网络");
+//                    break;
+//                case AFNetworkReachabilityStatusNotReachable:
+//                    NSLog(@"网络连接失败");
+//                    break;
+//                case AFNetworkReachabilityStatusReachableViaWWAN:
+//                    NSLog(@"3G网络已连接");
+//                    break;
+//                case AFNetworkReachabilityStatusReachableViaWiFi:
+//                    NSLog(@"WiFi网络已连接");
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }];
+//        [_shareHTTPSessionManager.reachabilityManager startMonitoring];
         _shareHTTPSessionManager.requestSerializer = [AFHTTPRequestSerializer serializer];
         _shareHTTPSessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
-        [_shareHTTPSessionManager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
-        [_shareHTTPSessionManager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+//        [_shareHTTPSessionManager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
+//        [_shareHTTPSessionManager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
         [_shareHTTPSessionManager.requestSerializer setTimeoutInterval:8];
     });
     return _shareHTTPSessionManager;

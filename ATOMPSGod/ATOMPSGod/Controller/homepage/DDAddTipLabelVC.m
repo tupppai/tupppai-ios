@@ -12,7 +12,7 @@
 #import "ATOMInputTipLabelTextView.h"
 #import "DDInviteVC.h"
 #import "DDShareVC.h"
-#import "ATOMUploadImage.h"
+#import "PIEUploadManager.h"
 #import "ATOMImage.h"
 #import "ATOMImageTipLabel.h"
 #import "AppDelegate.h"
@@ -207,7 +207,7 @@
 //上传作品
 - (void)uploadReplyImg {
     NSData *data = UIImageJPEGRepresentation(_workImage, 0.7);
-    ATOMUploadImage *uploadWork = [ATOMUploadImage new];
+    PIEUploadManager *uploadWork = [PIEUploadManager new];
     [uploadWork UploadImage:data WithBlock:^(ATOMImage *imageInformation, NSError *error) {
         _imgUploading = NO;
         if (error) {
@@ -250,7 +250,7 @@
     self.newAskPageViewModel.image = [UIImage imageWithData:data];
     self.newAskPageViewModel.imageWidth =    CGWidth(_addTipLabelView.workImageView.frame);
     self.newAskPageViewModel.imageHeight =   CGHeight(_addTipLabelView.workImageView.frame);
-    ATOMUploadImage *uploadImage = [ATOMUploadImage new];
+    PIEUploadManager *uploadImage = [PIEUploadManager new];
     [uploadImage UploadImage:data WithBlock:^(ATOMImage *imageInformation, NSError *error) {
         _imgUploading = NO;
         if (error) {
