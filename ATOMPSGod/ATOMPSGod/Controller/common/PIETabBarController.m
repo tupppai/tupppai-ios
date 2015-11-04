@@ -42,7 +42,6 @@ static dispatch_once_t once;
 }
 -(void)viewDidLoad {
     [super viewDidLoad];
-    [self uploadDeviceInfo];
     
     [[UITabBarItem appearance] setTitleTextAttributes:@{   NSForegroundColorAttributeName: [UIColor blackColor],                                                           NSFontAttributeName: [UIFont systemFontOfSize:11]
                                                                                  }
@@ -53,14 +52,7 @@ static dispatch_once_t once;
 
     self.delegate = self;
 }
--(void)uploadDeviceInfo {
-    dispatch_once(&once, ^ {
-        NSUUID *oNSUUID = [[UIDevice currentDevice] identifierForVendor];
-        NSString* token = [[NSUserDefaults standardUserDefaults]stringForKey:@"devicetoken"];
-        NSDictionary* param = [NSDictionary dictionaryWithObjectsAndKeys:token, @"device_token",@1,@"platform",@([[UIDevice currentDevice].systemVersion floatValue]),@"device_os",deviceName(),@"device_name",[oNSUUID UUIDString],@"device_mac",@"2.1",@"version",nil];
-        [DDService updateToken:param withBlock:nil];
-    });
-}
+
 - (void)configureTabBarController {
     PIENewViewController *homePageViewController = [PIENewViewController new];
     PIEEliteViewController *myAttentionViewController = [PIEEliteViewController new];

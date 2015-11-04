@@ -84,6 +84,7 @@
     _collectionView.dataSource = self;
     _collectionView.collectionViewLayout = self.layout;
     _collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    _collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnCollectionView:)];
     [_collectionView addGestureRecognizer:tapGesture];
     
@@ -106,6 +107,7 @@
                     action:@selector(textFieldDidChange:)
           forControlEvents:UIControlEventEditingChanged];
     
+    [_textField2 becomeFirstResponder];
     
 }
 
@@ -126,6 +128,8 @@
 }
 
 - (void)tapOnCollectionView:(UITapGestureRecognizer*)gesture {
+    [_textField2 resignFirstResponder];
+
     if (_segmentedControl.selectedSegmentIndex == 1) {
         CGPoint location = [gesture locationInView:self.collectionView];
        NSIndexPath* selectedIndexPath = [self.collectionView indexPathForItemAtPoint:location];

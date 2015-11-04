@@ -10,6 +10,7 @@
 @class ATOMImage;
 
 @interface PIEUploadManager : NSObject
+@property (nonatomic, copy) NSString *type;
 
 - (NSURLSessionDataTask *)UploadImage:(NSData *)data WithBlock:(void (^)(ATOMImage *imageInformation, NSError *error))block;
 - (void)upload:(void (^)(CGFloat percentage,BOOL success))block ;

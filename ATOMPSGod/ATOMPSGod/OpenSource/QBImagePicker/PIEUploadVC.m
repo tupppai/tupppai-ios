@@ -108,8 +108,8 @@
         } else if (_type == PIEUploadTypeReply) {
             [_imageArray insertObject:@"reply" atIndex:0];
         }
-//    }
-
+    [_imageArray addObject:_inputTextView.text];
+    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *yourArrayFileName = [documentsDirectory stringByAppendingPathComponent:@"ToUpload.dat"];

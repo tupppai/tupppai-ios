@@ -71,6 +71,8 @@
 @property (nonatomic, strong) PIEShareView *shareView;
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
 @property (nonatomic, strong)  MRNavigationBarProgressView* progressView;
+@property (nonatomic, assign)  long long timeStamp_ask;
+@property (nonatomic, assign)  long long timeStamp_reply;
 
 @end
 
@@ -84,7 +86,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self commonInit];
-    [self shouldDoUploadJob];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -93,13 +94,16 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 }
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self shouldNavToAskSegment];
-    [self shouldNavToHotSegment];
-    //tricks
+//    [self shouldNavToAskSegment];
+//    [self shouldNavToHotSegment];
+   
+    //tricks to display progressView  if vc re-appear
+    [self shouldDoUploadJob];
 }
 
 -(void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_New" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UploadRightNow" object:nil];
     //compiler would call [super dealloc] automatically in ARC.
 }
 
@@ -130,10 +134,17 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 }
 
 - (void) PleaseDoTheUploadProcess {
-    [[PIEUploadManager new] upload:^(CGFloat percentage,BOOL success) {
+    WS(ws);
+    PIEUploadManager* manager = [PIEUploadManager new];
+    [manager upload:^(CGFloat percentage,BOOL success) {
+        NSLog(@"uploading");
         [_progressView setProgress:percentage animated:YES];
         if (success) {
-//            NSLog(@"PIENewViewController 接受到成功信息");
+            if ([manager.type isEqualToString:@"ask"]) {
+                [ws.scrollView.collectionView.header beginRefreshing];
+            } else if ([manager.type isEqualToString:@"reply"]) {
+                [ws.scrollView.replyTable.header beginRefreshing];
+            }
         }
     }];
 }
@@ -184,17 +195,17 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
 #pragma mark - methods
 
-- (void)shouldNavToHotSegment {
-    BOOL shouldNav = [[NSUserDefaults standardUserDefaults]
-                      boolForKey:@"shouldNavToHotSegment"];
-    if (shouldNav) {
-        [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
-        [_scrollView toggleWithType:PIENewScrollTypeReply];
-        [_hotTableView.header beginRefreshing];
-    }
-    [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:@"shouldNavToHotSegment"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
+//- (void)shouldNavToHotSegment {
+//    BOOL shouldNav = [[NSUserDefaults standardUserDefaults]
+//                      boolForKey:@"shouldNavToHotSegment"];
+//    if (shouldNav) {
+//        [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
+//        [_scrollView toggleWithType:PIENewScrollTypeReply];
+//        [_hotTableView.header beginRefreshing];
+//    }
+//    [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:@"shouldNavToHotSegment"];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
+//}
 
 
 - (void)shouldDoUploadJob {
@@ -209,17 +220,17 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:@"shouldDoUploadJob"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
-- (void)shouldNavToAskSegment {
-    BOOL shouldNav = [[NSUserDefaults standardUserDefaults]
-                      boolForKey:@"shouldNavToAskSegment"];
-    if (shouldNav) {
-        [_segmentedControl setSelectedSegmentIndex:0 animated:YES];
-        [_scrollView toggleWithType:PIENewScrollTypeAsk];
-        [_askCollectionView.header beginRefreshing];
-    }
-    [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:@"shouldNavToAskSegment"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
+//- (void)shouldNavToAskSegment {
+//    BOOL shouldNav = [[NSUserDefaults standardUserDefaults]
+//                      boolForKey:@"shouldNavToAskSegment"];
+//    if (shouldNav) {
+//        [_segmentedControl setSelectedSegmentIndex:0 animated:YES];
+//        [_scrollView toggleWithType:PIENewScrollTypeAsk];
+//        [_askCollectionView.header beginRefreshing];
+//    }
+//    [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:@"shouldNavToAskSegment"];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
+//}
 
 
 - (void)refreshHeader {
@@ -367,8 +378,8 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     _currentAskIndex = 1;
     [_askCollectionView.footer endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary new];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    _timeStamp_ask = [[NSDate date] timeIntervalSince1970];
+    [param setObject:@(_timeStamp_ask) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
@@ -376,7 +387,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [pageManager pullAskSource:param block:^(NSMutableArray *homepageArray) {
         ws.isfirstLoadingAsk = NO;
         if (homepageArray.count) {
-            [ws.sourceAsk addObjectsFromArray:homepageArray];
+            ws.sourceAsk = homepageArray;
             _canRefreshAskFooter = YES;
         }
         else {
@@ -396,8 +407,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [ws.scrollView.collectionView.header endRefreshing];
     _currentAskIndex++;
     NSMutableDictionary *param = [NSMutableDictionary new];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(_timeStamp_ask) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(_currentAskIndex) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
@@ -420,8 +430,8 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     _currentHotIndex = 1;
     [_hotTableView.footer endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary new];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    _timeStamp_reply = [[NSDate date] timeIntervalSince1970];
+    [param setObject:@(_timeStamp_reply) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(1) forKey:@"page"];
@@ -430,8 +440,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [pageManager pullReplySource:param block:^(NSMutableArray *array) {
         ws.isfirstLoadingReply = NO;
         if (array.count) {
-                [ws.sourceReply removeAllObjects];
-                [ws.sourceReply addObjectsFromArray:array] ;
+                ws.sourceReply = array;
                 _canRefreshReplyFooter = YES;
         }
         else {
@@ -447,8 +456,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     _currentHotIndex ++;
     [_hotTableView.header endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary new];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(_timeStamp_reply) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(_currentHotIndex) forKey:@"page"];

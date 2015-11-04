@@ -12,7 +12,7 @@
 @interface PIEUploadManager()
 @property (nonatomic, strong) NSMutableArray *uploadIdArray;
 @property (nonatomic, strong) NSMutableArray *ratioArray;
-@property (nonatomic, copy) NSString *type;
+@property (nonatomic, copy) NSString *desc;
 
 @end
 @implementation PIEUploadManager
@@ -66,14 +66,13 @@
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *filePath2 = [documentsDirectory stringByAppendingPathComponent:@"ToUpload.dat"];
     NSArray* toUploadInfoArray = [NSArray arrayWithContentsOfFile:filePath2];
-    
+    _desc = [toUploadInfoArray lastObject];
     NSData* dataImage1;
     NSData* dataImage2;
     
     UIImage* image1;
     UIImage* image2;
-
-    NSInteger uploadCount = toUploadInfoArray.count - 1;
+    NSInteger uploadCount = toUploadInfoArray.count - 2;
     
     _type = [toUploadInfoArray objectAtIndex:0];
     if (uploadCount == 1) {
@@ -84,7 +83,6 @@
     } else if (uploadCount == 2) {
         dataImage1 = [toUploadInfoArray objectAtIndex:1];
         dataImage2 = [toUploadInfoArray objectAtIndex:2];
-        
         image1 = [UIImage imageWithData:dataImage1];
         image2 = [UIImage imageWithData:dataImage2];
         CGFloat ratio1 = image1.size.height/image1.size.width;
@@ -96,18 +94,22 @@
     if ([_type isEqualToString: @"ask"]) {
         if (uploadCount == 1) {
             [self uploadImage:dataImage1 Type:@"ask" withBlock:^(CGFloat percentage,BOOL success) {
-                block(percentage,NO);
+                block(percentage/1.1,NO);
                 if (success) {
-                    [self uploadRestInfo:nil];
+                    [self uploadRestInfo:^(BOOL success) {
+                        if (block) {
+                            block(1.0,success);
+                        }
+                    }];
                 }
             }];
         } else  if (uploadCount == 2) {
             [self uploadImage:dataImage1 Type:@"ask" withBlock:^(CGFloat percentage,BOOL success) {
                 if (!success) {
-                    block(percentage/2,NO);
+                    block(percentage/(100/45),NO);
                 } else {
                     [self uploadImage:dataImage2 Type:@"ask" withBlock:^(CGFloat percentage,BOOL success) {
-                        block(0.5+percentage/2,NO);
+                        block(0.45+percentage/2,NO);
                         if (success) {
                             [self uploadRestInfo:^(BOOL success) {
                                 if (block) {
@@ -123,7 +125,7 @@
     } else if ([_type isEqualToString:@"reply"]) {
         if (uploadCount == 1) {
             [self uploadImage:dataImage1 Type:@"reply" withBlock:^(CGFloat percentage,BOOL success) {
-                block(percentage,NO);
+                block(percentage/1.1,NO);
                 if (success) {
                     [self uploadReplyRestInfo:^(BOOL success) {
                         if (block) {
@@ -143,16 +145,15 @@
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:self.uploadIdArray forKey:@"upload_ids"];
     [param setObject:self.ratioArray forKey:@"ratios"];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
+//    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+//    [param setObject:@(timeStamp) forKey:@"last_updated"];
 
-//    [param setObject:_inputTextView.text forKey:@"desc"];
+    [param setObject:_desc forKey:@"desc"];
     [DDService ddSaveAsk:param withBlock:^(NSInteger newImageID) {
         if (newImageID!=-1) {
 //            [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:@"shouldNavToAskSegment"];
 //            [[NSUserDefaults standardUserDefaults] synchronize];
             [Hud success:@"求P成功"];
-
             if  (block) {
                 block(YES);
             }
@@ -173,7 +174,7 @@
     [param setObject:self.ratioArray forKey:@"ratios"];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
-    //    [param setObject:_inputTextView.text forKey:@"desc"];
+    [param setObject:_desc forKey:@"desc"];
     NSInteger askID = [[NSUserDefaults standardUserDefaults]
                        integerForKey:@"AskIDToReply"];
     [param setObject:@(askID) forKey:@"ask_id"];

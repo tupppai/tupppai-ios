@@ -28,6 +28,7 @@
 #import "PIEEliteHotAskTableViewCell.h"
 #import "PIESearchViewController.h"
 #import "DDNavigationController.h"
+#import "PIEBannerWebViewViewController.h"
 static  NSString* askIndentifier = @"PIEEliteFollowAskTableViewCell";
 static  NSString* replyIndentifier = @"PIEEliteFollowReplyTableViewCell";
 
@@ -42,6 +43,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
 @property (nonatomic, strong) NSMutableArray *sourceFollow;
 @property (nonatomic, strong) NSMutableArray *sourceHot;
+@property (nonatomic, strong) NSMutableArray *sourceBanner;
 
 @property (nonatomic, assign) BOOL isfirstLoadingFollow;
 @property (nonatomic, assign) BOOL isfirstLoadingHot;
@@ -72,6 +74,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     [self configData];
     [self createNavBar];
     [self configSubviews];
+    [self getRemoteSourceBanner];
     [self getSourceIfEmpty_hot:nil];
 }
 
@@ -207,7 +210,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
 - (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
 {
-    return 3;
+    return _sourceBanner.count;
 }
 
 - (UIView *)swipeView:(SwipeView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
@@ -221,19 +224,11 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
         imageView.clipsToBounds = YES;
         [view addSubview:imageView];
     }
-//    DDPageVM* vm = [_source objectAtIndex:index];
+    PIEBannerViewModel* vm = [_sourceBanner objectAtIndex:index];
     for (UIView *subView in view.subviews){
         if([subView isKindOfClass:[UIImageView class]]){
             UIImageView *imageView = (UIImageView *)subView;
-//            [imageView setImageWithURL:[NSURL URLWithString:vm.imageURL]];
-            if (index == 0) {
-                imageView.image = [UIImage imageNamed:@"psps"];
-            } else if (index == 1) {
-                imageView.image = [UIImage imageNamed:@"bg1@2x"];
-            } else if (index == 2) {
-                imageView.image = [UIImage imageNamed:@"intro1"];
-            }
-
+            [imageView setImageWithURL:[NSURL URLWithString:vm.imageUrl]placeholderImage:[UIImage imageNamed:@"cellBG"]];
         }
     }
     ;
@@ -241,10 +236,9 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 }
 
 -(void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index {
-//    PIECarouselViewController* vc = [PIECarouselViewController new];
-//    vc.pageVM = [_source objectAtIndex:index];
-//    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-//    [nav pushViewController:vc animated:YES ];
+    PIEBannerWebViewViewController* vc = [PIEBannerWebViewViewController new];
+    vc.viewModel = [_sourceBanner objectAtIndex:index];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 
@@ -497,7 +491,16 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
 
 #pragma mark - getDataSource
-
+- (void)getRemoteSourceBanner {
+    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [PIEEliteManager getBannerSource:param withBlock:^(NSMutableArray *array) {
+        _sourceBanner = array;
+        [self.sv.swipeView reloadData];
+    }];
+}
 - (void)getRemoteSourceFollow {
     WS(ws);
     [ws.sv.tableFollow.footer endRefreshing];

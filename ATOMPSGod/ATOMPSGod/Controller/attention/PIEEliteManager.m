@@ -29,6 +29,24 @@
     }];
 }
 
+
++ (void)getBannerSource:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *))block {
+    [DDBaseService GET:param url:URL_UKGetBanner block:^(id responseObject) {
+        NSMutableArray* retArray = [NSMutableArray array];
+        for (NSDictionary* dic in [responseObject objectForKey:@"data"]) {
+            PIEBannerViewModel* vm = [PIEBannerViewModel new];
+            vm.ID = (NSInteger)[dic objectForKey:@"id"];
+            vm.desc = [dic objectForKey:@"desc"];
+            vm.url = [dic objectForKey:@"url"];
+            vm.imageUrl = [dic objectForKey:@"large_pic"];
+            vm.imageUrl_thumb = [dic objectForKey:@"small_pic"];
+            [retArray addObject:vm];
+        }
+        if (block) {
+            block(retArray);
+        }
+    }];
+}
 + (void)getHotPages:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *))block {
     [DDService getHotPages:param withBlock:^(NSArray *data) {
         NSMutableArray *returnArray = [NSMutableArray array];

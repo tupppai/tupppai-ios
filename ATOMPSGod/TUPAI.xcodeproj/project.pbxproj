@@ -506,6 +506,9 @@
 		F4BBE7721BBE3F9D00003CDE /* PIEReplyCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE7701BBE3F9D00003CDE /* PIEReplyCollectionViewController.m */; };
 		F4BBE77C1BBE420400003CDE /* PIEReplyCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE77A1BBE420400003CDE /* PIEReplyCollectionCell.m */; };
 		F4BDF4CB1BDF345100DA3575 /* BBBadgeBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BDF4CA1BDF345100DA3575 /* BBBadgeBarButtonItem.m */; };
+		F4C0DFE61BE9D1B7000615CF /* PIEBannerViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C0DFE51BE9D1B7000615CF /* PIEBannerViewModel.m */; };
+		F4C0DFEB1BE9D45F000615CF /* PIEBannerWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C0DFE91BE9D45F000615CF /* PIEBannerWebViewViewController.m */; };
+		F4C0DFEC1BE9D45F000615CF /* PIEBannerWebViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4C0DFEA1BE9D45F000615CF /* PIEBannerWebViewViewController.xib */; };
 		F4D015BB1BA6AF7200A28329 /* PIEThumbAnimateView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D015BA1BA6AF7200A28329 /* PIEThumbAnimateView.m */; };
 		F4D07A5D1BBA3AB70016A8B5 /* PIEEliteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D07A5C1BBA3AB70016A8B5 /* PIEEliteManager.m */; };
 		F4D3686C1BA909E300E6C91C /* PIECameraCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D3686A1BA909E300E6C91C /* PIECameraCell.m */; };
@@ -1550,6 +1553,11 @@
 		F4BBE77A1BBE420400003CDE /* PIEReplyCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEReplyCollectionCell.m; sourceTree = "<group>"; };
 		F4BDF4C91BDF345100DA3575 /* BBBadgeBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBBadgeBarButtonItem.h; sourceTree = "<group>"; };
 		F4BDF4CA1BDF345100DA3575 /* BBBadgeBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBBadgeBarButtonItem.m; sourceTree = "<group>"; };
+		F4C0DFE41BE9D1B7000615CF /* PIEBannerViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEBannerViewModel.h; sourceTree = "<group>"; };
+		F4C0DFE51BE9D1B7000615CF /* PIEBannerViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEBannerViewModel.m; sourceTree = "<group>"; };
+		F4C0DFE81BE9D45F000615CF /* PIEBannerWebViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEBannerWebViewViewController.h; sourceTree = "<group>"; };
+		F4C0DFE91BE9D45F000615CF /* PIEBannerWebViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEBannerWebViewViewController.m; sourceTree = "<group>"; };
+		F4C0DFEA1BE9D45F000615CF /* PIEBannerWebViewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEBannerWebViewViewController.xib; sourceTree = "<group>"; };
 		F4D015B91BA6AF7200A28329 /* PIEThumbAnimateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEThumbAnimateView.h; sourceTree = "<group>"; };
 		F4D015BA1BA6AF7200A28329 /* PIEThumbAnimateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEThumbAnimateView.m; sourceTree = "<group>"; };
 		F4D07A5B1BBA3AB70016A8B5 /* PIEEliteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteManager.h; sourceTree = "<group>"; };
@@ -1811,6 +1819,7 @@
 		5C4F5BD61AA551BF00226F64 /* Elite */ = {
 			isa = PBXGroup;
 			children = (
+				F4C0DFE71BE9D443000615CF /* BannerWebView */,
 				F402F0EF1BE884CC004988B4 /* search */,
 				F4D9F6C91BBFC5390023A53B /* follow */,
 				F4D9F6C81BBFC5310023A53B /* hot */,
@@ -2340,6 +2349,8 @@
 				F402F1031BE8A327004988B4 /* PIEUserViewModel.m */,
 				F4EC11211BCF456E002D1DCF /* PIENotificationVM.h */,
 				F4EC11221BCF456E002D1DCF /* PIENotificationVM.m */,
+				F4C0DFE41BE9D1B7000615CF /* PIEBannerViewModel.h */,
+				F4C0DFE51BE9D1B7000615CF /* PIEBannerViewModel.m */,
 				5C9BDA011AA84CF800715698 /* follow */,
 				5C9BDA021AA84CF800715698 /* homepage */,
 				5C9BDA031AA84CF800715698 /* login */,
@@ -3805,6 +3816,16 @@
 			path = BBBadgeBarButtonItem;
 			sourceTree = "<group>";
 		};
+		F4C0DFE71BE9D443000615CF /* BannerWebView */ = {
+			isa = PBXGroup;
+			children = (
+				F4C0DFE81BE9D45F000615CF /* PIEBannerWebViewViewController.h */,
+				F4C0DFE91BE9D45F000615CF /* PIEBannerWebViewViewController.m */,
+				F4C0DFEA1BE9D45F000615CF /* PIEBannerWebViewViewController.xib */,
+			);
+			name = BannerWebView;
+			sourceTree = "<group>";
+		};
 		F4D3686E1BA954EB00E6C91C /* ask */ = {
 			isa = PBXGroup;
 			children = (
@@ -4161,6 +4182,7 @@
 				F4AE73C01BBA8B7A00734BCB /* cellBG.png in Resources */,
 				3B2D90FF1BA03FB000D6A243 /* LICENSE in Resources */,
 				E942897C1B5B32A200ED26E4 /* NotificationBackgroundSuccessIcon.png in Resources */,
+				F4C0DFEC1BE9D45F000615CF /* PIEBannerWebViewViewController.xib in Resources */,
 				F41366951BBE73D900EE0C4E /* PIEReplyCollectionCell.xib in Resources */,
 				F4D368731BA9552B00E6C91C /* PIENewAskCollectionCell.xib in Resources */,
 				3BE1AEC71B9FE9C900CE2303 /* Info.plist in Resources */,
@@ -4388,6 +4410,7 @@
 				F45ECF4E1BD1DF4600417A75 /* PIEMyCommentedPageViewController.m in Sources */,
 				5C4C70461AB665F500358989 /* DDPageVM.m in Sources */,
 				5C7B8AB01AFA535D00F448CD /* PIEEliteEntity.m in Sources */,
+				F4C0DFEB1BE9D45F000615CF /* PIEBannerWebViewViewController.m in Sources */,
 				5C589A8A1B04F2AC003D828A /* ATOMCameraView.m in Sources */,
 				5C83A8911AC66F910071A024 /* POPGeometry.mm in Sources */,
 				F4DC3D3F1BC131BA00DCF72F /* PIEFriendAskTableViewCell.m in Sources */,
@@ -4407,6 +4430,7 @@
 				5C84062F1ABA6C5300068F35 /* ATOMImageTipLabelDAO.m in Sources */,
 				5C0F04E51ADCF457002003AE /* ATOMConcernMessage.m in Sources */,
 				F45ECF4A1BD1DC3F00417A75 /* PIEMyCommentedPageTableViewCell.m in Sources */,
+				F4C0DFE61BE9D1B7000615CF /* PIEBannerViewModel.m in Sources */,
 				5CDB06341AA428BD0089121E /* NSArray+MASAdditions.m in Sources */,
 				5C3101811AAE8D4300EF529B /* ATOMModifyPasswordViewController.m in Sources */,
 				E9FF94AC1B7476FC00F06819 /* HMSegmentedControl.m in Sources */,

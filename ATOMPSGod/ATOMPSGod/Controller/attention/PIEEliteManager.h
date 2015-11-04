@@ -7,8 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PIEBannerViewModel.h"
+
 //#import "PIEEliteEntity.h"
 @interface PIEEliteManager : NSObject
 + (void)getMyFollow:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *))block;
 + (void)getHotPages:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *))block;
++ (void)getBannerSource:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *))block;
 @end

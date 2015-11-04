@@ -50,5 +50,6 @@ NSString * URL_NotiGetNotifications = @"message/index";
 
 NSString * URL_UKGetUserSearch = @"user/search";
 NSString * URL_UKGetContentSearch = @"thread/search";
+NSString * URL_UKGetBanner = @"banner/get_banner_list";
 
 @end
