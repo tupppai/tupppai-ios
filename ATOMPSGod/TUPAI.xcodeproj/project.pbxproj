@@ -509,6 +509,8 @@
 		F4C0DFE61BE9D1B7000615CF /* PIEBannerViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C0DFE51BE9D1B7000615CF /* PIEBannerViewModel.m */; };
 		F4C0DFEB1BE9D45F000615CF /* PIEBannerWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C0DFE91BE9D45F000615CF /* PIEBannerWebViewViewController.m */; };
 		F4C0DFEC1BE9D45F000615CF /* PIEBannerWebViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4C0DFEA1BE9D45F000615CF /* PIEBannerWebViewViewController.xib */; };
+		F4C0DFF01BE9EF3A000615CF /* PIEFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C0DFEE1BE9EF3A000615CF /* PIEFeedbackViewController.m */; };
+		F4C0DFF11BE9EF3A000615CF /* PIEFeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4C0DFEF1BE9EF3A000615CF /* PIEFeedbackViewController.xib */; };
 		F4D015BB1BA6AF7200A28329 /* PIEThumbAnimateView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D015BA1BA6AF7200A28329 /* PIEThumbAnimateView.m */; };
 		F4D07A5D1BBA3AB70016A8B5 /* PIEEliteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D07A5C1BBA3AB70016A8B5 /* PIEEliteManager.m */; };
 		F4D3686C1BA909E300E6C91C /* PIECameraCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D3686A1BA909E300E6C91C /* PIECameraCell.m */; };
@@ -1558,6 +1560,9 @@
 		F4C0DFE81BE9D45F000615CF /* PIEBannerWebViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEBannerWebViewViewController.h; sourceTree = "<group>"; };
 		F4C0DFE91BE9D45F000615CF /* PIEBannerWebViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEBannerWebViewViewController.m; sourceTree = "<group>"; };
 		F4C0DFEA1BE9D45F000615CF /* PIEBannerWebViewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEBannerWebViewViewController.xib; sourceTree = "<group>"; };
+		F4C0DFED1BE9EF3A000615CF /* PIEFeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEFeedbackViewController.h; sourceTree = "<group>"; };
+		F4C0DFEE1BE9EF3A000615CF /* PIEFeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEFeedbackViewController.m; sourceTree = "<group>"; };
+		F4C0DFEF1BE9EF3A000615CF /* PIEFeedbackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEFeedbackViewController.xib; sourceTree = "<group>"; };
 		F4D015B91BA6AF7200A28329 /* PIEThumbAnimateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEThumbAnimateView.h; sourceTree = "<group>"; };
 		F4D015BA1BA6AF7200A28329 /* PIEThumbAnimateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEThumbAnimateView.m; sourceTree = "<group>"; };
 		F4D07A5B1BBA3AB70016A8B5 /* PIEEliteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteManager.h; sourceTree = "<group>"; };
@@ -3727,6 +3732,9 @@
 				F499E4501BD0EAC300E5F178 /* PIESignOutTableViewCell.xib */,
 				F499E44D1BD0E90100E5F178 /* PIESignOutTableViewCell.h */,
 				F499E44E1BD0E90100E5F178 /* PIESignOutTableViewCell.m */,
+				F4C0DFED1BE9EF3A000615CF /* PIEFeedbackViewController.h */,
+				F4C0DFEE1BE9EF3A000615CF /* PIEFeedbackViewController.m */,
+				F4C0DFEF1BE9EF3A000615CF /* PIEFeedbackViewController.xib */,
 			);
 			name = settings;
 			sourceTree = "<group>";
@@ -4233,6 +4241,7 @@
 				F41E99911BA5BBC8005010C7 /* test1.png in Resources */,
 				F4E530971BD4CFB800FAA65D /* PIELoginViewController.xib in Resources */,
 				E94289791B5B32A200ED26E4 /* NotificationBackgroundMessage@2x.png in Resources */,
+				F4C0DFF11BE9EF3A000615CF /* PIEFeedbackViewController.xib in Resources */,
 				5C9BDA4D1AA85E5600715698 /* breathe.gif in Resources */,
 				F45D8FA71BD87CFD005946E8 /* WeiboSDK.bundle in Resources */,
 				F46117E31BAD1102001A6F1A /* IQKeyboardManager.bundle in Resources */,
@@ -4279,6 +4288,7 @@
 				5C4C70B41AB6A60C00358989 /* DDSessionManager.m in Sources */,
 				F4309E311BC8C7640035033C /* PIEModifySelfView.m in Sources */,
 				5C561A851AB80F400052D4D5 /* ATOMOtherPersonCollectionHeaderView.m in Sources */,
+				F4C0DFF01BE9EF3A000615CF /* PIEFeedbackViewController.m in Sources */,
 				5C83A8901AC66F910071A024 /* POPDecayAnimation.mm in Sources */,
 				5C83A8941AC66F910071A024 /* POPPropertyAnimation.mm in Sources */,
 				5CDB066E1AA46E6F0089121E /* UIAlertView+Blocks.m in Sources */,

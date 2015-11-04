@@ -22,6 +22,7 @@
 #import "PIEMyCommentedPageViewController.h"
 #import "PIESignOutTableViewCell.h"
 #import "PIEMyLikedPagesViewController.h"
+#import "PIEFeedbackViewController.h"
 @interface PIESettingsViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -179,7 +180,7 @@
     }
     else if (section == 3) {
         if (row == 0) {
-            ATOMUserFeedbackViewController *ufvc = [ATOMUserFeedbackViewController new];
+            PIEFeedbackViewController *ufvc = [PIEFeedbackViewController new];
             [self.navigationController pushViewController:ufvc animated:YES];
         } else if (row == 1) {
             //关于我们

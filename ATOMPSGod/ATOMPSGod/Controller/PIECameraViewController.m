@@ -51,6 +51,11 @@
 
 - (void)tapOnG1 {
     [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
+//    [self dismissViewControllerAnimated:YES completion:^{
+//        DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+//        [nav presentViewController:self.QBImagePickerController animated:YES completion:nil];
+//    }];
+
 }
 - (void)tapOnG2 {
     [self dismissViewControllerAnimated:YES completion:^{

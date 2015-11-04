@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PIEFeedbackViewController">
+            <connections>
+                <outlet property="label" destination="9kW-hj-pKh" id="2rc-jP-cL4"/>
+                <outlet property="textView" destination="d72-0D-1jo" id="nZe-ak-zRP"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="d72-0D-1jo" customClass="SZTextView">
+                    <rect key="frame" x="18" y="23" width="564" height="195"/>
+                    <animations/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="195" id="HmC-nJ-8fD"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="欢迎从[产品建议]  [产品体验]  [使用疑惑] 等方面向我们提出建议哦"/>
+                    </userDefinedRuntimeAttributes>
+                </textView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="也可以发送截图到 " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9kW-hj-pKh">
+                    <rect key="frame" x="18" y="232" width="564" height="20.5"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="9kW-hj-pKh" firstAttribute="trailing" secondItem="d72-0D-1jo" secondAttribute="trailing" id="3pa-zg-5ti"/>
+                <constraint firstItem="9kW-hj-pKh" firstAttribute="leading" secondItem="d72-0D-1jo" secondAttribute="leading" id="5w9-pB-3Ft"/>
+                <constraint firstItem="d72-0D-1jo" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="23" id="BaK-Lh-RO3"/>
+                <constraint firstAttribute="trailing" secondItem="d72-0D-1jo" secondAttribute="trailing" constant="18" id="DK3-qG-Vud"/>
+                <constraint firstItem="d72-0D-1jo" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="18" id="Zu5-DH-Wyl"/>
+                <constraint firstItem="9kW-hj-pKh" firstAttribute="top" secondItem="d72-0D-1jo" secondAttribute="bottom" constant="14" id="orA-Hx-Fiw"/>
+            </constraints>
+        </view>
+    </objects>
+</document>

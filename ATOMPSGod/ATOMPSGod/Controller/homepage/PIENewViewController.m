@@ -15,7 +15,6 @@
 #import "PIEShareView.h"
 #import "DDShareManager.h"
 #import "DDCollectManager.h"
-#import "DDInviteVC.h"
 #import "JGActionSheet.h"
 #import "ATOMReportModel.h"
 #import "HMSegmentedControl.h"
@@ -24,20 +23,14 @@
 #import "PIECarouselViewController.h"
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "PIENewAskCollectionCell.h"
-#import "PIERefreshCollectionView.h"
-#import "PIERefreshTableView.h"
 #import "PIEFriendViewController.h"
 #import "PIEReplyCollectionViewController.h"
 
 #import "MRNavigationBarProgressView.h"
 #import "MRProgressView+AFNetworking.h"
-
 #import "PIEUploadManager.h"
-#import "MMPlaceHolder.h"
-@class PIEPageEntity;
 
-@interface PIENewViewController() < UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,PWRefreshBaseCollectionViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,CHTCollectionViewDelegateWaterfallLayout,UICollectionViewDelegate,UICollectionViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
-@property (nonatomic, strong) UIImagePickerController *imagePickerController;
+@interface PIENewViewController() < UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,PWRefreshBaseCollectionViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,CHTCollectionViewDelegateWaterfallLayout,UICollectionViewDelegate,UICollectionViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureReply;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureAsk;
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureAsk;
@@ -57,15 +50,10 @@
 @property (nonatomic, assign) BOOL canRefreshReplyFooter;
 @property (nonatomic, assign) BOOL canRefreshAskFooter;
 
-@property (nonatomic, assign) BOOL isFirstEnterSecondView;
-
-//@property (nonatomic, strong) PIEShareFunctionView *shareFunctionView;
-@property (nonatomic, strong)  JGActionSheet * cameraActionsheet;
 @property (nonatomic, strong)  JGActionSheet * psActionSheet;
 @property (nonatomic, strong)  JGActionSheet * reportActionSheet;
 
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
-@property (nonatomic, strong) PIENewAskCollectionCell *selectedAskCell;
 @property (nonatomic, strong) PIENewReplyTableCell *selectedReplyCell;
 @property (nonatomic, strong) DDPageVM *selectedVM;
 @property (nonatomic, strong) PIEShareView *shareView;
@@ -73,7 +61,6 @@
 @property (nonatomic, strong)  MRNavigationBarProgressView* progressView;
 @property (nonatomic, assign)  long long timeStamp_ask;
 @property (nonatomic, assign)  long long timeStamp_reply;
-
 @end
 
 @implementation PIENewViewController
@@ -86,6 +73,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self commonInit];
+    [self shouldDoUploadJob];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -98,7 +86,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 //    [self shouldNavToHotSegment];
    
     //tricks to display progressView  if vc re-appear
-    [self shouldDoUploadJob];
 }
 
 -(void)dealloc {
@@ -120,7 +107,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     //set this before firstGetRemoteSource
     _canRefreshReplyFooter = YES;
     _canRefreshAskFooter = YES;
-    _isFirstEnterSecondView = YES;
     
     _isfirstLoadingAsk = YES;
     _isfirstLoadingReply = YES;
@@ -943,11 +929,11 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         CGPoint location = [gesture locationInView:_askCollectionView];
         NSIndexPath *indexPath = [_askCollectionView indexPathForItemAtPoint:location];
         if (indexPath) {
-            _selectedAskCell= (PIENewAskCollectionCell *)[_askCollectionView cellForItemAtIndexPath:indexPath];
+           PIENewAskCollectionCell* cell= (PIENewAskCollectionCell *)[_askCollectionView cellForItemAtIndexPath:indexPath];
             _selectedVM = _sourceAsk[indexPath.row];
-            CGPoint p = [gesture locationInView:_selectedAskCell];
+            CGPoint p = [gesture locationInView:cell];
             //点击大图
-            if (CGRectContainsPoint(_selectedAskCell.leftImageView.frame, p) || CGRectContainsPoint(_selectedAskCell.rightImageView.frame, p)) {
+            if (CGRectContainsPoint(cell.leftImageView.frame, p) || CGRectContainsPoint(cell.rightImageView.frame, p)) {
                 [self showShareView];
             }
         }
@@ -958,12 +944,12 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         CGPoint location = [gesture locationInView:_askCollectionView];
         NSIndexPath *indexPath = [_askCollectionView indexPathForItemAtPoint:location];
         if (indexPath) {
-            _selectedAskCell= (PIENewAskCollectionCell *)[_askCollectionView cellForItemAtIndexPath:indexPath];
+       PIENewAskCollectionCell*  cell= (PIENewAskCollectionCell *)[_askCollectionView cellForItemAtIndexPath:indexPath];
             _selectedVM = _sourceAsk[indexPath.row];
-            CGPoint p = [gesture locationInView:_selectedAskCell];
+            CGPoint p = [gesture locationInView:cell];
             
             //点击大图
-            if (CGRectContainsPoint(_selectedAskCell.leftImageView.frame, p) || CGRectContainsPoint(_selectedAskCell.rightImageView.frame, p)) {
+            if (CGRectContainsPoint(cell.leftImageView.frame, p) || CGRectContainsPoint(cell.rightImageView.frame, p)) {
                 DDCommentVC* vc = [DDCommentVC new];
                 vc.vm = _selectedVM;
                 //                PIECarouselViewController* vc = [PIECarouselViewController new];
@@ -971,20 +957,20 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
                 [self.navigationController pushViewController:vc animated:YES];
             }
             //点击头像
-            else if (CGRectContainsPoint(_selectedAskCell.avatarView.frame, p)) {
+            else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
                 PIEFriendViewController * friendVC = [PIEFriendViewController new];
                 friendVC.pageVM = _selectedVM;
                 [self.navigationController pushViewController:friendVC animated:YES];
             }
             
             //点击用户名
-            else if (CGRectContainsPoint(_selectedAskCell.nameLabel.frame, p)) {
+            else if (CGRectContainsPoint(cell.nameLabel.frame, p)) {
                 PIEFriendViewController * friendVC = [PIEFriendViewController new];
                 friendVC.pageVM = _selectedVM;
                 [self.navigationController pushViewController:friendVC animated:YES];
             }
             //点击帮p
-            else if (CGRectContainsPoint(_selectedAskCell.bangView.frame, p)) {
+            else if (CGRectContainsPoint(cell.bangView.frame, p)) {
                 [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
             }
         }

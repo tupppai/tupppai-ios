@@ -31,7 +31,6 @@
 #pragma mark - Lazy Initialize
 
 #pragma mark - Config
-static dispatch_once_t once;
 
 - (instancetype)init {
     self = [super init];

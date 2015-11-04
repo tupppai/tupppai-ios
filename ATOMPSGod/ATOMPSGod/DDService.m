@@ -260,13 +260,13 @@
 }
 
 + (void)ddGetSearchContentResult:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
-    [[self class]GET:param url:URL_UKGetContentSearch block:^(id responseObject) {
+    [[self class]POST:param url:URL_UKGetContentSearch block:^(id responseObject) {
         id data = [responseObject objectForKey:@"data"];
         if (block) { block(data); }
     }];
 }
 + (void)ddGetSearchUserResult:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block {
-    [[self class]GET:param url:URL_UKGetUserSearch block:^(id responseObject) {
+    [[self class]POST:param url:URL_UKGetUserSearch block:^(id responseObject) {
         id data = [responseObject objectForKey:@"data"];
         if (block) { block(data); }
     }];
