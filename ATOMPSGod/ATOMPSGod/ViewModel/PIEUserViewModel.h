@@ -60,6 +60,7 @@
  */
 @property (nonatomic, assign) NSInteger proceedingNumber;
 
+@property (nonatomic, assign) BOOL followed;
 @property (nonatomic, assign) bool bindWechat;
 @property (nonatomic, assign) bool bindWeibo;
 @property (nonatomic, assign) bool bindQQ;

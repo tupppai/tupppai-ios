@@ -119,15 +119,26 @@
 
 - (void)pushToFollowingVC {
     PIEFriendFollowingViewController *opvcv = [PIEFriendFollowingViewController new];
-    opvcv.uid = _pageVM.userID;
-    opvcv.userName = _pageVM.username;
+    if (_pageVM) {
+        opvcv.uid = _pageVM.userID;
+        opvcv.userName = _pageVM.username;
+    } else {
+        opvcv.uid = _uid;
+        opvcv.userName = _name;
+    }
+
     [self.navigationController pushViewController:opvcv animated:YES];
 
 }
 - (void)pushToFansVC {
     PIEFriendFansViewController *mfvc = [PIEFriendFansViewController new];
-    mfvc.uid = _pageVM.userID;
-    mfvc.userName = _pageVM.username;
+    if (_pageVM) {
+        mfvc.uid = _pageVM.userID;
+        mfvc.userName = _pageVM.username;
+    } else {
+        mfvc.uid = _uid;
+        mfvc.userName = _name;
+    }
     [self.navigationController pushViewController:mfvc animated:YES];
 }
 
@@ -135,7 +146,11 @@
 - (void)follow {
     _followButton.highlighted = !_followButton.highlighted;
     NSMutableDictionary *param = [NSMutableDictionary new];
-    [param setObject:@(_pageVM.userID) forKey:@"uid"];
+    if (_pageVM) {
+        [param setObject:@(_pageVM.userID) forKey:@"uid"];
+    } else {
+        [param setObject:@(_uid) forKey:@"uid"];
+    }
     [DDService follow:param withBlock:^(BOOL success) {
         if (!success) {
             _followButton.highlighted = !_followButton.highlighted;
@@ -239,8 +254,12 @@
 //    WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
-    [param setObject:@(_pageVM.userID) forKey:@"uid"];
-//    [param setObject:@(15) forKey:@"size"];
+    if (_pageVM) {
+        [param setObject:@(_pageVM.userID) forKey:@"uid"];
+    } else {
+        [param setObject:@(_uid) forKey:@"uid"];
+    }
+    //    [param setObject:@(15) forKey:@"size"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     

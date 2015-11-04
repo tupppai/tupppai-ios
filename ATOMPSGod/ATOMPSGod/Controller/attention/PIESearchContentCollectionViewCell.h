@@ -10,7 +10,7 @@
 
 @interface PIESearchContentCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIButton *avatarButton;
-@property (weak, nonatomic) IBOutlet UIButton *nameButton;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *typeImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;

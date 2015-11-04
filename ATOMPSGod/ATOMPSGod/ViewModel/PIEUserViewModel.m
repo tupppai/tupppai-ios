@@ -26,7 +26,7 @@
         _proceedingNumber = user.proceedingNumber;
         _bindWechat = user.bindWechat;
         _bindWeibo = user.bindWeibo;
-        
+        _followed = user.isMyFollow;
         _replies = [NSMutableArray array];
     }
     return self;

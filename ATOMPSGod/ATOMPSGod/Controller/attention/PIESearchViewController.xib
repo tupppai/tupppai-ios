@@ -7,11 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PIESearchViewController">
             <connections>
-                <outlet property="cancelButton" destination="Bpl-4j-o6d" id="eXU-Pm-EI7"/>
                 <outlet property="collectionView" destination="vtR-50-xMk" id="dhm-Fb-v2d"/>
                 <outlet property="segmentedControl" destination="Dss-7S-F7o" id="ks4-NI-3ef"/>
-                <outlet property="textField" destination="IGH-Mx-nzM" id="ffC-o7-UBT"/>
-                <outlet property="topContainerView" destination="FOO-Cr-9py" id="V0F-d0-AcR"/>
                 <outlet property="verticalLine" destination="6Lg-4L-RKC" id="bn4-hl-7tO"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -21,46 +18,19 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FOO-Cr-9py">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
-                    <subviews>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="搜索用户内容" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IGH-Mx-nzM">
-                            <rect key="frame" x="10" y="31" width="525" height="17"/>
-                            <animations/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
-                        </textField>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bpl-4j-o6d">
-                            <rect key="frame" x="545" y="24.5" width="46" height="30"/>
-                            <animations/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="30" id="P5k-SR-Q6z"/>
-                                <constraint firstAttribute="width" constant="46" id="bCv-g0-S8g"/>
-                            </constraints>
-                            <state key="normal" title="取消">
-                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                        </button>
-                    </subviews>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="vtR-50-xMk">
+                    <rect key="frame" x="0.0" y="42" width="600" height="558"/>
                     <animations/>
-                    <color key="backgroundColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="64" id="JNp-Vg-UT6"/>
-                        <constraint firstItem="Bpl-4j-o6d" firstAttribute="leading" secondItem="IGH-Mx-nzM" secondAttribute="trailing" constant="10" id="ULx-pi-7b3"/>
-                        <constraint firstItem="IGH-Mx-nzM" firstAttribute="top" secondItem="FOO-Cr-9py" secondAttribute="top" constant="31" id="aCG-FD-uGY"/>
-                        <constraint firstItem="Bpl-4j-o6d" firstAttribute="top" secondItem="FOO-Cr-9py" secondAttribute="top" constant="26" id="gc3-Rt-he6"/>
-                        <constraint firstItem="Bpl-4j-o6d" firstAttribute="centerY" secondItem="IGH-Mx-nzM" secondAttribute="centerY" id="iyi-B4-2Vm"/>
-                        <constraint firstAttribute="trailing" secondItem="Bpl-4j-o6d" secondAttribute="trailing" constant="9" id="tDg-NG-4UL"/>
-                        <constraint firstItem="IGH-Mx-nzM" firstAttribute="leading" secondItem="FOO-Cr-9py" secondAttribute="leading" constant="10" id="zHY-MC-hlz"/>
-                    </constraints>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="gc3-Rt-he6"/>
-                        </mask>
-                    </variation>
-                </view>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ugb-IM-fzv">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dss-7S-F7o" customClass="HMSegmentedControl">
-                    <rect key="frame" x="0.0" y="64" width="600" height="42"/>
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="42"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Lg-4L-RKC">
                             <rect key="frame" x="299" y="0.0" width="1" height="42"/>
@@ -80,30 +50,16 @@
                         <constraint firstItem="6Lg-4L-RKC" firstAttribute="top" secondItem="Dss-7S-F7o" secondAttribute="top" id="zQg-WZ-IdQ"/>
                     </constraints>
                 </view>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="vtR-50-xMk">
-                    <rect key="frame" x="0.0" y="106" width="600" height="494"/>
-                    <animations/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ugb-IM-fzv">
-                        <size key="itemSize" width="50" height="50"/>
-                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    </collectionViewFlowLayout>
-                </collectionView>
             </subviews>
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="Dss-7S-F7o" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="1sy-h1-sxk"/>
                 <constraint firstAttribute="bottom" secondItem="vtR-50-xMk" secondAttribute="bottom" id="2yd-wj-7KY"/>
                 <constraint firstItem="vtR-50-xMk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="GiX-KU-9i7"/>
                 <constraint firstAttribute="trailing" secondItem="Dss-7S-F7o" secondAttribute="trailing" id="Ika-s6-w1r"/>
-                <constraint firstAttribute="trailing" secondItem="FOO-Cr-9py" secondAttribute="trailing" id="eKl-y9-gaY"/>
-                <constraint firstItem="Dss-7S-F7o" firstAttribute="top" secondItem="FOO-Cr-9py" secondAttribute="bottom" id="hvZ-67-CAS"/>
                 <constraint firstItem="vtR-50-xMk" firstAttribute="top" secondItem="Dss-7S-F7o" secondAttribute="bottom" id="pt2-a9-5Oy"/>
                 <constraint firstAttribute="trailing" secondItem="vtR-50-xMk" secondAttribute="trailing" id="r12-ph-LOK"/>
-                <constraint firstItem="FOO-Cr-9py" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="vsK-Ml-EWq"/>
-                <constraint firstItem="FOO-Cr-9py" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="wFP-pj-RVf"/>
                 <constraint firstItem="Dss-7S-F7o" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="xto-9D-4nD"/>
             </constraints>
         </view>

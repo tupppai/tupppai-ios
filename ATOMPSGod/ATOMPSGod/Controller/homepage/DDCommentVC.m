@@ -453,8 +453,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)configFooterRefresh {
     [self.tableView addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     NSMutableArray *animatedImages = [NSMutableArray array];
-    for (int i = 1; i<=3; i++) {
-        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"loading_%ddot", i]];
+    for (int i = 1; i<=6; i++) {
+        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"pie_loading_%d", i]];
         [animatedImages addObject:image];
     }
     self.tableView.gifFooter.refreshingImages = animatedImages;

@@ -23,6 +23,10 @@
         imageView.contentMode = UIViewContentModeScaleAspectFill;
         imageView.clipsToBounds = YES;
     }
+    _avatarButton.userInteractionEnabled = NO;
+    _nameButton.userInteractionEnabled = NO;
+    _followButton.userInteractionEnabled = NO;
+    
 }
 - (void)injectSauce:(PIEUserViewModel*)vm {
     [_avatarButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:vm.avatar] placeholderImage:[UIImage imageNamed:@"cellBG"]];
@@ -35,6 +39,7 @@
             [imageView setImageWithURL:[NSURL URLWithString:vm2.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
         } else break;
     }
+    _followButton.selected = vm.followed;
 }
 -(void)prepareForReuse {
     [super prepareForReuse];

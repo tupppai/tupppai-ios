@@ -27,6 +27,7 @@
 #import "PIEEliteHotReplyTableViewCell.h"
 #import "PIEEliteHotAskTableViewCell.h"
 #import "PIESearchViewController.h"
+#import "DDNavigationController.h"
 static  NSString* askIndentifier = @"PIEEliteFollowAskTableViewCell";
 static  NSString* replyIndentifier = @"PIEEliteFollowReplyTableViewCell";
 
@@ -178,7 +179,11 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     
 }
 - (void) search {
-        [self presentViewController:[PIESearchViewController new] animated:NO completion:nil];
+    [self.navigationController pushViewController:[PIESearchViewController new] animated:YES];
+//    PIESearchViewController* vc = [PIESearchViewController new];
+//    vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+//    DDNavigationController* nav = [[DDNavigationController alloc]initWithRootViewController:vc];
+//    [self presentViewController:nav animated:YES completion:nil];
 }
 - (void)refreshHeader {
     if (_sv.type == PIEPageTypeEliteFollow && ![_sv.tableFollow.header isRefreshing]) {

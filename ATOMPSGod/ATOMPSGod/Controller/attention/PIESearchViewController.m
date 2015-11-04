@@ -12,13 +12,17 @@
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "PIESearchUserCollectionViewCell.h"
 #import "PIESearchContentCollectionViewCell.h"
+#import "PIEFriendViewController.h"
+#import "PIECarouselViewController.h"
+#import "PIEUserViewModel.h"
 
-@interface PIESearchViewController ()<UITextFieldDelegate,UICollectionViewDataSource,UICollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout>
-@property (weak, nonatomic) IBOutlet UIView *topContainerView;
+@interface PIESearchViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout>
 @property (weak, nonatomic) IBOutlet HMSegmentedControl *segmentedControl;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIView *verticalLine;
-@property (weak, nonatomic) IBOutlet UITextField *textField;
+
+@property (nonatomic, strong) UITextField *textField2;
+
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 
 
@@ -35,24 +39,15 @@
     
     _sourceUser = [NSMutableArray new];
     _sourceContent = [NSMutableArray new];
-    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
-        self.edgesForExtendedLayout = UIRectEdgeAll;
-    }
+//    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
+//        self.edgesForExtendedLayout = UIRectEdgeAll;
+//    }
     
     [_cancelButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
     UIImageView* searchView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 25, 15)];
     searchView.image = [UIImage imageNamed:@"pie_search"];
     searchView.contentMode = UIViewContentModeLeft;
     
-    [_textField addTarget:self
-                  action:@selector(textFieldDidChange:)
-        forControlEvents:UIControlEventEditingChanged];
-    _textField.leftView = searchView;
-    _textField.delegate = self;
-    [_textField becomeFirstResponder];
-    _textField.leftViewMode = UITextFieldViewModeAlways;
-    _topContainerView.backgroundColor = [UIColor colorWithHex:0xFFF119];
-    _topContainerView.layer.shadowOffset = CGSizeMake(0, 1);
     _verticalLine.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.3];
     _segmentedControl.sectionTitles =  @[@"用户",@"内容"];
     _segmentedControl.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15], NSFontAttributeName, [UIColor colorWithHex:0x000000 andAlpha:0.3], NSForegroundColorAttributeName, nil];
@@ -89,7 +84,98 @@
     _collectionView.dataSource = self;
     _collectionView.collectionViewLayout = self.layout;
     _collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnCollectionView:)];
+    [_collectionView addGestureRecognizer:tapGesture];
+    
+    UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
+    backButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [backButton setImage:[UIImage imageNamed:@"pie_search"] forState:UIControlStateNormal];
+    //    backButton.backgroundColor = [UIColor clearColor];
+    [backButton addTarget:self action:@selector(tapSearch) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *barBackButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    self.navigationItem.leftBarButtonItem =  barBackButtonItem;
+    UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(tapCancel)];
+    self.navigationItem.rightBarButtonItem =  rightButtonItem;
+    
+    _textField2 = [[UITextField alloc]initWithFrame:CGRectMake(0 , 0, SCREEN_WIDTH - 100, 30)];
+    _textField2.borderStyle = UITextBorderStyleNone;
+    _textField2.placeholder = @"搜索用户内容";
+    _textField2.font = [UIFont systemFontOfSize:14.0];
+    self.navigationItem.titleView = _textField2;
+    [_textField2 addTarget:self
+                    action:@selector(textFieldDidChange:)
+          forControlEvents:UIControlEventEditingChanged];
+    
+    
 }
+
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithHex:0xfff119];
+}
+- (void) tapSearch {
+    [self.textField2 becomeFirstResponder];
+}
+- (void) tapCancel {
+    [self.navigationController popViewControllerAnimated:NO];
+}
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+}
+
+- (void)tapOnCollectionView:(UITapGestureRecognizer*)gesture {
+    if (_segmentedControl.selectedSegmentIndex == 1) {
+        CGPoint location = [gesture locationInView:self.collectionView];
+       NSIndexPath* selectedIndexPath = [self.collectionView indexPathForItemAtPoint:location];
+        
+        if (selectedIndexPath) {
+            DDPageVM* vm = [_sourceContent objectAtIndex:selectedIndexPath.row];
+            PIESearchContentCollectionViewCell* cell = (PIESearchContentCollectionViewCell*)[self.collectionView cellForItemAtIndexPath:selectedIndexPath];
+            CGPoint p = [gesture locationInView:cell];
+            if (CGRectContainsPoint(cell.avatarButton.frame, p) || CGRectContainsPoint(cell.nameLabel.frame, p)) {
+                PIEFriendViewController* vc = [PIEFriendViewController new];
+                vc.pageVM = vm;
+                [self.navigationController pushViewController:vc animated:YES];
+            } else if (CGRectContainsPoint(cell.imageView.frame, p)) {
+                PIECarouselViewController* vc = [PIECarouselViewController new];
+                vc.pageVM = vm;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
+    }else if (_segmentedControl.selectedSegmentIndex == 0) {
+        CGPoint location = [gesture locationInView:self.collectionView];
+        NSIndexPath* selectedIndexPath = [self.collectionView indexPathForItemAtPoint:location];
+        if (selectedIndexPath) {
+            PIEUserViewModel* vm = [_sourceUser objectAtIndex:selectedIndexPath.row];
+            PIESearchUserCollectionViewCell* cell = (PIESearchUserCollectionViewCell*)[self.collectionView cellForItemAtIndexPath:selectedIndexPath];
+            CGPoint p = [gesture locationInView:cell];
+            if (CGRectContainsPoint(cell.avatarButton.frame, p) || CGRectContainsPoint(cell.nameButton.frame, p)) {
+                PIEFriendViewController* vc = [PIEFriendViewController new];
+                vc.uid = vm.uid;
+                vc.name = vm.username;
+                [self.navigationController pushViewController:vc animated:YES];
+            } else if (CGRectContainsPoint(cell.followButton.frame, p)) {
+                cell.followButton.selected = !cell.followButton.selected;
+                NSMutableDictionary *param = [NSMutableDictionary new];
+                [param setObject:@(vm.uid) forKey:@"uid"];
+                [DDService follow:param withBlock:^(BOOL success) {
+                    if (!success) {
+                        cell.followButton.selected = !cell.followButton.selected;
+                    } else {
+                    }
+                }];
+
+            }
+        }
+
+    }
+}
+
+- (void)follow:(NSInteger)uid {
+}
+
 -(CHTCollectionViewWaterfallLayout *)layout {
     if (!_layout) {
         _layout = [[CHTCollectionViewWaterfallLayout alloc] init];
