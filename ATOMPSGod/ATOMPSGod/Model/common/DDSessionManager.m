@@ -16,8 +16,11 @@ static DDSessionManager *_shareHTTPSessionManager = nil;
 + (instancetype)shareHTTPSessionManager {
     dispatch_once(&onceToken, ^{
 //        NSString *baseURL = @"http://android.loiter.us/v1/";
+#if DEBUG
         NSString *baseURL = @"http://api.loiter.us/";
-//        NSString *baseURL = @"http://api.qiupsdashen.com/";
+#else
+        NSString *baseURL = @"http://api.qiupsdashen.com/";
+#endif
         _shareHTTPSessionManager = [[DDSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseURL]];
 //        [_shareHTTPSessionManager.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
 //            switch (status) {

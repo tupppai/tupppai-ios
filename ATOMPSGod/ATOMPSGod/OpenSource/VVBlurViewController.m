@@ -50,9 +50,8 @@
     self.modalPresentationStyle = UIModalPresentationCustom;
     
     _presenter = [[VVBlurPresenter alloc] init];
-    _blurStyle = UIBlurEffectStyleDark;
-    _presenter.blurStyle = _blurStyle;
-    
+//    _blurStyle = UIBlurEffectStyleDark;
+//    _presenter.blurStyle = _blurStyle;
     self.transitioningDelegate = _presenter;
 }
 
@@ -61,11 +60,11 @@
     self.view.backgroundColor = [UIColor clearColor];
 }
 
--(void)setBlurStyle:(UIBlurEffectStyle)blurStyle {
-    if (blurStyle != _blurStyle) {
-        _blurStyle = blurStyle;
-        _presenter.blurStyle = blurStyle;
-    }
-}
+//-(void)setBlurStyle:(UIBlurEffectStyle)blurStyle {
+//    if (blurStyle != _blurStyle) {
+//        _blurStyle = blurStyle;
+//        _presenter.blurStyle = blurStyle;
+//    }
+//}
 
 @end

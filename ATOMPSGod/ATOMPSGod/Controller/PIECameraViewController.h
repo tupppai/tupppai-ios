@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "VVBlurViewController.h"
-@interface PIECameraViewController : VVBlurViewController
+@interface PIECameraViewController : DDBaseVC
 @property (weak, nonatomic) IBOutlet UIView *bg1;
 @property (weak, nonatomic) IBOutlet UIView *bg2;
 

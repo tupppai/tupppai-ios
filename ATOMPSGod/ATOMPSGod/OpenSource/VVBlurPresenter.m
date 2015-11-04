@@ -34,7 +34,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _blurStyle = UIBlurEffectStyleDark;
+//        _blurStyle = UIBlurEffectStyleDark;
     }
     return self;
 }
@@ -43,7 +43,7 @@
                                                            presentingViewController:(UIViewController *)presenting
                                                                sourceViewController:(UIViewController *)source {
     if (!self.animationController) {
-        self.animationController = [[VVBlurPresentationController alloc] initWithPresentedViewController:presented presentingViewController:presenting style:self.blurStyle];
+        self.animationController = [[VVBlurPresentationController alloc] initWithPresentedViewController:presented presentingViewController:presenting];
         self.animationController.vv_presentationDelegate = self;
     }
     return self.animationController;
@@ -66,12 +66,12 @@
     return transition;
 }
 
-- (void)setBlurStyle:(UIBlurEffectStyle)blurStyle {
-    if (_blurStyle != blurStyle) {
-        _blurStyle = blurStyle;
-        self.animationController.blurStyle = blurStyle;
-    }
-}
+//- (void)setBlurStyle:(UIBlurEffectStyle)blurStyle {
+//    if (_blurStyle != blurStyle) {
+//        _blurStyle = blurStyle;
+////        self.animationController.blurStyle = blurStyle;
+//    }
+//}
 
 -(void)presentationControllerDidDismissed:(VVBlurPresentationController *)controller {
     self.animationController = nil;

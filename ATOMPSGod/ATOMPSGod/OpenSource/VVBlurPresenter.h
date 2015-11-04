@@ -24,5 +24,5 @@
 #import <UIKit/UIKit.h>
 
 @interface VVBlurPresenter : NSObject <UIViewControllerTransitioningDelegate>
-@property (nonatomic, assign) UIBlurEffectStyle blurStyle;
+//@property (nonatomic, assign) UIBlurEffectStyle blurStyle;
 @end

@@ -22,43 +22,48 @@
 //  THE SOFTWARE.
 
 #import "VVBlurPresentationController.h"
-
+#import "FXBlurView.h"
 @interface VVBlurPresentationController ()
 //We need an effect container view to suppress the annoying warning on alpha of a visual effect view.
-@property (nonatomic, strong) UIView *effectContainerView;
-@property (nonatomic, strong) UIVisualEffectView *dimmingView;
+@property (nonatomic, strong) FXBlurView *effectContainerView;
+@property (nonatomic, strong) UIView *dimmingView;
 @end
 
 @implementation VVBlurPresentationController
 
-- (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController presentingViewController:(UIViewController *)presentingViewController style:(UIBlurEffectStyle)style {
+- (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController presentingViewController:(UIViewController *)presentingViewController  {
     self = [super initWithPresentedViewController:presentedViewController presentingViewController:presentingViewController];
     if (self) {
-        UIBlurEffect *effect = [UIBlurEffect effectWithStyle:style];
-        _dimmingView = [[UIVisualEffectView alloc] initWithEffect:effect];
-        _blurStyle = style;
-        _effectContainerView = [UIView new];
-        _effectContainerView.alpha = 0.0;
+//        UIBlurEffect *effect = [UIBlurEffect effectWithStyle:style];
+//        _dimmingView = [UIView new];
+//        _dimmingView.backgroundColor = [UIColor lightGrayColor];
+//        _dimmingView.blurRadius = 0.5;
+//        _dimmingView.dynamic = YES;
+//        _blurStyle = style;
+        _effectContainerView = [FXBlurView new];
+        _effectContainerView.dynamic = NO;
+//        _effectContainerView.backgroundColor = [UIColor lightGrayColor];
+//        [self.containerView addSubview:self.effectContainerView];
     }
     return self;
 }
 
 - (void)presentationTransitionWillBegin {
     self.effectContainerView.frame = self.containerView.bounds;
-    self.dimmingView.frame = self.containerView.bounds;
+//    self.dimmingView.frame = self.containerView.bounds;
 
-    [self.effectContainerView insertSubview:self.dimmingView atIndex:0];
+//    [self.effectContainerView insertSubview:self.dimmingView atIndex:0];
     [self.containerView insertSubview:self.effectContainerView atIndex:0];
     
-    self.effectContainerView.alpha = 0.0;
+//    self.effectContainerView.alpha = 0.0;
     
     id <UIViewControllerTransitionCoordinator> coordinator = [self.presentedViewController transitionCoordinator];
     if (coordinator) {
         [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-            self.effectContainerView.alpha = 1.0;
+//            self.effectContainerView.alpha = 1.0;
         } completion:nil];
     } else {
-        self.effectContainerView.alpha = 1.0;
+//        self.effectContainerView.alpha = 1.0;
     }
 }
 
@@ -66,10 +71,10 @@
     id <UIViewControllerTransitionCoordinator> coordinator = [self.presentedViewController transitionCoordinator];
     if (coordinator) {
         [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-            self.effectContainerView.alpha = 0.0;
+//            self.effectContainerView.alpha = 0.0;
         } completion:nil];
     } else {
-        self.effectContainerView.alpha = 0.0;
+//        self.effectContainerView.alpha = 0.0;
     }
 }
 
@@ -83,7 +88,7 @@
 
 - (void)containerViewWillLayoutSubviews {
     self.effectContainerView.frame = self.containerView.bounds;
-    self.dimmingView.frame = self.containerView.bounds;
+//    self.dimmingView.frame = self.containerView.bounds;
     self.presentedView.frame = self.containerView.bounds;
 }
 
@@ -96,22 +101,22 @@
 }
 
 - (void)setBlurStyle:(UIBlurEffectStyle)blurStyle {
-    if (blurStyle != _blurStyle) {
-        _blurStyle = blurStyle;
-        
-        UIView *previousDimmingView = _dimmingView;
-        
-        UIBlurEffect *effect = [UIBlurEffect effectWithStyle:blurStyle];
-        self.dimmingView = [[UIVisualEffectView alloc] initWithEffect:effect];
-        NSArray *subviews = [self.effectContainerView subviews];
-        for (UIView *view in subviews) {
-            if (view == previousDimmingView) {
-                self.dimmingView.frame = previousDimmingView.frame;
-                [self.effectContainerView insertSubview:self.dimmingView aboveSubview:previousDimmingView];
-                [previousDimmingView removeFromSuperview];
-            }
-        }
-    }
+//    if (blurStyle != _blurStyle) {
+//        _blurStyle = blurStyle;
+//    
+//        UIView *previousDimmingView = _dimmingView;
+//        
+////        UIBlurEffect *effect = [UIBlurEffect effectWithStyle:blurStyle];
+//        self.dimmingView = [FXBlurView new];
+//        NSArray *subviews = [self.effectContainerView subviews];
+//        for (UIView *view in subviews) {
+//            if (view == previousDimmingView) {
+//                self.dimmingView.frame = previousDimmingView.frame;
+//                [self.effectContainerView insertSubview:self.dimmingView aboveSubview:previousDimmingView];
+//                [previousDimmingView removeFromSuperview];
+//            }
+//        }
+//    }
 }
 
 @end

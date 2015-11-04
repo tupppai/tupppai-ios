@@ -13,7 +13,7 @@
 #import "PIETabBarController.h"
 #import "DDNavigationController.h"
 #import "PIEToHelpViewController.h"
-
+#import "FXBlurView.h"
 @interface PIECameraViewController () <QBImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *askBackgroundView;
 @property (weak, nonatomic) IBOutlet UIView *replyBackgroundView;
@@ -33,13 +33,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    ((FXBlurView*)self.view).dynamic = NO;
+    ((FXBlurView*)self.view).blurRadius = 100;
+    ((FXBlurView*)self.view).tintColor = [UIColor blackColor];
+    
     _askBackgroundView.layer.cornerRadius = _askBackgroundView.frame.size.width/2;
     _replyBackgroundView.layer.cornerRadius = _replyBackgroundView.frame.size.width/2;
     [_closeView addTarget:self action:@selector(dismissViewController) forControlEvents:UIControlEventTouchUpInside];
-    
     _bg1.userInteractionEnabled = YES;
     _bg2.userInteractionEnabled = YES;
-    
     UITapGestureRecognizer* tapG = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissViewController)];
     [self.view addGestureRecognizer:tapG];
 

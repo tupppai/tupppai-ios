@@ -33,9 +33,9 @@
 
 @interface VVBlurPresentationController : UIPresentationController
 
-@property (nonatomic, assign) UIBlurEffectStyle blurStyle;
+//@property (nonatomic, assign) UIBlurEffectStyle blurStyle;
 @property (nonatomic, weak) id<VVBlurPresentationControllerDelegate> vv_presentationDelegate;
 
-- (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController presentingViewController:(UIViewController *)presentingViewController style:(UIBlurEffectStyle)style;
+- (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController presentingViewController:(UIViewController *)presentingViewController;
 
 @end

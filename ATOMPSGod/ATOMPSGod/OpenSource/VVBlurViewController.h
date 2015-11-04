@@ -24,5 +24,5 @@
 #import <UIKit/UIKit.h>
 
 @interface VVBlurViewController : UIViewController
-@property (nonatomic, assign) UIBlurEffectStyle blurStyle;
+//@property (nonatomic, assign) UIBlurEffectStyle blurStyle;
 @end
