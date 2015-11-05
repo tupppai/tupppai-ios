@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "VVBlurViewController.h"
-@interface PIECameraViewController : DDBaseVC
+#import "VVCustomPresentViewController.h"
+@interface PIECameraViewController : VVCustomPresentViewController
 @property (weak, nonatomic) IBOutlet UIView *bg1;
 @property (weak, nonatomic) IBOutlet UIView *bg2;
 

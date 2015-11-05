@@ -1,5 +1,5 @@
 //
-//  VVBlurPresenter.h
+//  VVBlurViewController.m
 //
 //  Copyright (c) 2015 Wei Wang (http://onevcat.com)
 //
@@ -21,8 +21,41 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
+#import "VVCustomPresentViewController.h"
+#import "VVPresenter.h"
 
-@interface VVBlurPresenter : NSObject <UIViewControllerTransitioningDelegate>
-//@property (nonatomic, assign) UIBlurEffectStyle blurStyle;
+@interface VVCustomPresentViewController ()
+@property (nonatomic, strong) VVPresenter *presenter;
+@end
+
+@implementation VVCustomPresentViewController
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self vv_commonSetup];
+    }
+    return self;
+}
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        [self vv_commonSetup];
+    }
+    return self;
+}
+
+- (void)vv_commonSetup {
+    self.modalPresentationStyle = UIModalPresentationCustom;
+    
+    _presenter = [[VVPresenter alloc] init];
+    self.transitioningDelegate = _presenter;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+}
+
+
 @end

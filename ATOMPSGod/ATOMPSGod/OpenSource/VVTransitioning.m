@@ -21,12 +21,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import "VVBlurTransitioning.h"
+#import "VVTransitioning.h"
 
-@implementation VVBlurTransitioning
+@implementation VVTransitioning
 
 -(NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-    return 0.5;
+    return 0.3;
 }
 
 -(void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
@@ -51,7 +51,8 @@
     CGRect finalFrame = self.isPresentation ? onScreenFrame : offScreenFrame;
     animatingView.frame = initialFrame;
     
-    [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0.0 usingSpringWithDamping:300.0 initialSpringVelocity:5.0 options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionBeginFromCurrentState animations:^{
+
+    [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0.0 usingSpringWithDamping:10 initialSpringVelocity:5 options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionBeginFromCurrentState animations:^{
         animatingView.frame = finalFrame;
     } completion:^(BOOL finished) {
         if (!self.isPresentation) {

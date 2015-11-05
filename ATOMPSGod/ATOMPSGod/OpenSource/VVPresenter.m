@@ -1,5 +1,5 @@
 //
-//  VVChromeTransitioner.h
+//  VVBlurPresenter.m
 //
 //  Copyright (c) 2015 Wei Wang (http://onevcat.com)
 //
@@ -21,8 +21,40 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
+#import "VVPresenter.h"
+#import "VVBlurPresentationController.h"
+#import "VVTransitioning.h"
 
-@interface VVBlurTransitioning : NSObject <UIViewControllerAnimatedTransitioning>
-@property (nonatomic, assign) BOOL isPresentation;
+@interface VVPresenter ()
+@end
+
+@implementation VVPresenter
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+    }
+    return self;
+}
+
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented
+                                                                 presentingController:(UIViewController *)presenting
+                                                                     sourceController:(UIViewController *)source {
+    
+    VVTransitioning *transition = [VVTransitioning new];
+    transition.isPresentation = YES;
+    return transition;
+    
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
+    
+    VVTransitioning *transition = [VVTransitioning new];
+    transition.isPresentation = NO;
+    return transition;
+}
+
+
+
 @end

@@ -366,10 +366,9 @@
 		E9FF94AC1B7476FC00F06819 /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF94AB1B7476FC00F06819 /* HMSegmentedControl.m */; };
 		F40207311BA7C17C0007CE02 /* PIECameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F402072F1BA7C17C0007CE02 /* PIECameraViewController.m */; };
 		F40207321BA7C17C0007CE02 /* PIECameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F40207301BA7C17C0007CE02 /* PIECameraViewController.xib */; };
-		F40207401BA7C4160007CE02 /* VVBlurPresentationController.m in Sources */ = {isa = PBXBuildFile; fileRef = F40207391BA7C4160007CE02 /* VVBlurPresentationController.m */; };
-		F40207411BA7C4160007CE02 /* VVBlurPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = F402073B1BA7C4160007CE02 /* VVBlurPresenter.m */; };
-		F40207421BA7C4160007CE02 /* VVBlurTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = F402073D1BA7C4160007CE02 /* VVBlurTransitioning.m */; };
-		F40207431BA7C4160007CE02 /* VVBlurViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F402073F1BA7C4160007CE02 /* VVBlurViewController.m */; };
+		F40207411BA7C4160007CE02 /* VVPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = F402073B1BA7C4160007CE02 /* VVPresenter.m */; };
+		F40207421BA7C4160007CE02 /* VVTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = F402073D1BA7C4160007CE02 /* VVTransitioning.m */; };
+		F40207431BA7C4160007CE02 /* VVCustomPresentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F402073F1BA7C4160007CE02 /* VVCustomPresentViewController.m */; };
 		F402F0F31BE8852F004988B4 /* PIESearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F402F0F11BE8852F004988B4 /* PIESearchViewController.m */; };
 		F402F0F41BE8852F004988B4 /* PIESearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F402F0F21BE8852F004988B4 /* PIESearchViewController.xib */; };
 		F402F0F81BE89530004988B4 /* PIESearchUserCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F402F0F61BE89530004988B4 /* PIESearchUserCollectionViewCell.m */; };
@@ -1292,14 +1291,12 @@
 		F402072E1BA7C17C0007CE02 /* PIECameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECameraViewController.h; sourceTree = "<group>"; };
 		F402072F1BA7C17C0007CE02 /* PIECameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECameraViewController.m; sourceTree = "<group>"; };
 		F40207301BA7C17C0007CE02 /* PIECameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIECameraViewController.xib; sourceTree = "<group>"; };
-		F40207381BA7C4160007CE02 /* VVBlurPresentationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VVBlurPresentationController.h; sourceTree = "<group>"; };
-		F40207391BA7C4160007CE02 /* VVBlurPresentationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VVBlurPresentationController.m; sourceTree = "<group>"; };
-		F402073A1BA7C4160007CE02 /* VVBlurPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VVBlurPresenter.h; sourceTree = "<group>"; };
-		F402073B1BA7C4160007CE02 /* VVBlurPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VVBlurPresenter.m; sourceTree = "<group>"; };
-		F402073C1BA7C4160007CE02 /* VVBlurTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VVBlurTransitioning.h; sourceTree = "<group>"; };
-		F402073D1BA7C4160007CE02 /* VVBlurTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VVBlurTransitioning.m; sourceTree = "<group>"; };
-		F402073E1BA7C4160007CE02 /* VVBlurViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VVBlurViewController.h; sourceTree = "<group>"; };
-		F402073F1BA7C4160007CE02 /* VVBlurViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VVBlurViewController.m; sourceTree = "<group>"; };
+		F402073A1BA7C4160007CE02 /* VVPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VVPresenter.h; sourceTree = "<group>"; };
+		F402073B1BA7C4160007CE02 /* VVPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VVPresenter.m; sourceTree = "<group>"; };
+		F402073C1BA7C4160007CE02 /* VVTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VVTransitioning.h; sourceTree = "<group>"; };
+		F402073D1BA7C4160007CE02 /* VVTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VVTransitioning.m; sourceTree = "<group>"; };
+		F402073E1BA7C4160007CE02 /* VVCustomPresentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VVCustomPresentViewController.h; sourceTree = "<group>"; };
+		F402073F1BA7C4160007CE02 /* VVCustomPresentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VVCustomPresentViewController.m; sourceTree = "<group>"; };
 		F402F0F01BE8852F004988B4 /* PIESearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIESearchViewController.h; sourceTree = "<group>"; };
 		F402F0F11BE8852F004988B4 /* PIESearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIESearchViewController.m; sourceTree = "<group>"; };
 		F402F0F21BE8852F004988B4 /* PIESearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIESearchViewController.xib; sourceTree = "<group>"; };
@@ -3254,14 +3251,12 @@
 		F40207371BA7C3F60007CE02 /* VVBlur */ = {
 			isa = PBXGroup;
 			children = (
-				F40207381BA7C4160007CE02 /* VVBlurPresentationController.h */,
-				F40207391BA7C4160007CE02 /* VVBlurPresentationController.m */,
-				F402073A1BA7C4160007CE02 /* VVBlurPresenter.h */,
-				F402073B1BA7C4160007CE02 /* VVBlurPresenter.m */,
-				F402073C1BA7C4160007CE02 /* VVBlurTransitioning.h */,
-				F402073D1BA7C4160007CE02 /* VVBlurTransitioning.m */,
-				F402073E1BA7C4160007CE02 /* VVBlurViewController.h */,
-				F402073F1BA7C4160007CE02 /* VVBlurViewController.m */,
+				F402073A1BA7C4160007CE02 /* VVPresenter.h */,
+				F402073B1BA7C4160007CE02 /* VVPresenter.m */,
+				F402073C1BA7C4160007CE02 /* VVTransitioning.h */,
+				F402073D1BA7C4160007CE02 /* VVTransitioning.m */,
+				F402073E1BA7C4160007CE02 /* VVCustomPresentViewController.h */,
+				F402073F1BA7C4160007CE02 /* VVCustomPresentViewController.m */,
 			);
 			name = VVBlur;
 			sourceTree = "<group>";
@@ -4432,7 +4427,7 @@
 				F4DC3D3F1BC131BA00DCF72F /* PIEFriendAskTableViewCell.m in Sources */,
 				E901973E1B33F60500F46B78 /* PWRefreshFooterCollectionView.m in Sources */,
 				5C436A9C1AB07E5C00D14608 /* DDMsgPostReplyVC.m in Sources */,
-				F40207411BA7C4160007CE02 /* VVBlurPresenter.m in Sources */,
+				F40207411BA7C4160007CE02 /* VVPresenter.m in Sources */,
 				5CDB066B1AA45C920089121E /* ATOMMobileRegisterView.m in Sources */,
 				5C6697A11AAFC9B0001FCF8A /* ATOMMyWorkCollectionViewCell.m in Sources */,
 				5C8D4ACA1ADE400100B158AE /* ATOMConcernViewModel.m in Sources */,
@@ -4500,7 +4495,7 @@
 				E9F8908F1B86C4AB0057ECBF /* FMDatabaseAdditions.m in Sources */,
 				5C559B3A1AB138C3000C5B50 /* ATOMInviteView.m in Sources */,
 				F4AE73C31BBA90D800734BCB /* PIEFriendAskViewController.m in Sources */,
-				F40207421BA7C4160007CE02 /* VVBlurTransitioning.m in Sources */,
+				F40207421BA7C4160007CE02 /* VVTransitioning.m in Sources */,
 				5CDB06041AA405A40089121E /* UIColor+HSB.m in Sources */,
 				F4EC11231BCF456E002D1DCF /* PIENotificationVM.m in Sources */,
 				5C561A7F1AB7CAA90052D4D5 /* ATOMCreateTable.m in Sources */,
@@ -4527,7 +4522,7 @@
 				5CDB065D1AA45C4A0089121E /* PIECreateProfileView.m in Sources */,
 				5C0F04D21ADCA8E2002003AE /* ATOMFans.m in Sources */,
 				F499E4551BD0F69100E5F178 /* PIEEliteFollowReplyTableViewCell.m in Sources */,
-				F40207431BA7C4160007CE02 /* VVBlurViewController.m in Sources */,
+				F40207431BA7C4160007CE02 /* VVCustomPresentViewController.m in Sources */,
 				F4F72C041BCB8F08002FF05A /* PIEMyCollectionViewController.m in Sources */,
 				F46117DB1BAD1101001A6F1A /* IQKeyboardManager.m in Sources */,
 				5C559B371AB13884000C5B50 /* DDInviteVC.m in Sources */,
@@ -4590,7 +4585,6 @@
 				F439303B1BE4BD75006C9437 /* MRActivityIndicatorView.m in Sources */,
 				5C8A2A241AAF31B30064EB1C /* ATOMMyConcernTableFooterView.m in Sources */,
 				5C84062C1ABA67CC00068F35 /* JSONKit.m in Sources */,
-				F40207401BA7C4160007CE02 /* VVBlurPresentationController.m in Sources */,
 				F4EC110C1BCE5A48002D1DCF /* PIENotificationFollowTableViewCell.m in Sources */,
 				E94B03221B7C74E500863C6F /* DDCommentTextView.m in Sources */,
 				F4155D461BB3DA1300A0B045 /* PIEHighlightableLabel.m in Sources */,

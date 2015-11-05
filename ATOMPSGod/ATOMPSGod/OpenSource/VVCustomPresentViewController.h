@@ -1,5 +1,5 @@
 //
-//  VVBlurPresentationController.h
+//  VVBlurViewController.h
 //
 //  Copyright (c) 2015 Wei Wang (http://onevcat.com)
 //
@@ -23,19 +23,5 @@
 
 #import <UIKit/UIKit.h>
 
-@class VVBlurPresentationController;
-
-@protocol VVBlurPresentationControllerDelegate <NSObject>
-
-- (void)presentationControllerDidDismissed:(VVBlurPresentationController *)controller;
-
-@end
-
-@interface VVBlurPresentationController : UIPresentationController
-
-//@property (nonatomic, assign) UIBlurEffectStyle blurStyle;
-@property (nonatomic, weak) id<VVBlurPresentationControllerDelegate> vv_presentationDelegate;
-
-- (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController presentingViewController:(UIViewController *)presentingViewController;
-
+@interface VVCustomPresentViewController : UIViewController
 @end

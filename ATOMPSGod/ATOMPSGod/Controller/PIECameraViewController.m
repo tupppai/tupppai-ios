@@ -14,6 +14,7 @@
 #import "DDNavigationController.h"
 #import "PIEToHelpViewController.h"
 #import "FXBlurView.h"
+
 @interface PIECameraViewController () <QBImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *askBackgroundView;
 @property (weak, nonatomic) IBOutlet UIView *replyBackgroundView;
@@ -30,12 +31,22 @@
 
 @implementation PIECameraViewController
 
+-(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+
+    }
+    return self;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
     ((FXBlurView*)self.view).dynamic = NO;
-    ((FXBlurView*)self.view).blurRadius = 100;
     ((FXBlurView*)self.view).tintColor = [UIColor blackColor];
+
+    DDNavigationController *nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+    ((FXBlurView*)self.view).underlyingView =   [nav.viewControllers objectAtIndex:0].view;
     
     _askBackgroundView.layer.cornerRadius = _askBackgroundView.frame.size.width/2;
     _replyBackgroundView.layer.cornerRadius = _replyBackgroundView.frame.size.width/2;

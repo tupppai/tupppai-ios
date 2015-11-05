@@ -1,5 +1,5 @@
 //
-//  VVBlurViewController.h
+//  VVChromeTransitioner.h
 //
 //  Copyright (c) 2015 Wei Wang (http://onevcat.com)
 //
@@ -23,6 +23,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface VVBlurViewController : UIViewController
-//@property (nonatomic, assign) UIBlurEffectStyle blurStyle;
+@interface VVTransitioning : NSObject <UIViewControllerAnimatedTransitioning>
+@property (nonatomic, assign) BOOL isPresentation;
 @end
