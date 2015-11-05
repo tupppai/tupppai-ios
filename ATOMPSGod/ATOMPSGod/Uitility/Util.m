@@ -8,7 +8,7 @@
 
 #import "Util.h"
 #import "DDBaseService.h"
-
+#import "PIEShareImageView.h"
 
 @implementation Util
 
@@ -27,6 +27,39 @@
     pasteboard.string = string;
     [Hud success:@"成功复制到粘贴板"];
 }
+
+
++ (void) imageWithVm:(DDPageVM*)vm block:(void(^)(UIImage*))block
+{
+    
+    PIEShareImageView* view = [PIEShareImageView new];
+    [view injectSauce:vm withBlock:^(BOOL success) {
+        UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.opaque, 0.0f);
+        [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:YES];
+        UIImage * snapshotImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        if (block) {
+            block(snapshotImage);
+        }
+    }];
+}
+
+
+//+ (void) customShareView:(DDPageVM*)vm block:(void(^)(UIView*))block
+//{
+//    PIEShareImageView* view = [PIEShareImageView new];
+//    [view injectSauce:vm withBlock:^(BOOL success) {
+//        if (block) {
+//            block(view);
+//        }
+//    }];
+////    view.imageView.image = [UIImage imageNamed:@"psps"];
+////    view.avatarView.image = [UIImage imageNamed:@"psps"];
+////    view.nameLabel.text = @"peiwei";
+//    return view;
+//
+//}
+
 
 NSString* deviceName()
 {

@@ -97,36 +97,49 @@
             [shareParams SSDKEnableUseClientShare];
             
             
-            
             if (shareType == ATOMShareTypeWechatFriends) {
                 if ([share.type isEqualToString:@"image" ]) {
                     //这里要自己生成图片
-                    [shareParams SSDKSetupWeChatParamsByText:desc title:nil url:nil thumbImage:nil image:img musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeImage forPlatformSubType:SSDKPlatformSubTypeWechatSession];
+                    [Util imageWithVm:vm block:^(UIImage *img2) {
+                        NSLog(@"ATOMShareTypeWechatFriends %@",img2);
+                        [shareParams SSDKSetupWeChatParamsByText:desc title:nil url:nil thumbImage:nil image:img2 musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeImage forPlatformSubType:SSDKPlatformSubTypeWechatSession];
+                        [self shareStep2:SSDKPlatformTypeWechat withShareParams:shareParams];
+
+                    }];
                 }    else   {
                     [shareParams SSDKSetupWeChatParamsByText:desc title:shareTitle url:sUrl thumbImage:sUrl image:img musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeWebPage forPlatformSubType:SSDKPlatformSubTypeWechatSession];
+                    [self shareStep2:SSDKPlatformTypeWechat withShareParams:shareParams];
+
                 }
 
-                [self shareStep2:SSDKPlatformTypeWechat withShareParams:shareParams];
                 
             }
             
             
             else if (shareType == ATOMShareTypeWechatMoments) {
-                SSDKContentType contentType = SSDKContentTypeWebPage;
+//                SSDKContentType contentType = SSDKContentTypeWebPage;
                 if ([share.type isEqualToString:@"image" ]) {
-                    contentType = SSDKContentTypeImage;
-                }
                 //这里要自己生成图片
-                [shareParams SSDKSetupWeChatParamsByText:desc title:shareTitle url:nil thumbImage:nil image:img musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:contentType forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
-                [self shareStep2:SSDKPlatformSubTypeWechatTimeline withShareParams:shareParams];
+                   [Util imageWithVm:vm block:^(UIImage *image) {
+                       NSLog(@"ATOMShareTypeWechatMoments %@",image);
+
+                                  [shareParams SSDKSetupWeChatParamsByText:nil title:shareTitle url:nil thumbImage:nil image:image musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeImage forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
+                        }];
+                    [self shareStep2:SSDKPlatformSubTypeWechatTimeline withShareParams:shareParams];
+                }
+                else {
+                    [shareParams SSDKSetupWeChatParamsByText:desc title:shareTitle url:sUrl thumbImage:nil image:img musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeWebPage forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
+                    [self shareStep2:SSDKPlatformSubTypeWechatTimeline withShareParams:shareParams];
+                }
             }
             
             
             else if (shareType == ATOMShareTypeSinaWeibo) {
                 if ([share.type isEqualToString:@"image"]) {
-                    [DDService downloadImage:share.imageUrl withBlock:^(UIImage *image) {
-                        [shareParams SSDKSetupSinaWeiboShareParamsByText:desc title:nil image:image url:nil latitude:0 longitude:0 objectID:nil type:SSDKContentTypeImage];
+                    [Util imageWithVm:vm block:^(UIImage *img) {
+                        [shareParams SSDKSetupSinaWeiboShareParamsByText:desc title:nil image:img url:nil latitude:0 longitude:0 objectID:nil type:SSDKContentTypeImage];
                         [self shareStep2:SSDKPlatformTypeSinaWeibo withShareParams:shareParams];
+
                     }];
                 } else {
 //                    [DDService downloadImage:share.imageUrl withBlock:^(UIImage *image) {

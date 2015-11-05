@@ -29,6 +29,8 @@
 #import "PIESearchViewController.h"
 #import "DDNavigationController.h"
 #import "PIEBannerWebViewViewController.h"
+#import "PIEShareImageView.h"
+
 static  NSString* askIndentifier = @"PIEEliteFollowAskTableViewCell";
 static  NSString* replyIndentifier = @"PIEEliteFollowReplyTableViewCell";
 
@@ -99,6 +101,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_Elite" object:nil];
 }
 - (void)configSubviews {
+//    [[AppDelegate APP].window addSubview: [PIEShareImageView new]];
     self.view = self.sv;
     [self configTableViewFollow];
     [self configTableViewHot];

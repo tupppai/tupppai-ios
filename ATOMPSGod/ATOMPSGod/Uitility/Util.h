@@ -11,6 +11,7 @@
 #import "TSMessage.h"
 #import <sys/utsname.h> // import it in your header or implementation file.
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "DDPageVM.h"
 
 #define ASSET_PHOTO_THUMBNAIL           0
 #define ASSET_PHOTO_ASPECT_THUMBNAIL    1
@@ -27,6 +28,7 @@ NSString* deviceName();
 +(void)showWeAreWorkingOnThisFeature;
 + (UIImage *)getImageFromAsset:(ALAsset *)asset type:(NSInteger)nType;
 + (void)copyIntoPasteboard:(NSString*)string;
++ (void) imageWithVm:(DDPageVM*)vm block:(void(^)(UIImage*))block;
 @end
 
 @interface Hud : NSObject
