@@ -119,13 +119,11 @@
             else if (shareType == ATOMShareTypeWechatMoments) {
 //                SSDKContentType contentType = SSDKContentTypeWebPage;
                 if ([share.type isEqualToString:@"image" ]) {
-                //这里要自己生成图片
                    [Util imageWithVm:vm block:^(UIImage *image) {
-                       NSLog(@"ATOMShareTypeWechatMoments %@",image);
+                                  [shareParams SSDKSetupWeChatParamsByText:desc title:shareTitle url:nil thumbImage:nil image:image musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeImage forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
+                       [self shareStep2:SSDKPlatformSubTypeWechatTimeline withShareParams:shareParams];
 
-                                  [shareParams SSDKSetupWeChatParamsByText:nil title:shareTitle url:nil thumbImage:nil image:image musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeImage forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
                         }];
-                    [self shareStep2:SSDKPlatformSubTypeWechatTimeline withShareParams:shareParams];
                 }
                 else {
                     [shareParams SSDKSetupWeChatParamsByText:desc title:shareTitle url:sUrl thumbImage:nil image:img musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeWebPage forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
@@ -139,18 +137,13 @@
                     [Util imageWithVm:vm block:^(UIImage *img) {
                         [shareParams SSDKSetupSinaWeiboShareParamsByText:desc title:nil image:img url:nil latitude:0 longitude:0 objectID:nil type:SSDKContentTypeImage];
                         [self shareStep2:SSDKPlatformTypeSinaWeibo withShareParams:shareParams];
-
                     }];
                 } else {
-//                    [DDService downloadImage:share.imageUrl withBlock:^(UIImage *image) {
                         [shareParams SSDKSetupSinaWeiboShareParamsByText:desc title:shareTitle image:nil url:sUrl latitude:0 longitude:0 objectID:nil type:SSDKContentTypeWebPage];
                         [self shareStep2:SSDKPlatformTypeSinaWeibo withShareParams:shareParams];
-//                    }];
                 }
 
             }
-            
-            
             else if (shareType == ATOMShareTypeQQFriends) {
                 SSDKContentType contentType = SSDKContentTypeWebPage;
                 if ([share.type isEqualToString:@"image" ]) {

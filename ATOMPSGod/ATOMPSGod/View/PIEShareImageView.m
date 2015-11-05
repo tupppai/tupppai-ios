@@ -34,14 +34,16 @@
     [self addSubview:self.QRCodeView];
     [self addSubview:self.label];
     [self addSubview:self.label2];
+    [self addSubview:self.imageView_thumb_bg];
     [self addSubview:self.imageView_thumb];
-    
-    _height = 33+40+14+44+100;
+    [self addSubview:self.imageView_type];
+    [self addSubview:self.imageView_appIcon];
+    _height = 33+20+14+44+100;
 }
 - (void)mansory {
     [self.avatarView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.equalTo(@40);
-        make.height.equalTo(@40);
+        make.width.equalTo(@20);
+        make.height.equalTo(@20);
         make.leading.equalTo(self).with.offset(33);
         make.top.equalTo(self).with.offset(33);
     }];
@@ -55,13 +57,28 @@
         make.top.equalTo(self.avatarView.mas_bottom).with.offset(14);
         make.trailing.equalTo(self).with.offset(-46);
     }];
-    [self.imageView_thumb mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.equalTo(@93);
-        make.height.equalTo(@93);
+    [self.imageView_thumb_bg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(@105);
+        make.height.equalTo(@105);
         make.trailing.equalTo(self.imageView).with.offset(35);
         make.bottom.equalTo(self.imageView).with.offset(20);
         make.bottom.lessThanOrEqualTo(self.bottomView.mas_top).with.offset(-44);
     }];
+
+    [self.imageView_thumb mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(@93);
+        make.height.equalTo(@93);
+        make.center.equalTo(self.imageView_thumb_bg);
+    }];
+    
+    [self.imageView_type mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(@32);
+        make.height.equalTo(@17);
+        make.top.equalTo(self.imageView_thumb);
+        make.leading.equalTo(self.imageView_thumb);
+    }];
+    
+
     
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.equalTo(self);
@@ -83,6 +100,14 @@
         make.top.equalTo(self.QRCodeView.mas_bottom).with.offset(4);
         make.trailing.equalTo(self.QRCodeView).with.offset(-3);
     }];
+    
+    [self.imageView_appIcon mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(@11);
+        make.height.equalTo(@11);
+        make.top.equalTo(self.label2).with.offset(1);
+        make.centerX.equalTo(self.label2).with.offset(6);
+    }];
+    
 }
 -(void)injectSauce:(DDPageVM*)vm withBlock:(void(^)(BOOL success))block {
     _nameLabel.text = vm.username;
@@ -122,6 +147,8 @@
     if (!_avatarView) {
         _avatarView = [UIImageView new];
         _avatarView.contentMode = UIViewContentModeScaleAspectFill;
+        _avatarView.clipsToBounds = YES;
+        _avatarView.layer.cornerRadius = 10;
         _avatarView.clipsToBounds = YES;
 //        _avatarView.image = [UIImage imageNamed:@"psps"];
     }
@@ -187,12 +214,38 @@
     if (!_label2) {
         _label2 = [UILabel new];
         _label2.font = [UIFont systemFontOfSize:10];
-        _label2.text= @"分享自   图派";
+        _label2.text= @"分享自        图派";
         _label2.textAlignment = NSTextAlignmentRight;
         _label2.textColor = [UIColor colorWithHex:0x010101 andAlpha:0.5];
         _label2.alpha = 0.5;
     }
     return _label2;
+}
+
+-(UIImageView *)imageView_type {
+    if (!_imageView_type) {
+        _imageView_type = [UIImageView new];
+        _imageView_type.contentMode = UIViewContentModeTopLeft;
+        _imageView_type.image = [UIImage imageNamed:@"pie_origin"];
+    }
+    return _imageView_type;
+}
+-(UIView *)imageView_thumb_bg {
+    if (!_imageView_thumb_bg) {
+        _imageView_thumb_bg = [UIView new];
+        _imageView_thumb_bg.backgroundColor = [UIColor colorWithHex:0xf0f0f0];
+        _imageView_thumb_bg.layer.borderColor = [UIColor colorWithHex:0xeeeeee andAlpha:0.2].CGColor;
+        _imageView_thumb_bg.layer.borderWidth = 1.0;
+    }
+    return _imageView_thumb_bg;
+}
+-(UIImageView *)imageView_appIcon {
+    if (!_imageView_appIcon) {
+        _imageView_appIcon = [UIImageView new];
+        _imageView_appIcon.contentMode = UIViewContentModeScaleAspectFit;
+        _imageView_appIcon.image = [UIImage imageNamed:@"pie_appIcon"];
+    }
+    return _imageView_appIcon;
 }
 @end
 
