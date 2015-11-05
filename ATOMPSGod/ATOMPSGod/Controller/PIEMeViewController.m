@@ -121,6 +121,7 @@
             _avatarView.image = image;
             _topContainerView.image = [image blurredImageWithRadius:40 iterations:1 tintColor:nil];
     }];
+    self.usernameLabel.text = [DDUserManager currentUser].username;
 }
 - (void)pushToSettingViewController {
     PIESettingsViewController* vc = [PIESettingsViewController new];

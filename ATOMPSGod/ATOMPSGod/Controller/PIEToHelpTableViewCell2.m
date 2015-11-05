@@ -31,7 +31,6 @@
     _nameLabel.text = vm.username;
     _timeLabel.text = vm.publishTime;
     _contentLabel.text = vm.content;
-    _paticipantLabel.text = [NSString stringWithFormat:@"已有%@人帮p,马上参与pk!",vm.totalPSNumber];
 }
 
 @end

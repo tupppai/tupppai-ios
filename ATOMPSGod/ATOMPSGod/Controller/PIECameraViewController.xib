@@ -62,8 +62,9 @@
                             <rect key="frame" x="46" y="130" width="58" height="22.5"/>
                             <animations/>
                             <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="16"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
+                            <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <size key="shadowOffset" width="0.0" height="0.0"/>
                         </label>
                     </subviews>
                     <animations/>
@@ -117,8 +118,9 @@
                             <rect key="frame" x="43" y="130" width="64" height="22.5"/>
                             <animations/>
                             <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="16"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
+                            <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <size key="shadowOffset" width="0.0" height="0.0"/>
                         </label>
                     </subviews>
                     <animations/>

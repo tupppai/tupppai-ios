@@ -58,8 +58,6 @@
     _createProfileView.genderIsMan = [DDUserManager currentUser].sex;
 }
 
-
-
 #pragma mark - Click Event
 
 - (void)clickRightButtonItem {
@@ -82,7 +80,7 @@
     }
     [DDService updateProfile:param withBlock:^(BOOL success) {
         if (success) {
-            [Hud success:@"修改成功" inView:self.view];
+            [Hud success:@"修改成功"];
             [DDUserManager currentUser].username = _createProfileView.nicknameTextField.text;
             [DDUserManager currentUser].sex = _createProfileView.genderIsMan;
             if (_avatar) {
@@ -109,30 +107,12 @@
     [self.cameraActionsheet showInView:self.view animated:YES];
 }
 
-//
-//- (void)clickConfirmPickerButton:(UIButton *)sender {
-//    //    [_createProfileView hideSexPickerView];
-//    //    if ( [_createProfileView.showSexLabel.text  isEqualToString: @""] || _createProfileView.showSexLabel.text == NULL) {
-//    //        _createProfileView.showSexLabel.text = @"男";
-//    //    }
-//}
-//- (void)clickCancelRegionPickerButton:(UIButton *)sender {
-//    [_createProfileView hideRegionPickerView];
-//    [self updateAreaLabel];
-//}
-//
-//- (void)clickConfirmRegionPickerButton:(UIButton *)sender {
-//    [_createProfileView hideRegionPickerView];
-//    [self updateAreaLabel];
-//}
+
 
 #pragma mark - Gesture Event
 
 
-//- (void)tapRegionViewGesture:(UITapGestureRecognizer *)gesture {
-//    [_createProfileView.nicknameTextField resignFirstResponder];
-//    [_createProfileView showRegionPickerView];
-//}
+
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
@@ -180,76 +160,6 @@
     return YES;
 }
 
-//#pragma mark - UIPickerViewDataSource
-//
-//- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-//    return 2;
-//}
-//
-//- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-//    
-//    if(component == 0)
-//        return [_provinces count];
-//    else
-//        return [[[_provinces objectAtIndex:_selectedRowComponent1]objectForKey:@"citys"] count];
-//}
-//
-//#pragma mark - UIPickerViewDelegate
-//
-//- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-//    if(component == 0)
-//    {
-//        
-//        return [[_provinces objectAtIndex:row]objectForKey:@"name"];
-//    }
-//    else
-//    {
-//        NSArray* cities = [[_provinces objectAtIndex:_selectedRowComponent1] objectForKey:@"citys"];
-//        return [[[cities objectAtIndex:row] allValues]objectAtIndex:0];
-//    }
-//}
-//-(CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
-//    return 25;
-//}
-//- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-//    
-//    if(component == 0) {
-//        _selectedRowComponent1 = row;
-//        [pickerView reloadComponent:1];
-//        [pickerView selectRow:0 inComponent:1 animated:YES];
-//    }
-//    else {
-//        _selectedRowComponent2 = row;
-//        [self updateAreaLabel];
-//    }
-//}
-
-////updateAreaLabel and update currentUser
-//-(void)updateAreaLabel {
-//    NSString* provinceName = [[_provinces objectAtIndex:_selectedRowComponent1]objectForKey:@"name"];
-//    NSArray* cities = [[_provinces objectAtIndex:_selectedRowComponent1]objectForKey:@"citys"];
-//    NSString* cityName = @"";
-//    if(cities.count > 0) {
-//        cityName = [[cities[_selectedRowComponent2] allValues]objectAtIndex:0];
-//        [[DDUserManager currentUser].region setValue:[[[cities objectAtIndex:_selectedRowComponent2] allKeys]objectAtIndex:0] forKey:@"cityID"];
-//    }
-//    _createProfileView.showAreaLabel.text = [NSString stringWithFormat:@"%@,%@",provinceName,cityName];
-//    [[DDUserManager currentUser].region setValue:cityName forKey:@"cityName"];
-//    [[DDUserManager currentUser].region setValue:provinceName forKey:@"provinceName"];
-//    [[DDUserManager currentUser].region setValue:_provinces[_selectedRowComponent1][@"id"] forKey:@"provinceID"];
-//}
-////load region.csv before doing anything
-//-(void)loadRegionResource {
-//    NSString *path = [[NSBundle mainBundle] pathForResource:@"region"ofType:@"csv"];
-//    NSData *data=[NSData dataWithContentsOfFile:path];
-//    if (data) {
-//        NSDictionary* jsonRegionObject=[NSJSONSerialization JSONObjectWithData:data
-//                                                                       options:NSJSONReadingAllowFragments
-//                                                                         error:NULL];
-//        _provinces = [jsonRegionObject objectForKey:@"provinces"];
-//    }
-//    
-//}
 
 
 

@@ -12,7 +12,6 @@
 #import "UITableView+FDTemplateLayoutCell.h"
 #import "PIEFriendAskTableViewCell.h"
 #import "DDPageManager.h"
-static NSString *cellIdentifier = @"PIEFriendAskTableViewCell";
 
 @interface PIEFriendAskViewController ()<PWRefreshBaseTableViewDelegate,UITableViewDataSource,UITableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 @property (nonatomic, strong) NSMutableArray *source;
@@ -24,6 +23,7 @@ static NSString *cellIdentifier = @"PIEFriendAskTableViewCell";
 @end
 
 @implementation PIEFriendAskViewController
+ NSString *cellIdentifier = @"PIEFriendAskTableViewCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];

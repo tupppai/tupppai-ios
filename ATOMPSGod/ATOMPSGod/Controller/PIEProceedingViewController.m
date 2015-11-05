@@ -183,9 +183,9 @@
         else if (CGRectContainsPoint(cell.downloadView.frame, p)) {
             UIImageWriteToSavedPhotosAlbum(cell.theImageView.image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
         }
-        else if (CGRectContainsPoint(cell.deleteView.frame, p)) {
-            [self deleteOneToHelp:indexPath ID:vm.ID];
-        }
+//        else if (CGRectContainsPoint(cell.deleteView.frame, p)) {
+//            [self deleteOneToHelp:indexPath ID:vm.ID];
+//        }
         else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
             PIEFriendViewController *opvc = [PIEFriendViewController new];
             opvc.pageVM =  vm;
@@ -422,7 +422,7 @@
         return 180;
     }
     else if (tableView == _sv.toHelpTableView) {
-        return 150;
+        return 125;
     }
     else {
         return 0;

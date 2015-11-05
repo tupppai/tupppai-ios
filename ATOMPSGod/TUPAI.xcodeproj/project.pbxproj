@@ -390,6 +390,7 @@
 		F41FF0E81BDDFCE800566A12 /* UIImage+JTSImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = F41FF0E21BDDFCE800566A12 /* UIImage+JTSImageEffects.m */; };
 		F41FF0EB1BDE231200566A12 /* PIENotificationSystemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F41FF0EA1BDE231200566A12 /* PIENotificationSystemViewController.m */; };
 		F41FF0EE1BDE269A00566A12 /* PIENotificationLikedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F41FF0ED1BDE269A00566A12 /* PIENotificationLikedViewController.m */; };
+		F421A20D1BEB2F320028C521 /* PIEToHelpTableViewCell2.xib in Resources */ = {isa = PBXBuildFile; fileRef = F421A20C1BEB2F320028C521 /* PIEToHelpTableViewCell2.xib */; };
 		F4275A0F1BE0786400BBE7E4 /* SLKInputAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = F42759FC1BE0786400BBE7E4 /* SLKInputAccessoryView.m */; };
 		F4275A101BE0786400BBE7E4 /* SLKTextInputbar.m in Sources */ = {isa = PBXBuildFile; fileRef = F42759FE1BE0786400BBE7E4 /* SLKTextInputbar.m */; };
 		F4275A111BE0786400BBE7E4 /* SLKTextView+SLKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F4275A001BE0786400BBE7E4 /* SLKTextView+SLKAdditions.m */; };
@@ -470,7 +471,6 @@
 		F46117F31BAE558C001A6F1A /* PIEEliteScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F46117F21BAE558C001A6F1A /* PIEEliteScrollView.m */; };
 		F46521E81BC75D1F0043D706 /* PIEToHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F46521E71BC75D1F0043D706 /* PIEToHelpViewController.m */; };
 		F46521EC1BC763870043D706 /* PIEToHelpTableViewCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = F46521EA1BC763870043D706 /* PIEToHelpTableViewCell2.m */; };
-		F46521ED1BC763870043D706 /* PIEToHelpTableViewCell2.xib in Resources */ = {isa = PBXBuildFile; fileRef = F46521EB1BC763870043D706 /* PIEToHelpTableViewCell2.xib */; };
 		F472054B1BABA5B900E0ADA0 /* PIEProceedingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F472054A1BABA5B900E0ADA0 /* PIEProceedingViewController.m */; };
 		F472054E1BABA63000E0ADA0 /* PIEProceedingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F472054D1BABA63000E0ADA0 /* PIEProceedingScrollView.m */; };
 		F47205521BABE87D00E0ADA0 /* PIEMyAskCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F47205501BABE87D00E0ADA0 /* PIEMyAskCollectionCell.m */; };
@@ -1334,6 +1334,7 @@
 		F41FF0EA1BDE231200566A12 /* PIENotificationSystemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENotificationSystemViewController.m; sourceTree = "<group>"; };
 		F41FF0EC1BDE269A00566A12 /* PIENotificationLikedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIENotificationLikedViewController.h; sourceTree = "<group>"; };
 		F41FF0ED1BDE269A00566A12 /* PIENotificationLikedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENotificationLikedViewController.m; sourceTree = "<group>"; };
+		F421A20C1BEB2F320028C521 /* PIEToHelpTableViewCell2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEToHelpTableViewCell2.xib; sourceTree = "<group>"; };
 		F42759FB1BE0786400BBE7E4 /* SLKInputAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKInputAccessoryView.h; sourceTree = "<group>"; };
 		F42759FC1BE0786400BBE7E4 /* SLKInputAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLKInputAccessoryView.m; sourceTree = "<group>"; };
 		F42759FD1BE0786400BBE7E4 /* SLKTextInputbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKTextInputbar.h; sourceTree = "<group>"; };
@@ -1490,7 +1491,6 @@
 		F46521E71BC75D1F0043D706 /* PIEToHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEToHelpViewController.m; sourceTree = "<group>"; };
 		F46521E91BC763870043D706 /* PIEToHelpTableViewCell2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEToHelpTableViewCell2.h; sourceTree = "<group>"; };
 		F46521EA1BC763870043D706 /* PIEToHelpTableViewCell2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEToHelpTableViewCell2.m; sourceTree = "<group>"; };
-		F46521EB1BC763870043D706 /* PIEToHelpTableViewCell2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEToHelpTableViewCell2.xib; sourceTree = "<group>"; };
 		F47205491BABA5B900E0ADA0 /* PIEProceedingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEProceedingViewController.h; sourceTree = "<group>"; };
 		F472054A1BABA5B900E0ADA0 /* PIEProceedingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEProceedingViewController.m; sourceTree = "<group>"; };
 		F472054C1BABA63000E0ADA0 /* PIEProceedingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIEProceedingScrollView.h; path = ../View/homepage/PIEProceedingScrollView.h; sourceTree = "<group>"; };
@@ -4058,7 +4058,7 @@
 				F46521E71BC75D1F0043D706 /* PIEToHelpViewController.m */,
 				F46521E91BC763870043D706 /* PIEToHelpTableViewCell2.h */,
 				F46521EA1BC763870043D706 /* PIEToHelpTableViewCell2.m */,
-				F46521EB1BC763870043D706 /* PIEToHelpTableViewCell2.xib */,
+				F421A20C1BEB2F320028C521 /* PIEToHelpTableViewCell2.xib */,
 			);
 			name = toHelp2;
 			sourceTree = "<group>";
@@ -4179,6 +4179,7 @@
 				3B11C0441BA27ADB00B87165 /* PIENewReplyTableCell.xib in Resources */,
 				E94289821B5B32A200ED26E4 /* NotificationButtonBackground.png in Resources */,
 				F438D6B51BDA0F3D00213681 /* pattern1.jpeg in Resources */,
+				F421A20D1BEB2F320028C521 /* PIEToHelpTableViewCell2.xib in Resources */,
 				E94289811B5B32A200ED26E4 /* NotificationBackgroundWarningIcon@2x.png in Resources */,
 				3BE1AECD1B9FE9C900CE2303 /* QBImagePicker.storyboard in Resources */,
 				F402F0F91BE89530004988B4 /* PIESearchUserCollectionViewCell.xib in Resources */,
@@ -4217,7 +4218,6 @@
 				E9FF94A31B745BAA00F06819 /* intro1.png in Resources */,
 				E900AB5B1B450E970019BAEA /* Images.xcassets in Resources */,
 				5C7861311AAF4DD200E87C77 /* bg_main@2x.png in Resources */,
-				F46521ED1BC763870043D706 /* PIEToHelpTableViewCell2.xib in Resources */,
 				F4F72C001BCB6CD6002FF05A /* PIEMyCollectionTableViewCell.xib in Resources */,
 				F4DC3D401BC131BA00DCF72F /* PIEFriendAskTableViewCell.xib in Resources */,
 				F4AE73BE1BBA770000734BCB /* PIEFriendViewController.xib in Resources */,

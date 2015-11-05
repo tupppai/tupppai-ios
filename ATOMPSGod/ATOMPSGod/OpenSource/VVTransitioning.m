@@ -26,7 +26,7 @@
 @implementation VVTransitioning
 
 -(NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-    return 0.3;
+    return 0.4;
 }
 
 -(void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
@@ -44,6 +44,8 @@
     UIViewController *animatingViewController = self.isPresentation ? toViewController : fromViewController;
     UIView *animatingView = self.isPresentation ? toView : fromView;
     
+    animatingView.alpha = self.isPresentation? 0.0:0.8;
+    
     CGRect onScreenFrame = [transitionContext finalFrameForViewController:animatingViewController];
     CGRect offScreenFrame = CGRectOffset(onScreenFrame, 0, onScreenFrame.size.height);
     
@@ -54,6 +56,7 @@
 
     [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0.0 usingSpringWithDamping:10 initialSpringVelocity:5 options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionBeginFromCurrentState animations:^{
         animatingView.frame = finalFrame;
+        animatingView.alpha = self.isPresentation? 1.0:0.0;
     } completion:^(BOOL finished) {
         if (!self.isPresentation) {
             [fromView removeFromSuperview];

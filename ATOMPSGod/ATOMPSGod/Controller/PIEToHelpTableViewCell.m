@@ -16,11 +16,11 @@
     _avatarView.clipsToBounds = YES;
     _theImageView.clipsToBounds = YES;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.separatorInset = UIEdgeInsetsMake(0, 125, 0, 0);
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
 }
 
@@ -30,7 +30,6 @@
     [_theImageView setImageWithURL:[NSURL URLWithString:vm.imageURL]placeholderImage:[UIImage imageNamed:@"cellBG"]];
     _nameLabel.text = vm.username;
     _timeLabel.text = vm.publishTime;
-    _paticipantLabel.text = [NSString stringWithFormat:@"已有%@人帮p,马上参与pk!",vm.totalPSNumber];
     _contentLabel.text = vm.content;
 }
 

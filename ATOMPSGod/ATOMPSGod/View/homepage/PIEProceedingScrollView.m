@@ -26,7 +26,7 @@
     self.contentSize = CGSizeMake(SCREEN_WIDTH * 3, 0);
     self.pagingEnabled = YES;
     self.scrollsToTop = NO;
-    self.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    self.backgroundColor = [UIColor whiteColor];
     self.type = PIEProceedingTypeAsk;
 }
 

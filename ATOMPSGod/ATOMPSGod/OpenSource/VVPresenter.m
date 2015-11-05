@@ -22,7 +22,6 @@
 //  THE SOFTWARE.
 
 #import "VVPresenter.h"
-#import "VVBlurPresentationController.h"
 #import "VVTransitioning.h"
 
 @interface VVPresenter ()
