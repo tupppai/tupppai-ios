@@ -7,7 +7,7 @@
 //
 
 #import "PIEFriendFansTableCell.h"
-#import "ATOMFansViewModel.h"
+#import "PIEFansViewModel.h"
 
 @interface PIEFriendFansTableCell ()
 
@@ -84,7 +84,7 @@
     }];
 }
 
-- (void)setViewModel:(ATOMFansViewModel *)viewModel {
+- (void)setViewModel:(PIEFansViewModel *)viewModel {
     
     _viewModel = viewModel;
     [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];

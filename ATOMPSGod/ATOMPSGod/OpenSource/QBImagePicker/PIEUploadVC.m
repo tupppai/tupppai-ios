@@ -12,7 +12,7 @@
 #import "AppDelegate.h"
 #import "PIETabBarController.h"
 #import "PIEUploadManager.h"
-#import "ATOMImage.h"
+#import "PIEEntityImage.h"
 
 
 
@@ -26,8 +26,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *rightShareButton;
 
 @property (strong, nonatomic) NSMutableArray *imageArray;
-@property (nonatomic, strong) ATOMImage *imageInfo1;
-@property (nonatomic, strong) ATOMImage *imageInfo2;
+@property (nonatomic, strong) PIEEntityImage *imageInfo1;
+@property (nonatomic, strong) PIEEntityImage *imageInfo2;
 
 @property (weak, nonatomic) IBOutlet UIView *shareBanner;
 
@@ -182,7 +182,7 @@
 - (void) uploadImage2:(void (^)(BOOL success))block {
     NSData *data = UIImageJPEGRepresentation(_imageArray[1], 1.0);
     PIEUploadManager *uploadImage = [PIEUploadManager new];
-    [uploadImage UploadImage:data WithBlock:^(ATOMImage *imageInfo, NSError *error) {
+    [uploadImage UploadImage:data WithBlock:^(PIEEntityImage *imageInfo, NSError *error) {
         if (!imageInfo) {
             if (block) {
                 block(NO);
@@ -199,7 +199,7 @@
 - (void) uploadImage1:(void (^)(BOOL success))block {
         NSData *data = UIImageJPEGRepresentation(_imageArray[0], 1.0);
         PIEUploadManager *uploadImage = [PIEUploadManager new];
-        [uploadImage UploadImage:data WithBlock:^(ATOMImage *imageInfo, NSError *error) {
+        [uploadImage UploadImage:data WithBlock:^(PIEEntityImage *imageInfo, NSError *error) {
             if (!imageInfo) {
                 if (block) {
                     block(NO);

@@ -8,7 +8,7 @@
 
 #import "DDCommentVM.h"
 #import "PIECommentEntity.h"
-#import "DDCommentReplyVM.h"
+#import "PIEEntityCommentReply.h"
 #import "DDCommentManager.h"
 @implementation DDCommentVM
 
@@ -33,7 +33,7 @@
     if (comment.atCommentArray && comment.atCommentArray.count > 0) {
         NSString *content = comment.content;
         for (NSDictionary* dic in comment.atCommentArray) {
-            DDCommentReplyVM *reply = [MTLJSONAdapter modelOfClass:[DDCommentReplyVM class] fromJSONDictionary:dic error:NULL];
+            PIEEntityCommentReply *reply = [MTLJSONAdapter modelOfClass:[PIEEntityCommentReply class] fromJSONDictionary:dic error:NULL];
             if (reply) {
                 [_replyArray addObject:reply];
             }

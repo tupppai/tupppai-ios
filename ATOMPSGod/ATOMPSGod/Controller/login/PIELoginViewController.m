@@ -9,8 +9,8 @@
 #import "PIELoginViewController.h"
 #import "PIETabBarController.h"
 #import "AppDelegate.h"
-#import "ATOMUser.h"
-#import "ATOMUserProfileViewModel.h"
+#import "PIEEntityUser.h"
+#import "PIEUserProfileViewModel.h"
 #import "DDCreateProfileVC.h"
 
 #import "DDInputPhoneFPVC.h"
@@ -128,7 +128,7 @@
                 } else {
                     [DDUserManager currentUser].signUpType = ATOMSignUpWeibo;
                     [DDUserManager currentUser].sourceData = sourceData;
-                    ATOMUserProfileViewModel* ipvm = [ATOMUserProfileViewModel new];
+                    PIEUserProfileViewModel* ipvm = [PIEUserProfileViewModel new];
                     ipvm.nickName = sourceData[@"name"];
                     ipvm.province = sourceData[@"province"];
                     ipvm.city = sourceData[@"city"];
@@ -166,7 +166,7 @@
                 } else {
                     [DDUserManager currentUser].signUpType = ATOMSignUpWechat;
                     [DDUserManager currentUser].sourceData = sourceData;
-                    ATOMUserProfileViewModel* ipvm = [ATOMUserProfileViewModel new];
+                    PIEUserProfileViewModel* ipvm = [PIEUserProfileViewModel new];
                     ipvm.nickName = sourceData[@"nickname"];
                     ipvm.province = sourceData[@"province"];
                     ipvm.city = sourceData[@"city"];

@@ -9,16 +9,6 @@
 
 
 
-
-#import "ATOMImageTipLabel.h"
-#import "DDTipLabelVM.h"
-#import "ATOMReplier.h"
-#import "ATOMReplierViewModel.h"
-#import "DDBaseService.h"
-#import "PIEEliteEntity.h"
-#import "PIEImageEntity.h"
-
-
 @interface DDPageVM ()
 
 @end
@@ -144,32 +134,32 @@
     return self;
 }
 
-- (instancetype)initWithFollowEntity:(PIEEliteEntity *)entity {
-    self = [self init];
-    if (self) {
-        _ID = entity.ID;
-        _ID = entity.askID;
-        _type = entity.type;
-        _userID = entity.uid;
-        _username = entity.nickname;
-        _userSex = (entity.sex == 1) ? @"man" : @"woman";
-        _imageURL = entity.imageURL;
-        _avatarURL = entity.avatar;
-        
-        NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:entity.uploadTime];
-        _publishTime = [Util formatPublishTime:publishDate];
-        _content = entity.userDescription;
-        _likeCount = [NSString stringWithFormat:@"%zd",entity.totalPraiseNumber];
-        _shareCount = [NSString stringWithFormat:@"%zd",entity.totalShareNumber];
-        _commentCount = [NSString stringWithFormat:@"%zd",entity.totalCommentNumber];
-        _totalPSNumber = [NSString stringWithFormat:@"%zd",entity.totalWorkNumber];
-        _imageWidth = entity.imageWidth;
-        _imageHeight = entity.imageHeight;
-        _liked = entity.liked;
-        _collected = entity.collected;
-    }
-    return self;
-}
+//- (instancetype)initWithFollowEntity:(PIEEliteEntity *)entity {
+//    self = [self init];
+//    if (self) {
+//        _ID = entity.ID;
+//        _ID = entity.askID;
+//        _type = entity.type;
+//        _userID = entity.uid;
+//        _username = entity.nickname;
+//        _userSex = (entity.sex == 1) ? @"man" : @"woman";
+//        _imageURL = entity.imageURL;
+//        _avatarURL = entity.avatar;
+//        
+//        NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:entity.uploadTime];
+//        _publishTime = [Util formatPublishTime:publishDate];
+//        _content = entity.userDescription;
+//        _likeCount = [NSString stringWithFormat:@"%zd",entity.totalPraiseNumber];
+//        _shareCount = [NSString stringWithFormat:@"%zd",entity.totalShareNumber];
+//        _commentCount = [NSString stringWithFormat:@"%zd",entity.totalCommentNumber];
+//        _totalPSNumber = [NSString stringWithFormat:@"%zd",entity.totalWorkNumber];
+//        _imageWidth = entity.imageWidth;
+//        _imageHeight = entity.imageHeight;
+//        _liked = entity.liked;
+//        _collected = entity.collected;
+//    }
+//    return self;
+//}
 
 
 //-(DDCommentPageVM*)generatepageDetailViewModel {

@@ -7,7 +7,7 @@
 //
 
 #import "ATOMUserDAO.h"
-#import "ATOMUser.h"
+#import "PIEEntityUser.h"
 
 @implementation ATOMUserDAO
 
@@ -18,7 +18,7 @@
     return self;
 }
 
-+ (void)insertUser:(ATOMUser *)user {
++ (void)insertUser:(PIEEntityUser *)user {
     dispatch_queue_t q = dispatch_queue_create("insert", NULL);
     dispatch_async(q, ^{
         [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
@@ -34,16 +34,16 @@
     });
 }
 
-+ (ATOMUser *)selectUserByUID:(NSInteger)uid {
++ (PIEEntityUser *)selectUserByUID:(NSInteger)uid {
     NSLog(@"selectUserByUID");
-    __block ATOMUser *user;
+    __block PIEEntityUser *user;
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
         NSString *stmt = @"select * from ATOMUser where uid = ?";
         NSNumber* uid_ns = [NSNumber numberWithInteger:uid];
         NSArray *param = @[uid_ns];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {
-            user = [MTLFMDBAdapter modelOfClass:[ATOMUser class] fromFMResultSet:rs error:NULL];
+            user = [MTLFMDBAdapter modelOfClass:[PIEEntityUser class] fromFMResultSet:rs error:NULL];
             break;
         }
         [rs close];
@@ -51,15 +51,15 @@
     return user;
 }
 
-+ (void)fetchUser:(void (^)(ATOMUser*))block {
++ (void)fetchUser:(void (^)(PIEEntityUser*))block {
     NSLog(@"fetchFirstUser");
-    __block ATOMUser *user;
+    __block PIEEntityUser *user;
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
         NSString *stmt = @"select * from ATOMUser";
         FMResultSet *rs = [db executeQuery:stmt];
         int n = 0;
         while ([rs next]) {
-            user = [MTLFMDBAdapter modelOfClass:[ATOMUser class] fromFMResultSet:rs error:NULL];
+            user = [MTLFMDBAdapter modelOfClass:[PIEEntityUser class] fromFMResultSet:rs error:NULL];
 //            break;
             n++;
         }
@@ -73,7 +73,7 @@
     }
 }
 
-+ (BOOL)isExistUser:(ATOMUser *)user {
++ (BOOL)isExistUser:(PIEEntityUser *)user {
     __block BOOL flag = false;
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
         NSString *stmt = @"select * from ATOMUser where uid = ?";
@@ -82,7 +82,7 @@
 //        FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         FMResultSet *rs = [db executeQuery:stmt,uid];
         while ([rs next]) {
-            ATOMUser *user = [MTLFMDBAdapter modelOfClass:[ATOMUser class] fromFMResultSet:rs error:NULL];
+            PIEEntityUser *user = [MTLFMDBAdapter modelOfClass:[PIEEntityUser class] fromFMResultSet:rs error:NULL];
             [user NSLogSelf];
             NSLog(@"正在检索用户是否已经存在数据库...");
             if (user) {
@@ -99,7 +99,7 @@
     return flag;
 }
 
-+ (void)updateUser:(ATOMUser *)user {
++ (void)updateUser:(PIEEntityUser *)user {
     dispatch_queue_t q = dispatch_queue_create("update", NULL);
     dispatch_async(q, ^{
         [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {

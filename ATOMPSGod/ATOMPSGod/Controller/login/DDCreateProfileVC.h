@@ -7,8 +7,8 @@
 //
 
 #import "DDBaseVC.h"
-#import "ATOMUserProfileViewModel.h"
+#import "PIEUserProfileViewModel.h"
 
 @interface DDCreateProfileVC : DDLoginBaseVC
-@property (nonatomic, strong) ATOMUserProfileViewModel *userProfileViewModel;
+@property (nonatomic, strong) PIEUserProfileViewModel *userProfileViewModel;
 @end

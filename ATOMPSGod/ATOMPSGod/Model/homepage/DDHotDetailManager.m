@@ -10,15 +10,14 @@
 #import "DDSessionManager.h"
 #import "ATOMDetailPage.h"
 #import "PIECommentEntity.h"
-#import "ATOMCommentDAO.h"
-#import "ATOMDetailImageDAO.h"
-#import "PIEPageDAO.h"
-#import "ATOMImageTipLabel.h"
+//#import "ATOMCommentDAO.h"
+//#import "ATOMDetailImageDAO.h"
+//#import "PIEPageDAO.h"
 
 #import "PIEImageEntity.h"
 @interface DDHotDetailManager ()
-@property (nonatomic, strong) ATOMDetailImageDAO *detailImageDAO;
-@property (nonatomic, strong) ATOMCommentDAO *commentDAO;
+//@property (nonatomic, strong) ATOMDetailImageDAO *detailImageDAO;
+//@property (nonatomic, strong) ATOMCommentDAO *commentDAO;
 @end
 
 @implementation DDHotDetailManager

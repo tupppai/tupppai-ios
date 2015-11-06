@@ -8,7 +8,7 @@
 
 #import "PIEFriendViewController.h"
 #import "DDOtherUserManager.h"
-#import "ATOMUser.h"
+#import "PIEEntityUser.h"
 #import "CAPSPageMenu.h"
 #import "PIEFriendAskViewController.h"
 #import "PIEFriendReplyViewController.h"
@@ -158,7 +158,7 @@
         }
     }];
 }
-- (void)updateUserInterface:(ATOMUser*)user {
+- (void)updateUserInterface:(PIEEntityUser*)user {
     self.title = user.nickname;
 //    [_avatarView setImageWithURL:[NSURL URLWithString:user.avatar]];
     [DDService downloadImage:user.avatar withBlock:^(UIImage *image) {
@@ -263,7 +263,7 @@
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     
-    [DDOtherUserManager getOtherUserInfo:param withBlock:^(ATOMUser *user) {
+    [DDOtherUserManager getOtherUserInfo:param withBlock:^(PIEEntityUser *user) {
         if (user) {
             [self updateUserInterface:user];
         }

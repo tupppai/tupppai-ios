@@ -9,7 +9,7 @@
 #import "DDCommentManager.h"
 #import "DDSessionManager.h"
 #import "PIECommentEntity.h"
-#import "DDCommentReplyVM.h"
+#import "PIEEntityCommentReply.h"
 
 
 

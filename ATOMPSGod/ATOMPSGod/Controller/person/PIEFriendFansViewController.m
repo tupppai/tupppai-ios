@@ -10,8 +10,8 @@
 #import "PIEFriendFansTableCell.h"
 #import "PIEFriendViewController.h"
 #import "DDMyFansManager.h"
-#import "ATOMFans.h"
-#import "ATOMFansViewModel.h"
+#import "PIEEntityFan.h"
+#import "PIEFansViewModel.h"
 #import "PIERefreshFooterTableView.h"
 #import "DDService.h"
 
@@ -81,7 +81,7 @@
     CGPoint location = [gesture locationInView:_tableView];
     _selectedIndexPath = [_tableView indexPathForRowAtPoint:location];
     if (_selectedIndexPath) {
-        ATOMFansViewModel *viewModel = _dataSource[_selectedIndexPath.row];
+        PIEFansViewModel *viewModel = _dataSource[_selectedIndexPath.row];
         PIEFriendFansTableCell *cell = (PIEFriendFansTableCell *)[_tableView cellForRowAtIndexPath:_selectedIndexPath];
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
@@ -189,8 +189,8 @@
     [DDMyFansManager getMyFans:param withBlock:^(NSMutableArray *resultArray) {
         ws.isfirstLoading = NO;
         [Hud dismiss:self.view];
-        for (ATOMFans *fans in resultArray) {
-            ATOMFansViewModel *fansViewModel = [ATOMFansViewModel new];
+        for (PIEEntityFan *fans in resultArray) {
+            PIEFansViewModel *fansViewModel = [PIEFansViewModel new];
             [fansViewModel setViewModelData:fans];
             [ws.dataSource addObject:fansViewModel];
         }
@@ -208,8 +208,8 @@
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(_uid) forKeyedSubscript:@"uid"];
     [DDMyFansManager getMyFans:param withBlock:^(NSMutableArray *resultArray) {
-        for (ATOMFans *fans in resultArray) {
-            ATOMFansViewModel *fansViewModel = [ATOMFansViewModel new];
+        for (PIEEntityFan *fans in resultArray) {
+            PIEFansViewModel *fansViewModel = [PIEFansViewModel new];
             [fansViewModel setViewModelData:fans];
             [ws.dataSource addObject:fansViewModel];
         }

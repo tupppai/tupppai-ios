@@ -7,9 +7,9 @@
 //
 
 #import "DDPageManager.h"
-#import "ATOMUser.h"
+#import "PIEEntityUser.h"
 #import "PIEImageEntity.h"
-#import "ATOMImageTipLabel.h"
+//
 
 
 

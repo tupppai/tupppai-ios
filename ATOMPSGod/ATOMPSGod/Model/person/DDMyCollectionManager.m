@@ -8,7 +8,7 @@
 
 #import "DDMyCollectionManager.h"
 
-#import "ATOMImageTipLabel.h"
+//
 
 @implementation DDMyCollectionManager
 

@@ -7,7 +7,7 @@
 //
 
 #import "DDCommentTableCell.h"
-#import "DDCommentReplyVM.h"
+#import "PIEEntityCommentReply.h"
 @implementation DDCommentTableCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier

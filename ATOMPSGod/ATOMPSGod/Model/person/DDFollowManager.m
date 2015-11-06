@@ -7,7 +7,7 @@
 //
 
 #import "DDFollowManager.h"
-#import "DDFollow.h"
+#import "PIEEntityFollow.h"
 
 @implementation DDFollowManager
 
@@ -16,11 +16,11 @@
         NSMutableArray *retRecommend = [NSMutableArray array];
         NSMutableArray *retMine = [NSMutableArray array];
         for (int i = 0; i < recommendArray.count; i++) {
-            DDFollow *concern = [MTLJSONAdapter modelOfClass:[DDFollow class] fromJSONDictionary:recommendArray[i] error:NULL];
+            PIEEntityFollow *concern = [MTLJSONAdapter modelOfClass:[PIEEntityFollow class] fromJSONDictionary:recommendArray[i] error:NULL];
             [retRecommend addObject:concern];
         }
         for (int i = 0; i < myFollowArray.count; i++) {
-            DDFollow *concern = [MTLJSONAdapter modelOfClass:[DDFollow class] fromJSONDictionary:myFollowArray[i] error:NULL];
+            PIEEntityFollow *concern = [MTLJSONAdapter modelOfClass:[PIEEntityFollow class] fromJSONDictionary:myFollowArray[i] error:NULL];
             [retMine addObject:concern];
         }
         if (block) {

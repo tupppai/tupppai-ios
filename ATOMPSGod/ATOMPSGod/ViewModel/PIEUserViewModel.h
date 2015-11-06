@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ATOMUser.h"
+#import "PIEEntityUser.h"
 
 @interface PIEUserViewModel : NSObject
 /**
@@ -64,5 +64,5 @@
 @property (nonatomic, assign) bool bindWechat;
 @property (nonatomic, assign) bool bindWeibo;
 @property (nonatomic, assign) bool bindQQ;
-- (instancetype)initWithEntity:(ATOMUser*)user;
+- (instancetype)initWithEntity:(PIEEntityUser*)user;
 @end

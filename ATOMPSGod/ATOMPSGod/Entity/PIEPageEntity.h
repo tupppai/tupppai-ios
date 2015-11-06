@@ -7,7 +7,7 @@
 //
 
 #import "ATOMBaseModel.h"
-@class ATOMUser;
+@class PIEEntityUser;
 
 @interface PIEPageEntity : ATOMBaseModel <MTLFMDBSerializing>
 

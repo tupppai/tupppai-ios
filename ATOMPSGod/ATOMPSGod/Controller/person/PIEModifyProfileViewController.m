@@ -11,7 +11,7 @@
 #import "DDPhoneRegisterVC.h"
 #import "ATOMHeaderImageCropperViewController.h"
 #import "PIEUploadManager.h"
-#import "ATOMImage.h"
+#import "PIEEntityImage.h"
 #import "JGActionSheet.h"
 #import "AppDelegate.h"
 #import "DDNavigationController.h"
@@ -136,7 +136,7 @@
     NSData *data = UIImageJPEGRepresentation(image, 0.2);
     [_createProfileView.userHeaderButton setImage:image forState:UIControlStateNormal];
     PIEUploadManager *uploadImage = [PIEUploadManager new];
-    [uploadImage UploadImage:data WithBlock:^(ATOMImage *imageInfomation, NSError *error) {
+    [uploadImage UploadImage:data WithBlock:^(PIEEntityImage *imageInfomation, NSError *error) {
         if (error) {
             return ;
         }

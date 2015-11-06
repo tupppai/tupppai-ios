@@ -121,7 +121,7 @@
                 } else {
                     [DDUserManager currentUser].signUpType = ATOMSignUpWeibo;
                     [DDUserManager currentUser].sourceData = sourceData;
-                    ATOMUserProfileViewModel* ipvm = [ATOMUserProfileViewModel new];
+                    PIEUserProfileViewModel* ipvm = [PIEUserProfileViewModel new];
                     ipvm.nickName = sourceData[@"name"];
                     ipvm.province = sourceData[@"province"];
                     ipvm.city = sourceData[@"city"];
@@ -211,7 +211,7 @@
                 } else  {
                     [DDUserManager currentUser].signUpType = ATOMSignUpWechat;
                     [DDUserManager currentUser].sourceData = sourceData;
-                    ATOMUserProfileViewModel* ipvm = [ATOMUserProfileViewModel new];
+                    PIEUserProfileViewModel* ipvm = [PIEUserProfileViewModel new];
                     ipvm.nickName = sourceData[@"nickname"];
 //                    ipvm.province = sourceData[@"province"];
 //                    ipvm.city = sourceData[@"city"];

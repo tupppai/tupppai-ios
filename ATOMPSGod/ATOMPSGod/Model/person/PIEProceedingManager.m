@@ -8,7 +8,7 @@
 
 #import "PIEProceedingManager.h"
 
-#import "ATOMImageTipLabel.h"
+//
 
 @implementation PIEProceedingManager
 + (void)getMyAsk:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *dataArray))block {

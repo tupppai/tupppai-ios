@@ -11,13 +11,11 @@
 #import "DDCommentTextView.h"
 #import "DDCommentVM.h"
 #import "AppDelegate.h"
-#import "CommentCell.h"
 #import "PIEFriendViewController.h"
 #import "PIECommentEntity.h"
 #import "DDCommentManager.h"
-#import "CommentLikeButton.h"
-#import "DDCommentReplyVM.h"
-#import "DDCommentHeaderView.h"
+#import "PIEEntityCommentReply.h"
+#import "PIECommentHeaderView.h"
 #import "PIEShareView.h"
 #import "JGActionSheet.h"
 #import "ATOMReportModel.h"
@@ -187,13 +185,13 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         }
         //所要回复的评论多于一个回复人，也就是我要回复的评论已经多于两个人。
         else {
-            DDCommentReplyVM* reply1 = commentVM.replyArray[0];
+            PIEEntityCommentReply* reply1 = commentVM.replyArray[0];
             commentToShow = [NSString stringWithFormat:@"%@//@%@:%@",self.textView.text,_targetCommentVM.username,_targetCommentVM.originText];
             commentToShow = [NSString stringWithFormat:@"%@//@%@:%@",commentToShow,reply1.username,reply1.text];
         }
         commentVM.text = commentToShow;
 
-        DDCommentReplyVM* reply = [DDCommentReplyVM new];
+        PIEEntityCommentReply* reply = [PIEEntityCommentReply new];
         reply.uid = _targetCommentVM.uid;
         reply.username = _targetCommentVM.username;
         reply.text = _targetCommentVM.originText;
@@ -367,7 +365,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    DDCommentHeaderView *headerView = [DDCommentHeaderView new];
+    PIECommentHeaderView *headerView = [PIECommentHeaderView new];
     if (section == 0) {
         headerView.titleLabel.text = @"最热评论";
     } else if (section == 1) {

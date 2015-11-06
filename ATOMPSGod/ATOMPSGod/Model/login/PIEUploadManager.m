@@ -8,7 +8,7 @@
 
 #import "PIEUploadManager.h"
 #import "DDSessionManager.h"
-#import "ATOMImage.h"
+#import "PIEEntityImage.h"
 @interface PIEUploadManager()
 @property (nonatomic, strong) NSMutableArray *uploadIdArray;
 @property (nonatomic, strong) NSMutableArray *ratioArray;
@@ -17,11 +17,11 @@
 @end
 @implementation PIEUploadManager
 
-- (NSURLSessionDataTask *)UploadImage:(NSData *)data WithBlock:(void (^)(ATOMImage *, NSError *))block {
+- (NSURLSessionDataTask *)UploadImage:(NSData *)data WithBlock:(void (^)(PIEEntityImage *, NSError *))block {
     return [[DDSessionManager shareHTTPSessionManager] POST:@"image/upload" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         [formData appendPartWithFileData:data name:@"images" fileName:@"iOSTupaiApp" mimeType:@"image/png"];
     } success:^(NSURLSessionDataTask *task, id responseObject) {
-        ATOMImage *imageInfomation = [MTLJSONAdapter modelOfClass:[ATOMImage class] fromJSONDictionary:responseObject error:NULL];
+        PIEEntityImage *imageInfomation = [MTLJSONAdapter modelOfClass:[PIEEntityImage class] fromJSONDictionary:responseObject error:NULL];
         if (block) {
             block(imageInfomation, nil);
         }

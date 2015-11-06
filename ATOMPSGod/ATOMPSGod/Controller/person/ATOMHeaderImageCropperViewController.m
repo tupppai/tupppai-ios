@@ -7,12 +7,12 @@
 //
 
 #import "ATOMHeaderImageCropperViewController.h"
-#import "ATOMHeaderImageCropperView.h"
+#import "PIEImageCropperView.h"
 #import "BJImageCropper.h"
 
 @interface ATOMHeaderImageCropperViewController () <UIGestureRecognizerDelegate>
 
-@property (nonatomic, strong) ATOMHeaderImageCropperView *headerImageCropperView;
+@property (nonatomic, strong) PIEImageCropperView *headerImageCropperView;
 
 @end
 
@@ -51,7 +51,7 @@
 }
 
 - (void)createUI {
-    _headerImageCropperView = [ATOMHeaderImageCropperView new];
+    _headerImageCropperView = [PIEImageCropperView new];
     self.view = _headerImageCropperView;
     _headerImageCropperView.originImage = _originImage;
 //    [_headerImageCropperView.cancelButton addTarget:self action:@selector(clickLeftButtonItem:) forControlEvents:UIControlEventTouchUpInside];

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ATOMFansViewModel;
+@class PIEFansViewModel;
 
 @interface PIEFriendFansTableCell : UITableViewCell
 
@@ -18,6 +18,6 @@
 @property (nonatomic, strong) UILabel *uploadNumberLabel;
 @property (nonatomic, strong) UILabel *workNumberLabel;
 
-@property (nonatomic, strong) ATOMFansViewModel *viewModel;
+@property (nonatomic, strong) PIEFansViewModel *viewModel;
 
 @end

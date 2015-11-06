@@ -10,9 +10,9 @@
 #import "PIEFriendFollowingTableCell.h"
 #import "PIEFriendViewController.h"
 #import "DDFollowManager.h"
-#import "DDFollow.h"
+#import "PIEEntityFollow.h"
 #import "DDService.h"
-#import "ATOMConcernViewModel.h"
+#import "PIEFollowViewModel.h"
 #import "PIERefreshFooterTableView.h"
 
 
@@ -83,7 +83,7 @@
     CGPoint location = [gesture locationInView:_tableView];
     NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:location];
     if (indexPath) {
-        ATOMConcernViewModel *viewModel = _dataSource[indexPath.row];
+        PIEFollowViewModel *viewModel = _dataSource[indexPath.row];
         PIEFriendFollowingTableCell *cell = (PIEFriendFollowingTableCell *)[_tableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
@@ -174,8 +174,8 @@
     [Hud activity:@"" inView:self.view];
     [DDFollowManager getFollow:param withBlock:^(NSMutableArray *recommend,NSMutableArray* resultArray) {
         [Hud dismiss:self.view];
-        for (DDFollow *concern in resultArray) {
-            ATOMConcernViewModel *concernViewModel = [ATOMConcernViewModel new];
+        for (PIEEntityFollow *concern in resultArray) {
+            PIEFollowViewModel *concernViewModel = [PIEFollowViewModel new];
             [concernViewModel setViewModelData:concern];
             [ws.dataSource addObject:concernViewModel];
         }
@@ -193,8 +193,8 @@
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDFollowManager getFollow:param withBlock:^(NSMutableArray *resultArray,NSMutableArray* recommend) {
-        for (DDFollow *concern in resultArray) {
-            ATOMConcernViewModel *concernViewModel = [ATOMConcernViewModel new];
+        for (PIEEntityFollow *concern in resultArray) {
+            PIEFollowViewModel *concernViewModel = [PIEFollowViewModel new];
             [concernViewModel setViewModelData:concern];
             [ws.dataSource addObject:concernViewModel];
         }

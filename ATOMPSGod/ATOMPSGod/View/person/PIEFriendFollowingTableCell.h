@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ATOMConcernViewModel;
+@class PIEFollowViewModel;
 
 @interface PIEFriendFollowingTableCell : UITableViewCell
 
@@ -17,7 +17,7 @@
 @property (nonatomic, strong) UILabel *fansNumberLabel;
 @property (nonatomic, strong) UILabel *uploadNumberLabel;
 @property (nonatomic, strong) UILabel *workNumberLabel;
-@property (nonatomic, strong) ATOMConcernViewModel *viewModel;
+@property (nonatomic, strong) PIEFollowViewModel *viewModel;
 
 
 @end

@@ -7,14 +7,14 @@
 //
 
 #import "PIEThirdPartyBindingViewController.h"
-#import "ATOMAccountBindingView.h"
-#import "ATOMAccountBindingTableViewCell.h"
+#import "PIEAccountBindingView.h"
+#import "PIEAccountBindingTableViewCell.h"
 #import "DDMySettingsManager.h"
 
 #import "PIEModifyPasswordViewController.h"
 @interface PIEThirdPartyBindingViewController () <UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong) ATOMAccountBindingView *accountBindingView;
+@property (nonatomic, strong) PIEAccountBindingView *accountBindingView;
 
 @end
 
@@ -29,7 +29,7 @@
 
 - (void)createUI {
     self.title = @"帐号绑定";
-    _accountBindingView = [ATOMAccountBindingView new];
+    _accountBindingView = [PIEAccountBindingView new];
     self.view = _accountBindingView;
     _accountBindingView.accountBindingTableView.scrollEnabled = NO;
     _accountBindingView.accountBindingTableView.delegate = self;
@@ -106,9 +106,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"AccountBindingCell";
-    ATOMAccountBindingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    PIEAccountBindingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
-        cell = [[ATOMAccountBindingTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[PIEAccountBindingTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;

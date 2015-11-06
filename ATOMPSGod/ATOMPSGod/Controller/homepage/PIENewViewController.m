@@ -11,7 +11,7 @@
 
 
 #import "kfcHomeScrollView.h"
-#import "DDHomePageManager.h"
+#import "PIEPageManager.h"
 #import "PIEShareView.h"
 #import "DDShareManager.h"
 #import "DDCollectManager.h"
@@ -370,7 +370,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-    DDHomePageManager *pageManager = [DDHomePageManager new];
+    PIEPageManager *pageManager = [PIEPageManager new];
     [pageManager pullAskSource:param block:^(NSMutableArray *homepageArray) {
         ws.isfirstLoadingAsk = NO;
         if (homepageArray.count) {
@@ -398,7 +398,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(_currentAskIndex) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-    DDHomePageManager *pageManager = [DDHomePageManager new];
+    PIEPageManager *pageManager = [PIEPageManager new];
     [pageManager pullAskSource:param block:^(NSMutableArray *homepageArray) {
         if (homepageArray.count) {
             [ws.sourceAsk addObjectsFromArray:homepageArray];
@@ -423,7 +423,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(1) forKey:@"page"];
 
-    DDHomePageManager *pageManager = [DDHomePageManager new];
+    PIEPageManager *pageManager = [PIEPageManager new];
     [pageManager pullReplySource:param block:^(NSMutableArray *array) {
         ws.isfirstLoadingReply = NO;
         if (array.count) {
@@ -447,7 +447,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(_currentHotIndex) forKey:@"page"];
-    DDHomePageManager *pageManager = [DDHomePageManager new];
+    PIEPageManager *pageManager = [PIEPageManager new];
     [pageManager pullReplySource:param block:^(NSMutableArray *array) {
         if (array.count) {
             [ws.sourceReply addObjectsFromArray:array] ;

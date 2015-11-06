@@ -8,16 +8,16 @@
 
 #import "DDOtherUserManager.h"
 
-#import "ATOMImageTipLabel.h"
-#import "ATOMUser.h"
+//
+#import "PIEEntityUser.h"
 #import "PIEImageEntity.h"
 @implementation DDOtherUserManager
 
-+ (void)getOtherUserInfo:(NSDictionary *)param withBlock:(void (^)(ATOMUser *user))block {
++ (void)getOtherUserInfo:(NSDictionary *)param withBlock:(void (^)(PIEEntityUser *user))block {
     [DDService ddGetOtherUserInfo:param withBlock:^(NSDictionary *data, NSArray *askArray, NSArray *replyArray) {
         {
 
-            ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:data error:NULL];
+            PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:data error:NULL];
             if (block) {
                 block(user);
             }

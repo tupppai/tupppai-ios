@@ -8,13 +8,11 @@
 
 #import "PIETabBarController.h"
 #import "PIENewViewController.h"
-#import "DDMessageVC.h"
 #import "PIEEliteViewController.h"
 #import "DDNavigationController.h"
 #import "DDService.h"
 #import "PIEMeViewController.h"
 #import "PIECameraViewController.h"
-#import "PIEBlurViewController.h"
 #import "PIEProceedingViewController.h"
 
 @interface PIETabBarController ()<UITabBarControllerDelegate>

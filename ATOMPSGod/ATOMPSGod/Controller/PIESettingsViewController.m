@@ -11,13 +11,12 @@
 #import "PIESettingsTableViewCell.h"
 #import "PIEThirdPartyBindingViewController.h"
 #import "PIEMessagePushSettingViewController.h"
-#import "ATOMUserFeedbackViewController.h"
 #import "ATOMUserDAO.h"
 #import "PIEPageDAO.h"
 #import "DDLoginNavigationController.h"
 #import "AppDelegate.h"
 #import "SIAlertView.h"
-#import "DDHomePageManager.h"
+#import "PIEPageManager.h"
 #import "PIEModifyProfileViewController.h"
 #import "PIEMyCommentedPageViewController.h"
 #import "PIESignOutTableViewCell.h"
@@ -221,8 +220,8 @@
                              type:SIAlertViewButtonTypeDefault
                           handler:^(SIAlertView *alert) {
                               [[NSURLCache sharedURLCache]removeAllCachedResponses];
-                              DDHomePageManager *showHomepage = [DDHomePageManager new];
-                              [showHomepage clearHomePages];
+//                              DDHomePageManager *showHomepage = [DDHomePageManager new];
+//                              [showHomepage clearHomePages];
                               [Hud success:@"清理缓存成功" inView:self.view];
                           }];
     alertView.transitionStyle = SIAlertViewTransitionStyleDropDown;

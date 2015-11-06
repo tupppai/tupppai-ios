@@ -7,7 +7,7 @@
 //
 
 #import "PIEFriendFollowingTableCell.h"
-#import "ATOMConcernViewModel.h"
+#import "PIEFollowViewModel.h"
 
 @interface PIEFriendFollowingTableCell ()
 
@@ -87,7 +87,7 @@
 
 
 
-- (void)setViewModel:(ATOMConcernViewModel *)viewModel {
+- (void)setViewModel:(PIEFollowViewModel *)viewModel {
     _viewModel = viewModel;
     [self.userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
     self.userNameLabel.text = viewModel.userName;

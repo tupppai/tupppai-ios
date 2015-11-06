@@ -19,7 +19,6 @@
 #import "JGActionSheet.h"
 #import "AppDelegate.h"
 #import "ATOMReportModel.h"
-#import "DDInviteVC.h"
 
 #import "PIEShareView.h"
 #import "PIEEliteFollowAskTableViewCell.h"

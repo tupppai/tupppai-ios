@@ -7,12 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-@class ATOMImage;
+@class PIEEntityImage;
 
 @interface PIEUploadManager : NSObject
 @property (nonatomic, copy) NSString *type;
 
-- (NSURLSessionDataTask *)UploadImage:(NSData *)data WithBlock:(void (^)(ATOMImage *imageInformation, NSError *error))block;
+- (NSURLSessionDataTask *)UploadImage:(NSData *)data WithBlock:(void (^)(PIEEntityImage *imageInformation, NSError *error))block;
 - (void)upload:(void (^)(CGFloat percentage,BOOL success))block ;
 
 @end

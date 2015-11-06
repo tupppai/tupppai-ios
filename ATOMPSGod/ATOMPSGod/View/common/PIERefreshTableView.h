@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ATOMNoDataView.h"
 
 @interface PIERefreshTableView : UITableView
 @property (nonatomic, weak) id<PWRefreshBaseTableViewDelegate> psDelegate;

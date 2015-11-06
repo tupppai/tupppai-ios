@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "PIELaunchViewController.h"
-@class ATOMUser;
+@class PIEEntityUser;
 
 typedef enum {
     ATOMSignUpWechat = 0,
@@ -90,9 +90,9 @@ typedef enum {
 
 - (NSMutableDictionary *)dictionaryFromModel;
 
-- (void)setCurrentUser:(ATOMUser *)user;
+- (void)setCurrentUser:(PIEEntityUser *)user;
 -(void)tellMeEveryThingAboutYou;
-- (void)saveAndUpdateUser:(ATOMUser *)user;
+- (void)saveAndUpdateUser:(PIEEntityUser *)user;
 +(void)fetchUserInDBToCurrentUser:(void (^)(BOOL))block;
 -(void)wipe;
 

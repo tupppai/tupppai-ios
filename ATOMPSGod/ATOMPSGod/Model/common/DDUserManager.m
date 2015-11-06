@@ -7,7 +7,7 @@
 //
 
 #import "DDUserManager.h"
-#import "ATOMUser.h"
+#import "PIEEntityUser.h"
 #import "ATOMUserDao.h"
 @implementation DDUserManager
 
@@ -69,7 +69,7 @@ static  DDUserManager* _currentUser;
 }
 
 
-- (void)setCurrentUser:(ATOMUser *)user {
+- (void)setCurrentUser:(PIEEntityUser *)user {
     _uid = user.uid;
     _mobile = user.mobile;
     _username = user.nickname;
@@ -91,7 +91,7 @@ static  DDUserManager* _currentUser;
 
 //embarrassing
 + (void)saveCurrentUserToDB {
-    ATOMUser* user = [ATOMUser new];
+    PIEEntityUser* user = [PIEEntityUser new];
     DDUserManager* cUser = [DDUserManager currentUser];
     user.uid = cUser.uid;
     user.mobile = cUser.mobile;
@@ -116,7 +116,7 @@ static  DDUserManager* _currentUser;
 -(void)tellMeEveryThingAboutYou {
     NSLog(@"%@,%@,%@,_likeNumber%ld id %zd",_username,_mobile,_avatar,(long)_likeNumber,_uid);
 }
-- (void)saveAndUpdateUser:(ATOMUser *)user {
+- (void)saveAndUpdateUser:(PIEEntityUser *)user {
     if ([ATOMUserDAO isExistUser:user]) {
         [ATOMUserDAO updateUser:user];
         [self setCurrentUser:[ATOMUserDAO  selectUserByUID:user.uid]];
@@ -139,7 +139,7 @@ static  DDUserManager* _currentUser;
 }
 
 +(void)fetchUserInDBToCurrentUser:(void (^)(BOOL))block {
-  [ATOMUserDAO fetchUser:^(ATOMUser *user) {
+  [ATOMUserDAO fetchUser:^(PIEEntityUser *user) {
       if (user) {
           [[DDUserManager currentUser] setCurrentUser:user];
           if (block) {
@@ -156,7 +156,7 @@ static  DDUserManager* _currentUser;
 + (void)DDGetUserInfoAndUpdateMe {
     [DDService ddGetMyInfo:nil withBlock:^(NSDictionary *data) {
         if (data) {
-            ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:data error:NULL];
+            PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:data error:NULL];
             //保存更新数据库的user,并更新currentUser
             [[DDUserManager currentUser]saveAndUpdateUser:user];
         }
@@ -166,7 +166,7 @@ static  DDUserManager* _currentUser;
 + (void )DDRegister:(NSDictionary *)param withBlock:(void (^)(BOOL success))block {
     [DDService ddRegister:param withBlock:^(NSDictionary *data) {
         if (data) {
-            ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:data error:NULL];
+            PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:data error:NULL];
             [[DDUserManager currentUser]saveAndUpdateUser:user];
             if (block) { block(YES); }
         } else {
@@ -183,7 +183,7 @@ static  DDUserManager* _currentUser;
             {    //        data: { status: 1,正常  2，密码错误 3，未注册 }
                 if(status == 1) {
                     [Util ShowTSMessageSuccess:@"登录成功"];
-                    ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:data error:nil];
+                    PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:data error:nil];
                     //保存更新数据库的user,并更新currentUser
                     [[DDUserManager currentUser]saveAndUpdateUser:user];
                     if (block) {block(YES);}
@@ -204,7 +204,7 @@ static  DDUserManager* _currentUser;
     [DDService dd3PartyAuth:param with3PaType:type withBlock:^(BOOL isRegistered,NSDictionary* userObejct) {
         if (isRegistered) {
             //已经注册，抓取服务器存储的user对象，更新本地user.
-            ATOMUser* user = [MTLJSONAdapter modelOfClass:[ATOMUser class] fromJSONDictionary:userObejct error:NULL];
+            PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:userObejct error:NULL];
             [[DDUserManager currentUser]saveAndUpdateUser:user];
             block(YES,@"登录成功");
         } else {
