@@ -32,6 +32,16 @@
     _canRefreshFoot = YES;
     [self getRemoteSource];
 }
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"进入其它作品页"];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"离开其它作品页"];
+}
 - (void)getRemoteSource {
     _currentPage = 1;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];

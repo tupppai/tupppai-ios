@@ -20,6 +20,7 @@
 #import "WXApi.h"
 #import "WeiboSDK.h"
 #import "DDCommentVC.h"
+#import "MobClick.h"
 
 @interface AppDelegate ()
 
@@ -43,6 +44,12 @@
     
     [[IQKeyboardManager sharedManager] disableInViewControllerClass:[DDCommentVC class]];
     [[IQKeyboardManager sharedManager]setEnableAutoToolbar:NO];
+    
+    [MobClick startWithAppkey:@"55b1ecdbe0f55a1de9001164"];
+    [MobClick setCrashReportEnabled:YES];
+    [MobClick setEncryptEnabled:YES];
+    [MobClick setLogEnabled:YES];
+    
     return YES;
 }
 - (void)setupBarButtonItem {

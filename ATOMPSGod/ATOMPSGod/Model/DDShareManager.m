@@ -7,6 +7,9 @@
 //
 
 #import "DDShareManager.h"
+#import "MobClickSocialAnalytics.h"
+
+
 //#import "DDSessionManager.h"
 @implementation DDShareManager
 
@@ -45,19 +48,30 @@
 + (void)getRemoteShareInfo:(DDPageVM*)vm withSocialShareType:(ATOMShareType)shareType withBlock:(void (^)(ATOMShare* share))block {
     NSMutableDictionary* param = [NSMutableDictionary new];
     NSString* shareTypeToServer = @"";
+    MobClickSocialWeibo *weibo;
     if (shareType == ATOMShareTypeWechatFriends) {
         shareTypeToServer = @"wechat_friend";
+        weibo=[[MobClickSocialWeibo alloc] initWithPlatformType:MobClickSocialTypeWxsesion weiboId:nil usid:nil param:nil];
     } else if (shareType == ATOMShareTypeWechatMoments) {
         shareTypeToServer = @"wechat_timeline";
+        weibo=[[MobClickSocialWeibo alloc] initWithPlatformType:MobClickSocialTypeWxtimeline weiboId:nil usid:nil param:nil];
+
     } else if (shareType == ATOMShareTypeSinaWeibo) {
+        weibo=[[MobClickSocialWeibo alloc] initWithPlatformType:MobClickSocialTypeSina weiboId:nil usid:nil param:nil];
         shareTypeToServer = @"weibo";
     }  else if (shareType == ATOMShareTypeQQFriends) {
+        weibo=[[MobClickSocialWeibo alloc] initWithPlatformType:MobClickSocialTypeQQ weiboId:nil usid:nil param:nil];
+
         shareTypeToServer = @"qq_timeline";
     } else if (shareType == ATOMShareTypeQQZone) {
+        weibo=[[MobClickSocialWeibo alloc] initWithPlatformType:MobClickSocialTypeQzone weiboId:nil usid:nil param:nil];
+
         shareTypeToServer = @"qq_friend";
     } else if (shareType == ATOMShareTypeCopyLinks) {
+        weibo=[[MobClickSocialWeibo alloc] initWithPlatformType:@"copy" weiboId:nil usid:nil param:nil];
         shareTypeToServer = @"copy";
     }
+    [MobClickSocialAnalytics postWeiboCounts:@[weibo] appKey:@"55b1ecdbe0f55a1de9001164" topic:vm.content completion:nil];
     [param setObject:shareTypeToServer forKey:@"share_type"];
     [param setObject:@(vm.type) forKey:@"type"];
     [param setObject:@(vm.ID) forKey:@"target_id"];

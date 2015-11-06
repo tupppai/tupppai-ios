@@ -446,7 +446,6 @@
 		F45D8FAE1BD87CFD005946E8 /* ShareSDKInterfaceAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F45D8FA11BD87CFD005946E8 /* ShareSDKInterfaceAdapter.framework */; };
 		F45D8FAF1BD87CFD005946E8 /* ShareSDKUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F45D8FA21BD87CFD005946E8 /* ShareSDKUI.bundle */; };
 		F45D8FB01BD87CFD005946E8 /* ShareSDKUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F45D8FA31BD87CFD005946E8 /* ShareSDKUI.framework */; };
-		F45D8FB21BD87F01005946E8 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F45D8FB11BD87F01005946E8 /* AdSupport.framework */; };
 		F45ECF441BD1DB5B00417A75 /* PIEEliteHotReplyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F45ECF421BD1DB5B00417A75 /* PIEEliteHotReplyTableViewCell.m */; };
 		F45ECF451BD1DB5B00417A75 /* PIEEliteHotReplyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F45ECF431BD1DB5B00417A75 /* PIEEliteHotReplyTableViewCell.xib */; };
 		F45ECF4A1BD1DC3F00417A75 /* PIEMyCommentedPageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F45ECF481BD1DC3F00417A75 /* PIEMyCommentedPageTableViewCell.m */; };
@@ -481,6 +480,7 @@
 		F472055C1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F472055A1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.m */; };
 		F472055D1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F472055B1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.xib */; };
 		F49160931BEC4D0800BAFB65 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F49160901BEC4D0800BAFB65 /* libMobClickLibrary.a */; };
+		F49160941BEC4DFA00BAFB65 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F45D8FB11BD87F01005946E8 /* AdSupport.framework */; };
 		F4993CEA1BE5B32C007F9BE4 /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4993CD91BE5B32C007F9BE4 /* AFNetworkActivityIndicatorManager.m */; };
 		F4993CEB1BE5B32C007F9BE4 /* UIActivityIndicatorView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = F4993CDB1BE5B32C007F9BE4 /* UIActivityIndicatorView+AFNetworking.m */; };
 		F4993CEC1BE5B32C007F9BE4 /* UIAlertView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = F4993CDD1BE5B32C007F9BE4 /* UIAlertView+AFNetworking.m */; };
@@ -1680,7 +1680,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F45D8FB21BD87F01005946E8 /* AdSupport.framework in Frameworks */,
+				F49160941BEC4DFA00BAFB65 /* AdSupport.framework in Frameworks */,
 				E99C51481B85ADF9004CA47B /* ImageIO.framework in Frameworks */,
 				E99C51461B85ADEF004CA47B /* JavaScriptCore.framework in Frameworks */,
 				E99C51441B85ADE9004CA47B /* libstdc++.dylib in Frameworks */,

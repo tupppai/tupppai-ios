@@ -78,13 +78,14 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"进入最新页面"];
     self.navigationController.navigationBarHidden = NO;
 }
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 //    [self shouldNavToAskSegment];
 //    [self shouldNavToHotSegment];
-   
+    [MobClick endLogPageView:@"离开最新页面"];
     //tricks to display progressView  if vc re-appear
 }
 

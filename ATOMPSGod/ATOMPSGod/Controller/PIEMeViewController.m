@@ -86,6 +86,7 @@
                                                object:nil];
 
 }
+
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
@@ -97,11 +98,16 @@
     self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
     self.edgesForExtendedLayout = UIRectEdgeAll;
     [self updateNoticationStatus];
+    
+    [MobClick beginLogPageView:@"进入我的"];
+
 }
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.navigationController.navigationBar setBackgroundImage:nil
                                                   forBarMetrics:UIBarMetricsDefault];
+    [MobClick endLogPageView:@"离开我的"];
+
 }
 
 - (void)updateNoticationStatus {

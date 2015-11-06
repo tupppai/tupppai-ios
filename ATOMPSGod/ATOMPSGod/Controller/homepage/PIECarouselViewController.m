@@ -40,6 +40,13 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationItem.titleView = self.segmentedControl;
+    [MobClick beginLogPageView:@"进入滚动详情页"];
+
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"离开滚动详情页"];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -47,6 +54,7 @@
     [self getDataSource];
     [self setupViews];
 }
+
 - (void)setupViews {
     self.view.backgroundColor = [UIColor blackColor];
     self.view.clipsToBounds = YES;

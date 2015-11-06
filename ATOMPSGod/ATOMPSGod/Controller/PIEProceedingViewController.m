@@ -68,6 +68,18 @@
     [self getSourceIfEmpty_ask];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"进入进行中"];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"离开进行中"];
+}
+
+
 - (void)getSourceIfEmpty_ask {
     if (_sourceAsk.count <= 0 || _isfirstLoadingAsk) {
         [self.sv.askTableView.header beginRefreshing];

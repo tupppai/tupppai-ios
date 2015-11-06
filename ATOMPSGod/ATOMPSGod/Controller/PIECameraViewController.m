@@ -62,6 +62,17 @@
     [_bg2 addGestureRecognizer:tapG2];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"进入发布页"];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"离开发布页"];
+}
+
 - (void)tapOnG1 {
     [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
 //    [self dismissViewControllerAnimated:YES completion:^{

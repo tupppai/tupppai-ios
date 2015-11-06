@@ -94,7 +94,15 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"进入浏览图片页"];
 }
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"离开浏览图片页"];
+}
+
+
 
 - (void)viewDidAppear:(BOOL)animated
 {
