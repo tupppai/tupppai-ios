@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DDCommentPageVM.h"
+//
 #import "ATOMDetailPage.h"
 
 @class PIEPageEntity;
@@ -54,9 +54,9 @@
 @property (nonatomic, strong) NSString *imageURL2;
 
 
--(DDCommentPageVM*)generatepageDetailViewModel;
+//-(DDCommentPageVM*)generatepageDetailViewModel;
 - (instancetype)initWithPageEntity:(PIEPageEntity *)entity ;
-- (instancetype)initWithFollowEntity:(PIEEliteEntity *)entity;
+//- (instancetype)initWithFollowEntity:(PIEEliteEntity *)entity;
 
 - (void)toggleLike:(void (^)(BOOL success))block ;
 @end

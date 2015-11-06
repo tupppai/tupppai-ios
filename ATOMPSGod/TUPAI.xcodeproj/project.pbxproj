@@ -54,8 +54,6 @@
 		5C31018D1AAEAB3C00EF529B /* ATOMAccountBindingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C31018C1AAEAB3C00EF529B /* ATOMAccountBindingTableViewCell.m */; };
 		5C3101901AAEC8F900EF529B /* PIEMessagePushSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C31018F1AAEC8F900EF529B /* PIEMessagePushSettingViewController.m */; };
 		5C3101931AAEC9D800EF529B /* DDMsgPushSettingTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3101921AAEC9D800EF529B /* DDMsgPushSettingTableCell.m */; };
-		5C3E0CE51ABEB052006C9175 /* kfcPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3E0CE41ABEB052006C9175 /* kfcPageView.m */; };
-		5C436A7E1AB0249F00D14608 /* kfcFollowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C436A7D1AB0249F00D14608 /* kfcFollowCell.m */; };
 		5C436A811AB02E7300D14608 /* PIENotificationTypeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C436A801AB02E7300D14608 /* PIENotificationTypeTableViewCell.m */; };
 		5C436A841AB03BF100D14608 /* DDMsgCommentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C436A831AB03BF100D14608 /* DDMsgCommentVC.m */; };
 		5C436A871AB03E5900D14608 /* ATOMCommentMessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C436A861AB03E5900D14608 /* ATOMCommentMessageTableViewCell.m */; };
@@ -79,10 +77,7 @@
 		5C4F5BDC1AA555F900226F64 /* PIENewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BDB1AA555F900226F64 /* PIENewViewController.m */; };
 		5C4F5BDF1AA556E600226F64 /* DDMessageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BDE1AA556E600226F64 /* DDMessageVC.m */; };
 		5C4F5BEF1AA5893700226F64 /* UIActionSheet+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BEE1AA5893700226F64 /* UIActionSheet+Blocks.m */; };
-		5C4F5BF31AA593E200226F64 /* kfcHotCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BF21AA593E200226F64 /* kfcHotCell.m */; };
-		5C4F5BF61AA5BFEC00226F64 /* kfcAskCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BF51AA5BFEC00226F64 /* kfcAskCell.m */; };
 		5C4F5BF91AA5E0B600226F64 /* DDDetailPageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BF81AA5E0B600226F64 /* DDDetailPageVC.m */; };
-		5C4F5BFC1AA5E41900226F64 /* kfcDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BFB1AA5E41900226F64 /* kfcDetailCell.m */; };
 		5C4F88471AB56E760042E9BA /* DDShareVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F88461AB56E760042E9BA /* DDShareVC.m */; };
 		5C4F884A1AB56F180042E9BA /* ATOMShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F88491AB56F180042E9BA /* ATOMShareView.m */; };
 		5C535CB51AF1FC8A00BF30D1 /* ATOMBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C535CB01AF1FC8A00BF30D1 /* ATOMBaseView.m */; };
@@ -158,9 +153,7 @@
 		5C70715F1AC52656004B3A6A /* ATOMImageCropper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C70715E1AC52656004B3A6A /* ATOMImageCropper.m */; };
 		5C7861161AAF4C9400E87C77 /* PIEMyReplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7861151AAF4C9400E87C77 /* PIEMyReplyViewController.m */; };
 		5C7B8AB01AFA535D00F448CD /* PIEEliteEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7B8AAF1AFA535D00F448CD /* PIEEliteEntity.m */; };
-		5C7B8AB31AFA549D00F448CD /* kfcFollowVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7B8AB21AFA549D00F448CD /* kfcFollowVM.m */; };
 		5C7B8AB71AFA5AB700F448CD /* ATOMShowAttention.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7B8AB61AFA5AB700F448CD /* ATOMShowAttention.m */; };
-		5C8084F91AF2603D0062421C /* kfcButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8084F81AF2603D0062421C /* kfcButton.m */; };
 		5C8084FC1AF27BD30062421C /* ATOMTotalPSView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8084FB1AF27BD30062421C /* ATOMTotalPSView.m */; };
 		5C819C921AA71C1D00CDDB5B /* ATOMCommentDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C819C911AA71C1D00CDDB5B /* ATOMCommentDetailViewController.m */; };
 		5C819C951AA71FCD00CDDB5B /* ATOMCommentDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C819C941AA71FCD00CDDB5B /* ATOMCommentDetailTableViewCell.m */; };
@@ -287,7 +280,6 @@
 		E94B03221B7C74E500863C6F /* DDCommentTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B031B1B7C74E500863C6F /* DDCommentTextView.m */; };
 		E94B03231B7C74E500863C6F /* DDCommentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B031D1B7C74E500863C6F /* DDCommentVC.m */; };
 		E94B032A1B7DE6EC00863C6F /* UIColor+PSGod.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B03291B7DE6EC00863C6F /* UIColor+PSGod.m */; };
-		E94B032D1B7DE7D300863C6F /* kfcViews.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B032C1B7DE7D300863C6F /* kfcViews.m */; };
 		E95691AA1B22E88300DA84BB /* EXTRuntimeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = E956918C1B22E88300DA84BB /* EXTRuntimeExtensions.m */; };
 		E95691AB1B22E88300DA84BB /* EXTScope.m in Sources */ = {isa = PBXBuildFile; fileRef = E956918E1B22E88300DA84BB /* EXTScope.m */; };
 		E95691AC1B22E88300DA84BB /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E95691901B22E88300DA84BB /* Info.plist */; };
@@ -349,7 +341,6 @@
 		E9FBCD2C1B69F92D00BF7096 /* DDLoginBaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FBCD2B1B69F92D00BF7096 /* DDLoginBaseVC.m */; };
 		E9FBCD2F1B6A042000BF7096 /* DDLoginNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FBCD2E1B6A042000BF7096 /* DDLoginNavigationController.m */; };
 		E9FC94D91B2F0D0C00B72C60 /* ATOMUserProfileViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FC94D81B2F0D0C00B72C60 /* ATOMUserProfileViewModel.m */; };
-		E9FD023D1B29708200FC5E17 /* DDCommentPageVM.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD023C1B29708200FC5E17 /* DDCommentPageVM.m */; };
 		E9FF8A3B1B71CCB70010D2C4 /* DDInputPhoneFPVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF8A3A1B71CCB70010D2C4 /* DDInputPhoneFPVC.m */; };
 		E9FF8A3E1B71CD480010D2C4 /* ATOMInputMobileView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF8A3D1B71CD480010D2C4 /* ATOMInputMobileView.m */; };
 		E9FF8A411B71CE610010D2C4 /* ATOMInputVerifyCodeAndPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF8A401B71CE610010D2C4 /* ATOMInputVerifyCodeAndPasswordView.m */; };
@@ -486,6 +477,8 @@
 		F4AE73C31BBA90D800734BCB /* PIEFriendAskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE73C21BBA90D800734BCB /* PIEFriendAskViewController.m */; };
 		F4AE73C61BBA988900734BCB /* PIEFriendReplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE73C51BBA988900734BCB /* PIEFriendReplyViewController.m */; };
 		F4AFCD4B1BC79A3100027940 /* UIButton+Pop.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AFCD4A1BC79A3100027940 /* UIButton+Pop.m */; };
+		F4B02E121BECA27B00406A55 /* cellBG.png in Resources */ = {isa = PBXBuildFile; fileRef = F4B02E111BECA27B00406A55 /* cellBG.png */; };
+		F4B02E151BECA43D00406A55 /* kfcPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B02E141BECA43D00406A55 /* kfcPageView.m */; };
 		F4BB27BF1BD0AD8200C50F58 /* PIEImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BB27BE1BD0AD8200C50F58 /* PIEImageView.m */; };
 		F4BBE7721BBE3F9D00003CDE /* PIEReplyCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE7701BBE3F9D00003CDE /* PIEReplyCollectionViewController.m */; };
 		F4BBE77C1BBE420400003CDE /* PIEReplyCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE77A1BBE420400003CDE /* PIEReplyCollectionCell.m */; };
@@ -663,10 +656,6 @@
 		5C31018F1AAEC8F900EF529B /* PIEMessagePushSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEMessagePushSettingViewController.m; sourceTree = "<group>"; };
 		5C3101911AAEC9D800EF529B /* DDMsgPushSettingTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMsgPushSettingTableCell.h; sourceTree = "<group>"; };
 		5C3101921AAEC9D800EF529B /* DDMsgPushSettingTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMsgPushSettingTableCell.m; sourceTree = "<group>"; };
-		5C3E0CE31ABEB052006C9175 /* kfcPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kfcPageView.h; path = ../homepage/kfcPageView.h; sourceTree = "<group>"; };
-		5C3E0CE41ABEB052006C9175 /* kfcPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = kfcPageView.m; path = ../homepage/kfcPageView.m; sourceTree = "<group>"; };
-		5C436A7C1AB0249F00D14608 /* kfcFollowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kfcFollowCell.h; sourceTree = "<group>"; };
-		5C436A7D1AB0249F00D14608 /* kfcFollowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = kfcFollowCell.m; sourceTree = "<group>"; };
 		5C436A7F1AB02E7300D14608 /* PIENotificationTypeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIENotificationTypeTableViewCell.h; sourceTree = "<group>"; };
 		5C436A801AB02E7300D14608 /* PIENotificationTypeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENotificationTypeTableViewCell.m; sourceTree = "<group>"; };
 		5C436A821AB03BF100D14608 /* DDMsgCommentVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMsgCommentVC.h; sourceTree = "<group>"; };
@@ -713,14 +702,8 @@
 		5C4F5BDE1AA556E600226F64 /* DDMessageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMessageVC.m; sourceTree = "<group>"; };
 		5C4F5BED1AA5893700226F64 /* UIActionSheet+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActionSheet+Blocks.h"; sourceTree = "<group>"; };
 		5C4F5BEE1AA5893700226F64 /* UIActionSheet+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+Blocks.m"; sourceTree = "<group>"; };
-		5C4F5BF11AA593E200226F64 /* kfcHotCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kfcHotCell.h; sourceTree = "<group>"; };
-		5C4F5BF21AA593E200226F64 /* kfcHotCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = kfcHotCell.m; sourceTree = "<group>"; };
-		5C4F5BF41AA5BFEC00226F64 /* kfcAskCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kfcAskCell.h; sourceTree = "<group>"; };
-		5C4F5BF51AA5BFEC00226F64 /* kfcAskCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = kfcAskCell.m; sourceTree = "<group>"; };
 		5C4F5BF71AA5E0B600226F64 /* DDDetailPageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDetailPageVC.h; sourceTree = "<group>"; };
 		5C4F5BF81AA5E0B600226F64 /* DDDetailPageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDDetailPageVC.m; sourceTree = "<group>"; };
-		5C4F5BFA1AA5E41900226F64 /* kfcDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kfcDetailCell.h; sourceTree = "<group>"; };
-		5C4F5BFB1AA5E41900226F64 /* kfcDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = kfcDetailCell.m; sourceTree = "<group>"; };
 		5C4F88451AB56E760042E9BA /* DDShareVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDShareVC.h; sourceTree = "<group>"; };
 		5C4F88461AB56E760042E9BA /* DDShareVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDShareVC.m; sourceTree = "<group>"; };
 		5C4F88481AB56F180042E9BA /* ATOMShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShareView.h; sourceTree = "<group>"; };
@@ -872,12 +855,8 @@
 		5C7861151AAF4C9400E87C77 /* PIEMyReplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIEMyReplyViewController.m; path = person/PIEMyReplyViewController.m; sourceTree = "<group>"; };
 		5C7B8AAE1AFA535D00F448CD /* PIEEliteEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteEntity.h; sourceTree = "<group>"; };
 		5C7B8AAF1AFA535D00F448CD /* PIEEliteEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteEntity.m; sourceTree = "<group>"; };
-		5C7B8AB11AFA549D00F448CD /* kfcFollowVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kfcFollowVM.h; sourceTree = "<group>"; };
-		5C7B8AB21AFA549D00F448CD /* kfcFollowVM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = kfcFollowVM.m; sourceTree = "<group>"; };
 		5C7B8AB51AFA5AB700F448CD /* ATOMShowAttention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMShowAttention.h; sourceTree = "<group>"; };
 		5C7B8AB61AFA5AB700F448CD /* ATOMShowAttention.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShowAttention.m; sourceTree = "<group>"; };
-		5C8084F71AF2603D0062421C /* kfcButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kfcButton.h; path = ../homepage/kfcButton.h; sourceTree = "<group>"; };
-		5C8084F81AF2603D0062421C /* kfcButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = kfcButton.m; path = ../homepage/kfcButton.m; sourceTree = "<group>"; };
 		5C8084FA1AF27BD30062421C /* ATOMTotalPSView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATOMTotalPSView.h; path = ../homepage/ATOMTotalPSView.h; sourceTree = "<group>"; };
 		5C8084FB1AF27BD30062421C /* ATOMTotalPSView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATOMTotalPSView.m; path = ../homepage/ATOMTotalPSView.m; sourceTree = "<group>"; };
 		5C819C901AA71C1D00CDDB5B /* ATOMCommentDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMCommentDetailViewController.h; sourceTree = "<group>"; };
@@ -969,7 +948,7 @@
 		5C9BD9FF1AA8303700715698 /* ATOMUploadWorkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMUploadWorkView.m; sourceTree = "<group>"; };
 		5C9BDA061AA84D1000715698 /* DDCommentVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDCommentVM.h; sourceTree = "<group>"; };
 		5C9BDA071AA84D1000715698 /* DDCommentVM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDCommentVM.m; sourceTree = "<group>"; };
-		5C9BDA521AA8609800715698 /* psps.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = psps.png; sourceTree = "<group>"; };
+		5C9BDA521AA8609800715698 /* psps.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = psps.png; path = ../psps.png; sourceTree = "<group>"; };
 		5CAB05A41ADC144000BCF24B /* ATOMFaceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMFaceView.m; sourceTree = "<group>"; };
 		5CADF3D91AAC3C5A00FF8015 /* ATOMCommentDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMCommentDetailView.h; sourceTree = "<group>"; };
 		5CADF3DA1AAC3C5A00FF8015 /* ATOMCommentDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMCommentDetailView.m; sourceTree = "<group>"; };
@@ -1135,8 +1114,6 @@
 		E94B031D1B7C74E500863C6F /* DDCommentVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDCommentVC.m; sourceTree = "<group>"; };
 		E94B03281B7DE6EC00863C6F /* UIColor+PSGod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+PSGod.h"; sourceTree = "<group>"; };
 		E94B03291B7DE6EC00863C6F /* UIColor+PSGod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+PSGod.m"; sourceTree = "<group>"; };
-		E94B032B1B7DE7D300863C6F /* kfcViews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kfcViews.h; sourceTree = "<group>"; };
-		E94B032C1B7DE7D300863C6F /* kfcViews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = kfcViews.m; sourceTree = "<group>"; };
 		E956918A1B22E88300DA84BB /* EXTKeyPathCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTKeyPathCoding.h; sourceTree = "<group>"; };
 		E956918B1B22E88300DA84BB /* EXTRuntimeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTRuntimeExtensions.h; sourceTree = "<group>"; };
 		E956918C1B22E88300DA84BB /* EXTRuntimeExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTRuntimeExtensions.m; sourceTree = "<group>"; };
@@ -1252,8 +1229,6 @@
 		E9FBCD2E1B6A042000BF7096 /* DDLoginNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLoginNavigationController.m; sourceTree = "<group>"; };
 		E9FC94D71B2F0D0C00B72C60 /* ATOMUserProfileViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATOMUserProfileViewModel.h; path = ATOMPSGod/Model/login/ATOMUserProfileViewModel.h; sourceTree = SOURCE_ROOT; };
 		E9FC94D81B2F0D0C00B72C60 /* ATOMUserProfileViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATOMUserProfileViewModel.m; path = ATOMPSGod/Model/login/ATOMUserProfileViewModel.m; sourceTree = SOURCE_ROOT; };
-		E9FD023B1B29708200FC5E17 /* DDCommentPageVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDCommentPageVM.h; path = ../DDCommentPageVM.h; sourceTree = "<group>"; };
-		E9FD023C1B29708200FC5E17 /* DDCommentPageVM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDCommentPageVM.m; path = ../DDCommentPageVM.m; sourceTree = "<group>"; };
 		E9FF8A391B71CCB70010D2C4 /* DDInputPhoneFPVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDInputPhoneFPVC.h; sourceTree = "<group>"; };
 		E9FF8A3A1B71CCB70010D2C4 /* DDInputPhoneFPVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDInputPhoneFPVC.m; sourceTree = "<group>"; };
 		E9FF8A3C1B71CD480010D2C4 /* ATOMInputMobileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMInputMobileView.h; sourceTree = "<group>"; };
@@ -1517,6 +1492,9 @@
 		F4AE73C51BBA988900734BCB /* PIEFriendReplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEFriendReplyViewController.m; sourceTree = "<group>"; };
 		F4AFCD491BC79A3100027940 /* UIButton+Pop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Pop.h"; sourceTree = "<group>"; };
 		F4AFCD4A1BC79A3100027940 /* UIButton+Pop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Pop.m"; sourceTree = "<group>"; };
+		F4B02E111BECA27B00406A55 /* cellBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cellBG.png; sourceTree = "<group>"; };
+		F4B02E131BECA43D00406A55 /* kfcPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kfcPageView.h; sourceTree = "<group>"; };
+		F4B02E141BECA43D00406A55 /* kfcPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = kfcPageView.m; sourceTree = "<group>"; };
 		F4BB27BD1BD0AD8200C50F58 /* PIEImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEImageView.h; sourceTree = "<group>"; };
 		F4BB27BE1BD0AD8200C50F58 /* PIEImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEImageView.m; sourceTree = "<group>"; };
 		F4BBE76F1BBE3F9D00003CDE /* PIEReplyCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEReplyCollectionViewController.h; sourceTree = "<group>"; };
@@ -1875,8 +1853,6 @@
 		5C4F5BE61AA5752B00226F64 /* attention */ = {
 			isa = PBXGroup;
 			children = (
-				5C436A7C1AB0249F00D14608 /* kfcFollowCell.h */,
-				5C436A7D1AB0249F00D14608 /* kfcFollowCell.m */,
 			);
 			path = attention;
 			sourceTree = "<group>";
@@ -2225,10 +2201,13 @@
 			path = person;
 			sourceTree = "<group>";
 		};
-		5C7861171AAF4DD200E87C77 /* Img */ = {
+		5C7861171AAF4DD200E87C77 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				F4B02E111BECA27B00406A55 /* cellBG.png */,
+				5C9BDA521AA8609800715698 /* psps.png */,
 			);
+			name = images;
 			path = Img;
 			sourceTree = "<group>";
 		};
@@ -2330,8 +2309,6 @@
 		5C9BDA011AA84CF800715698 /* follow */ = {
 			isa = PBXGroup;
 			children = (
-				5C7B8AB11AFA549D00F448CD /* kfcFollowVM.h */,
-				5C7B8AB21AFA549D00F448CD /* kfcFollowVM.m */,
 			);
 			name = follow;
 			path = attention;
@@ -2340,8 +2317,6 @@
 		5C9BDA021AA84CF800715698 /* homepage */ = {
 			isa = PBXGroup;
 			children = (
-				E9FD023B1B29708200FC5E17 /* DDCommentPageVM.h */,
-				E9FD023C1B29708200FC5E17 /* DDCommentPageVM.m */,
 				5C5EF7BB1ABBCD1900CE5B84 /* DDHotDetailPageVM.h */,
 				5C5EF7BC1ABBCD1900CE5B84 /* DDHotDetailPageVM.m */,
 				5C9BDA061AA84D1000715698 /* DDCommentVM.h */,
@@ -2399,14 +2374,6 @@
 				5C8D4AC91ADE400100B158AE /* ATOMConcernViewModel.m */,
 			);
 			path = person;
-			sourceTree = "<group>";
-		};
-		5C9BDA431AA85E3A00715698 /* testImage */ = {
-			isa = PBXGroup;
-			children = (
-				5C9BDA521AA8609800715698 /* psps.png */,
-			);
-			name = testImage;
 			sourceTree = "<group>";
 		};
 		5C9BDA5D1AA88BD900715698 /* BJImageCropper */ = {
@@ -2474,8 +2441,7 @@
 			children = (
 				E9F890951B86D9770057ECBF /* ic_dismiss.png */,
 				E90193711B37EE1E00E91555 /* region.csv */,
-				5C7861171AAF4DD200E87C77 /* Img */,
-				5C9BDA431AA85E3A00715698 /* testImage */,
+				5C7861171AAF4DD200E87C77 /* images */,
 				5CDB06071AA4065C0089121E /* psgod.pch */,
 				5CDB05C51AA3FE520089121E /* Info.plist */,
 				5CDB05C61AA3FE520089121E /* main.m */,
@@ -2623,6 +2589,8 @@
 				5CDB06581AA45C4A0089121E /* login */,
 				F421A20E1BEB41560028C521 /* PIEShareImageView.h */,
 				F421A20F1BEB41560028C521 /* PIEShareImageView.m */,
+				F4B02E131BECA43D00406A55 /* kfcPageView.h */,
+				F4B02E141BECA43D00406A55 /* kfcPageView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2907,14 +2875,8 @@
 		E959A5681B8EFC6800F90155 /* page */ = {
 			isa = PBXGroup;
 			children = (
-				5C3E0CE31ABEB052006C9175 /* kfcPageView.h */,
-				5C3E0CE41ABEB052006C9175 /* kfcPageView.m */,
-				E94B032B1B7DE7D300863C6F /* kfcViews.h */,
-				E94B032C1B7DE7D300863C6F /* kfcViews.m */,
 				5C653BA51AA9A7B10025814B /* ATOMTipButton.h */,
 				5C653BA61AA9A7B10025814B /* ATOMTipButton.m */,
-				5C8084F71AF2603D0062421C /* kfcButton.h */,
-				5C8084F81AF2603D0062421C /* kfcButton.m */,
 				5C8084FA1AF27BD30062421C /* ATOMTotalPSView.h */,
 				5C8084FB1AF27BD30062421C /* ATOMTotalPSView.m */,
 			);
@@ -2942,12 +2904,6 @@
 			children = (
 				5C559B3E1AB13B8F000C5B50 /* InviteCell.h */,
 				5C559B3F1AB13B8F000C5B50 /* InviteCell.m */,
-				5C4F5BF11AA593E200226F64 /* kfcHotCell.h */,
-				5C4F5BF21AA593E200226F64 /* kfcHotCell.m */,
-				5C4F5BF41AA5BFEC00226F64 /* kfcAskCell.h */,
-				5C4F5BF51AA5BFEC00226F64 /* kfcAskCell.m */,
-				5C4F5BFA1AA5E41900226F64 /* kfcDetailCell.h */,
-				5C4F5BFB1AA5E41900226F64 /* kfcDetailCell.m */,
 			);
 			name = cell;
 			sourceTree = "<group>";
@@ -4139,6 +4095,7 @@
 				E94289811B5B32A200ED26E4 /* NotificationBackgroundWarningIcon@2x.png in Resources */,
 				3BE1AECD1B9FE9C900CE2303 /* QBImagePicker.storyboard in Resources */,
 				F402F0F91BE89530004988B4 /* PIESearchUserCollectionViewCell.xib in Resources */,
+				F4B02E121BECA27B00406A55 /* cellBG.png in Resources */,
 				3BE1AEC61B9FE9C900CE2303 /* QBImagePicker.strings in Resources */,
 				5C6CE6B91ADBE8A10035F522 /* EmojisList.plist in Resources */,
 				E942897F1B5B32A200ED26E4 /* NotificationBackgroundWarning@2x.png in Resources */,
@@ -4274,7 +4231,6 @@
 				5C436A8A1AB03FA800D14608 /* DDCommentMsgVM.m in Sources */,
 				F4F72C201BCCFB7B002FF05A /* PIEShareIcon.m in Sources */,
 				3BD87D081B9E8888003B2310 /* PIECarouselViewController.m in Sources */,
-				5C436A7E1AB0249F00D14608 /* kfcFollowCell.m in Sources */,
 				3BE1AECC1B9FE9C900CE2303 /* QBCheckmarkView.m in Sources */,
 				5C5DDBCB1AD3D0DC00F4B845 /* DDOtherUserManager.m in Sources */,
 				F4993CEB1BE5B32C007F9BE4 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
@@ -4293,7 +4249,6 @@
 				5C6697B31AAFE0A6001FCF8A /* ATOMProfileEditView.m in Sources */,
 				5CDB06361AA428BD0089121E /* View+MASAdditions.m in Sources */,
 				F4EC10FC1BCE591A002D1DCF /* PIENotificationCommentTableViewCell.m in Sources */,
-				5C4F5BF31AA593E200226F64 /* kfcHotCell.m in Sources */,
 				5C83A88F1AC66F910071A024 /* POPCustomAnimation.mm in Sources */,
 				5C7861161AAF4C9400E87C77 /* PIEMyReplyViewController.m in Sources */,
 				5C54DF231AB9772000BDE34D /* PIEPageEntity.m in Sources */,
@@ -4319,7 +4274,6 @@
 				E94B02F11B7B3F6A00863C6F /* ATOMFaceCollectionView.m in Sources */,
 				5C4F88471AB56E760042E9BA /* DDShareVC.m in Sources */,
 				5C4AE3EC1AAED60A0020E102 /* PIEFriendFansViewController.m in Sources */,
-				5C7B8AB31AFA549D00F448CD /* kfcFollowVM.m in Sources */,
 				5C653BA11AA98B870025814B /* ATOMAddTipLabelToImageView.m in Sources */,
 				5C3101871AAE9B0F00EF529B /* PIEThirdPartyBindingViewController.m in Sources */,
 				E9A5B66D1B9040310059754C /* DDServiceConstants.m in Sources */,
@@ -4434,7 +4388,6 @@
 				5C4F5BDC1AA555F900226F64 /* PIENewViewController.m in Sources */,
 				F4F72C081BCB994B002FF05A /* PIEMyAskViewController.m in Sources */,
 				5C436A931AB074EF00D14608 /* ATOMInviteMessageTableViewCell.m in Sources */,
-				E9FD023D1B29708200FC5E17 /* DDCommentPageVM.m in Sources */,
 				E94B03211B7C74E500863C6F /* DDCommentTableCell.m in Sources */,
 				F40207311BA7C17C0007CE02 /* PIECameraViewController.m in Sources */,
 				E9F8908F1B86C4AB0057ECBF /* FMDatabaseAdditions.m in Sources */,
@@ -4450,6 +4403,7 @@
 				F439303D1BE4BD75006C9437 /* MRIconView.m in Sources */,
 				E93D23811B3D065C0081F632 /* ATOMShare.m in Sources */,
 				5C535CB61AF1FC8A00BF30D1 /* ATOMNoDataView.m in Sources */,
+				F4B02E151BECA43D00406A55 /* kfcPageView.m in Sources */,
 				F449BB701BE496C50019C315 /* MMPlaceHolder.m in Sources */,
 				F4D07A5D1BBA3AB70016A8B5 /* PIEEliteManager.m in Sources */,
 				5CDB06011AA405A40089121E /* UIColor+CIELAB.m in Sources */,
@@ -4483,7 +4437,6 @@
 				5C8A2A181AAF1CE20064EB1C /* DDMyFollowVC.m in Sources */,
 				E99D2F581B1C7E8D000D7784 /* UIImage+Reflection.m in Sources */,
 				F4F72BF61BCB6979002FF05A /* PIEImageCollectionViewCell.m in Sources */,
-				5C3E0CE51ABEB052006C9175 /* kfcPageView.m in Sources */,
 				F46117DC1BAD1101001A6F1A /* IQKeyboardReturnKeyHandler.m in Sources */,
 				E99D2F5C1B1C7E8D000D7784 /* UIScrollView+Screenshot.m in Sources */,
 				5C561A771AB7C8C30052D4D5 /* UIScrollView+MJExtension.m in Sources */,
@@ -4517,11 +4470,9 @@
 				5C8406381ABABEC500068F35 /* DDTipLabelVM.m in Sources */,
 				5C83A88E1AC66F910071A024 /* POPCGUtils.mm in Sources */,
 				5CDB06741AA47EEC0089121E /* ATOMInputVerifyCodeView.m in Sources */,
-				5C8084F91AF2603D0062421C /* kfcButton.m in Sources */,
 				E90C7C5D1B20726400CF0E6A /* PWMascotAnimationImageView.m in Sources */,
 				5C4C70C51AB6BC5200358989 /* DDBaseService.m in Sources */,
 				F46117DD1BAD1101001A6F1A /* IQSegmentedNextPrevious.m in Sources */,
-				E94B032D1B7DE7D300863C6F /* kfcViews.m in Sources */,
 				5CDB06051AA405A40089121E /* UIColor+HSL.m in Sources */,
 				F41FF0E41BDDFCE800566A12 /* JTSImageInfo.m in Sources */,
 				F4E680631BDC73F500A4F199 /* PIEProceedingShareSheetView.m in Sources */,
@@ -4558,7 +4509,6 @@
 				E90C7C601B20A0FC00CF0E6A /* KShareManager.m in Sources */,
 				5C9BD9EE1AA8293400715698 /* DDCropImageVC.m in Sources */,
 				5C6CEF2D1AF1971400F06213 /* CommentLikeButton.m in Sources */,
-				5C4F5BFC1AA5E41900226F64 /* kfcDetailCell.m in Sources */,
 				F46117E11BAD1101001A6F1A /* IQToolbar.m in Sources */,
 				5C6697B01AAFE025001FCF8A /* ATOMProfileEditViewController.m in Sources */,
 				E99D2F561B1C7E8D000D7784 /* UIImage+Filtering.m in Sources */,
@@ -4641,7 +4591,6 @@
 				E94B032A1B7DE6EC00863C6F /* UIColor+PSGod.m in Sources */,
 				5C9BDA001AA8303700715698 /* ATOMUploadWorkView.m in Sources */,
 				F409AA871BAFE39000736B0D /* PIEImageEntity.m in Sources */,
-				5C4F5BF61AA5BFEC00226F64 /* kfcAskCell.m in Sources */,
 				5C0D28301ACA83C400491452 /* DDCommentReplyVM.m in Sources */,
 				5C5DDBD11AD3E4B300F4B845 /* ATOMReplyViewModel.m in Sources */,
 				F45ECF441BD1DB5B00417A75 /* PIEEliteHotReplyTableViewCell.m in Sources */,

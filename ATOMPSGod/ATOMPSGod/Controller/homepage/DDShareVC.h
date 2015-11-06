@@ -7,7 +7,7 @@
 //
 
 #import "DDBaseVC.h"
-#import "DDCommentPageVM.h"
+//
 @class DDPageVM;
 
 @interface DDShareVC : DDBaseVC

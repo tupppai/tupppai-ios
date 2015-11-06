@@ -581,7 +581,6 @@
     _currentIndex_ToHelp ++;
     [_sv.toHelpTableView.header endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(_currentIndex_ToHelp) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(_timeStamp_toHelp) forKey:@"last_updated"];

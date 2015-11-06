@@ -172,21 +172,21 @@
 }
 
 
--(DDCommentPageVM*)generatepageDetailViewModel {
-    DDCommentPageVM* commonViewModel = [DDCommentPageVM new];
-    commonViewModel.pageID = _ID;
-    commonViewModel.type = PIEPageTypeAsk;
-    commonViewModel.pageImageURL = _imageURL;
-    commonViewModel.avatarURL = _avatarURL;
-    commonViewModel.likeNumber = _likeCount;
-    commonViewModel.shareNumber = _shareCount;
-    commonViewModel.commentNumber = _commentCount;
-    commonViewModel.width = _imageWidth;
-    commonViewModel.height = _imageHeight;
-    commonViewModel.userName = _username;
-    commonViewModel.uid = _userID;
-    return commonViewModel;
-}
+//-(DDCommentPageVM*)generatepageDetailViewModel {
+//    DDCommentPageVM* commonViewModel = [DDCommentPageVM new];
+//    commonViewModel.pageID = _ID;
+//    commonViewModel.type = PIEPageTypeAsk;
+//    commonViewModel.pageImageURL = _imageURL;
+//    commonViewModel.avatarURL = _avatarURL;
+//    commonViewModel.likeNumber = _likeCount;
+//    commonViewModel.shareNumber = _shareCount;
+//    commonViewModel.commentNumber = _commentCount;
+//    commonViewModel.width = _imageWidth;
+//    commonViewModel.height = _imageHeight;
+//    commonViewModel.userName = _username;
+//    commonViewModel.uid = _userID;
+//    return commonViewModel;
+//}
 
 
 - (void)toggleLike:(void (^)(BOOL success))block  {

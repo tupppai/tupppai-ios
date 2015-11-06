@@ -7,7 +7,6 @@
 //
 
 #import "SLKTextViewController.h"
-#import "DDCommentPageVM.h"
 #import "kfcPageView.h"
 @interface DDCommentVC : SLKTextViewController
 

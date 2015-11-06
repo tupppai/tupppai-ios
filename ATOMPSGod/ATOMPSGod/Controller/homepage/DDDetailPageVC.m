@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "DDDetailPageVC.h"
-#import "kfcDetailCell.h"
 #import "ATOMCommentDetailViewController.h"
 #import "DDCropImageVC.h"
 
@@ -19,7 +18,7 @@
 #import "DDHotDetailManager.h"
 
 #import "PIEShareFunctionView.h"
-#import "kfcButton.h"
+//
 #import "PIERefreshTableView.h"
 #import "DDCollectManager.h"
 #import "DDBaseService.h"
