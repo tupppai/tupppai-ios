@@ -48,7 +48,7 @@
     [MobClick startWithAppkey:@"55b1ecdbe0f55a1de9001164"];
     [MobClick setCrashReportEnabled:YES];
     [MobClick setEncryptEnabled:YES];
-    [MobClick setLogEnabled:YES];
+    [MobClick setLogEnabled:NO];
     
     return YES;
 }

@@ -227,7 +227,8 @@ NSString* deviceName()
     if ([UIApplication sharedApplication].keyWindow) {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
-    hud.margin = 10;
+    hud.margin = 30;
+    hud.cornerRadius = 4;
     hud.color = [UIColor colorWithHex:0x000000 andAlpha:0.2];
     hud.labelText = message;
     }
@@ -235,7 +236,8 @@ NSString* deviceName()
 +(void)activity:(NSString*)message inView:(UIView*)view {
     if (view) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
-        hud.margin = 10;
+        hud.margin = 30;
+        hud.cornerRadius = 4;
         hud.color = [UIColor colorWithHex:0x000000 andAlpha:0.2];
         hud.mode = MBProgressHUDModeIndeterminate;
         hud.labelText = message;

@@ -19,7 +19,6 @@ typedef NS_ENUM(NSInteger, ATOMShareType) {
     ATOMShareTypeQQZone,
     ATOMShareTypeQQFriends,
     ATOMShareTypeCopyLinks,
-
 };
 @interface DDShareManager : NSObject
 + (void)getUserInfo:(SSDKPlatformType)type withBlock:(void (^)(NSString* openId ))block;

@@ -27,6 +27,7 @@
             block(user.uid);
         } else {
             block(nil);
+            [Hud error:@"获取不到信息，请重试"];
         }
     }];
 }
@@ -34,6 +35,8 @@
     [ShareSDK authorize:type settings:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
         if (state == SSDKResponseStateSuccess) {
             block(user.rawData);
+        } else {
+            [Hud error:@"获取不到信息，请重试"];
         }
     }];
 }
@@ -41,6 +44,8 @@
     [ShareSDK authorize:type settings:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
         if (state == SSDKResponseStateSuccess) {
             block(user);
+        }else {
+            [Hud error:@"获取不到信息，请重试"];
         }
     }];
 }

@@ -354,7 +354,6 @@
 		E9FBCD2F1B6A042000BF7096 /* DDLoginNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FBCD2E1B6A042000BF7096 /* DDLoginNavigationController.m */; };
 		E9FC94D91B2F0D0C00B72C60 /* ATOMUserProfileViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FC94D81B2F0D0C00B72C60 /* ATOMUserProfileViewModel.m */; };
 		E9FD023D1B29708200FC5E17 /* DDCommentPageVM.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD023C1B29708200FC5E17 /* DDCommentPageVM.m */; };
-		E9FF3FCD1B563B6D007AA3F6 /* DDShareSDKManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF3FCC1B563B6D007AA3F6 /* DDShareSDKManager.m */; };
 		E9FF8A3B1B71CCB70010D2C4 /* DDInputPhoneFPVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF8A3A1B71CCB70010D2C4 /* DDInputPhoneFPVC.m */; };
 		E9FF8A3E1B71CD480010D2C4 /* ATOMInputMobileView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF8A3D1B71CD480010D2C4 /* ATOMInputMobileView.m */; };
 		E9FF8A411B71CE610010D2C4 /* ATOMInputVerifyCodeAndPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FF8A401B71CE610010D2C4 /* ATOMInputVerifyCodeAndPasswordView.m */; };
@@ -1275,8 +1274,6 @@
 		E9FC94D81B2F0D0C00B72C60 /* ATOMUserProfileViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATOMUserProfileViewModel.m; path = ATOMPSGod/Model/login/ATOMUserProfileViewModel.m; sourceTree = SOURCE_ROOT; };
 		E9FD023B1B29708200FC5E17 /* DDCommentPageVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDCommentPageVM.h; path = ../DDCommentPageVM.h; sourceTree = "<group>"; };
 		E9FD023C1B29708200FC5E17 /* DDCommentPageVM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDCommentPageVM.m; path = ../DDCommentPageVM.m; sourceTree = "<group>"; };
-		E9FF3FCB1B563B6D007AA3F6 /* DDShareSDKManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDShareSDKManager.h; sourceTree = "<group>"; };
-		E9FF3FCC1B563B6D007AA3F6 /* DDShareSDKManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDShareSDKManager.m; sourceTree = "<group>"; };
 		E9FF8A391B71CCB70010D2C4 /* DDInputPhoneFPVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDInputPhoneFPVC.h; sourceTree = "<group>"; };
 		E9FF8A3A1B71CCB70010D2C4 /* DDInputPhoneFPVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDInputPhoneFPVC.m; sourceTree = "<group>"; };
 		E9FF8A3C1B71CD480010D2C4 /* ATOMInputMobileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMInputMobileView.h; sourceTree = "<group>"; };
@@ -1823,8 +1820,6 @@
 			children = (
 				5C4C70D41AB6FD5700358989 /* PIEUploadManager.h */,
 				5C4C70D51AB6FD5700358989 /* PIEUploadManager.m */,
-				E9FF3FCB1B563B6D007AA3F6 /* DDShareSDKManager.h */,
-				E9FF3FCC1B563B6D007AA3F6 /* DDShareSDKManager.m */,
 			);
 			path = login;
 			sourceTree = "<group>";
@@ -4685,7 +4680,6 @@
 				5C83A88B1AC66F910071A024 /* POPAnimationTracer.mm in Sources */,
 				5C6697A71AAFD242001FCF8A /* ATOMMyUploadCollectionViewCell.m in Sources */,
 				F4E5308F1BD4985400FAA65D /* PIESignUpSheetView.m in Sources */,
-				E9FF3FCD1B563B6D007AA3F6 /* DDShareSDKManager.m in Sources */,
 				F4F72BEE1BCB4EF7002FF05A /* FXBlurView.m in Sources */,
 				E9CBFF4C1B5214FB00DC8ED4 /* SIAlertView.m in Sources */,
 				5C561A501AB7C8210052D4D5 /* ATOMImage.m in Sources */,
@@ -4887,7 +4881,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: wang xiong (4H3M4NR77W)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
@@ -4917,9 +4911,9 @@
 					"$(inherited)",
 					Reveal,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.qiupsdashen.www;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tupppai.www;
 				PRODUCT_NAME = TUPAI;
-				PROVISIONING_PROFILE = "2466ed97-a919-42fb-a05c-9602c1f5dcef";
+				PROVISIONING_PROFILE = "34523e90-6a66-4e2d-aa8d-13dc5930be24";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = " armv7 armv7s arm64 arm6";
@@ -4931,7 +4925,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: wang xiong (4H3M4NR77W)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
@@ -4961,9 +4955,9 @@
 					"$(inherited)",
 					Reveal,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.qiupsdashen.www;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tupppai.www;
 				PRODUCT_NAME = TUPAI;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "449921df-06ad-46ee-b5ba-09bc0a134839";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				VALIDATE_PRODUCT = NO;
 				VALID_ARCHS = " armv7 armv7s arm64 arm6";
@@ -5058,8 +5052,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: peiwei chen (6D749TJP9J)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: wang xiong (4H3M4NR77W)";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: wang xiong (4H3M4NR77W)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
@@ -5089,9 +5083,9 @@
 					"$(inherited)",
 					Reveal,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.qiupsdashen.www;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tupppai.www;
 				PRODUCT_NAME = TUPAI;
-				PROVISIONING_PROFILE = "2466ed97-a919-42fb-a05c-9602c1f5dcef";
+				PROVISIONING_PROFILE = "34523e90-6a66-4e2d-aa8d-13dc5930be24";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				VALIDATE_PRODUCT = NO;
 				VALID_ARCHS = " armv7 armv7s arm64 arm6";

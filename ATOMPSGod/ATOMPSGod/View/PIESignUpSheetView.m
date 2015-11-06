@@ -63,10 +63,10 @@
     }
 }
 - (void)mansoryIcons {
-    CGFloat itemWidth = 80;
-    CGFloat itemHeight = 60;
+    CGFloat itemWidth = 65;
+    CGFloat itemHeight = 50;
     
-    CGFloat rowGap = 30;
+    CGFloat rowGap = 20;
     CGFloat columnGap = ( SCREEN_WIDTH*0.98 -  itemWidth*3 ) / 3;
     
     [_icon1 mas_makeConstraints:^(MASConstraintMaker *make) {

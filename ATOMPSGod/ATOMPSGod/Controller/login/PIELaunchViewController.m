@@ -110,9 +110,10 @@
             NSString* openID = sourceData[@"idstr"];
             NSMutableDictionary* param = [NSMutableDictionary new];
             [param setObject:openID forKey:@"openid"];
+            
             [DDUserManager DD3PartyAuth:param AndType:@"weibo" withBlock:^(bool isRegistered, NSString *info) {
                 if (isRegistered) {
-                    [Hud activity:@"" inView:self.view];
+                    [Hud activity:@"登录中" inView:self.view];
                     [self.navigationController setViewControllers:[NSArray array]];
                     [AppDelegate APP].mainTabBarController = nil;
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
@@ -202,6 +203,7 @@
             
             [DDUserManager DD3PartyAuth:param AndType:@"weixin" withBlock:^(bool isRegistered, NSString *info) {
                 if (isRegistered) {
+                    [Hud activity:@"登录中" inView:self.view];
                     [self.navigationController setViewControllers:[NSArray array]];
                     [AppDelegate APP].mainTabBarController = nil;
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
