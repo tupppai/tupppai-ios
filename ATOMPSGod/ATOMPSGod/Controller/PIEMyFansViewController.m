@@ -26,7 +26,7 @@
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, assign) NSIndexPath* selectedIndexPath;
 @property (nonatomic, assign) BOOL isfirstLoading;
-
+@property (nonatomic, assign)  long long timeStamp;
 @end
 
 @implementation PIEMyFansViewController
@@ -175,12 +175,12 @@
 - (void)getDataSource {
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    _timeStamp = [[NSDate date] timeIntervalSince1970];
     _dataSource = nil;
     _dataSource = [NSMutableArray array];
     _currentPage = 1;
     [param setObject:@(_currentPage) forKey:@"page"];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@([DDUserManager currentUser].uid) forKeyedSubscript:@"uid"];
     [Hud activity:@"" inView:self.view];
@@ -199,10 +199,9 @@
 - (void)getMoreDataSource {
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
     ws.currentPage++;
     [param setObject:@(ws.currentPage) forKey:@"page"];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@([DDUserManager currentUser].uid) forKeyedSubscript:@"uid"];
     [DDMyFansManager getMyFans:param withBlock:^(NSMutableArray *resultArray) {

@@ -21,6 +21,8 @@
 @property (nonatomic, strong) PIERefreshCollectionView *collectionView;
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, assign) BOOL isfirstLoading;
+@property (nonatomic, assign)  long long timeStamp;
+
 @end
 static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
 
@@ -53,11 +55,11 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
 - (void)getRemoteSource {
     [_collectionView.footer endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    _timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(_pageVM.userID) forKey:@"uid"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(1) forKey:@"page"];
     _currentIndex = 1;
     [DDOtherUserManager getFriendReply:param withBlock:^(NSMutableArray *returnArray) {
@@ -84,11 +86,10 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
     _currentIndex ++;
     [_collectionView.header endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(_pageVM.userID) forKey:@"uid"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(_currentIndex) forKey:@"page"];
     [DDOtherUserManager getFriendReply:param withBlock:^(NSMutableArray *returnArray) {
         NSMutableArray* arrayAgent = [NSMutableArray array];

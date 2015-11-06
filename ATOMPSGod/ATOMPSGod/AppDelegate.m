@@ -45,12 +45,15 @@
     [[IQKeyboardManager sharedManager] disableInViewControllerClass:[DDCommentVC class]];
     [[IQKeyboardManager sharedManager]setEnableAutoToolbar:NO];
     
+    [self setupUmengAnalytics];
+    
+    return YES;
+}
+- (void)setupUmengAnalytics {
     [MobClick startWithAppkey:@"55b1ecdbe0f55a1de9001164"];
     [MobClick setCrashReportEnabled:YES];
     [MobClick setEncryptEnabled:YES];
     [MobClick setLogEnabled:NO];
-    
-    return YES;
 }
 - (void)setupBarButtonItem {
     NSShadow *shadow = [[NSShadow alloc] init];
@@ -151,15 +154,12 @@
                      {
                          case SSDKPlatformTypeWechat:
                              [ShareSDKConnector connectWeChat:[WXApi class]];
-                             NSLog(@"wechat1");
-
                              break;
                          case SSDKPlatformTypeQQ:
                              [ShareSDKConnector connectQQ:[QQApiInterface class] tencentOAuthClass:[TencentOAuth class]];
                              break;
                          case SSDKPlatformTypeSinaWeibo:
                              [ShareSDKConnector connectWeibo:[WeiboSDK class]];
-                             NSLog(@"weibo1");
                              break;
                          default:
                              break;
@@ -171,12 +171,9 @@
               {
                 
                   case SSDKPlatformTypeWechat:
-                      NSLog(@"wechat2");
-
                       [appInfo SSDKSetupWeChatByAppId:@"wx86ff6f67a2b9b4b8" appSecret:@"c2da31fda3acf1c09c40ee25772b6ca5"];
                       break;
                   case SSDKPlatformTypeSinaWeibo:
-                      NSLog(@"weibo2");
                       //设置新浪微博应用信息,其中authType设置为使用SSO＋Web形式授权
                       [appInfo SSDKSetupSinaWeiboByAppKey:@"882276088"
                                                 appSecret:@"454f67c8e6d29b770d701e9272bc5ee7"
@@ -223,8 +220,6 @@
     
     [self uploadDeviceInfo:devicetokenString];
 
-//    [[NSUserDefaults standardUserDefaults]setObject:devicetokenString forKey:@"devicetoken"];
-//    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 - (void)uploadDeviceInfo:(NSString*)token {
     NSUUID *oNSUUID = [[UIDevice currentDevice] identifierForVendor];
@@ -246,7 +241,7 @@
 //    type = invite;
 //}
     
-    NSLog(@"userinfo:%@",userInfo);
+//    NSLog(@"userinfo:%@",userInfo);
 //    [UMessage didReceiveRemoteNotification:userInfo];
     NSInteger notifyType = [[userInfo objectForKey:@"type"]integerValue];
 //    int badgeNumber = [[[userInfo objectForKey:@"aps"]objectForKey:@"badge"]intValue];

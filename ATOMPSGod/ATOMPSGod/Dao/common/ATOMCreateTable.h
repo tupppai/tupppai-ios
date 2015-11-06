@@ -11,10 +11,10 @@
 @interface ATOMCreateTable : NSObject
 
 + (NSString *)createUser;
-+ (NSString *)createPIEImageEntity;
+//+ (NSString *)createPIEImageEntity;
 //+ (NSString *)createReplier;
-+ (NSString *)createHomeImage;
-+ (NSString *)createComment;
+//+ (NSString *)createHomeImage;
+//+ (NSString *)createComment;
 //+ (NSString *)createDetailImage;
 
 @end

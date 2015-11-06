@@ -17,7 +17,7 @@ static DDSessionManager *_shareHTTPSessionManager = nil;
     dispatch_once(&onceToken, ^{
 //        NSString *baseURL = @"http://android.loiter.us/v1/";
 #if DEBUG
-        NSString *baseURL = @"http://api.loiter.us/";
+        NSString *baseURL = @"http://api.qiupsdashen.com/";
 #else
         NSString *baseURL = @"http://api.qiupsdashen.com/";
 #endif

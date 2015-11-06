@@ -48,33 +48,33 @@ static FMDatabaseQueue *_fmQueue = nil;
 }
 
 - (void)createTable {
-    NSLog(@"FMDB createTable");
+//    NSLog(@"FMDB createTable");
     [[[self class] sharedFMQueue] inTransaction:^(FMDatabase *db, BOOL *rollback) {
         BOOL flag;
         
         flag = [db executeUpdate:[ATOMCreateTable createUser]];
-        if (flag) {
-            NSLog(@"create Table User success");
-        } else {
-            NSLog(@"create Table User fail");
-        }
-        flag = [db executeUpdate:[ATOMCreateTable createPIEImageEntity]];
-        if (flag) {
-            NSLog(@" Table createPIEImageEntity success");
-        } else {
-            NSLog(@" Table createPIEImageEntity fail");
-        }
+//        if (flag) {
+//            NSLog(@"create Table User success");
+//        } else {
+//            NSLog(@"create Table User fail");
+//        }
+//        flag = [db executeUpdate:[ATOMCreateTable createPIEImageEntity]];
+//        if (flag) {
+//            NSLog(@" Table createPIEImageEntity success");
+//        } else {
+//            NSLog(@" Table createPIEImageEntity fail");
+//        }
 //        flag = [db executeUpdate:[ATOMCreateTable createReplier]];
 //        if (flag) {
 //            NSLog(@"create Table Replier success");
 //        } else {
 //            NSLog(@"create Table Replier fail");
 //        }
-        flag = [db executeUpdate:[ATOMCreateTable createHomeImage]];
+//        flag = [db executeUpdate:[ATOMCreateTable createHomeImage]];
         if (flag) {
-            NSLog(@"create Table HomeImage success");
+//            NSLog(@"create Table HomeImage success");
         } else {
-            NSLog(@"create Table HomeImage fail");
+//            NSLog(@"create Table HomeImage fail");
         }
 //        flag = [db executeUpdate:[ATOMCreateTable createDetailImage]];
 //        if (flag) {
@@ -82,12 +82,12 @@ static FMDatabaseQueue *_fmQueue = nil;
 //        } else {
 //            NSLog(@"create Table DetailImage fail");
 //        }
-        flag = [db executeUpdate:[ATOMCreateTable createComment]];
-        if (flag) {
-            NSLog(@"create Table Comment success");
-        } else {
-            NSLog(@"create Table Comment fail");
-        }
+//        flag = [db executeUpdate:[ATOMCreateTable createComment]];
+//        if (flag) {
+//            NSLog(@"create Table Comment success");
+//        } else {
+//            NSLog(@"create Table Comment fail");
+//        }
     }];
 }
 

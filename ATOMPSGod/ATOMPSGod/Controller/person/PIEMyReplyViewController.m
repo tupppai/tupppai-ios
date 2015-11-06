@@ -30,6 +30,7 @@
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL isfirstLoading;
+@property (nonatomic, assign)  long long timeStamp;
 
 @end
 
@@ -62,11 +63,11 @@
     [ws.collectionView.footer endRefreshing];
 
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    _timeStamp = [[NSDate date] timeIntervalSince1970];
     _currentPage = 1;
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getReply:param withBlock:^(NSMutableArray *resultArray) {
         NSMutableArray* arrayAgent = [NSMutableArray new];
@@ -87,12 +88,11 @@
     WS(ws);
     [ws.collectionView.header endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    long long timestamp = [[NSDate date] timeIntervalSince1970];
     ws.currentPage++;
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@"hot" forKey:@"type"];
-    [param setObject:@(timestamp) forKey:@"last_updated"];
+    [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@"time" forKey:@"sort"];
     [param setObject:@"desc" forKey:@"order"];
     [param setObject:@(15) forKey:@"size"];

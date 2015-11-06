@@ -25,6 +25,7 @@
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, assign) BOOL isfirstLoading;
+@property (nonatomic, assign)  long long timeStamp;
 
 @end
 
@@ -162,12 +163,12 @@
 - (void)getDataSource {
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    _timeStamp = [[NSDate date] timeIntervalSince1970];
     _dataSource = nil;
     _dataSource = [NSMutableArray array];
     _currentPage = 1;
     [param setObject:@(_currentPage) forKey:@"page"];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@([DDUserManager currentUser].uid) forKeyedSubscript:@"uid"];
     [Hud activity:@"" inView:self.view];
@@ -186,11 +187,10 @@
 - (void)getMoreDataSource {
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    long long timestamp = [[NSDate date] timeIntervalSince1970];
     ws.currentPage++;
     [param setObject:@([DDUserManager currentUser].uid) forKeyedSubscript:@"uid"];
     [param setObject:@(ws.currentPage) forKey:@"page"];
-    [param setObject:@(timestamp) forKey:@"last_updated"];
+    [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDFollowManager getFollow:param withBlock:^(NSMutableArray *resultArray,NSMutableArray* recommend) {
         for (DDFollow *concern in resultArray) {

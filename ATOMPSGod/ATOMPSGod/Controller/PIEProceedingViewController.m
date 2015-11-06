@@ -41,6 +41,10 @@
 @property (nonatomic, assign) NSInteger currentIndex_ToHelp;
 @property (nonatomic, assign) NSInteger currentIndex_Done;
 
+@property (nonatomic, assign)  long long timeStamp_myAsk;
+@property (nonatomic, assign)  long long timeStamp_toHelp;
+@property (nonatomic, assign)  long long timeStamp_done;
+
 @property (nonatomic, assign) BOOL canRefreshAskFooter;
 @property (nonatomic, assign) BOOL canRefreshToHelpFooter;
 @property (nonatomic, assign) BOOL canRefreshDoneFooter;
@@ -498,11 +502,11 @@
     WS(ws);
     [ws.sv.askTableView.footer endRefreshing];
     _currentIndex_MyAsk = 1;
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    _timeStamp_myAsk = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH/2) forKey:@"width"];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(_timeStamp_myAsk) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getAskWithReplies:param withBlock:^(NSArray *returnArray) {
         ws.isfirstLoadingAsk = NO;
@@ -522,11 +526,10 @@
     WS(ws);
     [ws.sv.askTableView.header endRefreshing];
     _currentIndex_MyAsk++;
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_currentIndex_MyAsk) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(_timeStamp_myAsk) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getAskWithReplies:param withBlock:^(NSArray *returnArray) {
         if (returnArray.count == 0) {
@@ -549,10 +552,10 @@
     _currentIndex_ToHelp = 1;
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    _timeStamp_toHelp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(_timeStamp_toHelp) forKey:@"last_updated"];
     [param setObject:@(20) forKey:@"size"];
     [PIEProceedingManager getMyToHelp:param withBlock:^(NSMutableArray *resultArray) {
         ws.isfirstLoadingToHelp = NO;
@@ -581,7 +584,7 @@
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(_currentIndex_ToHelp) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(_timeStamp_toHelp) forKey:@"last_updated"];
     [param setObject:@(20) forKey:@"size"];
     [PIEProceedingManager getMyToHelp:param withBlock:^(NSMutableArray *resultArray) {
         if (resultArray.count == 0) {
@@ -604,11 +607,11 @@
     WS(ws);
     [ws.sv.doneCollectionView.footer endRefreshing];
     _currentIndex_Done = 1;
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    _timeStamp_done = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(1) forKey:@"page"];
 //    [param setObject:@(SCREEN_WIDTH/2) forKey:@"width"];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(_timeStamp_done) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     
     [PIEProceedingManager getMyDone:param withBlock:^(NSMutableArray *resultArray) {
@@ -635,11 +638,10 @@
     WS(ws);
     [ws.sv.doneCollectionView.header endRefreshing];
     _currentIndex_Done++;
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_currentIndex_Done) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH/2) forKey:@"width"];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(_timeStamp_done) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     
     [PIEProceedingManager getMyDone:param withBlock:^(NSMutableArray *resultArray) {
@@ -655,7 +657,6 @@
             [ws.sourceDone addObjectsFromArray:sourceAgent];
         }
         [ws.sv.doneCollectionView.footer endRefreshing];
-
         [ws.sv.doneCollectionView reloadData];
 
     }];
