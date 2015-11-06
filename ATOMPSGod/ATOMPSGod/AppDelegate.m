@@ -58,6 +58,7 @@
        }
      forState:UIControlStateNormal];
 }
+
 -(void)setupUmengPush:(NSDictionary *)launchOptions {
     //set AppKey and AppSecret
     [UMessage startWithAppkey:@"55b1ecdbe0f55a1de9001164" launchOptions:launchOptions];

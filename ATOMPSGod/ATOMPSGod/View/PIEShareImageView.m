@@ -127,9 +127,13 @@
                     [DDService downloadImage:entity.url withBlock:^(UIImage *image) {
                         _imageView_thumb.image = image;
                         _imageView_thumb.hidden = NO;
+                        _imageView_thumb_bg.hidden = NO;
+                        _imageView_type.hidden = NO;
                         block(YES);
                     }];
                 }
+            } else {
+                block(YES);
             }
         }];
     }];
@@ -178,7 +182,7 @@
         _imageView_thumb.image = [UIImage imageNamed:@"psps"];
         _imageView_thumb.contentMode = UIViewContentModeScaleAspectFill;
         _imageView_thumb.clipsToBounds = YES;
-//        _imageView_thumb.hidden = YES;
+        _imageView_thumb.hidden = YES;
     }
     return _imageView_thumb;
 }
@@ -227,6 +231,7 @@
         _imageView_type = [UIImageView new];
         _imageView_type.contentMode = UIViewContentModeTopLeft;
         _imageView_type.image = [UIImage imageNamed:@"pie_origin"];
+        _imageView_type.hidden = YES;
     }
     return _imageView_type;
 }
@@ -236,6 +241,8 @@
         _imageView_thumb_bg.backgroundColor = [UIColor colorWithHex:0xf0f0f0];
         _imageView_thumb_bg.layer.borderColor = [UIColor colorWithHex:0xeeeeee andAlpha:0.2].CGColor;
         _imageView_thumb_bg.layer.borderWidth = 1.0;
+        _imageView_thumb_bg.hidden = YES;
+
     }
     return _imageView_thumb_bg;
 }

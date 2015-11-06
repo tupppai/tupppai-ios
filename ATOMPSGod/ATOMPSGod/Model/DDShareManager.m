@@ -101,7 +101,6 @@
                 if ([share.type isEqualToString:@"image" ]) {
                     //这里要自己生成图片
                     [Util imageWithVm:vm block:^(UIImage *img2) {
-                        NSLog(@"ATOMShareTypeWechatFriends %@",img2);
                         [shareParams SSDKSetupWeChatParamsByText:desc title:nil url:nil thumbImage:nil image:img2 musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeImage forPlatformSubType:SSDKPlatformSubTypeWechatSession];
                         [self shareStep2:SSDKPlatformTypeWechat withShareParams:shareParams];
 
@@ -117,10 +116,14 @@
             
             
             else if (shareType == ATOMShareTypeWechatMoments) {
+                NSLog(@"ATOMShareTypeWechatMoments1 ");
 //                SSDKContentType contentType = SSDKContentTypeWebPage;
                 if ([share.type isEqualToString:@"image" ]) {
+                    NSLog(@"ATOMShareTypeWechatMoments11 ");
+
                    [Util imageWithVm:vm block:^(UIImage *image) {
-                                  [shareParams SSDKSetupWeChatParamsByText:desc title:shareTitle url:nil thumbImage:nil image:image musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeImage forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
+                       NSLog(@"ATOMShareTypeWechatMoments %@",image);
+                                  [shareParams SSDKSetupWeChatParamsByText:nil title:@"sdss" url:nil thumbImage:nil image:image musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeImage forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
                        [self shareStep2:SSDKPlatformSubTypeWechatTimeline withShareParams:shareParams];
 
                         }];
