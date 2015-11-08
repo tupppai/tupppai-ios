@@ -83,7 +83,11 @@
     [_table.footer endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     _timeStamp = [[NSDate date] timeIntervalSince1970];
-    [param setObject:@(_pageVM.userID) forKey:@"uid"];
+    if (_pageVM) {
+        [param setObject:@(_pageVM.userID) forKey:@"uid"];
+    } else {
+        [param setObject:@(_uid) forKey:@"uid"];
+    }
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
@@ -107,7 +111,11 @@
     _currentIndex++;
     [_table.header endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@(_pageVM.userID) forKey:@"uid"];
+    if (_pageVM) {
+        [param setObject:@(_pageVM.userID) forKey:@"uid"];
+    } else {
+        [param setObject:@(_uid) forKey:@"uid"];
+    }
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];

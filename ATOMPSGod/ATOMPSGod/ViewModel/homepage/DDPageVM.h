@@ -7,8 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-//
-#import "ATOMDetailPage.h"
 
 @class PIEPageEntity;
 @class DDCommentPageVM;

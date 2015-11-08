@@ -338,9 +338,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         CGRect titleBounds = [vm.username boundingRectWithSize:CGSizeMake(width-100, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:NULL];
         CGRect bodyBounds = [vm.text boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:NULL];
         
-        if (vm.text.length == 0) {
-            return 0.0;
-        }
+//        if (vm.text.length == 0) {
+//            return 0.0;
+//        }
         
         CGFloat height = CGRectGetHeight(titleBounds);
         height += CGRectGetHeight(bodyBounds);
@@ -386,7 +386,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     } else if (section == 1) {
         _targetCommentVM = _commentsNew[row];
     }
-    self.textView.placeholder = [NSString stringWithFormat:@"回复@%@:",_targetCommentVM.username];
+    self.textView.placeholder = [NSString stringWithFormat:@"@%@:",_targetCommentVM.username];
     [self.textView becomeFirstResponder];
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 

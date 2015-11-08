@@ -76,7 +76,8 @@
         weibo=[[MobClickSocialWeibo alloc] initWithPlatformType:@"copy" weiboId:nil usid:nil param:nil];
         shareTypeToServer = @"copy";
     }
-    [MobClickSocialAnalytics postWeiboCounts:@[weibo] appKey:@"55b1ecdbe0f55a1de9001164" topic:vm.content completion:nil];
+    NSArray* array = [NSArray arrayWithObject:weibo];
+    [MobClickSocialAnalytics postWeiboCounts:array appKey:@"55b1ecdbe0f55a1de9001164" topic:vm.content completion:nil];
     [param setObject:shareTypeToServer forKey:@"share_type"];
     [param setObject:@(vm.type) forKey:@"type"];
     [param setObject:@(vm.ID) forKey:@"target_id"];

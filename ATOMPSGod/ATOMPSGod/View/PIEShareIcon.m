@@ -49,7 +49,6 @@
 
 -(void)layoutSubviews {
     [super layoutSubviews];
-    
 //    // Move the image to the top and center it horizontally
     CGRect imageFrame = self.imageView.frame;
     imageFrame.origin.y = 0;

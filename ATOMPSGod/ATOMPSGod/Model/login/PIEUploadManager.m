@@ -35,7 +35,8 @@
 - (void)uploadImage:(NSData*)imageData Type:(NSString*)type withBlock:(void (^)(CGFloat percentage,BOOL success))block {
     if (imageData) {
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        AFHTTPRequestOperation *requestOperation = [manager POST:@"http://api.loiter.us/image/upload" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        NSString* url = [NSString stringWithFormat:@"%@%@",[DDSessionManager shareHTTPSessionManager].baseURL,@"image/upload"];
+        AFHTTPRequestOperation *requestOperation = [manager POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
             NSString* attachmentName = @"ask_attachment";
             if ([type isEqualToString: @"reply"]) {
                 attachmentName = @"reply_attachment";

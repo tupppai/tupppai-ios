@@ -10,4 +10,5 @@
 
 @interface PIEFriendAskViewController : DDBaseVC
 @property (nonatomic, strong) DDPageVM* pageVM;
+@property (nonatomic, assign) NSInteger uid;
 @end

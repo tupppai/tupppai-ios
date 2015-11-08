@@ -44,6 +44,7 @@
         make.left.equalTo(_usernameLabel).with.offset(0);
         make.right.equalTo(self.contentView).with.offset(-kPadding15);
         make.bottom.equalTo(self.contentView).with.offset(-kPadding10);
+//        make.height.greaterThanOrEqualTo(@10);
     }];
 //    [_likeButton mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.left.equalTo(_usernameLabel.mas_right).with.offset(kPadding15);

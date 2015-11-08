@@ -176,12 +176,18 @@
     
     PIEFriendReplyViewController *controller2 = [PIEFriendReplyViewController new];
     controller2.title = @"作品";
-    controller2.pageVM = _pageVM;
-    [controllerArray addObject:controller2];
-    
     PIEFriendAskViewController *controller = [PIEFriendAskViewController new];
-    controller.pageVM = _pageVM;
     controller.title = @"ta的求P";
+
+    if (_pageVM) {
+        controller.pageVM = _pageVM;
+        controller2.pageVM = _pageVM;
+    } else {
+        controller.uid = _uid;
+        controller2.uid = _uid;
+    }
+    
+    [controllerArray addObject:controller2];
     [controllerArray addObject:controller];
     
     NSDictionary *parameters = @{

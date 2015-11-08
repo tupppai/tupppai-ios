@@ -115,7 +115,6 @@
 		5C8D4ACA1ADE400100B158AE /* PIEFollowViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8D4AC91ADE400100B158AE /* PIEFollowViewModel.m */; };
 		5C8D4ACD1ADE484A00B158AE /* PIEFriendFollowingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8D4ACC1ADE484A00B158AE /* PIEFriendFollowingViewController.m */; };
 		5C9BDA081AA84D1000715698 /* DDCommentVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C9BDA071AA84D1000715698 /* DDCommentVM.m */; };
-		5C9BDA531AA8609800715698 /* psps.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C9BDA521AA8609800715698 /* psps.png */; };
 		5CDB05C71AA3FE520089121E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB05C61AA3FE520089121E /* main.m */; };
 		5CDB05CA1AA3FE520089121E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB05C91AA3FE520089121E /* AppDelegate.m */; };
 		5CDB05D51AA3FE520089121E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CDB05D31AA3FE520089121E /* LaunchScreen.xib */; };
@@ -467,8 +466,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0A953DE79CA8C60439E63894 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		1674AE1FE3B8781057753735 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		3B11C0401BA27ADB00B87165 /* PIENewReplyTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIENewReplyTableCell.h; sourceTree = "<group>"; };
 		3B11C0411BA27ADB00B87165 /* PIENewReplyTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENewReplyTableCell.m; sourceTree = "<group>"; };
 		3B11C0421BA27ADB00B87165 /* PIENewReplyTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIENewReplyTableCell.xib; sourceTree = "<group>"; };
@@ -509,7 +506,6 @@
 		3BE1AEC31B9FE9C900CE2303 /* QBVideoIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBVideoIndicatorView.h; sourceTree = "<group>"; };
 		3BE1AEC41B9FE9C900CE2303 /* QBVideoIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBVideoIndicatorView.m; sourceTree = "<group>"; };
 		3BE1AEC51B9FE9C900CE2303 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/QBImagePicker.strings"; sourceTree = "<group>"; };
-		4982D5BA166792C198790624 /* Pods.ad hoc distribution.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods.ad hoc distribution.xcconfig"; path = "Pods/Target Support Files/Pods/Pods.ad hoc distribution.xcconfig"; sourceTree = "<group>"; };
 		5C0D282B1ACA333200491452 /* DDCommentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDCommentManager.h; sourceTree = "<group>"; };
 		5C0D282C1ACA333200491452 /* DDCommentManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDCommentManager.m; sourceTree = "<group>"; };
 		5C0D282E1ACA83C400491452 /* PIEEntityCommentReply.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEntityCommentReply.h; sourceTree = "<group>"; };
@@ -699,7 +695,6 @@
 		5C8D4ACC1ADE484A00B158AE /* PIEFriendFollowingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIEFriendFollowingViewController.m; path = person/PIEFriendFollowingViewController.m; sourceTree = "<group>"; };
 		5C9BDA061AA84D1000715698 /* DDCommentVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDCommentVM.h; path = homepage/DDCommentVM.h; sourceTree = "<group>"; };
 		5C9BDA071AA84D1000715698 /* DDCommentVM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDCommentVM.m; path = homepage/DDCommentVM.m; sourceTree = "<group>"; };
-		5C9BDA521AA8609800715698 /* psps.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = psps.png; path = ../psps.png; sourceTree = "<group>"; };
 		5CDB05C11AA3FE520089121E /* TUPAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TUPAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CDB05C51AA3FE520089121E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5CDB05C61AA3FE520089121E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -768,7 +763,6 @@
 		5CE4082E1ACE94D600A56E4B /* UIViewController+ATOMTracking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ATOMTracking.m"; sourceTree = "<group>"; };
 		5CEAC0311AD4F9540058037C /* DDMyCollectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMyCollectionManager.h; sourceTree = "<group>"; };
 		5CEAC0321AD4F9540058037C /* DDMyCollectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMyCollectionManager.m; sourceTree = "<group>"; };
-		6159BD42FAA11BAC20BE9BD8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E900919B1B71E04E004623E4 /* DDInputAuthcodePwdFPVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDInputAuthcodePwdFPVC.h; sourceTree = "<group>"; };
 		E900919C1B71E04E004623E4 /* DDInputAuthcodePwdFPVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDInputAuthcodePwdFPVC.m; sourceTree = "<group>"; };
 		E900AB5A1B450E970019BAEA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -1630,7 +1624,7 @@
 			path = MTLFMDBAdapter;
 			sourceTree = "<group>";
 		};
-		5C561A4B1AB7C8210052D4D5 /* Entity */ = {
+		5C561A4B1AB7C8210052D4D5 /* model */ = {
 			isa = PBXGroup;
 			children = (
 				F4EC111E1BCE6F9E002D1DCF /* PIENotificationEntity.h */,
@@ -1656,6 +1650,7 @@
 				5C0F04FB1ADD0D88002003AE /* PIEEntityFollow.h */,
 				5C0F04FC1ADD0D88002003AE /* PIEEntityFollow.m */,
 			);
+			name = model;
 			path = Entity;
 			sourceTree = "<group>";
 		};
@@ -1714,7 +1709,6 @@
 			isa = PBXGroup;
 			children = (
 				F4B02E111BECA27B00406A55 /* cellBG.png */,
-				5C9BDA521AA8609800715698 /* psps.png */,
 			);
 			name = images;
 			path = Img;
@@ -1838,7 +1832,6 @@
 				5CDB05C31AA3FE520089121E /* TUPAI */,
 				5CDB05DD1AA3FE520089121E /* ATOMPSGodTests */,
 				5CDB05C21AA3FE520089121E /* Products */,
-				E1A2890C20795EC893C5D607 /* Pods */,
 				94794CACC85CA9D698472166 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -1857,7 +1850,7 @@
 			children = (
 				5C51B2521AB9088700F442A6 /* Framework */,
 				E9A5B6671B903B2D0059754C /* Service */,
-				5C561A4B1AB7C8210052D4D5 /* Entity */,
+				5C561A4B1AB7C8210052D4D5 /* model */,
 				5C5619F91AB7B9AE0052D4D5 /* Dao */,
 				5CDB05EB1AA400410089121E /* Manager */,
 				5C9BD9E81AA8150000715698 /* ViewModel */,
@@ -2120,19 +2113,8 @@
 			isa = PBXGroup;
 			children = (
 				F45D8FB11BD87F01005946E8 /* AdSupport.framework */,
-				6159BD42FAA11BAC20BE9BD8 /* libPods.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		E1A2890C20795EC893C5D607 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				1674AE1FE3B8781057753735 /* Pods.debug.xcconfig */,
-				0A953DE79CA8C60439E63894 /* Pods.release.xcconfig */,
-				4982D5BA166792C198790624 /* Pods.ad hoc distribution.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		E900AB5C1B4513A20019BAEA /* collect */ = {
@@ -3515,7 +3497,6 @@
 				E942897B1B5B32A200ED26E4 /* NotificationBackgroundSuccess@2x.png in Resources */,
 				F4EC10FD1BCE591A002D1DCF /* PIENotificationCommentTableViewCell.xib in Resources */,
 				E942897D1B5B32A200ED26E4 /* NotificationBackgroundSuccessIcon@2x.png in Resources */,
-				5C9BDA531AA8609800715698 /* psps.png in Resources */,
 				E94289751B5B32A200ED26E4 /* NotificationBackgroundError@2x.png in Resources */,
 				5C561A6E1AB7C8C30052D4D5 /* MJRefresh.bundle in Resources */,
 				E94289771B5B32A200ED26E4 /* NotificationBackgroundErrorIcon@2x.png in Resources */,
@@ -4042,7 +4023,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: wang xiong (4H3M4NR77W)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
@@ -4054,7 +4035,7 @@
 				);
 				GCC_PREFIX_HEADER = ./ATOMPSGod/psgod.pch;
 				INFOPLIST_FILE = ATOMPSGod/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4086,7 +4067,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: wang xiong (4H3M4NR77W)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
@@ -4098,7 +4079,7 @@
 				);
 				GCC_PREFIX_HEADER = ./ATOMPSGod/psgod.pch;
 				INFOPLIST_FILE = ATOMPSGod/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4213,7 +4194,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: wang xiong (4H3M4NR77W)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: wang xiong (4H3M4NR77W)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -4226,7 +4207,7 @@
 				);
 				GCC_PREFIX_HEADER = ./ATOMPSGod/psgod.pch;
 				INFOPLIST_FILE = ATOMPSGod/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
