@@ -101,4 +101,15 @@
         _type = PIEPageTypeEliteFollow;
     }
 }
+
+-(void)setType:(PIEPageType)type {
+    _type = type;
+    if (type == PIEPageTypeEliteFollow) {
+        self.tableFollow.scrollsToTop = YES;
+        self.tableHot.scrollsToTop = NO;
+    } else if (type == PIEPageTypeEliteHot) {
+        self.tableFollow.scrollsToTop = NO;
+        self.tableHot.scrollsToTop = YES;
+    }
+}
 @end

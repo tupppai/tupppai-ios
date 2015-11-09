@@ -99,10 +99,10 @@
     //    CGFloat imageViewHeight = viewModel.imageHeight <= SCREEN_HEIGHT/2 ? viewModel.imageHeight : SCREEN_HEIGHT/2;
 //    imageViewHeight = MAX(100, imageViewHeight);
 //    imageViewHeight = MIN(SCREEN_WIDTH, imageViewHeight);
-    [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@(SCREEN_WIDTH)).with.priorityHigh();
-    }];
-    
+//    [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
+//        make.height.equalTo(@(SCREEN_WIDTH)).with.priorityHigh();
+//    }];
+//    
         [self mansoryThumbAnimateView];
     
         [_thumbView setSubviewCounts:viewModel.thumbEntityArray.count];

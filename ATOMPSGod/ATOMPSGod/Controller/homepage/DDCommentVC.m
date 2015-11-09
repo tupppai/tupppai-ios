@@ -419,6 +419,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 -(void)configTableView {
     self.tableView.tableHeaderView = self.headerView;
+//    self.headerView.commentButton.numberString = [NSString stringWithFormat:@"%zd",_commentsNew.count + _commentsHot.count];
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag|UIScrollViewKeyboardDismissModeInteractive;

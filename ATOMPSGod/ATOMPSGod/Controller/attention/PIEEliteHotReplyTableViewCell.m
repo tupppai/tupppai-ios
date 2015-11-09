@@ -98,10 +98,10 @@
 //    imageViewHeight = MAX(100, imageViewHeight);
 //    imageViewHeight = MIN(SCREEN_WIDTH, imageViewHeight);
 
-    [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@(SCREEN_WIDTH)).with.priorityHigh();
-    }];
-    
+//    [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
+//        make.height.equalTo(@(SCREEN_WIDTH)).with.priorityHigh();
+//    }];
+//    
     if (viewModel.hotCommentEntityArray.count > 0) {
         PIECommentEntity* commentEntity1  = viewModel.hotCommentEntityArray[0];
         _commentLabel1.text = [NSString stringWithFormat:@"%@: %@",commentEntity1.nickname,commentEntity1.content];

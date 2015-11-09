@@ -73,9 +73,9 @@
 //    CGFloat imageViewHeight = viewModel.imageHeight <= SCREEN_HEIGHT/2 ? viewModel.imageHeight : SCREEN_HEIGHT/2;
 //    imageViewHeight = MAX(200, imageViewHeight);
 
-    [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@(SCREEN_WIDTH)).with.priorityHigh();
-    }];
+//    [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
+//        make.height.equalTo(@(SCREEN_WIDTH)).with.priorityHigh();
+//    }];
     
 
     if (viewModel.userID == [DDUserManager currentUser].uid) {

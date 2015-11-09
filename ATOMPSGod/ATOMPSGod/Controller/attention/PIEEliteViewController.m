@@ -273,6 +273,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == _sv.tableFollow) {
         DDPageVM* vm = [_sourceFollow objectAtIndex:indexPath.row];
+        
         if (vm.type == PIEPageTypeAsk) {
             PIEEliteFollowAskTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:askIndentifier];
             [cell injectSauce:vm];
@@ -661,15 +662,11 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     if (scrollView == _sv) {
         int currentPage = (scrollView.contentOffset.x + CGWidth(scrollView.frame) * 0.1) / CGWidth(scrollView.frame);
         if (currentPage == 0) {
-            _sv.tableHot.scrollsToTop = YES;
-            _sv.tableFollow.scrollsToTop = NO;
             [_segmentedControl setSelectedSegmentIndex:0 animated:YES];
             _sv.type = PIEPageTypeEliteHot;
             [self getSourceIfEmpty_hot:nil];
         } else if (currentPage == 1) {
             [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
-            _sv.tableHot.scrollsToTop = NO;
-            _sv.tableFollow.scrollsToTop = YES;
             _sv.type = PIEPageTypeEliteFollow;
             [self getSourceIfEmpty_follow:nil];
         }

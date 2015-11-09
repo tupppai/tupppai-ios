@@ -104,9 +104,9 @@
 //    imageViewHeight = MAX(100,imageViewHeight);
 //    imageViewHeight = MIN(SCREEN_WIDTH, imageViewHeight);
 
-    [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@(SCREEN_WIDTH)).with.priorityHigh();
-    }];
+//    [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
+//        make.height.equalTo(@(SCREEN_WIDTH)).with.priorityHigh();
+//    }];
     _thumbView.subviewCounts = viewModel.thumbEntityArray.count;
     if (viewModel.thumbEntityArray.count > 0) {
         PIEImageEntity* entity = [viewModel.thumbEntityArray objectAtIndex:0];
