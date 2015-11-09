@@ -65,7 +65,7 @@
 -(void)setupWithSourceData {
     if (_userProfileViewModel) {
 //        _createProfileView.showSexLabel.text = _userProfileViewModel.gender;
-        [_createProfileView.userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString: _userProfileViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
+        [_createProfileView.userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString: _userProfileViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
         _createProfileView.nicknameTextField.text = _userProfileViewModel.nickName;
         [DDUserManager currentUser].avatar = _userProfileViewModel.avatarURL;
         

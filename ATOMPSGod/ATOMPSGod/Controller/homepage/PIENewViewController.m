@@ -670,14 +670,14 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     DDPageVM* vm =   [_sourceAsk objectAtIndex:indexPath.row];
     CGFloat width;
     CGFloat height;
-    NSString* text = vm.content;
+//    NSString* text = vm.content;
     width = (SCREEN_WIDTH - 20) / 2.0;
     
 //    text = @"abcd";
 //    CGSize size1 = [text boundingRectWithSize:CGSizeMake(width,100) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:12]} context:nil].size;
 
-    CGSize size = [text boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:12], NSFontAttributeName, nil] context:NULL].size;
-    NSLog(@"size.height %zd",size.height);
+//    CGSize size = [text boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:12], NSFontAttributeName, nil] context:NULL].size;
+//    NSLog(@"size.height %zd",size.height);
     height = vm.imageHeight/vm.imageWidth * width + 124 + (16+10);
     height = MAX(200,height);
     height = MIN(SCREEN_HEIGHT/1.5, height);

@@ -110,7 +110,7 @@
 
 -(void)setVm:(DDPageVM *)vm {
     if (vm) {
-        [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"head_portrait"]];
+        [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
         _usernameLabel.text = vm.username;
         _timeLabel.text = vm.publishTime;
         
