@@ -53,8 +53,8 @@
 //            block(view);
 //        }
 //    }];
-////    view.imageView.image = [UIImage imageNamed:@"psps"];
-////    view.avatarView.image = [UIImage imageNamed:@"psps"];
+////    view.imageView.image = [UIImage imageNamed:@"cellBG"];
+////    view.avatarView.image = [UIImage imageNamed:@"cellBG"];
 ////    view.nameLabel.text = @"peiwei";
 //    return view;
 //

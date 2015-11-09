@@ -154,7 +154,7 @@
         _avatarView.clipsToBounds = YES;
         _avatarView.layer.cornerRadius = 10;
         _avatarView.clipsToBounds = YES;
-//        _avatarView.image = [UIImage imageNamed:@"psps"];
+//        _avatarView.image = [UIImage imageNamed:@"cellBG"];
     }
     return _avatarView;
 }
@@ -170,7 +170,7 @@
 -(UIImageView *)imageView {
     if (!_imageView) {
         _imageView = [UIImageView new];
-//        _imageView.image = [UIImage imageNamed:@"psps"];
+//        _imageView.image = [UIImage imageNamed:@"cellBG"];
         _imageView.contentMode = UIViewContentModeScaleAspectFill;
         _imageView.clipsToBounds = YES;
     }
@@ -179,7 +179,7 @@
 -(UIImageView *)imageView_thumb {
     if (!_imageView_thumb) {
         _imageView_thumb = [UIImageView new];
-        _imageView_thumb.image = [UIImage imageNamed:@"psps"];
+        _imageView_thumb.image = [UIImage imageNamed:@"cellBG"];
         _imageView_thumb.contentMode = UIViewContentModeScaleAspectFill;
         _imageView_thumb.clipsToBounds = YES;
         _imageView_thumb.hidden = YES;

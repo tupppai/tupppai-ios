@@ -10,7 +10,7 @@
 #import "DDSessionManager.h"
 #import "PIECommentEntity.h"
 #import "PIEEntityCommentReply.h"
-
+#import "DDCommentVM.h"
 
 
 @interface DDCommentManager ()
@@ -39,23 +39,22 @@
                 comment.commentType = [param[@"type"] integerValue];
                 comment.imageID = [param[@"target_id"] integerValue];
                 if (comment) {
-                    [hotCommentArray addObject:comment];
+                        DDCommentVM *model = [DDCommentVM new];
+                        [model setViewModelData:comment];
+                        [hotCommentArray addObject:model];
                 }
             }
             for (int i = 0; i < recentCommentDataArray.count; i++) {
                 PIECommentEntity *comment = [MTLJSONAdapter modelOfClass:[PIECommentEntity class] fromJSONDictionary:recentCommentDataArray[i] error:NULL];
                 comment.commentType = [param[@"type"] integerValue];
                 comment.imageID = [param[@"target_id"] integerValue];
-    //            comment.atCommentArray = [NSMutableArray array];
-    //            NSArray *atCommentArray = recentCommentDataArray[i][@"at_comments"];
-    //            for (int j = 0; j < atCommentArray.count; j++) {
-    //                ATOMAtComment *atComment = [MTLJSONAdapter modelOfClass:[ATOMAtComment class] fromJSONDictionary:atCommentArray[j] error:NULL];
-    //                if (atComment) {
-    //                    [comment.atCommentArray addObject:atComment];
-    //                }
-    //            }
                 if (comment) {
-                    [recentCommentArray addObject:comment];
+                    
+                    DDCommentVM *model = [DDCommentVM new];
+                    [model setViewModelData:comment];
+                    //            [ws.commentsNew addObject:model];
+                    
+                    [recentCommentArray addObject:model];
                 }
             }
             if (block) {

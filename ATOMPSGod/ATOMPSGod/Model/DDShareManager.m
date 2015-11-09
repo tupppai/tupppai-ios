@@ -108,7 +108,7 @@
             if ([desc isEqualToString:@""]) {
                 desc = @"我在#图派#app分享了一张图片，你也来看看吧";
             }
-            UIImage* img = [UIImage imageNamed:@"psps"];
+            UIImage* img = [UIImage imageNamed:@"cellBG"];
             
             NSURL* sUrl = [[NSURL alloc]initWithString:share.url];
             NSURL* imageUrl = [[NSURL alloc]initWithString:[NSString stringWithFormat:@"%@",share.imageUrl]];

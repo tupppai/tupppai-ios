@@ -23,7 +23,7 @@
 #import "PIEImageEntity.h"
 #import "JTSImageViewController.h"
 #import "JTSImageInfo.h"
-
+#import "KVCMutableArray.h"
 #define DEBUG_CUSTOM_TYPING_INDICATOR 0
 
 static NSString *MessengerCellIdentifier = @"MessengerCell";
@@ -31,7 +31,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 @interface DDCommentVC ()<DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,PIEShareViewDelegate,JGActionSheetDelegate,JTSImageViewControllerInteractionsDelegate>
 
 @property (nonatomic, strong) NSMutableArray *commentsHot;
-@property (nonatomic, strong) NSMutableArray *commentsNew;
+@property (nonatomic, strong) KVCMutableArray *commentsNew;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, strong) UITapGestureRecognizer *tapCommentTableGesture;
 @property (nonatomic, assign) BOOL canRefreshFooter;
@@ -206,7 +206,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
     [self.tableView beginUpdates];
-    [self.commentsNew insertObject:commentVM atIndex:0];
+    [self.commentsNew insertObject:commentVM inArrayAtIndex:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
@@ -288,7 +288,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     if (section == 0) {
         return _commentsHot.count;
     } else if (section == 1) {
-        return _commentsNew.count;
+        return _commentsNew.array.count;
     } else {
         return 0;
     }
@@ -304,7 +304,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         if (indexPath.section == 0) {
             [cell getSource:_commentsHot[indexPath.row]];
         } else if (indexPath.section == 1) {
-            [cell getSource:_commentsNew[indexPath.row]];
+            [cell getSource:_commentsNew.array[indexPath.row]];
         }
         // Cells must inherit the table view's transform
         // This is very important, since the main table view may be inverted
@@ -323,7 +323,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         if (indexPath.section == 0) {
             vm = _commentsHot[indexPath.row];
         } else if (indexPath.section == 1) {
-            vm = _commentsNew[indexPath.row];
+            vm = _commentsNew.array[indexPath.row];
         }
         
         NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
@@ -384,7 +384,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     if (section == 0) {
         _targetCommentVM = _commentsHot[row];
     } else if (section == 1) {
-        _targetCommentVM = _commentsNew[row];
+        _targetCommentVM = _commentsNew.array[row];
     }
     self.textView.placeholder = [NSString stringWithFormat:@"@%@:",_targetCommentVM.username];
     [self.textView becomeFirstResponder];
@@ -418,6 +418,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 #pragma mark init and config
 
 -(void)configTableView {
+    _commentsHot = [NSMutableArray new];
+    _commentsNew = [KVCMutableArray new];
+    
     self.tableView.tableHeaderView = self.headerView;
 //    self.headerView.commentButton.numberString = [NSString stringWithFormat:@"%zd",_commentsNew.count + _commentsHot.count];
     self.tableView.emptyDataSetSource = self;
@@ -437,6 +440,17 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     frame.size.height = height;
     header.frame = frame;
     self.tableView.tableHeaderView = header;
+    
+    [self.commentsNew addObserver:self forKeyPath:@"array" options:NSKeyValueObservingOptionNew context:nil];
+}
+
+-(void)dealloc {
+    [self.commentsNew removeObserver:self forKeyPath:@"array"];
+}
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"array"]) {
+        self.headerView.commentButton.number = _commentsNew.countOfArray;
+    }
 }
 - (void) dismissSelf {
     [self dismissViewControllerAnimated:NO completion:nil];
@@ -480,7 +494,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         NSInteger section = indexPath.section;
         NSInteger row = indexPath.row;
         DDCommentTableCell *cell = (DDCommentTableCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-        DDCommentVM *model = (section == 0) ? _commentsHot[row] : _commentsNew[row];
+        DDCommentVM *model = (section == 0) ? _commentsHot[row] : _commentsNew.array[row];
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.avatarView.frame, p)) {
             PIEFriendViewController *opvc = [PIEFriendViewController new];
@@ -523,10 +537,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 - (void)getDataSource {
     WS(ws);
-    _commentsHot = nil;
-    _commentsHot = [NSMutableArray array];
-    _commentsNew = nil;
-    _commentsNew = [NSMutableArray array];
+
     _currentPage = 1;
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -537,16 +548,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     
     DDCommentManager *commentManager = [DDCommentManager new];
     [commentManager ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
-        for (PIECommentEntity *comment in hotCommentArray) {
-            DDCommentVM *model = [DDCommentVM new];
-            [model setViewModelData:comment];
-            [ws.commentsHot addObject:model];
-        }
-        for (PIECommentEntity *comment in recentCommentArray) {
-            DDCommentVM *model = [DDCommentVM new];
-            [model setViewModelData:comment];
-            [ws.commentsNew addObject:model];
-        }
+        ws.commentsNew.array = recentCommentArray;
+        ws.commentsHot = hotCommentArray;
+        
         if (recentCommentArray.count > 0) {
             _canRefreshFooter = YES;
         }
@@ -564,11 +568,17 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [param setObject:@(10) forKey:@"size"];
     DDCommentManager *commentManager = [DDCommentManager new];
     [commentManager ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
-        for (PIECommentEntity *comment in recentCommentArray) {
-            DDCommentVM *model = [DDCommentVM new];
-            [model setViewModelData:comment];
-            [ws.commentsNew addObject:model];
-        }
+//        for (DDCommentVM* vm in recentCommentArray) {
+//            [ws.commentsNew addObject:vm];
+//        }
+//        [ws.commentsNew.array addObjectsFromArray:recentCommentArray];
+        
+        [self.commentsNew willChangeValueForKey:@"array"];
+        [ws.commentsNew addArrayObject: recentCommentArray];
+        [self.commentsNew didChangeValueForKey:@"array"];
+        
+        [ws.commentsHot addObjectsFromArray: hotCommentArray];
+
         [self.tableView.footer endRefreshing];
         [self.tableView reloadData];
         if (recentCommentArray.count == 0) {
