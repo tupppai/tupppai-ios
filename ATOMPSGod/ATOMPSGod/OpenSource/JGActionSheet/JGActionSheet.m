@@ -47,10 +47,10 @@
 #define iPad (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 #endif
 
-#define kHostsCornerRadius 6.0f
+#define kHostsCornerRadius 12.0f
 
-#define kHorizontalSpacing 4.0f
-#define kButtonYSpacing 5.0f
+#define kHorizontalSpacing 3.5f
+#define kButtonYSpacing 14.0f
 
 #define kArrowBaseWidth 20.0f
 #define kArrowHeight 10.0f
@@ -245,12 +245,11 @@ static BOOL disableCustomEasing = NO;
     }
     else {
         self.backgroundColor = [UIColor whiteColor];
-//        self.layer.cornerRadius = kHostsCornerRadius;
+        self.layer.cornerRadius = kHostsCornerRadius;
         self.layer.shadowColor = [UIColor blackColor].CGColor;
         self.layer.shadowOffset = CGSizeZero;
         self.layer.shadowRadius = kShadowRadius;
         self.layer.shadowOpacity = kShadowOpacity;
-        
     }
 }
 
@@ -288,13 +287,13 @@ static BOOL disableCustomEasing = NO;
         font = [UIFont boldSystemFontOfSize:17.0];
         titleColor = [UIColor darkGrayColor];
         backgroundColor = [UIColor colorWithHex:0xFEF07B];
-        borderColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
+//        borderColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
     }
     else if (buttonStyle == JGActionSheetButtonStyleCancel) {
         font = [UIFont boldSystemFontOfSize:17.0];
         titleColor = [UIColor darkGrayColor];
-        backgroundColor = [UIColor colorWithHex:0xb5c0c8];
-        borderColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
+        backgroundColor = [UIColor colorWithHex:0xd8d8d8];
+//        borderColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
     }
     else if (buttonStyle == JGActionSheetButtonStyleRed) {
         font = [UIFont systemFontOfSize:15.0f];
@@ -324,7 +323,8 @@ static BOOL disableCustomEasing = NO;
     [button setBackgroundImage:[self pixelImageWithColor:backgroundColor] forState:UIControlStateNormal];
     [button setBackgroundImage:[self pixelImageWithColor:borderColor] forState:UIControlStateHighlighted];
     button.layer.cornerRadius = 45 / 2;
-    button.layer.borderColor = borderColor.CGColor;
+    button.layer.borderWidth = 0.0;
+//    button.layer.borderColor = borderColor.CGColor;
 }
 
 - (JGButton *)makeButtonWithTitle:(NSString *)title style:(JGActionSheetButtonStyle)style {
@@ -350,11 +350,13 @@ static BOOL disableCustomEasing = NO;
 }
 
 - (CGRect)layoutForWidth:(CGFloat)width {
-    CGFloat buttonHeight = 50.0f;
+    CGFloat buttonHeight = 44.0;
     CGFloat spacing = kButtonYSpacing;
     
     CGFloat height = 0.0f;
-    CGFloat whiteGapHeight = 15.0;
+    CGFloat whiteGapHeight = 11.0;
+    
+    CGFloat buttonLeftSpace = 10.0;
     UIView* whiteGapView = [UIView new];
     whiteGapView.frame = (CGRect) {CGPointZero,{0,whiteGapHeight}};
     [self addSubview:whiteGapView];
@@ -366,7 +368,7 @@ static BOOL disableCustomEasing = NO;
         [self.titleLabel sizeToFit];
         height += CGRectGetHeight(self.titleLabel.frame);
         
-        self.titleLabel.frame = (CGRect){{spacing, spacing}, {width-spacing*2.0f, CGRectGetHeight(self.titleLabel.frame)}};
+        self.titleLabel.frame = (CGRect){{buttonLeftSpace, spacing}, {width-spacing - buttonLeftSpace, CGRectGetHeight(self.titleLabel.frame)}};
     }
     
     if (self.messageLabel) {

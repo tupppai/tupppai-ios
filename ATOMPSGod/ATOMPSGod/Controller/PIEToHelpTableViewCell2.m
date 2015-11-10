@@ -16,6 +16,7 @@
     _avatarView.clipsToBounds = YES;
     _theImageView.clipsToBounds = YES;
     self.accessoryType = UITableViewCellAccessoryNone;
+    _contentLabel.contentMode = UIViewContentModeTopLeft;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -84,7 +84,9 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self updateStatus];
     [MobClick beginLogPageView:@"进入首页"];
+
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -94,6 +96,20 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+}
+
+- (void)updateStatus {
+    if (_selectedIndexPath && _selectedVM.type == PIEPageTypeReply) {
+        if (_sv.type == PIEPageTypeEliteFollow) {
+            [_sv.tableFollow reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//          PIEEliteFollowReplyTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
+//            cell.likeView.selected = _selectedVM.liked;
+        } else if (_sv.type == PIEPageTypeEliteHot) {
+            [_sv.tableHot reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//            PIEEliteHotReplyTableViewCell* cell = [_sv.tableHot cellForRowAtIndexPath:_selectedIndexPath];
+//            cell.likeView.selected = _selectedVM.liked;
+        }
+    }
 }
 #pragma mark - init methods
 

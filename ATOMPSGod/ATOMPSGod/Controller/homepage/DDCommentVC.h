@@ -7,10 +7,14 @@
 //
 
 #import "SLKTextViewController.h"
-#import "kfcPageView.h"
+#import "PIECommentTableHeaderView_Ask.h"
+#import "PIECommentTableHeaderView_Reply.h"
+
 @interface DDCommentVC : SLKTextViewController
 
-@property (nonatomic, strong) kfcPageView *headerView;
+@property (nonatomic, strong) PIECommentTableHeaderView_Ask *headerView;
+@property (nonatomic, strong) PIECommentTableHeaderView_Reply *headerView_reply;
+
 @property (nonatomic, strong) DDPageVM *vm;
 //回传 是否点赞 到 parent VC
 @property (nonatomic, weak)   id<ATOMViewControllerDelegate> delegate;

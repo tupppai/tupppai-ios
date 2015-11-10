@@ -72,7 +72,7 @@
             vm.content = entity.comment;
             [resultArray addObject:vm];
         }
-        if (block && resultArray.count > 0) {
+        if (block) {
             block(resultArray);
         }
     }];
@@ -86,7 +86,7 @@
             DDPageVM* vm = [[DDPageVM alloc]initWithPageEntity:entity];
             [resultArray addObject:vm];
         }
-        if (block && resultArray.count > 0) {
+        if (block) {
             block(resultArray);
         }
     }];

@@ -1,37 +1,24 @@
 //
-//  kfcPageView.h
-//  ATOMPSGod
+//  PIECommentTableHeaderView_Reply.h
+//  TUPAI
 //
-//  Created by atom on 15/3/22.
-//  Copyright (c) 2015年 ATOM. All rights reserved.
+//  Created by chenpeiwei on 11/10/15.
+//  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-//评论VC的Header
-#import "ATOMBaseView.h"
-
-//#import "DDHotDetailPageVM.h"
-////
-////
+#import <UIKit/UIKit.h>
 #import "PIEPageButton.h"
-#import "PIEBangView.h"
 #import "PIEPageLikeButton.h"
-@interface kfcPageView : ATOMBaseView
-
-
-
+@interface PIECommentTableHeaderView_Reply : UIView
 @property (nonatomic, strong) UIImageView *avatarView;
 @property (nonatomic, strong) UILabel *usernameLabel;
 @property (nonatomic, strong) UILabel *timeLabel;
 @property (nonatomic, strong) UIImageView *imageViewMain;
 @property (nonatomic, strong) UIImageView *imageViewRight;
 @property (nonatomic, strong) UILabel *contentLabel;
+@property (nonatomic, strong) UIButton *moreWorkButton;
 @property (nonatomic, strong) PIEPageButton *commentButton;
 @property (nonatomic, strong) PIEPageButton *shareButton;
 @property (nonatomic, strong) PIEPageLikeButton *likeButton;
-
-@property (nonatomic, strong) PIEBangView *bangView;
 @property (nonatomic, strong) DDPageVM *vm;
-
-//+ (CGFloat)calculateHeaderViewHeight:(kfcPageVM *)viewModel;
-
 @end

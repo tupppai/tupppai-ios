@@ -35,10 +35,9 @@
 }
 
 + (PIEEntityUser *)selectUserByUID:(NSInteger)uid {
-    NSLog(@"selectUserByUID");
     __block PIEEntityUser *user;
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
-        NSString *stmt = @"select * from ATOMUser where uid = ?";
+        NSString *stmt = @"select * from PIEUserTable where uid = ?";
         NSNumber* uid_ns = [NSNumber numberWithInteger:uid];
         NSArray *param = @[uid_ns];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
@@ -55,7 +54,7 @@
     NSLog(@"fetchFirstUser");
     __block PIEEntityUser *user;
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
-        NSString *stmt = @"select * from ATOMUser";
+        NSString *stmt = @"select * from PIEUserTable";
         FMResultSet *rs = [db executeQuery:stmt];
         int n = 0;
         while ([rs next]) {
@@ -63,7 +62,6 @@
 //            break;
             n++;
         }
-        NSLog(@"仍然有%d个用户存在数据库",n);
         [rs close];
     }];
     if (user && block) {
@@ -76,17 +74,14 @@
 + (BOOL)isExistUser:(PIEEntityUser *)user {
     __block BOOL flag = false;
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
-        NSString *stmt = @"select * from ATOMUser where uid = ?";
+        NSString *stmt = @"select * from PIEUserTable where uid = ?";
         NSNumber* uid = [NSNumber numberWithInteger:user.uid];
 //        NSArray *param = @[uid];
 //        FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         FMResultSet *rs = [db executeQuery:stmt,uid];
         while ([rs next]) {
             PIEEntityUser *user = [MTLFMDBAdapter modelOfClass:[PIEEntityUser class] fromFMResultSet:rs error:NULL];
-            [user NSLogSelf];
-            NSLog(@"正在检索用户是否已经存在数据库...");
             if (user) {
-                NSLog(@"用户已经存在数据库");
                 flag = YES;
                 break;
             } else {
@@ -117,9 +112,8 @@
 }
 
 +(void)clearUsers {
-    NSLog(@"clear all Users in DB");
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
-        NSString *stmt = @"delete from ATOMUser";
+        NSString *stmt = @"delete from PIEUserTable";
         [db executeUpdate:stmt];
     }];
 }

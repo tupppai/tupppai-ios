@@ -73,7 +73,6 @@
  */
 @property (nonatomic, assign) NSInteger attentionWorkNumber;
 
--(void)NSLogSelf;
 
 
 

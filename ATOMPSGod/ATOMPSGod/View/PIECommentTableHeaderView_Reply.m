@@ -1,22 +1,20 @@
 //
-//  kfcPageView.m
-//  ATOMPSGod
+//  PIECommentTableHeaderView_Reply.m
+//  TUPAI
 //
-//  Created by atom on 15/3/22.
-//  Copyright (c) 2015年 ATOM. All rights reserved.
+//  Created by chenpeiwei on 11/10/15.
+//  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "kfcPageView.h"
-//#import "ATOMTipButton.h"
-//#import "DDTipLabelVM.h"
+#import "PIECommentTableHeaderView_Reply.h"
 #import "PIEImageEntity.h"
 #define MAXHEIGHT (SCREEN_WIDTH-kPadding15*2)*4/3
 
-@interface kfcPageView ()
+@interface PIECommentTableHeaderView_Reply ()
 
 @end
 
-@implementation kfcPageView
+@implementation PIECommentTableHeaderView_Reply
 
 - (instancetype)init {
     self = [super init];
@@ -34,15 +32,13 @@
     [self addSubview:self.contentLabel];
     [self addSubview:self.commentButton];
     [self addSubview:self.shareButton];
-    [self addSubview:self.bangView];
     [self addSubview:self.likeButton];
-
+    [self addSubview:self.moreWorkButton];
     [self configMansory];
 }
 
 - (void)configMansory {
     [self configMansoryViews];
-
 }
 
 - (void) configMansoryViews {
@@ -78,32 +74,46 @@
         make.left.equalTo(self).with.offset(12).with.priorityMedium();
         make.right.equalTo(self).with.offset(-12).with.priorityMedium();
     }];
-    [self.commentButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contentLabel.mas_bottom).with.offset(12).with.priorityLow();
+    
+    [self.moreWorkButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.commentButton);
         make.width.equalTo(@50);
         make.height.equalTo(@25);
-        make.left.equalTo(self).with.offset(12);
+        make.left.equalTo(self).with.offset(11);
+    }];
+    
+    [self.commentButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.contentLabel.mas_bottom).with.offset(12).with.priorityLow();
+        make.width.equalTo(@25).with.priorityMedium();
+        make.width.greaterThanOrEqualTo(@25);
+        make.height.equalTo(@25);
+        make.left.equalTo(self.moreWorkButton.mas_right).with.offset(18);
         make.bottom.equalTo(self).with.offset(-15);
     }];
     [self.shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.commentButton);
-        make.width.equalTo(@50);
+        make.width.equalTo(@25).with.priorityMedium();
+        make.width.greaterThanOrEqualTo(@25);
         make.height.equalTo(@25);
-        make.left.equalTo(self.commentButton.mas_right).with.offset(6);
+        make.left.equalTo(self.commentButton.mas_right).with.offset(18);
     }];
-    [self.bangView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.commentButton).with.priorityMedium();
-        make.width.equalTo(@25);
-        make.height.equalTo(@40);
-        make.right.equalTo(self).with.offset(-10);
-    }];
+  
     [self.likeButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.commentButton);
-        make.width.equalTo(@50);
+        make.width.equalTo(@25).priorityHigh();
+        make.width.greaterThanOrEqualTo(@25);
         make.height.equalTo(@30);
-        make.right.equalTo(self).with.offset(0);
+        make.right.equalTo(self).with.offset(-17);
     }];
     
+    UIView* line = [UIView new];
+    line.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
+    [self addSubview:line];
+    [line mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(self);
+        make.height.equalTo(@0.3);
+        make.bottom.equalTo(self);
+    }];
 }
 
 
@@ -142,17 +152,9 @@
         _contentLabel.text = vm.content;
         _likeButton.numberString = vm.likeCount;
         _likeButton.highlighted = vm.liked;
-        if (vm.type == PIEPageTypeAsk) {
-            _bangView.hidden = NO;
-            _likeButton.hidden = YES;
-        } else {
-            _bangView.hidden = YES;
-            _likeButton.hidden = NO;
-        }
+
     }
     else {
-        _bangView.hidden = YES;
-        _likeButton.hidden = YES;
         _imageViewMain.image = [UIImage imageNamed:@"cellBG"];
     }
 }
@@ -196,8 +198,8 @@
 -(UIImageView*)imageViewMain {
     if (!_imageViewMain) {
         _imageViewMain = [UIImageView new];
-//        _imageViewMain.contentMode = UIViewContentModeScaleAspectFit;
-//        _imageViewMain.clipsToBounds = YES;
+        //        _imageViewMain.contentMode = UIViewContentModeScaleAspectFit;
+        //        _imageViewMain.clipsToBounds = YES;
         _imageViewMain.userInteractionEnabled = YES;
         _imageViewMain.backgroundColor= [ UIColor groupTableViewBackgroundColor];
     }
@@ -216,7 +218,7 @@
 -(UILabel *)contentLabel {
     if (!_contentLabel) {
         _contentLabel = [UILabel new];
-        _contentLabel.textColor = [UIColor blackColor];
+        _contentLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
         _contentLabel.font = [UIFont boldSystemFontOfSize:15];
         _contentLabel.numberOfLines = 0;
     }
@@ -238,12 +240,6 @@
     return _shareButton;
 }
 
--(PIEBangView *)bangView {
-    if (!_bangView) {
-        _bangView = [PIEBangView new];
-    }
-    return _bangView;
-}
 -(PIEPageLikeButton *)likeButton {
     if (!_likeButton) {
         _likeButton = [PIEPageLikeButton new];
@@ -252,7 +248,14 @@
 }
 
 
-
+-(UIButton *)moreWorkButton {
+    if (!_moreWorkButton) {
+        _moreWorkButton = [UIButton new];
+        [_moreWorkButton setImage:[UIImage imageNamed:@"hot_allwork"] forState:UIControlStateNormal];
+        _moreWorkButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    }
+    return _moreWorkButton;
+}
 
 
 

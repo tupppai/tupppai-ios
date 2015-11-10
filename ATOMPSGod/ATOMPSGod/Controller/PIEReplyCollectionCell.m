@@ -18,7 +18,11 @@
     self.layer.cornerRadius = 8;
     _imageView.clipsToBounds = YES;
     _imageView.contentMode = UIViewContentModeScaleAspectFill;
+    NSLog(@"PIEReplyCollectionCell awakeFromNib %@",_likeButton);
 }
+-(void)setSelected:(BOOL)selected {
+}
+
 - (void)injectSauce:(DDPageVM *)viewModel {
     _viewModel = viewModel;
     [_imageView setImageWithURL:[NSURL URLWithString:viewModel.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
@@ -26,8 +30,11 @@
     _usernameLabel.text = viewModel.username;
     _ID = viewModel.ID;
     _type = viewModel.type;
-    _likeButton.highlighted = viewModel.liked;
+//    _likeButton.highlighted = viewModel.liked;
+    _likeButton.imageView.image = [UIImage imageNamed:@"pie_myCollection_like"];
     _likeButton.numberString = viewModel.likeCount;
+    _likeButton.label.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.6];
+    _likeButton.label.font = [UIFont systemFontOfSize:11];
 }
 
 @end

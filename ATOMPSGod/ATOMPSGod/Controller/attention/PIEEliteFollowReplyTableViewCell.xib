@@ -58,14 +58,14 @@
                         </variation>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="我觉得我长得真不错！" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="wdw-j6-aQB">
-                        <rect key="frame" x="8" y="440.5" width="370" height="114.5"/>
+                        <rect key="frame" x="8" y="441" width="370" height="113.5"/>
                         <animations/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hot_allwork" translatesAutoresizingMaskIntoConstraints="NO" id="u76-JP-qUq">
-                        <rect key="frame" x="8" y="570.5" width="60" height="19"/>
+                        <rect key="frame" x="8" y="570" width="60" height="19"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="19" id="5hz-Qg-q4U"/>
@@ -81,7 +81,7 @@
                         </constraints>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1t2-Zu-9X4" customClass="PIEPageButton">
-                        <rect key="frame" x="84" y="565.5" width="35" height="30"/>
+                        <rect key="frame" x="84" y="565" width="35" height="30"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="7aP-0K-Qxn"/>
@@ -95,7 +95,7 @@
                         </variation>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eCR-aD-tkR" customClass="PIEPageButton">
-                        <rect key="frame" x="129" y="565.5" width="35" height="30"/>
+                        <rect key="frame" x="129" y="565" width="35" height="30"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="4ag-2h-xR2"/>
@@ -110,7 +110,7 @@
                         </variation>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bZD-SV-wez" customClass="PIEPageButton">
-                        <rect key="frame" x="174" y="565.5" width="35" height="30"/>
+                        <rect key="frame" x="174" y="565" width="35" height="30"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="width" priority="250" constant="35" id="2Qc-yC-yeF"/>
@@ -123,16 +123,17 @@
                         </variation>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="New-cK-IUH" customClass="PIEPageLikeButton">
-                        <rect key="frame" x="331" y="566.5" width="39" height="28"/>
+                        <rect key="frame" x="344" y="566" width="25" height="28"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="39" id="UVr-LV-pc6"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="25" id="UVr-LV-pc6"/>
                             <constraint firstAttribute="height" constant="28" id="gIm-BQ-xM8"/>
+                            <constraint firstAttribute="width" priority="250" constant="25" id="k1b-WB-gsx"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eii-iC-8N1">
-                        <rect key="frame" x="0.0" y="606.5" width="386" height="11"/>
+                        <rect key="frame" x="0.0" y="606" width="386" height="11"/>
                         <animations/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -175,7 +176,7 @@
                     <constraint firstItem="Eii-iC-8N1" firstAttribute="top" secondItem="u76-JP-qUq" secondAttribute="bottom" constant="17" id="ou0-77-dcA"/>
                     <constraint firstItem="bZD-SV-wez" firstAttribute="height" secondItem="eCR-aD-tkR" secondAttribute="height" id="tBH-xb-HZt"/>
                     <constraint firstAttribute="bottom" secondItem="Eii-iC-8N1" secondAttribute="bottom" id="ufV-Cu-BTa"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="New-cK-IUH" secondAttribute="trailing" constant="8" id="xiU-st-f7t"/>
+                    <constraint firstAttribute="trailing" secondItem="New-cK-IUH" secondAttribute="trailing" constant="17" id="xiU-st-f7t"/>
                     <constraint firstAttribute="bottomMargin" secondItem="u76-JP-qUq" secondAttribute="bottom" id="y2d-Z8-QUX"/>
                 </constraints>
                 <variation key="default">
@@ -206,7 +207,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="cellBG.png" width="640" height="1136"/>
+        <image name="cellBG.png" width="355" height="474"/>
         <image name="hot_allwork" width="53" height="23"/>
         <image name="new_reply_follow" width="58" height="28"/>
         <image name="new_reply_followed" width="58" height="28"/>

@@ -88,6 +88,11 @@
         [DDService toggleLike:_likeButton.selected ID:_currentVM.ID type:_currentVM.type  withBlock:^(BOOL success) {
             if (success) {
                 _pageVM.liked = _likeButton.selected;
+                if (_pageVM.liked) {
+                    _pageVM.likeCount = [NSString stringWithFormat:@"%zd",[_pageVM.likeCount integerValue]+1];
+                } else {
+                    _pageVM.likeCount = [NSString stringWithFormat:@"%zd",[_pageVM.likeCount integerValue]-1];
+                }
             } else {
                 _likeButton.selected = !_likeButton.selected;
             }

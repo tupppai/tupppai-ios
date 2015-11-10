@@ -66,12 +66,8 @@
 }
 
 + (NSString *)FMDBTableName {
-    return @"PIEEntityUser";
+    return @"PIEUserTable";
 }
 
--(void)NSLogSelf {
-    NSArray* array = [NSArray arrayWithObjects:_nickname,_avatar, nil];
-    NSLog(@"ATOMUser description -> \n %@",array);
-}
 
 @end

@@ -44,9 +44,9 @@
     
     ((FXBlurView*)self.view).dynamic = NO;
     ((FXBlurView*)self.view).tintColor = [UIColor blackColor];
-
     DDNavigationController *nav = [AppDelegate APP].mainTabBarController.selectedViewController;
     ((FXBlurView*)self.view).underlyingView =   [nav.viewControllers objectAtIndex:0].view;
+    ((FXBlurView*)self.view).blurRadius = 200;
     
     _askBackgroundView.layer.cornerRadius = _askBackgroundView.frame.size.width/2;
     _replyBackgroundView.layer.cornerRadius = _replyBackgroundView.frame.size.width/2;

@@ -63,7 +63,6 @@
         ws.isfirstLoading = NO;//should set to NO before reloadData
         [ws.collectionView reloadData];
         [ws.collectionView.header endRefreshing];
-        
         if (resultArray.count == 0) {
             ws.canRefreshFooter = NO;
         } else {

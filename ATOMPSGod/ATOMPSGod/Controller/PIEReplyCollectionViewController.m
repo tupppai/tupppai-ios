@@ -105,38 +105,38 @@
         UINib* nib = [UINib nibWithNibName:@"PIEReplyCollectionCell" bundle:nil];
         [_collectionView registerNib:nib forCellWithReuseIdentifier:@"PIEReplyCollectionCell"];
         
-        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnCollectionView:)];
-        [_collectionView addGestureRecognizer:tapGesture];
+//        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnCollectionView:)];
+//        [_collectionView addGestureRecognizer:tapGesture];
 
     }
     return _collectionView;
 }
-- (void)tapOnCollectionView:(UITapGestureRecognizer *)gesture {
-        CGPoint location = [gesture locationInView:self.collectionView];
-        _selectedIndexPath = [self.collectionView indexPathForItemAtPoint:location];
-    
-        if (_selectedIndexPath) {
-            DDPageVM* vm = [_source objectAtIndex:_selectedIndexPath.row];
-            PIEReplyCollectionCell* cell = (PIEReplyCollectionCell*)[self.collectionView cellForItemAtIndexPath:_selectedIndexPath];
-            CGPoint p = [gesture locationInView:cell];
-            if (CGRectContainsPoint(cell.avatarView.frame, p) || CGRectContainsPoint(cell.usernameLabel.frame, p)) {
-                PIEFriendViewController* vc = [PIEFriendViewController new];
-                vc.pageVM = vm;
-                [self.navigationController pushViewController:vc animated:YES];
-            } else if (CGRectContainsPoint(cell.imageView.frame, p)) {
-                PIECarouselViewController* vc = [PIECarouselViewController new];
-                vc.pageVM = vm;
-                [self.navigationController pushViewController:vc animated:YES];
-            } else {
-                CGPoint q = [gesture locationInView:cell.bottomView];
-                if (CGRectContainsPoint(cell.likeButton.frame, q)) {
-                    [self like];
-                }
-            }
-    
-            
-        }
-}
+//- (void)tapOnCollectionView:(UITapGestureRecognizer *)gesture {
+//        CGPoint location = [gesture locationInView:self.collectionView];
+//        _selectedIndexPath = [self.collectionView indexPathForItemAtPoint:location];
+//    
+//        if (_selectedIndexPath) {
+//            DDPageVM* vm = [_source objectAtIndex:_selectedIndexPath.row];
+//            PIEReplyCollectionCell* cell = (PIEReplyCollectionCell*)[self.collectionView cellForItemAtIndexPath:_selectedIndexPath];
+//            CGPoint p = [gesture locationInView:cell];
+//            if (CGRectContainsPoint(cell.avatarView.frame, p) || CGRectContainsPoint(cell.usernameLabel.frame, p)) {
+//                PIEFriendViewController* vc = [PIEFriendViewController new];
+//                vc.pageVM = vm;
+//                [self.navigationController pushViewController:vc animated:YES];
+//            } else if (CGRectContainsPoint(cell.imageView.frame, p)) {
+//                PIECarouselViewController* vc = [PIECarouselViewController new];
+//                vc.pageVM = vm;
+//                [self.navigationController pushViewController:vc animated:YES];
+//            } else {
+//                CGPoint q = [gesture locationInView:cell.bottomView];
+//                if (CGRectContainsPoint(cell.likeButton.frame, q)) {
+//                    [self like];
+//                }
+//            }
+//    
+//            
+//        }
+//}
 
 - (void)like {
     NSLog(@"like");
@@ -199,7 +199,10 @@
     return nil;
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-
+    DDPageVM* vm = [_source objectAtIndex:indexPath.row];
+    PIECarouselViewController* vc = [PIECarouselViewController new];
+    vc.pageVM = vm;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout

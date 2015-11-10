@@ -24,6 +24,8 @@
 #import "JTSImageViewController.h"
 #import "JTSImageInfo.h"
 #import "KVCMutableArray.h"
+#import "PIEReplyCollectionViewController.h"
+
 #define DEBUG_CUSTOM_TYPING_INDICATOR 0
 
 static NSString *MessengerCellIdentifier = @"MessengerCell";
@@ -114,7 +116,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)scrollElegant {
     
     [UIView animateWithDuration:0.7 animations:^{
-        self.tableView.contentOffset = CGPointMake(0, _headerView.frame.size.height - 52);
+        self.tableView.contentOffset = CGPointMake(0, self.tableView.tableHeaderView.frame.size.height - 52);
     } completion:^(BOOL finished) {
     }];
 
@@ -281,17 +283,17 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 #pragma mark - UITableViewDataSource Methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
-        return _commentsHot.count;
-    } else if (section == 1) {
+//    if (section == 0) {
+//        return _commentsHot.count;
+//    } else if (section == 1) {
         return _commentsNew.array.count;
-    } else {
-        return 0;
-    }
+//    } else {
+//        return 0;
+//    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -301,11 +303,11 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         if (!cell) {
             cell = [[DDCommentTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
-        if (indexPath.section == 0) {
-            [cell getSource:_commentsHot[indexPath.row]];
-        } else if (indexPath.section == 1) {
+//        if (indexPath.section == 0) {
+//            [cell getSource:_commentsHot[indexPath.row]];
+//        } else if (indexPath.section == 1) {
             [cell getSource:_commentsNew.array[indexPath.row]];
-        }
+//        }
         // Cells must inherit the table view's transform
         // This is very important, since the main table view may be inverted
 //        cell.transform = self.tableView.transform;
@@ -320,11 +322,11 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 {
     if ([tableView isEqual:self.tableView]) {
         DDCommentVM* vm;
-        if (indexPath.section == 0) {
-            vm = _commentsHot[indexPath.row];
-        } else if (indexPath.section == 1) {
+//        if (indexPath.section == 0) {
+//            vm = _commentsHot[indexPath.row];
+//        } else if (indexPath.section == 1) {
             vm = _commentsNew.array[indexPath.row];
-        }
+//        }
         
         NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
         paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
@@ -356,36 +358,36 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 
 
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if ([tableView.dataSource tableView:tableView numberOfRowsInSection:section] == 0) {
-        return 0;
-    } else {
-        return kTableHeaderHeight;
-    }
-}
+//-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+//    if ([tableView.dataSource tableView:tableView numberOfRowsInSection:section] == 0) {
+//        return 0;
+//    } else {
+//        return kTableHeaderHeight;
+//    }
+//}
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    PIECommentHeaderView *headerView = [PIECommentHeaderView new];
-    if (section == 0) {
-        headerView.titleLabel.text = @"最热评论";
-    } else if (section == 1) {
-        headerView.titleLabel.text = @"最新评论";
-    }
-    return headerView;
-}
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+//    PIECommentHeaderView *headerView = [PIECommentHeaderView new];
+//    if (section == 0) {
+//        headerView.titleLabel.text = @"最热评论";
+//    } else if (section == 1) {
+//        headerView.titleLabel.text = @"最新评论";
+//    }
+//    return headerView;
+//}
 
 #pragma mark - UITableViewDelegate Methods
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSInteger section = indexPath.section;
+//    NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
-    if (section == 0) {
-        _targetCommentVM = _commentsHot[row];
-    } else if (section == 1) {
+//    if (section == 0) {
+//        _targetCommentVM = _commentsHot[row];
+//    } else if (section == 1) {
         _targetCommentVM = _commentsNew.array[row];
-    }
+//    }
     self.textView.placeholder = [NSString stringWithFormat:@"@%@:",_targetCommentVM.username];
     [self.textView becomeFirstResponder];
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
@@ -421,8 +423,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     _commentsHot = [NSMutableArray new];
     _commentsNew = [KVCMutableArray new];
     
-    self.tableView.tableHeaderView = self.headerView;
-//    self.headerView.commentButton.numberString = [NSString stringWithFormat:@"%zd",_commentsNew.count + _commentsHot.count];
+    
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag|UIScrollViewKeyboardDismissModeInteractive;
@@ -432,6 +433,11 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.showsHorizontalScrollIndicator = NO;
     
+    if (_vm.type == PIEPageTypeAsk) {
+        self.tableView.tableHeaderView = self.headerView;
+    } else {
+        self.tableView.tableHeaderView = self.headerView_reply;
+    }
     UIView *header = self.tableView.tableHeaderView;
     [header setNeedsLayout];
     [header layoutIfNeeded];
@@ -491,10 +497,12 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     CGPoint location = [gesture locationInView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
     if (indexPath) {
-        NSInteger section = indexPath.section;
+//        NSInteger section = indexPath.section;
         NSInteger row = indexPath.row;
         DDCommentTableCell *cell = (DDCommentTableCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-        DDCommentVM *model = (section == 0) ? _commentsHot[row] : _commentsNew.array[row];
+//        DDCommentVM *model = (section == 0) ? _commentsHot[row] : _commentsNew.array[row];
+        DDCommentVM *model =  _commentsNew.array[row];
+
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.avatarView.frame, p)) {
             PIEFriendViewController *opvc = [PIEFriendViewController new];
@@ -608,9 +616,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 #pragma mark - headerView
 
--(kfcPageView *)headerView {
+-(PIECommentTableHeaderView_Ask *)headerView {
     if (!_headerView) {
-        _headerView = [kfcPageView new];
+        _headerView = [PIECommentTableHeaderView_Ask new];
         _headerView.vm = _vm;
         
         UITapGestureRecognizer* tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap1)];
@@ -620,18 +628,46 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
         UITapGestureRecognizer* tap5 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap5)];
         UITapGestureRecognizer* tap6 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapHelp)];
-        UITapGestureRecognizer* tap7 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapLike)];
         [_headerView.avatarView addGestureRecognizer:tap1];
         [_headerView.usernameLabel addGestureRecognizer:tap2];
         [_headerView.imageViewMain addGestureRecognizer:tap3];
         [_headerView.imageViewRight addGestureRecognizer:tap4];
         [_headerView.shareButton addGestureRecognizer:tap5];
         [_headerView.bangView addGestureRecognizer:tap6];
-        [_headerView.likeButton addGestureRecognizer:tap7];
     }
     return _headerView;
 }
 
+#pragma mark - headerView
+
+-(PIECommentTableHeaderView_Reply *)headerView_reply {
+    if (!_headerView_reply) {
+        _headerView_reply = [PIECommentTableHeaderView_Reply new];
+        _headerView_reply.vm = _vm;
+        UITapGestureRecognizer* tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap1)];
+        UITapGestureRecognizer* tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap2)];
+        UITapGestureRecognizer* tap3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap3)];
+        UITapGestureRecognizer* tap4 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap4)];
+        
+        UITapGestureRecognizer* tap5 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap5)];
+        UITapGestureRecognizer* tap6 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapAllWorkButton)];
+        UITapGestureRecognizer* tap7 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapLike)];
+        [_headerView_reply.avatarView addGestureRecognizer:tap1];
+        [_headerView_reply.usernameLabel addGestureRecognizer:tap2];
+        [_headerView_reply.imageViewMain addGestureRecognizer:tap3];
+        [_headerView_reply.imageViewRight addGestureRecognizer:tap4];
+        [_headerView_reply.shareButton addGestureRecognizer:tap5];
+        [_headerView_reply.likeButton addGestureRecognizer:tap7];
+        [_headerView_reply.moreWorkButton addGestureRecognizer:tap6];
+    }
+    return _headerView_reply;
+}
+
+- (void) didTapAllWorkButton {
+    PIEReplyCollectionViewController* vc = [PIEReplyCollectionViewController new];
+    vc.pageVM = _vm;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 - (void) didTap1 {
     PIEFriendViewController *opvc = [PIEFriendViewController new];
     opvc.pageVM = _vm;
@@ -697,17 +733,17 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
 }
 - (void) didTapLike {
-    _headerView.likeButton.selected = !_headerView.likeButton.selected;
-    [DDService toggleLike:_headerView.likeButton.selected ID:_vm.ID type:_vm.type  withBlock:^(BOOL success) {
+    _headerView_reply.likeButton.selected = !_headerView_reply.likeButton.selected;
+    [DDService toggleLike:_headerView_reply.likeButton.selected ID:_vm.ID type:_vm.type  withBlock:^(BOOL success) {
         if (success) {
-            _vm.liked =  _headerView.likeButton.selected;
-            if ( _headerView.likeButton.selected) {
+            _vm.liked =  _headerView_reply.likeButton.selected;
+            if ( _headerView_reply.likeButton.selected) {
                 _vm.likeCount = [NSString stringWithFormat:@"%zd",_vm.likeCount.integerValue + 1];
             } else {
                 _vm.likeCount = [NSString stringWithFormat:@"%zd",_vm.likeCount.integerValue - 1];
             }
         } else {
-            _headerView.likeButton.selected = !_headerView.likeButton.selected;
+            _headerView_reply.likeButton.selected = !_headerView_reply.likeButton.selected;
         }
     }];
 }

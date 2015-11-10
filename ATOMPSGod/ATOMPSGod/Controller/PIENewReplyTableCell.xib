@@ -120,17 +120,21 @@
                             </mask>
                         </variation>
                     </view>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tse-As-wf5" customClass="PIEPageLikeButton">
-                        <rect key="frame" x="-23" y="-92" width="44" height="12"/>
-                        <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OK5-wj-zoL">
                         <rect key="frame" x="0.0" y="544.5" width="386" height="11"/>
                         <animations/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="11" id="4Fi-RT-vIv"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tse-As-wf5" customClass="PIEPageLikeButton">
+                        <rect key="frame" x="336" y="498" width="25" height="28"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" priority="250" constant="25" id="Mem-Qs-sQ0"/>
+                            <constraint firstAttribute="height" constant="28" id="izC-BR-7UU"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -145,7 +149,9 @@
                     <constraint firstItem="Wlr-Je-B2P" firstAttribute="width" secondItem="vV8-bh-K4z" secondAttribute="width" id="8fY-2I-Fr2"/>
                     <constraint firstItem="Qz0-1D-vqQ" firstAttribute="top" secondItem="tZ7-6S-wLe" secondAttribute="bottom" constant="10" id="AxG-BY-xmz"/>
                     <constraint firstAttribute="bottom" secondItem="OK5-wj-zoL" secondAttribute="bottom" id="Cu9-lA-0dJ"/>
+                    <constraint firstItem="tse-As-wf5" firstAttribute="centerY" secondItem="Wlr-Je-B2P" secondAttribute="centerY" id="EwV-hc-OMv"/>
                     <constraint firstAttribute="leadingMargin" secondItem="yHw-He-aWh" secondAttribute="leading" id="ILQ-GI-XRh"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="tse-As-wf5" secondAttribute="trailing" constant="13" id="JWv-CY-As3"/>
                     <constraint firstItem="XLA-1a-yzs" firstAttribute="top" secondItem="Qz0-1D-vqQ" secondAttribute="bottom" constant="8" id="K0n-Er-Qkg"/>
                     <constraint firstItem="vV8-bh-K4z" firstAttribute="height" secondItem="CWC-Fy-Ux9" secondAttribute="height" id="KRl-4b-xT0"/>
                     <constraint firstItem="tXl-3D-7si" firstAttribute="leading" secondItem="6r6-EV-L6Y" secondAttribute="trailing" constant="8" id="MFG-cb-qVw"/>
@@ -168,6 +174,7 @@
                     <constraint firstItem="6r6-EV-L6Y" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="nnW-UR-hYQ"/>
                     <constraint firstAttribute="trailingMargin" secondItem="ov8-cU-PvT" secondAttribute="trailing" constant="8" id="ons-kw-Xbz"/>
                     <constraint firstItem="tZ7-6S-wLe" firstAttribute="top" secondItem="tXl-3D-7si" secondAttribute="bottom" constant="5" id="prM-R6-pYJ"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="tse-As-wf5" secondAttribute="trailing" constant="17" id="reJ-sB-ZTQ"/>
                     <constraint firstItem="CWC-Fy-Ux9" firstAttribute="top" secondItem="XLA-1a-yzs" secondAttribute="bottom" constant="10.5" id="x5t-mg-Qsp"/>
                     <constraint firstItem="yHw-He-aWh" firstAttribute="centerY" secondItem="CWC-Fy-Ux9" secondAttribute="centerY" id="xZ0-GO-jdj"/>
                     <constraint firstItem="vV8-bh-K4z" firstAttribute="width" secondItem="CWC-Fy-Ux9" secondAttribute="width" id="xnv-K4-FAG"/>
@@ -181,6 +188,7 @@
                         <exclude reference="k3T-Vu-5qR"/>
                         <exclude reference="kLl-h0-5JP"/>
                         <exclude reference="7Og-VY-6cR"/>
+                        <exclude reference="JWv-CY-As3"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>
@@ -198,7 +206,7 @@
                 <outlet property="theImageView" destination="Qz0-1D-vqQ" id="Rbt-cP-LRF"/>
                 <outlet property="timeLabel" destination="tZ7-6S-wLe" id="7Ib-Nq-Kgx"/>
             </connections>
-            <point key="canvasLocation" x="247" y="624"/>
+            <point key="canvasLocation" x="196" y="526"/>
         </tableViewCell>
     </objects>
     <resources>

@@ -28,7 +28,7 @@
     [_label mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.equalTo(_imageView.mas_trailing).with.offset(1);
         make.top.equalTo(_imageView).with.offset(-3);
-        make.width.greaterThanOrEqualTo(@13);
+        make.trailing.equalTo(self);
     }];
 }
 -(instancetype)init {
@@ -49,9 +49,10 @@
             make.centerY.equalTo(self);
         }];
         [_label mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.leading.equalTo(_imageView.mas_trailing).with.offset(1);
+            make.leading.equalTo(_imageView.mas_trailing).with.offset(1).with.priorityHigh();
             make.top.equalTo(_imageView).with.offset(-3);
-            make.width.greaterThanOrEqualTo(@13);
+//            make.width.greaterThanOrEqualTo(@13);
+            make.trailing.equalTo(self).with.priorityMedium();
         }];
     }
     return self;

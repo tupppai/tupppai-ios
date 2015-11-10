@@ -37,17 +37,14 @@ typedef enum {
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, copy) NSString *mobile;
 @property (nonatomic, copy) NSString *password;
-@property (nonatomic, assign) NSInteger locationID;
+//@property (nonatomic, assign) NSInteger locationID;
 @property (nonatomic, copy) NSString *username;
 @property (nonatomic, copy) NSString *avatar;
 /**
  *  man:1 woman:0
  */
 @property (nonatomic, assign) BOOL sex;
-/**
- *  背景图url
- */
-@property (nonatomic, copy) NSString *backgroundImage;
+
 /**
  *  被关注注数
  */
@@ -68,19 +65,19 @@ typedef enum {
  *  回复作品数
  */
 @property (nonatomic, assign) NSInteger replyNumber;
-/**
- *  进行中数
- */
-@property (nonatomic, assign) NSInteger proceedingNumber;
-/**
- *  关注求P数
- */
-@property (nonatomic, assign) NSInteger attentionUploadNumber;
-/**
- *  关注作品数
- */
-@property (nonatomic, assign) NSInteger attentionWorkNumber;
-@property (nonatomic, assign) NSInteger avatarID;
+///**
+// *  进行中数
+// */
+//@property (nonatomic, assign) NSInteger proceedingNumber;
+///**
+// *  关注求P数
+// */
+//@property (nonatomic, assign) NSInteger attentionUploadNumber;
+///**
+// *  关注作品数
+// */
+//@property (nonatomic, assign) NSInteger attentionWorkNumber;
+//@property (nonatomic, assign) NSInteger avatarID;
 @property (nonatomic, assign) bool bindWechat;
 @property (nonatomic, assign) bool bindWeibo;
 @property (nonatomic, assign) bool bindQQ;

@@ -190,7 +190,7 @@
             return ;
         }
         [DDUserManager currentUser].avatar = imageInfomation.imageURL;
-        [DDUserManager currentUser].avatarID = imageInfomation.imageID;
+//        [DDUserManager currentUser].avatarID = imageInfomation.imageID;
     }];
 }
 #pragma mark - UITextFieldDelegate
