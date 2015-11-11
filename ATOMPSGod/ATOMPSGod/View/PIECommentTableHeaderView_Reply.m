@@ -42,7 +42,6 @@
 }
 
 - (void) configMansoryViews {
-    
     [self.avatarView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self).with.offset(10);
         make.left.equalTo(self).with.offset(12);
@@ -71,8 +70,9 @@
     }];
     [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_imageViewMain.mas_bottom).with.offset(10);
-        make.left.equalTo(self).with.offset(12).with.priorityMedium();
-        make.right.equalTo(self).with.offset(-12).with.priorityMedium();
+        //left and right to cause constraint error when self.width = 0;
+        make.left.equalTo(self).with.offset(12);
+        make.right.equalTo(self).with.offset(-12);
     }];
     
     [self.moreWorkButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -157,6 +157,12 @@
     else {
         _imageViewMain.image = [UIImage imageNamed:@"cellBG"];
     }
+    
+    NSDictionary *attributes = @{NSFontAttributeName : self.contentLabel.font};
+    CGFloat messageLabelHeight = CGRectGetHeight([self.contentLabel.text boundingRectWithSize:CGSizeMake(SCREEN_WIDTH-20, 500) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil]);
+    [self.contentLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@(messageLabelHeight+5)).with.priorityHigh();
+    }];
 }
 
 

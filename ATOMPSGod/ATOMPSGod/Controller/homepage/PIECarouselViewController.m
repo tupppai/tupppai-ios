@@ -374,11 +374,11 @@
 - (HMSegmentedControl*)segmentedControl {
     if (!_segmentedControl) {
         _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"原图",@"作品"]];
-        _segmentedControl.frame = CGRectMake(0, 120, SCREEN_WIDTH, 45);
+        _segmentedControl.frame = CGRectMake(0, 0, 240, 45);
         _segmentedControl.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor darkGrayColor], NSForegroundColorAttributeName, nil];
         _segmentedControl.selectedTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil];
         _segmentedControl.selectionIndicatorHeight = 4.0f;
-        _segmentedControl.selectionIndicatorEdgeInsets = UIEdgeInsetsMake(0, 0, -5, 0);
+        _segmentedControl.selectionIndicatorEdgeInsets = UIEdgeInsetsMake(0, 0, -1, 0);
         _segmentedControl.selectionIndicatorColor = [UIColor yellowColor];
         _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
         _segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;

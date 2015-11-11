@@ -30,7 +30,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.title = @"收到的赞";
     _source = [NSMutableArray array];
     _canRefreshFooter = YES;
     self.view = self.tableView;

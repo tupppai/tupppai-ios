@@ -88,6 +88,7 @@
     
     if (indexPath.section == 3 && indexPath.row == 2) {
         PIESignOutTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"PIESignOutTableViewCell"];
+        cell.separatorInset = UIEdgeInsetsMake(0, SCREEN_WIDTH, 0, 0);
         return cell;
     }
     else {

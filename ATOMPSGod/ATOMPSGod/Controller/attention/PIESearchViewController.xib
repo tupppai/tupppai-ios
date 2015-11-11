@@ -32,10 +32,10 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dss-7S-F7o" customClass="HMSegmentedControl">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="42"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Lg-4L-RKC">
-                            <rect key="frame" x="299" y="0.0" width="1" height="42"/>
+                        <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Lg-4L-RKC">
+                            <rect key="frame" x="299" y="5" width="1" height="32"/>
                             <animations/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="1" id="JG4-1Y-fgF"/>
                             </constraints>
@@ -44,10 +44,10 @@
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="6Lg-4L-RKC" secondAttribute="bottom" id="2g6-v8-0xf"/>
+                        <constraint firstAttribute="bottom" secondItem="6Lg-4L-RKC" secondAttribute="bottom" constant="5" id="2g6-v8-0xf"/>
                         <constraint firstItem="6Lg-4L-RKC" firstAttribute="centerX" secondItem="Dss-7S-F7o" secondAttribute="centerX" id="FnV-Ez-CnO"/>
                         <constraint firstAttribute="height" constant="42" id="Wfv-ab-Lco"/>
-                        <constraint firstItem="6Lg-4L-RKC" firstAttribute="top" secondItem="Dss-7S-F7o" secondAttribute="top" id="zQg-WZ-IdQ"/>
+                        <constraint firstItem="6Lg-4L-RKC" firstAttribute="top" secondItem="Dss-7S-F7o" secondAttribute="top" constant="5" id="zQg-WZ-IdQ"/>
                     </constraints>
                 </view>
             </subviews>

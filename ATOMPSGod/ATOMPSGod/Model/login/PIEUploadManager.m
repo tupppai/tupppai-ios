@@ -43,11 +43,11 @@
             }
             [formData appendPartWithFileData:imageData name:attachmentName fileName:@"AppTupaiImage_iOS" mimeType:@"image/png"];
         }  success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"operation success: %@\n %@", operation, responseObject);
+//            NSLog(@"operation success: %@\n %@", operation, responseObject);
             [self.uploadIdArray addObject:responseObject[@"data"][@"id"]];
             block(1,YES);
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error: %@", error);
+//            NSLog(@"Error: %@", error);
         }];
         [requestOperation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
             double percentDone = (double)totalBytesWritten / (double)totalBytesExpectedToWrite;

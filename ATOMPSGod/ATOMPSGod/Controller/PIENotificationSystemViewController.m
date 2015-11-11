@@ -31,6 +31,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"系统消息";
     // Do any additional setup after loading the view.
     _source = [NSMutableArray array];
     _canRefreshFooter = YES;

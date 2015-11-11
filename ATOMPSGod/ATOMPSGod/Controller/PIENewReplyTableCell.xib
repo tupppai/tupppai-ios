@@ -64,7 +64,7 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hot_allwork" translatesAutoresizingMaskIntoConstraints="NO" id="yHw-He-aWh">
+                    <imageView userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hot_allwork" translatesAutoresizingMaskIntoConstraints="NO" id="yHw-He-aWh">
                         <rect key="frame" x="8" y="502.5" width="60" height="19"/>
                         <animations/>
                         <constraints>
@@ -150,6 +150,7 @@
                     <constraint firstItem="Qz0-1D-vqQ" firstAttribute="top" secondItem="tZ7-6S-wLe" secondAttribute="bottom" constant="10" id="AxG-BY-xmz"/>
                     <constraint firstAttribute="bottom" secondItem="OK5-wj-zoL" secondAttribute="bottom" id="Cu9-lA-0dJ"/>
                     <constraint firstItem="tse-As-wf5" firstAttribute="centerY" secondItem="Wlr-Je-B2P" secondAttribute="centerY" id="EwV-hc-OMv"/>
+                    <constraint firstItem="yHw-He-aWh" firstAttribute="leading" secondItem="XLA-1a-yzs" secondAttribute="leading" id="H0N-pX-jHy"/>
                     <constraint firstAttribute="leadingMargin" secondItem="yHw-He-aWh" secondAttribute="leading" id="ILQ-GI-XRh"/>
                     <constraint firstAttribute="trailingMargin" secondItem="tse-As-wf5" secondAttribute="trailing" constant="13" id="JWv-CY-As3"/>
                     <constraint firstItem="XLA-1a-yzs" firstAttribute="top" secondItem="Qz0-1D-vqQ" secondAttribute="bottom" constant="8" id="K0n-Er-Qkg"/>
@@ -185,6 +186,7 @@
                         <exclude reference="V4O-fB-Vi7"/>
                         <exclude reference="AxG-BY-xmz"/>
                         <exclude reference="prM-R6-pYJ"/>
+                        <exclude reference="ILQ-GI-XRh"/>
                         <exclude reference="k3T-Vu-5qR"/>
                         <exclude reference="kLl-h0-5JP"/>
                         <exclude reference="7Og-VY-6cR"/>

@@ -16,13 +16,15 @@
 #import "PIECarouselViewController.h"
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
-@interface PIEToHelpViewController () <UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,QBImagePickerControllerDelegate>
+@interface PIEToHelpViewController () <UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,QBImagePickerControllerDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (nonatomic, strong) NSMutableArray *sourceToHelp;
 @property (nonatomic, assign) NSInteger currentIndex_ToHelp;
 @property (nonatomic, assign) BOOL canRefreshToHelpFooter;
 @property (nonatomic, strong) NSIndexPath* selectedIndexPath;
 @property (nonatomic, strong) QBImagePickerController* QBImagePickerController;
 @property (nonatomic, strong) PIERefreshTableView *toHelpTableView;
+@property (nonatomic, assign) BOOL isfirstLoading;
+
 @end
 
 @implementation PIEToHelpViewController
@@ -40,12 +42,15 @@
     _toHelpTableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     _toHelpTableView.dataSource = self;
     _toHelpTableView.delegate = self;
+    _toHelpTableView.emptyDataSetDelegate = self;
+    _toHelpTableView.emptyDataSetSource = self;
     _toHelpTableView.psDelegate = self;
     self.view = _toHelpTableView;
     UINib* nib = [UINib nibWithNibName:@"PIEToHelpTableViewCell2" bundle:nil];
     [_toHelpTableView registerNib:nib forCellReuseIdentifier:@"PIEToHelpTableViewCell2"];
     UITapGestureRecognizer* tapToHelpTableViewGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapToHelpTableViewGesture:)];
     [_toHelpTableView addGestureRecognizer:tapToHelpTableViewGesture];
+    _isfirstLoading = YES;
     [self getRemoteSourceToHelp];
 }
 
@@ -108,6 +113,7 @@
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(20) forKey:@"size"];
     [PIEProceedingManager getMyToHelp:param withBlock:^(NSMutableArray *resultArray) {
+        _isfirstLoading = NO;
         if (resultArray.count == 0) {
             _canRefreshToHelpFooter = NO;
         } else {
@@ -119,8 +125,8 @@
             }
             [ws.sourceToHelp removeAllObjects];
             [ws.sourceToHelp addObjectsFromArray:sourceAgent];
-            [ws.toHelpTableView reloadData];
         }
+        [ws.toHelpTableView reloadData];
         [ws.toHelpTableView.header endRefreshing];
     }];
 }
@@ -224,5 +230,26 @@
     return 150;
 }
 
+
+#pragma mark - DZNEmptyDataSetSource & delegate
+-(UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"pie_empty"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text = @"去最新的求P页面逛逛吧";
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+-(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
+    return !_isfirstLoading;
+}
+-(BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
+    return YES;
+}
 
 @end

@@ -72,15 +72,14 @@
     }];
     [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_imageViewMain.mas_bottom).with.offset(10);
-        make.left.equalTo(self).with.offset(12).with.priorityMedium();
-        make.right.equalTo(self).with.offset(-12).with.priorityMedium();
+        //left and right to cause constraint error when self.width = 0;
+        make.left.equalTo(self).with.offset(12);
+        make.right.equalTo(self).with.offset(-12);
     }];
     [self.commentButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contentLabel.mas_bottom).with.offset(12).with.priorityLow();
         make.width.equalTo(@50);
         make.height.equalTo(@25);
         make.left.equalTo(self).with.offset(12);
-        make.bottom.equalTo(self).with.offset(-15);
     }];
     [self.shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.commentButton);
@@ -89,6 +88,7 @@
         make.left.equalTo(self.commentButton.mas_right).with.offset(6);
     }];
     [self.bangView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.contentLabel.mas_bottom).with.offset(12).with.priorityHigh();
         make.centerY.equalTo(self.commentButton).with.priorityMedium();
         make.width.equalTo(@25);
         make.height.equalTo(@40);
@@ -103,6 +103,7 @@
         make.width.equalTo(self);
         make.height.equalTo(@0.3);
         make.bottom.equalTo(self);
+        make.top.equalTo(self.bangView.mas_bottom).with.offset(5);
     }];
 }
 
@@ -140,11 +141,16 @@
         _commentButton.numberString = vm.commentCount;
         _shareButton.numberString = vm.shareCount;
         _contentLabel.text = vm.content;
-
     }
     else {
         _imageViewMain.image = [UIImage imageNamed:@"cellBG"];
     }
+    
+    NSDictionary *attributes = @{NSFontAttributeName : self.contentLabel.font};
+    CGFloat messageLabelHeight = CGRectGetHeight([self.contentLabel.text boundingRectWithSize:CGSizeMake(SCREEN_WIDTH-20, 500) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil]);
+    [self.contentLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@(messageLabelHeight+5)).with.priorityHigh();
+    }];
 }
 
 

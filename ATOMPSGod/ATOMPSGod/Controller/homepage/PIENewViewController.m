@@ -124,7 +124,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     WS(ws);
     PIEUploadManager* manager = [PIEUploadManager new];
     [manager upload:^(CGFloat percentage,BOOL success) {
-        NSLog(@"uploading");
         [_progressView setProgress:percentage animated:YES];
         if (success) {
             if ([manager.type isEqualToString:@"ask"]) {
@@ -670,7 +669,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     DDPageVM* vm =   [_sourceAsk objectAtIndex:indexPath.row];
     CGFloat width;
     CGFloat height;
-//    NSString* text = vm.content;
     width = (SCREEN_WIDTH - 20) / 2.0;
     
 //    text = @"abcd";
@@ -678,7 +676,13 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
 //    CGSize size = [text boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:12], NSFontAttributeName, nil] context:NULL].size;
 //    NSLog(@"size.height %zd",size.height);
-    height = vm.imageHeight/vm.imageWidth * width + 124 + (16+10);
+    
+//    NSString* text = vm.content;
+
+//        NSDictionary *attributes = @{NSFontAttributeName : [UIFont boldSystemFontOfSize:12]};
+//        
+//        CGFloat messageLabelHeight = CGRectGetHeight([vm.content boundingRectWithSize:CGSizeMake(width, 300) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil]);
+    height = vm.imageHeight/vm.imageWidth * width + 129 + (29+20);
     height = MAX(200,height);
     height = MIN(SCREEN_HEIGHT/1.5, height);
     return CGSizeMake(width, height);

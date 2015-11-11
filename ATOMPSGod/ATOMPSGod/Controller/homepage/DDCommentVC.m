@@ -206,9 +206,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     }
 
     
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
-    [self.tableView beginUpdates];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.commentsNew insertObject:commentVM inArrayAtIndex:0];
+    [self.tableView beginUpdates];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
@@ -422,7 +422,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 -(void)configTableView {
     _commentsHot = [NSMutableArray new];
     _commentsNew = [KVCMutableArray new];
-    
     
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;

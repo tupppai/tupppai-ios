@@ -62,6 +62,7 @@
     self.modifyPasswordTextField.leftViewMode = UITextFieldViewModeAlways;
     self.confirmPasswordTextField.leftViewMode = UITextFieldViewModeAlways;
 
+    self.forgetPasswordButton.hidden = YES;
     [self.forgetPasswordButton addTarget:self action:@selector(clickForgetPasswordButton:) forControlEvents:UIControlEventTouchUpInside];
 }
 

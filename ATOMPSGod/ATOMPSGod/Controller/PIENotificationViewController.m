@@ -33,6 +33,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"我的消息";
     _source = [NSMutableArray array];
     _canRefreshFooter = YES;
     self.view = self.tableView;

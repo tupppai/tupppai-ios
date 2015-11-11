@@ -48,7 +48,7 @@
     searchView.image = [UIImage imageNamed:@"pie_search"];
     searchView.contentMode = UIViewContentModeLeft;
     
-    _verticalLine.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.3];
+//    _verticalLine.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
     _segmentedControl.sectionTitles =  @[@"用户",@"内容"];
     _segmentedControl.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15], NSFontAttributeName, [UIColor colorWithHex:0x000000 andAlpha:0.3], NSForegroundColorAttributeName, nil];
     _segmentedControl.selectedTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15], NSFontAttributeName, [UIColor colorWithHex:0x000000 andAlpha:0.9], NSForegroundColorAttributeName, nil];
@@ -100,7 +100,7 @@
     
     _textField2 = [[UITextField alloc]initWithFrame:CGRectMake(0 , 0, SCREEN_WIDTH - 100, 30)];
     _textField2.borderStyle = UITextBorderStyleNone;
-    _textField2.placeholder = @"搜索用户内容";
+    _textField2.placeholder = @"搜索用户或内容";
     _textField2.font = [UIFont systemFontOfSize:14.0];
     self.navigationItem.titleView = _textField2;
     [_textField2 addTarget:self

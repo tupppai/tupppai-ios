@@ -48,6 +48,6 @@
         }];
     }
     _contentLabel.text = vm.content;
-    [self updateConstraintsIfNeeded];
+//    [self updateConstraintsIfNeeded];
 }
 @end
