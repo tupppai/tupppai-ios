@@ -53,7 +53,8 @@
 + (void)getRemoteShareInfo:(DDPageVM*)vm withSocialShareType:(ATOMShareType)shareType withBlock:(void (^)(ATOMShare* share))block {
     NSMutableDictionary* param = [NSMutableDictionary new];
     NSString* shareTypeToServer = @"";
-    MobClickSocialWeibo *weibo;
+    MobClickSocialWeibo *   weibo=[[MobClickSocialWeibo alloc] initWithPlatformType:MobClickSocialTypeFacebook weiboId:nil usid:nil param:nil];
+    
     if (shareType == ATOMShareTypeWechatFriends) {
         shareTypeToServer = @"wechat_friend";
         weibo=[[MobClickSocialWeibo alloc] initWithPlatformType:MobClickSocialTypeWxsesion weiboId:nil usid:nil param:nil];
