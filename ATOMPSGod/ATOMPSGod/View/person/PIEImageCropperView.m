@@ -20,7 +20,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.backgroundColor = [UIColor blackColor];
+        self.backgroundColor = [UIColor whiteColor];
         [self createSubView];
     }
     return self;
@@ -29,7 +29,7 @@
 - (void)createSubView {
     
     _transparencyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 65)];
-    _transparencyView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.7];
+    _transparencyView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
     [self addSubview:_transparencyView];
     
 }

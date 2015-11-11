@@ -241,7 +241,6 @@
         (PIESearchUserCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PIESearchUserCollectionViewCell"
                                                                                forIndexPath:indexPath];
         [cell injectSauce:[_sourceUser objectAtIndex:indexPath.row]];
-
         return cell;
     } else {
         PIESearchContentCollectionViewCell *cell =
@@ -266,7 +265,17 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
 
     if (_segmentedControl.selectedSegmentIndex == 0) {
-        return CGSizeMake(SCREEN_WIDTH, 150);
+        if (_sourceUser.count > indexPath.row) {
+            PIEUserViewModel* vm = [_sourceUser objectAtIndex:indexPath.row];
+            if (vm.replies.count > 0) {
+                return CGSizeMake(SCREEN_WIDTH, 150);
+            }
+            else {
+                return CGSizeMake(SCREEN_WIDTH, 70);
+            }
+        } else {
+            return CGSizeZero;
+        }
     } else {
         DDPageVM* vm =[_sourceContent objectAtIndex:indexPath.row];
         CGFloat width;

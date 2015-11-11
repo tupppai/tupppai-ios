@@ -82,7 +82,7 @@
     [param setObject:@(15) forKey:@"size"];
     
 
-    [DDPageManager getAsk:param withBlock:^(NSMutableArray *resultArray) {
+    [DDPageManager getLikedPages:param withBlock:^(NSMutableArray *resultArray) {
 
         [ws.dataSource addObjectsFromArray:resultArray];
 

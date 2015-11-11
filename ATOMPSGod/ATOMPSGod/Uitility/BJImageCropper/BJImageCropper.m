@@ -342,7 +342,6 @@
             CGPoint touch = [[allTouches anyObject] locationInView:self.imageView];
             //pan
             if (CGRectContainsPoint(CGRectInset(cropView.frame, insetAmount, insetAmount), touch)) {
-                NSLog(@"isPanning1");
                 isPanning = YES;
                 panTouch = touch;
                 return;
@@ -355,7 +354,6 @@
 
             if ((currentTouches == 0 || currentTouches == 2) && CGRectContainsPoint(cropView.frame, touch1) && CGRectContainsPoint(cropView.frame, touch2)) {
                 isPanning = YES;
-                NSLog(@"isPanning2");
             }
             
             currentTouches = [allTouches count];

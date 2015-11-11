@@ -158,39 +158,37 @@
 
 -(void)tapSignUp1 {
     
-    [Util warningBetaTest];
-//    [self.signUpView dismiss];
-//    [DDShareManager authorize2:SSDKPlatformTypeQQ withBlock:^(SSDKUser *sdkUser) {
-//            NSString* openID = sdkUser.uid;
-//            NSMutableDictionary* param = [NSMutableDictionary new];
-//            [param setObject:openID forKey:@"openid"];
-//            [DDUserManager DD3PartyAuth:param AndType:@"qq" withBlock:^(bool isRegistered, NSString *info) {
-//                if (isRegistered) {
-//                    [Hud activity:@"" inView:self.view];
-//                    [self.navigationController setViewControllers:[NSArray array]];
-//                    [AppDelegate APP].mainTabBarController = nil;
-//                    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
-//                    ;
-//                } else {
-//                    [DDUserManager currentUser].signUpType = ATOMSignUpWeibo;
-//                    [DDUserManager currentUser].sourceData = sdkUser.rawData;
-//                    ATOMUserProfileViewModel* ipvm = [ATOMUserProfileViewModel new];
-//                    ipvm.nickName = sdkUser.nickname;
-////                    ipvm.province = sourceData[@"province"];
-////                    ipvm.city = sourceData[@"city"];
-//                    ipvm.avatarURL = sdkUser.icon;
-//                    if (sdkUser.gender == 1) {
-//                        ipvm.gender = @"女";
-//                    } else {
-//                        ipvm.gender = @"男";
-//                    }
-//                    DDCreateProfileVC *cpvc = [DDCreateProfileVC new];
-//                    cpvc.userProfileViewModel = ipvm;
-//                    [self.navigationController pushViewController:cpvc animated:YES];
-//                }
-//                
-//            }];
-//    }];
+//    [Util warningBetaTest];
+    [self.signUpView dismiss];
+    [DDShareManager authorize2:SSDKPlatformTypeQQ withBlock:^(SSDKUser *sdkUser) {
+            NSString* openID = sdkUser.uid;
+            NSMutableDictionary* param = [NSMutableDictionary new];
+            [param setObject:openID forKey:@"openid"];
+            [DDUserManager DD3PartyAuth:param AndType:@"qq" withBlock:^(bool isRegistered, NSString *info) {
+                if (isRegistered) {
+                    [Hud activity:@"" inView:self.view];
+                    [self.navigationController setViewControllers:[NSArray array]];
+                    [AppDelegate APP].mainTabBarController = nil;
+                    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
+                    ;
+                } else {
+                    [DDUserManager currentUser].signUpType = ATOMSignUpWeibo;
+                    [DDUserManager currentUser].sourceData = sdkUser.rawData;
+                    PIEUserProfileViewModel* ipvm = [PIEUserProfileViewModel new];
+                    ipvm.nickName = sdkUser.nickname;
+                    ipvm.avatarURL = sdkUser.icon;
+                    if (sdkUser.gender == 1) {
+                        ipvm.gender = @"女";
+                    } else {
+                        ipvm.gender = @"男";
+                    }
+                    DDCreateProfileVC *cpvc = [DDCreateProfileVC new];
+                    cpvc.userProfileViewModel = ipvm;
+                    [self.navigationController pushViewController:cpvc animated:YES];
+                }
+                
+            }];
+    }];
 
 }
 -(void)tapSignUp2 {

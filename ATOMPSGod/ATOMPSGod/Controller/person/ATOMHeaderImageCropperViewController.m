@@ -33,6 +33,14 @@
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.delegate = self;
     }
+    
+    UIBarButtonItem *anotherButton2 = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleDone target:self action:@selector(clickLeftButtonItem:)];
+    self.navigationItem.leftBarButtonItem = anotherButton2;
+    
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.delegate = self;
+    }
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

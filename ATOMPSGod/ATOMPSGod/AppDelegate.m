@@ -64,7 +64,7 @@
      setTitleTextAttributes:
      @{NSForegroundColorAttributeName:[UIColor blackColor],
        NSShadowAttributeName:shadow,
-       NSFontAttributeName:[UIFont systemFontOfSize:15.0]
+       NSFontAttributeName:[UIFont systemFontOfSize:14.0]
        }
      forState:UIControlStateNormal];
 }

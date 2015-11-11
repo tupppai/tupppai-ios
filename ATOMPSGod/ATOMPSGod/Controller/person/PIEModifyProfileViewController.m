@@ -126,7 +126,7 @@
         DDNavigationController* nav = [[DDNavigationController alloc]initWithRootViewController:hicvc];
         hicvc.delegate = ws;
         hicvc.originImage = info[UIImagePickerControllerOriginalImage];
-        [self.navigationController presentViewController:nav animated:NO completion:nil];
+        [self.navigationController presentViewController:nav animated:YES completion:nil];
     }];
 }
 

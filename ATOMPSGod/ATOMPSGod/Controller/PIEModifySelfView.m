@@ -177,18 +177,18 @@
     NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont14], NSFontAttributeName, [UIColor colorWithHex:0x74c3ff], NSForegroundColorAttributeName, nil];
     NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:@"点击下一步表示同意用户协议" attributes:attributeDict];
     [str addAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kFont14], NSFontAttributeName, [UIColor colorWithHex:0xacbbc1], NSForegroundColorAttributeName, nil] range:NSMakeRange(0, 9)];
-    WS(ws);
-    _protocolLabel = [UILabel new];
-    _protocolLabel.attributedText = str;
-    _protocolLabel.textAlignment = NSTextAlignmentCenter;
-    [_protocolView addSubview:_protocolLabel];
+//    WS(ws);
+//    _protocolLabel = [UILabel new];
+//    _protocolLabel.attributedText = str;
+//    _protocolLabel.textAlignment = NSTextAlignmentCenter;
+//    [_protocolView addSubview:_protocolLabel];
     
-    [_protocolLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(ws.protocolView.mas_bottom).with.offset(kPadding30);
-        make.centerX.equalTo(ws.protocolView.mas_centerX);
-        make.height.equalTo(@14);
-        make.width.equalTo(ws.protocolView);
-    }];
+//    [_protocolLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(ws.protocolView.mas_bottom).with.offset(kPadding30);
+//        make.centerX.equalTo(ws.protocolView.mas_centerX);
+//        make.height.equalTo(@14);
+//        make.width.equalTo(ws.protocolView);
+//    }];
 }
 
 

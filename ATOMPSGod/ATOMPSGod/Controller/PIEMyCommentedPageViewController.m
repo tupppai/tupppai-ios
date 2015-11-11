@@ -14,6 +14,7 @@
 #import "AppDelegate.h"
 #import "DDPageManager.h"
 #import "DDCommentVC.h"
+
 @interface PIEMyCommentedPageViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 @property (nonatomic,strong) PIERefreshTableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -29,6 +30,7 @@
     [super viewDidLoad];
     self.view = self.tableView;
     self.title = @"我评论过的";
+    [self initData];
     [self getDataSource];
 }
 
@@ -45,6 +47,7 @@
         _tableView.dataSource = self;
         _tableView.delegate = self;
         _tableView.psDelegate = self;
+        _tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
         _tableView.emptyDataSetSource = self;
         _tableView.emptyDataSetDelegate = self;
         UINib* nib = [UINib nibWithNibName:@"PIEMyCommentedPageTableViewCell" bundle:nil];
@@ -124,7 +127,6 @@
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getCommentedPages:param withBlock:^(NSMutableArray *resultArray) {
-
         if (resultArray.count <= 0) {
             ws.canRefreshFooter = NO;
         } else {

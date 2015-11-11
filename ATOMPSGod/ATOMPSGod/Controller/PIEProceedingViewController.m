@@ -341,7 +341,7 @@
 - (void)createNavBar {
     WS(ws);
     _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"我的求P",@"我的帮P",@"已完成"]];
-    _segmentedControl.frame = CGRectMake(0, 120, SCREEN_WIDTH-100, 45);
+    _segmentedControl.frame = CGRectMake(0, 120, SCREEN_WIDTH-40, 45);
     _segmentedControl.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor colorWithHex:0x000000 andAlpha:0.6], NSForegroundColorAttributeName, nil];
     _segmentedControl.selectedTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil];
     _segmentedControl.selectionIndicatorHeight = 4.0f;
@@ -713,7 +713,7 @@
     
     NSString *text ;
     if (scrollView == _sv.askTableView) {
-       text = @"还没发布求P,赶快发布召唤大神，六子你以为我们在拍龙珠啊";
+       text = @"还没发布求P,赶快发布召唤大神";
     } else if (scrollView == _sv.toHelpTableView) {
         text = @"还没认领帮P?就这样少了个炫（装）技（B）的机会咯？";
     } else if (scrollView == _sv.doneCollectionView) {

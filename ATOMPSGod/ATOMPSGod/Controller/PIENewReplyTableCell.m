@@ -29,7 +29,7 @@
     _theImageView.contentMode = UIViewContentModeScaleAspectFit;
     _theImageView.backgroundColor = [UIColor clearColor];
     _theImageView.clipsToBounds = YES;
-    _collectView.userInteractionEnabled = YES;
+//    _collectView.userInteractionEnabled = YES;
     [self configThumbAnimateView];
     
     [self.contentView insertSubview:self.blurView belowSubview:_theImageView];
@@ -79,10 +79,10 @@
     _commentView.imageView.image = [UIImage imageNamed:@"hot_comment"];
     _commentView.numberString = viewModel.commentCount;
     
-    _collectView.imageView.image = [UIImage imageNamed:@"hot_star"];
-    _collectView.imageView.highlightedImage = [UIImage imageNamed:@"hot_star_selected"];
-    _collectView.highlighted = viewModel.collected;
-    _collectView.numberString = viewModel.collectCount;
+//    _collectView.imageView.image = [UIImage imageNamed:@"hot_star"];
+//    _collectView.imageView.highlightedImage = [UIImage imageNamed:@"hot_star_selected"];
+//    _collectView.highlighted = viewModel.collected;
+//    _collectView.numberString = viewModel.collectCount;
     
     _likeView.highlighted = viewModel.liked;
     _likeView.numberString = viewModel.likeCount;

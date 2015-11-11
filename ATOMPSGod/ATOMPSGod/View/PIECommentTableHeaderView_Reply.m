@@ -125,6 +125,12 @@
         _timeLabel.text = vm.publishTime;
         
         if (vm.thumbEntityArray.count == 2) {
+            
+            _imageViewMain.contentMode = UIViewContentModeScaleAspectFill;
+            _imageViewRight.contentMode = UIViewContentModeScaleAspectFill;
+            _imageViewMain.clipsToBounds = YES;
+            _imageViewRight.clipsToBounds = YES;
+
             PIEImageEntity* imgEntity1 = vm.thumbEntityArray[0];
             PIEImageEntity* imgEntity2 = vm.thumbEntityArray[1];
             [_imageViewMain mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -133,8 +139,6 @@
             }];
             [_imageViewMain setImageWithURL:[NSURL URLWithString:imgEntity1.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
             [_imageViewRight setImageWithURL:[NSURL URLWithString:imgEntity2.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
-            _imageViewMain.contentMode = UIViewContentModeScaleAspectFit;
-            _imageViewRight.contentMode = UIViewContentModeScaleAspectFit;
         }
         else {
             [_imageViewMain setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];

@@ -488,18 +488,18 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
 }
 -(void)tapShare8 {
-    if (_scrollView.type == PIENewScrollTypeAsk) {
-        if (_selectedVM.type == PIEPageTypeAsk) {
-            [self collectAsk];
-        }
-    } else {
-        if (_selectedVM.type == PIEPageTypeAsk) {
-            [self collectAsk];
-        } else {
-            PIENewReplyTableCell* cell = [_scrollView.replyTable cellForRowAtIndexPath:_selectedIndexPath];
-            [self collect:cell.collectView shouldShowHud:YES];
-        }
-    }
+//    if (_scrollView.type == PIENewScrollTypeAsk) {
+//        if (_selectedVM.type == PIEPageTypeAsk) {
+            [self collect];
+//        }
+//    } else {
+//        if (_selectedVM.type == PIEPageTypeAsk) {
+//            [self collect];
+//        } else {
+//            PIENewReplyTableCell* cell = [_scrollView.replyTable cellForRowAtIndexPath:_selectedIndexPath];
+//            [self collect:cell.collectView shouldShowHud:YES];
+//        }
+//    }
 
 }
 
@@ -535,7 +535,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     }];
 }
 
--(void)collectAsk {
+-(void)collect {
     NSMutableDictionary *param = [NSMutableDictionary new];
     _selectedVM.collected = !_selectedVM.collected;
     if (_selectedVM.collected) {
@@ -697,9 +697,9 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 {
     NSString *text ;
     if (scrollView == _scrollView.collectionView) {
-        text = @"你是不可能看到这段文字的\n如果你看到了\n这个时候......\n我们的服务器工程师正在卷文件走人";
+        text = @"好伤心，再下拉刷新试试";
     } else if (scrollView == _scrollView.replyTable) {
-        text = @"你是不可能看到这段文字的\n如果你看到了\n这个时候......\n我们的服务器工程师正在卷文件走人";
+        text = @"好伤心，再下拉刷新试试";
     }
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
                                  NSForegroundColorAttributeName: [UIColor darkGrayColor]};
@@ -886,10 +886,11 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
                 friendVC.pageVM = _selectedVM;
                 [self.navigationController pushViewController:friendVC animated:YES];
             }
-            else if (CGRectContainsPoint(_selectedReplyCell.collectView.frame, p)) {
-                //should write this logic in viewModel
-                [self collect:_selectedReplyCell.collectView shouldShowHud:NO];
-            }
+//            else if (CGRectContainsPoint(_selectedReplyCell.collectView.frame, p)) {
+//                //should write this logic in viewModel
+////                [self collect:_selectedReplyCell.collectView shouldShowHud:NO];
+//                [self collect];
+//            }
             else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
                 [self likeReply];
             }

@@ -23,7 +23,7 @@
 @property (nonatomic, strong) UIButton *cancelRegionPickerButton;
 @property (nonatomic, strong) UIButton *confirmRegionPickerButton;
 @property (nonatomic, strong) UILabel *showAreaLabel;
-@property (nonatomic, strong) UILabel *protocolLabel;
+//@property (nonatomic, strong) UILabel *protocolLabel;
 @property (nonatomic, assign) BOOL genderIsMan;
 
 - (void)showRegionPickerView;

@@ -781,9 +781,9 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 {
     NSString *text ;
     if (scrollView == _sv.tableHot) {
-        text = @"你是不可能看到这段文字的\n如果你看到了\n这个时候......\n我们的运营工程师正在卷文件走人";
+        text = @"好伤心，再下拉刷新试试";
     } else if (scrollView == _sv.tableFollow) {
-        text = @"赶快去关注些大神吧，这里应该给一些大神的作品和大神的列表";
+        text = @"赶快去关注些大神吧";
     }
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
                                  NSForegroundColorAttributeName: [UIColor darkGrayColor]};

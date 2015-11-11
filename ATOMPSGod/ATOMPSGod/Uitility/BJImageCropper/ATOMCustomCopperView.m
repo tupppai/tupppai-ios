@@ -57,7 +57,7 @@
         
         UIBezierPath *path5 = [UIBezierPath bezierPath];
         path5.lineWidth = 3;
-        [[UIColor colorWithHex:0x74c3ff] setStroke];
+        [[UIColor colorWithHex:0x000000] setStroke];
         [path5 moveToPoint:CGPointMake(0, centerY)];
         [path5 addArcWithCenter:center radius:radius - 1.5 startAngle:M_PI endAngle:-M_PI clockwise:NO];
         [path5 stroke];
