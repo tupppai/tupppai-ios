@@ -13,6 +13,8 @@
 - (void)awakeFromNib {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.separatorInset = UIEdgeInsetsMake(0, 45, 0, 10);
+    _contentLabel.numberOfLines = 0;
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

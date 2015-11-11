@@ -136,7 +136,10 @@
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 60;
+    PIENotificationVM* vm = [_source objectAtIndex:indexPath.row];
+    NSDictionary *attributes = @{NSFontAttributeName : [UIFont systemFontOfSize:14]};
+    CGFloat height = CGRectGetHeight([vm.content boundingRectWithSize:CGSizeMake(SCREEN_WIDTH - 52, 300) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil]);
+    return 80+height;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
         return _source.count;
