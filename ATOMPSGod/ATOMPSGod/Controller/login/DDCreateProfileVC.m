@@ -14,7 +14,7 @@
 #import "PIEEntityImage.h"
 #import "JGActionSheet.h"
 #import "DDLoginNavigationController.h"
-
+#import "PIEAgreementsViewController.h"
 
 @interface DDCreateProfileVC () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, ATOMCropHeaderImageCompleteProtocol>
 @property (nonatomic, strong) PIECreateProfileView *createProfileView;
@@ -58,7 +58,18 @@
     [_createProfileView.confirmPickerButton addTarget:self action:@selector(clickConfirmPickerButton:) forControlEvents:UIControlEventTouchUpInside];
     [_createProfileView.cancelRegionPickerButton addTarget:self action:@selector(clickCancelRegionPickerButton:) forControlEvents:UIControlEventTouchUpInside];
     [_createProfileView.confirmRegionPickerButton addTarget:self action:@selector(clickConfirmRegionPickerButton:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UITapGestureRecognizer* tapProtocolGes = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapProtocol)];
+    [_createProfileView.protocolLabel addGestureRecognizer:tapProtocolGes];
+    
+    
     [self setupWithSourceData];
+
+}
+
+-(void )tapProtocol {
+    PIEAgreementsViewController* vc = [PIEAgreementsViewController new];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - Third party sign up

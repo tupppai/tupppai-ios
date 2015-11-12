@@ -180,6 +180,7 @@
     _protocolLabel = [UILabel new];
     _protocolLabel.attributedText = str;
     _protocolLabel.textAlignment = NSTextAlignmentCenter;
+    _protocolLabel.userInteractionEnabled = YES;
     [_protocolView addSubview:_protocolLabel];
     
     [_protocolLabel mas_makeConstraints:^(MASConstraintMaker *make) {

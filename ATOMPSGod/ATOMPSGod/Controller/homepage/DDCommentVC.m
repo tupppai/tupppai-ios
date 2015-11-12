@@ -205,7 +205,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         commentVM.text  = self.textView.text;
     }
 
-    
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.commentsNew insertObject:commentVM inArrayAtIndex:0];
     [self.tableView beginUpdates];

@@ -430,6 +430,8 @@
 		F4EA4DB01BF477E400486304 /* intro1.png in Resources */ = {isa = PBXBuildFile; fileRef = F4EA4DAD1BF477E400486304 /* intro1.png */; };
 		F4EA4DB11BF477E400486304 /* intro2.png in Resources */ = {isa = PBXBuildFile; fileRef = F4EA4DAE1BF477E400486304 /* intro2.png */; };
 		F4EA4DB21BF477E400486304 /* intro3.png in Resources */ = {isa = PBXBuildFile; fileRef = F4EA4DAF1BF477E400486304 /* intro3.png */; };
+		F4EA4DB51BF49B9F00486304 /* PIEAboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EA4DB41BF49B9F00486304 /* PIEAboutUsViewController.m */; };
+		F4EA4DB81BF49CB700486304 /* PIEAgreementsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EA4DB71BF49CB700486304 /* PIEAgreementsViewController.m */; };
 		F4EC10F81BCE58EE002D1DCF /* PIENotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EC10F71BCE58EE002D1DCF /* PIENotificationViewController.m */; };
 		F4EC10FC1BCE591A002D1DCF /* PIENotificationCommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EC10FA1BCE591A002D1DCF /* PIENotificationCommentTableViewCell.m */; };
 		F4EC10FD1BCE591A002D1DCF /* PIENotificationCommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4EC10FB1BCE591A002D1DCF /* PIENotificationCommentTableViewCell.xib */; };
@@ -1293,6 +1295,10 @@
 		F4EA4DAD1BF477E400486304 /* intro1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro1.png; sourceTree = "<group>"; };
 		F4EA4DAE1BF477E400486304 /* intro2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro2.png; sourceTree = "<group>"; };
 		F4EA4DAF1BF477E400486304 /* intro3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro3.png; sourceTree = "<group>"; };
+		F4EA4DB31BF49B9F00486304 /* PIEAboutUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEAboutUsViewController.h; sourceTree = "<group>"; };
+		F4EA4DB41BF49B9F00486304 /* PIEAboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEAboutUsViewController.m; sourceTree = "<group>"; };
+		F4EA4DB61BF49CB700486304 /* PIEAgreementsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEAgreementsViewController.h; sourceTree = "<group>"; };
+		F4EA4DB71BF49CB700486304 /* PIEAgreementsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEAgreementsViewController.m; sourceTree = "<group>"; };
 		F4EC10F61BCE58EE002D1DCF /* PIENotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIENotificationViewController.h; sourceTree = "<group>"; };
 		F4EC10F71BCE58EE002D1DCF /* PIENotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENotificationViewController.m; sourceTree = "<group>"; };
 		F4EC10F91BCE591A002D1DCF /* PIENotificationCommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIENotificationCommentTableViewCell.h; sourceTree = "<group>"; };
@@ -2649,6 +2655,10 @@
 				F4E7133A1BE35F230046C7A9 /* PIEModifyPasswordViewController.h */,
 				F4E7133B1BE35F230046C7A9 /* PIEModifyPasswordViewController.m */,
 				F4E7133C1BE35F230046C7A9 /* PIEModifyPasswordViewController.xib */,
+				F4EA4DB31BF49B9F00486304 /* PIEAboutUsViewController.h */,
+				F4EA4DB41BF49B9F00486304 /* PIEAboutUsViewController.m */,
+				F4EA4DB61BF49CB700486304 /* PIEAgreementsViewController.h */,
+				F4EA4DB71BF49CB700486304 /* PIEAgreementsViewController.m */,
 			);
 			name = ME;
 			sourceTree = "<group>";
@@ -3672,6 +3682,7 @@
 				5CDB06301AA428BD0089121E /* MASConstraintMaker.m in Sources */,
 				F402F1041BE8A327004988B4 /* PIEUserViewModel.m in Sources */,
 				F4275A141BE0786400BBE7E4 /* SLKTypingIndicatorView.m in Sources */,
+				F4EA4DB81BF49CB700486304 /* PIEAgreementsViewController.m in Sources */,
 				E9F890901B86C4AB0057ECBF /* FMDatabasePool.m in Sources */,
 				5C0D282D1ACA333200491452 /* DDCommentManager.m in Sources */,
 				F4D015BB1BA6AF7200A28329 /* PIEThumbAnimateView.m in Sources */,
@@ -3844,6 +3855,7 @@
 				5C561A7C1AB7C9FB0052D4D5 /* ATOMBaseDAO.m in Sources */,
 				E95691B51B22E88300DA84BB /* NSError+MTLModelException.m in Sources */,
 				E991EF011B735B7000025108 /* EAIntroView.m in Sources */,
+				F4EA4DB51BF49B9F00486304 /* PIEAboutUsViewController.m in Sources */,
 				5C54DF1E1AB9738E00BDE34D /* DDBaseVC.m in Sources */,
 				F402F0F81BE89530004988B4 /* PIESearchUserCollectionViewCell.m in Sources */,
 				3B2D90FE1BA03FB000D6A243 /* SZTextView.m in Sources */,

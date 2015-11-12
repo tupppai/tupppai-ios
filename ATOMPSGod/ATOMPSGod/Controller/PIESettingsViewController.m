@@ -22,6 +22,7 @@
 #import "PIESignOutTableViewCell.h"
 #import "PIEMyLikedPagesViewController.h"
 #import "PIEFeedbackViewController.h"
+#import "PIEAboutUsViewController.h"
 @interface PIESettingsViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -184,6 +185,9 @@
             [self.navigationController pushViewController:ufvc animated:YES];
         } else if (row == 1) {
             //关于我们
+            PIEAboutUsViewController* vc = [PIEAboutUsViewController new];
+            [self.navigationController pushViewController:vc animated:YES];
+            
         } else if (row == 2) {
             [self SignOut];
         }
