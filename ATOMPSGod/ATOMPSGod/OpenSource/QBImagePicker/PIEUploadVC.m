@@ -288,10 +288,7 @@
     [lvc dismissViewControllerAnimated:NO completion:nil];
 }
 -(void)showWarnLabel {
-    NSLog(@"showWarnLabel");
-    [TSMessage showNotificationWithTitle:@"求p内容不能为空"
-                                subtitle:@""
-                                    type:TSMessageNotificationTypeWarning];
+    [Hud text:@"求P内容不能为空"];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];

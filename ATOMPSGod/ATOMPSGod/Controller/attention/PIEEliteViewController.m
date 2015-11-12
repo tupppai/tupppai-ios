@@ -30,13 +30,7 @@
 #import "PIEBannerWebViewViewController.h"
 #import "PIEShareImageView.h"
 
-static  NSString* askIndentifier = @"PIEEliteFollowAskTableViewCell";
-static  NSString* replyIndentifier = @"PIEEliteFollowReplyTableViewCell";
 
-static  NSString* hotReplyIndentifier = @"PIEEliteHotReplyTableViewCell";
-static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
-
-//static  NSString* indentifier2 = @"PIEEliteHotTableViewCell";
 
 @interface PIEEliteViewController ()<UITableViewDelegate,UITableViewDataSource,PWRefreshBaseTableViewDelegate,UIScrollViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource,SwipeViewDelegate,SwipeViewDataSource>
 @property (nonatomic, strong) PIEEliteScrollView *sv;
@@ -60,8 +54,6 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
 
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
-//@property (nonatomic, strong) UITableViewCell *selectedFollowCell;
-//@property (nonatomic, strong) PIEEliteHotTableViewCell *selectedHotCell;
 @property (nonatomic, strong) DDPageVM *selectedVM;
 
 @property (nonatomic, strong)  JGActionSheet * psActionSheet;
@@ -72,13 +64,17 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
 @implementation PIEEliteViewController
 
+static  NSString* askIndentifier = @"PIEEliteFollowAskTableViewCell";
+static  NSString* replyIndentifier = @"PIEEliteFollowReplyTableViewCell";
+
+static  NSString* hotReplyIndentifier = @"PIEEliteHotReplyTableViewCell";
+static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configData];
     [self createNavBar];
     [self configSubviews];
-    [self getRemoteSourceBanner];
-    [self getSourceIfEmpty_hot:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -86,7 +82,6 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     [super viewWillAppear:animated];
     [self updateStatus];
     [MobClick beginLogPageView:@"进入首页"];
-
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -96,18 +91,21 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
+    if (_sv.type == PIEPageTypeEliteHot) {
+        [self getSourceIfEmpty_hot:nil];
+    } else {
+        [self getSourceIfEmpty_follow:nil];
+    }
+    [self getSourceIfEmpty_banner];
 }
 
 - (void)updateStatus {
     if (_selectedIndexPath && _selectedVM.type == PIEPageTypeReply) {
         if (_sv.type == PIEPageTypeEliteFollow) {
             [_sv.tableFollow reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-//          PIEEliteFollowReplyTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
-//            cell.likeView.selected = _selectedVM.liked;
         } else if (_sv.type == PIEPageTypeEliteHot) {
             [_sv.tableHot reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-//            PIEEliteHotReplyTableViewCell* cell = [_sv.tableHot cellForRowAtIndexPath:_selectedIndexPath];
-//            cell.likeView.selected = _selectedVM.liked;
         }
     }
 }
@@ -127,6 +125,10 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     _sourceHot = [NSMutableArray new];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_Elite" object:nil];
+}
+
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_Elite" object:nil];
 }
 - (void)configSubviews {
 //    [[AppDelegate APP].window addSubview: [PIEShareImageView new]];
@@ -472,24 +474,36 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 }
 #pragma mark - ATOMShareViewDelegate
 
+- (void)updateShareStatus {
+    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
+    if (_selectedIndexPath) {
+        if (_sv.type == PIEPageTypeEliteFollow) {
+            [_sv.tableFollow reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }else {
+            [_sv.tableHot reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
+    }
+
+}
 //sina
 -(void)tapShare1 {
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeSinaWeibo ];
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeSinaWeibo block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
 }
 //qqzone
 -(void)tapShare2 {
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQZone ];
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQZone block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
+
 }
 //wechat moments
 -(void)tapShare3 {
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatMoments ];
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatMoments block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
 }
 //wechat friends
 -(void)tapShare4 {
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatFriends ];
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatFriends block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
 }
 -(void)tapShare5 {
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQFriends ];
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQFriends block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
     
 }
 -(void)tapShare6 {
@@ -587,6 +601,12 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
         [ws.sv.tableFollow reloadData];
         [ws.sv.tableFollow.footer endRefreshing];
     }];
+}
+
+- (void)getSourceIfEmpty_banner {
+    if (_sourceBanner.count <= 0) {
+        [self getRemoteSourceBanner];
+    }
 }
 
 - (void)getSourceIfEmpty_hot:(void (^)(BOOL finished))block {

@@ -23,7 +23,7 @@
 
 @end
 
-@interface QBAssetsViewController () <UICollectionViewDelegateFlowLayout,UICollectionViewDataSource,UICollectionViewDelegate>
+@interface QBAssetsViewController () <UICollectionViewDelegateFlowLayout,UICollectionViewDataSource,UICollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *backButton;
@@ -61,7 +61,6 @@
                                                object:nil];
     [_backButton setTarget:self];
     [_backButton setAction:@selector(tapBackButton)];
-    
 }
 
 
@@ -474,10 +473,26 @@
 {
     if (indexPath.item == 0) {
         //go to camera
+        
+        [collectionView deselectItemAtIndexPath:indexPath animated:NO];
+        
+        if (! [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            UIAlertView *deviceNotFoundAlert = [[UIAlertView alloc] initWithTitle:@"出错了" message:@"相机不可用"
+                                                                         delegate:nil
+                                                                cancelButtonTitle:@"好的"
+                                                                otherButtonTitles:nil];
+            [deviceNotFoundAlert show];
+
+        }else {
+            UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+            picker.delegate = self;
+            picker.allowsEditing = YES;
+            [self presentViewController:picker animated:YES completion:NULL];
+        }
+        
     } else {
         QBImagePickerController *imagePickerController = self.imagePickerController;
         NSMutableOrderedSet *selectedAssetURLs = imagePickerController.selectedAssetURLs;
-        //first item is camera button.
         ALAsset *asset = self.assets[indexPath.item-1];
         NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
         
@@ -505,11 +520,6 @@
             
             if (imagePickerController.showsNumberOfSelectedAssets) {
                 [self updateSelectionInfo];
-                
-                //            if (selectedAssetURLs.count == 1) {
-                //                // Show toolbar
-                //                [self.navigationController setToolbarHidden:NO animated:YES];
-                //            }
             }
         } else {
             if ([imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didSelectAsset:)]) {
@@ -522,33 +532,37 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (!self.imagePickerController.allowsMultipleSelection) {
-        return;
-    }
-    
-    QBImagePickerController *imagePickerController = self.imagePickerController;
-    NSMutableOrderedSet *selectedAssetURLs = imagePickerController.selectedAssetURLs;
-    
-    // Remove asset from set
-    ALAsset *asset = self.assets[indexPath.item-1];
-    NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
-    
-    [imagePickerController willChangeValueForKey:@"selectedAssetURLs"];
-    [selectedAssetURLs removeObject:assetURL];
-    [imagePickerController didChangeValueForKey:@"selectedAssetURLs"];
-    
-    self.lastSelectedItemIndexPath = nil;
-    
-    [self updateDoneButtonState];
-    
-    if (imagePickerController.showsNumberOfSelectedAssets) {
-        [self updateSelectionInfo];
+    if (indexPath.row != 0) {
         
-        if (selectedAssetURLs.count == 0) {
-            // Hide toolbar
-            [self.navigationController setToolbarHidden:YES animated:YES];
+        if (!self.imagePickerController.allowsMultipleSelection) {
+            return;
+        }
+        
+        QBImagePickerController *imagePickerController = self.imagePickerController;
+        NSMutableOrderedSet *selectedAssetURLs = imagePickerController.selectedAssetURLs;
+        
+        // Remove asset from set
+        ALAsset *asset = self.assets[indexPath.item-1];
+        NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
+        
+        [imagePickerController willChangeValueForKey:@"selectedAssetURLs"];
+        [selectedAssetURLs removeObject:assetURL];
+        [imagePickerController didChangeValueForKey:@"selectedAssetURLs"];
+        
+        self.lastSelectedItemIndexPath = nil;
+        
+        [self updateDoneButtonState];
+        
+        if (imagePickerController.showsNumberOfSelectedAssets) {
+            [self updateSelectionInfo];
+            
+            if (selectedAssetURLs.count == 0) {
+                // Hide toolbar
+                [self.navigationController setToolbarHidden:YES animated:YES];
+            }
         }
     }
+
 }
 
 
@@ -568,4 +582,20 @@
     return CGSizeMake(width, width);
 }
 
+
+#pragma mark - imagePickerController delegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    UIImageWriteToSavedPhotosAlbum(chosenImage, nil, nil, nil);
+//    chosenImage
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    
+}
+
+//- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+//    
+//    [picker dismissViewControllerAnimated:YES completion:NULL];
+//    
+//}
 @end

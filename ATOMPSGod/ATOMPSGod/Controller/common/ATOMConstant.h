@@ -65,7 +65,7 @@ extern NSString * const kFontNameDefault;
 extern NSString * const kUserNameFont;
 extern NSString * const kPublishTimeFont;
 
-#define PIEColorHex 0xFEF07B
+#define PIEColorHex 0xFFEF00
 
 typedef NS_ENUM(NSInteger, PIEPageType) {
     PIEPageTypeAsk = 1,

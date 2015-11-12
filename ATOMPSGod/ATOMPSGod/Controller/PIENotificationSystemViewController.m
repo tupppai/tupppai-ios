@@ -17,11 +17,12 @@
 //#import "PIENotificationFollowTableViewCell.h"
 //#import "PIENotificationCommentTableViewCell.h"
 
-@interface PIENotificationSystemViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate>
+@interface PIENotificationSystemViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 @property (nonatomic, strong) NSMutableArray *source;
 @property (nonatomic, strong) PIERefreshTableView *tableView;
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, assign) BOOL canRefreshFooter;
+@property (nonatomic, assign) BOOL isfirstLoading;
 
 @end
 
@@ -37,6 +38,9 @@
     _canRefreshFooter = YES;
     self.view = self.tableView;
     //    [self getDataSource];
+    self.tableView.emptyDataSetSource = self;
+    self.tableView.emptyDataSetDelegate = self;
+    _isfirstLoading = YES;
     [self.tableView.header beginRefreshing];
 }
 
@@ -53,14 +57,15 @@
     [param setObject:@"fold" forKey:@"type"];
 
     [PIENotificationManager getNotifications:param block:^(NSArray *source) {
+        _isfirstLoading = NO;
         if (source.count>0) {
             ws.source = [source mutableCopy];
-            [ws.tableView reloadData];
             _canRefreshFooter = YES;
         }
         else {
             _canRefreshFooter = NO;
         }
+        [ws.tableView reloadData];
         [self.tableView.header endRefreshing];
     }];
 }
@@ -145,6 +150,25 @@
         return _source.count;
 }
 
+#pragma mark - DZNEmptyDataSetSource & delegate
+-(UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"pie_empty"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text = @"暂无系统消息喔～";
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
 
+-(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
+    return !_isfirstLoading;
+}
+-(BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
+    return YES;
+}
 
 @end

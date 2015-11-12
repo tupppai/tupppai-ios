@@ -41,12 +41,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
     ((FXBlurView*)self.view).dynamic = NO;
     ((FXBlurView*)self.view).tintColor = [UIColor blackColor];
     DDNavigationController *nav = [AppDelegate APP].mainTabBarController.selectedViewController;
     ((FXBlurView*)self.view).underlyingView =   [nav.viewControllers objectAtIndex:0].view;
-    ((FXBlurView*)self.view).blurRadius = 200;
+    ((FXBlurView*)self.view).blurRadius = 10;
+
+    UIView* viewLayer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    viewLayer.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2];
+    [self.view insertSubview:viewLayer atIndex:0];
+//
+//    UIView* viewLayer2 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+//    viewLayer2.backgroundColor = [UIColor colorWithHex:0x4a4a4a andAlpha:0.1];
+//    [self.view insertSubview:viewLayer2 atIndex:0];
     
     _askBackgroundView.layer.cornerRadius = _askBackgroundView.frame.size.width/2;
     _replyBackgroundView.layer.cornerRadius = _replyBackgroundView.frame.size.width/2;
@@ -115,10 +122,6 @@
     
 //    [self.QBImagePickerController.selectedAssetURLs removeAllObjects];
 
-    NSMutableArray* array = [NSMutableArray new];
-    for (ALAsset* asset in assets) {
-        [array addObject:asset];
-    }
     PIEUploadVC* vc = [PIEUploadVC new];
     vc.assetsArray = assets;
 //    if (imagePickerController.maximumNumberOfSelection == 1) {

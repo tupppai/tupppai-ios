@@ -666,30 +666,30 @@
 //sina
 -(void)tapShare1 {
     [self.shareView dismiss];
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeSinaWeibo ];
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeSinaWeibo block:nil];
 }
 //qqzone
 -(void)tapShare2 {
     [self.shareView dismiss];
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQZone ];
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQZone  block:nil];
 }
 //wechat moments
 -(void)tapShare3 {
     [self.shareView dismiss];
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatMoments ];
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatMoments block:nil];
 }
 //wechat friends
 -(void)tapShare4 {
     [self.shareView dismiss];
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatFriends ];
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatFriends  block:nil];
 }
 -(void)tapShare5 {
     [self.shareView dismiss];
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQFriends ];
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQFriends  block:nil];
     
 }
 -(void)tapShare6 {
-    
+    [DDShareManager copy:_selectedVM];
 }
 -(void)tapShare7 {
     [self.shareView dismiss];

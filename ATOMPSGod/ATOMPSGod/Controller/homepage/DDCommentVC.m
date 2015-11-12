@@ -224,7 +224,10 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     }
     DDCommentManager *showDetailOfComment = [DDCommentManager new];
     [showDetailOfComment SendComment:param withBlock:^(NSInteger comment_id, NSError *error) {
-        commentVM.ID = comment_id;
+        if (comment_id) {
+            commentVM.ID = comment_id;
+            _vm.commentCount = [NSString stringWithFormat:@"%zd",[_vm.commentCount integerValue]+1];
+        }
     }];
     self.textView.text = @"";
     _targetCommentVM = nil;
@@ -450,7 +453,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"array"]) {
-        self.headerView.commentButton.number = _commentsNew.countOfArray;
+        ((PIECommentTableHeaderView_Ask*)self.tableView.tableHeaderView).commentButton.number = _commentsNew.countOfArray;
     }
 }
 - (void) dismissSelf {
@@ -748,25 +751,45 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 #pragma mark - ATOMShareViewDelegate
 //sina
 -(void)tapShare1 {
-    [DDShareManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeSinaWeibo];
+    [DDShareManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeSinaWeibo block:^(BOOL success) {
+        if (success) {
+            _vm.shareCount = [NSString stringWithFormat:@"%zd",[_vm.shareCount integerValue]+1];
+        }
+    } ];
 }
 //qqzone
 -(void)tapShare2 {
-    [DDShareManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeQQZone ];
+    [DDShareManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeQQZone block:^(BOOL success) {
+        if (success) {
+            _vm.shareCount = [NSString stringWithFormat:@"%zd",[_vm.shareCount integerValue]+1];
+        }
+    } ];
 }
 //wechat moments
 -(void)tapShare3 {
-    [DDShareManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeWechatMoments ];
+    [DDShareManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeWechatMoments block:^(BOOL success) {
+        if (success) {
+            _vm.shareCount = [NSString stringWithFormat:@"%zd",[_vm.shareCount integerValue]+1];
+        }
+    } ];
 }
 //wechat friends
 -(void)tapShare4 {
-    [DDShareManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeWechatFriends ];
+    [DDShareManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeWechatFriends block:^(BOOL success) {
+        if (success) {
+            _vm.shareCount = [NSString stringWithFormat:@"%zd",[_vm.shareCount integerValue]+1];
+        }
+    } ];
 }
 -(void)tapShare5 {
-    [DDShareManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeQQFriends ];
+    [DDShareManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeQQFriends block:^(BOOL success) {
+        if (success) {
+            _vm.shareCount = [NSString stringWithFormat:@"%zd",[_vm.shareCount integerValue]+1];
+        }
+    } ];
 }
 -(void)tapShare6 {
-    
+    [DDShareManager copy:_vm];
 }
 -(void)tapShare7 {
     [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];

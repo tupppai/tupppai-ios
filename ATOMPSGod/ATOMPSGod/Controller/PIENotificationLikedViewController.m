@@ -16,11 +16,12 @@
 //#import "PIENotificationFollowTableViewCell.h"
 //#import "PIENotificationCommentTableViewCell.h"
 
-@interface PIENotificationLikedViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate>
+@interface PIENotificationLikedViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (nonatomic, strong) NSMutableArray *source;
 @property (nonatomic, strong) PIERefreshTableView *tableView;
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, assign) BOOL canRefreshFooter;
+@property (nonatomic, assign) BOOL isfirstLoading;
 
 @end
 
@@ -34,8 +35,10 @@
     _source = [NSMutableArray array];
     _canRefreshFooter = YES;
     self.view = self.tableView;
-    //    [self getDataSource];
+    _isfirstLoading = YES;
     [self.tableView.header beginRefreshing];
+    self.tableView.emptyDataSetDelegate = self;
+    self.tableView.emptyDataSetSource = self;
 }
 
 #pragma mark - GetDataSource
@@ -51,14 +54,16 @@
     [param setObject:@"normal" forKey:@"type"];
     
     [PIENotificationManager getNotifications:param block:^(NSArray *source) {
+        ws.isfirstLoading = NO;
         if (source.count>0) {
             ws.source = [source mutableCopy];
-            [ws.tableView reloadData];
             _canRefreshFooter = YES;
         }
         else {
             _canRefreshFooter = NO;
         }
+        
+        [ws.tableView reloadData];
         [self.tableView.header endRefreshing];
     }];
 }
@@ -138,6 +143,28 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _source.count;
+}
+
+
+#pragma mark - DZNEmptyDataSetSource & delegate
+-(UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"pie_empty"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text = @"还没收到赞喔～";
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+-(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
+    return !_isfirstLoading;
+}
+-(BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
+    return YES;
 }
 
 

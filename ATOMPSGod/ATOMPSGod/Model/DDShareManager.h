@@ -22,7 +22,7 @@ typedef NS_ENUM(NSInteger, ATOMShareType) {
 };
 @interface DDShareManager : NSObject
 + (void)getUserInfo:(SSDKPlatformType)type withBlock:(void (^)(NSString* openId ))block;
-+(void)postSocialShare2:(DDPageVM*)vm withSocialShareType:(ATOMShareType)shareType;
++(void)postSocialShare2:(DDPageVM*)vm withSocialShareType:(ATOMShareType)shareType block:(void (^)(BOOL success))block ;
 + (void)authorize:(SSDKPlatformType)type withBlock:(void (^)(NSDictionary* ))block;//to delete
 + (void)authorize2:(SSDKPlatformType)type withBlock:(void (^)(SSDKUser* user ))block;
 + (void)getRemoteShareInfo:(DDPageVM*)vm withSocialShareType:(ATOMShareType)shareType withBlock:(void (^)(ATOMShare* share))block;

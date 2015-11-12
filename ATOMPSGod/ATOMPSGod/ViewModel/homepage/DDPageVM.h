@@ -26,7 +26,7 @@
 @property (nonatomic, copy) NSString *avatarURL;
 @property (nonatomic, copy) NSString *imageURL;
 @property (nonatomic, copy) NSString *publishTime;
-@property (nonatomic, assign) NSString *likeCount;
+@property (nonatomic, copy) NSString *likeCount;
 @property (nonatomic, copy) NSString *shareCount;
 @property (nonatomic, copy) NSString *commentCount;
 @property (nonatomic, copy) NSString *totalPSNumber;

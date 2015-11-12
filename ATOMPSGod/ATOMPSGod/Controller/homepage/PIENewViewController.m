@@ -460,27 +460,38 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     }];
 }
 
+- (void)updateShareStatus {
+    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
+        if (_scrollView.type == PIENewScrollTypeReply) {
+            if (_selectedIndexPath) {
+            [_scrollView.replyTable reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            }
+    }
+    
+}
+
 #pragma mark - ATOMShareViewDelegate
 //sina
 -(void)tapShare1 {
-
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeSinaWeibo ];
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeSinaWeibo block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
 }
 //qqzone
 -(void)tapShare2 {
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQZone ];
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQZone block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
 }
 //wechat moments
 -(void)tapShare3 {
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatMoments ];
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatMoments block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
 }
 //wechat friends
 -(void)tapShare4 {
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatFriends ];
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatFriends block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
 }
 -(void)tapShare5 {
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQFriends ];
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQFriends block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
+    
 }
+
 -(void)tapShare6 {
     [DDShareManager copy:_selectedVM];
 }
