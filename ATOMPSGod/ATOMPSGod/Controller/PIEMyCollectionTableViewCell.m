@@ -37,7 +37,7 @@
         _originView.image = [UIImage imageNamed:@"pie_reply"];
     }
     
-    [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarURL]placeholderImage:[UIImage imageNamed:@"cellBG"]];
+    [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarURL]placeholderImage:[UIImage imageNamed:@"avatar_default"]];
     [_pageImageView setImageWithURL:[NSURL URLWithString:vm.imageURL]placeholderImage:[UIImage imageNamed:@"cellBG"]];
     _nameLabel.text = vm.username;
     _contentLabel.text = vm.content;

@@ -88,7 +88,7 @@
     _likeView.numberString = viewModel.likeCount;
     _contentLabel.text = viewModel.content;
     
-    [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+    [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
     
     _nameLabel.text = viewModel.username;
     _timeLabel.text = viewModel.publishTime;

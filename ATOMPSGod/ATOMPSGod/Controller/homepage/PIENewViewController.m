@@ -68,6 +68,12 @@
 static NSString *CellIdentifier = @"PIENewReplyTableCell";
 static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
+
+- (void)updateStatus {
+    if (_selectedIndexPath  && _scrollView.type == PIENewScrollTypeReply) {
+        [_scrollView.replyTable reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+}
 #pragma mark - life cycle
 
 - (void)viewDidLoad {
@@ -85,6 +91,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [super viewDidAppear:animated];
 //    [self shouldNavToAskSegment];
 //    [self shouldNavToHotSegment];
+    [self updateStatus];
     [MobClick endLogPageView:@"离开最新页面"];
     //tricks to display progressView  if vc re-appear
 }
@@ -462,12 +469,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
 - (void)updateShareStatus {
     _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
-        if (_scrollView.type == PIENewScrollTypeReply) {
-            if (_selectedIndexPath) {
-            [_scrollView.replyTable reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            }
-    }
-    
+        [self updateStatus];
 }
 
 #pragma mark - ATOMShareViewDelegate

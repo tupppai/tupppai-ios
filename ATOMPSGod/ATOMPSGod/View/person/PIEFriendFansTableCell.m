@@ -108,7 +108,7 @@
         _userHeaderButton.userInteractionEnabled = NO;
         _userHeaderButton.layer.cornerRadius = kfcAvatarWidth / 2;
         _userHeaderButton.layer.masksToBounds = YES;
-        [_userHeaderButton setBackgroundImage:[UIImage imageNamed:@"cellBG"] forState:UIControlStateNormal];
+        [_userHeaderButton setBackgroundImage:[UIImage imageNamed:@"avatar_default"] forState:UIControlStateNormal];
     }
     return _userHeaderButton;
 }

@@ -45,21 +45,6 @@
 }
 
 
-//+ (void) customShareView:(DDPageVM*)vm block:(void(^)(UIView*))block
-//{
-//    PIEShareImageView* view = [PIEShareImageView new];
-//    [view injectSauce:vm withBlock:^(BOOL success) {
-//        if (block) {
-//            block(view);
-//        }
-//    }];
-////    view.imageView.image = [UIImage imageNamed:@"cellBG"];
-////    view.avatarView.image = [UIImage imageNamed:@"cellBG"];
-////    view.nameLabel.text = @"peiwei";
-//    return view;
-//
-//}
-
 
 NSString* deviceName()
 {

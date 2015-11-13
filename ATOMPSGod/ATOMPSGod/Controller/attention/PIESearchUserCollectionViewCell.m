@@ -32,7 +32,7 @@
 
 - (void)injectSauce:(PIEUserViewModel*)vm {
     _vm = vm;
-    [_avatarButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:vm.avatar] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+    [_avatarButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:vm.avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
     [_nameButton setTitle:vm.username forState:UIControlStateNormal];
     _countLabel.text = [NSString stringWithFormat:@"%zd 作品   %zd 粉丝   %zd 关注",vm.replyNumber,vm.fansNumber,vm.attentionNumber];
 //    for (int i = 0; i<vm.replies.count; i++) {

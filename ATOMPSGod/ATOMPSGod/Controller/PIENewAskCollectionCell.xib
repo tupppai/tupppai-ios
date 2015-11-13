@@ -14,7 +14,7 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="323" height="515"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cellBG.png" translatesAutoresizingMaskIntoConstraints="NO" id="t6N-sk-Gt2">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_default" translatesAutoresizingMaskIntoConstraints="NO" id="t6N-sk-Gt2">
                         <rect key="frame" x="8" y="14" width="26" height="26"/>
                         <animations/>
                         <constraints>
@@ -160,7 +160,7 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="cellBG.png" width="355" height="474"/>
+        <image name="avatar_default" width="36" height="36"/>
         <image name="pie_ask_help" width="40" height="42"/>
     </resources>
 </document>

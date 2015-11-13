@@ -26,7 +26,7 @@
 - (void)injectSauce:(DDPageVM *)viewModel {
     _viewModel = viewModel;
     [_imageView setImageWithURL:[NSURL URLWithString:viewModel.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
-    [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+    [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
     _usernameLabel.text = viewModel.username;
     _ID = viewModel.ID;
     _type = viewModel.type;

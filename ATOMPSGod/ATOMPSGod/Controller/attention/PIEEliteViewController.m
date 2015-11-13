@@ -80,6 +80,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    //update status of like button
     [self updateStatus];
     [MobClick beginLogPageView:@"进入首页"];
 }
