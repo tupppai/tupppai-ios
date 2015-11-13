@@ -129,7 +129,17 @@
                         _imageView_thumb.hidden = NO;
                         _imageView_thumb_bg.hidden = NO;
                         _imageView_type.hidden = NO;
-                        block(YES);
+                        
+                        [DDBaseService GET:nil url:@"app/qrcode" block:^(id responseObject) {
+                            NSString* url = [[responseObject objectForKey:@"data"]objectForKey:@"url"];
+                            NSLog(@"url %@",url);
+                            [DDService downloadImage:url withBlock:^(UIImage *image) {
+                                _QRCodeView.image = image;
+                                block(YES);
+                            }];
+                            NSDictionary* dic;
+                            [dic objectForKey:@"test"];
+                        }];
                     }];
                 }
             } else {
