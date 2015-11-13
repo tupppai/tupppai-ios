@@ -48,20 +48,25 @@
     intro.skipButton.hidden = YES;
     intro.useMotionEffects = YES;
     intro.pageControl.hidden = NO;
-    intro.pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
-    intro.pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
+    intro.pageControlY = SCREEN_HEIGHT - 20;
+    intro.pageControl.pageIndicatorTintColor = [UIColor colorWithHex:0xffffff andAlpha:0.5];
+    intro.pageControl.currentPageIndicatorTintColor = [UIColor colorWithHex:0xffffff andAlpha:0.9];
     intro.tapToNext = YES;
-    UIButton* button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0,100, 60)];
+    UIButton* button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 150, 60)];
+    
+    [button mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(@150);
+        make.height.equalTo(@60);
+    }];
     [button setTitle:@"进入图派" forState:UIControlStateNormal];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//    [button setBackgroundColor:[UIColor pieYellowColor]];
     button.layer.borderColor = [UIColor blackColor].CGColor;
     button.layer.borderWidth = 1.0;
-    button.layer.cornerRadius = 10.0;
+    button.layer.cornerRadius = 15.0;
     button.clipsToBounds = YES;
     intro.skipButton = button;
-    intro.skipButtonY = 300;
-    intro.skipButtonSideMargin = SCREEN_WIDTH/2-50;
+    intro.skipButtonY = 200;
+    intro.skipButtonSideMargin = SCREEN_WIDTH/2-70;
     intro.showSkipButtonOnlyOnLastPage = YES;
     [intro setDelegate:self];
     [intro showInView:self.view animateDuration:1.0];
