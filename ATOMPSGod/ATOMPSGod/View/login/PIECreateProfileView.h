@@ -14,6 +14,8 @@
 
 @property (nonatomic, strong) UIView *topView;
 @property (nonatomic, strong) UIButton *userHeaderButton;
+@property (nonatomic, strong) UIButton *protocolButton;
+
 @property (nonatomic, strong) UITextField *nicknameTextField;
 @property (nonatomic, strong) HMSegmentedControl *sexSegment;
 @property (nonatomic, strong) UIPickerView *regionPickerView;

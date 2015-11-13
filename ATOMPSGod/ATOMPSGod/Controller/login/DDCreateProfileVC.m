@@ -32,6 +32,7 @@
 #pragma mark - UI
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     [self loadRegionResource];
     [self createUI];
@@ -48,20 +49,21 @@
     _createProfileView.nicknameTextField.delegate = self;
     [_createProfileView.userHeaderButton addTarget:self action:@selector(clickToManageAvatar) forControlEvents:UIControlEventTouchUpInside];
     
-
     [_createProfileView.areaView addGestureRecognizer:self.tapRegionViewGesture];
     _createProfileView.regionPickerView.delegate = self;
     _createProfileView.regionPickerView.dataSource = self;
     
     _selectedRowComponent1 = 0;
     _selectedRowComponent2 = 0;
+    
+    //guangdong province
+    [_createProfileView.regionPickerView selectRow:18 inComponent:0 animated:YES];
+
     [_createProfileView.confirmPickerButton addTarget:self action:@selector(clickConfirmPickerButton:) forControlEvents:UIControlEventTouchUpInside];
     [_createProfileView.cancelRegionPickerButton addTarget:self action:@selector(clickCancelRegionPickerButton:) forControlEvents:UIControlEventTouchUpInside];
     [_createProfileView.confirmRegionPickerButton addTarget:self action:@selector(clickConfirmRegionPickerButton:) forControlEvents:UIControlEventTouchUpInside];
     
-    UITapGestureRecognizer* tapProtocolGes = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapProtocol)];
-    [_createProfileView.protocolLabel addGestureRecognizer:tapProtocolGes];
-    
+    [_createProfileView.protocolButton addTarget:self action:@selector(tapProtocol) forControlEvents:UIControlEventTouchUpInside];
     
     [self setupWithSourceData];
 
@@ -269,7 +271,7 @@
     NSString* provinceName = [[_provinces objectAtIndex:_selectedRowComponent1]objectForKey:@"name"];
     NSArray* cities = [[_provinces objectAtIndex:_selectedRowComponent1]objectForKey:@"citys"];
     NSString* cityName = @"";
-    if(cities.count > 0) {
+    if(cities.count > _selectedRowComponent2) {
          cityName = [[cities[_selectedRowComponent2] allValues]objectAtIndex:0];
         [[DDUserManager currentUser].region setValue:[[[cities objectAtIndex:_selectedRowComponent2] allKeys]objectAtIndex:0] forKey:@"cityID"];
     }
