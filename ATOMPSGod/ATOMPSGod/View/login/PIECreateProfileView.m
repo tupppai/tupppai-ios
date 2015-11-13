@@ -334,7 +334,6 @@
         [lbl setTextColor:[UIColor colorWithHex:0x606060]];
         [lbl setTextAlignment:NSTextAlignmentLeft];
         lbl.font = [UIFont systemFontOfSize:15];
-
         _nicknameTextField = [UITextField new];
         _nicknameTextField.textColor = [UIColor colorWithHex:0x737373];
         _nicknameTextField.returnKeyType = UIReturnKeyDone;

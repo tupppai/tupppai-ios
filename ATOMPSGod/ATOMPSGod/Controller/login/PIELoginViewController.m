@@ -77,119 +77,53 @@
     }
 }
 - (void)tap1 {
-    
-//    [Util warningBetaTest];
-
-    [DDShareManager authorize2:SSDKPlatformTypeQQ withBlock:^(SSDKUser *sdkUser) {
-        NSString* openID = sdkUser.uid;
-        NSMutableDictionary* param = [NSMutableDictionary new];
-        [param setObject:openID forKey:@"openid"];
-        [DDUserManager DD3PartyAuth:param AndType:@"qq" withBlock:^(bool isRegistered, NSString *info) {
-            if (isRegistered) {
-                [Hud activity:@"" inView:self.view];
-                [self.navigationController setViewControllers:[NSArray array]];
-                [AppDelegate APP].mainTabBarController = nil;
-                [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
-                ;
-            } else {
-                [DDUserManager currentUser].signUpType = ATOMSignUpWeibo;
-                [DDUserManager currentUser].sourceData = sdkUser.rawData;
-                PIEUserProfileViewModel* ipvm = [PIEUserProfileViewModel new];
-                ipvm.nickName = sdkUser.nickname;
-                //                    ipvm.province = sourceData[@"province"];
-                //                    ipvm.city = sourceData[@"city"];
-                ipvm.avatarURL = sdkUser.icon;
-                if (sdkUser.gender == 1) {
-                    ipvm.gender = @"女";
-                } else {
-                    ipvm.gender = @"男";
-                }
-                DDCreateProfileVC *cpvc = [DDCreateProfileVC new];
-                cpvc.userProfileViewModel = ipvm;
-                [self.navigationController pushViewController:cpvc animated:YES];
-            }
-            
-        }];
-    }];
+    [self login:ATOMSignUpQQ];
 }
 - (void)tap2 {
-    [DDShareManager authorize:SSDKPlatformTypeSinaWeibo withBlock:^(NSDictionary *sourceData) {
-        if (sourceData) {
-            NSString* openID = sourceData[@"idstr"];
-            NSMutableDictionary* param = [NSMutableDictionary new];
-            [param setObject:openID forKey:@"openid"];
-            [DDUserManager DD3PartyAuth:param AndType:@"weibo" withBlock:^(bool isRegistered, NSString *info) {
-                if (isRegistered) {
-                    [Hud activity:@"" inView:self.view];
-                    [self.navigationController setViewControllers:[NSArray array]];
-                    [AppDelegate APP].mainTabBarController = nil;
-                    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
-                    ;
-                } else {
-                    [DDUserManager currentUser].signUpType = ATOMSignUpWeibo;
-                    [DDUserManager currentUser].sourceData = sourceData;
-                    PIEUserProfileViewModel* ipvm = [PIEUserProfileViewModel new];
-                    ipvm.nickName = sourceData[@"name"];
-                    ipvm.province = sourceData[@"province"];
-                    ipvm.city = sourceData[@"city"];
-                    ipvm.avatarURL = sourceData[@"avatar_large"];
-                    if ([(NSString*)sourceData[@"gender"] isEqualToString:@"m"]) {
-                        ipvm.gender = @"男";
-                    } else {
-                        ipvm.gender = @"女";
-                    }
-                    DDCreateProfileVC *cpvc = [DDCreateProfileVC new];
-                    cpvc.userProfileViewModel = ipvm;
-                    [self.navigationController pushViewController:cpvc animated:YES];
-                }
-                
-            }];
-        }
-        else {
-            NSLog(@"获取不到第三平台的数据");
-        }
-    }];
+    [self login:ATOMSignUpQQ];
 }
 - (void)tap3 {
-    [DDShareManager authorize:SSDKPlatformTypeWechat withBlock:^(NSDictionary *sourceData) {
-        if (sourceData) {
-            NSString* openid = sourceData[@"openid"];
+    [self login:ATOMSignUpWechat];
+}
+
+
+- (void)login:(ATOMSignUpType)type {
+    NSString* typeStr = @"error";
+    SSDKPlatformType platformType = SSDKPlatformTypeAny;
+    if (type == ATOMSignUpQQ) {
+        typeStr = @"qq";
+        platformType = SSDKPlatformTypeQQ;
+    } else if (type == ATOMSignUpWechat) {
+        typeStr = @"weixin";
+        platformType = SSDKPlatformTypeWechat;
+    } else if (type == ATOMSignUpWeibo) {
+        typeStr = @"weibo";
+        platformType = SSDKPlatformTypeSinaWeibo;
+    } else if (type == ATOMSignUpMobile) {
+        
+    }
+    [DDShareManager authorize2:platformType withBlock:^(SSDKUser *sdkUser) {
+        if (sdkUser) {
             NSMutableDictionary* param = [NSMutableDictionary new];
-            [param setObject:openid forKey:@"openid"];
-            [DDUserManager DD3PartyAuth:param AndType:@"weixin" withBlock:^(bool isRegistered, NSString *info) {
+            [param setObject:sdkUser.uid forKey:@"openid"];
+            
+            [DDUserManager DD3PartyAuth:param AndType:typeStr withBlock:^(bool isRegistered, NSString *info) {
                 if (isRegistered) {
-                    [Hud activity:@"" inView:self.view];
+                    [Hud activity:@"登录中"];
                     [self.navigationController setViewControllers:[NSArray array]];
                     [AppDelegate APP].mainTabBarController = nil;
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
                     ;
                 } else {
-                    [DDUserManager currentUser].signUpType = ATOMSignUpWechat;
-                    [DDUserManager currentUser].sourceData = sourceData;
-                    PIEUserProfileViewModel* ipvm = [PIEUserProfileViewModel new];
-                    ipvm.nickName = sourceData[@"nickname"];
-                    ipvm.province = sourceData[@"province"];
-                    ipvm.city = sourceData[@"city"];
-                    ipvm.avatarURL = sourceData[@"headimgurl"];
-                    if ((BOOL)sourceData[@"sex"] == YES) {
-                        ipvm.gender = @"男";
-                    } else {
-                        ipvm.gender = @"女";
-                    }
+                    [DDUserManager currentUser].signUpType = type;
+                    [DDUserManager currentUser].sdkUser = sdkUser;
                     DDCreateProfileVC *cpvc = [DDCreateProfileVC new];
-                    cpvc.userProfileViewModel = ipvm;
                     [self.navigationController pushViewController:cpvc animated:YES];
                 }
             }];
         }
-        else {
-            NSLog(@"获取不到第三平台的数据");
-        }
     }];
-    
 }
-
-
 
 
 

@@ -115,7 +115,6 @@
             //注释掉的话 微博自动分享
             [shareParams SSDKEnableUseClientShare];
             
-            
             if (shareType == ATOMShareTypeWechatFriends) {
                 if ([share.type isEqualToString:@"image" ]) {
                     //这里要自己生成图片

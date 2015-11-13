@@ -159,7 +159,6 @@
         if (row == 0) {
             PIEMessagePushSettingViewController *mrvc = [PIEMessagePushSettingViewController new];
             [self.navigationController pushViewController:mrvc animated:YES];
-
         } else if (row == 1) {
             //我赞过的
             PIEMyLikedPagesViewController * vc = [PIEMyLikedPagesViewController new];
@@ -172,11 +171,13 @@
     } else if (section == 2) {
         
         if (row == 0) {
-//            PIEMessagePushSettingViewController *mrvc = [PIEMessagePushSettingViewController new];
-//            [self.navigationController pushViewController:mrvc animated:YES];
+            NSString *iTunesLink = @"http://itunes.apple.com/app/id1056871759";
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
         } else if (row == 1) {
             [self clearCache];
         } else if (row == 2) {
+            NSString *iTunesLink = @"http://itunes.apple.com/app/id1056871759";
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
         }
     }
     else if (section == 3) {

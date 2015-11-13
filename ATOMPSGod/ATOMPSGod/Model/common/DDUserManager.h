@@ -8,12 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "PIELaunchViewController.h"
+#import <ShareSDK/SSDKUser.h>
 @class PIEEntityUser;
 
 typedef enum {
     ATOMSignUpWechat = 0,
     ATOMSignUpWeibo,
-    ATOMSignUpMobile
+    ATOMSignUpMobile,
+    ATOMSignUpQQ
 }ATOMSignUpType;
 
 @interface DDUserManager : NSObject
@@ -26,6 +28,9 @@ typedef enum {
 /**
  *  通过第三方平台可能获取到的数据
  */
+
+@property (nonatomic, strong) SSDKUser *sdkUser;
+
 @property (nonatomic, strong) NSDictionary *sourceData;
 /**
  *  注册类型 weixin = 0 ,weibo = 1 ,mobile = 3

@@ -65,6 +65,10 @@
     
     [_createProfileView.protocolButton addTarget:self action:@selector(tapProtocol) forControlEvents:UIControlEventTouchUpInside];
     
+    if ([DDUserManager currentUser].sdkUser.gender == 1) {
+        [_createProfileView.sexSegment setSelectedSegmentIndex:1];
+    }
+    
     [self setupWithSourceData];
 
 }
@@ -76,58 +80,14 @@
 
 #pragma mark - Third party sign up
 -(void)setupWithSourceData {
-    if (_userProfileViewModel) {
-//        _createProfileView.showSexLabel.text = _userProfileViewModel.gender;
-        [_createProfileView.userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString: _userProfileViewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
-        _createProfileView.nicknameTextField.text = _userProfileViewModel.nickName;
-        [DDUserManager currentUser].avatar = _userProfileViewModel.avatarURL;
-        
-        switch ([DDUserManager currentUser].signUpType) {
-                //微信获取到的地区是名字，需要解析为ID
-            case ATOMSignUpWechat:
-                _createProfileView.showAreaLabel.text = [NSString stringWithFormat:@"%@,%@",_userProfileViewModel.province,_userProfileViewModel.city];
-                for (NSDictionary* province in _provinces) {
-                    NSString* provinceName = (NSString* )province[@"name"];
-                    if ([provinceName isEqualToString:_userProfileViewModel.province]) {
-                        NSArray* cities = province[@"citys"];
-                        NSString* provinceID = province[@"id"];
-                        [[DDUserManager currentUser].region setObject:provinceID forKey:@"provinceID"];
-                        for (NSDictionary* city in cities) {
-                            NSString* cityName = [city allValues][0];
-                            if ([cityName isEqualToString:_userProfileViewModel.city]) {
-                                NSString* cityID = [city allKeys][0];
-                                [[DDUserManager currentUser].region setObject:cityID forKey:@"cityID"];
-                            }
-                        }
-                    
-                    }
-                }
-                break;
-                //获取到的是ID，需要解析为string展示出来
-            case ATOMSignUpWeibo:
-                for (NSDictionary* province in _provinces) {
-                    NSString* provinceID = [NSString stringWithFormat:@"%@",province[@"id"]];
-                    if ([provinceID isEqualToString: _userProfileViewModel.province]) {
-                        NSArray* cities = province[@"citys"];
-                        NSString* provinceName = province[@"name"];
-                        [[DDUserManager currentUser].region setObject:provinceID forKey:@"provinceID"];
-                        for (NSDictionary* city in cities) {
-                            NSString* cityID = [city allKeys][0];
-                            if ([cityID isEqualToString:_userProfileViewModel.city]) {
-                                NSString* cityName = [city allValues][0];
-                                [[DDUserManager currentUser].region setObject:cityID forKey:@"cityID"];
-                                _createProfileView.showAreaLabel.text = [NSString stringWithFormat:@"%@,%@",provinceName,cityName];
-                            }
-                        }
-                        
-                    }
-                }
-                break;
-            default:
-                break;
-        }
+    if ([DDUserManager currentUser].signUpType != ATOMSignUpMobile) {
+        NSString* avatarUrl = [DDUserManager currentUser].sdkUser.icon;
+        [DDUserManager currentUser].sex = [DDUserManager currentUser].sdkUser.gender == 0 ? YES:NO;
+        NSString* name = [DDUserManager currentUser].sdkUser.nickname;
+        [DDUserManager currentUser].avatar = avatarUrl;
+        [_createProfileView.userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString: avatarUrl] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+        _createProfileView.nicknameTextField.text = name;
     }
-
 }
 
 #pragma mark - Click Event
@@ -203,7 +163,6 @@
             return ;
         }
         [DDUserManager currentUser].avatar = imageInfomation.imageURL;
-//        [DDUserManager currentUser].avatarID = imageInfomation.imageID;
     }];
 }
 #pragma mark - UITextFieldDelegate

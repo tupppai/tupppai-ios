@@ -11,7 +11,4 @@
 @interface DDHotDetailManager : NSObject
 
 - (NSURLSessionDataTask *)fetchAllReply:(NSDictionary *)param ID:(NSInteger)replyID withBlock:(void (^)(NSMutableArray *askArray, NSMutableArray *replyArray))block;
-//- (void)saveDetailImagesInDB:(NSMutableArray *)detailImages;
-//- (NSArray *)getDetalImagesByImageID:(NSInteger)imageID;
-
 @end

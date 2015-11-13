@@ -50,6 +50,11 @@ static  DDUserManager* _currentUser;
             [dict setObject:_sourceData[@"headimgurl"] forKey:@"avatar_url"];
             [dict setObject:@"weixin" forKey:@"type"];
             break;
+        case ATOMSignUpQQ:
+            [dict setObject:_sourceData[@"openid"] forKey:@"openid"];
+            [dict setObject:_sourceData[@"headimgurl"] forKey:@"avatar_url"];
+            [dict setObject:@"qq" forKey:@"type"];
+            break;
         case ATOMSignUpWeibo:
             [dict setObject:_sourceData[@"idstr"] forKey:@"openid"];
             [dict setObject:_sourceData[@"avatar_hd"] forKey:@"avatar_url"];

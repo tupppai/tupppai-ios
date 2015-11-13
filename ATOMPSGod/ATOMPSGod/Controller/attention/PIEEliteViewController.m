@@ -254,8 +254,8 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
         CGFloat width = _sv.swipeView.frame.size.width;
         view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width+10, width)];
         UIImageView* imageView = [[UIImageView alloc] initWithFrame:view.bounds];
-        imageView.contentMode = UIViewContentModeScaleAspectFill;
-        imageView.clipsToBounds = YES;
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
+//        imageView.clipsToBounds = YES;
         [view addSubview:imageView];
     }
     PIEBannerViewModel* vm = [_sourceBanner objectAtIndex:index];

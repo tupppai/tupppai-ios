@@ -14,7 +14,9 @@
 @end
 
 @implementation PIEBannerWebViewViewController
-
+-(BOOL)hidesBottomBarWhenPushed {
+    return YES;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.webView.scalesPageToFit = YES;

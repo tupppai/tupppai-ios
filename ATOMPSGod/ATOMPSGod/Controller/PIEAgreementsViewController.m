@@ -21,7 +21,7 @@
     self.webView.scalesPageToFit = YES;
     self.webView.backgroundColor = [UIColor whiteColor];
     self.webView.contentMode = UIViewContentModeScaleAspectFit;
-    NSString *url= @"http://www.ps.com/mobile/agreement.html";
+    NSString *url= [NSString stringWithFormat:@"%@mobile/agreement.html",[DDSessionManager shareHTTPSessionManager].baseURL];
     NSURL *nsurl=[NSURL URLWithString:url];
     NSURLRequest *nsrequest=[NSURLRequest requestWithURL:nsurl];
     [self.webView loadRequest:nsrequest];

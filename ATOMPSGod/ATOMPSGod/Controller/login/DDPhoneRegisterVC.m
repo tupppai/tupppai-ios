@@ -67,21 +67,26 @@
     if (![mobileStr isMobileNumber]) {
         if (block) { block(NO);}
         [Util ShowTSMessageWarn:@"请输入正确的手机号"];
-    } else {
-        NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:_mobileRegisterView.mobileTextField.text,@"phone", nil];
-        [DDService checkPhoneRegistration:param withBlock:^(BOOL isRegistered) {
-            if (isRegistered) {
-                [Util ShowTSMessageWarn:@"此手机号已注册"];
-                if (block) { block(NO);}
-            } else if (![passwordStr isPassword]) {
-                [Util ShowTSMessageWarn:@"密码必须由6~16的位的数字和字母组成"];
-                if (block) { block(NO);}
-            }
-            else {
-                if (block) { block(YES);}
-            }
-        }];
     }
+    else if ([DDUserManager currentUser].signUpType == ATOMSignUpMobile ) {
+                NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:_mobileRegisterView.mobileTextField.text,@"phone", nil];
+                [DDService checkPhoneRegistration:param withBlock:^(BOOL isRegistered) {
+                    if (isRegistered) {
+                        [Util ShowTSMessageWarn:@"此手机号已注册"];
+                        if (block) { block(NO);}
+                    } else if (![passwordStr isPassword]) {
+                        [Util ShowTSMessageWarn:@"密码必须由6~16的位的数字和字母组成"];
+                        if (block) { block(NO);}
+                    }
+                    else {
+                        if (block) { block(YES);}
+                    }
+                }];
+    }else {
+        if (block) { block(YES);}
+    }
+    
+    
     return _flag;
 }
 
@@ -97,7 +102,10 @@
         NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:_mobileRegisterView.mobileTextField.text,@"phone", nil];
         if (![_mobileRegisterView.mobileTextField.text isMobileNumber]) {
             [Util ShowTSMessageWarn:@"请输入正确的手机号"];
-        } else {
+        }
+        else if ([DDUserManager currentUser].signUpType == ATOMSignUpMobile )
+
+        {
             [DDService checkPhoneRegistration:param withBlock:^(BOOL isRegistered) {
                 if (isRegistered) {
                     [Util ShowTSMessageWarn:@"此手机号已注册"];

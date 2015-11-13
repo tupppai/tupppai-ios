@@ -275,6 +275,10 @@
 		F41FF0EB1BDE231200566A12 /* PIENotificationSystemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F41FF0EA1BDE231200566A12 /* PIENotificationSystemViewController.m */; };
 		F41FF0EE1BDE269A00566A12 /* PIENotificationLikedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F41FF0ED1BDE269A00566A12 /* PIENotificationLikedViewController.m */; };
 		F4206FE71BF0929C00C9B339 /* KVCMutableArray.m in Sources */ = {isa = PBXBuildFile; fileRef = F4206FE61BF0929C00C9B339 /* KVCMutableArray.m */; };
+		F42100EE1BF5E76A00CFD82E /* intro1.xib in Resources */ = {isa = PBXBuildFile; fileRef = F42100ED1BF5E76A00CFD82E /* intro1.xib */; };
+		F42100F01BF5EBC800CFD82E /* intro2.xib in Resources */ = {isa = PBXBuildFile; fileRef = F42100EF1BF5EBC800CFD82E /* intro2.xib */; };
+		F42100F21BF5EC1900CFD82E /* intro3.xib in Resources */ = {isa = PBXBuildFile; fileRef = F42100F11BF5EC1900CFD82E /* intro3.xib */; };
+		F42100F41BF5EC5600CFD82E /* intro4.xib in Resources */ = {isa = PBXBuildFile; fileRef = F42100F31BF5EC5600CFD82E /* intro4.xib */; };
 		F42131B91BF1E012004D48F8 /* PIECommentTableHeaderView_Reply.m in Sources */ = {isa = PBXBuildFile; fileRef = F42131B81BF1E012004D48F8 /* PIECommentTableHeaderView_Reply.m */; };
 		F421A20D1BEB2F320028C521 /* PIEToHelpTableViewCell2.xib in Resources */ = {isa = PBXBuildFile; fileRef = F421A20C1BEB2F320028C521 /* PIEToHelpTableViewCell2.xib */; };
 		F421A2101BEB41560028C521 /* PIEShareImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F421A20F1BEB41560028C521 /* PIEShareImageView.m */; };
@@ -1001,6 +1005,10 @@
 		F41FF0ED1BDE269A00566A12 /* PIENotificationLikedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENotificationLikedViewController.m; sourceTree = "<group>"; };
 		F4206FE51BF0929C00C9B339 /* KVCMutableArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVCMutableArray.h; sourceTree = "<group>"; };
 		F4206FE61BF0929C00C9B339 /* KVCMutableArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KVCMutableArray.m; sourceTree = "<group>"; };
+		F42100ED1BF5E76A00CFD82E /* intro1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = intro1.xib; sourceTree = "<group>"; };
+		F42100EF1BF5EBC800CFD82E /* intro2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = intro2.xib; sourceTree = "<group>"; };
+		F42100F11BF5EC1900CFD82E /* intro3.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = intro3.xib; sourceTree = "<group>"; };
+		F42100F31BF5EC5600CFD82E /* intro4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = intro4.xib; sourceTree = "<group>"; };
 		F42131B71BF1E012004D48F8 /* PIECommentTableHeaderView_Reply.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECommentTableHeaderView_Reply.h; sourceTree = "<group>"; };
 		F42131B81BF1E012004D48F8 /* PIECommentTableHeaderView_Reply.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECommentTableHeaderView_Reply.m; sourceTree = "<group>"; };
 		F421A20C1BEB2F320028C521 /* PIEToHelpTableViewCell2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEToHelpTableViewCell2.xib; sourceTree = "<group>"; };
@@ -2346,6 +2354,10 @@
 			children = (
 				E991EF091B735D0500025108 /* DDIntroVC.h */,
 				E991EF0A1B735D0500025108 /* DDIntroVC.m */,
+				F42100ED1BF5E76A00CFD82E /* intro1.xib */,
+				F42100EF1BF5EBC800CFD82E /* intro2.xib */,
+				F42100F11BF5EC1900CFD82E /* intro3.xib */,
+				F42100F31BF5EC5600CFD82E /* intro4.xib */,
 			);
 			name = introduction;
 			sourceTree = "<group>";
@@ -3495,6 +3507,7 @@
 				F402F0F91BE89530004988B4 /* PIESearchUserCollectionViewCell.xib in Resources */,
 				F4B02E121BECA27B00406A55 /* cellBG.png in Resources */,
 				3BE1AEC61B9FE9C900CE2303 /* QBImagePicker.strings in Resources */,
+				F42100F21BF5EC1900CFD82E /* intro3.xib in Resources */,
 				5C6CE6B91ADBE8A10035F522 /* EmojisList.plist in Resources */,
 				E942897F1B5B32A200ED26E4 /* NotificationBackgroundWarning@2x.png in Resources */,
 				E942897A1B5B32A200ED26E4 /* NotificationBackgroundSuccess.png in Resources */,
@@ -3525,10 +3538,12 @@
 				E900AB5B1B450E970019BAEA /* Images.xcassets in Resources */,
 				F4F72C001BCB6CD6002FF05A /* PIEMyCollectionTableViewCell.xib in Resources */,
 				F4EA4DB21BF477E400486304 /* intro3.png in Resources */,
+				F42100EE1BF5E76A00CFD82E /* intro1.xib in Resources */,
 				F4DC3D401BC131BA00DCF72F /* PIEFriendAskTableViewCell.xib in Resources */,
 				F4AE73BE1BBA770000734BCB /* PIEFriendViewController.xib in Resources */,
 				F499E4511BD0EAC300E5F178 /* PIESignOutTableViewCell.xib in Resources */,
 				F42ED3B91BC4FC9E0052A0BF /* PIEMyReplyCollectionViewCell.xib in Resources */,
+				F42100F41BF5EC5600CFD82E /* intro4.xib in Resources */,
 				E94289841B5B32A200ED26E4 /* TSMessagesDefaultDesign.json in Resources */,
 				E942897E1B5B32A200ED26E4 /* NotificationBackgroundWarning.png in Resources */,
 				E94289801B5B32A200ED26E4 /* NotificationBackgroundWarningIcon.png in Resources */,
@@ -3544,6 +3559,7 @@
 				E94289791B5B32A200ED26E4 /* NotificationBackgroundMessage@2x.png in Resources */,
 				F4C0DFF11BE9EF3A000615CF /* PIEFeedbackViewController.xib in Resources */,
 				F45D8FA71BD87CFD005946E8 /* WeiboSDK.bundle in Resources */,
+				F42100F01BF5EBC800CFD82E /* intro2.xib in Resources */,
 				F46117E31BAD1102001A6F1A /* IQKeyboardManager.bundle in Resources */,
 				F42ED3B31BC4FC3B0052A0BF /* Me.storyboard in Resources */,
 				F45ECF4B1BD1DC3F00417A75 /* PIEMyCommentedPageTableViewCell.xib in Resources */,
