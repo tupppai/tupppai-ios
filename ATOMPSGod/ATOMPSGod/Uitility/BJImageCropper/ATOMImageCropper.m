@@ -156,7 +156,7 @@
     if (gesture.state == UIGestureRecognizerStateChanged || gesture.state == UIGestureRecognizerStateEnded) {
         CGFloat translateX = location.x - preLocation.x;
         CGFloat translateY = location.y - preLocation.y;
-        NSLog(@"translate (x = %f , y = %f)", translateX, translateY);
+//        NSLog(@"translate (x = %f , y = %f)", translateX, translateY);
         CGPoint center = self.imageView.center;
         center.x += translateX;
         center.y += translateY;

@@ -8,5 +8,5 @@
 
 #import "SLKTextView.h"
 
-@interface DDCommentTextView : SLKTextView
+@interface PIECommentTextView : SLKTextView
 @end

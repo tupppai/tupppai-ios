@@ -13,10 +13,6 @@
 
 - (void)pullAskSource:(NSDictionary *)param block:(void (^)(NSMutableArray *))block;
 - (void)pullReplySource:(NSDictionary *)param block:(void (^)(NSMutableArray *))block;
-//- (void)saveHomeImagesInDB:(NSMutableArray *)homeImages;
-//- (NSArray *)getHomeImages;
-//- (NSArray *)getHomeImagesWithHomeType:(NSInteger)homeType;
-//- (void)clearHomePages;
-//- (void)clearHomePagesWithHomeType:(NSString *)homeType;
++ (void)getPageSource:(NSDictionary *)param block:(void (^)(DDPageVM *))block;
 //
 @end

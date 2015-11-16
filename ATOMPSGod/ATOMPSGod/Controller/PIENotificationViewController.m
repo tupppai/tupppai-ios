@@ -11,23 +11,26 @@
 #import "PIENotificationManager.h"
 #import "PIENotificationVM.h"
 
-//#import "PIENotificationSystemTableViewCell.h"
 #import "PIENotificationReplyTableViewCell.h"
-//#import "PIENotificationLikeTableViewCell.h"
 #import "PIENotificationFollowTableViewCell.h"
 #import "PIENotificationCommentTableViewCell.h"
 #import "PIENotificationSystemViewController.h"
 #import "PIENotificationLikedViewController.h"
 #import "PIENotificationTypeTableViewCell.h"
+#import "PIEFriendViewController.h"
+#import "PIECommentViewController.h"
+#import "PIECommentManager.h"
 @interface PIENotificationViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate>
 @property (nonatomic, strong) NSMutableArray *source;
-@property (nonatomic, strong) PIERefreshTableView *tableView;
+//@property (nonatomic, strong) PIERefreshTableView *tableView;
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, assign) BOOL canRefreshFooter;
+@property (nonatomic, strong) PIENotificationVM* selectedVM;
 
 @end
 
 @implementation PIENotificationViewController
+
 -(BOOL)hidesBottomBarWhenPushed {
     return YES;
 }
@@ -36,19 +39,170 @@
     self.title = @"我的消息";
     _source = [NSMutableArray array];
     _canRefreshFooter = YES;
-    self.view = self.tableView;
-    [self.tableView.header beginRefreshing];
     
+    UITapGestureRecognizer* tapGes = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnTableView:)];
+    [self.tableView addGestureRecognizer:tapGes];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTableView) name:@"updateNoticationStatus" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidHide:)
+                                                 name:UIKeyboardDidHideNotification
+                                               object:nil];
+    [self configSlack];
+    [self configTableView];
+    [self setupRefresh_Footer];
+    [self getDataSource];
 }
+
+- (void)keyboardWillShow:(id)sender {
+    self.textInputbarHidden = NO;
+}
+- (void)keyboardDidHide:(id)sender {
+    self.textInputbarHidden = YES;
+}
+
+- (void)tapOnTableView:(UITapGestureRecognizer*)gesture {
+    CGPoint location = [gesture locationInView:self.tableView];
+    NSIndexPath* selectedIndexPath = [self.tableView indexPathForRowAtPoint:location];
+    if (selectedIndexPath.section == 1) {
+        PIENotificationVM* vm = [_source objectAtIndex:selectedIndexPath.row];
+        _selectedVM = vm;
+        if (vm.type == 1) {
+            PIENotificationCommentTableViewCell* cell = [self.tableView cellForRowAtIndexPath:selectedIndexPath];
+            CGPoint p = [gesture locationInView:cell];
+            if (CGRectContainsPoint(cell.replyLabel.frame,p)) {
+                self.textInputbarHidden = NO;
+                self.textView.placeholder = [NSString stringWithFormat:@"@%@:",vm.username];
+                [self.textView becomeFirstResponder];
+            }     else       if (CGRectContainsPoint(cell.avatarView.frame,p) || (CGRectContainsPoint(cell.usernameLabel.frame,p))) {
+                PIEFriendViewController* vc = [PIEFriendViewController new];
+                vc.uid = vm.senderID;
+                vc.name = vm.username;
+                [self.navigationController pushViewController:vc animated:YES];
+            } else  if (CGRectContainsPoint(cell.pageImageView.frame,p)) {
+                PIECommentViewController* vc = [PIECommentViewController new];
+                DDPageVM* pageVM = [DDPageVM new];
+                pageVM.ID = vm.targetID;
+                pageVM.type = vm.targetType;
+                vc.vm = pageVM;
+                vc.shouldDownloadVMSource = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        } else    if (vm.type == 2) {
+            PIENotificationReplyTableViewCell* cell = [self.tableView cellForRowAtIndexPath:selectedIndexPath];
+            CGPoint p = [gesture locationInView:cell];
+            if (CGRectContainsPoint(cell.replyLabel.frame,p)) {
+                self.textInputbarHidden = NO;
+                self.textView.placeholder = [NSString stringWithFormat:@"@%@:",vm.username];
+                [self.textView becomeFirstResponder];
+            } else if (CGRectContainsPoint(cell.avatarView.frame,p) || (CGRectContainsPoint(cell.usernameLabel.frame,p))) {
+                PIEFriendViewController* vc = [PIEFriendViewController new];
+                vc.uid = vm.senderID;
+                vc.name = vm.username;
+                [self.navigationController pushViewController:vc animated:YES];
+            } else  if (CGRectContainsPoint(cell.pageImageView.frame,p)) {
+                PIECommentViewController* vc = [PIECommentViewController new];
+                DDPageVM* pageVM = [DDPageVM new];
+                pageVM.ID = vm.targetID;
+                pageVM.type = vm.targetType;
+                vc.vm = pageVM;
+                vc.shouldDownloadVMSource = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        } else if (vm.type == 3) {
+                PIEFriendViewController* vc = [PIEFriendViewController new];
+                vc.uid = vm.senderID;
+                vc.name = vm.username;
+                [self.navigationController pushViewController:vc animated:YES];
+        }
+    } else if (selectedIndexPath.section == 0) {
+
+            NSInteger row = selectedIndexPath.row;
+            NSString* badgeKey;
+            if (row == 0 ) {
+                badgeKey = @"NotificationSystem";
+            } else     if (row == 1 ) {
+                badgeKey = @"NotificationLike";
+            }
+            [[NSUserDefaults standardUserDefaults]setObject:@(0) forKey:badgeKey];
+            [[NSUserDefaults standardUserDefaults]synchronize];
+            PIENotificationTypeTableViewCell *cell = (PIENotificationTypeTableViewCell*)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
+            cell.badgeNumber = 0;
+            [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:selectedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            
+            if (selectedIndexPath.row == 0) {
+                PIENotificationSystemViewController* vc = [PIENotificationSystemViewController new];
+                [self.navigationController pushViewController:vc animated:YES];
+            } else if (selectedIndexPath.row == 1) {
+                PIENotificationLikedViewController* vc = [PIENotificationLikedViewController new];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
+}
+
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"updateNoticationStatus" object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardDidHideNotification object:nil];
+
+}
+- (void)configTableView {
+    UINib* nib  = [UINib nibWithNibName:@"PIENotificationCommentTableViewCell" bundle:nil];
+    UINib* nib3 = [UINib nibWithNibName:@"PIENotificationFollowTableViewCell" bundle:nil];
+    UINib* nib4 = [UINib nibWithNibName:@"PIENotificationReplyTableViewCell" bundle:nil];
+    [self.tableView registerNib:nib  forCellReuseIdentifier:@"PIENotificationCommentTableViewCell"];
+    [self.tableView registerNib:nib3 forCellReuseIdentifier:@"PIENotificationFollowTableViewCell"];
+    [self.tableView registerNib:nib4 forCellReuseIdentifier:@"PIENotificationReplyTableViewCell"];
+//    self.tableView.emptyDataSetSource = self;
+//    self.tableView.emptyDataSetDelegate = self;
+    self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag|UIScrollViewKeyboardDismissModeInteractive;
+//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    [self.tableView registerClass:[DDCommentTableCell class] forCellReuseIdentifier:MessengerCellIdentifier];
+    self.tableView.tableFooterView = [UIView new];
+    self.tableView.showsVerticalScrollIndicator = NO;
+    self.tableView.showsHorizontalScrollIndicator = NO;
+}
+- (void)configSlack {
+    self.bounces = NO;
+    self.shakeToClearEnabled = NO;
+    self.keyboardPanningEnabled = YES;
+    self.shouldScrollToBottomAfterKeyboardShows = NO;
+    self.inverted = NO;
+    //    [self.leftButton setImage:[UIImage imageNamed:@"btn_emoji"] forState:UIControlStateNormal];
+    //    [self.rightButton setImage:[UIImage imageNamed:@"btn_comment_send"] forState:UIControlStateNormal];
+    [self.rightButton setTitle:@"回复ta" forState:UIControlStateNormal];
+    [self.rightButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    self.textInputbar.autoHideRightButton = YES;
+    self.textInputbar.maxCharCount = 128;
+    self.textInputbar.counterStyle = SLKCounterStyleSplit;
+    self.textInputbar.counterPosition = SLKCounterPositionTop;
+    self.shouldClearTextAtRightButtonPress = YES;
+    self.textView.placeholder = @"回复ta";
+    self.textInputbarHidden = YES;
+}
+- (void)setupRefresh_Footer {
+    [self.tableView addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    NSMutableArray *animatedImages = [NSMutableArray array];
+    for (int i = 1; i<=6; i++) {
+        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"pie_loading_%d", i]];
+        [animatedImages addObject:image];
+    }
+    self.tableView.gifFooter.refreshingImages = animatedImages;
+    self.tableView.footer.stateHidden = YES;
+    _canRefreshFooter = YES;
+}
+
+
 -(void)refreshTableView {
-    [_tableView reloadData];
+    [self.tableView reloadData];
 }
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [[NSUserDefaults standardUserDefaults]setObject:@(NO) forKey:@"NotificationNew"];
     [[NSUserDefaults standardUserDefaults]synchronize];
-    
 }
 #pragma mark - GetDataSource
 - (void)getDataSource {
@@ -72,6 +226,29 @@
         }
         [self.tableView.header endRefreshing];
     }];
+}
+
+
+- (void)didPressRightButton:(id)sender
+{
+    // Notifies the view controller when the right button's action has been triggered, manually or by using the keyboard return key.
+    if (_selectedVM) {
+        NSMutableDictionary *param = [NSMutableDictionary dictionary];
+        [param setObject:self.textView.text forKey:@"content"];
+        [param setObject:@(_selectedVM.targetType) forKey:@"type"];
+        [param setObject:@(_selectedVM.targetID) forKey:@"target_id"];
+        [param setObject:@(_selectedVM.commentId) forKey:@"for_comment"];
+        PIECommentManager *commentManager = [PIECommentManager new];
+        [commentManager SendComment:param withBlock:^(NSInteger comment_id, NSError *error) {
+            if (comment_id) {
+                [Hud success:@"回复成功" inView:self.view];
+                [self.textView resignFirstResponder];
+            } else if (error) {
+                [Hud error:@"回复失败" inView:self.view];
+            }
+        }];
+    }
+    [super didPressRightButton:sender];
 }
 
 #pragma mark - GetDataSource
@@ -98,34 +275,12 @@
     }];
 }
 
--(void)didPullRefreshDown:(UITableView *)tableView {
-    [self getDataSource];
-}
--(void)didPullRefreshUp:(UITableView *)tableView {
+- (void)loadMoreData {
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
         [self.tableView.footer endRefreshing];
     }
-}
--(PIERefreshTableView *)tableView {
-    if (!_tableView) {
-        _tableView = [PIERefreshTableView new];
-        _tableView.dataSource = self;
-        _tableView.delegate = self;
-        _tableView.psDelegate = self;
-        UINib* nib  = [UINib nibWithNibName:@"PIENotificationCommentTableViewCell" bundle:nil];
-//        UINib* nib2 = [UINib nibWithNibName:@"PIENotificationLikeTableViewCell" bundle:nil];
-        UINib* nib3 = [UINib nibWithNibName:@"PIENotificationFollowTableViewCell" bundle:nil];
-        UINib* nib4 = [UINib nibWithNibName:@"PIENotificationReplyTableViewCell" bundle:nil];
-//        UINib* nib5 = [UINib nibWithNibName:@"PIENotificationSystemTableViewCell" bundle:nil];
-        [_tableView registerNib:nib  forCellReuseIdentifier:@"PIENotificationCommentTableViewCell"];
-//        [_tableView registerNib:nib2 forCellReuseIdentifier:@"PIENotificationLikeTableViewCell"];
-        [_tableView registerNib:nib3 forCellReuseIdentifier:@"PIENotificationFollowTableViewCell"];
-        [_tableView registerNib:nib4 forCellReuseIdentifier:@"PIENotificationReplyTableViewCell"];
-//        [_tableView registerNib:nib5 forCellReuseIdentifier:@"PIENotificationSystemTableViewCell"];
-    }
-    return _tableView;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -151,13 +306,7 @@
                     return cell;
                     break;
                 }
-                    //            case PIENotificationTypeLike:
-                    //            {
-                    //                PIENotificationLikeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIENotificationLikeTableViewCell"];
-                    //                [cell injectSauce:vm];
-                    //                return cell;
-                    //                break;
-                    //            }
+   
                 case PIENotificationTypeReply:
                 {
                     PIENotificationReplyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIENotificationReplyTableViewCell"];
@@ -165,14 +314,7 @@
                     return cell;
                     break;
                 }
-                    //            case PIENotificationTypeSystem:
-                    //            {
-                    //                PIENotificationSystemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIENotificationSystemTableViewCell"];
-                    //                [cell injectSauce:vm];
-                    //                return cell;
-                    //                break;
-                    //                
-                    //            }
+
                 default:
                     return nil;
                     break;
@@ -192,7 +334,6 @@
             cell.textLabel.text = @"收到的赞";
             cell.badgeNumber = [[[NSUserDefaults standardUserDefaults]objectForKey:@"NotificationLike"]integerValue];
         }
-
         return cell;
     }
     return nil;
@@ -262,34 +403,34 @@
     }
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        if (self.navigationController.topViewController != self) {
-            return;
-        }
-        NSInteger row = indexPath.row;
-        NSString* badgeKey;
-        if (row == 0 ) {
-            badgeKey = @"NotificationSystem";
-        } else     if (row == 1 ) {
-            badgeKey = @"NotificationLike";
-        }
-        [[NSUserDefaults standardUserDefaults]setObject:@(0) forKey:badgeKey];
-        [[NSUserDefaults standardUserDefaults]synchronize];
-        PIENotificationTypeTableViewCell *cell = (PIENotificationTypeTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
-        cell.badgeNumber = 0;
-        [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        
-            if (indexPath.row == 0) {
-                PIENotificationSystemViewController* vc = [PIENotificationSystemViewController new];
-                [self.navigationController pushViewController:vc animated:YES];
-            } else if (indexPath.row == 1) {
-                PIENotificationLikedViewController* vc = [PIENotificationLikedViewController new];
-                [self.navigationController pushViewController:vc animated:YES];
-            }
-    }
-
-}
+//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if (indexPath.section == 0) {
+//        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//        if (self.navigationController.topViewController != self) {
+//            return;
+//        }
+//        NSInteger row = indexPath.row;
+//        NSString* badgeKey;
+//        if (row == 0 ) {
+//            badgeKey = @"NotificationSystem";
+//        } else     if (row == 1 ) {
+//            badgeKey = @"NotificationLike";
+//        }
+//        [[NSUserDefaults standardUserDefaults]setObject:@(0) forKey:badgeKey];
+//        [[NSUserDefaults standardUserDefaults]synchronize];
+//        PIENotificationTypeTableViewCell *cell = (PIENotificationTypeTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+//        cell.badgeNumber = 0;
+//        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//        
+//            if (indexPath.row == 0) {
+//                PIENotificationSystemViewController* vc = [PIENotificationSystemViewController new];
+//                [self.navigationController pushViewController:vc animated:YES];
+//            } else if (indexPath.row == 1) {
+//                PIENotificationLikedViewController* vc = [PIENotificationLikedViewController new];
+//                [self.navigationController pushViewController:vc animated:YES];
+//            }
+//    }
+//
+//}
 
 @end

@@ -11,7 +11,7 @@
 #import "PIEFriendViewController.h"
 #import "HMSegmentedControl.h"
 #import "FXBlurView.h"
-#import "DDCommentVC.h"
+#import "PIECommentViewController.h"
 #import "JGActionSheet.h"
 @interface PIECarouselViewController ()<JGActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *blurView;
@@ -191,7 +191,7 @@
 
 - (void)carousel:(__unused iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index
 {
-    DDCommentVC* vc = [DDCommentVC new];
+    PIECommentViewController* vc = [PIECommentViewController new];
     vc.vm = _currentVM;
     [self.navigationController pushViewController:vc animated:YES];
 }

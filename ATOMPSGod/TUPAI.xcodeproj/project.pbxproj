@@ -28,7 +28,7 @@
 		3BE1AECE1B9FE9C900CE2303 /* QBImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE1AEC01B9FE9C900CE2303 /* QBImagePickerController.m */; };
 		3BE1AECF1B9FE9C900CE2303 /* QBVideoIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE1AEC21B9FE9C900CE2303 /* QBVideoIconView.m */; };
 		3BE1AED01B9FE9C900CE2303 /* QBVideoIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE1AEC41B9FE9C900CE2303 /* QBVideoIndicatorView.m */; };
-		5C0D282D1ACA333200491452 /* DDCommentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D282C1ACA333200491452 /* DDCommentManager.m */; };
+		5C0D282D1ACA333200491452 /* PIECommentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D282C1ACA333200491452 /* PIECommentManager.m */; };
 		5C0D28301ACA83C400491452 /* PIEEntityCommentReply.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D282F1ACA83C400491452 /* PIEEntityCommentReply.m */; };
 		5C0F04D21ADCA8E2002003AE /* PIEEntityFan.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C0F04D11ADCA8E2002003AE /* PIEEntityFan.m */; };
 		5C0F04F71ADD033D002003AE /* PIEFansViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C0F04F61ADD033D002003AE /* PIEFansViewModel.m */; };
@@ -114,7 +114,7 @@
 		5C8D4AC71ADE3FBF00B158AE /* DDFollowManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8D4AC61ADE3FBF00B158AE /* DDFollowManager.m */; };
 		5C8D4ACA1ADE400100B158AE /* PIEFollowViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8D4AC91ADE400100B158AE /* PIEFollowViewModel.m */; };
 		5C8D4ACD1ADE484A00B158AE /* PIEFriendFollowingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8D4ACC1ADE484A00B158AE /* PIEFriendFollowingViewController.m */; };
-		5C9BDA081AA84D1000715698 /* DDCommentVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C9BDA071AA84D1000715698 /* DDCommentVM.m */; };
+		5C9BDA081AA84D1000715698 /* PIECommentVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C9BDA071AA84D1000715698 /* PIECommentVM.m */; };
 		5CDB05C71AA3FE520089121E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB05C61AA3FE520089121E /* main.m */; };
 		5CDB05CA1AA3FE520089121E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB05C91AA3FE520089121E /* AppDelegate.m */; };
 		5CDB05D51AA3FE520089121E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CDB05D31AA3FE520089121E /* LaunchScreen.xib */; };
@@ -181,9 +181,9 @@
 		E94289871B5B32A200ED26E4 /* TSMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = E94289701B5B32A200ED26E4 /* TSMessage.m */; };
 		E94289881B5B32A200ED26E4 /* TSMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E94289721B5B32A200ED26E4 /* TSMessageView.m */; };
 		E942898B1B5B374B00ED26E4 /* HexColors.m in Sources */ = {isa = PBXBuildFile; fileRef = E942898A1B5B374B00ED26E4 /* HexColors.m */; };
-		E94B03211B7C74E500863C6F /* DDCommentTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B03191B7C74E500863C6F /* DDCommentTableCell.m */; };
-		E94B03221B7C74E500863C6F /* DDCommentTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B031B1B7C74E500863C6F /* DDCommentTextView.m */; };
-		E94B03231B7C74E500863C6F /* DDCommentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B031D1B7C74E500863C6F /* DDCommentVC.m */; };
+		E94B03211B7C74E500863C6F /* PIECommentTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B03191B7C74E500863C6F /* PIECommentTableCell.m */; };
+		E94B03221B7C74E500863C6F /* PIECommentTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B031B1B7C74E500863C6F /* PIECommentTextView.m */; };
+		E94B03231B7C74E500863C6F /* PIECommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B031D1B7C74E500863C6F /* PIECommentViewController.m */; };
 		E94B032A1B7DE6EC00863C6F /* UIColor+PSGod.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B03291B7DE6EC00863C6F /* UIColor+PSGod.m */; };
 		E95691AA1B22E88300DA84BB /* EXTRuntimeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = E956918C1B22E88300DA84BB /* EXTRuntimeExtensions.m */; };
 		E95691AB1B22E88300DA84BB /* EXTScope.m in Sources */ = {isa = PBXBuildFile; fileRef = E956918E1B22E88300DA84BB /* EXTScope.m */; };
@@ -517,8 +517,8 @@
 		3BE1AEC31B9FE9C900CE2303 /* QBVideoIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBVideoIndicatorView.h; sourceTree = "<group>"; };
 		3BE1AEC41B9FE9C900CE2303 /* QBVideoIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBVideoIndicatorView.m; sourceTree = "<group>"; };
 		3BE1AEC51B9FE9C900CE2303 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/QBImagePicker.strings"; sourceTree = "<group>"; };
-		5C0D282B1ACA333200491452 /* DDCommentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDCommentManager.h; sourceTree = "<group>"; };
-		5C0D282C1ACA333200491452 /* DDCommentManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDCommentManager.m; sourceTree = "<group>"; };
+		5C0D282B1ACA333200491452 /* PIECommentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECommentManager.h; sourceTree = "<group>"; };
+		5C0D282C1ACA333200491452 /* PIECommentManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECommentManager.m; sourceTree = "<group>"; };
 		5C0D282E1ACA83C400491452 /* PIEEntityCommentReply.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEntityCommentReply.h; sourceTree = "<group>"; };
 		5C0D282F1ACA83C400491452 /* PIEEntityCommentReply.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEntityCommentReply.m; sourceTree = "<group>"; };
 		5C0F04D01ADCA8E2002003AE /* PIEEntityFan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEntityFan.h; sourceTree = "<group>"; };
@@ -704,8 +704,8 @@
 		5C8D4AC91ADE400100B158AE /* PIEFollowViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIEFollowViewModel.m; path = person/PIEFollowViewModel.m; sourceTree = "<group>"; };
 		5C8D4ACB1ADE484A00B158AE /* PIEFriendFollowingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIEFriendFollowingViewController.h; path = person/PIEFriendFollowingViewController.h; sourceTree = "<group>"; };
 		5C8D4ACC1ADE484A00B158AE /* PIEFriendFollowingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIEFriendFollowingViewController.m; path = person/PIEFriendFollowingViewController.m; sourceTree = "<group>"; };
-		5C9BDA061AA84D1000715698 /* DDCommentVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDCommentVM.h; path = homepage/DDCommentVM.h; sourceTree = "<group>"; };
-		5C9BDA071AA84D1000715698 /* DDCommentVM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDCommentVM.m; path = homepage/DDCommentVM.m; sourceTree = "<group>"; };
+		5C9BDA061AA84D1000715698 /* PIECommentVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIECommentVM.h; path = homepage/PIECommentVM.h; sourceTree = "<group>"; };
+		5C9BDA071AA84D1000715698 /* PIECommentVM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIECommentVM.m; path = homepage/PIECommentVM.m; sourceTree = "<group>"; };
 		5CDB05C11AA3FE520089121E /* TUPAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TUPAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CDB05C51AA3FE520089121E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5CDB05C61AA3FE520089121E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -829,12 +829,12 @@
 		E94289721B5B32A200ED26E4 /* TSMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSMessageView.m; sourceTree = "<group>"; };
 		E94289891B5B374B00ED26E4 /* HexColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HexColors.h; sourceTree = "<group>"; };
 		E942898A1B5B374B00ED26E4 /* HexColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HexColors.m; sourceTree = "<group>"; };
-		E94B03181B7C74E500863C6F /* DDCommentTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDCommentTableCell.h; sourceTree = "<group>"; };
-		E94B03191B7C74E500863C6F /* DDCommentTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDCommentTableCell.m; sourceTree = "<group>"; };
-		E94B031A1B7C74E500863C6F /* DDCommentTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDCommentTextView.h; sourceTree = "<group>"; };
-		E94B031B1B7C74E500863C6F /* DDCommentTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDCommentTextView.m; sourceTree = "<group>"; };
-		E94B031C1B7C74E500863C6F /* DDCommentVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDCommentVC.h; sourceTree = "<group>"; };
-		E94B031D1B7C74E500863C6F /* DDCommentVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDCommentVC.m; sourceTree = "<group>"; };
+		E94B03181B7C74E500863C6F /* PIECommentTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECommentTableCell.h; sourceTree = "<group>"; };
+		E94B03191B7C74E500863C6F /* PIECommentTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECommentTableCell.m; sourceTree = "<group>"; };
+		E94B031A1B7C74E500863C6F /* PIECommentTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECommentTextView.h; sourceTree = "<group>"; };
+		E94B031B1B7C74E500863C6F /* PIECommentTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECommentTextView.m; sourceTree = "<group>"; };
+		E94B031C1B7C74E500863C6F /* PIECommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECommentViewController.h; sourceTree = "<group>"; };
+		E94B031D1B7C74E500863C6F /* PIECommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECommentViewController.m; sourceTree = "<group>"; };
 		E94B03281B7DE6EC00863C6F /* UIColor+PSGod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+PSGod.h"; sourceTree = "<group>"; };
 		E94B03291B7DE6EC00863C6F /* UIColor+PSGod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+PSGod.m"; sourceTree = "<group>"; };
 		E956918A1B22E88300DA84BB /* EXTKeyPathCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTKeyPathCoding.h; sourceTree = "<group>"; };
@@ -1620,8 +1620,8 @@
 				5C54DF2C1AB99F5300BDE34D /* DDTipLabelManager.m */,
 				5C8406301ABA762900068F35 /* PIEPageManager.h */,
 				5C8406311ABA762900068F35 /* PIEPageManager.m */,
-				5C0D282B1ACA333200491452 /* DDCommentManager.h */,
-				5C0D282C1ACA333200491452 /* DDCommentManager.m */,
+				5C0D282B1ACA333200491452 /* PIECommentManager.h */,
+				5C0D282C1ACA333200491452 /* PIECommentManager.m */,
 			);
 			path = homepage;
 			sourceTree = "<group>";
@@ -1825,8 +1825,8 @@
 				F4EC11221BCF456E002D1DCF /* PIENotificationVM.m */,
 				F4C0DFE41BE9D1B7000615CF /* PIEBannerViewModel.h */,
 				F4C0DFE51BE9D1B7000615CF /* PIEBannerViewModel.m */,
-				5C9BDA061AA84D1000715698 /* DDCommentVM.h */,
-				5C9BDA071AA84D1000715698 /* DDCommentVM.m */,
+				5C9BDA061AA84D1000715698 /* PIECommentVM.h */,
+				5C9BDA071AA84D1000715698 /* PIECommentVM.m */,
 				E9FC94D71B2F0D0C00B72C60 /* PIEUserProfileViewModel.h */,
 				E9FC94D81B2F0D0C00B72C60 /* PIEUserProfileViewModel.m */,
 				5C0F04F51ADD033D002003AE /* PIEFansViewModel.h */,
@@ -2235,12 +2235,12 @@
 		E94B03151B7C74C600863C6F /* comment */ = {
 			isa = PBXGroup;
 			children = (
-				E94B03181B7C74E500863C6F /* DDCommentTableCell.h */,
-				E94B03191B7C74E500863C6F /* DDCommentTableCell.m */,
-				E94B031A1B7C74E500863C6F /* DDCommentTextView.h */,
-				E94B031B1B7C74E500863C6F /* DDCommentTextView.m */,
-				E94B031C1B7C74E500863C6F /* DDCommentVC.h */,
-				E94B031D1B7C74E500863C6F /* DDCommentVC.m */,
+				E94B03181B7C74E500863C6F /* PIECommentTableCell.h */,
+				E94B03191B7C74E500863C6F /* PIECommentTableCell.m */,
+				E94B031A1B7C74E500863C6F /* PIECommentTextView.h */,
+				E94B031B1B7C74E500863C6F /* PIECommentTextView.m */,
+				E94B031C1B7C74E500863C6F /* PIECommentViewController.h */,
+				E94B031D1B7C74E500863C6F /* PIECommentViewController.m */,
 				F4206FE51BF0929C00C9B339 /* KVCMutableArray.h */,
 				F4206FE61BF0929C00C9B339 /* KVCMutableArray.m */,
 			);
@@ -3626,7 +3626,7 @@
 				5C83A8861AC66F910071A024 /* POPAnimatableProperty.mm in Sources */,
 				F4B02E1B1BECAAE200406A55 /* DDHotDetailManager.m in Sources */,
 				F421A2101BEB41560028C521 /* PIEShareImageView.m in Sources */,
-				5C9BDA081AA84D1000715698 /* DDCommentVM.m in Sources */,
+				5C9BDA081AA84D1000715698 /* PIECommentVM.m in Sources */,
 				5C67FB2A1AB2B634004EFF05 /* PIEImageCropperView.m in Sources */,
 				5CDB06331AA428BD0089121E /* MASViewConstraint.m in Sources */,
 				5C54DF261AB97B8400BDE34D /* PIECommentEntity.m in Sources */,
@@ -3649,7 +3649,7 @@
 				5CDB06031AA405A40089121E /* UIColor+Hex.m in Sources */,
 				F4AE609B1BC129ED007BCA2A /* PIEFriendReplyCollectionViewCell.m in Sources */,
 				F4E5F5CC1BD923E000AB8B31 /* PIEEliteHotAskTableViewCell.m in Sources */,
-				E94B03231B7C74E500863C6F /* DDCommentVC.m in Sources */,
+				E94B03231B7C74E500863C6F /* PIECommentViewController.m in Sources */,
 				5CDB06361AA428BD0089121E /* View+MASAdditions.m in Sources */,
 				F4EC10FC1BCE591A002D1DCF /* PIENotificationCommentTableViewCell.m in Sources */,
 				5C83A88F1AC66F910071A024 /* POPCustomAnimation.mm in Sources */,
@@ -3700,7 +3700,7 @@
 				F4275A141BE0786400BBE7E4 /* SLKTypingIndicatorView.m in Sources */,
 				F4EA4DB81BF49CB700486304 /* PIEAgreementsViewController.m in Sources */,
 				E9F890901B86C4AB0057ECBF /* FMDatabasePool.m in Sources */,
-				5C0D282D1ACA333200491452 /* DDCommentManager.m in Sources */,
+				5C0D282D1ACA333200491452 /* PIECommentManager.m in Sources */,
 				F4D015BB1BA6AF7200A28329 /* PIEThumbAnimateView.m in Sources */,
 				5CE4082F1ACE94D600A56E4B /* UIViewController+ATOMTracking.m in Sources */,
 				F4275A101BE0786400BBE7E4 /* SLKTextInputbar.m in Sources */,
@@ -3760,7 +3760,7 @@
 				5C561A491AB7C7720052D4D5 /* ATOMUserDAO.m in Sources */,
 				5C4F5BDC1AA555F900226F64 /* PIENewViewController.m in Sources */,
 				F4F72C081BCB994B002FF05A /* PIEMyAskViewController.m in Sources */,
-				E94B03211B7C74E500863C6F /* DDCommentTableCell.m in Sources */,
+				E94B03211B7C74E500863C6F /* PIECommentTableCell.m in Sources */,
 				F40207311BA7C17C0007CE02 /* PIECameraViewController.m in Sources */,
 				E9F8908F1B86C4AB0057ECBF /* FMDatabaseAdditions.m in Sources */,
 				F4AE73C31BBA90D800734BCB /* PIEFriendAskViewController.m in Sources */,
@@ -3837,7 +3837,7 @@
 				F439303B1BE4BD75006C9437 /* MRActivityIndicatorView.m in Sources */,
 				5C84062C1ABA67CC00068F35 /* JSONKit.m in Sources */,
 				F4EC110C1BCE5A48002D1DCF /* PIENotificationFollowTableViewCell.m in Sources */,
-				E94B03221B7C74E500863C6F /* DDCommentTextView.m in Sources */,
+				E94B03221B7C74E500863C6F /* PIECommentTextView.m in Sources */,
 				F4155D461BB3DA1300A0B045 /* PIEHighlightableLabel.m in Sources */,
 				F439303F1BE4BD75006C9437 /* MRProgressOverlayView.m in Sources */,
 				E93ED5261B7F25F00035630B /* UITableView+FDTemplateLayoutCell.m in Sources */,

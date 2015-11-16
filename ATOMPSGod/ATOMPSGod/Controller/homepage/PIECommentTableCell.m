@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Slack Technologies, Inc. All rights reserved.
 //
 
-#import "DDCommentTableCell.h"
+#import "PIECommentTableCell.h"
 #import "PIEEntityCommentReply.h"
-@implementation DDCommentTableCell
+@implementation PIECommentTableCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -60,7 +60,7 @@
     [super prepareForReuse];
 }
 
--(void)getSource:(DDCommentVM *)vm {
+-(void)getSource:(PIECommentVM *)vm {
     self.usernameLabel.text = vm.username;
     self.commentLabel.text = vm.text;
 //    self.likeButton.selected = vm.liked;

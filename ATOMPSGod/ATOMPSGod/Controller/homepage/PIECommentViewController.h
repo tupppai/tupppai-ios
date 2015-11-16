@@ -10,12 +10,14 @@
 #import "PIECommentTableHeaderView_Ask.h"
 #import "PIECommentTableHeaderView_Reply.h"
 
-@interface DDCommentVC : SLKTextViewController
+@interface PIECommentViewController : SLKTextViewController
 
 @property (nonatomic, strong) PIECommentTableHeaderView_Ask *headerView;
 @property (nonatomic, strong) PIECommentTableHeaderView_Reply *headerView_reply;
 
 @property (nonatomic, strong) DDPageVM *vm;
+@property (nonatomic, assign) BOOL shouldDownloadVMSource;
+
 //回传 是否点赞 到 parent VC
 @property (nonatomic, weak)   id<ATOMViewControllerDelegate> delegate;
 @end

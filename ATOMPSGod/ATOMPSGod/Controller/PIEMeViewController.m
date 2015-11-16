@@ -52,6 +52,7 @@
     [self setupViews];
     [self setupPageMenu];
     
+    
     UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
     backButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [backButton setImage:[UIImage imageNamed:@"pie_message"] forState:UIControlStateNormal];
@@ -124,7 +125,7 @@
 -(void)updateAvatar {
         [DDService downloadImage:[DDUserManager currentUser].avatar withBlock:^(UIImage *image) {
             _avatarView.image = image;
-            _topContainerView.image = [image blurredImageWithRadius:40 iterations:1 tintColor:nil];
+            _topContainerView.image = [image blurredImageWithRadius:80 iterations:1 tintColor:nil];
     }];
     self.usernameLabel.text = [DDUserManager currentUser].username;
 }
@@ -137,6 +138,14 @@
     [self.navigationController pushViewController:vc animated:NO];
 }
 - (void)setupViews {
+    
+    UIView* viewBG = [[UIView alloc]initWithFrame:_topContainerView.bounds];
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = viewBG.bounds;
+    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor whiteColor] CGColor], (id)[[UIColor blackColor] CGColor], nil];
+    [viewBG.layer insertSublayer:gradient atIndex:0];
+    [self.view insertSubview:viewBG belowSubview:self.topContainerView];
+    
     _dotView1.layer.cornerRadius = _dotView1.frame.size.width/2;
     _dotView2.layer.cornerRadius = _dotView2.frame.size.width/2;
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;

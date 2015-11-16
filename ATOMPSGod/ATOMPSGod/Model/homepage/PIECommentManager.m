@@ -6,18 +6,18 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "DDCommentManager.h"
+#import "PIECommentManager.h"
 #import "DDSessionManager.h"
 #import "PIECommentEntity.h"
 #import "PIEEntityCommentReply.h"
-#import "DDCommentVM.h"
+#import "PIECommentVM.h"
 
 
-@interface DDCommentManager ()
+@interface PIECommentManager ()
 
 @end
 
-@implementation DDCommentManager
+@implementation PIECommentManager
 
 - (instancetype)init {
     self = [super init];
@@ -39,7 +39,7 @@
                 comment.commentType = [param[@"type"] integerValue];
                 comment.imageID = [param[@"target_id"] integerValue];
                 if (comment) {
-                        DDCommentVM *model = [DDCommentVM new];
+                        PIECommentVM *model = [PIECommentVM new];
                         [model setViewModelData:comment];
                         [hotCommentArray addObject:model];
                 }
@@ -50,7 +50,7 @@
                 comment.imageID = [param[@"target_id"] integerValue];
                 if (comment) {
                     
-                    DDCommentVM *model = [DDCommentVM new];
+                    PIECommentVM *model = [PIECommentVM new];
                     [model setViewModelData:comment];
                     //            [ws.commentsNew addObject:model];
                     

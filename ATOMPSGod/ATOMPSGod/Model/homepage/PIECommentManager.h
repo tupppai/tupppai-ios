@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface DDCommentManager : NSObject
+@interface PIECommentManager : NSObject
 
 - (NSURLSessionDataTask *)ShowDetailOfComment:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error))block;
 - (NSURLSessionDataTask *)SendComment:(NSDictionary *)param withBlock:(void (^)(NSInteger comment_id, NSError *error))block;

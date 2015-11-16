@@ -44,14 +44,13 @@
     return YES;
 }
 -(void)awakeFromNib {
-    NSLog(@"PIEFriendViewController awakeFromNib");
+//    NSLog(@"PIEFriendViewController awakeFromNib");
 
 }
 -(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        NSLog(@"PIEFriendViewController initWithNibName");
-
+//        NSLog(@"PIEFriendViewController initWithNibName");
 
     }
     return self;
@@ -73,6 +72,12 @@
 }
 - (void)setupViews {
     self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = _view1.bounds;
+    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor whiteColor] CGColor], (id)[[UIColor blackColor] CGColor], nil];
+    [_view1.layer insertSublayer:gradient atIndex:0];
+
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
     _avatarView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];

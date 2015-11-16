@@ -6,8 +6,9 @@
 //  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "DDBaseVC.h"
+//#import "DDBaseVC.h"
+#import "SLKTextViewController.h"
 
-@interface PIENotificationViewController : DDBaseVC
+@interface PIENotificationViewController : SLKTextViewController
 
 @end

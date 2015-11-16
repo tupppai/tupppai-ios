@@ -19,7 +19,8 @@
 #import <TencentOpenAPI/QQApiInterface.h>
 #import "WXApi.h"
 #import "WeiboSDK.h"
-#import "DDCommentVC.h"
+#import "PIECommentViewController.h"
+#import "PIENotificationViewController.h"
 #import "MobClick.h"
 
 @interface AppDelegate ()
@@ -42,7 +43,9 @@
     [self setupUmengPush:launchOptions];
     [self setupBarButtonItem];
     
-    [[IQKeyboardManager sharedManager] disableInViewControllerClass:[DDCommentVC class]];
+    [[IQKeyboardManager sharedManager] disableInViewControllerClass:[PIECommentViewController class]];
+    [[IQKeyboardManager sharedManager] disableInViewControllerClass:[PIENotificationViewController class]];
+
     [[IQKeyboardManager sharedManager]setEnableAutoToolbar:NO];
     
     [self setupUmengAnalytics];

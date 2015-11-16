@@ -8,16 +8,16 @@
 
 #import <UIKit/UIKit.h>
 //#import "CommentLikeButton.h"
-#import "DDCommentVM.h"
+#import "PIECommentVM.h"
 static CGFloat kMessageTableViewCellMinimumHeight = 50.0;
 static CGFloat kMessageTableViewCellAvatarHeight = 30.0;
 
-@interface DDCommentTableCell : UITableViewCell
+@interface PIECommentTableCell : UITableViewCell
 
 @property (nonatomic, strong) UIImageView *avatarView;
 @property (nonatomic, strong) UILabel *usernameLabel;
 @property (nonatomic, strong) UILabel *commentLabel;
 //@property (nonatomic, strong) CommentLikeButton *likeButton;
 
--(void)getSource:(DDCommentVM *)vm;
+-(void)getSource:(PIECommentVM *)vm;
 @end

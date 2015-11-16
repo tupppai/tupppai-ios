@@ -84,7 +84,7 @@
     [alertView show];
 }
 -(void) errorOccuredRET {
-    NSLog(@"DDBaseVC errorOccuredRET");
+//    NSLog(@"DDBaseVC errorOccuredRET");
     [Hud text:@"出现未知错误" inView:self.view];
 }
 -(void) showInfoRET:(NSNotification *)notification {

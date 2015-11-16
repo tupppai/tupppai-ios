@@ -485,6 +485,7 @@
 
         }else {
             UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
             picker.delegate = self;
             picker.allowsEditing = YES;
             [self presentViewController:picker animated:YES completion:NULL];

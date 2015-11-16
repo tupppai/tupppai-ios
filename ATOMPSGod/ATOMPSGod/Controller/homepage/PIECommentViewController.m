@@ -6,14 +6,14 @@
 //  Copyright (c) 2014 Slack Technologies, Inc. All rights reserved.
 //
 
-#import "DDCommentVC.h"
-#import "DDCommentTableCell.h"
-#import "DDCommentTextView.h"
-#import "DDCommentVM.h"
+#import "PIECommentViewController.h"
+#import "PIECommentTableCell.h"
+#import "PIECommentTextView.h"
+#import "PIECommentVM.h"
 #import "AppDelegate.h"
 #import "PIEFriendViewController.h"
 #import "PIECommentEntity.h"
-#import "DDCommentManager.h"
+#import "PIECommentManager.h"
 #import "PIEEntityCommentReply.h"
 #import "PIECommentHeaderView.h"
 #import "PIEShareView.h"
@@ -25,19 +25,20 @@
 #import "JTSImageInfo.h"
 #import "KVCMutableArray.h"
 #import "PIEReplyCollectionViewController.h"
+#import "PIEPageManager.h"
 
 #define DEBUG_CUSTOM_TYPING_INDICATOR 0
 
 static NSString *MessengerCellIdentifier = @"MessengerCell";
 
-@interface DDCommentVC ()<DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,PIEShareViewDelegate,JGActionSheetDelegate,JTSImageViewControllerInteractionsDelegate>
+@interface PIECommentViewController ()<DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,PIEShareViewDelegate,JGActionSheetDelegate,JTSImageViewControllerInteractionsDelegate>
 
 @property (nonatomic, strong) NSMutableArray *commentsHot;
 @property (nonatomic, strong) KVCMutableArray *commentsNew;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, strong) UITapGestureRecognizer *tapCommentTableGesture;
 @property (nonatomic, assign) BOOL canRefreshFooter;
-@property (nonatomic, strong) DDCommentVM *targetCommentVM;
+@property (nonatomic, strong) PIECommentVM *targetCommentVM;
 @property (nonatomic, strong) NSIndexPath *selectedIndexpath;
 @property (nonatomic, strong) PIEShareView *shareView;
 @property (nonatomic, strong)  JGActionSheet * psActionSheet;
@@ -46,7 +47,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 @end
 
-@implementation DDCommentVC
+@implementation PIECommentViewController
 
 - (id)init
 {
@@ -74,7 +75,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)commonInit
 {
     // Register a SLKTextView subclass, if you need any special appearance and/or behavior customisation.
-    [self registerClassForTextView:[DDCommentTextView class]];
+    [self registerClassForTextView:[PIECommentTextView class]];
 }
 
 #pragma mark - View lifecycle
@@ -89,6 +90,25 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [self addGestureToCommentTableView];
     _isFirstLoading = YES;
     [self getDataSource];
+    
+    if (_shouldDownloadVMSource) {
+        [self getVMSource];
+    }
+    
+}
+- (void)getVMSource {
+//    [PIEPageManager ]
+    NSMutableDictionary* param = [NSMutableDictionary new];
+    [param setObject:@(_vm.ID) forKey:@"id"];
+    [param setObject:@(_vm.type) forKey:@"type"];
+    [PIEPageManager getPageSource:param block:^(DDPageVM *remoteVM) {
+        if (_vm.type == PIEPageTypeAsk) {
+            self.headerView.vm = remoteVM;
+        } else {
+            self.headerView_reply.vm = remoteVM;
+        }
+        [self resizeHeaderView];
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -172,7 +192,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [self.textView resignFirstResponder];
     self.textView.placeholder = @"发布你的神回复..";
     
-    DDCommentVM *commentVM = [DDCommentVM new];
+    PIECommentVM *commentVM = [PIECommentVM new];
     commentVM.username = [DDUserManager currentUser].username;
     commentVM.uid = [DDUserManager currentUser].uid;
     commentVM.avatar = [DDUserManager currentUser].avatar;
@@ -221,7 +241,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     if (_targetCommentVM) {
         [param setObject:@(_targetCommentVM.ID) forKey:@"for_comment"];
     }
-    DDCommentManager *showDetailOfComment = [DDCommentManager new];
+    PIECommentManager *showDetailOfComment = [PIECommentManager new];
     [showDetailOfComment SendComment:param withBlock:^(NSInteger comment_id, NSError *error) {
         if (comment_id) {
             commentVM.ID = comment_id;
@@ -301,9 +321,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.tableView == tableView) {
         static NSString *CellIdentifier = @"CommentCell";
-        DDCommentTableCell *cell = (DDCommentTableCell *)[self.tableView dequeueReusableCellWithIdentifier:MessengerCellIdentifier];
+        PIECommentTableCell *cell = (PIECommentTableCell *)[self.tableView dequeueReusableCellWithIdentifier:MessengerCellIdentifier];
         if (!cell) {
-            cell = [[DDCommentTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            cell = [[PIECommentTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
 //        if (indexPath.section == 0) {
 //            [cell getSource:_commentsHot[indexPath.row]];
@@ -323,7 +343,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([tableView isEqual:self.tableView]) {
-        DDCommentVM* vm;
+        PIECommentVM* vm;
 //        if (indexPath.section == 0) {
 //            vm = _commentsHot[indexPath.row];
 //        } else if (indexPath.section == 1) {
@@ -425,7 +445,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     self.tableView.emptyDataSetDelegate = self;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag|UIScrollViewKeyboardDismissModeInteractive;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.tableView registerClass:[DDCommentTableCell class] forCellReuseIdentifier:MessengerCellIdentifier];
+    [self.tableView registerClass:[PIECommentTableCell class] forCellReuseIdentifier:MessengerCellIdentifier];
     self.tableView.tableFooterView = [UIView new];
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.showsHorizontalScrollIndicator = NO;
@@ -435,6 +455,12 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     } else {
         self.tableView.tableHeaderView = self.headerView_reply;
     }
+    [self resizeHeaderView];
+    
+    [self.commentsNew addObserver:self forKeyPath:@"array" options:NSKeyValueObservingOptionNew context:nil];
+}
+
+- (void)resizeHeaderView {
     UIView *header = self.tableView.tableHeaderView;
     [header setNeedsLayout];
     [header layoutIfNeeded];
@@ -443,10 +469,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     frame.size.height = height;
     header.frame = frame;
     self.tableView.tableHeaderView = header;
-    
-    [self.commentsNew addObserver:self forKeyPath:@"array" options:NSKeyValueObservingOptionNew context:nil];
 }
-
 -(void)dealloc {
     [self.commentsNew removeObserver:self forKeyPath:@"array"];
 }
@@ -496,9 +519,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     if (indexPath) {
 //        NSInteger section = indexPath.section;
         NSInteger row = indexPath.row;
-        DDCommentTableCell *cell = (DDCommentTableCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        PIECommentTableCell *cell = (PIECommentTableCell *)[self.tableView cellForRowAtIndexPath:indexPath];
 //        DDCommentVM *model = (section == 0) ? _commentsHot[row] : _commentsNew.array[row];
-        DDCommentVM *model =  _commentsNew.array[row];
+        PIECommentVM *model =  _commentsNew.array[row];
 
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.avatarView.frame, p)) {
@@ -551,7 +574,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
     
-    DDCommentManager *commentManager = [DDCommentManager new];
+    PIECommentManager *commentManager = [PIECommentManager new];
     [commentManager ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
         ws.commentsNew.array = recentCommentArray;
         ws.commentsHot = hotCommentArray;
@@ -571,7 +594,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [param setObject:@(_vm.type) forKey:@"type"];
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
-    DDCommentManager *commentManager = [DDCommentManager new];
+    PIECommentManager *commentManager = [PIECommentManager new];
     [commentManager ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
 //        for (DDCommentVM* vm in recentCommentArray) {
 //            [ws.commentsNew addObject:vm];

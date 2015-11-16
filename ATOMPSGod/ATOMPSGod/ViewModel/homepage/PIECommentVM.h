@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 @class PIECommentEntity;
 
-@interface DDCommentVM : NSObject
+@interface PIECommentVM : NSObject
 
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, copy) NSString *username;
@@ -29,7 +29,7 @@
 @property (nonatomic, strong) NSMutableArray* replyArray;
 
 - (void)setViewModelData:(PIECommentEntity *)comment;
-- (void)setDataWithAtModel:(DDCommentVM *)viewModel andContent:(NSString *)content;
+- (void)setDataWithAtModel:(PIECommentVM *)viewModel andContent:(NSString *)content;
 - (void)toggleLike;
 
 @end

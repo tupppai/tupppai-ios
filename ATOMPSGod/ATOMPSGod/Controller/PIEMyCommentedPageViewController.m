@@ -13,7 +13,7 @@
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
 #import "DDPageManager.h"
-#import "DDCommentVC.h"
+#import "PIECommentViewController.h"
 
 @interface PIEMyCommentedPageViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 @property (nonatomic,strong) PIERefreshTableView *tableView;
@@ -75,7 +75,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 //    PIECarouselViewController* vc = [PIECarouselViewController new];
     DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-    DDCommentVC* vc = [DDCommentVC new];
+    PIECommentViewController* vc = [PIECommentViewController new];
     vc.vm = [_dataSource objectAtIndex:indexPath.row];
     [nav pushViewController:vc animated:YES ];
 

@@ -31,7 +31,7 @@
         if (block) {
             block(nil, error);
         }
-        NSLog(@"%@",error);
+//        NSLog(@"%@",error);
     }];
 
 }
@@ -60,10 +60,10 @@
 + (NSURLSessionDataTask *)setBindSetting:(NSDictionary *)param withToggleBind:(BOOL)bind withBlock:(void (^)(NSError *))block {
     NSString* url = bind?@"auth/bind":@"auth/unbind";
     return [[DDSessionManager shareHTTPSessionManager] POST:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"setBindSetting param %@ responseObject%@",param,responseObject);
+//        NSLog(@"setBindSetting param %@ responseObject%@",param,responseObject);
         int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
-        NSString* info = (NSString*)[ responseObject objectForKey:@"info"];
-        NSLog(@"setBindSetting info %@",info);
+//        NSString* info = (NSString*)[ responseObject objectForKey:@"info"];
+//        NSLog(@"setBindSetting info %@",info);
         if (ret == 1) {
             if (block) {
                 block(nil);

@@ -84,6 +84,22 @@
         }
     }];
 }
+
++ (void)getPageSource:(NSDictionary *)param block:(void (^)(DDPageVM *))block {
+    [DDBaseService GET:param url:@"thread/item" block:^(id responseObject) {
+        PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:                    [responseObject objectForKey:@"data"] error:NULL];
+        if (entity) {
+            DDPageVM* vm = [[DDPageVM alloc]initWithPageEntity:entity];
+            if (block) {
+                block(vm);
+            }
+        } else {
+            if (block) {
+                block(nil);
+            }
+        }
+    }];
+}
 //
 //- (void)saveHomeImagesInDB:(NSMutableArray *)homeImages {
 //    for (PIEPageEntity *homeImage in homeImages) {

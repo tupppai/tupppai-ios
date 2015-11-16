@@ -18,7 +18,7 @@
 #import "JGActionSheet.h"
 #import "ATOMReportModel.h"
 #import "HMSegmentedControl.h"
-#import "DDCommentVC.h"
+#import "PIECommentViewController.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 #import "PIECarouselViewController.h"
 #import "CHTCollectionViewWaterfallLayout.h"
@@ -914,7 +914,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
                 [self showShareView];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.commentView.frame, p)) {
-                DDCommentVC* vc = [DDCommentVC new];
+                PIECommentViewController* vc = [PIECommentViewController new];
                 vc.vm = _selectedVM;
                 [self.navigationController pushViewController:vc animated:YES];
             }
@@ -969,7 +969,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
             
             //点击大图
             if (CGRectContainsPoint(cell.leftImageView.frame, p) || CGRectContainsPoint(cell.rightImageView.frame, p)) {
-                DDCommentVC* vc = [DDCommentVC new];
+                PIECommentViewController* vc = [PIECommentViewController new];
                 vc.vm = _selectedVM;
                 //                PIECarouselViewController* vc = [PIECarouselViewController new];
                 //                vc.pageVM = _selectedVM;

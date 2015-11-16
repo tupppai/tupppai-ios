@@ -6,11 +6,11 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "DDCommentVM.h"
+#import "PIECommentVM.h"
 #import "PIECommentEntity.h"
 #import "PIEEntityCommentReply.h"
-#import "DDCommentManager.h"
-@implementation DDCommentVM
+#import "PIECommentManager.h"
+@implementation PIECommentVM
 
 - (instancetype)init {
     self = [super init];
@@ -49,7 +49,7 @@
     _liked = comment.liked;
 }
 
-- (void)setDataWithAtModel:(DDCommentVM *)viewModel andContent:(NSString *)text{
+- (void)setDataWithAtModel:(PIECommentVM *)viewModel andContent:(NSString *)text{
     _originText = viewModel.originText;
     _replyArray = viewModel.replyArray;
     _uid = [DDUserManager currentUser].uid;
@@ -71,7 +71,7 @@
     _liked = !_liked;
     [param setValue:@(status) forKey:@"status"];
     
-    DDCommentManager * showCommentDetail = [DDCommentManager new];
+    PIECommentManager * showCommentDetail = [PIECommentManager new];
     [showCommentDetail toggleLike:param withID:self.ID withBlock:^(NSError *error) {
         if (!error) {
             NSInteger number = [_likeNumber integerValue]+one;

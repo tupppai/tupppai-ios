@@ -13,7 +13,7 @@
 #import "PIEEliteManager.h"
 #import "PIECarouselViewController.h"
 #import "PIEFriendViewController.h"
-#import "DDCommentVC.h"
+#import "PIECommentViewController.h"
 #import "DDCollectManager.h"
 #import "PIEReplyCollectionViewController.h"
 #import "JGActionSheet.h"
@@ -896,7 +896,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                 }
                 
                 else if (CGRectContainsPoint(cell.commentView.frame, p)) {
-                    DDCommentVC* vc = [DDCommentVC new];
+                    PIECommentViewController* vc = [PIECommentViewController new];
                     vc.vm = _selectedVM;
                     [self.navigationController pushViewController:vc animated:YES];
                 }
@@ -957,7 +957,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                     [self collect:cell.collectView shouldShowHud:NO];
                 }
                 else if (CGRectContainsPoint(cell.commentView.frame, p)) {
-                    DDCommentVC* vc = [DDCommentVC new];
+                    PIECommentViewController* vc = [PIECommentViewController new];
                     vc.vm = _selectedVM;
                     [self.navigationController pushViewController:vc animated:YES];
                 }
@@ -1045,7 +1045,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                 }
                 
                 else if (CGRectContainsPoint(cell.commentView.frame, p)) {
-                    DDCommentVC* vc = [DDCommentVC new];
+                    PIECommentViewController* vc = [PIECommentViewController new];
                     vc.vm = _selectedVM;
                     [self.navigationController pushViewController:vc animated:YES];
                 }
@@ -1105,7 +1105,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                     [self collect:cell.collectView shouldShowHud:NO];
                 }
                 else if (CGRectContainsPoint(cell.commentView.frame, p)) {
-                    DDCommentVC* vc = [DDCommentVC new];
+                    PIECommentViewController* vc = [PIECommentViewController new];
                     vc.vm = _selectedVM;
                     [self.navigationController pushViewController:vc animated:YES];
                 }

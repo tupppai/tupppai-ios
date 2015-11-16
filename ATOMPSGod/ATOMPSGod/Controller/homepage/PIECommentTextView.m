@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Slack Technologies, Inc. All rights reserved.
 //
 
-#import "DDCommentTextView.h"
+#import "PIECommentTextView.h"
 
-@implementation DDCommentTextView
+@implementation PIECommentTextView
 
 - (instancetype)init
 {
