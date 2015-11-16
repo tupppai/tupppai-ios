@@ -230,6 +230,27 @@
     NSDictionary* param = [NSDictionary dictionaryWithObjectsAndKeys:token, @"device_token",@1,@"platform",@([[UIDevice currentDevice].systemVersion floatValue]),@"device_os",deviceName(),@"device_name",[oNSUUID UUIDString],@"device_mac",@"2.1",@"version",nil];
     [DDService updateToken:param withBlock:nil];
 }
+- (void)addRedDotToTabBarItemIndex:(NSInteger)index {
+    for (UIView* subview in self.mainTabBarController.tabBar.subviews) {
+        if (subview && subview.tag == 1314) {
+            [subview removeFromSuperview];
+            break;
+        }
+    }
+    
+    NSInteger RedDotRadius = 4;
+    NSInteger RedDotDiameter = RedDotRadius*2;
+    NSInteger TopMargin = 5;
+    NSInteger TabBarItemCount = self.mainTabBarController.tabBar.items.count;
+    NSInteger HalfItemWidth = SCREEN_WIDTH / (TabBarItemCount * 2);
+    NSInteger xOffset = HalfItemWidth* (index * 2 + 1);
+    NSInteger imageHalfWidth = [self.mainTabBarController.tabBar.items objectAtIndex:index].selectedImage.size.width/2;
+    UIView* redDot = [[UIView alloc]initWithFrame:CGRectMake(xOffset+imageHalfWidth, TopMargin, RedDotDiameter, RedDotDiameter)];
+    redDot.tag = 1314;
+    redDot.backgroundColor = [UIColor redColor];
+    redDot.layer.cornerRadius = RedDotRadius;
+    [self.mainTabBarController.tabBar addSubview:redDot ];
+}
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
     
@@ -264,7 +285,7 @@
     
     [[NSUserDefaults standardUserDefaults]setObject:@(YES) forKey:@"NotificationNew"];
     [[NSUserDefaults standardUserDefaults]synchronize];
-    
+    [self addRedDotToTabBarItemIndex:4];
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"updateNoticationStatus" object:nil]];
 
 }

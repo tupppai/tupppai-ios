@@ -51,13 +51,12 @@
     [super viewDidLoad];
     [self setupViews];
     [self setupPageMenu];
-    
+//    [self addRedDotToTabBarItemIndex:4];
     
     UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
     backButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [backButton setImage:[UIImage imageNamed:@"pie_message"] forState:UIControlStateNormal];
     [backButton setImage:[UIImage imageNamed:@"pie_message_new"] forState:UIControlStateSelected];
-//    backButton.backgroundColor = [UIColor clearColor];
     [backButton addTarget:self action:@selector(pushToMessageViewController) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *barBackButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     self.navigationItem.rightBarButtonItem =  barBackButtonItem;
@@ -66,7 +65,6 @@
     UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
     buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [buttonLeft setImage:[UIImage imageNamed:@"pie_setting"] forState:UIControlStateNormal];
-//    buttonLeft.backgroundColor = [UIColor clearColor];
     [buttonLeft addTarget:self action:@selector(pushToSettingViewController) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonLeft];
     self.navigationItem.leftBarButtonItem =  buttonItem;
@@ -84,6 +82,8 @@
                                              selector:@selector(updateNoticationStatus)
                                                  name:@"updateNoticationStatus"
                                                object:nil];
+    
+
 
 }
 
@@ -114,14 +114,23 @@
     if ( [[[NSUserDefaults standardUserDefaults]objectForKey:@"NotificationNew"]boolValue]) {
         UIButton *btn =  self.navigationItem.rightBarButtonItem.customView;
         btn.selected = YES;
-        self.tabBarItem.badgeValue = @"";
+//        [self addRedDotToTabBarItemIndex:4];
     } else {
         UIButton *btn =  self.navigationItem.rightBarButtonItem.customView;
         btn.selected = NO;
-        self.navigationController.tabBarItem.badgeValue = nil;
+        [self clearRedDot];
     }
 }
 
+
+- (void)clearRedDot {
+    for (UIView* subview in self.tabBarController.tabBar.subviews) {
+        if (subview && subview.tag == 1314) {
+            [subview removeFromSuperview];
+            break;
+        }
+    }
+}
 -(void)updateAvatar {
         [DDService downloadImage:[DDUserManager currentUser].avatar withBlock:^(UIImage *image) {
             _avatarView.image = image;
@@ -225,25 +234,8 @@
         make.bottom.equalTo(self.view);
     }];
 
-    
-//    UIPanGestureRecognizer* panGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panGesture:)];
-//    [_pageMenu.view addGestureRecognizer:panGesture];
 }
-//- (void)panGesture:(UIPanGestureRecognizer *)sender {
-//    if (sender.state == UIGestureRecognizerStateBegan) {
-//        _startPanLocation = [sender locationInView:self.view];
-//    }
-//    if (_pageMenu.view.frame.origin.y >= 60 && _pageMenu.view.frame.origin.y <= 220) {
-//        
-//        CGFloat dif = [sender locationInView:self.view].y - _startPanLocation.y;
-//        CGFloat y = _pageMenu.view.frame.origin.y +  dif ;
-//        y = MIN(y, 220);
-//        y = MAX(y, 60);
-//       
-//        _pageMenu.view.frame = CGRectMake(0, y, SCREEN_WIDTH, SCREEN_HEIGHT-y);
-//        _startPanLocation = [sender locationInView:self.view];
-//    }
-//}
+
 - (void)scrollUp {
     if (_pageMenu.view.frame.origin.y != 60) {
         [self.pageMenu.view mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -264,8 +256,10 @@
             [self.pageMenu.view layoutIfNeeded];
         }];
     }
-
 }
 
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
 
 @end
