@@ -24,7 +24,7 @@
              @"targetType" : @"target_type",
              @"type" : @"type",
              @"time" : @"update_time",
-             @"askID" : @"ask_id",
+             @"askID" : @"target_ask_id",
              @"replyID" : @"reply_id",
              };
 }

@@ -10,11 +10,9 @@
 #import "PIERefreshTableView.h"
 #import "PIENotificationManager.h"
 #import "PIENotificationVM.h"
-#import "PIENotificationSystemTableViewCell.h"
-//#import "PIENotificationReplyTableViewCell.h"
-//#import "PIENotificationLikeTableViewCell.h"
-//#import "PIENotificationFollowTableViewCell.h"
-//#import "PIENotificationCommentTableViewCell.h"
+#import "PIENotificationLikeTableViewCell.h"
+#import "PIEFriendViewController.h"
+#import "PIECarouselViewController.h"
 
 @interface PIENotificationLikedViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (nonatomic, strong) NSMutableArray *source;
@@ -51,7 +49,7 @@
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [param setObject:@"normal" forKey:@"type"];
+    [param setObject:@"like" forKey:@"type"];
     
     [PIENotificationManager getNotifications:param block:^(NSArray *source) {
         ws.isfirstLoading = NO;
@@ -109,16 +107,12 @@
         _tableView.dataSource = self;
         _tableView.delegate = self;
         _tableView.psDelegate = self;
-        //        UINib* nib  = [UINib nibWithNibName:@"PIENotificationCommentTableViewCell" bundle:nil];
+        
+        UITapGestureRecognizer* tapGes = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnTableView:)];
+        [_tableView addGestureRecognizer:tapGes];
+        
         UINib* nib2 = [UINib nibWithNibName:@"PIENotificationLikeTableViewCell" bundle:nil];
-        //        UINib* nib3 = [UINib nibWithNibName:@"PIENotificationFollowTableViewCell" bundle:nil];
-        //        UINib* nib4 = [UINib nibWithNibName:@"PIENotificationReplyTableViewCell" bundle:nil];
-//        UINib* nib5 = [UINib nibWithNibName:@"PIENotificationSystemTableViewCell" bundle:nil];
-        //        [_tableView registerNib:nib  forCellReuseIdentifier:@"PIENotificationCommentTableViewCell"];
-        //        [_tableView registerNib:nib2 forCellReuseIdentifier:@"PIENotificationLikeTableViewCell"];
-        //        [_tableView registerNib:nib3 forCellReuseIdentifier:@"PIENotificationFollowTableViewCell"];
         [_tableView registerNib:nib2 forCellReuseIdentifier:@"PIENotificationLikeTableViewCell"];
-        //        [_tableView registerNib:nib5 forCellReuseIdentifier:@"PIENotificationSystemTableViewCell"];
     }
     return _tableView;
 }
@@ -127,10 +121,33 @@
     return 1;
 }
 
+- (void)tapOnTableView:(UITapGestureRecognizer*)gesture {
+    CGPoint location = [gesture locationInView:self.tableView];
+    NSIndexPath* selectedIndexPath = [self.tableView indexPathForRowAtPoint:location];
+    if (selectedIndexPath.section == 0) {
+        PIENotificationVM* vm = [_source objectAtIndex:selectedIndexPath.row];
+            PIENotificationLikeTableViewCell* cell = [self.tableView cellForRowAtIndexPath:selectedIndexPath];
+            CGPoint p = [gesture locationInView:cell];
+       if (CGRectContainsPoint(cell.avatarView.frame,p) || (CGRectContainsPoint(cell.usernameLabel.frame,p))) {
+                PIEFriendViewController* vc = [PIEFriendViewController new];
+                vc.uid = vm.senderID;
+                vc.name = vm.username;
+                [self.navigationController pushViewController:vc animated:YES];
+            } else  if (CGRectContainsPoint(cell.pageImageView.frame,p)) {
+                PIECarouselViewController* vc = [PIECarouselViewController new];
+                DDPageVM* pageVM = [DDPageVM new];
+                pageVM.ID = vm.targetID;
+                pageVM.askID = vm.askID;
+                pageVM.type = vm.targetType;
+                vc.pageVM = pageVM;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+    }
+}
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_source.count > indexPath.row) {
         PIENotificationVM* vm = [_source objectAtIndex:indexPath.row];
-        PIENotificationSystemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIENotificationLikeTableViewCell"];
+        PIENotificationLikeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIENotificationLikeTableViewCell"];
         [cell injectSauce:vm];
         return cell;
     }
@@ -139,7 +156,7 @@
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 60;
+    return 55;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _source.count;

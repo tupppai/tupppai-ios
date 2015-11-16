@@ -37,8 +37,8 @@
         [_badge mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self);
             make.right.equalTo(self.mas_right).with.offset(-100);
-            make.width.equalTo(@30);
-            make.height.equalTo(@30);
+            make.width.equalTo(@20);
+            make.height.equalTo(@20);
         }];
     }
 }
@@ -48,6 +48,13 @@
     }
     return _badge;
 }
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.imageView.frame = CGRectMake(20,(self.frame.size.height-15)/2,20,15);
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+}
+
 //- (void)createSubViewConstaints {
 //    
 //    [self.themeImageView mas_makeConstraints:^(MASConstraintMaker *make) {

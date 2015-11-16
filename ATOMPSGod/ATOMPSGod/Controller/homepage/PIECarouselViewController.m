@@ -27,6 +27,8 @@
 @property (nonatomic, strong) DDPageVM* currentVM;
 @property (nonatomic, strong) HMSegmentedControl* segmentedControl;
 @property (nonatomic, strong)  JGActionSheet * psActionSheet;
+@property (nonatomic, assign)  NSInteger askCount;
+@property (nonatomic, assign)  NSInteger replyCount;
 
 @end
 
@@ -51,10 +53,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupBlurredImage];
-    [self getDataSource];
     [self setupViews];
+    [self setupData];
+    [self getDataSource];
 }
-
+-(void)setupData {
+    _askCount = 0;
+    _replyCount = 0;
+}
 - (void)setupViews {
     self.view.backgroundColor = [UIColor blackColor];
     self.view.clipsToBounds = YES;
@@ -128,12 +134,9 @@
     if (_dataSource.count > index) {
 
         DDPageVM* vm = [_dataSource objectAtIndex:index];
-        //create new view if no view is available for recycling
         if (view == nil)
         {
             CGFloat height = self.carousel.frame.size.height-80;
-//            CGFloat width = MAX(height*vm.imageWidth/vm.imageHeight, 200);
-//            width = MIN(width, SCREEN_WIDTH - 80);
             view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, height, height)];
             view.backgroundColor = [UIColor clearColor];
             view.contentMode = UIViewContentModeScaleAspectFit;
@@ -217,7 +220,7 @@
             [segmentDescArray addObject:desc];
         }
         else {
-            if (_pageVM.thumbEntityArray.count == 1) {
+            if (_askCount == 1) {
                 NSString* desc = @"原图";
                 [segmentDescArray addObject:desc];
             }
@@ -226,12 +229,12 @@
                 [segmentDescArray addObject:desc];
             }
          }
-        NSString* desc = [NSString stringWithFormat:@"作品(%zd)",_dataSource.count - _pageVM.thumbEntityArray.count];
+        NSString* desc = [NSString stringWithFormat:@"作品(%zd)",_replyCount];
         [segmentDescArray addObject:desc];
     }
     else {
         //如果此时滚到reply
-        if (_pageVM.thumbEntityArray.count == 1) {
+        if (_askCount == 1) {
             NSString* desc = @"原图";
             [segmentDescArray addObject:desc];
         }
@@ -243,7 +246,7 @@
             index = index - 1;
         }
         
-        NSString* desc = [NSString stringWithFormat:@"作品(%zd/%zd)",index,_dataSource.count - _pageVM.thumbEntityArray.count];
+        NSString* desc = [NSString stringWithFormat:@"作品(%zd/%zd)",index,_replyCount];
         [segmentDescArray addObject:desc];
     }
     
@@ -300,7 +303,10 @@
         ID = _pageVM.ID;
     }
     [manager fetchAllReply:param ID:ID withBlock:^(NSMutableArray *askArray, NSMutableArray *replyArray) {
-
+        
+        _askCount = askArray.count;
+        _replyCount = replyArray.count;
+        
             [self.dataSource removeAllObjects];
             [self.dataSource addObjectsFromArray:askArray];
             [self.dataSource addObjectsFromArray: replyArray];
@@ -308,7 +314,7 @@
             [self initSegmentTitles];
             [_carousel reloadData];
             [self reorderSourceAndScroll];
-
+        
     }];
 }
 

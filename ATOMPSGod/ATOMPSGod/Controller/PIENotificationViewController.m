@@ -329,11 +329,13 @@
             cell.imageView.image = [UIImage imageNamed:@"notify_system"];
             cell.textLabel.text = @"系统消息";
             cell.badgeNumber = [[[NSUserDefaults standardUserDefaults]objectForKey:@"NotificationSystem"]integerValue];
+//            cell.separatorInset = UIEdgeInsetsMake(0, 60, 0, 0);
         }    else if (indexPath.row == 1) {
             cell.imageView.image = [UIImage imageNamed:@"pieLike_selected"];
             cell.textLabel.text = @"收到的赞";
             cell.badgeNumber = [[[NSUserDefaults standardUserDefaults]objectForKey:@"NotificationLike"]integerValue];
         }
+        cell.textLabel.font = [UIFont systemFontOfSize:14];
         return cell;
     }
     return nil;

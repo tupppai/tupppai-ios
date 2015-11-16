@@ -42,10 +42,8 @@
     [self setupShareSDK];
     [self setupUmengPush:launchOptions];
     [self setupBarButtonItem];
-    
     [[IQKeyboardManager sharedManager] disableInViewControllerClass:[PIECommentViewController class]];
     [[IQKeyboardManager sharedManager] disableInViewControllerClass:[PIENotificationViewController class]];
-
     [[IQKeyboardManager sharedManager]setEnableAutoToolbar:NO];
     
     [self setupUmengAnalytics];

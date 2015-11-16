@@ -54,7 +54,7 @@
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [param setObject:@"fold" forKey:@"type"];
+    [param setObject:@"system" forKey:@"type"];
 
     [PIENotificationManager getNotifications:param block:^(NSArray *source) {
         _isfirstLoading = NO;
