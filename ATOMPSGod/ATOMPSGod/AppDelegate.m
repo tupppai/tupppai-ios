@@ -97,30 +97,30 @@
 }
 -(void)initializeAfterDB {
     
-    DDIntroVC* vc = [DDIntroVC new];
-    self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:vc];
-    self.window.rootViewController = self.baseNav;
-            [self.window makeKeyAndVisible];
+//    DDIntroVC* vc = [DDIntroVC new];
+//    self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:vc];
+//    self.window.rootViewController = self.baseNav;
+//            [self.window makeKeyAndVisible];
     
-//    [DDUserManager fetchUserInDBToCurrentUser:^(BOOL success) {
-//        if (success) {
-//            self.window.rootViewController = self.mainTabBarController;
-//        } else {
-//            if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
-//            {
-//                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
-//                [[NSUserDefaults standardUserDefaults] synchronize];
-//                DDIntroVC* vc = [DDIntroVC new];
-//                self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:vc];
-//                self.window.rootViewController = self.baseNav;
-//            } else {
-//                PIELaunchViewController *lvc = [[PIELaunchViewController alloc] init];
-//                self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
-//                self.window.rootViewController = self.baseNav;
-//            }
-//        }
-//        [self.window makeKeyAndVisible];
-//    }];
+    [DDUserManager fetchUserInDBToCurrentUser:^(BOOL success) {
+        if (success) {
+            self.window.rootViewController = self.mainTabBarController;
+        } else {
+            if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
+            {
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                DDIntroVC* vc = [DDIntroVC new];
+                self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:vc];
+                self.window.rootViewController = self.baseNav;
+            } else {
+                PIELaunchViewController *lvc = [[PIELaunchViewController alloc] init];
+                self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
+                self.window.rootViewController = self.baseNav;
+            }
+        }
+        [self.window makeKeyAndVisible];
+    }];
 }
 
 -(void)setupNotification {
