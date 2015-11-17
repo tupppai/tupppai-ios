@@ -12,7 +12,7 @@
 //#import "ATOMReplier.h"
 
 #import "PIEPageDAO.h"
-#import "kfcHomeScrollView.h"
+#import "PIENewScrollView.h"
 //#import "PIEAskImageDao.h"
 #import "PIEImageEntity.h"
 

@@ -129,7 +129,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [super viewDidAppear:animated];
     if (_isFirstLoading) {
         [self.textView becomeFirstResponder];
-        [self scrollElegant];
+//        [self scrollElegant];
         _isFirstLoading = NO;
     }
 }

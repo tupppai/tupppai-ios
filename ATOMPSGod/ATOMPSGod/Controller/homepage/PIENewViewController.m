@@ -10,7 +10,7 @@
 #import "PIENewReplyTableCell.h"
 
 
-#import "kfcHomeScrollView.h"
+#import "PIENewScrollView.h"
 #import "PIEPageManager.h"
 #import "PIEShareView.h"
 #import "DDShareManager.h"
@@ -31,24 +31,32 @@
 #import "PIEUploadManager.h"
 
 @interface PIENewViewController() < UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,PWRefreshBaseCollectionViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,CHTCollectionViewDelegateWaterfallLayout,UICollectionViewDelegate,UICollectionViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
-@property (nonatomic, strong) UITapGestureRecognizer *tapGestureReply;
-@property (nonatomic, strong) UITapGestureRecognizer *tapGestureAsk;
-@property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureAsk;
-@property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureReply;
+
 
 @property (nonatomic, assign) BOOL isfirstLoadingAsk;
 @property (nonatomic, assign) BOOL isfirstLoadingReply;
+@property (nonatomic, assign) BOOL isfirstLoadingActivity;
 
 @property (nonatomic, strong) NSMutableArray *sourceAsk;
 @property (nonatomic, strong) NSMutableArray *sourceReply;
+@property (nonatomic, strong) NSMutableArray *sourceActivity;
 
-@property (nonatomic, assign) NSInteger currentHotIndex;
-@property (nonatomic, assign) NSInteger currentAskIndex;
-@property (nonatomic, strong) kfcHomeScrollView *scrollView;
-@property (nonatomic, weak) PIERefreshCollectionView *askCollectionView;
-@property (nonatomic, weak) PIERefreshTableView *hotTableView;
-@property (nonatomic, assign) BOOL canRefreshReplyFooter;
-@property (nonatomic, assign) BOOL canRefreshAskFooter;
+@property (nonatomic, assign) NSInteger currentIndex_reply;
+@property (nonatomic, assign) NSInteger currentIndex_ask;
+@property (nonatomic, assign) NSInteger currentIndex_activity;
+
+@property (nonatomic, assign)  long long timeStamp_ask;
+@property (nonatomic, assign)  long long timeStamp_reply;
+@property (nonatomic, assign)  long long timeStamp_activity;
+
+@property (nonatomic, assign) BOOL canRefreshFooter_ask;
+@property (nonatomic, assign) BOOL canRefreshFooter_reply;
+@property (nonatomic, assign) BOOL canRefreshFooter_activity;
+
+@property (nonatomic, weak) PIERefreshTableView *tableViewActivity;
+@property (nonatomic, weak) PIERefreshCollectionView *collectionView_ask;
+@property (nonatomic, weak) PIERefreshTableView *tableViewReply;
+@property (nonatomic, strong) PIENewScrollView *scrollView;
 
 @property (nonatomic, strong)  JGActionSheet * psActionSheet;
 @property (nonatomic, strong)  JGActionSheet * reportActionSheet;
@@ -59,8 +67,8 @@
 @property (nonatomic, strong) PIEShareView *shareView;
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
 @property (nonatomic, strong)  MRNavigationBarProgressView* progressView;
-@property (nonatomic, assign)  long long timeStamp_ask;
-@property (nonatomic, assign)  long long timeStamp_reply;
+
+
 @end
 
 @implementation PIENewViewController
@@ -71,7 +79,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
 - (void)updateStatus {
     if (_selectedIndexPath  && _scrollView.type == PIENewScrollTypeReply) {
-        [_scrollView.replyTable reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [_scrollView.tableReply reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
 }
 #pragma mark - life cycle
@@ -89,8 +97,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 }
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-//    [self shouldNavToAskSegment];
-//    [self shouldNavToHotSegment];
     [self updateStatus];
     [MobClick endLogPageView:@"离开最新页面"];
     //tricks to display progressView  if vc re-appear
@@ -108,23 +114,33 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
 - (void)commonInit {
     self.view = self.scrollView;
-    [self createCustomNavigationBar];
-    [self confighotTable];
-    [self configAskView];
+    [self setupNavBar];
+    [self setupTable_activity];
+    [self setupTable_reply];
+    [self setupCollectionView_ask];
     [self setupGestures];
+    [self setupData];
+    [self firstGetSourceIfEmpty_ask];
+    [self setupNotifications];
+}
+
+- (void)setupNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_New" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldDoUploadJob) name:@"UploadRightNow" object:nil];
+}
+- (void) setupData {
     //set this before firstGetRemoteSource
-    _canRefreshReplyFooter = YES;
-    _canRefreshAskFooter = YES;
+    _canRefreshFooter_activity = YES;
+    _canRefreshFooter_reply = YES;
+    _canRefreshFooter_ask = YES;
     
+    _isfirstLoadingActivity = YES;
     _isfirstLoadingAsk = YES;
     _isfirstLoadingReply = YES;
     
+    _sourceActivity = [NSMutableArray new];
     _sourceAsk = [NSMutableArray new];
     _sourceReply = [NSMutableArray new];
-    
-    [self firstGetSourceIfEmpty_ask];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_New" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldDoUploadJob) name:@"UploadRightNow" object:nil];
 }
 
 - (void) PleaseDoTheUploadProcess {
@@ -134,71 +150,74 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         [_progressView setProgress:percentage animated:YES];
         if (success) {
             if ([manager.type isEqualToString:@"ask"]) {
-                [ws.scrollView.collectionView.header beginRefreshing];
+                [ws.scrollView.collectionViewAsk.header beginRefreshing];
             } else if ([manager.type isEqualToString:@"reply"]) {
-                [ws.scrollView.replyTable.header beginRefreshing];
+                [ws.scrollView.tableReply.header beginRefreshing];
             }
         }
     }];
 }
-
-- (void)confighotTable {
-    _hotTableView = _scrollView.replyTable;
-    _hotTableView.delegate = self;
-    _hotTableView.dataSource = self;
-    _hotTableView.psDelegate = self;
-    _hotTableView.emptyDataSetSource = self;
-    _hotTableView.emptyDataSetDelegate = self;
+- (void)setupTable_activity {
+    _tableViewActivity = _scrollView.tableActivity;
+    _tableViewActivity.delegate = self;
+    _tableViewActivity.dataSource = self;
+    _tableViewActivity.psDelegate = self;
+    _tableViewActivity.emptyDataSetSource = self;
+    _tableViewActivity.emptyDataSetDelegate = self;
+//    UINib* nib = [UINib nibWithNibName:CellIdentifier bundle:nil];
+//    [_tableViewActivity registerNib:nib forCellReuseIdentifier:CellIdentifier];
+    _tableViewActivity.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
+    _currentIndex_activity = 1;
+}
+- (void)setupTable_reply {
+    _tableViewReply = _scrollView.tableReply;
+    _tableViewReply.delegate = self;
+    _tableViewReply.dataSource = self;
+    _tableViewReply.psDelegate = self;
+    _tableViewReply.emptyDataSetSource = self;
+    _tableViewReply.emptyDataSetDelegate = self;
     UINib* nib = [UINib nibWithNibName:CellIdentifier bundle:nil];
-    [_hotTableView registerNib:nib forCellReuseIdentifier:CellIdentifier];
-    _hotTableView.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
-    _hotTableView.scrollsToTop = YES;
-    _currentHotIndex = 1;
+    [_tableViewReply registerNib:nib forCellReuseIdentifier:CellIdentifier];
+    _tableViewReply.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
+    _tableViewReply.scrollsToTop = YES;
+    _currentIndex_reply = 1;
+}
+- (void)setupCollectionView_ask {
+    _collectionView_ask = _scrollView.collectionViewAsk;
+    _collectionView_ask.dataSource = self;
+    _collectionView_ask.delegate = self;
+    _collectionView_ask.emptyDataSetDelegate = self;
+    _collectionView_ask.emptyDataSetSource = self;
+    _collectionView_ask.psDelegate = self;
+    UINib* nib = [UINib nibWithNibName:CellIdentifier2 bundle:nil];
+    [_collectionView_ask registerNib:nib forCellWithReuseIdentifier:CellIdentifier2];
+    _currentIndex_ask = 1;
 }
 - (void)setupGestures {
-    _tapGestureReply = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureReply:)];
-    [_hotTableView addGestureRecognizer:_tapGestureReply];
-    _tapGestureAsk = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureAsk:)];
-    [_askCollectionView addGestureRecognizer:_tapGestureAsk];
+    UITapGestureRecognizer* tapGestureAsk = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnAsk:)];
+    UILongPressGestureRecognizer* longPressGestureAsk = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnAsk:)];
     
-    _longPressGestureAsk = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnAsk:)];
-    _longPressGestureReply = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnReply:)];
-
-    [_askCollectionView addGestureRecognizer:_longPressGestureAsk];
+    UITapGestureRecognizer* tapGestureReply = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnReply:)];
+    UILongPressGestureRecognizer* longPressGestureReply = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnReply:)];
     
-    [_hotTableView addGestureRecognizer:_longPressGestureReply];
-
+    UITapGestureRecognizer* tapGestureActivity = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnActivity:)];
+    UILongPressGestureRecognizer* longPressGestureActivity = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnActivity:)];
+    
+    [_tableViewReply addGestureRecognizer:longPressGestureReply];
+    [_tableViewReply addGestureRecognizer:tapGestureReply];
+    [_collectionView_ask addGestureRecognizer:tapGestureAsk];
+    [_collectionView_ask addGestureRecognizer:longPressGestureAsk];
+    [_tableViewActivity addGestureRecognizer:tapGestureActivity];
+    [_tableViewActivity addGestureRecognizer:longPressGestureActivity];
 }
 
-- (void)configAskView {
-    _askCollectionView = _scrollView.collectionView;
-    _askCollectionView.dataSource = self;
-    _askCollectionView.delegate = self;
-    _askCollectionView.emptyDataSetDelegate = self;
-    _askCollectionView.emptyDataSetSource = self;
-    _askCollectionView.psDelegate = self;
-    UINib* nib = [UINib nibWithNibName:CellIdentifier2 bundle:nil];
-    [_askCollectionView registerNib:nib forCellWithReuseIdentifier:CellIdentifier2];
-    _currentAskIndex = 1;
-}
 
-- (void)createCustomNavigationBar {
+
+- (void)setupNavBar {
     self.navigationItem.titleView = self.segmentedControl;
 }
 
 #pragma mark - methods
-
-//- (void)shouldNavToHotSegment {
-//    BOOL shouldNav = [[NSUserDefaults standardUserDefaults]
-//                      boolForKey:@"shouldNavToHotSegment"];
-//    if (shouldNav) {
-//        [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
-//        [_scrollView toggleWithType:PIENewScrollTypeReply];
-//        [_hotTableView.header beginRefreshing];
-//    }
-//    [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:@"shouldNavToHotSegment"];
-//    [[NSUserDefaults standardUserDefaults] synchronize];
-//}
 
 
 - (void)shouldDoUploadJob {
@@ -213,30 +232,20 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:@"shouldDoUploadJob"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
-//- (void)shouldNavToAskSegment {
-//    BOOL shouldNav = [[NSUserDefaults standardUserDefaults]
-//                      boolForKey:@"shouldNavToAskSegment"];
-//    if (shouldNav) {
-//        [_segmentedControl setSelectedSegmentIndex:0 animated:YES];
-//        [_scrollView toggleWithType:PIENewScrollTypeAsk];
-//        [_askCollectionView.header beginRefreshing];
-//    }
-//    [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:@"shouldNavToAskSegment"];
-//    [[NSUserDefaults standardUserDefaults] synchronize];
-//}
+
 
 
 - (void)refreshHeader {
-    if (_scrollView.type == PIENewScrollTypeReply && ![_hotTableView.header isRefreshing]) {
-        [_hotTableView.header beginRefreshing];
-    } else if (_scrollView.type == PIENewScrollTypeAsk && ![_askCollectionView.header isRefreshing]) {
-        [_askCollectionView.header beginRefreshing];
+    if (_scrollView.type == PIENewScrollTypeReply && ![_tableViewReply.header isRefreshing]) {
+        [_tableViewReply.header beginRefreshing];
+    } else if (_scrollView.type == PIENewScrollTypeAsk && ![_collectionView_ask.header isRefreshing]) {
+        [_collectionView_ask.header beginRefreshing];
+    } else if (_scrollView.type == PIENewScrollTypeActivity && ![_tableViewActivity.header isRefreshing]) {
+        [_tableViewActivity.header beginRefreshing];
     }
 }
 
 #pragma mark - event response
-
-
 
 - (void)help:(BOOL)shouldDownload {
     NSMutableDictionary* param = [NSMutableDictionary new];
@@ -284,15 +293,16 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     if (scrollView == _scrollView) {
         int currentPage = (_scrollView.contentOffset.x + CGWidth(_scrollView.frame) * 0.1) / CGWidth(_scrollView.frame);
         if (currentPage == 0) {
-            _hotTableView.scrollsToTop = NO;
-            _askCollectionView.scrollsToTop = YES;
             [_segmentedControl setSelectedSegmentIndex:0 animated:YES];
-            _scrollView.type = PIENewScrollTypeAsk;
-            [self firstGetSourceIfEmpty_ask];
+            _scrollView.type = PIENewScrollTypeActivity;
+//            [self firstGetSourceIfEmpty_ask];
         } else if (currentPage == 1) {
-            _hotTableView.scrollsToTop = YES;
-            _askCollectionView.scrollsToTop = NO;
             [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
+            _scrollView.type = PIENewScrollTypeActivity;
+            //            [self firstGetSourceIfEmpty_ask];
+        }
+        else if (currentPage == 2) {
+            [_segmentedControl setSelectedSegmentIndex:2 animated:YES];
             _scrollView.type = PIENewScrollTypeReply;
             [self firstGetSourceIfEmpty_Reply];
         }
@@ -301,14 +311,16 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (_hotTableView == tableView) {
+    if (_tableViewReply == tableView) {
+        return _sourceReply.count;
+    }else if (_tableViewActivity == tableView) {
         return _sourceReply.count;
     }
     return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (_hotTableView == tableView) {
+    if (_tableViewReply == tableView) {
         PIENewReplyTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         [cell injectSauce:_sourceReply[indexPath.row]];
         return cell;
@@ -321,7 +333,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (_hotTableView == tableView) {
+    if (_tableViewReply == tableView) {
         return [tableView fd_heightForCellWithIdentifier:CellIdentifier  cacheByIndexPath:indexPath configuration:^(PIENewReplyTableCell *cell) {
             [cell injectSauce:_sourceReply[indexPath.row]];
         }];
@@ -337,7 +349,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 //- (void)firstGetDataSourceFromDataBase {
 //
 //    _sourceAsk = [self fetchDBDataSourceWithHomeType:PIENewScrollTypeAsk];
-//    [_askCollectionView reloadData];
+//    [_collectionView_ask reloadData];
 //
 ////    _sourceReply = [self fetchDBDataSourceWithHomeType:PIENewScrollTypeReply];
 //}
@@ -356,20 +368,20 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
 - (void)firstGetSourceIfEmpty_ask {
     if (_sourceAsk.count <= 0 || _isfirstLoadingAsk) {
-        [self.askCollectionView.header beginRefreshing];
+        [self.collectionView_ask.header beginRefreshing];
     }
 }
 - (void)firstGetSourceIfEmpty_Reply {
     if (_sourceReply.count <= 0 || _isfirstLoadingReply) {
-        [self.hotTableView.header beginRefreshing];
+        [self.tableViewReply.header beginRefreshing];
     }
 }
 //获取服务器的最新数据
 - (void)getRemoteAskSource:(void (^)(BOOL finished))block{
     WS(ws);
-    [ws.scrollView.collectionView.footer endRefreshing];
-    _currentAskIndex = 1;
-    [_askCollectionView.footer endRefreshing];
+    [ws.scrollView.collectionViewAsk.footer endRefreshing];
+    _currentIndex_ask = 1;
+    [_collectionView_ask.footer endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary new];
     _timeStamp_ask = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(_timeStamp_ask) forKey:@"last_updated"];
@@ -381,13 +393,13 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         ws.isfirstLoadingAsk = NO;
         if (homepageArray.count) {
             ws.sourceAsk = homepageArray;
-            _canRefreshAskFooter = YES;
+            _canRefreshFooter_ask = YES;
         }
         else {
-            _canRefreshAskFooter = NO;
+            _canRefreshFooter_ask = NO;
         }
-        [ws.askCollectionView reloadData];
-        [ws.scrollView.collectionView.header endRefreshing];
+        [ws.collectionView_ask reloadData];
+        [ws.scrollView.collectionViewAsk.header endRefreshing];
         if (block) {
             block(YES);
         }
@@ -397,31 +409,31 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 //拉至底层刷新
 - (void)getMoreRemoteAskSource {
     WS(ws);
-    [ws.scrollView.collectionView.header endRefreshing];
-    _currentAskIndex++;
+    [ws.scrollView.collectionViewAsk.header endRefreshing];
+    _currentIndex_ask++;
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:@(_timeStamp_ask) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [param setObject:@(_currentAskIndex) forKey:@"page"];
+    [param setObject:@(_currentIndex_ask) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     PIEPageManager *pageManager = [PIEPageManager new];
     [pageManager pullAskSource:param block:^(NSMutableArray *homepageArray) {
         if (homepageArray.count) {
             [ws.sourceAsk addObjectsFromArray:homepageArray];
-            _canRefreshAskFooter = YES;
+            _canRefreshFooter_ask = YES;
         }
         else {
-            _canRefreshAskFooter = NO;
+            _canRefreshFooter_ask = NO;
         }
-        [ws.askCollectionView reloadData];
-        [ws.scrollView.collectionView.footer endRefreshing];
+        [ws.collectionView_ask reloadData];
+        [ws.scrollView.collectionViewAsk.footer endRefreshing];
     }];
 }
 
 - (void)getRemoteReplySource {
     WS(ws);
-    _currentHotIndex = 1;
-    [_hotTableView.footer endRefreshing];
+    _currentIndex_reply = 1;
+    [_tableViewReply.footer endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary new];
     _timeStamp_reply = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(_timeStamp_reply) forKey:@"last_updated"];
@@ -434,36 +446,36 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         ws.isfirstLoadingReply = NO;
         if (array.count) {
                 ws.sourceReply = array;
-                _canRefreshReplyFooter = YES;
+                _canRefreshFooter_reply = YES;
         }
         else {
-            _canRefreshReplyFooter = NO;
+            _canRefreshFooter_reply = NO;
         }
-        [ws.hotTableView reloadData];
-        [ws.hotTableView.header endRefreshing];
+        [ws.tableViewReply reloadData];
+        [ws.tableViewReply.header endRefreshing];
     }];
 }
 
 - (void)getMoreRemoteReplySource {
     WS(ws);
-    _currentHotIndex ++;
-    [_hotTableView.header endRefreshing];
+    _currentIndex_reply ++;
+    [_tableViewReply.header endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:@(_timeStamp_reply) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-    [param setObject:@(_currentHotIndex) forKey:@"page"];
+    [param setObject:@(_currentIndex_reply) forKey:@"page"];
     PIEPageManager *pageManager = [PIEPageManager new];
     [pageManager pullReplySource:param block:^(NSMutableArray *array) {
         if (array.count) {
             [ws.sourceReply addObjectsFromArray:array] ;
-            _canRefreshReplyFooter = YES;
+            _canRefreshFooter_reply = YES;
         }
         else {
-            _canRefreshReplyFooter = NO;
+            _canRefreshFooter_reply = NO;
         }
-        [ws.hotTableView reloadData];
-        [ws.hotTableView.footer endRefreshing];
+        [ws.tableViewReply reloadData];
+        [ws.tableViewReply.footer endRefreshing];
     }];
 }
 
@@ -509,7 +521,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 //        if (_selectedVM.type == PIEPageTypeAsk) {
 //            [self collect];
 //        } else {
-//            PIENewReplyTableCell* cell = [_scrollView.replyTable cellForRowAtIndexPath:_selectedIndexPath];
+//            PIENewReplyTableCell* cell = [_scrollView.tableReply cellForRowAtIndexPath:_selectedIndexPath];
 //            [self collect:cell.collectView shouldShowHud:YES];
 //        }
 //    }
@@ -615,10 +627,10 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 }
 
 - (void)loadMoreHotData {
-    if (_canRefreshReplyFooter && !_hotTableView.header.isRefreshing) {
+    if (_canRefreshFooter_reply && !_tableViewReply.header.isRefreshing) {
         [self getMoreRemoteReplySource];
     } else {
-        [_hotTableView.footer endRefreshing];
+        [_tableViewReply.footer endRefreshing];
     }
 }
 
@@ -628,23 +640,23 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 }
 
 - (void)loadMoreRecentData {
-    if (_canRefreshAskFooter && !_askCollectionView.header.isRefreshing) {
+    if (_canRefreshFooter_ask && !_collectionView_ask.header.isRefreshing) {
         [self getMoreRemoteAskSource];
     } else {
-        [_askCollectionView.footer endRefreshing];
+        [_collectionView_ask.footer endRefreshing];
     }
 }
 
 #pragma mark - PWRefreshBaseTableViewDelegate
 
 -(void)didPullRefreshDown:(UITableView *)tableView{
-    if (tableView == _hotTableView) {
+    if (tableView == _tableViewReply) {
         [self loadNewHotData];
     }
 }
 
 -(void)didPullRefreshUp:(UITableView *)tableView {
-    if (tableView == _hotTableView) {
+    if (tableView == _tableViewReply) {
         [self loadMoreHotData];
     }
 }
@@ -709,9 +721,9 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
 {
     NSString *text ;
-    if (scrollView == _scrollView.collectionView) {
+    if (scrollView == _scrollView.collectionViewAsk) {
         text = @"好伤心，再下拉刷新试试";
-    } else if (scrollView == _scrollView.replyTable) {
+    } else if (scrollView == _scrollView.tableReply) {
         text = @"好伤心，再下拉刷新试试";
     }
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
@@ -721,9 +733,9 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 }
 
 -(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
-    if (scrollView == _scrollView.collectionView) {
+    if (scrollView == _scrollView.collectionViewAsk) {
         return !_isfirstLoadingAsk;
-    } else if (scrollView == _scrollView.replyTable) {
+    } else if (scrollView == _scrollView.tableReply) {
         return !_isfirstLoadingReply;
     }
     return NO;
@@ -735,9 +747,9 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
 #pragma mark - Getters and Setters
 
--(kfcHomeScrollView*)scrollView {
+-(PIENewScrollView*)scrollView {
     if (!_scrollView) {
-        _scrollView = [kfcHomeScrollView new];
+        _scrollView = [PIENewScrollView new];
         _scrollView.delegate =self;
     }
     return _scrollView;
@@ -813,9 +825,9 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
             [ATOMReportModel report:param withBlock:^(NSError *error) {
                 UIView* view;
                 if (ws.scrollView.type == PIENewScrollTypeReply) {
-                    view = ws.hotTableView;
+                    view = ws.tableViewReply;
                 } else  if (ws.scrollView.type == PIENewScrollTypeAsk) {
-                    view = ws.askCollectionView;
+                    view = ws.collectionView_ask;
                 }
                 if(!error) {
                     [Hud text:@"已举报" inView:view];
@@ -832,8 +844,8 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 - (HMSegmentedControl*)segmentedControl {
     WS(ws);
     if (!_segmentedControl) {
-        _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"求P",@"作品"]];
-        _segmentedControl.frame = CGRectMake(0, 120, 200, 45);
+        _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"活动",@"求P",@"作品"]];
+        _segmentedControl.frame = CGRectMake(0, 120, SCREEN_WIDTH-40, 45);
         _segmentedControl.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor colorWithHex:0x000000 andAlpha:0.6], NSForegroundColorAttributeName, nil];
         _segmentedControl.selectedTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil];
         _segmentedControl.selectionIndicatorHeight = 4.0f;
@@ -845,9 +857,12 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         
         [_segmentedControl setIndexChangeBlock:^(NSInteger index) {
             if (index == 0) {
+                [ws.scrollView toggleWithType:PIENewScrollTypeActivity];
+//                [ws firstGetSourceIfEmpty_ask];
+            } else             if (index == 1) {
                 [ws.scrollView toggleWithType:PIENewScrollTypeAsk];
                 [ws firstGetSourceIfEmpty_ask];
-            } else {
+            } else             if (index == 2) {
                 [ws.scrollView toggleWithType:PIENewScrollTypeReply];
                 [ws firstGetSourceIfEmpty_Reply];
             }
@@ -858,12 +873,12 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
 #pragma mark - Gesture Event
 
-- (void)tapGestureReply:(UITapGestureRecognizer *)gesture {
+- (void)tapOnReply:(UITapGestureRecognizer *)gesture {
     if (_scrollView.type == PIENewScrollTypeReply) {
-        CGPoint location = [gesture locationInView:_hotTableView];
-        _selectedIndexPath = [_hotTableView indexPathForRowAtPoint:location];
+        CGPoint location = [gesture locationInView:_tableViewReply];
+        _selectedIndexPath = [_tableViewReply indexPathForRowAtPoint:location];
         if (_selectedIndexPath) {
-            _selectedReplyCell = [_hotTableView cellForRowAtIndexPath:_selectedIndexPath];
+            _selectedReplyCell = [_tableViewReply cellForRowAtIndexPath:_selectedIndexPath];
             _selectedVM = _sourceReply[_selectedIndexPath.row];
             CGPoint p = [gesture locationInView:_selectedReplyCell];
             
@@ -928,10 +943,10 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 }
 - (void)longPressOnReply:(UILongPressGestureRecognizer *)gesture {
     if (_scrollView.type == PIENewScrollTypeReply) {
-        CGPoint location = [gesture locationInView:_hotTableView];
-        _selectedIndexPath = [_hotTableView indexPathForRowAtPoint:location];
+        CGPoint location = [gesture locationInView:_tableViewReply];
+        _selectedIndexPath = [_tableViewReply indexPathForRowAtPoint:location];
         if (_selectedIndexPath) {
-            _selectedReplyCell = [_hotTableView cellForRowAtIndexPath:_selectedIndexPath];
+            _selectedReplyCell = [_tableViewReply cellForRowAtIndexPath:_selectedIndexPath];
             _selectedVM = _sourceReply[_selectedIndexPath.row];
             CGPoint p = [gesture locationInView:_selectedReplyCell];
             
@@ -945,10 +960,10 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 }
 - (void)longPressOnAsk:(UILongPressGestureRecognizer *)gesture {
     if (_scrollView.type == PIENewScrollTypeAsk) {
-        CGPoint location = [gesture locationInView:_askCollectionView];
-        NSIndexPath *indexPath = [_askCollectionView indexPathForItemAtPoint:location];
+        CGPoint location = [gesture locationInView:_collectionView_ask];
+        NSIndexPath *indexPath = [_collectionView_ask indexPathForItemAtPoint:location];
         if (indexPath) {
-           PIENewAskCollectionCell* cell= (PIENewAskCollectionCell *)[_askCollectionView cellForItemAtIndexPath:indexPath];
+           PIENewAskCollectionCell* cell= (PIENewAskCollectionCell *)[_collectionView_ask cellForItemAtIndexPath:indexPath];
             _selectedVM = _sourceAsk[indexPath.row];
             CGPoint p = [gesture locationInView:cell];
             //点击大图
@@ -958,12 +973,12 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         }
     }
 }
-- (void)tapGestureAsk:(UITapGestureRecognizer *)gesture {
+- (void)tapOnAsk:(UITapGestureRecognizer *)gesture {
     if (_scrollView.type == PIENewScrollTypeAsk) {
-        CGPoint location = [gesture locationInView:_askCollectionView];
-        NSIndexPath *indexPath = [_askCollectionView indexPathForItemAtPoint:location];
+        CGPoint location = [gesture locationInView:_collectionView_ask];
+        NSIndexPath *indexPath = [_collectionView_ask indexPathForItemAtPoint:location];
         if (indexPath) {
-       PIENewAskCollectionCell*  cell= (PIENewAskCollectionCell *)[_askCollectionView cellForItemAtIndexPath:indexPath];
+       PIENewAskCollectionCell*  cell= (PIENewAskCollectionCell *)[_collectionView_ask cellForItemAtIndexPath:indexPath];
             _selectedVM = _sourceAsk[indexPath.row];
             CGPoint p = [gesture locationInView:cell];
             

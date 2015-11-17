@@ -28,11 +28,11 @@
              @"mobile" : @"phone",
              @"bindWeibo" : @"is_bound_weibo",
              @"bindWechat" : @"is_bound_weixin",
-//             @"locationID" : @"location",
-//             @"cityID" : @"city",
-//             @"provinceID" : @"province",
+             @"bindQQ":@"is_bound_qq",
              @"isMyFan":@"is_fan",
              @"isMyFollow":@"is_follow",
+             @"token":@"token",
+             @"praisedCount":@"total_praise"
              };
 }
 + (NSDictionary *)FMDBColumnsByPropertyKey {
@@ -53,11 +53,14 @@
              @"mobile" : @"mobile",
              @"bindWeibo" : @"bindWeibo",
              @"bindWechat" : @"bindWechat",
+             @"bindQQ":@"bindQQ",
              @"locationID" : @"locationID",
              @"cityID" : @"cityID",
              @"provinceID" : @"provinceID",
              @"isMyFan":@"isMyFan",
              @"isMyFollow":@"isMyFan",
+             @"token":@"token",
+             @"praisedCount":@"praisedCount",
              };
 }
 

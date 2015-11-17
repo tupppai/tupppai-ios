@@ -83,12 +83,6 @@
     _avatarView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
     _dotView1.layer.cornerRadius = _dotView1.frame.size.width/2;
     _dotView2.layer.cornerRadius = _dotView2.frame.size.width/2;
-//    _followCountLabel.font = [UIFont boldSystemFontOfSize:15];
-//    _fansCountLabel.font = [UIFont boldSystemFontOfSize:15];
-//    _likedCountLabel.font = [UIFont boldSystemFontOfSize:15];
-//    _fansDescLabel.font = [UIFont systemFontOfSize:14];
-//    _followCountLabel.font = [UIFont systemFontOfSize:14];
-//    _likedDescLabel.font = [UIFont systemFontOfSize:14];
     _blurView.contentMode = UIViewContentModeScaleAspectFill;
     _blurView.clipsToBounds = YES;
 
@@ -172,7 +166,7 @@
     }];
     _followCountLabel.text = [NSString stringWithFormat:@"%zd",user.attentionNumber];
     _fansCountLabel.text = [NSString stringWithFormat:@"%zd",user.fansNumber];
-    _likedCountLabel.text = [NSString stringWithFormat:@"%zd",user.likeNumber];
+    _likedCountLabel.text = [NSString stringWithFormat:@"%zd",user.praisedCount];
     _followButton.highlighted = user.isMyFollow;
 }
 

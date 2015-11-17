@@ -170,29 +170,37 @@
     }];
 }
 
-+ (void) ddLogin :(NSDictionary*)param withBlock:(void (^)(NSDictionary* data , NSInteger status))block {
-    [[self class]POST:param url:URL_ACLogin block:^(id responseObject) {
-            NSDictionary* data = [responseObject objectForKey:@"data"];
-            NSInteger status = [(NSString*)[data objectForKey:@"status"]integerValue];
-            if (block) { block(data,status); }
-    }];
-}
+//+ (void) ddLogin :(NSDictionary*)param withBlock:(void (^)(NSDictionary* data , NSInteger status))block {
+//    [[self class]POST:param url:URL_ACLogin block:^(id responseObject) {
+//            NSDictionary* data = [responseObject objectForKey:@"data"];
+//            NSInteger status = [(NSString*)[data objectForKey:@"status"]integerValue];
+//            if (block) { block(data,status); }
+//    }];
+//}
 
-+ (void) ddRegister :(NSDictionary*)param withBlock:(void (^)(NSDictionary* data))block {
-    [[self class]POST:param url:URL_ACRegister block:^(id responseObject) {
-            NSDictionary *data = [ responseObject objectForKey:@"data"];
-                if (block) { block(data); }
-    }];
-}
-+ (void) dd3PartyAuth :(NSDictionary*)param with3PaType:(NSString *)type withBlock:(void (^)(BOOL isRegistered,NSDictionary*userObject))block {
-    NSString* url = [NSString stringWithFormat:@"%@%@",URL_AC3PaAuth,type];
-    [[self class]POST:param url:url block:^(id responseObject) {
-            NSDictionary *data = [ responseObject objectForKey:@"data"];
-            NSInteger isRegistered = [[data objectForKey:@"is_register"] integerValue];
-            NSDictionary* userObject = [data objectForKey:@"user_obj"];
-            if (block) { block(isRegistered,userObject); }
-    }];
-}
+//+ (void) ddRegister :(NSDictionary*)param withBlock:(void (^)(NSDictionary* data))block {
+//    [[self class]POST:param url:URL_ACRegister block:^(id responseObject) {
+//            NSDictionary *data = [ responseObject objectForKey:@"data"];
+//                if (block) { block(data); }
+//    }];
+//}
+//+ (void) dd3PartyAuth :(NSDictionary*)param with3PaType:(NSString *)type withBlock:(void (^)(BOOL isRegistered,NSDictionary*userObject))block {
+//    NSString* url = [NSString stringWithFormat:@"%@%@",URL_AC3PaAuth,type];
+//    [[self class]POST:param url:url block:^(id responseObject) {
+//            NSDictionary *data = [ responseObject objectForKey:@"data"];
+//            NSInteger isRegistered = [[data objectForKey:@"is_register"] integerValue];
+//            NSDictionary* userObject = [data objectForKey:@"user_obj"];
+//            if (block) { block(isRegistered,userObject); }
+//    }];
+//}
+
+//+ (void) dd3PartyAuth :(NSDictionary*)param with3PaType:(NSString *)type withBlock:(void (^)(id responseObject))block {
+//    NSString* url = [NSString stringWithFormat:@"%@%@",URL_AC3PaAuth,type];
+//    [[self class]POST:param url:url block:^(id responseObject) {
+//        if (block) { block(responseObject); }
+//    }];
+//}
+
 //+ (void) checkPhoneRegistration:(NSDictionary*)param withBlock:(void (^)(NSNumber* isRegistered))block {
 //    [[self class]GET:param url:URL_ACHasRegistered block:^(id responseObject) {
 //        if (responseObject) {

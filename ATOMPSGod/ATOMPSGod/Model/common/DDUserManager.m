@@ -80,22 +80,20 @@ static  DDUserManager* _currentUser;
     _username = user.nickname;
     _sex = user.sex;
     _avatar = user.avatar;
-//    _locationID = user.locationID;
-//    _backgroundImage = user.backgroundImage;
+    _praisedCount = user.praisedCount;
     _attentionNumber = user.attentionNumber;
     _fansNumber = user.fansNumber;
     _likeNumber = user.likeNumber;
     _uploadNumber = user.uploadNumber;
     _replyNumber = user.replyNumber;
-//    _proceedingNumber = user.proceedingNumber;
-//    _attentionUploadNumber = user.attentionUploadNumber;
-//    _attentionWorkNumber = user.attentionWorkNumber;
     _bindWechat = user.bindWechat;
     _bindWeibo = user.bindWeibo;
+    _bindQQ = user.bindQQ;
+    _token = user.token;
 }
 
 //embarrassing
-+ (void)saveCurrentUserToDB {
++ (void)updateDBUserFromCurrentUser {
     PIEEntityUser* user = [PIEEntityUser new];
     DDUserManager* cUser = [DDUserManager currentUser];
     user.uid = cUser.uid;
@@ -103,18 +101,16 @@ static  DDUserManager* _currentUser;
     user.nickname = cUser.username;
     user.sex = cUser.sex;
     user.avatar = cUser.avatar;
-//    user.locationID = cUser.locationID;
-//    user.backgroundImage = cUser.backgroundImage;
     user.attentionNumber = cUser.attentionNumber;
     user.fansNumber = cUser.fansNumber;
     user.likeNumber = cUser.likeNumber;
     user.uploadNumber = cUser.uploadNumber;
     user.replyNumber = cUser.replyNumber;
-//    user.proceedingNumber = cUser.proceedingNumber;
-//    user.attentionUploadNumber = cUser.attentionUploadNumber;
-//    user.attentionWorkNumber = cUser.attentionWorkNumber;
     user.bindWechat = cUser.bindWechat;
     user.bindWeibo = cUser.bindWeibo;
+    user.bindQQ = cUser.bindQQ;
+    user.praisedCount = cUser.praisedCount;
+    user.token = cUser.token;
     [ATOMUserDAO updateUser:user];
 }
 
@@ -135,12 +131,10 @@ static  DDUserManager* _currentUser;
     self.uid = 0;
     self.username = @"游客";
     self.mobile = @"-1";
-//    self.locationID = 0;
     self.avatar = @"";
-//    self.avatarID = 0;
-//    self.backgroundImage = @"";
     self.bindWechat = NO;
     self.bindWeibo = NO;
+    self.bindQQ = NO;
 }
 
 +(void)fetchUserInDBToCurrentUser:(void (^)(BOOL))block {
@@ -169,9 +163,12 @@ static  DDUserManager* _currentUser;
 }
 
 + (void )DDRegister:(NSDictionary *)param withBlock:(void (^)(BOOL success))block {
-    [DDService ddRegister:param withBlock:^(NSDictionary *data) {
+    
+    [DDBaseService POST:param url:URL_ACRegister block:^(id responseObject) {
+        NSDictionary *data = [ responseObject objectForKey:@"data"];
         if (data) {
             PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:data error:NULL];
+            user.token = [responseObject objectForKey:@"token"];
             [[DDUserManager currentUser]saveAndUpdateUser:user];
             if (block) { block(YES); }
         } else {
@@ -182,14 +179,17 @@ static  DDUserManager* _currentUser;
 
 + (void )DDLogin:(NSDictionary*)param withBlock:(void (^)(BOOL succeed))block{
     [Hud activity:@""];
-    [DDService ddLogin:param withBlock:^(NSDictionary *data,NSInteger status) {
-        [Hud dismiss];
+    
+    [DDBaseService POST:param url:URL_ACLogin block:^(id responseObject) {
+        NSDictionary* data = [responseObject objectForKey:@"data"];
+        NSInteger status = [(NSString*)[data objectForKey:@"status"]integerValue];
         if (data) {
             {    //        data: { status: 1,正常  2，密码错误 3，未注册 }
                 if(status == 1) {
-                    [Util ShowTSMessageSuccess:@"登录成功"];
                     PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:data error:nil];
                     //保存更新数据库的user,并更新currentUser
+                    user.token = [responseObject objectForKey:@"token"];
+                    NSLog(@"token%@",user.token);
                     [[DDUserManager currentUser]saveAndUpdateUser:user];
                     if (block) {block(YES);}
                 } else if (status == 2) {
@@ -201,15 +201,23 @@ static  DDUserManager* _currentUser;
                 }
             }
         } else { if (block) {  block(NO);  } }
+        
+        [Hud dismiss];
     }];
+
 }
 
 
 + (void)DD3PartyAuth:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(bool isRegistered,NSString* info))block {
-    [DDService dd3PartyAuth:param with3PaType:type withBlock:^(BOOL isRegistered,NSDictionary* userObejct) {
+    NSString* url = [NSString stringWithFormat:@"%@%@",URL_AC3PaAuth,type];
+    [DDBaseService POST:param url:url block:^(id responseObject) {
+        NSDictionary *data = [ responseObject objectForKey:@"data"];
+        NSInteger isRegistered = [[data objectForKey:@"is_register"] integerValue];
+        NSDictionary* userObject = [data objectForKey:@"user_obj"];
         if (isRegistered) {
             //已经注册，抓取服务器存储的user对象，更新本地user.
-            PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:userObejct error:NULL];
+            PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:userObject error:NULL];
+            user.token = [responseObject objectForKey:@"token"];
             [[DDUserManager currentUser]saveAndUpdateUser:user];
             block(YES,@"登录成功");
         } else {
@@ -217,6 +225,8 @@ static  DDUserManager* _currentUser;
                 block(NO,@"未注册，跳到注册页面");
             }
         }
+
     }];
+
 }
 @end

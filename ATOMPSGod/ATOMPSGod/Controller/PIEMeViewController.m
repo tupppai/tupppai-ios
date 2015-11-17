@@ -164,7 +164,7 @@
     _usernameLabel.text = user.username;
     _followCountLabel.text = [NSString stringWithFormat:@"%zd",user.attentionNumber];
     _fansCountLabel.text = [NSString stringWithFormat:@"%zd",user.fansNumber];
-    _likedCountLabel.text = [NSString stringWithFormat:@"%zd",user.likeNumber];
+    _likedCountLabel.text = [NSString stringWithFormat:@"%zd",user.praisedCount];
     [self updateAvatar];
     [self setupTapGesture];
 }

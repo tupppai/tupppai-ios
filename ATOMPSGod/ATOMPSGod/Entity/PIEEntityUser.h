@@ -15,6 +15,7 @@
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, assign) bool bindWeibo;
 @property (nonatomic, assign) bool bindWechat;
+@property (nonatomic, assign) bool bindQQ;
 
 /**
  *  此用户是否我的粉丝
@@ -52,6 +53,8 @@
  *  被点赞数
  */
 @property (nonatomic, assign) NSInteger likeNumber;
+
+@property (nonatomic, assign) NSInteger praisedCount;
 /**
  *  求P数
  */
@@ -73,6 +76,7 @@
  */
 @property (nonatomic, assign) NSInteger attentionWorkNumber;
 
+@property (nonatomic, copy) NSString* token;
 
 
 

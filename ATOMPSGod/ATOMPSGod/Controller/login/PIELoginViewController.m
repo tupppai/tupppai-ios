@@ -80,7 +80,7 @@
     [self login:ATOMSignUpQQ];
 }
 - (void)tap2 {
-    [self login:ATOMSignUpQQ];
+    [self login:ATOMSignUpWeibo];
 }
 - (void)tap3 {
     [self login:ATOMSignUpWechat];

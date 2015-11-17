@@ -87,7 +87,7 @@
                 //use reactive cocoa to update all avatar view.
                 [DDUserManager currentUser].avatar = _avatar;
             }
-            [DDUserManager saveCurrentUserToDB];
+            [DDUserManager updateDBUserFromCurrentUser];
             
             DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
             PIEMeViewController* mevc = [nav.viewControllers firstObject];

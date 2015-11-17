@@ -42,16 +42,17 @@ typedef enum {
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, copy) NSString *mobile;
 @property (nonatomic, copy) NSString *password;
-//@property (nonatomic, assign) NSInteger locationID;
 @property (nonatomic, copy) NSString *username;
 @property (nonatomic, copy) NSString *avatar;
+@property (nonatomic, copy) NSString *token;
+
 /**
  *  man:1 woman:0
  */
 @property (nonatomic, assign) BOOL sex;
 
 /**
- *  被关注注数
+ *  关注数
  */
 @property (nonatomic, assign) NSInteger attentionNumber;
 /**
@@ -70,19 +71,8 @@ typedef enum {
  *  回复作品数
  */
 @property (nonatomic, assign) NSInteger replyNumber;
-///**
-// *  进行中数
-// */
-//@property (nonatomic, assign) NSInteger proceedingNumber;
-///**
-// *  关注求P数
-// */
-//@property (nonatomic, assign) NSInteger attentionUploadNumber;
-///**
-// *  关注作品数
-// */
-//@property (nonatomic, assign) NSInteger attentionWorkNumber;
-//@property (nonatomic, assign) NSInteger avatarID;
+@property (nonatomic, assign) NSInteger praisedCount;
+
 @property (nonatomic, assign) bool bindWechat;
 @property (nonatomic, assign) bool bindWeibo;
 @property (nonatomic, assign) bool bindQQ;
@@ -98,7 +88,7 @@ typedef enum {
 +(void)fetchUserInDBToCurrentUser:(void (^)(BOOL))block;
 -(void)wipe;
 
-+ (void)saveCurrentUserToDB;
++ (void)updateDBUserFromCurrentUser;
 + (void)DDGetUserInfoAndUpdateMe;
 + (void )DDRegister:(NSDictionary *)param withBlock:(void (^)(BOOL success))block ;
 + (void )DDLogin:(NSDictionary*)param withBlock:(void (^)(BOOL succeed))block ;

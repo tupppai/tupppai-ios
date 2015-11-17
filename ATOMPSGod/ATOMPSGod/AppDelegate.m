@@ -227,7 +227,8 @@
 }
 - (void)uploadDeviceInfo:(NSString*)token {
     NSUUID *oNSUUID = [[UIDevice currentDevice] identifierForVendor];
-    NSDictionary* param = [NSDictionary dictionaryWithObjectsAndKeys:token, @"device_token",@1,@"platform",@([[UIDevice currentDevice].systemVersion floatValue]),@"device_os",deviceName(),@"device_name",[oNSUUID UUIDString],@"device_mac",@"2.1",@"version",nil];
+    NSNumber *version =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    NSDictionary* param = [NSDictionary dictionaryWithObjectsAndKeys:token, @"device_token",@1,@"platform",@([[UIDevice currentDevice].systemVersion floatValue]),@"device_os",deviceName(),@"device_name",[oNSUUID UUIDString],@"device_mac",version,@"version",nil];
     [DDService updateToken:param withBlock:nil];
 }
 - (void)addRedDotToTabBarItemIndex:(NSInteger)index {
@@ -253,21 +254,7 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
-    
-//userinfo:{
-//    aps =     {
-//        alert = "\U60a8\U6709\U4e00\U6761\U65b0\U7684\U6c42p\U9080\U8bf7";
-//        badge = 1;
-//        sound = chime;
-//    };
-//    count = 1;
-//    d = uu75868143928550190401;
-//    p = 0;
-//    type = invite;
-//}
-    
 //    NSLog(@"userinfo:%@",userInfo);
-//    [UMessage didReceiveRemoteNotification:userInfo];
     NSInteger notifyType = [[userInfo objectForKey:@"type"]integerValue];
 //    int badgeNumber = [[[userInfo objectForKey:@"aps"]objectForKey:@"badge"]intValue];
 
@@ -280,9 +267,7 @@
         [self updateBadgeNumberForKey:@"NotificationOthers" toAdd:1];
     }
     
-   DDNavigationController* nav = [[self.mainTabBarController viewControllers] objectAtIndex:4];
-    nav.tabBarItem.badgeValue = @"";
-    
+//   DDNavigationController* nav = [[self.mainTabBarController viewControllers] objectAtIndex:4];    
     [[NSUserDefaults standardUserDefaults]setObject:@(YES) forKey:@"NotificationNew"];
     [[NSUserDefaults standardUserDefaults]synchronize];
     [self addRedDotToTabBarItemIndex:4];
