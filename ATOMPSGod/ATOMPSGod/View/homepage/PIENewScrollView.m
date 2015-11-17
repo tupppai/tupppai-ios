@@ -10,7 +10,7 @@
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "PIENewAskCollectionCell.h"
 @interface PIENewScrollView ()
-
+@property (nonatomic, strong) UIView* tableheaderView_activity;
 @end
 
 @implementation PIENewScrollView
@@ -19,8 +19,9 @@
     self = [super init];
     if (self) {
         [self configSelf];
-        [self addSubview:self.tableReply];
+        [self addSubview:self.tableActivity];
         [self addSubview:self.collectionViewAsk];
+        [self addSubview:self.tableReply];
     }
     return self;
 }
@@ -30,10 +31,11 @@
     self.showsVerticalScrollIndicator = NO;
     self.showsHorizontalScrollIndicator = NO;
     self.contentSize = CGSizeMake(SCREEN_WIDTH * 3, 0);
+    self.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
     self.pagingEnabled = YES;
     self.scrollsToTop = NO;
     self.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    self.type = 1;
+    self.type = PIENewScrollTypeAsk;
 }
 
 -(PIERefreshTableView *)tableReply {
@@ -46,13 +48,14 @@
     return _tableReply;
 }
 -(PIERefreshTableView *)tableActivity {
-    if (!_tableReply) {
-        _tableReply = [[PIERefreshTableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
-        _tableReply.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _tableReply.backgroundColor = [UIColor clearColor];
-        _tableReply.showsVerticalScrollIndicator = NO;
+    if (!_tableActivity) {
+        _tableActivity = [[PIERefreshTableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
+        _tableActivity.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tableActivity.backgroundColor = [UIColor clearColor];
+        _tableActivity.showsVerticalScrollIndicator = NO;
+        _tableActivity.tableHeaderView = self.tableheaderView_activity;
     }
-    return _tableReply;
+    return _tableActivity;
 }
 
 -(PIERefreshCollectionView *)collectionViewAsk {
@@ -71,6 +74,29 @@
     return _collectionViewAsk;
 }
 
+-(SwipeView *)swipeView {
+    if (!_swipeView) {
+        _swipeView = [[SwipeView alloc]initWithFrame:CGRectMake(0, 0, _tableActivity.bounds.size.width, 224)];
+        _swipeView.backgroundColor = [UIColor clearColor];
+        _swipeView.wrapEnabled = YES;
+        [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
+    }
+    return _swipeView;
+}
+-(UIView *)tableheaderView_activity {
+    if (!_tableheaderView_activity) {
+        float ratio = 286.0/375.0;
+        NSInteger height = ratio*SCREEN_WIDTH;
+        _tableheaderView_activity = [[UIView alloc]initWithFrame:CGRectMake(0,0, _tableActivity.bounds.size.width, height)];
+        _tableheaderView_activity.backgroundColor = [UIColor whiteColor];
+        [_tableheaderView_activity addSubview:self.swipeView];
+    }
+    return _tableheaderView_activity;
+}
+- (void) onTimer
+{
+    [self.swipeView scrollByNumberOfItems:1 duration:0.5];
+}
 
 - (void)toggleWithType:(PIENewScrollType)type {
     _type = type;

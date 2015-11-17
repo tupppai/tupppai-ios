@@ -1,19 +1,17 @@
 //
-//  PIEEliteAskTableViewCell.m
+//  PIENewActivityTableViewCell.m
 //  TUPAI
 //
-//  Created by chenpeiwei on 10/16/15.
+//  Created by chenpeiwei on 11/17/15.
 //  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIEEliteFollowAskTableViewCell.h"
-#import "PIEImageEntity.h"
+#import "PIENewActivityTableViewCell.h"
 #import "FXBlurView.h"
-@interface PIEEliteFollowAskTableViewCell()
+@interface PIENewActivityTableViewCell()
 @property (nonatomic, strong) UIImageView* blurView;
 @end
-
-@implementation PIEEliteFollowAskTableViewCell
+@implementation PIENewActivityTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code
@@ -71,20 +69,8 @@
         ws.theImageView.image = image;
         ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
     } failure:nil];
-//    CGFloat imageViewHeight = viewModel.imageHeight <= SCREEN_HEIGHT/2 ? viewModel.imageHeight : SCREEN_HEIGHT/2;
-//    imageViewHeight = MAX(200, imageViewHeight);
-
-//    [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-//        make.height.equalTo(@(SCREEN_WIDTH)).with.priorityHigh();
-//    }];
     
-
     if (viewModel.userID == [DDUserManager currentUser].uid) {
         _followView.hidden = YES;
     }
-}
-
-
-
-
-@end
+}@end

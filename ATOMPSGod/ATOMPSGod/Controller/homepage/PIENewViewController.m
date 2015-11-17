@@ -29,7 +29,7 @@
 #import "MRNavigationBarProgressView.h"
 #import "MRProgressView+AFNetworking.h"
 #import "PIEUploadManager.h"
-
+#import "PIENewActivityTableViewCell.h"
 @interface PIENewViewController() < UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,PWRefreshBaseCollectionViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,CHTCollectionViewDelegateWaterfallLayout,UICollectionViewDelegate,UICollectionViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
 
@@ -75,7 +75,7 @@
 
 static NSString *CellIdentifier = @"PIENewReplyTableCell";
 static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
-
+static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 
 - (void)updateStatus {
     if (_selectedIndexPath  && _scrollView.type == PIENewScrollTypeReply) {
@@ -164,8 +164,8 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     _tableViewActivity.psDelegate = self;
     _tableViewActivity.emptyDataSetSource = self;
     _tableViewActivity.emptyDataSetDelegate = self;
-//    UINib* nib = [UINib nibWithNibName:CellIdentifier bundle:nil];
-//    [_tableViewActivity registerNib:nib forCellReuseIdentifier:CellIdentifier];
+    UINib* nib = [UINib nibWithNibName:CellIdentifier3 bundle:nil];
+    [_tableViewActivity registerNib:nib forCellReuseIdentifier:CellIdentifier3];
     _tableViewActivity.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
     _currentIndex_activity = 1;
 }
@@ -295,11 +295,11 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         if (currentPage == 0) {
             [_segmentedControl setSelectedSegmentIndex:0 animated:YES];
             _scrollView.type = PIENewScrollTypeActivity;
-//            [self firstGetSourceIfEmpty_ask];
+            [self firstGetSourceIfEmpty_activity];
         } else if (currentPage == 1) {
             [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
-            _scrollView.type = PIENewScrollTypeActivity;
-            //            [self firstGetSourceIfEmpty_ask];
+            _scrollView.type = PIENewScrollTypeAsk;
+            [self firstGetSourceIfEmpty_ask];
         }
         else if (currentPage == 2) {
             [_segmentedControl setSelectedSegmentIndex:2 animated:YES];
@@ -314,7 +314,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     if (_tableViewReply == tableView) {
         return _sourceReply.count;
     }else if (_tableViewActivity == tableView) {
-        return _sourceReply.count;
+        return _sourceActivity.count;
     }
     return 0;
 }
@@ -323,6 +323,10 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     if (_tableViewReply == tableView) {
         PIENewReplyTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         [cell injectSauce:_sourceReply[indexPath.row]];
+        return cell;
+    } else if (_tableViewActivity == tableView) {
+        PIENewActivityTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier3];
+        [cell injectSauce:_sourceActivity[indexPath.row]];
         return cell;
     }
     else {
@@ -337,7 +341,12 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         return [tableView fd_heightForCellWithIdentifier:CellIdentifier  cacheByIndexPath:indexPath configuration:^(PIENewReplyTableCell *cell) {
             [cell injectSauce:_sourceReply[indexPath.row]];
         }];
-    } else {
+    } else if (_tableViewActivity == tableView) {
+        return [tableView fd_heightForCellWithIdentifier:CellIdentifier3  cacheByIndexPath:indexPath configuration:^(PIENewActivityTableViewCell *cell) {
+            [cell injectSauce:_sourceActivity[indexPath.row]];
+        }];
+    }
+    else {
         return 0;
     }
 }
@@ -365,7 +374,11 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 //    }
 //    return tableViewDataSource;
 //}
-
+- (void)firstGetSourceIfEmpty_activity {
+    if (_sourceActivity.count <= 0 || _isfirstLoadingActivity) {
+        [self.tableViewActivity.header beginRefreshing];
+    }
+}
 - (void)firstGetSourceIfEmpty_ask {
     if (_sourceAsk.count <= 0 || _isfirstLoadingAsk) {
         [self.collectionView_ask.header beginRefreshing];
@@ -376,12 +389,71 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         [self.tableViewReply.header beginRefreshing];
     }
 }
+
+//获取服务器的最新数据
+- (void)getRemoteSource_activity:(void (^)(BOOL finished))block{
+    WS(ws);
+    [ws.scrollView.tableActivity.footer endRefreshing];
+    _currentIndex_activity = 1;
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    _timeStamp_activity = [[NSDate date] timeIntervalSince1970];
+    [param setObject:@(_timeStamp_activity) forKey:@"last_updated"];
+    [param setObject:@(15) forKey:@"size"];
+    [param setObject:@(1) forKey:@"page"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    
+    
+    [ws.scrollView.tableActivity.header endRefreshing];
+    ws.isfirstLoadingActivity = NO;
+    [ws.tableViewActivity reloadData];
+    _canRefreshFooter_activity = NO;
+    
+//    PIEPageManager *pageManager = [PIEPageManager new];
+//    [pageManager pullAskSource:param block:^(NSMutableArray *homepageArray) {
+//        ws.isfirstLoadingActivity = NO;
+//        if (homepageArray.count) {
+//            ws.sourceActivity = homepageArray;
+//            _canRefreshFooter_activity = YES;
+//        }
+//        else {
+//            _canRefreshFooter_activity = NO;
+//        }
+//        [ws.tableViewActivity reloadData];
+//        [ws.tableViewActivity.header endRefreshing];
+//        if (block) {
+//            block(YES);
+//        }
+//    }];
+}
+//拉至底层刷新
+- (void)getMoreRemoteSource_activity {
+    WS(ws);
+    [ws.tableViewActivity.header endRefreshing];
+    _currentIndex_ask++;
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    [param setObject:@(_timeStamp_ask) forKey:@"last_updated"];
+    [param setObject:@(15) forKey:@"size"];
+    [param setObject:@(_currentIndex_ask) forKey:@"page"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    PIEPageManager *pageManager = [PIEPageManager new];
+    [pageManager pullAskSource:param block:^(NSMutableArray *homepageArray) {
+        if (homepageArray.count) {
+            [ws.sourceActivity addObjectsFromArray:homepageArray];
+            _canRefreshFooter_activity = YES;
+        }
+        else {
+            _canRefreshFooter_activity = NO;
+        }
+        [ws.tableViewActivity reloadData];
+        [ws.tableViewActivity.footer endRefreshing];
+    }];
+}
+
 //获取服务器的最新数据
 - (void)getRemoteAskSource:(void (^)(BOOL finished))block{
     WS(ws);
     [ws.scrollView.collectionViewAsk.footer endRefreshing];
     _currentIndex_ask = 1;
-    [_collectionView_ask.footer endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary new];
     _timeStamp_ask = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(_timeStamp_ask) forKey:@"last_updated"];
@@ -622,11 +694,11 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
 #pragma mark - Refresh
 
-- (void)loadNewHotData {
+- (void)loadNewData_reply {
     [self getRemoteReplySource];
 }
 
-- (void)loadMoreHotData {
+- (void)loadMoreData_reply {
     if (_canRefreshFooter_reply && !_tableViewReply.header.isRefreshing) {
         [self getMoreRemoteReplySource];
     } else {
@@ -634,12 +706,22 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     }
 }
 
+- (void)loadNewData_activity {
+    [self getRemoteSource_activity:nil];
+}
 
-- (void)loadNewRecentData {
+- (void)loadMoreData_activity {
+    if (_canRefreshFooter_activity && !_tableViewActivity.header.isRefreshing) {
+        [self getMoreRemoteSource_activity];
+    } else {
+        [_tableViewActivity.footer endRefreshing];
+    }
+}
+- (void)loadNewData_ask {
     [self getRemoteAskSource:nil];
 }
 
-- (void)loadMoreRecentData {
+- (void)loadMoreData_ask {
     if (_canRefreshFooter_ask && !_collectionView_ask.header.isRefreshing) {
         [self getMoreRemoteAskSource];
     } else {
@@ -651,22 +733,26 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
 -(void)didPullRefreshDown:(UITableView *)tableView{
     if (tableView == _tableViewReply) {
-        [self loadNewHotData];
+        [self loadNewData_reply];
+    } else if (tableView == _tableViewActivity) {
+        [self loadNewData_activity];
     }
 }
 
 -(void)didPullRefreshUp:(UITableView *)tableView {
     if (tableView == _tableViewReply) {
-        [self loadMoreHotData];
+        [self loadMoreData_reply];
+    } if (tableView == _tableViewActivity) {
+        [self loadMoreData_activity];
     }
 }
 
 -(void)didPullDownCollectionView:(UICollectionView *)collectionView {
-    [self loadNewRecentData];
+    [self loadNewData_ask];
 }
 
 -(void)didPullUpCollectionViewBottom:(UICollectionView *)collectionView {
-    [self loadMoreRecentData];
+    [self loadMoreData_ask];
 }
 
 
@@ -685,7 +771,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     PIENewAskCollectionCell*cell =
     (PIENewAskCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier2
                                                                       forIndexPath:indexPath];
-//    [cell showPlaceHolderWithAllSubviews];
     [cell injectSource:[_sourceAsk objectAtIndex:indexPath.row]];
     return cell;
 }
@@ -725,6 +810,8 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         text = @"好伤心，再下拉刷新试试";
     } else if (scrollView == _scrollView.tableReply) {
         text = @"好伤心，再下拉刷新试试";
+    } else if (scrollView == _scrollView.tableActivity) {
+        text = @"我们的活动频道即将推出";
     }
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
                                  NSForegroundColorAttributeName: [UIColor darkGrayColor]};
@@ -737,8 +824,13 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         return !_isfirstLoadingAsk;
     } else if (scrollView == _scrollView.tableReply) {
         return !_isfirstLoadingReply;
+    } else if (scrollView == _scrollView.tableActivity) {
+        return !_isfirstLoadingActivity;
     }
     return NO;
+}
+-(CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    return 150;
 }
 -(BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
     return YES;
@@ -854,11 +946,11 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
         _segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
         _segmentedControl.backgroundColor = [UIColor clearColor];
-        
+        _segmentedControl.selectedSegmentIndex = 1;
         [_segmentedControl setIndexChangeBlock:^(NSInteger index) {
             if (index == 0) {
                 [ws.scrollView toggleWithType:PIENewScrollTypeActivity];
-//                [ws firstGetSourceIfEmpty_ask];
+                [ws firstGetSourceIfEmpty_activity];
             } else             if (index == 1) {
                 [ws.scrollView toggleWithType:PIENewScrollTypeAsk];
                 [ws firstGetSourceIfEmpty_ask];
@@ -891,9 +983,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
                 else if (CGRectContainsPoint(_selectedReplyCell.thumbView.rightView.frame,pp)) {
                     [_selectedReplyCell animateThumbScale:PIEAnimateViewTypeRight];
                 }
-                
             }
-            
             //点击大图
             else  if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
                 //进入热门详情
@@ -973,6 +1063,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         }
     }
 }
+
 - (void)tapOnAsk:(UITapGestureRecognizer *)gesture {
     if (_scrollView.type == PIENewScrollTypeAsk) {
         CGPoint location = [gesture locationInView:_collectionView_ask];
@@ -1011,4 +1102,8 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     }
 }
 
+- (void)longPressOnActivity:(UILongPressGestureRecognizer *)gesture {
+}
+- (void)tapOnActivity:(UITapGestureRecognizer *)gesture {
+}
 @end
