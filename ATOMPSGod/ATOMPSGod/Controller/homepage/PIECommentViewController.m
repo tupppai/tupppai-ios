@@ -102,6 +102,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [param setObject:@(_vm.ID) forKey:@"id"];
     [param setObject:@(_vm.type) forKey:@"type"];
     [PIEPageManager getPageSource:param block:^(DDPageVM *remoteVM) {
+        _vm = remoteVM;
         if (_vm.type == PIEPageTypeAsk) {
             self.headerView.vm = remoteVM;
         } else {
