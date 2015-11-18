@@ -10,6 +10,8 @@
 #import "PIERefreshTableView.h"
 #import "PIERefreshCollectionView.h"
 #import "SwipeView.h"
+#import "SMPageControl.h"
+
 typedef NS_ENUM(NSInteger, PIENewScrollType) {
     PIENewScrollTypeAsk = 1,
     PIENewScrollTypeReply ,
@@ -21,6 +23,7 @@ typedef NS_ENUM(NSInteger, PIENewScrollType) {
 @property (nonatomic, strong) PIERefreshCollectionView *collectionViewAsk;
 @property (nonatomic, strong) PIERefreshTableView *tableActivity;
 @property (nonatomic, strong) SwipeView *swipeView;
+
 @property (nonatomic, assign) PIENewScrollType type;
 - (void)toggleWithType:(PIENewScrollType)type;
 @end

@@ -207,12 +207,12 @@
                 <outlet property="bangView" destination="d9k-Oi-vsr" id="3sM-No-ntk"/>
                 <outlet property="commentLabel1" destination="dx1-wy-HfC" id="uBC-HU-stM"/>
                 <outlet property="commentLabel2" destination="dJZ-ry-jKf" id="VaE-SK-mhq"/>
-                <outlet property="commentView" destination="rRd-1s-eqJ" id="QBU-2N-2Gv"/>
+                <outlet property="commentView" destination="SrQ-Rh-NFW" id="c5O-Cr-r5Z"/>
                 <outlet property="contentLabel" destination="GWd-F2-Xqa" id="VIq-0g-4dJ"/>
                 <outlet property="followView" destination="STu-b3-ztK" id="2sH-EF-okd"/>
                 <outlet property="gapView" destination="s7C-qX-Myf" id="3rU-uG-IQU"/>
                 <outlet property="nameLabel" destination="gc1-0E-ZlO" id="CkH-at-LTy"/>
-                <outlet property="shareView" destination="SrQ-Rh-NFW" id="gy3-Cr-ijK"/>
+                <outlet property="shareView" destination="rRd-1s-eqJ" id="SQf-LY-roX"/>
                 <outlet property="theImageView" destination="RI7-Dm-doA" id="atD-2n-Ru4"/>
                 <outlet property="timeLabel" destination="0mU-MP-wps" id="Acd-kv-inA"/>
             </connections>

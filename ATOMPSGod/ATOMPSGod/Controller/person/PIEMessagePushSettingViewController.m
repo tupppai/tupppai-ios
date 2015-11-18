@@ -39,7 +39,7 @@
     [self.view addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    self.title = @"消息提醒";
+    self.title = @"消息通知";
 }
 
 
@@ -50,7 +50,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -73,14 +73,14 @@
             cell.textLabel.text = @"帖子回复";
             cell.notificationSwitch.on = [[_data objectForKey:@"reply"]boolValue];
         }
-//        else if (row == 2) {
-//            cell.textLabel.text = @"关注通知";
-//            cell.notificationSwitch.on = [[_data objectForKey:@"follow"]boolValue];
-//        } else if (row == 3) {
-//            cell.textLabel.text = @"邀请通知";
-//            cell.notificationSwitch.on = [[_data objectForKey:@"invite"]boolValue];
-//        }
         else if (row == 2) {
+            cell.textLabel.text = @"关注通知";
+            cell.notificationSwitch.on = [[_data objectForKey:@"follow"]boolValue];
+        } else if (row == 3) {
+            cell.textLabel.text = @"点赞通知";
+            cell.notificationSwitch.on = [[_data objectForKey:@"like"]boolValue];
+        }
+        else if (row == 4) {
             cell.notificationSwitch.on = [[_data objectForKey:@"system"]boolValue];
             cell.textLabel.text = @"系统通知";
         }
@@ -99,13 +99,13 @@
         case 1:
             type = @"reply";
             break;
-//        case 2:
-//            type = @"follow";
-//            break;
-//        case 3:
-//            type = @"invite";
-//            break;
         case 2:
+            type = @"follow";
+            break;
+        case 3:
+            type = @"like";
+            break;
+        case 4:
             type = @"system";
             break;
         default:

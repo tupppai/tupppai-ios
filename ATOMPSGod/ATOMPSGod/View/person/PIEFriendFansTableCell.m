@@ -93,12 +93,15 @@
     _uploadNumberLabel.text = [NSString stringWithFormat:@"%@求P", viewModel.askCount];
     _workNumberLabel.text = [NSString stringWithFormat:@"%@作品", viewModel.replyCount];
 
-    if (viewModel.isFollow) {
-        //已关注
-        _attentionButton.selected = YES;
-    } else  {
-        _attentionButton.selected = NO;
+ 
+    
+    if (viewModel.followStatus == 1) {
+        self.attentionButton.selected = YES;
+    } else if (viewModel.followStatus == 2) {
+        [self.attentionButton setImage:[UIImage imageNamed:@"pie_mutualfollow"] forState:UIControlStateSelected];
+        self.attentionButton.selected = YES;
     }
+
 }
 
 

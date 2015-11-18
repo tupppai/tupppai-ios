@@ -113,7 +113,7 @@
         [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
         [self.thumbView.rightView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellBG"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
             ws.thumbView.rightView.image = image;
-            ws.thumbView.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+//            //ws.thumbView.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
         } failure:nil];
         if (viewModel.thumbEntityArray.count == 2) {
             entity = viewModel.thumbEntityArray[1];
@@ -125,7 +125,7 @@
         [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
         [self.thumbView.rightView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellBG"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
             ws.thumbView.rightView.image = image;
-            ws.thumbView.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+            //ws.thumbView.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
         } failure:nil];
     }
 

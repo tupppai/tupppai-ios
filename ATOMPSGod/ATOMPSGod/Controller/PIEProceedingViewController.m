@@ -480,19 +480,13 @@
 
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    DDPageVM* vm;
-    if (collectionView == _sv.doneCollectionView) {
-        vm =   [_sourceDone objectAtIndex:indexPath.row];
-    }
-    
+    DDPageVM* vm = [_sourceDone objectAtIndex:indexPath.row];
     CGFloat width;
     CGFloat height;
-    
-    width = MyAskCellWidth;
-    height = vm.imageHeight + 46;
-    height = MAX(height, 50);
-    height = MIN(height, 200);
-
+    width = (SCREEN_WIDTH) /2 - 20;
+    height = vm.imageHeight/vm.imageWidth * width;
+    height = MAX(150, height);
+    height = MIN(SCREEN_HEIGHT/2, height);
     return CGSizeMake(width, height);
 }
 

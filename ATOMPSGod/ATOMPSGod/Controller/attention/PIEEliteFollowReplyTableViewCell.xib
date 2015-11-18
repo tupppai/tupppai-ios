@@ -208,7 +208,7 @@
     </objects>
     <resources>
         <image name="avatar_default" width="36" height="36"/>
-        <image name="hot_allwork" width="53" height="23"/>
+        <image name="hot_allwork" width="53" height="24"/>
         <image name="new_reply_follow" width="58" height="28"/>
         <image name="new_reply_followed" width="58" height="28"/>
     </resources>

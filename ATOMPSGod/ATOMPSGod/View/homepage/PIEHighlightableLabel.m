@@ -25,7 +25,7 @@
         _numberString = @"0";
         _number = 0;
         self.font = [UIFont systemFontOfSize:11];
-        self.layer.cornerRadius = 5;
+        self.layer.cornerRadius = 6;
         self.clipsToBounds = YES;
         self.textColor = [UIColor blackColor];
         self.textAlignment = NSTextAlignmentCenter;
@@ -37,7 +37,7 @@
     if (highlighted) {
         self.backgroundColor = [UIColor colorWithHex:PIEColorHex];
     } else {
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor colorWithHex:0x4a4a4a andAlpha:0.3];
     }
 }
 
@@ -46,7 +46,7 @@
         self.backgroundColor = [UIColor colorWithHex:PIEColorHex];
         self.number++;
     } else {
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor colorWithHex:0x4a4a4a andAlpha:0.3];
         self.number--;
     }
 }

@@ -63,9 +63,11 @@
         _blurView = [UIImageView new];
         _blurView.contentMode = UIViewContentModeScaleAspectFill;
         _blurView.clipsToBounds = YES;
+        _blurView.backgroundColor = [UIColor whiteColor];
     }
     return _blurView;
 }
+
 - (UIImageView*)leftView {
     if (!_leftView) {
         _leftView = [UIImageView new];

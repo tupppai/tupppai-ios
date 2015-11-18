@@ -16,7 +16,9 @@
 @property (nonatomic, strong) PIECommentTableHeaderView_Reply *headerView_reply;
 
 @property (nonatomic, strong) DDPageVM *vm;
+
 @property (nonatomic, assign) BOOL shouldDownloadVMSource;
+@property (nonatomic, assign) BOOL shouldShowHeaderView;
 
 //回传 是否点赞 到 parent VC
 @property (nonatomic, weak)   id<ATOMViewControllerDelegate> delegate;

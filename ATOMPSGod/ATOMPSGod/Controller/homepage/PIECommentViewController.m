@@ -74,6 +74,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 - (void)commonInit
 {
+    _shouldShowHeaderView = YES;
+    _shouldDownloadVMSource = NO;
+
     // Register a SLKTextView subclass, if you need any special appearance and/or behavior customisation.
     [self registerClassForTextView:[PIECommentTextView class]];
 }
@@ -83,21 +86,19 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"浏览图片";
+    _isFirstLoading = YES;
+    
     [self configTableView];
     [self configFooterRefresh];
     [self configTextInput];
     [self addGestureToCommentTableView];
-    _isFirstLoading = YES;
-    [self getDataSource];
     
-    if (_shouldDownloadVMSource) {
+    [self getDataSource];
+    if (_shouldDownloadVMSource && _shouldShowHeaderView) {
         [self getVMSource];
     }
-    
 }
 - (void)getVMSource {
-//    [PIEPageManager ]
     NSMutableDictionary* param = [NSMutableDictionary new];
     [param setObject:@(_vm.ID) forKey:@"id"];
     [param setObject:@(_vm.type) forKey:@"type"];
@@ -115,12 +116,12 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [MobClick beginLogPageView:@"进入浏览图片页"];
+//    [MobClick beginLogPageView:@"进入浏览图片页"];
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [MobClick endLogPageView:@"离开浏览图片页"];
+//    [MobClick endLogPageView:@"离开浏览图片页"];
 }
 
 
@@ -128,8 +129,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    if (_isFirstLoading) {
-//        [self.textView becomeFirstResponder];
+    if (_isFirstLoading&&!_shouldShowHeaderView) {
+        [self.textView becomeFirstResponder];
 //        [self scrollElegant];
         _isFirstLoading = NO;
     }
@@ -191,7 +192,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 -(void)sendComment {
     
     [self.textView resignFirstResponder];
-    self.textView.placeholder = @"发布你的神回复..";
+    self.textView.placeholder = @"添加评论";
     
     PIECommentVM *commentVM = [PIECommentVM new];
     commentVM.username = [DDUserManager currentUser].username;
@@ -451,14 +452,19 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.showsHorizontalScrollIndicator = NO;
     
-    if (_vm.type == PIEPageTypeAsk) {
-        self.tableView.tableHeaderView = self.headerView;
+    if (_shouldShowHeaderView) {
+        self.title = @"浏览图片";
+        if (_vm.type == PIEPageTypeAsk) {
+            self.tableView.tableHeaderView = self.headerView;
+        } else {
+            self.tableView.tableHeaderView = self.headerView_reply;
+        }
+        [self resizeHeaderView];
+        
+        [self.commentsNew addObserver:self forKeyPath:@"array" options:NSKeyValueObservingOptionNew context:nil];
     } else {
-        self.tableView.tableHeaderView = self.headerView_reply;
+        self.title = @"全部评论";
     }
-    [self resizeHeaderView];
-    
-    [self.commentsNew addObserver:self forKeyPath:@"array" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)resizeHeaderView {
@@ -472,7 +478,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     self.tableView.tableHeaderView = header;
 }
 -(void)dealloc {
-    [self.commentsNew removeObserver:self forKeyPath:@"array"];
+    if (_shouldShowHeaderView) {
+        [self.commentsNew removeObserver:self forKeyPath:@"array"];
+    }
 }
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"array"]) {
@@ -597,15 +605,10 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [param setObject:@(10) forKey:@"size"];
     PIECommentManager *commentManager = [PIECommentManager new];
     [commentManager ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
-//        for (DDCommentVM* vm in recentCommentArray) {
-//            [ws.commentsNew addObject:vm];
-//        }
-//        [ws.commentsNew.array addObjectsFromArray:recentCommentArray];
         
         [self.commentsNew willChangeValueForKey:@"array"];
         [ws.commentsNew addArrayObject: recentCommentArray];
         [self.commentsNew didChangeValueForKey:@"array"];
-        
         [ws.commentsHot addObjectsFromArray: hotCommentArray];
 
         [self.tableView.footer endRefreshing];
@@ -620,7 +623,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 
 #pragma mark - DZNEmptyDataSetSource
-
+-(UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"pie_empty"];
+}
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
 {
     NSString *text = @"快来抢第一个坐上沙发";

@@ -34,7 +34,7 @@
     _tableView.dataSource = self;
     _tableView.psDelegate = self;
     _tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.emptyDataSetDelegate = self;
     _tableView.emptyDataSetSource = self;
     _tableView.showsVerticalScrollIndicator = NO;

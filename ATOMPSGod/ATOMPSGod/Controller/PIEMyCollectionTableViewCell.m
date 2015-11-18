@@ -17,9 +17,22 @@
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
     _pageImageView.clipsToBounds = YES;
-    self.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    _nameLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.6];
+    _contentLabel.textColor =[UIColor colorWithHex:0x000000 andAlpha:0.8];
+    [self addLine];
 }
 
+- (void)addLine {
+    UIView* line = [UIView new];
+    line.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2];
+    [self addSubview:line];
+    [line mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@0.5);
+        make.leading.equalTo(self);
+        make.trailing.equalTo(self);
+        make.bottom.equalTo(self);
+    }];
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     // Configure the view for the selected state

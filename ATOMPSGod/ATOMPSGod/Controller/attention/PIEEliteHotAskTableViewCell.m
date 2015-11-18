@@ -31,7 +31,7 @@
     _theImageView.contentMode = UIViewContentModeScaleAspectFit;
     _theImageView.backgroundColor = [UIColor clearColor];
     _theImageView.clipsToBounds = YES;
-    
+    _timeLabel.hidden = YES;
     [self.contentView insertSubview:self.blurView belowSubview:_theImageView];
     [self.blurView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.theImageView);
@@ -65,9 +65,9 @@
     _askID = viewModel.askID;
     _followView.highlighted = viewModel.followed;
     _shareView.imageView.image = [UIImage imageNamed:@"hot_share"];
-    _shareView.numberString = @"999999999";
+    _shareView.numberString = viewModel.shareCount;
     _commentView.imageView.image = [UIImage imageNamed:@"hot_comment"];
-    _commentView.numberString = @"999999";
+    _commentView.numberString = viewModel.commentCount;
     _contentLabel.text = viewModel.content;
     
     [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
@@ -80,25 +80,12 @@
         ws.theImageView.image = image;
         ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
     } failure:nil];
-//    [_theImageView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellBG"] success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull image) {
-//        ws.theImageView.image = image;
-//        ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
-//    } failure:nil];
-    
-//    CGFloat imageViewHeight = viewModel.imageHeight <= SCREEN_HEIGHT/2 ? viewModel.imageHeight : SCREEN_HEIGHT/2;
-//    imageViewHeight = MAX(200, imageViewHeight);
-//    [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-//        make.height.equalTo(@(SCREEN_WIDTH)).with.priorityHigh();
-//    }];
     
     if (viewModel.hotCommentEntityArray.count > 0) {
         PIECommentEntity* commentEntity1  = viewModel.hotCommentEntityArray[0];
         _commentLabel1.text = [NSString stringWithFormat:@"%@: %@",commentEntity1.nickname,commentEntity1.content];
         
         if (viewModel.hotCommentEntityArray.count == 1) {
-            //            [_commentLabel1 mas_updateConstraints:^(MASConstraintMaker *make) {
-            //                make.bottom.equalTo(_commentLabel2.mas_top).with.offset(-14).with.priorityHigh();
-            //            }];
         } else {
             PIECommentEntity* commentEntity2  = viewModel.hotCommentEntityArray[1];
             _commentLabel2.text = [NSString stringWithFormat:@"%@: %@",commentEntity2.nickname,commentEntity2.content];

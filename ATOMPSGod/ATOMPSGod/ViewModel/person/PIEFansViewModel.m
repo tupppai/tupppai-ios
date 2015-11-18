@@ -20,6 +20,14 @@
     _askCount = [NSString stringWithFormat:@"%d", (int)fans.askCount];
     _replyCount = [NSString stringWithFormat:@"%d", (int)fans.replyCount];
     _isFollow = fans.isFollow;
+    
+    if (fans.isFollow == YES && fans.isMyFan == YES) {
+        _followStatus = 2;
+    } else if(fans.isFollow == YES){
+        _followStatus = 1;
+    } else if (fans.isFollow == NO) {
+        _followStatus = 0;
+    }
 }
 
 @end

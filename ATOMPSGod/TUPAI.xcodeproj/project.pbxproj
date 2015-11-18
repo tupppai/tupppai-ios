@@ -465,6 +465,7 @@
 		F4F72C1D1BCCFB2A002FF05A /* PIESharesheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F72C1C1BCCFB2A002FF05A /* PIESharesheetView.m */; };
 		F4F72C201BCCFB7B002FF05A /* PIEShareIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F72C1F1BCCFB7B002FF05A /* PIEShareIcon.m */; };
 		F4F72C231BCD13D6002FF05A /* PIEShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F72C221BCD13D6002FF05A /* PIEShareView.m */; };
+		F4F9FFC91BFC849A00032FDE /* SMPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F9FFC81BFC849A00032FDE /* SMPageControl.m */; };
 		F4FABAFD1BAA593C00F47064 /* PIERefreshCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4FABAFC1BAA593C00F47064 /* PIERefreshCollectionView.m */; };
 /* End PBXBuildFile section */
 
@@ -1357,6 +1358,8 @@
 		F4F72C1F1BCCFB7B002FF05A /* PIEShareIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEShareIcon.m; sourceTree = "<group>"; };
 		F4F72C211BCD13D6002FF05A /* PIEShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEShareView.h; sourceTree = "<group>"; };
 		F4F72C221BCD13D6002FF05A /* PIEShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEShareView.m; sourceTree = "<group>"; };
+		F4F9FFC71BFC849A00032FDE /* SMPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPageControl.h; sourceTree = "<group>"; };
+		F4F9FFC81BFC849A00032FDE /* SMPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPageControl.m; sourceTree = "<group>"; };
 		F4FABAFB1BAA593C00F47064 /* PIERefreshCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIERefreshCollectionView.h; sourceTree = "<group>"; };
 		F4FABAFC1BAA593C00F47064 /* PIERefreshCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIERefreshCollectionView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1976,6 +1979,7 @@
 		5CDB05EC1AA400410089121E /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				F4F9FFC61BFC849A00032FDE /* SMPageControl */,
 				F491608F1BEC4D0800BAFB65 /* UMAnalytics_Sdk_3.6.4 */,
 				F43930121BE4BD75006C9437 /* MRProgress */,
 				F42759FA1BE0786400BBE7E4 /* slackViewController */,
@@ -3416,6 +3420,15 @@
 			name = shareView;
 			sourceTree = "<group>";
 		};
+		F4F9FFC61BFC849A00032FDE /* SMPageControl */ = {
+			isa = PBXGroup;
+			children = (
+				F4F9FFC71BFC849A00032FDE /* SMPageControl.h */,
+				F4F9FFC81BFC849A00032FDE /* SMPageControl.m */,
+			);
+			path = SMPageControl;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -3954,6 +3967,7 @@
 				E942898B1B5B374B00ED26E4 /* HexColors.m in Sources */,
 				5C31018A1AAE9B5700EF529B /* PIEAccountBindingView.m in Sources */,
 				F43930461BE4BD75006C9437 /* MRMethodCopier.m in Sources */,
+				F4F9FFC91BFC849A00032FDE /* SMPageControl.m in Sources */,
 				5C84063B1ABADA8B00068F35 /* PIEPageDAO.m in Sources */,
 				F43930471BE4BD75006C9437 /* MRWeakProxy.m in Sources */,
 				E9F890921B86C4AB0057ECBF /* FMResultSet.m in Sources */,

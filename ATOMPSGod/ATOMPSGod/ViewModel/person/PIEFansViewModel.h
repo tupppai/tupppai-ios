@@ -19,6 +19,7 @@
 @property (nonatomic, copy) NSString *askCount;
 @property (nonatomic, copy) NSString *replyCount;
 @property (nonatomic, assign) BOOL isFollow;
+@property (nonatomic, assign) NSInteger followStatus;
 
 - (void)setViewModelData:(PIEEntityFan *)fans;
 

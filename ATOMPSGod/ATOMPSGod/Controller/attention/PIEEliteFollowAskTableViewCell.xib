@@ -171,11 +171,11 @@
             <connections>
                 <outlet property="avatarView" destination="YEQ-gZ-upE" id="Vaa-p7-kZW"/>
                 <outlet property="bangView" destination="8gN-It-V5K" id="j59-le-ef6"/>
-                <outlet property="commentView" destination="GKG-Pm-OL3" id="QFA-bz-Orl"/>
+                <outlet property="commentView" destination="fmz-Ws-G9O" id="EsX-Wg-vW4"/>
                 <outlet property="contentLabel" destination="Uh0-Nk-WwP" id="Q77-jK-DjO"/>
                 <outlet property="followView" destination="K1Q-jR-LrV" id="gRA-u5-3ih"/>
                 <outlet property="nameLabel" destination="LFV-Bb-iYb" id="pY9-5T-4fy"/>
-                <outlet property="shareView" destination="fmz-Ws-G9O" id="xkz-XX-js1"/>
+                <outlet property="shareView" destination="GKG-Pm-OL3" id="b4r-Qn-bTe"/>
                 <outlet property="theImageView" destination="1RB-Q4-adE" id="tdO-fL-fvL"/>
                 <outlet property="timeLabel" destination="xwi-w4-KPE" id="f0u-1h-7FI"/>
             </connections>

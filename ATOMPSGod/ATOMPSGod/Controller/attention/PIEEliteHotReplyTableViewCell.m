@@ -16,10 +16,8 @@
 @end
 @implementation PIEEliteHotReplyTableViewCell
 - (void)awakeFromNib {
-    // Initialization code
     [self commonInit];
 }
-
 - (void)commonInit {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
@@ -30,6 +28,8 @@
     _theImageView.clipsToBounds = YES;
     _theImageView.backgroundColor = [UIColor clearColor];
     _collectView.userInteractionEnabled = YES;
+    _timeLabel.hidden = YES;
+    
     [self.contentView addSubview:self.thumbView];
     [self.contentView insertSubview:self.blurView belowSubview:_theImageView];
 
@@ -126,7 +126,7 @@
         [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
         [self.thumbView.rightView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellBG"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
             ws.thumbView.rightView.image = image;
-            ws.thumbView.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+            //ws.thumbView.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
         } failure:nil];
         if (viewModel.thumbEntityArray.count == 2) {
             entity = viewModel.thumbEntityArray[1];
@@ -138,7 +138,7 @@
         [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
         [self.thumbView.rightView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellBG"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
             ws.thumbView.rightView.image = image;
-            ws.thumbView.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+            //ws.thumbView.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
         } failure:nil];
     }
     

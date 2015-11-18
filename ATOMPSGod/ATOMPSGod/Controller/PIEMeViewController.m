@@ -49,10 +49,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self hideNavitionBarTitleView];
     [self setupViews];
     [self setupPageMenu];
-//    [self addRedDotToTabBarItemIndex:4];
-    
     UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
     backButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [backButton setImage:[UIImage imageNamed:@"pie_message"] forState:UIControlStateNormal];
@@ -82,11 +81,12 @@
                                              selector:@selector(updateNoticationStatus)
                                                  name:@"updateNoticationStatus"
                                                object:nil];
-    
-
-
 }
 
+- (void)hideNavitionBarTitleView {
+    UILabel *label = [[UILabel alloc] init];
+    self.navigationItem.titleView = label;
+}
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
@@ -114,7 +114,6 @@
     if ( [[[NSUserDefaults standardUserDefaults]objectForKey:@"NotificationNew"]boolValue]) {
         UIButton *btn =  self.navigationItem.rightBarButtonItem.customView;
         btn.selected = YES;
-//        [self addRedDotToTabBarItemIndex:4];
     } else {
         UIButton *btn =  self.navigationItem.rightBarButtonItem.customView;
         btn.selected = NO;
@@ -134,7 +133,7 @@
 -(void)updateAvatar {
         [DDService downloadImage:[DDUserManager currentUser].avatar withBlock:^(UIImage *image) {
             _avatarView.image = image;
-            _topContainerView.image = [image blurredImageWithRadius:80 iterations:1 tintColor:nil];
+            _topContainerView.image = [image blurredImageWithRadius:20 iterations:5 tintColor:nil];
     }];
     self.usernameLabel.text = [DDUserManager currentUser].username;
 }

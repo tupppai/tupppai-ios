@@ -16,7 +16,7 @@
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = _blurBottomView.bounds;
-    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithHex:0x000000 andAlpha:0.0] CGColor], (id)[[UIColor colorWithHex:0x000000 andAlpha:0.2] CGColor], nil];
+    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor clearColor] CGColor], (id)[[UIColor colorWithHex:0x000000 andAlpha:0.5] CGColor], nil];
     [_blurBottomView.layer insertSublayer:gradient atIndex:0];
 //    _tipLabel.layer.cornerRadius = 4;
 }

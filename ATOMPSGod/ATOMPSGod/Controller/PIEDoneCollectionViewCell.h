@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface PIEDoneCollectionViewCell : UICollectionViewCell
+@property (weak, nonatomic) IBOutlet UIView *blurBottomView;
 @property (weak, nonatomic) IBOutlet UIImageView *theImageView;
-- (void)injectSauce:(DDPageVM*)vm;
+@property (weak, nonatomic) IBOutlet UIImageView *likeView;
+@property (weak, nonatomic) IBOutlet UILabel *likeCountLabel;
+- (void)injectSauce:(DDPageVM*)vm ;
 @end

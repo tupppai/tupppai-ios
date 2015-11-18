@@ -102,7 +102,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 }
 
 - (void)updateStatus {
-    if (_selectedIndexPath && _selectedVM.type == PIEPageTypeReply) {
+    if (_selectedIndexPath) {
         if (_sv.type == PIEPageTypeEliteFollow) {
             [_sv.tableFollow reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         } else if (_sv.type == PIEPageTypeEliteHot) {
@@ -132,7 +132,6 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_Elite" object:nil];
 }
 - (void)configSubviews {
-//    [[AppDelegate APP].window addSubview: [PIEShareImageView new]];
     self.view = self.sv;
     [self configTableViewFollow];
     [self configTableViewHot];
@@ -217,10 +216,6 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 }
 - (void) search {
     [self.navigationController pushViewController:[PIESearchViewController new] animated:YES];
-//    PIESearchViewController* vc = [PIESearchViewController new];
-//    vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-//    DDNavigationController* nav = [[DDNavigationController alloc]initWithRootViewController:vc];
-//    [self presentViewController:nav animated:YES completion:nil];
 }
 - (void)refreshHeader {
     if (_sv.type == PIEPageTypeEliteFollow && ![_sv.tableFollow.header isRefreshing]) {
@@ -252,10 +247,11 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     if (!view)
     {
         CGFloat width = _sv.swipeView.frame.size.width;
-        view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width+10, width)];
+        CGFloat height = _sv.swipeView.frame.size.height;
+        
+        view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
         UIImageView* imageView = [[UIImageView alloc] initWithFrame:view.bounds];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
-//        imageView.clipsToBounds = YES;
         [view addSubview:imageView];
     }
     PIEBannerViewModel* vm = [_sourceBanner objectAtIndex:index];
@@ -267,6 +263,9 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     }
     ;
     return view;
+}
+-(void)swipeViewCurrentItemIndexDidChange:(SwipeView *)swipeView {
+    _sv.pageControl_swipeView.currentPage = swipeView.currentItemIndex;
 }
 
 -(void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index {
@@ -545,6 +544,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [PIEEliteManager getBannerSource:param withBlock:^(NSMutableArray *array) {
         _sourceBanner = array;
+        _sv.pageControl_swipeView.numberOfPages = _sourceBanner.count;
         [self.sv.swipeView reloadData];
     }];
 }
@@ -897,6 +897,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                 
                 else if (CGRectContainsPoint(cell.commentView.frame, p)) {
                     PIECommentViewController* vc = [PIECommentViewController new];
+                    vc.shouldShowHeaderView = NO;
                     vc.vm = _selectedVM;
                     [self.navigationController pushViewController:vc animated:YES];
                 }
@@ -959,6 +960,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                 else if (CGRectContainsPoint(cell.commentView.frame, p)) {
                     PIECommentViewController* vc = [PIECommentViewController new];
                     vc.vm = _selectedVM;
+                    vc.shouldShowHeaderView = NO;
                     [self.navigationController pushViewController:vc animated:YES];
                 }
                 else if (CGRectContainsPoint(cell.allWorkView.frame, p)) {
@@ -1047,6 +1049,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                 else if (CGRectContainsPoint(cell.commentView.frame, p)) {
                     PIECommentViewController* vc = [PIECommentViewController new];
                     vc.vm = _selectedVM;
+                    vc.shouldShowHeaderView = NO;
                     [self.navigationController pushViewController:vc animated:YES];
                 }
                 else if (CGRectContainsPoint(cell.allWorkView.frame, p)) {
@@ -1107,6 +1110,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                 else if (CGRectContainsPoint(cell.commentView.frame, p)) {
                     PIECommentViewController* vc = [PIECommentViewController new];
                     vc.vm = _selectedVM;
+                    vc.shouldShowHeaderView = NO;
                     [self.navigationController pushViewController:vc animated:YES];
                 }
                 else if (CGRectContainsPoint(cell.allWorkView.frame, p)) {

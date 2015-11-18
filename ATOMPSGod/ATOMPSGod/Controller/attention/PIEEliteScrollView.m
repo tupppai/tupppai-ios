@@ -55,12 +55,25 @@
 {
     [self.swipeView scrollByNumberOfItems:1 duration:0.5];
 }
-
+-(SMPageControl *)pageControl_swipeView {
+    if (!_pageControl_swipeView) {
+        _pageControl_swipeView = [[SMPageControl alloc]initWithFrame:CGRectMake(0,0, 200, 20)];
+    }
+    return _pageControl_swipeView;
+}
 -(SwipeView *)swipeView {
     if (!_swipeView) {
-        _swipeView = [[SwipeView alloc]initWithFrame:CGRectMake(0, 0, _tableHot.bounds.size.width, 167)];
+        CGFloat height = 333.0/750*SCREEN_WIDTH;
+        _swipeView = [[SwipeView alloc]initWithFrame:CGRectMake(0, 0, _tableHot.bounds.size.width, height)];
         _swipeView.backgroundColor = [UIColor clearColor];
         _swipeView.wrapEnabled = YES;
+        [_swipeView addSubview:self.pageControl_swipeView];        
+        CGPoint center = self.pageControl_swipeView.center;
+        
+        center.x = _swipeView.center.x;
+        center.y = _swipeView.center.y+69;
+        self.pageControl_swipeView.center = center;
+        
         [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
     }
     return _swipeView;

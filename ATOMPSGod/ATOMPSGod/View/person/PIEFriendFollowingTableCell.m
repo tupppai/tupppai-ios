@@ -97,7 +97,7 @@
     if (viewModel.concernStatus == 1) {
         self.attentionButton.selected = YES;
     } else if (viewModel.concernStatus == 2) {
-        [self.attentionButton setImage:[UIImage imageNamed:@"btn_mutualattention"] forState:UIControlStateSelected];
+        [self.attentionButton setImage:[UIImage imageNamed:@"pie_mutualfollow"] forState:UIControlStateSelected];
         self.attentionButton.selected = YES;
     }
     [self setNeedsLayout];

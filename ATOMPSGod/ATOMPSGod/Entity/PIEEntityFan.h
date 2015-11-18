@@ -40,6 +40,8 @@
  *  自身是否已经关注了该用户
  */
 @property (nonatomic, assign) bool isFollow;
+@property (nonatomic, assign) bool isMyFan;
+
 
 
 @end
