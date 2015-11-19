@@ -166,8 +166,11 @@
     }];
     _followCountLabel.text = [NSString stringWithFormat:@"%zd",user.attentionNumber];
     _fansCountLabel.text = [NSString stringWithFormat:@"%zd",user.fansNumber];
-    _likedCountLabel.text = [NSString stringWithFormat:@"%zd",user.praisedCount];
+    _likedCountLabel.text = [NSString stringWithFormat:@"%zd",user.likedCount];
     _followButton.highlighted = user.isMyFollow;
+    if (user.uid == [DDUserManager currentUser].uid) {
+        _followButton.hidden = YES;
+    }
 }
 
 - (void)setupPageMenu {

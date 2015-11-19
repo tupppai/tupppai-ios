@@ -124,33 +124,35 @@
         _usernameLabel.text = vm.username;
         _timeLabel.text = vm.publishTime;
         
-        if (vm.thumbEntityArray.count == 2) {
-            
-            _imageViewMain.contentMode = UIViewContentModeScaleAspectFill;
-            _imageViewRight.contentMode = UIViewContentModeScaleAspectFill;
-            _imageViewMain.clipsToBounds = YES;
-            _imageViewRight.clipsToBounds = YES;
-
-            PIEImageEntity* imgEntity1 = vm.thumbEntityArray[0];
-            PIEImageEntity* imgEntity2 = vm.thumbEntityArray[1];
+//        if (vm.thumbEntityArray.count == 2) {
+//            
+//            _imageViewMain.contentMode = UIViewContentModeScaleAspectFill;
+//            _imageViewRight.contentMode = UIViewContentModeScaleAspectFill;
+//            _imageViewMain.clipsToBounds = YES;
+//            _imageViewRight.clipsToBounds = YES;
+//
+//            PIEImageEntity* imgEntity1 = vm.thumbEntityArray[0];
+//            PIEImageEntity* imgEntity2 = vm.thumbEntityArray[1];
+//            [_imageViewMain mas_updateConstraints:^(MASConstraintMaker *make) {
+//                make.width.equalTo(self).with.multipliedBy(0.5).with.priorityHigh();
+//                make.height.equalTo(@(SCREEN_WIDTH)).with.priorityHigh();
+//            }];
+//            [_imageViewMain setImageWithURL:[NSURL URLWithString:imgEntity1.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+//            [_imageViewRight setImageWithURL:[NSURL URLWithString:imgEntity2.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+//        }
+//        else {
+//        }
+//        
+        [_imageViewMain setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+        CGFloat height = vm.imageHeight/vm.imageWidth *SCREEN_WIDTH;
+        if (height > 100) {
             [_imageViewMain mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.width.equalTo(self).with.multipliedBy(0.5).with.priorityHigh();
-                make.height.equalTo(@(SCREEN_WIDTH)).with.priorityHigh();
+                make.height.equalTo(@(height));
             }];
-            [_imageViewMain setImageWithURL:[NSURL URLWithString:imgEntity1.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
-            [_imageViewRight setImageWithURL:[NSURL URLWithString:imgEntity2.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+        } else {
+            _imageViewMain.contentMode = UIViewContentModeScaleAspectFit;
         }
-        else {
-            [_imageViewMain setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
-            CGFloat height = vm.imageHeight/vm.imageWidth *SCREEN_WIDTH;
-            if (height > 100) {
-                [_imageViewMain mas_updateConstraints:^(MASConstraintMaker *make) {
-                    make.height.equalTo(@(height));
-                }];
-            } else {
-                _imageViewMain.contentMode = UIViewContentModeScaleAspectFit;
-            }
-        }
+
         _commentButton.numberString = vm.commentCount;
         _shareButton.numberString = vm.shareCount;
         _contentLabel.text = vm.content;

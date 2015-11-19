@@ -71,8 +71,8 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mWh-Ir-XGg">
-                        <rect key="frame" x="52" y="56" width="42" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mWh-Ir-XGg">
+                        <rect key="frame" x="52" y="56" width="247" height="17"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="42" id="JaE-xY-rzT"/>
@@ -81,16 +81,24 @@
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="JaE-xY-rzT"/>
+                                <exclude reference="z3j-hf-S07"/>
+                            </mask>
+                        </variation>
                     </label>
                 </subviews>
                 <animations/>
                 <constraints>
                     <constraint firstItem="mWh-Ir-XGg" firstAttribute="top" secondItem="EkK-p3-K7E" secondAttribute="bottom" constant="10" id="15J-1O-QuM"/>
+                    <constraint firstItem="aMj-ga-ufm" firstAttribute="leading" secondItem="mWh-Ir-XGg" secondAttribute="trailing" constant="5" id="4w9-wd-r7C"/>
                     <constraint firstItem="v3h-J0-50D" firstAttribute="leading" secondItem="aDZ-QY-GiV" secondAttribute="trailing" constant="8" id="516-pL-9yE"/>
                     <constraint firstAttribute="bottomMargin" secondItem="aMj-ga-ufm" secondAttribute="bottom" constant="1.5" id="Bcm-yV-cLi"/>
                     <constraint firstItem="EkK-p3-K7E" firstAttribute="leading" secondItem="v3h-J0-50D" secondAttribute="leading" id="FTc-nt-K4w"/>
                     <constraint firstItem="aDZ-QY-GiV" firstAttribute="leading" secondItem="w6W-Ag-2Fl" secondAttribute="leadingMargin" constant="6" id="Itw-pr-YWB"/>
                     <constraint firstItem="hhX-vB-T4Q" firstAttribute="leading" secondItem="v3h-J0-50D" secondAttribute="trailing" constant="6" id="JtV-aC-CZJ"/>
+                    <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="mWh-Ir-XGg" secondAttribute="bottom" constant="1" id="KsU-mZ-eyB"/>
                     <constraint firstItem="v3h-J0-50D" firstAttribute="top" secondItem="aDZ-QY-GiV" secondAttribute="top" id="QBU-HR-QrZ"/>
                     <constraint firstItem="86O-Xl-Etv" firstAttribute="leading" secondItem="hhX-vB-T4Q" secondAttribute="trailing" id="RGH-2t-9ff"/>
                     <constraint firstItem="hBO-yz-c0C" firstAttribute="top" secondItem="w6W-Ag-2Fl" secondAttribute="topMargin" constant="4" id="XVe-K1-T3C"/>

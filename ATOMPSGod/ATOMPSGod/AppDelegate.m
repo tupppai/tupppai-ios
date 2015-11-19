@@ -22,6 +22,7 @@
 #import "PIECommentViewController.h"
 #import "PIENotificationViewController.h"
 #import "MobClick.h"
+#import "UMCheckUpdate.h"
 
 @interface AppDelegate ()
 
@@ -55,6 +56,10 @@
     [MobClick setCrashReportEnabled:YES];
     [MobClick setEncryptEnabled:YES];
     [MobClick setLogEnabled:NO];
+    
+    [UMCheckUpdate checkUpdateWithAppkey:@"55b1ecdbe0f55a1de9001164" channel:nil];
+//    [UMCheckUpdate checkUpdate:@"新版本更新！" cancelButtonTitle:@"继续用旧版" otherButtonTitles:@"更新" appkey:@"55b1ecdbe0f55a1de9001164" channel:nil];
+//    [UMCheckUpdate setLogEnabled:YES];
 }
 - (void)setupBarButtonItem {
     NSShadow *shadow = [[NSShadow alloc] init];
@@ -254,9 +259,8 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
-//    NSLog(@"userinfo:%@",userInfo);
+    NSLog(@"userinfo:%@",userInfo);
     NSInteger notifyType = [[userInfo objectForKey:@"type"]integerValue];
-//    int badgeNumber = [[[userInfo objectForKey:@"aps"]objectForKey:@"badge"]intValue];
 
     [self updateBadgeNumberForKey:@"NotificationAll" toAdd:1];
     if (notifyType == 0) {
@@ -267,7 +271,6 @@
         [self updateBadgeNumberForKey:@"NotificationOthers" toAdd:1];
     }
     
-//   DDNavigationController* nav = [[self.mainTabBarController viewControllers] objectAtIndex:4];    
     [[NSUserDefaults standardUserDefaults]setObject:@(YES) forKey:@"NotificationNew"];
     [[NSUserDefaults standardUserDefaults]synchronize];
     [self addRedDotToTabBarItemIndex:4];

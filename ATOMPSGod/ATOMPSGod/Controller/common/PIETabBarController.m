@@ -67,10 +67,10 @@
     _centerNav = [[DDNavigationController alloc] initWithRootViewController:vc];
     _preNav = _navigation_elite;
     
-    _navigation_new.tabBarItem.image = [UIImage imageNamed:@"pie_tab_1"];
-    _navigation_new.tabBarItem.selectedImage = [UIImage imageNamed:@"pie_tab_1_selected"];
-    _navigation_elite.tabBarItem.image = [UIImage imageNamed:@"pie_tab_2"];
-    _navigation_elite.tabBarItem.selectedImage = [UIImage imageNamed:@"pie_tab_2_selected"];
+    _navigation_elite.tabBarItem.image = [UIImage imageNamed:@"pie_tab_1"];
+    _navigation_elite.tabBarItem.selectedImage = [UIImage imageNamed:@"pie_tab_1_selected"];
+    _navigation_new.tabBarItem.image = [UIImage imageNamed:@"pie_tab_2"];
+    _navigation_new.tabBarItem.selectedImage = [UIImage imageNamed:@"pie_tab_2_selected"];
     _navigation_proceeding.tabBarItem.image = [UIImage imageNamed:@"pie_tab_4"];
     _navigation_proceeding.tabBarItem.selectedImage = [UIImage imageNamed:@"pie_tab_4_selected"];
     _navigation_me.tabBarItem.image = [UIImage imageNamed:@"pie_tab_5"];

@@ -110,13 +110,15 @@
 
 
 -(void)setVm:(DDPageVM *)vm {
+    _vm = vm;
     if (vm) {
         [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
         _usernameLabel.text = vm.username;
         _timeLabel.text = vm.publishTime;
-        
+        NSLog(@"ask1");
         if (vm.thumbEntityArray.count == 2) {
-            
+            NSLog(@"ask2");
+
             _imageViewMain.contentMode = UIViewContentModeScaleAspectFill;
             _imageViewRight.contentMode = UIViewContentModeScaleAspectFill;
             _imageViewMain.clipsToBounds = YES;
@@ -128,10 +130,15 @@
                 make.width.equalTo(self).with.multipliedBy(0.5).with.priorityHigh();
                 make.height.equalTo(@(SCREEN_WIDTH)).with.priorityHigh();
             }];
+            NSLog(@"%@",imgEntity1.url);
+            NSLog(@"%@",imgEntity2.url);
+
             [_imageViewMain setImageWithURL:[NSURL URLWithString:imgEntity1.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
             [_imageViewRight setImageWithURL:[NSURL URLWithString:imgEntity2.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
         }
         else {
+            NSLog(@"ask3");
+
             [_imageViewMain setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
             CGFloat height = vm.imageHeight/vm.imageWidth *SCREEN_WIDTH;
             if (height > 100) {

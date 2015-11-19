@@ -21,6 +21,8 @@
  *  所展示出来的评论内容
  */
 @property (nonatomic, copy) NSString *text;
+@property (nonatomic, copy) NSString *time;
+
 @property (nonatomic, copy) NSString *likeNumber;
 @property (nonatomic, assign) NSInteger ID;
 @property (nonatomic, copy) NSString *sex;

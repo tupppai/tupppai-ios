@@ -89,6 +89,14 @@
     [DDBaseService GET:param url:@"thread/item" block:^(id responseObject) {
         PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:                    [responseObject objectForKey:@"data"] error:NULL];
         if (entity) {
+            if (entity.type == PIEPageTypeAsk) {
+                NSMutableArray* thumbArray = [NSMutableArray new];
+                for (int i = 0; i<entity.thumbEntityArray.count; i++) {
+                    PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.thumbEntityArray[i] error:NULL];
+                    [thumbArray addObject:entity2];
+                }
+                entity.thumbEntityArray = thumbArray;
+            }
             DDPageVM* vm = [[DDPageVM alloc]initWithPageEntity:entity];
             if (block) {
                 block(vm);

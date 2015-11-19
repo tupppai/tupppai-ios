@@ -61,9 +61,12 @@
     }
     return _pageControl_swipeView;
 }
+
+
+
 -(SwipeView *)swipeView {
     if (!_swipeView) {
-        CGFloat height = 333.0/750*SCREEN_WIDTH;
+        CGFloat height = 333.0/750 * SCREEN_WIDTH;
         _swipeView = [[SwipeView alloc]initWithFrame:CGRectMake(0, 0, _tableHot.bounds.size.width, height)];
         _swipeView.backgroundColor = [UIColor clearColor];
         _swipeView.wrapEnabled = YES;

@@ -20,7 +20,7 @@
         _locationID = user.locationID;
         _attentionNumber = user.attentionNumber;
         _fansNumber = user.fansNumber;
-        _likeNumber = user.likeNumber;
+        _likedCount = user.likedCount;
         _uploadNumber = user.uploadNumber;
         _replyNumber = user.replyNumber;
         _proceedingNumber = user.proceedingNumber;

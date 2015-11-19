@@ -17,6 +17,8 @@ static CGFloat kMessageTableViewCellAvatarHeight = 30.0;
 @property (nonatomic, strong) UIImageView *avatarView;
 @property (nonatomic, strong) UILabel *usernameLabel;
 @property (nonatomic, strong) UILabel *commentLabel;
+@property (nonatomic, strong) UILabel *timeLabel;
+
 //@property (nonatomic, strong) CommentLikeButton *likeButton;
 
 -(void)getSource:(PIECommentVM *)vm;

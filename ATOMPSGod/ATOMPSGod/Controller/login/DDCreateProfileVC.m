@@ -57,7 +57,7 @@
     _selectedRowComponent2 = 0;
     
     //guangdong province
-    [_createProfileView.regionPickerView selectRow:18 inComponent:0 animated:YES];
+//    [_createProfileView.regionPickerView selectRow:18 inComponent:0 animated:YES];
 
     [_createProfileView.confirmPickerButton addTarget:self action:@selector(clickConfirmPickerButton:) forControlEvents:UIControlEventTouchUpInside];
     [_createProfileView.cancelRegionPickerButton addTarget:self action:@selector(clickCancelRegionPickerButton:) forControlEvents:UIControlEventTouchUpInside];

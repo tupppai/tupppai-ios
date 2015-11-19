@@ -162,7 +162,8 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     [_sv.tableHot registerNib:nib2 forCellReuseIdentifier:hotAskIndentifier];
     _sv.swipeView.dataSource = self;
     _sv.swipeView.delegate = self;
-    
+//    [_sv.pageControl_swipeView addTarget:self action:@selector(tapPageControl:) forControlEvents:UIControlEventValueChanged];
+
 }
 - (void)setupGestures {
     
@@ -274,6 +275,12 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+
+- (void)tapPageControl:(SMPageControl *)sender
+{
+//    NSLog(@"tapPageControl %zd",sender.currentPage);
+    [self.sv.swipeView scrollToItemAtIndex:sender.currentPage duration:0.5];
+}
 
 #pragma mark - UITableView Datasource and delegate
 

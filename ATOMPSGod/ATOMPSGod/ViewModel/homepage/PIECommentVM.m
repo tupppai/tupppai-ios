@@ -30,6 +30,10 @@
     _ID = comment.cid;
     _likeNumber = [NSString stringWithFormat:@"%zd", comment.likeNumber];
     _avatar = comment.avatar;
+    
+    NSDate* date = [NSDate dateWithTimeIntervalSince1970:comment.commentTime];
+    _time = [Util formatPublishTime:date];
+    
     if (comment.atCommentArray && comment.atCommentArray.count > 0) {
         NSString *content = comment.content;
         for (NSDictionary* dic in comment.atCommentArray) {

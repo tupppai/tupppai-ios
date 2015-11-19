@@ -23,6 +23,7 @@
 #import "PIEMyLikedPagesViewController.h"
 #import "PIEFeedbackViewController.h"
 #import "PIEAboutUsViewController.h"
+#import "UMCheckUpdate.h"
 @interface PIESettingsViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -171,13 +172,13 @@
     } else if (section == 2) {
         
         if (row == 0) {
-            NSString *iTunesLink = @"http://itunes.apple.com/app/id1056871759";
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
+//            [UMCheckUpdate checkUpdateWithAppkey:@"55b1ecdbe0f55a1de9001164" channel:nil];
+            [UMCheckUpdate checkUpdateWithDelegate:self selector:@selector(UMCheckUpdateReturn:) appkey:@"55b1ecdbe0f55a1de9001164" channel:nil];
+            
         } else if (row == 1) {
             [self clearCache];
         } else if (row == 2) {
-            NSString *iTunesLink = @"http://itunes.apple.com/app/id1056871759";
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
+            [self alert_evaluation];
         }
     }
     else if (section == 3) {
@@ -194,6 +195,15 @@
         }
     }
 
+}
+
+- (void) UMCheckUpdateReturn:(id)sender {
+    NSString* toUpdate = [sender objectForKey:@"update"];
+    if ([toUpdate isEqualToString:@"NO"]) {
+        [Hud text:@"已是最新版本"];
+    } else {
+        [self alert_goToAppstore];
+    }
 }
 
 -(void) SignOut {
@@ -216,6 +226,40 @@
     alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
     [alertView show];
 }
+
+
+-(void) alert_goToAppstore {
+    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"检测到新版本" andMessage:@"是否前往 App Store 更新图派?"];
+    [alertView addButtonWithTitle:@"取消"
+                             type:SIAlertViewButtonTypeCancel
+                          handler:^(SIAlertView *alert) {
+                          }];
+    [alertView addButtonWithTitle:@"欣然前往"
+                             type:SIAlertViewButtonTypeDefault
+                          handler:^(SIAlertView *alert) {
+                              NSString *iTunesLink = @"http://itunes.apple.com/app/id1056871759";
+                              [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
+                          }];
+    alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
+    [alertView show];
+}
+-(void) alert_evaluation {
+    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"图派感谢有你" andMessage:@"是否前往 App Store 对图派进行评分?"];
+    [alertView addButtonWithTitle:@"取消"
+                             type:SIAlertViewButtonTypeCancel
+                          handler:^(SIAlertView *alert) {
+                          }];
+    [alertView addButtonWithTitle:@"欣然前往"
+                             type:SIAlertViewButtonTypeDefault
+                          handler:^(SIAlertView *alert) {
+                              NSString *iTunesLink = @"http://itunes.apple.com/app/id1056871759";
+                              [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
+                              
+                          }];
+    alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
+    [alertView show];
+}
+
 -(void) clearCache {
     SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"😊" andMessage:@"确定要清理缓存吗？"];
     [alertView addButtonWithTitle:@"不清理"

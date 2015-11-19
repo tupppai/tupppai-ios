@@ -105,9 +105,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [PIEPageManager getPageSource:param block:^(DDPageVM *remoteVM) {
         _vm = remoteVM;
         if (_vm.type == PIEPageTypeAsk) {
-            self.headerView.vm = remoteVM;
+            self.headerView.vm = _vm;
         } else {
-            self.headerView_reply.vm = remoteVM;
+            self.headerView_reply.vm = _vm;
         }
         [self resizeHeaderView];
     }];
@@ -414,26 +414,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 }
 
-#pragma mark - UIScrollViewDelegate Methods
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    
-    // Since SLKTextViewController uses UIScrollViewDelegate to update a few things, it is important that if you ovveride this method, to call super.
-    [super scrollViewDidScroll:scrollView];
-}
 
 
 #pragma mark - UIScrollViewDelegate Methods
-
-/** UITextViewDelegate */
-- (BOOL)textView:(SLKTextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-{
-//    if ([text isEqualToString:@"\n"]) {
-//        [self sendComment];
-//    }
-    return [super textView:textView shouldChangeTextInRange:range replacementText:text];
-}
 
 
 
@@ -605,7 +588,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [param setObject:@(10) forKey:@"size"];
     PIECommentManager *commentManager = [PIECommentManager new];
     [commentManager ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
-        
         [self.commentsNew willChangeValueForKey:@"array"];
         [ws.commentsNew addArrayObject: recentCommentArray];
         [self.commentsNew didChangeValueForKey:@"array"];

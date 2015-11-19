@@ -19,6 +19,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = _viewModel.desc;
     self.webView.scalesPageToFit = YES;
     self.webView.backgroundColor = [UIColor clearColor];
     self.webView.contentMode = UIViewContentModeScaleAspectFit;

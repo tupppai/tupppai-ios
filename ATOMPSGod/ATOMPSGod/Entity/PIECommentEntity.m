@@ -18,7 +18,7 @@
 //             @"sex" : @"sex",
              @"avatar" : @"avatar",
              @"content" : @"content",
-             @"commentTime" : @"created_time",
+             @"commentTime" : @"create_time",
              @"likeNumber" : @"up_count",
              @"liked": @"uped",
              @"atCommentArray":@"at_comment"

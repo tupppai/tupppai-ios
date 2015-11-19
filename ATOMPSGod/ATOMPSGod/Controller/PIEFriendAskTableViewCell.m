@@ -75,7 +75,7 @@
     [_originView1.imageView setImageWithURL:[NSURL URLWithString:_vmAsk1.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
     [_source removeObjectAtIndex:0];
 
-    if (_source.count >= 2) {
+    if (_source.count >= 1) {
         _vmAsk2 = [_source objectAtIndex:0];
         if (_vmAsk2.type != PIEPageTypeReply) {
             [_source removeObjectAtIndex:0];

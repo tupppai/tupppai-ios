@@ -253,6 +253,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     [param setObject:@(_selectedVM.ID) forKey:@"target"];
     
     [DDService signProceeding:param withBlock:^(NSString *imageUrl) {
+        NSLog(@"signProceeding");
         if (imageUrl != nil) {
             if (shouldDownload) {
                 [DDService downloadImage:imageUrl withBlock:^(UIImage *image) {
@@ -260,7 +261,8 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
                 }];
             }
             else {
-                [Hud customText:@"添加成功\n在“进行中”等你下载咯!" inView:self.view];
+                NSLog(@"signProceeding2");
+                [Hud text:@"添加成功\n在“进行中”等你下载咯!"];
             }
         }
     }];
@@ -269,7 +271,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
   contextInfo: (void *) contextInfo {
     if(error != NULL){
     } else {
-        [Hud customText:@"下载成功\n我猜你会用美图秀秀来P?" inView:self.view];
+        [Hud text:@"下载成功\n我猜你会用美图秀秀来P?"];
     }
 }
 
@@ -781,17 +783,6 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     CGFloat height;
     width = (SCREEN_WIDTH - 20) / 2.0;
     
-//    text = @"abcd";
-//    CGSize size1 = [text boundingRectWithSize:CGSizeMake(width,100) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:12]} context:nil].size;
-
-//    CGSize size = [text boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:12], NSFontAttributeName, nil] context:NULL].size;
-//    NSLog(@"size.height %zd",size.height);
-    
-//    NSString* text = vm.content;
-
-//        NSDictionary *attributes = @{NSFontAttributeName : [UIFont boldSystemFontOfSize:12]};
-//        
-//        CGFloat messageLabelHeight = CGRectGetHeight([vm.content boundingRectWithSize:CGSizeMake(width, 300) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil]);
     height = vm.imageHeight/vm.imageWidth * width + 129 + (29+20);
     height = MAX(200,height);
     height = MIN(SCREEN_HEIGHT/1.5, height);
@@ -1021,6 +1012,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
             else if (CGRectContainsPoint(_selectedReplyCell.commentView.frame, p)) {
                 PIECommentViewController* vc = [PIECommentViewController new];
                 vc.vm = _selectedVM;
+                vc.shouldShowHeaderView = NO;
                 [self.navigationController pushViewController:vc animated:YES];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.allWorkView.frame, p)) {
@@ -1077,6 +1069,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
             if (CGRectContainsPoint(cell.leftImageView.frame, p) || CGRectContainsPoint(cell.rightImageView.frame, p)) {
                 PIECommentViewController* vc = [PIECommentViewController new];
                 vc.vm = _selectedVM;
+
                 //                PIECarouselViewController* vc = [PIECarouselViewController new];
                 //                vc.pageVM = _selectedVM;
                 [self.navigationController pushViewController:vc animated:YES];

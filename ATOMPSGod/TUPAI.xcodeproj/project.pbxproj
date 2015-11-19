@@ -452,6 +452,7 @@
 		F4EC11271BCF55EC002D1DCF /* PIENotificationLikeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4EC11261BCF55EC002D1DCF /* PIENotificationLikeTableViewCell.xib */; };
 		F4EC11291BCF55F7002D1DCF /* PIENotificationSystemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4EC11281BCF55F7002D1DCF /* PIENotificationSystemTableViewCell.xib */; };
 		F4EC112B1BCF5604002D1DCF /* PIENotificationReplyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4EC112A1BCF5604002D1DCF /* PIENotificationReplyTableViewCell.xib */; };
+		F4F006D81BFD8ED000FD7078 /* libUMCheckUpdate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4F006D61BFD8ECF00FD7078 /* libUMCheckUpdate.a */; };
 		F4F72BEE1BCB4EF7002FF05A /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F72BED1BCB4EF7002FF05A /* FXBlurView.m */; };
 		F4F72BF61BCB6979002FF05A /* PIEImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F72BF41BCB6979002FF05A /* PIEImageCollectionViewCell.m */; };
 		F4F72BFF1BCB6CD6002FF05A /* PIEMyCollectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F72BFD1BCB6CD6002FF05A /* PIEMyCollectionTableViewCell.m */; };
@@ -1336,6 +1337,8 @@
 		F4EC11261BCF55EC002D1DCF /* PIENotificationLikeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIENotificationLikeTableViewCell.xib; sourceTree = "<group>"; };
 		F4EC11281BCF55F7002D1DCF /* PIENotificationSystemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIENotificationSystemTableViewCell.xib; sourceTree = "<group>"; };
 		F4EC112A1BCF5604002D1DCF /* PIENotificationReplyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIENotificationReplyTableViewCell.xib; sourceTree = "<group>"; };
+		F4F006D61BFD8ECF00FD7078 /* libUMCheckUpdate.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMCheckUpdate.a; sourceTree = "<group>"; };
+		F4F006D71BFD8ECF00FD7078 /* UMCheckUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMCheckUpdate.h; sourceTree = "<group>"; };
 		F4F72BEC1BCB4EF7002FF05A /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
 		F4F72BED1BCB4EF7002FF05A /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
 		F4F72BF31BCB6979002FF05A /* PIEImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEImageCollectionViewCell.h; sourceTree = "<group>"; };
@@ -1376,6 +1379,7 @@
 				F45D8FA81BD87CFD005946E8 /* libWeChatSDK.a in Frameworks */,
 				E99C51171B85A4CB004CA47B /* libz.dylib in Frameworks */,
 				F49160941BEC4DFA00BAFB65 /* AdSupport.framework in Frameworks */,
+				F4F006D81BFD8ED000FD7078 /* libUMCheckUpdate.a in Frameworks */,
 				F45D8FA91BD87CFD005946E8 /* MOBFoundation.framework in Frameworks */,
 				F45D8FAC1BD87CFD005946E8 /* ShareSDKConnector.framework in Frameworks */,
 				E99C51151B85A40E004CA47B /* libsqlite3.0.dylib in Frameworks */,
@@ -3026,6 +3030,8 @@
 			isa = PBXGroup;
 			children = (
 				F49160901BEC4D0800BAFB65 /* libMobClickLibrary.a */,
+				F4F006D61BFD8ECF00FD7078 /* libUMCheckUpdate.a */,
+				F4F006D71BFD8ECF00FD7078 /* UMCheckUpdate.h */,
 				F49160911BEC4D0800BAFB65 /* MobClick.h */,
 				F49160921BEC4D0800BAFB65 /* MobClickSocialAnalytics.h */,
 			);

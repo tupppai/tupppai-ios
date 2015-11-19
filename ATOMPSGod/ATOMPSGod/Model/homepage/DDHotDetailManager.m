@@ -54,7 +54,17 @@
                 entity.imageWidth = imgEntity.width;
                 entity.imageHeight = imgEntity.height;
                 
+                NSMutableArray* thumbArray = [NSMutableArray new];
+                for (int i = 0; i<entity.thumbEntityArray.count; i++) {
+                    PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.thumbEntityArray[i] error:NULL];
+                    [thumbArray addObject:entity2];
+                }
+                
+                entity.thumbEntityArray = thumbArray;
+
+                
                 DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+                
                 [askRETArray addObject:vm];
 
             }

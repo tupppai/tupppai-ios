@@ -19,7 +19,7 @@
              @"backgroundImage" : @"bg_image",
              @"attentionNumber" : @"fellow_count",
              @"fansNumber" : @"fans_count",
-             @"likeNumber" : @"uped_count",
+             @"likedCount" : @"uped_count",
              @"uploadNumber" : @"ask_count",
              @"replyNumber" : @"reply_count",
              @"proceedingNumber" : @"inprogress_count",
@@ -32,7 +32,6 @@
              @"isMyFan":@"is_fan",
              @"isMyFollow":@"is_follow",
              @"token":@"token",
-             @"praisedCount":@"total_praise"
              };
 }
 + (NSDictionary *)FMDBColumnsByPropertyKey {
@@ -44,7 +43,7 @@
              @"backgroundImage" : @"backgroundImage",
              @"attentionNumber" : @"attentionNumber",
              @"fansNumber" : @"fansNumber",
-             @"likeNumber" : @"likeNumber",
+//             @"likeNumber" : @"likeNumber",
              @"uploadNumber" : @"uploadNumber",
              @"replyNumber" : @"replyNumber",
              @"proceedingNumber" : @"proceedingNumber",
@@ -60,7 +59,7 @@
              @"isMyFan":@"isMyFan",
              @"isMyFollow":@"isMyFan",
              @"token":@"token",
-             @"praisedCount":@"praisedCount",
+             @"likedCount":@"likedCount",
              };
 }
 

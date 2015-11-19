@@ -38,8 +38,8 @@
             vm.ID = (NSInteger)[dic objectForKey:@"id"];
             vm.desc = [dic objectForKey:@"desc"];
             vm.url = [dic objectForKey:@"url"];
-            vm.imageUrl = [dic objectForKey:@"large_pic"];
-            vm.imageUrl_thumb = [dic objectForKey:@"small_pic"];
+            vm.imageUrl = [dic objectForKey:@"small_pic"];
+//            vm.imageUrl_thumb = [dic objectForKey:@"small_pic"];
             [retArray addObject:vm];
         }
         if (block) {
