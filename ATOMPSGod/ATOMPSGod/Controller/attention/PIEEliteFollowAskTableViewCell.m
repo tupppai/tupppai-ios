@@ -51,7 +51,7 @@
     [super prepareForReuse];
     _followView.hidden = NO;
 }
-- (void)injectSauce:(DDPageVM *)viewModel {
+- (void)injectSauce:(PIEPageVM *)viewModel {
     WS(ws);
     _ID = viewModel.ID;
     _askID = viewModel.askID;

@@ -135,7 +135,7 @@
        NSIndexPath* selectedIndexPath = [self.collectionView indexPathForItemAtPoint:location];
         
         if (selectedIndexPath) {
-            DDPageVM* vm = [_sourceContent objectAtIndex:selectedIndexPath.row];
+            PIEPageVM* vm = [_sourceContent objectAtIndex:selectedIndexPath.row];
             PIESearchContentCollectionViewCell* cell = (PIESearchContentCollectionViewCell*)[self.collectionView cellForItemAtIndexPath:selectedIndexPath];
             CGPoint p = [gesture locationInView:cell];
             if (CGRectContainsPoint(cell.avatarButton.frame, p) || CGRectContainsPoint(cell.nameLabel.frame, p)) {
@@ -277,7 +277,7 @@
             return CGSizeZero;
         }
     } else {
-        DDPageVM* vm =[_sourceContent objectAtIndex:indexPath.row];
+        PIEPageVM* vm =[_sourceContent objectAtIndex:indexPath.row];
         CGFloat width;
         CGFloat height;
         width = SCREEN_WIDTH/2 - 20;

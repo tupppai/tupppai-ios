@@ -24,5 +24,5 @@
 @property (nonatomic,strong) UIImageView* QRCodeView;
 @property (nonatomic,strong) UIImageView* imageView_appIcon;
 
--(void)injectSauce:(DDPageVM*)vm withBlock:(void(^)(BOOL success))block;
+-(void)injectSauce:(PIEPageVM*)vm withBlock:(void(^)(BOOL success))block;
 @end

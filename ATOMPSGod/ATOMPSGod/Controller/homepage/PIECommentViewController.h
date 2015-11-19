@@ -15,7 +15,7 @@
 @property (nonatomic, strong) PIECommentTableHeaderView_Ask *headerView;
 @property (nonatomic, strong) PIECommentTableHeaderView_Reply *headerView_reply;
 
-@property (nonatomic, strong) DDPageVM *vm;
+@property (nonatomic, strong) PIEPageVM *vm;
 
 @property (nonatomic, assign) BOOL shouldDownloadVMSource;
 @property (nonatomic, assign) BOOL shouldShowHeaderView;

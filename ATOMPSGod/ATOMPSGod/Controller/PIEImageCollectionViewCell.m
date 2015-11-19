@@ -14,7 +14,7 @@
     // Initialization code
     self.layer.cornerRadius = 4;
 }
-- (void)injectSauce:(DDPageVM*)vm {
+- (void)injectSauce:(PIEPageVM*)vm {
     
     [_pageImgaeView setImageWithURL:[NSURL URLWithString:vm.imageURL]placeholderImage:[UIImage imageNamed:@"cellBG"]];
     

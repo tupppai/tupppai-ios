@@ -24,7 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *likeButton;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, assign) NSInteger currentPage;
-@property (nonatomic, strong) DDPageVM* currentVM;
+@property (nonatomic, strong) PIEPageVM* currentVM;
 @property (nonatomic, strong) HMSegmentedControl* segmentedControl;
 @property (nonatomic, strong)  JGActionSheet * psActionSheet;
 @property (nonatomic, assign)  NSInteger askCount;
@@ -133,7 +133,7 @@
 {
     if (_dataSource.count > index) {
 
-        DDPageVM* vm = [_dataSource objectAtIndex:index];
+        PIEPageVM* vm = [_dataSource objectAtIndex:index];
         if (view == nil)
         {
             CGFloat height = self.carousel.frame.size.height-80;
@@ -321,11 +321,11 @@
 - (void)reorderSourceAndScroll {
 //初始化，把传进来的vm重组，放在原图的下一位，被滚动到此位置。
     for (int i =0; i < _dataSource.count; i++) {
-        DDPageVM* vm = [_dataSource objectAtIndex:i];
+        PIEPageVM* vm = [_dataSource objectAtIndex:i];
         //找出与传进来的pageVM匹配的vm
         if (vm.ID == _pageVM.ID && vm.type == _pageVM.type && _pageVM.type == PIEPageTypeReply) {
             if (_dataSource.count >= 2) {
-                DDPageVM* vmToCheck = [_dataSource objectAtIndex:1];
+                PIEPageVM* vmToCheck = [_dataSource objectAtIndex:1];
                 [_dataSource removeObjectAtIndex:i];
                 if (vmToCheck.type == PIEPageTypeAsk) {
                     [_dataSource insertObject:vm atIndex:2];

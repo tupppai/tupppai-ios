@@ -21,7 +21,7 @@
 
             for (NSDictionary* dic in replies) {
                 PIEPageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:dic error:NULL];
-                DDPageVM* vm2 = [[DDPageVM alloc]initWithPageEntity:entity2];
+                PIEPageVM* vm2 = [[PIEPageVM alloc]initWithPageEntity:entity2];
                 [vm.replies addObject:vm2];
             }
             [retArray addObject:vm];
@@ -38,7 +38,7 @@
 
         for (NSDictionary* dic in data) {
             PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:dic error:NULL];
-            DDPageVM* vm = [[DDPageVM alloc]initWithPageEntity:entity];
+            PIEPageVM* vm = [[PIEPageVM alloc]initWithPageEntity:entity];
             [retArray addObject:vm];
         }
         if (block) {

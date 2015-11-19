@@ -9,7 +9,7 @@
 #import "DDBaseVC.h"
 
 @interface PIEFriendReplyViewController : DDBaseVC
-@property (nonatomic, strong) DDPageVM* pageVM;
+@property (nonatomic, strong) PIEPageVM* pageVM;
 @property (nonatomic, assign) NSInteger uid;
 
 @end

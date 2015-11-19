@@ -84,7 +84,7 @@
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             PIEFriendViewController *opvc = [PIEFriendViewController new];
-            DDPageVM* vm = [DDPageVM new];
+            PIEPageVM* vm = [PIEPageVM new];
             vm.userID = viewModel.uid;
             vm.username = viewModel.userName;
             opvc.pageVM = vm;

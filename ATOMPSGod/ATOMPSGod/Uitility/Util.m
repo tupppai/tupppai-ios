@@ -29,7 +29,7 @@
 }
 
 
-+ (void) imageWithVm:(DDPageVM*)vm block:(void(^)(UIImage*))block
++ (void) imageWithVm:(PIEPageVM*)vm block:(void(^)(UIImage*))block
 {
     
     PIEShareImageView* view = [PIEShareImageView new];

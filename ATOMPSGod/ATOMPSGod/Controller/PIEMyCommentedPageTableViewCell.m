@@ -21,7 +21,7 @@
     // Configure the view for the selected state
 }
 
-- (void)injectSauce:(DDPageVM* )vm {
+- (void)injectSauce:(PIEPageVM* )vm {
     _usernameLabel.text = vm.username;
     _timeLabel.text = vm.publishTime;
     _contentLabel.text = [NSString stringWithFormat:@"你评论了%@: %@",vm.username,vm.content];

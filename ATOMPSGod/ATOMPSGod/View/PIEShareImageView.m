@@ -109,7 +109,7 @@
     }];
     
 }
--(void)injectSauce:(DDPageVM*)vm withBlock:(void(^)(BOOL success))block {
+-(void)injectSauce:(PIEPageVM*)vm withBlock:(void(^)(BOOL success))block {
     _nameLabel.text = vm.username;
     
     [DDService downloadImage:vm.imageURL withBlock:^(UIImage *image) {

@@ -17,8 +17,8 @@
 @property (nonatomic, assign) NSInteger ID;
 @property (nonatomic, assign) PIEPageType type;
 @property (weak, nonatomic) IBOutlet PIEPageLikeButton *likeButton;
-@property (nonatomic, strong) DDPageVM *viewModel;
+@property (nonatomic, strong) PIEPageVM *viewModel;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
 
-- (void)injectSauce:(DDPageVM *)viewModel;
+- (void)injectSauce:(PIEPageVM *)viewModel;
 @end

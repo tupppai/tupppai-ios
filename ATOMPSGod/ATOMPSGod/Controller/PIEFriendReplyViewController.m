@@ -72,7 +72,7 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
         if (returnArray.count) {
             _canRefreshFooter = YES;
             for (PIEPageEntity *entity in returnArray) {
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+                PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 NSLog(@"NAME %@",vm.username);
                 [arrayAgent addObject:vm];
             }
@@ -104,7 +104,7 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
         if (returnArray.count) {
             _canRefreshFooter = YES;
             for (PIEPageEntity *entity in returnArray) {
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+                PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [arrayAgent addObject:vm];
             }
             [_source addObjectsFromArray:arrayAgent];
@@ -178,7 +178,7 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
 }
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    DDPageVM* vm = [_source objectAtIndex:indexPath.row];
+    PIEPageVM* vm = [_source objectAtIndex:indexPath.row];
     CGFloat width;
     CGFloat height;
     width = (SCREEN_WIDTH) /2 - 20;
@@ -214,7 +214,7 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    DDPageVM* vm = [_source objectAtIndex:indexPath.row];
+    PIEPageVM* vm = [_source objectAtIndex:indexPath.row];
     PIECarouselViewController* vc = [PIECarouselViewController new];
     vc.pageVM = vm;
     DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;

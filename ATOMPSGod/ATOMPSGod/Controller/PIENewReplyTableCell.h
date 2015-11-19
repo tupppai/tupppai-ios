@@ -29,7 +29,7 @@
 
 @property (strong, nonatomic) PIEThumbAnimateView *thumbView;
 
-- (void)injectSauce:(DDPageVM *)viewModel ;
+- (void)injectSauce:(PIEPageVM *)viewModel ;
 - (void)animateToggleExpanded ;
 - (void)animateThumbScale:(PIEAnimateViewType)type;
 @end

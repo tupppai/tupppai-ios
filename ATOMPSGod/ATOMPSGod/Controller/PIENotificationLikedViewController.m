@@ -135,7 +135,7 @@
                 [self.navigationController pushViewController:vc animated:YES];
             } else  if (CGRectContainsPoint(cell.pageImageView.frame,p)) {
                 PIECarouselViewController* vc = [PIECarouselViewController new];
-                DDPageVM* pageVM = [DDPageVM new];
+                PIEPageVM* pageVM = [PIEPageVM new];
                 pageVM.ID = vm.targetID;
                 pageVM.askID = vm.askID;
                 pageVM.type = vm.targetType;

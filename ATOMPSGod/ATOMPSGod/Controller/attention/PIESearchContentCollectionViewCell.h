@@ -14,5 +14,5 @@
 @property (weak, nonatomic) IBOutlet UIImageView *typeImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
-- (void)injectSauce:(DDPageVM*)vm ;
+- (void)injectSauce:(PIEPageVM*)vm ;
 @end

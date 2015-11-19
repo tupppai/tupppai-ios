@@ -50,7 +50,7 @@
     }];
 }
 
-+ (void)getRemoteShareInfo:(DDPageVM*)vm withSocialShareType:(ATOMShareType)shareType withBlock:(void (^)(ATOMShare* share))block {
++ (void)getRemoteShareInfo:(PIEPageVM*)vm withSocialShareType:(ATOMShareType)shareType withBlock:(void (^)(ATOMShare* share))block {
     NSMutableDictionary* param = [NSMutableDictionary new];
     NSString* shareTypeToServer = @"";
     MobClickSocialWeibo *   weibo=[[MobClickSocialWeibo alloc] initWithPlatformType:MobClickSocialTypeFacebook weiboId:nil usid:nil param:nil];
@@ -89,14 +89,14 @@
     }];
 }
 
-+(void)copy:(DDPageVM*)vm {
++(void)copy:(PIEPageVM*)vm {
     [self getRemoteShareInfo:vm withSocialShareType:ATOMShareTypeCopyLinks withBlock:^(ATOMShare *share) {
         UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
         pasteboard.string = share.url;
         [Hud success:@"成功复制到粘贴板"];
     }];
 }
-+(void)postSocialShare2:(DDPageVM*)vm withSocialShareType:(ATOMShareType)shareType block:(void (^)(BOOL success))block {
++(void)postSocialShare2:(PIEPageVM*)vm withSocialShareType:(ATOMShareType)shareType block:(void (^)(BOOL success))block {
     
     //先获取服务器传输过来的信息
     [self getRemoteShareInfo:vm withSocialShareType:shareType withBlock:^(ATOMShare *share) {

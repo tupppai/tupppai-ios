@@ -26,7 +26,7 @@
 }
 
 //put a needle injecting into cell's ass.
-- (void)injectSource:(DDPageVM*)vm {
+- (void)injectSource:(PIEPageVM*)vm {
     [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
     [_theImageView setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
     _nameLabel.text = vm.username;

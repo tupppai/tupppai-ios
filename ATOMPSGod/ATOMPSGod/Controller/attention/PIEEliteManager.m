@@ -67,7 +67,7 @@
                     [commentEntityArray addObject:commentEntity];
                 }
                 entity.hotCommentEntityArray = commentEntityArray;
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+                PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [returnArray addObject:vm];
             }
         }

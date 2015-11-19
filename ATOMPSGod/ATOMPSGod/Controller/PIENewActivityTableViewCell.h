@@ -25,5 +25,5 @@
 //@property (strong, nonatomic) PIEThumbAnimateView *thumbView;
 @property (nonatomic, assign) NSInteger ID;
 @property (nonatomic, assign) NSInteger askID;
-- (void)injectSauce:(DDPageVM *)viewModel;
+- (void)injectSauce:(PIEPageVM *)viewModel;
 @end

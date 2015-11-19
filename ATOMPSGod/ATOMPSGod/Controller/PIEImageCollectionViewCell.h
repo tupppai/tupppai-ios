@@ -10,5 +10,5 @@
 
 @interface PIEImageCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *pageImgaeView;
-- (void)injectSauce:(DDPageVM*)vm;
+- (void)injectSauce:(PIEPageVM*)vm;
 @end

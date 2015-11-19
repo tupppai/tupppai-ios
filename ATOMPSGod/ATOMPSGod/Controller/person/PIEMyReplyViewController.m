@@ -69,7 +69,7 @@
     [DDPageManager getReply:param withBlock:^(NSMutableArray *resultArray) {
         NSMutableArray* arrayAgent = [NSMutableArray new];
         for (PIEPageEntity *entity in resultArray) {
-            DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+            PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
             [arrayAgent addObject:vm];
         }
         [ws.dataSource removeAllObjects];
@@ -96,7 +96,7 @@
     
     [DDPageManager getReply:param withBlock:^(NSMutableArray *resultArray) {
         for (PIEPageEntity *entity in resultArray) {
-            DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+            PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
             [ws.dataSource addObject:vm];
         }
         if (resultArray.count == 0) {
@@ -156,7 +156,7 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PIEMyReplyCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PIEMyReplyCollectionViewCell" forIndexPath:indexPath];
-    DDPageVM *vm = _dataSource[indexPath.row];
+    PIEPageVM *vm = _dataSource[indexPath.row];
     [cell injectSauce:vm];
     return cell;
 }
@@ -194,7 +194,7 @@
 
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    DDPageVM* vm = [_dataSource objectAtIndex:indexPath.row];
+    PIEPageVM* vm = [_dataSource objectAtIndex:indexPath.row];
     CGFloat width;
     CGFloat height;
     width = (SCREEN_WIDTH) /2 - 20;

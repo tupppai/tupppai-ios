@@ -44,7 +44,6 @@
     return YES;
 }
 -(void)awakeFromNib {
-//    NSLog(@"PIEFriendViewController awakeFromNib");
 
 }
 -(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -159,10 +158,9 @@
 }
 - (void)updateUserInterface:(PIEEntityUser*)user {
     self.title = user.nickname;
-//    [_avatarView setImageWithURL:[NSURL URLWithString:user.avatar]];
     [DDService downloadImage:user.avatar withBlock:^(UIImage *image) {
         _avatarView.image = image;
-        _blurView.image = [image blurredImageWithRadius:40 iterations:1 tintColor:nil];
+        _blurView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:nil];
     }];
     _followCountLabel.text = [NSString stringWithFormat:@"%zd",user.attentionNumber];
     _fansCountLabel.text = [NSString stringWithFormat:@"%zd",user.fansNumber];

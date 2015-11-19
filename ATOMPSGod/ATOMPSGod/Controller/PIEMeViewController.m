@@ -51,9 +51,30 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self hideNavitionBarTitleView];
+    [self setupNavBar];
     [self setupViews];
     [self setupPageMenu];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(scrollUp)
+                                                 name:@"PIEMeScrollUp"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(scrollDown)
+                                                 name:@"PIEMeScrollDown"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateNoticationStatus)
+                                                 name:@"updateNoticationStatus"
+                                               object:nil];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"PIEMeScrollUp" object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"PIEMeScrollDown" object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"updateNoticationStatus" object:nil];
+}
+- (void)setupNavBar {
     UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
     backButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [backButton setImage:[UIImage imageNamed:@"pie_message"] forState:UIControlStateNormal];
@@ -69,21 +90,10 @@
     [buttonLeft addTarget:self action:@selector(pushToSettingViewController) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonLeft];
     self.navigationItem.leftBarButtonItem =  buttonItem;
+    
+    [self hideNavitionBarTitleView];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(scrollUp)
-                                                 name:@"PIEMeScrollUp"
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(scrollDown)
-                                                 name:@"PIEMeScrollDown"
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateNoticationStatus)
-                                                 name:@"updateNoticationStatus"
-                                               object:nil];
 }
-
 - (void)hideNavitionBarTitleView {
     UILabel *label = [[UILabel alloc] init];
     self.navigationItem.titleView = label;
@@ -99,7 +109,6 @@
     self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
     self.edgesForExtendedLayout = UIRectEdgeAll;
     [self updateNoticationStatus];
-    
     [MobClick beginLogPageView:@"进入我的"];
 
 }
@@ -150,7 +159,7 @@
 -(void)updateAvatar {
         [DDService downloadImage:[DDUserManager currentUser].avatar withBlock:^(UIImage *image) {
             _avatarView.image = image;
-            _topContainerView.image = [image blurredImageWithRadius:20 iterations:5 tintColor:nil];
+            _topContainerView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:nil];
     }];
     self.usernameLabel.text = [DDUserManager currentUser].username;
 }

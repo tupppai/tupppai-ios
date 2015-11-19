@@ -118,7 +118,7 @@
 
 
 
--(void)setVm:(DDPageVM *)vm {
+-(void)setVm:(PIEPageVM *)vm {
     if (vm) {
         [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
         _usernameLabel.text = vm.username;

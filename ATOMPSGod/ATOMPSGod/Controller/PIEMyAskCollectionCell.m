@@ -17,7 +17,7 @@
 }
 
 //put a needle injecting into cell's ass.
-- (void)injectSource:(DDPageVM*)vm {
+- (void)injectSource:(PIEPageVM*)vm {
     [_theImageView setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
     _contentLabel.text = vm.content;
 }

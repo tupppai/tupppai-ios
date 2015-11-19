@@ -22,7 +22,7 @@
     [_blurBottomView.layer insertSublayer:gradient atIndex:0];
     //    _tipLabel.layer.cornerRadius = 4;
 }
-- (void)injectSource:(DDPageVM*)vm {
+- (void)injectSource:(PIEPageVM*)vm {
     
     [_theImageView setImageWithURL:[NSURL URLWithString:vm.imageURL]placeholderImage:[UIImage imageNamed:@"cellBG"]];
     

@@ -68,7 +68,7 @@
         for (int i = 0; i < data.count; i++) {
             NSDictionary* dic = [data objectAtIndex:i];
             PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:dic error:NULL];
-            DDPageVM* vm = [[DDPageVM alloc]initWithPageEntity:entity];
+            PIEPageVM* vm = [[PIEPageVM alloc]initWithPageEntity:entity];
             vm.content = entity.comment;
             [resultArray addObject:vm];
         }
@@ -83,7 +83,7 @@
         NSMutableArray *resultArray = [NSMutableArray array];
         for (int i = 0; i < data.count; i++) {
             PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
-            DDPageVM* vm = [[DDPageVM alloc]initWithPageEntity:entity];
+            PIEPageVM* vm = [[PIEPageVM alloc]initWithPageEntity:entity];
             [resultArray addObject:vm];
         }
         if (block) {
@@ -108,14 +108,14 @@
                 askEntity.imageWidth = ie.width;
                 askEntity.imageHeight = ie.height;
                 askEntity.imageURL = ie.url;
-                DDPageVM* vm = [[DDPageVM alloc]initWithPageEntity:askEntity];
+                PIEPageVM* vm = [[PIEPageVM alloc]initWithPageEntity:askEntity];
                 [source addObject:vm];
             }
             
             NSArray* repliesDic = [[returnArray objectAtIndex:i]objectForKey:@"replies"];
             for (NSDictionary* dic in repliesDic) {
                 PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:dic error:NULL];
-                DDPageVM* vm = [[DDPageVM alloc]initWithPageEntity:entity];
+                PIEPageVM* vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [source addObject:vm];
             }
             [array addObject:source];

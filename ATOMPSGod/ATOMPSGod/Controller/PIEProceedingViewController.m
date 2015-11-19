@@ -52,7 +52,7 @@
 @property (nonatomic, assign) BOOL canRefreshDoneFooter;
 
 @property (nonatomic, strong) NSIndexPath* selectedIndexPath;
-@property (nonatomic, strong) DDPageVM* selectedVM;
+@property (nonatomic, strong) PIEPageVM* selectedVM;
 
 @property (nonatomic, strong) QBImagePickerController* QBImagePickerController;
 @property (nonatomic, strong) PIEProceedingShareView *shareView;
@@ -190,7 +190,7 @@
     CGPoint location = [gesture locationInView:_sv.toHelpTableView];
     NSIndexPath *indexPath = [_sv.toHelpTableView indexPathForRowAtPoint:location];
     _selectedIndexPath = indexPath;
-    DDPageVM* vm = [_sourceToHelp objectAtIndex:indexPath.row];
+    PIEPageVM* vm = [_sourceToHelp objectAtIndex:indexPath.row];
     if (indexPath) {
         PIEProceedingToHelpTableViewCell *cell = (PIEProceedingToHelpTableViewCell *)[_sv.toHelpTableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
@@ -317,7 +317,7 @@
     vc.assetsArray = assets;
     vc.hideSecondView = YES;
     vc.type = PIEUploadTypeReply;
-    DDPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath.row];
+    PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath.row];
     vc.askIDToReply = vm.askID;
     
     [[NSUserDefaults standardUserDefaults] setObject:@(vm.askID) forKey:@"AskIDToReply"];
@@ -442,7 +442,8 @@
     else if (tableView == _sv.toHelpTableView) {
         return [tableView fd_heightForCellWithIdentifier:@"PIEProceedingToHelpTableViewCell"  cacheByIndexPath:indexPath configuration:^(PIEProceedingToHelpTableViewCell *cell) {
             [cell injectSource:[_sourceToHelp objectAtIndex:indexPath.row]];
-        }];    }
+        }];
+    }
     else {
         return 0;
     }
@@ -483,7 +484,7 @@
 
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    DDPageVM* vm = [_sourceDone objectAtIndex:indexPath.row];
+    PIEPageVM* vm = [_sourceDone objectAtIndex:indexPath.row];
     CGFloat width;
     CGFloat height;
     width = (SCREEN_WIDTH) /2 - 20;
@@ -562,7 +563,7 @@
             _canRefreshToHelpFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
             for (PIEPageEntity *homeImage in resultArray) {
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:homeImage];
+                PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:homeImage];
                 [sourceAgent addObject:vm];
             }
             [ws.sourceToHelp removeAllObjects];
@@ -589,7 +590,7 @@
             _canRefreshToHelpFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
             for (PIEPageEntity *homeImage in resultArray) {
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:homeImage];
+                PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:homeImage];
                 [sourceAgent addObject:vm];
             }
             [ws.sourceToHelp addObjectsFromArray:sourceAgent];
@@ -618,7 +619,7 @@
             _canRefreshDoneFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
             for (PIEPageEntity *homeImage in resultArray) {
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:homeImage];
+                PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:homeImage];
                 [sourceAgent addObject:vm];
             }
             
@@ -647,7 +648,7 @@
             _canRefreshDoneFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
             for (PIEPageEntity *homeImage in resultArray) {
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:homeImage];
+                PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:homeImage];
                 [sourceAgent addObject:vm];
             }
             [ws.sourceDone addObjectsFromArray:sourceAgent];
@@ -691,7 +692,7 @@
 -(void)tapShare7 {
     [self.shareView dismiss];
     if (_sv.type == PIEProceedingTypeToHelp) {
-        DDPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath.row];
+        PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath.row];
         [self deleteOneToHelp:_selectedIndexPath ID:vm.ID];
     }
 }

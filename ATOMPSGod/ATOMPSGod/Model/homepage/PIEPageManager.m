@@ -46,7 +46,7 @@
                     [thumbArray addObject:entity2];
                 }
                 entity.thumbEntityArray = thumbArray;
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+                PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [returnArray addObject:vm];
             }
             if (block) {
@@ -71,7 +71,7 @@
                     [thumbArray addObject:entity2];
                 }
                 entity.thumbEntityArray = thumbArray;
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+                PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [returnArray addObject:vm];
             }
             if (block) {
@@ -85,7 +85,7 @@
     }];
 }
 
-+ (void)getPageSource:(NSDictionary *)param block:(void (^)(DDPageVM *))block {
++ (void)getPageSource:(NSDictionary *)param block:(void (^)(PIEPageVM *))block {
     [DDBaseService GET:param url:@"thread/item" block:^(id responseObject) {
         PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:                    [responseObject objectForKey:@"data"] error:NULL];
         if (entity) {
@@ -97,7 +97,7 @@
                 }
                 entity.thumbEntityArray = thumbArray;
             }
-            DDPageVM* vm = [[DDPageVM alloc]initWithPageEntity:entity];
+            PIEPageVM* vm = [[PIEPageVM alloc]initWithPageEntity:entity];
             if (block) {
                 block(vm);
             }

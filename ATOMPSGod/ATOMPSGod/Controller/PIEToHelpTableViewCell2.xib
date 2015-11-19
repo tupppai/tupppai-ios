@@ -46,7 +46,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="5jl-sT-Hmm">
-                        <rect key="frame" x="96" y="46" width="410" height="75.5"/>
+                        <rect key="frame" x="96" y="46" width="410" height="0.0"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -62,7 +62,8 @@
                     <constraint firstItem="s6r-9h-3AB" firstAttribute="leading" secondItem="inl-s0-J2h" secondAttribute="trailing" constant="10" id="DtJ-0y-Pp6"/>
                     <constraint firstItem="VzJ-EH-jGF" firstAttribute="leading" secondItem="inl-s0-J2h" secondAttribute="leading" id="ELI-dD-p9V"/>
                     <constraint firstItem="inl-s0-J2h" firstAttribute="top" secondItem="G1I-oj-Exp" secondAttribute="topMargin" id="HAG-OB-hxJ"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="5jl-sT-Hmm" secondAttribute="bottom" constant="5" id="an5-R8-DMJ"/>
+                    <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="VzJ-EH-jGF" secondAttribute="bottom" id="IR2-C3-By4"/>
+                    <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="5jl-sT-Hmm" secondAttribute="bottom" constant="5" id="an5-R8-DMJ"/>
                     <constraint firstItem="nVJ-yg-xMf" firstAttribute="leading" secondItem="s6r-9h-3AB" secondAttribute="leading" id="bcm-J1-Dak"/>
                     <constraint firstItem="VzJ-EH-jGF" firstAttribute="top" secondItem="inl-s0-J2h" secondAttribute="bottom" constant="3" id="f35-R5-Wu7"/>
                     <constraint firstItem="nVJ-yg-xMf" firstAttribute="bottom" secondItem="inl-s0-J2h" secondAttribute="bottom" constant="3" id="fgW-pj-rgI"/>

@@ -28,6 +28,7 @@
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, strong) PIENotificationVM* selectedVM;
+@property (nonatomic, assign)  long long timeStamp;
 
 @end
 
@@ -86,7 +87,7 @@
                 [self.navigationController pushViewController:vc animated:YES];
             } else  if (CGRectContainsPoint(cell.pageImageView.frame,p)) {
                 PIECommentViewController* vc = [PIECommentViewController new];
-                DDPageVM* pageVM = [DDPageVM new];
+                PIEPageVM* pageVM = [PIEPageVM new];
                 pageVM.ID = vm.targetID;
                 pageVM.type = vm.targetType;
                 vc.vm = pageVM;
@@ -107,7 +108,7 @@
                 [self.navigationController pushViewController:vc animated:YES];
             } else  if (CGRectContainsPoint(cell.pageImageView.frame,p)) {
                 PIECommentViewController* vc = [PIECommentViewController new];
-                DDPageVM* pageVM = [DDPageVM new];
+                PIEPageVM* pageVM = [PIEPageVM new];
                 pageVM.ID = vm.targetID;
                 pageVM.type = vm.targetType;
                 vc.vm = pageVM;
@@ -212,10 +213,10 @@
     [self.tableView.footer endRefreshing];
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    _timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [PIENotificationManager getNotifications:param block:^(NSArray *source) {
         if (source.count>0) {
@@ -259,10 +260,9 @@
     _currentIndex++;
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(_currentIndex) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [PIENotificationManager getNotifications:param block:^(NSArray *source) {
         if (source.count>0) {

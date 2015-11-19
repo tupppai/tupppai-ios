@@ -43,7 +43,7 @@
 		5C436A811AB02E7300D14608 /* PIENotificationTypeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C436A801AB02E7300D14608 /* PIENotificationTypeTableViewCell.m */; };
 		5C4AE3EC1AAED60A0020E102 /* PIEFriendFansViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AE3EB1AAED60A0020E102 /* PIEFriendFansViewController.m */; };
 		5C4AE3EF1AAED6520020E102 /* PIEFriendFansTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AE3EE1AAED6520020E102 /* PIEFriendFansTableCell.m */; };
-		5C4C70461AB665F500358989 /* DDPageVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4C70451AB665F500358989 /* DDPageVM.m */; };
+		5C4C70461AB665F500358989 /* PIEPageVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4C70451AB665F500358989 /* PIEPageVM.m */; };
 		5C4C70B41AB6A60C00358989 /* DDSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4C70B31AB6A60C00358989 /* DDSessionManager.m */; };
 		5C4C70C51AB6BC5200358989 /* DDBaseService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4C70C41AB6BC5200358989 /* DDBaseService.m */; };
 		5C4C70C81AB6E20800358989 /* DDUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4C70C71AB6E20800358989 /* DDUserManager.m */; };
@@ -551,8 +551,8 @@
 		5C4AE3EB1AAED60A0020E102 /* PIEFriendFansViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIEFriendFansViewController.m; path = person/PIEFriendFansViewController.m; sourceTree = "<group>"; };
 		5C4AE3ED1AAED6520020E102 /* PIEFriendFansTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIEFriendFansTableCell.h; path = ../View/person/PIEFriendFansTableCell.h; sourceTree = "<group>"; };
 		5C4AE3EE1AAED6520020E102 /* PIEFriendFansTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIEFriendFansTableCell.m; path = ../View/person/PIEFriendFansTableCell.m; sourceTree = "<group>"; };
-		5C4C70441AB665F500358989 /* DDPageVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDPageVM.h; path = homepage/DDPageVM.h; sourceTree = "<group>"; };
-		5C4C70451AB665F500358989 /* DDPageVM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDPageVM.m; path = homepage/DDPageVM.m; sourceTree = "<group>"; };
+		5C4C70441AB665F500358989 /* PIEPageVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIEPageVM.h; path = homepage/PIEPageVM.h; sourceTree = "<group>"; };
+		5C4C70451AB665F500358989 /* PIEPageVM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIEPageVM.m; path = homepage/PIEPageVM.m; sourceTree = "<group>"; };
 		5C4C70B21AB6A60C00358989 /* DDSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDSessionManager.h; path = Model/common/DDSessionManager.h; sourceTree = "<group>"; };
 		5C4C70B31AB6A60C00358989 /* DDSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDSessionManager.m; path = Model/common/DDSessionManager.m; sourceTree = "<group>"; };
 		5C4C70C31AB6BC5200358989 /* DDBaseService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDBaseService.h; path = Model/common/DDBaseService.h; sourceTree = "<group>"; };
@@ -1830,8 +1830,8 @@
 		5C9BD9E81AA8150000715698 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				5C4C70441AB665F500358989 /* DDPageVM.h */,
-				5C4C70451AB665F500358989 /* DDPageVM.m */,
+				5C4C70441AB665F500358989 /* PIEPageVM.h */,
+				5C4C70451AB665F500358989 /* PIEPageVM.m */,
 				F402F1021BE8A327004988B4 /* PIEUserViewModel.h */,
 				F402F1031BE8A327004988B4 /* PIEUserViewModel.m */,
 				F4EC11211BCF456E002D1DCF /* PIENotificationVM.h */,
@@ -3744,7 +3744,7 @@
 				E94289861B5B32A200ED26E4 /* TSBlurView.m in Sources */,
 				E99D2F5E1B1C7E8D000D7784 /* NYXProgressiveImageView.m in Sources */,
 				F45ECF4E1BD1DF4600417A75 /* PIEMyCommentedPageViewController.m in Sources */,
-				5C4C70461AB665F500358989 /* DDPageVM.m in Sources */,
+				5C4C70461AB665F500358989 /* PIEPageVM.m in Sources */,
 				F4C0DFEB1BE9D45F000615CF /* PIEBannerWebViewViewController.m in Sources */,
 				5C83A8911AC66F910071A024 /* POPGeometry.mm in Sources */,
 				F4DC3D3F1BC131BA00DCF72F /* PIEFriendAskTableViewCell.m in Sources */,

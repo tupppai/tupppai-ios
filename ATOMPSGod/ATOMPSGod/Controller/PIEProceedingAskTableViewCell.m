@@ -12,8 +12,8 @@
 #import "AppDelegate.h"
 @interface PIEProceedingAskTableViewCell()
 @property (strong, nonatomic) NSMutableArray *source;
-@property (strong, nonatomic) DDPageVM *vmAsk1;
-@property (strong, nonatomic) DDPageVM *vmAsk2;
+@property (strong, nonatomic) PIEPageVM *vmAsk1;
+@property (strong, nonatomic) PIEPageVM *vmAsk2;
 @end
 
 @implementation PIEProceedingAskTableViewCell
@@ -138,7 +138,7 @@
         imageView.clipsToBounds = YES;
         [view addSubview:imageView];
     }
-    DDPageVM* vm = [_source objectAtIndex:index];
+    PIEPageVM* vm = [_source objectAtIndex:index];
     for (UIView *subView in view.subviews){
         if([subView isKindOfClass:[UIImageView class]]){
             UIImageView *imageView = (UIImageView *)subView;

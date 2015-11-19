@@ -36,7 +36,7 @@
     [_nameButton setTitle:vm.username forState:UIControlStateNormal];
     _countLabel.text = [NSString stringWithFormat:@"%zd 作品   %zd 粉丝   %zd 关注",vm.replyNumber,vm.fansNumber,vm.attentionNumber];
 //    for (int i = 0; i<vm.replies.count; i++) {
-//        DDPageVM* vm2 = [vm.replies objectAtIndex:i];
+//        PIEPageVM* vm2 = [vm.replies objectAtIndex:i];
 //        if (i<=3) {
 //            UIImageView* imageView = [_imageViewArray objectAtIndex:i];
 //            [imageView setImageWithURL:[NSURL URLWithString:vm2.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
@@ -77,7 +77,7 @@
         imageView.clipsToBounds = YES;
         [view addSubview:imageView];
     }
-    DDPageVM* vm = [_vm.replies objectAtIndex:index];
+    PIEPageVM* vm = [_vm.replies objectAtIndex:index];
     for (UIView *subView in view.subviews){
         if([subView isKindOfClass:[UIImageView class]]){
             UIImageView *imageView = (UIImageView *)subView;

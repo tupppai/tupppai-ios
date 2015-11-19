@@ -59,7 +59,7 @@
         make.bottom.equalTo(_gapView.mas_top).with.offset(0).priorityHigh();
     }];
 }
-- (void)injectSauce:(DDPageVM *)viewModel {
+- (void)injectSauce:(PIEPageVM *)viewModel {
     WS(ws);
     _ID = viewModel.ID;
     _askID = viewModel.askID;

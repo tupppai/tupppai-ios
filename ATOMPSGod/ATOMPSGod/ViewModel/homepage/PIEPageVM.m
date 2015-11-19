@@ -9,11 +9,11 @@
 
 
 
-@interface DDPageVM ()
+@interface PIEPageVM ()
 
 @end
 
-@implementation DDPageVM
+@implementation PIEPageVM
 
 - (instancetype)init {
     self = [super init];

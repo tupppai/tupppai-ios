@@ -37,7 +37,7 @@
     [super setSelected:selected animated:animated];
     // Configure the view for the selected state
 }
-- (void)injectSauce:(DDPageVM*)vm {
+- (void)injectSauce:(PIEPageVM*)vm {
     if (vm.type == PIEPageTypeAsk) {
         _likeView.hidden = YES;
         _likeCountLabel.hidden = YES;

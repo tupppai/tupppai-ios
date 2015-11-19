@@ -109,7 +109,7 @@
 
 
 
--(void)setVm:(DDPageVM *)vm {
+-(void)setVm:(PIEPageVM *)vm {
     _vm = vm;
     if (vm) {
         [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];

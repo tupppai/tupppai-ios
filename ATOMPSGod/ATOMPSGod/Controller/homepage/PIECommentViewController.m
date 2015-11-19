@@ -102,7 +102,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     NSMutableDictionary* param = [NSMutableDictionary new];
     [param setObject:@(_vm.ID) forKey:@"id"];
     [param setObject:@(_vm.type) forKey:@"type"];
-    [PIEPageManager getPageSource:param block:^(DDPageVM *remoteVM) {
+    [PIEPageManager getPageSource:param block:^(PIEPageVM *remoteVM) {
         _vm = remoteVM;
         if (_vm.type == PIEPageTypeAsk) {
             self.headerView.vm = _vm;
@@ -518,7 +518,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.avatarView.frame, p)) {
             PIEFriendViewController *opvc = [PIEFriendViewController new];
-            DDPageVM* vm = [DDPageVM new];
+            PIEPageVM* vm = [PIEPageVM new];
             vm.userID = model.uid;
             vm.username = model.username;
             opvc.pageVM = vm;
@@ -526,7 +526,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         }
         else if (CGRectContainsPoint(cell.usernameLabel.frame, p)) {
             PIEFriendViewController *opvc = [PIEFriendViewController new];
-            DDPageVM* vm = [DDPageVM new];
+            PIEPageVM* vm = [PIEPageVM new];
             vm.userID = model.uid;
             vm.username = model.username;
             opvc.pageVM = vm;

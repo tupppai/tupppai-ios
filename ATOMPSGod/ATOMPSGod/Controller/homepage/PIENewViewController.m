@@ -63,7 +63,7 @@
 
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 @property (nonatomic, strong) PIENewReplyTableCell *selectedReplyCell;
-@property (nonatomic, strong) DDPageVM *selectedVM;
+@property (nonatomic, strong) PIEPageVM *selectedVM;
 @property (nonatomic, strong) PIEShareView *shareView;
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
 @property (nonatomic, strong)  MRNavigationBarProgressView* progressView;
@@ -370,7 +370,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 //    NSArray * homepageArray = [[showHomepage getHomeImagesWithHomeType:homeType] mutableCopy];
 //    NSMutableArray* tableViewDataSource = [NSMutableArray array];
 //    for (PIEPageEntity *homeImage in homepageArray) {
-//        DDPageVM *model = [DDPageVM new];
+//        PIEPageVM *model = [PIEPageVM new];
 //        [model setViewModelData:homeImage];
 //        [tableViewDataSource addObject:model];
 //    }
@@ -778,7 +778,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 }
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    DDPageVM* vm =   [_sourceAsk objectAtIndex:indexPath.row];
+    PIEPageVM* vm =   [_sourceAsk objectAtIndex:indexPath.row];
     CGFloat width;
     CGFloat height;
     width = (SCREEN_WIDTH - 20) / 2.0;

@@ -9,5 +9,5 @@
 #import "DDBaseVC.h"
 
 @interface PIEReplyCollectionViewController : DDBaseVC
-@property (nonatomic, strong) DDPageVM *pageVM;
+@property (nonatomic, strong) PIEPageVM *pageVM;
 @end

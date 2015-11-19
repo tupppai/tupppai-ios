@@ -54,7 +54,7 @@
 #import "DDBaseService.h"
 
 #import "PIEPageEntity.h"
-#import "DDPageVM.h"
+#import "PIEPageVM.h"
 #import "UIButton+Pop.h"
 #endif
 

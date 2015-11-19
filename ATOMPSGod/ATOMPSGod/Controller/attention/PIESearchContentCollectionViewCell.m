@@ -22,7 +22,7 @@
     _avatarButton.userInteractionEnabled = NO;
 }
 
-- (void)injectSauce:(DDPageVM*)vm {
+- (void)injectSauce:(PIEPageVM*)vm {
     [_avatarButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
     _nameLabel.text = vm.username;
     _contentLabel.text = vm.content;

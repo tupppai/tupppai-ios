@@ -53,7 +53,7 @@
         if (replyArray.count>0) {
 //            NSMutableArray* arrayAgent = [NSMutableArray new];
 //            for (PIEPageEntity *entity in replyArray) {
-//                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+//                PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
 //                [arrayAgent addObject:vm];
 //            }
             [_source removeAllObjects];
@@ -116,7 +116,7 @@
 //        _selectedIndexPath = [self.collectionView indexPathForItemAtPoint:location];
 //    
 //        if (_selectedIndexPath) {
-//            DDPageVM* vm = [_source objectAtIndex:_selectedIndexPath.row];
+//            PIEPageVM* vm = [_source objectAtIndex:_selectedIndexPath.row];
 //            PIEReplyCollectionCell* cell = (PIEReplyCollectionCell*)[self.collectionView cellForItemAtIndexPath:_selectedIndexPath];
 //            CGPoint p = [gesture locationInView:cell];
 //            if (CGRectContainsPoint(cell.avatarView.frame, p) || CGRectContainsPoint(cell.usernameLabel.frame, p)) {
@@ -140,7 +140,7 @@
 
 - (void)like {
     NSLog(@"like");
-    DDPageVM* vm = [_source objectAtIndex:_selectedIndexPath.row];
+    PIEPageVM* vm = [_source objectAtIndex:_selectedIndexPath.row];
     PIEReplyCollectionCell* cell = (PIEReplyCollectionCell*)[self.collectionView cellForItemAtIndexPath:_selectedIndexPath];
 
     cell.likeButton.selected = !cell.likeButton.selected;
@@ -199,7 +199,7 @@
     return nil;
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    DDPageVM* vm = [_source objectAtIndex:indexPath.row];
+    PIEPageVM* vm = [_source objectAtIndex:indexPath.row];
     PIECarouselViewController* vc = [PIECarouselViewController new];
     vc.pageVM = vm;
     [self.navigationController pushViewController:vc animated:YES];
@@ -207,7 +207,7 @@
 
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    DDPageVM* vm = [_source objectAtIndex:indexPath.row];
+    PIEPageVM* vm = [_source objectAtIndex:indexPath.row];
     CGFloat width;
     CGFloat height;
     width = (SCREEN_WIDTH) /2 - 20;

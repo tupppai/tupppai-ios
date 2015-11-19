@@ -26,7 +26,7 @@
 @property (nonatomic, strong) PIEPageButton *commentButton;
 @property (nonatomic, strong) PIEPageButton *shareButton;
 @property (nonatomic, strong) PIEBangView *bangView;
-@property (nonatomic, strong) DDPageVM *vm;
+@property (nonatomic, strong) PIEPageVM *vm;
 
 //+ (CGFloat)calculateHeaderViewHeight:(kfcPageVM *)viewModel;
 

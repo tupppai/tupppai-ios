@@ -138,7 +138,7 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PIEImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PIEImageCollectionViewCell" forIndexPath:indexPath];
-    DDPageVM *vm = _dataSource[indexPath.row];
+    PIEPageVM *vm = _dataSource[indexPath.row];
     [cell injectSauce:vm];
     return cell;
 }

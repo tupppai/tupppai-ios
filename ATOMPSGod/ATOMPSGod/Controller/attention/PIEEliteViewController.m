@@ -54,7 +54,7 @@
 
 
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
-@property (nonatomic, strong) DDPageVM *selectedVM;
+@property (nonatomic, strong) PIEPageVM *selectedVM;
 
 @property (nonatomic, strong)  JGActionSheet * psActionSheet;
 @property (nonatomic, strong)  JGActionSheet * reportActionSheet;
@@ -297,7 +297,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == _sv.tableFollow) {
-        DDPageVM* vm = [_sourceFollow objectAtIndex:indexPath.row];
+        PIEPageVM* vm = [_sourceFollow objectAtIndex:indexPath.row];
         
         if (vm.type == PIEPageTypeAsk) {
             PIEEliteFollowAskTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:askIndentifier];
@@ -310,7 +310,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
             return cell;
         }
     } else if (tableView == _sv.tableHot) {
-        DDPageVM* vm = [_sourceHot objectAtIndex:indexPath.row];
+        PIEPageVM* vm = [_sourceHot objectAtIndex:indexPath.row];
         if (vm.type == PIEPageTypeAsk) {
             PIEEliteHotAskTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:hotAskIndentifier];
             [cell injectSauce:vm];
@@ -329,7 +329,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == _sv.tableFollow) {
-        DDPageVM* vm = [_sourceFollow objectAtIndex:indexPath.row];
+        PIEPageVM* vm = [_sourceFollow objectAtIndex:indexPath.row];
         if (vm.type == PIEPageTypeAsk) {
             return [tableView fd_heightForCellWithIdentifier:askIndentifier  cacheByIndexPath:indexPath configuration:^(PIEEliteFollowAskTableViewCell *cell) {
                 [cell injectSauce:[_sourceFollow objectAtIndex:indexPath.row]];
@@ -342,7 +342,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
             }];
         }
     } else if (tableView == _sv.tableHot) {
-        DDPageVM* vm = [_sourceHot objectAtIndex:indexPath.row];
+        PIEPageVM* vm = [_sourceHot objectAtIndex:indexPath.row];
         if (vm.type == PIEPageTypeAsk) {
             return [tableView fd_heightForCellWithIdentifier:hotAskIndentifier  cacheByIndexPath:indexPath configuration:^(PIEEliteHotAskTableViewCell *cell) {
                 [cell injectSauce:[_sourceHot objectAtIndex:indexPath.row]];
@@ -574,7 +574,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
             _canRefreshFooterFollow = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
             for (PIEPageEntity *entity in returnArray) {
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+                PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [sourceAgent addObject:vm];
                 [ws.sourceFollow removeAllObjects];
                 [ws.sourceFollow addObjectsFromArray:sourceAgent];
@@ -601,7 +601,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
             _canRefreshFooterFollow = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
             for (PIEPageEntity *entity in returnArray) {
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+                PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [sourceAgent addObject:vm];
             }
             [ws.sourceFollow addObjectsFromArray:sourceAgent];

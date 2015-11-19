@@ -16,6 +16,7 @@
 #import "PIECarouselViewController.h"
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
+#import "UITableView+FDTemplateLayoutCell.h"
 @interface PIEToHelpViewController () <UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,QBImagePickerControllerDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (nonatomic, strong) NSMutableArray *sourceToHelp;
 @property (nonatomic, assign) NSInteger currentIndex_ToHelp;
@@ -58,7 +59,7 @@
     CGPoint location = [gesture locationInView:_toHelpTableView];
     NSIndexPath *indexPath = [_toHelpTableView indexPathForRowAtPoint:location];
     _selectedIndexPath = indexPath;
-    DDPageVM* vm = [_sourceToHelp objectAtIndex:indexPath.row];
+    PIEPageVM* vm = [_sourceToHelp objectAtIndex:indexPath.row];
     if (indexPath) {
         PIEToHelpTableViewCell2 *cell = (PIEToHelpTableViewCell2 *)[_toHelpTableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
@@ -120,7 +121,7 @@
             _canRefreshToHelpFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
             for (PIEPageEntity *homeImage in resultArray) {
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:homeImage];
+                PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:homeImage];
                 [sourceAgent addObject:vm];
             }
             [ws.sourceToHelp removeAllObjects];
@@ -148,7 +149,7 @@
             _canRefreshToHelpFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
             for (PIEPageEntity *homeImage in resultArray) {
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:homeImage];
+                PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:homeImage];
                 [sourceAgent addObject:vm];
             }
             [ws.sourceToHelp addObjectsFromArray:sourceAgent];
@@ -180,7 +181,7 @@
     vc.assetsArray = assets;
     vc.hideSecondView = YES;
     vc.type = PIEUploadTypeReply;
-    DDPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath.row];
+    PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath.row];
     vc.askIDToReply = vm.askID;
     [[NSUserDefaults standardUserDefaults] setObject:@(vm.askID) forKey:@"AskIDToReply"];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -227,8 +228,9 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 150;
-}
+    return [tableView fd_heightForCellWithIdentifier:@"PIEToHelpTableViewCell2"  cacheByIndexPath:indexPath configuration:^(PIEToHelpTableViewCell2 *cell) {
+        [cell injectSource:[_sourceToHelp objectAtIndex:indexPath.row]];
+    }];}
 
 
 #pragma mark - DZNEmptyDataSetSource & delegate

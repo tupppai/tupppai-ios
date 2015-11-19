@@ -63,7 +63,7 @@
                 entity.thumbEntityArray = thumbArray;
 
                 
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+                PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 
                 [askRETArray addObject:vm];
 
@@ -71,7 +71,7 @@
 
             for (int i = 0; i < replyArray.count; i++) {
                 PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:[replyArray objectAtIndex:i] error:NULL];
-                DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+                PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [replyRETArray addObject:vm];
 
             }

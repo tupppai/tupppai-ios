@@ -106,7 +106,7 @@
     [DDPageManager getCollection:param withBlock:^(NSMutableArray *resultArray) {
         NSMutableArray* arrayAgent = [NSMutableArray new];
         for (PIEPageEntity *entity in resultArray) {
-            DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+            PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
             [arrayAgent addObject:vm];
         }
         [_dataSource removeAllObjects];
@@ -133,7 +133,7 @@
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getCollection:param withBlock:^(NSMutableArray *resultArray) {
         for (PIEPageEntity *entity in resultArray) {
-            DDPageVM *vm = [[DDPageVM alloc]initWithPageEntity:entity];
+            PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
             [_dataSource addObject:vm];
         }
         [ws.tableView reloadData];

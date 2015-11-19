@@ -10,5 +10,5 @@
 #import "iCarousel.h"
 
 @interface PIECarouselViewController : DDBaseVC<iCarouselDataSource, iCarouselDelegate>
-@property (nonatomic, strong) DDPageVM *pageVM;
+@property (nonatomic, strong) PIEPageVM *pageVM;
 @end

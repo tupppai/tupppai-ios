@@ -17,5 +17,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *downloadView;
 @property (weak, nonatomic) IBOutlet UIImageView *uploadView;
-- (void)injectSource:(DDPageVM*)vm;
+- (void)injectSource:(PIEPageVM*)vm;
 @end
