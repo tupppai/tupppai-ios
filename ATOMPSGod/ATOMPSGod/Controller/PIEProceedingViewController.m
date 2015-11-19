@@ -13,7 +13,7 @@
 #import "PIEDoneCollectionViewCell.h"
 #import "PIEProceedingManager.h"
 
-#import "PIEToHelpTableViewCell.h"
+#import "PIEProceedingToHelpTableViewCell.h"
 #import "QBImagePickerController.h"
 #import "PIEUploadVC.h"
 #import "PIEFriendViewController.h"
@@ -23,6 +23,8 @@
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
 #import "PIEProceedingShareView.h"
+#import "UITableView+FDTemplateLayoutCell.h"
+
 #define MyAskCellWidth (SCREEN_WIDTH - 20) / 2.0
 
 @interface PIEProceedingViewController ()<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,PWRefreshBaseCollectionViewDelegate,PWRefreshBaseTableViewDelegate,CHTCollectionViewDelegateWaterfallLayout,UITableViewDataSource,UITableViewDelegate,QBImagePickerControllerDelegate,PIEProceedingShareViewDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
@@ -150,8 +152,8 @@
     _sv.toHelpTableView.psDelegate = self;
     _sv.toHelpTableView.emptyDataSetDelegate = self;
     _sv.toHelpTableView.emptyDataSetSource = self;
-    UINib* nib = [UINib nibWithNibName:@"PIEToHelpTableViewCell" bundle:nil];
-    [_sv.toHelpTableView registerNib:nib forCellReuseIdentifier:@"PIEToHelpTableViewCell"];
+    UINib* nib = [UINib nibWithNibName:@"PIEProceedingToHelpTableViewCell" bundle:nil];
+    [_sv.toHelpTableView registerNib:nib forCellReuseIdentifier:@"PIEProceedingToHelpTableViewCell"];
 }
 - (void)setupGestures {
     UITapGestureRecognizer* tapToHelpTableViewGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapToHelpTableViewGesture:)];
@@ -190,7 +192,7 @@
     _selectedIndexPath = indexPath;
     DDPageVM* vm = [_sourceToHelp objectAtIndex:indexPath.row];
     if (indexPath) {
-        PIEToHelpTableViewCell *cell = (PIEToHelpTableViewCell *)[_sv.toHelpTableView cellForRowAtIndexPath:indexPath];
+        PIEProceedingToHelpTableViewCell *cell = (PIEProceedingToHelpTableViewCell *)[_sv.toHelpTableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
         //点击图片
         if (CGRectContainsPoint(cell.uploadView.frame, p)) {
@@ -423,7 +425,7 @@
         return cell;
     }
     else if (tableView == _sv.toHelpTableView) {
-        PIEToHelpTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIEToHelpTableViewCell"];
+        PIEProceedingToHelpTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIEProceedingToHelpTableViewCell"];
         [cell injectSource:[_sourceToHelp objectAtIndex:indexPath.row]];
         return cell;
     }
@@ -438,8 +440,9 @@
         return 180;
     }
     else if (tableView == _sv.toHelpTableView) {
-        return 125;
-    }
+        return [tableView fd_heightForCellWithIdentifier:@"PIEProceedingToHelpTableViewCell"  cacheByIndexPath:indexPath configuration:^(PIEProceedingToHelpTableViewCell *cell) {
+            [cell injectSource:[_sourceToHelp objectAtIndex:indexPath.row]];
+        }];    }
     else {
         return 0;
     }

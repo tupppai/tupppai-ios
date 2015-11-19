@@ -362,8 +362,8 @@
 		F47205531BABE87D00E0ADA0 /* PIEMyAskCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F47205511BABE87D00E0ADA0 /* PIEMyAskCollectionCell.xib */; };
 		F47205571BABFDFF00E0ADA0 /* PIEDoneCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F47205551BABFDFF00E0ADA0 /* PIEDoneCollectionViewCell.m */; };
 		F47205581BABFDFF00E0ADA0 /* PIEDoneCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F47205561BABFDFF00E0ADA0 /* PIEDoneCollectionViewCell.xib */; };
-		F472055C1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F472055A1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.m */; };
-		F472055D1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F472055B1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.xib */; };
+		F472055C1BAC031B00E0ADA0 /* PIEProceedingToHelpTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F472055A1BAC031B00E0ADA0 /* PIEProceedingToHelpTableViewCell.m */; };
+		F472055D1BAC031B00E0ADA0 /* PIEProceedingToHelpTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F472055B1BAC031B00E0ADA0 /* PIEProceedingToHelpTableViewCell.xib */; };
 		F49160931BEC4D0800BAFB65 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F49160901BEC4D0800BAFB65 /* libMobClickLibrary.a */; };
 		F49160941BEC4DFA00BAFB65 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F45D8FB11BD87F01005946E8 /* AdSupport.framework */; };
 		F4993CEA1BE5B32C007F9BE4 /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4993CD91BE5B32C007F9BE4 /* AFNetworkActivityIndicatorManager.m */; };
@@ -1179,9 +1179,9 @@
 		F47205541BABFDFF00E0ADA0 /* PIEDoneCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEDoneCollectionViewCell.h; sourceTree = "<group>"; };
 		F47205551BABFDFF00E0ADA0 /* PIEDoneCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEDoneCollectionViewCell.m; sourceTree = "<group>"; };
 		F47205561BABFDFF00E0ADA0 /* PIEDoneCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEDoneCollectionViewCell.xib; sourceTree = "<group>"; };
-		F47205591BAC031B00E0ADA0 /* PIEToHelpTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEToHelpTableViewCell.h; sourceTree = "<group>"; };
-		F472055A1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEToHelpTableViewCell.m; sourceTree = "<group>"; };
-		F472055B1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEToHelpTableViewCell.xib; sourceTree = "<group>"; };
+		F47205591BAC031B00E0ADA0 /* PIEProceedingToHelpTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEProceedingToHelpTableViewCell.h; sourceTree = "<group>"; };
+		F472055A1BAC031B00E0ADA0 /* PIEProceedingToHelpTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEProceedingToHelpTableViewCell.m; sourceTree = "<group>"; };
+		F472055B1BAC031B00E0ADA0 /* PIEProceedingToHelpTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEProceedingToHelpTableViewCell.xib; sourceTree = "<group>"; };
 		F49160901BEC4D0800BAFB65 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
 		F49160911BEC4D0800BAFB65 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 		F49160921BEC4D0800BAFB65 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
@@ -3001,9 +3001,9 @@
 		F46521E51BC75CFE0043D706 /* ToHelp */ = {
 			isa = PBXGroup;
 			children = (
-				F47205591BAC031B00E0ADA0 /* PIEToHelpTableViewCell.h */,
-				F472055A1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.m */,
-				F472055B1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.xib */,
+				F47205591BAC031B00E0ADA0 /* PIEProceedingToHelpTableViewCell.h */,
+				F472055A1BAC031B00E0ADA0 /* PIEProceedingToHelpTableViewCell.m */,
+				F472055B1BAC031B00E0ADA0 /* PIEProceedingToHelpTableViewCell.xib */,
 				F4F72C121BCBBB29002FF05A /* toHelp2 */,
 			);
 			name = ToHelp;
@@ -3556,7 +3556,7 @@
 				3BDCC53F1BA0EFD4005FE00E /* PIEUploadVC.xib in Resources */,
 				F4EC11291BCF55F7002D1DCF /* PIENotificationSystemTableViewCell.xib in Resources */,
 				F4E7133E1BE35F230046C7A9 /* PIEModifyPasswordViewController.xib in Resources */,
-				F472055D1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.xib in Resources */,
+				F472055D1BAC031B00E0ADA0 /* PIEProceedingToHelpTableViewCell.xib in Resources */,
 				E94289781B5B32A200ED26E4 /* NotificationBackgroundMessage.png in Resources */,
 				E90193721B37EE1E00E91555 /* region.csv in Resources */,
 				F40207321BA7C17C0007CE02 /* PIECameraViewController.xib in Resources */,
@@ -3882,7 +3882,7 @@
 				5C436A811AB02E7300D14608 /* PIENotificationTypeTableViewCell.m in Sources */,
 				3BE1AECB1B9FE9C900CE2303 /* QBAssetsViewController.m in Sources */,
 				F402F1011BE89CB4004988B4 /* PIESearchManager.m in Sources */,
-				F472055C1BAC031B00E0ADA0 /* PIEToHelpTableViewCell.m in Sources */,
+				F472055C1BAC031B00E0ADA0 /* PIEProceedingToHelpTableViewCell.m in Sources */,
 				F4E5F5FC1BD9D2E100AB8B31 /* AFURLResponseSerialization.m in Sources */,
 				F4E680661BDC744C00A4F199 /* PIEProceedingShareView.m in Sources */,
 				F4EC11071BCE59B5002D1DCF /* PIENotificationLikeTableViewCell.m in Sources */,

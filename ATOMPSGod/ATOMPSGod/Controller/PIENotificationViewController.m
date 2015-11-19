@@ -20,6 +20,8 @@
 #import "PIEFriendViewController.h"
 #import "PIECommentViewController.h"
 #import "PIECommentManager.h"
+#import "UITableView+FDTemplateLayoutCell.h"
+
 @interface PIENotificationViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate>
 @property (nonatomic, strong) NSMutableArray *source;
 //@property (nonatomic, strong) PIERefreshTableView *tableView;
@@ -324,12 +326,10 @@
     else {
 
         PIENotificationTypeTableViewCell* cell = [[PIENotificationTypeTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"defaultCell"];
-//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         if (indexPath.row == 0) {
             cell.imageView.image = [UIImage imageNamed:@"notify_system"];
             cell.textLabel.text = @"系统消息";
             cell.badgeNumber = [[[NSUserDefaults standardUserDefaults]objectForKey:@"NotificationSystem"]integerValue];
-//            cell.separatorInset = UIEdgeInsetsMake(0, 60, 0, 0);
         }    else if (indexPath.row == 1) {
             cell.imageView.image = [UIImage imageNamed:@"pieLike_selected"];
             cell.textLabel.text = @"收到的赞";
@@ -372,7 +372,9 @@
         PIENotificationVM* vm = [_source objectAtIndex:indexPath.row];
         switch (vm.type) {
             case PIENotificationTypeComment:
-                return 109;
+                return [tableView fd_heightForCellWithIdentifier:@"PIENotificationCommentTableViewCell"  cacheByIndexPath:indexPath configuration:^(PIENotificationCommentTableViewCell *cell) {
+                    [cell injectSauce:vm];
+                }];
                 break;
             case PIENotificationTypeFollow:
                 return 60;

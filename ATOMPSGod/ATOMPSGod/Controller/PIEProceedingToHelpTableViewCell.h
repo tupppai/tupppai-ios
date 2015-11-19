@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface PIEToHelpTableViewCell : UITableViewCell
+@interface PIEProceedingToHelpTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
 @property (weak, nonatomic) IBOutlet UIImageView *theImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;

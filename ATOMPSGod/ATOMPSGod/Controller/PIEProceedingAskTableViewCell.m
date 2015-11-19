@@ -94,7 +94,7 @@
     [_originView1.imageView setImageWithURL:[NSURL URLWithString:_vmAsk1.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
     [_source removeObjectAtIndex:0];
     
-    if (_source.count >= 2) {
+    if (_source.count >= 1) {
         _vmAsk2 = [_source objectAtIndex:0];
         if (_vmAsk2.type != PIEPageTypeReply) {
             [_source removeObjectAtIndex:0];
@@ -134,6 +134,7 @@
         view.contentMode = UIViewContentModeScaleAspectFill;
         UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, width, width)];
         imageView.layer.cornerRadius = 3.0;
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
         imageView.clipsToBounds = YES;
         [view addSubview:imageView];
     }

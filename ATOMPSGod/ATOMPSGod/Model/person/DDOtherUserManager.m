@@ -13,7 +13,7 @@
 #import "PIEImageEntity.h"
 @implementation DDOtherUserManager
 
-+ (void)getOtherUserInfo:(NSDictionary *)param withBlock:(void (^)(PIEEntityUser *user))block {
++ (void)getUserInfo:(NSDictionary *)param withBlock:(void (^)(PIEEntityUser *user))block {
     [DDService ddGetOtherUserInfo:param withBlock:^(NSDictionary *data, NSArray *askArray, NSArray *replyArray) {
         {
 

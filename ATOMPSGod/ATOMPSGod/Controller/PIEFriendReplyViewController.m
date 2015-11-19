@@ -206,7 +206,7 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
 }
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
 {
-    NSString *text = @"他还没有观众所期待的作品";
+    NSString *text = @"ta还没有发布过作品";
     
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
                                  NSForegroundColorAttributeName: [UIColor darkGrayColor]};

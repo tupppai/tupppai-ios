@@ -1067,9 +1067,11 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
             
             //点击大图
             if (CGRectContainsPoint(cell.leftImageView.frame, p) || CGRectContainsPoint(cell.rightImageView.frame, p)) {
+                if (_selectedVM) {
+                    <#statements#>
+                }
                 PIECommentViewController* vc = [PIECommentViewController new];
                 vc.vm = _selectedVM;
-
                 //                PIECarouselViewController* vc = [PIECarouselViewController new];
                 //                vc.pageVM = _selectedVM;
                 [self.navigationController pushViewController:vc animated:YES];

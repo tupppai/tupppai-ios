@@ -20,6 +20,8 @@
 #import "PIENotificationViewController.h"
 #import "PIEMyFollowViewController.h"
 #import "PIEMyFansViewController.h"
+#import "DDOtherUserManager.h"
+
 @interface PIEMeViewController ()<PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,CAPSPageMenuDelegate>
 @property (weak, nonatomic) IBOutlet UIView *dotView2;
 @property (weak, nonatomic) IBOutlet UIView *dotView1;
@@ -68,7 +70,6 @@
     UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonLeft];
     self.navigationItem.leftBarButtonItem =  buttonItem;
 
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(scrollUp)
                                                  name:@"PIEMeScrollUp"
@@ -109,6 +110,22 @@
     [MobClick endLogPageView:@"离开我的"];
 
 }
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self update];
+}
+
+- (void)update {
+    [DDOtherUserManager getUserInfo:nil withBlock:^(PIEEntityUser *user) {
+        if (user) {
+            [[DDUserManager currentUser] saveAndUpdateUser:user];
+            [self updateViewsWithData];
+        }
+    }];
+
+}
+
 
 - (void)updateNoticationStatus {
     if ( [[[NSUserDefaults standardUserDefaults]objectForKey:@"NotificationNew"]boolValue]) {
@@ -159,13 +176,17 @@
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarContainerView.layer.cornerRadius = _avatarContainerView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
+
+    [self setupTapGesture];
+}
+
+- (void)updateViewsWithData {
     DDUserManager* user = [DDUserManager currentUser];
     _usernameLabel.text = user.username;
     _followCountLabel.text = [NSString stringWithFormat:@"%zd",user.attentionNumber];
     _fansCountLabel.text = [NSString stringWithFormat:@"%zd",user.fansNumber];
     _likedCountLabel.text = [NSString stringWithFormat:@"%zd",user.praisedCount];
     [self updateAvatar];
-    [self setupTapGesture];
 }
 
 - (void)setupTapGesture {
@@ -257,8 +278,5 @@
     }
 }
 
--(void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
 
 @end

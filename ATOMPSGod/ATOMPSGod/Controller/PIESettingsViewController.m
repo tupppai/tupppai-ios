@@ -24,6 +24,7 @@
 #import "PIEFeedbackViewController.h"
 #import "PIEAboutUsViewController.h"
 #import "UMCheckUpdate.h"
+
 @interface PIESettingsViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -172,9 +173,7 @@
     } else if (section == 2) {
         
         if (row == 0) {
-//            [UMCheckUpdate checkUpdateWithAppkey:@"55b1ecdbe0f55a1de9001164" channel:nil];
             [UMCheckUpdate checkUpdateWithDelegate:self selector:@selector(UMCheckUpdateReturn:) appkey:@"55b1ecdbe0f55a1de9001164" channel:nil];
-            
         } else if (row == 1) {
             [self clearCache];
         } else if (row == 2) {

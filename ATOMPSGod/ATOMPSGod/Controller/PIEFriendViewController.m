@@ -271,12 +271,11 @@
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     
-    [DDOtherUserManager getOtherUserInfo:param withBlock:^(PIEEntityUser *user) {
+    [DDOtherUserManager getUserInfo:param withBlock:^(PIEEntityUser *user) {
         if (user) {
             [self updateUserInterface:user];
         }
     }];
-    
 }
 
 

@@ -51,7 +51,7 @@
                             </mask>
                         </variation>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="755" translatesAutoresizingMaskIntoConstraints="NO" id="HuN-1e-EeQ" userLabel="RightImageView">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="755" translatesAutoresizingMaskIntoConstraints="NO" id="HuN-1e-EeQ" userLabel="RightImageView">
                         <rect key="frame" x="323" y="53" width="0.0" height="357"/>
                         <animations/>
                         <constraints>
@@ -65,7 +65,7 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="29" id="o78-YR-T9w"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -122,13 +122,13 @@
                 <constraint firstItem="kZC-OW-G6f" firstAttribute="leading" secondItem="sZw-7M-qG8" secondAttribute="trailing" constant="-178.5" id="Sz3-7O-ZDf"/>
                 <constraint firstItem="UP6-ZS-j1n" firstAttribute="top" secondItem="DIa-GT-Bof" secondAttribute="bottom" constant="8" id="TgX-0I-R68"/>
                 <constraint firstItem="UP6-ZS-j1n" firstAttribute="bottom" secondItem="t6N-sk-Gt2" secondAttribute="bottom" constant="-1" id="YdC-jB-Pbo"/>
-                <constraint firstItem="HuN-1e-EeQ" firstAttribute="top" secondItem="tSi-M5-pb6" secondAttribute="top" priority="750" id="bSZ-m7-vwm"/>
+                <constraint firstItem="HuN-1e-EeQ" firstAttribute="top" secondItem="tSi-M5-pb6" secondAttribute="top" id="bSZ-m7-vwm"/>
                 <constraint firstItem="t6N-sk-Gt2" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leadingMargin" id="bit-nJ-sG9"/>
                 <constraint firstItem="tSi-M5-pb6" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="clC-yz-Bzo"/>
                 <constraint firstItem="HuN-1e-EeQ" firstAttribute="leading" secondItem="tSi-M5-pb6" secondAttribute="trailing" priority="750" id="cyd-jG-VgB"/>
                 <constraint firstAttribute="centerX" secondItem="kZC-OW-G6f" secondAttribute="centerX" id="jQX-Qo-JJd"/>
                 <constraint firstItem="UP6-ZS-j1n" firstAttribute="top" secondItem="DIa-GT-Bof" secondAttribute="bottom" constant="1" id="rp6-gO-dy1"/>
-                <constraint firstItem="HuN-1e-EeQ" firstAttribute="bottom" secondItem="tSi-M5-pb6" secondAttribute="bottom" priority="750" id="svq-Hh-a2t"/>
+                <constraint firstItem="HuN-1e-EeQ" firstAttribute="bottom" secondItem="tSi-M5-pb6" secondAttribute="bottom" id="svq-Hh-a2t"/>
                 <constraint firstItem="DIa-GT-Bof" firstAttribute="leading" secondItem="UP6-ZS-j1n" secondAttribute="leading" id="t4w-9t-ap6"/>
                 <constraint firstItem="sZw-7M-qG8" firstAttribute="top" secondItem="tSi-M5-pb6" secondAttribute="bottom" constant="9" id="v5Q-xX-l9I"/>
                 <constraint firstItem="sZw-7M-qG8" firstAttribute="trailing" secondItem="gTV-IL-0wX" secondAttribute="trailingMargin" id="vg5-jr-ZHC"/>

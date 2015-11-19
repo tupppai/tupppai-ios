@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIEToHelpTableViewCell.h"
+#import "PIEProceedingToHelpTableViewCell.h"
 
-@implementation PIEToHelpTableViewCell
+@implementation PIEProceedingToHelpTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code
