@@ -87,7 +87,7 @@
         }
     }
     _timeLabel.text = _vmAsk1.publishTime;
-    _allWorkDescLabel.text = [NSString stringWithFormat:@"已有%@个作品",_vmAsk1.totalPSNumber];
+    _allWorkDescLabel.text = [NSString stringWithFormat:@"已有%@个作品",_vmAsk1.replyCount];
     _contentLabel.text = [NSString stringWithFormat:@"要求:%@",_vmAsk1.content];
     
     [self.swipeView reloadData];
