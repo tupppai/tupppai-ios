@@ -24,9 +24,7 @@
     self.webView.backgroundColor = [UIColor clearColor];
     self.webView.contentMode = UIViewContentModeScaleAspectFit;
     NSNumber *version =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-
     NSString *url= [NSString stringWithFormat:@"%@?version=%@&token=%@",_viewModel.url,version,[DDUserManager currentUser].token];
-    NSLog(@"url%@",url);
     NSURL *nsurl=[NSURL URLWithString:url];
     
     NSURLRequest *nsrequest=[NSURLRequest requestWithURL:nsurl];

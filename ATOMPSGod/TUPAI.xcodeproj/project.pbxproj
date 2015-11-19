@@ -453,6 +453,8 @@
 		F4EC11291BCF55F7002D1DCF /* PIENotificationSystemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4EC11281BCF55F7002D1DCF /* PIENotificationSystemTableViewCell.xib */; };
 		F4EC112B1BCF5604002D1DCF /* PIENotificationReplyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4EC112A1BCF5604002D1DCF /* PIENotificationReplyTableViewCell.xib */; };
 		F4F006D81BFD8ED000FD7078 /* libUMCheckUpdate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4F006D61BFD8ECF00FD7078 /* libUMCheckUpdate.a */; };
+		F4F006DC1BFDCE3E00FD7078 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F006DB1BFDCE3E00FD7078 /* TTTAttributedLabel.m */; };
+		F4F006E01BFDD2E000FD7078 /* RTLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F006DF1BFDD2E000FD7078 /* RTLabel.m */; };
 		F4F72BEE1BCB4EF7002FF05A /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F72BED1BCB4EF7002FF05A /* FXBlurView.m */; };
 		F4F72BF61BCB6979002FF05A /* PIEImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F72BF41BCB6979002FF05A /* PIEImageCollectionViewCell.m */; };
 		F4F72BFF1BCB6CD6002FF05A /* PIEMyCollectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F72BFD1BCB6CD6002FF05A /* PIEMyCollectionTableViewCell.m */; };
@@ -1339,6 +1341,10 @@
 		F4EC112A1BCF5604002D1DCF /* PIENotificationReplyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIENotificationReplyTableViewCell.xib; sourceTree = "<group>"; };
 		F4F006D61BFD8ECF00FD7078 /* libUMCheckUpdate.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMCheckUpdate.a; sourceTree = "<group>"; };
 		F4F006D71BFD8ECF00FD7078 /* UMCheckUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMCheckUpdate.h; sourceTree = "<group>"; };
+		F4F006DA1BFDCE3E00FD7078 /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
+		F4F006DB1BFDCE3E00FD7078 /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
+		F4F006DE1BFDD2E000FD7078 /* RTLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTLabel.h; sourceTree = "<group>"; };
+		F4F006DF1BFDD2E000FD7078 /* RTLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTLabel.m; sourceTree = "<group>"; };
 		F4F72BEC1BCB4EF7002FF05A /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
 		F4F72BED1BCB4EF7002FF05A /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
 		F4F72BF31BCB6979002FF05A /* PIEImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEImageCollectionViewCell.h; sourceTree = "<group>"; };
@@ -1983,6 +1989,8 @@
 		5CDB05EC1AA400410089121E /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				F4F006DD1BFDD2E000FD7078 /* RTLabel */,
+				F4F006D91BFDCE3E00FD7078 /* TTTAttributedLabel */,
 				F4F9FFC61BFC849A00032FDE /* SMPageControl */,
 				F491608F1BEC4D0800BAFB65 /* UMAnalytics_Sdk_3.6.4 */,
 				F43930121BE4BD75006C9437 /* MRProgress */,
@@ -3348,6 +3356,24 @@
 			name = 2.1;
 			sourceTree = "<group>";
 		};
+		F4F006D91BFDCE3E00FD7078 /* TTTAttributedLabel */ = {
+			isa = PBXGroup;
+			children = (
+				F4F006DA1BFDCE3E00FD7078 /* TTTAttributedLabel.h */,
+				F4F006DB1BFDCE3E00FD7078 /* TTTAttributedLabel.m */,
+			);
+			path = TTTAttributedLabel;
+			sourceTree = "<group>";
+		};
+		F4F006DD1BFDD2E000FD7078 /* RTLabel */ = {
+			isa = PBXGroup;
+			children = (
+				F4F006DE1BFDD2E000FD7078 /* RTLabel.h */,
+				F4F006DF1BFDD2E000FD7078 /* RTLabel.m */,
+			);
+			path = RTLabel;
+			sourceTree = "<group>";
+		};
 		F4F72BEB1BCB4EF7002FF05A /* FXBlurView */ = {
 			isa = PBXGroup;
 			children = (
@@ -3736,6 +3762,7 @@
 				F4275A141BE0786400BBE7E4 /* SLKTypingIndicatorView.m in Sources */,
 				F4EA4DB81BF49CB700486304 /* PIEAgreementsViewController.m in Sources */,
 				E9F890901B86C4AB0057ECBF /* FMDatabasePool.m in Sources */,
+				F4F006DC1BFDCE3E00FD7078 /* TTTAttributedLabel.m in Sources */,
 				5C0D282D1ACA333200491452 /* PIECommentManager.m in Sources */,
 				F4D015BB1BA6AF7200A28329 /* PIEThumbAnimateView.m in Sources */,
 				5CE4082F1ACE94D600A56E4B /* UIViewController+ATOMTracking.m in Sources */,
@@ -3753,6 +3780,7 @@
 				5C8D4ACA1ADE400100B158AE /* PIEFollowViewModel.m in Sources */,
 				5CDB06021AA405A40089121E /* UIColor+Crayola.m in Sources */,
 				5C561A761AB7C8C30052D4D5 /* MJRefreshLegendHeader.m in Sources */,
+				F4F006E01BFDD2E000FD7078 /* RTLabel.m in Sources */,
 				5CDB05C71AA3FE520089121E /* main.m in Sources */,
 				F428F01E1BD331EF00318AC2 /* PIELaunchViewController.m in Sources */,
 				E9FF8A411B71CE610010D2C4 /* ATOMInputVerifyCodeAndPasswordView.m in Sources */,

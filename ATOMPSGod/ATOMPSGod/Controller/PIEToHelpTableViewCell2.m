@@ -15,13 +15,12 @@
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
     _theImageView.clipsToBounds = YES;
-    self.accessoryType = UITableViewCellAccessoryNone;
     _contentLabel.contentMode = UIViewContentModeTopLeft;
+    self.accessoryType = UITableViewCellAccessoryNone;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-    
     // Configure the view for the selected state
 }
 

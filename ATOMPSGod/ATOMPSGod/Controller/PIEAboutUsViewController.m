@@ -22,7 +22,10 @@
     self.webView.scalesPageToFit = YES;
     self.webView.backgroundColor = [UIColor clearColor];
     self.webView.contentMode = UIViewContentModeScaleAspectFit;
-    NSString *url= [NSString stringWithFormat:@"%@mobile/contacts.html",[DDSessionManager shareHTTPSessionManager].baseURL];
+    
+    NSNumber *version =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    NSString *url= [NSString stringWithFormat:@"%@mobile/contacts.html?version=%@&token=%@",[DDSessionManager shareHTTPSessionManager].baseURL,version,[DDUserManager currentUser].token];
+    
     NSURL *nsurl=[NSURL URLWithString:url];
     NSURLRequest *nsrequest=[NSURLRequest requestWithURL:nsurl];
     [self.webView loadRequest:nsrequest];

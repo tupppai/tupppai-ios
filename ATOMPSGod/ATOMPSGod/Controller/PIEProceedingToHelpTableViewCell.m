@@ -17,6 +17,7 @@
     _theImageView.clipsToBounds = YES;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.separatorInset = UIEdgeInsetsMake(0, 125, 0, 0);
+    _contentLabel.enabledTextCheckingTypes = NSTextCheckingTypeLink;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -31,6 +32,7 @@
     _nameLabel.text = vm.username;
     _timeLabel.text = vm.publishTime;
     _contentLabel.text = vm.content;
+    
 }
 
 @end
