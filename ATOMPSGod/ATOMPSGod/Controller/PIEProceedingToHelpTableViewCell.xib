@@ -57,7 +57,7 @@
                             <constraint firstAttribute="height" constant="23" id="buv-qC-zqA"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="description" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="8N2-R2-1zk">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="description" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="8N2-R2-1zk" customClass="TTTAttributedLabel">
                         <rect key="frame" x="131" y="36" width="331" height="16"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
