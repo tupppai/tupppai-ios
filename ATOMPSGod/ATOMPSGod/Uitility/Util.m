@@ -29,6 +29,15 @@
 }
 
 
++(NSString *) stringByStrippingHTML:(NSString*) s {
+    NSRange r;
+//    NSString *s = [[self copy] autorelease];
+    while ((r = [s rangeOfString:@"<[^>]+>" options:NSRegularExpressionSearch]).location != NSNotFound)
+//        s = [
+        s = [s stringByReplacingCharactersInRange:r withString:@""];
+    return s;
+}
+
 + (void) imageWithVm:(PIEPageVM*)vm block:(void(^)(UIImage*))block
 {
     

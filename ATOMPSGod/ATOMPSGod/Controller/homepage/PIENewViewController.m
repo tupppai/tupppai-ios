@@ -913,7 +913,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
                     view = ws.collectionView_ask;
                 }
                 if(!error) {
-                    [Hud text:@"已举报" inView:view];
+                    [Util ShowTSMessageSuccess:@"已举报"];
                 }
                 
             }];

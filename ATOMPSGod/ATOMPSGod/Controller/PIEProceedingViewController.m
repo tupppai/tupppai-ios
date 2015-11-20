@@ -152,6 +152,9 @@
     _sv.toHelpTableView.psDelegate = self;
     _sv.toHelpTableView.emptyDataSetDelegate = self;
     _sv.toHelpTableView.emptyDataSetSource = self;
+    _sv.toHelpTableView.estimatedRowHeight = 145;
+    _sv.toHelpTableView.rowHeight = UITableViewAutomaticDimension;
+    
     UINib* nib = [UINib nibWithNibName:@"PIEProceedingToHelpTableViewCell" bundle:nil];
     [_sv.toHelpTableView registerNib:nib forCellReuseIdentifier:@"PIEProceedingToHelpTableViewCell"];
 }
@@ -443,6 +446,14 @@
         return [tableView fd_heightForCellWithIdentifier:@"PIEProceedingToHelpTableViewCell"  cacheByIndexPath:indexPath configuration:^(PIEProceedingToHelpTableViewCell *cell) {
             [cell injectSource:[_sourceToHelp objectAtIndex:indexPath.row]];
         }];
+//        PIEProceedingToHelpTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+//        UITextView* textV = [UITextView new];
+//        textV.text = ((PIEPageVM*)[_sourceToHelp objectAtIndex:indexPath.row]).content;
+//        CGSize size = [textV sizeThatFits:CGSizeMake(200, CGFLOAT_MAX)];
+//        NSLog(@"_contentTextView width %f",cell.contentTextView.frame.size.width);
+//        NSLog(@"_contentTextView height %f",size.height);
+//        return size.height + 72;
+
     }
     else {
         return 0;

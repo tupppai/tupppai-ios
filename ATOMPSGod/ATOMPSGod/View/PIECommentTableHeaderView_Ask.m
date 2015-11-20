@@ -10,6 +10,9 @@
 //#import "ATOMTipButton.h"
 //#import "DDTipLabelVM.h"
 #import "PIEImageEntity.h"
+#import "PIEWebViewViewController.h"
+#import "DDNavigationController.h"
+#import "AppDelegate.h"
 #define MAXHEIGHT (SCREEN_WIDTH-kPadding15*2)*4/3
 
 @interface PIECommentTableHeaderView_Ask ()
@@ -31,7 +34,9 @@
     [self addSubview:self.timeLabel];
     [self addSubview:self.imageViewMain];
     [self addSubview:self.imageViewRight];
-    [self addSubview:self.contentLabel];
+//    [self addSubview:self.contentLabel];
+    [self addSubview:self.textView_content];
+    
     [self addSubview:self.commentButton];
     [self addSubview:self.shareButton];
     [self addSubview:self.bangView];
@@ -70,12 +75,20 @@
         make.right.equalTo(self).with.offset(0);
         make.bottom.equalTo(self.imageViewMain.mas_bottom).with.offset(0);
     }];
-    [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//    [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(_imageViewMain.mas_bottom).with.offset(10);
+//        //left and right to cause constraint error when self.width = 0;
+//        make.left.equalTo(self).with.offset(12);
+//        make.right.equalTo(self).with.offset(-12);
+//    }];
+    
+    [self.textView_content mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_imageViewMain.mas_bottom).with.offset(10);
-        //left and right to cause constraint error when self.width = 0;
+        //left and right would cause constraint error when self.width = 0;
         make.left.equalTo(self).with.offset(12);
         make.right.equalTo(self).with.offset(-12);
     }];
+
     [self.commentButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@50);
         make.height.equalTo(@25);
@@ -88,11 +101,11 @@
         make.left.equalTo(self.commentButton.mas_right).with.offset(6);
     }];
     [self.bangView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contentLabel.mas_bottom).with.offset(12).with.priorityHigh();
+        make.top.equalTo(self.textView_content.mas_bottom).with.offset(12).with.priorityHigh();
         make.centerY.equalTo(self.commentButton).with.priorityMedium();
         make.width.equalTo(@25);
         make.height.equalTo(@40);
-        make.right.equalTo(self).with.offset(-10);
+        make.right.equalTo(self).with.offset(-20);
     }];
 
     
@@ -115,10 +128,7 @@
         [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
         _usernameLabel.text = vm.username;
         _timeLabel.text = vm.publishTime;
-        NSLog(@"ask1");
         if (vm.thumbEntityArray.count == 2) {
-            NSLog(@"ask2");
-
             _imageViewMain.contentMode = UIViewContentModeScaleAspectFill;
             _imageViewRight.contentMode = UIViewContentModeScaleAspectFill;
             _imageViewMain.clipsToBounds = YES;
@@ -130,15 +140,11 @@
                 make.width.equalTo(self).with.multipliedBy(0.5).with.priorityHigh();
                 make.height.equalTo(@(SCREEN_WIDTH)).with.priorityHigh();
             }];
-            NSLog(@"%@",imgEntity1.url);
-            NSLog(@"%@",imgEntity2.url);
 
             [_imageViewMain setImageWithURL:[NSURL URLWithString:imgEntity1.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
             [_imageViewRight setImageWithURL:[NSURL URLWithString:imgEntity2.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
         }
         else {
-            NSLog(@"ask3");
-
             [_imageViewMain setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
             CGFloat height = vm.imageHeight/vm.imageWidth *SCREEN_WIDTH;
             if (height > 100) {
@@ -151,17 +157,21 @@
         }
         _commentButton.numberString = vm.commentCount;
         _shareButton.numberString = vm.shareCount;
-        _contentLabel.text = vm.content;
+        
+        NSString * htmlString = vm.content;
+        NSAttributedString * attrStr = [[NSAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
+        _textView_content.attributedText = attrStr;
     }
     else {
         _imageViewMain.image = [UIImage imageNamed:@"cellBG"];
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName : self.contentLabel.font};
-    CGFloat messageLabelHeight = CGRectGetHeight([self.contentLabel.text boundingRectWithSize:CGSizeMake(SCREEN_WIDTH-20, 500) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil]);
-    [self.contentLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@(messageLabelHeight+5)).with.priorityHigh();
+    CGSize size = [self.textView_content sizeThatFits:CGSizeMake(SCREEN_WIDTH-24, CGFLOAT_MAX)];
+    [self.textView_content mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@(size.height)).with.priorityHigh();
     }];
+    self.textView_content.backgroundColor = [UIColor lightGrayColor];
+    
 }
 
 
@@ -220,14 +230,11 @@
     }
     return _imageViewRight;
 }
--(UILabel *)contentLabel {
-    if (!_contentLabel) {
-        _contentLabel = [UILabel new];
-        _contentLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
-        _contentLabel.font = [UIFont boldSystemFontOfSize:15];
-        _contentLabel.numberOfLines = 0;
+- (PIETextView_noSelection *)textView_content {
+    if (!_textView_content) {
+        _textView_content = [PIETextView_noSelection new];
     }
-    return _contentLabel;
+    return _textView_content;
 }
 
 -(PIEPageButton *)commentButton {
@@ -251,9 +258,6 @@
     }
     return _bangView;
 }
-
-
-
 
 
 

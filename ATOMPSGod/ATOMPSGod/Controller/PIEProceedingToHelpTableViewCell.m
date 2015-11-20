@@ -7,7 +7,9 @@
 //
 
 #import "PIEProceedingToHelpTableViewCell.h"
-
+#import "PIEWebViewViewController.h"
+#import "DDNavigationController.h"
+#import "AppDelegate.h"
 @implementation PIEProceedingToHelpTableViewCell
 
 - (void)awakeFromNib {
@@ -17,7 +19,6 @@
     _theImageView.clipsToBounds = YES;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.separatorInset = UIEdgeInsetsMake(0, 125, 0, 0);
-    _contentLabel.enabledTextCheckingTypes = NSTextCheckingTypeLink;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -29,10 +30,15 @@
 - (void)injectSource:(PIEPageVM*)vm {
     [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
     [_theImageView setImageWithURL:[NSURL URLWithString:vm.imageURL]placeholderImage:[UIImage imageNamed:@"cellBG"]];
+    
     _nameLabel.text = vm.username;
     _timeLabel.text = vm.publishTime;
-    _contentLabel.text = vm.content;
     
+    NSString * htmlString = vm.content;
+    NSAttributedString * attrStr = [[NSAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
+    _contentTextView.attributedText = attrStr;
 }
+
+
 
 @end

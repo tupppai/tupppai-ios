@@ -1,32 +1,38 @@
 //
-//  PIEBannerWebViewViewController.m
+//  PIEWebViewViewController.m
 //  TUPAI
 //
 //  Created by chenpeiwei on 11/4/15.
 //  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIEBannerWebViewViewController.h"
+#import "PIEWebViewViewController.h"
 
-@interface PIEBannerWebViewViewController ()
+@interface PIEWebViewViewController ()
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 
 @end
 
-@implementation PIEBannerWebViewViewController
+@implementation PIEWebViewViewController
 -(BOOL)hidesBottomBarWhenPushed {
     return YES;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = _viewModel.desc;
     self.webView.scalesPageToFit = YES;
     self.webView.backgroundColor = [UIColor clearColor];
     self.webView.contentMode = UIViewContentModeScaleAspectFit;
     NSNumber *version =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    NSString *url= [NSString stringWithFormat:@"%@?version=%@&token=%@",_viewModel.url,version,[DDUserManager currentUser].token];
-    NSURL *nsurl=[NSURL URLWithString:url];
-    
+    NSString *urlB = @"";
+    if (_viewModel) {
+        self.title = _viewModel.desc;
+        urlB= [NSString stringWithFormat:@"%@?version=%@&token=%@",_viewModel.url,version,[DDUserManager currentUser].token];
+
+    } else if (_url) {
+        urlB= [NSString stringWithFormat:@"%@?version=%@&token=%@",_url,version,[DDUserManager currentUser].token];
+    }
+
+    NSURL *nsurl=[NSURL URLWithString:urlB];
     NSURLRequest *nsrequest=[NSURLRequest requestWithURL:nsurl];
     [self.webView loadRequest:nsrequest];
 }

@@ -18,6 +18,7 @@ static DDSessionManager *_shareHTTPSessionManager = nil;
 #if DEBUG
         NSString *baseURL = @"http://api.loiter.us/";
 #else
+//        NSString *baseURL = @"http://api.loiter.us/";
         NSString *baseURL = @"http://api.qiupsdashen.com/";
 #endif
         _shareHTTPSessionManager = [[DDSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseURL]];

@@ -396,8 +396,8 @@
 		F4BBE77C1BBE420400003CDE /* PIEReplyCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE77A1BBE420400003CDE /* PIEReplyCollectionCell.m */; };
 		F4BDF4CB1BDF345100DA3575 /* BBBadgeBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BDF4CA1BDF345100DA3575 /* BBBadgeBarButtonItem.m */; };
 		F4C0DFE61BE9D1B7000615CF /* PIEBannerViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C0DFE51BE9D1B7000615CF /* PIEBannerViewModel.m */; };
-		F4C0DFEB1BE9D45F000615CF /* PIEBannerWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C0DFE91BE9D45F000615CF /* PIEBannerWebViewViewController.m */; };
-		F4C0DFEC1BE9D45F000615CF /* PIEBannerWebViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4C0DFEA1BE9D45F000615CF /* PIEBannerWebViewViewController.xib */; };
+		F4C0DFEB1BE9D45F000615CF /* PIEWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C0DFE91BE9D45F000615CF /* PIEWebViewViewController.m */; };
+		F4C0DFEC1BE9D45F000615CF /* PIEWebViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4C0DFEA1BE9D45F000615CF /* PIEWebViewViewController.xib */; };
 		F4C0DFF01BE9EF3A000615CF /* PIEFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C0DFEE1BE9EF3A000615CF /* PIEFeedbackViewController.m */; };
 		F4C0DFF11BE9EF3A000615CF /* PIEFeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4C0DFEF1BE9EF3A000615CF /* PIEFeedbackViewController.xib */; };
 		F4D015BB1BA6AF7200A28329 /* PIEThumbAnimateView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D015BA1BA6AF7200A28329 /* PIEThumbAnimateView.m */; };
@@ -453,7 +453,7 @@
 		F4EC11291BCF55F7002D1DCF /* PIENotificationSystemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4EC11281BCF55F7002D1DCF /* PIENotificationSystemTableViewCell.xib */; };
 		F4EC112B1BCF5604002D1DCF /* PIENotificationReplyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4EC112A1BCF5604002D1DCF /* PIENotificationReplyTableViewCell.xib */; };
 		F4F006D81BFD8ED000FD7078 /* libUMCheckUpdate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4F006D61BFD8ECF00FD7078 /* libUMCheckUpdate.a */; };
-		F4F006DC1BFDCE3E00FD7078 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F006DB1BFDCE3E00FD7078 /* TTTAttributedLabel.m */; };
+		F4F006F31BFEFD1300FD7078 /* PIETextView_noSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F006F21BFEFD1300FD7078 /* PIETextView_noSelection.m */; };
 		F4F72BEE1BCB4EF7002FF05A /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F72BED1BCB4EF7002FF05A /* FXBlurView.m */; };
 		F4F72BF61BCB6979002FF05A /* PIEImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F72BF41BCB6979002FF05A /* PIEImageCollectionViewCell.m */; };
 		F4F72BFF1BCB6CD6002FF05A /* PIEMyCollectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F72BFD1BCB6CD6002FF05A /* PIEMyCollectionTableViewCell.m */; };
@@ -1243,9 +1243,9 @@
 		F4BDF4CA1BDF345100DA3575 /* BBBadgeBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBBadgeBarButtonItem.m; sourceTree = "<group>"; };
 		F4C0DFE41BE9D1B7000615CF /* PIEBannerViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEBannerViewModel.h; sourceTree = "<group>"; };
 		F4C0DFE51BE9D1B7000615CF /* PIEBannerViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEBannerViewModel.m; sourceTree = "<group>"; };
-		F4C0DFE81BE9D45F000615CF /* PIEBannerWebViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEBannerWebViewViewController.h; sourceTree = "<group>"; };
-		F4C0DFE91BE9D45F000615CF /* PIEBannerWebViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEBannerWebViewViewController.m; sourceTree = "<group>"; };
-		F4C0DFEA1BE9D45F000615CF /* PIEBannerWebViewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEBannerWebViewViewController.xib; sourceTree = "<group>"; };
+		F4C0DFE81BE9D45F000615CF /* PIEWebViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEWebViewViewController.h; sourceTree = "<group>"; };
+		F4C0DFE91BE9D45F000615CF /* PIEWebViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEWebViewViewController.m; sourceTree = "<group>"; };
+		F4C0DFEA1BE9D45F000615CF /* PIEWebViewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEWebViewViewController.xib; sourceTree = "<group>"; };
 		F4C0DFED1BE9EF3A000615CF /* PIEFeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEFeedbackViewController.h; sourceTree = "<group>"; };
 		F4C0DFEE1BE9EF3A000615CF /* PIEFeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEFeedbackViewController.m; sourceTree = "<group>"; };
 		F4C0DFEF1BE9EF3A000615CF /* PIEFeedbackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEFeedbackViewController.xib; sourceTree = "<group>"; };
@@ -1340,8 +1340,8 @@
 		F4EC112A1BCF5604002D1DCF /* PIENotificationReplyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIENotificationReplyTableViewCell.xib; sourceTree = "<group>"; };
 		F4F006D61BFD8ECF00FD7078 /* libUMCheckUpdate.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMCheckUpdate.a; sourceTree = "<group>"; };
 		F4F006D71BFD8ECF00FD7078 /* UMCheckUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMCheckUpdate.h; sourceTree = "<group>"; };
-		F4F006DA1BFDCE3E00FD7078 /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
-		F4F006DB1BFDCE3E00FD7078 /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
+		F4F006F11BFEFD1300FD7078 /* PIETextView_noSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIETextView_noSelection.h; sourceTree = "<group>"; };
+		F4F006F21BFEFD1300FD7078 /* PIETextView_noSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIETextView_noSelection.m; sourceTree = "<group>"; };
 		F4F72BEC1BCB4EF7002FF05A /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
 		F4F72BED1BCB4EF7002FF05A /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
 		F4F72BF31BCB6979002FF05A /* PIEImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEImageCollectionViewCell.h; sourceTree = "<group>"; };
@@ -1986,7 +1986,6 @@
 		5CDB05EC1AA400410089121E /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				F4F006D91BFDCE3E00FD7078 /* TTTAttributedLabel */,
 				F4F9FFC61BFC849A00032FDE /* SMPageControl */,
 				F491608F1BEC4D0800BAFB65 /* UMAnalytics_Sdk_3.6.4 */,
 				F43930121BE4BD75006C9437 /* MRProgress */,
@@ -3009,6 +3008,8 @@
 				F472055A1BAC031B00E0ADA0 /* PIEProceedingToHelpTableViewCell.m */,
 				F472055B1BAC031B00E0ADA0 /* PIEProceedingToHelpTableViewCell.xib */,
 				F4F72C121BCBBB29002FF05A /* toHelp2 */,
+				F4F006F11BFEFD1300FD7078 /* PIETextView_noSelection.h */,
+				F4F006F21BFEFD1300FD7078 /* PIETextView_noSelection.m */,
 			);
 			name = ToHelp;
 			sourceTree = "<group>";
@@ -3175,9 +3176,9 @@
 		F4C0DFE71BE9D443000615CF /* BannerWebView */ = {
 			isa = PBXGroup;
 			children = (
-				F4C0DFE81BE9D45F000615CF /* PIEBannerWebViewViewController.h */,
-				F4C0DFE91BE9D45F000615CF /* PIEBannerWebViewViewController.m */,
-				F4C0DFEA1BE9D45F000615CF /* PIEBannerWebViewViewController.xib */,
+				F4C0DFE81BE9D45F000615CF /* PIEWebViewViewController.h */,
+				F4C0DFE91BE9D45F000615CF /* PIEWebViewViewController.m */,
+				F4C0DFEA1BE9D45F000615CF /* PIEWebViewViewController.xib */,
 			);
 			name = BannerWebView;
 			sourceTree = "<group>";
@@ -3350,15 +3351,6 @@
 				F4EC111B1BCE6B9A002D1DCF /* PIENotificationManager.m */,
 			);
 			name = 2.1;
-			sourceTree = "<group>";
-		};
-		F4F006D91BFDCE3E00FD7078 /* TTTAttributedLabel */ = {
-			isa = PBXGroup;
-			children = (
-				F4F006DA1BFDCE3E00FD7078 /* TTTAttributedLabel.h */,
-				F4F006DB1BFDCE3E00FD7078 /* TTTAttributedLabel.m */,
-			);
-			path = TTTAttributedLabel;
 			sourceTree = "<group>";
 		};
 		F4F72BEB1BCB4EF7002FF05A /* FXBlurView */ = {
@@ -3561,7 +3553,7 @@
 				E942897A1B5B32A200ED26E4 /* NotificationBackgroundSuccess.png in Resources */,
 				3B2D90FF1BA03FB000D6A243 /* LICENSE in Resources */,
 				E942897C1B5B32A200ED26E4 /* NotificationBackgroundSuccessIcon.png in Resources */,
-				F4C0DFEC1BE9D45F000615CF /* PIEBannerWebViewViewController.xib in Resources */,
+				F4C0DFEC1BE9D45F000615CF /* PIEWebViewViewController.xib in Resources */,
 				F41366951BBE73D900EE0C4E /* PIEReplyCollectionCell.xib in Resources */,
 				F4D368731BA9552B00E6C91C /* PIENewAskCollectionCell.xib in Resources */,
 				3BE1AEC71B9FE9C900CE2303 /* Info.plist in Resources */,
@@ -3749,7 +3741,6 @@
 				F4275A141BE0786400BBE7E4 /* SLKTypingIndicatorView.m in Sources */,
 				F4EA4DB81BF49CB700486304 /* PIEAgreementsViewController.m in Sources */,
 				E9F890901B86C4AB0057ECBF /* FMDatabasePool.m in Sources */,
-				F4F006DC1BFDCE3E00FD7078 /* TTTAttributedLabel.m in Sources */,
 				5C0D282D1ACA333200491452 /* PIECommentManager.m in Sources */,
 				F4D015BB1BA6AF7200A28329 /* PIEThumbAnimateView.m in Sources */,
 				5CE4082F1ACE94D600A56E4B /* UIViewController+ATOMTracking.m in Sources */,
@@ -3759,7 +3750,7 @@
 				E99D2F5E1B1C7E8D000D7784 /* NYXProgressiveImageView.m in Sources */,
 				F45ECF4E1BD1DF4600417A75 /* PIEMyCommentedPageViewController.m in Sources */,
 				5C4C70461AB665F500358989 /* PIEPageVM.m in Sources */,
-				F4C0DFEB1BE9D45F000615CF /* PIEBannerWebViewViewController.m in Sources */,
+				F4C0DFEB1BE9D45F000615CF /* PIEWebViewViewController.m in Sources */,
 				5C83A8911AC66F910071A024 /* POPGeometry.mm in Sources */,
 				F4DC3D3F1BC131BA00DCF72F /* PIEFriendAskTableViewCell.m in Sources */,
 				F40207411BA7C4160007CE02 /* VVPresenter.m in Sources */,
@@ -3790,6 +3781,7 @@
 				F439303E1BE4BD75006C9437 /* MRNavigationBarProgressView.m in Sources */,
 				5C4C70DA1AB6FD5700358989 /* DDPageManager.m in Sources */,
 				F4275A151BE0786400BBE7E4 /* UIResponder+SLKAdditions.m in Sources */,
+				F4F006F31BFEFD1300FD7078 /* PIETextView_noSelection.m in Sources */,
 				F4E7133D1BE35F230046C7A9 /* PIEModifyPasswordViewController.m in Sources */,
 				F43930391BE4BD75006C9437 /* MRBlurView.m in Sources */,
 				5C561A511AB7C8210052D4D5 /* PIEEntityUser.m in Sources */,

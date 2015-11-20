@@ -27,7 +27,7 @@
 #import "PIEEliteHotAskTableViewCell.h"
 #import "PIESearchViewController.h"
 #import "DDNavigationController.h"
-#import "PIEBannerWebViewViewController.h"
+#import "PIEWebViewViewController.h"
 #import "PIEShareImageView.h"
 
 
@@ -270,7 +270,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 }
 
 -(void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index {
-    PIEBannerWebViewViewController* vc = [PIEBannerWebViewViewController new];
+    PIEWebViewViewController* vc = [PIEWebViewViewController new];
     vc.viewModel = [_sourceBanner objectAtIndex:index];
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -792,7 +792,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
             }
             [ATOMReportModel report:param withBlock:^(NSError *error) {
                 if(!error) {
-                    [Hud text:@"已举报" inView:[AppDelegate APP].window];
+                    [Util ShowTSMessageSuccess:@"已举报"];
                 }
                 
             }];

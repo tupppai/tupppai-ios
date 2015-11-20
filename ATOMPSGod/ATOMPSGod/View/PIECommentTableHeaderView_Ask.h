@@ -15,6 +15,7 @@
 #import "PIEPageButton.h"
 #import "PIEBangView.h"
 #import "PIEPageLikeButton.h"
+#import "PIETextView_noSelection.h"
 @interface PIECommentTableHeaderView_Ask : ATOMBaseView
 
 @property (nonatomic, strong) UIImageView *avatarView;
@@ -22,7 +23,9 @@
 @property (nonatomic, strong) UILabel *timeLabel;
 @property (nonatomic, strong) UIImageView *imageViewMain;
 @property (nonatomic, strong) UIImageView *imageViewRight;
-@property (nonatomic, strong) UILabel *contentLabel;
+//@property (nonatomic, strong) UILabel *contentLabel;
+@property (nonatomic, strong) PIETextView_noSelection *textView_content;
+
 @property (nonatomic, strong) PIEPageButton *commentButton;
 @property (nonatomic, strong) PIEPageButton *shareButton;
 @property (nonatomic, strong) PIEBangView *bangView;

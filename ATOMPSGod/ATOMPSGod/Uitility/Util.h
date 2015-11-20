@@ -29,6 +29,7 @@ NSString* deviceName();
 + (UIImage *)getImageFromAsset:(ALAsset *)asset type:(NSInteger)nType;
 + (void)copyIntoPasteboard:(NSString*)string;
 + (void) imageWithVm:(PIEPageVM*)vm block:(void(^)(UIImage*))block;
++(NSString *) stringByStrippingHTML:(NSString*)s ;
 @end
 
 @interface Hud : NSObject

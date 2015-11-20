@@ -1,5 +1,5 @@
 //
-//  PIEBannerWebViewViewController.h
+//  PIEWebViewViewController.h
 //  TUPAI
 //
 //  Created by chenpeiwei on 11/4/15.
@@ -8,6 +8,8 @@
 
 #import "DDBaseVC.h"
 #import "PIEBannerViewModel.h"
-@interface PIEBannerWebViewViewController : DDBaseVC
+@interface PIEWebViewViewController : DDBaseVC
 @property (nonatomic,strong)PIEBannerViewModel* viewModel;
+@property (nonatomic,strong)NSString* url;
+
 @end

@@ -942,7 +942,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
             }
             [ATOMReportModel report:param withBlock:^(NSError *error) {
                 if(!error) {
-                    [Hud text:@"已举报" inView:ws.view];
+                    [Util ShowTSMessageSuccess:@"已举报"];
                 }
                 
             }];
