@@ -9,13 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "PIEPageButton.h"
 #import "PIEPageLikeButton.h"
+#import "PIETextView_linkDetection.h"
 @interface PIECommentTableHeaderView_Reply : UIView
 @property (nonatomic, strong) UIImageView *avatarView;
 @property (nonatomic, strong) UILabel *usernameLabel;
 @property (nonatomic, strong) UILabel *timeLabel;
 @property (nonatomic, strong) UIImageView *imageViewMain;
 @property (nonatomic, strong) UIImageView *imageViewRight;
-@property (nonatomic, strong) UILabel *contentLabel;
+@property (nonatomic, strong) PIETextView_linkDetection *textView_content;
 @property (nonatomic, strong) UIButton *moreWorkButton;
 @property (nonatomic, strong) PIEPageButton *commentButton;
 @property (nonatomic, strong) PIEPageButton *shareButton;

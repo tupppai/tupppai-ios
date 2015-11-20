@@ -6,11 +6,11 @@
 //  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIETextView_noSelection.h"
+#import "PIETextView_linkDetection.h"
 #import "PIEWebViewViewController.h"
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
-@implementation PIETextView_noSelection
+@implementation PIETextView_linkDetection
 
 -(void)awakeFromNib {
     [self commonInit];

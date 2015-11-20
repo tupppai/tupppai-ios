@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PIETextView_noSelection : UITextView<UITextViewDelegate>
+@interface PIETextView_linkDetection : UITextView<UITextViewDelegate>
 
 @end

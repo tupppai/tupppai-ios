@@ -159,7 +159,9 @@
         _shareButton.numberString = vm.shareCount;
         
         NSString * htmlString = vm.content;
-        NSAttributedString * attrStr = [[NSAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
+        NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
+        
+        [attrStr addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:15] range:NSMakeRange(0, attrStr.length)];
         _textView_content.attributedText = attrStr;
     }
     else {
@@ -170,7 +172,6 @@
     [self.textView_content mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(size.height)).with.priorityHigh();
     }];
-    self.textView_content.backgroundColor = [UIColor lightGrayColor];
     
 }
 
@@ -230,9 +231,11 @@
     }
     return _imageViewRight;
 }
-- (PIETextView_noSelection *)textView_content {
+- (PIETextView_linkDetection *)textView_content {
     if (!_textView_content) {
-        _textView_content = [PIETextView_noSelection new];
+        _textView_content = [PIETextView_linkDetection new];
+        _textView_content.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
+        _textView_content.font = [UIFont systemFontOfSize:15];
     }
     return _textView_content;
 }

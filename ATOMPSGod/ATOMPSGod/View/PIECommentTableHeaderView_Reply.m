@@ -29,7 +29,7 @@
     [self addSubview:self.timeLabel];
     [self addSubview:self.imageViewMain];
     [self addSubview:self.imageViewRight];
-    [self addSubview:self.contentLabel];
+    [self addSubview:self.textView_content];
     [self addSubview:self.commentButton];
     [self addSubview:self.shareButton];
     [self addSubview:self.likeButton];
@@ -68,7 +68,7 @@
         make.right.equalTo(self).with.offset(0);
         make.bottom.equalTo(self.imageViewMain.mas_bottom).with.offset(0);
     }];
-    [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.textView_content mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_imageViewMain.mas_bottom).with.offset(10);
         //left and right to cause constraint error when self.width = 0;
         make.left.equalTo(self).with.offset(12);
@@ -83,7 +83,7 @@
     }];
     
     [self.commentButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contentLabel.mas_bottom).with.offset(12).with.priorityLow();
+        make.top.equalTo(self.textView_content.mas_bottom).with.offset(12).with.priorityLow();
         make.width.equalTo(@25).with.priorityMedium();
         make.width.greaterThanOrEqualTo(@25);
         make.height.equalTo(@25);
@@ -155,19 +155,24 @@
 
         _commentButton.numberString = vm.commentCount;
         _shareButton.numberString = vm.shareCount;
-        _contentLabel.text = vm.content;
         _likeButton.numberString = vm.likeCount;
         _likeButton.highlighted = vm.liked;
+        
+        NSString * htmlString = vm.content;
+        NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
+        
+        [attrStr addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:15] range:NSMakeRange(0, attrStr.length)];
+        _textView_content.attributedText = attrStr;
+
 
     }
     else {
         _imageViewMain.image = [UIImage imageNamed:@"cellBG"];
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName : self.contentLabel.font};
-    CGFloat messageLabelHeight = CGRectGetHeight([self.contentLabel.text boundingRectWithSize:CGSizeMake(SCREEN_WIDTH-20, 500) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil]);
-    [self.contentLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@(messageLabelHeight+5)).with.priorityHigh();
+    CGSize size = [self.textView_content sizeThatFits:CGSizeMake(SCREEN_WIDTH-24, CGFLOAT_MAX)];
+    [self.textView_content mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@(size.height)).with.priorityHigh();
     }];
 }
 
@@ -227,14 +232,13 @@
     }
     return _imageViewRight;
 }
--(UILabel *)contentLabel {
-    if (!_contentLabel) {
-        _contentLabel = [UILabel new];
-        _contentLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
-        _contentLabel.font = [UIFont boldSystemFontOfSize:15];
-        _contentLabel.numberOfLines = 0;
+- (PIETextView_linkDetection *)textView_content {
+    if (!_textView_content) {
+        _textView_content = [PIETextView_linkDetection new];
+        _textView_content.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
+        _textView_content.font = [UIFont systemFontOfSize:15];
     }
-    return _contentLabel;
+    return _textView_content;
 }
 
 -(PIEPageButton *)commentButton {
