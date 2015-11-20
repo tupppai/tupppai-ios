@@ -453,7 +453,7 @@
 		F4EC11291BCF55F7002D1DCF /* PIENotificationSystemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4EC11281BCF55F7002D1DCF /* PIENotificationSystemTableViewCell.xib */; };
 		F4EC112B1BCF5604002D1DCF /* PIENotificationReplyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4EC112A1BCF5604002D1DCF /* PIENotificationReplyTableViewCell.xib */; };
 		F4F006D81BFD8ED000FD7078 /* libUMCheckUpdate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4F006D61BFD8ECF00FD7078 /* libUMCheckUpdate.a */; };
-		F4F006F31BFEFD1300FD7078 /* PIETextView_noSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F006F21BFEFD1300FD7078 /* PIETextView_noSelection.m */; };
+		F4F006F31BFEFD1300FD7078 /* PIETextView_linkDetection.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F006F21BFEFD1300FD7078 /* PIETextView_linkDetection.m */; };
 		F4F72BEE1BCB4EF7002FF05A /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F72BED1BCB4EF7002FF05A /* FXBlurView.m */; };
 		F4F72BF61BCB6979002FF05A /* PIEImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F72BF41BCB6979002FF05A /* PIEImageCollectionViewCell.m */; };
 		F4F72BFF1BCB6CD6002FF05A /* PIEMyCollectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F72BFD1BCB6CD6002FF05A /* PIEMyCollectionTableViewCell.m */; };
@@ -1340,8 +1340,8 @@
 		F4EC112A1BCF5604002D1DCF /* PIENotificationReplyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIENotificationReplyTableViewCell.xib; sourceTree = "<group>"; };
 		F4F006D61BFD8ECF00FD7078 /* libUMCheckUpdate.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMCheckUpdate.a; sourceTree = "<group>"; };
 		F4F006D71BFD8ECF00FD7078 /* UMCheckUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMCheckUpdate.h; sourceTree = "<group>"; };
-		F4F006F11BFEFD1300FD7078 /* PIETextView_noSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIETextView_noSelection.h; sourceTree = "<group>"; };
-		F4F006F21BFEFD1300FD7078 /* PIETextView_noSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIETextView_noSelection.m; sourceTree = "<group>"; };
+		F4F006F11BFEFD1300FD7078 /* PIETextView_linkDetection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIETextView_linkDetection.h; sourceTree = "<group>"; };
+		F4F006F21BFEFD1300FD7078 /* PIETextView_linkDetection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIETextView_linkDetection.m; sourceTree = "<group>"; };
 		F4F72BEC1BCB4EF7002FF05A /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
 		F4F72BED1BCB4EF7002FF05A /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
 		F4F72BF31BCB6979002FF05A /* PIEImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEImageCollectionViewCell.h; sourceTree = "<group>"; };
@@ -3008,8 +3008,8 @@
 				F472055A1BAC031B00E0ADA0 /* PIEProceedingToHelpTableViewCell.m */,
 				F472055B1BAC031B00E0ADA0 /* PIEProceedingToHelpTableViewCell.xib */,
 				F4F72C121BCBBB29002FF05A /* toHelp2 */,
-				F4F006F11BFEFD1300FD7078 /* PIETextView_noSelection.h */,
-				F4F006F21BFEFD1300FD7078 /* PIETextView_noSelection.m */,
+				F4F006F11BFEFD1300FD7078 /* PIETextView_linkDetection.h */,
+				F4F006F21BFEFD1300FD7078 /* PIETextView_linkDetection.m */,
 			);
 			name = ToHelp;
 			sourceTree = "<group>";
@@ -3781,7 +3781,7 @@
 				F439303E1BE4BD75006C9437 /* MRNavigationBarProgressView.m in Sources */,
 				5C4C70DA1AB6FD5700358989 /* DDPageManager.m in Sources */,
 				F4275A151BE0786400BBE7E4 /* UIResponder+SLKAdditions.m in Sources */,
-				F4F006F31BFEFD1300FD7078 /* PIETextView_noSelection.m in Sources */,
+				F4F006F31BFEFD1300FD7078 /* PIETextView_linkDetection.m in Sources */,
 				F4E7133D1BE35F230046C7A9 /* PIEModifyPasswordViewController.m in Sources */,
 				F43930391BE4BD75006C9437 /* MRBlurView.m in Sources */,
 				5C561A511AB7C8210052D4D5 /* PIEEntityUser.m in Sources */,

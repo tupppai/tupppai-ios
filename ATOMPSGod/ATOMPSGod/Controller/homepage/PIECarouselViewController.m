@@ -19,7 +19,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *contentLabel;
+@property (weak, nonatomic) IBOutlet PIETextView_linkDetection *textView_content;
+
+//@property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *likeButton;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -73,7 +75,7 @@
     _avatarView.layer.cornerRadius = 20;
     _avatarView.clipsToBounds = YES;
     _avatarView.userInteractionEnabled = YES;
-    
+    _textView_content.scrollEnabled = YES;
     _dataSource = [NSMutableArray array];
 
     UITapGestureRecognizer *tapG1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToSeeFriend)];
@@ -133,16 +135,23 @@
 {
     if (_dataSource.count > index) {
 
-        PIEPageVM* vm = [_dataSource objectAtIndex:index];
         if (view == nil)
         {
-            CGFloat height = self.carousel.frame.size.height-80;
-            view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, height, height)];
-            view.backgroundColor = [UIColor clearColor];
-            view.contentMode = UIViewContentModeScaleAspectFit;
-            view.clipsToBounds = YES;
+            CGFloat height = self.carousel.frame.size.height-20;
+            view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, height, height)];
+            UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, height, height)];
+            imageView.backgroundColor = [UIColor clearColor];
+            imageView.contentMode = UIViewContentModeScaleAspectFit;
+            imageView.clipsToBounds = YES;
+            [view addSubview:imageView];
         }
-        [((UIImageView *)view) setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+        PIEPageVM* vm = [_dataSource objectAtIndex:index];
+        for (UIView *subView in view.subviews){
+            if([subView isKindOfClass:[UIImageView class]]){
+                UIImageView *imageView = (UIImageView *)subView;
+                [imageView setImageWithURL:[NSURL URLWithString:vm.imageURL]];
+            }
+        }
         return view;
     }
     return nil;
@@ -270,7 +279,22 @@
         [_avatarView setImageWithURL:[NSURL URLWithString:_currentVM.avatarURL] placeholderImage:[UIImage new]];
         _usernameLabel.text = _currentVM.username;
         _timeLabel.text = _currentVM.publishTime;
-        _contentLabel.text = _currentVM.content;
+        
+        
+        
+        NSString * htmlString = @"I found your question because I was also fighting with NSAttributedString. For me, the beginEditing and endEditing methods did the trick, like stated in Changing an Attributed String. Apart from that, the lineSpacing is set with setLineSpacing on the paragraphStyle.";
+        NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
+        
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init] ;
+        [paragraphStyle setAlignment:NSTextAlignmentCenter];
+        [attrStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, attrStr.length)];
+        [attrStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSMakeRange(0, attrStr.length)];
+        [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0xffffff andAlpha:1.0] range:NSMakeRange(0, attrStr.length)];
+
+        _textView_content.attributedText = attrStr;
+
+        
+        
         _likeButton.selected = _currentVM.liked;
         if (_currentVM.type == PIEPageTypeAsk) {
             [_likeButton setImage:[UIImage imageNamed:@"pie_carousel_ask"] forState:UIControlStateNormal];

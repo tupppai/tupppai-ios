@@ -7,9 +7,7 @@
 //
 
 #import "PIEProceedingToHelpTableViewCell.h"
-#import "PIEWebViewViewController.h"
-#import "DDNavigationController.h"
-#import "AppDelegate.h"
+
 @implementation PIEProceedingToHelpTableViewCell
 
 - (void)awakeFromNib {

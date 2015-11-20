@@ -71,7 +71,7 @@
     [self.textView_content mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_imageViewMain.mas_bottom).with.offset(10);
         //left and right to cause constraint error when self.width = 0;
-        make.left.equalTo(self).with.offset(12);
+        make.left.equalTo(self).with.offset(8);
         make.right.equalTo(self).with.offset(-12);
     }];
     
