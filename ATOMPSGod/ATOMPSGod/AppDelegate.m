@@ -56,8 +56,9 @@
     [MobClick setCrashReportEnabled:YES];
     [MobClick setEncryptEnabled:YES];
     [MobClick setLogEnabled:NO];
-    
     [UMCheckUpdate checkUpdateWithAppkey:@"55b1ecdbe0f55a1de9001164" channel:nil];
+    NSNumber *version =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    [UMCheckUpdate setVersion:[version integerValue]];
 //    [UMCheckUpdate checkUpdate:@"新版本更新！" cancelButtonTitle:@"继续用旧版" otherButtonTitles:@"更新" appkey:@"55b1ecdbe0f55a1de9001164" channel:nil];
 //    [UMCheckUpdate setLogEnabled:YES];
 }

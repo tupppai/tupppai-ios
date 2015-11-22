@@ -280,9 +280,7 @@
         _usernameLabel.text = _currentVM.username;
         _timeLabel.text = _currentVM.publishTime;
         
-        
-        
-        NSString * htmlString = @"I found your question because I was also fighting with NSAttributedString. For me, the beginEditing and endEditing methods did the trick, like stated in Changing an Attributed String. Apart from that, the lineSpacing is set with setLineSpacing on the paragraphStyle.";
+        NSString * htmlString = _currentVM.content;
         NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
         
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init] ;

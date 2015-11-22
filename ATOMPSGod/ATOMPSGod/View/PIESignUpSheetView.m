@@ -38,7 +38,7 @@
 }
 - (void)generateData {
     _iconArray = [NSMutableArray new];
-    _infoArray = [NSArray arrayWithObjects:@[@"QQ注册",@"pie_signup_qq"],
+    _infoArray = [NSArray arrayWithObjects:@[@"QQ注册",@"pie_signup_QQ"],
                   @[@"微信注册",@"pie_signup_wechat"],
                   @[@"手机注册",@"pie_signup_phone"], nil];
 }

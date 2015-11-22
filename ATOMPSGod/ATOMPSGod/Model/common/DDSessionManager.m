@@ -15,12 +15,17 @@ static DDSessionManager *_shareHTTPSessionManager = nil;
 
 + (instancetype)shareHTTPSessionManager {
     dispatch_once(&onceToken, ^{
-#if DEBUG
-        NSString *baseURL = @"http://api.loiter.us/";
-#else
-//        NSString *baseURL = @"http://api.loiter.us/";
         NSString *baseURL = @"http://api.qiupsdashen.com/";
-#endif
+//        NSString *baseURL = @"http://api.loiter.us/";
+
+//#if DEBUG
+//        NSString *baseURL = @"http://api.loiter.us/";
+//#elif ADHOC
+//        NSString *baseURL = @"http://api.loiter.us/";
+//#else
+//        NSString *baseURL = @"http://api.qiupsdashen.com/";
+//#endif
+
         _shareHTTPSessionManager = [[DDSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseURL]];
 //        [_shareHTTPSessionManager.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
 //            switch (status) {
