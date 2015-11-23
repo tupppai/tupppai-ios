@@ -44,6 +44,7 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationItem.titleView = self.segmentedControl;
+    _likeButton.selected = _currentVM.liked;
     [MobClick beginLogPageView:@"进入滚动详情页"];
 
 }
@@ -60,6 +61,7 @@
     [self addDarkEffectOnBlurView];
     [self getDataSource];
 }
+
 -(void)setupData {
     _askCount = 0;
     _replyCount = 0;

@@ -29,7 +29,7 @@
 #import "DDNavigationController.h"
 #import "PIEWebViewViewController.h"
 #import "PIEShareImageView.h"
-
+#import <objc/runtime.h>
 
 
 @interface PIEEliteViewController ()<UITableViewDelegate,UITableViewDataSource,PWRefreshBaseTableViewDelegate,UIScrollViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource,SwipeViewDelegate,SwipeViewDataSource>
@@ -104,9 +104,9 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 - (void)updateStatus {
     if (_selectedIndexPath) {
         if (_sv.type == PIEPageTypeEliteFollow) {
-            [_sv.tableFollow reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [_sv.tableFollow reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
         } else if (_sv.type == PIEPageTypeEliteHot) {
-            [_sv.tableHot reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [_sv.tableHot reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
         }
     }
 }

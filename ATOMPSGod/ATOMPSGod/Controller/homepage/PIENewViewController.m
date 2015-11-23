@@ -79,7 +79,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 
 - (void)updateStatus {
     if (_selectedIndexPath  && _scrollView.type == PIENewScrollTypeReply) {
-        [_scrollView.tableReply reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [_scrollView.tableReply reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
 #pragma mark - life cycle
