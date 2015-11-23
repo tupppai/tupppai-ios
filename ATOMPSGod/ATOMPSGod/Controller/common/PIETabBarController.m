@@ -117,7 +117,7 @@
 }
 - (void)presentBlurViewController {
     PIECameraViewController *pvc = [PIECameraViewController new];
-//    pvc.blurStyle = UIBlurEffectStyleDark;
+    pvc.blurStyle = UIBlurEffectStyleDark;
     [self presentViewController:pvc animated:YES completion:nil];
 }
 @end

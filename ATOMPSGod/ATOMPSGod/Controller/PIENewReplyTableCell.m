@@ -29,7 +29,14 @@
     _theImageView.contentMode = UIViewContentModeScaleAspectFit;
     _theImageView.backgroundColor = [UIColor clearColor];
     _theImageView.clipsToBounds = YES;
-//    _collectView.userInteractionEnabled = YES;
+    [_nameLabel setFont:[UIFont mediumTupaiFontOfSize:13]];
+    [_contentLabel setFont:[UIFont mediumTupaiFontOfSize:15]];
+    [_timeLabel setFont:[UIFont mediumTupaiFontOfSize:10]];
+    
+    [_nameLabel setTextColor:[UIColor colorWithHex:0x4a4a4a andAlpha:1.0]];
+    [_timeLabel setTextColor:[UIColor colorWithHex:0x4a4a4a andAlpha:0.3]];
+    [_contentLabel setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.9]];
+
     [self configThumbAnimateView];
     
     [self.contentView insertSubview:self.blurView belowSubview:_theImageView];

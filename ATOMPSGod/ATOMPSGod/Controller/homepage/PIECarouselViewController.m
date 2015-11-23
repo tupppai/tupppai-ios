@@ -57,11 +57,25 @@
     [self setupBlurredImage];
     [self setupViews];
     [self setupData];
+    [self addDarkEffectOnBlurView];
     [self getDataSource];
 }
 -(void)setupData {
     _askCount = 0;
     _replyCount = 0;
+}
+
+- (void)addDarkEffectOnBlurView {
+    
+        UIView* viewLayer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        viewLayer.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2];
+    
+        UIView* viewLayer2 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        viewLayer2.backgroundColor = [UIColor colorWithHex:0xeeeeee andAlpha:0.1];
+    
+        [self.blurView insertSubview:viewLayer atIndex:0];
+        [self.blurView insertSubview:viewLayer2 atIndex:0];
+    
 }
 - (void)setupViews {
     self.view.backgroundColor = [UIColor blackColor];
@@ -137,7 +151,7 @@
 
         if (view == nil)
         {
-            CGFloat height = self.carousel.frame.size.height-20;
+            CGFloat height = self.carousel.frame.size.height-50;
             view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, height, height)];
             UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, height, height)];
             imageView.backgroundColor = [UIColor clearColor];

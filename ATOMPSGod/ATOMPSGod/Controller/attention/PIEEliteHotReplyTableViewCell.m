@@ -34,6 +34,11 @@
     [_commentLabel1 setFont:[UIFont mediumTupaiFontOfSize:13]];
     [_commentLabel2 setFont:[UIFont mediumTupaiFontOfSize:13]];
     
+    [_nameLabel setTextColor:[UIColor colorWithHex:0x4a4a4a andAlpha:1.0]];
+    [_contentLabel setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.9]];
+    [_commentLabel1 setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.8]];
+    [_commentLabel2 setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.8]];
+
     [self.contentView addSubview:self.thumbView];
     [self.contentView insertSubview:self.blurView belowSubview:_theImageView];
 
@@ -62,7 +67,7 @@
     _commentLabel1.text = @"";
     
     [_commentLabel1 mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(_commentLabel2.mas_top).with.offset(0).priorityLow();
+        make.bottom.equalTo(_commentLabel2.mas_top).with.offset(0).priorityHigh();
     }];
     [_commentLabel2 mas_updateConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(_gapView.mas_top).with.offset(0).priorityHigh();

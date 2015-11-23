@@ -8,6 +8,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PIELoginViewController">
             <connections>
                 <outlet property="forgetLabel" destination="IaO-mg-K8b" id="TO4-qv-20j"/>
+                <outlet property="line1" destination="dgS-JO-Jih" id="PNU-Nh-bIv"/>
+                <outlet property="line2" destination="0Gs-bj-pji" id="RjR-Np-c9y"/>
                 <outlet property="loginLabel" destination="ldl-W0-kNF" id="rbG-8q-m1w"/>
                 <outlet property="passwordTextfield" destination="cHh-zq-v92" id="cQd-iL-MiB"/>
                 <outlet property="phoneTextfield" destination="6Ff-6L-VIy" id="p9I-xt-SXL"/>
@@ -44,7 +46,7 @@
                     <animations/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="1" id="eY7-KP-ioa"/>
+                        <constraint firstAttribute="height" priority="250" constant="1" id="eY7-KP-ioa"/>
                     </constraints>
                 </view>
                 <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Gs-bj-pji" userLabel="line2">
@@ -52,7 +54,7 @@
                     <animations/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="1" id="abo-Ee-63i"/>
+                        <constraint firstAttribute="height" priority="250" constant="1" id="abo-Ee-63i"/>
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="登录" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ldl-W0-kNF">

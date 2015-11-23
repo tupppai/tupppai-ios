@@ -37,6 +37,12 @@
     [_commentLabel1 setFont:[UIFont mediumTupaiFontOfSize:13]];
     [_commentLabel2 setFont:[UIFont mediumTupaiFontOfSize:13]];
     
+    [_nameLabel setTextColor:[UIColor colorWithHex:0x4a4a4a andAlpha:1.0]];
+    [_contentLabel setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.9]];
+    [_commentLabel1 setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.8]];
+    [_commentLabel2 setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.8]];
+
+    
     [self.contentView insertSubview:self.blurView belowSubview:_theImageView];
     [self.blurView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.theImageView);

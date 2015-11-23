@@ -220,7 +220,6 @@
 - (void)textFieldDidChange:(UITextField*)sender {
     
     if ([_lastSearchKeyword isEqualToString: sender.text ] && _lastIndex == self.segmentedControl.selectedSegmentIndex ) {
-    } else if ([sender.text isEqualToString:@""]) {
     } else {
         [self searchRemoteWithText:sender.text];
         _lastSearchKeyword = sender.text;
@@ -231,24 +230,25 @@
 - (void)searchRemoteWithText:(NSString*)string {
     [_sourceUser removeAllObjects];
     [_sourceContent removeAllObjects];
-    
-    NSMutableDictionary* param = [NSMutableDictionary new];
-    if (_segmentedControl.selectedSegmentIndex == 0) {
-        [param setObject:string forKey:@"name"];
-        [PIESearchManager getSearchUserResult:param withBlock:^(NSMutableArray *retArray) {
+    if (![string isEqualToString:@""]) {
+        NSMutableDictionary* param = [NSMutableDictionary new];
+        if (_segmentedControl.selectedSegmentIndex == 0) {
+            [param setObject:string forKey:@"name"];
+            [PIESearchManager getSearchUserResult:param withBlock:^(NSMutableArray *retArray) {
+                _notFirstLoading = YES;
+                _sourceUser = retArray;
+                [_collectionView reloadData];
+            }];
+        } else {
             _notFirstLoading = YES;
-            _sourceUser = retArray;
-            [_collectionView reloadData];
-        }];
-    } else {
-        _notFirstLoading = YES;
-        [param setObject:string forKey:@"desc"];
-        [PIESearchManager getSearchContentResult:param withBlock:^(NSMutableArray *retArray) {
-            _sourceContent = retArray;
-            [_collectionView reloadData];
-        }];
+            [param setObject:string forKey:@"desc"];
+            [PIESearchManager getSearchContentResult:param withBlock:^(NSMutableArray *retArray) {
+                _sourceContent = retArray;
+                [_collectionView reloadData];
+            }];
+        }
     }
-    
+
 }
 - (void)dismiss {
     [self dismissViewControllerAnimated:NO completion:nil];

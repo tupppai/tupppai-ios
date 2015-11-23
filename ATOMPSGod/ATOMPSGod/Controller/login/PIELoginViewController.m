@@ -24,23 +24,37 @@
 @property (weak, nonatomic) IBOutlet UIImageView *socialView3;
 @property (weak, nonatomic) IBOutlet UILabel *forgetLabel;
 @property (weak, nonatomic) IBOutlet UILabel *socialTipLabel;
+@property (weak, nonatomic) IBOutlet UIView *line1;
+@property (weak, nonatomic) IBOutlet UIView *line2;
+
 
 @end
 
 @implementation PIELoginViewController
--(void)awakeFromNib {
 
-}
+//-(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+//    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+//    if (self) {
+//    }
+//    return self;
+//}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"登录";
+    
+    [_line1 mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@0.5);
+    }];
+    [_line2 mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@0.5);
+    }];
+    
     _socialView1.userInteractionEnabled = YES;
     _socialView2.userInteractionEnabled = YES;
     _socialView3.userInteractionEnabled = YES;
     _loginLabel.userInteractionEnabled = YES;
     _forgetLabel.userInteractionEnabled = YES;
     _loginLabel.textColor = [UIColor colorWithHex:0x4A4A4A];
-
 
     UITapGestureRecognizer* tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tap1)];
     UITapGestureRecognizer* tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tap2)];

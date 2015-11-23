@@ -402,7 +402,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     [param setObject:@(_timeStamp_activity) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(1) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     
     
     [ws.scrollView.tableActivity.header endRefreshing];
@@ -436,7 +436,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     [param setObject:@(_timeStamp_ask) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(_currentIndex_ask) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     PIEPageManager *pageManager = [PIEPageManager new];
     [pageManager pullAskSource:param block:^(NSMutableArray *homepageArray) {
         if (homepageArray.count) {
@@ -512,7 +512,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     _timeStamp_reply = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(_timeStamp_reply) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(1) forKey:@"page"];
 
     PIEPageManager *pageManager = [PIEPageManager new];
@@ -537,7 +537,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:@(_timeStamp_reply) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(_currentIndex_reply) forKey:@"page"];
     PIEPageManager *pageManager = [PIEPageManager new];
     [pageManager pullReplySource:param block:^(NSMutableArray *array) {
@@ -782,12 +782,10 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     CGFloat width;
     CGFloat height;
     width = (SCREEN_WIDTH - 20) / 2.0;
-    
     height = vm.imageHeight/vm.imageWidth * width + 129 + (29+20);
     height = MAX(200,height);
     height = MIN(SCREEN_HEIGHT/1.5, height);
     return CGSizeMake(width, height);
-    
 }
 
 #pragma mark - DZNEmptyDataSetSource & delegate

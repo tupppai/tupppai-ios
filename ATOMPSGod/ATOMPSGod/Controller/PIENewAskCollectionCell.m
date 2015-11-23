@@ -19,8 +19,15 @@
     _rightImageView.clipsToBounds = YES;
     _leftImageView.contentMode = UIViewContentModeScaleAspectFill;
     _rightImageView.contentMode = UIViewContentModeScaleAspectFill;
-
     _contentLabel.text = @"";
+    [_nameLabel setFont:[UIFont mediumTupaiFontOfSize:12]];
+    [_contentLabel setFont:[UIFont mediumTupaiFontOfSize:12]];
+    [_timeLabel setFont:[UIFont mediumTupaiFontOfSize:9]];
+
+    [_nameLabel setTextColor:[UIColor colorWithHex:0x4a4a4a andAlpha:1.0]];
+    [_timeLabel setTextColor:[UIColor colorWithHex:0x4a4a4a andAlpha:0.3]];
+    [_contentLabel setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.9]];
+
 //    _leftImageView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.4];
 //    _rightImageView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.4];
 }
