@@ -71,18 +71,25 @@
             self.layout.columnCount = 1;
             self.layout.minimumInteritemSpacing = 1;
             self.layout.minimumColumnSpacing = 0;
+            _layout.sectionInset = UIEdgeInsetsMake(10, 0, 0, 0);
 
+//            [_sourceUser removeAllObjects];
+//            [_sourceContent removeAllObjects];
             [_collectionView reloadData];
-            [_sourceUser removeAllObjects];
-            [_sourceContent removeAllObjects];
+            [self searchRemoteWithText:_textField2.text];
         }
         else {
             self.layout.columnCount = 2;
             self.layout.minimumInteritemSpacing = 10;
             self.layout.minimumColumnSpacing = 10;
+            _layout.sectionInset = UIEdgeInsetsMake(10, 6, 0, 6);
+
+//            [_sourceUser removeAllObjects];
+//            [_sourceContent removeAllObjects];
             [_collectionView reloadData];
-            [_sourceUser removeAllObjects];
-            [_sourceContent removeAllObjects];
+            [self searchRemoteWithText:_textField2.text];
+
+
         }
     }];
     
@@ -201,10 +208,11 @@
 -(CHTCollectionViewWaterfallLayout *)layout {
     if (!_layout) {
         _layout = [[CHTCollectionViewWaterfallLayout alloc] init];
-        _layout.sectionInset = UIEdgeInsetsMake(10, 6, 0, 6);
         _layout.columnCount = 1;
         _layout.minimumInteritemSpacing = 1;
         _layout.minimumColumnSpacing = 0;
+        _layout.sectionInset = UIEdgeInsetsMake(10, 0, 0, 0);
+
     }
     return _layout;
 }

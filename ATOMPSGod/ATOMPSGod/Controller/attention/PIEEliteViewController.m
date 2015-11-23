@@ -311,7 +311,8 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
         }
     } else if (tableView == _sv.tableHot) {
         PIEPageVM* vm = [_sourceHot objectAtIndex:indexPath.row];
-        if (vm.type == PIEPageTypeAsk) {
+        
+        if (YES) {
             PIEEliteHotAskTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:hotAskIndentifier];
             [cell injectSauce:vm];
             return cell;

@@ -31,7 +31,12 @@
     _theImageView.contentMode = UIViewContentModeScaleAspectFit;
     _theImageView.backgroundColor = [UIColor clearColor];
     _theImageView.clipsToBounds = YES;
-    _timeLabel.hidden = YES;
+    
+    [_nameLabel setFont:[UIFont mediumTupaiFontOfSize:13]];
+    [_contentLabel setFont:[UIFont mediumTupaiFontOfSize:15]];
+    [_commentLabel1 setFont:[UIFont mediumTupaiFontOfSize:13]];
+    [_commentLabel2 setFont:[UIFont mediumTupaiFontOfSize:13]];
+    
     [self.contentView insertSubview:self.blurView belowSubview:_theImageView];
     [self.blurView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.theImageView);
@@ -58,6 +63,9 @@
     [_commentLabel2 mas_updateConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(_gapView.mas_top).with.offset(0).priorityHigh();
     }];
+    [_commentLabel1 mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(_commentLabel2.mas_top).with.offset(0).priorityHigh();
+    }];
 }
 - (void)injectSauce:(PIEPageVM *)viewModel {
     WS(ws);
@@ -72,7 +80,7 @@
     
     [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
     _nameLabel.text = viewModel.username;
-    _timeLabel.text = viewModel.publishTime;
+//    _timeLabel.text = viewModel.publishTime;
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:viewModel.imageURL]];
     [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
@@ -85,15 +93,21 @@
         PIECommentEntity* commentEntity1  = viewModel.hotCommentEntityArray[0];
         _commentLabel1.text = [NSString stringWithFormat:@"%@: %@",commentEntity1.nickname,commentEntity1.content];
         
-        if (viewModel.hotCommentEntityArray.count == 1) {
-        } else {
+        [_commentLabel2 mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(_gapView.mas_top).with.offset(-25).with.priorityHigh();
+        }];
+        
+        if (viewModel.hotCommentEntityArray.count > 1) {
+            
+            [_commentLabel1 mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.bottom.equalTo(_commentLabel2.mas_top).with.offset(-10).with.priorityHigh();
+            }];
+            
             PIECommentEntity* commentEntity2  = viewModel.hotCommentEntityArray[1];
             _commentLabel2.text = [NSString stringWithFormat:@"%@: %@",commentEntity2.nickname,commentEntity2.content];
-            [_commentLabel2 mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.bottom.equalTo(_gapView.mas_top).with.offset(-14).with.priorityHigh();
-            }];
         }
     }
+
     
     if (viewModel.userID == [DDUserManager currentUser].uid) {
         _followView.hidden = YES;

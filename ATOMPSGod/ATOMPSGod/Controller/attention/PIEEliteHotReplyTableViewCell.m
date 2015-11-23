@@ -28,7 +28,11 @@
     _theImageView.clipsToBounds = YES;
     _theImageView.backgroundColor = [UIColor clearColor];
     _collectView.userInteractionEnabled = YES;
-    _timeLabel.hidden = YES;
+
+    [_nameLabel setFont:[UIFont mediumTupaiFontOfSize:13]];
+    [_contentLabel setFont:[UIFont mediumTupaiFontOfSize:15]];
+    [_commentLabel1 setFont:[UIFont mediumTupaiFontOfSize:13]];
+    [_commentLabel2 setFont:[UIFont mediumTupaiFontOfSize:13]];
     
     [self.contentView addSubview:self.thumbView];
     [self.contentView insertSubview:self.blurView belowSubview:_theImageView];
@@ -56,6 +60,10 @@
     _followView.hidden = NO;
     _commentLabel2.text = @"";
     _commentLabel1.text = @"";
+    
+    [_commentLabel1 mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(_commentLabel2.mas_top).with.offset(0).priorityLow();
+    }];
     [_commentLabel2 mas_updateConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(_gapView.mas_top).with.offset(0).priorityHigh();
     }];
@@ -84,7 +92,7 @@
     
     [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
     _nameLabel.text = viewModel.username;
-    _timeLabel.text = viewModel.publishTime;
+//    _timeLabel.text = viewModel.publishTime;
 //    [ setImageWithURL:[NSURL URLWithString:viewModel.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:viewModel.imageURL]];
@@ -105,15 +113,19 @@
     if (viewModel.hotCommentEntityArray.count > 0) {
         PIECommentEntity* commentEntity1  = viewModel.hotCommentEntityArray[0];
         _commentLabel1.text = [NSString stringWithFormat:@"%@: %@",commentEntity1.nickname,commentEntity1.content];
-
-        if (viewModel.hotCommentEntityArray.count == 1) {
-
-        } else {
+       
+        [_commentLabel2 mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(_gapView.mas_top).with.offset(-25).with.priorityHigh();
+        }];
+        
+        if (viewModel.hotCommentEntityArray.count > 1) {
+            
+            [_commentLabel1 mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.bottom.equalTo(_commentLabel2.mas_top).with.offset(-10).with.priorityHigh();
+            }];
+            
             PIECommentEntity* commentEntity2  = viewModel.hotCommentEntityArray[1];
             _commentLabel2.text = [NSString stringWithFormat:@"%@: %@",commentEntity2.nickname,commentEntity2.content];
-            [_commentLabel2 mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.bottom.equalTo(_gapView.mas_top).with.offset(-14).with.priorityHigh();
-            }];
         }
     }
     
