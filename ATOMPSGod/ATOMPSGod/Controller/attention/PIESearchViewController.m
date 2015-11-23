@@ -29,6 +29,8 @@
 @property (nonatomic, strong) NSMutableArray* sourceUser;
 @property (nonatomic, strong) NSMutableArray* sourceContent;
 @property (nonatomic, strong) CHTCollectionViewWaterfallLayout *layout;
+@property (nonatomic, assign) NSInteger lastIndex;
+@property (nonatomic, strong) NSString *lastSearchKeyword;
 
 @end
 
@@ -71,7 +73,6 @@
             [_sourceContent removeAllObjects];
         }
     }];
-    
     
 
     
@@ -190,8 +191,15 @@
 }
 
 - (void)textFieldDidChange:(UITextField*)sender {
-    [self searchRemoteWithText:sender.text];
+    
+    if ([_lastSearchKeyword isEqualToString: sender.text ] && _lastIndex == self.segmentedControl.selectedSegmentIndex ) {
+    } else {
+        [self searchRemoteWithText:sender.text];
+        _lastSearchKeyword = sender.text;
+        _lastIndex = self.segmentedControl.selectedSegmentIndex;
+    }
 }
+
 - (void)searchRemoteWithText:(NSString*)string {
     [_sourceUser removeAllObjects];
     [_sourceContent removeAllObjects];
@@ -221,7 +229,7 @@
     return YES;
 }
 -(void)textFieldDidEndEditing:(UITextField *)textField {
-    NSLog(@"textField %@",textField.text);
+    NSLog(@"textFieldDidEndEditing %@",textField.text);
 }
 
 

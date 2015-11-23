@@ -24,7 +24,7 @@
                     </constraints>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jip-1A-Moq">
-                    <rect key="frame" x="170" y="482" width="240" height="81"/>
+                    <rect key="frame" x="73" y="-89" width="65" height="90"/>
                     <animations/>
                 </imageView>
             </subviews>

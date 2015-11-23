@@ -108,7 +108,7 @@
 //    self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:vc];
 //    self.window.rootViewController = self.baseNav;
 //            [self.window makeKeyAndVisible];
-    
+//
     [DDUserManager fetchUserInDBToCurrentUser:^(BOOL success) {
         if (success) {
             self.window.rootViewController = self.mainTabBarController;
