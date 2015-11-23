@@ -14,15 +14,15 @@
                 <rect key="frame" x="0.0" y="0.0" width="486" height="139"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aqW-05-v5A">
-                        <rect key="frame" x="8" y="8" width="30" height="30"/>
+                        <rect key="frame" x="8" y="15" width="30" height="30"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="vcW-4y-V3w"/>
                             <constraint firstAttribute="width" constant="30" id="zgt-Jw-Pyi"/>
                         </constraints>
                     </button>
-                    <button opaque="NO" alpha="0.90000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wfj-ZC-vbK">
-                        <rect key="frame" x="50" y="8" width="30" height="29"/>
+                    <button opaque="NO" alpha="0.90000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wfj-ZC-vbK">
+                        <rect key="frame" x="50" y="7" width="30" height="29"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <state key="normal">
@@ -47,7 +47,7 @@
                         <state key="selected" image="new_reply_followed"/>
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j7j-YT-s7L" customClass="SwipeView">
-                        <rect key="frame" x="8" y="55" width="470" height="79"/>
+                        <rect key="frame" x="8" y="50" width="470" height="84"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -58,16 +58,16 @@
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="aqW-05-v5A" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="2wb-CE-GZF"/>
+                <constraint firstItem="aqW-05-v5A" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="15" id="2wb-CE-GZF"/>
                 <constraint firstAttribute="trailing" secondItem="aBY-Ex-sPM" secondAttribute="trailing" constant="55" id="3bo-ck-nIX"/>
                 <constraint firstItem="j7j-YT-s7L" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="C2r-7C-Egj"/>
                 <constraint firstItem="7Os-9V-3km" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="Ddw-md-8Al"/>
                 <constraint firstItem="wfj-ZC-vbK" firstAttribute="top" secondItem="aqW-05-v5A" secondAttribute="top" id="Iae-vh-fSg"/>
                 <constraint firstAttribute="trailing" secondItem="j7j-YT-s7L" secondAttribute="trailing" constant="8" id="LLX-51-WkT"/>
-                <constraint firstItem="wfj-ZC-vbK" firstAttribute="top" secondItem="aqW-05-v5A" secondAttribute="top" id="OZf-cL-n9M"/>
+                <constraint firstItem="wfj-ZC-vbK" firstAttribute="top" secondItem="aqW-05-v5A" secondAttribute="top" constant="-8" id="OZf-cL-n9M"/>
                 <constraint firstItem="aqW-05-v5A" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="Rz0-Fo-2BY"/>
-                <constraint firstItem="aBY-Ex-sPM" firstAttribute="top" secondItem="wfj-ZC-vbK" secondAttribute="bottom" constant="2" id="eEt-U0-wy8"/>
-                <constraint firstItem="j7j-YT-s7L" firstAttribute="top" secondItem="aBY-Ex-sPM" secondAttribute="bottom" constant="16" id="eW1-Ni-knS"/>
+                <constraint firstItem="aBY-Ex-sPM" firstAttribute="top" secondItem="wfj-ZC-vbK" secondAttribute="bottom" constant="3" id="eEt-U0-wy8"/>
+                <constraint firstItem="j7j-YT-s7L" firstAttribute="top" secondItem="aBY-Ex-sPM" secondAttribute="bottom" constant="11" id="eW1-Ni-knS"/>
                 <constraint firstAttribute="bottom" secondItem="j7j-YT-s7L" secondAttribute="bottom" constant="5" id="i28-w6-1HX"/>
                 <constraint firstItem="aBY-Ex-sPM" firstAttribute="leading" secondItem="wfj-ZC-vbK" secondAttribute="leading" id="jrb-XK-bUj"/>
                 <constraint firstItem="wfj-ZC-vbK" firstAttribute="leading" secondItem="aqW-05-v5A" secondAttribute="trailing" constant="12" id="p1K-Ny-pcp"/>
@@ -88,7 +88,7 @@
                 <outlet property="nameButton" destination="wfj-ZC-vbK" id="WK7-qM-Fuv"/>
                 <outlet property="swipeView" destination="j7j-YT-s7L" id="EMY-Mo-JKM"/>
             </connections>
-            <point key="canvasLocation" x="119" y="230.5"/>
+            <point key="canvasLocation" x="48" y="119.5"/>
         </collectionViewCell>
     </objects>
     <resources>

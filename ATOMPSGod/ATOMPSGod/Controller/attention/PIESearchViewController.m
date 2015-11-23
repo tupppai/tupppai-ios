@@ -16,7 +16,7 @@
 #import "PIECarouselViewController.h"
 #import "PIEUserViewModel.h"
 
-@interface PIESearchViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout>
+@interface PIESearchViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (weak, nonatomic) IBOutlet HMSegmentedControl *segmentedControl;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIView *verticalLine;
@@ -32,10 +32,17 @@
 @property (nonatomic, assign) NSInteger lastIndex;
 @property (nonatomic, strong) NSString *lastSearchKeyword;
 
+//has to set isFirstLoading to be Yes in first place before call network requst, use notFirstLoading instead to avoid this;
+
+@property (nonatomic, assign) BOOL notFirstLoading;
+
 @end
 
 @implementation PIESearchViewController
 
+-(BOOL)hidesBottomBarWhenPushed {
+    return YES;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -62,12 +69,17 @@
     [_segmentedControl setIndexChangeBlock:^(NSInteger index) {
         if (index == 0) {
             self.layout.columnCount = 1;
+            self.layout.minimumInteritemSpacing = 1;
+            self.layout.minimumColumnSpacing = 0;
+
             [_collectionView reloadData];
             [_sourceUser removeAllObjects];
             [_sourceContent removeAllObjects];
         }
         else {
             self.layout.columnCount = 2;
+            self.layout.minimumInteritemSpacing = 10;
+            self.layout.minimumColumnSpacing = 10;
             [_collectionView reloadData];
             [_sourceUser removeAllObjects];
             [_sourceContent removeAllObjects];
@@ -83,6 +95,8 @@
     
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
+    _collectionView.emptyDataSetDelegate = self;
+    _collectionView.emptyDataSetSource = self;
     _collectionView.collectionViewLayout = self.layout;
     _collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     _collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
@@ -129,7 +143,10 @@
 }
 
 - (void)tapOnCollectionView:(UITapGestureRecognizer*)gesture {
-    [_textField2 resignFirstResponder];
+    if ([_textField2 isFirstResponder]) {
+        [_textField2 resignFirstResponder];
+        return;
+    }
 
     if (_segmentedControl.selectedSegmentIndex == 1) {
         CGPoint location = [gesture locationInView:self.collectionView];
@@ -186,6 +203,8 @@
         _layout = [[CHTCollectionViewWaterfallLayout alloc] init];
         _layout.sectionInset = UIEdgeInsetsMake(10, 6, 0, 6);
         _layout.columnCount = 1;
+        _layout.minimumInteritemSpacing = 1;
+        _layout.minimumColumnSpacing = 0;
     }
     return _layout;
 }
@@ -193,6 +212,7 @@
 - (void)textFieldDidChange:(UITextField*)sender {
     
     if ([_lastSearchKeyword isEqualToString: sender.text ] && _lastIndex == self.segmentedControl.selectedSegmentIndex ) {
+    } else if ([sender.text isEqualToString:@""]) {
     } else {
         [self searchRemoteWithText:sender.text];
         _lastSearchKeyword = sender.text;
@@ -208,10 +228,12 @@
     if (_segmentedControl.selectedSegmentIndex == 0) {
         [param setObject:string forKey:@"name"];
         [PIESearchManager getSearchUserResult:param withBlock:^(NSMutableArray *retArray) {
+            _notFirstLoading = YES;
             _sourceUser = retArray;
             [_collectionView reloadData];
         }];
     } else {
+        _notFirstLoading = YES;
         [param setObject:string forKey:@"desc"];
         [PIESearchManager getSearchContentResult:param withBlock:^(NSMutableArray *retArray) {
             _sourceContent = retArray;
@@ -224,13 +246,7 @@
     [self dismissViewControllerAnimated:NO completion:nil];
 }
 
--(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    NSLog(@"shouldChangeCharactersInRange%@",string);
-    return YES;
-}
--(void)textFieldDidEndEditing:(UITextField *)textField {
-    NSLog(@"textFieldDidEndEditing %@",textField.text);
-}
+
 
 
 #pragma mark - UICollectionViewDataSource
@@ -279,7 +295,7 @@
                 return CGSizeMake(SCREEN_WIDTH, 150);
             }
             else {
-                return CGSizeMake(SCREEN_WIDTH, 70);
+                return CGSizeMake(SCREEN_WIDTH, 65);
             }
         } else {
             return CGSizeZero;
@@ -294,6 +310,32 @@
         height = MIN(height, SCREEN_HEIGHT/1.5);
         return CGSizeMake(width, height);
     }
+}
+
+#pragma mark - DZNEmptyDataSetSource & delegate
+-(UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"pie_empty"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text = @"我们的频道很快出版咯，敬请期待～";
+
+    if (_notFirstLoading) {
+        text = @"未搜索到用户或内容";
+    }
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+-(BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
+    return YES;
+}
+
+-(CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    return -100;
 }
 
 @end

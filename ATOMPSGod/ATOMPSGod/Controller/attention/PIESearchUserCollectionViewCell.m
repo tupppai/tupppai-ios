@@ -26,8 +26,15 @@
     _avatarButton.userInteractionEnabled = NO;
     _nameButton.userInteractionEnabled = NO;
     _followButton.userInteractionEnabled = NO;
-    
     _swipeView.dataSource = self;
+    
+//    [self addBottomBorder];
+}
+- (void)addBottomBorder {
+    CALayer *border = [CALayer layer];
+    border.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5].CGColor;
+    border.frame = CGRectMake(0, self.frame.size.height-10, self.frame.size.width, 1);
+    [self.layer addSublayer:border];
 }
 
 - (void)injectSauce:(PIEUserViewModel*)vm {
