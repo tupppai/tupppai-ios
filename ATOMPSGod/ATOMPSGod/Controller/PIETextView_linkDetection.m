@@ -41,4 +41,11 @@
     return NO;
 }
 
+- (void)textViewDidChangeSelection:(UITextView *)textView {
+    if(NSEqualRanges(textView.selectedRange, NSMakeRange(0, 0)) == NO) {
+        textView.selectedRange = NSMakeRange(0, 0);
+    }
+}
+
+
 @end

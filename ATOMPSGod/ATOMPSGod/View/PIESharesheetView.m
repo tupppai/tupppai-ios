@@ -30,7 +30,18 @@
 }
 - (void)configSelf {
     self.backgroundColor = [UIColor whiteColor];
-    self.layer.cornerRadius = 10;
+//    self.layer.cornerRadius = 10;
+    self.frame = CGRectMake(0, 0, SCREEN_WIDTH*0.98, 240);
+    UIBezierPath *maskPath;
+    maskPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
+                                     byRoundingCorners:(UIRectCornerTopLeft|UIRectCornerTopRight)
+                                           cornerRadii:CGSizeMake(10.0, 10.0)];
+    
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+    maskLayer.frame = self.bounds;
+    maskLayer.path = maskPath.CGPath;
+    self.layer.mask = maskLayer;
+
 }
 - (void)generateData {
     _iconArray = [NSMutableArray new];

@@ -22,6 +22,7 @@
             make.centerX.equalTo(self);
             make.bottom.equalTo(self).with.offset(240).with.priorityHigh();
         }];
+        
         [self configClickEvent];
     }
     return self;
