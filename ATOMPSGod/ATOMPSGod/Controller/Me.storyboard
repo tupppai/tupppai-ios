@@ -18,59 +18,59 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="0eW-Qd-Lp1" userLabel="topContainerView" customClass="UIImageView">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="220"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="240"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="＊" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gng-se-MP8">
-                                        <rect key="frame" x="255" y="181" width="12" height="14.5"/>
+                                        <rect key="frame" x="255" y="186" width="12" height="14.5"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="关注" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gx7-sZ-8Me">
-                                        <rect key="frame" x="229" y="181" width="24" height="14.5"/>
+                                        <rect key="frame" x="229" y="186" width="24" height="14.5"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="＊" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gy0-hx-9KW">
-                                        <rect key="frame" x="365" y="181" width="12" height="14.5"/>
+                                        <rect key="frame" x="365" y="186" width="12" height="14.5"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="获赞" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qzW-PX-U7Y">
-                                        <rect key="frame" x="339" y="181" width="24" height="14.5"/>
+                                        <rect key="frame" x="339" y="186" width="24" height="14.5"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="粉丝" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UHf-uB-TMZ">
-                                        <rect key="frame" x="284" y="181" width="24" height="14.5"/>
+                                        <rect key="frame" x="284" y="186" width="24" height="14.5"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="＊" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0f8-Kd-RTM">
-                                        <rect key="frame" x="310" y="181" width="12" height="14.5"/>
+                                        <rect key="frame" x="310" y="186" width="12" height="14.5"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="quq-3A-g9a">
-                                        <rect key="frame" x="296" y="145" width="7.5" height="19.5"/>
+                                        <rect key="frame" x="296" y="150" width="7.5" height="19.5"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jt2-sH-511">
-                                        <rect key="frame" x="274" y="187" width="3" height="3"/>
+                                        <rect key="frame" x="274" y="192" width="3" height="3"/>
                                         <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -79,7 +79,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JTg-Op-4Qr">
-                                        <rect key="frame" x="329" y="187" width="3" height="3"/>
+                                        <rect key="frame" x="329" y="192" width="3" height="3"/>
                                         <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -127,10 +127,10 @@
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="quq-3A-g9a" firstAttribute="top" secondItem="yAp-sS-H6c" secondAttribute="bottom" constant="5" id="0x3-0d-MnJ"/>
+                                    <constraint firstItem="quq-3A-g9a" firstAttribute="top" secondItem="yAp-sS-H6c" secondAttribute="bottom" constant="10" id="0x3-0d-MnJ"/>
                                     <constraint firstItem="UHf-uB-TMZ" firstAttribute="leading" secondItem="gng-se-MP8" secondAttribute="trailing" constant="37" id="2GM-3n-ndj"/>
                                     <constraint firstItem="gx7-sZ-8Me" firstAttribute="centerY" secondItem="UHf-uB-TMZ" secondAttribute="centerY" id="2GN-nd-JgD"/>
-                                    <constraint firstAttribute="height" constant="220" id="52r-Xc-219"/>
+                                    <constraint firstAttribute="height" constant="240" id="52r-Xc-219"/>
                                     <constraint firstItem="0f8-Kd-RTM" firstAttribute="leading" secondItem="UHf-uB-TMZ" secondAttribute="trailing" constant="2" id="5bV-H0-Kxt"/>
                                     <constraint firstItem="JTg-Op-4Qr" firstAttribute="centerY" secondItem="qzW-PX-U7Y" secondAttribute="centerY" id="5uf-6d-DHq"/>
                                     <constraint firstItem="0f8-Kd-RTM" firstAttribute="top" secondItem="0eW-Qd-Lp1" secondAttribute="top" constant="20" id="7JD-jn-9lz"/>
@@ -203,6 +203,7 @@
                         <outlet property="fansView" destination="UHf-uB-TMZ" id="Hmv-7W-lc3"/>
                         <outlet property="followCountLabel" destination="gng-se-MP8" id="0Cp-Tm-O02"/>
                         <outlet property="followView" destination="gx7-sZ-8Me" id="scz-qJ-RcT"/>
+                        <outlet property="likeView" destination="qzW-PX-U7Y" id="uh9-4q-Uh0"/>
                         <outlet property="likedCountLabel" destination="Gy0-hx-9KW" id="xNo-3z-Wka"/>
                         <outlet property="topContainerView" destination="0eW-Qd-Lp1" id="BnU-jc-QkQ"/>
                         <outlet property="usernameLabel" destination="quq-3A-g9a" id="Mz4-Iu-gA7"/>

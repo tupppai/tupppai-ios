@@ -26,16 +26,18 @@
 @property (weak, nonatomic) IBOutlet UIView *dotView2;
 @property (weak, nonatomic) IBOutlet UIView *dotView1;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
+@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *followCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *fansCountLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *topContainerView;
-@property (weak, nonatomic) IBOutlet UIView *pageMenuContainerView;
+@property (weak, nonatomic) IBOutlet UILabel *likedCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *followView;
 @property (weak, nonatomic) IBOutlet UILabel *fansView;
-@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *likeView;
+
+@property (weak, nonatomic) IBOutlet UIImageView *topContainerView;
+@property (weak, nonatomic) IBOutlet UIView *pageMenuContainerView;
 @property (weak, nonatomic) IBOutlet UIView *avatarContainerView;
 
-@property (weak, nonatomic) IBOutlet UILabel *likedCountLabel;
 @property (nonatomic, strong) PWRefreshFooterCollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *homeImageDataSource;
@@ -185,10 +187,29 @@
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarContainerView.layer.cornerRadius = _avatarContainerView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
-
+    
+    [self setupColorAndFont];
     [self setupTapGesture];
 }
 
+- (void)setupColorAndFont {
+    [ _usernameLabel setFont:[UIFont boldSystemFontOfSize:16]];
+    [ _followCountLabel setFont:[UIFont boldSystemFontOfSize:12]];
+    [ _followView setFont:[UIFont boldSystemFontOfSize:12]];
+    [ _likedCountLabel setFont:[UIFont boldSystemFontOfSize:12]];
+    [ _likeView setFont:[UIFont boldSystemFontOfSize:12]];
+    [ _fansCountLabel setFont:[UIFont boldSystemFontOfSize:12]];
+    [ _fansView setFont:[UIFont boldSystemFontOfSize:12]];
+
+    [_usernameLabel setTextColor:[UIColor colorWithHex:0xffffff andAlpha:1.0]];
+    [_followCountLabel setTextColor:[UIColor colorWithHex:0xffffff andAlpha:0.8]];
+    [_followView setTextColor:[UIColor colorWithHex:0xffffff andAlpha:0.8]];
+    [_fansCountLabel setTextColor:[UIColor colorWithHex:0xffffff andAlpha:0.8]];
+    [_fansView setTextColor:[UIColor colorWithHex:0xffffff andAlpha:0.8]];
+    [_likeView setTextColor:[UIColor colorWithHex:0xffffff andAlpha:0.8]];
+    [_likedCountLabel setTextColor:[UIColor colorWithHex:0xffffff andAlpha:0.8]];
+
+}
 - (void)updateViewsWithData {
     DDUserManager* user = [DDUserManager currentUser];
     _usernameLabel.text = user.username;
