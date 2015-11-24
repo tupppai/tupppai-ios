@@ -1061,7 +1061,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                     [self showShareView];
                 }
                 
-                else if (CGRectContainsPoint(cell.commentView.frame, p)) {
+                else if ((CGRectContainsPoint(cell.commentView.frame, p))||(CGRectContainsPoint(cell.commentLabel1.frame, p))||(CGRectContainsPoint(cell.commentLabel2.frame, p)) ) {
                     PIECommentViewController* vc = [PIECommentViewController new];
                     vc.vm = _selectedVM;
                     vc.shouldShowHeaderView = NO;
@@ -1122,8 +1122,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                 else if (CGRectContainsPoint(cell.collectView.frame, p)) {
                     [self collect:cell.collectView shouldShowHud:NO];
                 }
-                else if (CGRectContainsPoint(cell.commentView.frame, p)) {
-                    PIECommentViewController* vc = [PIECommentViewController new];
+                else if ((CGRectContainsPoint(cell.commentView.frame, p))||(CGRectContainsPoint(cell.commentLabel1.frame, p))||(CGRectContainsPoint(cell.commentLabel2.frame, p)) ) {                    PIECommentViewController* vc = [PIECommentViewController new];
                     vc.vm = _selectedVM;
                     vc.shouldShowHeaderView = NO;
                     [self.navigationController pushViewController:vc animated:YES];

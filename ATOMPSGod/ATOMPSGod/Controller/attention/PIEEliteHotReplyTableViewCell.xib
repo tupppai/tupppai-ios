@@ -98,12 +98,12 @@
                         </variation>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jc3-XI-5t8" customClass="PIEPageLikeButton">
-                        <rect key="frame" x="344" y="475" width="25" height="28"/>
+                        <rect key="frame" x="348" y="475" width="27" height="28"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="25" id="Ag1-cc-BHa"/>
-                            <constraint firstAttribute="width" priority="250" constant="25" id="fx6-Rl-ng8"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="27" id="Ag1-cc-BHa"/>
+                            <constraint firstAttribute="width" priority="250" constant="27" id="fx6-Rl-ng8"/>
                             <constraint firstAttribute="height" constant="28" id="z4l-O1-j55"/>
                         </constraints>
                     </view>
@@ -173,7 +173,7 @@
                     <constraint firstItem="kwf-rd-ff2" firstAttribute="top" secondItem="fJb-ve-xhh" secondAttribute="top" constant="7" id="7Wa-Fk-Nlj"/>
                     <constraint firstItem="jz8-n6-016" firstAttribute="top" secondItem="Sgj-ub-LZu" secondAttribute="bottom" constant="17" id="7hE-wE-Zc7"/>
                     <constraint firstItem="fJb-ve-xhh" firstAttribute="top" secondItem="r7k-a1-VTN" secondAttribute="topMargin" id="90f-ER-cJ9"/>
-                    <constraint firstAttribute="trailing" secondItem="Jc3-XI-5t8" secondAttribute="trailing" constant="17" id="9hP-Wv-sEh"/>
+                    <constraint firstAttribute="trailing" secondItem="Jc3-XI-5t8" secondAttribute="trailing" constant="11" id="9hP-Wv-sEh"/>
                     <constraint firstItem="hvb-nQ-yFa" firstAttribute="leading" secondItem="VBu-vK-E8O" secondAttribute="trailing" constant="15" id="ARY-F3-Lag"/>
                     <constraint firstItem="cg3-rv-3zG" firstAttribute="leading" secondItem="r7k-a1-VTN" secondAttribute="leading" id="Ad3-em-PKB"/>
                     <constraint firstAttribute="trailing" secondItem="jz8-n6-016" secondAttribute="trailing" id="BaB-Gf-RmL"/>

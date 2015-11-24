@@ -150,8 +150,12 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
         [_progressView setProgress:percentage animated:YES];
         if (success) {
             if ([manager.type isEqualToString:@"ask"]) {
+                ws.segmentedControl.selectedSegmentIndex=1;
+                [ws.scrollView toggleWithType:PIENewScrollTypeAsk];
                 [ws.scrollView.collectionViewAsk.header beginRefreshing];
             } else if ([manager.type isEqualToString:@"reply"]) {
+                ws.segmentedControl.selectedSegmentIndex=2;
+                [ws.scrollView toggleWithType:PIENewScrollTypeReply];
                 [ws.scrollView.tableReply.header beginRefreshing];
             }
         }

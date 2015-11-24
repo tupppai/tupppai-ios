@@ -20,8 +20,8 @@
     _imageView.image = [UIImage imageNamed:@"pieLike"];
     _imageView.highlightedImage = [UIImage imageNamed:@"pieLike_selected"];
     [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.equalTo(@15);
-        make.height.equalTo(@15);
+        make.width.equalTo(@17);
+        make.height.equalTo(@17);
         make.leading.equalTo(self);
         make.centerY.equalTo(self);
     }];

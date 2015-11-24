@@ -17,20 +17,20 @@
     _imageView = [UIImageView new];
     _label = [UILabel new];
     _label.text = @"0";
-    _label.font = [UIFont lightTupaiFontOfSize:13];
+    _label.font = [UIFont lightTupaiFontOfSize:14];
     _label.textColor = [UIColor colorWithHex:0x4a4a4a andAlpha:1.0];
     [self addSubview:_imageView];
     [self addSubview:_label];
     _imageView.contentMode = UIViewContentModeScaleAspectFit;
     [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.equalTo(@13);
-        make.height.equalTo(@13);
+        make.width.equalTo(@15);
+        make.height.equalTo(@15);
         make.leading.equalTo(self);
         make.centerY.equalTo(self);
     }];
     [_label mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.equalTo(_imageView.mas_trailing).with.offset(3);
-        make.centerY.equalTo(_imageView).with.offset(0);
+        make.centerY.equalTo(_imageView).with.offset(-1);
         make.right.equalTo(self);
     }];
 }

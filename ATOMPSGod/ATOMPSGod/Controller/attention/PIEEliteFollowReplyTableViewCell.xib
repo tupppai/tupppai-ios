@@ -123,13 +123,13 @@
                         </variation>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="New-cK-IUH" customClass="PIEPageLikeButton">
-                        <rect key="frame" x="344" y="566" width="25" height="28"/>
+                        <rect key="frame" x="345" y="566" width="30" height="28"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="25" id="UVr-LV-pc6"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="UVr-LV-pc6"/>
                             <constraint firstAttribute="height" constant="28" id="gIm-BQ-xM8"/>
-                            <constraint firstAttribute="width" priority="250" constant="25" id="k1b-WB-gsx"/>
+                            <constraint firstAttribute="width" priority="250" constant="30" id="k1b-WB-gsx"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eii-iC-8N1">
@@ -176,7 +176,7 @@
                     <constraint firstItem="Eii-iC-8N1" firstAttribute="top" secondItem="u76-JP-qUq" secondAttribute="bottom" constant="17" id="ou0-77-dcA"/>
                     <constraint firstItem="bZD-SV-wez" firstAttribute="height" secondItem="eCR-aD-tkR" secondAttribute="height" id="tBH-xb-HZt"/>
                     <constraint firstAttribute="bottom" secondItem="Eii-iC-8N1" secondAttribute="bottom" id="ufV-Cu-BTa"/>
-                    <constraint firstAttribute="trailing" secondItem="New-cK-IUH" secondAttribute="trailing" constant="17" id="xiU-st-f7t"/>
+                    <constraint firstAttribute="trailing" secondItem="New-cK-IUH" secondAttribute="trailing" constant="11" id="xiU-st-f7t"/>
                     <constraint firstAttribute="bottomMargin" secondItem="u76-JP-qUq" secondAttribute="bottom" id="y2d-Z8-QUX"/>
                 </constraints>
                 <variation key="default">

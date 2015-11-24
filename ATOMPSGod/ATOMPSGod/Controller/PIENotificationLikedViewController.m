@@ -20,6 +20,7 @@
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, assign) BOOL isfirstLoading;
+@property (nonatomic, assign)  long long timeStamp;
 
 @end
 
@@ -45,9 +46,9 @@
     [self.tableView.footer endRefreshing];
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    _timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(1) forKey:@"page"];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@"like" forKey:@"type"];
     
@@ -72,11 +73,10 @@
     _currentIndex++;
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(_currentIndex) forKey:@"page"];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [param setObject:@"normal" forKey:@"type"];
+    [param setObject:@"like" forKey:@"type"];
     
     [PIENotificationManager getNotifications:param block:^(NSArray *source) {
         if (source.count>0) {

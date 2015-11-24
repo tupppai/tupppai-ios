@@ -42,7 +42,6 @@
     self.title = @"我的消息";
     _source = [NSMutableArray array];
     _canRefreshFooter = YES;
-    
     UITapGestureRecognizer* tapGes = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnTableView:)];
     [self.tableView addGestureRecognizer:tapGes];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTableView) name:@"updateNoticationStatus" object:nil];
@@ -54,12 +53,30 @@
                                              selector:@selector(keyboardDidHide:)
                                                  name:UIKeyboardDidHideNotification
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateNoticationStatus)
+                                                 name:@"updateNoticationStatus"
+                                               object:nil];
     [self configSlack];
     [self configTableView];
     [self setupRefresh_Footer];
     [self getDataSource];
 }
 
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[NSUserDefaults standardUserDefaults]setObject:@(NO) forKey:@"NotificationNew"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+
+    if (![[self.navigationController viewControllers] containsObject: self]) //any other hierarchy compare
+    {
+        [[NSNotificationCenter defaultCenter]removeObserver:self name:@"updateNoticationStatus" object:nil];
+    }
+}
+
+- (void)updateNoticationStatus {
+    [self getDataSource];
+}
 - (void)keyboardWillShow:(id)sender {
     self.textInputbarHidden = NO;
 }
@@ -85,7 +102,7 @@
                 vc.uid = vm.senderID;
                 vc.name = vm.username;
                 [self.navigationController pushViewController:vc animated:YES];
-            } else  if (CGRectContainsPoint(cell.pageImageView.frame,p)) {
+            } else   {
                 PIECommentViewController* vc = [PIECommentViewController new];
                 PIEPageVM* pageVM = [PIEPageVM new];
                 pageVM.ID = vm.targetID;
@@ -106,7 +123,7 @@
                 vc.uid = vm.senderID;
                 vc.name = vm.username;
                 [self.navigationController pushViewController:vc animated:YES];
-            } else  if (CGRectContainsPoint(cell.pageImageView.frame,p)) {
+            } else {
                 PIECommentViewController* vc = [PIECommentViewController new];
                 PIEPageVM* pageVM = [PIEPageVM new];
                 pageVM.ID = vm.targetID;
@@ -202,11 +219,7 @@
 -(void)refreshTableView {
     [self.tableView reloadData];
 }
--(void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [[NSUserDefaults standardUserDefaults]setObject:@(NO) forKey:@"NotificationNew"];
-    [[NSUserDefaults standardUserDefaults]synchronize];
-}
+
 #pragma mark - GetDataSource
 - (void)getDataSource {
     _currentIndex = 1;
@@ -217,7 +230,7 @@
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
-    [param setObject:@(15) forKey:@"size"];
+    [param setObject:@(100) forKey:@"size"];
     [PIENotificationManager getNotifications:param block:^(NSArray *source) {
         if (source.count>0) {
             ws.source = [source mutableCopy];

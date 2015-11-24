@@ -229,7 +229,6 @@
                                    stringByReplacingOccurrencesOfString:@" " withString:@""];
     
     [self uploadDeviceInfo:devicetokenString];
-
 }
 - (void)uploadDeviceInfo:(NSString*)token {
     NSUUID *oNSUUID = [[UIDevice currentDevice] identifierForVendor];
