@@ -33,11 +33,11 @@
                         <rect key="frame" x="50" y="39" width="381" height="0.0"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Os-9V-3km">
-                        <rect key="frame" x="432" y="8" width="46" height="30"/>
+                        <rect key="frame" x="432" y="6.5" width="46" height="30"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="L1m-M9-UFQ"/>
@@ -60,6 +60,7 @@
             <constraints>
                 <constraint firstItem="aqW-05-v5A" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="15" id="2wb-CE-GZF"/>
                 <constraint firstAttribute="trailing" secondItem="aBY-Ex-sPM" secondAttribute="trailing" constant="55" id="3bo-ck-nIX"/>
+                <constraint firstItem="7Os-9V-3km" firstAttribute="centerY" secondItem="wfj-ZC-vbK" secondAttribute="centerY" id="45s-OP-yMA"/>
                 <constraint firstItem="j7j-YT-s7L" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="C2r-7C-Egj"/>
                 <constraint firstItem="7Os-9V-3km" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="Ddw-md-8Al"/>
                 <constraint firstItem="wfj-ZC-vbK" firstAttribute="top" secondItem="aqW-05-v5A" secondAttribute="top" id="Iae-vh-fSg"/>
@@ -79,6 +80,7 @@
                 <mask key="constraints">
                     <exclude reference="Iae-vh-fSg"/>
                     <exclude reference="xHF-DH-FDq"/>
+                    <exclude reference="Ddw-md-8Al"/>
                 </mask>
             </variation>
             <connections>

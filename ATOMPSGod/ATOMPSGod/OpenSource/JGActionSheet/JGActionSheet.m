@@ -245,7 +245,17 @@ static BOOL disableCustomEasing = NO;
     }
     else {
         self.backgroundColor = [UIColor whiteColor];
-        self.layer.cornerRadius = kHostsCornerRadius;
+        
+        UIBezierPath *maskPath;
+        maskPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
+                                         byRoundingCorners:(UIRectCornerTopLeft|UIRectCornerTopRight)
+                                               cornerRadii:CGSizeMake(kHostsCornerRadius, kHostsCornerRadius)];
+        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+        maskLayer.frame = self.bounds;
+        maskLayer.path = maskPath.CGPath;
+        self.layer.mask = maskLayer;
+        
+//        self.layer.cornerRadius = kHostsCornerRadius;
         self.layer.shadowColor = [UIColor blackColor].CGColor;
         self.layer.shadowOffset = CGSizeZero;
         self.layer.shadowRadius = kShadowRadius;

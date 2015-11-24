@@ -75,6 +75,11 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     [self configData];
     [self createNavBar];
     [self configSubviews];
+    
+    [self getSourceIfEmpty_hot:nil];
+    [self getSourceIfEmpty_banner];
+
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -93,12 +98,14 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    if (_sv.type == PIEPageTypeEliteHot) {
-        [self getSourceIfEmpty_hot:nil];
-    } else {
-        [self getSourceIfEmpty_follow:nil];
+    if (!_isfirstLoadingHot) {
+        if (_sv.type == PIEPageTypeEliteHot) {
+            [self getSourceIfEmpty_hot:nil];
+        } else {
+            [self getSourceIfEmpty_follow:nil];
+        }
+        [self getSourceIfEmpty_banner];
     }
-    [self getSourceIfEmpty_banner];
 }
 
 - (void)updateStatus {

@@ -35,6 +35,7 @@
 //has to set isFirstLoading to be Yes in first place before call network requst, use notFirstLoading instead to avoid this;
 
 @property (nonatomic, assign) BOOL notFirstLoading;
+@property (nonatomic, assign) BOOL notFirstShowKeyboard;
 
 @end
 
@@ -42,6 +43,13 @@
 
 -(BOOL)hidesBottomBarWhenPushed {
     return YES;
+}
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (!_notFirstShowKeyboard) {
+        [_textField2 becomeFirstResponder];
+        _notFirstShowKeyboard = YES;
+    }
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -129,7 +137,6 @@
                     action:@selector(textFieldDidChange:)
           forControlEvents:UIControlEventEditingChanged];
     
-    [_textField2 becomeFirstResponder];
     
 }
 

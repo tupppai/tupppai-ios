@@ -31,6 +31,8 @@
 @property (nonatomic, strong)  JGActionSheet * psActionSheet;
 @property (nonatomic, assign)  NSInteger askCount;
 @property (nonatomic, assign)  NSInteger replyCount;
+@property (weak, nonatomic) IBOutlet UIView *bottomContainerView;
+@property (weak, nonatomic) IBOutlet UIVisualEffectView *bottomDimmerView;
 
 @end
 
@@ -38,15 +40,11 @@
 -(BOOL)hidesBottomBarWhenPushed {
     return YES;
 }
--(void)awakeFromNib {
-    
-}
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationItem.titleView = self.segmentedControl;
     _likeButton.selected = _currentVM.liked;
     [MobClick beginLogPageView:@"进入滚动详情页"];
-
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -55,10 +53,9 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupBlurredImage];
     [self setupViews];
     [self setupData];
-    [self addDarkEffectOnBlurView];
+//    [self addDarkEffectOnBlurView];
     [self getDataSource];
 }
 
@@ -88,7 +85,7 @@
     _carousel.pagingEnabled = YES;
     _carousel.bounces = YES;
     _carousel.bounceDistance = 0.21;
-    _avatarView.layer.cornerRadius = 20;
+    _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
     _avatarView.userInteractionEnabled = YES;
     _textView_content.scrollEnabled = YES;
@@ -99,6 +96,18 @@
     _usernameLabel.userInteractionEnabled = YES;
     UITapGestureRecognizer *tapG2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToSeeFriend)];
     [_usernameLabel addGestureRecognizer:tapG2];
+    
+    [_usernameLabel setFont:[UIFont mediumTupaiFontOfSize:13]];
+    [_timeLabel setFont:[UIFont mediumTupaiFontOfSize:10]];
+    [_usernameLabel setTextColor:[UIColor colorWithHex:0xffffff andAlpha:0.8]];
+    [_timeLabel setTextColor:[UIColor colorWithHex:0xffffff andAlpha:0.5]];
+    
+    UIBlurEffect* effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    _bottomDimmerView.effect = effect;
+//    _bottomDimmerView.backgroundColor = [UIColor redColor];
+    
+    _bottomContainerView.backgroundColor = [UIColor clearColor];
+    
 }
 - (void)pushToSeeFriend {
     PIEFriendViewController * friendVC = [PIEFriendViewController new];
@@ -128,11 +137,11 @@
 
 }
 
-- (void)setupBlurredImage
+- (void)DownloadAndBlurImage
 {
-    [DDService downloadImage:_pageVM.imageURL withBlock:^(UIImage *image) {
+    [DDService downloadImage:_currentVM.imageURL withBlock:^(UIImage *image) {
         if (image) {
-            self.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+            self.blurView.image = [image blurredImageWithRadius:60 iterations:1 tintColor:[UIColor blackColor]];
         } else {
             
         }
@@ -166,6 +175,7 @@
             if([subView isKindOfClass:[UIImageView class]]){
                 UIImageView *imageView = (UIImageView *)subView;
                 [imageView setImageWithURL:[NSURL URLWithString:vm.imageURL]];
+                break;
             }
         }
         return view;
@@ -292,22 +302,37 @@
 -(void)updateUIWithIndex:(NSInteger)index {
     if (_dataSource.count > index) {
         _currentVM = [_dataSource objectAtIndex:index];
-        [_avatarView setImageWithURL:[NSURL URLWithString:_currentVM.avatarURL] placeholderImage:[UIImage new]];
+        
+        [_avatarView setImageWithURL:[NSURL URLWithString:_currentVM.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+ 
         _usernameLabel.text = _currentVM.username;
         _timeLabel.text = _currentVM.publishTime;
         
+        UIView* currentItemView = _carousel.currentItemView;
+        
+        for (UIView *subView in currentItemView.subviews) {
+            if([subView isKindOfClass:[UIImageView class]]){
+                UIImageView *imageView = (UIImageView *)subView;
+                if (imageView.image) {
+                    self.blurView.image = [imageView.image blurredImageWithRadius:60 iterations:1 tintColor:[UIColor blackColor]];
+                } else {
+                    [self DownloadAndBlurImage];
+                }
+                
+                break;
+            }
+        }
+
         NSString * htmlString = _currentVM.content;
         NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
         
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init] ;
         [paragraphStyle setAlignment:NSTextAlignmentCenter];
         [attrStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, attrStr.length)];
-        [attrStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSMakeRange(0, attrStr.length)];
-        [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0xffffff andAlpha:1.0] range:NSMakeRange(0, attrStr.length)];
+        [attrStr addAttribute:NSFontAttributeName value:[UIFont mediumTupaiFontOfSize:15] range:NSMakeRange(0, attrStr.length)];
+        [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0xffffff andAlpha:0.95] range:NSMakeRange(0, attrStr.length)];
 
         _textView_content.attributedText = attrStr;
-
-        
         
         _likeButton.selected = _currentVM.liked;
         if (_currentVM.type == PIEPageTypeAsk) {
@@ -348,7 +373,6 @@
             [self.dataSource removeAllObjects];
             [self.dataSource addObjectsFromArray:askArray];
             [self.dataSource addObjectsFromArray: replyArray];
-            [self updateUIWithIndex:0];
             [self initSegmentTitles];
             [_carousel reloadData];
             [self reorderSourceAndScroll];
@@ -368,13 +392,18 @@
                 if (vmToCheck.type == PIEPageTypeAsk) {
                     [_dataSource insertObject:vm atIndex:2];
                     [_carousel scrollToItemAtIndex:2 duration:0];
+                    break;
                 }
                 else {
                     [_dataSource insertObject:vm atIndex:1];
                     [_carousel scrollToItemAtIndex:1 duration:0];
+                    break;
                 }
             }
             //must animate scroll carousel in order to scroll segment.
+        } else {
+//            [self updateUIWithIndex:0];
+            [_carousel.delegate carouselCurrentItemIndexDidChange:_carousel];
         }
     }
 
