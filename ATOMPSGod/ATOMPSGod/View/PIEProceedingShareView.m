@@ -28,6 +28,14 @@
     return self;
 }
 
+-(void)setHideDeleteButton:(BOOL)hideDeleteButton {
+    _hideDeleteButton = hideDeleteButton;
+    if (hideDeleteButton) {
+        self.sheetView.icon7.hidden = YES;
+    } else {
+        self.sheetView.icon7.hidden = NO;
+    }
+}
 -(PIEProceedingShareSheetView *)sheetView {
     if (!_sheetView) {
         _sheetView = [PIEProceedingShareSheetView new];

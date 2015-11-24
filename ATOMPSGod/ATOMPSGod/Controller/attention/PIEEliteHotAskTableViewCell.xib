@@ -23,7 +23,7 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_default" translatesAutoresizingMaskIntoConstraints="NO" id="OWA-uz-PjT">
+                    <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_default" translatesAutoresizingMaskIntoConstraints="NO" id="OWA-uz-PjT">
                         <rect key="frame" x="8" y="8" width="30" height="30"/>
                         <animations/>
                         <rect key="contentStretch" x="1" y="1" width="1" height="1"/>
@@ -104,8 +104,8 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="GRj-6h-Kth"/>
-                                <exclude reference="fqQ-LU-wlT"/>
                                 <exclude reference="WY0-ya-BUm"/>
+                                <exclude reference="fqQ-LU-wlT"/>
                             </mask>
                         </variation>
                     </imageView>

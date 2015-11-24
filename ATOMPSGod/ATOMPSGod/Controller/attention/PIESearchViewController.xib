@@ -19,7 +19,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="vtR-50-xMk">
-                    <rect key="frame" x="0.0" y="42" width="600" height="558"/>
+                    <rect key="frame" x="0.0" y="44" width="600" height="556"/>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ugb-IM-fzv">
@@ -30,7 +30,7 @@
                     </collectionViewFlowLayout>
                 </collectionView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dss-7S-F7o" customClass="HMSegmentedControl">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="42"/>
+                    <rect key="frame" x="0.0" y="2" width="600" height="42"/>
                     <subviews>
                         <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Lg-4L-RKC">
                             <rect key="frame" x="299" y="5" width="1" height="32"/>
@@ -54,7 +54,7 @@
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="Dss-7S-F7o" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="1sy-h1-sxk"/>
+                <constraint firstItem="Dss-7S-F7o" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="2" id="1sy-h1-sxk"/>
                 <constraint firstAttribute="bottom" secondItem="vtR-50-xMk" secondAttribute="bottom" id="2yd-wj-7KY"/>
                 <constraint firstItem="vtR-50-xMk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="GiX-KU-9i7"/>
                 <constraint firstAttribute="trailing" secondItem="Dss-7S-F7o" secondAttribute="trailing" id="Ika-s6-w1r"/>

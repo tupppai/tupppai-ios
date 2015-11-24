@@ -29,7 +29,6 @@
 #import "DDNavigationController.h"
 #import "PIEWebViewViewController.h"
 #import "PIEShareImageView.h"
-#import <objc/runtime.h>
 
 
 @interface PIEEliteViewController ()<UITableViewDelegate,UITableViewDataSource,PWRefreshBaseTableViewDelegate,UIScrollViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource,SwipeViewDelegate,SwipeViewDataSource>
@@ -87,6 +86,9 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     [super viewWillAppear:animated];
     //update status of like button
     [self updateStatus];
+    
+    //make it always visible when coming back to this vc from other vc.
+    [self.sv.swipeView reloadData];
     [MobClick beginLogPageView:@"进入首页"];
 }
 - (void)viewWillDisappear:(BOOL)animated

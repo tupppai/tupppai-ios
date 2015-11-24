@@ -65,8 +65,8 @@
     if (str.length < 2) {
         [Hud text:@"昵称不能低于2位"];
         return ;
-    } else if (str.length > 8) {
-        [Hud text:@"昵称不能大于8位"];
+    } else if (str.length > 16) {
+        [Hud text:@"昵称不能大于16位"];
         return ;
     }
     

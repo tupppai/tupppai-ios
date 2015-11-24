@@ -199,6 +199,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     commentVM.uid = [DDUserManager currentUser].uid;
     commentVM.avatar = [DDUserManager currentUser].avatar;
     commentVM.originText = self.textView.text;
+    commentVM.time = @"刚刚";
     NSString* commentToShow;
     //回复评论
     if (_targetCommentVM) {

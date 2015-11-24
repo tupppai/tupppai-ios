@@ -23,6 +23,7 @@
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
 #import "PIEProceedingShareView.h"
+
 #import "UITableView+FDTemplateLayoutCell.h"
 
 #define MyAskCellWidth (SCREEN_WIDTH - 20) / 2.0
@@ -176,7 +177,7 @@
     _selectedVM = [_sourceAsk objectAtIndex:indexPath.row];
     if (indexPath) {
         //点击图片
-        [self showShareView];
+        [self showShareViewWithToHideDeleteButton:YES];
     }
 }
 - (void)longPressOnToHelp:(UILongPressGestureRecognizer *)gesture {
@@ -186,7 +187,7 @@
     _selectedVM = [_sourceToHelp objectAtIndex:indexPath.row];
     if (indexPath) {
         //点击图片
-        [self showShareView];
+        [self showShareViewWithToHideDeleteButton:NO];
     }
 }
 - (void)tapToHelpTableViewGesture:(UITapGestureRecognizer *)gesture {
@@ -394,7 +395,8 @@
     return _QBImagePickerController;
 }
 
-- (void)showShareView {
+- (void)showShareViewWithToHideDeleteButton:(BOOL)hide{
+    self.shareView.hideDeleteButton = hide;
     [self.shareView show];
     
 }
@@ -405,6 +407,7 @@
     }
     return _shareView;
 }
+
 
 #pragma mark - UITableView Datasource and delegate
 

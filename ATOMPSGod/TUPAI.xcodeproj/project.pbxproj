@@ -275,6 +275,8 @@
 		F41FF0EB1BDE231200566A12 /* PIENotificationSystemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F41FF0EA1BDE231200566A12 /* PIENotificationSystemViewController.m */; };
 		F41FF0EE1BDE269A00566A12 /* PIENotificationLikedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F41FF0ED1BDE269A00566A12 /* PIENotificationLikedViewController.m */; };
 		F4206FE71BF0929C00C9B339 /* KVCMutableArray.m in Sources */ = {isa = PBXBuildFile; fileRef = F4206FE61BF0929C00C9B339 /* KVCMutableArray.m */; };
+		F4207AE01C044A20004B1978 /* PIESearchUserSimpleCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4207ADE1C044A20004B1978 /* PIESearchUserSimpleCollectionCell.m */; };
+		F4207AE11C044A20004B1978 /* PIESearchUserSimpleCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4207ADF1C044A20004B1978 /* PIESearchUserSimpleCollectionCell.xib */; };
 		F42100EE1BF5E76A00CFD82E /* intro1.xib in Resources */ = {isa = PBXBuildFile; fileRef = F42100ED1BF5E76A00CFD82E /* intro1.xib */; };
 		F42100F01BF5EBC800CFD82E /* intro2.xib in Resources */ = {isa = PBXBuildFile; fileRef = F42100EF1BF5EBC800CFD82E /* intro2.xib */; };
 		F42100F21BF5EC1900CFD82E /* intro3.xib in Resources */ = {isa = PBXBuildFile; fileRef = F42100F11BF5EC1900CFD82E /* intro3.xib */; };
@@ -1014,6 +1016,9 @@
 		F41FF0ED1BDE269A00566A12 /* PIENotificationLikedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENotificationLikedViewController.m; sourceTree = "<group>"; };
 		F4206FE51BF0929C00C9B339 /* KVCMutableArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVCMutableArray.h; sourceTree = "<group>"; };
 		F4206FE61BF0929C00C9B339 /* KVCMutableArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KVCMutableArray.m; sourceTree = "<group>"; };
+		F4207ADD1C044A20004B1978 /* PIESearchUserSimpleCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIESearchUserSimpleCollectionCell.h; sourceTree = "<group>"; };
+		F4207ADE1C044A20004B1978 /* PIESearchUserSimpleCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIESearchUserSimpleCollectionCell.m; sourceTree = "<group>"; };
+		F4207ADF1C044A20004B1978 /* PIESearchUserSimpleCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIESearchUserSimpleCollectionCell.xib; sourceTree = "<group>"; };
 		F42100ED1BF5E76A00CFD82E /* intro1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = intro1.xib; sourceTree = "<group>"; };
 		F42100EF1BF5EBC800CFD82E /* intro2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = intro2.xib; sourceTree = "<group>"; };
 		F42100F11BF5EC1900CFD82E /* intro3.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = intro3.xib; sourceTree = "<group>"; };
@@ -2611,6 +2616,9 @@
 				F402F0FB1BE8953F004988B4 /* PIESearchContentCollectionViewCell.m */,
 				F402F0FC1BE8953F004988B4 /* PIESearchContentCollectionViewCell.xib */,
 				F402F0F51BE89530004988B4 /* PIESearchUserCollectionViewCell.h */,
+				F4207ADD1C044A20004B1978 /* PIESearchUserSimpleCollectionCell.h */,
+				F4207ADE1C044A20004B1978 /* PIESearchUserSimpleCollectionCell.m */,
+				F4207ADF1C044A20004B1978 /* PIESearchUserSimpleCollectionCell.xib */,
 				F402F0F61BE89530004988B4 /* PIESearchUserCollectionViewCell.m */,
 				F402F0F71BE89530004988B4 /* PIESearchUserCollectionViewCell.xib */,
 				F402F0FF1BE89CB4004988B4 /* PIESearchManager.h */,
@@ -3645,6 +3653,7 @@
 				F4E713391BE3557E0046C7A9 /* PIEFriendReplyCollectionViewCell.xib in Resources */,
 				F4F72C051BCB8F08002FF05A /* PIEMyCollectionViewController.xib in Resources */,
 				F4EC11251BCF55C8002D1DCF /* PIENotificationFollowTableViewCell.xib in Resources */,
+				F4207AE11C044A20004B1978 /* PIESearchUserSimpleCollectionCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4012,6 +4021,7 @@
 				5C31018A1AAE9B5700EF529B /* PIEAccountBindingView.m in Sources */,
 				F43930461BE4BD75006C9437 /* MRMethodCopier.m in Sources */,
 				F4F9FFC91BFC849A00032FDE /* SMPageControl.m in Sources */,
+				F4207AE01C044A20004B1978 /* PIESearchUserSimpleCollectionCell.m in Sources */,
 				5C84063B1ABADA8B00068F35 /* PIEPageDAO.m in Sources */,
 				F43930471BE4BD75006C9437 /* MRWeakProxy.m in Sources */,
 				E9F890921B86C4AB0057ECBF /* FMResultSet.m in Sources */,

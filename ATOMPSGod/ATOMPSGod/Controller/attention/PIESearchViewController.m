@@ -11,11 +11,12 @@
 #import "PIESearchManager.h"
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "PIESearchUserCollectionViewCell.h"
+#import "PIESearchUserSimpleCollectionCell.h"
+
 #import "PIESearchContentCollectionViewCell.h"
 #import "PIEFriendViewController.h"
 #import "PIECarouselViewController.h"
 #import "PIEUserViewModel.h"
-
 @interface PIESearchViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (weak, nonatomic) IBOutlet HMSegmentedControl *segmentedControl;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -107,6 +108,8 @@
     [_collectionView registerNib:nib forCellWithReuseIdentifier:@"PIESearchUserCollectionViewCell"];
     UINib* nib2 = [UINib nibWithNibName:@"PIESearchContentCollectionViewCell" bundle:nil];
     [_collectionView registerNib:nib2 forCellWithReuseIdentifier:@"PIESearchContentCollectionViewCell"];
+    UINib* nib3 = [UINib nibWithNibName:@"PIESearchUserSimpleCollectionCell" bundle:nil];
+    [_collectionView registerNib:nib3 forCellWithReuseIdentifier:@"PIESearchUserSimpleCollectionCell"];
     
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
@@ -209,8 +212,7 @@
     }
 }
 
-- (void)follow:(NSInteger)uid {
-}
+
 
 -(CHTCollectionViewWaterfallLayout *)layout {
     if (!_layout) {
@@ -275,12 +277,23 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
     if (_segmentedControl.selectedSegmentIndex == 0) {
-        PIESearchUserCollectionViewCell *cell =
-        (PIESearchUserCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PIESearchUserCollectionViewCell"
-                                                                               forIndexPath:indexPath];
-        [cell injectSauce:[_sourceUser objectAtIndex:indexPath.row]];
-        return cell;
+        PIEUserViewModel* vm = [_sourceUser objectAtIndex:indexPath.row];
+        if (vm.replies.count<=0) {
+            PIESearchUserSimpleCollectionCell *cell =
+            (PIESearchUserSimpleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PIESearchUserSimpleCollectionCell"
+                                                                                         forIndexPath:indexPath];
+            [cell injectSauce:[_sourceUser objectAtIndex:indexPath.row]];
+            return cell;
+        } else {
+            PIESearchUserCollectionViewCell *cell =
+            (PIESearchUserCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PIESearchUserCollectionViewCell"
+                                                                                         forIndexPath:indexPath];
+            [cell injectSauce:[_sourceUser objectAtIndex:indexPath.row]];
+            return cell;
+        }
+
     } else {
         PIESearchContentCollectionViewCell *cell =
         (PIESearchContentCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PIESearchContentCollectionViewCell"
