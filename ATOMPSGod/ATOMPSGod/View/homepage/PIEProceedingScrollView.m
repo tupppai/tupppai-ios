@@ -31,24 +31,11 @@
 }
 
 - (void)initSubviews {
-    [self initAskCollectionView];
-    [self initToHelpTableView];
-    [self initDoneCollectionView];
+    [self initAsk];
+    [self initToHelp];
+    [self initDone];
 }
-- (void)initAskCollectionView {
-//    CHTCollectionViewWaterfallLayout *layout = [[CHTCollectionViewWaterfallLayout alloc] init];
-//    layout.sectionInset = UIEdgeInsetsMake(10, 6, 0, 6);
-//    layout.minimumColumnSpacing = 8;
-//    layout.minimumInteritemSpacing = 10;
-//    _askCollectionView = [[PIERefreshCollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT) collectionViewLayout:layout];
-//    _askCollectionView.toRefreshBottom = YES;
-//    _askCollectionView.backgroundColor = [UIColor clearColor];
-//    _askCollectionView.toRefreshTop = YES;
-//    _askCollectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-//
-//    [self addSubview:_askCollectionView];
-    
-    
+- (void)initAsk {
     _askTableView = [[PIERefreshTableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
     _askTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _askTableView.backgroundColor = [UIColor clearColor];
@@ -56,14 +43,14 @@
     
 }
 
-- (void)initToHelpTableView {
+- (void)initToHelp {
     _toHelpTableView = [[PIERefreshTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
     _toHelpTableView.backgroundColor = [UIColor clearColor];
 
     [self addSubview:_toHelpTableView];
 }
 
-- (void)initDoneCollectionView {
+- (void)initDone {
     CHTCollectionViewWaterfallLayout *layout = [[CHTCollectionViewWaterfallLayout alloc] init];
     layout.sectionInset = UIEdgeInsetsMake(10, 6, 0, 6);
     layout.minimumColumnSpacing = 8;

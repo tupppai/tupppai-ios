@@ -1,22 +1,22 @@
 //
-//  PIEProceedingAskTableViewCell.m
+//  PIEProceedingAskTableViewCell_NoGap.m
 //  TUPAI
 //
-//  Created by chenpeiwei on 10/12/15.
+//  Created by chenpeiwei on 11/25/15.
 //  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIEProceedingAskTableViewCell.h"
+#import "PIEProceedingAskTableViewCell_NoGap.h"
 #import "PIECarouselViewController.h"
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
-@interface PIEProceedingAskTableViewCell()
+@interface PIEProceedingAskTableViewCell_NoGap()
 @property (strong, nonatomic) NSMutableArray *source;
 @property (strong, nonatomic) PIEPageVM *vmAsk1;
 @property (strong, nonatomic) PIEPageVM *vmAsk2;
 @end
 
-@implementation PIEProceedingAskTableViewCell
+@implementation PIEProceedingAskTableViewCell_NoGap
 
 - (void)awakeFromNib {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -111,7 +111,7 @@
     }
     _timeLabel.text = _vmAsk1.publishTime;
     _allWorkDescLabel.text = [NSString stringWithFormat:@"已有%@个作品",_vmAsk1.replyCount];
-//    _contentLabel.text = [NSString stringWithFormat:@"要求:%@",_vmAsk1.content];
+    //    _contentLabel.text = [NSString stringWithFormat:@"要求:%@",_vmAsk1.content];
     _contentTextField.text = _vmAsk1.content;
     [self.swipeView reloadData];
     

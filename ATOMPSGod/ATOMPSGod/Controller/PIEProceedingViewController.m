@@ -23,7 +23,7 @@
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
 #import "PIEProceedingShareView.h"
-
+#import "PIEProceedingAskTableViewCell_NoGap.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 
 #define MyAskCellWidth (SCREEN_WIDTH - 20) / 2.0
@@ -137,6 +137,10 @@
     _sv.askTableView.emptyDataSetSource = self;
     UINib* nib = [UINib nibWithNibName:@"PIEProceedingAskTableViewCell" bundle:nil];
     [_sv.askTableView registerNib:nib forCellReuseIdentifier:@"PIEProceedingAskTableViewCell"];
+    
+    UINib* nib2 = [UINib nibWithNibName:@"PIEProceedingAskTableViewCell_NoGap" bundle:nil];
+    [_sv.askTableView registerNib:nib2 forCellReuseIdentifier:@"PIEProceedingAskTableViewCell_NoGap"];
+
 }
 - (void)configDoneCollectionView {
     _sv.doneCollectionView.dataSource = self;
@@ -155,7 +159,10 @@
     _sv.toHelpTableView.emptyDataSetSource = self;
     _sv.toHelpTableView.estimatedRowHeight = 145;
     _sv.toHelpTableView.rowHeight = UITableViewAutomaticDimension;
-    
+    _sv.toHelpTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    _sv.toHelpTableView.separatorInset = UIEdgeInsetsMake(0, 132, 0, 0);
+    _sv.toHelpTableView.separatorColor = [UIColor colorWithHex:0xd8d8d8 andAlpha:1.0];
+
     UINib* nib = [UINib nibWithNibName:@"PIEProceedingToHelpTableViewCell" bundle:nil];
     [_sv.toHelpTableView registerNib:nib forCellReuseIdentifier:@"PIEProceedingToHelpTableViewCell"];
 }
@@ -426,9 +433,15 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == _sv.askTableView) {
-        PIEProceedingAskTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIEProceedingAskTableViewCell"];
-        [cell injectSource:[_sourceAsk objectAtIndex:indexPath.row]];
-        return cell;
+        if (indexPath.row == 0) {
+            PIEProceedingAskTableViewCell_NoGap *cell = [tableView dequeueReusableCellWithIdentifier:@"PIEProceedingAskTableViewCell_NoGap"];
+            [cell injectSource:[_sourceAsk objectAtIndex:indexPath.row]];
+            return cell;
+        } else {
+            PIEProceedingAskTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIEProceedingAskTableViewCell"];
+            [cell injectSource:[_sourceAsk objectAtIndex:indexPath.row]];
+            return cell;
+        }
     }
     else if (tableView == _sv.toHelpTableView) {
         PIEProceedingToHelpTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIEProceedingToHelpTableViewCell"];
@@ -443,7 +456,11 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == _sv.askTableView) {
-        return 180;
+        if (indexPath.row == 0) {
+            return 180-15;
+        } else {
+            return 175;
+        }
     }
     else if (tableView == _sv.toHelpTableView) {
         return [tableView fd_heightForCellWithIdentifier:@"PIEProceedingToHelpTableViewCell"  cacheByIndexPath:indexPath configuration:^(PIEProceedingToHelpTableViewCell *cell) {
