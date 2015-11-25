@@ -208,15 +208,15 @@
                     <exclude reference="Sig-Ve-fot"/>
                 </mask>
                 <mask key="constraints">
+                    <exclude reference="K9J-CL-vi6"/>
+                    <exclude reference="e5o-62-lQQ"/>
+                    <exclude reference="loj-Pf-5yO"/>
+                    <exclude reference="vJC-S0-esh"/>
                     <exclude reference="FZP-sn-cYK"/>
                     <exclude reference="PfT-pe-d6x"/>
                     <exclude reference="RvI-I8-pZf"/>
                     <exclude reference="fJ4-LM-3UJ"/>
                     <exclude reference="ufH-nL-1Ia"/>
-                    <exclude reference="K9J-CL-vi6"/>
-                    <exclude reference="e5o-62-lQQ"/>
-                    <exclude reference="loj-Pf-5yO"/>
-                    <exclude reference="vJC-S0-esh"/>
                 </mask>
             </variation>
             <variation key="widthClass=compact">

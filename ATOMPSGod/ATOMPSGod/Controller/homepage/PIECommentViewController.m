@@ -618,11 +618,15 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
-
+-(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
+    return !_shouldShowHeaderView;
+}
 -(BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
     return YES;
 }
-
+-(CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    return -100;
+}
 #pragma mark - headerView
 
 -(PIECommentTableHeaderView_Ask *)headerView {

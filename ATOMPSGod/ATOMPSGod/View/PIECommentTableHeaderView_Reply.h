@@ -14,6 +14,7 @@
 @property (nonatomic, strong) UIImageView *avatarView;
 @property (nonatomic, strong) UILabel *usernameLabel;
 @property (nonatomic, strong) UILabel *timeLabel;
+@property (nonatomic, strong) UIButton *followButton;
 @property (nonatomic, strong) UIImageView *imageViewMain;
 @property (nonatomic, strong) UIImageView *imageViewRight;
 @property (nonatomic, strong) PIETextView_linkDetection *textView_content;

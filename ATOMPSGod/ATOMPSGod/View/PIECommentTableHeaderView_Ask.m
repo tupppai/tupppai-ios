@@ -32,11 +32,10 @@
     [self addSubview:self.avatarView];
     [self addSubview:self.usernameLabel];
     [self addSubview:self.timeLabel];
+    [self addSubview:self.followButton];
     [self addSubview:self.imageViewMain];
     [self addSubview:self.imageViewRight];
-//    [self addSubview:self.contentLabel];
     [self addSubview:self.textView_content];
-    
     [self addSubview:self.commentButton];
     [self addSubview:self.shareButton];
     [self addSubview:self.bangView];
@@ -48,24 +47,32 @@
 }
 
 - (void) configMansoryViews {
-    
+    //to avoid contraints break warning since self.width = 0 initially and we should set the leading and trailing of imageView.
+    [self mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(@(SCREEN_WIDTH));
+    }];
     [self.avatarView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self).with.offset(10);
         make.left.equalTo(self).with.offset(12);
-        make.width.equalTo(@(kfcAvatarWidth));
-        make.height.equalTo(@(kfcAvatarWidth));
+        make.width.equalTo(@(32));
+        make.height.equalTo(@(32));
     }];
     [self.usernameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_avatarView).with.offset(3);
+        make.top.equalTo(_avatarView).with.offset(0);
         make.left.equalTo(_avatarView.mas_right).with.offset(9);
     }];
     [self.timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_usernameLabel.mas_bottom).with.offset(3);
         make.left.equalTo(_avatarView.mas_right).with.offset(9);
     }];
-    
+    [self.followButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(@58);
+        make.height.equalTo(@28);
+        make.centerY.equalTo(self.avatarView);
+        make.right.equalTo(self).with.offset(-12);
+    }];
     [self.imageViewMain mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_timeLabel.mas_bottom).with.offset(20);
+        make.top.equalTo(_timeLabel.mas_bottom).with.offset(10);
         make.left.equalTo(self).with.offset(0);
         make.width.equalTo(self).with.priorityHigh();
     }];
@@ -75,12 +82,6 @@
         make.right.equalTo(self).with.offset(0);
         make.bottom.equalTo(self.imageViewMain.mas_bottom).with.offset(0);
     }];
-//    [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(_imageViewMain.mas_bottom).with.offset(10);
-//        //left and right to cause constraint error when self.width = 0;
-//        make.left.equalTo(self).with.offset(12);
-//        make.right.equalTo(self).with.offset(-12);
-//    }];
     
     [self.textView_content mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_imageViewMain.mas_bottom).with.offset(10);
@@ -92,7 +93,7 @@
     [self.commentButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@50);
         make.height.equalTo(@25);
-        make.left.equalTo(self).with.offset(12);
+        make.left.equalTo(self).with.offset(15);
     }];
     [self.shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.commentButton);
@@ -128,6 +129,8 @@
         [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
         _usernameLabel.text = vm.username;
         _timeLabel.text = vm.publishTime;
+        _followButton.selected = vm.followed;
+        
         if (vm.thumbEntityArray.count == 2) {
             _imageViewMain.contentMode = UIViewContentModeScaleAspectFill;
             _imageViewRight.contentMode = UIViewContentModeScaleAspectFill;
@@ -161,7 +164,9 @@
         NSString * htmlString = vm.content;
         NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
         
-        [attrStr addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:15] range:NSMakeRange(0, attrStr.length)];
+        [attrStr addAttribute:NSFontAttributeName value:[UIFont mediumTupaiFontOfSize:15] range:NSMakeRange(0, attrStr.length)];
+        [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0x000000 andAlpha:0.9] range:NSMakeRange(0, attrStr.length)];
+
         _textView_content.attributedText = attrStr;
     }
     else {
@@ -172,9 +177,7 @@
     [self.textView_content mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(size.height)).with.priorityHigh();
     }];
-    
 }
-
 
 
 
@@ -185,7 +188,7 @@
         _avatarView.userInteractionEnabled = YES;
         _avatarView.contentMode = UIViewContentModeScaleToFill;
         _avatarView.clipsToBounds = YES;
-        _avatarView.layer.cornerRadius = 17.5;
+        _avatarView.layer.cornerRadius = 16;
     }
     return _avatarView;
 }
@@ -195,8 +198,8 @@
     if (!_usernameLabel) {
         _usernameLabel = [UILabel new];
         _usernameLabel.userInteractionEnabled = YES;
-        _usernameLabel.textColor = [UIColor darkGrayColor];
-        _usernameLabel.font = [UIFont systemFontOfSize:12.0];
+        _usernameLabel.textColor = [UIColor colorWithHex:0x4a4a4a andAlpha:1.0];
+        _usernameLabel.font = [UIFont mediumTupaiFontOfSize:12.0];
     }
     return _usernameLabel;
 }
@@ -205,8 +208,8 @@
     if (!_timeLabel) {
         _timeLabel = [UILabel new];
         _timeLabel.userInteractionEnabled = YES;
-        _timeLabel.textColor = [UIColor lightGrayColor];
-        _timeLabel.font = [UIFont systemFontOfSize:10.0];
+        _timeLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.3];
+        _timeLabel.font = [UIFont lightTupaiFontOfSize:10.0];
     }
     return _timeLabel;
 }
@@ -214,8 +217,6 @@
 -(UIImageView*)imageViewMain {
     if (!_imageViewMain) {
         _imageViewMain = [UIImageView new];
-//        _imageViewMain.contentMode = UIViewContentModeScaleAspectFit;
-//        _imageViewMain.clipsToBounds = YES;
         _imageViewMain.userInteractionEnabled = YES;
         _imageViewMain.backgroundColor= [ UIColor groupTableViewBackgroundColor];
     }
@@ -224,8 +225,6 @@
 -(UIImageView*)imageViewRight {
     if (!_imageViewRight) {
         _imageViewRight = [UIImageView new];
-        //        _imageViewMain.contentMode = UIViewContentModeScaleAspectFit;
-        //        _imageViewMain.clipsToBounds = YES;
         _imageViewRight.userInteractionEnabled = YES;
         _imageViewRight.backgroundColor= [ UIColor groupTableViewBackgroundColor];
     }
@@ -234,8 +233,6 @@
 - (PIETextView_linkDetection *)textView_content {
     if (!_textView_content) {
         _textView_content = [PIETextView_linkDetection new];
-        _textView_content.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
-        _textView_content.font = [UIFont systemFontOfSize:15];
     }
     return _textView_content;
 }
@@ -244,6 +241,7 @@
     if (!_commentButton) {
         _commentButton = [PIEPageButton new];
         _commentButton.imageView.image = [UIImage imageNamed:@"hot_comment"];
+        _commentButton.imageSize = CGSizeMake(16, 16);
     }
     return _commentButton;
 }
@@ -251,9 +249,12 @@
     if (!_shareButton) {
         _shareButton = [PIEPageButton new];
         _shareButton.imageView.image = [UIImage imageNamed:@"hot_share"];
+        _shareButton.imageSize = CGSizeMake(16, 16);
     }
     return _shareButton;
 }
+
+
 
 -(PIEBangView *)bangView {
     if (!_bangView) {
@@ -263,9 +264,38 @@
 }
 
 
-
-
-
+-(UIButton *)followButton {
+    if (!_followButton) {
+        _followButton = [UIButton new];
+        _followButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        
+        [_followButton setImage:[UIImage imageNamed:@"new_reply_follow"] forState:UIControlStateNormal];
+        [_followButton setImage:[UIImage imageNamed:@"new_reply_followed"] forState:UIControlStateHighlighted];
+        [_followButton setImage:[UIImage imageNamed:@"new_reply_followed"] forState:UIControlStateSelected];
+        [_followButton addTarget:self action:@selector(follow:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _followButton;
+}
+-(void)follow:(UIButton*)followView {
+    
+    followView.selected = !followView.selected;
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    [param setObject:@(_vm.userID) forKey:@"uid"];
+    if (followView.selected) {
+        [param setObject:@1 forKey:@"status"];
+    }
+    else {
+        [param setObject:@0 forKey:@"status"];
+    }
+    
+    [DDService follow:param withBlock:^(BOOL success) {
+        if (success) {
+            _vm.followed = followView.selected;
+        } else {
+            followView.selected = !followView.selected;
+        }
+    }];
+}
 
 
 

@@ -34,6 +34,15 @@
         make.right.equalTo(self);
     }];
 }
+-(void)setImageSize:(CGSize)imageSize {
+    _imageSize = imageSize;
+    [_imageView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(@(imageSize.width));
+        make.height.equalTo(@(imageSize.height));
+        make.leading.equalTo(self);
+        make.centerY.equalTo(self);
+    }];
+}
 
 -(instancetype)init {
     self = [super init];

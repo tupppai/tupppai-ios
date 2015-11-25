@@ -19,6 +19,7 @@
 @interface PIECommentTableHeaderView_Ask : ATOMBaseView
 
 @property (nonatomic, strong) UIImageView *avatarView;
+@property (nonatomic, strong) UIButton *followButton;
 @property (nonatomic, strong) UILabel *usernameLabel;
 @property (nonatomic, strong) UILabel *timeLabel;
 @property (nonatomic, strong) UIImageView *imageViewMain;
