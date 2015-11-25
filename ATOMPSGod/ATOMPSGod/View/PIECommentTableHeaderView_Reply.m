@@ -82,7 +82,7 @@
         make.bottom.equalTo(self.imageViewMain.mas_bottom).with.offset(0);
     }];
     [self.textView_content mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_imageViewMain.mas_bottom).with.offset(10);
+        make.top.equalTo(_imageViewMain.mas_bottom).with.offset(5);
         //left and right to cause constraint error when self.width = 0;
         make.left.equalTo(self).with.offset(8);
         make.right.equalTo(self).with.offset(-12);
@@ -96,7 +96,7 @@
     }];
     
     [self.commentButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.textView_content.mas_bottom).with.offset(12).with.priorityLow();
+        make.top.equalTo(self.textView_content.mas_bottom).with.offset(6).with.priorityLow();
         make.width.equalTo(@30).with.priorityMedium();
         make.width.greaterThanOrEqualTo(@30);
         make.height.equalTo(@30);
