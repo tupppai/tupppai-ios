@@ -38,6 +38,10 @@
     [self.tableView.header beginRefreshing];
     self.tableView.emptyDataSetDelegate = self;
     self.tableView.emptyDataSetSource = self;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    self.tableView.separatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
+    self.tableView.separatorInset = UIEdgeInsetsMake(0, 50, 0, 10);
+
 }
 
 #pragma mark - GetDataSource
@@ -156,7 +160,7 @@
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 55;
+    return 68;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _source.count;

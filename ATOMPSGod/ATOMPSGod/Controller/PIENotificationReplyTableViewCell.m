@@ -13,8 +13,14 @@
 - (void)awakeFromNib {
     // Initialization code
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    self.separatorInset = UIEdgeInsetsMake(0, 45, 0, 10);
-    _replyLabel.textColor = [UIColor colorWithHex:0xFF6D3F andAlpha:0.9];
+    _usernameLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:1.0];
+    _timeLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
+    _replyLabel.textColor = [UIColor colorWithHex:0xff6d3f andAlpha:1.0];
+    _usernameLabel.font = [UIFont lightTupaiFontOfSize:13];
+    _replyLabel.font = [UIFont lightTupaiFontOfSize:12];
+    _timeLabel.font = [UIFont lightTupaiFontOfSize:10];
+    _typeLabel.font = [UIFont lightTupaiFontOfSize:13];
+
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
     _pageImageView.clipsToBounds = YES;

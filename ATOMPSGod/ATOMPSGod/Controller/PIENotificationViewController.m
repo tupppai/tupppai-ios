@@ -179,8 +179,10 @@
 //    self.tableView.emptyDataSetSource = self;
 //    self.tableView.emptyDataSetDelegate = self;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag|UIScrollViewKeyboardDismissModeInteractive;
-//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//    [self.tableView registerClass:[DDCommentTableCell class] forCellReuseIdentifier:MessengerCellIdentifier];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    self.tableView.separatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
+    self.tableView.separatorInset = UIEdgeInsetsMake(0, 50, 0, 10);
+    
     self.tableView.tableFooterView = [UIView new];
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.showsHorizontalScrollIndicator = NO;
@@ -191,8 +193,6 @@
     self.keyboardPanningEnabled = YES;
     self.shouldScrollToBottomAfterKeyboardShows = NO;
     self.inverted = NO;
-    //    [self.leftButton setImage:[UIImage imageNamed:@"btn_emoji"] forState:UIControlStateNormal];
-    //    [self.rightButton setImage:[UIImage imageNamed:@"btn_comment_send"] forState:UIControlStateNormal];
     [self.rightButton setTitle:@"回复ta" forState:UIControlStateNormal];
     [self.rightButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     self.textInputbar.autoHideRightButton = YES;
@@ -363,12 +363,12 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,40)];
     view.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 100,40)];
-    label.textColor = [UIColor lightGrayColor];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(13, 0, 100,40)];
+    label.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
     label.backgroundColor = [UIColor clearColor];
     [view addSubview:label];
     
-    label.font = [UIFont boldSystemFontOfSize:13];
+    label.font = [UIFont lightTupaiFontOfSize:12];
     switch (section)
     {
         case 1:
@@ -390,17 +390,12 @@
                 }];
                 break;
             case PIENotificationTypeFollow:
-                return 60;
+                return 68;
                 break;
-                //        case PIENotificationTypeLike:
-                //            return 0;
-                //            break;
+
             case PIENotificationTypeReply:
-                return 105;
+                return 85;
                 break;
-                //        case PIENotificationTypeSystem:
-                //            return 0;
-                //            break;
             default:
                 return 105;
                 break;

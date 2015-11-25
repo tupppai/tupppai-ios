@@ -24,6 +24,8 @@
 
 @interface PIEShareView:UIView
 @property (strong, nonatomic) PIESharesheetView *sheetView;
+@property (strong, nonatomic) UIVisualEffectView *dimmingView;
+
 @property (nonatomic, weak) id<PIEShareViewDelegate> delegate;
 - (void)showInView:(UIView *)view animated:(BOOL)animated;
 - (void)show;

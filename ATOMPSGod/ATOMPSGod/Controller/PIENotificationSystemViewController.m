@@ -111,16 +111,11 @@
         _tableView.dataSource = self;
         _tableView.delegate = self;
         _tableView.psDelegate = self;
-//        UINib* nib  = [UINib nibWithNibName:@"PIENotificationCommentTableViewCell" bundle:nil];
-        //        UINib* nib2 = [UINib nibWithNibName:@"PIENotificationLikeTableViewCell" bundle:nil];
-//        UINib* nib3 = [UINib nibWithNibName:@"PIENotificationFollowTableViewCell" bundle:nil];
-//        UINib* nib4 = [UINib nibWithNibName:@"PIENotificationReplyTableViewCell" bundle:nil];
-                UINib* nib5 = [UINib nibWithNibName:@"PIENotificationSystemTableViewCell" bundle:nil];
-//        [_tableView registerNib:nib  forCellReuseIdentifier:@"PIENotificationCommentTableViewCell"];
-        //        [_tableView registerNib:nib2 forCellReuseIdentifier:@"PIENotificationLikeTableViewCell"];
-//        [_tableView registerNib:nib3 forCellReuseIdentifier:@"PIENotificationFollowTableViewCell"];
+        UINib* nib5 = [UINib nibWithNibName:@"PIENotificationSystemTableViewCell" bundle:nil];
         [_tableView registerNib:nib5 forCellReuseIdentifier:@"PIENotificationSystemTableViewCell"];
-        //        [_tableView registerNib:nib5 forCellReuseIdentifier:@"PIENotificationSystemTableViewCell"];
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        _tableView.separatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
+        _tableView.separatorInset = UIEdgeInsetsMake(0, 50, 0, 10);
     }
     return _tableView;
 }
@@ -131,8 +126,8 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
         if (_source.count > indexPath.row) {
-            PIENotificationVM* vm = [_source objectAtIndex:indexPath.row];
             PIENotificationSystemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIENotificationSystemTableViewCell"];
+            PIENotificationVM* vm = [_source objectAtIndex:indexPath.row];
             [cell injectSauce:vm];
             return cell;
         }
@@ -144,7 +139,7 @@
     PIENotificationVM* vm = [_source objectAtIndex:indexPath.row];
     NSDictionary *attributes = @{NSFontAttributeName : [UIFont systemFontOfSize:14]};
     CGFloat height = CGRectGetHeight([vm.content boundingRectWithSize:CGSizeMake(SCREEN_WIDTH - 52, 300) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil]);
-    return 80+height;
+    return 100+height;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
         return _source.count;
