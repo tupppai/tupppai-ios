@@ -115,9 +115,9 @@
     [self addSubview:line];
     [line mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(self);
-        make.height.equalTo(@0.3);
-        make.bottom.equalTo(self);
+        make.height.equalTo(@0.5);
         make.top.equalTo(self.bangView.mas_bottom).with.offset(5);
+        make.bottom.equalTo(self);
     }];
 }
 

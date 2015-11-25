@@ -101,7 +101,7 @@
         make.width.greaterThanOrEqualTo(@30);
         make.height.equalTo(@30);
         make.left.equalTo(self.moreWorkButton.mas_right).with.offset(18);
-        make.bottom.equalTo(self).with.offset(-15);
+//        make.bottom.equalTo(self).with.offset(-15);
     }];
     [self.shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.commentButton);
@@ -124,9 +124,11 @@
     [self addSubview:line];
     [line mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(self);
-        make.height.equalTo(@0.3);
+        make.height.equalTo(@0.5);
+        make.top.equalTo(self.likeButton.mas_bottom).with.offset(5);
         make.bottom.equalTo(self);
     }];
+    
 }
 
 
