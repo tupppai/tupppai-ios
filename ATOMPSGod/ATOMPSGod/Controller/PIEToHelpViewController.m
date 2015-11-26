@@ -40,12 +40,14 @@
     _sourceToHelp = [NSMutableArray new];
     
     _toHelpTableView = [[PIERefreshTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
-    _toHelpTableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    _toHelpTableView.backgroundColor = [UIColor whiteColor];
     _toHelpTableView.dataSource = self;
     _toHelpTableView.delegate = self;
     _toHelpTableView.emptyDataSetDelegate = self;
     _toHelpTableView.emptyDataSetSource = self;
     _toHelpTableView.psDelegate = self;
+    _toHelpTableView.separatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
+    _toHelpTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
     self.view = _toHelpTableView;
     UINib* nib = [UINib nibWithNibName:@"PIEToHelpTableViewCell2" bundle:nil];
     [_toHelpTableView registerNib:nib forCellReuseIdentifier:@"PIEToHelpTableViewCell2"];

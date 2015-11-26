@@ -148,7 +148,7 @@
     if (!_cancelLabel) {
         _cancelLabel = [UILabel new];
         _cancelLabel.text = @"取消";
-        _cancelLabel.font = [UIFont mediumTupaiFontOfSize:15];
+        _cancelLabel.font = [UIFont lightTupaiFontOfSize:15];
         _cancelLabel.backgroundColor = [UIColor colorWithHex:0xEBEBEB andAlpha:1.0];
         _cancelLabel.textColor = [UIColor colorWithHex:0x4a4a4a andAlpha:1.0];
         _cancelLabel.layer.cornerRadius = 20;

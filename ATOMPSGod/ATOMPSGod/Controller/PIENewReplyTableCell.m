@@ -29,9 +29,9 @@
     _theImageView.contentMode = UIViewContentModeScaleAspectFit;
     _theImageView.backgroundColor = [UIColor clearColor];
     _theImageView.clipsToBounds = YES;
-    [_nameLabel setFont:[UIFont mediumTupaiFontOfSize:13]];
-    [_contentLabel setFont:[UIFont mediumTupaiFontOfSize:15]];
-    [_timeLabel setFont:[UIFont mediumTupaiFontOfSize:10]];
+    [_nameLabel setFont:[UIFont lightTupaiFontOfSize:13]];
+    [_contentLabel setFont:[UIFont lightTupaiFontOfSize:15]];
+    [_timeLabel setFont:[UIFont lightTupaiFontOfSize:10]];
     
     [_nameLabel setTextColor:[UIColor colorWithHex:0x4a4a4a andAlpha:1.0]];
     [_timeLabel setTextColor:[UIColor colorWithHex:0x4a4a4a andAlpha:0.3]];

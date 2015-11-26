@@ -273,7 +273,7 @@
                                  };
     
     _pageMenu = [[CAPSPageMenu alloc] initWithViewControllers:controllerArray frame:CGRectMake(0, 0, SCREEN_WIDTH, 100) options:parameters];
-    _pageMenu.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    _pageMenu.view.backgroundColor = [UIColor whiteColor];
     _pageMenu.view.layer.borderColor = [UIColor colorWithHex:0x000000 andAlpha:0.1].CGColor;
     _pageMenu.view.layer.borderWidth = 0.5;
     [self.view addSubview:_pageMenu.view];

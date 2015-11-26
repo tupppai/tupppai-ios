@@ -97,8 +97,8 @@
     UITapGestureRecognizer *tapG2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToSeeFriend)];
     [_usernameLabel addGestureRecognizer:tapG2];
     
-    [_usernameLabel setFont:[UIFont mediumTupaiFontOfSize:13]];
-    [_timeLabel setFont:[UIFont mediumTupaiFontOfSize:10]];
+    [_usernameLabel setFont:[UIFont lightTupaiFontOfSize:13]];
+    [_timeLabel setFont:[UIFont lightTupaiFontOfSize:10]];
     [_usernameLabel setTextColor:[UIColor colorWithHex:0xffffff andAlpha:0.8]];
     [_timeLabel setTextColor:[UIColor colorWithHex:0xffffff andAlpha:0.5]];
     
@@ -329,7 +329,7 @@
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init] ;
         [paragraphStyle setAlignment:NSTextAlignmentCenter];
         [attrStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, attrStr.length)];
-        [attrStr addAttribute:NSFontAttributeName value:[UIFont mediumTupaiFontOfSize:15] range:NSMakeRange(0, attrStr.length)];
+        [attrStr addAttribute:NSFontAttributeName value:[UIFont lightTupaiFontOfSize:15] range:NSMakeRange(0, attrStr.length)];
         [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0xffffff andAlpha:0.95] range:NSMakeRange(0, attrStr.length)];
 
         _textView_content.attributedText = attrStr;

@@ -33,7 +33,7 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.psDelegate = self;
-    _tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    _tableView.backgroundColor = [UIColor clearColor];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.emptyDataSetDelegate = self;
     _tableView.emptyDataSetSource = self;

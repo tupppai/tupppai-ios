@@ -157,7 +157,7 @@
         
         NSString * htmlString = vm.content;
         NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
-        [attrStr addAttribute:NSFontAttributeName value:[UIFont mediumTupaiFontOfSize:15] range:NSMakeRange(0, attrStr.length)];
+        [attrStr addAttribute:NSFontAttributeName value:[UIFont lightTupaiFontOfSize:15] range:NSMakeRange(0, attrStr.length)];
         [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0x000000 andAlpha:0.9] range:NSMakeRange(0, attrStr.length)];
         _textView_content.attributedText = attrStr;
 
@@ -194,7 +194,7 @@
         _usernameLabel = [UILabel new];
         _usernameLabel.userInteractionEnabled = YES;
         _usernameLabel.textColor = [UIColor colorWithHex:0x4a4a4a andAlpha:1.0];
-        _usernameLabel.font = [UIFont mediumTupaiFontOfSize:12.0];
+        _usernameLabel.font = [UIFont lightTupaiFontOfSize:12.0];
     }
     return _usernameLabel;
 }

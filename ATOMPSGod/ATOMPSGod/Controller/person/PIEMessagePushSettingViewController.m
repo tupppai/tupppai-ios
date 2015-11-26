@@ -34,6 +34,8 @@
 - (void)createUI {
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     _tableView.scrollEnabled = NO;
+    _tableView.separatorInset = UIEdgeInsetsMake(0, 30, 0, 20);
+    _tableView.separatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
     _tableView.tableFooterView = [UIView new];
     _tableView.allowsSelection = NO;
     [self.view addSubview:_tableView];
@@ -63,8 +65,6 @@
     }
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
-    cell.textLabel.textColor = [UIColor blackColor];
-    cell.textLabel.font = [UIFont systemFontOfSize:15];
     if (section == 0) {
         if (row == 0) {
             cell.textLabel.text = @"评论";

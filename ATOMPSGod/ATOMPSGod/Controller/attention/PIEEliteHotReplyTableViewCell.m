@@ -29,10 +29,10 @@
     _theImageView.backgroundColor = [UIColor clearColor];
     _collectView.userInteractionEnabled = YES;
 
-    [_nameLabel setFont:[UIFont mediumTupaiFontOfSize:13]];
-    [_contentLabel setFont:[UIFont mediumTupaiFontOfSize:15]];
-    [_commentLabel1 setFont:[UIFont mediumTupaiFontOfSize:13]];
-    [_commentLabel2 setFont:[UIFont mediumTupaiFontOfSize:13]];
+    [_nameLabel setFont:[UIFont lightTupaiFontOfSize:13]];
+    [_contentLabel setFont:[UIFont lightTupaiFontOfSize:15]];
+    [_commentLabel1 setFont:[UIFont lightTupaiFontOfSize:13]];
+    [_commentLabel2 setFont:[UIFont lightTupaiFontOfSize:13]];
     
     [_nameLabel setTextColor:[UIColor colorWithHex:0x4a4a4a andAlpha:1.0]];
     [_contentLabel setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.9]];

@@ -31,8 +31,8 @@
     _nameLabel.text = vm.username;
     _timeLabel.text = vm.publishTime;
     
-    _nameLabel.font = [UIFont mediumTupaiFontOfSize:11];
-    _timeLabel.font = [UIFont mediumTupaiFontOfSize:10];
+    _nameLabel.font = [UIFont lightTupaiFontOfSize:11];
+    _timeLabel.font = [UIFont lightTupaiFontOfSize:10];
     _nameLabel.textColor = [UIColor colorWithHex:0x4a4a4a andAlpha:1.0];
     _timeLabel.textColor = [UIColor colorWithHex:0x4a4a4a andAlpha:1.0];
 
@@ -42,7 +42,7 @@
     
     NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
     [attrStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, attrStr.length)];
-    [attrStr addAttribute:NSFontAttributeName value:[UIFont mediumTupaiFontOfSize:13] range:NSMakeRange(0, attrStr.length)];
+    [attrStr addAttribute:NSFontAttributeName value:[UIFont lightTupaiFontOfSize:13] range:NSMakeRange(0, attrStr.length)];
     [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0x000000 andAlpha:0.9] range:NSMakeRange(0, attrStr.length)];
     
     _contentTextView.attributedText = attrStr;

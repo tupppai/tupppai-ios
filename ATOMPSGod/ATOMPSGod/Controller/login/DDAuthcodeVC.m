@@ -68,10 +68,15 @@
 }
 
 - (void)clickRightButtonItem{
+    BOOL one = [_verifyCode isEqualToString:_inputVerifyView.verifyCodeTextField.text];
+    BOOL tow = (_verifyCode  ==  _inputVerifyView.verifyCodeTextField.text);
+    NSLog(@"clickRightButtonItem %@,%@ ,one %d,two %d",_inputVerifyView.verifyCodeTextField.text,_verifyCode,one,tow);
+
     
-    if ([_inputVerifyView.verifyCodeTextField.text isEqualToString:_verifyCode]) {
+    if ( [_verifyCode isEqualToString:_inputVerifyView.verifyCodeTextField.text] ) {
         NSMutableDictionary *param = [[DDUserManager currentUser] dictionaryFromModel];
-        [DDUserManager DDRegister:[param copy] withBlock:^(BOOL success) {
+        [param setObject:_verifyCode forKey:@"code"];
+        [DDUserManager DDRegister:param withBlock:^(BOOL success) {
             if (success) {
                 [self.navigationController setViewControllers:[NSArray new]];
                 [AppDelegate APP].mainTabBarController = nil;

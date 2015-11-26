@@ -38,7 +38,7 @@
     if (!_label) {
         _label = [UILabel new];
         _label.textAlignment = NSTextAlignmentCenter;
-        _label.font = [UIFont mediumTupaiFontOfSize:13];
+        _label.font = [UIFont lightTupaiFontOfSize:13];
         _label.textColor = [UIColor colorWithHex:0x4a4a4a andAlpha:1.0];
         _label.highlightedTextColor = [UIColor colorWithHex:0x4a4a4a andAlpha:0.5];
         _label.adjustsFontSizeToFitWidth = YES;

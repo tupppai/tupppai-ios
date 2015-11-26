@@ -45,7 +45,7 @@
     [_editButton setTitleColor:[UIColor colorWithHex:0xff6d3f] forState:UIControlStateSelected];
     [_editButton setImage:[UIImage new] forState:UIControlStateSelected];
     [_editButton setTitle:@"确定" forState:UIControlStateSelected];
-    _editButton.titleLabel.font = [UIFont mediumTupaiFontOfSize:14.0];
+    _editButton.titleLabel.font = [UIFont lightTupaiFontOfSize:14.0];
     [_editButton addTarget:self action:@selector(editAsk) forControlEvents:UIControlEventTouchUpInside];
 }
 
