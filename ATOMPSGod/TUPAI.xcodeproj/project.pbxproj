@@ -420,6 +420,7 @@
 		F4D9F6CF1BBFDDE10023A53B /* PIEBangView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D9F6CE1BBFDDE10023A53B /* PIEBangView.m */; };
 		F4DC3D3F1BC131BA00DCF72F /* PIEFriendAskTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DC3D3D1BC131BA00DCF72F /* PIEFriendAskTableViewCell.m */; };
 		F4DC3D401BC131BA00DCF72F /* PIEFriendAskTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4DC3D3E1BC131BA00DCF72F /* PIEFriendAskTableViewCell.xib */; };
+		F4DE44F61C06E4BC00BEEB96 /* cellHolder.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DE44F51C06E4BC00BEEB96 /* cellHolder.png */; };
 		F4E5308F1BD4985400FAA65D /* PIESignUpSheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E5308E1BD4985400FAA65D /* PIESignUpSheetView.m */; };
 		F4E530921BD49AE800FAA65D /* PIESignUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E530911BD49AE800FAA65D /* PIESignUpView.m */; };
 		F4E530961BD4CFB800FAA65D /* PIELoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E530941BD4CFB800FAA65D /* PIELoginViewController.m */; };
@@ -1292,6 +1293,7 @@
 		F4DC3D3C1BC131BA00DCF72F /* PIEFriendAskTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEFriendAskTableViewCell.h; sourceTree = "<group>"; };
 		F4DC3D3D1BC131BA00DCF72F /* PIEFriendAskTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEFriendAskTableViewCell.m; sourceTree = "<group>"; };
 		F4DC3D3E1BC131BA00DCF72F /* PIEFriendAskTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEFriendAskTableViewCell.xib; sourceTree = "<group>"; };
+		F4DE44F51C06E4BC00BEEB96 /* cellHolder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cellHolder.png; sourceTree = "<group>"; };
 		F4E5308D1BD4985400FAA65D /* PIESignUpSheetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIESignUpSheetView.h; sourceTree = "<group>"; };
 		F4E5308E1BD4985400FAA65D /* PIESignUpSheetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIESignUpSheetView.m; sourceTree = "<group>"; };
 		F4E530901BD49AE800FAA65D /* PIESignUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIESignUpView.h; sourceTree = "<group>"; };
@@ -3366,6 +3368,7 @@
 		F4EA4DAC1BF477DC00486304 /* intro */ = {
 			isa = PBXGroup;
 			children = (
+				F4DE44F51C06E4BC00BEEB96 /* cellHolder.png */,
 				F4EA4DAD1BF477E400486304 /* intro1.png */,
 				F4EA4DAE1BF477E400486304 /* intro2.png */,
 				F4EA4DAF1BF477E400486304 /* intro3.png */,
@@ -3638,6 +3641,7 @@
 				F42100EE1BF5E76A00CFD82E /* intro1.xib in Resources */,
 				F4DC3D401BC131BA00DCF72F /* PIEFriendAskTableViewCell.xib in Resources */,
 				F4AE73BE1BBA770000734BCB /* PIEFriendViewController.xib in Resources */,
+				F4DE44F61C06E4BC00BEEB96 /* cellHolder.png in Resources */,
 				F499E4511BD0EAC300E5F178 /* PIESignOutTableViewCell.xib in Resources */,
 				F42ED3B91BC4FC9E0052A0BF /* PIEMyReplyCollectionViewCell.xib in Resources */,
 				F42100F41BF5EC5600CFD82E /* intro4.xib in Resources */,

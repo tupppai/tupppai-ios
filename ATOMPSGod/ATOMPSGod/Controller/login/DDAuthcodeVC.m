@@ -68,10 +68,6 @@
 }
 
 - (void)clickRightButtonItem{
-    BOOL one = [_verifyCode isEqualToString:_inputVerifyView.verifyCodeTextField.text];
-    BOOL tow = (_verifyCode  ==  _inputVerifyView.verifyCodeTextField.text);
-    NSLog(@"clickRightButtonItem %@,%@ ,one %d,two %d",_inputVerifyView.verifyCodeTextField.text,_verifyCode,one,tow);
-
     
     if ( [_verifyCode isEqualToString:_inputVerifyView.verifyCodeTextField.text] ) {
         NSMutableDictionary *param = [[DDUserManager currentUser] dictionaryFromModel];
