@@ -68,7 +68,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YJO-Is-7zc">
                     <rect key="frame" x="0.0" y="258" width="600" height="278"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="cellBG.png" translatesAutoresizingMaskIntoConstraints="NO" id="pyi-Yf-Ai7">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="cellHolder.png" translatesAutoresizingMaskIntoConstraints="NO" id="pyi-Yf-Ai7">
                             <rect key="frame" x="284" y="-16" width="32" height="32"/>
                             <animations/>
                             <constraints>
@@ -201,8 +201,6 @@
                 <constraint firstAttribute="trailing" secondItem="gaH-5k-Hr1" secondAttribute="trailing" constant="158" id="ufH-nL-1Ia"/>
                 <constraint firstItem="Sig-Ve-fot" firstAttribute="bottom" secondItem="YJO-Is-7zc" secondAttribute="bottom" id="vJC-S0-esh"/>
             </constraints>
-            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
-            <nil key="simulatedBottomBarMetrics"/>
             <variation key="default">
                 <mask key="subviews">
                     <exclude reference="Sig-Ve-fot"/>
@@ -239,7 +237,7 @@
         </view>
     </objects>
     <resources>
-        <image name="cellBG.png" width="355" height="474"/>
+        <image name="cellHolder.png" width="706" height="706"/>
         <image name="pie_like" width="42" height="42"/>
     </resources>
 </document>

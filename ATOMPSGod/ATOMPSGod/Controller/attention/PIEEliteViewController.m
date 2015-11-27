@@ -29,7 +29,7 @@
 #import "DDNavigationController.h"
 #import "PIEWebViewViewController.h"
 #import "PIEShareImageView.h"
-
+#import "PIECarouselViewController2.h"
 
 @interface PIEEliteViewController ()<UITableViewDelegate,UITableViewDataSource,PWRefreshBaseTableViewDelegate,UIScrollViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource,SwipeViewDelegate,SwipeViewDataSource>
 @property (nonatomic, strong) PIEEliteScrollView *sv;
@@ -268,7 +268,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     for (UIView *subView in view.subviews){
         if([subView isKindOfClass:[UIImageView class]]){
             UIImageView *imageView = (UIImageView *)subView;
-            [imageView setImageWithURL:[NSURL URLWithString:vm.imageUrl]placeholderImage:[UIImage imageNamed:@"cellBG"]];
+            [imageView setImageWithURL:[NSURL URLWithString:vm.imageUrl]placeholderImage:[UIImage imageNamed:@"cellHolder"]];
         }
     }
     ;
@@ -885,10 +885,10 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                 CGPoint p = [gesture locationInView:cell];
                 if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                     //进入热门详情
-                    PIECarouselViewController* vc = [PIECarouselViewController new];
+                    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
                     _selectedVM.image = cell.theImageView.image;
                     vc.pageVM = _selectedVM;
-                    [self.navigationController pushViewController:vc animated:YES];
+                    [self presentViewController:vc animated:YES completion:nil];
                 }
                 //点击头像
                 else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
@@ -1077,7 +1077,6 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                 
             }
             
-            //关注  作品
             
             else {
                 PIEEliteHotReplyTableViewCell* cell = [_sv.tableHot cellForRowAtIndexPath:_selectedIndexPath];
@@ -1095,10 +1094,11 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                 //点击大图
                 else  if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                     //进入热门详情
-                    PIECarouselViewController* vc = [PIECarouselViewController new];
+                    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+                    
                     _selectedVM.image = cell.theImageView.image;
                     vc.pageVM = _selectedVM;
-                    [self.navigationController pushViewController:vc animated:YES];
+                    [self presentViewController:vc animated:YES completion:nil];
                 }
                 //点击头像
                 else if (CGRectContainsPoint(cell.avatarView.frame, p)) {

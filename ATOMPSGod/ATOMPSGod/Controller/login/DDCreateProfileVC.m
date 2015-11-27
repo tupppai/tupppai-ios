@@ -85,7 +85,7 @@
         [DDUserManager currentUser].sex = [DDUserManager currentUser].sdkUser.gender == 0 ? YES:NO;
         NSString* name = [DDUserManager currentUser].sdkUser.nickname;
         [DDUserManager currentUser].avatar = avatarUrl;
-        [_createProfileView.userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString: avatarUrl] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+        [_createProfileView.userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString: avatarUrl] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
         _createProfileView.nicknameTextField.text = name;
     }
 }

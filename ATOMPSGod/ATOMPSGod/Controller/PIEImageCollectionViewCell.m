@@ -16,7 +16,7 @@
 }
 - (void)injectSauce:(PIEPageVM*)vm {
     
-    [_pageImgaeView setImageWithURL:[NSURL URLWithString:vm.imageURL]placeholderImage:[UIImage imageNamed:@"cellBG"]];
+    [_pageImgaeView setImageWithURL:[NSURL URLWithString:vm.imageURL]placeholderImage:[UIImage imageNamed:@"cellHolder"]];
     
 }
 @end

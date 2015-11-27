@@ -36,7 +36,7 @@
     _usernameLabel.text = vm.username;
     _timeLabel.text = vm.time;
     _contentLabel.text = vm.content;
-    [_pageImageView setImageWithURL:[NSURL URLWithString:vm.imageUrl]placeholderImage:[UIImage imageNamed:@"cellBG"]];
+    [_pageImageView setImageWithURL:[NSURL URLWithString:vm.imageUrl]placeholderImage:[UIImage imageNamed:@"cellHolder"]];
 }
 
 @end

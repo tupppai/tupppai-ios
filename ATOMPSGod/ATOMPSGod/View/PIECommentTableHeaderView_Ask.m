@@ -144,11 +144,11 @@
                 make.height.equalTo(@(SCREEN_WIDTH)).with.priorityHigh();
             }];
 
-            [_imageViewMain setImageWithURL:[NSURL URLWithString:imgEntity1.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
-            [_imageViewRight setImageWithURL:[NSURL URLWithString:imgEntity2.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+            [_imageViewMain setImageWithURL:[NSURL URLWithString:imgEntity1.url] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+            [_imageViewRight setImageWithURL:[NSURL URLWithString:imgEntity2.url] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
         }
         else {
-            [_imageViewMain setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+            [_imageViewMain setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
             CGFloat height = vm.imageHeight/vm.imageWidth *SCREEN_WIDTH;
             if (height > 100) {
                 [_imageViewMain mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -170,7 +170,7 @@
         _textView_content.attributedText = attrStr;
     }
     else {
-        _imageViewMain.image = [UIImage imageNamed:@"cellBG"];
+        _imageViewMain.image = [UIImage imageNamed:@"cellHolder"];
     }
     
     CGSize size = [self.textView_content sizeThatFits:CGSizeMake(SCREEN_WIDTH-24, CGFLOAT_MAX)];

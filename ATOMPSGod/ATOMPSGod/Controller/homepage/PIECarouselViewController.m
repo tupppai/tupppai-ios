@@ -40,6 +40,7 @@
 -(BOOL)hidesBottomBarWhenPushed {
     return YES;
 }
+
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationItem.titleView = self.segmentedControl;
@@ -374,7 +375,6 @@
             [self.dataSource addObjectsFromArray:askArray];
             [self.dataSource addObjectsFromArray: replyArray];
             [self initSegmentTitles];
-            [_carousel reloadData];
             [self reorderSourceAndScroll];
         
     }];
@@ -382,30 +382,40 @@
 
 - (void)reorderSourceAndScroll {
 //初始化，把传进来的vm重组，放在原图的下一位，被滚动到此位置。
+    BOOL shouldScroll = NO;
     for (int i =0; i < _dataSource.count; i++) {
         PIEPageVM* vm = [_dataSource objectAtIndex:i];
         //找出与传进来的pageVM匹配的vm
         if (vm.ID == _pageVM.ID && vm.type == _pageVM.type && _pageVM.type == PIEPageTypeReply) {
             if (_dataSource.count >= 2) {
+                shouldScroll = YES;
                 PIEPageVM* vmToCheck = [_dataSource objectAtIndex:1];
                 [_dataSource removeObjectAtIndex:i];
                 if (vmToCheck.type == PIEPageTypeAsk) {
                     [_dataSource insertObject:vm atIndex:2];
+                    [_carousel reloadData];
                     [_carousel scrollToItemAtIndex:2 duration:0];
-                    break;
                 }
                 else {
                     [_dataSource insertObject:vm atIndex:1];
+                    [_carousel reloadData];
                     [_carousel scrollToItemAtIndex:1 duration:0];
-                    break;
                 }
+                break;
             }
             //must animate scroll carousel in order to scroll segment.
-        } else {
-//            [self updateUIWithIndex:0];
-            [_carousel.delegate carouselCurrentItemIndexDidChange:_carousel];
         }
+//        else {
+////            [self updateUIWithIndex:0];
+//            [_carousel.delegate carouselCurrentItemIndexDidChange:_carousel];
+//        }
     }
+    if (!shouldScroll) {
+        [_carousel reloadData];
+        [self updateUIWithIndex:0];
+    }
+    
+
 
 }
 - (void)initSegmentTitles {

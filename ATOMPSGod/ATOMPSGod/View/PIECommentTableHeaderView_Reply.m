@@ -140,7 +140,7 @@
         _usernameLabel.text = vm.username;
         _timeLabel.text = vm.publishTime;
         _followButton.selected = vm.followed;
-        [_imageViewMain setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+        [_imageViewMain setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
         CGFloat height = vm.imageHeight/vm.imageWidth *SCREEN_WIDTH;
         if (height > 100) {
             [_imageViewMain mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -164,7 +164,7 @@
 
     }
     else {
-        _imageViewMain.image = [UIImage imageNamed:@"cellBG"];
+        _imageViewMain.image = [UIImage imageNamed:@"cellHolder"];
     }
     
     CGSize size = [self.textView_content sizeThatFits:CGSizeMake(SCREEN_WIDTH-24, CGFLOAT_MAX)];
