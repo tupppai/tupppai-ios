@@ -30,7 +30,6 @@
 @property (nonatomic, assign)  NSInteger replyCount;
 @property (weak, nonatomic) IBOutlet UIView *bottomContainerView;
 @property (weak, nonatomic) IBOutlet UIVisualEffectView *bottomDimmerView;
-
 @end
 
 @implementation PIECarouselViewController2
@@ -72,14 +71,145 @@
 
 - (void)setupViews {
     self.edgesForExtendedLayout = UIRectEdgeAll;
-    self.view.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2];
+    self.view.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
     [self setModalPresentationStyle:UIModalPresentationOverCurrentContext];
     [self setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
-    
     _dataSource = [NSMutableArray array];
     [self.view addSubview:self.carousel];
-    NSLog(@"view frame %@",NSStringFromCGRect(self.view.frame));
-    NSLog(@"carousel frame %@",NSStringFromCGRect(self.carousel.frame));
+//    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture_SwipeUp:)];
+//    swipe.direction =   UISwipeGestureRecognizerDirectionUp;
+//    [self.carousel addGestureRecognizer:swipe];
+    
+    UISwipeGestureRecognizer *swipe2 = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture_SwipeDown:)];
+    swipe2.direction =   UISwipeGestureRecognizerDirectionDown;
+    [self.carousel addGestureRecognizer:swipe2];
+    
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(pan:)];
+    [self.carousel addGestureRecognizer:pan];
+}
+
+- (void)pan:(UIPanGestureRecognizer *)sender
+{
+    
+    typedef NS_ENUM(NSUInteger, UIPanGestureRecognizerDirection) {
+        UIPanGestureRecognizerDirectionUndefined,
+        UIPanGestureRecognizerDirectionUp,
+        UIPanGestureRecognizerDirectionDown,
+        UIPanGestureRecognizerDirectionLeft,
+        UIPanGestureRecognizerDirectionRight
+    };
+    
+    static UIPanGestureRecognizerDirection direction = UIPanGestureRecognizerDirectionUndefined;
+    
+    switch (sender.state) {
+            
+        case UIGestureRecognizerStateBegan: {
+            
+            if (direction == UIPanGestureRecognizerDirectionUndefined) {
+                
+                CGPoint velocity = [sender velocityInView:self.carousel];
+                
+                BOOL isVerticalGesture = fabs(velocity.y) > fabs(velocity.x);
+                
+                if (isVerticalGesture) {
+                    if (velocity.y > 0) {
+                        direction = UIPanGestureRecognizerDirectionDown;
+                    } else {
+                        direction = UIPanGestureRecognizerDirectionUp;
+                    }
+                }
+                
+                else {
+                    if (velocity.x > 0) {
+                        direction = UIPanGestureRecognizerDirectionRight;
+                    } else {
+                        direction = UIPanGestureRecognizerDirectionLeft;
+                    }
+                }
+            }
+            
+            break;
+        }
+            
+        case UIGestureRecognizerStateChanged: {
+            switch (direction) {
+                case UIPanGestureRecognizerDirectionUp: {
+                    [self handleUpwardsGesture:sender];
+                    break;
+                }
+                case UIPanGestureRecognizerDirectionDown: {
+                    [self handleDownwardsGesture:sender];
+                    break;
+                }
+                case UIPanGestureRecognizerDirectionLeft: {
+                    [self handleLeftGesture:sender];
+                    break;
+                }
+                case UIPanGestureRecognizerDirectionRight: {
+                    [self handleRightGesture:sender];
+                    break;
+                }
+                default: {
+                    break;
+                }
+            }
+        }
+            
+        case UIGestureRecognizerStateEnded: {
+            direction = UIPanGestureRecognizerDirectionUndefined;
+            break;
+        }
+            
+        default:
+            break;
+    }
+    
+}
+
+#define kMinimumPanDistance 1.0f
+UIPanGestureRecognizer *recognizer;
+CGPoint lastRecognizedInterval;
+
+- (void)handleUpwardsGesture:(UIPanGestureRecognizer *)sender
+{
+    CGPoint thisInterval = [sender translationInView:self.view];
+    
+    if (fabs(lastRecognizedInterval.y - thisInterval.y) > kMinimumPanDistance) {
+        
+        lastRecognizedInterval = thisInterval;
+        
+        CGRect frame = self.carousel.currentItemView.frame;
+        frame.origin.y += (lastRecognizedInterval.y - thisInterval.y);
+        // you would add your method call here
+    }
+    NSLog(@"Up");
+}
+
+- (void)handleDownwardsGesture:(UIPanGestureRecognizer *)sender
+{
+    NSLog(@"Down");
+}
+
+- (void)handleLeftGesture:(UIPanGestureRecognizer *)sender
+{
+    NSLog(@"Left");
+}
+
+- (void)handleRightGesture:(UIPanGestureRecognizer *)sender
+{
+    NSLog(@"Right");
+}
+
+- (void)handleGesture_SwipeUp:(id)sender {
+    NSLog(@"handleGesture_SwipeUp");
+    PIECommentViewController* vc = [PIECommentViewController new];
+    vc.vm = _currentVM;
+    [vc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+    [self presentViewController:vc animated:YES completion:nil];
+}
+- (void)handleGesture_SwipeDown:(id)sender {
+    NSLog(@"handleGesture_SwipeDown");
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 -(iCarousel *)carousel {
     if (!_carousel) {
@@ -132,23 +262,36 @@
 
 - (UIView *)carousel:(__unused iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
 {
-    if (_dataSource.count > index) {
 
+    if (_dataSource.count > index) {
         if (view == nil)
         {
-//            CGFloat height = self.carousel.frame.size.height;
-            view = [[UIView alloc]initWithFrame:self.view.bounds];
+            
+            CGFloat scale_h = (414-40)/414.0;
+            CGFloat scale_v = (736-94)/736.0;
+            
+            CGFloat width  = SCREEN_WIDTH *scale_h;
+            CGFloat height = SCREEN_HEIGHT*scale_v;
+            
+//            CGFloat margin_h = (SCREEN_WIDTH - width)/2.0;
+            CGFloat margin_v = (SCREEN_HEIGHT - height);
+            
+            view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, width, self.view.bounds.size.height)];
             view.backgroundColor = [UIColor clearColor];
-            CGFloat width = view.bounds.size.width - 50;
-            CGFloat height = view.bounds.size.height - 150;
-            PIECarousel_ItemView* itemView = [[PIECarousel_ItemView alloc]initWithFrame:CGRectMake(25, 75, view.bounds.size.width - 50, view.bounds.size.height - 150)];
+
+            PIECarousel_ItemView* itemView = [[PIECarousel_ItemView alloc]initWithFrame:CGRectMake(0, margin_v, width, view.frame.size.height)];
             itemView.backgroundColor = [UIColor whiteColor];
             itemView.layer.cornerRadius = 10;
             itemView.clipsToBounds = YES;
             [view addSubview:itemView];
         }
         PIEPageVM* vm = [_dataSource objectAtIndex:index];
-      
+        for (id subview in view.subviews) {
+            if ([subview isKindOfClass:[PIECarousel_ItemView class]]) {
+                PIECarousel_ItemView* itemView = subview;
+                itemView.vm = vm;
+            }
+        }
         return view;
     }
     return nil;
@@ -204,11 +347,18 @@
     vc.vm = _currentVM;
     [self.navigationController pushViewController:vc animated:YES];
 }
-
+-(void)carouselDidEndScrollingAnimation:(iCarousel *)carousel {
+    [self flyCurrentItemViewWithDirection:YES];
+}
 - (void)carouselCurrentItemIndexDidChange:(__unused iCarousel *)carousel
 {
     [self updateUIWithIndex:carousel.currentItemIndex];
 }
+-(void)carouselWillBeginDragging:(iCarousel *)carousel {
+    [self flyCurrentItemViewWithDirection:NO];
+}
+
+
 - (NSInteger)numberOfPlaceholdersInCarousel:(iCarousel *)carousel {
     return 2;
 }
@@ -256,31 +406,69 @@
     }];
 }
 
+
+- (void)flyCurrentItemViewWithDirection:(BOOL)up {
+    
+    if (up && self.carousel.currentItemView.tag!=1) {
+        CGRect frame =  self.carousel.currentItemView.frame;
+        frame.origin.y = frame.origin.y - 10;
+        self.carousel.currentItemView.tag = 1;
+
+        [UIView animateWithDuration:0.3 animations:^{
+            self.carousel.currentItemView.frame = frame;
+        }completion:^(BOOL finished) {
+            if (finished) {
+            }
+        }];
+    } else if (!up && self.carousel.currentItemView.tag!=0) {
+        CGRect frame =  self.carousel.currentItemView.frame;
+        frame.origin.y = frame.origin.y + 10;
+        self.carousel.currentItemView.tag = 0;
+        
+        [UIView animateWithDuration:0.2 animations:^{
+            self.carousel.currentItemView.frame = frame;
+        }completion:^(BOOL finished) {
+            if (finished) {
+            }
+        }];
+    
+    }
+}
 - (void)reorderSourceAndScroll {
-//初始化，把传进来的vm重组，放在原图的下一位，被滚动到此位置。
+    //初始化，把传进来的vm重组，放在原图的下一位，被滚动到此位置。
+    BOOL shouldScroll = NO;
     for (int i =0; i < _dataSource.count; i++) {
         PIEPageVM* vm = [_dataSource objectAtIndex:i];
         //找出与传进来的pageVM匹配的vm
         if (vm.ID == _pageVM.ID && vm.type == _pageVM.type && _pageVM.type == PIEPageTypeReply) {
             if (_dataSource.count >= 2) {
+                shouldScroll = YES;
                 PIEPageVM* vmToCheck = [_dataSource objectAtIndex:1];
                 [_dataSource removeObjectAtIndex:i];
                 if (vmToCheck.type == PIEPageTypeAsk) {
                     [_dataSource insertObject:vm atIndex:2];
+                    [_carousel reloadData];
                     [_carousel scrollToItemAtIndex:2 duration:0];
-                    break;
                 }
                 else {
                     [_dataSource insertObject:vm atIndex:1];
+                    [_carousel reloadData];
                     [_carousel scrollToItemAtIndex:1 duration:0];
-                    break;
                 }
+                break;
             }
             //must animate scroll carousel in order to scroll segment.
-        } else {
-//            [self updateUIWithIndex:0];
-            [_carousel.delegate carouselCurrentItemIndexDidChange:_carousel];
         }
+        //        else {
+        ////            [self updateUIWithIndex:0];
+        //            [_carousel.delegate carouselCurrentItemIndexDidChange:_carousel];
+        //        }
+    }
+    if (!shouldScroll) {
+        [_carousel reloadData];
+        [_carousel scrollToItemAtIndex:0 duration:0];
+
+//        [self updateUIWithIndex:0];
     }
 
 }

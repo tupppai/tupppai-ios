@@ -49,6 +49,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 @implementation PIECommentViewController
 
+-(BOOL)prefersStatusBarHidden {
+    return YES;
+}
 - (id)init
 {
     self = [super initWithTableViewStyle:UITableViewStylePlain];
