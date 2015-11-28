@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Slack Technologies, Inc. All rights reserved.
 //
 
-#import "PIECommentViewController.h"
+#import "PIECommentViewController2.h"
 #import "PIECommentTableCell.h"
 #import "PIECommentTextView.h"
 #import "PIECommentVM.h"
@@ -26,12 +26,14 @@
 #import "KVCMutableArray.h"
 #import "PIEReplyCollectionViewController.h"
 #import "PIEPageManager.h"
+
 #import "UIViewController+ScrollingNavbar.h"
+
 #define DEBUG_CUSTOM_TYPING_INDICATOR 0
 
 static NSString *MessengerCellIdentifier = @"MessengerCell";
 
-@interface PIECommentViewController ()<DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,PIEShareViewDelegate,JGActionSheetDelegate,JTSImageViewControllerInteractionsDelegate>
+@interface PIECommentViewController2 ()<DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,PIEShareViewDelegate,JGActionSheetDelegate,JTSImageViewControllerInteractionsDelegate>
 
 @property (nonatomic, strong) NSMutableArray *source_hotComment;
 @property (nonatomic, strong) KVCMutableArray *source_newComment;
@@ -47,7 +49,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 @end
 
-@implementation PIECommentViewController
+@implementation PIECommentViewController2
 
 -(BOOL)prefersStatusBarHidden {
     return YES;
@@ -79,7 +81,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 {
     _shouldShowHeaderView = YES;
     _shouldDownloadVMSource = NO;
-
+    
     // Register a SLKTextView subclass, if you need any special appearance and/or behavior customisation.
     [self registerClassForTextView:[PIECommentTextView class]];
 }
@@ -90,16 +92,28 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 {
     [super viewDidLoad];
     _isFirstLoading = YES;
-    
+    [self setupNavBar];
     [self configTableView];
     [self configFooterRefresh];
     [self configTextInput];
     [self addGestureToCommentTableView];
-    
     [self getDataSource];
     if (_shouldDownloadVMSource && _shouldShowHeaderView) {
         [self getVMSource];
     }
+
+}
+
+- (void)setupNavBar {
+    UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
+    buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [buttonLeft setImage:[UIImage imageNamed:@"close_sign"] forState:UIControlStateNormal];
+    [buttonLeft addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonLeft];
+    self.navigationItem.leftBarButtonItem =  buttonItem;
+}
+- (void) dismiss {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (void)getVMSource {
     NSMutableDictionary* param = [NSMutableDictionary new];
@@ -119,22 +133,28 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    [MobClick beginLogPageView:@"进入浏览图片页"];
+    
+    //    [MobClick beginLogPageView:@"进入浏览图片页"];
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-//    [MobClick endLogPageView:@"离开浏览图片页"];
+    //    [MobClick endLogPageView:@"离开浏览图片页"];
+
 }
 
-
+-(void)dealloc {
+    if (_shouldShowHeaderView) {
+        [self.source_newComment removeObserver:self forKeyPath:@"array"];
+    }
+}
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     if (_isFirstLoading&&!_shouldShowHeaderView) {
         [self.textView becomeFirstResponder];
-//        [self scrollElegant];
+        //        [self scrollElegant];
         _isFirstLoading = NO;
     }
 }
@@ -144,7 +164,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         self.tableView.contentOffset = CGPointMake(0, self.tableView.tableHeaderView.frame.size.height - 52);
     } completion:^(BOOL finished) {
     }];
-
+    
 }
 -(BOOL)hidesBottomBarWhenPushed {
     return YES;
@@ -167,14 +187,14 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)textWillUpdate
 {
     // Notifies the view controller that the text will update.
-
+    
     [super textWillUpdate];
 }
 
 - (void)textDidUpdate:(BOOL)animated
 {
     // Notifies the view controller that the text did update.
-
+    
     [super textDidUpdate:animated];
 }
 
@@ -218,7 +238,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
             commentToShow = [NSString stringWithFormat:@"%@//@%@:%@",commentToShow,reply1.username,reply1.text];
         }
         commentVM.text = commentToShow;
-
+        
         PIEEntityCommentReply* reply = [PIEEntityCommentReply new];
         reply.uid = _targetCommentVM.uid;
         reply.username = _targetCommentVM.username;
@@ -230,7 +250,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     else {
         commentVM.text  = self.textView.text;
     }
-
+    
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.source_newComment insertObject:commentVM inArrayAtIndex:0];
     [self.tableView beginUpdates];
@@ -239,7 +259,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     // Fixes the cell from blinking (because of the transform, when using translucent cells)
     // See https://github.com/slackhq/SlackTextViewController/issues/94#issuecomment-69929927
-//    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    //    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:self.textView.text forKey:@"content"];
     [param setObject:@(_vm.type) forKey:@"type"];
@@ -274,14 +294,14 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)didCommitTextEditing:(id)sender
 {
     // Notifies the view controller when tapped on the right "Accept" button for commiting the edited text
-
+    
     [super didCommitTextEditing:sender];
 }
 
 - (void)didCancelTextEditing:(id)sender
 {
     // Notifies the view controller when tapped on the left "Cancel" button
-
+    
     [super didCancelTextEditing:sender];
 }
 -(void)didPasteMediaContent:(NSDictionary *)userInfo {
@@ -315,13 +335,13 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    if (section == 0) {
-//        return _commentsHot.count;
-//    } else if (section == 1) {
-        return _source_newComment.array.count;
-//    } else {
-//        return 0;
-//    }
+    //    if (section == 0) {
+    //        return _commentsHot.count;
+    //    } else if (section == 1) {
+    return _source_newComment.array.count;
+    //    } else {
+    //        return 0;
+    //    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -331,14 +351,14 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         if (!cell) {
             cell = [[PIECommentTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
-//        if (indexPath.section == 0) {
-//            [cell getSource:_commentsHot[indexPath.row]];
-//        } else if (indexPath.section == 1) {
-            [cell getSource:_source_newComment.array[indexPath.row]];
-//        }
+        //        if (indexPath.section == 0) {
+        //            [cell getSource:_commentsHot[indexPath.row]];
+        //        } else if (indexPath.section == 1) {
+        [cell getSource:_source_newComment.array[indexPath.row]];
+        //        }
         // Cells must inherit the table view's transform
         // This is very important, since the main table view may be inverted
-//        cell.transform = self.tableView.transform;
+        //        cell.transform = self.tableView.transform;
         return cell;
     }
     return nil;
@@ -350,11 +370,11 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 {
     if ([tableView isEqual:self.tableView]) {
         PIECommentVM* vm;
-//        if (indexPath.section == 0) {
-//            vm = _commentsHot[indexPath.row];
-//        } else if (indexPath.section == 1) {
-            vm = _source_newComment.array[indexPath.row];
-//        }
+        //        if (indexPath.section == 0) {
+        //            vm = _commentsHot[indexPath.row];
+        //        } else if (indexPath.section == 1) {
+        vm = _source_newComment.array[indexPath.row];
+        //        }
         
         NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
         paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
@@ -405,17 +425,17 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    NSInteger section = indexPath.section;
+    //    NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
-//    if (section == 0) {
-//        _targetCommentVM = _commentsHot[row];
-//    } else if (section == 1) {
-        _targetCommentVM = _source_newComment.array[row];
-//    }
+    //    if (section == 0) {
+    //        _targetCommentVM = _commentsHot[row];
+    //    } else if (section == 1) {
+    _targetCommentVM = _source_newComment.array[row];
+    //    }
     self.textView.placeholder = [NSString stringWithFormat:@"@%@:",_targetCommentVM.username];
     [self.textView becomeFirstResponder];
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-
+    
 }
 
 
@@ -469,11 +489,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     header.frame = frame;
     self.tableView.tableHeaderView = header;
 }
--(void)dealloc {
-    if (_shouldShowHeaderView) {
-        [self.source_newComment removeObserver:self forKeyPath:@"array"];
-    }
-}
+
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"array"]) {
         ((PIECommentTableHeaderView_Ask*)self.tableView.tableHeaderView).commentButton.number = _source_newComment.countOfArray;
@@ -488,8 +504,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     self.keyboardPanningEnabled = YES;
     self.shouldScrollToBottomAfterKeyboardShows = NO;
     self.inverted = NO;
-//    [self.leftButton setImage:[UIImage imageNamed:@"btn_emoji"] forState:UIControlStateNormal];
-//    [self.rightButton setImage:[UIImage imageNamed:@"btn_comment_send"] forState:UIControlStateNormal];
+    //    [self.leftButton setImage:[UIImage imageNamed:@"btn_emoji"] forState:UIControlStateNormal];
+    //    [self.rightButton setImage:[UIImage imageNamed:@"btn_comment_send"] forState:UIControlStateNormal];
     [self.rightButton setTitle:@"发送" forState:UIControlStateNormal];
     [self.rightButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     self.textInputbar.autoHideRightButton = YES;
@@ -514,16 +530,16 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 #pragma mark - tap Event
 
 - (void)tapCommentTable:(UITapGestureRecognizer *)gesture {
-
+    
     CGPoint location = [gesture locationInView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
     if (indexPath) {
-//        NSInteger section = indexPath.section;
+        //        NSInteger section = indexPath.section;
         NSInteger row = indexPath.row;
         PIECommentTableCell *cell = (PIECommentTableCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-//        DDCommentVM *model = (section == 0) ? _commentsHot[row] : _source_newComment.array[row];
+        //        DDCommentVM *model = (section == 0) ? _commentsHot[row] : _source_newComment.array[row];
         PIECommentVM *model =  _source_newComment.array[row];
-
+        
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.avatarView.frame, p)) {
             PIEFriendViewController *opvc = [PIEFriendViewController new];
@@ -541,14 +557,14 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
             opvc.pageVM = vm;
             [self.navigationController pushViewController:opvc animated:YES];
         }
-//        else if (CGRectContainsPoint(cell.likeButton.frame, p)) {
-//            //UI
-//            [cell.likeButton toggleLike];
-//            //Network
-//            [model toggleLike];
-//
-//    }
-}
+        //        else if (CGRectContainsPoint(cell.likeButton.frame, p)) {
+        //            //UI
+        //            [cell.likeButton toggleLike];
+        //            //Network
+        //            [model toggleLike];
+        //
+        //    }
+    }
 }
 
 
@@ -566,7 +582,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 - (void)getDataSource {
     WS(ws);
-
+    
     _currentPage = 1;
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -601,7 +617,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         [ws.source_newComment addArrayObject: recentCommentArray];
         [self.source_newComment didChangeValueForKey:@"array"];
         [ws.source_hotComment addObjectsFromArray: hotCommentArray];
-
+        
         [self.tableView.footer endRefreshing];
         [self.tableView reloadData];
         if (recentCommentArray.count == 0) {
@@ -646,7 +662,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         UITapGestureRecognizer* tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap2)];
         UITapGestureRecognizer* tap3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap3)];
         UITapGestureRecognizer* tap4 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap4)];
-
+        
         UITapGestureRecognizer* tap5 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap5)];
         UITapGestureRecognizer* tap6 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapHelp)];
         [_headerView.avatarView addGestureRecognizer:tap1];
@@ -701,25 +717,25 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 - (void) didTap3 {
     [self.textView resignFirstResponder];
-        // Create image info
-        JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
-        if (_headerView.imageViewMain.image != nil) {
-            imageInfo.image = _headerView.imageViewMain.image;
-        } else {
-            imageInfo.imageURL = [NSURL URLWithString:_vm.imageURL];
-        }
+    // Create image info
+    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+    if (_headerView.imageViewMain.image != nil) {
+        imageInfo.image = _headerView.imageViewMain.image;
+    } else {
+        imageInfo.imageURL = [NSURL URLWithString:_vm.imageURL];
+    }
     //    imageInfo.referenceRect = _selectedHotDetailCell.userHeaderButton.frame;
     //    imageInfo.referenceView = _selectedHotDetailCell.userHeaderButton;
     
-        // Setup view controller
-        JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
-                                               initWithImageInfo:imageInfo
-                                               mode:JTSImageViewControllerMode_Image
-                                               backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
+    // Setup view controller
+    JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
+                                           initWithImageInfo:imageInfo
+                                           mode:JTSImageViewControllerMode_Image
+                                           backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
     
-        // Present the view controller.
-        [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOffscreen];
-        imageViewer.interactionsDelegate = self;
+    // Present the view controller.
+    [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOffscreen];
+    imageViewer.interactionsDelegate = self;
 }
 - (void) didTap4 {
     [self.textView resignFirstResponder];

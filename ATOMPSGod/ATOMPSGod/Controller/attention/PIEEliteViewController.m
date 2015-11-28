@@ -14,6 +14,8 @@
 #import "PIECarouselViewController.h"
 #import "PIEFriendViewController.h"
 #import "PIECommentViewController.h"
+#import "PIECommentViewController2.h"
+
 #import "DDCollectManager.h"
 #import "PIEReplyCollectionViewController.h"
 #import "JGActionSheet.h"
@@ -30,7 +32,6 @@
 #import "PIEWebViewViewController.h"
 #import "PIEShareImageView.h"
 #import "PIECarouselViewController2.h"
-
 @interface PIEEliteViewController ()<UITableViewDelegate,UITableViewDataSource,PWRefreshBaseTableViewDelegate,UIScrollViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource,SwipeViewDelegate,SwipeViewDataSource>
 @property (nonatomic, strong) PIEEliteScrollView *sv;
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
@@ -77,8 +78,6 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     
     [self getSourceIfEmpty_hot:nil];
     [self getSourceIfEmpty_banner];
-
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated

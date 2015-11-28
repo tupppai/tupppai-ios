@@ -10,12 +10,15 @@
 #import "PIECustomViewFromXib.h"
 #import "PIEPageLikeButton.h"
 #import "PIEPageButton.h"
+#import "PIEImageView_BlurBG.h"
 @interface PIECarousel_ItemView : PIECustomViewFromXib
 @property (weak, nonatomic) IBOutlet UIImageView *imageView_type;
 @property (weak, nonatomic) IBOutlet UIButton *button_name;
 @property (weak, nonatomic) IBOutlet UILabel *label_time;
 @property (weak, nonatomic) IBOutlet UIButton *button_avatar;
-@property (weak, nonatomic) IBOutlet UIImageView *imageView_page;
+//@property (weak, nonatomic) IBOutlet UIImageView *imageView_page;
+@property (weak, nonatomic) IBOutlet PIEImageView_BlurBG *view_pageImage;
+
 @property (weak, nonatomic) IBOutlet UILabel *label_content;
 @property (weak, nonatomic) IBOutlet PIEPageButton *pageButton_share;
 @property (weak, nonatomic) IBOutlet PIEPageButton *pageButton_comment;

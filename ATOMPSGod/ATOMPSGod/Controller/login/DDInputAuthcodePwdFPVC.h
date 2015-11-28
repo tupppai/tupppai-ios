@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface DDInputAuthcodePwdFPVC : DDLoginBaseVC
-@property (nonatomic, copy) NSString *verifyCode;
+//@property (nonatomic, copy) NSString *verifyCode;
 @property (nonatomic, copy) NSString *phoneNumber;
 
 @end

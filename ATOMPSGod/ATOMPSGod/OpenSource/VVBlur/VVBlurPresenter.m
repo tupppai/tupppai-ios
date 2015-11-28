@@ -52,7 +52,6 @@
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented
                                                                  presentingController:(UIViewController *)presenting
                                                                      sourceController:(UIViewController *)source {
-    
     VVBlurTransitioning *transition = [VVBlurTransitioning new];
     transition.isPresentation = YES;
     return transition;

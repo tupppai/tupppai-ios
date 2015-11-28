@@ -8,6 +8,7 @@
 
 #import "PIECommentTableHeaderView_Reply.h"
 #import "PIEImageEntity.h"
+#import "FXBlurView.h"
 #define MAXHEIGHT (SCREEN_WIDTH-kPadding15*2)*4/3
 
 @interface PIECommentTableHeaderView_Reply ()
@@ -30,6 +31,7 @@
     [self addSubview:self.usernameLabel];
     [self addSubview:self.timeLabel];
     [self addSubview:self.followButton];
+    [self addSubview:self.imageViewBlur];
     [self addSubview:self.imageViewMain];
     [self addSubview:self.imageViewRight];
     [self addSubview:self.textView_content];
@@ -70,16 +72,26 @@
         make.centerY.equalTo(self.avatarView);
         make.right.equalTo(self).with.offset(-12);
     }];
+    
+    
     [self.imageViewMain mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_timeLabel.mas_bottom).with.offset(10);
         make.left.equalTo(self).with.offset(0);
         make.width.equalTo(self).with.priorityHigh();
+        make.height.equalTo(self.mas_width);
     }];
+    
     [self.imageViewRight mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.imageViewMain.mas_top);
         make.left.equalTo(self.imageViewMain.mas_right).with.offset(0);
         make.right.equalTo(self).with.offset(0);
         make.bottom.equalTo(self.imageViewMain.mas_bottom).with.offset(0);
+    }];
+    [self.imageViewBlur mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.imageViewMain);
+        make.bottom.equalTo(self.imageViewMain);
+        make.left.equalTo(self);
+        make.right.equalTo(self);
     }];
     [self.textView_content mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_imageViewMain.mas_bottom).with.offset(5);
@@ -140,7 +152,13 @@
         _usernameLabel.text = vm.username;
         _timeLabel.text = vm.publishTime;
         _followButton.selected = vm.followed;
-        [_imageViewMain setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+//        [_imageViewMain setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+        
+        [DDService downloadImage:vm.imageURL withBlock:^(UIImage *image) {
+            _imageViewBlur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
+            _imageViewMain.image = image;
+        }];
+
         CGFloat height = vm.imageHeight/vm.imageWidth *SCREEN_WIDTH;
         if (height > 100) {
             [_imageViewMain mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -212,17 +230,24 @@
 -(UIImageView*)imageViewMain {
     if (!_imageViewMain) {
         _imageViewMain = [UIImageView new];
-        //        _imageViewMain.contentMode = UIViewContentModeScaleAspectFit;
+        _imageViewMain.contentMode = UIViewContentModeScaleAspectFit;
         //        _imageViewMain.clipsToBounds = YES;
         _imageViewMain.userInteractionEnabled = YES;
-        _imageViewMain.backgroundColor= [ UIColor groupTableViewBackgroundColor];
     }
     return _imageViewMain;
+}
+-(UIImageView*)imageViewBlur {
+    if (!_imageViewBlur) {
+        _imageViewBlur = [UIImageView new];
+        _imageViewBlur.contentMode = UIViewContentModeScaleAspectFill;
+        _imageViewBlur.clipsToBounds = YES;
+    }
+    return _imageViewBlur;
 }
 -(UIImageView*)imageViewRight {
     if (!_imageViewRight) {
         _imageViewRight = [UIImageView new];
-        //        _imageViewMain.contentMode = UIViewContentModeScaleAspectFit;
+        _imageViewMain.contentMode = UIViewContentModeScaleAspectFit;
         //        _imageViewMain.clipsToBounds = YES;
         _imageViewRight.userInteractionEnabled = YES;
         _imageViewRight.backgroundColor= [ UIColor groupTableViewBackgroundColor];

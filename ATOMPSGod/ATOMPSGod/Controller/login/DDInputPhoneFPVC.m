@@ -41,11 +41,11 @@
 - (void)clickRightButtonItem {
     if ([self checkInputMessageSuccess]) {
         NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:_inputMobileView.mobileTextField.text, @"phone", nil];
-        [DDService getAuthCode:param withBlock:^(NSString* authcode) {
-            if (authcode) {
+        [DDService getAuthCode:param withBlock:^(BOOL success) {
+            if (success) {
                 [DDUserManager currentUser].mobile = _inputMobileView.mobileTextField.text;
                 DDInputAuthcodePwdFPVC *ivcvc = [DDInputAuthcodePwdFPVC new];
-                ivcvc.verifyCode = authcode;
+//                ivcvc.verifyCode = authcode;
                 ivcvc.phoneNumber = _inputMobileView.mobileTextField.text;
                 [self.navigationController pushViewController:ivcvc animated:YES];            }
             else {

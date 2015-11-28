@@ -21,7 +21,7 @@
 #import "PIECommentViewController.h"
 #import "PIECommentManager.h"
 #import "UITableView+FDTemplateLayoutCell.h"
-
+#import "UIViewController+ScrollingNavbar.h"
 @interface PIENotificationViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate>
 @property (nonatomic, strong) NSMutableArray *source;
 //@property (nonatomic, strong) PIERefreshTableView *tableView;
@@ -37,8 +37,14 @@
 -(BOOL)hidesBottomBarWhenPushed {
     return YES;
 }
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+
+    
     self.title = @"我的消息";
     _source = [NSMutableArray array];
     _canRefreshFooter = YES;
@@ -61,6 +67,11 @@
     [self configTableView];
     [self setupRefresh_Footer];
     [self getDataSource];
+    
+    
+//    [self.navigationController.navigationBar setTranslucent:NO];
+//    [self followScrollView:self.tableView];
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -186,6 +197,8 @@
     self.tableView.tableFooterView = [UIView new];
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.showsHorizontalScrollIndicator = NO;
+    
+
 }
 - (void)configSlack {
     self.bounces = NO;

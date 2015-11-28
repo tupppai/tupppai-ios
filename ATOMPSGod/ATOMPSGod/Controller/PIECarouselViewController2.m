@@ -13,9 +13,9 @@
 #import "FXBlurView.h"
 #import "PIECommentViewController.h"
 #import "JGActionSheet.h"
-
 #import "PIECarousel_ItemView.h"
-
+#import "DDNavigationController.h"
+#import "PIECommentViewController2.h"
 @interface PIECarouselViewController2 ()<JGActionSheetDelegate>
 @property (nonatomic, strong)  iCarousel *carousel;
 
@@ -30,6 +30,8 @@
 @property (nonatomic, assign)  NSInteger replyCount;
 @property (weak, nonatomic) IBOutlet UIView *bottomContainerView;
 @property (weak, nonatomic) IBOutlet UIVisualEffectView *bottomDimmerView;
+@property (nonatomic, assign) NSInteger previousCurrentIndex ;
+
 @end
 
 @implementation PIECarouselViewController2
@@ -76,136 +78,40 @@
     [self setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     _dataSource = [NSMutableArray array];
     [self.view addSubview:self.carousel];
-//    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture_SwipeUp:)];
-//    swipe.direction =   UISwipeGestureRecognizerDirectionUp;
-//    [self.carousel addGestureRecognizer:swipe];
+    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture_SwipeUp:)];
+    swipe.direction =   UISwipeGestureRecognizerDirectionUp;
+    [self.carousel addGestureRecognizer:swipe];
     
     UISwipeGestureRecognizer *swipe2 = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture_SwipeDown:)];
     swipe2.direction =   UISwipeGestureRecognizerDirectionDown;
     [self.carousel addGestureRecognizer:swipe2];
     
-    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(pan:)];
-    [self.carousel addGestureRecognizer:pan];
+//    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(pan:)];
+//    [self.carousel addGestureRecognizer:pan];
 }
+
+CGFloat startPanLocationY;
 
 - (void)pan:(UIPanGestureRecognizer *)sender
 {
-    
-    typedef NS_ENUM(NSUInteger, UIPanGestureRecognizerDirection) {
-        UIPanGestureRecognizerDirectionUndefined,
-        UIPanGestureRecognizerDirectionUp,
-        UIPanGestureRecognizerDirectionDown,
-        UIPanGestureRecognizerDirectionLeft,
-        UIPanGestureRecognizerDirectionRight
-    };
-    
-    static UIPanGestureRecognizerDirection direction = UIPanGestureRecognizerDirectionUndefined;
-    
-    switch (sender.state) {
-            
-        case UIGestureRecognizerStateBegan: {
-            
-            if (direction == UIPanGestureRecognizerDirectionUndefined) {
-                
-                CGPoint velocity = [sender velocityInView:self.carousel];
-                
-                BOOL isVerticalGesture = fabs(velocity.y) > fabs(velocity.x);
-                
-                if (isVerticalGesture) {
-                    if (velocity.y > 0) {
-                        direction = UIPanGestureRecognizerDirectionDown;
-                    } else {
-                        direction = UIPanGestureRecognizerDirectionUp;
-                    }
-                }
-                
-                else {
-                    if (velocity.x > 0) {
-                        direction = UIPanGestureRecognizerDirectionRight;
-                    } else {
-                        direction = UIPanGestureRecognizerDirectionLeft;
-                    }
-                }
-            }
-            
-            break;
-        }
-            
-        case UIGestureRecognizerStateChanged: {
-            switch (direction) {
-                case UIPanGestureRecognizerDirectionUp: {
-                    [self handleUpwardsGesture:sender];
-                    break;
-                }
-                case UIPanGestureRecognizerDirectionDown: {
-                    [self handleDownwardsGesture:sender];
-                    break;
-                }
-                case UIPanGestureRecognizerDirectionLeft: {
-                    [self handleLeftGesture:sender];
-                    break;
-                }
-                case UIPanGestureRecognizerDirectionRight: {
-                    [self handleRightGesture:sender];
-                    break;
-                }
-                default: {
-                    break;
-                }
-            }
-        }
-            
-        case UIGestureRecognizerStateEnded: {
-            direction = UIPanGestureRecognizerDirectionUndefined;
-            break;
-        }
-            
-        default:
-            break;
+    if ( sender.state == UIGestureRecognizerStateBegan) {
+        startPanLocationY = [sender locationInView:self.carousel].y;
     }
     
+    CGRect frame = self.carousel.currentItemView.frame;
+    frame.origin.y += [sender locationInView:self.carousel].y - startPanLocationY;
+    self.carousel.currentItemView.frame = frame;
+    startPanLocationY = [sender locationInView:self.view].y;
 }
 
-#define kMinimumPanDistance 1.0f
-UIPanGestureRecognizer *recognizer;
-CGPoint lastRecognizedInterval;
-
-- (void)handleUpwardsGesture:(UIPanGestureRecognizer *)sender
-{
-    CGPoint thisInterval = [sender translationInView:self.view];
-    
-    if (fabs(lastRecognizedInterval.y - thisInterval.y) > kMinimumPanDistance) {
-        
-        lastRecognizedInterval = thisInterval;
-        
-        CGRect frame = self.carousel.currentItemView.frame;
-        frame.origin.y += (lastRecognizedInterval.y - thisInterval.y);
-        // you would add your method call here
-    }
-    NSLog(@"Up");
-}
-
-- (void)handleDownwardsGesture:(UIPanGestureRecognizer *)sender
-{
-    NSLog(@"Down");
-}
-
-- (void)handleLeftGesture:(UIPanGestureRecognizer *)sender
-{
-    NSLog(@"Left");
-}
-
-- (void)handleRightGesture:(UIPanGestureRecognizer *)sender
-{
-    NSLog(@"Right");
-}
 
 - (void)handleGesture_SwipeUp:(id)sender {
     NSLog(@"handleGesture_SwipeUp");
-    PIECommentViewController* vc = [PIECommentViewController new];
+    PIECommentViewController2* vc = [PIECommentViewController2 new];
     vc.vm = _currentVM;
     [vc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
-    [self presentViewController:vc animated:YES completion:nil];
+    DDNavigationController* nav = [[DDNavigationController alloc]initWithRootViewController:vc];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 - (void)handleGesture_SwipeDown:(id)sender {
     NSLog(@"handleGesture_SwipeDown");

@@ -59,9 +59,8 @@
 
 - (void)updateAuthCode {
     NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:[DDUserManager currentUser].mobile, @"phone", nil];
-    [DDService getAuthCode:param withBlock:^(NSString* authcode) {
-        if (authcode) {
-            self.verifyCode = authcode;
+    [DDService getAuthCode:param withBlock:^(BOOL success) {
+        if (success) {
         }
         else {
             [Util ShowTSMessageError:@"无法获取到验证码"];
@@ -71,12 +70,11 @@
 
 
 - (void)clickRightButtonItem{
-        if ([_inputVerifyView.verifyCodeTextField.text isEqualToString:_verifyCode]) {
             if ([_inputVerifyView.passwordTextField.text isPassword]) {
             NSMutableDictionary* param = [NSMutableDictionary new];
             [param setObject:_inputVerifyView.passwordTextField.text forKey:@"new_pwd"];
             [param setObject:_phoneNumber forKey:@"phone"];
-            [param setObject:_verifyCode forKey:@"code"];
+            [param setObject:_inputVerifyView.verifyCodeTextField.text forKey:@"code"];
 
             [DDService resetPassword:param withBlock:^(BOOL success) {
                 if (success) {
@@ -89,9 +87,6 @@
             } else {
                 [Util ShowTSMessageWarn:@"密码必须由6~16位的数字和字母组成"];
             }
-        } else {
-            [Util ShowTSMessageError:@"验证码有误"];
-        }
     }
 
 - (void)clickLeftButtonItem{

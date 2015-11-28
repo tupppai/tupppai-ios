@@ -58,9 +58,8 @@
 
 - (void)updateAuthCode {
     NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:[DDUserManager currentUser].mobile, @"phone", nil];
-    [DDService getAuthCode:param withBlock:^(NSString* authcode) {
-        if (authcode) {
-            self.verifyCode = authcode;
+    [DDService getAuthCode:param withBlock:^(BOOL success) {
+        if (success) {
         } else {
             [Util ShowTSMessageError:@"无法获取到验证码"];
         }
@@ -68,22 +67,19 @@
 }
 
 - (void)clickRightButtonItem{
-    
-    if ( [_verifyCode isEqualToString:_inputVerifyView.verifyCodeTextField.text] ) {
-        NSMutableDictionary *param = [[DDUserManager currentUser] dictionaryFromModel];
-        [param setObject:_verifyCode forKey:@"code"];
-        [DDUserManager DDRegister:param withBlock:^(BOOL success) {
-            if (success) {
-                [self.navigationController setViewControllers:[NSArray new]];
-                [AppDelegate APP].mainTabBarController = nil;
-                [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
-                ;
-            }
-        }];
-    } else {
-        [Util ShowTSMessageError:@"验证码错误哦"];
+    NSMutableDictionary *param = [[DDUserManager currentUser] dictionaryFromModel];
+    [param setObject:_inputVerifyView.verifyCodeTextField.text forKey:@"code"];
+
+    [DDUserManager DDRegister:param withBlock:^(BOOL success) {
+        if (success) {
+            [self.navigationController setViewControllers:[NSArray new]];
+            [AppDelegate APP].mainTabBarController = nil;
+            [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
+            ;
+        }
+    }];
+
     }
-}
 - (void)clickLeftButtonItem{
     [self.navigationController popViewControllerAnimated:YES];
 }

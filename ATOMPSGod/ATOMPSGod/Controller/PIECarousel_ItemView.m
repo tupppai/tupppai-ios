@@ -63,8 +63,10 @@
         _pageLikeButton.numberString = vm.likeCount;
     }
     
-    [_imageView_page setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-    
+//    [_imageView_page setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+    [DDService downloadImage:vm.imageURL withBlock:^(UIImage *image) {
+        _view_pageImage.image = image;
+    }];
 }
 //@property (weak, nonatomic) IBOutlet UIImageView *imageView_type;
 //@property (weak, nonatomic) IBOutlet UIButton *button_name;

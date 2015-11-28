@@ -162,11 +162,13 @@
     }];
 }
 
-+ (void)getAuthCode:(NSDictionary*)param withBlock:(void (^)(NSString *authcode))block {
++ (void)getAuthCode:(NSDictionary*)param withBlock:(void (^)(BOOL success))block {
     [[self class]GET:param url:URL_ACRequestAuthCode block:^(id responseObject) {
-            NSDictionary* data = [responseObject objectForKey:@"data"];
-            NSString* authcode = [[data objectForKey:@"code"]stringValue];
-            if (block && authcode) { block(authcode); }
+        if (responseObject) {
+            if (block ) { block(YES); }
+        } else {
+            if (block ) { block(NO); }
+        }
     }];
 }
 

@@ -26,6 +26,7 @@
 @property (nonatomic, strong) UIImageView *imageViewRight;
 //@property (nonatomic, strong) UILabel *contentLabel;
 @property (nonatomic, strong) PIETextView_linkDetection *textView_content;
+@property (nonatomic, strong) UIImageView *imageViewBlur;
 
 @property (nonatomic, strong) PIEPageButton *commentButton;
 @property (nonatomic, strong) PIEPageButton *shareButton;

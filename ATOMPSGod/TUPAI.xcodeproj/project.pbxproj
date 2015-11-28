@@ -305,6 +305,7 @@
 		F4309E2D1BC8C05C0035033C /* PIEModifyProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4309E2C1BC8C05C0035033C /* PIEModifyProfileViewController.m */; };
 		F4309E311BC8C7640035033C /* PIEModifySelfView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4309E301BC8C7640035033C /* PIEModifySelfView.m */; };
 		F43159CD1BB5567000DCA292 /* PIEPageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F43159CC1BB5567000DCA292 /* PIEPageButton.m */; };
+		F4324CDF1C0956CD005C61AC /* PIECommentViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = F4324CDE1C0956CD005C61AC /* PIECommentViewController2.m */; };
 		F43930391BE4BD75006C9437 /* MRBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = F43930151BE4BD75006C9437 /* MRBlurView.m */; };
 		F439303A1BE4BD75006C9437 /* UIImage+MRImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = F43930171BE4BD75006C9437 /* UIImage+MRImageEffects.m */; };
 		F439303B1BE4BD75006C9437 /* MRActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = F439301A1BE4BD75006C9437 /* MRActivityIndicatorView.m */; };
@@ -409,6 +410,17 @@
 		F4C0DFEC1BE9D45F000615CF /* PIEWebViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4C0DFEA1BE9D45F000615CF /* PIEWebViewViewController.xib */; };
 		F4C0DFF01BE9EF3A000615CF /* PIEFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C0DFEE1BE9EF3A000615CF /* PIEFeedbackViewController.m */; };
 		F4C0DFF11BE9EF3A000615CF /* PIEFeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4C0DFEF1BE9EF3A000615CF /* PIEFeedbackViewController.xib */; };
+		F4C705721C096E030057AA6A /* NSObject+TLYSwizzlingHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C7055D1C096E030057AA6A /* NSObject+TLYSwizzlingHelpers.m */; };
+		F4C705731C096E030057AA6A /* TLYDelegateProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C7055F1C096E030057AA6A /* TLYDelegateProxy.m */; };
+		F4C705741C096E030057AA6A /* UIScrollView+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C705611C096E030057AA6A /* UIScrollView+Helpers.m */; };
+		F4C705751C096E030057AA6A /* UIViewController+BetterLayoutGuides.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C705631C096E030057AA6A /* UIViewController+BetterLayoutGuides.m */; };
+		F4C705771C096E030057AA6A /* TLYShyScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C705691C096E030057AA6A /* TLYShyScrollViewController.m */; };
+		F4C705781C096E030057AA6A /* TLYShyStatusBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C7056B1C096E030057AA6A /* TLYShyStatusBarController.m */; };
+		F4C705791C096E030057AA6A /* TLYShyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C7056D1C096E030057AA6A /* TLYShyViewController.m */; };
+		F4C7057A1C096E030057AA6A /* TLYShyNavBarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C705711C096E030057AA6A /* TLYShyNavBarManager.m */; };
+		F4C705DC1C09700A0057AA6A /* UIViewController+ScrollingNavbar.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C705DA1C09700A0057AA6A /* UIViewController+ScrollingNavbar.m */; };
+		F4C705DF1C0995840057AA6A /* PIEImageView_BlurBG.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C705DE1C0995840057AA6A /* PIEImageView_BlurBG.m */; };
+		F4C705E21C0998750057AA6A /* PIEImageView_blur.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C705E11C0998750057AA6A /* PIEImageView_blur.m */; };
 		F4D015BB1BA6AF7200A28329 /* PIEThumbAnimateView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D015BA1BA6AF7200A28329 /* PIEThumbAnimateView.m */; };
 		F4D07A5D1BBA3AB70016A8B5 /* PIEEliteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D07A5C1BBA3AB70016A8B5 /* PIEEliteManager.m */; };
 		F4D3686C1BA909E300E6C91C /* PIECameraCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D3686A1BA909E300E6C91C /* PIECameraCell.m */; };
@@ -1076,6 +1088,8 @@
 		F4309E301BC8C7640035033C /* PIEModifySelfView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEModifySelfView.m; sourceTree = "<group>"; };
 		F43159CB1BB5567000DCA292 /* PIEPageButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEPageButton.h; sourceTree = "<group>"; };
 		F43159CC1BB5567000DCA292 /* PIEPageButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEPageButton.m; sourceTree = "<group>"; };
+		F4324CDD1C0956CD005C61AC /* PIECommentViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECommentViewController2.h; sourceTree = "<group>"; };
+		F4324CDE1C0956CD005C61AC /* PIECommentViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECommentViewController2.m; sourceTree = "<group>"; };
 		F43930141BE4BD75006C9437 /* MRBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRBlurView.h; sourceTree = "<group>"; };
 		F43930151BE4BD75006C9437 /* MRBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRBlurView.m; sourceTree = "<group>"; };
 		F43930161BE4BD75006C9437 /* UIImage+MRImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MRImageEffects.h"; sourceTree = "<group>"; };
@@ -1278,6 +1292,33 @@
 		F4C0DFED1BE9EF3A000615CF /* PIEFeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEFeedbackViewController.h; sourceTree = "<group>"; };
 		F4C0DFEE1BE9EF3A000615CF /* PIEFeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEFeedbackViewController.m; sourceTree = "<group>"; };
 		F4C0DFEF1BE9EF3A000615CF /* PIEFeedbackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEFeedbackViewController.xib; sourceTree = "<group>"; };
+		F4C7055C1C096E030057AA6A /* NSObject+TLYSwizzlingHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TLYSwizzlingHelpers.h"; sourceTree = "<group>"; };
+		F4C7055D1C096E030057AA6A /* NSObject+TLYSwizzlingHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TLYSwizzlingHelpers.m"; sourceTree = "<group>"; };
+		F4C7055E1C096E030057AA6A /* TLYDelegateProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLYDelegateProxy.h; sourceTree = "<group>"; };
+		F4C7055F1C096E030057AA6A /* TLYDelegateProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLYDelegateProxy.m; sourceTree = "<group>"; };
+		F4C705601C096E030057AA6A /* UIScrollView+Helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+Helpers.h"; sourceTree = "<group>"; };
+		F4C705611C096E030057AA6A /* UIScrollView+Helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Helpers.m"; sourceTree = "<group>"; };
+		F4C705621C096E030057AA6A /* UIViewController+BetterLayoutGuides.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+BetterLayoutGuides.h"; sourceTree = "<group>"; };
+		F4C705631C096E030057AA6A /* UIViewController+BetterLayoutGuides.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+BetterLayoutGuides.m"; sourceTree = "<group>"; };
+		F4C705661C096E030057AA6A /* TLYShyChild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLYShyChild.h; sourceTree = "<group>"; };
+		F4C705671C096E030057AA6A /* TLYShyParent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLYShyParent.h; sourceTree = "<group>"; };
+		F4C705681C096E030057AA6A /* TLYShyScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLYShyScrollViewController.h; sourceTree = "<group>"; };
+		F4C705691C096E030057AA6A /* TLYShyScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLYShyScrollViewController.m; sourceTree = "<group>"; };
+		F4C7056A1C096E030057AA6A /* TLYShyStatusBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLYShyStatusBarController.h; sourceTree = "<group>"; };
+		F4C7056B1C096E030057AA6A /* TLYShyStatusBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLYShyStatusBarController.m; sourceTree = "<group>"; };
+		F4C7056C1C096E030057AA6A /* TLYShyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLYShyViewController.h; sourceTree = "<group>"; };
+		F4C7056D1C096E030057AA6A /* TLYShyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLYShyViewController.m; sourceTree = "<group>"; };
+		F4C7056E1C096E030057AA6A /* TLYShyNavBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLYShyNavBar.h; sourceTree = "<group>"; };
+		F4C7056F1C096E030057AA6A /* TLYShyNavBarFade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLYShyNavBarFade.h; sourceTree = "<group>"; };
+		F4C705701C096E030057AA6A /* TLYShyNavBarManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLYShyNavBarManager.h; sourceTree = "<group>"; };
+		F4C705711C096E030057AA6A /* TLYShyNavBarManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLYShyNavBarManager.m; sourceTree = "<group>"; };
+		F4C705D71C09700A0057AA6A /* AMScrollingNavbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMScrollingNavbar.h; sourceTree = "<group>"; };
+		F4C705D91C09700A0057AA6A /* UIViewController+ScrollingNavbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ScrollingNavbar.h"; sourceTree = "<group>"; };
+		F4C705DA1C09700A0057AA6A /* UIViewController+ScrollingNavbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ScrollingNavbar.m"; sourceTree = "<group>"; };
+		F4C705DD1C0995840057AA6A /* PIEImageView_BlurBG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEImageView_BlurBG.h; sourceTree = "<group>"; };
+		F4C705DE1C0995840057AA6A /* PIEImageView_BlurBG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEImageView_BlurBG.m; sourceTree = "<group>"; };
+		F4C705E01C0998750057AA6A /* PIEImageView_blur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIEImageView_blur.h; path = login/PIEImageView_blur.h; sourceTree = "<group>"; };
+		F4C705E11C0998750057AA6A /* PIEImageView_blur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIEImageView_blur.m; path = login/PIEImageView_blur.m; sourceTree = "<group>"; };
 		F4D015B91BA6AF7200A28329 /* PIEThumbAnimateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEThumbAnimateView.h; sourceTree = "<group>"; };
 		F4D015BA1BA6AF7200A28329 /* PIEThumbAnimateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEThumbAnimateView.m; sourceTree = "<group>"; };
 		F4D07A5B1BBA3AB70016A8B5 /* PIEEliteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteManager.h; sourceTree = "<group>"; };
@@ -2014,6 +2055,8 @@
 		5CDB05EC1AA400410089121E /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				F4C705D61C09700A0057AA6A /* AMScrollingNavbar */,
+				F4C7055A1C096E030057AA6A /* TLYShyNavBar */,
 				F47EF07D1C031FF500BFB442 /* VVBlur */,
 				F4F9FFC61BFC849A00032FDE /* SMPageControl */,
 				F491608F1BEC4D0800BAFB65 /* UMAnalytics_Sdk_3.6.4 */,
@@ -2096,6 +2139,10 @@
 				F4B02E141BECA43D00406A55 /* PIECommentTableHeaderView_Ask.m */,
 				F42131B71BF1E012004D48F8 /* PIECommentTableHeaderView_Reply.h */,
 				F42131B81BF1E012004D48F8 /* PIECommentTableHeaderView_Reply.m */,
+				F4C705DD1C0995840057AA6A /* PIEImageView_BlurBG.h */,
+				F4C705DE1C0995840057AA6A /* PIEImageView_BlurBG.m */,
+				F4C705E01C0998750057AA6A /* PIEImageView_blur.h */,
+				F4C705E11C0998750057AA6A /* PIEImageView_blur.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2286,6 +2333,8 @@
 				E94B031A1B7C74E500863C6F /* PIECommentTextView.h */,
 				E94B031B1B7C74E500863C6F /* PIECommentTextView.m */,
 				E94B031C1B7C74E500863C6F /* PIECommentViewController.h */,
+				F4324CDD1C0956CD005C61AC /* PIECommentViewController2.h */,
+				F4324CDE1C0956CD005C61AC /* PIECommentViewController2.m */,
 				E94B031D1B7C74E500863C6F /* PIECommentViewController.m */,
 				F4206FE51BF0929C00C9B339 /* KVCMutableArray.h */,
 				F4206FE61BF0929C00C9B339 /* KVCMutableArray.m */,
@@ -3259,6 +3308,59 @@
 			name = BannerWebView;
 			sourceTree = "<group>";
 		};
+		F4C7055A1C096E030057AA6A /* TLYShyNavBar */ = {
+			isa = PBXGroup;
+			children = (
+				F4C7055B1C096E030057AA6A /* Categories */,
+				F4C705651C096E030057AA6A /* ShyControllers */,
+				F4C7056E1C096E030057AA6A /* TLYShyNavBar.h */,
+				F4C7056F1C096E030057AA6A /* TLYShyNavBarFade.h */,
+				F4C705701C096E030057AA6A /* TLYShyNavBarManager.h */,
+				F4C705711C096E030057AA6A /* TLYShyNavBarManager.m */,
+			);
+			path = TLYShyNavBar;
+			sourceTree = "<group>";
+		};
+		F4C7055B1C096E030057AA6A /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				F4C7055C1C096E030057AA6A /* NSObject+TLYSwizzlingHelpers.h */,
+				F4C7055D1C096E030057AA6A /* NSObject+TLYSwizzlingHelpers.m */,
+				F4C7055E1C096E030057AA6A /* TLYDelegateProxy.h */,
+				F4C7055F1C096E030057AA6A /* TLYDelegateProxy.m */,
+				F4C705601C096E030057AA6A /* UIScrollView+Helpers.h */,
+				F4C705611C096E030057AA6A /* UIScrollView+Helpers.m */,
+				F4C705621C096E030057AA6A /* UIViewController+BetterLayoutGuides.h */,
+				F4C705631C096E030057AA6A /* UIViewController+BetterLayoutGuides.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		F4C705651C096E030057AA6A /* ShyControllers */ = {
+			isa = PBXGroup;
+			children = (
+				F4C705661C096E030057AA6A /* TLYShyChild.h */,
+				F4C705671C096E030057AA6A /* TLYShyParent.h */,
+				F4C705681C096E030057AA6A /* TLYShyScrollViewController.h */,
+				F4C705691C096E030057AA6A /* TLYShyScrollViewController.m */,
+				F4C7056A1C096E030057AA6A /* TLYShyStatusBarController.h */,
+				F4C7056B1C096E030057AA6A /* TLYShyStatusBarController.m */,
+				F4C7056C1C096E030057AA6A /* TLYShyViewController.h */,
+				F4C7056D1C096E030057AA6A /* TLYShyViewController.m */,
+			);
+			path = ShyControllers;
+			sourceTree = "<group>";
+		};
+		F4C705D61C09700A0057AA6A /* AMScrollingNavbar */ = {
+			isa = PBXGroup;
+			children = (
+				F4C705D71C09700A0057AA6A /* AMScrollingNavbar.h */,
+				F4C705D91C09700A0057AA6A /* UIViewController+ScrollingNavbar.h */,
+				F4C705DA1C09700A0057AA6A /* UIViewController+ScrollingNavbar.m */,
+			);
+			path = AMScrollingNavbar;
+			sourceTree = "<group>";
+		};
 		F4D3686E1BA954EB00E6C91C /* ask */ = {
 			isa = PBXGroup;
 			children = (
@@ -3821,6 +3923,7 @@
 				5C561A461AB7C51F0052D4D5 /* MTLFMDBAdapter.m in Sources */,
 				5C3101841AAE8D9900EF529B /* ATOMModifyPasswordView.m in Sources */,
 				5C54DF161AB9529200BDE34D /* PIENewScrollView.m in Sources */,
+				F4C705791C096E030057AA6A /* TLYShyViewController.m in Sources */,
 				E93D237E1B3CFA4D0081F632 /* DDShareManager.m in Sources */,
 				F46117F01BAE556B001A6F1A /* PIEEliteViewController.m in Sources */,
 				F46117D91BAD1101001A6F1A /* IQUIViewController+Additions.m in Sources */,
@@ -3836,6 +3939,7 @@
 				F4275A101BE0786400BBE7E4 /* SLKTextInputbar.m in Sources */,
 				F4D368771BA9629800E6C91C /* CHTCollectionViewWaterfallLayout.m in Sources */,
 				E94289861B5B32A200ED26E4 /* TSBlurView.m in Sources */,
+				F4C705731C096E030057AA6A /* TLYDelegateProxy.m in Sources */,
 				E99D2F5E1B1C7E8D000D7784 /* NYXProgressiveImageView.m in Sources */,
 				F45ECF4E1BD1DF4600417A75 /* PIEMyCommentedPageViewController.m in Sources */,
 				5C4C70461AB665F500358989 /* PIEPageVM.m in Sources */,
@@ -3863,6 +3967,7 @@
 				F4E72E731C070C6C0056791D /* PIECustomViewFromXib.m in Sources */,
 				5CDB06061AA405A40089121E /* UIColor+iOS7.m in Sources */,
 				F4275A1D1BE0B9ED00BBE7E4 /* PIEMyFollowViewController.m in Sources */,
+				F4324CDF1C0956CD005C61AC /* PIECommentViewController2.m in Sources */,
 				F41FF0EB1BDE231200566A12 /* PIENotificationSystemViewController.m in Sources */,
 				F4993CEA1BE5B32C007F9BE4 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				5CDB06311AA428BD0089121E /* MASLayoutConstraint.m in Sources */,
@@ -3886,6 +3991,7 @@
 				F45ECF511BD1E39500417A75 /* PIEMyLikedPagesViewController.m in Sources */,
 				F42ED3B11BC4FC2D0052A0BF /* PIEMeViewController.m in Sources */,
 				5CDB062E1AA428BD0089121E /* MASCompositeConstraint.m in Sources */,
+				F4C705741C096E030057AA6A /* UIScrollView+Helpers.m in Sources */,
 				E900AB5F1B4513B20019BAEA /* DDCollectManager.m in Sources */,
 				5C561A741AB7C8C30052D4D5 /* MJRefreshHeader.m in Sources */,
 				5C4C70C81AB6E20800358989 /* DDUserManager.m in Sources */,
@@ -3900,15 +4006,18 @@
 				E9F8908F1B86C4AB0057ECBF /* FMDatabaseAdditions.m in Sources */,
 				F4AE73C31BBA90D800734BCB /* PIEFriendAskViewController.m in Sources */,
 				F40207421BA7C4160007CE02 /* VVTransitioning.m in Sources */,
+				F4C705781C096E030057AA6A /* TLYShyStatusBarController.m in Sources */,
 				5CDB06041AA405A40089121E /* UIColor+HSB.m in Sources */,
 				F4EC11231BCF456E002D1DCF /* PIENotificationVM.m in Sources */,
 				5C561A7F1AB7CAA90052D4D5 /* ATOMCreateTable.m in Sources */,
+				F4C705771C096E030057AA6A /* TLYShyScrollViewController.m in Sources */,
 				5C4AE3EF1AAED6520020E102 /* PIEFriendFansTableCell.m in Sources */,
 				F4AE73C61BBA988900734BCB /* PIEFriendReplyViewController.m in Sources */,
 				F439303D1BE4BD75006C9437 /* MRIconView.m in Sources */,
 				E93D23811B3D065C0081F632 /* ATOMShare.m in Sources */,
 				F4B02E151BECA43D00406A55 /* PIECommentTableHeaderView_Ask.m in Sources */,
 				F449BB701BE496C50019C315 /* MMPlaceHolder.m in Sources */,
+				F4C705751C096E030057AA6A /* UIViewController+BetterLayoutGuides.m in Sources */,
 				F4D07A5D1BBA3AB70016A8B5 /* PIEEliteManager.m in Sources */,
 				5CDB06011AA405A40089121E /* UIColor+CIELAB.m in Sources */,
 				F46521E81BC75D1F0043D706 /* PIEToHelpViewController.m in Sources */,
@@ -3937,16 +4046,19 @@
 				F4F72BF61BCB6979002FF05A /* PIEImageCollectionViewCell.m in Sources */,
 				F46117DC1BAD1101001A6F1A /* IQKeyboardReturnKeyHandler.m in Sources */,
 				E99D2F5C1B1C7E8D000D7784 /* UIScrollView+Screenshot.m in Sources */,
+				F4C705DC1C09700A0057AA6A /* UIViewController+ScrollingNavbar.m in Sources */,
 				5C561A771AB7C8C30052D4D5 /* UIScrollView+MJExtension.m in Sources */,
 				E94289881B5B32A200ED26E4 /* TSMessageView.m in Sources */,
 				F42131B91BF1E012004D48F8 /* PIECommentTableHeaderView_Reply.m in Sources */,
 				E9A5B66A1B903C270059754C /* DDService.m in Sources */,
 				F46117D71BAD1101001A6F1A /* IQUITextFieldView+Additions.m in Sources */,
+				F4C7057A1C096E030057AA6A /* TLYShyNavBarManager.m in Sources */,
 				5C561A8B1AB857870052D4D5 /* NSString+ATOMValidate.m in Sources */,
 				F43930401BE4BD75006C9437 /* MRProgressView.m in Sources */,
 				E93D23871B3FA6FB0081F632 /* DDMySettingsManager.m in Sources */,
 				E95691B71B22E88300DA84BB /* NSValueTransformer+MTLInversionAdditions.m in Sources */,
 				E95691AE1B22E88300DA84BB /* MTLManagedObjectAdapter.m in Sources */,
+				F4C705DF1C0995840057AA6A /* PIEImageView_BlurBG.m in Sources */,
 				5C0F04FD1ADD0D88002003AE /* PIEEntityFollow.m in Sources */,
 				F47EF0871C031FF500BFB442 /* VVBlurPresenter.m in Sources */,
 				E99D2F571B1C7E8D000D7784 /* UIImage+Masking.m in Sources */,
@@ -4039,6 +4151,7 @@
 				F4F72BEE1BCB4EF7002FF05A /* FXBlurView.m in Sources */,
 				E9CBFF4C1B5214FB00DC8ED4 /* SIAlertView.m in Sources */,
 				5C561A501AB7C8210052D4D5 /* PIEEntityImage.m in Sources */,
+				F4C705E21C0998750057AA6A /* PIEImageView_blur.m in Sources */,
 				F4AE73BD1BBA770000734BCB /* PIEFriendViewController.m in Sources */,
 				5C83A8881AC66F910071A024 /* POPAnimationEvent.mm in Sources */,
 				E90197381B32D3C100F46B78 /* Util.m in Sources */,
@@ -4078,6 +4191,7 @@
 				F43930461BE4BD75006C9437 /* MRMethodCopier.m in Sources */,
 				F4F9FFC91BFC849A00032FDE /* SMPageControl.m in Sources */,
 				F4207AE01C044A20004B1978 /* PIESearchUserSimpleCollectionCell.m in Sources */,
+				F4C705721C096E030057AA6A /* NSObject+TLYSwizzlingHelpers.m in Sources */,
 				5C84063B1ABADA8B00068F35 /* PIEPageDAO.m in Sources */,
 				F43930471BE4BD75006C9437 /* MRWeakProxy.m in Sources */,
 				E9F890921B86C4AB0057ECBF /* FMResultSet.m in Sources */,
