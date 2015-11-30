@@ -8,7 +8,6 @@
 
 #import "PIEEliteFollowReplyTableViewCell.h"
 #import "PIEImageEntity.h"
-
 @interface PIEEliteFollowReplyTableViewCell()
 @property (nonatomic, strong) UIImageView* blurView;
 @end

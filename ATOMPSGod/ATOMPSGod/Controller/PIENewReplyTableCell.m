@@ -9,6 +9,7 @@
 #import "PIENewReplyTableCell.h"
 #import "PIEImageEntity.h"
 #import "POP.h"
+//#import "MMPlaceHolder.h"
 @interface PIENewReplyTableCell()
 @property (nonatomic, strong) UIImageView* blurView;
 @end
@@ -18,6 +19,7 @@
 - (void)awakeFromNib {
     // Initialization code
     [self commonInit];
+//    [self showPlaceHolder];
 }
 
 - (void)commonInit {

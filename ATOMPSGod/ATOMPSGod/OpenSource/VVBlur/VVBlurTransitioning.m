@@ -51,7 +51,7 @@
     CGRect finalFrame = self.isPresentation ? onScreenFrame : offScreenFrame;
     animatingView.frame = initialFrame;
     
-    [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0.0 usingSpringWithDamping:300.0 initialSpringVelocity:5.0 options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionBeginFromCurrentState animations:^{
+    [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0 usingSpringWithDamping:0.65 initialSpringVelocity:0.05 options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionBeginFromCurrentState animations:^{
         animatingView.frame = finalFrame;
     } completion:^(BOOL finished) {
         if (!self.isPresentation) {

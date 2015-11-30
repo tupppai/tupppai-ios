@@ -94,7 +94,6 @@
 - (UIModalPresentationStyle)adaptivePresentationStyle {
     return UIModalPresentationCustom;
 }
-
 - (void)setBlurStyle:(UIBlurEffectStyle)blurStyle {
     if (blurStyle != _blurStyle) {
         _blurStyle = blurStyle;

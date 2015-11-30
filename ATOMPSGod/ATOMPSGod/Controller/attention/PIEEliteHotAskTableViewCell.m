@@ -9,7 +9,6 @@
 #import "PIEEliteHotAskTableViewCell.h"
 #import "PIEImageEntity.h"
 #import "PIECommentEntity.h"
-
 @interface PIEEliteHotAskTableViewCell()
 @property (nonatomic, strong) UIImageView* blurView;
 @end

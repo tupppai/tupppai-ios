@@ -9,9 +9,8 @@
 #import "PIEEliteViewController.h"
 #import "PIEEliteScrollView.h"
 #import "HMSegmentedControl.h"
-#import "UITableView+FDTemplateLayoutCell.h"
+//#import "UITableView+FDTemplateLayoutCell.h"
 #import "PIEEliteManager.h"
-//#import "PIECarouselViewController.h"
 #import "PIEFriendViewController.h"
 #import "PIECommentViewController.h"
 #import "PIECommentViewController2.h"
@@ -155,6 +154,8 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     _sv.tableFollow.psDelegate = self;
     _sv.tableFollow.emptyDataSetSource = self;
     _sv.tableFollow.emptyDataSetDelegate = self;
+    _sv.tableFollow.estimatedRowHeight = SCREEN_WIDTH+155;
+    _sv.tableFollow.rowHeight = UITableViewAutomaticDimension;
     UINib* nib2 = [UINib nibWithNibName:askIndentifier bundle:nil];
     [_sv.tableFollow registerNib:nib2 forCellReuseIdentifier:askIndentifier];
     UINib* nib3 = [UINib nibWithNibName:replyIndentifier bundle:nil];
@@ -168,6 +169,8 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     _sv.tableHot.psDelegate = self;
     _sv.tableHot.emptyDataSetDelegate = self;
     _sv.tableHot.emptyDataSetSource = self;
+    _sv.tableHot.estimatedRowHeight = SCREEN_WIDTH+225;
+    _sv.tableHot.rowHeight = UITableViewAutomaticDimension;
     UINib* nib = [UINib nibWithNibName:hotReplyIndentifier bundle:nil];
     [_sv.tableHot registerNib:nib forCellReuseIdentifier:hotReplyIndentifier];
     UINib* nib2 = [UINib nibWithNibName:hotAskIndentifier bundle:nil];
@@ -340,39 +343,39 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
 #pragma mark - UITableViewDelegate
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableView == _sv.tableFollow) {
-        PIEPageVM* vm = [_sourceFollow objectAtIndex:indexPath.row];
-        if (vm.type == PIEPageTypeAsk) {
-            return [tableView fd_heightForCellWithIdentifier:askIndentifier  cacheByIndexPath:indexPath configuration:^(PIEEliteFollowAskTableViewCell *cell) {
-                [cell injectSauce:[_sourceFollow objectAtIndex:indexPath.row]];
-            }];
-
-        }
-        else {
-            return [tableView fd_heightForCellWithIdentifier:replyIndentifier  cacheByIndexPath:indexPath configuration:^(PIEEliteFollowReplyTableViewCell *cell) {
-                [cell injectSauce:[_sourceFollow objectAtIndex:indexPath.row]];
-            }];
-        }
-    } else if (tableView == _sv.tableHot) {
-        PIEPageVM* vm = [_sourceHot objectAtIndex:indexPath.row];
-        if (vm.type == PIEPageTypeAsk) {
-            return [tableView fd_heightForCellWithIdentifier:hotAskIndentifier  cacheByIndexPath:indexPath configuration:^(PIEEliteHotAskTableViewCell *cell) {
-                [cell injectSauce:[_sourceHot objectAtIndex:indexPath.row]];
-            }];
-            
-        }
-        else {
-            return [tableView fd_heightForCellWithIdentifier:hotReplyIndentifier  cacheByIndexPath:indexPath configuration:^(PIEEliteHotReplyTableViewCell *cell) {
-                [cell injectSauce:[_sourceHot objectAtIndex:indexPath.row]];
-            }];
-        }
-
-    } else {
-        return 0;
-    }
-}
-
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if (tableView == _sv.tableFollow) {
+//        PIEPageVM* vm = [_sourceFollow objectAtIndex:indexPath.row];
+//        if (vm.type == PIEPageTypeAsk) {
+//            return [tableView fd_heightForCellWithIdentifier:askIndentifier  cacheByIndexPath:indexPath configuration:^(PIEEliteFollowAskTableViewCell *cell) {
+//                [cell injectSauce:[_sourceFollow objectAtIndex:indexPath.row]];
+//            }];
+//
+//        }
+//        else {
+//            return [tableView fd_heightForCellWithIdentifier:replyIndentifier  cacheByIndexPath:indexPath configuration:^(PIEEliteFollowReplyTableViewCell *cell) {
+//                [cell injectSauce:[_sourceFollow objectAtIndex:indexPath.row]];
+//            }];
+//        }
+//    } else if (tableView == _sv.tableHot) {
+//        PIEPageVM* vm = [_sourceHot objectAtIndex:indexPath.row];
+//        if (vm.type == PIEPageTypeAsk) {
+//            return [tableView fd_heightForCellWithIdentifier:hotAskIndentifier  cacheByIndexPath:indexPath configuration:^(PIEEliteHotAskTableViewCell *cell) {
+//                [cell injectSauce:[_sourceHot objectAtIndex:indexPath.row]];
+//            }];
+//            
+//        }
+//        else {
+//            return [tableView fd_heightForCellWithIdentifier:hotReplyIndentifier  cacheByIndexPath:indexPath configuration:^(PIEEliteHotReplyTableViewCell *cell) {
+//                [cell injectSauce:[_sourceHot objectAtIndex:indexPath.row]];
+//            }];
+//        }
+//
+//    } else {
+//        return 0;
+//    }
+//}
+//
 
 
 

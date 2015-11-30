@@ -18,7 +18,7 @@
 #import "JGActionSheet.h"
 #import "HMSegmentedControl.h"
 #import "PIECommentViewController.h"
-#import "UITableView+FDTemplateLayoutCell.h"
+//#import "UITableView+FDTemplateLayoutCell.h"
 #import "PIECarouselViewController2.h"
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "PIENewAskCollectionCell.h"
@@ -168,6 +168,8 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     _tableViewActivity.psDelegate = self;
     _tableViewActivity.emptyDataSetSource = self;
     _tableViewActivity.emptyDataSetDelegate = self;
+    _tableViewActivity.estimatedRowHeight = SCREEN_WIDTH+145;
+    _tableViewActivity.rowHeight = UITableViewAutomaticDimension;
     UINib* nib = [UINib nibWithNibName:CellIdentifier3 bundle:nil];
     [_tableViewActivity registerNib:nib forCellReuseIdentifier:CellIdentifier3];
     _tableViewActivity.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
@@ -180,6 +182,8 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     _tableViewReply.psDelegate = self;
     _tableViewReply.emptyDataSetSource = self;
     _tableViewReply.emptyDataSetDelegate = self;
+    _tableViewReply.estimatedRowHeight = SCREEN_WIDTH+145;
+    _tableViewReply.rowHeight = UITableViewAutomaticDimension;
     UINib* nib = [UINib nibWithNibName:CellIdentifier bundle:nil];
     [_tableViewReply registerNib:nib forCellReuseIdentifier:CellIdentifier];
     _tableViewReply.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
@@ -342,20 +346,20 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 
 #pragma mark - UITableViewDelegate
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (_tableViewReply == tableView) {
-        return [tableView fd_heightForCellWithIdentifier:CellIdentifier  cacheByIndexPath:indexPath configuration:^(PIENewReplyTableCell *cell) {
-            [cell injectSauce:_sourceReply[indexPath.row]];
-        }];
-    } else if (_tableViewActivity == tableView) {
-        return [tableView fd_heightForCellWithIdentifier:CellIdentifier3  cacheByIndexPath:indexPath configuration:^(PIENewActivityTableViewCell *cell) {
-            [cell injectSauce:_sourceActivity[indexPath.row]];
-        }];
-    }
-    else {
-        return 0;
-    }
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if (_tableViewReply == tableView) {
+//        return [tableView fd_heightForCellWithIdentifier:CellIdentifier  cacheByIndexPath:indexPath configuration:^(PIENewReplyTableCell *cell) {
+//            [cell injectSauce:_sourceReply[indexPath.row]];
+//        }];
+//    } else if (_tableViewActivity == tableView) {
+//        return [tableView fd_heightForCellWithIdentifier:CellIdentifier3  cacheByIndexPath:indexPath configuration:^(PIENewActivityTableViewCell *cell) {
+//            [cell injectSauce:_sourceActivity[indexPath.row]];
+//        }];
+//    }
+//    else {
+//        return 0;
+//    }
+//}
 
 #pragma mark - ATOMViewControllerDelegate
 
