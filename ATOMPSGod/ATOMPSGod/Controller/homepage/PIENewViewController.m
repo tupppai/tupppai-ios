@@ -19,7 +19,7 @@
 #import "HMSegmentedControl.h"
 #import "PIECommentViewController.h"
 #import "UITableView+FDTemplateLayoutCell.h"
-#import "PIECarouselViewController.h"
+#import "PIECarouselViewController2.h"
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "PIENewAskCollectionCell.h"
 #import "PIEFriendViewController.h"
@@ -902,10 +902,11 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
             //点击大图
             else  if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
                 //进入热门详情
-                PIECarouselViewController* vc = [PIECarouselViewController new];
+                PIECarouselViewController2* vc = [PIECarouselViewController2 new];
                 _selectedVM.image = _selectedReplyCell.theImageView.image;
                 vc.pageVM = _selectedVM;
-                [self.navigationController pushViewController:vc animated:YES];
+                [self presentViewController:vc animated:YES completion:nil];
+//                [self.navigationController pushViewController:vc animated:YES];
             }
             //点击头像
             else if (CGRectContainsPoint(_selectedReplyCell.avatarView.frame, p)) {
@@ -992,9 +993,9 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
             //点击大图
             if (CGRectContainsPoint(cell.leftImageView.frame, p) || CGRectContainsPoint(cell.rightImageView.frame, p)) {
                 if (![_selectedVM.replyCount isEqualToString:@"0"]) {
-                    PIECarouselViewController* vc = [PIECarouselViewController new];
+                    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
                     vc.pageVM = _selectedVM;
-                    [self.navigationController pushViewController:vc animated:YES];
+                    [self presentViewController:vc animated:YES completion:nil];
                 } else {
                     PIECommentViewController* vc = [PIECommentViewController new];
                     vc.vm = _selectedVM;

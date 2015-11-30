@@ -29,7 +29,7 @@
         make.centerY.equalTo(self);
     }];
     [_label mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.equalTo(_imageView.mas_trailing).with.offset(3);
+        make.leading.equalTo(_imageView.mas_trailing).with.offset(6);
         make.centerY.equalTo(_imageView).with.offset(-1);
         make.right.equalTo(self);
     }];

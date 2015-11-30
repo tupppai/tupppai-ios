@@ -11,7 +11,7 @@
 #import "HMSegmentedControl.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 #import "PIEEliteManager.h"
-#import "PIECarouselViewController.h"
+//#import "PIECarouselViewController.h"
 #import "PIEFriendViewController.h"
 #import "PIECommentViewController.h"
 #import "PIECommentViewController2.h"
@@ -793,7 +793,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                 if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                     //进入热门详情
                     PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-                    _selectedVM.image = cell.theImageView.image;
+//                    _selectedVM.image = cell.theImageView.image;
                     vc.pageVM = _selectedVM;
                     [self presentViewController:vc animated:YES completion:nil];
                 }
@@ -853,10 +853,10 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                 //点击大图
                 else  if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                     //进入热门详情
-                    PIECarouselViewController* vc = [PIECarouselViewController new];
-                    _selectedVM.image = cell.theImageView.image;
+                    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+//                    _selectedVM.image = cell.theImageView.image;
                     vc.pageVM = _selectedVM;
-                    [self.navigationController pushViewController:vc animated:YES];
+                    [self presentViewController:vc animated:YES completion:nil];
                 }
                 //点击头像
                 else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
@@ -944,10 +944,10 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                 //点击大图
                 if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                     //进入热门详情
-                    PIECarouselViewController* vc = [PIECarouselViewController new];
-                    _selectedVM.image = cell.theImageView.image;
+                    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+//                    _selectedVM.image = cell.theImageView.image;
                     vc.pageVM = _selectedVM;
-                    [self.navigationController pushViewController:vc animated:YES];
+                    [self presentViewController:vc animated:YES completion:nil];
                 }
                 //点击头像
                 else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
@@ -1005,7 +1005,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                     //进入热门详情
                     PIECarouselViewController2* vc = [PIECarouselViewController2 new];
                     
-                    _selectedVM.image = cell.theImageView.image;
+//                    _selectedVM.image = cell.theImageView.image;
                     vc.pageVM = _selectedVM;
                     [self presentViewController:vc animated:YES completion:nil];
                 }

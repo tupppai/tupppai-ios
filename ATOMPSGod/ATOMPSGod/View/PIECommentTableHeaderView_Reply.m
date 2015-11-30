@@ -110,16 +110,16 @@
     
     [self.commentButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.textView_content.mas_bottom).with.offset(6).with.priorityLow();
-        make.width.equalTo(@30).with.priorityMedium();
-        make.width.greaterThanOrEqualTo(@30);
+        make.width.equalTo(@40).with.priorityMedium();
+        make.width.greaterThanOrEqualTo(@40);
         make.height.equalTo(@30);
         make.left.equalTo(self.moreWorkButton.mas_right).with.offset(18);
 //        make.bottom.equalTo(self).with.offset(-15);
     }];
     [self.shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.commentButton);
-        make.width.equalTo(@30).with.priorityMedium();
-        make.width.greaterThanOrEqualTo(@30);
+        make.width.equalTo(@40).with.priorityMedium();
+        make.width.greaterThanOrEqualTo(@40);
         make.height.equalTo(@30);
         make.left.equalTo(self.commentButton.mas_right).with.offset(18);
     }];

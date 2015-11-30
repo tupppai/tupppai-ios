@@ -57,7 +57,7 @@
 - (void)setupNavBar {
     UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
     buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [buttonLeft setImage:[UIImage imageNamed:@"close_sign"] forState:UIControlStateNormal];
+    [buttonLeft setImage:[UIImage imageNamed:@"PIE_icon_back"] forState:UIControlStateNormal];
     [buttonLeft addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonLeft];
     self.navigationItem.leftBarButtonItem =  buttonItem;

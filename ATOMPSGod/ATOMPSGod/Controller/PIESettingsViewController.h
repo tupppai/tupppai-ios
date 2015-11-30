@@ -8,6 +8,6 @@
 
 #import "DDBaseVC.h"
 
-@interface PIESettingsViewController : UIViewController
+@interface PIESettingsViewController : DDBaseVC
 
 @end

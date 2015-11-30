@@ -81,13 +81,13 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fW3-XH-iwv" customClass="PIEPageLikeButton">
-                    <rect key="frame" x="350" y="512.5" width="40" height="38"/>
+                    <rect key="frame" x="360" y="512.5" width="30" height="38"/>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="width" priority="250" constant="40" id="IOV-JK-c8W"/>
+                        <constraint firstAttribute="width" priority="250" constant="30" id="IOV-JK-c8W"/>
                         <constraint firstAttribute="height" constant="38" id="PmF-Gu-9w6"/>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="YSB-UG-VKi"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="YSB-UG-VKi"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IMs-GI-iS7" customClass="PIEImageView_BlurBG">

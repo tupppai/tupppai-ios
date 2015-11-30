@@ -98,15 +98,17 @@
     }];
 
     [self.commentButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.equalTo(@50);
+        make.width.equalTo(@40).with.priorityMedium();
+        make.width.greaterThanOrEqualTo(@40);
         make.height.equalTo(@25);
         make.left.equalTo(self).with.offset(15);
     }];
     [self.shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.commentButton);
-        make.width.equalTo(@50);
+        make.width.equalTo(@40).with.priorityMedium();
+        make.width.greaterThanOrEqualTo(@40);
         make.height.equalTo(@25);
-        make.left.equalTo(self.commentButton.mas_right).with.offset(6);
+        make.left.equalTo(self.commentButton.mas_right).with.offset(18);
     }];
     [self.bangView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.textView_content.mas_bottom).with.offset(6).with.priorityHigh();
@@ -316,24 +318,6 @@
         }
     }];
 }
-
-
-
-//-(BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
-//    PIEWebViewViewController* vc = [PIEWebViewViewController new];
-//    vc.url = [URL absoluteString];
-//    
-//    DDNavigationController* nav = self.superview.viewController.navigationController;
-//    
-//    [nav pushViewController:vc animated:YES ];
-//    return NO;
-//}
-
-
-
-
-
-
 
 
 
