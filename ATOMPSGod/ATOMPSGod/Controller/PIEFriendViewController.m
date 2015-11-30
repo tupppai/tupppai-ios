@@ -69,6 +69,26 @@
     [self setupPageMenu];
     [self setupTapGesture];
 }
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (self.navigationController.viewControllers.count <= 1) {
+        [self setupNavBar];
+    }
+}
+
+
+- (void)setupNavBar {
+    UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
+    buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [buttonLeft setImage:[UIImage imageNamed:@"close_sign"] forState:UIControlStateNormal];
+    [buttonLeft addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonLeft];
+    self.navigationItem.leftBarButtonItem =  buttonItem;
+}
+- (void)dismiss {
+    [self dismissViewControllerAnimated:NO completion:nil];
+}
 - (void)setupViews {
     self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     

@@ -16,7 +16,6 @@
 #import "DDShareManager.h"
 #import "DDCollectManager.h"
 #import "JGActionSheet.h"
-#import "ATOMReportModel.h"
 #import "HMSegmentedControl.h"
 #import "PIECommentViewController.h"
 #import "UITableView+FDTemplateLayoutCell.h"
@@ -30,6 +29,8 @@
 #import "MRProgressView+AFNetworking.h"
 #import "PIEUploadManager.h"
 #import "PIENewActivityTableViewCell.h"
+#import "PIEActionSheet_PS.h"
+
 @interface PIENewViewController() < UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,PWRefreshBaseCollectionViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,CHTCollectionViewDelegateWaterfallLayout,UICollectionViewDelegate,UICollectionViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
 
@@ -58,8 +59,7 @@
 @property (nonatomic, weak) PIERefreshTableView *tableViewReply;
 @property (nonatomic, strong) PIENewScrollView *scrollView;
 
-@property (nonatomic, strong)  JGActionSheet * psActionSheet;
-@property (nonatomic, strong)  JGActionSheet * reportActionSheet;
+@property (nonatomic, strong)  PIEActionSheet_PS * psActionSheet;
 
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 @property (nonatomic, strong) PIENewReplyTableCell *selectedReplyCell;
@@ -588,7 +588,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     [DDShareManager copy:_selectedVM];
 }
 -(void)tapShare7 {
-    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
+    self.shareView.vm = _selectedVM;
 }
 -(void)tapShare8 {
 //    if (_scrollView.type == PIENewScrollTypeAsk) {
@@ -840,90 +840,12 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     return _scrollView;
 }
 
-- (JGActionSheet *)psActionSheet {
-    WS(ws);
+- (PIEActionSheet_PS *)psActionSheet {
     if (!_psActionSheet) {
-        _psActionSheet = [JGActionSheet new];
-        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"下载图片帮P", @"添加至进行中",@"取消"] buttonStyle:JGActionSheetButtonStyleDefault];
-        [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:2];
-        NSArray *sections = @[section];
-        _psActionSheet = [JGActionSheet actionSheetWithSections:sections];
-        _psActionSheet.delegate = self;
-        [_psActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
-            [sheet dismissAnimated:YES];
-        }];
-        [_psActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
-            switch (indexPath.row) {
-                case 0:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    [ws help:YES];
-                    break;
-                case 1:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    [ws help:NO];
-                    break;
-                case 2:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    break;
-                default:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    break;
-            }
-        }];
+        _psActionSheet = [PIEActionSheet_PS new];
     }
     return _psActionSheet;
 }
-
-- (JGActionSheet *)reportActionSheet {
-    WS(ws);
-    if (!_reportActionSheet) {
-        _reportActionSheet = [JGActionSheet new];
-        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"色情、淫秽或低俗内容", @"广告或垃圾信息",@"违反法律法规的内容"] buttonStyle:JGActionSheetButtonStyleDefault];
-        NSArray *sections = @[section];
-        _reportActionSheet = [JGActionSheet actionSheetWithSections:sections];
-        _reportActionSheet.delegate = self;
-        [_reportActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
-            [sheet dismissAnimated:YES];
-        }];
-        [_reportActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
-            NSMutableDictionary* param = [NSMutableDictionary new];
-            [param setObject:@(ws.selectedVM.ID) forKey:@"target_id"];
-            [param setObject:@(PIEPageTypeAsk) forKey:@"target_type"];
-            UIButton* b = section.buttons[indexPath.row];
-            switch (indexPath.row) {
-                case 0:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                case 1:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                case 2:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                default:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    break;
-            }
-            [ATOMReportModel report:param withBlock:^(NSError *error) {
-                UIView* view;
-                if (ws.scrollView.type == PIENewScrollTypeReply) {
-                    view = ws.tableViewReply;
-                } else  if (ws.scrollView.type == PIENewScrollTypeAsk) {
-                    view = ws.collectionView_ask;
-                }
-                if(!error) {
-                    [Util ShowTSMessageSuccess:@"已举报"];
-                }
-                
-            }];
-        }];
-    }
-    return _reportActionSheet;
-}
-
 
 
 - (HMSegmentedControl*)segmentedControl {
@@ -1095,6 +1017,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
             }
             //点击帮p
             else if (CGRectContainsPoint(cell.bangView.frame, p)) {
+                self.psActionSheet.vm = _selectedVM;
                 [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
             }
         }

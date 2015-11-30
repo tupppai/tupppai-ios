@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PIESharesheetView.h"
+#import "PIEActionSheet_Report.h"
 
 @protocol PIEShareViewDelegate <NSObject>
 @optional
@@ -25,8 +26,10 @@
 @interface PIEShareView:UIView
 @property (strong, nonatomic) PIESharesheetView *sheetView;
 @property (strong, nonatomic) UIVisualEffectView *dimmingView;
+@property (nonatomic, strong)  PIEActionSheet_Report * reportActionSheet;
 
 @property (nonatomic, weak) id<PIEShareViewDelegate> delegate;
+@property (nonatomic,strong) PIEPageVM* vm;
 - (void)showInView:(UIView *)view animated:(BOOL)animated;
 - (void)show;
 -(void)dismiss;

@@ -26,6 +26,7 @@
             make.centerX.equalTo(self);
             make.bottom.equalTo(self).with.offset(height_sheet).with.priorityHigh();
         }];
+//        self.delegate = self;
         
         [self configClickEvent];
     }
@@ -85,6 +86,8 @@
 - (void)tapGes1:(UIGestureRecognizer*)gesture {
     if (_delegate && [_delegate respondsToSelector:@selector(tapShare1)]) {
         [_delegate tapShare1];
+    } else {
+        
     }
 }
 - (void)tapGes2:(UIGestureRecognizer*)gesture {
@@ -116,6 +119,8 @@
     if (_delegate && [_delegate respondsToSelector:@selector(tapShare7)]) {
         [_delegate tapShare7];
     }
+    (self.reportActionSheet).vm = _vm;
+    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
 }
 - (void)tapGes8:(UIGestureRecognizer*)gesture {
     if (_delegate && [_delegate respondsToSelector:@selector(tapShare8)]) {
@@ -192,5 +197,12 @@
             self.dimmingView.alpha = 0.87;
         }
     }];
+}
+
+-(PIEActionSheet_Report *)reportActionSheet {
+    if (!_reportActionSheet) {
+        _reportActionSheet = [PIEActionSheet_Report new];
+    }
+    return _reportActionSheet;
 }
 @end

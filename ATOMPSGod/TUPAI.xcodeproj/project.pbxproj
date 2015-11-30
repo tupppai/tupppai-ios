@@ -322,6 +322,12 @@
 		F43930461BE4BD75006C9437 /* MRMethodCopier.m in Sources */ = {isa = PBXBuildFile; fileRef = F43930351BE4BD75006C9437 /* MRMethodCopier.m */; };
 		F43930471BE4BD75006C9437 /* MRWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = F43930381BE4BD75006C9437 /* MRWeakProxy.m */; };
 		F449BB701BE496C50019C315 /* MMPlaceHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = F449BB6F1BE496C50019C315 /* MMPlaceHolder.m */; };
+		F44A52751C0BF83000707281 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = F44A52701C0BF83000707281 /* TFHpple.m */; };
+		F44A52761C0BF83000707281 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = F44A52721C0BF83000707281 /* TFHppleElement.m */; };
+		F44A52771C0BF83000707281 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = F44A52741C0BF83000707281 /* XPathQuery.m */; };
+		F44A52791C0BF91500707281 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F44A52781C0BF91500707281 /* libxml2.2.tbd */; };
+		F44A527F1C0C335000707281 /* PIEActionSheet_Report.m in Sources */ = {isa = PBXBuildFile; fileRef = F44A527E1C0C335000707281 /* PIEActionSheet_Report.m */; };
+		F44A52821C0C336500707281 /* PIEActionSheet_PS.m in Sources */ = {isa = PBXBuildFile; fileRef = F44A52811C0C336500707281 /* PIEActionSheet_PS.m */; };
 		F45D8FA41BD87CFD005946E8 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F45D8F881BD87CFD005946E8 /* TencentOpenAPI.framework */; };
 		F45D8FA51BD87CFD005946E8 /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F45D8F891BD87CFD005946E8 /* TencentOpenApi_IOS_Bundle.bundle */; };
 		F45D8FA61BD87CFD005946E8 /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F45D8F8B1BD87CFD005946E8 /* libWeiboSDK.a */; };
@@ -1125,6 +1131,18 @@
 		F43930381BE4BD75006C9437 /* MRWeakProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRWeakProxy.m; sourceTree = "<group>"; };
 		F449BB6E1BE496C50019C315 /* MMPlaceHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMPlaceHolder.h; sourceTree = "<group>"; };
 		F449BB6F1BE496C50019C315 /* MMPlaceHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMPlaceHolder.m; sourceTree = "<group>"; };
+		F44A526F1C0BF83000707281 /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
+		F44A52701C0BF83000707281 /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
+		F44A52711C0BF83000707281 /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
+		F44A52721C0BF83000707281 /* TFHppleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHppleElement.m; sourceTree = "<group>"; };
+		F44A52731C0BF83000707281 /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPathQuery.h; sourceTree = "<group>"; };
+		F44A52741C0BF83000707281 /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPathQuery.m; sourceTree = "<group>"; };
+		F44A52781C0BF91500707281 /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
+		F44A527A1C0BF96000707281 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
+		F44A527D1C0C335000707281 /* PIEActionSheet_Report.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEActionSheet_Report.h; sourceTree = "<group>"; };
+		F44A527E1C0C335000707281 /* PIEActionSheet_Report.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEActionSheet_Report.m; sourceTree = "<group>"; };
+		F44A52801C0C336500707281 /* PIEActionSheet_PS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEActionSheet_PS.h; sourceTree = "<group>"; };
+		F44A52811C0C336500707281 /* PIEActionSheet_PS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEActionSheet_PS.m; sourceTree = "<group>"; };
 		F45D8F881BD87CFD005946E8 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		F45D8F891BD87CFD005946E8 /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
 		F45D8F8B1BD87CFD005946E8 /* libWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeiboSDK.a; sourceTree = "<group>"; };
@@ -1453,6 +1471,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F44A52791C0BF91500707281 /* libxml2.2.tbd in Frameworks */,
 				E99C51481B85ADF9004CA47B /* ImageIO.framework in Frameworks */,
 				E99C51461B85ADEF004CA47B /* JavaScriptCore.framework in Frameworks */,
 				E99C51441B85ADE9004CA47B /* libstdc++.dylib in Frameworks */,
@@ -2055,6 +2074,7 @@
 		5CDB05EC1AA400410089121E /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				F44A526E1C0BF83000707281 /* TFHpple */,
 				F4C705D61C09700A0057AA6A /* AMScrollingNavbar */,
 				F4C7055A1C096E030057AA6A /* TLYShyNavBar */,
 				F47EF07D1C031FF500BFB442 /* VVBlur */,
@@ -2126,6 +2146,7 @@
 		5CDB05EE1AA400410089121E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F44A527C1C0C332700707281 /* actionsheet */,
 				F4E72E701C070C460056791D /* customViewFromXib */,
 				F43159C71BB5547300DCA292 /* 2.1 */,
 				E959A5691B8EFCB700F90155 /* refresh */,
@@ -2234,6 +2255,8 @@
 		94794CACC85CA9D698472166 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F44A527A1C0BF96000707281 /* libxml2.tbd */,
+				F44A52781C0BF91500707281 /* libxml2.2.tbd */,
 				F45D8FB11BD87F01005946E8 /* AdSupport.framework */,
 			);
 			name = Frameworks;
@@ -2934,6 +2957,30 @@
 				F449BB6F1BE496C50019C315 /* MMPlaceHolder.m */,
 			);
 			path = MMPlaceHolder;
+			sourceTree = "<group>";
+		};
+		F44A526E1C0BF83000707281 /* TFHpple */ = {
+			isa = PBXGroup;
+			children = (
+				F44A526F1C0BF83000707281 /* TFHpple.h */,
+				F44A52701C0BF83000707281 /* TFHpple.m */,
+				F44A52711C0BF83000707281 /* TFHppleElement.h */,
+				F44A52721C0BF83000707281 /* TFHppleElement.m */,
+				F44A52731C0BF83000707281 /* XPathQuery.h */,
+				F44A52741C0BF83000707281 /* XPathQuery.m */,
+			);
+			path = TFHpple;
+			sourceTree = "<group>";
+		};
+		F44A527C1C0C332700707281 /* actionsheet */ = {
+			isa = PBXGroup;
+			children = (
+				F44A527D1C0C335000707281 /* PIEActionSheet_Report.h */,
+				F44A527E1C0C335000707281 /* PIEActionSheet_Report.m */,
+				F44A52801C0C336500707281 /* PIEActionSheet_PS.h */,
+				F44A52811C0C336500707281 /* PIEActionSheet_PS.m */,
+			);
+			name = actionsheet;
 			sourceTree = "<group>";
 		};
 		F45D8F841BD87CFD005946E8 /* socialShare */ = {
@@ -3854,6 +3901,7 @@
 				F41FF0E31BDDFCE800566A12 /* JTSAnimatedGIFUtility.m in Sources */,
 				5C67FB2D1AB2C509004EFF05 /* ATOMCustomCopperView.m in Sources */,
 				F43930441BE4BD75006C9437 /* MRProgressView+AFNetworking.m in Sources */,
+				F44A52821C0C336500707281 /* PIEActionSheet_PS.m in Sources */,
 				F41FF0E61BDDFCE800566A12 /* JTSSimpleImageDownloader.m in Sources */,
 				5C83A8861AC66F910071A024 /* POPAnimatableProperty.mm in Sources */,
 				F4B02E1B1BECAAE200406A55 /* DDHotDetailManager.m in Sources */,
@@ -3912,6 +3960,7 @@
 				5C83A8951AC66F910071A024 /* POPSpringAnimation.mm in Sources */,
 				3BE1AEC91B9FE9C900CE2303 /* QBAlbumsViewController.m in Sources */,
 				F402F0FD1BE8953F004988B4 /* PIESearchContentCollectionViewCell.m in Sources */,
+				F44A52751C0BF83000707281 /* TFHpple.m in Sources */,
 				F41FF0EE1BDE269A00566A12 /* PIENotificationLikedViewController.m in Sources */,
 				5CDB06321AA428BD0089121E /* MASViewAttribute.m in Sources */,
 				E99D2F5A1B1C7E8D000D7784 /* UIImage+Rotating.m in Sources */,
@@ -3972,6 +4021,7 @@
 				F4993CEA1BE5B32C007F9BE4 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				5CDB06311AA428BD0089121E /* MASLayoutConstraint.m in Sources */,
 				3B11C0431BA27ADB00B87165 /* PIENewReplyTableCell.m in Sources */,
+				F44A52771C0BF83000707281 /* XPathQuery.m in Sources */,
 				F499E4491BD0E41100E5F178 /* PIESettingsViewController.m in Sources */,
 				F4E5F5F91BD9D2E100AB8B31 /* AFSecurityPolicy.m in Sources */,
 				3BE1AEC81B9FE9C900CE2303 /* QBAlbumCell.m in Sources */,
@@ -4032,6 +4082,7 @@
 				F499E4551BD0F69100E5F178 /* PIEEliteFollowReplyTableViewCell.m in Sources */,
 				F40207431BA7C4160007CE02 /* VVCustomPresentViewController.m in Sources */,
 				F4F72C041BCB8F08002FF05A /* PIEMyCollectionViewController.m in Sources */,
+				F44A527F1C0C335000707281 /* PIEActionSheet_Report.m in Sources */,
 				F46117DB1BAD1101001A6F1A /* IQKeyboardManager.m in Sources */,
 				F4E5F5FA1BD9D2E100AB8B31 /* AFURLConnectionOperation.m in Sources */,
 				F47EF0891C031FF500BFB442 /* VVBlurViewController.m in Sources */,
@@ -4178,6 +4229,7 @@
 				5C0D28301ACA83C400491452 /* PIEEntityCommentReply.m in Sources */,
 				F45ECF441BD1DB5B00417A75 /* PIEEliteHotReplyTableViewCell.m in Sources */,
 				F4F72BFF1BCB6CD6002FF05A /* PIEMyCollectionTableViewCell.m in Sources */,
+				F44A52761C0BF83000707281 /* TFHppleElement.m in Sources */,
 				E99D2F591B1C7E8D000D7784 /* UIImage+Resizing.m in Sources */,
 				F41FF0E51BDDFCE800566A12 /* JTSImageViewController.m in Sources */,
 				E95691B21B22E88300DA84BB /* MTLValueTransformer.m in Sources */,
@@ -4350,6 +4402,7 @@
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/QQSDK",
 				);
 				GCC_PREFIX_HEADER = ./ATOMPSGod/psgod.pch;
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = ATOMPSGod/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -4391,6 +4444,7 @@
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/QQSDK",
 				);
 				GCC_PREFIX_HEADER = ./ATOMPSGod/psgod.pch;
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = ATOMPSGod/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -4516,6 +4570,7 @@
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/QQSDK",
 				);
 				GCC_PREFIX_HEADER = ./ATOMPSGod/psgod.pch;
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = ATOMPSGod/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

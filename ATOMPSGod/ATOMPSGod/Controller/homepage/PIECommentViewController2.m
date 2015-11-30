@@ -17,8 +17,7 @@
 #import "PIEEntityCommentReply.h"
 #import "PIECommentHeaderView.h"
 #import "PIEShareView.h"
-#import "JGActionSheet.h"
-#import "ATOMReportModel.h"
+#import "PIEActionSheet_PS.h"
 #import "DDCollectManager.h"
 #import "PIEImageEntity.h"
 #import "JTSImageViewController.h"
@@ -43,8 +42,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 @property (nonatomic, strong) PIECommentVM *targetCommentVM;
 @property (nonatomic, strong) NSIndexPath *selectedIndexpath;
 @property (nonatomic, strong) PIEShareView *shareView;
-@property (nonatomic, strong)  JGActionSheet * psActionSheet;
-@property (nonatomic, strong)  JGActionSheet * reportActionSheet;
+@property (nonatomic, strong)  PIEActionSheet_PS * psActionSheet;
 @property (nonatomic, assign)  BOOL isFirstLoading;
 
 @end
@@ -448,17 +446,20 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 -(void)configTableView {
     _source_hotComment = [NSMutableArray new];
+    
     _source_newComment = [KVCMutableArray new];
     
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag|UIScrollViewKeyboardDismissModeInteractive;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[PIECommentTableCell class] forCellReuseIdentifier:MessengerCellIdentifier];
     self.tableView.tableFooterView = [UIView new];
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.showsHorizontalScrollIndicator = NO;
-    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    self.tableView.separatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
+    self.tableView.separatorInset = UIEdgeInsetsMake(0, 60, 0, 14);
+
     if (_shouldShowHeaderView) {
         self.title = @"浏览图片";
         if (_vm.type == PIEPageTypeAsk) {
@@ -473,9 +474,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         self.title = @"全部评论";
     }
     
-    [self.navigationController.navigationBar setTranslucent:NO];
-    [self setUseSuperview:NO];
-    [self followScrollView:self.tableView];
+//    [self.navigationController.navigationBar setTranslucent:NO];
+//    [self setUseSuperview:NO];
+//    [self followScrollView:self.tableView];
 
 }
 
@@ -831,7 +832,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [DDShareManager copy:_vm];
 }
 -(void)tapShare7 {
-    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
+    self.shareView.vm = _vm;
 }
 -(void)tapShare8 {
     [self collect];
@@ -871,64 +872,14 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         }
     }];
 }
-- (JGActionSheet *)psActionSheet {
-    WS(ws);
+- (PIEActionSheet_PS *)psActionSheet {
     if (!_psActionSheet) {
-        _psActionSheet = [JGActionSheet new];
-        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"下载图片帮P", @"添加至进行中",@"取消"] buttonStyle:JGActionSheetButtonStyleDefault];
-        [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:2];
-        NSArray *sections = @[section];
-        _psActionSheet = [JGActionSheet actionSheetWithSections:sections];
-        _psActionSheet.delegate = self;
-        [_psActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
-            [sheet dismissAnimated:YES];
-        }];
-        [_psActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
-            switch (indexPath.row) {
-                case 0:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    [ws help:YES];
-                    break;
-                case 1:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    [ws help:NO];
-                    break;
-                case 2:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    break;
-                default:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    break;
-            }
-        }];
+        _psActionSheet = [PIEActionSheet_PS new];
+        _psActionSheet.vm = _vm;
     }
     return _psActionSheet;
 }
-- (void)help:(BOOL)shouldDownload {
-    NSMutableDictionary* param = [NSMutableDictionary new];
-    [param setObject:@(_vm.ID) forKey:@"target"];
-    [param setObject:@"ask" forKey:@"type"];
-    
-    [DDService signProceeding:param withBlock:^(NSString *imageUrl) {
-        if (imageUrl != nil) {
-            if (shouldDownload) {
-                [DDService downloadImage:imageUrl withBlock:^(UIImage *image) {
-                    UIImageWriteToSavedPhotosAlbum(image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
-                }];
-            }
-            else {
-                [Hud customText:@"添加成功\n在“进行中”等你下载咯!" inView:self.view];
-            }
-        }
-    }];
-}
-- (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error
-  contextInfo: (void *) contextInfo {
-    if(error != NULL){
-    } else {
-        [Hud customText:@"下载成功\n我猜你会用美图秀秀来P?" inView:self.view];
-    }
-}
+
 -(PIEShareView *)shareView {
     if (!_shareView) {
         _shareView = [PIEShareView new];
@@ -936,49 +887,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     }
     return _shareView;
 }
-- (JGActionSheet *)reportActionSheet {
-    WS(ws);
-    if (!_reportActionSheet) {
-        _reportActionSheet = [JGActionSheet new];
-        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"色情、淫秽或低俗内容", @"广告或垃圾信息",@"违反法律法规的内容"] buttonStyle:JGActionSheetButtonStyleDefault];
-        NSArray *sections = @[section];
-        _reportActionSheet = [JGActionSheet actionSheetWithSections:sections];
-        _reportActionSheet.delegate = self;
-        [_reportActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
-            [sheet dismissAnimated:YES];
-        }];
-        [_reportActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
-            NSMutableDictionary* param = [NSMutableDictionary new];
-            [param setObject:@(ws.vm.ID) forKey:@"target_id"];
-            [param setObject:@(ws.vm.type) forKey:@"target_type"];
-            UIButton* b = section.buttons[indexPath.row];
-            switch (indexPath.row) {
-                case 0:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                case 1:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                case 2:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                default:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    break;
-            }
-            [ATOMReportModel report:param withBlock:^(NSError *error) {
-                if(!error) {
-                    [Util ShowTSMessageSuccess:@"已举报"];
-                }
-                
-            }];
-        }];
-    }
-    return _reportActionSheet;
-}
+
 
 
 @end

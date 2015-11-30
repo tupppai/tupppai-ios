@@ -23,11 +23,11 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+            <rect key="frame" x="0.0" y="64" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="s5f-Tj-oBr" userLabel="blurView">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <animations/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gaH-5k-Hr1" userLabel="iCarousel" customClass="iCarousel">
@@ -66,7 +66,7 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YJO-Is-7zc">
-                    <rect key="frame" x="0.0" y="258" width="600" height="278"/>
+                    <rect key="frame" x="0.0" y="258" width="600" height="342"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="cellHolder.png" translatesAutoresizingMaskIntoConstraints="NO" id="pyi-Yf-Ai7">
                             <rect key="frame" x="284" y="-16" width="32" height="32"/>
@@ -117,7 +117,7 @@
                             </variation>
                         </label>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="right" translatesAutoresizingMaskIntoConstraints="NO" id="QWn-hM-tb6" customClass="PIETextView_linkDetection">
-                            <rect key="frame" x="10" y="52" width="580" height="146"/>
+                            <rect key="frame" x="10" y="52" width="580" height="210"/>
                             <animations/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -125,7 +125,7 @@
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
                         <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F9S-X3-Axq">
-                            <rect key="frame" x="279" y="206" width="42" height="42"/>
+                            <rect key="frame" x="279" y="270" width="42" height="42"/>
                             <animations/>
                             <state key="normal" image="pie_like">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>

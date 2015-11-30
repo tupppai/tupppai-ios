@@ -18,10 +18,8 @@
 
 #import "DDCollectManager.h"
 #import "PIEReplyCollectionViewController.h"
-#import "JGActionSheet.h"
 #import "AppDelegate.h"
-#import "ATOMReportModel.h"
-
+//
 #import "PIEShareView.h"
 #import "PIEEliteFollowAskTableViewCell.h"
 #import "PIEEliteFollowReplyTableViewCell.h"
@@ -32,6 +30,8 @@
 #import "PIEWebViewViewController.h"
 #import "PIEShareImageView.h"
 #import "PIECarouselViewController2.h"
+#import "PIEActionSheet_PS.h"
+
 @interface PIEEliteViewController ()<UITableViewDelegate,UITableViewDataSource,PWRefreshBaseTableViewDelegate,UIScrollViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource,SwipeViewDelegate,SwipeViewDataSource>
 @property (nonatomic, strong) PIEEliteScrollView *sv;
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
@@ -56,8 +56,7 @@
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 @property (nonatomic, strong) PIEPageVM *selectedVM;
 
-@property (nonatomic, strong)  JGActionSheet * psActionSheet;
-@property (nonatomic, strong)  JGActionSheet * reportActionSheet;
+@property (nonatomic, strong)  PIEActionSheet_PS * psActionSheet;
 @property (nonatomic, strong)  PIEShareView * shareView;
 
 @end
@@ -79,7 +78,12 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     [self getSourceIfEmpty_hot:nil];
     [self getSourceIfEmpty_banner];
 }
-
+-(PIEActionSheet_PS *)psActionSheet {
+    if (!_psActionSheet) {
+        _psActionSheet = [PIEActionSheet_PS new];
+    }
+    return _psActionSheet;
+}
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -463,31 +467,6 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 }
 
 
-- (void)help:(BOOL)shouldDownload {
-    NSMutableDictionary* param = [NSMutableDictionary new];
-    [param setObject:@(_selectedVM.ID) forKey:@"target"];
-    [param setObject:@"ask" forKey:@"type"];
-    
-    [DDService signProceeding:param withBlock:^(NSString *imageUrl) {
-        if (imageUrl != nil) {
-            if (shouldDownload) {
-                [DDService downloadImage:imageUrl withBlock:^(UIImage *image) {
-                    UIImageWriteToSavedPhotosAlbum(image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
-                }];
-            }
-            else {
-                [Hud customText:@"添加成功\n在“进行中”等你下载咯!" inView:[AppDelegate APP].window];
-            }
-        }
-    }];
-}
-- (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error
-  contextInfo: (void *) contextInfo {
-    if(error != NULL){
-    } else {
-        [Hud customText:@"下载成功\n我猜你会用美图秀秀来P?" inView:[AppDelegate APP].window];
-    }
-}
 #pragma mark - ATOMShareViewDelegate
 
 - (void)updateShareStatus {
@@ -526,7 +505,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     [DDShareManager copy:_selectedVM];
 }
 -(void)tapShare7 {
-    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
+    self.shareView.vm = _selectedVM;
 }
 -(void)tapShare8 {
     if (_sv.type == PIEPageTypeEliteHot) {
@@ -549,7 +528,6 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 -(void)tapShareCancel {
     [self.shareView dismiss];
 }
-
 
 
 #pragma mark - getDataSource
@@ -733,82 +711,9 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     }
     return _shareView;
 }
-- (JGActionSheet *)psActionSheet {
-    WS(ws);
-    if (!_psActionSheet) {
-        _psActionSheet = [JGActionSheet new];
-        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"下载图片帮P", @"添加至进行中",@"取消"] buttonStyle:JGActionSheetButtonStyleDefault];
-        [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:2];
-        NSArray *sections = @[section];
-        _psActionSheet = [JGActionSheet actionSheetWithSections:sections];
-        _psActionSheet.delegate = self;
-        [_psActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
-            [sheet dismissAnimated:YES];
-        }];
-        [_psActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
-            switch (indexPath.row) {
-                case 0:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    [ws help:YES];
-                    break;
-                case 1:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    [ws help:NO];
-                    break;
-                case 2:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    break;
-                default:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    break;
-            }
-        }];
-    }
-    return _psActionSheet;
-}
-- (JGActionSheet *)reportActionSheet {
-    WS(ws);
-    if (!_reportActionSheet) {
-        _reportActionSheet = [JGActionSheet new];
-        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"色情、淫秽或低俗内容", @"广告或垃圾信息",@"违反法律法规的内容"] buttonStyle:JGActionSheetButtonStyleDefault];
-        NSArray *sections = @[section];
-        _reportActionSheet = [JGActionSheet actionSheetWithSections:sections];
-        _reportActionSheet.delegate = self;
-        [_reportActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
-            [sheet dismissAnimated:YES];
-        }];
-        [_reportActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
-            NSMutableDictionary* param = [NSMutableDictionary new];
-            [param setObject:@(ws.selectedVM.ID) forKey:@"target_id"];
-            [param setObject:@(PIEPageTypeAsk) forKey:@"target_type"];
-            UIButton* b = section.buttons[indexPath.row];
-            switch (indexPath.row) {
-                case 0:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                case 1:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                case 2:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                default:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    break;
-            }
-            [ATOMReportModel report:param withBlock:^(NSError *error) {
-                if(!error) {
-                    [Util ShowTSMessageSuccess:@"已举报"];
-                }
-                
-            }];
-        }];
-    }
-    return _reportActionSheet;
-}
+
+
+
 
 #pragma mark - DZNEmptyDataSetSource & delegate
 -(UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
@@ -838,6 +743,9 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 }
 -(BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
     return YES;
+}
+-(CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    return 100;
 }
 #pragma mark - Gesture Event
 
@@ -902,6 +810,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                     [self.navigationController pushViewController:friendVC animated:YES];
                 }
                 else if (CGRectContainsPoint(cell.bangView.frame, p)) {
+                    self.psActionSheet.vm = _selectedVM;
                     [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
                 }
                 else if (CGRectContainsPoint(cell.followView.frame, p)) {
@@ -1053,6 +962,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                     [self.navigationController pushViewController:friendVC animated:YES];
                 }
                 else if (CGRectContainsPoint(cell.bangView.frame, p)) {
+                    self.psActionSheet.vm = _selectedVM;
                     [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
                 }
                 else if (CGRectContainsPoint(cell.followView.frame, p)) {

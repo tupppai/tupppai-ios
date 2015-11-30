@@ -9,6 +9,7 @@
 #import "PIECommentTableHeaderView_Reply.h"
 #import "PIEImageEntity.h"
 #import "FXBlurView.h"
+
 #define MAXHEIGHT (SCREEN_WIDTH-kPadding15*2)*4/3
 
 @interface PIECommentTableHeaderView_Reply ()
@@ -257,8 +258,6 @@
 - (PIETextView_linkDetection *)textView_content {
     if (!_textView_content) {
         _textView_content = [PIETextView_linkDetection new];
-        _textView_content.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
-        _textView_content.font = [UIFont systemFontOfSize:15];
     }
     return _textView_content;
 }
@@ -334,21 +333,14 @@
         }
     }];
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//
+//-(BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
+//    PIEWebViewViewController* vc = [PIEWebViewViewController new];
+//    vc.url = [URL absoluteString];
+//    
+//    DDNavigationController* nav = (DDNavigationController*)[AppDelegate APP].mainTabBarController.presentedViewController.presentedViewController;
+//    [nav pushViewController:vc animated:YES ];
+//    return NO;
+//}
 
 @end

@@ -51,7 +51,6 @@
 }
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//    _likeButton.selected = _currentVM.liked;
     [MobClick beginLogPageView:@"进入滚动详情页"];
 }
 - (void)viewWillDisappear:(BOOL)animated
@@ -106,7 +105,6 @@ CGFloat startPanLocationY;
 
 
 - (void)handleGesture_SwipeUp:(id)sender {
-    NSLog(@"handleGesture_SwipeUp");
     PIECommentViewController2* vc = [PIECommentViewController2 new];
     vc.vm = _currentVM;
     [vc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
@@ -114,7 +112,6 @@ CGFloat startPanLocationY;
     [self presentViewController:nav animated:YES completion:nil];
 }
 - (void)handleGesture_SwipeDown:(id)sender {
-    NSLog(@"handleGesture_SwipeDown");
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 -(iCarousel *)carousel {
@@ -266,7 +263,7 @@ CGFloat startPanLocationY;
 
 
 - (NSInteger)numberOfPlaceholdersInCarousel:(iCarousel *)carousel {
-    return 2;
+    return 0;
 }
 -(UIView *)carousel:(iCarousel *)carousel placeholderViewAtIndex:(NSInteger)index reusingView:(UIView *)view {
     return [UIView new];

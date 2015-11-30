@@ -10,10 +10,9 @@
 //#import "ATOMTipButton.h"
 //#import "DDTipLabelVM.h"
 #import "PIEImageEntity.h"
-#import "PIEWebViewViewController.h"
-#import "DDNavigationController.h"
-#import "AppDelegate.h"
 #import "FXBlurView.h"
+
+
 #define MAXHEIGHT (SCREEN_WIDTH-kPadding15*2)*4/3
 
 @interface PIECommentTableHeaderView_Ask ()
@@ -253,6 +252,7 @@
 - (PIETextView_linkDetection *)textView_content {
     if (!_textView_content) {
         _textView_content = [PIETextView_linkDetection new];
+//        _textView_content.delegate = self;
     }
     return _textView_content;
 }
@@ -318,6 +318,16 @@
 }
 
 
+
+//-(BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
+//    PIEWebViewViewController* vc = [PIEWebViewViewController new];
+//    vc.url = [URL absoluteString];
+//    
+//    DDNavigationController* nav = self.superview.viewController.navigationController;
+//    
+//    [nav pushViewController:vc animated:YES ];
+//    return NO;
+//}
 
 
 

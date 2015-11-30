@@ -18,7 +18,6 @@
 #import "PIECommentHeaderView.h"
 #import "PIEShareView.h"
 #import "JGActionSheet.h"
-#import "ATOMReportModel.h"
 #import "DDCollectManager.h"
 #import "PIEImageEntity.h"
 #import "JTSImageViewController.h"
@@ -42,7 +41,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 @property (nonatomic, strong) NSIndexPath *selectedIndexpath;
 @property (nonatomic, strong) PIEShareView *shareView;
 @property (nonatomic, strong)  JGActionSheet * psActionSheet;
-@property (nonatomic, strong)  JGActionSheet * reportActionSheet;
 @property (nonatomic, assign)  BOOL isFirstLoading;
 
 @end
@@ -815,7 +813,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [DDShareManager copy:_vm];
 }
 -(void)tapShare7 {
-    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
+    self.shareView.vm = _vm;
 }
 -(void)tapShare8 {
     [self collect];
@@ -920,49 +918,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     }
     return _shareView;
 }
-- (JGActionSheet *)reportActionSheet {
-    WS(ws);
-    if (!_reportActionSheet) {
-        _reportActionSheet = [JGActionSheet new];
-        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"色情、淫秽或低俗内容", @"广告或垃圾信息",@"违反法律法规的内容"] buttonStyle:JGActionSheetButtonStyleDefault];
-        NSArray *sections = @[section];
-        _reportActionSheet = [JGActionSheet actionSheetWithSections:sections];
-        _reportActionSheet.delegate = self;
-        [_reportActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
-            [sheet dismissAnimated:YES];
-        }];
-        [_reportActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
-            NSMutableDictionary* param = [NSMutableDictionary new];
-            [param setObject:@(ws.vm.ID) forKey:@"target_id"];
-            [param setObject:@(ws.vm.type) forKey:@"target_type"];
-            UIButton* b = section.buttons[indexPath.row];
-            switch (indexPath.row) {
-                case 0:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                case 1:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                case 2:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                default:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    break;
-            }
-            [ATOMReportModel report:param withBlock:^(NSError *error) {
-                if(!error) {
-                    [Util ShowTSMessageSuccess:@"已举报"];
-                }
-                
-            }];
-        }];
-    }
-    return _reportActionSheet;
-}
+
 
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "PIEWebViewViewController.h"
-
+#import "TFHpple.h"
 @interface PIEWebViewViewController ()
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @end
@@ -18,6 +18,8 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setupNavBar];
+    self.title = _viewModel.desc;
     self.webView.scalesPageToFit = YES;
     self.webView.backgroundColor = [UIColor clearColor];
     self.webView.contentMode = UIViewContentModeScaleAspectFit;
@@ -26,7 +28,6 @@
     if (_viewModel) {
         self.title = _viewModel.desc;
         urlB= [NSString stringWithFormat:@"%@?version=%@&token=%@",_viewModel.url,version,[DDUserManager currentUser].token];
-
     } else if (_url) {
         urlB= [NSString stringWithFormat:@"%@?version=%@&token=%@",_url,version,[DDUserManager currentUser].token];
     }
@@ -34,13 +35,36 @@
     NSURL *nsurl=[NSURL URLWithString:urlB];
     NSURLRequest *nsrequest=[NSURLRequest requestWithURL:nsurl];
     [self.webView loadRequest:nsrequest];
+    [self loadDataFromHtml:urlB];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)loadDataFromHtml:(NSString*)stringUrl {
+    NSURL *url = [NSURL URLWithString:stringUrl];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    
+    TFHpple *parser = [TFHpple hppleWithHTMLData:data];
+    
+    NSString *XpathQueryStringTitle = @"//title";
+    NSArray *nodes = [parser searchWithXPathQuery:XpathQueryStringTitle];
+    
+    NSLog(@"%@",nodes);
+//    NSMutableArray *dataArray = [[NSMutableArray alloc]initWithCapacity:0];
+    for (TFHppleElement *element in nodes) {
+        self.title = [[element firstChild]content];
+    }
 }
 
+- (void)setupNavBar {
+    UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
+    buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [buttonLeft setImage:[UIImage imageNamed:@"close_sign"] forState:UIControlStateNormal];
+    [buttonLeft addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonLeft];
+    self.navigationItem.leftBarButtonItem =  buttonItem;
+}
+- (void) dismiss {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 /*
 #pragma mark - Navigation
 
