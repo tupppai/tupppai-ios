@@ -25,6 +25,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     UIBarButtonItem *btnDone = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(clickRightButtonItem)];
     self.navigationItem.rightBarButtonItem = btnDone;
 }

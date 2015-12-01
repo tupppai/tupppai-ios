@@ -41,7 +41,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"登录";
-    
+//    [self setupNavBar];
+
     [_line1 mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@0.5);
     }];
@@ -71,8 +72,20 @@
     _loginLabel.backgroundColor = [UIColor colorWithHex:0XFFEF06];
     _loginLabel.layer.cornerRadius = 18;
     _loginLabel.clipsToBounds = YES;
+    
 }
 
+- (void)setupNavBar {
+    UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
+    buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [buttonLeft setImage:[UIImage imageNamed:@"PIE_icon_back"] forState:UIControlStateNormal];
+    [buttonLeft addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonLeft];
+    self.navigationItem.leftBarButtonItem =  buttonItem;
+}
+- (void)dismiss {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 - (void)tapLogin {
     if (![_phoneTextfield.text isMobileNumber]) {
         [Util ShowTSMessageWarn:@"手机格式有误"];

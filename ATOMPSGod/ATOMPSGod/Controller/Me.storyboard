@@ -189,7 +189,7 @@
                             <constraint firstAttribute="trailing" secondItem="0eW-Qd-Lp1" secondAttribute="trailing" id="i5d-dP-eod"/>
                         </constraints>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" id="Zde-u9-5Xv">
                         <barButtonItem key="rightBarButtonItem" image="pie_message" id="Akv-fg-yFt"/>
                     </navigationItem>

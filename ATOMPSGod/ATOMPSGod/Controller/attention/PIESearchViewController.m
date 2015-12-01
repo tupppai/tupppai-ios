@@ -54,7 +54,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.edgesForExtendedLayout = UIRectEdgeNone;    
     _sourceUser = [NSMutableArray new];
     _sourceContent = [NSMutableArray new];
 //    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
@@ -146,6 +146,8 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+        [self.navigationController.navigationBar setBackgroundImage:nil
+                                                      forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithHex:0xfff119];
 }
 - (void) tapSearch {

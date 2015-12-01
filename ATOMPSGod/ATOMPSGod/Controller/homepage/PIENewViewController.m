@@ -86,6 +86,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     [self commonInit];
     [self shouldDoUploadJob];
 }
@@ -93,7 +94,11 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"进入最新页面"];
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.hidesBarsOnSwipe = YES;
+}
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+//    self.navigationController.hidesBarsOnSwipe = NO;
 }
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];

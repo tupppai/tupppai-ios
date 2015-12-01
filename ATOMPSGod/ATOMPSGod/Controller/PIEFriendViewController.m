@@ -63,6 +63,8 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.edgesForExtendedLayout = UIRectEdgeAll;
+    self.navigationController.hidesBarsOnSwipe = NO;
     // Do any additional setup after loading the view from its nib.
     [self setupViews];
     [self getDataSource];
@@ -72,6 +74,13 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
+                                                  forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.navigationController.navigationBar.translucent = YES;
+    self.navigationController.view.backgroundColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+    
     if (self.navigationController.viewControllers.count <= 1) {
         [self setupNavBar];
     }
@@ -256,7 +265,7 @@
 
     if (_pageMenu.view.frame.origin.y != 0) {
         [self.pageMenu.view mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.view1.mas_bottom).with.offset(-self.view1.frame.size.height).with.priorityHigh();
+            make.top.equalTo(self.view1.mas_bottom).with.offset(-self.view1.frame.size.height+NAV_HEIGHT).with.priorityHigh();
         }];
         [UIView animateWithDuration:0.5 animations:^{
             [self.pageMenu.view layoutIfNeeded];

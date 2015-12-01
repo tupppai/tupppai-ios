@@ -18,7 +18,6 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupNavBar];
     self.title = _viewModel.desc;
     self.webView.scalesPageToFit = YES;
     self.webView.backgroundColor = [UIColor clearColor];
@@ -36,6 +35,11 @@
     NSURLRequest *nsrequest=[NSURLRequest requestWithURL:nsurl];
     [self.webView loadRequest:nsrequest];
     [self loadDataFromHtml:urlB];
+    
+    
+    if (self.navigationController.viewControllers.count<=1) {
+        [self setupNavBar];
+    }
 }
 
 - (void)loadDataFromHtml:(NSString*)stringUrl {

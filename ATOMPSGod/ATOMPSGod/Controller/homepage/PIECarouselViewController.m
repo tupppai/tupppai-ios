@@ -56,6 +56,7 @@
     [super viewDidLoad];
     [self setupViews];
     [self setupData];
+//    self.edgesForExtendedLayout = UIRectEdgeNone;
 //    [self addDarkEffectOnBlurView];
     [self getDataSource];
 }
@@ -105,8 +106,6 @@
     
     UIBlurEffect* effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
     _bottomDimmerView.effect = effect;
-//    _bottomDimmerView.backgroundColor = [UIColor redColor];
-    
     _bottomContainerView.backgroundColor = [UIColor clearColor];
     
 }

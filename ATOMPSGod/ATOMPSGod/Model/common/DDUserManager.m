@@ -211,21 +211,22 @@ static  DDUserManager* _currentUser;
 + (void)DD3PartyAuth:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(bool isRegistered,NSString* info))block {
     NSString* url = [NSString stringWithFormat:@"%@%@",URL_AC3PaAuth,type];
     [DDBaseService POST:param url:url block:^(id responseObject) {
-        NSDictionary *data = [ responseObject objectForKey:@"data"];
-        NSInteger isRegistered = [[data objectForKey:@"is_register"] integerValue];
-        NSDictionary* userObject = [data objectForKey:@"user_obj"];
-        if (isRegistered) {
-            //已经注册，抓取服务器存储的user对象，更新本地user.
-            PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:userObject error:NULL];
-            user.token = [responseObject objectForKey:@"token"];
-            [[DDUserManager currentUser]saveAndUpdateUser:user];
-            block(YES,@"登录成功");
-        } else {
-            if (block) {
-                block(NO,@"未注册，跳到注册页面");
+        if (responseObject) {
+            NSDictionary *data = [ responseObject objectForKey:@"data"];
+            NSInteger isRegistered = [[data objectForKey:@"is_register"] integerValue];
+            NSDictionary* userObject = [data objectForKey:@"user_obj"];
+            if (isRegistered) {
+                //已经注册，抓取服务器存储的user对象，更新本地user.
+                PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:userObject error:NULL];
+                user.token = [responseObject objectForKey:@"token"];
+                [[DDUserManager currentUser]saveAndUpdateUser:user];
+                block(YES,@"登录成功");
+            } else if (isRegistered == NO){
+                if (block) {
+                    block(NO,@"未注册，跳到注册页面");
+                }
             }
-        }
-
+        } 
     }];
 
 }

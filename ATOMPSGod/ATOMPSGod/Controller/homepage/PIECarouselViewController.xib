@@ -176,7 +176,9 @@
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="gaH-5k-Hr1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="807-PI-7hd"/>
+                <constraint firstItem="gaH-5k-Hr1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="807-PI-7hd">
+                    <variation key="heightClass=regular-widthClass=compact" constant="50"/>
+                </constraint>
                 <constraint firstAttribute="bottom" secondItem="YJO-Is-7zc" secondAttribute="bottom" id="90e-59-I1P"/>
                 <constraint firstAttribute="trailing" secondItem="YJO-Is-7zc" secondAttribute="trailing" id="ATg-ri-aNb"/>
                 <constraint firstItem="YJO-Is-7zc" firstAttribute="top" secondItem="gaH-5k-Hr1" secondAttribute="bottom" constant="8" id="Adz-Oq-qcK">
@@ -193,7 +195,7 @@
                 <constraint firstItem="Sig-Ve-fot" firstAttribute="top" secondItem="gaH-5k-Hr1" secondAttribute="bottom" constant="-210" id="e5o-62-lQQ">
                     <variation key="heightClass=regular-widthClass=compact" constant="20"/>
                 </constraint>
-                <constraint firstItem="gaH-5k-Hr1" firstAttribute="height" secondItem="s5f-Tj-oBr" secondAttribute="height" multiplier="0.6" id="fJ4-LM-3UJ"/>
+                <constraint firstItem="gaH-5k-Hr1" firstAttribute="height" secondItem="s5f-Tj-oBr" secondAttribute="height" multiplier="0.55" id="fJ4-LM-3UJ"/>
                 <constraint firstAttribute="trailing" secondItem="gaH-5k-Hr1" secondAttribute="trailing" id="lbe-1O-TNm"/>
                 <constraint firstAttribute="trailing" secondItem="Sig-Ve-fot" secondAttribute="trailing" id="loj-Pf-5yO"/>
                 <constraint firstItem="YJO-Is-7zc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="mUj-x1-XZj"/>

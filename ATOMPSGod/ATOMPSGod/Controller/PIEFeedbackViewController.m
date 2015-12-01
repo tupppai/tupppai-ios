@@ -18,7 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"反馈建议";
+    self.title = @"意见反馈";
     _textView.font = [UIFont systemFontOfSize:13.0];
     _textView.layer.borderWidth = 0.5;
     _textView.layer.borderColor = [UIColor colorWithHex:0x000000 andAlpha:0.3].CGColor;

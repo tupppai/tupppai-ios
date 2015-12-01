@@ -30,8 +30,23 @@
 
 @implementation PIEMyLikedPagesViewController
 
-
-
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.hidesBarsOnSwipe = YES;
+    self.navigationController.navigationBar.backgroundColor = [UIColor colorWithHex:0xffffff andAlpha:0.5];
+}
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navigationController.hidesBarsOnSwipe = NO;
+//    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+}
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+}
 #pragma mark - Refresh
 -(void)didPullDownCollectionView:(UICollectionView *)collectionView {
     [self getDataSource];
@@ -43,7 +58,9 @@
         [_collectionView.footer endRefreshing];
     }
 }
-
+-(BOOL)prefersStatusBarHidden {
+    return YES;
+}
 
 
 #pragma mark - GetDataSource
@@ -114,7 +131,7 @@
     self.view = _collectionView;
     _collectionView.toRefreshBottom = YES;
     _collectionView.toRefreshTop = YES;
-    _collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    _collectionView.backgroundColor = [UIColor whiteColor];
     _collectionView.dataSource = self;
     _collectionView.delegate = self;
     _collectionView.psDelegate = self;
@@ -127,7 +144,7 @@
     _dataSource = [NSMutableArray array];
     _isfirstLoading = YES;
 
-    [self getDataSource];
+    [self.collectionView.header beginRefreshing];
 }
 
 #pragma mark - UICollectionViewDataSource

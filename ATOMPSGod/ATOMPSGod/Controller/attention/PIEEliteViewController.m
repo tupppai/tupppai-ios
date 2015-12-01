@@ -51,10 +51,8 @@
 @property (nonatomic, assign)  long long timeStamp_follow;
 @property (nonatomic, assign)  long long timeStamp_hot;
 
-
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 @property (nonatomic, strong) PIEPageVM *selectedVM;
-
 @property (nonatomic, strong)  PIEActionSheet_PS * psActionSheet;
 @property (nonatomic, strong)  PIEShareView * shareView;
 
@@ -86,9 +84,10 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+//    self.navigationController.hidesBarsOnSwipe = YES;
+
     //update status of like button
     [self updateStatus];
-    
     //make it always visible when coming back to this vc from other vc.
     [self.sv.swipeView reloadData];
     [MobClick beginLogPageView:@"进入首页"];
@@ -96,6 +95,8 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+//    self.navigationController.hidesBarsOnSwipe = NO;
+
     [MobClick endLogPageView:@"离开首页"];
 }
 
@@ -111,7 +112,6 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
         [self getSourceIfEmpty_banner];
     }
 }
-
 - (void)updateStatus {
     if (_selectedIndexPath) {
         if (_sv.type == PIEPageTypeEliteFollow) {
@@ -144,6 +144,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 }
 - (void)configSubviews {
     self.view = self.sv;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     [self configTableViewFollow];
     [self configTableViewHot];
     [self setupGestures];
@@ -160,7 +161,6 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     [_sv.tableFollow registerNib:nib2 forCellReuseIdentifier:askIndentifier];
     UINib* nib3 = [UINib nibWithNibName:replyIndentifier bundle:nil];
     [_sv.tableFollow registerNib:nib3 forCellReuseIdentifier:replyIndentifier];
-
 }
 - (void)configTableViewHot {
     
@@ -177,19 +177,16 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     [_sv.tableHot registerNib:nib2 forCellReuseIdentifier:hotAskIndentifier];
     _sv.swipeView.dataSource = self;
     _sv.swipeView.delegate = self;
-//    [_sv.pageControl_swipeView addTarget:self action:@selector(tapPageControl:) forControlEvents:UIControlEventValueChanged];
 
 }
 - (void)setupGestures {
     
     UITapGestureRecognizer* tapGestureFollow = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureFollow:)];
     [_sv.tableFollow addGestureRecognizer:tapGestureFollow];
-    
     UITapGestureRecognizer* tapGestureHot = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureHot:)];
     [_sv.tableHot addGestureRecognizer:tapGestureHot];
     UILongPressGestureRecognizer* longPressGestureHot = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnHot:)];
     [_sv.tableHot addGestureRecognizer:longPressGestureHot];
-    
     UILongPressGestureRecognizer* longPressGestureFollow = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnFollow:)];
     [_sv.tableFollow addGestureRecognizer:longPressGestureFollow];
     
@@ -197,39 +194,17 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
 
 - (void)createNavBar {
-    WS(ws);
-    _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"热门",@"关注"]];
-    _segmentedControl.frame = CGRectMake(0, 120, 200, 45);
-    _segmentedControl.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor colorWithHex:0x000000 andAlpha:0.6], NSForegroundColorAttributeName, nil];
-    _segmentedControl.selectedTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil];
-    _segmentedControl.selectionIndicatorHeight = 4.0f;
-    _segmentedControl.selectionIndicatorEdgeInsets = UIEdgeInsetsMake(0, 0, -1, 0);
-    _segmentedControl.selectionIndicatorColor = [UIColor yellowColor];
-    _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
-    _segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
-    _segmentedControl.backgroundColor = [UIColor clearColor];
-
-    [_segmentedControl setIndexChangeBlock:^(NSInteger index) {
-        if (index == 0) {
-            [ws.sv toggleWithType:PIEPageTypeEliteHot];
-            [ws getSourceIfEmpty_hot:nil];
-        }
-        else {
-            [ws.sv toggleWithType:PIEPageTypeEliteFollow];
-            [ws getSourceIfEmpty_follow:nil];
-        }
-    }];
-    self.navigationItem.titleView = _segmentedControl;
-    
+    self.navigationItem.titleView = self.segmentedControl;
     UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
     backButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [backButton setImage:[UIImage imageNamed:@"pie_search"] forState:UIControlStateNormal];
     UIBarButtonItem *barBackButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [backButton addTarget:self action:@selector(search) forControlEvents:UIControlEventTouchUpInside];
-    
     self.navigationItem.rightBarButtonItem = barBackButtonItem;
     
 }
+
+
 - (void) search {
     [self.navigationController pushViewController:[PIESearchViewController new] animated:YES];
 }
@@ -293,7 +268,6 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
 - (void)tapPageControl:(SMPageControl *)sender
 {
-//    NSLog(@"tapPageControl %zd",sender.currentPage);
     [self.sv.swipeView scrollToItemAtIndex:sender.currentPage duration:0.5];
 }
 
@@ -1051,6 +1025,33 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     }
 }
 
-
+-(HMSegmentedControl *)segmentedControl {
+    if (!_segmentedControl) {
+        WS(ws);
+        _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"热门",@"关注"]];
+        _segmentedControl.frame = CGRectMake(0, 120, 200, 45);
+        _segmentedControl.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor colorWithHex:0x000000 andAlpha:0.6], NSForegroundColorAttributeName, nil];
+        _segmentedControl.selectedTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil];
+        _segmentedControl.selectionIndicatorHeight = 4.0f;
+        _segmentedControl.selectionIndicatorEdgeInsets = UIEdgeInsetsMake(0, 0, -1, 0);
+        _segmentedControl.selectionIndicatorColor = [UIColor yellowColor];
+        _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+        _segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
+        _segmentedControl.backgroundColor = [UIColor clearColor];
+        
+        [_segmentedControl setIndexChangeBlock:^(NSInteger index) {
+            if (index == 0) {
+                [ws.sv toggleWithType:PIEPageTypeEliteHot];
+                [ws getSourceIfEmpty_hot:nil];
+            }
+            else {
+                [ws.sv toggleWithType:PIEPageTypeEliteFollow];
+                [ws getSourceIfEmpty_follow:nil];
+            }
+        }];
+        
+    }
+    return _segmentedControl;
+}
 
 @end

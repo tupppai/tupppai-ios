@@ -50,6 +50,7 @@
 }
 - (void)createUI {
     self.title = @"资料编辑";
+//    self.edgesForExtendedLayout = UIRectEdgeNone;
     _createProfileView = [PIEModifySelfView new];
     self.view = _createProfileView;
     

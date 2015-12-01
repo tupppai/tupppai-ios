@@ -1035,6 +1035,8 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
     }
 }
 
+
+
 - (void)slk_didTapScrollView:(UIGestureRecognizer *)gesture
 {
     if (!self.isPresentedInPopover && ![self ignoreTextInputbarAdjustment]) {

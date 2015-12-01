@@ -49,6 +49,8 @@
     
     [self setupUmengAnalytics];
     
+    
+    
     return YES;
 }
 - (void)setupUmengAnalytics {

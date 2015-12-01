@@ -32,7 +32,7 @@
     }];
 }
 - (void)createUI {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     _tableView.scrollEnabled = NO;
     _tableView.separatorInset = UIEdgeInsetsMake(0, 30, 0, 20);
     _tableView.separatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];

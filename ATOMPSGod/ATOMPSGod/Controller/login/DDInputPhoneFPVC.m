@@ -27,6 +27,9 @@
     _inputMobileView = [ATOMInputMobileView new];
     self.view = _inputMobileView;
     _inputMobileView.mobileTextField.delegate = self;
+    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+
 }
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];

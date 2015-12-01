@@ -26,8 +26,6 @@
 #import "PIEReplyCollectionViewController.h"
 #import "PIEPageManager.h"
 
-#import "UIViewController+ScrollingNavbar.h"
-
 #define DEBUG_CUSTOM_TYPING_INDICATOR 0
 
 static NSString *MessengerCellIdentifier = @"MessengerCell";
@@ -49,9 +47,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 @implementation PIECommentViewController2
 
--(BOOL)prefersStatusBarHidden {
-    return YES;
-}
 - (id)init
 {
     self = [super initWithTableViewStyle:UITableViewStylePlain];
@@ -89,6 +84,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+//    self.edgesForExtendedLayout = UIRectEdgeAll;
     _isFirstLoading = YES;
     [self setupNavBar];
     [self configTableView];
@@ -99,9 +96,11 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     if (_shouldDownloadVMSource && _shouldShowHeaderView) {
         [self getVMSource];
     }
-
 }
 
+-(BOOL)prefersStatusBarHidden {
+    return YES;
+}
 - (void)setupNavBar {
     UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
     buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -132,15 +131,33 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 {
     [super viewWillAppear:animated];
     
-    //    [MobClick beginLogPageView:@"进入浏览图片页"];
+//    self.navigationController.hidesBarsOnSwipe = YES;
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
+                                                  forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.navigationController.navigationBar.translucent = YES;
+    self.navigationController.view.backgroundColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.backgroundColor = [UIColor colorWithHex:0xffffff andAlpha:0.5];
+        [MobClick beginLogPageView:@"进入浏览图片页"];
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
+//    self.navigationController.hidesBarsOnSwipe = NO;
     [super viewWillDisappear:animated];
     //    [MobClick endLogPageView:@"离开浏览图片页"];
 
 }
 
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [super scrollViewDidScroll:scrollView];
+    float scrollOffset = scrollView.contentOffset.y;
+    
+    if (scrollOffset < - 85) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+
+}
 -(void)dealloc {
     if (_shouldShowHeaderView) {
         [self.source_newComment removeObserver:self forKeyPath:@"array"];
@@ -661,14 +678,14 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         
         UITapGestureRecognizer* tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap1)];
         UITapGestureRecognizer* tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap2)];
-        UITapGestureRecognizer* tap3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap3)];
+//        UITapGestureRecognizer* tap3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap3)];
         UITapGestureRecognizer* tap4 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap4)];
         
         UITapGestureRecognizer* tap5 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap5)];
         UITapGestureRecognizer* tap6 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapHelp)];
         [_headerView.avatarView addGestureRecognizer:tap1];
         [_headerView.usernameLabel addGestureRecognizer:tap2];
-        [_headerView.imageViewMain addGestureRecognizer:tap3];
+//        [_headerView.imageViewMain addGestureRecognizer:tap3];
         [_headerView.imageViewRight addGestureRecognizer:tap4];
         [_headerView.shareButton addGestureRecognizer:tap5];
         [_headerView.bangView addGestureRecognizer:tap6];
@@ -684,7 +701,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         _headerView_reply.vm = _vm;
         UITapGestureRecognizer* tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap1)];
         UITapGestureRecognizer* tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap2)];
-        UITapGestureRecognizer* tap3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap3)];
+//        UITapGestureRecognizer* tap3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap3)];
         UITapGestureRecognizer* tap4 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap4)];
         
         UITapGestureRecognizer* tap5 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap5)];
@@ -692,7 +709,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         UITapGestureRecognizer* tap7 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapLike)];
         [_headerView_reply.avatarView addGestureRecognizer:tap1];
         [_headerView_reply.usernameLabel addGestureRecognizer:tap2];
-        [_headerView_reply.imageViewMain addGestureRecognizer:tap3];
+//        [_headerView_reply.imageViewMain addGestureRecognizer:tap3];
         [_headerView_reply.imageViewRight addGestureRecognizer:tap4];
         [_headerView_reply.shareButton addGestureRecognizer:tap5];
         [_headerView_reply.likeButton addGestureRecognizer:tap7];

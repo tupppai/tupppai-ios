@@ -25,7 +25,6 @@
 #import "KVCMutableArray.h"
 #import "PIEReplyCollectionViewController.h"
 #import "PIEPageManager.h"
-#import "UIViewController+ScrollingNavbar.h"
 #define DEBUG_CUSTOM_TYPING_INDICATOR 0
 
 static NSString *MessengerCellIdentifier = @"MessengerCell";
@@ -47,9 +46,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 @implementation PIECommentViewController
 
--(BOOL)prefersStatusBarHidden {
-    return YES;
-}
+//-(BOOL)prefersStatusBarHidden {
+//    return YES;
+//}
 - (id)init
 {
     self = [super initWithTableViewStyle:UITableViewStylePlain];
@@ -451,10 +450,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         self.title = @"全部评论";
     }
     
-    [self.navigationController.navigationBar setTranslucent:NO];
-    [self setUseSuperview:NO];
-    [self followScrollView:self.tableView];
-
 }
 
 - (void)resizeHeaderView {

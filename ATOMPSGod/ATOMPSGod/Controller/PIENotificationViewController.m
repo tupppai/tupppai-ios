@@ -21,7 +21,6 @@
 #import "PIECommentViewController.h"
 #import "PIECommentManager.h"
 #import "UITableView+FDTemplateLayoutCell.h"
-#import "UIViewController+ScrollingNavbar.h"
 @interface PIENotificationViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate>
 @property (nonatomic, strong) NSMutableArray *source;
 //@property (nonatomic, strong) PIERefreshTableView *tableView;
@@ -39,6 +38,11 @@
 }
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.navigationController.hidesBarsOnSwipe = YES;
+}
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    self.navigationController.navigationBar.backgroundColor = [UIColor colorWithHex:0xffffff andAlpha:0.9];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -76,6 +80,9 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    self.navigationController.hidesBarsOnSwipe = NO;
+    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+
     [[NSUserDefaults standardUserDefaults]setObject:@(NO) forKey:@"NotificationNew"];
     [[NSUserDefaults standardUserDefaults]synchronize];
 
