@@ -16,6 +16,8 @@
 #import "PIECarousel_ItemView.h"
 #import "DDNavigationController.h"
 #import "PIECommentViewController2.h"
+
+
 @interface PIECarouselViewController2 ()<JGActionSheetDelegate>
 @property (nonatomic, strong)  iCarousel *carousel;
 
@@ -117,7 +119,7 @@ CGFloat startPanLocationY;
 -(iCarousel *)carousel {
     if (!_carousel) {
         _carousel = [[iCarousel alloc]initWithFrame:self.view.bounds];
-        _carousel.type = iCarouselTypeLinear;
+        _carousel.type = iCarouselTypeCoverFlow2;
         _carousel.backgroundColor = [UIColor clearColor];
         _carousel.delegate = self;
         _carousel.dataSource = self;
@@ -214,7 +216,7 @@ CGFloat startPanLocationY;
         case iCarouselOptionSpacing:
         {
             //add a bit of spacing between the item views
-            return value * 1.03f;
+            return value * 1.02f;
         }
         case iCarouselOptionFadeMax:
         {
@@ -263,10 +265,13 @@ CGFloat startPanLocationY;
 
 
 - (NSInteger)numberOfPlaceholdersInCarousel:(iCarousel *)carousel {
-    return 0;
+    return 2;
 }
 -(UIView *)carousel:(iCarousel *)carousel placeholderViewAtIndex:(NSInteger)index reusingView:(UIView *)view {
-    return [UIView new];
+    if (!view) {
+        view = [UIView new];
+    }
+    return view;
 }
 
 
@@ -312,30 +317,30 @@ CGFloat startPanLocationY;
 
 - (void)flyCurrentItemViewWithDirection:(BOOL)up {
     
-    if (up && self.carousel.currentItemView.tag!=1) {
-        CGRect frame =  self.carousel.currentItemView.frame;
-        frame.origin.y = frame.origin.y - 10;
-        self.carousel.currentItemView.tag = 1;
-
-        [UIView animateWithDuration:0.3 animations:^{
-            self.carousel.currentItemView.frame = frame;
-        }completion:^(BOOL finished) {
-            if (finished) {
-            }
-        }];
-    } else if (!up && self.carousel.currentItemView.tag!=0) {
-        CGRect frame =  self.carousel.currentItemView.frame;
-        frame.origin.y = frame.origin.y + 10;
-        self.carousel.currentItemView.tag = 0;
-        
-        [UIView animateWithDuration:0.2 animations:^{
-            self.carousel.currentItemView.frame = frame;
-        }completion:^(BOOL finished) {
-            if (finished) {
-            }
-        }];
-    
-    }
+//    if (up && self.carousel.currentItemView.tag!=1) {
+//        CGRect frame =  self.carousel.currentItemView.frame;
+//        frame.origin.y = frame.origin.y - 10;
+//        self.carousel.currentItemView.tag = 1;
+//
+//        [UIView animateWithDuration:0.3 animations:^{
+//            self.carousel.currentItemView.frame = frame;
+//        }completion:^(BOOL finished) {
+//            if (finished) {
+//            }
+//        }];
+//    } else if (!up && self.carousel.currentItemView.tag!=0) {
+//        CGRect frame =  self.carousel.currentItemView.frame;
+//        frame.origin.y = frame.origin.y + 10;
+//        self.carousel.currentItemView.tag = 0;
+//        
+//        [UIView animateWithDuration:0.2 animations:^{
+//            self.carousel.currentItemView.frame = frame;
+//        }completion:^(BOOL finished) {
+//            if (finished) {
+//            }
+//        }];
+//    
+//    }
 }
 - (void)reorderSourceAndScroll {
     //初始化，把传进来的vm重组，放在原图的下一位，被滚动到此位置。
