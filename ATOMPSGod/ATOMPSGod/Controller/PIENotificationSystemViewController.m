@@ -41,13 +41,13 @@
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     _isfirstLoading = YES;
-    [self.tableView.header beginRefreshing];
+    [self.tableView.mj_header beginRefreshing];
 }
 
 #pragma mark - GetDataSource
 - (void)getDataSource {
     _currentIndex = 1;
-    [self.tableView.footer endRefreshing];
+    [self.tableView.mj_footer endRefreshing];
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
@@ -66,13 +66,13 @@
             _canRefreshFooter = NO;
         }
         [ws.tableView reloadData];
-        [self.tableView.header endRefreshing];
+        [self.tableView.mj_header endRefreshing];
     }];
 }
 
 #pragma mark - GetDataSource
 - (void)getMoreDataSource {
-    [self.tableView.header endRefreshing];
+    [self.tableView.mj_header endRefreshing];
     _currentIndex++;
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -91,7 +91,7 @@
         else {
             _canRefreshFooter = NO;
         }
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
     }];
 }
 
@@ -102,7 +102,7 @@
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
     }
 }
 -(PIERefreshTableView *)tableView {

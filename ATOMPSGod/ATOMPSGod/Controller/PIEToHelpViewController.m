@@ -106,7 +106,7 @@
 
 - (void)getRemoteSourceToHelp {
     WS(ws);
-    [_toHelpTableView.footer endRefreshing];
+    [_toHelpTableView.mj_footer endRefreshing];
     _currentIndex_ToHelp = 1;
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -130,14 +130,14 @@
             [ws.sourceToHelp addObjectsFromArray:sourceAgent];
         }
         [ws.toHelpTableView reloadData];
-        [ws.toHelpTableView.header endRefreshing];
+        [ws.toHelpTableView.mj_header endRefreshing];
     }];
 }
 
 - (void)getMoreRemoteSourceToHelp {
     WS(ws);
     _currentIndex_ToHelp ++;
-    [_toHelpTableView.header endRefreshing];
+    [_toHelpTableView.mj_header endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(_currentIndex_ToHelp) forKey:@"page"];
@@ -157,7 +157,7 @@
             [ws.sourceToHelp addObjectsFromArray:sourceAgent];
             [ws.toHelpTableView reloadData];
         }
-        [ws.toHelpTableView.footer endRefreshing];
+        [ws.toHelpTableView.mj_footer endRefreshing];
     }];
 }
 
@@ -169,7 +169,7 @@
     if (_canRefreshToHelpFooter) {
         [self getMoreRemoteSourceToHelp];
     } else {
-        [_toHelpTableView.footer endRefreshing];
+        [_toHelpTableView.mj_footer endRefreshing];
     }
 }
 

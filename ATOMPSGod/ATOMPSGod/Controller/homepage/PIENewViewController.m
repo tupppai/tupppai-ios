@@ -157,11 +157,11 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
             if ([manager.type isEqualToString:@"ask"]) {
                 ws.segmentedControl.selectedSegmentIndex=1;
                 [ws.scrollView toggleWithType:PIENewScrollTypeAsk];
-                [ws.scrollView.collectionViewAsk.header beginRefreshing];
+                [ws.scrollView.collectionViewAsk.mj_header beginRefreshing];
             } else if ([manager.type isEqualToString:@"reply"]) {
                 ws.segmentedControl.selectedSegmentIndex=2;
                 [ws.scrollView toggleWithType:PIENewScrollTypeReply];
-                [ws.scrollView.tableReply.header beginRefreshing];
+                [ws.scrollView.tableReply.mj_header beginRefreshing];
             }
         }
     }];
@@ -249,12 +249,12 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 
 
 - (void)refreshHeader {
-    if (_scrollView.type == PIENewScrollTypeReply && ![_tableViewReply.header isRefreshing]) {
-        [_tableViewReply.header beginRefreshing];
-    } else if (_scrollView.type == PIENewScrollTypeAsk && ![_collectionView_ask.header isRefreshing]) {
-        [_collectionView_ask.header beginRefreshing];
-    } else if (_scrollView.type == PIENewScrollTypeActivity && ![_tableViewActivity.header isRefreshing]) {
-        [_tableViewActivity.header beginRefreshing];
+    if (_scrollView.type == PIENewScrollTypeReply && !_tableViewReply.mj_header.isRefreshing) {
+        [_tableViewReply.mj_header beginRefreshing];
+    } else if (_scrollView.type == PIENewScrollTypeAsk && !_collectionView_ask.mj_header.isRefreshing) {
+        [_collectionView_ask.mj_header beginRefreshing];
+    } else if (_scrollView.type == PIENewScrollTypeActivity && !_tableViewActivity.mj_header.isRefreshing) {
+        [_tableViewActivity.mj_header beginRefreshing];
     }
 }
 
@@ -391,24 +391,24 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 //}
 - (void)firstGetSourceIfEmpty_activity {
     if (_sourceActivity.count <= 0 || _isfirstLoadingActivity) {
-        [self.tableViewActivity.header beginRefreshing];
+        [self.tableViewActivity.mj_header beginRefreshing];
     }
 }
 - (void)firstGetSourceIfEmpty_ask {
     if (_sourceAsk.count <= 0 || _isfirstLoadingAsk) {
-        [self.collectionView_ask.header beginRefreshing];
+        [self.collectionView_ask.mj_header beginRefreshing];
     }
 }
 - (void)firstGetSourceIfEmpty_Reply {
     if (_sourceReply.count <= 0 || _isfirstLoadingReply) {
-        [self.tableViewReply.header beginRefreshing];
+        [self.tableViewReply.mj_header beginRefreshing];
     }
 }
 
 //获取服务器的最新数据
 - (void)getRemoteSource_activity:(void (^)(BOOL finished))block{
     WS(ws);
-    [ws.scrollView.tableActivity.footer endRefreshing];
+    [ws.scrollView.tableActivity.mj_footer endRefreshing];
     _currentIndex_activity = 1;
     NSMutableDictionary *param = [NSMutableDictionary new];
     _timeStamp_activity = [[NSDate date] timeIntervalSince1970];
@@ -418,7 +418,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 //    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     
     
-    [ws.scrollView.tableActivity.header endRefreshing];
+    [ws.scrollView.tableActivity.mj_header endRefreshing];
     ws.isfirstLoadingActivity = NO;
     [ws.tableViewActivity reloadData];
     _canRefreshFooter_activity = NO;
@@ -434,7 +434,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 //            _canRefreshFooter_activity = NO;
 //        }
 //        [ws.tableViewActivity reloadData];
-//        [ws.tableViewActivity.header endRefreshing];
+//        [ws.tableViewActivity.mj_header endRefreshing];
 //        if (block) {
 //            block(YES);
 //        }
@@ -443,7 +443,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 //拉至底层刷新
 - (void)getMoreRemoteSource_activity {
     WS(ws);
-    [ws.tableViewActivity.header endRefreshing];
+    [ws.tableViewActivity.mj_header endRefreshing];
     _currentIndex_ask++;
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:@(_timeStamp_ask) forKey:@"last_updated"];
@@ -460,14 +460,14 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
             _canRefreshFooter_activity = NO;
         }
         [ws.tableViewActivity reloadData];
-        [ws.tableViewActivity.footer endRefreshing];
+        [ws.tableViewActivity.mj_footer endRefreshing];
     }];
 }
 
 //获取服务器的最新数据
 - (void)getRemoteAskSource:(void (^)(BOOL finished))block{
     WS(ws);
-    [ws.scrollView.collectionViewAsk.footer endRefreshing];
+    [ws.scrollView.collectionViewAsk.mj_footer endRefreshing];
     _currentIndex_ask = 1;
     NSMutableDictionary *param = [NSMutableDictionary new];
     _timeStamp_ask = [[NSDate date] timeIntervalSince1970];
@@ -486,7 +486,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
             _canRefreshFooter_ask = NO;
         }
         [ws.collectionView_ask reloadData];
-        [ws.scrollView.collectionViewAsk.header endRefreshing];
+        [ws.scrollView.collectionViewAsk.mj_header endRefreshing];
         if (block) {
             block(YES);
         }
@@ -496,7 +496,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 //拉至底层刷新
 - (void)getMoreRemoteAskSource {
     WS(ws);
-    [ws.scrollView.collectionViewAsk.header endRefreshing];
+    [ws.scrollView.collectionViewAsk.mj_header endRefreshing];
     _currentIndex_ask++;
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:@(_timeStamp_ask) forKey:@"last_updated"];
@@ -513,14 +513,14 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
             _canRefreshFooter_ask = NO;
         }
         [ws.collectionView_ask reloadData];
-        [ws.scrollView.collectionViewAsk.footer endRefreshing];
+        [ws.scrollView.collectionViewAsk.mj_footer endRefreshing];
     }];
 }
 
 - (void)getRemoteReplySource {
     WS(ws);
     _currentIndex_reply = 1;
-    [_tableViewReply.footer endRefreshing];
+    [_tableViewReply.mj_footer endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary new];
     _timeStamp_reply = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(_timeStamp_reply) forKey:@"last_updated"];
@@ -539,14 +539,14 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
             _canRefreshFooter_reply = NO;
         }
         [ws.tableViewReply reloadData];
-        [ws.tableViewReply.header endRefreshing];
+        [ws.tableViewReply.mj_header endRefreshing];
     }];
 }
 
 - (void)getMoreRemoteReplySource {
     WS(ws);
     _currentIndex_reply ++;
-    [_tableViewReply.header endRefreshing];
+    [_tableViewReply.mj_header endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:@(_timeStamp_reply) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
@@ -562,7 +562,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
             _canRefreshFooter_reply = NO;
         }
         [ws.tableViewReply reloadData];
-        [ws.tableViewReply.footer endRefreshing];
+        [ws.tableViewReply.mj_footer endRefreshing];
     }];
 }
 
@@ -714,10 +714,10 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 }
 
 - (void)loadMoreData_reply {
-    if (_canRefreshFooter_reply && !_tableViewReply.header.isRefreshing) {
+    if (_canRefreshFooter_reply && !_tableViewReply.mj_header.isRefreshing) {
         [self getMoreRemoteReplySource];
     } else {
-        [_tableViewReply.footer endRefreshing];
+        [_tableViewReply.mj_footer endRefreshing];
     }
 }
 
@@ -726,10 +726,10 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 }
 
 - (void)loadMoreData_activity {
-    if (_canRefreshFooter_activity && !_tableViewActivity.header.isRefreshing) {
+    if (_canRefreshFooter_activity && !_tableViewActivity.mj_header.isRefreshing) {
         [self getMoreRemoteSource_activity];
     } else {
-        [_tableViewActivity.footer endRefreshing];
+        [_tableViewActivity.mj_footer endRefreshing];
     }
 }
 - (void)loadNewData_ask {
@@ -737,10 +737,10 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 }
 
 - (void)loadMoreData_ask {
-    if (_canRefreshFooter_ask && !_collectionView_ask.header.isRefreshing) {
+    if (_canRefreshFooter_ask && !_collectionView_ask.mj_header.isRefreshing) {
         [self getMoreRemoteAskSource];
     } else {
-        [_collectionView_ask.footer endRefreshing];
+        [_collectionView_ask.mj_footer endRefreshing];
     }
 }
 

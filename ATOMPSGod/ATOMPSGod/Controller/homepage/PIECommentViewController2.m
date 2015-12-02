@@ -533,14 +533,21 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     self.shouldClearTextAtRightButtonPress = YES;
 }
 - (void)configFooterRefresh {
-    [self.tableView addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    
     NSMutableArray *animatedImages = [NSMutableArray array];
     for (int i = 1; i<=6; i++) {
         UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"pie_loading_%d", i]];
         [animatedImages addObject:image];
     }
-    self.tableView.gifFooter.refreshingImages = animatedImages;
-    self.tableView.footer.stateHidden = YES;
+    
+    MJRefreshAutoGifFooter *footer = [MJRefreshAutoGifFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    footer.refreshingTitleHidden = YES;
+    footer.stateLabel.hidden = YES;
+    
+    [footer setImages:animatedImages duration:0.5 forState:MJRefreshStateRefreshing];
+    
+    self.tableView.mj_footer = footer;
+    
     _canRefreshFooter = NO;
 }
 
@@ -592,7 +599,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
     }
 }
 
@@ -636,7 +643,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         [self.source_newComment didChangeValueForKey:@"array"];
         [ws.source_hotComment addObjectsFromArray: hotCommentArray];
         
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
         [self.tableView reloadData];
         if (recentCommentArray.count == 0) {
             ws.canRefreshFooter = NO;

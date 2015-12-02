@@ -224,14 +224,17 @@
     self.textInputbarHidden = YES;
 }
 - (void)setupRefresh_Footer {
-    [self.tableView addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     NSMutableArray *animatedImages = [NSMutableArray array];
     for (int i = 1; i<=6; i++) {
         UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"pie_loading_%d", i]];
         [animatedImages addObject:image];
     }
-    self.tableView.gifFooter.refreshingImages = animatedImages;
-    self.tableView.footer.stateHidden = YES;
+    MJRefreshAutoGifFooter *footer = [MJRefreshAutoGifFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    footer.refreshingTitleHidden = YES;
+    footer.stateLabel.hidden = YES;
+    [footer setImages:animatedImages duration:0.5 forState:MJRefreshStateRefreshing];
+    self.tableView.mj_footer = footer;
+    
     _canRefreshFooter = YES;
 }
 
@@ -243,7 +246,7 @@
 #pragma mark - GetDataSource
 - (void)getDataSource {
     _currentIndex = 1;
-    [self.tableView.footer endRefreshing];
+    [self.tableView.mj_footer endRefreshing];
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     _timeStamp = [[NSDate date] timeIntervalSince1970];
@@ -260,7 +263,7 @@
         else {
             _canRefreshFooter = NO;
         }
-        [self.tableView.header endRefreshing];
+        [self.tableView.mj_header endRefreshing];
     }];
 }
 
@@ -289,7 +292,7 @@
 
 #pragma mark - GetDataSource
 - (void)getMoreDataSource {
-    [self.tableView.header endRefreshing];
+    [self.tableView.mj_header endRefreshing];
     _currentIndex++;
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -306,7 +309,7 @@
         else {
             _canRefreshFooter = NO;
         }
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
     }];
 }
 
@@ -314,7 +317,7 @@
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
     }
 }
 

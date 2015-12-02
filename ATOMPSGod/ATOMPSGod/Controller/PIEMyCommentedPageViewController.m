@@ -31,7 +31,7 @@
     self.view = self.tableView;
     self.title = @"我评论过的";
     [self initData];
-    [self.tableView.header beginRefreshing];
+    [self.tableView.mj_header beginRefreshing];
 }
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -110,14 +110,14 @@
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
     }
 }
 #pragma mark - GetDataSource
 
 - (void)getDataSource {
     WS(ws);
-    [ws.tableView.footer endRefreshing];
+    [ws.tableView.mj_footer endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     _timeStamp = [[NSDate date] timeIntervalSince1970];
     _currentPage = 1;
@@ -134,14 +134,14 @@
             ws.canRefreshFooter = YES;
         }
         [ws.tableView reloadData];
-        [ws.tableView.header endRefreshing];
+        [ws.tableView.mj_header endRefreshing];
 
     }];
 }
 
 - (void)getMoreDataSource {
     WS(ws);
-    [ws.tableView.header endRefreshing];
+    [ws.tableView.mj_header endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     _currentPage++;
     [param setObject:@(_currentPage) forKey:@"page"];
@@ -156,7 +156,7 @@
             ws.canRefreshFooter = YES;
         }
         [ws.tableView reloadData];
-        [ws.tableView.footer endRefreshing];
+        [ws.tableView.mj_footer endRefreshing];
     }];
 }
 

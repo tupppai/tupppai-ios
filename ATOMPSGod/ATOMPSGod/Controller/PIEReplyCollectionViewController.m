@@ -64,7 +64,7 @@
         else {
             _canRefreshFoot = NO;
         }
-        [self.collectionView.header endRefreshing];
+        [self.collectionView.mj_header endRefreshing];
     }];
 }
 - (void)getMoreRemoteSource {
@@ -84,7 +84,7 @@
                 _canRefreshFoot = NO;
             }
 //        }
-        [self.collectionView.footer endRefreshing];
+        [self.collectionView.mj_footer endRefreshing];
     }];
 }
 
@@ -170,7 +170,7 @@
         if (_canRefreshFoot) {
             [self getMoreRemoteSource];
         } else {
-            [_collectionView.footer endRefreshing];
+            [_collectionView.mj_footer endRefreshing];
         }
     }
 }

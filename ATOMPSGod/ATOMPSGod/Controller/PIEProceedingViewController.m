@@ -89,17 +89,17 @@
 
 - (void)getSourceIfEmpty_ask {
     if (_sourceAsk.count <= 0 || _isfirstLoadingAsk) {
-        [self.sv.askTableView.header beginRefreshing];
+        [self.sv.askTableView.mj_header beginRefreshing];
     }
 }
 - (void)getSourceIfEmpty_toHelp {
     if (_sourceToHelp.count <= 0 || _isfirstLoadingToHelp) {
-        [self.sv.toHelpTableView.header beginRefreshing];
+        [self.sv.toHelpTableView.mj_header beginRefreshing];
     }
 }
 - (void)getSourceIfEmpty_done {
     if (_sourceDone.count <= 0 || _isfirstLoadingDone) {
-        [self.sv.doneCollectionView.header beginRefreshing];
+        [self.sv.doneCollectionView.mj_header beginRefreshing];
     }
 }
 #pragma mark - init methods
@@ -267,7 +267,7 @@
         if (_canRefreshDoneFooter) {
             [self getMoreRemoteSourceDone];
         } else {
-            [_sv.doneCollectionView.footer endRefreshing];
+            [_sv.doneCollectionView.mj_footer endRefreshing];
         }
     }
 }
@@ -283,13 +283,13 @@
         if (_canRefreshAskFooter) {
             [self getMoreRemoteSourceMyAsk];
         } else {
-            [_sv.askTableView.footer endRefreshing];
+            [_sv.askTableView.mj_footer endRefreshing];
         }
     } else if (tableView == _sv.toHelpTableView) {
         if (_canRefreshToHelpFooter) {
             [self getMoreRemoteSourceToHelp];
         } else {
-            [_sv.toHelpTableView.footer endRefreshing];
+            [_sv.toHelpTableView.mj_footer endRefreshing];
         }
     }
 
@@ -529,7 +529,7 @@
 
 - (void)getRemoteSourceMyAsk {
     WS(ws);
-    [ws.sv.askTableView.footer endRefreshing];
+    [ws.sv.askTableView.mj_footer endRefreshing];
     _currentIndex_MyAsk = 1;
     _timeStamp_myAsk = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -547,13 +547,13 @@
             [ws.sourceAsk addObjectsFromArray:returnArray];
         }
         [ws.sv.askTableView reloadData];
-        [ws.sv.askTableView.header endRefreshing];
+        [ws.sv.askTableView.mj_header endRefreshing];
     }];
 }
 
 - (void)getMoreRemoteSourceMyAsk {
     WS(ws);
-    [ws.sv.askTableView.header endRefreshing];
+    [ws.sv.askTableView.mj_header endRefreshing];
     _currentIndex_MyAsk++;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_currentIndex_MyAsk) forKey:@"page"];
@@ -568,7 +568,7 @@
             [ws.sourceAsk addObjectsFromArray:returnArray];
         }
         [ws.sv.askTableView reloadData];
-        [ws.sv.askTableView.footer endRefreshing];
+        [ws.sv.askTableView.mj_footer endRefreshing];
     }];
 
 }
@@ -577,7 +577,7 @@
 
 - (void)getRemoteSourceToHelp {
     WS(ws);
-    [_sv.toHelpTableView.footer endRefreshing];
+    [_sv.toHelpTableView.mj_footer endRefreshing];
     _currentIndex_ToHelp = 1;
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -601,14 +601,14 @@
             [ws.sourceToHelp addObjectsFromArray:sourceAgent];
         }
         [ws.sv.toHelpTableView reloadData];
-        [ws.sv.toHelpTableView.header endRefreshing];
+        [ws.sv.toHelpTableView.mj_header endRefreshing];
     }];
 }
 
 - (void)getMoreRemoteSourceToHelp {
     WS(ws);
     _currentIndex_ToHelp ++;
-    [_sv.toHelpTableView.header endRefreshing];
+    [_sv.toHelpTableView.mj_header endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_currentIndex_ToHelp) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
@@ -627,13 +627,13 @@
             [ws.sourceToHelp addObjectsFromArray:sourceAgent];
         }
         [ws.sv.toHelpTableView reloadData];
-        [ws.sv.toHelpTableView.footer endRefreshing];
+        [ws.sv.toHelpTableView.mj_footer endRefreshing];
     }];
 }
 
 - (void)getRemoteSourceDone {
     WS(ws);
-    [ws.sv.doneCollectionView.footer endRefreshing];
+    [ws.sv.doneCollectionView.mj_footer endRefreshing];
     _currentIndex_Done = 1;
     _timeStamp_done = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -657,14 +657,14 @@
             [ws.sourceDone removeAllObjects];
             [ws.sourceDone addObjectsFromArray:sourceAgent];
         }
-        [ws.sv.doneCollectionView.header endRefreshing];
+        [ws.sv.doneCollectionView.mj_header endRefreshing];
         [ws.sv.doneCollectionView reloadData];
 
     }];
 }
 - (void)getMoreRemoteSourceDone {
     WS(ws);
-    [ws.sv.doneCollectionView.header endRefreshing];
+    [ws.sv.doneCollectionView.mj_header endRefreshing];
     _currentIndex_Done++;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_currentIndex_Done) forKey:@"page"];
@@ -684,7 +684,7 @@
             }
             [ws.sourceDone addObjectsFromArray:sourceAgent];
         }
-        [ws.sv.doneCollectionView.footer endRefreshing];
+        [ws.sv.doneCollectionView.mj_footer endRefreshing];
         [ws.sv.doneCollectionView reloadData];
 
     }];

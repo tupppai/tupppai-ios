@@ -53,7 +53,7 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
 
 #pragma mark - GetDataSource
 - (void)getRemoteSource {
-    [_collectionView.footer endRefreshing];
+    [_collectionView.mj_footer endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     _timeStamp = [[NSDate date] timeIntervalSince1970];
     if (_pageVM) {
@@ -82,13 +82,13 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
         else {
             _canRefreshFooter = NO;
         }
-        [_collectionView.header endRefreshing];
+        [_collectionView.mj_header endRefreshing];
         [_collectionView reloadData];
     }];
 }
 - (void)getMoreRemoteSource {
     _currentIndex ++;
-    [_collectionView.header endRefreshing];
+    [_collectionView.mj_header endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     if (_pageVM) {
         [param setObject:@(_pageVM.userID) forKey:@"uid"];
@@ -112,7 +112,7 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
         else {
             _canRefreshFooter = NO;
         }
-        [_collectionView.footer endRefreshing];
+        [_collectionView.mj_footer endRefreshing];
         [_collectionView reloadData];
     }];
 }
@@ -147,10 +147,10 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
     [self getRemoteSource];
 }
 -(void)didPullUpCollectionViewBottom:(UICollectionView *)collectionView {
-    if (_canRefreshFooter && !_collectionView.header.isRefreshing) {
+    if (_canRefreshFooter && !_collectionView.mj_header.isRefreshing) {
         [self getMoreRemoteSource];
     } else {
-        [_collectionView.footer endRefreshing];
+        [_collectionView.mj_footer endRefreshing];
     }
 }
 

@@ -209,10 +209,10 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     [self.navigationController pushViewController:[PIESearchViewController new] animated:YES];
 }
 - (void)refreshHeader {
-    if (_sv.type == PIEPageTypeEliteFollow && ![_sv.tableFollow.header isRefreshing]) {
-        [_sv.tableFollow.header beginRefreshing];
-    } else if (_sv.type == PIEPageTypeEliteHot && ![_sv.tableHot.header isRefreshing]) {
-        [_sv.tableHot.header beginRefreshing];
+    if (_sv.type == PIEPageTypeEliteFollow && !_sv.tableFollow.mj_header.isRefreshing) {
+        [_sv.tableFollow.mj_header beginRefreshing];
+    } else if (_sv.type == PIEPageTypeEliteHot && !_sv.tableHot.mj_header.isRefreshing) {
+        [_sv.tableHot.mj_header beginRefreshing];
     }
 }
 
@@ -521,7 +521,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 }
 - (void)getRemoteSourceFollow {
     WS(ws);
-    [ws.sv.tableFollow.footer endRefreshing];
+    [ws.sv.tableFollow.mj_footer endRefreshing];
     _currentIndex_follow = 1;
     _timeStamp_follow = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -544,14 +544,14 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                 [ws.sourceFollow addObjectsFromArray:sourceAgent];
             }
         }
-        [ws.sv.tableFollow.header endRefreshing];
+        [ws.sv.tableFollow.mj_header endRefreshing];
         [ws.sv.tableFollow reloadData];
     }];
 }
 
 - (void)getMoreRemoteSourceFollow {
     WS(ws);
-    [ws.sv.tableFollow.header endRefreshing];
+    [ws.sv.tableFollow.mj_header endRefreshing];
     _currentIndex_follow++;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_timeStamp_follow) forKey:@"last_updated"];
@@ -571,7 +571,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
             [ws.sourceFollow addObjectsFromArray:sourceAgent];
         }
         [ws.sv.tableFollow reloadData];
-        [ws.sv.tableFollow.footer endRefreshing];
+        [ws.sv.tableFollow.mj_footer endRefreshing];
     }];
 }
 
@@ -583,20 +583,20 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
 - (void)getSourceIfEmpty_hot:(void (^)(BOOL finished))block {
     if (_isfirstLoadingHot || _sourceHot.count <= 0) {
-        [_sv.tableFollow.header endRefreshing];
-        [_sv.tableHot.header beginRefreshing];
+        [_sv.tableFollow.mj_header endRefreshing];
+        [_sv.tableHot.mj_header beginRefreshing];
     }
 }
 - (void)getSourceIfEmpty_follow:(void (^)(BOOL finished))block {
     if (_isfirstLoadingFollow || _sourceFollow.count <= 0) {
-        [_sv.tableHot.header endRefreshing];
-        [_sv.tableFollow.header beginRefreshing];
+        [_sv.tableHot.mj_header endRefreshing];
+        [_sv.tableFollow.mj_header beginRefreshing];
     }
 }
 
 - (void)getRemoteSourceHot:(void (^)(BOOL finished))block {
     WS(ws);
-    [ws.sv.tableHot.footer endRefreshing];
+    [ws.sv.tableHot.mj_footer endRefreshing];
     _currentIndex_hot = 1;
     _timeStamp_hot = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -615,7 +615,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
             [ws.sourceHot addObjectsFromArray:returnArray];
         }
         [ws.sv.tableHot reloadData];
-        [ws.sv.tableHot.header endRefreshing];
+        [ws.sv.tableHot.mj_header endRefreshing];
         if (block) {
             block(YES);
         }
@@ -623,7 +623,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 }
 - (void)getMoreRemoteSourceHot {
     WS(ws);
-    [ws.sv.tableHot.header endRefreshing];
+    [ws.sv.tableHot.mj_header endRefreshing];
     _currentIndex_hot ++;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_timeStamp_hot) forKey:@"last_updated"];
@@ -639,7 +639,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
             [ws.sourceHot addObjectsFromArray:returnArray];
         }
         [ws.sv.tableHot reloadData];
-        [ws.sv.tableHot.footer endRefreshing];
+        [ws.sv.tableHot.mj_footer endRefreshing];
     }];
 }
 
@@ -655,13 +655,13 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
         if (_canRefreshFooterFollow) {
             [self getMoreRemoteSourceFollow];
         } else {
-            [_sv.tableFollow.footer endRefreshing];
+            [_sv.tableFollow.mj_footer endRefreshing];
         }
     } else {
         if (_canRefreshFooterHot) {
             [self getMoreRemoteSourceHot];
         } else {
-            [_sv.tableHot.footer endRefreshing];
+            [_sv.tableHot.mj_footer endRefreshing];
         }
     }
 }
