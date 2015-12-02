@@ -266,6 +266,9 @@
 		F409AA871BAFE39000736B0D /* PIEImageEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = F409AA861BAFE39000736B0D /* PIEImageEntity.m */; };
 		F41366951BBE73D900EE0C4E /* PIEReplyCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F41366941BBE73D900EE0C4E /* PIEReplyCollectionCell.xib */; };
 		F4155D461BB3DA1300A0B045 /* PIEHighlightableLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4155D451BB3DA1300A0B045 /* PIEHighlightableLabel.m */; };
+		F41BA04F1C0E9A2800979D43 /* PIEButton_Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = F41BA04E1C0E9A2800979D43 /* PIEButton_Tag.m */; };
+		F41BA0521C0E9DC800979D43 /* PIETagsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F41BA0511C0E9DC800979D43 /* PIETagsView.m */; };
+		F41BA0551C0E9E7300979D43 /* PIETagModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F41BA0541C0E9E7300979D43 /* PIETagModel.m */; };
 		F41FF0E31BDDFCE800566A12 /* JTSAnimatedGIFUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F41FF0D81BDDFCE800566A12 /* JTSAnimatedGIFUtility.m */; };
 		F41FF0E41BDDFCE800566A12 /* JTSImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F41FF0DA1BDDFCE800566A12 /* JTSImageInfo.m */; };
 		F41FF0E51BDDFCE800566A12 /* JTSImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F41FF0DC1BDDFCE800566A12 /* JTSImageViewController.m */; };
@@ -1015,6 +1018,12 @@
 		F41366941BBE73D900EE0C4E /* PIEReplyCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEReplyCollectionCell.xib; sourceTree = "<group>"; };
 		F4155D441BB3DA1300A0B045 /* PIEHighlightableLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEHighlightableLabel.h; sourceTree = "<group>"; };
 		F4155D451BB3DA1300A0B045 /* PIEHighlightableLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEHighlightableLabel.m; sourceTree = "<group>"; };
+		F41BA04D1C0E9A2800979D43 /* PIEButton_Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEButton_Tag.h; sourceTree = "<group>"; };
+		F41BA04E1C0E9A2800979D43 /* PIEButton_Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEButton_Tag.m; sourceTree = "<group>"; };
+		F41BA0501C0E9DC800979D43 /* PIETagsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIETagsView.h; sourceTree = "<group>"; };
+		F41BA0511C0E9DC800979D43 /* PIETagsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIETagsView.m; sourceTree = "<group>"; };
+		F41BA0531C0E9E7300979D43 /* PIETagModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIETagModel.h; sourceTree = "<group>"; };
+		F41BA0541C0E9E7300979D43 /* PIETagModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIETagModel.m; sourceTree = "<group>"; };
 		F41FF0D71BDDFCE800566A12 /* JTSAnimatedGIFUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSAnimatedGIFUtility.h; sourceTree = "<group>"; };
 		F41FF0D81BDDFCE800566A12 /* JTSAnimatedGIFUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSAnimatedGIFUtility.m; sourceTree = "<group>"; };
 		F41FF0D91BDDFCE800566A12 /* JTSImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSImageInfo.h; sourceTree = "<group>"; };
@@ -2112,6 +2121,7 @@
 		5CDB05EE1AA400410089121E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F41BA04C1C0E9A0F00979D43 /* tag */,
 				F44A527C1C0C332700707281 /* actionsheet */,
 				F4E72E701C070C460056791D /* customViewFromXib */,
 				F43159C71BB5547300DCA292 /* 2.1 */,
@@ -2674,6 +2684,19 @@
 				F402F1001BE89CB4004988B4 /* PIESearchManager.m */,
 			);
 			name = search;
+			sourceTree = "<group>";
+		};
+		F41BA04C1C0E9A0F00979D43 /* tag */ = {
+			isa = PBXGroup;
+			children = (
+				F41BA04D1C0E9A2800979D43 /* PIEButton_Tag.h */,
+				F41BA04E1C0E9A2800979D43 /* PIEButton_Tag.m */,
+				F41BA0501C0E9DC800979D43 /* PIETagsView.h */,
+				F41BA0511C0E9DC800979D43 /* PIETagsView.m */,
+				F41BA0531C0E9E7300979D43 /* PIETagModel.h */,
+				F41BA0541C0E9E7300979D43 /* PIETagModel.m */,
+			);
+			name = tag;
 			sourceTree = "<group>";
 		};
 		F41FF0D61BDDFCE800566A12 /* JTS */ = {
@@ -3985,6 +4008,7 @@
 				5C83A88A1AC66F910071A024 /* POPAnimationRuntime.mm in Sources */,
 				F4BBE77C1BBE420400003CDE /* PIEReplyCollectionCell.m in Sources */,
 				5CDB065D1AA45C4A0089121E /* PIECreateProfileView.m in Sources */,
+				F41BA0521C0E9DC800979D43 /* PIETagsView.m in Sources */,
 				5C0F04D21ADCA8E2002003AE /* PIEEntityFan.m in Sources */,
 				F499E4551BD0F69100E5F178 /* PIEEliteFollowReplyTableViewCell.m in Sources */,
 				F40207431BA7C4160007CE02 /* VVCustomPresentViewController.m in Sources */,
@@ -4019,6 +4043,7 @@
 				F47EF0871C031FF500BFB442 /* VVBlurPresenter.m in Sources */,
 				E99D2F571B1C7E8D000D7784 /* UIImage+Masking.m in Sources */,
 				F4F72C231BCD13D6002FF05A /* PIEShareView.m in Sources */,
+				F41BA0551C0E9E7300979D43 /* PIETagModel.m in Sources */,
 				F43930411BE4BD75006C9437 /* MRStopButton.m in Sources */,
 				F47205571BABFDFF00E0ADA0 /* PIEDoneCollectionViewCell.m in Sources */,
 				5C83A8871AC66F910071A024 /* POPAnimation.mm in Sources */,
@@ -4120,6 +4145,7 @@
 				E9FBCD2C1B69F92D00BF7096 /* DDLoginBaseVC.m in Sources */,
 				F4E5F5FD1BD9D2E100AB8B31 /* AFURLSessionManager.m in Sources */,
 				E95691AD1B22E88300DA84BB /* MTLJSONAdapter.m in Sources */,
+				F41BA04F1C0E9A2800979D43 /* PIEButton_Tag.m in Sources */,
 				E95691AB1B22E88300DA84BB /* EXTScope.m in Sources */,
 				F46117DA1BAD1101001A6F1A /* IQUIWindow+Hierarchy.m in Sources */,
 				E95691B31B22E88300DA84BB /* NSArray+MTLManipulationAdditions.m in Sources */,
