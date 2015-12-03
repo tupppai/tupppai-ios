@@ -33,16 +33,15 @@
     self.title = @"收到的赞";
     _source = [NSMutableArray array];
     _canRefreshFooter = YES;
-    self.view = self.tableView;
     _isfirstLoading = YES;
+//    self.edgesForExtendedLayout = UIRectEdgeNone;
+    
+//    self.view = self.tableView;
+    [self.view addSubview:self.tableView];
     [self.tableView.mj_header beginRefreshing];
-    self.tableView.emptyDataSetDelegate = self;
-    self.tableView.emptyDataSetSource = self;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    self.tableView.separatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
-    self.tableView.separatorInset = UIEdgeInsetsMake(0, 50, 0, 10);
 
 }
+
 
 #pragma mark - GetDataSource
 - (void)getDataSource {
@@ -107,11 +106,15 @@
 }
 -(PIERefreshTableView *)tableView {
     if (!_tableView) {
-        _tableView = [PIERefreshTableView new];
+        _tableView = [[PIERefreshTableView alloc]initWithFrame:self.view.bounds];
         _tableView.dataSource = self;
         _tableView.delegate = self;
         _tableView.psDelegate = self;
-        
+        _tableView.emptyDataSetDelegate = self;
+        _tableView.emptyDataSetSource = self;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        _tableView.separatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
+        _tableView.separatorInset = UIEdgeInsetsMake(0, 50, 0, 10);
         UITapGestureRecognizer* tapGes = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnTableView:)];
         [_tableView addGestureRecognizer:tapGes];
         

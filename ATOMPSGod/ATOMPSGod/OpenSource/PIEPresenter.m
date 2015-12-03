@@ -21,13 +21,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import "VVPresenter.h"
-#import "VVTransitioning.h"
+#import "PIEPresenter.h"
+#import "PIETransitioning.h"
 
-@interface VVPresenter ()
+@interface PIEPresenter ()
 @end
 
-@implementation VVPresenter
+@implementation PIEPresenter
 
 - (instancetype)init {
     self = [super init];
@@ -41,7 +41,7 @@
                                                                  presentingController:(UIViewController *)presenting
                                                                      sourceController:(UIViewController *)source {
     
-    VVTransitioning *transition = [VVTransitioning new];
+    PIETransitioning *transition = [PIETransitioning new];
     transition.isPresentation = YES;
     return transition;
     
@@ -49,7 +49,7 @@
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
     
-    VVTransitioning *transition = [VVTransitioning new];
+    PIETransitioning *transition = [PIETransitioning new];
     transition.isPresentation = NO;
     return transition;
 }

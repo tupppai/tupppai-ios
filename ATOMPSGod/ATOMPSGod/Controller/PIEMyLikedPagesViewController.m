@@ -58,9 +58,7 @@
         [_collectionView.mj_footer endRefreshing];
     }
 }
--(BOOL)prefersStatusBarHidden {
-    return YES;
-}
+
 
 
 #pragma mark - GetDataSource

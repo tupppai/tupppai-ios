@@ -50,7 +50,7 @@
     
     _areaView = [UIView new];
     [self addSubview:_areaView];
-    
+    _areaView.hidden = YES;
     
     
     [_topView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -117,15 +117,15 @@
         make.size.mas_equalTo(CGSizeMake(11, 24));
     }];
     
-    UIView* line = [UIView new];
-    line.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
-    [self addSubview:line];
-    [line mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.areaView.mas_bottom).with.offset(2);
-        make.centerX.equalTo(_areaView);
-        make.width.equalTo(self.areaView);
-        make.height.equalTo(@1);
-    }];
+//    UIView* line = [UIView new];
+//    line.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
+//    [self addSubview:line];
+//    [line mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.areaView.mas_bottom).with.offset(2);
+//        make.centerX.equalTo(_areaView);
+//        make.width.equalTo(self.areaView);
+//        make.height.equalTo(@1);
+//    }];
 }
 
 - (void)createProtocolSubView {
@@ -262,7 +262,7 @@
     WS(ws);
     [self.topView addSubview:self.userHeaderButton];
     [self.topView addSubview:self.sexSegment];
-    
+//    self.sexSegment.hidden = YES;
     [_userHeaderButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
         make.top.equalTo(ws.topView.mas_top).with.offset(kPadding30);

@@ -50,9 +50,7 @@
     [super viewDidDisappear:animated];
     self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
 }
--(BOOL)prefersStatusBarHidden {
-    return YES;
-}
+
 - (void)initData {
     _currentPage = 1;
     _canRefreshFooter = YES;

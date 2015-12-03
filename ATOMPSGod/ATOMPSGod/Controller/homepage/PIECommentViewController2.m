@@ -84,8 +84,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
-//    self.edgesForExtendedLayout = UIRectEdgeAll;
     _isFirstLoading = YES;
     [self setupNavBar];
     [self configTableView];
@@ -98,9 +96,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     }
 }
 
--(BOOL)prefersStatusBarHidden {
-    return YES;
-}
 - (void)setupNavBar {
     UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
     buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -136,13 +131,15 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
                                                   forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     self.navigationController.navigationBar.translucent = YES;
-    self.navigationController.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.navigationBar.backgroundColor = [UIColor colorWithHex:0xffffff andAlpha:0.5];
+
         [MobClick beginLogPageView:@"进入浏览图片页"];
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
-//    self.navigationController.hidesBarsOnSwipe = NO;
+    [self.navigationController.navigationBar setBackgroundImage:nil
+                                                  forBarMetrics:UIBarMetricsDefault];
+    
     [super viewWillDisappear:animated];
     //    [MobClick endLogPageView:@"离开浏览图片页"];
 

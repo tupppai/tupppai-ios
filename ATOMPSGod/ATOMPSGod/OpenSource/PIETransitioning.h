@@ -1,5 +1,5 @@
 //
-//  VVBlurPresenter.h
+//  VVChromeTransitioner.h
 //
 //  Copyright (c) 2015 Wei Wang (http://onevcat.com)
 //
@@ -23,5 +23,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface VVPresenter : NSObject <UIViewControllerTransitioningDelegate>
+@interface PIETransitioning : NSObject <UIViewControllerAnimatedTransitioning>
+@property (nonatomic, assign) BOOL isPresentation;
 @end

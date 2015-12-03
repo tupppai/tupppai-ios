@@ -9,6 +9,7 @@
 //#import "DDBaseVC.h"
 #import "iCarousel.h"
 #import "VVBlurViewController.h"
-@interface PIECarouselViewController2 : DDBaseVC<iCarouselDataSource, iCarouselDelegate>
+#import "PIECustomPresentViewController.h"
+@interface PIECarouselViewController2 : PIECustomPresentViewController<iCarouselDataSource, iCarouselDelegate>
 @property (nonatomic, strong) PIEPageVM *pageVM;
 @end

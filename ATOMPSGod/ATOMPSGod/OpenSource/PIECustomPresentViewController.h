@@ -23,5 +23,5 @@
 
 #import <UIKit/UIKit.h>
 
-@interface VVCustomPresentViewController : UIViewController
+@interface PIECustomPresentViewController : UIViewController
 @end

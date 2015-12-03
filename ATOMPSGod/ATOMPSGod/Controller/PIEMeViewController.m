@@ -103,13 +103,15 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 //
-//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
-//                                                  forBarMetrics:UIBarMetricsDefault];
-//    self.navigationController.navigationBar.shadowImage = [UIImage new];
-//    self.navigationController.navigationBar.translucent = YES;
-//    self.navigationController.view.backgroundColor = [UIColor clearColor];
-//    self.edgesForExtendedLayout = UIRectEdgeAll;
-//    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+    
+    self.edgesForExtendedLayout = UIRectEdgeAll;
+
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
+                                                  forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.navigationController.navigationBar.translucent = YES;
+    self.navigationController.view.backgroundColor = [UIColor clearColor];
+    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
     
     [self updateNoticationStatus];
     [MobClick beginLogPageView:@"进入我的"];
@@ -117,8 +119,8 @@
 }
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-//    [self.navigationController.navigationBar setBackgroundImage:nil
-//                                                  forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setBackgroundImage:nil
+                                                  forBarMetrics:UIBarMetricsDefault];
     [MobClick endLogPageView:@"离开我的"];
 
 }

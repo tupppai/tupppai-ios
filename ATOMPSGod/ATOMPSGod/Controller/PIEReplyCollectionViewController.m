@@ -24,6 +24,9 @@
 
 @implementation PIEReplyCollectionViewController
 
+-(BOOL)hidesBottomBarWhenPushed {
+    return YES;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"其它作品";

@@ -449,9 +449,13 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     } else {
         self.title = @"全部评论";
     }
-    
 }
 
+
+-(void)setVm:(PIEPageVM *)vm {
+    _vm = vm;
+    NSLog(@"vm %zd %zd",vm.type,vm.ID);
+}
 - (void)resizeHeaderView {
     UIView *header = self.tableView.tableHeaderView;
     [header setNeedsLayout];

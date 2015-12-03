@@ -23,7 +23,6 @@
 #import "UITableView+FDTemplateLayoutCell.h"
 @interface PIENotificationViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate>
 @property (nonatomic, strong) NSMutableArray *source;
-//@property (nonatomic, strong) PIERefreshTableView *tableView;
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, strong) PIENotificationVM* selectedVM;
@@ -38,7 +37,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.navigationController.hidesBarsOnSwipe = YES;
+//    self.navigationController.hidesBarsOnSwipe = YES;
 }
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -46,8 +45,6 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-
     
     self.title = @"我的消息";
     _source = [NSMutableArray array];
@@ -80,7 +77,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    self.navigationController.hidesBarsOnSwipe = NO;
+//    self.navigationController.hidesBarsOnSwipe = NO;
     self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
 
     [[NSUserDefaults standardUserDefaults]setObject:@(NO) forKey:@"NotificationNew"];

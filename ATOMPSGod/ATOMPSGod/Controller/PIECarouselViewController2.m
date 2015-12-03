@@ -119,13 +119,13 @@ CGFloat startPanLocationY;
 -(iCarousel *)carousel {
     if (!_carousel) {
         _carousel = [[iCarousel alloc]initWithFrame:self.view.bounds];
-        _carousel.type = iCarouselTypeCoverFlow2;
+        _carousel.type = iCarouselTypeLinear;
         _carousel.backgroundColor = [UIColor clearColor];
         _carousel.delegate = self;
         _carousel.dataSource = self;
         _carousel.pagingEnabled = YES;
         _carousel.bounces = YES;
-        _carousel.bounceDistance = 0.21;
+        _carousel.bounceDistance = 0.11;
     }
     return _carousel;
 }
@@ -167,11 +167,12 @@ CGFloat startPanLocationY;
 
 - (UIView *)carousel:(__unused iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
 {
-
+    NSLog(@"viewForItemAtIndex");
+    
     if (_dataSource.count > index) {
-        if (view == nil)
+        if (view == nil || view.tag != index)
         {
-            
+            view.tag = index;
             CGFloat scale_h = (414-40)/414.0;
             CGFloat scale_v = (736-94)/736.0;
             
@@ -183,7 +184,7 @@ CGFloat startPanLocationY;
             
             view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, width, self.view.bounds.size.height)];
             view.backgroundColor = [UIColor clearColor];
-
+        
             PIECarousel_ItemView* itemView = [[PIECarousel_ItemView alloc]initWithFrame:CGRectMake(0, margin_v, width, view.frame.size.height)];
             itemView.backgroundColor = [UIColor whiteColor];
             itemView.layer.cornerRadius = 10;
@@ -308,7 +309,7 @@ CGFloat startPanLocationY;
             [self.dataSource removeAllObjects];
             [self.dataSource addObjectsFromArray:askArray];
             [self.dataSource addObjectsFromArray: replyArray];
-            [_carousel reloadData];
+//            [_carousel reloadData];
             [self reorderSourceAndScroll];
         
     }];
@@ -317,30 +318,24 @@ CGFloat startPanLocationY;
 
 - (void)flyCurrentItemViewWithDirection:(BOOL)up {
     
-//    if (up && self.carousel.currentItemView.tag!=1) {
-//        CGRect frame =  self.carousel.currentItemView.frame;
-//        frame.origin.y = frame.origin.y - 10;
-//        self.carousel.currentItemView.tag = 1;
-//
-//        [UIView animateWithDuration:0.3 animations:^{
-//            self.carousel.currentItemView.frame = frame;
-//        }completion:^(BOOL finished) {
-//            if (finished) {
-//            }
-//        }];
-//    } else if (!up && self.carousel.currentItemView.tag!=0) {
-//        CGRect frame =  self.carousel.currentItemView.frame;
-//        frame.origin.y = frame.origin.y + 10;
-//        self.carousel.currentItemView.tag = 0;
-//        
-//        [UIView animateWithDuration:0.2 animations:^{
-//            self.carousel.currentItemView.frame = frame;
-//        }completion:^(BOOL finished) {
-//            if (finished) {
-//            }
-//        }];
-//    
-//    }
+    if (up && self.carousel.currentItemView.tag!=1) {
+        CGRect frame =  self.carousel.currentItemView.frame;
+        frame.origin.y = frame.origin.y - 10;
+        self.carousel.currentItemView.tag = 1;
+
+        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionCurveEaseIn animations:^{
+            self.carousel.currentItemView.frame = frame;
+        } completion:nil];
+
+    } else if (!up && self.carousel.currentItemView.tag!=0) {
+        CGRect frame =  self.carousel.currentItemView.frame;
+        frame.origin.y = frame.origin.y + 10;
+        self.carousel.currentItemView.tag = 0;
+        
+        [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+            self.carousel.currentItemView.frame = frame;
+        } completion:nil];
+    }
 }
 - (void)reorderSourceAndScroll {
     //初始化，把传进来的vm重组，放在原图的下一位，被滚动到此位置。
@@ -356,12 +351,12 @@ CGFloat startPanLocationY;
                 if (vmToCheck.type == PIEPageTypeAsk) {
                     [_dataSource insertObject:vm atIndex:2];
                     [_carousel reloadData];
-                    [_carousel scrollToItemAtIndex:2 duration:0];
+                    [_carousel scrollToItemAtIndex:2 animated:NO];
                 }
                 else {
                     [_dataSource insertObject:vm atIndex:1];
                     [_carousel reloadData];
-                    [_carousel scrollToItemAtIndex:1 duration:0];
+                    [_carousel scrollToItemAtIndex:1 animated:NO];
                 }
                 break;
             }
@@ -374,7 +369,7 @@ CGFloat startPanLocationY;
     }
     if (!shouldScroll) {
         [_carousel reloadData];
-        [_carousel scrollToItemAtIndex:0 duration:0];
+//        [_carousel scrollToItemAtIndex:0 duration:0];
 
 //        [self updateUIWithIndex:0];
     }

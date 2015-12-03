@@ -21,14 +21,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import "VVCustomPresentViewController.h"
-#import "VVPresenter.h"
+#import "PIECustomPresentViewController.h"
+#import "PIEPresenter.h"
 
-@interface VVCustomPresentViewController ()
-@property (nonatomic, strong) VVPresenter *presenter;
+@interface PIECustomPresentViewController ()
+@property (nonatomic, strong) PIEPresenter *presenter;
 @end
 
-@implementation VVCustomPresentViewController
+@implementation PIECustomPresentViewController
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
@@ -49,7 +49,7 @@
 - (void)vv_commonSetup {
     self.modalPresentationStyle = UIModalPresentationCustom;
     
-    _presenter = [[VVPresenter alloc] init];
+    _presenter = [[PIEPresenter alloc] init];
     self.transitioningDelegate = _presenter;
 }
 

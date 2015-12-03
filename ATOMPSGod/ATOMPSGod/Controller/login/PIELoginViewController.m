@@ -50,6 +50,11 @@
         make.height.equalTo(@0.5);
     }];
     
+    _phoneTextfield.font = [UIFont lightTupaiFontOfSize:15];
+    _passwordTextfield.font = [UIFont lightTupaiFontOfSize:15];
+    _loginLabel.font = [UIFont lightTupaiFontOfSize:17];
+    _forgetLabel.font = [UIFont lightTupaiFontOfSize:11];
+    
     _socialView1.userInteractionEnabled = YES;
     _socialView2.userInteractionEnabled = YES;
     _socialView3.userInteractionEnabled = YES;
