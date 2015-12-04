@@ -16,7 +16,7 @@
 #import "PIECarouselViewController.h"
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
-#import "UITableView+FDTemplateLayoutCell.h"
+//#import "UITableView+FDTemplateLayoutCell.h"
 @interface PIEToHelpViewController () <UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,QBImagePickerControllerDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (nonatomic, strong) NSMutableArray *sourceToHelp;
 @property (nonatomic, assign) NSInteger currentIndex_ToHelp;
@@ -48,6 +48,8 @@
     _toHelpTableView.psDelegate = self;
     _toHelpTableView.separatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
     _toHelpTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    _toHelpTableView.estimatedRowHeight = 100;
+    _toHelpTableView.rowHeight = UITableViewAutomaticDimension;
     self.view = _toHelpTableView;
     UINib* nib = [UINib nibWithNibName:@"PIEToHelpTableViewCell2" bundle:nil];
     [_toHelpTableView registerNib:nib forCellReuseIdentifier:@"PIEToHelpTableViewCell2"];
@@ -229,10 +231,11 @@
 
 #pragma mark - UITableViewDelegate
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [tableView fd_heightForCellWithIdentifier:@"PIEToHelpTableViewCell2"  cacheByIndexPath:indexPath configuration:^(PIEToHelpTableViewCell2 *cell) {
-        [cell injectSource:[_sourceToHelp objectAtIndex:indexPath.row]];
-    }];}
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    return [tableView fd_heightForCellWithIdentifier:@"PIEToHelpTableViewCell2"  cacheByIndexPath:indexPath configuration:^(PIEToHelpTableViewCell2 *cell) {
+//        [cell injectSource:[_sourceToHelp objectAtIndex:indexPath.row]];
+//    }];
+//}
 
 
 #pragma mark - DZNEmptyDataSetSource & delegate

@@ -112,13 +112,18 @@
 //    self.window.rootViewController = self.baseNav;
 //            [self.window makeKeyAndVisible];
 //
+
     [DDUserManager fetchUserInDBToCurrentUser:^(BOOL success) {
         if (success) {
             self.window.rootViewController = self.mainTabBarController;
         } else {
-            if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
+            
+            NSNumber *version =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+            NSString* launchKey = [NSString stringWithFormat:@"HasLaunchedOnce%@",version];
+            
+            if (![[NSUserDefaults standardUserDefaults] boolForKey:launchKey])
             {
-                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:launchKey];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 DDIntroVC* vc = [DDIntroVC new];
                 self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:vc];

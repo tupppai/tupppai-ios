@@ -20,7 +20,7 @@
 #import "PIEFriendViewController.h"
 #import "PIECommentViewController.h"
 #import "PIECommentManager.h"
-#import "UITableView+FDTemplateLayoutCell.h"
+//#import "UITableView+FDTemplateLayoutCell.h"
 @interface PIENotificationViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate>
 @property (nonatomic, strong) NSMutableArray *source;
 @property (nonatomic, assign) NSInteger currentIndex;
@@ -201,6 +201,8 @@
     self.tableView.tableFooterView = [UIView new];
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.showsHorizontalScrollIndicator = NO;
+    self.tableView.estimatedRowHeight = 100;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
     
 
 }
@@ -405,9 +407,7 @@
         PIENotificationVM* vm = [_source objectAtIndex:indexPath.row];
         switch (vm.type) {
             case PIENotificationTypeComment:
-                return [tableView fd_heightForCellWithIdentifier:@"PIENotificationCommentTableViewCell"  cacheByIndexPath:indexPath configuration:^(PIENotificationCommentTableViewCell *cell) {
-                    [cell injectSauce:vm];
-                }];
+                return UITableViewAutomaticDimension;
                 break;
             case PIENotificationTypeFollow:
                 return 68;

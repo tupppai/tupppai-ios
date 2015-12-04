@@ -12,13 +12,13 @@
 #import "HMSegmentedControl.h"
 #import "FXBlurView.h"
 #import "PIECommentViewController.h"
-#import "JGActionSheet.h"
+//#import "JGActionSheet.h"
 #import "PIECarousel_ItemView.h"
 #import "DDNavigationController.h"
 #import "PIECommentViewController2.h"
+#import "PIEActionSheet_PS.h"
 
-
-@interface PIECarouselViewController2 ()<JGActionSheetDelegate>
+@interface PIECarouselViewController2 ()
 @property (nonatomic, strong)  iCarousel *carousel;
 
 
@@ -27,7 +27,7 @@
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, strong) PIEPageVM* currentVM;
-@property (nonatomic, strong)  JGActionSheet * psActionSheet;
+@property (nonatomic, strong)  PIEActionSheet_PS * psActionSheet;
 @property (nonatomic, assign)  NSInteger askCount;
 @property (nonatomic, assign)  NSInteger replyCount;
 @property (weak, nonatomic) IBOutlet UIView *bottomContainerView;
@@ -167,8 +167,7 @@ CGFloat startPanLocationY;
 
 - (UIView *)carousel:(__unused iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
 {
-    NSLog(@"viewForItemAtIndex");
-    
+
     if (_dataSource.count > index) {
         if (view == nil || view.tag != index)
         {
@@ -378,65 +377,11 @@ CGFloat startPanLocationY;
 
 
 
-- (JGActionSheet *)psActionSheet {
-    WS(ws);
+- (PIEActionSheet_PS *)psActionSheet {
     if (!_psActionSheet) {
-        _psActionSheet = [JGActionSheet new];
-        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"下载图片帮P", @"添加至进行中",@"取消"] buttonStyle:JGActionSheetButtonStyleDefault];
-        [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:2];
-        NSArray *sections = @[section];
-        _psActionSheet = [JGActionSheet actionSheetWithSections:sections];
-        _psActionSheet.delegate = self;
-        [_psActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
-            [sheet dismissAnimated:YES];
-        }];
-        [_psActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
-            switch (indexPath.row) {
-                case 0:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    [ws help:YES];
-                    break;
-                case 1:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    [ws help:NO];
-                    break;
-                case 2:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    break;
-                default:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    break;
-            }
-        }];
+        _psActionSheet = [PIEActionSheet_PS new];
+        _psActionSheet.vm = _pageVM;
     }
     return _psActionSheet;
-}
-
-- (void)help:(BOOL)shouldDownload {
-    NSMutableDictionary* param = [NSMutableDictionary new];
-    [param setObject:@"ask" forKey:@"type"];
-    [param setObject:@(_currentVM.askID) forKey:@"target"];
-    
-    [DDService signProceeding:param withBlock:^(NSString *imageUrl) {
-        if (imageUrl != nil) {
-            if (shouldDownload) {
-                [DDService downloadImage:imageUrl withBlock:^(UIImage *image) {
-
-                    UIImageWriteToSavedPhotosAlbum(image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
-                }];
-            }
-            else {
-                [Hud customText:@"添加成功\n在“进行中”等你下载咯!" inView:self.view];
-            }
-        }
-    }];
-}
-
-- (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error
-  contextInfo: (void *) contextInfo {
-    if(error != NULL){
-    } else {
-        [Hud customText:@"下载成功\n我猜你会用美图秀秀来P?" inView:self.view];
-    }
 }
 @end

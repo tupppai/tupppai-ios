@@ -9,7 +9,7 @@
 #import "PIEFriendAskViewController.h"
 #import "DDOtherUserManager.h"
 #import "PIERefreshTableView.h"
-#import "UITableView+FDTemplateLayoutCell.h"
+//#import "UITableView+FDTemplateLayoutCell.h"
 #import "PIEFriendAskTableViewCell.h"
 #import "DDPageManager.h"
 

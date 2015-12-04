@@ -24,7 +24,7 @@
 #import "AppDelegate.h"
 #import "PIEProceedingShareView.h"
 #import "PIEProceedingAskTableViewCell_NoGap.h"
-#import "UITableView+FDTemplateLayoutCell.h"
+//#import "UITableView+FDTemplateLayoutCell.h"
 
 #define MyAskCellWidth (SCREEN_WIDTH - 20) / 2.0
 
@@ -68,10 +68,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     [self configData];
     [self createNavBar];
     [self configSubviews];
-    
     [self getSourceIfEmpty_ask];
 }
 
@@ -461,23 +461,25 @@
         } else {
             return 175;
         }
+    } else {
+        return UITableViewAutomaticDimension;
     }
-    else if (tableView == _sv.toHelpTableView) {
-        return [tableView fd_heightForCellWithIdentifier:@"PIEProceedingToHelpTableViewCell"  cacheByIndexPath:indexPath configuration:^(PIEProceedingToHelpTableViewCell *cell) {
-            [cell injectSource:[_sourceToHelp objectAtIndex:indexPath.row]];
-        }];
-//        PIEProceedingToHelpTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-//        UITextView* textV = [UITextView new];
-//        textV.text = ((PIEPageVM*)[_sourceToHelp objectAtIndex:indexPath.row]).content;
-//        CGSize size = [textV sizeThatFits:CGSizeMake(200, CGFLOAT_MAX)];
-//        NSLog(@"_contentTextView width %f",cell.contentTextView.frame.size.width);
-//        NSLog(@"_contentTextView height %f",size.height);
-//        return size.height + 72;
-
-    }
-    else {
-        return 0;
-    }
+//    else if (tableView == _sv.toHelpTableView) {
+////        return [tableView fd_heightForCellWithIdentifier:@"PIEProceedingToHelpTableViewCell"  cacheByIndexPath:indexPath configuration:^(PIEProceedingToHelpTableViewCell *cell) {
+////            [cell injectSource:[_sourceToHelp objectAtIndex:indexPath.row]];
+////        }];
+////        PIEProceedingToHelpTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+////        UITextView* textV = [UITextView new];
+////        textV.text = ((PIEPageVM*)[_sourceToHelp objectAtIndex:indexPath.row]).content;
+////        CGSize size = [textV sizeThatFits:CGSizeMake(200, CGFLOAT_MAX)];
+////        NSLog(@"_contentTextView width %f",cell.contentTextView.frame.size.width);
+////        NSLog(@"_contentTextView height %f",size.height);
+////        return size.height + 72;
+//        
+//    }
+//    else {
+//        return 0;
+//    }
 }
 
 #pragma mark - UICollectionViewDataSource

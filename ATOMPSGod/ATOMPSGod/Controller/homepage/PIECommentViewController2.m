@@ -30,7 +30,7 @@
 
 static NSString *MessengerCellIdentifier = @"MessengerCell";
 
-@interface PIECommentViewController2 ()<DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,PIEShareViewDelegate,JGActionSheetDelegate,JTSImageViewControllerInteractionsDelegate>
+@interface PIECommentViewController2 ()<DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,PIEShareViewDelegate,JTSImageViewControllerInteractionsDelegate>
 
 @property (nonatomic, strong) NSMutableArray *source_hotComment;
 @property (nonatomic, strong) KVCMutableArray *source_newComment;

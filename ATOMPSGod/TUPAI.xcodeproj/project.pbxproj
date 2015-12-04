@@ -146,7 +146,6 @@
 		E93D237E1B3CFA4D0081F632 /* DDShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D237D1B3CFA4D0081F632 /* DDShareManager.m */; };
 		E93D23811B3D065C0081F632 /* ATOMShare.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D23801B3D065C0081F632 /* ATOMShare.m */; };
 		E93D23871B3FA6FB0081F632 /* DDMySettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D23861B3FA6FB0081F632 /* DDMySettingsManager.m */; };
-		E93ED5261B7F25F00035630B /* UITableView+FDTemplateLayoutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E93ED5251B7F25EF0035630B /* UITableView+FDTemplateLayoutCell.m */; };
 		E94289741B5B32A200ED26E4 /* NotificationBackgroundError.png in Resources */ = {isa = PBXBuildFile; fileRef = E942895A1B5B32A200ED26E4 /* NotificationBackgroundError.png */; };
 		E94289751B5B32A200ED26E4 /* NotificationBackgroundError@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E942895B1B5B32A200ED26E4 /* NotificationBackgroundError@2x.png */; };
 		E94289761B5B32A200ED26E4 /* NotificationBackgroundErrorIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = E942895C1B5B32A200ED26E4 /* NotificationBackgroundErrorIcon.png */; };
@@ -814,8 +813,6 @@
 		E93D23801B3D065C0081F632 /* ATOMShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMShare.m; sourceTree = "<group>"; };
 		E93D23851B3FA6FB0081F632 /* DDMySettingsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMySettingsManager.h; sourceTree = "<group>"; };
 		E93D23861B3FA6FB0081F632 /* DDMySettingsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMySettingsManager.m; sourceTree = "<group>"; };
-		E93ED5241B7F25EF0035630B /* UITableView+FDTemplateLayoutCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+FDTemplateLayoutCell.h"; sourceTree = "<group>"; };
-		E93ED5251B7F25EF0035630B /* UITableView+FDTemplateLayoutCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+FDTemplateLayoutCell.m"; sourceTree = "<group>"; };
 		E94289591B5B32A200ED26E4 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		E942895A1B5B32A200ED26E4 /* NotificationBackgroundError.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NotificationBackgroundError.png; sourceTree = "<group>"; };
 		E942895B1B5B32A200ED26E4 /* NotificationBackgroundError@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationBackgroundError@2x.png"; sourceTree = "<group>"; };
@@ -2063,7 +2060,6 @@
 				3BD87CFA1B9E8558003B2310 /* iCarousel */,
 				E9F890821B86C4AB0057ECBF /* fmdb */,
 				E9ED35831B80F62F00B93BE5 /* NODataSet */,
-				E93ED5231B7F25EF0035630B /* FDAutoHeightCell */,
 				E9D7390A1B79F200008CE562 /* BadgeView */,
 				E9FF94A91B7476FC00F06819 /* HMSegmentedControl */,
 				E9B1B3B11B61FF5C00842E05 /* UMessage_Sdk_1.1.0 */,
@@ -2253,15 +2249,6 @@
 				E93D23861B3FA6FB0081F632 /* DDMySettingsManager.m */,
 			);
 			name = settings;
-			sourceTree = "<group>";
-		};
-		E93ED5231B7F25EF0035630B /* FDAutoHeightCell */ = {
-			isa = PBXGroup;
-			children = (
-				E93ED5241B7F25EF0035630B /* UITableView+FDTemplateLayoutCell.h */,
-				E93ED5251B7F25EF0035630B /* UITableView+FDTemplateLayoutCell.m */,
-			);
-			path = FDAutoHeightCell;
 			sourceTree = "<group>";
 		};
 		E94289571B5B32A200ED26E4 /* TSMessage */ = {
@@ -4162,7 +4149,6 @@
 				E94B03221B7C74E500863C6F /* PIECommentTextView.m in Sources */,
 				F4155D461BB3DA1300A0B045 /* PIEHighlightableLabel.m in Sources */,
 				F439303F1BE4BD75006C9437 /* MRProgressOverlayView.m in Sources */,
-				E93ED5261B7F25F00035630B /* UITableView+FDTemplateLayoutCell.m in Sources */,
 				F41BA0D51C0EDCE800979D43 /* UIView+MJExtension.m in Sources */,
 				E900919D1B71E04E004623E4 /* DDInputAuthcodePwdFPVC.m in Sources */,
 				5C6CEF2A1AF18BA800F06213 /* ATOMConstant.m in Sources */,
