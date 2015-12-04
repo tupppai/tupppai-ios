@@ -14,6 +14,9 @@
 #import "PIEMeViewController.h"
 #import "PIECameraViewController.h"
 #import "PIEProceedingViewController.h"
+#import "AppDelegate.h"
+#import "DDLoginNavigationController.h"
+#import "ATOMUserDAO.h"
 
 @interface PIETabBarController ()<UITabBarControllerDelegate>
 @property (nonatomic, strong) DDNavigationController *navigation_new;
@@ -46,9 +49,32 @@
     [[UITabBarItem appearance] setTitleTextAttributes:@{   NSForegroundColorAttributeName: [UIColor blackColor],                                                           NSFontAttributeName: [UIFont systemFontOfSize:10]
                                                            }
                                              forState:UIControlStateSelected];
-
     self.delegate = self;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NetworkSignOutRET) name:@"NetworkSignOutCall" object:nil];
+
 }
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkSignOutCall"object:nil];
+}
+-(void) NetworkSignOutRET {
+    SIAlertView *alertView = [KShareManager NetworkErrorOccurredAlertView];
+    [alertView addButtonWithTitle:@"好的"
+                             type:SIAlertViewButtonTypeDefault
+                          handler:^(SIAlertView *alert) {
+                              //清空数据库用户表
+                              [ATOMUserDAO clearUsers];
+                              //清空当前用户
+                              [[DDUserManager currentUser]wipe];
+                              self.navigationController.viewControllers = @[];
+                              PIELaunchViewController *lvc = [[PIELaunchViewController alloc] init];
+                              [AppDelegate APP].window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
+                          }];
+    alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
+    [alertView show];
+}
+
+
 
 - (void)configureTabBarController {
     PIENewViewController *homePageViewController = [PIENewViewController new];
