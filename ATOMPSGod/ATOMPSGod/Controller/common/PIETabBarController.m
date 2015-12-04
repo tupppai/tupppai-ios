@@ -7,7 +7,7 @@
 //
 
 #import "PIETabBarController.h"
-#import "PIENewViewController.h"
+#import "PIEChannelViewController.h"
 #import "PIEEliteViewController.h"
 #import "DDNavigationController.h"
 #import "DDService.h"
@@ -77,16 +77,16 @@
 
 
 - (void)configureTabBarController {
-    PIENewViewController *homePageViewController = [PIENewViewController new];
+    PIEChannelViewController *channelVc = [PIEChannelViewController new];
     PIEEliteViewController *myAttentionViewController = [PIEEliteViewController new];
     PIEProceedingViewController *proceedingViewController = [PIEProceedingViewController new];
     PIEMeViewController *vc4 = (PIEMeViewController *)[[UIStoryboard storyboardWithName:@"Me" bundle:nil] instantiateViewControllerWithIdentifier: @"PIEME"];
     UIViewController* vc = [UIViewController new];
-    homePageViewController.title = @"最新";
+    channelVc.title = @"图派";
     myAttentionViewController.title = @"首页";
     proceedingViewController.title = @"进行中";
     vc4.title = @"我的";
-    _navigation_new = [[DDNavigationController alloc] initWithRootViewController:homePageViewController];
+    _navigation_new = [[DDNavigationController alloc] initWithRootViewController:channelVc];
     _navigation_elite = [[DDNavigationController alloc] initWithRootViewController:myAttentionViewController];
     _navigation_proceeding = [[DDNavigationController alloc] initWithRootViewController:proceedingViewController];
     _navigation_me = [[DDNavigationController alloc] initWithRootViewController:vc4];
@@ -124,7 +124,7 @@
 -(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
     if (viewController == _navigation_new) {
         if (_preNav == _navigation_new) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshNavigation_New" object:nil];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshNavigation_New" object:nil];
         }
     } else if (viewController == _navigation_elite) {
         if (_preNav == _navigation_elite) {

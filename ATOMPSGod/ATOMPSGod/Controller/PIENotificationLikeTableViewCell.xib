@@ -91,7 +91,7 @@
                 <outlet property="typeLabel" destination="vQK-oA-5Cd" id="oTH-dt-hNv"/>
                 <outlet property="usernameLabel" destination="Xc3-Oc-OxX" id="7yc-gD-tbH"/>
             </connections>
-            <point key="canvasLocation" x="501" y="-24.5"/>
+            <point key="canvasLocation" x="415" y="21.5"/>
         </tableViewCell>
     </objects>
     <resources>
