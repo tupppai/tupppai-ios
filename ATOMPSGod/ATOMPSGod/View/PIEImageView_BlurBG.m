@@ -42,10 +42,10 @@
         [self addSubview:self.imageView_blur];
         [self addSubview:self.imageView];
         [self.imageView_blur mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self).with.offset(1);
+            make.top.equalTo(self).with.offset(2);
             make.bottom.equalTo(self).with.offset(-1);
-            make.leading.equalTo(self);
-            make.trailing.equalTo(self);
+            make.leading.equalTo(self).with.offset(-1);
+            make.trailing.equalTo(self).with.offset(-1);
         }];
         [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self);
