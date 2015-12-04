@@ -30,8 +30,8 @@
     self.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT);
     self.showsVerticalScrollIndicator = NO;
     self.showsHorizontalScrollIndicator = NO;
-    self.contentSize = CGSizeMake(SCREEN_WIDTH * 3, 0);
-    self.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
+    self.contentSize = CGSizeMake(SCREEN_WIDTH * 2, 0);
+    self.contentOffset = CGPointMake(0, 0);
     self.pagingEnabled = YES;
     self.scrollsToTop = NO;
     self.backgroundColor = [UIColor groupTableViewBackgroundColor];
@@ -40,7 +40,7 @@
 
 -(PIERefreshTableView *)tableReply {
     if (!_tableReply) {
-        _tableReply = [[PIERefreshTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*2, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
+        _tableReply = [[PIERefreshTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*1, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
         _tableReply.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableReply.backgroundColor = [UIColor clearColor];
         _tableReply.showsVerticalScrollIndicator = NO;
@@ -54,6 +54,7 @@
         _tableActivity.backgroundColor = [UIColor clearColor];
         _tableActivity.showsVerticalScrollIndicator = NO;
         _tableActivity.tableHeaderView = self.tableheaderView_activity;
+        _tableActivity.hidden = YES;
     }
     return _tableActivity;
 }
@@ -64,7 +65,7 @@
         layout.sectionInset = UIEdgeInsetsMake(10, 6, 0, 6);
         layout.minimumColumnSpacing = 8;
         layout.minimumInteritemSpacing = 10;
-        _collectionViewAsk = [[PIERefreshCollectionView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT) collectionViewLayout:layout];
+        _collectionViewAsk = [[PIERefreshCollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT) collectionViewLayout:layout];
         _collectionViewAsk.toRefreshBottom = YES;
         _collectionViewAsk.backgroundColor = [UIColor clearColor];
         _collectionViewAsk.toRefreshTop = YES;
@@ -100,27 +101,19 @@
 
 - (void)toggleWithType:(PIENewScrollType)type {
     _type = type;
-    if (_type == PIENewScrollTypeActivity) {
-        _tableActivity.scrollsToTop = YES;
-        _collectionViewAsk.scrollsToTop = NO;
-        _tableReply.scrollsToTop = NO;
-        [UIView animateWithDuration:0.3 animations:^{
-            self.contentOffset = CGPointMake(0, 0);
-        }];
-    }
-    else if (_type == PIENewScrollTypeAsk) {
+   if (_type == PIENewScrollTypeAsk) {
         _tableActivity.scrollsToTop = NO;
         _collectionViewAsk.scrollsToTop = YES;
         _tableReply.scrollsToTop = NO;
         [UIView animateWithDuration:0.3 animations:^{
-            self.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
+            self.contentOffset = CGPointMake(0, 0);
         }];
     } else {
         _tableActivity.scrollsToTop = NO;
         _collectionViewAsk.scrollsToTop = NO;
         _tableReply.scrollsToTop = YES;
         [UIView animateWithDuration:0.3 animations:^{
-            self.contentOffset = CGPointMake(SCREEN_WIDTH*2, 0);
+            self.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
         }];
     }
 }

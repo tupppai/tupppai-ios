@@ -309,15 +309,11 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
         int currentPage = (_scrollView.contentOffset.x + CGWidth(_scrollView.frame) * 0.1) / CGWidth(_scrollView.frame);
         if (currentPage == 0) {
             [_segmentedControl setSelectedSegmentIndex:0 animated:YES];
-            _scrollView.type = PIENewScrollTypeActivity;
-            [self firstGetSourceIfEmpty_activity];
-        } else if (currentPage == 1) {
-            [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
             _scrollView.type = PIENewScrollTypeAsk;
             [self firstGetSourceIfEmpty_ask];
         }
-        else if (currentPage == 2) {
-            [_segmentedControl setSelectedSegmentIndex:2 animated:YES];
+        else if (currentPage == 1) {
+            [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
             _scrollView.type = PIENewScrollTypeReply;
             [self firstGetSourceIfEmpty_Reply];
         }
@@ -860,8 +856,8 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 - (HMSegmentedControl*)segmentedControl {
     WS(ws);
     if (!_segmentedControl) {
-        _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"活动",@"求P",@"作品"]];
-        _segmentedControl.frame = CGRectMake(0, 120, SCREEN_WIDTH-40, 45);
+        _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"求P",@"作品"]];
+        _segmentedControl.frame = CGRectMake(0, 120,200, 45);
         _segmentedControl.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor colorWithHex:0x000000 andAlpha:0.6], NSForegroundColorAttributeName, nil];
         _segmentedControl.selectedTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil];
         _segmentedControl.selectionIndicatorHeight = 4.0f;
@@ -870,15 +866,12 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
         _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
         _segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
         _segmentedControl.backgroundColor = [UIColor clearColor];
-        _segmentedControl.selectedSegmentIndex = 1;
+        _segmentedControl.selectedSegmentIndex = 0;
         [_segmentedControl setIndexChangeBlock:^(NSInteger index) {
-            if (index == 0) {
-                [ws.scrollView toggleWithType:PIENewScrollTypeActivity];
-                [ws firstGetSourceIfEmpty_activity];
-            } else             if (index == 1) {
+                  if (index == 0) {
                 [ws.scrollView toggleWithType:PIENewScrollTypeAsk];
                 [ws firstGetSourceIfEmpty_ask];
-            } else             if (index == 2) {
+            } else             if (index == 1) {
                 [ws.scrollView toggleWithType:PIENewScrollTypeReply];
                 [ws firstGetSourceIfEmpty_Reply];
             }
