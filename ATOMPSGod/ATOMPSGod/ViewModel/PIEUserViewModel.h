@@ -28,11 +28,11 @@
  *  用户唯一ID
  */
 @property (nonatomic, assign) NSInteger uid;
-@property (nonatomic, copy) NSString *mobile;
-@property (nonatomic, copy) NSString *password;
+@property (nonatomic, copy  ) NSString  *mobile;
+@property (nonatomic, copy  ) NSString  *password;
 @property (nonatomic, assign) NSInteger locationID;
-@property (nonatomic, copy) NSString *username;
-@property (nonatomic, copy) NSString *avatar;
+@property (nonatomic, copy  ) NSString  *username;
+@property (nonatomic, copy  ) NSString  *avatar;
 /**
  *  man:1 woman:0
  */
