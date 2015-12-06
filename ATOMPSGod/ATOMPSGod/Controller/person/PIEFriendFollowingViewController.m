@@ -56,10 +56,10 @@
 
 - (void)createUI {
     self.title = [NSString stringWithFormat:@"%@的关注", _userName];
-    _concernView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
+    _concernView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     self.view = _concernView;
     _tableView = [[PIERefreshFooterTableView alloc] initWithFrame:_concernView.bounds];
-    _tableView.backgroundColor = [UIColor colorWithHex:0xededed];
+    _tableView.backgroundColor = [UIColor whiteColor];
     _tableView.tableFooterView = [UIView new];
     [_concernView addSubview:_tableView];
     _tableView.dataSource = self;

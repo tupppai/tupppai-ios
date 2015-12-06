@@ -54,10 +54,10 @@
     self.title = [NSString stringWithFormat:@"%@的粉丝", _uid ? _userName : @"我"];
 }
 - (void) setupViews {
-    _myFansView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
+    _myFansView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     self.view = _myFansView;
     _tableView = [[PIERefreshFooterTableView alloc] initWithFrame:_myFansView.bounds];
-    _tableView.backgroundColor = [UIColor colorWithHex:0xededed];
+    _tableView.backgroundColor = [UIColor whiteColor];
     [_myFansView addSubview:_tableView];
     _tableView.delegate = self;
     _tableView.dataSource = self;
