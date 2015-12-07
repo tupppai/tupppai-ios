@@ -9,26 +9,26 @@
 #import <Foundation/Foundation.h>
 #import "PIENotificationEntity.h"
 typedef NS_ENUM(NSInteger, PIENotificationType) {
-    PIENotificationTypeSystem = 0,
+    PIENotificationTypeSystem  = 0,
     PIENotificationTypeComment = 1,
-    PIENotificationTypeReply = 2,
-    PIENotificationTypeFollow = 3,
-    PIENotificationTypeLike = 5,
+    PIENotificationTypeReply   = 2,
+    PIENotificationTypeFollow  = 3,
+    PIENotificationTypeLike    = 5,
 };
 @interface PIENotificationVM : NSObject
-@property (nonatomic, copy) NSString *avatarUrl;
+@property (nonatomic, copy  ) NSString  *avatarUrl;
 @property (nonatomic, assign) NSInteger commentId;
-@property (nonatomic, copy) NSString *content;
+@property (nonatomic, copy  ) NSString  *content;
 @property (nonatomic, assign) NSInteger ID;
-@property (nonatomic, copy) NSString *username;
-@property (nonatomic, copy) NSString *imageUrl;
+@property (nonatomic, copy  ) NSString  *username;
+@property (nonatomic, copy  ) NSString  *imageUrl;
 @property (nonatomic, assign) NSInteger senderID;
 @property (nonatomic, assign) NSInteger targetID;
 @property (nonatomic, assign) NSInteger targetType;
 @property (nonatomic, assign) NSInteger type;
 @property (nonatomic, assign) NSInteger askID;
 @property (nonatomic, assign) NSInteger replyID;
-@property (nonatomic, copy) NSString *time;
+@property (nonatomic, copy  ) NSString  *time;
 
 - (instancetype)initWithEntity:(PIENotificationEntity *)entity ;
 
