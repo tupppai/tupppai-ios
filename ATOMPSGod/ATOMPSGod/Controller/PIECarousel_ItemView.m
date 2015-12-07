@@ -50,7 +50,7 @@
         
         [self setupTableView];
         [self addEvent];
-
+        
     }
     return self;
 }
@@ -149,14 +149,17 @@
         [_textView_content mas_updateConstraints:^(MASConstraintMaker *make) {
             make.height.equalTo(@0).with.priorityMedium();
         }];
-    } else {
-        NSString * htmlString = vm.content;
-        NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
-        [attrStr addAttribute:NSFontAttributeName value:[UIFont lightTupaiFontOfSize:15] range:NSMakeRange(0, attrStr.length)];
-        [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0x000000 andAlpha:0.9] range:NSMakeRange(0, attrStr.length)];
-        _textView_content.attributedText = attrStr;
     }
-    
+//    else {
+//        NSString * htmlString = vm.content;
+//        NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSRTFTextDocumentType } documentAttributes:nil error:nil];
+//        [attrStr addAttribute:NSFontAttributeName value:[UIFont lightTupaiFontOfSize:15] range:NSMakeRange(0, attrStr.length)];
+//        [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0x000000 andAlpha:0.9] range:NSMakeRange(0, attrStr.length)];
+//        _textView_content.attributedText = attrStr;
+//    }
+    _textView_content.font = [UIFont lightTupaiFontOfSize:15];
+    _textView_content.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.9];
+    _textView_content.text = vm.content;
     [self getDataSource];
 
     

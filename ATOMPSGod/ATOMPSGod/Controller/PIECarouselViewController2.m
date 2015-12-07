@@ -18,6 +18,17 @@
 #import "PIECommentViewController2.h"
 #import "PIEActionSheet_PS.h"
 
+
+
+
+#define scale_h (414-40)/414.0
+#define scale_v (1334-168)/1334
+
+#define margin_v (SCREEN_HEIGHT - SCREEN_HEIGHT*scale_v)
+
+
+
+
 @interface PIECarouselViewController2 ()
 @property (nonatomic, strong)  iCarousel *carousel;
 
@@ -30,8 +41,8 @@
 @property (nonatomic, strong)  PIEActionSheet_PS * psActionSheet;
 @property (nonatomic, assign)  NSInteger askCount;
 @property (nonatomic, assign)  NSInteger replyCount;
-@property (weak, nonatomic) IBOutlet UIView *bottomContainerView;
-@property (weak, nonatomic) IBOutlet UIVisualEffectView *bottomDimmerView;
+//@property (weak, nonatomic) IBOutlet UIView *bottomContainerView;
+//@property (weak, nonatomic) IBOutlet UIVisualEffectView *bottomDimmerView;
 @property (nonatomic, assign) NSInteger previousCurrentIndex ;
 
 @end
@@ -86,39 +97,59 @@
     UISwipeGestureRecognizer *swipe2 = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture_SwipeDown:)];
     swipe2.direction =   UISwipeGestureRecognizerDirectionDown;
     [self.carousel addGestureRecognizer:swipe2];
-    
+    UITapGestureRecognizer* tapGes = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnSelf:)];
+    [self.view addGestureRecognizer:tapGes];
 //    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(pan:)];
 //    [self.carousel addGestureRecognizer:pan];
 }
 
+- (void) tapOnSelf:(UIGestureRecognizer*)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 CGFloat startPanLocationY;
 
-- (void)pan:(UIPanGestureRecognizer *)sender
-{
-    if ( sender.state == UIGestureRecognizerStateBegan) {
-        startPanLocationY = [sender locationInView:self.carousel].y;
-    }
-    
-    CGRect frame = self.carousel.currentItemView.frame;
-    frame.origin.y += [sender locationInView:self.carousel].y - startPanLocationY;
-    self.carousel.currentItemView.frame = frame;
-    startPanLocationY = [sender locationInView:self.view].y;
-}
+//- (void)pan:(UIPanGestureRecognizer *)sender
+//{
+//    if ( sender.state == UIGestureRecognizerStateBegan) {
+//        startPanLocationY = [sender locationInView:self.carousel].y;
+//    }
+//    NSLog(@"startPanLocationY%f, new y %f",startPanLocationY,[sender locationInView:self.carousel].y);
+//    CGRect frame = self.carousel.currentItemView.frame;
+//    frame.origin.y += [sender locationInView:self.carousel].y - startPanLocationY;
+//    self.carousel.currentItemView.frame = frame;
+//    startPanLocationY = [sender locationInView:self.carousel].y;
+//}
 
 
 - (void)handleGesture_SwipeUp:(id)sender {
-    PIECommentViewController2* vc = [PIECommentViewController2 new];
-    vc.vm = _currentVM;
-    [vc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
-    DDNavigationController* nav = [[DDNavigationController alloc]initWithRootViewController:vc];
-    [self presentViewController:nav animated:YES completion:nil];
+    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.9 initialSpringVelocity:0.5 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+        [self.carousel.currentItemView setTransform:CGAffineTransformMakeScale(1.1, 1.1)];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [self.carousel.currentItemView setTransform:CGAffineTransformIdentity];
+            PIECommentViewController2* vc = [PIECommentViewController2 new];
+            vc.vm = _currentVM;
+            DDNavigationController* nav = [[DDNavigationController alloc]initWithRootViewController:vc];
+            [self presentViewController:nav animated:NO completion:nil];
+        }
+    }];
+
 }
 - (void)handleGesture_SwipeDown:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [UIView animateWithDuration:0.8 delay:0 usingSpringWithDamping:1 initialSpringVelocity:1 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        CGRect frame = self.carousel.currentItemView.frame;
+        frame.origin.y += SCREEN_HEIGHT;
+        self.carousel.currentItemView.frame = frame;
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [self dismissViewControllerAnimated:NO completion:nil];
+        }
+    }];
 }
+
 -(iCarousel *)carousel {
     if (!_carousel) {
-        _carousel = [[iCarousel alloc]initWithFrame:self.view.bounds];
+        _carousel = [[iCarousel alloc]initWithFrame:CGRectMake(0, margin_v, self.view.frame.size.width, SCREEN_HEIGHT)];
         _carousel.type = iCarouselTypeLinear;
         _carousel.backgroundColor = [UIColor clearColor];
         _carousel.delegate = self;
@@ -172,19 +203,16 @@ CGFloat startPanLocationY;
         if (view == nil || view.tag != index)
         {
             view.tag = index;
-            CGFloat scale_h = (414-40)/414.0;
-            CGFloat scale_v = (736-94)/736.0;
-            
+
             CGFloat width  = SCREEN_WIDTH *scale_h;
-            CGFloat height = SCREEN_HEIGHT*scale_v;
-            
+//            CGFloat height = SCREEN_HEIGHT*scale_v;
 //            CGFloat margin_h = (SCREEN_WIDTH - width)/2.0;
-            CGFloat margin_v = (SCREEN_HEIGHT - height);
+//            CGFloat margin_v = (SCREEN_HEIGHT - height);
             
             view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, width, self.view.bounds.size.height)];
             view.backgroundColor = [UIColor clearColor];
         
-            PIECarousel_ItemView* itemView = [[PIECarousel_ItemView alloc]initWithFrame:CGRectMake(0, margin_v, width, view.frame.size.height)];
+            PIECarousel_ItemView* itemView = [[PIECarousel_ItemView alloc]initWithFrame:CGRectMake(0, 0, width, view.frame.size.height)];
             itemView.backgroundColor = [UIColor whiteColor];
             itemView.layer.cornerRadius = 10;
             itemView.clipsToBounds = YES;
@@ -319,7 +347,7 @@ CGFloat startPanLocationY;
     
     if (up && self.carousel.currentItemView.tag!=1) {
         CGRect frame =  self.carousel.currentItemView.frame;
-        frame.origin.y = frame.origin.y - 10;
+        frame.origin.y = frame.origin.y - 6;
         self.carousel.currentItemView.tag = 1;
 
         [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionCurveEaseIn animations:^{
@@ -328,7 +356,7 @@ CGFloat startPanLocationY;
 
     } else if (!up && self.carousel.currentItemView.tag!=0) {
         CGRect frame =  self.carousel.currentItemView.frame;
-        frame.origin.y = frame.origin.y + 10;
+        frame.origin.y = frame.origin.y + 6;
         self.carousel.currentItemView.tag = 0;
         
         [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
