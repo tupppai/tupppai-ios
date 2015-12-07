@@ -10,7 +10,7 @@
 #import "Masonry.h"
 #import "PIEChannelTableViewCell.h"
 #import "PIEChannelBannerCell.h"
-
+#import "PIENewReplyViewController.h"
 
 
 
@@ -121,8 +121,8 @@
 {
     NSLog(@"%s", __func__);
     
-    [self.navigationController pushViewController:nil
-                                         animated:YES];
+//    [self.navigationController pushViewController:nil
+//                                         animated:YES];
 
 }
 
@@ -131,8 +131,9 @@
 {
     NSLog(@"%s", __func__);
     
-    [self.navigationController pushViewController:nil
-                                         animated:YES];
+    [self.navigationController
+     pushViewController:[[PIENewReplyViewController alloc] init]
+     animated:YES];
 
 }
 

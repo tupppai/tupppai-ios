@@ -87,6 +87,8 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     [self shouldDoUploadJob];
 }
 
+
+// TODO: AOP needed here. 统计用户数据
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"进入最新页面"];
@@ -153,6 +155,9 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     _currentIndex_activity = 1;
 }
 - (void)setupTable_reply {
+    
+    // !!! _tableViewReply 和 _scrollView.tableReply出现了交叉混用的!!!
+    // 建议统一将_scrollView.tableReply转为 _tableViewReply
     _tableViewReply = _scrollView.tableReply;
     _tableViewReply.delegate = self;
     _tableViewReply.dataSource = self;
@@ -245,6 +250,8 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 
 #pragma mark - event response -- ???
 #pragma mark - these two methods are never used.
+
+//!!! 下面这两个方法，从来没有被调用过。
 - (void)help:(BOOL)shouldDownload {
     NSMutableDictionary* param = [NSMutableDictionary new];
     [param setObject:@"ask" forKey:@"type"];
