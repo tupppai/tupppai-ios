@@ -78,12 +78,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 
-- (void)updateStatus {
-    if (_selectedIndexPath  && _scrollView.type == PIENewScrollTypeReply) {
-        [_scrollView.tableReply reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-    }
-}
-#pragma mark - life cycle
+#pragma mark - UI life cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -108,12 +103,6 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     //tricks to display progressView  if vc re-appear
 }
 
--(void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_New" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UploadRightNow" object:nil];
-    //compiler would call [super dealloc] automatically in ARC.
-}
-
 
 #pragma mark - init methods
 
@@ -130,43 +119,25 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     [self setupNotifications];
 }
 
-- (void)setupNotifications {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_New" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldDoUploadJob) name:@"UploadRightNow" object:nil];
-}
+#pragma mark - property first initiation
 - (void) setupData {
     //set this before firstGetRemoteSource
     _canRefreshFooter_activity = YES;
-    _canRefreshFooter_reply = YES;
-    _canRefreshFooter_ask = YES;
-    
-    _isfirstLoadingActivity = YES;
-    _isfirstLoadingAsk = YES;
-    _isfirstLoadingReply = YES;
-    
-    _sourceActivity = [NSMutableArray new];
-    _sourceAsk = [NSMutableArray new];
-    _sourceReply = [NSMutableArray new];
+    _canRefreshFooter_reply    = YES;
+    _canRefreshFooter_ask      = YES;
+
+    _isfirstLoadingActivity    = YES;
+    _isfirstLoadingAsk         = YES;
+    _isfirstLoadingReply       = YES;
+
+    _sourceActivity            = [NSMutableArray new];
+    _sourceAsk                 = [NSMutableArray new];
+    _sourceReply               = [NSMutableArray new];
 }
 
-- (void) PleaseDoTheUploadProcess {
-    WS(ws);
-    PIEUploadManager* manager = [PIEUploadManager new];
-    [manager upload:^(CGFloat percentage,BOOL success) {
-        [_progressView setProgress:percentage animated:YES];
-        if (success) {
-            if ([manager.type isEqualToString:@"ask"]) {
-                ws.segmentedControl.selectedSegmentIndex=1;
-                [ws.scrollView toggleWithType:PIENewScrollTypeAsk];
-                [ws.scrollView.collectionViewAsk.mj_header beginRefreshing];
-            } else if ([manager.type isEqualToString:@"reply"]) {
-                ws.segmentedControl.selectedSegmentIndex=2;
-                [ws.scrollView toggleWithType:PIENewScrollTypeReply];
-                [ws.scrollView.tableReply.mj_header beginRefreshing];
-            }
-        }
-    }];
-}
+
+
+#pragma mark - UI components setup
 - (void)setupTable_activity {
     _tableViewActivity = _scrollView.tableActivity;
     _tableViewActivity.delegate = self;
@@ -207,32 +178,19 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     [_collectionView_ask registerNib:nib forCellWithReuseIdentifier:CellIdentifier2];
     _currentIndex_ask = 1;
 }
-- (void)setupGestures {
-    UITapGestureRecognizer* tapGestureAsk = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnAsk:)];
-    UILongPressGestureRecognizer* longPressGestureAsk = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnAsk:)];
-    
-    UITapGestureRecognizer* tapGestureReply = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnReply:)];
-    UILongPressGestureRecognizer* longPressGestureReply = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnReply:)];
-    
-    UITapGestureRecognizer* tapGestureActivity = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnActivity:)];
-    UILongPressGestureRecognizer* longPressGestureActivity = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnActivity:)];
-    
-    [_tableViewReply addGestureRecognizer:longPressGestureReply];
-    [_tableViewReply addGestureRecognizer:tapGestureReply];
-    [_collectionView_ask addGestureRecognizer:tapGestureAsk];
-    [_collectionView_ask addGestureRecognizer:longPressGestureAsk];
-    [_tableViewActivity addGestureRecognizer:tapGestureActivity];
-    [_tableViewActivity addGestureRecognizer:longPressGestureActivity];
-}
 
-
-
+/**
+ *  add SegmentedControl as the titleView of navigationItem
+ */
 - (void)setupNavBar {
     self.navigationItem.titleView = self.segmentedControl;
 }
 
-#pragma mark - methods
-
+#pragma mark - Notification methods
+- (void)setupNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_New" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldDoUploadJob) name:@"UploadRightNow" object:nil];
+}
 
 - (void)shouldDoUploadJob {
     _progressView = [MRNavigationBarProgressView progressViewForNavigationController:self.navigationController];
@@ -247,8 +205,6 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-
-
 - (void)refreshHeader {
     if (_scrollView.type == PIENewScrollTypeReply && !_tableViewReply.mj_header.isRefreshing) {
         [_tableViewReply.mj_header beginRefreshing];
@@ -259,8 +215,36 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     }
 }
 
-#pragma mark - event response
+- (void) PleaseDoTheUploadProcess {
+    WS(ws);
+    PIEUploadManager* manager = [PIEUploadManager new];
+    [manager upload:^(CGFloat percentage,BOOL success) {
+        [_progressView setProgress:percentage animated:YES];
+        if (success) {
+            if ([manager.type isEqualToString:@"ask"]) {
+                ws.segmentedControl.selectedSegmentIndex=1;
+                [ws.scrollView toggleWithType:PIENewScrollTypeAsk];
+                [ws.scrollView.collectionViewAsk.mj_header beginRefreshing];
+            } else if ([manager.type isEqualToString:@"reply"]) {
+                ws.segmentedControl.selectedSegmentIndex=2;
+                [ws.scrollView toggleWithType:PIENewScrollTypeReply];
+                [ws.scrollView.tableReply.mj_header beginRefreshing];
+            }
+        }
+    }];
+}
 
+/**
+ *  Remove ovservers from NSNotificationCenter
+ */
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_New" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UploadRightNow" object:nil];
+    //compiler would call [super dealloc] automatically in ARC.
+}
+
+#pragma mark - event response -- ???
+#pragma mark - these two methods are never used.
 - (void)help:(BOOL)shouldDownload {
     NSMutableDictionary* param = [NSMutableDictionary new];
     [param setObject:@"ask" forKey:@"type"];
@@ -289,21 +273,9 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     }
 }
 
-- (void)showShareView {
-    [self.shareView show];
-    
-}
--(PIEShareView *)shareView {
-    if (!_shareView) {
-        _shareView = [PIEShareView new];
-        _shareView.delegate = self;
-    }
-    return _shareView;
-}
 
 
-
-#pragma mark - UIScrollViewDelegate
+#pragma mark - <UIScrollViewDelegate>
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (scrollView == _scrollView) {
@@ -324,7 +296,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
         }
     }
 }
-#pragma mark - UITableViewDataSource
+#pragma mark - <UITableViewDataSource>
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (_tableViewReply == tableView) {
@@ -350,7 +322,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     }
 }
 
-#pragma mark - UITableViewDelegate
+#pragma mark - <UITableViewDelegate>
 
 //- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 //    if (_tableViewReply == tableView) {
@@ -366,10 +338,6 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 //        return 0;
 //    }
 //}
-
-#pragma mark - ATOMViewControllerDelegate
-
-
 #pragma mark - GetDataSource from DB
 //- (void)firstGetDataSourceFromDataBase {
 //
@@ -406,6 +374,8 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     }
 }
 
+
+#pragma mark - Fetch Data - Activity
 //获取服务器的最新数据
 - (void)getRemoteSource_activity:(void (^)(BOOL finished))block{
     WS(ws);
@@ -465,6 +435,8 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     }];
 }
 
+
+#pragma mark - Fetch data Ask
 //获取服务器的最新数据
 - (void)getRemoteAskSource:(void (^)(BOOL finished))block{
     WS(ws);
@@ -518,6 +490,8 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     }];
 }
 
+#pragma mark - Fetch data - Reply
+
 - (void)getRemoteReplySource {
     WS(ws);
     _currentIndex_reply = 1;
@@ -567,10 +541,30 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     }];
 }
 
+
+#pragma mark - methods on Sharing<ATOMShareViewDelegate>
 - (void)updateShareStatus {
+    
+    /**
+     *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面的点赞数和分享数
+     */
     _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
-        [self updateStatus];
+    [self updateStatus];
 }
+
+
+- (void)showShareView {
+    [self.shareView show];
+    
+}
+-(PIEShareView *)shareView {
+    if (!_shareView) {
+        _shareView = [PIEShareView new];
+        _shareView.delegate = self;
+    }
+    return _shareView;
+}
+
 
 #pragma mark - ATOMShareViewDelegate
 //sina
@@ -621,6 +615,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 }
 
 
+#pragma mark - ???
 -(void)collect:(PIEPageButton*) collectView shouldShowHud:(BOOL)shouldShowHud {
     NSMutableDictionary *param = [NSMutableDictionary new];
     collectView.selected = !collectView.selected;
@@ -671,6 +666,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     }];
 }
 
+#pragma mark - Reply ???
 -(void)likeReply {
     _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
     [DDService toggleLike:_selectedReplyCell.likeView.selected ID:_selectedVM.ID type:_selectedVM.type  withBlock:^(BOOL success) {
@@ -745,7 +741,17 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     }
 }
 
-#pragma mark - PWRefreshBaseTableViewDelegate
+#pragma mark - Synchronized data with newest action
+/**
+ *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面的点赞数和分享数
+ */
+- (void)updateStatus {
+    if (_selectedIndexPath  && _scrollView.type == PIENewScrollTypeReply) {
+        [_scrollView.tableReply reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
+}
+
+#pragma mark - <PWRefreshBaseTableViewDelegate>
 
 -(void)didPullRefreshDown:(UITableView *)tableView{
     if (tableView == _tableViewReply) {
@@ -763,6 +769,8 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     }
 }
 
+
+#pragma mark - <PWRefreshBaseCollectionViewDelegate>
 -(void)didPullDownCollectionView:(UICollectionView *)collectionView {
     [self loadNewData_ask];
 }
@@ -773,7 +781,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 
 
 
-#pragma mark - UICollectionViewDataSource
+#pragma mark - <UICollectionViewDataSource>
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return _sourceAsk.count;
@@ -841,7 +849,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 
 
 #pragma mark - Getters and Setters
-
+#pragma mark - Lazy loadings
 -(PIENewScrollView*)scrollView {
     if (!_scrollView) {
         _scrollView = [PIENewScrollView new];
@@ -889,6 +897,25 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 }
 
 #pragma mark - Gesture Event
+
+- (void)setupGestures {
+    UITapGestureRecognizer* tapGestureAsk = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnAsk:)];
+    UILongPressGestureRecognizer* longPressGestureAsk = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnAsk:)];
+    
+    UITapGestureRecognizer* tapGestureReply = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnReply:)];
+    UILongPressGestureRecognizer* longPressGestureReply = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnReply:)];
+    
+    UITapGestureRecognizer* tapGestureActivity = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnActivity:)];
+    UILongPressGestureRecognizer* longPressGestureActivity = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnActivity:)];
+    
+    [_tableViewReply addGestureRecognizer:longPressGestureReply];
+    [_tableViewReply addGestureRecognizer:tapGestureReply];
+    [_collectionView_ask addGestureRecognizer:tapGestureAsk];
+    [_collectionView_ask addGestureRecognizer:longPressGestureAsk];
+    [_tableViewActivity addGestureRecognizer:tapGestureActivity];
+    [_tableViewActivity addGestureRecognizer:longPressGestureActivity];
+}
+
 
 - (void)tapOnReply:(UITapGestureRecognizer *)gesture {
     if (_scrollView.type == PIENewScrollTypeReply) {

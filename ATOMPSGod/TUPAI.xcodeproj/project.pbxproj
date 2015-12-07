@@ -4550,7 +4550,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tupppai.www;
 				PRODUCT_NAME = TUPAI;
-				PROVISIONING_PROFILE = "34523e90-6a66-4e2d-aa8d-13dc5930be24";
+				PROVISIONING_PROFILE = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = " armv7 armv7s arm64 arm6";
@@ -4592,7 +4592,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tupppai.www;
 				PRODUCT_NAME = TUPAI;
-				PROVISIONING_PROFILE = "449921df-06ad-46ee-b5ba-09bc0a134839";
+				PROVISIONING_PROFILE = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				VALIDATE_PRODUCT = NO;
 				VALID_ARCHS = " armv7 armv7s arm64 arm6";
@@ -4718,7 +4718,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tupppai.www;
 				PRODUCT_NAME = TUPAI;
-				PROVISIONING_PROFILE = "34523e90-6a66-4e2d-aa8d-13dc5930be24";
+				PROVISIONING_PROFILE = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				VALIDATE_PRODUCT = NO;
 				VALID_ARCHS = " armv7 armv7s arm64 arm6";

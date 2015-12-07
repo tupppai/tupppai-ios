@@ -10,10 +10,23 @@
 
 @interface PIENewAskMakeUpViewController ()
 
+@property (nonatomic, assign) BOOL isFirstLoading;
+
+@property (nonatomic, assign) NSMutableArray *source;
+
+@property (nonatomic, assign) NSInteger currentIndex;
+
+@property (nonatomic, assign) long long timeStamp;
+
+@property (nonatomic, assign) BOOL canRefreshFooter;
+
+
+
 @end
 
 @implementation PIENewAskMakeUpViewController
 
+#pragma mark - UI life cycles
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
