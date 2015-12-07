@@ -13,15 +13,25 @@
 
 
 
+
+
+
+/**
+ *  <PIEChannelBannerDelegate>: 处理bannerCell的两个button的点击（push到其他页面）
+ */
+@interface PIEChannelViewController (BannerCellDelegate)<PIEChannelBannerCellDelegate>
+
+@end
+
+
+
+
 @interface PIEChannelViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, weak) UIView *containerView;
 @property (nonatomic, weak) UITableView *tableView;
 @end
 
 
-@interface PIEChannelViewController (BannerCellDelegate)<PIEChannelBannerCellDelegate>
-
-@end
 
 
 
@@ -110,6 +120,9 @@
        didClickLeftButton:(UIButton *)button
 {
     NSLog(@"%s", __func__);
+    
+    [self.navigationController pushViewController:nil
+                                         animated:YES];
 
 }
 
@@ -117,6 +130,9 @@
       didClickRightButton:(UIButton *)button
 {
     NSLog(@"%s", __func__);
+    
+    [self.navigationController pushViewController:nil
+                                         animated:YES];
 
 }
 
