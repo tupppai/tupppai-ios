@@ -60,13 +60,13 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
 #pragma mark - UI life cycles
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     self.view = self.collectionView_ask;
-    self.collectionView_ask.delegate             = self;
+//    self.collectionView_ask.backgroundColor = [UIColor whiteColor];
+    
     [self setupGestures];
     [self setupData];
     [self firstGetSourceIfEmpty_ask];
@@ -117,10 +117,19 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     _currentIndex_ask = 1;
     NSMutableDictionary *param = [NSMutableDictionary new];
     _timeStamp_ask = [[NSDate date] timeIntervalSince1970];
+    
+    /**
+     *  参数：传递上次更新的时间
+     *
+     *  @param _timeStamp_ask 上次更新的shijian (NSDate now)
+     */
     [param setObject:@(_timeStamp_ask) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    
+    
+    
     PIEPageManager *pageManager = [PIEPageManager new];
     
     __weak typeof(self) weakSelf = self;
@@ -133,8 +142,11 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         else {
             _canRefreshFooter_ask = NO;
         }
+        
         [weakSelf.collectionView_ask reloadData];
         [weakSelf.collectionView_ask.mj_header endRefreshing];
+        
+        // ???
         if (block) {
             block(YES);
         }
@@ -154,8 +166,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [param setObject:@(_currentIndex_ask) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     PIEPageManager *pageManager = [PIEPageManager new];
-    
-    
     
     [pageManager pullAskSource:param block:^(NSMutableArray *homepageArray) {
         if (homepageArray.count) {
@@ -377,15 +387,16 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         layout.minimumInteritemSpacing = 10;
         
         
-        
-        
         _collectionView_ask = [[PIERefreshCollectionView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT) collectionViewLayout:layout];
+        
+        
+        
         
         UINib* nib = [UINib nibWithNibName:CellIdentifier2 bundle:nil];
         [_collectionView_ask registerNib:nib forCellWithReuseIdentifier:CellIdentifier2];
-        
+
         _collectionView_ask.dataSource           = self;
-//        _collectionView_ask.delegate             = self;
+        _collectionView_ask.delegate             = self;
         _collectionView_ask.emptyDataSetDelegate = self;
         _collectionView_ask.emptyDataSetSource   = self;
         _collectionView_ask.psDelegate           = self;
@@ -395,7 +406,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         _collectionView_ask.toRefreshTop                 = YES;
         _collectionView_ask.autoresizingMask             = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         _collectionView_ask.showsVerticalScrollIndicator = NO;
-        
+        _collectionView_ask.backgroundColor = [UIColor whiteColor];
         
     }
     return _collectionView_ask;

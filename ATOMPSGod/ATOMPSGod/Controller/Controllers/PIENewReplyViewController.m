@@ -426,7 +426,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     if (_tableViewReply == nil) {
         _tableViewReply = [[PIERefreshTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*2, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
         _tableViewReply.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _tableViewReply.backgroundColor = [UIColor clearColor];
+        _tableViewReply.backgroundColor = [UIColor whiteColor];
         _tableViewReply.showsVerticalScrollIndicator = NO;
         
         _tableViewReply.delegate             = self;

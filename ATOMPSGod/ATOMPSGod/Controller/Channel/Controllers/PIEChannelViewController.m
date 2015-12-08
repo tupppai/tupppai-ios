@@ -12,8 +12,11 @@
 #import "PIEChannelBannerCell.h"
 #import "PIENewReplyViewController.h"
 #import "PIENewAskMakeUpViewController.h"
+#import "MJRefresh.h"
+#import "PIERefreshTableView.h"
 
-
+#import "DDBaseService.h"
+#import "DDServiceConstants.h"
 
 
 /**
@@ -23,16 +26,14 @@
 
 @end
 
+@interface PIEChannelViewController (RefeshMethods)<PWRefreshBaseTableViewDelegate>
 
-
+@end
 
 @interface PIEChannelViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, weak) UIView *containerView;
-@property (nonatomic, weak) UITableView *tableView;
+@property (nonatomic, weak) PIERefreshTableView *tableView;
 @end
-
-
-
 
 
 @implementation PIEChannelViewController
@@ -56,12 +57,14 @@
 
 - (void)setupTableView
 {
-    UITableView *tableView = [[UITableView alloc] init];
+    PIERefreshTableView *tableView = [[PIERefreshTableView alloc] init];
     self.tableView = tableView;
     [self.view addSubview:tableView];
 
     tableView.delegate   = self;
     tableView.dataSource = self;
+    
+    tableView.psDelegate = self;
    
     tableView.estimatedRowHeight = 120;
     tableView.rowHeight = UITableViewAutomaticDimension;
@@ -80,6 +83,8 @@
         make.edges.equalTo(self.view).with.insets(padding);
     }];
     
+    
+        
 }
 
 #pragma mark - <UITableViewDelegate>
@@ -112,6 +117,66 @@
     
 }
 
+
+#pragma mark - Refresh methods
+- (void)loadNewChannels
+{
+    NSLog(@"%s", __func__);
+
+    // load new channels from server
+    /*
+     URL_ChannelHomeThreads
+     /thread/home
+     接受参数
+     get:
+     page:页面，默认为1
+     size:页面数目，默认为10
+     last_updated:最后下拉更新的时间戳（10位）
+     
+     */
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"page"] = @1;
+    params[@"size"] = @5;
+    
+    [DDBaseService GET:params
+                   url:URL_ChannelHomeThreads
+                 block:^(id responseObject) {
+                     NSLog(@"responseObject as followed: ");
+                     NSLog(@"%@", responseObject);
+                     [self.tableView.mj_header endRefreshing];
+                 }];
+    
+    
+    // add to viewModels
+    
+    
+    
+    // refresh tableView
+    
+    
+    
+    
+}
+
+- (void)loadMoreChannels
+{
+    NSLog(@"%s", __func__);
+
+    // load more channels from server
+    // add to view models
+    // refresh tableView
+    
+    
+}
+
+#pragma marmk - <PWRefreshBaseTableViewDelegate>
+- (void)didPullRefreshUp:(UITableView *)tableView{
+    [self loadMoreChannels];
+}
+
+- (void)didPullRefreshDown:(UITableView *)tableView{
+    [self loadNewChannels];
+}
 
 #pragma mark - 
 #pragma mark - <PIEChannelBannerCellDelegate>
