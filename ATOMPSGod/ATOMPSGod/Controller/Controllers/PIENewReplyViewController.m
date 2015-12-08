@@ -50,24 +50,20 @@
 @end
 
 /* Delegates */
-@interface PIENewReplyViewController (SharingDelegate)<PIEShareViewDelegate>
-
-
+@interface PIENewReplyViewController (SharingDelegate)
+<PIEShareViewDelegate>
 @end
 
-
-@interface PIENewReplyViewController (TableView)<UITableViewDelegate, UITableViewDataSource>
-
-
+@interface PIENewReplyViewController (TableView)
+<UITableViewDelegate, UITableViewDataSource>
 @end
 
-@interface PIENewReplyViewController (PWRefreshBaseTableView)<PWRefreshBaseTableViewDelegate>
-
-
+@interface PIENewReplyViewController (PWRefreshBaseTableView)
+<PWRefreshBaseTableViewDelegate>
 @end
 
-@interface PIENewReplyViewController (DZNEmptyDataSet)<DZNEmptyDataSetDelegate, DZNEmptyDataSetSource>
-
+@interface PIENewReplyViewController (DZNEmptyDataSet)
+<DZNEmptyDataSetDelegate, DZNEmptyDataSetSource>
 @end
 
 // =================================================================
@@ -78,9 +74,6 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 
 #pragma mark - 
 #pragma mark UI life cycles
-
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -105,13 +98,13 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 #pragma mark - property first initiation
 - (void) setupData {
     //set this before firstGetRemoteSource
-    _canRefreshFooter_reply    = YES;
-    
-    _isfirstLoadingReply       = YES;
-    
-    _currentIndex_reply = 1;
-    
-    _sourceReply               = [NSMutableArray new];
+    _canRefreshFooter_reply = YES;
+
+    _isfirstLoadingReply    = YES;
+
+    _currentIndex_reply     = 1;
+
+    _sourceReply            = [NSMutableArray new];
 }
 
 #pragma mark - Notification methods
@@ -444,16 +437,15 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
         
         
         _tableViewReply.estimatedRowHeight = SCREEN_WIDTH+145;
-        _tableViewReply.rowHeight = UITableViewAutomaticDimension;
+        _tableViewReply.rowHeight          = UITableViewAutomaticDimension;
         UINib* nib = [UINib nibWithNibName:CellIdentifier bundle:nil];
         [_tableViewReply registerNib:nib forCellReuseIdentifier:CellIdentifier];
         _tableViewReply.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
-        _tableViewReply.scrollsToTop = YES;
+        _tableViewReply.scrollsToTop       = YES;
         
     }
     return _tableViewReply;
 }
-
 
 
 @end

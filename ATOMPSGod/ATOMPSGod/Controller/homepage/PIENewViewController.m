@@ -55,26 +55,26 @@
 @property (nonatomic, assign) BOOL canRefreshFooter_reply;
 @property (nonatomic, assign) BOOL canRefreshFooter_activity;
 
-@property (nonatomic, weak) PIERefreshTableView *tableViewActivity;
-@property (nonatomic, weak) PIERefreshCollectionView *collectionView_ask;
-@property (nonatomic, weak) PIERefreshTableView *tableViewReply;
-@property (nonatomic, strong) PIENewScrollView *scrollView;
+@property (nonatomic, weak  ) PIERefreshTableView      *tableViewActivity;
+@property (nonatomic, weak  ) PIERefreshCollectionView *collectionView_ask;
+@property (nonatomic, weak  ) PIERefreshTableView      *tableViewReply;
+@property (nonatomic, strong) PIENewScrollView         *scrollView;
 
-@property (nonatomic, strong)  PIEActionSheet_PS * psActionSheet;
+@property (nonatomic, strong) PIEActionSheet_PS        * psActionSheet;
 
-@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
-@property (nonatomic, strong) PIENewReplyTableCell *selectedReplyCell;
-@property (nonatomic, strong) PIEPageVM *selectedVM;
-@property (nonatomic, strong) PIEShareView *shareView;
-@property (nonatomic, strong) HMSegmentedControl *segmentedControl;
-@property (nonatomic, strong)  MRNavigationBarProgressView* progressView;
+@property (nonatomic, strong) NSIndexPath                 *selectedIndexPath;
+@property (nonatomic, strong) PIENewReplyTableCell        *selectedReplyCell;
+@property (nonatomic, strong) PIEPageVM                   *selectedVM;
+@property (nonatomic, strong) PIEShareView                *shareView;
+@property (nonatomic, strong) HMSegmentedControl          *segmentedControl;
+@property (nonatomic, strong) MRNavigationBarProgressView *progressView;
 
 
 @end
 
 @implementation PIENewViewController
 
-static NSString *CellIdentifier = @"PIENewReplyTableCell";
+static NSString *CellIdentifier  = @"PIENewReplyTableCell";
 static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 
@@ -353,7 +353,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 //
 ////    _sourceReply = [self fetchDBDataSourceWithHomeType:PIENewScrollTypeReply];
 //}
-#pragma mark - GetDataSource from Server
+#pragma mark - Get DataSource from Server for the first time
 //-(NSMutableArray*)fetchDBDataSourceWithHomeType:(PIEHomeType) homeType {
 //    DDHomePageManager *showHomepage = [DDHomePageManager new];
 //    NSArray * homepageArray = [[showHomepage getHomeImagesWithHomeType:homeType] mutableCopy];
@@ -799,7 +799,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    PIENewAskCollectionCell*cell =
+    PIENewAskCollectionCell *cell =
     (PIENewAskCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier2
                                                                       forIndexPath:indexPath];
     [cell injectSource:[_sourceAsk objectAtIndex:indexPath.row]];

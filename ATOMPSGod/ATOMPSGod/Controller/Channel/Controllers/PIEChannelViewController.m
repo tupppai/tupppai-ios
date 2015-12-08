@@ -11,7 +11,7 @@
 #import "PIEChannelTableViewCell.h"
 #import "PIEChannelBannerCell.h"
 #import "PIENewReplyViewController.h"
-
+#import "PIENewAskMakeUpViewController.h"
 
 
 
@@ -30,7 +30,6 @@
 @property (nonatomic, weak) UIView *containerView;
 @property (nonatomic, weak) UITableView *tableView;
 @end
-
 
 
 
@@ -121,8 +120,9 @@
 {
     NSLog(@"%s", __func__);
     
-//    [self.navigationController pushViewController:nil
-//                                         animated:YES];
+    [self.navigationController
+     pushViewController:[[PIENewAskMakeUpViewController alloc] init]
+     animated:YES];
 
 }
 
