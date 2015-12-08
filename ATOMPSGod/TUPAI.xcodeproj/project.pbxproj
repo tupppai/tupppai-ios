@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E3FB9E41C155E0C0012E290 /* PIENewAskMakeUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3FB9E31C155E0C0012E290 /* PIENewAskMakeUpViewController.m */; };
+		0E3FB9EB1C15603A0012E290 /* PIENewReplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3FB9EA1C15603A0012E290 /* PIENewReplyViewController.m */; };
 		0EF2F5C51C154A5700F27D61 /* PIEChannelBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF2F5C01C154A5700F27D61 /* PIEChannelBannerCell.m */; };
 		0EF2F5C61C154A5700F27D61 /* PIEChannelBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EF2F5C11C154A5700F27D61 /* PIEChannelBannerCell.xib */; };
 		0EF2F5C71C154A5700F27D61 /* PIEChannelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF2F5C31C154A5700F27D61 /* PIEChannelTableViewCell.m */; };
@@ -520,6 +522,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E3FB9E21C155E0C0012E290 /* PIENewAskMakeUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIENewAskMakeUpViewController.h; sourceTree = "<group>"; };
+		0E3FB9E31C155E0C0012E290 /* PIENewAskMakeUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENewAskMakeUpViewController.m; sourceTree = "<group>"; };
+		0E3FB9E91C15603A0012E290 /* PIENewReplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIENewReplyViewController.h; sourceTree = "<group>"; };
+		0E3FB9EA1C15603A0012E290 /* PIENewReplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENewReplyViewController.m; sourceTree = "<group>"; };
 		0EF2F5BF1C154A5700F27D61 /* PIEChannelBannerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelBannerCell.h; sourceTree = "<group>"; };
 		0EF2F5C01C154A5700F27D61 /* PIEChannelBannerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelBannerCell.m; sourceTree = "<group>"; };
 		0EF2F5C11C154A5700F27D61 /* PIEChannelBannerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEChannelBannerCell.xib; sourceTree = "<group>"; };
@@ -1517,6 +1523,45 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E3FB9DE1C155C680012E290 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				0E3FB9E21C155E0C0012E290 /* PIENewAskMakeUpViewController.h */,
+				0E3FB9E31C155E0C0012E290 /* PIENewAskMakeUpViewController.m */,
+				0E3FB9E91C15603A0012E290 /* PIENewReplyViewController.h */,
+				0E3FB9EA1C15603A0012E290 /* PIENewReplyViewController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		0E3FB9DF1C155C6F0012E290 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0E3FB9E01C155C760012E290 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		0E3FB9E11C155C850012E290 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		0E3FB9E81C155E8E0012E290 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
 		0EF2F5B71C15497A00F27D61 /* Channel */ = {
 			isa = PBXGroup;
 			children = (
@@ -1568,6 +1613,10 @@
 		3B0655A51BA2595A0094C46C /* New */ = {
 			isa = PBXGroup;
 			children = (
+				0E3FB9E11C155C850012E290 /* Models */,
+				0E3FB9E01C155C760012E290 /* ViewModels */,
+				0E3FB9DF1C155C6F0012E290 /* Views */,
+				0E3FB9DE1C155C680012E290 /* Controllers */,
 				5C4F5BDA1AA555F900226F64 /* PIENewViewController.h */,
 				5C4F5BDB1AA555F900226F64 /* PIENewViewController.m */,
 				F4E9859A1BFAFC0100EF4BCA /* activity */,
@@ -2017,6 +2066,7 @@
 				5CDB05EA1AA400410089121E /* Controller */,
 				5CDB05EC1AA400410089121E /* Vendor */,
 				5CDB05ED1AA400410089121E /* Uitility */,
+				0E3FB9E81C155E8E0012E290 /* Categories */,
 				5CDB05C81AA3FE520089121E /* AppDelegate.h */,
 				5CDB05C91AA3FE520089121E /* AppDelegate.m */,
 				5C6CE6B81ADBE8A10035F522 /* EmojisList.plist */,
@@ -4048,6 +4098,7 @@
 				5C8406321ABA762900068F35 /* PIEPageManager.m in Sources */,
 				F43159CD1BB5567000DCA292 /* PIEPageButton.m in Sources */,
 				5C561A461AB7C51F0052D4D5 /* MTLFMDBAdapter.m in Sources */,
+				0E3FB9EB1C15603A0012E290 /* PIENewReplyViewController.m in Sources */,
 				5C3101841AAE8D9900EF529B /* ATOMModifyPasswordView.m in Sources */,
 				5C54DF161AB9529200BDE34D /* PIENewScrollView.m in Sources */,
 				E93D237E1B3CFA4D0081F632 /* DDShareManager.m in Sources */,
@@ -4301,6 +4352,7 @@
 				E90197351B32D2F800F46B78 /* MBProgressHUD.m in Sources */,
 				E99D2F5D1B1C7E8D000D7784 /* UIView+Screenshot.m in Sources */,
 				F4AFCD4B1BC79A3100027940 /* UIButton+Pop.m in Sources */,
+				0E3FB9E41C155E0C0012E290 /* PIENewAskMakeUpViewController.m in Sources */,
 				F4993CEF1BE5B32C007F9BE4 /* UIProgressView+AFNetworking.m in Sources */,
 				E94B032A1B7DE6EC00863C6F /* UIColor+PSGod.m in Sources */,
 				F409AA871BAFE39000736B0D /* PIEImageEntity.m in Sources */,
@@ -4498,7 +4550,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tupppai.www;
 				PRODUCT_NAME = TUPAI;
-				PROVISIONING_PROFILE = "34523e90-6a66-4e2d-aa8d-13dc5930be24";
+				PROVISIONING_PROFILE = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = " armv7 armv7s arm64 arm6";
@@ -4540,7 +4592,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tupppai.www;
 				PRODUCT_NAME = TUPAI;
-				PROVISIONING_PROFILE = "449921df-06ad-46ee-b5ba-09bc0a134839";
+				PROVISIONING_PROFILE = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				VALIDATE_PRODUCT = NO;
 				VALID_ARCHS = " armv7 armv7s arm64 arm6";
@@ -4666,7 +4718,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tupppai.www;
 				PRODUCT_NAME = TUPAI;
-				PROVISIONING_PROFILE = "34523e90-6a66-4e2d-aa8d-13dc5930be24";
+				PROVISIONING_PROFILE = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				VALIDATE_PRODUCT = NO;
 				VALID_ARCHS = " armv7 armv7s arm64 arm6";

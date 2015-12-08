@@ -6,6 +6,7 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
+
 #import "DDBaseVC.h"
 #import "ATOMUserDAO.h"
 #import "DDLoginNavigationController.h"
@@ -56,6 +57,7 @@
         self.navigationItem.leftBarButtonItems = @[ barBackButtonItem];
     }
 }
+
 - (void)addObservers {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorOccuredRET) name:@"NetworkErrorCall" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showInfoRET:) name:@"NetworkShowInfoCall" object:nil];
