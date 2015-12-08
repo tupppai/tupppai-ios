@@ -60,13 +60,13 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
 #pragma mark - UI life cycles
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     self.view = self.collectionView_ask;
-    self.collectionView_ask.delegate             = self;
+//    self.collectionView_ask.backgroundColor = [UIColor whiteColor];
+    
     [self setupGestures];
     [self setupData];
     [self firstGetSourceIfEmpty_ask];
@@ -377,15 +377,16 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         layout.minimumInteritemSpacing = 10;
         
         
-        
-        
         _collectionView_ask = [[PIERefreshCollectionView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT) collectionViewLayout:layout];
+        
+        
+        
         
         UINib* nib = [UINib nibWithNibName:CellIdentifier2 bundle:nil];
         [_collectionView_ask registerNib:nib forCellWithReuseIdentifier:CellIdentifier2];
-        
+
         _collectionView_ask.dataSource           = self;
-//        _collectionView_ask.delegate             = self;
+        _collectionView_ask.delegate             = self;
         _collectionView_ask.emptyDataSetDelegate = self;
         _collectionView_ask.emptyDataSetSource   = self;
         _collectionView_ask.psDelegate           = self;
@@ -395,7 +396,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         _collectionView_ask.toRefreshTop                 = YES;
         _collectionView_ask.autoresizingMask             = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         _collectionView_ask.showsVerticalScrollIndicator = NO;
-        
+        _collectionView_ask.backgroundColor = [UIColor whiteColor];
         
     }
     return _collectionView_ask;
