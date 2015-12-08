@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		0E3FB9E41C155E0C0012E290 /* PIENewAskMakeUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3FB9E31C155E0C0012E290 /* PIENewAskMakeUpViewController.m */; };
 		0E3FB9EB1C15603A0012E290 /* PIENewReplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3FB9EA1C15603A0012E290 /* PIENewReplyViewController.m */; };
+		0E6F78FE1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E6F78FC1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.m */; };
+		0E6F78FF1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E6F78FD1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.xib */; };
+		0E6F79031C16EE5C002F9FB6 /* PIEChannelDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E6F79011C16EE5C002F9FB6 /* PIEChannelDetailViewController.m */; };
+		0E6F79041C16EE5C002F9FB6 /* PIEChannelDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E6F79021C16EE5C002F9FB6 /* PIEChannelDetailViewController.xib */; };
 		0EF2F5C51C154A5700F27D61 /* PIEChannelBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF2F5C01C154A5700F27D61 /* PIEChannelBannerCell.m */; };
 		0EF2F5C61C154A5700F27D61 /* PIEChannelBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EF2F5C11C154A5700F27D61 /* PIEChannelBannerCell.xib */; };
 		0EF2F5C71C154A5700F27D61 /* PIEChannelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF2F5C31C154A5700F27D61 /* PIEChannelTableViewCell.m */; };
@@ -528,6 +532,12 @@
 		0E3FB9E31C155E0C0012E290 /* PIENewAskMakeUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENewAskMakeUpViewController.m; sourceTree = "<group>"; };
 		0E3FB9E91C15603A0012E290 /* PIENewReplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIENewReplyViewController.h; sourceTree = "<group>"; };
 		0E3FB9EA1C15603A0012E290 /* PIENewReplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENewReplyViewController.m; sourceTree = "<group>"; };
+		0E6F78FB1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelDetailLatestPSCell.h; sourceTree = "<group>"; };
+		0E6F78FC1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelDetailLatestPSCell.m; sourceTree = "<group>"; };
+		0E6F78FD1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEChannelDetailLatestPSCell.xib; sourceTree = "<group>"; };
+		0E6F79001C16EE5C002F9FB6 /* PIEChannelDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelDetailViewController.h; sourceTree = "<group>"; };
+		0E6F79011C16EE5C002F9FB6 /* PIEChannelDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelDetailViewController.m; sourceTree = "<group>"; };
+		0E6F79021C16EE5C002F9FB6 /* PIEChannelDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEChannelDetailViewController.xib; sourceTree = "<group>"; };
 		0ECE8FB11C16AB4500E98CB5 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
 		0EF2F5BF1C154A5700F27D61 /* PIEChannelBannerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelBannerCell.h; sourceTree = "<group>"; };
 		0EF2F5C01C154A5700F27D61 /* PIEChannelBannerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelBannerCell.m; sourceTree = "<group>"; };
@@ -1593,6 +1603,9 @@
 				0EF2F5C91C154A6200F27D61 /* PIEChannelViewController.h */,
 				0EF2F5CA1C154A6200F27D61 /* PIEChannelViewController.m */,
 				0EF2F5CB1C154A6200F27D61 /* PIEChannelViewController.xib */,
+				0E6F79001C16EE5C002F9FB6 /* PIEChannelDetailViewController.h */,
+				0E6F79011C16EE5C002F9FB6 /* PIEChannelDetailViewController.m */,
+				0E6F79021C16EE5C002F9FB6 /* PIEChannelDetailViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1620,6 +1633,9 @@
 				0EF2F5C21C154A5700F27D61 /* PIEChannelTableViewCell.h */,
 				0EF2F5C31C154A5700F27D61 /* PIEChannelTableViewCell.m */,
 				0EF2F5C41C154A5700F27D61 /* PIEChannelTableViewCell.xib */,
+				0E6F78FB1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.h */,
+				0E6F78FC1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.m */,
+				0E6F78FD1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3916,6 +3932,7 @@
 				F41BA0D11C0EDCE800979D43 /* MJRefresh.bundle in Resources */,
 				E94289821B5B32A200ED26E4 /* NotificationButtonBackground.png in Resources */,
 				0EF2F5CD1C154A6200F27D61 /* PIEChannelViewController.xib in Resources */,
+				0E6F79041C16EE5C002F9FB6 /* PIEChannelDetailViewController.xib in Resources */,
 				F421A20D1BEB2F320028C521 /* PIEToHelpTableViewCell2.xib in Resources */,
 				E94289811B5B32A200ED26E4 /* NotificationBackgroundWarningIcon@2x.png in Resources */,
 				3BE1AECD1B9FE9C900CE2303 /* QBImagePicker.storyboard in Resources */,
@@ -3994,6 +4011,7 @@
 				F402F0F41BE8852F004988B4 /* PIESearchViewController.xib in Resources */,
 				E991EF0D1B7371D200025108 /* bg1@2x.png in Resources */,
 				F4E713391BE3557E0046C7A9 /* PIEFriendReplyCollectionViewCell.xib in Resources */,
+				0E6F78FF1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.xib in Resources */,
 				F4F72C051BCB8F08002FF05A /* PIEMyCollectionViewController.xib in Resources */,
 				0EF2F5C61C154A5700F27D61 /* PIEChannelBannerCell.xib in Resources */,
 				F4EC11251BCF55C8002D1DCF /* PIENotificationFollowTableViewCell.xib in Resources */,
@@ -4161,6 +4179,7 @@
 				F4EC11111BCE5A73002D1DCF /* PIENotificationReplyTableViewCell.m in Sources */,
 				0EF2F5C51C154A5700F27D61 /* PIEChannelBannerCell.m in Sources */,
 				F4E72E731C070C6C0056791D /* PIECustomViewFromXib.m in Sources */,
+				0E6F78FE1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.m in Sources */,
 				5CDB06061AA405A40089121E /* UIColor+iOS7.m in Sources */,
 				F4275A1D1BE0B9ED00BBE7E4 /* PIEMyFollowViewController.m in Sources */,
 				F4324CDF1C0956CD005C61AC /* PIECommentViewController2.m in Sources */,
@@ -4202,6 +4221,7 @@
 				F40207311BA7C17C0007CE02 /* PIECameraViewController.m in Sources */,
 				E9F8908F1B86C4AB0057ECBF /* FMDatabaseAdditions.m in Sources */,
 				F4AE73C31BBA90D800734BCB /* PIEFriendAskViewController.m in Sources */,
+				0E6F79031C16EE5C002F9FB6 /* PIEChannelDetailViewController.m in Sources */,
 				F40207421BA7C4160007CE02 /* PIETransitioning.m in Sources */,
 				F41BA0CE1C0EDCE800979D43 /* MJRefreshGifHeader.m in Sources */,
 				5CDB06041AA405A40089121E /* UIColor+HSB.m in Sources */,
