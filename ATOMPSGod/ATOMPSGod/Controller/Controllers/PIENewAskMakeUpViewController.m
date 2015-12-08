@@ -117,10 +117,19 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     _currentIndex_ask = 1;
     NSMutableDictionary *param = [NSMutableDictionary new];
     _timeStamp_ask = [[NSDate date] timeIntervalSince1970];
+    
+    /**
+     *  参数：传递上次更新的时间
+     *
+     *  @param _timeStamp_ask 上次更新的shijian (NSDate now)
+     */
     [param setObject:@(_timeStamp_ask) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    
+    
+    
     PIEPageManager *pageManager = [PIEPageManager new];
     
     __weak typeof(self) weakSelf = self;
@@ -133,8 +142,11 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         else {
             _canRefreshFooter_ask = NO;
         }
+        
         [weakSelf.collectionView_ask reloadData];
         [weakSelf.collectionView_ask.mj_header endRefreshing];
+        
+        // ???
         if (block) {
             block(YES);
         }
@@ -154,8 +166,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [param setObject:@(_currentIndex_ask) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     PIEPageManager *pageManager = [PIEPageManager new];
-    
-    
     
     [pageManager pullAskSource:param block:^(NSMutableArray *homepageArray) {
         if (homepageArray.count) {
