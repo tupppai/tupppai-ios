@@ -13,6 +13,8 @@
 /* Variables */
 @interface PIEChannelDetailViewController ()
 @property (nonatomic, strong)PIERefreshTableView *tableView;
+@property (nonatomic, strong) UIButton *takePhotoButton;
+
 @end
 
 /* Delegates */
@@ -29,25 +31,64 @@
 
 @implementation PIEChannelDetailViewController
 
-static NSString * const PIEDetailLatestPSCellIdentifier =
+static NSString *  PIEDetailLatestPSCellIdentifier =
 @"DetailLatestPSCellIdentifier";
 
-static NSString * const PIEDetailNormalIdentifier =
+static NSString *  PIEDetailNormalIdentifier =
 @"PIEDetailNormalIdentifier";
 
 
 #pragma mark - UI life cycles
+//- (void)loadView
+//{
+//    self.tableView = [[PIERefreshTableView alloc] init];
+//    self.view      = self.tableView;
+//    [self configurePIERefreshTableView:self.tableView];
+//}
+
+
+/**
+ *  不能直接用self.tableView替换掉self.view，而是让self.tableView和self.takePhotoButton
+ 同时成为self.view的子视图。
+ */
+
 - (void)loadView
 {
-    self.tableView = [[PIERefreshTableView alloc] init];
-    self.view      = self.tableView;
-    [self configurePIERefreshTableView:self.tableView];
+    [super loadView];
+    
 }
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
+
+    
+    /* add subView */
+    
+    
+    [self.view addSubview:self.tableView];
+    [self.view addSubview:self.takePhotoButton];
+    
+    // --- add autolayout constraint on _takePhotoButton and _tableView
+//    self.tableView.frame = self.view.bounds;
+    // wtf is the bug? https://www.google.com.hk/?gws_rd=ssl#q=libc%2B%2Babi.dylib+terminate_handler+unexpectedly+threw+an+exception
+    
+    
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
+    
+    [self.takePhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view.mas_centerX);
+        make.height.mas_equalTo(50);
+        make.width.mas_equalTo(50);
+        make.bottom.equalTo(self.view.mas_bottom).with.offset(-64);
+    }];
+    
+    
     
 }
+
 
 
 #pragma mark - Private helpers
@@ -135,5 +176,74 @@ static NSString * const PIEDetailNormalIdentifier =
 {
     NSLog(@"%s", __func__);
 }
+
+#pragma mark - Target-actions
+- (void)takePhoto:(UIButton *)button
+{
+    NSLog(@"%s", __func__);
+    
+}
+
+
+#pragma mark - lazy loadings
+- (PIERefreshTableView *)tableView
+{
+    if (_tableView == nil) {
+        // instantiate only for once
+        _tableView = [[PIERefreshTableView alloc] init];
+        
+        // configurations
+        // set delegate
+        _tableView.delegate   = self;
+        
+        _tableView.dataSource = self;
+        
+        _tableView.psDelegate = self;
+        
+        // iOS 8+, self-sizing cell
+        _tableView.estimatedRowHeight = 88;
+        
+        _tableView.rowHeight          = UITableViewAutomaticDimension;
+        
+        
+        // register cells
+        [_tableView
+         registerNib:[UINib nibWithNibName:@"PIEChannelDetailLatestPSCell" bundle:nil]
+         forCellReuseIdentifier:PIEDetailLatestPSCellIdentifier];
+        
+        [_tableView registerClass:[UITableViewCell class]
+           forCellReuseIdentifier:PIEDetailNormalIdentifier];
+    }
+    return _tableView;
+    
+}
+
+- (UIButton *)takePhotoButton
+{
+    if (_takePhotoButton == nil) {
+        // instantiate only for once
+        _takePhotoButton = [[UIButton alloc] init];
+        
+        /* Configurations */
+        // set background image
+        [_takePhotoButton setBackgroundImage:[UIImage imageNamed:@"pie_signup_close"]
+                                    forState:UIControlStateNormal];
+        
+        // add target-actions
+        [_takePhotoButton addTarget:self
+                             action:@selector(takePhoto:)
+                   forControlEvents:UIControlEventTouchUpInside];
+        
+        // added as subViews
+        // ... in viewDidLoad
+        
+        // Autolayout constraints
+        // ... in viewDidLoad
+        
+    }
+    return _takePhotoButton;
+    
+}
+
 
 @end
