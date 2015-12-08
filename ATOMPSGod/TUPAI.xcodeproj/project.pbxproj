@@ -258,6 +258,8 @@
 		F402F1041BE8A327004988B4 /* PIEUserViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F402F1031BE8A327004988B4 /* PIEUserViewModel.m */; };
 		F409AA871BAFE39000736B0D /* PIEImageEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = F409AA861BAFE39000736B0D /* PIEImageEntity.m */; };
 		F41366951BBE73D900EE0C4E /* PIEReplyCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F41366941BBE73D900EE0C4E /* PIEReplyCollectionCell.xib */; };
+		F413B0501C167AB500F9BA27 /* PIECarouselPageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F413B04E1C167AB500F9BA27 /* PIECarouselPageTableViewCell.m */; };
+		F413B0511C167AB500F9BA27 /* PIECarouselPageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F413B04F1C167AB500F9BA27 /* PIECarouselPageTableViewCell.xib */; };
 		F4155D461BB3DA1300A0B045 /* PIEHighlightableLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4155D451BB3DA1300A0B045 /* PIEHighlightableLabel.m */; };
 		F41BA04F1C0E9A2800979D43 /* PIEButton_Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = F41BA04E1C0E9A2800979D43 /* PIEButton_Tag.m */; };
 		F41BA0521C0E9DC800979D43 /* PIETagsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F41BA0511C0E9DC800979D43 /* PIETagsView.m */; };
@@ -1010,6 +1012,9 @@
 		F409AA851BAFE39000736B0D /* PIEImageEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEImageEntity.h; sourceTree = "<group>"; };
 		F409AA861BAFE39000736B0D /* PIEImageEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEImageEntity.m; sourceTree = "<group>"; };
 		F41366941BBE73D900EE0C4E /* PIEReplyCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEReplyCollectionCell.xib; sourceTree = "<group>"; };
+		F413B04D1C167AB500F9BA27 /* PIECarouselPageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECarouselPageTableViewCell.h; sourceTree = "<group>"; };
+		F413B04E1C167AB500F9BA27 /* PIECarouselPageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECarouselPageTableViewCell.m; sourceTree = "<group>"; };
+		F413B04F1C167AB500F9BA27 /* PIECarouselPageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIECarouselPageTableViewCell.xib; sourceTree = "<group>"; };
 		F4155D441BB3DA1300A0B045 /* PIEHighlightableLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEHighlightableLabel.h; sourceTree = "<group>"; };
 		F4155D451BB3DA1300A0B045 /* PIEHighlightableLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEHighlightableLabel.m; sourceTree = "<group>"; };
 		F41BA04D1C0E9A2800979D43 /* PIEButton_Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEButton_Tag.h; sourceTree = "<group>"; };
@@ -3444,6 +3449,9 @@
 				F4E72E751C070D5C0056791D /* PIECarousel_ItemView.h */,
 				F4E72E761C070D5C0056791D /* PIECarousel_ItemView.m */,
 				F4E72E781C070D6A0056791D /* PIECarousel_ItemView.xib */,
+				F413B04D1C167AB500F9BA27 /* PIECarouselPageTableViewCell.h */,
+				F413B04E1C167AB500F9BA27 /* PIECarouselPageTableViewCell.m */,
+				F413B04F1C167AB500F9BA27 /* PIECarouselPageTableViewCell.xib */,
 			);
 			name = carousel;
 			sourceTree = "<group>";
@@ -3836,6 +3844,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F413B0511C167AB500F9BA27 /* PIECarouselPageTableViewCell.xib in Resources */,
 				E9F890961B86D9770057ECBF /* ic_dismiss.png in Resources */,
 				F47205581BABFDFF00E0ADA0 /* PIEDoneCollectionViewCell.xib in Resources */,
 				F428F01F1BD331EF00318AC2 /* PIELaunchViewController.xib in Resources */,
@@ -4159,6 +4168,7 @@
 				F40207431BA7C4160007CE02 /* PIECustomPresentViewController.m in Sources */,
 				F4F72C041BCB8F08002FF05A /* PIEMyCollectionViewController.m in Sources */,
 				F44A527F1C0C335000707281 /* PIEActionSheet_Report.m in Sources */,
+				F413B0501C167AB500F9BA27 /* PIECarouselPageTableViewCell.m in Sources */,
 				F46117DB1BAD1101001A6F1A /* IQKeyboardManager.m in Sources */,
 				F4E5F5FA1BD9D2E100AB8B31 /* AFURLConnectionOperation.m in Sources */,
 				F47EF0891C031FF500BFB442 /* VVBlurViewController.m in Sources */,
