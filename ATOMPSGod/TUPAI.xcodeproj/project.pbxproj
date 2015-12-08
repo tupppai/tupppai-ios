@@ -248,7 +248,7 @@
 		F40207311BA7C17C0007CE02 /* PIECameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F402072F1BA7C17C0007CE02 /* PIECameraViewController.m */; };
 		F40207321BA7C17C0007CE02 /* PIECameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F40207301BA7C17C0007CE02 /* PIECameraViewController.xib */; };
 		F40207411BA7C4160007CE02 /* PIEPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = F402073B1BA7C4160007CE02 /* PIEPresenter.m */; };
-		F40207421BA7C4160007CE02 /* PIETransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = F402073D1BA7C4160007CE02 /* PIETransitioning.m */; };
+		F40207421BA7C4160007CE02 /* PIETransitioning_CarouselHome.m in Sources */ = {isa = PBXBuildFile; fileRef = F402073D1BA7C4160007CE02 /* PIETransitioning_CarouselHome.m */; };
 		F40207431BA7C4160007CE02 /* PIECustomPresentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F402073F1BA7C4160007CE02 /* PIECustomPresentViewController.m */; };
 		F402F0F31BE8852F004988B4 /* PIESearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F402F0F11BE8852F004988B4 /* PIESearchViewController.m */; };
 		F402F0F41BE8852F004988B4 /* PIESearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F402F0F21BE8852F004988B4 /* PIESearchViewController.xib */; };
@@ -262,6 +262,7 @@
 		F41366951BBE73D900EE0C4E /* PIEReplyCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F41366941BBE73D900EE0C4E /* PIEReplyCollectionCell.xib */; };
 		F413B0501C167AB500F9BA27 /* PIECarouselPageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F413B04E1C167AB500F9BA27 /* PIECarouselPageTableViewCell.m */; };
 		F413B0511C167AB500F9BA27 /* PIECarouselPageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F413B04F1C167AB500F9BA27 /* PIECarouselPageTableViewCell.xib */; };
+		F413B0591C16E2C000F9BA27 /* PIETransitioning_CarouselComment.m in Sources */ = {isa = PBXBuildFile; fileRef = F413B0581C16E2C000F9BA27 /* PIETransitioning_CarouselComment.m */; };
 		F4155D461BB3DA1300A0B045 /* PIEHighlightableLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4155D451BB3DA1300A0B045 /* PIEHighlightableLabel.m */; };
 		F41BA04F1C0E9A2800979D43 /* PIEButton_Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = F41BA04E1C0E9A2800979D43 /* PIEButton_Tag.m */; };
 		F41BA0521C0E9DC800979D43 /* PIETagsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F41BA0511C0E9DC800979D43 /* PIETagsView.m */; };
@@ -998,8 +999,8 @@
 		F40207301BA7C17C0007CE02 /* PIECameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIECameraViewController.xib; sourceTree = "<group>"; };
 		F402073A1BA7C4160007CE02 /* PIEPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEPresenter.h; sourceTree = "<group>"; };
 		F402073B1BA7C4160007CE02 /* PIEPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEPresenter.m; sourceTree = "<group>"; };
-		F402073C1BA7C4160007CE02 /* PIETransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIETransitioning.h; sourceTree = "<group>"; };
-		F402073D1BA7C4160007CE02 /* PIETransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIETransitioning.m; sourceTree = "<group>"; };
+		F402073C1BA7C4160007CE02 /* PIETransitioning_CarouselHome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIETransitioning_CarouselHome.h; sourceTree = "<group>"; };
+		F402073D1BA7C4160007CE02 /* PIETransitioning_CarouselHome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIETransitioning_CarouselHome.m; sourceTree = "<group>"; };
 		F402073E1BA7C4160007CE02 /* PIECustomPresentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECustomPresentViewController.h; sourceTree = "<group>"; };
 		F402073F1BA7C4160007CE02 /* PIECustomPresentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECustomPresentViewController.m; sourceTree = "<group>"; };
 		F402F0F01BE8852F004988B4 /* PIESearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIESearchViewController.h; sourceTree = "<group>"; };
@@ -1021,6 +1022,8 @@
 		F413B04D1C167AB500F9BA27 /* PIECarouselPageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECarouselPageTableViewCell.h; sourceTree = "<group>"; };
 		F413B04E1C167AB500F9BA27 /* PIECarouselPageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECarouselPageTableViewCell.m; sourceTree = "<group>"; };
 		F413B04F1C167AB500F9BA27 /* PIECarouselPageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIECarouselPageTableViewCell.xib; sourceTree = "<group>"; };
+		F413B0571C16E2C000F9BA27 /* PIETransitioning_CarouselComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIETransitioning_CarouselComment.h; sourceTree = "<group>"; };
+		F413B0581C16E2C000F9BA27 /* PIETransitioning_CarouselComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIETransitioning_CarouselComment.m; sourceTree = "<group>"; };
 		F4155D441BB3DA1300A0B045 /* PIEHighlightableLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEHighlightableLabel.h; sourceTree = "<group>"; };
 		F4155D451BB3DA1300A0B045 /* PIEHighlightableLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEHighlightableLabel.m; sourceTree = "<group>"; };
 		F41BA04D1C0E9A2800979D43 /* PIEButton_Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEButton_Tag.h; sourceTree = "<group>"; };
@@ -2753,8 +2756,10 @@
 			children = (
 				F402073A1BA7C4160007CE02 /* PIEPresenter.h */,
 				F402073B1BA7C4160007CE02 /* PIEPresenter.m */,
-				F402073C1BA7C4160007CE02 /* PIETransitioning.h */,
-				F402073D1BA7C4160007CE02 /* PIETransitioning.m */,
+				F402073C1BA7C4160007CE02 /* PIETransitioning_CarouselHome.h */,
+				F402073D1BA7C4160007CE02 /* PIETransitioning_CarouselHome.m */,
+				F413B0571C16E2C000F9BA27 /* PIETransitioning_CarouselComment.h */,
+				F413B0581C16E2C000F9BA27 /* PIETransitioning_CarouselComment.m */,
 				F402073E1BA7C4160007CE02 /* PIECustomPresentViewController.h */,
 				F402073F1BA7C4160007CE02 /* PIECustomPresentViewController.m */,
 			);
@@ -4192,7 +4197,7 @@
 				F40207311BA7C17C0007CE02 /* PIECameraViewController.m in Sources */,
 				E9F8908F1B86C4AB0057ECBF /* FMDatabaseAdditions.m in Sources */,
 				F4AE73C31BBA90D800734BCB /* PIEFriendAskViewController.m in Sources */,
-				F40207421BA7C4160007CE02 /* PIETransitioning.m in Sources */,
+				F40207421BA7C4160007CE02 /* PIETransitioning_CarouselHome.m in Sources */,
 				F41BA0CE1C0EDCE800979D43 /* MJRefreshGifHeader.m in Sources */,
 				5CDB06041AA405A40089121E /* UIColor+HSB.m in Sources */,
 				F4EC11231BCF456E002D1DCF /* PIENotificationVM.m in Sources */,
@@ -4205,6 +4210,7 @@
 				F449BB701BE496C50019C315 /* MMPlaceHolder.m in Sources */,
 				F4D07A5D1BBA3AB70016A8B5 /* PIEEliteManager.m in Sources */,
 				5CDB06011AA405A40089121E /* UIColor+CIELAB.m in Sources */,
+				F413B0591C16E2C000F9BA27 /* PIETransitioning_CarouselComment.m in Sources */,
 				F46521E81BC75D1F0043D706 /* PIEToHelpViewController.m in Sources */,
 				E95691B11B22E88300DA84BB /* MTLReflection.m in Sources */,
 				E99D2F5B1B1C7E8D000D7784 /* UIImage+Saving.m in Sources */,

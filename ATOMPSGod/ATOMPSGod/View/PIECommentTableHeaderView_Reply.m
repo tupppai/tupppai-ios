@@ -55,24 +55,25 @@
     }];
     [self.avatarView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self).with.offset(10);
-        make.left.equalTo(self).with.offset(12);
+        make.right.equalTo(self).with.offset(-12);
         make.width.equalTo(@(32));
         make.height.equalTo(@(32));
     }];
     [self.usernameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_avatarView).with.offset(0);
-        make.left.equalTo(_avatarView.mas_right).with.offset(9);
+        make.right.equalTo(_avatarView.mas_left).with.offset(-9);
     }];
     [self.timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_usernameLabel.mas_bottom).with.offset(3);
-        make.left.equalTo(_avatarView.mas_right).with.offset(9);
+        make.right.equalTo(_usernameLabel.mas_right).with.offset(0);
     }];
     [self.followButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@58);
         make.height.equalTo(@28);
         make.centerY.equalTo(self.avatarView);
-        make.right.equalTo(self).with.offset(-12);
+        make.left.equalTo(self).with.offset(12);
     }];
+
     
     
     [self.imageViewMain mas_makeConstraints:^(MASConstraintMaker *make) {

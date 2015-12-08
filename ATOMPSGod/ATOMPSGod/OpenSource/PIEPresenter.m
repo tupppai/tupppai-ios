@@ -22,7 +22,7 @@
 //  THE SOFTWARE.
 
 #import "PIEPresenter.h"
-#import "PIETransitioning.h"
+#import "PIETransitioning_CarouselHome.h"
 
 @interface PIEPresenter ()
 @end
@@ -41,7 +41,7 @@
                                                                  presentingController:(UIViewController *)presenting
                                                                      sourceController:(UIViewController *)source {
     
-    PIETransitioning *transition = [PIETransitioning new];
+    PIETransitioning_CarouselHome *transition = [PIETransitioning_CarouselHome new];
     transition.isPresentation = YES;
     return transition;
     
@@ -49,7 +49,7 @@
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
     
-    PIETransitioning *transition = [PIETransitioning new];
+    PIETransitioning_CarouselHome *transition = [PIETransitioning_CarouselHome new];
     transition.isPresentation = NO;
     return transition;
 }
