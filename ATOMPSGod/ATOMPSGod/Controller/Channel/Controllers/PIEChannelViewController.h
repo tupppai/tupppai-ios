@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 
-@interface PIEChannelViewController : UIViewController
+@interface PIEChannelViewController : DDBaseVC
 
 @end

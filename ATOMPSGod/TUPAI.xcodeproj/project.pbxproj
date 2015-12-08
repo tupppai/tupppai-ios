@@ -529,6 +529,7 @@
 		0E3FB9E31C155E0C0012E290 /* PIENewAskMakeUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENewAskMakeUpViewController.m; sourceTree = "<group>"; };
 		0E3FB9E91C15603A0012E290 /* PIENewReplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIENewReplyViewController.h; sourceTree = "<group>"; };
 		0E3FB9EA1C15603A0012E290 /* PIENewReplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENewReplyViewController.m; sourceTree = "<group>"; };
+		0ECE8FB11C16AB4500E98CB5 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
 		0EF2F5BF1C154A5700F27D61 /* PIEChannelBannerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelBannerCell.h; sourceTree = "<group>"; };
 		0EF2F5C01C154A5700F27D61 /* PIEChannelBannerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelBannerCell.m; sourceTree = "<group>"; };
 		0EF2F5C11C154A5700F27D61 /* PIEChannelBannerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEChannelBannerCell.xib; sourceTree = "<group>"; };
@@ -1570,6 +1571,14 @@
 			path = Categories;
 			sourceTree = "<group>";
 		};
+		0ECE8FB01C16AB2B00E98CB5 /* Reveal */ = {
+			isa = PBXGroup;
+			children = (
+				0ECE8FB11C16AB4500E98CB5 /* Reveal.framework */,
+			);
+			path = Reveal;
+			sourceTree = "<group>";
+		};
 		0EF2F5B71C15497A00F27D61 /* Channel */ = {
 			isa = PBXGroup;
 			children = (
@@ -2161,6 +2170,7 @@
 		5CDB05EC1AA400410089121E /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				0ECE8FB01C16AB2B00E98CB5 /* Reveal */,
 				F41BA0961C0EDCE800979D43 /* MJRefresh */,
 				F44A526E1C0BF83000707281 /* TFHpple */,
 				F47EF07D1C031FF500BFB442 /* VVBlur */,
@@ -4545,6 +4555,8 @@
 					"$(PROJECT_DIR)/ATOMPSGod/Framework",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/QQSDK",
+					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/Reveal",
+					"$(PROJECT_DIR)/ATOMPSGod/Vendor/Reveal",
 				);
 				GCC_PREFIX_HEADER = ./ATOMPSGod/psgod.pch;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
@@ -4563,6 +4575,10 @@
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
+					"-ObjC",
+					"-lz",
+					"-framework",
+					Reveal,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tupppai.www;
 				PRODUCT_NAME = TUPAI;
@@ -4587,6 +4603,8 @@
 					"$(PROJECT_DIR)/ATOMPSGod/Framework",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/QQSDK",
+					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/Reveal",
+					"$(PROJECT_DIR)/ATOMPSGod/Vendor/Reveal",
 				);
 				GCC_PREFIX_HEADER = ./ATOMPSGod/psgod.pch;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
@@ -4713,6 +4731,8 @@
 					"$(PROJECT_DIR)/ATOMPSGod/Framework",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/QQSDK",
+					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/Reveal",
+					"$(PROJECT_DIR)/ATOMPSGod/Vendor/Reveal",
 				);
 				GCC_PREFIX_HEADER = ./ATOMPSGod/psgod.pch;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
