@@ -23,4 +23,7 @@ highlighted toggle color only!
 
 @property (nonatomic, assign) NSInteger number;
 @property (nonatomic, copy) NSString* numberString;
+
+@property (nonatomic, assign) CGSize imageSize;
+
 @end

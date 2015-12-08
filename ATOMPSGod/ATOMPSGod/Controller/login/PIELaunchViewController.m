@@ -37,7 +37,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor clearColor];
     CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = CGRectMake(0, - NAV_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT);
+    gradient.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithHex:0xFFF00D] CGColor], (id)[[UIColor colorWithHex:0xFFEF00] CGColor], nil];
     [self.view.layer insertSublayer:gradient atIndex:0];
     

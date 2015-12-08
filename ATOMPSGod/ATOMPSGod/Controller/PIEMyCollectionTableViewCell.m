@@ -19,12 +19,15 @@
     _pageImageView.clipsToBounds = YES;
     _nameLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.6];
     _contentLabel.textColor =[UIColor colorWithHex:0x000000 andAlpha:0.8];
+    [_nameLabel setFont:[UIFont lightTupaiFontOfSize:12]];
+    [_contentLabel setFont:[UIFont lightTupaiFontOfSize:14]];
+
     [self addLine];
 }
 
 - (void)addLine {
     UIView* line = [UIView new];
-    line.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2];
+    line.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
     [self addSubview:line];
     [line mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@0.5);
@@ -51,7 +54,7 @@
     }
     
     [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarURL]placeholderImage:[UIImage imageNamed:@"avatar_default"]];
-    [_pageImageView setImageWithURL:[NSURL URLWithString:vm.imageURL]placeholderImage:[UIImage imageNamed:@"cellBG"]];
+    [_pageImageView setImageWithURL:[NSURL URLWithString:vm.imageURL]placeholderImage:[UIImage imageNamed:@"cellHolder"]];
     _nameLabel.text = vm.username;
     _contentLabel.text = vm.content;
 }

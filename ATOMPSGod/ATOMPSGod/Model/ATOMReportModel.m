@@ -6,9 +6,8 @@
 //  Copyright (c) 2015 ATOM. All rights reserved.
 //
 
+//#import "DDSessionManager.h"
 #import "ATOMReportModel.h"
-#import "DDSessionManager.h"
-
 @implementation ATOMReportModel
 
 + (NSURLSessionDataTask *)report :(NSDictionary*)param withBlock:(void (^)(NSError *))block {

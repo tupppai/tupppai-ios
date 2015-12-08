@@ -37,13 +37,29 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.edgesForExtendedLayout = UIRectEdgeAll;
     [self createUI];
 }
 
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    self.navigationController.navigationBar.backgroundColor = [UIColor colorWithHex:0xffffff andAlpha:0.9];
+}
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+}
 - (void)createUI {
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
-    _tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    _tableView.backgroundColor = [UIColor whiteColor];
     _tableView.tableFooterView = [UIView new];
+    _tableView.separatorInset = UIEdgeInsetsMake(0, 30, 0, 20);
+    _tableView.separatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
+
     self.view = _tableView;
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -85,7 +101,11 @@
     return 45;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section != 0) {
         return 10;
+    } else {
+        return 0;
+    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -260,9 +280,23 @@
 }
 
 -(void) clearCache {
+    
+//    UIAlertController *alertController = [UIAlertController  alertControllerWithTitle:@"确定要清理缓存吗？"  message:nil  preferredStyle:UIAlertControllerStyleAlert];
+//    [alertController addAction:[UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+//        [[NSURLCache sharedURLCache]removeAllCachedResponses];
+//        //                              DDHomePageManager *showHomepage = [DDHomePageManager new];
+//        //                              [showHomepage clearHomePages];
+//        [Hud success:@"清理缓存成功" inView:self.view];
+//
+//    }]];
+//    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+//        [self dismissViewControllerAnimated:YES completion:nil];
+//    }]];
+//    [self presentViewController:alertController animated:YES completion:nil];
+    
     SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"😊" andMessage:@"确定要清理缓存吗？"];
     [alertView addButtonWithTitle:@"不清理"
-                             type:SIAlertViewButtonTypeDestructive
+                             type:SIAlertViewButtonTypeCancel
                           handler:^(SIAlertView *alert) {
                           }];
     [alertView addButtonWithTitle:@"坚决清理"

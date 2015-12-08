@@ -9,6 +9,7 @@
 #import "PIENewReplyTableCell.h"
 #import "PIEImageEntity.h"
 #import "POP.h"
+//#import "MMPlaceHolder.h"
 @interface PIENewReplyTableCell()
 @property (nonatomic, strong) UIImageView* blurView;
 @end
@@ -18,6 +19,7 @@
 - (void)awakeFromNib {
     // Initialization code
     [self commonInit];
+//    [self showPlaceHolder];
 }
 
 - (void)commonInit {
@@ -29,7 +31,14 @@
     _theImageView.contentMode = UIViewContentModeScaleAspectFit;
     _theImageView.backgroundColor = [UIColor clearColor];
     _theImageView.clipsToBounds = YES;
-//    _collectView.userInteractionEnabled = YES;
+    [_nameLabel setFont:[UIFont lightTupaiFontOfSize:13]];
+    [_contentLabel setFont:[UIFont lightTupaiFontOfSize:15]];
+    [_timeLabel setFont:[UIFont lightTupaiFontOfSize:10]];
+    
+    [_nameLabel setTextColor:[UIColor colorWithHex:0x4a4a4a andAlpha:1.0]];
+    [_timeLabel setTextColor:[UIColor colorWithHex:0x4a4a4a andAlpha:0.3]];
+    [_contentLabel setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.9]];
+
     [self configThumbAnimateView];
     
     [self.contentView insertSubview:self.blurView belowSubview:_theImageView];
@@ -95,7 +104,7 @@
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:viewModel.imageURL]];
     [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
-    [_theImageView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellBG"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
+    [_theImageView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellHolder"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
         ws.theImageView.image = image;
         ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
     } failure:nil];
@@ -112,19 +121,19 @@
         PIEImageEntity* entity = [viewModel.thumbEntityArray objectAtIndex:0];
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:entity.url]];
         [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
-        [self.thumbView.rightView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellBG"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
+        [self.thumbView.rightView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellHolder"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
             ws.thumbView.rightView.image = image;
             //ws.thumbView.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
         } failure:nil];
         if (viewModel.thumbEntityArray.count == 2) {
             entity = viewModel.thumbEntityArray[1];
-            [_thumbView.leftView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+            [_thumbView.leftView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
         }
     }
     else {
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:viewModel.imageURL]];
         [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
-        [self.thumbView.rightView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellBG"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
+        [self.thumbView.rightView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellHolder"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
             ws.thumbView.rightView.image = image;
             //ws.thumbView.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
         } failure:nil];

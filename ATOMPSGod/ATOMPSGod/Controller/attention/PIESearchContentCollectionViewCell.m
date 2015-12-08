@@ -20,13 +20,14 @@
     _avatarButton.clipsToBounds = YES;
     _avatarButton.backgroundColor = [UIColor lightGrayColor];
     _avatarButton.userInteractionEnabled = NO;
+    _nameLabel.alpha = 0.8;
 }
 
 - (void)injectSauce:(PIEPageVM*)vm {
-    [_avatarButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+    [_avatarButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
     _nameLabel.text = vm.username;
     _contentLabel.text = vm.content;
-    [_imageView setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+    [_imageView setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
     if (vm.type == PIEPageTypeAsk) {
         _typeImageView.image = [UIImage imageNamed:@"pie_search_ask"];
     }else if (vm.type == PIEPageTypeReply) {

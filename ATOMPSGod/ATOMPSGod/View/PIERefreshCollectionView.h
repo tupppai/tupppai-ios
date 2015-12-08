@@ -7,10 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CHTCollectionViewWaterfallLayout.h"
+
 
 @interface PIERefreshCollectionView : UICollectionView
 @property (nonatomic, weak) id<PWRefreshBaseCollectionViewDelegate> psDelegate;
 @property (nonatomic, assign) BOOL toRefreshTop;
 @property (nonatomic, assign) BOOL toRefreshBottom;
+
+@property (nonatomic, weak) id<CHTCollectionViewDelegateWaterfallLayout> delegate;
+
 
 @end

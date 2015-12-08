@@ -8,7 +8,7 @@
 
 #import "UIColor+PSGod.h"
 
-@implementation UIColor (PSGod)
+@implementation UIColor (Tupai)
 
 +  (UIColor *)pieYellowColor {
     return [UIColor colorWithHex:PIEColorHex];
@@ -34,7 +34,7 @@
 }
 
 @end
-@implementation UIFont (PSGod)
+@implementation UIFont (Tupai)
 
 +  (UIFont *)kfcButton {
     return [UIFont fontWithName:kFontNameDefault size:12];
@@ -56,23 +56,13 @@
     return [UIFont fontWithName:kFontNameDefault size:14];
 }
 
++ (UIFont *)mediumTupaiFontOfSize:(CGFloat)fontSize {
+    return [UIFont fontWithName:@"STHeitiSC-Medium" size:fontSize];
+}
+
++ (UIFont *)lightTupaiFontOfSize:(CGFloat)fontSize {
+    return [UIFont fontWithName:@"STHeitiSC-Light" size:fontSize];
+}
 @end
 
 
-
-//@implementation UIFont (SystemFontOverride)
-//
-//#pragma clang diagnostic push
-//#pragma clang diagnostic ignored "-Wobjc-protocol-method-implementation"
-//
-//+ (UIFont *)boldSystemFontOfSize:(CGFloat)fontSize {
-//    return [UIFont fontWithName:@"STHeitiSC-Medium" size:fontSize];
-//}
-//
-//+ (UIFont *)systemFontOfSize:(CGFloat)fontSize {
-//    return [UIFont fontWithName:@"STHeitiSC-Light" size:fontSize];
-//}
-//
-//#pragma clang diagnostic pop
-//
-//@end

@@ -12,12 +12,12 @@
 @implementation PIEFollowViewModel
 
 - (void)setViewModelData:(PIEEntityFollow *)concern {
-    _uid = concern.uid;
-    _userName = concern.nickname;
-    _userSex = concern.sex ? @"man" : @"woman";
-    _avatarURL = concern.avatar;
-    _fansCount = [NSString stringWithFormat:@"%zd", concern.fansCount];
-    _askCount = [NSString stringWithFormat:@"%zd", concern.askCount];
+    _uid        = concern.uid;
+    _userName   = concern.nickname;
+    _userSex    = concern.sex ? @"man" : @"woman";
+    _avatarURL  = concern.avatar;
+    _fansCount  = [NSString stringWithFormat:@"%zd", concern.fansCount];
+    _askCount   = [NSString stringWithFormat:@"%zd", concern.askCount];
     _replyCount = [NSString stringWithFormat:@"%zd", concern.replyCount];
     if (concern.isMyFollow == YES && concern.isMyFan == YES) {
         _concernStatus = 2;

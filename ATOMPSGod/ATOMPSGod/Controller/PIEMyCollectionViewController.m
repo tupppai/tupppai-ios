@@ -33,7 +33,7 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.psDelegate = self;
-    _tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    _tableView.backgroundColor = [UIColor clearColor];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.emptyDataSetDelegate = self;
     _tableView.emptyDataSetSource = self;
@@ -51,7 +51,7 @@
     _currentPage = 1;
     _dataSource = [NSMutableArray array];
     _isfirstLoading = YES;
-    [self.tableView.header beginRefreshing];
+    [self.tableView.mj_header beginRefreshing];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -86,14 +86,14 @@
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [_tableView.footer endRefreshing];
+        [_tableView.mj_footer endRefreshing];
     }
 }
 #pragma mark - GetDataSource
 
 - (void)getDataSource {
     WS(ws);
-    [ws.tableView.footer endRefreshing];
+    [ws.tableView.mj_footer endRefreshing];
 
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     _timeStamp = [[NSDate date] timeIntervalSince1970];
@@ -113,7 +113,7 @@
         [_dataSource addObjectsFromArray:arrayAgent];
         ws.isfirstLoading = NO;
         [ws.tableView reloadData];
-        [ws.tableView.header endRefreshing];
+        [ws.tableView.mj_header endRefreshing];
         if (resultArray.count == 0) {
             ws.canRefreshFooter = NO;
         } else {
@@ -124,7 +124,7 @@
 
 - (void)getMoreDataSource {
     WS(ws);
-    [ws.tableView.header endRefreshing];
+    [ws.tableView.mj_header endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     _currentPage++;
     [param setObject:@(_currentPage) forKey:@"page"];
@@ -137,7 +137,7 @@
             [_dataSource addObject:vm];
         }
         [ws.tableView reloadData];
-        [ws.tableView.footer endRefreshing];
+        [ws.tableView.mj_footer endRefreshing];
         if (resultArray.count == 0) {
             ws.canRefreshFooter = NO;
         } else {

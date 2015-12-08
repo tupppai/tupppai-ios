@@ -12,12 +12,12 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="intro2_desc" translatesAutoresizingMaskIntoConstraints="NO" id="wbO-eT-ObQ" customClass="intro1_title">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="intro2_desc" translatesAutoresizingMaskIntoConstraints="NO" id="wbO-eT-ObQ" customClass="intro1_title">
                     <rect key="frame" x="207.5" y="130" width="184" height="12"/>
                     <animations/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="intro2.png" translatesAutoresizingMaskIntoConstraints="NO" id="Ffg-2o-YXW">
-                    <rect key="frame" x="81" y="192" width="438" height="408"/>
+                    <rect key="frame" x="100" y="192" width="400" height="408"/>
                     <animations/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="intro2_title" translatesAutoresizingMaskIntoConstraints="NO" id="kt8-AL-inY">
@@ -37,6 +37,11 @@
                 <constraint firstItem="kt8-AL-inY" firstAttribute="top" secondItem="5cM-13-mtN" secondAttribute="top" constant="85" id="hvY-b8-BaD"/>
                 <constraint firstItem="Ffg-2o-YXW" firstAttribute="height" secondItem="5cM-13-mtN" secondAttribute="height" multiplier="68:100" id="zaO-Jn-hqM"/>
             </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="SuN-O2-pRB"/>
+                </mask>
+            </variation>
         </view>
     </objects>
     <resources>

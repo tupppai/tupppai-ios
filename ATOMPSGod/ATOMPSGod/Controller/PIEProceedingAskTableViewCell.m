@@ -37,11 +37,15 @@
     _contentLabel.textColor = [UIColor colorWithHex:0x50484B andAlpha:1];
     _contentTextField.textColor = [UIColor colorWithHex:0x50484B andAlpha:1];
     _allWorkDescLabel.textColor = [UIColor colorWithHex:0xFEAA2B andAlpha:1];
+    _contentLabel.font = [UIFont lightTupaiFontOfSize:14];
+    _contentTextField.font = [UIFont lightTupaiFontOfSize:14];
+    _allWorkDescLabel.font = [UIFont lightTupaiFontOfSize:11];
+    
     _contentTextField.enabled = NO;
     [_editButton setTitleColor:[UIColor colorWithHex:0xff6d3f] forState:UIControlStateSelected];
     [_editButton setImage:[UIImage new] forState:UIControlStateSelected];
     [_editButton setTitle:@"确定" forState:UIControlStateSelected];
-    _editButton.titleLabel.font = [UIFont systemFontOfSize:14.0];
+    _editButton.titleLabel.font = [UIFont lightTupaiFontOfSize:14.0];
     [_editButton addTarget:self action:@selector(editAsk) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -91,14 +95,14 @@
 - (void)injectSource:(NSArray*)array {
     _source = [array mutableCopy];
     _vmAsk1 = [_source objectAtIndex:0];
-    [_originView1.imageView setImageWithURL:[NSURL URLWithString:_vmAsk1.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+    [_originView1.imageView setImageWithURL:[NSURL URLWithString:_vmAsk1.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
     [_source removeObjectAtIndex:0];
     
     if (_source.count >= 1) {
         _vmAsk2 = [_source objectAtIndex:0];
         if (_vmAsk2.type != PIEPageTypeReply) {
             [_source removeObjectAtIndex:0];
-            [_originView2.imageView setImageWithURL:[NSURL URLWithString:_vmAsk2.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+            [_originView2.imageView setImageWithURL:[NSURL URLWithString:_vmAsk2.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
             [_originView2 mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.width.equalTo(@84);
                 make.leading.equalTo(_originView1.mas_trailing).with.offset(10);

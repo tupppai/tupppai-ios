@@ -24,7 +24,7 @@
 }
 - (void)injectSource:(PIEPageVM*)vm {
     
-    [_theImageView setImageWithURL:[NSURL URLWithString:vm.imageURL]placeholderImage:[UIImage imageNamed:@"cellBG"]];
+    [_theImageView setImageWithURL:[NSURL URLWithString:vm.imageURL]placeholderImage:[UIImage imageNamed:@"cellHolder"]];
     
     _likeCountLabel.text = vm.likeCount;
 }

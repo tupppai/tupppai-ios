@@ -49,6 +49,8 @@
     
     [self setupUmengAnalytics];
     
+    
+    
     return YES;
 }
 - (void)setupUmengAnalytics {
@@ -87,7 +89,8 @@
                                                                                      categories:nil];
         [UMessage registerRemoteNotificationAndUserNotificationSettings:userSettings];
         
-    } else{
+    }
+    else {
         //register remoteNotification types (iOS 8.0以下)
         [UMessage registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge
          |UIRemoteNotificationTypeSound
@@ -108,14 +111,19 @@
 //    self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:vc];
 //    self.window.rootViewController = self.baseNav;
 //            [self.window makeKeyAndVisible];
-    
+//
+
     [DDUserManager fetchUserInDBToCurrentUser:^(BOOL success) {
         if (success) {
             self.window.rootViewController = self.mainTabBarController;
         } else {
-            if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
+            
+            NSNumber *version =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+            NSString* launchKey = [NSString stringWithFormat:@"HasLaunchedOnce%@",version];
+            
+            if (![[NSUserDefaults standardUserDefaults] boolForKey:launchKey])
             {
-                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:launchKey];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 DDIntroVC* vc = [DDIntroVC new];
                 self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:vc];
@@ -130,18 +138,18 @@
     }];
 }
 
--(void)setupNotification {
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
-    {
-        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
-        [[UIApplication sharedApplication] registerForRemoteNotifications];
-    }
-    else
-    {
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-         (UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert)];
-    }
-}
+//-(void)setupNotification {
+//    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+//    {
+//        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+//        [[UIApplication sharedApplication] registerForRemoteNotifications];
+//    }
+//    else
+//    {
+//        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+//         (UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert)];
+//    }
+//}
 -(void)initializeDatabase {
     [ATOMBaseDAO new];
 }
@@ -229,7 +237,6 @@
                                    stringByReplacingOccurrencesOfString:@" " withString:@""];
     
     [self uploadDeviceInfo:devicetokenString];
-
 }
 - (void)uploadDeviceInfo:(NSString*)token {
     NSUUID *oNSUUID = [[UIDevice currentDevice] identifierForVendor];

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="278" id="KGk-i7-Jjw" customClass="PIEChannelTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="467" height="278"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="467" height="277"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gKv-rV-B0d">
+                        <rect key="frame" x="0.0" y="0.0" width="467" height="149"/>
+                        <color key="backgroundColor" red="0.92534722219999999" green="0.39678257830000002" blue="0.41251772450000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="149" id="EPm-nn-aWV"/>
+                            <constraint firstAttribute="width" secondItem="gKv-rV-B0d" secondAttribute="height" multiplier="714:228" id="kgF-Un-h00"/>
+                        </constraints>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EsH-Of-MTP" userLabel="containerView">
+                        <rect key="frame" x="0.0" y="149" width="467" height="100"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GFW-7B-nhJ">
+                                <rect key="frame" x="10" y="8" width="85" height="84"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="GFW-7B-nhJ" secondAttribute="height" multiplier="1:1" id="mj2-yn-knq"/>
+                                </constraints>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FtG-wG-PzG" customClass="SwipeView">
+                                <rect key="frame" x="105" y="7" width="352" height="85"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="GFW-7B-nhJ" firstAttribute="centerY" secondItem="EsH-Of-MTP" secondAttribute="centerY" id="1Hm-zQ-Du9"/>
+                            <constraint firstAttribute="trailing" secondItem="FtG-wG-PzG" secondAttribute="trailing" constant="10" id="2BD-X7-xXJ"/>
+                            <constraint firstItem="FtG-wG-PzG" firstAttribute="leading" secondItem="GFW-7B-nhJ" secondAttribute="trailing" constant="10" id="723-Js-dTS"/>
+                            <constraint firstItem="FtG-wG-PzG" firstAttribute="height" secondItem="GFW-7B-nhJ" secondAttribute="height" id="VoT-Ij-3zV"/>
+                            <constraint firstItem="GFW-7B-nhJ" firstAttribute="leading" secondItem="EsH-Of-MTP" secondAttribute="leading" constant="10" id="chc-3K-Rhx"/>
+                            <constraint firstAttribute="width" secondItem="EsH-Of-MTP" secondAttribute="height" multiplier="714:152" id="eAM-iU-h3S"/>
+                            <constraint firstItem="GFW-7B-nhJ" firstAttribute="height" secondItem="EsH-Of-MTP" secondAttribute="height" multiplier="0.85" id="nos-tJ-eXb"/>
+                            <constraint firstItem="FtG-wG-PzG" firstAttribute="centerY" secondItem="EsH-Of-MTP" secondAttribute="centerY" id="xMy-aX-vbA"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="EsH-Of-MTP" secondAttribute="trailing" id="AgS-ky-4of"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="EsH-Of-MTP" secondAttribute="bottom" id="Klk-MO-G91"/>
+                    <constraint firstAttribute="trailing" secondItem="gKv-rV-B0d" secondAttribute="trailing" id="hO4-j6-iX6"/>
+                    <constraint firstItem="EsH-Of-MTP" firstAttribute="top" secondItem="gKv-rV-B0d" secondAttribute="bottom" id="kG9-c9-8YT"/>
+                    <constraint firstItem="EsH-Of-MTP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="nBb-S2-N1w"/>
+                    <constraint firstItem="gKv-rV-B0d" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="sC1-Tq-jzk"/>
+                    <constraint firstItem="gKv-rV-B0d" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="skI-UW-Wll"/>
+                </constraints>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="291.5" y="312"/>
+        </tableViewCell>
+    </objects>
+</document>

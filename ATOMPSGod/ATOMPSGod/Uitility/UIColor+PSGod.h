@@ -7,7 +7,7 @@
 //
 
 
-@interface UIColor(PSGod)
+@interface UIColor(Tupai)
 +  (UIColor *)pieYellowColor;
 +(UIColor *) kfcUsername;
 +(UIColor *)kfcPublishTime;
@@ -16,16 +16,15 @@
 +  (UIColor *)kfcPublishType;
 +  (UIColor *)kTitleForEmptySource;
 @end
-@interface UIFont(PSGod)
+@interface UIFont(Tupai)
 +  (UIFont *)kfcButton;
 +  (UIFont *)kfcPublishTime;
 +  (UIFont *)kfcPublishTimeSmall;
 +  (UIFont *)kfcPublishType;
 +  (UIFont *)kfcCommentUserName;
 +  (UIFont *)kfcComment;
-@end
-
-
-@interface UIFont (SystemFontOverride)
++ (UIFont *)mediumTupaiFontOfSize:(CGFloat)fontSize;
++ (UIFont *)lightTupaiFontOfSize:(CGFloat)fontSize;
 
 @end
+

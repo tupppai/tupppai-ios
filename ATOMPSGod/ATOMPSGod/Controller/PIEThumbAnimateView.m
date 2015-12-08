@@ -51,7 +51,7 @@
     [_originView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self);
         make.leading.equalTo(self);
-        make.width.equalTo(@40);
+        make.width.equalTo(@34);
         make.height.equalTo(@16);
     }];
 }

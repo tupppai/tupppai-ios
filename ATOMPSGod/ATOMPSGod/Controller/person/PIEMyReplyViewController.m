@@ -48,7 +48,7 @@
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [_collectionView.footer endRefreshing];
+        [_collectionView.mj_footer endRefreshing];
     }
     
 }
@@ -57,7 +57,7 @@
 
 - (void)getDataSource {
     WS(ws);
-    [ws.collectionView.footer endRefreshing];
+    [ws.collectionView.mj_footer endRefreshing];
 
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     _timeStamp = [[NSDate date] timeIntervalSince1970];
@@ -76,14 +76,14 @@
         [ws.dataSource addObjectsFromArray:arrayAgent];
         ws.isfirstLoading = NO;
         [ws.collectionView reloadData];
-        [ws.collectionView.header endRefreshing];
+        [ws.collectionView.mj_header endRefreshing];
         
     }];
 }
 
 - (void)getMoreDataSource {
     WS(ws);
-    [ws.collectionView.header endRefreshing];
+    [ws.collectionView.mj_header endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     ws.currentPage++;
     [param setObject:@(ws.currentPage) forKey:@"page"];
@@ -104,7 +104,7 @@
         } else {
             ws.canRefreshFooter = YES;
         }
-        [ws.collectionView.footer endRefreshing];
+        [ws.collectionView.mj_footer endRefreshing];
         [ws.collectionView reloadData];
     }];
 }
@@ -145,7 +145,7 @@
     _canRefreshFooter = YES;
     _dataSource = [NSMutableArray array];
     _isfirstLoading = YES;
-    [self.collectionView.header beginRefreshing];
+    [self.collectionView.mj_header beginRefreshing];
 }
 
 #pragma mark - UICollectionViewDataSource

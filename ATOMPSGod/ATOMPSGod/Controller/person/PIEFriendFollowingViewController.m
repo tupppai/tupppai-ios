@@ -42,7 +42,7 @@
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [_tableView.footer endRefreshing];
+        [_tableView.mj_footer endRefreshing];
     }
 }
 
@@ -56,10 +56,10 @@
 
 - (void)createUI {
     self.title = [NSString stringWithFormat:@"%@的关注", _userName];
-    _concernView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
+    _concernView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     self.view = _concernView;
     _tableView = [[PIERefreshFooterTableView alloc] initWithFrame:_concernView.bounds];
-    _tableView.backgroundColor = [UIColor colorWithHex:0xededed];
+    _tableView.backgroundColor = [UIColor whiteColor];
     _tableView.tableFooterView = [UIView new];
     [_concernView addSubview:_tableView];
     _tableView.dataSource = self;
@@ -142,7 +142,7 @@
 }
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
 {
-    NSString *text = @"他还没有关注的人";
+    NSString *text = @"ta还没有关注的人";
     
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
                                  NSForegroundColorAttributeName: [UIColor darkGrayColor]};
@@ -203,7 +203,7 @@
         } else {
             ws.canRefreshFooter = YES;
         }
-        [ws.tableView.footer endRefreshing];
+        [ws.tableView.mj_footer endRefreshing];
         [ws.tableView reloadData];
     }];
 }

@@ -20,11 +20,9 @@
 #import "PIEFriendViewController.h"
 #import "PIECommentViewController.h"
 #import "PIECommentManager.h"
-#import "UITableView+FDTemplateLayoutCell.h"
-
+//#import "UITableView+FDTemplateLayoutCell.h"
 @interface PIENotificationViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate>
 @property (nonatomic, strong) NSMutableArray *source;
-//@property (nonatomic, strong) PIERefreshTableView *tableView;
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, strong) PIENotificationVM* selectedVM;
@@ -37,12 +35,20 @@
 -(BOOL)hidesBottomBarWhenPushed {
     return YES;
 }
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+//    self.navigationController.hidesBarsOnSwipe = YES;
+}
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    self.navigationController.navigationBar.backgroundColor = [UIColor colorWithHex:0xffffff andAlpha:0.9];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.title = @"我的消息";
     _source = [NSMutableArray array];
     _canRefreshFooter = YES;
-    
     UITapGestureRecognizer* tapGes = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnTableView:)];
     [self.tableView addGestureRecognizer:tapGes];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTableView) name:@"updateNoticationStatus" object:nil];
@@ -54,12 +60,38 @@
                                              selector:@selector(keyboardDidHide:)
                                                  name:UIKeyboardDidHideNotification
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateNoticationStatus)
+                                                 name:@"updateNoticationStatus"
+                                               object:nil];
     [self configSlack];
     [self configTableView];
     [self setupRefresh_Footer];
     [self getDataSource];
+    
+    
+//    [self.navigationController.navigationBar setTranslucent:NO];
+//    [self followScrollView:self.tableView];
+
 }
 
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+//    self.navigationController.hidesBarsOnSwipe = NO;
+    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+
+    [[NSUserDefaults standardUserDefaults]setObject:@(NO) forKey:@"NotificationNew"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+
+    if (![[self.navigationController viewControllers] containsObject: self]) //any other hierarchy compare
+    {
+        [[NSNotificationCenter defaultCenter]removeObserver:self name:@"updateNoticationStatus" object:nil];
+    }
+}
+
+- (void)updateNoticationStatus {
+    [self getDataSource];
+}
 - (void)keyboardWillShow:(id)sender {
     self.textInputbarHidden = NO;
 }
@@ -85,7 +117,7 @@
                 vc.uid = vm.senderID;
                 vc.name = vm.username;
                 [self.navigationController pushViewController:vc animated:YES];
-            } else  if (CGRectContainsPoint(cell.pageImageView.frame,p)) {
+            } else   {
                 PIECommentViewController* vc = [PIECommentViewController new];
                 PIEPageVM* pageVM = [PIEPageVM new];
                 pageVM.ID = vm.targetID;
@@ -106,7 +138,7 @@
                 vc.uid = vm.senderID;
                 vc.name = vm.username;
                 [self.navigationController pushViewController:vc animated:YES];
-            } else  if (CGRectContainsPoint(cell.pageImageView.frame,p)) {
+            } else {
                 PIECommentViewController* vc = [PIECommentViewController new];
                 PIEPageVM* pageVM = [PIEPageVM new];
                 pageVM.ID = vm.targetID;
@@ -162,11 +194,17 @@
 //    self.tableView.emptyDataSetSource = self;
 //    self.tableView.emptyDataSetDelegate = self;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag|UIScrollViewKeyboardDismissModeInteractive;
-//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//    [self.tableView registerClass:[DDCommentTableCell class] forCellReuseIdentifier:MessengerCellIdentifier];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    self.tableView.separatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
+    self.tableView.separatorInset = UIEdgeInsetsMake(0, 50, 0, 10);
+    
     self.tableView.tableFooterView = [UIView new];
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.showsHorizontalScrollIndicator = NO;
+    self.tableView.estimatedRowHeight = 100;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
+
 }
 - (void)configSlack {
     self.bounces = NO;
@@ -174,8 +212,6 @@
     self.keyboardPanningEnabled = YES;
     self.shouldScrollToBottomAfterKeyboardShows = NO;
     self.inverted = NO;
-    //    [self.leftButton setImage:[UIImage imageNamed:@"btn_emoji"] forState:UIControlStateNormal];
-    //    [self.rightButton setImage:[UIImage imageNamed:@"btn_comment_send"] forState:UIControlStateNormal];
     [self.rightButton setTitle:@"回复ta" forState:UIControlStateNormal];
     [self.rightButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     self.textInputbar.autoHideRightButton = YES;
@@ -187,14 +223,17 @@
     self.textInputbarHidden = YES;
 }
 - (void)setupRefresh_Footer {
-    [self.tableView addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     NSMutableArray *animatedImages = [NSMutableArray array];
     for (int i = 1; i<=6; i++) {
         UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"pie_loading_%d", i]];
         [animatedImages addObject:image];
     }
-    self.tableView.gifFooter.refreshingImages = animatedImages;
-    self.tableView.footer.stateHidden = YES;
+    MJRefreshAutoGifFooter *footer = [MJRefreshAutoGifFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    footer.refreshingTitleHidden = YES;
+    footer.stateLabel.hidden = YES;
+    [footer setImages:animatedImages duration:0.5 forState:MJRefreshStateRefreshing];
+    self.tableView.mj_footer = footer;
+    
     _canRefreshFooter = YES;
 }
 
@@ -202,22 +241,18 @@
 -(void)refreshTableView {
     [self.tableView reloadData];
 }
--(void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [[NSUserDefaults standardUserDefaults]setObject:@(NO) forKey:@"NotificationNew"];
-    [[NSUserDefaults standardUserDefaults]synchronize];
-}
+
 #pragma mark - GetDataSource
 - (void)getDataSource {
     _currentIndex = 1;
-    [self.tableView.footer endRefreshing];
+    [self.tableView.mj_footer endRefreshing];
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     _timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
-    [param setObject:@(15) forKey:@"size"];
+    [param setObject:@(100) forKey:@"size"];
     [PIENotificationManager getNotifications:param block:^(NSArray *source) {
         if (source.count>0) {
             ws.source = [source mutableCopy];
@@ -227,7 +262,7 @@
         else {
             _canRefreshFooter = NO;
         }
-        [self.tableView.header endRefreshing];
+        [self.tableView.mj_header endRefreshing];
     }];
 }
 
@@ -256,7 +291,7 @@
 
 #pragma mark - GetDataSource
 - (void)getMoreDataSource {
-    [self.tableView.header endRefreshing];
+    [self.tableView.mj_header endRefreshing];
     _currentIndex++;
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -273,7 +308,7 @@
         else {
             _canRefreshFooter = NO;
         }
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
     }];
 }
 
@@ -281,7 +316,7 @@
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
     }
 }
 
@@ -350,12 +385,12 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,40)];
     view.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 100,40)];
-    label.textColor = [UIColor lightGrayColor];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(13, 0, 100,40)];
+    label.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
     label.backgroundColor = [UIColor clearColor];
     [view addSubview:label];
     
-    label.font = [UIFont boldSystemFontOfSize:13];
+    label.font = [UIFont lightTupaiFontOfSize:12];
     switch (section)
     {
         case 1:
@@ -372,22 +407,15 @@
         PIENotificationVM* vm = [_source objectAtIndex:indexPath.row];
         switch (vm.type) {
             case PIENotificationTypeComment:
-                return [tableView fd_heightForCellWithIdentifier:@"PIENotificationCommentTableViewCell"  cacheByIndexPath:indexPath configuration:^(PIENotificationCommentTableViewCell *cell) {
-                    [cell injectSauce:vm];
-                }];
+                return UITableViewAutomaticDimension;
                 break;
             case PIENotificationTypeFollow:
-                return 60;
+                return 68;
                 break;
-                //        case PIENotificationTypeLike:
-                //            return 0;
-                //            break;
+
             case PIENotificationTypeReply:
-                return 105;
+                return 85;
                 break;
-                //        case PIENotificationTypeSystem:
-                //            return 0;
-                //            break;
             default:
                 return 105;
                 break;

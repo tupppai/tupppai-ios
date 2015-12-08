@@ -17,5 +17,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *originView;
 @property (weak, nonatomic) IBOutlet UIView *line;
 @property (weak, nonatomic) IBOutlet UILabel *likeCountLabel;
+@property (weak, nonatomic) IBOutlet UIView *bottomLine;
 - (void)injectSauce:(PIEPageVM*)vm;
 @end

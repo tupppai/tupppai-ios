@@ -20,7 +20,7 @@
 }
 
 - (void)configSelf {
-    self.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT);
+    self.frame = self.superview.bounds;
     self.showsVerticalScrollIndicator = NO;
     self.showsHorizontalScrollIndicator = NO;
     self.contentSize = CGSizeMake(SCREEN_WIDTH * 2, 0);
@@ -36,14 +36,14 @@
 }
 
 - (void)initTable1 {
-    _tableFollow = [[PIERefreshTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
+    _tableFollow = [[PIERefreshTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - TAB_HEIGHT)];
     _tableFollow.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableFollow.backgroundColor = [UIColor clearColor];
     _tableFollow.showsVerticalScrollIndicator = NO;
     [self addSubview:_tableFollow];
 }
 - (void)initTable2 {
-    _tableHot = [[PIERefreshTableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
+    _tableHot = [[PIERefreshTableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - TAB_HEIGHT)];
     _tableHot.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableHot.backgroundColor = [UIColor clearColor];
     _tableHot.showsVerticalScrollIndicator = NO;

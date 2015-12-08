@@ -39,9 +39,25 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self setupNavBar];
+}
+
+- (void)setupNavBar {
+//    UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
+//    buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
+//    [buttonLeft setImage:[UIImage imageNamed:@"PIE_icon_back"] forState:UIControlStateNormal];
+//    [buttonLeft addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonLeft];
+//    self.navigationItem.leftBarButtonItem =  buttonItem;
+    
+    
     UIBarButtonItem *btnDone = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStyleDone target:self action:@selector(clickRightButtonItem)];
     self.navigationItem.rightBarButtonItem = btnDone;
+
 }
+//- (void)dismiss {
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//}
 
 - (void)createUI {
     _createProfileView = [PIECreateProfileView new];
@@ -85,7 +101,7 @@
         [DDUserManager currentUser].sex = [DDUserManager currentUser].sdkUser.gender == 0 ? YES:NO;
         NSString* name = [DDUserManager currentUser].sdkUser.nickname;
         [DDUserManager currentUser].avatar = avatarUrl;
-        [_createProfileView.userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString: avatarUrl] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+        [_createProfileView.userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString: avatarUrl] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
         _createProfileView.nicknameTextField.text = name;
     }
 }
@@ -97,8 +113,8 @@
     if (str.length < 2) {
         [Hud text:@"昵称不能低于2位"];
         return ;
-    } else if (str.length > 8) {
-        [Hud text:@"昵称不能大于8位"];
+    } else if (str.length > 16) {
+        [Hud text:@"昵称不能大于16位"];
         return ;
     }
     [DDUserManager currentUser].sex = _createProfileView.genderIsMan;
@@ -172,8 +188,8 @@
     if (str.length == 0) {
         [Util ShowTSMessageWarn:@"昵称不能为空"];
         return NO;
-    } else if (str.length > 8) {
-        [Util ShowTSMessageWarn:@"昵称不能大于8位"];
+    } else if (str.length > 16) {
+        [Util ShowTSMessageWarn:@"昵称不能大于16位"];
 
         return NO;
     }

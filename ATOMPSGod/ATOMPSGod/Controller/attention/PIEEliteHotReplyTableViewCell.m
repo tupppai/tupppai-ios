@@ -28,8 +28,17 @@
     _theImageView.clipsToBounds = YES;
     _theImageView.backgroundColor = [UIColor clearColor];
     _collectView.userInteractionEnabled = YES;
-    _timeLabel.hidden = YES;
+
+    [_nameLabel setFont:[UIFont lightTupaiFontOfSize:13]];
+    [_contentLabel setFont:[UIFont lightTupaiFontOfSize:15]];
+    [_commentLabel1 setFont:[UIFont lightTupaiFontOfSize:13]];
+    [_commentLabel2 setFont:[UIFont lightTupaiFontOfSize:13]];
     
+    [_nameLabel setTextColor:[UIColor colorWithHex:0x4a4a4a andAlpha:1.0]];
+    [_contentLabel setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.9]];
+    [_commentLabel1 setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.8]];
+    [_commentLabel2 setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.8]];
+
     [self.contentView addSubview:self.thumbView];
     [self.contentView insertSubview:self.blurView belowSubview:_theImageView];
 
@@ -56,6 +65,10 @@
     _followView.hidden = NO;
     _commentLabel2.text = @"";
     _commentLabel1.text = @"";
+    
+    [_commentLabel1 mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(_commentLabel2.mas_top).with.offset(0).priorityHigh();
+    }];
     [_commentLabel2 mas_updateConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(_gapView.mas_top).with.offset(0).priorityHigh();
     }];
@@ -84,12 +97,12 @@
     
     [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
     _nameLabel.text = viewModel.username;
-    _timeLabel.text = viewModel.publishTime;
-//    [ setImageWithURL:[NSURL URLWithString:viewModel.imageURL] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+//    _timeLabel.text = viewModel.publishTime;
+//    [ setImageWithURL:[NSURL URLWithString:viewModel.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:viewModel.imageURL]];
     [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
-    [_theImageView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellBG"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
+    [_theImageView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellHolder"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
         ws.theImageView.image = image;
         ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
     } failure:nil];
@@ -105,15 +118,19 @@
     if (viewModel.hotCommentEntityArray.count > 0) {
         PIECommentEntity* commentEntity1  = viewModel.hotCommentEntityArray[0];
         _commentLabel1.text = [NSString stringWithFormat:@"%@: %@",commentEntity1.nickname,commentEntity1.content];
-
-        if (viewModel.hotCommentEntityArray.count == 1) {
-
-        } else {
+       
+        [_commentLabel2 mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(_gapView.mas_top).with.offset(-25).with.priorityHigh();
+        }];
+        
+        if (viewModel.hotCommentEntityArray.count > 1) {
+            
+            [_commentLabel1 mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.bottom.equalTo(_commentLabel2.mas_top).with.offset(-10).with.priorityHigh();
+            }];
+            
             PIECommentEntity* commentEntity2  = viewModel.hotCommentEntityArray[1];
             _commentLabel2.text = [NSString stringWithFormat:@"%@: %@",commentEntity2.nickname,commentEntity2.content];
-            [_commentLabel2 mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.bottom.equalTo(_gapView.mas_top).with.offset(-14).with.priorityHigh();
-            }];
         }
     }
     
@@ -124,19 +141,19 @@
         PIEImageEntity* entity = [viewModel.thumbEntityArray objectAtIndex:0];
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:entity.url]];
         [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
-        [self.thumbView.rightView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellBG"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
+        [self.thumbView.rightView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellHolder"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
             ws.thumbView.rightView.image = image;
             //ws.thumbView.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
         } failure:nil];
         if (viewModel.thumbEntityArray.count == 2) {
             entity = viewModel.thumbEntityArray[1];
-            [_thumbView.leftView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellBG"]];
+            [_thumbView.leftView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
         }
     }
     else {
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:viewModel.imageURL]];
         [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
-        [self.thumbView.rightView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellBG"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
+        [self.thumbView.rightView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellHolder"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
             ws.thumbView.rightView.image = image;
             //ws.thumbView.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
         } failure:nil];

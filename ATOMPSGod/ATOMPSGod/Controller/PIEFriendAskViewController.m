@@ -9,7 +9,7 @@
 #import "PIEFriendAskViewController.h"
 #import "DDOtherUserManager.h"
 #import "PIERefreshTableView.h"
-#import "UITableView+FDTemplateLayoutCell.h"
+//#import "UITableView+FDTemplateLayoutCell.h"
 #import "PIEFriendAskTableViewCell.h"
 #import "DDPageManager.h"
 
@@ -80,7 +80,7 @@
 #pragma mark - GetDataSource
 - (void)getRemoteSource {
     _currentIndex = 1;
-    [_table.footer endRefreshing];
+    [_table.mj_footer endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     _timeStamp = [[NSDate date] timeIntervalSince1970];
     if (_pageVM) {
@@ -102,14 +102,14 @@
             _canRefreshFooter = NO;
         }
         [self.table reloadData];
-        [self.table.header endRefreshing];
+        [self.table.mj_header endRefreshing];
     }];
 }
 
 #pragma mark - GetDataSource
 - (void)getMoreRemoteSource {
     _currentIndex++;
-    [_table.header endRefreshing];
+    [_table.mj_header endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     if (_pageVM) {
         [param setObject:@(_pageVM.userID) forKey:@"uid"];
@@ -128,7 +128,7 @@
             _canRefreshFooter = NO;
         }
         [self.table reloadData];
-        [self.table.footer endRefreshing];
+        [self.table.mj_footer endRefreshing];
     }];
 }
 
@@ -152,10 +152,10 @@
     [self getRemoteSource];
 }
 -(void)didPullRefreshUp:(UITableView *)tableView {
-    if (_canRefreshFooter && !_table.header.isRefreshing) {
+    if (_canRefreshFooter && !_table.mj_header.isRefreshing) {
         [self getMoreRemoteSource];
     } else {
-        [_table.footer endRefreshing];
+        [_table.mj_footer endRefreshing];
     }
 }
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {

@@ -24,13 +24,13 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="刚刚" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yv2-ua-Vba">
-                        <rect key="frame" x="46" y="25" width="20" height="14"/>
+                        <rect key="frame" x="47" y="27" width="20" height="14"/>
                         <animations/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="10"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_default" translatesAutoresizingMaskIntoConstraints="NO" id="lxd-gB-yQl">
+                    <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_default" translatesAutoresizingMaskIntoConstraints="NO" id="lxd-gB-yQl">
                         <rect key="frame" x="8" y="8" width="30" height="30"/>
                         <animations/>
                         <rect key="contentStretch" x="1" y="1" width="1" height="1"/>
@@ -40,7 +40,7 @@
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="R82-sU-8ep">
-                        <rect key="frame" x="0.0" y="47" width="386" height="386.5"/>
+                        <rect key="frame" x="0.0" y="49" width="386" height="386.5"/>
                         <animations/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -54,17 +54,17 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="T5a-v7-GgT"/>
-                                <exclude reference="NF5-Et-bbc"/>
-                                <exclude reference="gyV-QZ-20Z"/>
-                                <exclude reference="oQl-3I-SmQ"/>
                                 <exclude reference="AvI-ox-zdt"/>
                                 <exclude reference="FW8-KO-POD"/>
+                                <exclude reference="NF5-Et-bbc"/>
+                                <exclude reference="T5a-v7-GgT"/>
+                                <exclude reference="gyV-QZ-20Z"/>
+                                <exclude reference="oQl-3I-SmQ"/>
                             </mask>
                         </variation>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="7ML-1Q-cbx">
-                        <rect key="frame" x="8" y="441" width="370" height="65.5"/>
+                        <rect key="frame" x="8" y="443" width="370" height="63.5"/>
                         <animations/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -133,7 +133,7 @@
                     <constraint firstItem="wrd-u2-HUV" firstAttribute="top" secondItem="ebx-4I-Q1d" secondAttribute="bottom" constant="17" id="D8C-os-Rfu"/>
                     <constraint firstItem="7ML-1Q-cbx" firstAttribute="top" secondItem="R82-sU-8ep" secondAttribute="bottom" constant="8" id="Hs3-Kk-84B"/>
                     <constraint firstAttribute="trailing" secondItem="R82-sU-8ep" secondAttribute="trailing" id="JRm-gV-tMZ"/>
-                    <constraint firstItem="Wqo-zD-Tcr" firstAttribute="leading" secondItem="Yv2-ua-Vba" secondAttribute="leading" id="K9v-fX-g94"/>
+                    <constraint firstItem="Wqo-zD-Tcr" firstAttribute="leading" secondItem="Yv2-ua-Vba" secondAttribute="leading" constant="-1" id="K9v-fX-g94"/>
                     <constraint firstAttribute="bottomMargin" secondItem="ebx-4I-Q1d" secondAttribute="bottom" constant="6.5" id="L0o-ml-u3F"/>
                     <constraint firstItem="R82-sU-8ep" firstAttribute="top" secondItem="Yv2-ua-Vba" secondAttribute="bottom" constant="8" id="MQs-Xb-thN"/>
                     <constraint firstAttribute="trailing" secondItem="wrd-u2-HUV" secondAttribute="trailing" id="McU-Lx-hVg"/>
@@ -147,7 +147,7 @@
                     <constraint firstAttribute="bottom" secondItem="wrd-u2-HUV" secondAttribute="bottom" id="huR-V7-FVy"/>
                     <constraint firstItem="Wqo-zD-Tcr" firstAttribute="top" secondItem="lxd-gB-yQl" secondAttribute="top" id="i1R-mg-9hw"/>
                     <constraint firstItem="R82-sU-8ep" firstAttribute="leading" secondItem="rS6-S7-EnB" secondAttribute="leading" id="nfK-PP-3EN"/>
-                    <constraint firstItem="Yv2-ua-Vba" firstAttribute="bottom" secondItem="lxd-gB-yQl" secondAttribute="bottom" constant="1" id="oCz-hD-SUx"/>
+                    <constraint firstItem="Yv2-ua-Vba" firstAttribute="bottom" secondItem="lxd-gB-yQl" secondAttribute="bottom" constant="3" id="oCz-hD-SUx"/>
                     <constraint firstAttribute="trailingMargin" secondItem="oIA-Nu-l3n" secondAttribute="trailing" constant="8" id="pXH-Ne-gPt"/>
                     <constraint firstItem="lxd-gB-yQl" firstAttribute="leading" secondItem="rS6-S7-EnB" secondAttribute="leadingMargin" id="q3q-k4-f6d"/>
                     <constraint firstItem="lxd-gB-yQl" firstAttribute="top" secondItem="Yv2-ua-Vba" secondAttribute="top" constant="-4" id="tO1-me-z9F"/>
@@ -184,7 +184,7 @@
     </objects>
     <resources>
         <image name="avatar_default" width="36" height="36"/>
-        <image name="new_reply_follow" width="58" height="28"/>
+        <image name="new_reply_follow" width="50" height="25"/>
         <image name="new_reply_followed" width="58" height="28"/>
     </resources>
 </document>

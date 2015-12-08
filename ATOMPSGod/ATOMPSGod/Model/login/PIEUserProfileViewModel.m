@@ -16,11 +16,11 @@
     return self;
 }
 -(void)setViewModel:(PIEUserProfileViewModel*)viewModel {
-    _nickName = viewModel.nickName;
-    _city = viewModel.gender;
+    _nickName  = viewModel.nickName;
+    _city      = viewModel.gender;
     _avatarURL = viewModel.avatarURL;
-    _phone = viewModel.phone;
-    _gender = viewModel.gender;
+    _phone     = viewModel.phone;
+    _gender    = viewModel.gender;
 }
 
 @end

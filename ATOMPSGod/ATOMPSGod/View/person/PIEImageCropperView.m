@@ -28,7 +28,7 @@
 
 - (void)createSubView {
     
-    _transparencyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 65)];
+    _transparencyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     _transparencyView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
     [self addSubview:_transparencyView];
     

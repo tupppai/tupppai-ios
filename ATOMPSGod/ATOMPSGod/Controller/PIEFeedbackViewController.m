@@ -18,13 +18,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"反馈建议";
+    self.title = @"意见反馈";
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     _textView.font = [UIFont systemFontOfSize:13.0];
     _textView.layer.borderWidth = 0.5;
     _textView.layer.borderColor = [UIColor colorWithHex:0x000000 andAlpha:0.3].CGColor;
     _textView.layer.cornerRadius = 4;
     _textView.clipsToBounds = YES;
     _textView.placeholderTextColor = [UIColor colorWithHex:0x9B9B9B andAlpha:0.9];
+    _textView.contentMode = UIViewContentModeTopLeft;
 //    _textView.textColor = [UIColor colorWithHex:0x9B9B9B andAlpha:0.9];
     _label.textColor = [UIColor colorWithHex:0x4a4a4a andAlpha:1.0];
     _label.font = [UIFont systemFontOfSize:13.0];

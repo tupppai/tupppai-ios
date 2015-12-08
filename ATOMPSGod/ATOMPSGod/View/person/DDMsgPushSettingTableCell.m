@@ -21,7 +21,8 @@
 }
 
 - (void)createSubView {
-    self.textLabel.textColor = [UIColor colorWithHex:0x797979];
+    self.textLabel.textColor = [UIColor blackColor];
+    self.textLabel.font = [UIFont lightTupaiFontOfSize:14];    
     _notificationSwitch = [UISwitch new];
     self.accessoryView = _notificationSwitch;
     _notificationSwitch.onTintColor = [UIColor colorWithHex:PIEColorHex];

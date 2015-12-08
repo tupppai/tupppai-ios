@@ -15,7 +15,7 @@
 @interface PIEEliteHotAskTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+//@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *theImageView;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *allWorkView;
@@ -26,6 +26,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *commentLabel1;
 @property (weak, nonatomic) IBOutlet UILabel *commentLabel2;
+
 @property (weak, nonatomic) IBOutlet UIImageView *followView;
 @property (nonatomic, assign) NSInteger ID;
 @property (nonatomic, assign) NSInteger askID;

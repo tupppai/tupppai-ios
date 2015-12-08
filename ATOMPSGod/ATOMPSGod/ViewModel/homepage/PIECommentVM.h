@@ -12,7 +12,7 @@
 @interface PIECommentVM : NSObject
 
 @property (nonatomic, assign) NSInteger uid;
-@property (nonatomic, copy) NSString *username;
+@property (nonatomic, copy  ) NSString  *username;
 /**
  *  username发布的最新评论，即text显示的评论数组里的第一个。
  */

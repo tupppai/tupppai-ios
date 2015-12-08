@@ -36,9 +36,17 @@
 -(BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
     PIEWebViewViewController* vc = [PIEWebViewViewController new];
     vc.url = [URL absoluteString];
-    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-    [nav pushViewController:vc animated:YES ];
+    UIViewController* rootvc = (UIViewController*)self.superview.viewController;
+    DDNavigationController* nav = [[DDNavigationController alloc]initWithRootViewController:vc];
+    [rootvc presentViewController:nav animated:YES completion:nil];
     return NO;
 }
+
+- (void)textViewDidChangeSelection:(UITextView *)textView {
+    if(NSEqualRanges(textView.selectedRange, NSMakeRange(0, 0)) == NO) {
+        textView.selectedRange = NSMakeRange(0, 0);
+    }
+}
+
 
 @end

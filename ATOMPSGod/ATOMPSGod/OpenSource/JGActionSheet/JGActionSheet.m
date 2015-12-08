@@ -245,7 +245,17 @@ static BOOL disableCustomEasing = NO;
     }
     else {
         self.backgroundColor = [UIColor whiteColor];
-        self.layer.cornerRadius = kHostsCornerRadius;
+        
+        UIBezierPath *maskPath;
+        maskPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
+                                         byRoundingCorners:(UIRectCornerTopLeft|UIRectCornerTopRight)
+                                               cornerRadii:CGSizeMake(kHostsCornerRadius, kHostsCornerRadius)];
+        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+        maskLayer.frame = self.bounds;
+        maskLayer.path = maskPath.CGPath;
+        self.layer.mask = maskLayer;
+        
+//        self.layer.cornerRadius = kHostsCornerRadius;
         self.layer.shadowColor = [UIColor blackColor].CGColor;
         self.layer.shadowOffset = CGSizeZero;
         self.layer.shadowRadius = kShadowRadius;
@@ -321,7 +331,7 @@ static BOOL disableCustomEasing = NO;
     
     button.titleLabel.font = font;
     [button setBackgroundImage:[self pixelImageWithColor:backgroundColor] forState:UIControlStateNormal];
-    [button setBackgroundImage:[self pixelImageWithColor:borderColor] forState:UIControlStateHighlighted];
+    [button setBackgroundImage:[self pixelImageWithColor:[UIColor lightGrayColor]] forState:UIControlStateHighlighted];
     button.layer.cornerRadius = 45 / 2;
     button.layer.borderWidth = 0.0;
 //    button.layer.borderColor = borderColor.CGColor;

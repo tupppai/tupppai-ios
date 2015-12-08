@@ -30,8 +30,23 @@
 
 @implementation PIEMyLikedPagesViewController
 
-
-
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.hidesBarsOnSwipe = YES;
+    self.navigationController.navigationBar.backgroundColor = [UIColor colorWithHex:0xffffff andAlpha:0.5];
+}
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navigationController.hidesBarsOnSwipe = NO;
+//    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+}
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+}
 #pragma mark - Refresh
 -(void)didPullDownCollectionView:(UICollectionView *)collectionView {
     [self getDataSource];
@@ -40,7 +55,7 @@
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [_collectionView.footer endRefreshing];
+        [_collectionView.mj_footer endRefreshing];
     }
 }
 
@@ -50,7 +65,7 @@
 
 - (void)getDataSource {
     WS(ws);
-    [ws.collectionView.footer endRefreshing];
+    [ws.collectionView.mj_footer endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     _timeStamp = [[NSDate date] timeIntervalSince1970];
     _currentPage = 1;
@@ -62,7 +77,7 @@
         ws.dataSource = resultArray;
         ws.isfirstLoading = NO;//should set to NO before reloadData
         [ws.collectionView reloadData];
-        [ws.collectionView.header endRefreshing];
+        [ws.collectionView.mj_header endRefreshing];
         if (resultArray.count == 0) {
             ws.canRefreshFooter = NO;
         } else {
@@ -73,7 +88,7 @@
 
 - (void)getMoreDataSource {
     WS(ws);
-    [ws.collectionView.header endRefreshing];
+    [ws.collectionView.mj_header endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     ws.currentPage++;
     [param setObject:@(ws.currentPage) forKey:@"page"];
@@ -91,7 +106,7 @@
         } else {
             ws.canRefreshFooter = YES;
         }
-        [ws.collectionView.footer endRefreshing];
+        [ws.collectionView.mj_footer endRefreshing];
         [ws.collectionView reloadData];
     }];
 }
@@ -114,7 +129,7 @@
     self.view = _collectionView;
     _collectionView.toRefreshBottom = YES;
     _collectionView.toRefreshTop = YES;
-    _collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    _collectionView.backgroundColor = [UIColor whiteColor];
     _collectionView.dataSource = self;
     _collectionView.delegate = self;
     _collectionView.psDelegate = self;
@@ -127,7 +142,7 @@
     _dataSource = [NSMutableArray array];
     _isfirstLoading = YES;
 
-    [self getDataSource];
+    [self.collectionView.mj_header beginRefreshing];
 }
 
 #pragma mark - UICollectionViewDataSource

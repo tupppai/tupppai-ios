@@ -16,7 +16,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6dw-qo-oSJ">
-                        <rect key="frame" x="0.0" y="15" width="409" height="172.5"/>
+                        <rect key="frame" x="0.0" y="10" width="409" height="177.5"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pie_clock" translatesAutoresizingMaskIntoConstraints="NO" id="39M-2O-8QD">
                                 <rect key="frame" x="16" y="13" width="11" height="11"/>
@@ -62,7 +62,7 @@
                                 </variation>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="要求：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HAK-LR-uig">
-                                <rect key="frame" x="16" y="132" width="43" height="28"/>
+                                <rect key="frame" x="16" y="132" width="43" height="33"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="43" id="A2D-f6-Z0L"/>
@@ -90,14 +90,14 @@
                                 </constraints>
                             </view>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="29e-zX-BN2">
-                                <rect key="frame" x="59" y="132" width="300" height="28"/>
+                                <rect key="frame" x="59" y="132" width="300" height="33"/>
                                 <animations/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="stF-57-Ks0">
-                                <rect key="frame" x="380" y="135" width="15" height="22"/>
+                                <rect key="frame" x="380" y="137.5" width="15" height="22"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="lci-c8-06X"/>
@@ -172,9 +172,9 @@
                     </view>
                 </subviews>
                 <animations/>
-                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="0.5" colorSpace="calibratedRGB"/>
                 <constraints>
-                    <constraint firstItem="6dw-qo-oSJ" firstAttribute="top" secondItem="oSU-26-BgF" secondAttribute="top" constant="15" id="MJt-8L-gQ1"/>
+                    <constraint firstItem="6dw-qo-oSJ" firstAttribute="top" secondItem="oSU-26-BgF" secondAttribute="top" constant="10" id="MJt-8L-gQ1"/>
                     <constraint firstItem="6dw-qo-oSJ" firstAttribute="leading" secondItem="oSU-26-BgF" secondAttribute="leading" id="O5p-tR-hpc"/>
                     <constraint firstAttribute="bottom" secondItem="6dw-qo-oSJ" secondAttribute="bottom" id="m1H-9I-TfK"/>
                     <constraint firstAttribute="trailing" secondItem="6dw-qo-oSJ" secondAttribute="trailing" id="mQB-W5-ACd"/>

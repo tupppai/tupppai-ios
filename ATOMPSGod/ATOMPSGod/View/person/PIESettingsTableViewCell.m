@@ -14,9 +14,9 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.accessoryType = UITableViewCellAccessoryNone;
-        self.separatorInset = UIEdgeInsetsMake(0, kPadding28, 0, kPadding15);
+        
         self.textLabel.textColor = [UIColor blackColor];
-        self.textLabel.font = [UIFont systemFontOfSize:14];
+        self.textLabel.font = [UIFont lightTupaiFontOfSize:14];
         UIImageView* view = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 12, 12)];
         view.image = [UIImage imageNamed:@"pie_next"];
         view.contentMode = UIViewContentModeScaleAspectFit;
