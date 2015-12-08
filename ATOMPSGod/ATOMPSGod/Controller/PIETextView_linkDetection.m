@@ -15,6 +15,7 @@
 -(void)awakeFromNib {
     [self commonInit];
 }
+
 -(instancetype)init {
     self = [super init];
     if (self) {

@@ -454,7 +454,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 -(void)setVm:(PIEPageVM *)vm {
     _vm = vm;
-    NSLog(@"vm %zd %zd",vm.type,vm.ID);
+//    NSLog(@"vm %zd %zd",vm.type,vm.ID);
 }
 - (void)resizeHeaderView {
     UIView *header = self.tableView.tableHeaderView;
