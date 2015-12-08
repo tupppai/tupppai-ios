@@ -23,7 +23,6 @@
 
 #pragma mark - Target-actions
 - (IBAction)bannerCellDidClickLeftButton:(UIButton *)sender {
-    NSLog(@"%s", __func__);
     if ([self.delegate respondsToSelector:@selector(channelBannerCell:didClickLeftButton:)]) {
         [self.delegate channelBannerCell:self
                       didClickLeftButton:sender];
@@ -31,7 +30,6 @@
     
 }
 - (IBAction)bannerCellDidClickRightButton:(UIButton *)sender {
-    NSLog(@"%s", __func__);
     if ([self.delegate respondsToSelector:@selector(channelBannerCell:didClickRightButton:)]) {
         [self.delegate channelBannerCell:self
                      didClickRightButton:sender];
@@ -47,7 +45,7 @@
     /**
      *  set delegate to nil while cell is being reused.
      */
-//    self.delegate = nil;
+    self.delegate = nil;
 }
 
 

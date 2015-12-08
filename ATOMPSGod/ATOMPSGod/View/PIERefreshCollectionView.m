@@ -8,7 +8,10 @@
 
 #import "PIERefreshCollectionView.h"
 
+
 @implementation PIERefreshCollectionView
+
+@dynamic delegate;
 
 -(instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
