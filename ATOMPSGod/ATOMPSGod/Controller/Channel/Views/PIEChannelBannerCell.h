@@ -25,6 +25,8 @@
 
 @interface PIEChannelBannerCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIButton *leftButton;
+@property (weak, nonatomic) IBOutlet UIButton *rightbutton;
 @property (nonatomic, weak) id <PIEChannelBannerCellDelegate> delegate;
 
 @end

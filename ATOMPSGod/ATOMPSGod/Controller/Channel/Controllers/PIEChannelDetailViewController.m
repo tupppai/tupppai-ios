@@ -96,7 +96,7 @@ static NSString *  PIEDetailNormalIdentifier =
     {
         UITableViewCell *cell =
         [tableView dequeueReusableCellWithIdentifier:PIEDetailNormalIdentifier];
-        cell.textLabel.text = [NSString stringWithFormat:@"Cell-%ld", indexPath.row];
+        cell.textLabel.text = [NSString stringWithFormat:@"Cell-%zd", indexPath.row];
         return cell;
     }
 }
