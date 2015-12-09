@@ -18,7 +18,6 @@
     self.layer.cornerRadius = 8;
     _imageView.clipsToBounds = YES;
     _imageView.contentMode = UIViewContentModeScaleAspectFill;
-    NSLog(@"PIEReplyCollectionCell awakeFromNib %@",_likeButton);
 }
 -(void)setSelected:(BOOL)selected {
 }

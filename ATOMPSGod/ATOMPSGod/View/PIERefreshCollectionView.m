@@ -70,7 +70,9 @@
         // 设置header
         header.lastUpdatedTimeLabel.hidden = YES;
         header.stateLabel.hidden = YES;
+        header.automaticallyChangeAlpha = YES;
         self.mj_header = header;
+
     } else {
         [self.mj_header removeFromSuperview];
     }

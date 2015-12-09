@@ -43,17 +43,21 @@
 -(void)viewDidLoad {
     [super viewDidLoad];
     
+    self.delegate = self;
+    [self setupTitle];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NetworkSignOutRET) name:@"NetworkSignOutCall" object:nil];
+    
+}
+- (void)setupTitle {
     [[UITabBarItem appearance] setTitleTextAttributes:@{   NSForegroundColorAttributeName: [UIColor blackColor],                                                           NSFontAttributeName: [UIFont systemFontOfSize:10]
-                                                                                 }
+                                                           }
                                              forState:UIControlStateNormal];
     [[UITabBarItem appearance] setTitleTextAttributes:@{   NSForegroundColorAttributeName: [UIColor blackColor],                                                           NSFontAttributeName: [UIFont systemFontOfSize:10]
                                                            }
                                              forState:UIControlStateSelected];
-    self.delegate = self;
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NetworkSignOutRET) name:@"NetworkSignOutCall" object:nil];
 
 }
+
 -(void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkSignOutCall"object:nil];
 }
@@ -73,7 +77,6 @@
     alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
     [alertView show];
 }
-
 
 
 - (void)configureTabBarController {

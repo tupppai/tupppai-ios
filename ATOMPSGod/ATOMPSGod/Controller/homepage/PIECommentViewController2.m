@@ -134,7 +134,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     self.navigationController.navigationBar.backgroundColor = [UIColor colorWithHex:0xffffff andAlpha:0.5];
 
     self.navigationController.hidesBarsOnSwipe = YES;
-//    [self.navigationController setNavigationBarHidden:YES];
         [MobClick beginLogPageView:@"进入浏览图片页"];
 }
 - (void)viewWillDisappear:(BOOL)animated

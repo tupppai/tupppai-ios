@@ -74,7 +74,7 @@
     CGRect onScreenFrame = [transitionContext finalFrameForViewController:animatingViewController];
     CGRect offScreenFrame = CGRectOffset(onScreenFrame, 0, onScreenFrame.size.height);
     
-    CGRect initialFrame = self.isPresentation ? offScreenFrame : onScreenFrame;
+//    CGRect initialFrame = self.isPresentation ? offScreenFrame : onScreenFrame;
     CGRect finalFrame = self.isPresentation ? onScreenFrame : offScreenFrame;
     
 //        animatingView.frame = initialFrame;

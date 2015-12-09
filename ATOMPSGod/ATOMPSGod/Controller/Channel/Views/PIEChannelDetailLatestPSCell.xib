@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -13,11 +13,12 @@
             <rect key="frame" x="0.0" y="0.0" width="750" height="334"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="750" height="333"/>
+                <rect key="frame" x="0.0" y="0.0" width="750" height="333.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9lc-DF-GbP">
                         <rect key="frame" x="20" y="32" width="2" height="13"/>
+                        <animations/>
                         <color key="backgroundColor" red="1" green="0.80000001192092896" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="2" id="3Jg-Mf-Mtr"/>
@@ -26,10 +27,12 @@
                     </view>
                     <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j8w-sT-wSv" customClass="SwipeView">
                         <rect key="frame" x="28" y="57" width="722" height="212"/>
+                        <animations/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="全部 》" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6rw-Gf-uB2">
                         <rect key="frame" x="707" y="15" width="40" height="12"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="12" id="Gsp-LR-789"/>
                             <constraint firstAttribute="width" constant="40" id="dKf-2v-3mN"/>
@@ -40,6 +43,7 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="最新求P" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8e3-Nu-EjB">
                         <rect key="frame" x="43" y="32" width="51" height="15"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="51" id="9C6-b5-Sh6"/>
                         </constraints>
@@ -47,6 +51,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <animations/>
                 <constraints>
                     <constraint firstItem="j8w-sT-wSv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="20" id="9P1-oD-eKp"/>
                     <constraint firstItem="j8w-sT-wSv" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.283" id="ERy-A5-KzP"/>
@@ -61,6 +66,7 @@
                     <constraint firstItem="8e3-Nu-EjB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="wmh-j4-wfH"/>
                 </constraints>
             </tableViewCellContentView>
+            <animations/>
             <connections>
                 <outlet property="swipeView" destination="j8w-sT-wSv" id="Loe-7B-ftb"/>
             </connections>

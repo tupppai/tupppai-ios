@@ -78,7 +78,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     [super viewDidLoad];
     
     self.view = self.tableViewReply;
-    
+    self.title = @"最新作品";
     [self setupGestures];
     [self setupData];
     [self setupNotifications];
@@ -89,6 +89,17 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     [self firstGetSourceIfEmpty_Reply];
 }
 
+-(BOOL)hidesBottomBarWhenPushed {
+    return YES;
+}
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.hidesBarsOnSwipe = YES;
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navigationController.hidesBarsOnSwipe = NO;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

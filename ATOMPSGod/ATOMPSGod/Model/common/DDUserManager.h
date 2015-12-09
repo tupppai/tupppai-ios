@@ -44,6 +44,7 @@ typedef enum {
 @property (nonatomic, copy) NSString *password;
 @property (nonatomic, copy) NSString *username;
 @property (nonatomic, copy) NSString *avatar;
+@property (nonatomic, strong) UIImage *avatarImage;
 @property (nonatomic, copy) NSString *token;
 
 /**

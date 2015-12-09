@@ -41,12 +41,13 @@
 
         [_button_avatar setTitleColor:[UIColor colorWithHex:0x000000 andAlpha:0.9] forState:UIControlStateNormal];
         [_button_avatar.titleLabel setFont:[UIFont lightTupaiFontOfSize:13]];
+        _label_time.textColor =[UIColor colorWithHex:0x000000 andAlpha:0.4];
+        [_label_time setFont:[UIFont lightTupaiFontOfSize:10]];
 //        _textView_content.delegate = self;
 //        [_label_content setTintColor:[UIColor colorWithHex:0x000000 andAlpha:0.8]];
 //        [_label_content setFont:[UIFont lightTupaiFontOfSize:15]];
 
-        [_label_time setTintColor:[UIColor colorWithHex:0x000000 andAlpha:0.4]];
-        [_label_time setFont:[UIFont lightTupaiFontOfSize:10]];
+   
         
         [self setupTableView];
         [self addEvent];
