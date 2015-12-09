@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Tg5-17-tnZ">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+    </dependencies>
+    <scenes>
+        <!--New Reply View Controller-->
+        <scene sceneID="JNi-st-6h1">
+            <objects>
+                <viewController id="Tg5-17-tnZ" customClass="PIENewReplyViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="WQi-Jk-Y6E"/>
+                        <viewControllerLayoutGuide type="bottom" id="DSk-KF-tYJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ixI-cE-uOo">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lEp-gw-tPH">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="Jr2-1B-RL4"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="Bfo-bF-GXO" kind="embed" id="wIe-Vc-0a4"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="lEp-gw-tPH" secondAttribute="trailing" id="VIZ-q1-TF4"/>
+                            <constraint firstItem="lEp-gw-tPH" firstAttribute="leading" secondItem="ixI-cE-uOo" secondAttribute="leading" id="bb1-HP-zU5"/>
+                            <constraint firstItem="lEp-gw-tPH" firstAttribute="top" secondItem="ixI-cE-uOo" secondAttribute="top" id="ijU-6h-vtm"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IK4-33-li8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="83" y="95"/>
+        </scene>
+        <!--Channel View Controller-->
+        <scene sceneID="2V6-9l-7I9">
+            <objects>
+                <viewController id="Bfo-bF-GXO" customClass="PIEChannelViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3Xt-RP-Vi3"/>
+                        <viewControllerLayoutGuide type="bottom" id="aiw-KI-wdd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="jcc-uo-rrx">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cAH-bj-FhV">
+                                <rect key="frame" x="277" y="85" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="cAH-bj-FhV" firstAttribute="centerY" secondItem="jcc-uo-rrx" secondAttribute="centerY" id="4wv-j2-ptB"/>
+                            <constraint firstItem="cAH-bj-FhV" firstAttribute="centerX" secondItem="jcc-uo-rrx" secondAttribute="centerX" id="rth-f6-xWz"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WOh-1L-5DT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="905" y="95"/>
+        </scene>
+    </scenes>
+</document>

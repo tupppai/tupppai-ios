@@ -38,7 +38,7 @@
 
 }
 
-
+#pragma mark - Reuse methods
 - (void)prepareForReuse
 {
     [super prepareForReuse];
@@ -49,6 +49,10 @@
     self.delegate = nil;
 }
 
+- (void)dealloc
+{
+    self.delegate = nil;
+}
 
 
 

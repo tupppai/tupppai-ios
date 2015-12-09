@@ -98,6 +98,17 @@
         [self.navigationController
          pushViewController:[[PIEChannelDetailViewController alloc] init]
          animated:YES];
+        
+//        // testing:
+//        UIStoryboard *PIEChannelDetailViewController_Reuse =
+//        [UIStoryboard storyboardWithName:@"PIEChannelDetailViewController_Reuse"
+//                                  bundle:nil];
+//        PIEChannelDetailViewController *channelDetailViewController =
+//        (PIEChannelDetailViewController *)
+//        [PIEChannelDetailViewController_Reuse instantiateInitialViewController];
+//        
+//        [self.navigationController pushViewController:channelDetailViewController animated:YES];
+        
     }
 }
 

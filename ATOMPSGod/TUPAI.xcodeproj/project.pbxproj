@@ -12,7 +12,9 @@
 		0E6F78FE1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E6F78FC1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.m */; };
 		0E6F78FF1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E6F78FD1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.xib */; };
 		0E6F79031C16EE5C002F9FB6 /* PIEChannelDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E6F79011C16EE5C002F9FB6 /* PIEChannelDetailViewController.m */; };
-		0E6F79041C16EE5C002F9FB6 /* PIEChannelDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E6F79021C16EE5C002F9FB6 /* PIEChannelDetailViewController.xib */; };
+		0E966C941C17C49D0049BC61 /* PIEChannelDetailViewController_Reuse.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E966C931C17C49D0049BC61 /* PIEChannelDetailViewController_Reuse.storyboard */; };
+		0ECED3461C17CC4E00D3F097 /* PIEChannelDetailAskPSItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECED3451C17CC4E00D3F097 /* PIEChannelDetailAskPSItemView.m */; };
+		0ECED3481C17CC5E00D3F097 /* PIEChannelDetailAskPSItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0ECED3471C17CC5E00D3F097 /* PIEChannelDetailAskPSItemView.xib */; };
 		0EF2F5C51C154A5700F27D61 /* PIEChannelBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF2F5C01C154A5700F27D61 /* PIEChannelBannerCell.m */; };
 		0EF2F5C61C154A5700F27D61 /* PIEChannelBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EF2F5C11C154A5700F27D61 /* PIEChannelBannerCell.xib */; };
 		0EF2F5C71C154A5700F27D61 /* PIEChannelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF2F5C31C154A5700F27D61 /* PIEChannelTableViewCell.m */; };
@@ -537,8 +539,11 @@
 		0E6F78FD1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEChannelDetailLatestPSCell.xib; sourceTree = "<group>"; };
 		0E6F79001C16EE5C002F9FB6 /* PIEChannelDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelDetailViewController.h; sourceTree = "<group>"; };
 		0E6F79011C16EE5C002F9FB6 /* PIEChannelDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelDetailViewController.m; sourceTree = "<group>"; };
-		0E6F79021C16EE5C002F9FB6 /* PIEChannelDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEChannelDetailViewController.xib; sourceTree = "<group>"; };
+		0E966C931C17C49D0049BC61 /* PIEChannelDetailViewController_Reuse.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PIEChannelDetailViewController_Reuse.storyboard; sourceTree = "<group>"; };
 		0ECE8FB11C16AB4500E98CB5 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
+		0ECED3441C17CC4E00D3F097 /* PIEChannelDetailAskPSItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelDetailAskPSItemView.h; sourceTree = "<group>"; };
+		0ECED3451C17CC4E00D3F097 /* PIEChannelDetailAskPSItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelDetailAskPSItemView.m; sourceTree = "<group>"; };
+		0ECED3471C17CC5E00D3F097 /* PIEChannelDetailAskPSItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEChannelDetailAskPSItemView.xib; sourceTree = "<group>"; };
 		0EF2F5BF1C154A5700F27D61 /* PIEChannelBannerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelBannerCell.h; sourceTree = "<group>"; };
 		0EF2F5C01C154A5700F27D61 /* PIEChannelBannerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelBannerCell.m; sourceTree = "<group>"; };
 		0EF2F5C11C154A5700F27D61 /* PIEChannelBannerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEChannelBannerCell.xib; sourceTree = "<group>"; };
@@ -1605,7 +1610,7 @@
 				0EF2F5CB1C154A6200F27D61 /* PIEChannelViewController.xib */,
 				0E6F79001C16EE5C002F9FB6 /* PIEChannelDetailViewController.h */,
 				0E6F79011C16EE5C002F9FB6 /* PIEChannelDetailViewController.m */,
-				0E6F79021C16EE5C002F9FB6 /* PIEChannelDetailViewController.xib */,
+				0E966C931C17C49D0049BC61 /* PIEChannelDetailViewController_Reuse.storyboard */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1636,6 +1641,9 @@
 				0E6F78FB1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.h */,
 				0E6F78FC1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.m */,
 				0E6F78FD1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.xib */,
+				0ECED3441C17CC4E00D3F097 /* PIEChannelDetailAskPSItemView.h */,
+				0ECED3451C17CC4E00D3F097 /* PIEChannelDetailAskPSItemView.m */,
+				0ECED3471C17CC5E00D3F097 /* PIEChannelDetailAskPSItemView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3932,13 +3940,13 @@
 				F41BA0D11C0EDCE800979D43 /* MJRefresh.bundle in Resources */,
 				E94289821B5B32A200ED26E4 /* NotificationButtonBackground.png in Resources */,
 				0EF2F5CD1C154A6200F27D61 /* PIEChannelViewController.xib in Resources */,
-				0E6F79041C16EE5C002F9FB6 /* PIEChannelDetailViewController.xib in Resources */,
 				F421A20D1BEB2F320028C521 /* PIEToHelpTableViewCell2.xib in Resources */,
 				E94289811B5B32A200ED26E4 /* NotificationBackgroundWarningIcon@2x.png in Resources */,
 				3BE1AECD1B9FE9C900CE2303 /* QBImagePicker.storyboard in Resources */,
 				F402F0F91BE89530004988B4 /* PIESearchUserCollectionViewCell.xib in Resources */,
 				F4B02E121BECA27B00406A55 /* cell_holder_rectangle.png in Resources */,
 				3BE1AEC61B9FE9C900CE2303 /* QBImagePicker.strings in Resources */,
+				0E966C941C17C49D0049BC61 /* PIEChannelDetailViewController_Reuse.storyboard in Resources */,
 				F4207AE91C046302004B1978 /* PIENotificationViewController.xib in Resources */,
 				F42100F21BF5EC1900CFD82E /* intro3.xib in Resources */,
 				5C6CE6B91ADBE8A10035F522 /* EmojisList.plist in Resources */,
@@ -3966,6 +3974,7 @@
 				F45ECF451BD1DB5B00417A75 /* PIEEliteHotReplyTableViewCell.xib in Resources */,
 				5CDB05D51AA3FE520089121E /* LaunchScreen.xib in Resources */,
 				E94289851B5B32A200ED26E4 /* .gitkeep in Resources */,
+				0ECED3481C17CC5E00D3F097 /* PIEChannelDetailAskPSItemView.xib in Resources */,
 				E94289741B5B32A200ED26E4 /* NotificationBackgroundError.png in Resources */,
 				F46FB6E11C10357000FEB2E7 /* intro1.png in Resources */,
 				F4EC11271BCF55EC002D1DCF /* PIENotificationLikeTableViewCell.xib in Resources */,
@@ -4117,6 +4126,7 @@
 				F4E530961BD4CFB800FAA65D /* PIELoginViewController.m in Sources */,
 				5C4AE3EC1AAED60A0020E102 /* PIEFriendFansViewController.m in Sources */,
 				5C3101871AAE9B0F00EF529B /* PIEThirdPartyBindingViewController.m in Sources */,
+				0ECED3461C17CC4E00D3F097 /* PIEChannelDetailAskPSItemView.m in Sources */,
 				E9A5B66D1B9040310059754C /* DDServiceConstants.m in Sources */,
 				F4275A1A1BE0B9E400BBE7E4 /* PIEMyFansViewController.m in Sources */,
 				F46117D81BAD1101001A6F1A /* IQUIView+Hierarchy.m in Sources */,

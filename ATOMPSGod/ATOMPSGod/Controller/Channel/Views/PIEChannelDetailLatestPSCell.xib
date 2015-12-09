@@ -61,6 +61,9 @@
                     <constraint firstItem="8e3-Nu-EjB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="wmh-j4-wfH"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="swipeView" destination="j8w-sT-wSv" id="Loe-7B-ftb"/>
+            </connections>
             <point key="canvasLocation" x="445" y="219"/>
         </tableViewCell>
     </objects>

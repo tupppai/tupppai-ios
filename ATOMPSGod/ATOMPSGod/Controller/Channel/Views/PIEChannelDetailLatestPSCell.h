@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+@class SwipeView;
+
 @interface PIEChannelDetailLatestPSCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet SwipeView *swipeView;
 
 @end
