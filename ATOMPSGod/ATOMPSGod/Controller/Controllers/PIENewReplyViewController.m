@@ -49,7 +49,7 @@
 
 @end
 
-/* Delegates */
+/* Protocols */
 @interface PIENewReplyViewController (SharingDelegate)
 <PIEShareViewDelegate>
 @end

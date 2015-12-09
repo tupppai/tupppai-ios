@@ -17,6 +17,7 @@
 
 #import "DDBaseService.h"
 #import "DDServiceConstants.h"
+#import "PIEChannelDetailViewController.h"
 
 
 /**
@@ -88,7 +89,28 @@
 }
 
 #pragma mark - <UITableViewDelegate>
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"%s", __func__);
 
+    if (indexPath.row != 0)
+    {
+        [self.navigationController
+         pushViewController:[[PIEChannelDetailViewController alloc] init]
+         animated:YES];
+        
+//        // testing:
+//        UIStoryboard *PIEChannelDetailViewController_Reuse =
+//        [UIStoryboard storyboardWithName:@"PIEChannelDetailViewController_Reuse"
+//                                  bundle:nil];
+//        PIEChannelDetailViewController *channelDetailViewController =
+//        (PIEChannelDetailViewController *)
+//        [PIEChannelDetailViewController_Reuse instantiateInitialViewController];
+//        
+//        [self.navigationController pushViewController:channelDetailViewController animated:YES];
+        
+    }
+}
 
 
 #pragma mark - <UITableViewDataSource>
@@ -124,6 +146,7 @@
     NSLog(@"%s", __func__);
 
     // load new channels from server
+    
     /*
      URL_ChannelHomeThreads
      /thread/home
@@ -165,7 +188,6 @@
     // load more channels from server
     // add to view models
     // refresh tableView
-    
     
 }
 
