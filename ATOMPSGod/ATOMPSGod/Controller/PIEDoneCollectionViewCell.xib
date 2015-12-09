@@ -51,8 +51,8 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="Jyw-kk-rwn"/>
                                 <exclude reference="DRf-e5-pKN"/>
+                                <exclude reference="Jyw-kk-rwn"/>
                                 <exclude reference="oqc-p6-mFY"/>
                             </mask>
                         </variation>

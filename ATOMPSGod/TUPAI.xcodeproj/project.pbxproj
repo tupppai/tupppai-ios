@@ -685,8 +685,8 @@
 		5C67FB2B1AB2C509004EFF05 /* ATOMCustomCopperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMCustomCopperView.h; sourceTree = "<group>"; };
 		5C67FB2C1AB2C509004EFF05 /* ATOMCustomCopperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMCustomCopperView.m; sourceTree = "<group>"; };
 		5C6CE6B81ADBE8A10035F522 /* EmojisList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = EmojisList.plist; sourceTree = "<group>"; };
-		5C6CEF281AF18BA800F06213 /* ATOMConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATOMConstant.h; path = ../../Controller/common/ATOMConstant.h; sourceTree = "<group>"; };
-		5C6CEF291AF18BA800F06213 /* ATOMConstant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATOMConstant.m; path = ../../Controller/common/ATOMConstant.m; sourceTree = "<group>"; };
+		5C6CEF281AF18BA800F06213 /* ATOMConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATOMConstant.h; path = ../Controller/common/ATOMConstant.h; sourceTree = "<group>"; };
+		5C6CEF291AF18BA800F06213 /* ATOMConstant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATOMConstant.m; path = ../Controller/common/ATOMConstant.m; sourceTree = "<group>"; };
 		5C70715D1AC52656004B3A6A /* ATOMImageCropper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMImageCropper.h; sourceTree = "<group>"; };
 		5C70715E1AC52656004B3A6A /* ATOMImageCropper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMImageCropper.m; sourceTree = "<group>"; };
 		5C7861141AAF4C9400E87C77 /* PIEMyReplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIEMyReplyViewController.h; path = person/PIEMyReplyViewController.h; sourceTree = "<group>"; };
@@ -2070,8 +2070,6 @@
 		5C9BDA5D1AA88BD900715698 /* BJImageCropper */ = {
 			isa = PBXGroup;
 			children = (
-				5C6CEF281AF18BA800F06213 /* ATOMConstant.h */,
-				5C6CEF291AF18BA800F06213 /* ATOMConstant.m */,
 				5C653B991AA96C820025814B /* BJImageCropper.h */,
 				5C653B9A1AA96C820025814B /* BJImageCropper.m */,
 				5C67FB2B1AB2C509004EFF05 /* ATOMCustomCopperView.h */,
@@ -2249,6 +2247,8 @@
 				5CDB06161AA428BD0089121E /* Masonry */,
 				5C561A431AB7C51F0052D4D5 /* MTLFMDBAdapter */,
 				5C9BDA5D1AA88BD900715698 /* BJImageCropper */,
+				5C6CEF281AF18BA800F06213 /* ATOMConstant.h */,
+				5C6CEF291AF18BA800F06213 /* ATOMConstant.m */,
 				5C4F5BED1AA5893700226F64 /* UIActionSheet+Blocks.h */,
 				5C4F5BEE1AA5893700226F64 /* UIActionSheet+Blocks.m */,
 				5CDB066C1AA46E6F0089121E /* UIAlertView+Blocks.h */,
