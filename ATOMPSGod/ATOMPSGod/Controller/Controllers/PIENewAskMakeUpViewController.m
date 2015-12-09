@@ -37,7 +37,7 @@
 @end
 
 
-/* Delegates */
+/* Protocols */
 @interface PIENewAskMakeUpViewController (CollectionView)
 <UICollectionViewDataSource, UICollectionViewDelegate, CHTCollectionViewDelegateWaterfallLayout>
 @end

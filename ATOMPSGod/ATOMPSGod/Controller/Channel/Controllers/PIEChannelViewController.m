@@ -19,6 +19,9 @@
 #import "DDServiceConstants.h"
 #import "PIEChannelViewModel.h"
 #import "PIEChannelManager.h"
+#import "PIEChannelDetailViewController.h"
+
+
 /**
  *  <PIEChannelBannerDelegate>: 处理bannerCell的两个button的点击（push到其他页面）
  */
@@ -72,14 +75,34 @@
 
 - (void)setupData {
     _source = [NSMutableArray array];
-}
 
+}
 #pragma mark - <UITableViewDelegate>
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"%s", __func__);
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    //push
+
+    if (indexPath.row != 0)
+    {
+        [self.navigationController
+         pushViewController:[[PIEChannelDetailViewController alloc] init]
+         animated:YES];
+        
+//        // testing:
+//        UIStoryboard *PIEChannelDetailViewController_Reuse =
+//        [UIStoryboard storyboardWithName:@"PIEChannelDetailViewController_Reuse"
+//                                  bundle:nil];
+//        PIEChannelDetailViewController *channelDetailViewController =
+//        (PIEChannelDetailViewController *)
+//        [PIEChannelDetailViewController_Reuse instantiateInitialViewController];
+//        
+//        [self.navigationController pushViewController:channelDetailViewController animated:YES];
+        
+    }
 }
+
+
 
 #pragma mark - <UITableViewDataSource>
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -125,6 +148,7 @@
     NSLog(@"%s", __func__);
 
     // load new channels from server
+    
     /*
      URL_ChannelHomeThreads
      /thread/home
@@ -170,6 +194,7 @@
         [self.tableView.mj_footer endRefreshing];
     }];
     
+
 }
 
 #pragma marmk - <PWRefreshBaseTableViewDelegate>
