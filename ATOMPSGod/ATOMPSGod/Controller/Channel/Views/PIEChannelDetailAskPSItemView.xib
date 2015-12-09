@@ -15,7 +15,7 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="moment" translatesAutoresizingMaskIntoConstraints="NO" id="HSJ-Q3-MDg" userLabel="imageView">
                     <rect key="frame" x="0.0" y="0.0" width="90" height="100"/>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KnH-EY-fmF">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="desc" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KnH-EY-fmF">
                     <rect key="frame" x="0.0" y="99" width="90" height="20"/>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -35,10 +35,10 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="desc" destination="KnH-EY-fmF" id="NFM-ce-Ffg"/>
                 <outlet property="imageView" destination="HSJ-Q3-MDg" id="uNS-eA-Iem"/>
-                <outlet property="title" destination="KnH-EY-fmF" id="rZ7-d9-B1K"/>
             </connections>
-            <point key="canvasLocation" x="100" y="183.5"/>
+            <point key="canvasLocation" x="-140" y="38.5"/>
         </view>
     </objects>
     <resources>

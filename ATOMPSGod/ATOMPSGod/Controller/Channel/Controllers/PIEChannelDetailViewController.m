@@ -11,11 +11,17 @@
 #import "PIEChannelDetailLatestPSCell.h"
 #import "SwipeView.h"
 #import "PIEChannelDetailAskPSItemView.h"
+#import "PIEChannelManager.h"
+
+#import "PIEChannelViewModel.h"
 
 /* Variables */
 @interface PIEChannelDetailViewController ()
-@property (nonatomic, strong)PIERefreshTableView *tableView;
-@property (nonatomic, strong) UIButton *takePhotoButton;
+@property (nonatomic, strong) PIERefreshTableView *tableView;
+@property (nonatomic, strong) UIButton            *takePhotoButton;
+
+/**  timeStamp: 刷新数据的时候的时间（整数10位）*/
+@property (nonatomic, assign) long long           timeStamp;
 
 
 @end
@@ -63,8 +69,8 @@ static NSString *  PIEDetailNormalIdentifier =
     
     self.title = @"用PS搞创意";
     
-    NSLog(@"selectedChannelViewModel: %@", self.selectedChannelViewModel);
-    
+    // load new data for the first time
+    [self.tableView.mj_header beginRefreshing];
 }
 
 #pragma mark - <UITableViewDelegate>
@@ -106,19 +112,19 @@ static NSString *  PIEDetailNormalIdentifier =
 #pragma mark - <PWRefreshBaseTableViewDelegate>
 
 /**
- *  下拉刷新
+ *  上拉加载
 */
 - (void)didPullRefreshUp:(UITableView *)tableView
 {
-    [self loadNewUserPSWorks];
+    [self loadMoreUserPSWorks];
 }
 
 /**
- *  上拉加载
+ *  下拉刷新
 */
 - (void)didPullRefreshDown:(UITableView *)tableView
 {
-    [self loadMoreUserPSWorks];
+    [self loadNewUserPSWorks];
 }
 
 #pragma mark - <SwipeViewDelegate>
@@ -161,6 +167,22 @@ static NSString *  PIEDetailNormalIdentifier =
 - (void)loadNewUserPSWorks
 {
     NSLog(@"%s", __func__);
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"channel_id"]       = @(self.selectedChannelViewModel.ID);
+    params[@"page"]             = @(1);
+    params[@"size"]             = @(20);
+    
+    // --- Double -> Long long int
+    _timeStamp                  = @([[NSDate date] timeIntervalSince1970]);
+    params[@"last_updated"]     = @(_timeStamp);
+    
+    __weak typeof(self) weakSelf = self;
+    [PIEChannelManager
+     getSource_latestAskForPS:params
+     block:^(NSMutableArray<PIEPageVM *> *resultArray) {
+        [weakSelf.tableView.mj_header endRefreshing];
+     }];
 }
 
 #pragma mark - Target-actions

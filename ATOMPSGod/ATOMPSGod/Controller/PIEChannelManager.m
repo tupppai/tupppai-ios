@@ -9,7 +9,8 @@
 #import "PIEChannelManager.h"
 #import "PIEChannelViewModel.h"
 @implementation PIEChannelManager
-+ (void)getSource_Channel:(NSDictionary *)params  block:(void (^)(NSMutableArray *))block {
++ (void)getSource_Channel:(NSDictionary *)params
+                    block:(void (^)(NSMutableArray<PIEChannelViewModel *> *))block {
     [DDBaseService GET:params
                    url:URL_ChannelHomeThreads
                  block:^(id responseObject) {
@@ -47,4 +48,87 @@
 }
 
 
++ (void)getSource_latestAskForPS:(NSDictionary *)params
+                           block:(void (^)(NSMutableArray<PIEPageVM *> *resultArray))block
+{
+    
+    /*
+     /thread/get_threads_by_channel
+     URL_ChannelLatestAskForPS
+     接受参数
+     get:
+     channel_id: 频道id
+     page:页面，默认为1
+     size:页面数目，默认为10
+     last_updated:最后下拉更新的时间戳（整数10位）
+     
+     返回
+     
+     code = 0;
+     data =     {
+        ask =         (
+     );
+        replies =         (
+     );
+     };
+     debug = 1;
+     info = "";
+     ret = 1;
+     token = feeb2e6fd5f5025921f97fae210f71ab3dfd9bf5;
+     } ,error (null)
+     
+     data字段里面的ask: 最新求P
+     
+     */
+
+    [DDBaseService GET:params
+                   url:URL_ChannelLatestAskForPS
+                 block:^(id responseObject) {
+                     NSLog(@"\n\n\n\n\n\n\n\n\n");
+                     NSLog(@"response: %@\n", responseObject);
+                     block(nil);
+                 }];
+}
+
++ (void)getSource_usersPSByChannelID:(NSDictionary *)params
+                               block:(void (^)(NSMutableArray<PIEPageVM *> *resultArray))block
+{
+    
+    /*
+     /thread/get_threads_by_channel
+     URL_ChannelUsersPS
+     
+     接受参数
+     get:
+     channel_id: 频道id
+     page:页面，默认为1
+     size:页面数目，默认为10
+     last_updated:最后下拉更新的时间戳（整数10位）
+     
+     返回
+     
+     code = 0;
+     data =     {
+        ask =         (
+     );
+        replies =         (
+     );
+     };
+     debug = 1;
+     info = "";
+     ret = 1;
+     token = feeb2e6fd5f5025921f97fae210f71ab3dfd9bf5;
+     } ,error (null)
+     
+     data字段里面的replies: 该频道的所有用户的PS作品
+     
+     */
+    
+    [DDBaseService GET:params
+                   url:URL_ChannelUsersPS
+                 block:^(id responseObject) {
+                     block(nil);
+                 }];
+
+}
 @end

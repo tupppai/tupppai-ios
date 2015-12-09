@@ -48,12 +48,16 @@ NSString * URL_PFGetFollowPages     = @"Thread/timeline";
 NSString * URL_PFGetHotPages        = @"Thread/popular";
 NSString * URL_NotiGetNotifications = @"message/index";
 
-NSString * URL_UKGetUserSearch = @"user/search";
+NSString * URL_UKGetUserSearch    = @"user/search";
 NSString * URL_UKGetContentSearch = @"thread/search";
-NSString * URL_UKGetBanner = @"banner/get_banner_list";
+NSString * URL_UKGetBanner        = @"banner/get_banner_list";
 
-NSString * URL_ChannelHomeThreads = @"/thread/home";
-NSString * URL_ChannelGetActivities = @"/thread/get_activity_threads";
+NSString * URL_ChannelHomeThreads      = @"/thread/home";
+NSString * URL_ChannelGetActivities    = @"/thread/get_activity_threads";
 NSString * URL_ChannelGetDetailThreads = @"/thread/get_threads_by_channel";
+
+NSString * URL_ChannelLatestAskForPS     = @"/thread/get_threads_by_channel";
+NSString * URL_ChannelUsersPS = @"/thread/get_threads_by_channel";
+
 
 @end

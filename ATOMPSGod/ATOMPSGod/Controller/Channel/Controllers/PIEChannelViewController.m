@@ -55,8 +55,9 @@
     [self setupTableView];
     [self setupData];
     
-    // load first data
-    [self loadNewChannels];
+    // load data for the first time!
+    [self.tableView.mj_header beginRefreshing];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -124,7 +125,8 @@
     }
     else if (indexPath.section == 1)
     {
-        PIEChannelTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"Channel_Cell"];
+        PIEChannelTableViewCell* cell =
+        [tableView dequeueReusableCellWithIdentifier:@"Channel_Cell"];
         cell.vm = [_source objectAtIndex:indexPath.row];
 //        cell.swipeView.delegate = self;
         cell.swipeView.dataSource = self;
@@ -150,7 +152,7 @@
      get:
      page:页面，默认为1
      size:页面数目，默认为10
-     last_updated:最后下拉更新的时间戳（10位）
+     last_updated:最后下拉更新的时间戳（整数10位）
      
      */
     [self.tableView.mj_footer endRefreshing];
@@ -191,8 +193,6 @@
         }
         [self.tableView.mj_footer endRefreshing];
     }];
-    
-
 }
 
 #pragma marmk - <PWRefreshBaseTableViewDelegate>
