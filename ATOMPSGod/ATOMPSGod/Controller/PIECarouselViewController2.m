@@ -44,7 +44,7 @@
 //@property (weak, nonatomic) IBOutlet UIView *bottomContainerView;
 //@property (weak, nonatomic) IBOutlet UIVisualEffectView *bottomDimmerView;
 @property (nonatomic, assign) NSInteger previousCurrentIndex ;
-
+@property (nonatomic, strong) UIView *view_placeHoder ;
 @end
 
 @implementation PIECarouselViewController2
@@ -82,6 +82,23 @@
     _askCount = 0;
     _replyCount = 0;
 }
+-(void)setupPlaceHoder {
+    CGFloat width  = SCREEN_WIDTH *scale_h;
+    _view_placeHoder = [[UIView alloc]initWithFrame:CGRectMake((self.view.frame.size.width-width)/2, margin_v, width, SCREEN_HEIGHT-margin_v+5)];
+    _view_placeHoder.backgroundColor = [UIColor whiteColor];
+    _view_placeHoder.alpha = 0.9;
+    _view_placeHoder.layer.cornerRadius = 10;
+    _view_placeHoder.clipsToBounds = YES;
+    [self.view addSubview:_view_placeHoder];
+    
+    UIActivityIndicatorView* indicatorView = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    indicatorView.center = CGPointMake(width/2, 200);
+    [_view_placeHoder addSubview:indicatorView];
+    [indicatorView startAnimating];
+    UISwipeGestureRecognizer *swipe2 = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture_SwipeDown:)];
+    swipe2.direction =   UISwipeGestureRecognizerDirectionDown;
+    [_view_placeHoder addGestureRecognizer:swipe2];
+}
 
 - (void)setupViews {
     self.edgesForExtendedLayout = UIRectEdgeAll;
@@ -101,6 +118,7 @@
     [self.view addGestureRecognizer:tapGes];
 //    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(pan:)];
 //    [self.carousel addGestureRecognizer:pan];
+    [self setupPlaceHoder];
 }
 
 - (void) tapOnSelf:(UIGestureRecognizer*)sender {
@@ -122,29 +140,47 @@ CGFloat startPanLocationY;
 
 
 - (void)handleGesture_SwipeUp:(id)sender {
-    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.9 initialSpringVelocity:0.5 options:UIViewAnimationOptionAllowUserInteraction animations:^{
-        [self.carousel.currentItemView setTransform:CGAffineTransformMakeScale(1.1, 1.1)];
+    
+    
+    PIECommentViewController2* vc = [PIECommentViewController2 new];
+    vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    vc.vm = _currentVM;
+    DDNavigationController* nav = [[DDNavigationController alloc]initWithRootViewController:vc];
+    
+    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1.0 initialSpringVelocity:1.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+               CGRect frame = self.carousel.currentItemView.frame;
+               frame.origin.y -= margin_v - 20;
+        self.carousel.currentItemView.frame = frame;
+//                    [self.carousel.currentItemView setTransform:CGAffineTransformMakeScale(1.05, 1.05)];
     } completion:^(BOOL finished) {
         if (finished) {
-            [self.carousel.currentItemView setTransform:CGAffineTransformIdentity];
-            PIECommentViewController2* vc = [PIECommentViewController2 new];
-            vc.vm = _currentVM;
-            DDNavigationController* nav = [[DDNavigationController alloc]initWithRootViewController:vc];
-            [self presentViewController:nav animated:NO completion:nil];
+//            [self.carousel.currentItemView setTransform:CGAffineTransformIdentity];
+            [self presentViewController:nav animated:YES completion:^{
+                CGRect frame = self.carousel.currentItemView.frame;
+                frame.origin.y += margin_v - 20;
+                self.carousel.currentItemView.frame = frame;
+            }];
         }
     }];
-
+    
+    
+    
 }
 - (void)handleGesture_SwipeDown:(id)sender {
-    [UIView animateWithDuration:0.8 delay:0 usingSpringWithDamping:1 initialSpringVelocity:1 options:UIViewAnimationOptionCurveEaseIn animations:^{
-        CGRect frame = self.carousel.currentItemView.frame;
-        frame.origin.y += SCREEN_HEIGHT;
-        self.carousel.currentItemView.frame = frame;
-    } completion:^(BOOL finished) {
-        if (finished) {
-            [self dismissViewControllerAnimated:NO completion:nil];
-        }
-    }];
+    [self dismissViewControllerAnimated:NO completion:nil];
+
+//   [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+//       CGRect frame = self.carousel.currentItemView.frame;
+//       [self.carousel setTransform:CGAffineTransformMakeScale(0.3, 0.3)];
+//       self.view.alpha = 0.1;
+//       frame.origin.y += SCREEN_HEIGHT;
+//       self.carousel.frame = frame;
+//       self.view.backgroundColor = [UIColor clearColor];
+//   } completion:^(BOOL finished) {
+//       if (finished) {
+//           [self dismissViewControllerAnimated:NO completion:nil];
+//       }
+//   }];
 }
 
 -(iCarousel *)carousel {
@@ -337,6 +373,13 @@ CGFloat startPanLocationY;
             [self.dataSource addObjectsFromArray:askArray];
             [self.dataSource addObjectsFromArray: replyArray];
 //            [_carousel reloadData];
+        if (self.dataSource.count > 0) {
+            [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+                _view_placeHoder.alpha = 0;
+            } completion:^(BOOL finished) {
+                [_view_placeHoder removeFromSuperview];
+            }];
+        }
             [self reorderSourceAndScroll];
         
     }];

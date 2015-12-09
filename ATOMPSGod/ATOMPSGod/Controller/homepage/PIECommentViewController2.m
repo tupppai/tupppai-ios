@@ -133,16 +133,17 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     self.navigationController.navigationBar.translucent = YES;
     self.navigationController.navigationBar.backgroundColor = [UIColor colorWithHex:0xffffff andAlpha:0.5];
 
+    self.navigationController.hidesBarsOnSwipe = YES;
+//    [self.navigationController setNavigationBarHidden:YES];
         [MobClick beginLogPageView:@"进入浏览图片页"];
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
     [self.navigationController.navigationBar setBackgroundImage:nil
                                                   forBarMetrics:UIBarMetricsDefault];
-    
+    self.navigationController.hidesBarsOnSwipe = NO;
     [super viewWillDisappear:animated];
     //    [MobClick endLogPageView:@"离开浏览图片页"];
-
 }
 
 
@@ -150,7 +151,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [super scrollViewDidScroll:scrollView];
     float scrollOffset = scrollView.contentOffset.y;
     
-    if (scrollOffset < - 85) {
+    if (scrollOffset < - 90) {
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 

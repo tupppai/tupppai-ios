@@ -21,9 +21,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import "PIETransitioning.h"
+#import "PIETransitioning_CarouselHome.h"
 
-@implementation PIETransitioning
+@implementation PIETransitioning_CarouselHome
 
 -(NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
     return 0.6;

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -13,10 +13,10 @@
             <rect key="frame" x="0.0" y="0.0" width="467" height="278"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="467" height="277"/>
+                <rect key="frame" x="0.0" y="0.0" width="467" height="277.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gKv-rV-B0d">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gKv-rV-B0d">
                         <rect key="frame" x="9" y="11" width="449" height="144"/>
                         <animations/>
                         <color key="backgroundColor" red="0.92534722219999999" green="0.39678257830000002" blue="0.41251772450000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -24,7 +24,7 @@
                             <constraint firstAttribute="width" secondItem="gKv-rV-B0d" secondAttribute="height" multiplier="714:228" id="abI-Vm-wQ3"/>
                         </constraints>
                     </imageView>
-                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EsH-Of-MTP" userLabel="containerView">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EsH-Of-MTP" userLabel="containerView">
                         <rect key="frame" x="9" y="155" width="449" height="105"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FtG-wG-PzG" customClass="SwipeView">
@@ -56,6 +56,10 @@
                 </constraints>
             </tableViewCellContentView>
             <animations/>
+            <connections>
+                <outlet property="imageView_banner" destination="gKv-rV-B0d" id="3nG-Gm-Etx"/>
+                <outlet property="swipeView" destination="FtG-wG-PzG" id="YXz-97-hel"/>
+            </connections>
             <point key="canvasLocation" x="291.5" y="312"/>
         </tableViewCell>
     </objects>

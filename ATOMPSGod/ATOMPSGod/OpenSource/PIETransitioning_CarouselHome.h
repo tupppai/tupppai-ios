@@ -23,6 +23,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PIETransitioning : NSObject <UIViewControllerAnimatedTransitioning>
+@interface PIETransitioning_CarouselHome : NSObject <UIViewControllerAnimatedTransitioning>
 @property (nonatomic, assign) BOOL isPresentation;
 @end
