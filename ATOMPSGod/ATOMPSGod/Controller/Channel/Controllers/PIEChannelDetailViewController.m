@@ -52,6 +52,10 @@ static NSString *  PIEDetailNormalIdentifier =
  同时成为self.view的子视图。
  */
 
+
+/*
+   FIXME: 不重写loadView，程序报错：libc++abi.dylib: terminate_handler unexpectedly threw an exceptio
+ */
 - (void)loadView
 {
     [super loadView];
@@ -63,59 +67,14 @@ static NSString *  PIEDetailNormalIdentifier =
     [super viewDidLoad];
 
     
-    /* add subView */
+    /* setup and added as subviews */
+    [self tableView];
+    [self takePhotoButton];
     
-    
-    [self.view addSubview:self.tableView];
-    [self.view addSubview:self.takePhotoButton];
-    
-    // --- add autolayout constraint on _takePhotoButton and _tableView
-//    self.tableView.frame = self.view.bounds;
-    // wtf is the bug? https://www.google.com.hk/?gws_rd=ssl#q=libc%2B%2Babi.dylib+terminate_handler+unexpectedly+threw+an+exception
-    
-    
-    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
-    }];
-    
-    [self.takePhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.view.mas_centerX);
-        make.height.mas_equalTo(50);
-        make.width.mas_equalTo(50);
-        make.bottom.equalTo(self.view.mas_bottom).with.offset(-64);
-    }];
-    
+
     
     
 }
-
-
-
-#pragma mark - Private helpers
-- (void)configurePIERefreshTableView:(PIERefreshTableView *)tableView
-{
-    // set delegate
-    tableView.delegate   = self;
-
-    tableView.dataSource = self;
-
-    tableView.psDelegate = self;
-    
-    // iOS 8+, self-sizing cell
-    tableView.estimatedRowHeight = 88;
-    
-    tableView.rowHeight          = UITableViewAutomaticDimension;
-    
-    // register cells
-    [tableView
-     registerNib:[UINib nibWithNibName:@"PIEChannelDetailLatestPSCell" bundle:nil]
-     forCellReuseIdentifier:PIEDetailLatestPSCellIdentifier];
-    
-    [tableView registerClass:[UITableViewCell class]
-      forCellReuseIdentifier:PIEDetailNormalIdentifier];
-    
-}
-
 
 #pragma mark - <UITableViewDelegate>
 
@@ -205,7 +164,6 @@ static NSString *  PIEDetailNormalIdentifier =
         
         _tableView.rowHeight          = UITableViewAutomaticDimension;
         
-        
         // register cells
         [_tableView
          registerNib:[UINib nibWithNibName:@"PIEChannelDetailLatestPSCell" bundle:nil]
@@ -213,6 +171,16 @@ static NSString *  PIEDetailNormalIdentifier =
         
         [_tableView registerClass:[UITableViewCell class]
            forCellReuseIdentifier:PIEDetailNormalIdentifier];
+        
+        // added as subview
+        [self.view addSubview:_tableView];
+        
+        // add constraints
+        __weak typeof(self) weakSelf = self;
+        [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(weakSelf.view);
+        }];
+ 
     }
     return _tableView;
     
@@ -235,10 +203,16 @@ static NSString *  PIEDetailNormalIdentifier =
                    forControlEvents:UIControlEventTouchUpInside];
         
         // added as subViews
-        // ... in viewDidLoad
+        [self.view addSubview:_takePhotoButton];
         
         // Autolayout constraints
-        // ... in viewDidLoad
+        __weak typeof(self) weakSelf = self;
+        [_takePhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(weakSelf.view.mas_centerX);
+            make.height.mas_equalTo(50);
+            make.width.mas_equalTo(50);
+            make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-64);
+        }];
         
     }
     return _takePhotoButton;
