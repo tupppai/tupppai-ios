@@ -17,12 +17,18 @@
 
 /* Variables */
 @interface PIEChannelDetailViewController ()
-@property (nonatomic, strong) PIERefreshTableView *tableView;
-@property (nonatomic, strong) UIButton            *takePhotoButton;
+@property (nonatomic, strong) PIERefreshTableView           *tableView;
+@property (nonatomic, strong) UIButton                      *takePhotoButton;
+
+/** 该频道内最新求P */
+@property (nonatomic, strong) NSMutableArray<PIEPageVM *>   *latestAskForPSSource;
+/** 该频道内的用户PS作品 */
+@property (nonatomic, strong) NSMutableArray<PIEPageVM *>   *usersPSSource;
 
 /**  timeStamp: 刷新数据的时候的时间（整数10位）*/
-@property (nonatomic, assign) long long           timeStamp;
+@property (nonatomic, assign) long long                     timeStamp;
 
+@property (nonatomic, strong) SwipeView *swipeView;
 
 @end
 
@@ -71,6 +77,7 @@ static NSString *  PIEDetailNormalIdentifier =
     
     // load new data for the first time
     [self.tableView.mj_header beginRefreshing];
+    
 }
 
 #pragma mark - <UITableViewDelegate>
@@ -98,13 +105,17 @@ static NSString *  PIEDetailNormalIdentifier =
         detailLatestPSCell.swipeView.delegate   = self;
         detailLatestPSCell.swipeView.dataSource = self;
         
+        // ??? 实在是想不到更好地方法了。。。
+        self.swipeView = detailLatestPSCell.swipeView;
         return detailLatestPSCell;
     }
     else
     {
         UITableViewCell *cell =
         [tableView dequeueReusableCellWithIdentifier:PIEDetailNormalIdentifier];
-        cell.textLabel.text = [NSString stringWithFormat:@"Cell-%ld", indexPath.row];
+        
+        // configure cell
+        
         return cell;
     }
 }
@@ -116,7 +127,7 @@ static NSString *  PIEDetailNormalIdentifier =
 */
 - (void)didPullRefreshUp:(UITableView *)tableView
 {
-    [self loadMoreUserPSWorks];
+    [self loadMorePageViewModels];
 }
 
 /**
@@ -124,7 +135,7 @@ static NSString *  PIEDetailNormalIdentifier =
 */
 - (void)didPullRefreshDown:(UITableView *)tableView
 {
-    [self loadNewUserPSWorks];
+    [self loadNewPageViewModels];
 }
 
 #pragma mark - <SwipeViewDelegate>
@@ -139,32 +150,39 @@ static NSString *  PIEDetailNormalIdentifier =
 #pragma mark - <SwipeViewDataSource>
 - (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
 {
-    return 10;
+    return self.latestAskForPSSource.count;
 }
 
 - (UIView *)swipeView:(SwipeView *)swipeView
-   viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
+   viewForItemAtIndex:(NSInteger)index
+          reusingView:(PIEChannelDetailAskPSItemView *)view
 {
     if (view == nil)
     {
         view =
-        (PIEChannelDetailAskPSItemView *)
         [[NSBundle mainBundle] loadNibNamed:@"PIEChannelDetailAskPSItemView"
                                              owner:self options:nil][0];
     }
+    
+    // viewModel -> view
+    NSURL *imageURL = [NSURL URLWithString:_latestAskForPSSource[index].imageURL];
+    [view.imageView setImageWithURL:imageURL
+                   placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+    view.desc.text = _latestAskForPSSource[index].content;
+    
     
     return view;
 }
 
 
 #pragma mark - Refresh methods
-- (void)loadMoreUserPSWorks
+- (void)loadMorePageViewModels
 {
     NSLog(@"%s", __func__);
 }
 
 
-- (void)loadNewUserPSWorks
+- (void)loadNewPageViewModels
 {
     NSLog(@"%s", __func__);
     
@@ -179,10 +197,31 @@ static NSString *  PIEDetailNormalIdentifier =
     
     __weak typeof(self) weakSelf = self;
     [PIEChannelManager
-     getSource_latestAskForPS:params
-     block:^(NSMutableArray<PIEPageVM *> *resultArray) {
-        [weakSelf.tableView.mj_header endRefreshing];
+     getSource_pageViewModels:params
+     latestAskForPSBlock:^(NSMutableArray<PIEPageVM *> *latestAskForPSResultArray)
+     {
+         [weakSelf.latestAskForPSSource
+          arrayByAddingObjectsFromArray:latestAskForPSResultArray];
+         
+         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+             
+             // -- stop refreshing animation and reload TableView & SwipeView
+             [weakSelf.tableView.mj_header endRefreshing];
+             
+             [weakSelf.tableView reloadData];
+             
+             // !!! prone to get error! 如果cell复用了的话swipeView怎么办？
+             [weakSelf.swipeView reloadData];
+         }];
+         
+     }
+     usersPSBlock:^(NSMutableArray<PIEPageVM *> *usersPSResultArray)
+     {
+         [weakSelf.usersPSSource
+          arrayByAddingObjectsFromArray:usersPSResultArray];
      }];
+    
+    
 }
 
 #pragma mark - Target-actions
@@ -191,6 +230,34 @@ static NSString *  PIEDetailNormalIdentifier =
     NSLog(@"%s", __func__);
     
 }
+#pragma mark - UI components configuration
+- (void)configureTableView
+{
+    // added as subview
+    [self.view addSubview:self.tableView];
+    
+    // add constraints
+    __weak typeof(self) weakSelf = self;
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(weakSelf.view);
+    }];
+}
+
+- (void)configureTakePhotoButton
+{
+    // --- added as subViews
+    [self.view addSubview:self.takePhotoButton];
+    
+    // --- Autolayout constraints
+    __weak typeof(self) weakSelf = self;
+    [_takePhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(weakSelf.view.mas_centerX);
+        make.height.mas_equalTo(50);
+        make.width.mas_equalTo(50);
+        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-64);
+    }];
+}
+
 
 
 #pragma mark - lazy loadings
@@ -235,7 +302,7 @@ static NSString *  PIEDetailNormalIdentifier =
         
         // --- set background image
         [_takePhotoButton setBackgroundImage:[UIImage imageNamed:@"pie_signup_close"]
-                                    forState:UIControlStateNormal];
+              forState:UIControlStateNormal];
         
         // --- add target-actions
         [_takePhotoButton addTarget:self
@@ -246,34 +313,26 @@ static NSString *  PIEDetailNormalIdentifier =
     
 }
 
-#pragma mark - UI components configuration
-- (void)configureTableView
+- (NSMutableArray<PIEPageVM *> *)latestAskForPSSource
 {
-    // added as subview
-    [self.view addSubview:_tableView];
-    
-    // add constraints
-    __weak typeof(self) weakSelf = self;
-    [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(weakSelf.view);
-    }];
-}
-
-- (void)configureTakePhotoButton
-{
-    // --- added as subViews
-    [self.view addSubview:_takePhotoButton];
-    
-    // --- Autolayout constraints
-    __weak typeof(self) weakSelf = self;
-    [_takePhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(weakSelf.view.mas_centerX);
-        make.height.mas_equalTo(50);
-        make.width.mas_equalTo(50);
-        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-64);
-    }];
+    if (_latestAskForPSSource == nil) {
+        // instantiate only for once
+        _latestAskForPSSource = [NSMutableArray<PIEPageVM *> array];
+    }
+    return _latestAskForPSSource;
 
 }
+
+
+- (NSMutableArray<PIEPageVM *> *)usersPSSource
+{
+    if (_usersPSSource == nil) {
+        // instantiate only for once
+        _usersPSSource = [NSMutableArray<PIEPageVM *> array];
+    }
+    return _usersPSSource;
+}
+
 
 
 @end

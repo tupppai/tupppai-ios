@@ -4256,7 +4256,7 @@
 				E9F8908F1B86C4AB0057ECBF /* FMDatabaseAdditions.m in Sources */,
 				F4AE73C31BBA90D800734BCB /* PIEFriendAskViewController.m in Sources */,
 				0E6F79031C16EE5C002F9FB6 /* PIEChannelDetailViewController.m in Sources */,
-				F40207421BA7C4160007CE02 /* PIETransitioning.m in Sources */,
+				F40207421BA7C4160007CE02 /* PIETransitioning_CarouselHome.m in Sources */,
 				F41BA0CE1C0EDCE800979D43 /* MJRefreshGifHeader.m in Sources */,
 				5CDB06041AA405A40089121E /* UIColor+HSB.m in Sources */,
 				F4EC11231BCF456E002D1DCF /* PIENotificationVM.m in Sources */,

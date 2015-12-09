@@ -22,11 +22,11 @@
                          
                          for (NSDictionary* dic in categories) {
                              PIEChannelViewModel* vm = [PIEChannelViewModel new];
-                             vm.ID = [[dic objectForKey:@"id"]integerValue];
+                             vm.ID       = [[dic objectForKey:@"id"]integerValue];
                              vm.imageUrl = [dic objectForKey:@"app_pic"];
-                             vm.iconUrl = [dic objectForKey:@"icon"];
-                             vm.title = [dic objectForKey:@"display_name"];
-                             vm.content = [dic objectForKey:@"description"];
+                             vm.iconUrl  = [dic objectForKey:@"icon"];
+                             vm.title    = [dic objectForKey:@"display_name"];
+                             vm.content  = [dic objectForKey:@"description"];
                              
                              NSMutableArray* threads_transformed = [NSMutableArray new];
                              NSArray* threads = [dic objectForKey:@"threads"];
@@ -51,19 +51,10 @@
 + (void)getSource_latestAskForPS:(NSDictionary *)params
                            block:(void (^)(NSMutableArray<PIEPageVM *> *resultArray))block
 {
-    
     /*
      /thread/get_threads_by_channel
      URL_ChannelLatestAskForPS
-     接受参数
-     get:
-     channel_id: 频道id
-     page:页面，默认为1
-     size:页面数目，默认为10
-     last_updated:最后下拉更新的时间戳（整数10位）
-     
      返回
-     
      code = 0;
      data =     {
         ask =         (
@@ -71,22 +62,21 @@
         replies =         (
      );
      };
-     debug = 1;
-     info = "";
-     ret = 1;
-     token = feeb2e6fd5f5025921f97fae210f71ab3dfd9bf5;
-     } ,error (null)
-     
      data字段里面的ask: 最新求P
-     
      */
-
+    
     [DDBaseService GET:params
                    url:URL_ChannelLatestAskForPS
                  block:^(id responseObject) {
-                     NSLog(@"\n\n\n\n\n\n\n\n\n");
-                     NSLog(@"response: %@\n", responseObject);
-                     block(nil);
+                     if (responseObject != nil) {
+                         NSMutableArray<PIEPageVM *> *retArray = nil;
+                         retArray =
+                         [self pageViewModelsWithResponseObject:responseObject
+                                                     ColumnName:@"ask"];
+                         if (block != nil) {
+                             block(retArray);
+                         }
+                     }
                  }];
 }
 
@@ -97,16 +87,7 @@
     /*
      /thread/get_threads_by_channel
      URL_ChannelUsersPS
-     
-     接受参数
-     get:
-     channel_id: 频道id
-     page:页面，默认为1
-     size:页面数目，默认为10
-     last_updated:最后下拉更新的时间戳（整数10位）
-     
      返回
-     
      code = 0;
      data =     {
         ask =         (
@@ -114,21 +95,97 @@
         replies =         (
      );
      };
-     debug = 1;
-     info = "";
-     ret = 1;
-     token = feeb2e6fd5f5025921f97fae210f71ab3dfd9bf5;
-     } ,error (null)
-     
      data字段里面的replies: 该频道的所有用户的PS作品
-     
      */
     
     [DDBaseService GET:params
                    url:URL_ChannelUsersPS
                  block:^(id responseObject) {
-                     block(nil);
+                     if (responseObject){
+                         NSMutableArray<PIEPageVM *> *retArray = nil;
+                         retArray =
+                         [self pageViewModelsWithResponseObject:responseObject
+                                                     ColumnName:@"replies"];
+                         if (block == nil) {
+                             block(retArray);
+                         }
+                     }
                  }];
-
 }
+
+/**
+ *  Fetch latestAskForArray & usersPSArray at the same time.
+ *
+ *  @param latestAskForPSBlock 返回latestAskForPS的viewModels
+ *  @param usersPSBlock        返回usersPS的viewModels
+ */
++ (void)getSource_pageViewModels:(NSDictionary *)params
+             latestAskForPSBlock:(void (^)(NSMutableArray<PIEPageVM *> *latestAskForPSResultArray))latestAskForPSBlock
+                    usersPSBlock:(void (^)(NSMutableArray<PIEPageVM *> *usersPSResultArray))usersPSBlock
+{
+    [DDBaseService GET:params
+                    url:URL_ChannelGetDetailThreads
+                  block:^(id responseObject) {
+                      if (responseObject != nil)
+                      {
+                          
+                          NSMutableArray<PIEPageVM *> *latestAskForPSResultArray
+                          = nil;
+                          
+                          NSMutableArray<PIEPageVM *> *usersPSResultArray = nil;
+                          
+                          latestAskForPSResultArray =
+                          [self
+                           pageViewModelsWithResponseObject:responseObject
+                           ColumnName:@"ask"];
+                          
+                          usersPSResultArray =
+                          [self
+                           pageViewModelsWithResponseObject:responseObject
+                           ColumnName:@"replies"];
+                          
+                          
+                          if (latestAskForPSBlock != nil)
+                          {
+                              latestAskForPSBlock(latestAskForPSResultArray);
+                          }
+                          
+                          if (usersPSBlock != nil)
+                          {
+                              usersPSBlock(usersPSResultArray);
+                          }
+                      }
+                  }];
+}
+
+#pragma mark - private helpers
+
+/**
+ *  NSDictionary, NSString -> NSArray<PIEPageVM *>;
+    解析JSON数据为PIEPageVM对象数组
+ *
+ *  @param columnName     JSON的字段名
+ *
+ */
++ (NSMutableArray <PIEPageVM *> *)
+pageViewModelsWithResponseObject:(NSDictionary *)responseObject
+                      ColumnName:(NSString *)columnName
+{
+    NSMutableArray <PIEPageVM *> *retArray = [NSMutableArray array];
+    NSDictionary *dataDict                 = responseObject[@"data"];
+    NSArray *pageVMDicts                   = dataDict[columnName];
+    
+    // Dictionary -> Model -> ViewModel
+    for (NSDictionary *dict in pageVMDicts) {
+        
+        PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:dict error:NULL];
+        
+        PIEPageVM *vm = [[PIEPageVM alloc] initWithPageEntity:entity];
+        
+        [retArray addObject:vm];
+    }
+    
+    return retArray;
+}
+
 @end
