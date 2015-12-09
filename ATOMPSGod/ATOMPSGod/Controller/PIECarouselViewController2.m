@@ -146,7 +146,6 @@ CGFloat startPanLocationY;
     vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     vc.vm = _currentVM;
     DDNavigationController* nav = [[DDNavigationController alloc]initWithRootViewController:vc];
-
     
     [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1.0 initialSpringVelocity:1.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
                CGRect frame = self.carousel.currentItemView.frame;

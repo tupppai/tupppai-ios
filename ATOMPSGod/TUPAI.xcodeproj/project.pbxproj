@@ -512,6 +512,8 @@
 		F4F72C231BCD13D6002FF05A /* PIEShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F72C221BCD13D6002FF05A /* PIEShareView.m */; };
 		F4F9FFC91BFC849A00032FDE /* SMPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F9FFC81BFC849A00032FDE /* SMPageControl.m */; };
 		F4FABAFD1BAA593C00F47064 /* PIERefreshCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4FABAFC1BAA593C00F47064 /* PIERefreshCollectionView.m */; };
+		F4FAC94A1C17C330001EF455 /* PIEChannelViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4FAC9491C17C330001EF455 /* PIEChannelViewModel.m */; };
+		F4FAC94F1C17C808001EF455 /* PIEChannelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4FAC94E1C17C808001EF455 /* PIEChannelManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1489,6 +1491,10 @@
 		F4F9FFC81BFC849A00032FDE /* SMPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPageControl.m; sourceTree = "<group>"; };
 		F4FABAFB1BAA593C00F47064 /* PIERefreshCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIERefreshCollectionView.h; sourceTree = "<group>"; };
 		F4FABAFC1BAA593C00F47064 /* PIERefreshCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIERefreshCollectionView.m; sourceTree = "<group>"; };
+		F4FAC9481C17C330001EF455 /* PIEChannelViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIEChannelViewModel.h; path = ATOMPSGod/OpenSource/PIEChannelViewModel.h; sourceTree = SOURCE_ROOT; };
+		F4FAC9491C17C330001EF455 /* PIEChannelViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIEChannelViewModel.m; path = ATOMPSGod/OpenSource/PIEChannelViewModel.m; sourceTree = SOURCE_ROOT; };
+		F4FAC94D1C17C808001EF455 /* PIEChannelManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelManager.h; sourceTree = "<group>"; };
+		F4FAC94E1C17C808001EF455 /* PIEChannelManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1582,6 +1588,7 @@
 		0EF2F5B71C15497A00F27D61 /* Channel */ = {
 			isa = PBXGroup;
 			children = (
+				F4FAC94C1C17C7DC001EF455 /* manager */,
 				0EF2F5BB1C1549BB00F27D61 /* Views */,
 				0EF2F5BA1C1549B100F27D61 /* ViewModels */,
 				0EF2F5B91C1549A900F27D61 /* Models */,
@@ -1610,6 +1617,8 @@
 		0EF2F5BA1C1549B100F27D61 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				F4FAC9481C17C330001EF455 /* PIEChannelViewModel.h */,
+				F4FAC9491C17C330001EF455 /* PIEChannelViewModel.m */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -3817,6 +3826,16 @@
 			path = SMPageControl;
 			sourceTree = "<group>";
 		};
+		F4FAC94C1C17C7DC001EF455 /* manager */ = {
+			isa = PBXGroup;
+			children = (
+				F4FAC94D1C17C808001EF455 /* PIEChannelManager.h */,
+				F4FAC94E1C17C808001EF455 /* PIEChannelManager.m */,
+			);
+			name = manager;
+			path = ..;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -4280,6 +4299,7 @@
 				F43930421BE4BD75006C9437 /* MRActivityIndicatorView+AFNetworking.m in Sources */,
 				5C83A88E1AC66F910071A024 /* POPCGUtils.mm in Sources */,
 				F41BA0C61C0EDCE800979D43 /* MJRefreshFooter.m in Sources */,
+				F4FAC94F1C17C808001EF455 /* PIEChannelManager.m in Sources */,
 				5CDB06741AA47EEC0089121E /* ATOMInputVerifyCodeView.m in Sources */,
 				E90C7C5D1B20726400CF0E6A /* PWMascotAnimationImageView.m in Sources */,
 				5C4C70C51AB6BC5200358989 /* DDBaseService.m in Sources */,
@@ -4327,6 +4347,7 @@
 				F46117D61BAD1101001A6F1A /* IQNSArray+Sort.m in Sources */,
 				5C561A7C1AB7C9FB0052D4D5 /* ATOMBaseDAO.m in Sources */,
 				E95691B51B22E88300DA84BB /* NSError+MTLModelException.m in Sources */,
+				F4FAC94A1C17C330001EF455 /* PIEChannelViewModel.m in Sources */,
 				E991EF011B735B7000025108 /* EAIntroView.m in Sources */,
 				F4EA4DB51BF49B9F00486304 /* PIEAboutUsViewController.m in Sources */,
 				F476AC2E1C059E0D00E45945 /* PIEProceedingAskTableViewCell_NoGap.m in Sources */,
@@ -4582,7 +4603,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tupppai.www;
 				PRODUCT_NAME = TUPAI;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "34523e90-6a66-4e2d-aa8d-13dc5930be24";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = " armv7 armv7s arm64 arm6";
@@ -4626,7 +4647,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tupppai.www;
 				PRODUCT_NAME = TUPAI;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "449921df-06ad-46ee-b5ba-09bc0a134839";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				VALIDATE_PRODUCT = NO;
 				VALID_ARCHS = " armv7 armv7s arm64 arm6";
@@ -4754,7 +4775,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tupppai.www;
 				PRODUCT_NAME = TUPAI;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "34523e90-6a66-4e2d-aa8d-13dc5930be24";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				VALIDATE_PRODUCT = NO;
 				VALID_ARCHS = " armv7 armv7s arm64 arm6";

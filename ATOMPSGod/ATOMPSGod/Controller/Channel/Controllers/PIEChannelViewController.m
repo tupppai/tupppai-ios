@@ -17,22 +17,27 @@
 
 #import "DDBaseService.h"
 #import "DDServiceConstants.h"
-
-
+#import "PIEChannelViewModel.h"
+#import "PIEChannelManager.h"
 /**
  *  <PIEChannelBannerDelegate>: 处理bannerCell的两个button的点击（push到其他页面）
  */
 @interface PIEChannelViewController (BannerCellDelegate)<PIEChannelBannerCellDelegate>
 
 @end
+@interface PIEChannelViewController (ChannelCellDelegate)<SwipeViewDelegate,SwipeViewDataSource>
 
+@end
 @interface PIEChannelViewController (RefeshMethods)<PWRefreshBaseTableViewDelegate>
 
 @end
 
 @interface PIEChannelViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, weak) UIView *containerView;
-@property (nonatomic, weak) PIERefreshTableView *tableView;
+@property (nonatomic, strong) PIERefreshTableView *tableView;
+@property (nonatomic, strong) NSMutableArray *source;
+@property (nonatomic, assign) NSInteger currentIndex;
+@property (nonatomic, assign) long long timeStamp;
 @end
 
 
@@ -45,7 +50,7 @@
 //    [self setupContainerView];
     
     [self setupTableView];
-    
+    [self setupData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -57,64 +62,60 @@
 
 - (void)setupTableView
 {
-    PIERefreshTableView *tableView = [[PIERefreshTableView alloc] init];
-    self.tableView = tableView;
-    [self.view addSubview:tableView];
-
-    tableView.delegate   = self;
-    tableView.dataSource = self;
-    
-    tableView.psDelegate = self;
-   
-    tableView.estimatedRowHeight = 120;
-    tableView.rowHeight = UITableViewAutomaticDimension;
-
-    [tableView registerNib:[UINib nibWithNibName:@"PIEChannelTableViewCell"
-                                          bundle:nil]
-    forCellReuseIdentifier:@"Channel_Cell"];
-    
-    [tableView registerNib:[UINib nibWithNibName:@"PIEChannelBannerCell"
-                                          bundle:nil]
-    forCellReuseIdentifier:@"Banner_Cell"];
-    
-    
+    [self.view addSubview:self.tableView];
     UIEdgeInsets padding = UIEdgeInsetsMake(10, 6, 0, 6);
-    [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view).with.insets(padding);
     }];
-    
-    
-        
+}
+
+
+- (void)setupData {
+    _source = [NSMutableArray array];
 }
 
 #pragma mark - <UITableViewDelegate>
 
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    //push
+}
 
 #pragma mark - <UITableViewDataSource>
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    if (section == 0) {
+        return 1;
+    } else if (section == 1) {
+        return _source.count;
+    }
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0)
+    if (indexPath.section == 0)
     {
         PIEChannelBannerCell *cell =
         [tableView dequeueReusableCellWithIdentifier:@"Banner_Cell"];
-        
         cell.delegate = self;
-        
         return cell;
     }
-    else
+    else if (indexPath.section == 1)
     {
-        return [tableView dequeueReusableCellWithIdentifier:@"Channel_Cell"];
+        PIEChannelTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"Channel_Cell"];
+        cell.vm = [_source objectAtIndex:indexPath.row];
+//        cell.swipeView.delegate = self;
+        cell.swipeView.dataSource = self;
+        cell.swipeView.tag = indexPath.row;
+        return cell;
     }
+    return nil;
 
-    
 }
 
 
@@ -134,38 +135,40 @@
      last_updated:最后下拉更新的时间戳（10位）
      
      */
+    [self.tableView.mj_footer endRefreshing];
+    _timeStamp = [[NSDate date]timeIntervalSince1970];
+    _currentIndex = 1;
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     params[@"page"] = @1;
     params[@"size"] = @5;
-    
-    [DDBaseService GET:params
-                   url:URL_ChannelHomeThreads
-                 block:^(id responseObject) {
-                     NSLog(@"responseObject as followed: ");
-                     NSLog(@"%@", responseObject);
-                     [self.tableView.mj_header endRefreshing];
-                 }];
-    
-    
-    // add to viewModels
-    
-    
-    
-    // refresh tableView
-    
-    
-    
-    
+    params[@"last_updated"] = @(_timeStamp);
+
+    [PIEChannelManager getSource_Channel:params block:^(NSMutableArray *array) {
+        if (array.count) {
+            [_source removeAllObjects];
+            [_source addObjectsFromArray:array];
+            [self.tableView reloadData];
+        }
+        [self.tableView.mj_header endRefreshing];
+    }];
 }
 
 - (void)loadMoreChannels
 {
-    NSLog(@"%s", __func__);
-
-    // load more channels from server
-    // add to view models
-    // refresh tableView
+    [self.tableView.mj_header endRefreshing];
+    _currentIndex ++;
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"page"] = @(_currentIndex);
+    params[@"size"] = @5;
+    params[@"last_updated"] = @(_timeStamp);
     
+    [PIEChannelManager getSource_Channel:params block:^(NSMutableArray *array) {
+        if (array.count) {
+            [_source addObjectsFromArray: array];;
+            [self.tableView reloadData];
+        }
+        [self.tableView.mj_footer endRefreshing];
+    }];
     
 }
 
@@ -200,6 +203,58 @@
      pushViewController:[[PIENewReplyViewController alloc] init]
      animated:YES];
 
+}
+
+#pragma mark iCarousel methods
+
+
+- (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
+{
+    return ((PIEChannelViewModel*)[_source objectAtIndex:swipeView.tag]).threads.count;
+}
+
+- (UIView *)swipeView:(SwipeView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
+{
+    if (!view)
+    {
+        CGFloat width = 40;
+        view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, width)];
+        UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, width, width)];
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
+        imageView.layer.cornerRadius = 3.0;
+        imageView.clipsToBounds = YES;
+        [view addSubview:imageView];
+    }
+    PIEPageVM* vm = [((PIEChannelViewModel*)[_source objectAtIndex:swipeView.tag]).threads objectAtIndex:index];
+    for (UIView *subView in view.subviews) {
+        if([subView isKindOfClass:[UIImageView class]]){
+            UIImageView *imageView = (UIImageView *)subView;
+            [imageView setImageWithURL:[NSURL URLWithString:vm.imageURL]];
+        }
+    }
+    return view;
+}
+
+
+-(PIERefreshTableView *)tableView {
+    if (_tableView == nil) {
+        _tableView = [[PIERefreshTableView alloc] init];
+        _tableView.delegate   = self;
+        _tableView.dataSource = self;
+        _tableView.psDelegate = self;
+        _tableView.estimatedRowHeight = 120;
+        _tableView.rowHeight = UITableViewAutomaticDimension;
+        
+        [_tableView registerNib:[UINib nibWithNibName:@"PIEChannelTableViewCell"
+                                               bundle:nil]
+         forCellReuseIdentifier:@"Channel_Cell"];
+        
+        [_tableView registerNib:[UINib nibWithNibName:@"PIEChannelBannerCell"
+                                               bundle:nil]
+         forCellReuseIdentifier:@"Banner_Cell"];
+        
+    }
+    return _tableView;
 }
 
 

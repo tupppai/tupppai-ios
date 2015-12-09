@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "SwipeView.h"
+#import "PIEChannelViewModel.h"
 @interface PIEChannelTableViewCell : UITableViewCell
-
+@property (weak, nonatomic) IBOutlet UIImageView *imageView_banner;
+@property (weak, nonatomic) IBOutlet SwipeView *swipeView;
+@property (nonatomic,strong)  PIEChannelViewModel *vm;
 @end
