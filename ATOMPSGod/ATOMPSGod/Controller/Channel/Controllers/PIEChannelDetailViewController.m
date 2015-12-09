@@ -63,6 +63,8 @@ static NSString *  PIEDetailNormalIdentifier =
     
     self.title = @"用PS搞创意";
     
+    NSLog(@"selectedChannelViewModel: %@", self.selectedChannelViewModel);
+    
 }
 
 #pragma mark - <UITableViewDelegate>

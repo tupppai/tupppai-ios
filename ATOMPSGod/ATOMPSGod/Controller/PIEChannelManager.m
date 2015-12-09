@@ -17,6 +17,8 @@
                          NSMutableArray* retArray = [NSMutableArray new];
                          NSDictionary* data = [responseObject objectForKey:@"data"];
                          NSArray* categories = [data objectForKey:@"categories"];
+                         
+                         
                          for (NSDictionary* dic in categories) {
                              PIEChannelViewModel* vm = [PIEChannelViewModel new];
                              vm.ID = [[dic objectForKey:@"id"]integerValue];
@@ -35,10 +37,14 @@
                              vm.threads = threads_transformed;
                              [retArray addObject:vm];
                          }
+                         
+                         
                          if (block) {
                              block(retArray);
                          }
                      }
                  }];
 }
+
+
 @end
