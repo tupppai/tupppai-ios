@@ -218,27 +218,29 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     params[@"size"] = @(20);
     
     // --- Double -> Long long int
-    _timeStamp = @([[NSDate date] timeIntervalSince1970]);
+    _timeStamp = [[NSDate date] timeIntervalSince1970];
     params[@"last_updated"] = @(_timeStamp);
     
     __weak typeof(self) weakSelf = self;
     
     [PIEChannelManager
      getSource_pageViewModels:params
-     latestAskForPSBlock:^(NSMutableArray<PIEPageVM *> *latestAskForPSResultArray) {
-         [_latestAskForPSSource addObjectsFromArray:latestAskForPSResultArray];
-     }
-     usersPSBlock:^(NSMutableArray<PIEPageVM *> *usersPSResultArray) {
-         [_usersPSSource addObjectsFromArray:usersPSResultArray];
+     resultBlock:^(NSMutableArray<PIEPageVM *> *latestAskForPSResultArray,
+                   NSMutableArray<PIEPageVM *> *usersRepliesResultArray) {
+         if (usersRepliesResultArray.count == 0) {
+             [weakSelf.tableView.mj_footer endRefreshing];
+         }
+         else{
+             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                 [weakSelf.tableView reloadData];
+                 [weakSelf.tableView.mj_footer endRefreshing];
+             }];
+         }
      }
      completion:^{
-         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-             [weakSelf.tableView.mj_footer endRefreshing];
-         }];
-         [weakSelf.tableView reloadData];
-         //             [weakSelf.swipeView reloadData];
-         
+          // nothing.
      }];
+    
 }
 
 
@@ -252,35 +254,28 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     params[@"size"]             = @(20);
     
     // --- Double -> Long long int
-    _timeStamp                  = @([[NSDate date] timeIntervalSince1970]);
+    _timeStamp                  = [[NSDate date] timeIntervalSince1970];
     params[@"last_updated"]     = @(_timeStamp);
     
     __weak typeof(self) weakSelf = self;
     [PIEChannelManager
      getSource_pageViewModels:params
-     latestAskForPSBlock:^(NSMutableArray<PIEPageVM *> *latestAskForPSResultArray)
-     {
-         
-         [_latestAskForPSSource removeAllObjects];
-         [_latestAskForPSSource addObjectsFromArray:latestAskForPSResultArray];
-     }
-     usersPSBlock:^(NSMutableArray<PIEPageVM *> *usersPSResultArray)
-     {
-         [_usersPSSource removeAllObjects];
-         [_usersPSSource addObjectsFromArray:usersPSResultArray];
-     }
-     completion:^{
+     resultBlock:^(NSMutableArray<PIEPageVM *> *latestAskForPSResultArray,
+                   NSMutableArray<PIEPageVM *> *usersRepliesResultArray) {
+         if (usersRepliesResultArray.count != 0) {
+             [_usersPSSource removeAllObjects];
+             [_usersPSSource addObjectsFromArray:usersRepliesResultArray];
+        
+             [_latestAskForPSSource removeAllObjects];
+             [_latestAskForPSSource addObjectsFromArray:latestAskForPSResultArray];
+        }
+     }completion:^{
          [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-             
              [weakSelf.tableView.mj_header endRefreshing];
-             
              [weakSelf.tableView reloadData];
              
-             //!!! is weakSelf.swipeView non-nil?
-             [weakSelf.swipeView reloadData];
          }];
-     }
-     ];
+     }];
 }
 
 #pragma mark - Target-actions
