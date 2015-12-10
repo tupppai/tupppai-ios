@@ -7,8 +7,23 @@
 //
 
 #import <Foundation/Foundation.h>
-
+@class PIEChannelViewModel;
+@class PIEPageVM;
 @interface PIEChannelManager : NSObject
-+ (void)getSource_Channel:(NSDictionary *)param  block:(void (^)(NSMutableArray *))block;
+
++ (void)getSource_Channel:(NSDictionary *)params
+                    block:(void (^)(NSMutableArray<PIEChannelViewModel *> *))block;
+
+
+//+ (void)getSource_latestAskForPS:(NSDictionary *)params
+//                    block:(void (^)(NSMutableArray<PIEPageVM *> *))block;
+
+//+ (void)getSource_usersPSByChannelID:(NSDictionary *)params
+//                              block:(void (^)(NSMutableArray<PIEPageVM *> *))block;
+
++ (void)getSource_pageViewModels:(NSDictionary *)params
+             latestAskForPSBlock:(void (^)(NSMutableArray<PIEPageVM *> *latestAskForPSResultArray))latestAskForPSBlock
+                    usersPSBlock:(void (^)(NSMutableArray<PIEPageVM *> *usersPSResultArray))usersPSBlock
+                      completion:(void (^)(void))completionBlock;
 @end
 

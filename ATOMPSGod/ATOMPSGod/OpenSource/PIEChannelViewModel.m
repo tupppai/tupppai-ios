@@ -9,5 +9,10 @@
 #import "PIEChannelViewModel.h"
 
 @implementation PIEChannelViewModel
+- (NSString *)description
+{
+    return [NSString stringWithFormat:
+            @"\n ID = %ld \n imageUrl = %@ \n iconUrl = %@ \n title = %@ \n content = %@ \n threads = %@ \n\n", (long)_ID, _imageUrl, _iconUrl, _title, _content, _threads];
+}
 
 @end

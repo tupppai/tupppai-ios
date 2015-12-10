@@ -11,12 +11,24 @@
 #import "PIEChannelDetailLatestPSCell.h"
 #import "SwipeView.h"
 #import "PIEChannelDetailAskPSItemView.h"
+#import "PIEChannelManager.h"
+
+#import "PIEChannelViewModel.h"
 
 /* Variables */
 @interface PIEChannelDetailViewController ()
-@property (nonatomic, strong)PIERefreshTableView *tableView;
-@property (nonatomic, strong) UIButton *takePhotoButton;
+@property (nonatomic, strong) PIERefreshTableView           *tableView;
+@property (nonatomic, strong) UIButton                      *takePhotoButton;
 
+/** 该频道内最新求P */
+@property (nonatomic, strong) NSMutableArray<PIEPageVM *>   *latestAskForPSSource;
+/** 该频道内的用户PS作品 */
+@property (nonatomic, strong) NSMutableArray<PIEPageVM *>   *usersPSSource;
+
+/**  timeStamp: 刷新数据的时候的时间（整数10位）*/
+@property (nonatomic, assign) long long                     timeStamp;
+
+@property (nonatomic, strong) SwipeView *swipeView;
 
 @end
 
@@ -63,6 +75,9 @@ static NSString *  PIEDetailNormalIdentifier =
     
     self.title = @"用PS搞创意";
     
+    // load new data for the first time
+    [self.tableView.mj_header beginRefreshing];
+    
 }
 
 #pragma mark - <UITableViewDelegate>
@@ -72,7 +87,7 @@ static NSString *  PIEDetailNormalIdentifier =
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return self.usersPSSource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -90,13 +105,21 @@ static NSString *  PIEDetailNormalIdentifier =
         detailLatestPSCell.swipeView.delegate   = self;
         detailLatestPSCell.swipeView.dataSource = self;
         
+        // ??? 实在是想不到更好地方法了。。。
+        self.swipeView = detailLatestPSCell.swipeView;
         return detailLatestPSCell;
     }
     else
     {
         UITableViewCell *cell =
         [tableView dequeueReusableCellWithIdentifier:PIEDetailNormalIdentifier];
-        cell.textLabel.text = [NSString stringWithFormat:@"Cell-%zd", indexPath.row];
+
+        
+        // configure cell
+        PIEPageVM *pageVM = self.usersPSSource[indexPath.row];
+        cell.textLabel.text =
+        [NSString stringWithFormat:@"Cell-%@",pageVM.imageURL ];
+        
         return cell;
     }
 }
@@ -104,19 +127,19 @@ static NSString *  PIEDetailNormalIdentifier =
 #pragma mark - <PWRefreshBaseTableViewDelegate>
 
 /**
- *  下拉刷新
+ *  上拉加载
 */
 - (void)didPullRefreshUp:(UITableView *)tableView
 {
-    [self loadNewUserPSWorks];
+    [self loadMorePageViewModels];
 }
 
 /**
- *  上拉加载
+ *  下拉刷新
 */
 - (void)didPullRefreshDown:(UITableView *)tableView
 {
-    [self loadMoreUserPSWorks];
+    [self loadNewPageViewModels];
 }
 
 #pragma mark - <SwipeViewDelegate>
@@ -131,34 +154,77 @@ static NSString *  PIEDetailNormalIdentifier =
 #pragma mark - <SwipeViewDataSource>
 - (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
 {
-    return 10;
+    return self.latestAskForPSSource.count;
 }
 
 - (UIView *)swipeView:(SwipeView *)swipeView
-   viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
+   viewForItemAtIndex:(NSInteger)index
+          reusingView:(PIEChannelDetailAskPSItemView *)view
 {
     if (view == nil)
     {
         view =
-        (PIEChannelDetailAskPSItemView *)
         [[NSBundle mainBundle] loadNibNamed:@"PIEChannelDetailAskPSItemView"
                                              owner:self options:nil][0];
     }
+    
+    // viewModel -> view
+    NSURL *imageURL = [NSURL URLWithString:_latestAskForPSSource[index].imageURL];
+    [view.imageView setImageWithURL:imageURL
+                   placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+    view.desc.text = _latestAskForPSSource[index].content;
+    
     
     return view;
 }
 
 
 #pragma mark - Refresh methods
-- (void)loadMoreUserPSWorks
+- (void)loadMorePageViewModels
 {
     NSLog(@"%s", __func__);
 }
 
 
-- (void)loadNewUserPSWorks
+- (void)loadNewPageViewModels
 {
     NSLog(@"%s", __func__);
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"channel_id"]       = @(self.selectedChannelViewModel.ID);
+    params[@"page"]             = @(1);
+    params[@"size"]             = @(20);
+    
+    // --- Double -> Long long int
+    _timeStamp                  = @([[NSDate date] timeIntervalSince1970]);
+    params[@"last_updated"]     = @(_timeStamp);
+    
+    __weak typeof(self) weakSelf = self;
+    [PIEChannelManager
+     getSource_pageViewModels:params
+     latestAskForPSBlock:^(NSMutableArray<PIEPageVM *> *latestAskForPSResultArray)
+     {
+         [weakSelf.latestAskForPSSource
+          arrayByAddingObjectsFromArray:latestAskForPSResultArray];
+     }
+     usersPSBlock:^(NSMutableArray<PIEPageVM *> *usersPSResultArray)
+     {
+         [weakSelf.usersPSSource
+          arrayByAddingObjectsFromArray:usersPSResultArray];
+     }
+     completion:^{
+         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+             [weakSelf.tableView reloadData];
+             
+             // is weakSelf.swipeView non-nil?
+             [weakSelf.swipeView reloadData];
+         }];
+     }
+     ];
+    
+    
+    
+    
 }
 
 #pragma mark - Target-actions
@@ -167,6 +233,34 @@ static NSString *  PIEDetailNormalIdentifier =
     NSLog(@"%s", __func__);
     
 }
+#pragma mark - UI components configuration
+- (void)configureTableView
+{
+    // added as subview
+    [self.view addSubview:self.tableView];
+    
+    // add constraints
+    __weak typeof(self) weakSelf = self;
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(weakSelf.view);
+    }];
+}
+
+- (void)configureTakePhotoButton
+{
+    // --- added as subViews
+    [self.view addSubview:self.takePhotoButton];
+    
+    // --- Autolayout constraints
+    __weak typeof(self) weakSelf = self;
+    [_takePhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(weakSelf.view.mas_centerX);
+        make.height.mas_equalTo(50);
+        make.width.mas_equalTo(50);
+        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-64);
+    }];
+}
+
 
 
 #pragma mark - lazy loadings
@@ -211,7 +305,7 @@ static NSString *  PIEDetailNormalIdentifier =
         
         // --- set background image
         [_takePhotoButton setBackgroundImage:[UIImage imageNamed:@"pie_signup_close"]
-                                    forState:UIControlStateNormal];
+              forState:UIControlStateNormal];
         
         // --- add target-actions
         [_takePhotoButton addTarget:self
@@ -222,34 +316,26 @@ static NSString *  PIEDetailNormalIdentifier =
     
 }
 
-#pragma mark - UI components configuration
-- (void)configureTableView
+- (NSMutableArray<PIEPageVM *> *)latestAskForPSSource
 {
-    // added as subview
-    [self.view addSubview:_tableView];
-    
-    // add constraints
-    __weak typeof(self) weakSelf = self;
-    [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(weakSelf.view);
-    }];
-}
-
-- (void)configureTakePhotoButton
-{
-    // --- added as subViews
-    [self.view addSubview:_takePhotoButton];
-    
-    // --- Autolayout constraints
-    __weak typeof(self) weakSelf = self;
-    [_takePhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(weakSelf.view.mas_centerX);
-        make.height.mas_equalTo(50);
-        make.width.mas_equalTo(50);
-        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-64);
-    }];
+    if (_latestAskForPSSource == nil) {
+        // instantiate only for once
+        _latestAskForPSSource = [NSMutableArray<PIEPageVM *> array];
+    }
+    return _latestAskForPSSource;
 
 }
+
+
+- (NSMutableArray<PIEPageVM *> *)usersPSSource
+{
+    if (_usersPSSource == nil) {
+        // instantiate only for once
+        _usersPSSource = [NSMutableArray<PIEPageVM *> array];
+    }
+    return _usersPSSource;
+}
+
 
 
 @end

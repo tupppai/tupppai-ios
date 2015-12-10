@@ -96,6 +96,18 @@ extern NSString * URL_ChannelGetActivities;
 extern NSString * URL_ChannelGetDetailThreads;
 
 
+/**
+ *  获取某频道的最新求P
+ */
+extern NSString * URL_ChannelLatestAskForPS;
+
+/**
+ *  获取在某频道中， 用户（复数）的PS作品
+ */
+extern NSString * URL_ChannelUsersPS;
+
+
+
 #pragma mark - Notification
 extern NSString * URL_NotiGetNotifications;
 

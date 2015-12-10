@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class PIEChannelViewModel;
 @interface PIEChannelDetailViewController : DDBaseVC
+
+@property (nonatomic, strong)PIEChannelViewModel *selectedChannelViewModel;
+
 
 @end
