@@ -35,7 +35,6 @@ CGFloat const kfcImageHeightMax = 600;
 
 NSInteger const kfcReplierDefaultQuantity = 7;
 
-
 CGFloat const kfcGapViewHeight = 8;
 
 NSInteger const kPagePadding = 15;
