@@ -563,7 +563,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [self.tableView.mj_footer endRefreshing];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
     }
 }
 
@@ -571,7 +571,10 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 - (void)getDataSource {
     WS(ws);
-
+    UIActivityIndicatorView* activityView = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    activityView.center = CGPointMake(self.view.center.x, 100);
+    [self.view addSubview:activityView];
+    [activityView startAnimating];
     _currentPage = 1;
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -582,6 +585,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     
     PIECommentManager *commentManager = [PIECommentManager new];
     [commentManager ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
+        [activityView stopAnimating];
+        [activityView removeFromSuperview];
         ws.source_newComment.array = recentCommentArray;
         ws.source_hotComment = hotCommentArray;
         
@@ -632,7 +637,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 -(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
-    return !_shouldShowHeaderView;
+    return !_shouldShowHeaderView && !_isFirstLoading ;
 }
 -(BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
     return YES;

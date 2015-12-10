@@ -83,28 +83,35 @@
     _replyCount = 0;
 }
 -(void)setupPlaceHoder {
-    CGFloat width  = SCREEN_WIDTH *scale_h;
-    _view_placeHoder = [[UIView alloc]initWithFrame:CGRectMake((self.view.frame.size.width-width)/2, margin_v, width, SCREEN_HEIGHT-margin_v+5)];
-    _view_placeHoder.backgroundColor = [UIColor whiteColor];
-    _view_placeHoder.alpha = 0.9;
-    _view_placeHoder.layer.cornerRadius = 10;
-    _view_placeHoder.clipsToBounds = YES;
-    [self.view addSubview:_view_placeHoder];
-    
-    UIActivityIndicatorView* indicatorView = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    indicatorView.center = CGPointMake(width/2, 200);
-    [_view_placeHoder addSubview:indicatorView];
-    [indicatorView startAnimating];
-    UISwipeGestureRecognizer *swipe2 = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture_SwipeDown:)];
-    swipe2.direction =   UISwipeGestureRecognizerDirectionDown;
-    [_view_placeHoder addGestureRecognizer:swipe2];
+    [self.view addSubview:self.view_placeHoder];
+}
+
+-(UIView *)view_placeHoder {
+    if (!_view_placeHoder) {
+        CGFloat width  = SCREEN_WIDTH *scale_h;
+        _view_placeHoder = [[UIView alloc]initWithFrame:CGRectMake((self.view.frame.size.width-width)/2, margin_v, width, SCREEN_HEIGHT-margin_v+5)];
+        _view_placeHoder.backgroundColor = [UIColor whiteColor];
+        _view_placeHoder.alpha = 0.9;
+        _view_placeHoder.layer.cornerRadius = 10;
+        _view_placeHoder.clipsToBounds = YES;
+        
+        UIActivityIndicatorView* indicatorView = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        indicatorView.center = CGPointMake(width/2, 200);
+        [_view_placeHoder addSubview:indicatorView];
+        [indicatorView startAnimating];
+        UISwipeGestureRecognizer *swipe2 = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture_SwipeDown:)];
+        swipe2.direction =   UISwipeGestureRecognizerDirectionDown;
+        [_view_placeHoder addGestureRecognizer:swipe2];
+
+    }
+    return _view_placeHoder;
 }
 
 - (void)setupViews {
     self.edgesForExtendedLayout = UIRectEdgeAll;
     self.view.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
     [self setModalPresentationStyle:UIModalPresentationOverCurrentContext];
-    [self setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+//    [self setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     _dataSource = [NSMutableArray array];
     [self.view addSubview:self.carousel];
     UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture_SwipeUp:)];
@@ -122,7 +129,9 @@
 }
 
 - (void) tapOnSelf:(UIGestureRecognizer*)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if ([self.view hitTest:[sender locationInView:self.view] withEvent:nil] == self.view )  {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 CGFloat startPanLocationY;
 
@@ -147,17 +156,19 @@ CGFloat startPanLocationY;
     vc.vm = _currentVM;
     DDNavigationController* nav = [[DDNavigationController alloc]initWithRootViewController:vc];
     
-    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1.0 initialSpringVelocity:1.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
                CGRect frame = self.carousel.currentItemView.frame;
-               frame.origin.y -= margin_v - 20;
+               frame.origin.y -= 30;
         self.carousel.currentItemView.frame = frame;
+        self.view.backgroundColor = [UIColor blackColor];
 //                    [self.carousel.currentItemView setTransform:CGAffineTransformMakeScale(1.05, 1.05)];
     } completion:^(BOOL finished) {
         if (finished) {
 //            [self.carousel.currentItemView setTransform:CGAffineTransformIdentity];
             [self presentViewController:nav animated:YES completion:^{
+                self.view.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
                 CGRect frame = self.carousel.currentItemView.frame;
-                frame.origin.y += margin_v - 20;
+                frame.origin.y += 30;
                 self.carousel.currentItemView.frame = frame;
             }];
         }
@@ -167,20 +178,21 @@ CGFloat startPanLocationY;
     
 }
 - (void)handleGesture_SwipeDown:(id)sender {
-    [self dismissViewControllerAnimated:NO completion:nil];
+//    [self dismissViewControllerAnimated:NO completion:nil];
 
-//   [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-//       CGRect frame = self.carousel.currentItemView.frame;
+   [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+       CGRect frame = self.carousel.currentItemView.frame;
+       frame.origin.y += 20;
 //       [self.carousel setTransform:CGAffineTransformMakeScale(0.3, 0.3)];
 //       self.view.alpha = 0.1;
 //       frame.origin.y += SCREEN_HEIGHT;
-//       self.carousel.frame = frame;
-//       self.view.backgroundColor = [UIColor clearColor];
-//   } completion:^(BOOL finished) {
-//       if (finished) {
-//           [self dismissViewControllerAnimated:NO completion:nil];
-//       }
-//   }];
+       self.carousel.currentItemView.frame = frame;
+       self.view.backgroundColor = [UIColor clearColor];
+   } completion:^(BOOL finished) {
+       if (finished) {
+           [self dismissViewControllerAnimated:NO completion:nil];
+       }
+   }];
 }
 
 -(iCarousel *)carousel {
@@ -321,7 +333,7 @@ CGFloat startPanLocationY;
 }
 - (void)carouselCurrentItemIndexDidChange:(__unused iCarousel *)carousel
 {
-    [self updateUIWithIndex:carousel.currentItemIndex];
+    [self updateCurrentVMWithIndex:carousel.currentItemIndex];
 }
 -(void)carouselWillBeginDragging:(iCarousel *)carousel {
     [self flyCurrentItemViewWithDirection:NO];
@@ -339,15 +351,9 @@ CGFloat startPanLocationY;
 }
 
 
--(void)updateUIWithIndex:(NSInteger)index {
+-(void)updateCurrentVMWithIndex:(NSInteger)index {
     if (_dataSource.count > index) {
         _currentVM = [_dataSource objectAtIndex:index];
-        
-//        [_avatarView setImageWithURL:[NSURL URLWithString:_currentVM.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
-// 
-//        _usernameLabel.text = _currentVM.username;
-//        _timeLabel.text = _currentVM.publishTime;
-        
     }
 }
 - (void)getDataSource {
@@ -430,18 +436,12 @@ CGFloat startPanLocationY;
                 }
                 break;
             }
-            //must animate scroll carousel in order to scroll segment.
         }
-        //        else {
-        ////            [self updateUIWithIndex:0];
-        //            [_carousel.delegate carouselCurrentItemIndexDidChange:_carousel];
-        //        }
     }
     if (!shouldScroll) {
         [_carousel reloadData];
+        [self updateCurrentVMWithIndex:0];
 //        [_carousel scrollToItemAtIndex:0 duration:0];
-
-//        [self updateUIWithIndex:0];
     }
 
 }

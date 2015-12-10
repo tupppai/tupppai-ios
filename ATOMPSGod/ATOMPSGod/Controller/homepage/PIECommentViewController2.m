@@ -597,7 +597,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [self.tableView.mj_footer endRefreshing];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
     }
 }
 

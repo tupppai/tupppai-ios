@@ -655,13 +655,13 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
         if (_canRefreshFooterFollow) {
             [self getMoreRemoteSourceFollow];
         } else {
-            [_sv.tableFollow.mj_footer endRefreshing];
+            [_sv.tableFollow.mj_footer endRefreshingWithNoMoreData];
         }
     } else {
         if (_canRefreshFooterHot) {
             [self getMoreRemoteSourceHot];
         } else {
-            [_sv.tableHot.mj_footer endRefreshing];
+            [_sv.tableHot.mj_footer endRefreshingWithNoMoreData];
         }
     }
 }
