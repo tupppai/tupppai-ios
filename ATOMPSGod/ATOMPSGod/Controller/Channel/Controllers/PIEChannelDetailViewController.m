@@ -87,7 +87,7 @@ static NSString *  PIEDetailNormalIdentifier =
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return self.usersPSSource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -115,6 +115,9 @@ static NSString *  PIEDetailNormalIdentifier =
         [tableView dequeueReusableCellWithIdentifier:PIEDetailNormalIdentifier];
         
         // configure cell
+        PIEPageVM *pageVM = self.usersPSSource[indexPath.row];
+        cell.textLabel.text =
+        [NSString stringWithFormat:@"Cell-%@",pageVM.imageURL ];
         
         return cell;
     }
@@ -202,24 +205,23 @@ static NSString *  PIEDetailNormalIdentifier =
      {
          [weakSelf.latestAskForPSSource
           arrayByAddingObjectsFromArray:latestAskForPSResultArray];
-         
-         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-             
-             // -- stop refreshing animation and reload TableView & SwipeView
-             [weakSelf.tableView.mj_header endRefreshing];
-             
-             [weakSelf.tableView reloadData];
-             
-             // !!! prone to get error! 如果cell复用了的话swipeView怎么办？
-             [weakSelf.swipeView reloadData];
-         }];
-         
      }
      usersPSBlock:^(NSMutableArray<PIEPageVM *> *usersPSResultArray)
      {
          [weakSelf.usersPSSource
           arrayByAddingObjectsFromArray:usersPSResultArray];
-     }];
+     }
+     completion:^{
+         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+             [weakSelf.tableView reloadData];
+             
+             // is weakSelf.swipeView non-nil?
+             [weakSelf.swipeView reloadData];
+         }];
+     }
+     ];
+    
+    
     
     
 }

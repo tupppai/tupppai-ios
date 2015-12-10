@@ -16,8 +16,8 @@
                  block:^(id responseObject) {
                      if (responseObject) {
                          NSMutableArray* retArray = [NSMutableArray new];
-                         NSDictionary* data = [responseObject objectForKey:@"data"];
-                         NSArray* categories = [data objectForKey:@"categories"];
+                         NSDictionary* data       = [responseObject objectForKey:@"data"];
+                         NSArray* categories      = [data objectForKey:@"categories"];
                          
                          
                          for (NSDictionary* dic in categories) {
@@ -38,7 +38,7 @@
                              vm.threads = threads_transformed;
                              [retArray addObject:vm];
                          }
-                         
+                         NSLog(@"source: %@, source.count: %zd", retArray, retArray.count);
                          
                          if (block) {
                              block(retArray);
@@ -122,6 +122,7 @@
 + (void)getSource_pageViewModels:(NSDictionary *)params
              latestAskForPSBlock:(void (^)(NSMutableArray<PIEPageVM *> *latestAskForPSResultArray))latestAskForPSBlock
                     usersPSBlock:(void (^)(NSMutableArray<PIEPageVM *> *usersPSResultArray))usersPSBlock
+                      completion:(void (^)(void))completionBlock
 {
     [DDBaseService GET:params
                     url:URL_ChannelGetDetailThreads
@@ -153,6 +154,10 @@
                           if (usersPSBlock != nil)
                           {
                               usersPSBlock(usersPSResultArray);
+                          }
+                          
+                          if (completionBlock != nil) {
+                              completionBlock();
                           }
                       }
                   }];

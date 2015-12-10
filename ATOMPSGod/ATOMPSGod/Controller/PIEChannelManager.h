@@ -23,8 +23,7 @@
 
 + (void)getSource_pageViewModels:(NSDictionary *)params
              latestAskForPSBlock:(void (^)(NSMutableArray<PIEPageVM *> *latestAskForPSResultArray))latestAskForPSBlock
-                    usersPSBlock:(void (^)(NSMutableArray<PIEPageVM *> *usersPSResultArray))usersPSBlock;
-
-
+                    usersPSBlock:(void (^)(NSMutableArray<PIEPageVM *> *usersPSResultArray))usersPSBlock
+                      completion:(void (^)(void))completionBlock;
 @end
 
