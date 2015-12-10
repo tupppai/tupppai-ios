@@ -13,7 +13,17 @@
 - (void)awakeFromNib {
     // Initialization code
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    
+//    [_leftButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentFill];
+//    [_leftButton setContentVerticalAlignment:UIControlContentVerticalAlignmentFill];
+//
+//    [_rightbutton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentFill];
+//    [_rightbutton setContentVerticalAlignment:UIControlContentVerticalAlignmentFill];
+
+//    _leftButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
+//    _rightbutton.imageView.contentMode = UIViewContentModeScaleToFill;
+//    [_leftButton setImage:[UIImage imageNamed:@"pieChannelBannerCellButton2"] forState:UIControlStateNormal];
+//    [_rightbutton setImage:[UIImage imageNamed:@"pieChannelBannerCellButton1"] forState:UIControlStateNormal];
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

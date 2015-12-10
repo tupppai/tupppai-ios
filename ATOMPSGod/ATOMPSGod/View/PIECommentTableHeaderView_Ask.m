@@ -193,8 +193,14 @@
     }];
 }
 
-
-
+//
+//_button_name.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+//_label_time.textAlignment = NSTextAlignmentRight;
+//
+//[_button_avatar setTitleColor:[UIColor colorWithHex:0x000000 andAlpha:0.9] forState:UIControlStateNormal];
+//[_button_avatar.titleLabel setFont:[UIFont lightTupaiFontOfSize:13]];
+//[_label_time setTintColor:[UIColor colorWithHex:0x000000 andAlpha:0.4]];
+//[_label_time setFont:[UIFont lightTupaiFontOfSize:10]];
 - (UIImageView *)avatarView
 {
     if (!_avatarView) {
@@ -212,8 +218,8 @@
     if (!_usernameLabel) {
         _usernameLabel = [UILabel new];
         _usernameLabel.userInteractionEnabled = YES;
-        _usernameLabel.textColor = [UIColor colorWithHex:0x4a4a4a andAlpha:1.0];
-        _usernameLabel.font = [UIFont lightTupaiFontOfSize:12.0];
+        _usernameLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.9];
+        _usernameLabel.font = [UIFont lightTupaiFontOfSize:13];
     }
     return _usernameLabel;
 }
@@ -222,8 +228,8 @@
     if (!_timeLabel) {
         _timeLabel = [UILabel new];
         _timeLabel.userInteractionEnabled = YES;
-        _timeLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.3];
-        _timeLabel.font = [UIFont lightTupaiFontOfSize:10.0];
+        _timeLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.4];
+        _timeLabel.font = [UIFont lightTupaiFontOfSize:10];
     }
     return _timeLabel;
 }

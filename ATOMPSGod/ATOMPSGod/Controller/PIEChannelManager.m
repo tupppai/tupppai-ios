@@ -33,7 +33,8 @@
                              for (NSDictionary*dic in threads) {
                                  //entity就是model
                                  PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:dic error:NULL];
-                                 [threads_transformed addObject:entity];
+                                 PIEPageVM* vm = [[PIEPageVM alloc]initWithPageEntity:entity];
+                                 [threads_transformed addObject:vm];
                              }
                              vm.threads = threads_transformed;
                              [retArray addObject:vm];

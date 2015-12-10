@@ -37,12 +37,15 @@
 
 /* Properties */
 
-@interface PIEChannelViewController ()
-@property (nonatomic, weak  ) UIView                                *containerView;
-@property (nonatomic, strong) PIERefreshTableView                   *tableView;
+
+@interface PIEChannelViewController ()<UITableViewDelegate, UITableViewDataSource>
+@property (nonatomic, weak) UIView *containerView;
+@property (nonatomic, strong) PIERefreshTableView *tableView;
 @property (nonatomic, strong) NSMutableArray<PIEChannelViewModel *> *source;
-@property (nonatomic, assign) NSInteger                             currentIndex;
-@property (nonatomic, assign) long long                             timeStamp;
+@property (nonatomic, assign) NSInteger currentIndex;
+@property (nonatomic, assign) long long timeStamp;
+@property (nonatomic, assign) BOOL stopRefreshFooter;
+
 @end
 
 
@@ -50,8 +53,10 @@
 #pragma mark - UI life cycles
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    
+
+    //remove title
+    self.navigationItem.titleView = [UIView new];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     [self setupTableView];
     [self setupData];
     
@@ -69,12 +74,27 @@
 - (void)setupTableView
 {
     [self.view addSubview:self.tableView];
-    UIEdgeInsets padding = UIEdgeInsetsMake(10, 6, 0, 6);
+    UIEdgeInsets padding = UIEdgeInsetsMake(0, 0, 0, 0);
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view).with.insets(padding);
     }];
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
+                                                  forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.navigationController.navigationBar.translucent = YES;
+    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar setBackgroundImage:nil
+                                                  forBarMetrics:UIBarMetricsDefault];
+}
 - (void)setupData {
     _source = [NSMutableArray array];
 
@@ -172,6 +192,8 @@
             [_source addObjectsFromArray:array];
             
             [self.tableView reloadData];
+        } else {
+            _stopRefreshFooter = YES;
         }
         [self.tableView.mj_header endRefreshing];
     }];
@@ -179,17 +201,20 @@
 
 - (void)loadMoreChannels
 {
+
     [self.tableView.mj_header endRefreshing];
     _currentIndex ++;
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    params[@"page"]             = @(_currentIndex);
-    params[@"size"]             = @5;
-    params[@"last_updated"]     = @(_timeStamp);
+    params[@"page"] = @(_currentIndex);
+    params[@"size"] = @5;
+    params[@"last_updated"] = @(_timeStamp);
     
     [PIEChannelManager getSource_Channel:params block:^(NSMutableArray *array) {
         if (array.count) {
             [_source addObjectsFromArray: array];;
             [self.tableView reloadData];
+        } else {
+            _stopRefreshFooter = YES;
         }
         [self.tableView.mj_footer endRefreshing];
     }];
@@ -197,7 +222,11 @@
 
 #pragma marmk - <PWRefreshBaseTableViewDelegate>
 - (void)didPullRefreshUp:(UITableView *)tableView{
-    [self loadMoreChannels];
+    if (_stopRefreshFooter) {
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
+    } else {
+        [self loadMoreChannels];
+    }
 }
 
 - (void)didPullRefreshDown:(UITableView *)tableView{
@@ -240,12 +269,11 @@
 {
     if (view == nil)
     {
-        CGFloat width                = 40;
-        view                         = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, width)];
-        UIImageView* imageView       = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, width, width)];
-        imageView.contentMode        = UIViewContentModeScaleAspectFill;
-        imageView.layer.cornerRadius = 3.0;
-        imageView.clipsToBounds      = YES;
+        CGFloat width = swipeView.frame.size.height;
+        view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width+8, width)];
+        UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, width, width)];
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
+        imageView.clipsToBounds = YES;
         [view addSubview:imageView];
     }
     
@@ -273,8 +301,10 @@
         _tableView.dataSource         = self;
         _tableView.psDelegate         = self;
         _tableView.estimatedRowHeight = 120;
-        _tableView.rowHeight          = UITableViewAutomaticDimension;
-        
+
+        _tableView.rowHeight = UITableViewAutomaticDimension;
+        _tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [_tableView registerNib:[UINib nibWithNibName:@"PIEChannelTableViewCell"
                                                bundle:nil]
          forCellReuseIdentifier:@"Channel_Cell"];

@@ -113,6 +113,7 @@ static NSString *  PIEDetailNormalIdentifier =
     {
         UITableViewCell *cell =
         [tableView dequeueReusableCellWithIdentifier:PIEDetailNormalIdentifier];
+
         
         // configure cell
         PIEPageVM *pageVM = self.usersPSSource[indexPath.row];

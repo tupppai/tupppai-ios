@@ -16,25 +16,25 @@
                 <rect key="frame" x="0.0" y="0.0" width="467" height="277"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gKv-rV-B0d">
-                        <rect key="frame" x="9" y="11" width="449" height="144"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gKv-rV-B0d">
+                        <rect key="frame" x="9" y="10" width="449" height="144"/>
                         <animations/>
-                        <color key="backgroundColor" red="0.92534722219999999" green="0.39678257830000002" blue="0.41251772450000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="gKv-rV-B0d" secondAttribute="height" multiplier="714:228" id="abI-Vm-wQ3"/>
                         </constraints>
                     </imageView>
                     <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EsH-Of-MTP" userLabel="containerView">
-                        <rect key="frame" x="9" y="155" width="449" height="105"/>
+                        <rect key="frame" x="9" y="154" width="449" height="105"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FtG-wG-PzG" customClass="SwipeView">
                                 <rect key="frame" x="11" y="7" width="427" height="90"/>
                                 <animations/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="EsH-Of-MTP" secondAttribute="height" multiplier="467:109" id="Lya-vf-ckZ"/>
                             <constraint firstItem="FtG-wG-PzG" firstAttribute="top" secondItem="EsH-Of-MTP" secondAttribute="top" constant="7" id="Noi-LH-0mq"/>
@@ -45,17 +45,19 @@
                     </view>
                 </subviews>
                 <animations/>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstItem="EsH-Of-MTP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="1" id="13D-F1-iEg"/>
                     <constraint firstItem="EsH-Of-MTP" firstAttribute="top" secondItem="gKv-rV-B0d" secondAttribute="bottom" id="9aP-4k-2iB"/>
                     <constraint firstAttribute="bottomMargin" secondItem="EsH-Of-MTP" secondAttribute="bottom" priority="750" id="9d9-1l-GeK"/>
                     <constraint firstAttribute="trailingMargin" secondItem="EsH-Of-MTP" secondAttribute="trailing" constant="1" id="EpY-lN-Hrk"/>
-                    <constraint firstItem="gKv-rV-B0d" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="Ydh-93-TNZ"/>
+                    <constraint firstItem="gKv-rV-B0d" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Ydh-93-TNZ"/>
                     <constraint firstAttribute="trailingMargin" secondItem="gKv-rV-B0d" secondAttribute="trailing" constant="1" id="l6e-Le-n1M"/>
                     <constraint firstItem="gKv-rV-B0d" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="1" id="msz-53-EKs"/>
                 </constraints>
             </tableViewCellContentView>
             <animations/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="imageView_banner" destination="gKv-rV-B0d" id="3nG-Gm-Etx"/>
                 <outlet property="swipeView" destination="FtG-wG-PzG" id="YXz-97-hel"/>

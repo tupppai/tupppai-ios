@@ -2471,9 +2471,9 @@
 				E94B031A1B7C74E500863C6F /* PIECommentTextView.h */,
 				E94B031B1B7C74E500863C6F /* PIECommentTextView.m */,
 				E94B031C1B7C74E500863C6F /* PIECommentViewController.h */,
+				E94B031D1B7C74E500863C6F /* PIECommentViewController.m */,
 				F4324CDD1C0956CD005C61AC /* PIECommentViewController2.h */,
 				F4324CDE1C0956CD005C61AC /* PIECommentViewController2.m */,
-				E94B031D1B7C74E500863C6F /* PIECommentViewController.m */,
 				F4206FE51BF0929C00C9B339 /* KVCMutableArray.h */,
 				F4206FE61BF0929C00C9B339 /* KVCMutableArray.m */,
 			);

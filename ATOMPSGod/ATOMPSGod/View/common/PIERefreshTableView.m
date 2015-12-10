@@ -25,6 +25,7 @@
         }
         
         MJRefreshGifHeader *header = [MJRefreshGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewHotData)];
+        header.automaticallyChangeAlpha = YES;
         // 设置普通状态的动画图片
         [header setImages:idleImages forState:MJRefreshStateIdle];
         // 设置即将刷新状态的动画图片（一松开就会刷新的状态）

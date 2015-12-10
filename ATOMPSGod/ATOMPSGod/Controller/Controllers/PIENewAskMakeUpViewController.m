@@ -65,6 +65,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     // Do any additional setup after loading the view.
     
     self.view = self.collectionView_ask;
+    self.title = @"最新求P";
 //    self.collectionView_ask.backgroundColor = [UIColor whiteColor];
     
     [self setupGestures];
@@ -73,7 +74,17 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [self setupNotifications];
     
 }
-
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.hidesBarsOnSwipe = YES;
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navigationController.hidesBarsOnSwipe = NO;
+}
+-(BOOL)hidesBottomBarWhenPushed {
+    return YES;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -402,11 +413,10 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         _collectionView_ask.psDelegate           = self;
         
         _collectionView_ask.toRefreshBottom              = YES;
-        _collectionView_ask.backgroundColor              = [UIColor clearColor];
         _collectionView_ask.toRefreshTop                 = YES;
         _collectionView_ask.autoresizingMask             = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         _collectionView_ask.showsVerticalScrollIndicator = NO;
-        _collectionView_ask.backgroundColor = [UIColor whiteColor];
+        _collectionView_ask.backgroundColor = [UIColor groupTableViewBackgroundColor];
         
     }
     return _collectionView_ask;

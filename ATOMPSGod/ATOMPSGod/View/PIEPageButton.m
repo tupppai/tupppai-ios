@@ -11,7 +11,6 @@
 @implementation PIEPageButton
 
 -(void)awakeFromNib {
-
     _number = 0;
     _selected = NO;
     _imageView = [UIImageView new];
