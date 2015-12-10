@@ -82,6 +82,10 @@
 }
 
 - (void)tapLogo {
+    UIImageView* imgView = [[UIImageView alloc]initWithFrame:self.view.bounds];
+    imgView.image = [UIImage imageNamed:@"baozou"];
+    [self.view addSubview:imgView];
+
     if ([[[DDSessionManager shareHTTPSessionManager].baseURL absoluteString] isEqualToString: baseURLString]) {
         [[NSUserDefaults standardUserDefaults]setObject:baseURLString_Test forKey:@"BASEURL"];
         [Hud activity:@"切换到->测试服,你的程序准备爆炸"];
