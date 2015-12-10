@@ -14,6 +14,7 @@
 #import "PIEChannelManager.h"
 
 #import "PIEChannelViewModel.h"
+#import "PIENewReplyTableCell.h"
 
 /* Variables */
 @interface PIEChannelDetailViewController ()
@@ -54,20 +55,27 @@ static NSString *  PIEDetailLatestPSCellIdentifier =
 static NSString *  PIEDetailNormalIdentifier =
 @"PIEDetailNormalIdentifier";
 
+static NSString * PIEDetailUsersPSCellIdentifier =
+@"PIENewReplyTableCell";
 
 #pragma mark - UI life cycles
 /**
  *  不能直接用self.tableView替换掉self.view，而是让self.tableView和self.takePhotoButton
  同时成为self.view的子视图。
  */
-
+-(BOOL)hidesBottomBarWhenPushed {
+    return YES;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     /* UI components setup */
-    [self tableView];
-    [self takePhotoButton];
+//    [self tableView];
+//    [self takePhotoButton];
+    
+    /* setup source data */
+    [self setupData];
     
     /* added as subviews & add autolayout constraints */
     [self configureTableView];
@@ -75,24 +83,30 @@ static NSString *  PIEDetailNormalIdentifier =
     
     self.title = @"用PS搞创意";
     
-    // load new data for the first time
+    // pullToRefresh for the first time
     [self.tableView.mj_header beginRefreshing];
+    
     
 }
 
 #pragma mark - <UITableViewDelegate>
 
 
+
 #pragma mark - <UITableViewDataSource>
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    NSLog(@"%s", __func__);
+
     return self.usersPSSource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"%s", __func__);
+
     if (indexPath.row == 0)
     {
         /* first row */
@@ -105,23 +119,20 @@ static NSString *  PIEDetailNormalIdentifier =
         detailLatestPSCell.swipeView.delegate   = self;
         detailLatestPSCell.swipeView.dataSource = self;
         
-        // ??? 实在是想不到更好地方法了。。。
+        // ??? 实在是想不到更好地方法了。。。 (BUG AWARE!)
         self.swipeView = detailLatestPSCell.swipeView;
         return detailLatestPSCell;
     }
     else
     {
-        UITableViewCell *cell =
-        [tableView dequeueReusableCellWithIdentifier:PIEDetailNormalIdentifier];
-
+        PIENewReplyTableCell *cell =
+        [tableView dequeueReusableCellWithIdentifier:PIEDetailUsersPSCellIdentifier];
         
-        // configure cell
-        PIEPageVM *pageVM = self.usersPSSource[indexPath.row];
-        cell.textLabel.text =
-        [NSString stringWithFormat:@"Cell-%@",pageVM.imageURL ];
+        [cell injectSauce:_usersPSSource[indexPath.row]];
         
         return cell;
     }
+    
 }
 
 #pragma mark - <PWRefreshBaseTableViewDelegate>
@@ -131,6 +142,8 @@ static NSString *  PIEDetailNormalIdentifier =
 */
 - (void)didPullRefreshUp:(UITableView *)tableView
 {
+    NSLog(@"%s", __func__);
+
     [self loadMorePageViewModels];
 }
 
@@ -139,12 +152,17 @@ static NSString *  PIEDetailNormalIdentifier =
 */
 - (void)didPullRefreshDown:(UITableView *)tableView
 {
+    NSLog(@"%s", __func__);
+
     [self loadNewPageViewModels];
 }
 
 #pragma mark - <SwipeViewDelegate>
 - (CGSize)swipeViewItemSize:(SwipeView *)swipeView
 {
+    NSLog(@"%s", __func__);
+
+    
     CGFloat screenWidth         = [UIScreen mainScreen].bounds.size.width;
     CGFloat swipeViewItemWidth  = screenWidth * (180.0 / 750.0);
     CGFloat swipeViewItemHeight = screenWidth * (214.0 / 750.0);
@@ -154,6 +172,8 @@ static NSString *  PIEDetailNormalIdentifier =
 #pragma mark - <SwipeViewDataSource>
 - (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
 {
+    NSLog(@"%s", __func__);
+
     return self.latestAskForPSSource.count;
 }
 
@@ -161,6 +181,8 @@ static NSString *  PIEDetailNormalIdentifier =
    viewForItemAtIndex:(NSInteger)index
           reusingView:(PIEChannelDetailAskPSItemView *)view
 {
+    NSLog(@"%s", __func__);
+
     if (view == nil)
     {
         view =
@@ -178,11 +200,45 @@ static NSString *  PIEDetailNormalIdentifier =
     return view;
 }
 
+#pragma mark - data first setup
+- (void)setupData
+{
+    _usersPSSource        = [NSMutableArray<PIEPageVM *> array];
+    _latestAskForPSSource = [NSMutableArray<PIEPageVM *> array];
+}
 
 #pragma mark - Refresh methods
 - (void)loadMorePageViewModels
 {
     NSLog(@"%s", __func__);
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"channel_id"] = @(self.selectedChannelViewModel.ID);
+    params[@"page"] = @(2);
+    params[@"size"] = @(20);
+    
+    // --- Double -> Long long int
+    _timeStamp = @([[NSDate date] timeIntervalSince1970]);
+    params[@"last_updated"] = @(_timeStamp);
+    
+    __weak typeof(self) weakSelf = self;
+    
+    [PIEChannelManager
+     getSource_pageViewModels:params
+     latestAskForPSBlock:^(NSMutableArray<PIEPageVM *> *latestAskForPSResultArray) {
+         [_latestAskForPSSource addObjectsFromArray:latestAskForPSResultArray];
+     }
+     usersPSBlock:^(NSMutableArray<PIEPageVM *> *usersPSResultArray) {
+         [_usersPSSource addObjectsFromArray:usersPSResultArray];
+     }
+     completion:^{
+         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+             [weakSelf.tableView.mj_footer endRefreshing];
+         }];
+         [weakSelf.tableView reloadData];
+         //             [weakSelf.swipeView reloadData];
+         
+     }];
 }
 
 
@@ -204,27 +260,27 @@ static NSString *  PIEDetailNormalIdentifier =
      getSource_pageViewModels:params
      latestAskForPSBlock:^(NSMutableArray<PIEPageVM *> *latestAskForPSResultArray)
      {
-         [weakSelf.latestAskForPSSource
-          arrayByAddingObjectsFromArray:latestAskForPSResultArray];
+         
+         [_latestAskForPSSource removeAllObjects];
+         [_latestAskForPSSource addObjectsFromArray:latestAskForPSResultArray];
      }
      usersPSBlock:^(NSMutableArray<PIEPageVM *> *usersPSResultArray)
      {
-         [weakSelf.usersPSSource
-          arrayByAddingObjectsFromArray:usersPSResultArray];
+         [_usersPSSource removeAllObjects];
+         [_usersPSSource addObjectsFromArray:usersPSResultArray];
      }
      completion:^{
          [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+             
+             [weakSelf.tableView.mj_header endRefreshing];
+             
              [weakSelf.tableView reloadData];
              
-             // is weakSelf.swipeView non-nil?
+             //!!! is weakSelf.swipeView non-nil?
              [weakSelf.swipeView reloadData];
          }];
      }
      ];
-    
-    
-    
-    
 }
 
 #pragma mark - Target-actions
@@ -239,11 +295,11 @@ static NSString *  PIEDetailNormalIdentifier =
     // added as subview
     [self.view addSubview:self.tableView];
     
-    // add constraints
-    __weak typeof(self) weakSelf = self;
-    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(weakSelf.view);
-    }];
+//    // add constraints
+//    __weak typeof(self) weakSelf = self;
+//    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.edges.equalTo(weakSelf.view);
+//    }];
 }
 
 - (void)configureTakePhotoButton
@@ -268,9 +324,12 @@ static NSString *  PIEDetailNormalIdentifier =
 {
     if (_tableView == nil) {
         // instantiate only for once
-        _tableView = [[PIERefreshTableView alloc] init];
+        _tableView = [[PIERefreshTableView alloc] initWithFrame:self.view.bounds];
         
         // configurations
+        
+//        _tableView.frame = self.view.bounds;
+        
         // set delegate
         _tableView.delegate   = self;
         
@@ -279,7 +338,7 @@ static NSString *  PIEDetailNormalIdentifier =
         _tableView.psDelegate = self;
         
         // iOS 8+, self-sizing cell
-        _tableView.estimatedRowHeight = 88;
+        _tableView.estimatedRowHeight = 400;
         
         _tableView.rowHeight          = UITableViewAutomaticDimension;
         
@@ -288,9 +347,11 @@ static NSString *  PIEDetailNormalIdentifier =
          registerNib:[UINib nibWithNibName:@"PIEChannelDetailLatestPSCell" bundle:nil]
          forCellReuseIdentifier:PIEDetailLatestPSCellIdentifier];
         
-        [_tableView registerClass:[UITableViewCell class]
-           forCellReuseIdentifier:PIEDetailNormalIdentifier];
- 
+        [_tableView registerNib:[UINib nibWithNibName:@"PIENewReplyTableCell"
+                                               bundle:nil]
+         forCellReuseIdentifier:PIEDetailUsersPSCellIdentifier];
+        
+  
     }
     return _tableView;
 }
@@ -307,6 +368,12 @@ static NSString *  PIEDetailNormalIdentifier =
         [_takePhotoButton setBackgroundImage:[UIImage imageNamed:@"pie_signup_close"]
               forState:UIControlStateNormal];
         
+        // --- add drop shadows
+        _takePhotoButton.layer.shadowColor  = (__bridge CGColorRef _Nullable)
+        ([UIColor colorWithWhite:0.0 alpha:0.5]);
+        _takePhotoButton.layer.shadowOffset = CGSizeMake(0, 4);
+        _takePhotoButton.layer.shadowRadius = 8.0;
+        
         // --- add target-actions
         [_takePhotoButton addTarget:self
                              action:@selector(takePhoto:)
@@ -316,25 +383,6 @@ static NSString *  PIEDetailNormalIdentifier =
     
 }
 
-- (NSMutableArray<PIEPageVM *> *)latestAskForPSSource
-{
-    if (_latestAskForPSSource == nil) {
-        // instantiate only for once
-        _latestAskForPSSource = [NSMutableArray<PIEPageVM *> array];
-    }
-    return _latestAskForPSSource;
-
-}
-
-
-- (NSMutableArray<PIEPageVM *> *)usersPSSource
-{
-    if (_usersPSSource == nil) {
-        // instantiate only for once
-        _usersPSSource = [NSMutableArray<PIEPageVM *> array];
-    }
-    return _usersPSSource;
-}
 
 
 

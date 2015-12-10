@@ -51,12 +51,16 @@
 
 -(void) loadNewHotData {
     if (_psDelegate && [_psDelegate respondsToSelector:@selector(didPullRefreshDown:)]) {
-        [_psDelegate didPullRefreshDown:self];
+        __weak typeof(self) weakSelf = self;
+        [_psDelegate didPullRefreshDown:weakSelf];
     }
 }
 -(void) loadMoreHotData {
+    NSLog(@"%s", __func__);
+
     if (_psDelegate && [_psDelegate respondsToSelector:@selector(didPullRefreshUp:)]) {
-        [_psDelegate didPullRefreshUp:self];
+        __weak typeof(self) weakSelf = self;
+        [_psDelegate didPullRefreshUp:weakSelf];
     }}
 
 
