@@ -64,6 +64,8 @@
     _tableView.emptyDataSetSource = self;
     _tableView.emptyDataSetDelegate = self;
     _tableView.psDelegate = self;
+    _tableView.separatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
+    _tableView.separatorInset = UIEdgeInsetsMake(0, 18, 0, 15);
     _tapMyFansGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMyFansGesture:)];
     [_tableView addGestureRecognizer:_tapMyFansGesture];
 }
