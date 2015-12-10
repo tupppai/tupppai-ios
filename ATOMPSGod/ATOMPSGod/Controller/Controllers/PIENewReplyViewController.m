@@ -417,7 +417,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 }
 -(PIEShareView *)shareView {
     if (!_shareView) {
-        _shareView = [PIEShareView new];
+        _shareView          = [PIEShareView new];
         _shareView.delegate = self;
     }
     return _shareView;

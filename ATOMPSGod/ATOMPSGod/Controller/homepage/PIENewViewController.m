@@ -622,7 +622,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 }
 
 
-#pragma mark - 分享页面的收藏按钮操作
+#pragma mark - 分享页面的收藏按钮
 
 -(void)collect:(PIEPageButton*) collectView shouldShowHud:(BOOL)shouldShowHud {
     NSMutableDictionary *param = [NSMutableDictionary new];

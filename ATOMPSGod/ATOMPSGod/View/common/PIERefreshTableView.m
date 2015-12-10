@@ -40,7 +40,13 @@
         MJRefreshAutoGifFooter *footer = [MJRefreshAutoGifFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreHotData)];
         footer.refreshingTitleHidden = YES;
         footer.stateLabel.hidden = YES;
+        
+        /*BUG FIX: 为了避免因为returnValueCount == 0而让footer一直扯着底部不断死循环加载数据，设置footer要
+                   拉高到footer高度的1.4倍的时候再出发loadMore方法。
+         */
+        footer.triggerAutomaticallyRefreshPercent = 1.4;
         [footer setImages:animatedImages duration:0.5 forState:MJRefreshStateRefreshing];
+        
         self.mj_footer = footer;
         
         self.tableFooterView = [UIView new];
