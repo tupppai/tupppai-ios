@@ -11,6 +11,7 @@
 #import "PIENewReplyTableCell.h"
 #import "PIEPageVM.h"
 #import "PIEChannelViewModel.h"
+#import "PIEChannelManager.h"
 
 
 /* Variables */
@@ -28,6 +29,9 @@
 @property (nonatomic, strong) PIEPageVM                   *selectedVM;
 @property (nonatomic, strong) PIEChannelViewModel         *currentChannelVM;
 
+/* HTTP Request parameter */
+@property (nonatomic, assign) long long timeStamp;
+
 @end
 
 /* Protocols */
@@ -43,7 +47,7 @@
 @implementation PIEChannelActivityViewController
 
 static NSString *
-PIEChannelActivityReplyCellIdentifier = @"PIENewReplyTableCell";
+PIEChannelActivityReplyCellIdentifier = @"pieacti";
 
 static NSString *
 PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifier";
@@ -57,10 +61,15 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     
     self.title = @"#表情有灵气";
     
+    // setup data
+    [self setupData];
+    
     // configure subviews
     [self configureTableView];
     [self configureGoPsButton];
     
+    // load data for the first time.
+    [self.tableView.mj_header beginRefreshing];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -73,6 +82,8 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 {
     // add to subView
     [self.view addSubview:self.tableView];
+    
+    
     
     // set constraints
     UIEdgeInsets padding = UIEdgeInsetsMake(0, 0, 0, 0);
@@ -96,6 +107,11 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     }];
 }
 
+#pragma mark - data setup
+- (void)setupData
+{
+    _source_reply = [[NSMutableArray<PIEPageVM *> alloc] init];
+}
 
 #pragma mark - <UITableViewDelegate>
 
@@ -104,19 +120,18 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
-    
-    
+    return  self.source_reply.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell =
-    [tableView dequeueReusableCellWithIdentifier:PIEChannelActivityNormalCellIdentifier];
-
-    cell.textLabel.text = [NSString stringWithFormat:@"Cell-%zd", indexPath.row];
     
-    return cell;
+    PIENewReplyTableCell *replyCell =
+    [tableView dequeueReusableCellWithIdentifier:PIEChannelActivityReplyCellIdentifier];
+    
+    [replyCell injectSauce:_source_reply[indexPath.row]];
+    
+    return replyCell;
 }
 #pragma mark - <PWRefreshBaseTableViewDelegate>
 - (void)didPullRefreshUp:(UITableView *)tableView
@@ -133,13 +148,82 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 - (void)loadNewReplies
 {
     NSLog(@"%s", __func__);
-
+    
+    /*
+     <h3 id="get_activity_threads">获取活动相关作品</h3>
+     
+     /thread/get_activity_threads
+     URL_ChannelActivity
+     接受参数
+     get:
+     activity_id:活动id (test: 1003)
+     page:页面，默认为1
+     size:页面数目，默认为10
+     last_updated:最后下拉更新的时间戳（10位）
+     */
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"activity_id"]      = @(1003);
+    params[@"page"]             = @(1);
+    params[@"size"]             = @(10);
+    _timeStamp                  = [[NSDate date] timeIntervalSince1970];
+    params[@"last_updated"]     = @(_timeStamp);
+    
+    __weak typeof(self) weakSelf = self;
+    [PIEChannelManager
+     getSource_pageViewModels:params
+     repliesResult:^(NSMutableArray<PIEPageVM *> *repliesResultArray) {
+         [_source_reply removeAllObjects];
+         [_source_reply addObjectsFromArray:repliesResultArray];
+         
+         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+             [weakSelf.tableView.mj_header endRefreshing];
+             [weakSelf.tableView reloadData];
+         }];
+     }];
 }
 
 - (void)loadMoreReplies
 {
     NSLog(@"%s", __func__);
-
+    
+    /*
+     <h3 id="get_activity_threads">获取活动相关作品</h3>
+     
+     /thread/get_activity_threads
+     URL_ChannelActivity
+     接受参数
+     get:
+     activity_id:活动id (test: 1003)
+     page:页面，默认为1
+     size:页面数目，默认为10
+     last_updated:最后下拉更新的时间戳（10位）
+     */
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"activity_id"]      = @(1003);
+    params[@"page"]             = @(2);
+    params[@"size"]             = @(10);
+    _timeStamp                  = [[NSDate date] timeIntervalSince1970];
+    params[@"last_updated"]     = @(_timeStamp);
+    
+    __weak typeof(self) weakSelf = self;
+    [PIEChannelManager
+     getSource_pageViewModels:params
+     repliesResult:^(NSMutableArray<PIEPageVM *> *repliesResultArray) {
+         if (repliesResultArray.count == 0) {
+             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                 [weakSelf.tableView.mj_footer endRefreshing];
+             }];
+         }
+         else{
+             [_source_reply addObjectsFromArray:repliesResultArray];
+             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                 [weakSelf.tableView.mj_footer endRefreshing];
+                 [weakSelf.tableView reloadData];
+             }];
+         }
+     }];
+    
 }
 
 #pragma mark - Target-actions
@@ -167,11 +251,14 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
         _tableView.dataSource = self;
         
         // iOS 8+, self-sizing cell
-        _tableView.estimatedRowHeight = 88;
+        _tableView.estimatedRowHeight = 400;
         _tableView.rowHeight = UITableViewAutomaticDimension;
         
         // add headerBannerView
         _tableView.tableHeaderView = self.headerBannerView;
+        
+        _tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         // register cells
         [_tableView registerNib:[UINib nibWithNibName:@"PIENewReplyTableCell"
@@ -198,13 +285,11 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
          setBackgroundImage:[UIImage imageNamed:@"pie_channelActivityBanner"]
          forState:UIControlStateNormal];
         
-        // TODO: 取消这个button的highlighted状态（取消点一下会闪一下的效果）
-        // ...
+        // 取消点击变暗的效果
+        _headerBannerView.adjustsImageWhenHighlighted = NO;
         
         // set frame
         _headerBannerView.frame = CGRectMake(0, 0, SCREEN_WIDTH, (448.0 / 750.0)*SCREEN_WIDTH);
-        
-        
         
         // Target-actions
         [_headerBannerView addTarget:self
@@ -223,6 +308,8 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
         // set background image (make-shift case)
         [_goPsButton setBackgroundImage:[UIImage imageNamed:@"moment"]
                                forState:UIControlStateNormal];
+        
+        
         
         // Target-actions
         [_goPsButton addTarget:self

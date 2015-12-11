@@ -80,7 +80,7 @@ static NSString *  PIEDetailNormalIdentifier =
 @"PIEDetailNormalIdentifier";
 
 static NSString * PIEDetailUsersPSCellIdentifier =
-@"PIENewReplyTableCell";
+@"pieacti";
 
 #pragma mark - UI life cycles
 /**
@@ -513,8 +513,8 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     params[@"channel_id"] = @(self.selectedChannelViewModel.ID);
-    params[@"page"] = @(2);
-    params[@"size"] = @(20);
+    params[@"page"]       = @(2);
+    params[@"size"]       = @(20);
     
     // --- Double -> Long long int
     _timeStamp = [[NSDate date] timeIntervalSince1970];

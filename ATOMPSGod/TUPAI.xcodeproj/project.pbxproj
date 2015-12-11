@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0E0DDC8D1C1A64BC009A66C4 /* PIEChannelActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0DDC8C1C1A64BC009A66C4 /* PIEChannelActivityViewController.m */; };
-		0E2CA9BC1C195594007176DA /* NSMutableArray+insertArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E2CA9BB1C195594007176DA /* NSMutableArray+insertArray.m */; };
 		0E3FB9E41C155E0C0012E290 /* PIENewAskMakeUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3FB9E31C155E0C0012E290 /* PIENewAskMakeUpViewController.m */; };
 		0E3FB9EB1C15603A0012E290 /* PIENewReplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3FB9EA1C15603A0012E290 /* PIENewReplyViewController.m */; };
 		0E6F78FE1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E6F78FC1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.m */; };
@@ -536,8 +535,6 @@
 /* Begin PBXFileReference section */
 		0E0DDC8B1C1A64BC009A66C4 /* PIEChannelActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelActivityViewController.h; sourceTree = "<group>"; };
 		0E0DDC8C1C1A64BC009A66C4 /* PIEChannelActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelActivityViewController.m; sourceTree = "<group>"; };
-		0E2CA9BA1C195594007176DA /* NSMutableArray+insertArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+insertArray.h"; path = "../../../../../../../Desktop/GotoKitchen-master/xiachufang/Reveal/NSMutableArray+insertArray.h"; sourceTree = "<group>"; };
-		0E2CA9BB1C195594007176DA /* NSMutableArray+insertArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+insertArray.m"; path = "../../../../../../../Desktop/GotoKitchen-master/xiachufang/Reveal/NSMutableArray+insertArray.m"; sourceTree = "<group>"; };
 		0E3FB9E21C155E0C0012E290 /* PIENewAskMakeUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIENewAskMakeUpViewController.h; sourceTree = "<group>"; };
 		0E3FB9E31C155E0C0012E290 /* PIENewAskMakeUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENewAskMakeUpViewController.m; sourceTree = "<group>"; };
 		0E3FB9E91C15603A0012E290 /* PIENewReplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIENewReplyViewController.h; sourceTree = "<group>"; };
@@ -1592,8 +1589,6 @@
 		0E3FB9E81C155E8E0012E290 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				0E2CA9BA1C195594007176DA /* NSMutableArray+insertArray.h */,
-				0E2CA9BB1C195594007176DA /* NSMutableArray+insertArray.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -4260,7 +4255,6 @@
 				E94B03211B7C74E500863C6F /* PIECommentTableCell.m in Sources */,
 				F40207311BA7C17C0007CE02 /* PIECameraViewController.m in Sources */,
 				E9F8908F1B86C4AB0057ECBF /* FMDatabaseAdditions.m in Sources */,
-				0E2CA9BC1C195594007176DA /* NSMutableArray+insertArray.m in Sources */,
 				F4AE73C31BBA90D800734BCB /* PIEFriendAskViewController.m in Sources */,
 				0E6F79031C16EE5C002F9FB6 /* PIEChannelDetailViewController.m in Sources */,
 				F40207421BA7C4160007CE02 /* PIETransitioning_CarouselHome.m in Sources */,

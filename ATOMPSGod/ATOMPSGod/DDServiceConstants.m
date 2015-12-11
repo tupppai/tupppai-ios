@@ -58,6 +58,6 @@ NSString * URL_ChannelGetDetailThreads = @"/thread/get_threads_by_channel";
 
 NSString * URL_ChannelLatestAskForPS   = @"/thread/get_threads_by_channel";
 NSString * URL_ChannelUsersPS          = @"/thread/get_threads_by_channel";
-
+NSString * URL_ChannelActivity         = @"/thread/get_activity_threads";
 
 @end

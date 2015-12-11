@@ -20,5 +20,9 @@
                                            NSMutableArray<PIEPageVM *>
                                            *usersRepliesResultArray))resultBlock
                       completion:(void (^)(void))completionBlock;
+
++ (void)getSource_pageViewModels:(NSDictionary *)params
+                   repliesResult:(void (^)
+                                  (NSMutableArray<PIEPageVM *> * repliesResultArray))repliesResultBlock;
 @end
 
