@@ -81,11 +81,16 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     }
     return _psActionSheet;
 }
+
+- (void)bindProgressView {
+    _progressView = [MRNavigationBarProgressView progressViewForNavigationController:self.navigationController];
+    _progressView.progressTintColor = [UIColor pieYellowColor];
+}
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
 //    self.navigationController.hidesBarsOnSwipe = YES;
-
+    [self bindProgressView];
     //update status of like button
     [self updateStatus];
     //make it always visible when coming back to this vc from other vc.
