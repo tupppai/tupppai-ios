@@ -147,8 +147,10 @@
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
                     ;
                 } else {
-                    [DDUserManager currentUser].signUpType = type;
-                    [DDUserManager currentUser].sdkUser = sdkUser;
+//                    [DDUserManager currentUser].signUpType = type;
+//                    [DDUserManager currentUser].sdkUser = sdkUser;
+                    [[NSUserDefaults standardUserDefaults]setObject:@(type) forKey:@"SignUpType"];
+                    [[NSUserDefaults standardUserDefaults]setObject:sdkUser forKey:@"SdkUser"];
                     DDCreateProfileVC *cpvc = [DDCreateProfileVC new];
                     [self.navigationController pushViewController:cpvc animated:YES];
                 }

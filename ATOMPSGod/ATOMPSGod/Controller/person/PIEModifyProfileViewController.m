@@ -76,13 +76,13 @@
         [param setObject:_avatar forKey:@"avatar"];
     }
     [param setObject:@(_createProfileView.genderIsMan) forKey:@"sex"];
-    if (![[DDUserManager currentUser].username isEqualToString:_createProfileView.nicknameTextField.text]) {
+    if (![[DDUserManager currentUser].nickname isEqualToString:_createProfileView.nicknameTextField.text]) {
         [param setObject:_createProfileView.nicknameTextField.text forKey:@"nickname"];
     }
     [DDService updateProfile:param withBlock:^(BOOL success) {
         if (success) {
             [Hud success:@"修改成功"];
-            [DDUserManager currentUser].username = _createProfileView.nicknameTextField.text;
+            [DDUserManager currentUser].nickname = _createProfileView.nicknameTextField.text;
             [DDUserManager currentUser].sex = _createProfileView.genderIsMan;
             if (_avatar) {
                 //use reactive cocoa to update all avatar view.

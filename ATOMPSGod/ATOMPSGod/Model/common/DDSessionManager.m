@@ -18,7 +18,8 @@ static DDSessionManager *_shareHTTPSessionManager = nil;
         
         
 //        NSString *baseURL = @"http://api.qiupsdashen.com/";
-        NSString *baseURL = @"http://api.loiter.us/";
+
+        NSString *baseURL = [[NSUserDefaults standardUserDefaults] valueForKey:@"BASEURL"];
 
 //#if DEBUG
 //        NSString *baseURL = @"http://api.loiter.us/";
@@ -28,6 +29,7 @@ static DDSessionManager *_shareHTTPSessionManager = nil;
 //        NSString *baseURL = @"http://api.qiupsdashen.com/";
 //#endif
 
+        
         _shareHTTPSessionManager = [[DDSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseURL]];
 //        [_shareHTTPSessionManager.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
 //            switch (status) {

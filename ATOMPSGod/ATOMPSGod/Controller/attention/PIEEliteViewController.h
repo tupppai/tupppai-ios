@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MRNavigationBarProgressView.h"
 
 @interface PIEEliteViewController : DDBaseVC
+@property (nonatomic, strong) MRNavigationBarProgressView *progressView;
 
 @end

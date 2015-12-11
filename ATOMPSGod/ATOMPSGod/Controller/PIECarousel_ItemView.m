@@ -47,8 +47,6 @@
 //        [_label_content setTintColor:[UIColor colorWithHex:0x000000 andAlpha:0.8]];
 //        [_label_content setFont:[UIFont lightTupaiFontOfSize:15]];
 
-   
-        
         [self setupTableView];
         [self addEvent];
         
@@ -242,34 +240,6 @@
             likeView.selected = !likeView.selected;
         }
     }];
-}
-
-
-- (void)help:(BOOL)shouldDownload {
-    NSMutableDictionary* param = [NSMutableDictionary new];
-    [param setObject:@(_vm.ID) forKey:@"target"];
-    [param setObject:@"ask" forKey:@"type"];
-    
-    [DDService signProceeding:param withBlock:^(NSString *imageUrl) {
-        if (imageUrl != nil) {
-            if (shouldDownload) {
-                [DDService downloadImage:imageUrl withBlock:^(UIImage *image) {
-                    UIImageWriteToSavedPhotosAlbum(image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
-                }];
-            }
-            else {
-                [Hud customText:@"添加成功\n在“进行中”等你下载咯!" inView:[AppDelegate APP].window];
-            }
-        }
-    }];
-}
-
-- (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error
-  contextInfo: (void *) contextInfo {
-    if(error != NULL){
-    } else {
-        [Hud customText:@"下载成功\n我猜你会用美图秀秀来P?" inView:[AppDelegate APP].window];
-    }
 }
 
 

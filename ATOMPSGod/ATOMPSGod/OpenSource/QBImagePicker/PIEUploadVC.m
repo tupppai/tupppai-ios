@@ -25,7 +25,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *leftShareButton;
 @property (weak, nonatomic) IBOutlet UIButton *rightShareButton;
 
-@property (strong, nonatomic) NSMutableArray *imageArray;
+//@property (strong, nonatomic) NSMutableArray *dataArray;
+
+@property (strong, nonatomic) NSMutableDictionary *uploadInfo;
+
 @property (nonatomic, strong) PIEEntityImage *imageInfo1;
 @property (nonatomic, strong) PIEEntityImage *imageInfo2;
 
@@ -111,22 +114,25 @@
     _inputTextView.delegate = self;
     _leftImageView.clipsToBounds = YES;
     _rightImageView.clipsToBounds = YES;
-    _imageArray = [NSMutableArray array];
-    
+//    _dataArray = [NSMutableArray array];
+    _uploadInfo = [NSMutableDictionary new];
     if (_assetsArray.count == 1) {
         _leftImageView.image = [Util getImageFromAsset:[_assetsArray objectAtIndex:0] type:ASSET_PHOTO_SCREEN_SIZE];
         _rightImageView.image = [UIImage imageNamed:@"pie_upload_plus"];
         UITapGestureRecognizer* tapGesure = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(iWantSelecteMorePhoto)];
         _rightImageView.userInteractionEnabled = YES;
         [_rightImageView addGestureRecognizer:tapGesure];
-        [_imageArray addObject:UIImagePNGRepresentation(_leftImageView.image)];
+        [_uploadInfo setObject:(_leftImageView.image) forKey:@"image1"];
+        [_uploadInfo setObject:@1 forKey:@"imageCount"];
+
     } else if (_assetsArray.count == 2) {
         _leftImageView.image = [Util getImageFromAsset:[_assetsArray objectAtIndex:0] type:ASSET_PHOTO_SCREEN_SIZE];
         _rightImageView.image = [Util getImageFromAsset:[_assetsArray objectAtIndex:1] type:ASSET_PHOTO_SCREEN_SIZE];
-//        NSData* data1 = UIImagePNGRepresentation(_leftImageView.image);
-//        NSData* data2 = UIImagePNGRepresentation(_rightImageView.image);
-        [_imageArray addObjectsFromArray:[NSArray arrayWithObjects:UIImagePNGRepresentation(_leftImageView.image),UIImagePNGRepresentation(_rightImageView.image),nil]];
-//        NSLog(@"data size %zd , size2 %zd",data1.length,data2.length);
+        
+        [_uploadInfo setObject:(_leftImageView.image) forKey:@"image1"];
+        [_uploadInfo setObject:(_rightImageView.image) forKey:@"image2"];
+        [_uploadInfo setObject:@2 forKey:@"imageCount"];
+
     }
     
     if (_hideSecondView) {
@@ -137,8 +143,6 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void) tapNext {
-    NSLog(@"tapNext %zd,%d,%zd",_type,_succeedToDownloadTags,_view_tag.array_selectedId);
-
     if (_inputTextView.text.length == 0) {
         [self showWarnLabel];
     }
@@ -147,22 +151,17 @@
         [self showWarnLabel2];
     } else {
         if (_type == PIEUploadTypeAsk) {
-            [_imageArray insertObject:@"ask" atIndex:0];
+            [_uploadInfo setObject:@"ask" forKey:@"type"];
+
         } else if (_type == PIEUploadTypeReply) {
-            [_imageArray insertObject:@"reply" atIndex:0];
+            [_uploadInfo setObject:@"reply" forKey:@"type"];
         }
-        [_imageArray addObject:_view_tag.array_selectedId];
-        [_imageArray addObject:_inputTextView.text];
         
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0];
-        NSString *yourArrayFileName = [documentsDirectory stringByAppendingPathComponent:@"ToUpload.dat"];
-        [_imageArray writeToFile:yourArrayFileName atomically:YES];
-        
-        [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:@"shouldDoUploadJob"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"UploadRightNow" object:nil];
-        [self backToPIENewViewController];
+        [_uploadInfo setObject:_view_tag.array_selectedId forKey:@"tag_ids_array"];
+        [_uploadInfo setObject:_inputTextView.text forKey:@"text_string"];
+
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"UploadCall" object:nil userInfo:_uploadInfo];
+        [self backToTabbarController];
     }
 }
 //-(void) uploadReply {
@@ -180,10 +179,10 @@
 //        }
 //    }];
 //}
--(void) uploadAsk {
-    
+//-(void) uploadAsk {
+
 //    [Hud activity:@"上传中" inView:self.view];
-//    if (_imageArray.count == 2) {
+//    if (_dataArray.count == 2) {
 //        [self uploadImage1:^(BOOL success) {
 //            if (success) {
 //                [self uploadImage2:^(BOOL success) {
@@ -201,7 +200,7 @@
 //            }
 //        }
 //         ];
-//    } else if (_imageArray.count == 1) {
+//    } else if (_dataArray.count == 1) {
 //        [self uploadImage1:^(BOOL success) {
 //            if (success) {
 //                [self uploadAskRestInfo:^(BOOL success) {
@@ -215,17 +214,17 @@
 //            }
 //        }];
 //    }
-}
+//}
 
-- (void)backToPIENewViewController {
+- (void)backToTabbarController {
     PIETabBarController *lvc = [AppDelegate APP].mainTabBarController;
     [lvc dismissViewControllerAnimated:YES completion:nil];
     [lvc.selectedViewController popToRootViewControllerAnimated:YES];
-    [lvc setSelectedIndex:1];
+//    [lvc setSelectedIndex:1];
 }
 
 //- (void) uploadImage2:(void (^)(BOOL success))block {
-//    NSData *data = UIImageJPEGRepresentation(_imageArray[1], 1.0);
+//    NSData *data = UIImageJPEGRepresentation(_dataArray[1], 1.0);
 //    PIEUploadManager *uploadImage = [PIEUploadManager new];
 //    [uploadImage UploadImage:data WithBlock:^(PIEEntityImage *imageInfo, NSError *error) {
 //        if (!imageInfo) {
@@ -242,7 +241,7 @@
 //}
 
 //- (void) uploadImage1:(void (^)(BOOL success))block {
-//        NSData *data = UIImageJPEGRepresentation(_imageArray[0], 1.0);
+//        NSData *data = UIImageJPEGRepresentation(_dataArray[0], 1.0);
 //        PIEUploadManager *uploadImage = [PIEUploadManager new];
 //        [uploadImage UploadImage:data WithBlock:^(PIEEntityImage *imageInfo, NSError *error) {
 //            if (!imageInfo) {
@@ -263,14 +262,14 @@
 //    NSArray* ratios;
 //    if (_assetsArray.count == 2) {
 //        uploadIds = [NSArray arrayWithObjects:@(_imageInfo1.imageID),@(_imageInfo2.imageID), nil];
-//        UIImage* image1 = _imageArray[0];
-//        UIImage* image2 = _imageArray[1];
+//        UIImage* image1 = _dataArray[0];
+//        UIImage* image2 = _dataArray[1];
 //        CGFloat ratio1 = image1.size.height/image1.size.width;
 //        CGFloat ratio2 = image2.size.height/image2.size.width;
 //        ratios = [NSArray arrayWithObjects:@(ratio1),@(ratio2), nil];
 //    } else {
 //        uploadIds = [NSArray arrayWithObjects:@(_imageInfo1.imageID), nil];
-//        UIImage* image1 = _imageArray[0];
+//        UIImage* image1 = _dataArray[0];
 //        CGFloat ratio1 = image1.size.height/image1.size.width;
 //        ratios = [NSArray arrayWithObjects:@(ratio1), nil];
 //    }
@@ -300,7 +299,7 @@
 
 //- (void)uploadReplyRestInfo:(void (^) (BOOL success))block {
 //    
-//    UIImage* image1 = _imageArray[0];
+//    UIImage* image1 = _dataArray[0];
 //    CGFloat ratio1 = image1.size.height/image1.size.width;
 //    NSMutableDictionary *param = [NSMutableDictionary new];
 //    [param setObject:@(ratio1) forKey:@"ratio"];

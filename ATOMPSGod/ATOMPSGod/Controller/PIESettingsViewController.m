@@ -37,35 +37,35 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.edgesForExtendedLayout = UIRectEdgeAll;
-    [self createUI];
+    self.view = self.tableView;
+    self.title = @"设置";
 }
-
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 }
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    self.navigationController.navigationBar.backgroundColor = [UIColor colorWithHex:0xffffff andAlpha:0.9];
+//    self.navigationController.navigationBar.backgroundColor = [UIColor colorWithHex:0xffffff andAlpha:0.9];
 }
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+//    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
 }
-- (void)createUI {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
-    _tableView.backgroundColor = [UIColor whiteColor];
-    _tableView.tableFooterView = [UIView new];
-    _tableView.separatorInset = UIEdgeInsetsMake(0, 30, 0, 20);
-    _tableView.separatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
 
-    self.view = _tableView;
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    UINib* nib = [UINib nibWithNibName:@"PIESignOutTableViewCell" bundle:nil];
-    [_tableView registerNib:nib forCellReuseIdentifier:@"PIESignOutTableViewCell"];
-    self.title = @"设置";
+-(UITableView *)tableView {
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
+        _tableView.backgroundColor = [UIColor whiteColor];
+        _tableView.tableFooterView = [UIView new];
+        _tableView.separatorInset = UIEdgeInsetsMake(0, 30, 0, 20);
+        _tableView.separatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        UINib* nib = [UINib nibWithNibName:@"PIESignOutTableViewCell" bundle:nil];
+        [_tableView registerNib:nib forCellReuseIdentifier:@"PIESignOutTableViewCell"];
+    }
+    return _tableView;
 }
 -(BOOL)hidesBottomBarWhenPushed {
     return YES;
@@ -237,7 +237,7 @@
                               //清空数据库用户表
                               [ATOMUserDAO clearUsers];
                               //清空当前用户
-                              [[DDUserManager currentUser]wipe];
+                              [DDUserManager wipe];
                               self.navigationController.viewControllers = @[];
                               PIELaunchViewController *lvc = [[PIELaunchViewController alloc] init];
                               [AppDelegate APP].window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];

@@ -17,7 +17,7 @@
 #import "AppDelegate.h"
 #import "DDLoginNavigationController.h"
 #import "ATOMUserDAO.h"
-
+#import "PIEUploadManager.h"
 @interface PIETabBarController ()<UITabBarControllerDelegate>
 @property (nonatomic, strong) DDNavigationController *navigation_new;
 @property (nonatomic, strong) DDNavigationController *navigation_elite;
@@ -46,8 +46,9 @@
     self.delegate = self;
     [self setupTitle];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NetworkSignOutRET) name:@"NetworkSignOutCall" object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DoUploadJob:) name:@"UploadCall" object:nil];
 }
+
 - (void)setupTitle {
     [[UITabBarItem appearance] setTitleTextAttributes:@{   NSForegroundColorAttributeName: [UIColor blackColor],                                                           NSFontAttributeName: [UIFont systemFontOfSize:10]
                                                            }
@@ -59,7 +60,27 @@
 }
 
 -(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UploadCall"object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkSignOutCall"object:nil];
+}
+- (void) DoUploadJob:(NSNotification *)notification
+{
+    NSDictionary *info = [notification userInfo];
+    
+    PIEEliteViewController* vc = (PIEEliteViewController*)((DDNavigationController*)[self.viewControllers objectAtIndex:0]).topViewController;
+    PIEUploadManager* manager = [PIEUploadManager new];
+    manager.uploadInfo = info;
+    [manager upload:^(CGFloat percentage,BOOL success) {
+//        [_progressView setProgress:percentage animated:YES];
+        [vc.progressView setProgress:percentage animated:YES];
+        if (success) {
+            if ([manager.type isEqualToString:@"ask"]) {
+                
+            } else if ([manager.type isEqualToString:@"reply"]) {
+
+            }
+        }
+    }];
 }
 -(void) NetworkSignOutRET {
     SIAlertView *alertView = [KShareManager NetworkErrorOccurredAlertView];
@@ -69,7 +90,7 @@
                               //清空数据库用户表
                               [ATOMUserDAO clearUsers];
                               //清空当前用户
-                              [[DDUserManager currentUser]wipe];
+                              [DDUserManager wipe];
                               self.navigationController.viewControllers = @[];
                               PIELaunchViewController *lvc = [[PIELaunchViewController alloc] init];
                               [AppDelegate APP].window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];

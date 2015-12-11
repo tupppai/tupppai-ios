@@ -41,13 +41,11 @@
 
 
 @interface PIEChannelViewController ()<UITableViewDelegate, UITableViewDataSource>
-@property (nonatomic, weak) UIView *containerView;
 @property (nonatomic, strong) PIERefreshTableView *tableView;
 @property (nonatomic, strong) NSMutableArray<PIEChannelViewModel *> *source;
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, assign) long long timeStamp;
 @property (nonatomic, assign) BOOL stopRefreshFooter;
-
 @end
 
 
@@ -104,8 +102,6 @@
 #pragma mark - <UITableViewDelegate>
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%s", __func__);
-    
     if (indexPath.section != 0)
     {
         PIEChannelDetailViewController *channelDetailViewController =
