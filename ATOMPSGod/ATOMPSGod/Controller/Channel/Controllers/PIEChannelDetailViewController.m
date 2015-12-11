@@ -80,7 +80,7 @@ static NSString *  PIEDetailNormalIdentifier =
 @"PIEDetailNormalIdentifier";
 
 static NSString * PIEDetailUsersPSCellIdentifier =
-@"pieacti";
+@"PIENewReplyTableCell";
 
 #pragma mark - UI life cycles
 /**

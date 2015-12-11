@@ -29,6 +29,8 @@
 
 @property (strong, nonatomic) PIEThumbAnimateView *thumbView;
 
+- (void)hideThumbnailImage;
+
 - (void)injectSauce:(PIEPageVM *)viewModel ;
 - (void)animateToggleExpanded ;
 - (void)animateThumbScale:(PIEAnimateViewType)type;

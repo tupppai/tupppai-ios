@@ -250,14 +250,14 @@
 {
     NSLog(@"%s", __func__);
     
-    [self.navigationController
-     pushViewController:[[PIENewReplyViewController alloc] init]
-     animated:YES];
-    
-//    // just for testing
 //    [self.navigationController
-//     pushViewController:[[PIEChannelActivityViewController alloc] init]
+//     pushViewController:[[PIENewReplyViewController alloc] init]
 //     animated:YES];
+    
+    // just for testing
+    [self.navigationController
+     pushViewController:[[PIEChannelActivityViewController alloc] init]
+     animated:YES];
 
 }
 

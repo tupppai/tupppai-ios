@@ -47,7 +47,7 @@
 @implementation PIEChannelActivityViewController
 
 static NSString *
-PIEChannelActivityReplyCellIdentifier = @"pieacti";
+PIEChannelActivityReplyCellIdentifier = @"PIENewReplyTableCell";
 
 static NSString *
 PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifier";
@@ -128,7 +128,7 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     
     PIENewReplyTableCell *replyCell =
     [tableView dequeueReusableCellWithIdentifier:PIEChannelActivityReplyCellIdentifier];
-    
+    [replyCell hideThumbnailImage];
     [replyCell injectSauce:_source_reply[indexPath.row]];
     
     return replyCell;
