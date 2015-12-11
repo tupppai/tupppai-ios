@@ -21,6 +21,8 @@
 #import "PIEChannelManager.h"
 #import "PIEChannelDetailViewController.h"
 
+#import "PIEChannelActivityViewController.h"
+
 /* Protocols */
 
 @interface PIEChannelViewController (BannerCellDelegate)<PIEChannelBannerCellDelegate>
@@ -248,8 +250,13 @@
 {
     NSLog(@"%s", __func__);
     
+//    [self.navigationController
+//     pushViewController:[[PIENewReplyViewController alloc] init]
+//     animated:YES];
+    
+    // just for testing
     [self.navigationController
-     pushViewController:[[PIENewReplyViewController alloc] init]
+     pushViewController:[[PIEChannelActivityViewController alloc] init]
      animated:YES];
 
 }
