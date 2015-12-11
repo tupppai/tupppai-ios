@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "PIELaunchViewController.h"
 #import <ShareSDK/SSDKUser.h>
+#import "PIEEntityUser.h"
+
 @class PIEEntityUser;
 
 typedef enum {
@@ -79,13 +81,13 @@ typedef enum {
 @property (nonatomic, assign) bool bindQQ;
 
 
-+ (DDUserManager *)currentUser;
++ (PIEEntityUser *)currentUser;
 
 - (NSMutableDictionary *)dictionaryFromModel;
 
 - (void)setCurrentUser:(PIEEntityUser *)user;
 -(void)tellMeEveryThingAboutYou;
-- (void)saveAndUpdateUser:(PIEEntityUser *)user;
++ (void)saveAndUpdateUser:(PIEEntityUser *)user;
 +(void)fetchUserInDBToCurrentUser:(void (^)(BOOL))block;
 -(void)wipe;
 

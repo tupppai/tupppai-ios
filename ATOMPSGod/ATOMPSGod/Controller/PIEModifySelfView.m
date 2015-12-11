@@ -37,7 +37,7 @@
 
 - (void)injectSource {
     [self.userHeaderButton setImageForState:UIControlStateNormal withURL:[[NSURL alloc]initWithString:[DDUserManager currentUser].avatar]];
-    self.nicknameTextField.text = [DDUserManager currentUser].username;
+    self.nicknameTextField.text = [DDUserManager currentUser].nickname;
     NSInteger index = [DDUserManager currentUser].sex ? 0:1;
     [self.sexSegment setSelectedSegmentIndex:index];
 }
