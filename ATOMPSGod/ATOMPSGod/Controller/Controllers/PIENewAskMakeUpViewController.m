@@ -423,5 +423,11 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
 }
 
+- (PIEActionSheet_PS *)psActionSheet {
+    if (!_psActionSheet) {
+        _psActionSheet = [PIEActionSheet_PS new];
+    }
+    return _psActionSheet;
+}
 
 @end
