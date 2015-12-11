@@ -75,8 +75,41 @@
     [_otherWayLabel addGestureRecognizer:tap2];
     [_hasAccountLabel addGestureRecognizer:tap3];
 
+    UITapGestureRecognizer * tapLogo = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapLogo)];
+    tapLogo.numberOfTapsRequired = 14;
+    _logoView.userInteractionEnabled = YES;
+    [_logoView addGestureRecognizer:tapLogo];
 }
 
+- (void)tapLogo {
+    UIImageView* imgView = [[UIImageView alloc]initWithFrame:self.view.bounds];
+    imgView.image = [UIImage imageNamed:@"baozou"];
+    [self.view addSubview:imgView];
+
+    if ([[[DDSessionManager shareHTTPSessionManager].baseURL absoluteString] isEqualToString: baseURLString]) {
+        [[NSUserDefaults standardUserDefaults]setObject:baseURLString_Test forKey:@"BASEURL"];
+        [Hud activity:@"切换到->测试服,你的程序准备爆炸"];
+        [UIView animateWithDuration:2 animations:^{
+            self.view.backgroundColor = [UIColor blackColor];
+            self.view.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            self.view.alpha = 1.0;
+            NSArray *array = [NSArray new];
+            NSLog(@"%@",[array objectAtIndex:8]);
+        }];
+    } else {
+        [[NSUserDefaults standardUserDefaults]setObject:baseURLString forKey:@"BASEURL"];
+        [Hud activity:@"切换到->正式服,你的程序准备爆炸"];
+        [UIView animateWithDuration:2 animations:^{
+            self.view.backgroundColor = [UIColor blackColor];
+            self.view.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            self.view.alpha = 1.0;
+            NSArray *array = [NSArray new];
+            NSLog(@"%@",[array objectAtIndex:8]);
+        }];
+    }
+}
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
@@ -116,10 +149,9 @@
         if (sdkUser) {
             NSMutableDictionary* param = [NSMutableDictionary new];
             [param setObject:sdkUser.uid forKey:@"openid"];
-            
+                        
             [DDUserManager DD3PartyAuth:param AndType:typeStr withBlock:^(bool isRegistered, NSString *info) {
                 if (isRegistered) {
-                    [Hud activity:@"登录中"];
                     [self.navigationController setViewControllers:[NSArray array]];
                     [AppDelegate APP].mainTabBarController = nil;
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];

@@ -265,6 +265,7 @@
 		F402F1011BE89CB4004988B4 /* PIESearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F402F1001BE89CB4004988B4 /* PIESearchManager.m */; };
 		F402F1041BE8A327004988B4 /* PIEUserViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F402F1031BE8A327004988B4 /* PIEUserViewModel.m */; };
 		F409AA871BAFE39000736B0D /* PIEImageEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = F409AA861BAFE39000736B0D /* PIEImageEntity.m */; };
+		F41205B11C1986D500EE959F /* baozou.png in Resources */ = {isa = PBXBuildFile; fileRef = F41205B01C1986D500EE959F /* baozou.png */; };
 		F41366951BBE73D900EE0C4E /* PIEReplyCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F41366941BBE73D900EE0C4E /* PIEReplyCollectionCell.xib */; };
 		F413B0501C167AB500F9BA27 /* PIECarouselPageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F413B04E1C167AB500F9BA27 /* PIECarouselPageTableViewCell.m */; };
 		F413B0511C167AB500F9BA27 /* PIECarouselPageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F413B04F1C167AB500F9BA27 /* PIECarouselPageTableViewCell.xib */; };
@@ -999,7 +1000,7 @@
 		E9F8908B1B86C4AB0057ECBF /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
 		E9F8908C1B86C4AB0057ECBF /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		E9F8908D1B86C4AB0057ECBF /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
-		E9F890951B86D9770057ECBF /* ic_dismiss.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_dismiss.png; sourceTree = "<group>"; };
+		E9F890951B86D9770057ECBF /* ic_dismiss.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_dismiss.png; path = ../ic_dismiss.png; sourceTree = "<group>"; };
 		E9FBCD2B1B69F92D00BF7096 /* DDLoginBaseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLoginBaseVC.m; sourceTree = "<group>"; };
 		E9FBCD2D1B6A042000BF7096 /* DDLoginNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLoginNavigationController.h; sourceTree = "<group>"; };
 		E9FBCD2E1B6A042000BF7096 /* DDLoginNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLoginNavigationController.m; sourceTree = "<group>"; };
@@ -1037,6 +1038,7 @@
 		F402F1031BE8A327004988B4 /* PIEUserViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEUserViewModel.m; sourceTree = "<group>"; };
 		F409AA851BAFE39000736B0D /* PIEImageEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEImageEntity.h; sourceTree = "<group>"; };
 		F409AA861BAFE39000736B0D /* PIEImageEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEImageEntity.m; sourceTree = "<group>"; };
+		F41205B01C1986D500EE959F /* baozou.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = baozou.png; path = ../baozou.png; sourceTree = "<group>"; };
 		F41366941BBE73D900EE0C4E /* PIEReplyCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEReplyCollectionCell.xib; sourceTree = "<group>"; };
 		F413B04D1C167AB500F9BA27 /* PIECarouselPageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECarouselPageTableViewCell.h; sourceTree = "<group>"; };
 		F413B04E1C167AB500F9BA27 /* PIECarouselPageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECarouselPageTableViewCell.m; sourceTree = "<group>"; };
@@ -1966,6 +1968,8 @@
 		5C7861171AAF4DD200E87C77 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				E9F890951B86D9770057ECBF /* ic_dismiss.png */,
+				F41205B01C1986D500EE959F /* baozou.png */,
 				F4EA4DAC1BF477DC00486304 /* intro */,
 				F4B02E111BECA27B00406A55 /* cell_holder_rectangle.png */,
 			);
@@ -2131,7 +2135,6 @@
 		5CDB05C41AA3FE520089121E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				E9F890951B86D9770057ECBF /* ic_dismiss.png */,
 				E90193711B37EE1E00E91555 /* region.csv */,
 				5C7861171AAF4DD200E87C77 /* images */,
 				5CDB06071AA4065C0089121E /* psgod.pch */,
@@ -3993,6 +3996,7 @@
 				F40207321BA7C17C0007CE02 /* PIECameraViewController.xib in Resources */,
 				F4F72C0F1BCBA25E002FF05A /* PIEProceedingAskTableViewCell.xib in Resources */,
 				E95691AC1B22E88300DA84BB /* Info.plist in Resources */,
+				F41205B11C1986D500EE959F /* baozou.png in Resources */,
 				F499E4561BD0F69100E5F178 /* PIEEliteFollowReplyTableViewCell.xib in Resources */,
 				E94289761B5B32A200ED26E4 /* NotificationBackgroundErrorIcon.png in Resources */,
 				F402F0FE1BE8953F004988B4 /* PIESearchContentCollectionViewCell.xib in Resources */,

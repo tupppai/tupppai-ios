@@ -36,7 +36,7 @@
 }
 
 -(void) errorOccuredRET {
-    [Hud text:@"出现未知错误" inView:self.view];
+    [Hud text:@"网路好像有点问题～" inView:self.view];
 }
 -(void) showInfoRET:(NSNotification *)notification {
     NSString* info = [[notification userInfo] valueForKey:@"info"];

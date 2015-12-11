@@ -76,11 +76,14 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 }
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setBackgroundImage:nil
+                                                  forBarMetrics:UIBarMetricsDefault];
     self.navigationController.hidesBarsOnSwipe = YES;
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.hidesBarsOnSwipe = NO;
+    self.navigationController.navigationBarHidden = NO;
 }
 -(BOOL)hidesBottomBarWhenPushed {
     return YES;

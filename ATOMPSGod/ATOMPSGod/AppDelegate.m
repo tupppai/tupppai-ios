@@ -34,6 +34,8 @@
     return [[UIApplication sharedApplication] delegate];
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    [self setupNetworkManager];
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
     self.window.backgroundColor = [UIColor whiteColor];
@@ -52,6 +54,12 @@
     
     
     return YES;
+}
+
+- (void)setupNetworkManager {
+    if ([[NSUserDefaults standardUserDefaults] valueForKey:@"BASEURL"] == nil) {
+        [[NSUserDefaults standardUserDefaults]setObject:baseURLString forKey:@"BASEURL"];
+    }
 }
 - (void)setupUmengAnalytics {
     [MobClick startWithAppkey:@"55b1ecdbe0f55a1de9001164"];

@@ -31,7 +31,5 @@
 @property (nonatomic, strong) NSMutableArray* replyArray;
 
 - (void)setViewModelData:(PIECommentEntity *)comment;
-- (void)setDataWithAtModel:(PIECommentVM *)viewModel andContent:(NSString *)content;
-- (void)toggleLike;
 
 @end
