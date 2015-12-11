@@ -67,10 +67,53 @@
 }
 
 - (void)clickRightButtonItem{
-    NSMutableDictionary *param = [[DDUserManager currentUser] dictionaryFromModel];
-    [param setObject:_inputVerifyView.verifyCodeTextField.text forKey:@"code"];
+    
+    NSMutableDictionary *dict = [NSMutableDictionary new];
+    [dict setObject:[DDUserManager currentUser].nickname forKey:@"nickname"];
+    [dict setObject:[DDUserManager currentUser].mobile forKey:@"mobile"];
+    NSString* password = [[NSUserDefaults standardUserDefaults]valueForKey:@"password"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"password"];
+    [dict setObject:password forKey:@"password"];
+    [dict setObject:@([DDUserManager currentUser].sex) forKey:@"sex"];
+    [dict setObject:[DDUserManager currentUser].avatar forKey:@"avatar"];
+    SSDKUser* sdkUser = [[NSUserDefaults standardUserDefaults]valueForKey:@"SdkUser"];
+    switch ([[[NSUserDefaults standardUserDefaults]valueForKey:@"SignUpType"] integerValue]) {
 
-    [DDUserManager DDRegister:param withBlock:^(BOOL success) {
+        case ATOMSignUpWechat:
+            [dict setObject:@"weixin" forKey:@"type"];
+            [dict setObject:sdkUser.uid forKey:@"openid"];
+            [dict setObject:sdkUser.icon forKey:@"avatar_url"];
+
+            break;
+        case ATOMSignUpQQ:
+            [dict setObject:@"qq" forKey:@"type"];
+            [dict setObject:sdkUser.uid forKey:@"openid"];
+            [dict setObject:sdkUser.icon forKey:@"avatar_url"];
+
+            break;
+        case ATOMSignUpWeibo:
+            [dict setObject:@"weibo" forKey:@"type"];
+            [dict setObject:sdkUser.uid forKey:@"openid"];
+            [dict setObject:sdkUser.icon forKey:@"avatar_url"];
+
+            break;
+        case ATOMSignUpMobile:
+            //            [dict setObject:[NSString stringWithFormat:@"%@", _region[@"cityID"]] forKey:@"city"];
+            //            [dict setObject:[NSString stringWithFormat:@"%@", _region[@"provinceID"]] forKey:@"province"];
+            [dict setObject:@"mobile" forKey:@"type"];
+            break;
+        default:
+            break;
+    }
+    
+
+//    NSMutableDictionary *param = [DDUserManager convertCurrentUserToDic];
+    
+    
+    
+    [dict setObject:_inputVerifyView.verifyCodeTextField.text forKey:@"code"];
+
+    [DDUserManager DDRegister:dict withBlock:^(BOOL success) {
         if (success) {
             [self.navigationController setViewControllers:[NSArray new]];
             [AppDelegate APP].mainTabBarController = nil;

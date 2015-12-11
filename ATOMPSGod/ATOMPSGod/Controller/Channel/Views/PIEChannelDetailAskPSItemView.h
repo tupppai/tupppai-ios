@@ -11,6 +11,4 @@
 @interface PIEChannelDetailAskPSItemView : UIView
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *desc;
-
-
 @end

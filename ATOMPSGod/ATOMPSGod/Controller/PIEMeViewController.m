@@ -133,7 +133,8 @@
 - (void)update {
     [DDOtherUserManager getUserInfo:nil withBlock:^(PIEEntityUser *user) {
         if (user) {
-            [[DDUserManager currentUser] saveAndUpdateUser:user];
+//            [[DDUserManager currentUser] saveAndUpdateUser:user];
+            [DDUserManager saveAndUpdateUser:user];
             [self updateViewsWithData];
         }
     }];
@@ -166,7 +167,7 @@
             _avatarView.image = image;
             _topContainerView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:nil];
     }];
-    self.usernameLabel.text = [DDUserManager currentUser].username;
+    self.usernameLabel.text = [DDUserManager currentUser].nickname;
 }
 - (void)pushToSettingViewController {
     PIESettingsViewController* vc = [PIESettingsViewController new];
@@ -214,11 +215,11 @@
 
 }
 - (void)updateViewsWithData {
-    DDUserManager* user = [DDUserManager currentUser];
-    _usernameLabel.text = user.username;
+    PIEEntityUser* user = [DDUserManager currentUser];
+    _usernameLabel.text = user.nickname;
     _followCountLabel.text = [NSString stringWithFormat:@"%zd",user.attentionNumber];
     _fansCountLabel.text = [NSString stringWithFormat:@"%zd",user.fansNumber];
-    _likedCountLabel.text = [NSString stringWithFormat:@"%zd",user.praisedCount];
+    _likedCountLabel.text = [NSString stringWithFormat:@"%zd",user.likedCount];
     [self updateAvatar];
 }
 

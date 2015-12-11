@@ -157,8 +157,11 @@
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
                     ;
                 } else {
-                    [DDUserManager currentUser].signUpType = type;
-                    [DDUserManager currentUser].sdkUser = sdkUser;
+                    [[NSUserDefaults standardUserDefaults]setObject:@(type) forKey:@"SignUpType"];
+                    [[NSUserDefaults standardUserDefaults]setObject:sdkUser forKey:@"SdkUser"];
+
+//                    [DDUserManager currentUser].signUpType = type;
+//                    [DDUserManager currentUser].sdkUser = sdkUser;
                     DDCreateProfileVC *cpvc = [DDCreateProfileVC new];
                     [self.navigationController pushViewController:cpvc animated:YES];
                 }
@@ -260,7 +263,9 @@
 }
 -(void)tapSignUp3 {
     [self.signUpView dismiss];
-    [DDUserManager currentUser].signUpType = ATOMSignUpMobile;
+//    [DDUserManager currentUser].signUpType = ATOMSignUpMobile;
+    [[NSUserDefaults standardUserDefaults]setObject:@(ATOMSignUpMobile) forKey:@"SignUpType"];
+
     DDCreateProfileVC *cpvc = [DDCreateProfileVC new];
     [self.navigationController pushViewController:cpvc animated:YES];
 }

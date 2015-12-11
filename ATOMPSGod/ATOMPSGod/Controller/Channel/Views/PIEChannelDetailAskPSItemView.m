@@ -9,5 +9,8 @@
 #import "PIEChannelDetailAskPSItemView.h"
 
 @implementation PIEChannelDetailAskPSItemView
-
+-(void)awakeFromNib {
+    _imageView.contentMode = UIViewContentModeScaleAspectFill;
+    _imageView.clipsToBounds = YES;
+}
 @end

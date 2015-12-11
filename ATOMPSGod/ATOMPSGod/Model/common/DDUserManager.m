@@ -35,43 +35,42 @@ static  PIEEntityUser* _currentUser;
 }
 
 
-- (NSMutableDictionary *)dictionaryFromModel {
-    NSMutableDictionary *dict = [NSMutableDictionary new];
-    [dict setObject:_username forKey:@"nickname"];
-    [dict setObject:_mobile forKey:@"mobile"];
-    [dict setObject:_password forKey:@"password"];
-//    [dict setObject:[NSString stringWithFormat:@"%d", (int)_locationID] forKey:@"location"];
-    [dict setObject:[NSString stringWithFormat:@"%d", (int)_sex] forKey:@"sex"];
-    [dict setObject:[NSString stringWithFormat:@"%@", _avatar] forKey:@"avatar"];
-
-    switch (_signUpType) {
-        case ATOMSignUpWechat:
-            [dict setObject:_sourceData[@"openid"] forKey:@"openid"];
-            [dict setObject:_sourceData[@"headimgurl"] forKey:@"avatar_url"];
-            [dict setObject:@"weixin" forKey:@"type"];
-            break;
-        case ATOMSignUpQQ:
-            [dict setObject:_sourceData[@"openid"] forKey:@"openid"];
-            [dict setObject:_sourceData[@"headimgurl"] forKey:@"avatar_url"];
-            [dict setObject:@"qq" forKey:@"type"];
-            break;
-        case ATOMSignUpWeibo:
-            [dict setObject:_sourceData[@"idstr"] forKey:@"openid"];
-            [dict setObject:_sourceData[@"avatar_hd"] forKey:@"avatar_url"];
-            [dict setObject:_sourceData[@"province"] forKey:@"province"];
-            [dict setObject:_sourceData[@"city"] forKey:@"city"];
-            [dict setObject:@"weibo" forKey:@"type"];
-            break;
-        case ATOMSignUpMobile:
-            [dict setObject:[NSString stringWithFormat:@"%@", _region[@"cityID"]] forKey:@"city"];
-            [dict setObject:[NSString stringWithFormat:@"%@", _region[@"provinceID"]] forKey:@"province"];
-            [dict setObject:@"mobile" forKey:@"type"];
-            break;
-        default:
-            break;
-    }
-    return [dict mutableCopy];
-}
+//+ (NSMutableDictionary *)convertCurrentUserToDic {
+//    NSMutableDictionary *dict = [NSMutableDictionary new];
+//    [dict setObject:_currentUser.nickname forKey:@"nickname"];
+//    [dict setObject:_currentUser.mobile forKey:@"mobile"];
+////    [dict setObject:_currentUser.password forKey:@"password"];
+//    [dict setObject:[NSString stringWithFormat:@"%zd", _currentUser.sex] forKey:@"sex"];
+//    [dict setObject:[NSString stringWithFormat:@"%@", _currentUser.avatar] forKey:@"avatar"];
+//
+//    switch (_currentUser.signUpType) {
+//        case ATOMSignUpWechat:
+//            [dict setObject:_currentUser.sourceData[@"openid"] forKey:@"openid"];
+//            [dict setObject:_currentUser.sourceData[@"headimgurl"] forKey:@"avatar_url"];
+//            [dict setObject:@"weixin" forKey:@"type"];
+//            break;
+//        case ATOMSignUpQQ:
+//            [dict setObject:_currentUser.sourceData[@"openid"] forKey:@"openid"];
+//            [dict setObject:_currentUser.sourceData[@"headimgurl"] forKey:@"avatar_url"];
+//            [dict setObject:@"qq" forKey:@"type"];
+//            break;
+//        case ATOMSignUpWeibo:
+//            [dict setObject:_currentUser.sourceData[@"idstr"] forKey:@"openid"];
+//            [dict setObject:_currentUser.sourceData[@"avatar_hd"] forKey:@"avatar_url"];
+//            [dict setObject:_currentUser.sourceData[@"province"] forKey:@"province"];
+//            [dict setObject:_currentUser.sourceData[@"city"] forKey:@"city"];
+//            [dict setObject:@"weibo" forKey:@"type"];
+//            break;
+//        case ATOMSignUpMobile:
+////            [dict setObject:[NSString stringWithFormat:@"%@", _region[@"cityID"]] forKey:@"city"];
+////            [dict setObject:[NSString stringWithFormat:@"%@", _region[@"provinceID"]] forKey:@"province"];
+//            [dict setObject:@"mobile" forKey:@"type"];
+//            break;
+//        default:
+//            break;
+//    }
+//    return [dict mutableCopy];
+//}
 
 
 - (void)setCurrentUser:(PIEEntityUser *)user {
@@ -150,15 +149,14 @@ static  PIEEntityUser* _currentUser;
     }
 }
 
--(void)wipe {
-    self.sourceData = nil;
-    self.uid = 0;
-    self.username = @"游客";
-    self.mobile = @"-1";
-    self.avatar = @"";
-    self.bindWechat = NO;
-    self.bindWeibo = NO;
-    self.bindQQ = NO;
++(void)wipe {
+    _currentUser.uid = 0;
+    _currentUser.nickname = @"游客";
+    _currentUser.mobile = @"-1";
+    _currentUser.avatar = @"";
+    _currentUser.bindWechat = NO;
+    _currentUser.bindWeibo = NO;
+    _currentUser.bindQQ = NO;
 }
 
 +(void)fetchUserInDBToCurrentUser:(void (^)(BOOL))block {

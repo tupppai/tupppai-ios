@@ -196,7 +196,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     self.textView.placeholder = @"添加评论";
     
     PIECommentVM *commentVM = [PIECommentVM new];
-    commentVM.username = [DDUserManager currentUser].username;
+    commentVM.username = [DDUserManager currentUser].nickname;
     commentVM.uid = [DDUserManager currentUser].uid;
     commentVM.avatar = [DDUserManager currentUser].avatar;
     commentVM.originText = self.textView.text;
