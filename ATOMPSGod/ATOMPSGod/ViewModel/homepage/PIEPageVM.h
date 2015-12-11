@@ -8,6 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+    PIEPageVM is the overall info of a image waiting to be or has been PS'ed, where:
+        * ID: 
+        * askID:
+        * type:
+        * userID:
+ **/
+
 @class PIEPageEntity;
 
 @interface PIEPageVM : NSObject
@@ -43,6 +51,8 @@
 @property (nonatomic, strong) NSArray *hotCommentEntityArray;
 
 - (instancetype)initWithPageEntity:(PIEPageEntity *)entity ;
+
+-(void)collect;
 
 @end
 

@@ -31,7 +31,24 @@
     self.view = self.tableView;
     self.title = @"我评论过的";
     [self initData];
-    [self getDataSource];
+    [self.tableView.mj_header beginRefreshing];
+}
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.hidesBarsOnSwipe = YES;
+    self.navigationController.navigationBar.backgroundColor = [UIColor colorWithHex:0xffffff andAlpha:0.5];
+}
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navigationController.hidesBarsOnSwipe = NO;
+    //    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+}
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
 }
 
 - (void)initData {
@@ -43,13 +60,16 @@
 
 -(PIERefreshTableView *)tableView {
     if (!_tableView) {
-        _tableView = [PIERefreshTableView new];
+        _tableView = [[PIERefreshTableView alloc]initWithFrame:self.view.bounds];
         _tableView.dataSource = self;
+        _tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
         _tableView.delegate = self;
         _tableView.psDelegate = self;
-        _tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        _tableView.backgroundColor = [UIColor whiteColor];
         _tableView.emptyDataSetSource = self;
         _tableView.emptyDataSetDelegate = self;
+        _tableView.estimatedRowHeight = 100;
+        _tableView.rowHeight = UITableViewAutomaticDimension;
         UINib* nib = [UINib nibWithNibName:@"PIEMyCommentedPageTableViewCell" bundle:nil];
         [_tableView registerNib:nib forCellReuseIdentifier:@"PIEMyCommentedPageTableViewCell"];
     }
@@ -67,9 +87,9 @@
     [cell injectSauce:[_dataSource objectAtIndex:indexPath.row]];
     return cell;
 }
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 82;
-}
+//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    return 82;
+//}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -88,14 +108,14 @@
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [_tableView.footer endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
     }
 }
 #pragma mark - GetDataSource
 
 - (void)getDataSource {
     WS(ws);
-    [ws.tableView.footer endRefreshing];
+    [ws.tableView.mj_footer endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     _timeStamp = [[NSDate date] timeIntervalSince1970];
     _currentPage = 1;
@@ -112,14 +132,14 @@
             ws.canRefreshFooter = YES;
         }
         [ws.tableView reloadData];
-        [ws.tableView.header endRefreshing];
+        [ws.tableView.mj_header endRefreshing];
 
     }];
 }
 
 - (void)getMoreDataSource {
     WS(ws);
-    [ws.tableView.header endRefreshing];
+    [ws.tableView.mj_header endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     _currentPage++;
     [param setObject:@(_currentPage) forKey:@"page"];
@@ -134,7 +154,7 @@
             ws.canRefreshFooter = YES;
         }
         [ws.tableView reloadData];
-        [ws.tableView.footer endRefreshing];
+        [ws.tableView.mj_footer endRefreshing];
     }];
 }
 

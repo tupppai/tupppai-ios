@@ -16,5 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *rightImageView;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 @property (weak, nonatomic) IBOutlet UIView *bangView;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView_multiAskSign;
 - (void)injectSource:(PIEPageVM*)vm;
 @end

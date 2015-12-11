@@ -17,6 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"关于我们";
     self.webView = [[UIWebView alloc]initWithFrame:self.view.bounds];
     self.view = self.webView;
     self.webView.scalesPageToFit = YES;

@@ -11,12 +11,13 @@
 #import "PIESearchManager.h"
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "PIESearchUserCollectionViewCell.h"
+#import "PIESearchUserSimpleCollectionCell.h"
+
 #import "PIESearchContentCollectionViewCell.h"
 #import "PIEFriendViewController.h"
 #import "PIECarouselViewController.h"
 #import "PIEUserViewModel.h"
-
-@interface PIESearchViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout>
+@interface PIESearchViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (weak, nonatomic) IBOutlet HMSegmentedControl *segmentedControl;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIView *verticalLine;
@@ -29,14 +30,31 @@
 @property (nonatomic, strong) NSMutableArray* sourceUser;
 @property (nonatomic, strong) NSMutableArray* sourceContent;
 @property (nonatomic, strong) CHTCollectionViewWaterfallLayout *layout;
+@property (nonatomic, assign) NSInteger lastIndex;
+@property (nonatomic, strong) NSString *lastSearchKeyword;
+
+//has to set isFirstLoading to be Yes in first place before call network requst, use notFirstLoading instead to avoid this;
+
+@property (nonatomic, assign) BOOL notFirstLoading;
+@property (nonatomic, assign) BOOL notFirstShowKeyboard;
 
 @end
 
 @implementation PIESearchViewController
 
+-(BOOL)hidesBottomBarWhenPushed {
+    return YES;
+}
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (!_notFirstShowKeyboard) {
+        [_textField2 becomeFirstResponder];
+        _notFirstShowKeyboard = YES;
+    }
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.edgesForExtendedLayout = UIRectEdgeNone;    
     _sourceUser = [NSMutableArray new];
     _sourceContent = [NSMutableArray new];
 //    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
@@ -60,18 +78,29 @@
     [_segmentedControl setIndexChangeBlock:^(NSInteger index) {
         if (index == 0) {
             self.layout.columnCount = 1;
+            self.layout.minimumInteritemSpacing = 1;
+            self.layout.minimumColumnSpacing = 0;
+            _layout.sectionInset = UIEdgeInsetsMake(10, 0, 0, 0);
+
+//            [_sourceUser removeAllObjects];
+//            [_sourceContent removeAllObjects];
             [_collectionView reloadData];
-            [_sourceUser removeAllObjects];
-            [_sourceContent removeAllObjects];
+            [self searchRemoteWithText:_textField2.text];
         }
         else {
             self.layout.columnCount = 2;
+            self.layout.minimumInteritemSpacing = 10;
+            self.layout.minimumColumnSpacing = 10;
+            _layout.sectionInset = UIEdgeInsetsMake(10, 6, 0, 6);
+
+//            [_sourceUser removeAllObjects];
+//            [_sourceContent removeAllObjects];
             [_collectionView reloadData];
-            [_sourceUser removeAllObjects];
-            [_sourceContent removeAllObjects];
+            [self searchRemoteWithText:_textField2.text];
+
+
         }
     }];
-    
     
 
     
@@ -79,9 +108,13 @@
     [_collectionView registerNib:nib forCellWithReuseIdentifier:@"PIESearchUserCollectionViewCell"];
     UINib* nib2 = [UINib nibWithNibName:@"PIESearchContentCollectionViewCell" bundle:nil];
     [_collectionView registerNib:nib2 forCellWithReuseIdentifier:@"PIESearchContentCollectionViewCell"];
+    UINib* nib3 = [UINib nibWithNibName:@"PIESearchUserSimpleCollectionCell" bundle:nil];
+    [_collectionView registerNib:nib3 forCellWithReuseIdentifier:@"PIESearchUserSimpleCollectionCell"];
     
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
+    _collectionView.emptyDataSetDelegate = self;
+    _collectionView.emptyDataSetSource = self;
     _collectionView.collectionViewLayout = self.layout;
     _collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     _collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
@@ -107,13 +140,14 @@
                     action:@selector(textFieldDidChange:)
           forControlEvents:UIControlEventEditingChanged];
     
-    [_textField2 becomeFirstResponder];
     
 }
 
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+        [self.navigationController.navigationBar setBackgroundImage:nil
+                                                      forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithHex:0xfff119];
 }
 - (void) tapSearch {
@@ -128,7 +162,10 @@
 }
 
 - (void)tapOnCollectionView:(UITapGestureRecognizer*)gesture {
-    [_textField2 resignFirstResponder];
+    if ([_textField2 isFirstResponder]) {
+        [_textField2 resignFirstResponder];
+        return;
+    }
 
     if (_segmentedControl.selectedSegmentIndex == 1) {
         CGPoint location = [gesture locationInView:self.collectionView];
@@ -177,52 +214,58 @@
     }
 }
 
-- (void)follow:(NSInteger)uid {
-}
+
 
 -(CHTCollectionViewWaterfallLayout *)layout {
     if (!_layout) {
         _layout = [[CHTCollectionViewWaterfallLayout alloc] init];
-        _layout.sectionInset = UIEdgeInsetsMake(10, 6, 0, 6);
         _layout.columnCount = 1;
+        _layout.minimumInteritemSpacing = 1;
+        _layout.minimumColumnSpacing = 0;
+        _layout.sectionInset = UIEdgeInsetsMake(10, 0, 0, 0);
+
     }
     return _layout;
 }
 
 - (void)textFieldDidChange:(UITextField*)sender {
-    [self searchRemoteWithText:sender.text];
+    
+    if ([_lastSearchKeyword isEqualToString: sender.text ] && _lastIndex == self.segmentedControl.selectedSegmentIndex ) {
+    } else {
+        [self searchRemoteWithText:sender.text];
+        _lastSearchKeyword = sender.text;
+        _lastIndex = self.segmentedControl.selectedSegmentIndex;
+    }
 }
+
 - (void)searchRemoteWithText:(NSString*)string {
     [_sourceUser removeAllObjects];
     [_sourceContent removeAllObjects];
-    
-    NSMutableDictionary* param = [NSMutableDictionary new];
-    if (_segmentedControl.selectedSegmentIndex == 0) {
-        [param setObject:string forKey:@"name"];
-        [PIESearchManager getSearchUserResult:param withBlock:^(NSMutableArray *retArray) {
-            _sourceUser = retArray;
-            [_collectionView reloadData];
-        }];
-    } else {
-        [param setObject:string forKey:@"desc"];
-        [PIESearchManager getSearchContentResult:param withBlock:^(NSMutableArray *retArray) {
-            _sourceContent = retArray;
-            [_collectionView reloadData];
-        }];
+    if (![string isEqualToString:@""]) {
+        NSMutableDictionary* param = [NSMutableDictionary new];
+        if (_segmentedControl.selectedSegmentIndex == 0) {
+            [param setObject:string forKey:@"name"];
+            [PIESearchManager getSearchUserResult:param withBlock:^(NSMutableArray *retArray) {
+                _notFirstLoading = YES;
+                _sourceUser = retArray;
+                [_collectionView reloadData];
+            }];
+        } else {
+            _notFirstLoading = YES;
+            [param setObject:string forKey:@"desc"];
+            [PIESearchManager getSearchContentResult:param withBlock:^(NSMutableArray *retArray) {
+                _sourceContent = retArray;
+                [_collectionView reloadData];
+            }];
+        }
     }
-    
+
 }
 - (void)dismiss {
     [self dismissViewControllerAnimated:NO completion:nil];
 }
 
--(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    NSLog(@"shouldChangeCharactersInRange%@",string);
-    return YES;
-}
--(void)textFieldDidEndEditing:(UITextField *)textField {
-    NSLog(@"textField %@",textField.text);
-}
+
 
 
 #pragma mark - UICollectionViewDataSource
@@ -236,12 +279,23 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
     if (_segmentedControl.selectedSegmentIndex == 0) {
-        PIESearchUserCollectionViewCell *cell =
-        (PIESearchUserCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PIESearchUserCollectionViewCell"
-                                                                               forIndexPath:indexPath];
-        [cell injectSauce:[_sourceUser objectAtIndex:indexPath.row]];
-        return cell;
+        PIEUserViewModel* vm = [_sourceUser objectAtIndex:indexPath.row];
+        if (vm.replies.count<=0) {
+            PIESearchUserSimpleCollectionCell *cell =
+            (PIESearchUserSimpleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PIESearchUserSimpleCollectionCell"
+                                                                                         forIndexPath:indexPath];
+            [cell injectSauce:[_sourceUser objectAtIndex:indexPath.row]];
+            return cell;
+        } else {
+            PIESearchUserCollectionViewCell *cell =
+            (PIESearchUserCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PIESearchUserCollectionViewCell"
+                                                                                         forIndexPath:indexPath];
+            [cell injectSauce:[_sourceUser objectAtIndex:indexPath.row]];
+            return cell;
+        }
+
     } else {
         PIESearchContentCollectionViewCell *cell =
         (PIESearchContentCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PIESearchContentCollectionViewCell"
@@ -271,7 +325,7 @@
                 return CGSizeMake(SCREEN_WIDTH, 150);
             }
             else {
-                return CGSizeMake(SCREEN_WIDTH, 70);
+                return CGSizeMake(SCREEN_WIDTH, 65);
             }
         } else {
             return CGSizeZero;
@@ -286,6 +340,32 @@
         height = MIN(height, SCREEN_HEIGHT/1.5);
         return CGSizeMake(width, height);
     }
+}
+
+#pragma mark - DZNEmptyDataSetSource & delegate
+-(UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"pie_empty"];
+}
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text = @"我们的频道很快出版咯，敬请期待～";
+
+    if (_notFirstLoading) {
+        text = @"未搜索到用户或内容";
+    }
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+-(BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
+    return YES;
+}
+
+-(CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    return -100;
 }
 
 @end

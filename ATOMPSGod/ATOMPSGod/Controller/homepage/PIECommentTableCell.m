@@ -16,7 +16,7 @@
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.backgroundColor = [UIColor whiteColor];
-        self.separatorInset = UIEdgeInsetsMake(0, kMessageTableViewCellAvatarHeight+kPadding15+5, 0, 0);
+//        self.separatorInset = UIEdgeInsetsMake(0, kMessageTableViewCellAvatarHeight+kPadding15+5, 0, 0);
         [self configureSubviews];
     }
     return self;
@@ -103,7 +103,7 @@
         _commentLabel = [UILabel new];
 //        _commentLabel.backgroundColor = [UIColor clearColor];
         _commentLabel.numberOfLines = 0;
-        _commentLabel.font = [UIFont systemFontOfSize:16.0];
+        _commentLabel.font = [UIFont systemFontOfSize:14.0];
         _commentLabel.textColor = [UIColor darkGrayColor];
     }
     return _commentLabel;

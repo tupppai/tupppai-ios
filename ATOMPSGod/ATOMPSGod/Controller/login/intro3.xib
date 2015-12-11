@@ -17,11 +17,11 @@
                     <animations/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="intro3.png" translatesAutoresizingMaskIntoConstraints="NO" id="UqQ-Xd-JEp">
-                    <rect key="frame" x="81" y="192" width="438" height="408"/>
+                    <rect key="frame" x="93" y="192" width="414" height="408"/>
                     <animations/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="intro3_title" translatesAutoresizingMaskIntoConstraints="NO" id="A57-Qy-6XK">
-                    <rect key="frame" x="196.5" y="85" width="207" height="21"/>
+                    <rect key="frame" x="196" y="85" width="207" height="21"/>
                     <animations/>
                 </imageView>
             </subviews>
@@ -37,6 +37,11 @@
                 <constraint firstItem="A57-Qy-6XK" firstAttribute="top" secondItem="BTQ-RU-Pjc" secondAttribute="top" constant="85" id="wG1-0b-xOC"/>
                 <constraint firstItem="UqQ-Xd-JEp" firstAttribute="centerX" secondItem="BTQ-RU-Pjc" secondAttribute="centerX" id="wLE-Nf-jkA"/>
             </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="5FB-24-3vK"/>
+                </mask>
+            </variation>
         </view>
     </objects>
     <resources>

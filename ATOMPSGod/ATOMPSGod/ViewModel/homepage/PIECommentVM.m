@@ -16,23 +16,23 @@
     self = [super init];
     if (self) {
         _likeNumber = @"0";
-        _username = @"visitor";
-        _liked = NO;
+        _username   = @"-";
+        _liked      = NO;
         _replyArray = [NSMutableArray array];
     }
     return self;
 }
 
 - (void)setViewModelData:(PIECommentEntity *)comment {
-    _originText = comment.content;
-    _uid = comment.uid;
-    _username = comment.nickname;
-    _ID = comment.cid;
-    _likeNumber = [NSString stringWithFormat:@"%zd", comment.likeNumber];
-    _avatar = comment.avatar;
-    
+    _originText  = comment.content;
+    _uid         = comment.uid;
+    _username    = comment.nickname;
+    _ID          = comment.cid;
+    _avatar      = comment.avatar;
+    _likeNumber  = [NSString stringWithFormat:@"%zd", comment.likeNumber];
+
     NSDate* date = [NSDate dateWithTimeIntervalSince1970:comment.commentTime];
-    _time = [Util formatPublishTime:date];
+    _time        = [Util formatPublishTime:date];
     
     if (comment.atCommentArray && comment.atCommentArray.count > 0) {
         NSString *content = comment.content;
@@ -53,37 +53,10 @@
     _liked = comment.liked;
 }
 
-- (void)setDataWithAtModel:(PIECommentVM *)viewModel andContent:(NSString *)text{
-    _originText = viewModel.originText;
-    _replyArray = viewModel.replyArray;
-    _uid = [DDUserManager currentUser].uid;
-    _username = [DDUserManager currentUser].username;
-    _likeNumber = @"0";
-    _avatar = [DDUserManager currentUser].avatar;
-    if (viewModel) {
-        _text = [NSString stringWithFormat:@"%@//@%@:%@", text, viewModel.username, viewModel.text];
-    } else {
-        _text = text;
-    }
-}
 
 
-- (void)toggleLike {
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    NSInteger status = _liked? 0:1;
-    NSInteger one = _liked? -1:1;
-    _liked = !_liked;
-    [param setValue:@(status) forKey:@"status"];
-    
-    PIECommentManager * showCommentDetail = [PIECommentManager new];
-    [showCommentDetail toggleLike:param withID:self.ID withBlock:^(NSError *error) {
-        if (!error) {
-            NSInteger number = [_likeNumber integerValue]+one;
-            [self setLikeNumber:[NSString stringWithFormat:@"%ld",(long)number]];
-        }
-    }];
-    
-}
+
+
 
 
 

@@ -17,9 +17,9 @@
 }
 
 - (void)setupNav {
-    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
-        self.edgesForExtendedLayout = UIRectEdgeNone;
-    }
+//    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
+//        self.edgesForExtendedLayout = UIRectEdgeNone;
+//    }
     UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
     backButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [backButton setImage:[UIImage imageNamed:@"PIE_icon_back"] forState:UIControlStateNormal];
@@ -36,7 +36,7 @@
 }
 
 -(void) errorOccuredRET {
-    [Hud text:@"出现未知错误" inView:self.view];
+    [Hud text:@"网路好像有点问题～" inView:self.view];
 }
 -(void) showInfoRET:(NSNotification *)notification {
     NSString* info = [[notification userInfo] valueForKey:@"info"];

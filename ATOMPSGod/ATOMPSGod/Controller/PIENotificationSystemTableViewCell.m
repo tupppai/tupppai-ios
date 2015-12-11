@@ -14,7 +14,14 @@
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.separatorInset = UIEdgeInsetsMake(0, 45, 0, 10);
     _contentLabel.numberOfLines = 0;
-
+    
+    _nameLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:1.0];
+    _timeLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
+    _typeLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
+    
+    _nameLabel.font = [UIFont lightTupaiFontOfSize:13];
+    _timeLabel.font = [UIFont lightTupaiFontOfSize:10];
+    _typeLabel.font = [UIFont lightTupaiFontOfSize:13];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

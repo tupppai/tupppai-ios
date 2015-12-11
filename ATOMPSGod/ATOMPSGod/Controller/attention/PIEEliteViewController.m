@@ -9,17 +9,16 @@
 #import "PIEEliteViewController.h"
 #import "PIEEliteScrollView.h"
 #import "HMSegmentedControl.h"
-#import "UITableView+FDTemplateLayoutCell.h"
+//#import "UITableView+FDTemplateLayoutCell.h"
 #import "PIEEliteManager.h"
-#import "PIECarouselViewController.h"
 #import "PIEFriendViewController.h"
 #import "PIECommentViewController.h"
+#import "PIECommentViewController2.h"
+
 #import "DDCollectManager.h"
 #import "PIEReplyCollectionViewController.h"
-#import "JGActionSheet.h"
 #import "AppDelegate.h"
-#import "ATOMReportModel.h"
-
+//
 #import "PIEShareView.h"
 #import "PIEEliteFollowAskTableViewCell.h"
 #import "PIEEliteFollowReplyTableViewCell.h"
@@ -29,8 +28,8 @@
 #import "DDNavigationController.h"
 #import "PIEWebViewViewController.h"
 #import "PIEShareImageView.h"
-
-
+#import "PIECarouselViewController2.h"
+#import "PIEActionSheet_PS.h"
 
 @interface PIEEliteViewController ()<UITableViewDelegate,UITableViewDataSource,PWRefreshBaseTableViewDelegate,UIScrollViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource,SwipeViewDelegate,SwipeViewDataSource>
 @property (nonatomic, strong) PIEEliteScrollView *sv;
@@ -52,12 +51,9 @@
 @property (nonatomic, assign)  long long timeStamp_follow;
 @property (nonatomic, assign)  long long timeStamp_hot;
 
-
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 @property (nonatomic, strong) PIEPageVM *selectedVM;
-
-@property (nonatomic, strong)  JGActionSheet * psActionSheet;
-@property (nonatomic, strong)  JGActionSheet * reportActionSheet;
+@property (nonatomic, strong)  PIEActionSheet_PS * psActionSheet;
 @property (nonatomic, strong)  PIEShareView * shareView;
 
 @end
@@ -75,38 +71,53 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     [self configData];
     [self createNavBar];
     [self configSubviews];
+    
+    [self getSourceIfEmpty_hot:nil];
+    [self getSourceIfEmpty_banner];
 }
-
+-(PIEActionSheet_PS *)psActionSheet {
+    if (!_psActionSheet) {
+        _psActionSheet = [PIEActionSheet_PS new];
+    }
+    return _psActionSheet;
+}
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+//    self.navigationController.hidesBarsOnSwipe = YES;
+
     //update status of like button
     [self updateStatus];
+    //make it always visible when coming back to this vc from other vc.
+    [self.sv.swipeView reloadData];
     [MobClick beginLogPageView:@"进入首页"];
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+//    self.navigationController.hidesBarsOnSwipe = NO;
+
     [MobClick endLogPageView:@"离开首页"];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    if (_sv.type == PIEPageTypeEliteHot) {
-        [self getSourceIfEmpty_hot:nil];
-    } else {
-        [self getSourceIfEmpty_follow:nil];
+    if (!_isfirstLoadingHot) {
+        if (_sv.type == PIEPageTypeEliteHot) {
+            [self getSourceIfEmpty_hot:nil];
+        } else {
+            [self getSourceIfEmpty_follow:nil];
+        }
+        [self getSourceIfEmpty_banner];
     }
-    [self getSourceIfEmpty_banner];
 }
-
 - (void)updateStatus {
     if (_selectedIndexPath) {
         if (_sv.type == PIEPageTypeEliteFollow) {
-            [_sv.tableFollow reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [_sv.tableFollow reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
         } else if (_sv.type == PIEPageTypeEliteHot) {
-            [_sv.tableHot reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [_sv.tableHot reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
         }
     }
 }
@@ -133,6 +144,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 }
 - (void)configSubviews {
     self.view = self.sv;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     [self configTableViewFollow];
     [self configTableViewHot];
     [self setupGestures];
@@ -143,11 +155,12 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     _sv.tableFollow.psDelegate = self;
     _sv.tableFollow.emptyDataSetSource = self;
     _sv.tableFollow.emptyDataSetDelegate = self;
+    _sv.tableFollow.estimatedRowHeight = SCREEN_WIDTH+155;
+    _sv.tableFollow.rowHeight = UITableViewAutomaticDimension;
     UINib* nib2 = [UINib nibWithNibName:askIndentifier bundle:nil];
     [_sv.tableFollow registerNib:nib2 forCellReuseIdentifier:askIndentifier];
     UINib* nib3 = [UINib nibWithNibName:replyIndentifier bundle:nil];
     [_sv.tableFollow registerNib:nib3 forCellReuseIdentifier:replyIndentifier];
-
 }
 - (void)configTableViewHot {
     
@@ -156,25 +169,24 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     _sv.tableHot.psDelegate = self;
     _sv.tableHot.emptyDataSetDelegate = self;
     _sv.tableHot.emptyDataSetSource = self;
+    _sv.tableHot.estimatedRowHeight = SCREEN_WIDTH+225;
+    _sv.tableHot.rowHeight = UITableViewAutomaticDimension;
     UINib* nib = [UINib nibWithNibName:hotReplyIndentifier bundle:nil];
     [_sv.tableHot registerNib:nib forCellReuseIdentifier:hotReplyIndentifier];
     UINib* nib2 = [UINib nibWithNibName:hotAskIndentifier bundle:nil];
     [_sv.tableHot registerNib:nib2 forCellReuseIdentifier:hotAskIndentifier];
     _sv.swipeView.dataSource = self;
     _sv.swipeView.delegate = self;
-//    [_sv.pageControl_swipeView addTarget:self action:@selector(tapPageControl:) forControlEvents:UIControlEventValueChanged];
 
 }
 - (void)setupGestures {
     
     UITapGestureRecognizer* tapGestureFollow = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureFollow:)];
     [_sv.tableFollow addGestureRecognizer:tapGestureFollow];
-    
     UITapGestureRecognizer* tapGestureHot = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureHot:)];
     [_sv.tableHot addGestureRecognizer:tapGestureHot];
     UILongPressGestureRecognizer* longPressGestureHot = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnHot:)];
     [_sv.tableHot addGestureRecognizer:longPressGestureHot];
-    
     UILongPressGestureRecognizer* longPressGestureFollow = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnFollow:)];
     [_sv.tableFollow addGestureRecognizer:longPressGestureFollow];
     
@@ -182,47 +194,25 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
 
 - (void)createNavBar {
-    WS(ws);
-    _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"热门",@"关注"]];
-    _segmentedControl.frame = CGRectMake(0, 120, 200, 45);
-    _segmentedControl.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor colorWithHex:0x000000 andAlpha:0.6], NSForegroundColorAttributeName, nil];
-    _segmentedControl.selectedTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil];
-    _segmentedControl.selectionIndicatorHeight = 4.0f;
-    _segmentedControl.selectionIndicatorEdgeInsets = UIEdgeInsetsMake(0, 0, -1, 0);
-    _segmentedControl.selectionIndicatorColor = [UIColor yellowColor];
-    _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
-    _segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
-    _segmentedControl.backgroundColor = [UIColor clearColor];
-
-    [_segmentedControl setIndexChangeBlock:^(NSInteger index) {
-        if (index == 0) {
-            [ws.sv toggleWithType:PIEPageTypeEliteHot];
-            [ws getSourceIfEmpty_hot:nil];
-        }
-        else {
-            [ws.sv toggleWithType:PIEPageTypeEliteFollow];
-            [ws getSourceIfEmpty_follow:nil];
-        }
-    }];
-    self.navigationItem.titleView = _segmentedControl;
-    
+    self.navigationItem.titleView = self.segmentedControl;
     UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
     backButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [backButton setImage:[UIImage imageNamed:@"pie_search"] forState:UIControlStateNormal];
     UIBarButtonItem *barBackButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [backButton addTarget:self action:@selector(search) forControlEvents:UIControlEventTouchUpInside];
-    
     self.navigationItem.rightBarButtonItem = barBackButtonItem;
     
 }
+
+
 - (void) search {
     [self.navigationController pushViewController:[PIESearchViewController new] animated:YES];
 }
 - (void)refreshHeader {
-    if (_sv.type == PIEPageTypeEliteFollow && ![_sv.tableFollow.header isRefreshing]) {
-        [_sv.tableFollow.header beginRefreshing];
-    } else if (_sv.type == PIEPageTypeEliteHot && ![_sv.tableHot.header isRefreshing]) {
-        [_sv.tableHot.header beginRefreshing];
+    if (_sv.type == PIEPageTypeEliteFollow && !_sv.tableFollow.mj_header.isRefreshing) {
+        [_sv.tableFollow.mj_header beginRefreshing];
+    } else if (_sv.type == PIEPageTypeEliteHot && !_sv.tableHot.mj_header.isRefreshing) {
+        [_sv.tableHot.mj_header beginRefreshing];
     }
 }
 
@@ -259,7 +249,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     for (UIView *subView in view.subviews){
         if([subView isKindOfClass:[UIImageView class]]){
             UIImageView *imageView = (UIImageView *)subView;
-            [imageView setImageWithURL:[NSURL URLWithString:vm.imageUrl]placeholderImage:[UIImage imageNamed:@"cellBG"]];
+            [imageView setImageWithURL:[NSURL URLWithString:vm.imageUrl]placeholderImage:[UIImage imageNamed:@"cellHolder"]];
         }
     }
     ;
@@ -278,7 +268,6 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
 - (void)tapPageControl:(SMPageControl *)sender
 {
-//    NSLog(@"tapPageControl %zd",sender.currentPage);
     [self.sv.swipeView scrollToItemAtIndex:sender.currentPage duration:0.5];
 }
 
@@ -311,6 +300,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
         }
     } else if (tableView == _sv.tableHot) {
         PIEPageVM* vm = [_sourceHot objectAtIndex:indexPath.row];
+        
         if (vm.type == PIEPageTypeAsk) {
             PIEEliteHotAskTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:hotAskIndentifier];
             [cell injectSauce:vm];
@@ -327,39 +317,39 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
 #pragma mark - UITableViewDelegate
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableView == _sv.tableFollow) {
-        PIEPageVM* vm = [_sourceFollow objectAtIndex:indexPath.row];
-        if (vm.type == PIEPageTypeAsk) {
-            return [tableView fd_heightForCellWithIdentifier:askIndentifier  cacheByIndexPath:indexPath configuration:^(PIEEliteFollowAskTableViewCell *cell) {
-                [cell injectSauce:[_sourceFollow objectAtIndex:indexPath.row]];
-            }];
-
-        }
-        else {
-            return [tableView fd_heightForCellWithIdentifier:replyIndentifier  cacheByIndexPath:indexPath configuration:^(PIEEliteFollowReplyTableViewCell *cell) {
-                [cell injectSauce:[_sourceFollow objectAtIndex:indexPath.row]];
-            }];
-        }
-    } else if (tableView == _sv.tableHot) {
-        PIEPageVM* vm = [_sourceHot objectAtIndex:indexPath.row];
-        if (vm.type == PIEPageTypeAsk) {
-            return [tableView fd_heightForCellWithIdentifier:hotAskIndentifier  cacheByIndexPath:indexPath configuration:^(PIEEliteHotAskTableViewCell *cell) {
-                [cell injectSauce:[_sourceHot objectAtIndex:indexPath.row]];
-            }];
-            
-        }
-        else {
-            return [tableView fd_heightForCellWithIdentifier:hotReplyIndentifier  cacheByIndexPath:indexPath configuration:^(PIEEliteHotReplyTableViewCell *cell) {
-                [cell injectSauce:[_sourceHot objectAtIndex:indexPath.row]];
-            }];
-        }
-
-    } else {
-        return 0;
-    }
-}
-
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if (tableView == _sv.tableFollow) {
+//        PIEPageVM* vm = [_sourceFollow objectAtIndex:indexPath.row];
+//        if (vm.type == PIEPageTypeAsk) {
+//            return [tableView fd_heightForCellWithIdentifier:askIndentifier  cacheByIndexPath:indexPath configuration:^(PIEEliteFollowAskTableViewCell *cell) {
+//                [cell injectSauce:[_sourceFollow objectAtIndex:indexPath.row]];
+//            }];
+//
+//        }
+//        else {
+//            return [tableView fd_heightForCellWithIdentifier:replyIndentifier  cacheByIndexPath:indexPath configuration:^(PIEEliteFollowReplyTableViewCell *cell) {
+//                [cell injectSauce:[_sourceFollow objectAtIndex:indexPath.row]];
+//            }];
+//        }
+//    } else if (tableView == _sv.tableHot) {
+//        PIEPageVM* vm = [_sourceHot objectAtIndex:indexPath.row];
+//        if (vm.type == PIEPageTypeAsk) {
+//            return [tableView fd_heightForCellWithIdentifier:hotAskIndentifier  cacheByIndexPath:indexPath configuration:^(PIEEliteHotAskTableViewCell *cell) {
+//                [cell injectSauce:[_sourceHot objectAtIndex:indexPath.row]];
+//            }];
+//            
+//        }
+//        else {
+//            return [tableView fd_heightForCellWithIdentifier:hotReplyIndentifier  cacheByIndexPath:indexPath configuration:^(PIEEliteHotReplyTableViewCell *cell) {
+//                [cell injectSauce:[_sourceHot objectAtIndex:indexPath.row]];
+//            }];
+//        }
+//
+//    } else {
+//        return 0;
+//    }
+//}
+//
 
 
 
@@ -454,31 +444,6 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 }
 
 
-- (void)help:(BOOL)shouldDownload {
-    NSMutableDictionary* param = [NSMutableDictionary new];
-    [param setObject:@(_selectedVM.ID) forKey:@"target"];
-    [param setObject:@"ask" forKey:@"type"];
-    
-    [DDService signProceeding:param withBlock:^(NSString *imageUrl) {
-        if (imageUrl != nil) {
-            if (shouldDownload) {
-                [DDService downloadImage:imageUrl withBlock:^(UIImage *image) {
-                    UIImageWriteToSavedPhotosAlbum(image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
-                }];
-            }
-            else {
-                [Hud customText:@"添加成功\n在“进行中”等你下载咯!" inView:[AppDelegate APP].window];
-            }
-        }
-    }];
-}
-- (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error
-  contextInfo: (void *) contextInfo {
-    if(error != NULL){
-    } else {
-        [Hud customText:@"下载成功\n我猜你会用美图秀秀来P?" inView:[AppDelegate APP].window];
-    }
-}
 #pragma mark - ATOMShareViewDelegate
 
 - (void)updateShareStatus {
@@ -517,7 +482,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     [DDShareManager copy:_selectedVM];
 }
 -(void)tapShare7 {
-    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
+    self.shareView.vm = _selectedVM;
 }
 -(void)tapShare8 {
     if (_sv.type == PIEPageTypeEliteHot) {
@@ -542,7 +507,6 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 }
 
 
-
 #pragma mark - getDataSource
 - (void)getRemoteSourceBanner {
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
@@ -557,12 +521,12 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 }
 - (void)getRemoteSourceFollow {
     WS(ws);
-    [ws.sv.tableFollow.footer endRefreshing];
+    [ws.sv.tableFollow.mj_footer endRefreshing];
     _currentIndex_follow = 1;
     _timeStamp_follow = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_timeStamp_follow) forKey:@"last_updated"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
     
@@ -580,18 +544,18 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                 [ws.sourceFollow addObjectsFromArray:sourceAgent];
             }
         }
-        [ws.sv.tableFollow.header endRefreshing];
+        [ws.sv.tableFollow.mj_header endRefreshing];
         [ws.sv.tableFollow reloadData];
     }];
 }
 
 - (void)getMoreRemoteSourceFollow {
     WS(ws);
-    [ws.sv.tableFollow.header endRefreshing];
+    [ws.sv.tableFollow.mj_header endRefreshing];
     _currentIndex_follow++;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_timeStamp_follow) forKey:@"last_updated"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(_currentIndex_follow) forKey:@"page"];
     [param setObject:@(15) forKey:@"size"];
     [PIEEliteManager getMyFollow:param withBlock:^(NSMutableArray *returnArray) {
@@ -607,7 +571,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
             [ws.sourceFollow addObjectsFromArray:sourceAgent];
         }
         [ws.sv.tableFollow reloadData];
-        [ws.sv.tableFollow.footer endRefreshing];
+        [ws.sv.tableFollow.mj_footer endRefreshing];
     }];
 }
 
@@ -619,25 +583,25 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
 - (void)getSourceIfEmpty_hot:(void (^)(BOOL finished))block {
     if (_isfirstLoadingHot || _sourceHot.count <= 0) {
-        [_sv.tableFollow.header endRefreshing];
-        [_sv.tableHot.header beginRefreshing];
+        [_sv.tableFollow.mj_header endRefreshing];
+        [_sv.tableHot.mj_header beginRefreshing];
     }
 }
 - (void)getSourceIfEmpty_follow:(void (^)(BOOL finished))block {
     if (_isfirstLoadingFollow || _sourceFollow.count <= 0) {
-        [_sv.tableHot.header endRefreshing];
-        [_sv.tableFollow.header beginRefreshing];
+        [_sv.tableHot.mj_header endRefreshing];
+        [_sv.tableFollow.mj_header beginRefreshing];
     }
 }
 
 - (void)getRemoteSourceHot:(void (^)(BOOL finished))block {
     WS(ws);
-    [ws.sv.tableHot.footer endRefreshing];
+    [ws.sv.tableHot.mj_footer endRefreshing];
     _currentIndex_hot = 1;
     _timeStamp_hot = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_timeStamp_hot) forKey:@"last_updated"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(8) forKey:@"size"];
     
@@ -651,7 +615,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
             [ws.sourceHot addObjectsFromArray:returnArray];
         }
         [ws.sv.tableHot reloadData];
-        [ws.sv.tableHot.header endRefreshing];
+        [ws.sv.tableHot.mj_header endRefreshing];
         if (block) {
             block(YES);
         }
@@ -659,11 +623,11 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 }
 - (void)getMoreRemoteSourceHot {
     WS(ws);
-    [ws.sv.tableHot.header endRefreshing];
+    [ws.sv.tableHot.mj_header endRefreshing];
     _currentIndex_hot ++;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_timeStamp_hot) forKey:@"last_updated"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(_currentIndex_hot) forKey:@"page"];
     [param setObject:@(15) forKey:@"size"];
     
@@ -675,7 +639,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
             [ws.sourceHot addObjectsFromArray:returnArray];
         }
         [ws.sv.tableHot reloadData];
-        [ws.sv.tableHot.footer endRefreshing];
+        [ws.sv.tableHot.mj_footer endRefreshing];
     }];
 }
 
@@ -691,13 +655,13 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
         if (_canRefreshFooterFollow) {
             [self getMoreRemoteSourceFollow];
         } else {
-            [_sv.tableFollow.footer endRefreshing];
+            [_sv.tableFollow.mj_footer endRefreshingWithNoMoreData];
         }
     } else {
         if (_canRefreshFooterHot) {
             [self getMoreRemoteSourceHot];
         } else {
-            [_sv.tableHot.footer endRefreshing];
+            [_sv.tableHot.mj_footer endRefreshingWithNoMoreData];
         }
     }
 }
@@ -724,82 +688,9 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     }
     return _shareView;
 }
-- (JGActionSheet *)psActionSheet {
-    WS(ws);
-    if (!_psActionSheet) {
-        _psActionSheet = [JGActionSheet new];
-        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"下载图片帮P", @"添加至进行中",@"取消"] buttonStyle:JGActionSheetButtonStyleDefault];
-        [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:2];
-        NSArray *sections = @[section];
-        _psActionSheet = [JGActionSheet actionSheetWithSections:sections];
-        _psActionSheet.delegate = self;
-        [_psActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
-            [sheet dismissAnimated:YES];
-        }];
-        [_psActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
-            switch (indexPath.row) {
-                case 0:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    [ws help:YES];
-                    break;
-                case 1:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    [ws help:NO];
-                    break;
-                case 2:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    break;
-                default:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    break;
-            }
-        }];
-    }
-    return _psActionSheet;
-}
-- (JGActionSheet *)reportActionSheet {
-    WS(ws);
-    if (!_reportActionSheet) {
-        _reportActionSheet = [JGActionSheet new];
-        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"色情、淫秽或低俗内容", @"广告或垃圾信息",@"违反法律法规的内容"] buttonStyle:JGActionSheetButtonStyleDefault];
-        NSArray *sections = @[section];
-        _reportActionSheet = [JGActionSheet actionSheetWithSections:sections];
-        _reportActionSheet.delegate = self;
-        [_reportActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
-            [sheet dismissAnimated:YES];
-        }];
-        [_reportActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
-            NSMutableDictionary* param = [NSMutableDictionary new];
-            [param setObject:@(ws.selectedVM.ID) forKey:@"target_id"];
-            [param setObject:@(PIEPageTypeAsk) forKey:@"target_type"];
-            UIButton* b = section.buttons[indexPath.row];
-            switch (indexPath.row) {
-                case 0:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                case 1:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                case 2:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                default:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    break;
-            }
-            [ATOMReportModel report:param withBlock:^(NSError *error) {
-                if(!error) {
-                    [Util ShowTSMessageSuccess:@"已举报"];
-                }
-                
-            }];
-        }];
-    }
-    return _reportActionSheet;
-}
+
+
+
 
 #pragma mark - DZNEmptyDataSetSource & delegate
 -(UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
@@ -829,6 +720,9 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 }
 -(BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
     return YES;
+}
+-(CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    return 100;
 }
 #pragma mark - Gesture Event
 
@@ -875,10 +769,10 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                 CGPoint p = [gesture locationInView:cell];
                 if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                     //进入热门详情
-                    PIECarouselViewController* vc = [PIECarouselViewController new];
-                    _selectedVM.image = cell.theImageView.image;
+                    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+//                    _selectedVM.image = cell.theImageView.image;
                     vc.pageVM = _selectedVM;
-                    [self.navigationController pushViewController:vc animated:YES];
+                    [self presentViewController:vc animated:YES completion:nil];
                 }
                 //点击头像
                 else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
@@ -893,6 +787,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                     [self.navigationController pushViewController:friendVC animated:YES];
                 }
                 else if (CGRectContainsPoint(cell.bangView.frame, p)) {
+                    self.psActionSheet.vm = _selectedVM;
                     [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
                 }
                 else if (CGRectContainsPoint(cell.followView.frame, p)) {
@@ -935,10 +830,10 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                 //点击大图
                 else  if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                     //进入热门详情
-                    PIECarouselViewController* vc = [PIECarouselViewController new];
-                    _selectedVM.image = cell.theImageView.image;
+                    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+//                    _selectedVM.image = cell.theImageView.image;
                     vc.pageVM = _selectedVM;
-                    [self.navigationController pushViewController:vc animated:YES];
+                    [self presentViewController:vc animated:YES completion:nil];
                 }
                 //点击头像
                 else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
@@ -1026,10 +921,10 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                 //点击大图
                 if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                     //进入热门详情
-                    PIECarouselViewController* vc = [PIECarouselViewController new];
-                    _selectedVM.image = cell.theImageView.image;
+                    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+//                    _selectedVM.image = cell.theImageView.image;
                     vc.pageVM = _selectedVM;
-                    [self.navigationController pushViewController:vc animated:YES];
+                    [self presentViewController:vc animated:YES completion:nil];
                 }
                 //点击头像
                 else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
@@ -1044,6 +939,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                     [self.navigationController pushViewController:friendVC animated:YES];
                 }
                 else if (CGRectContainsPoint(cell.bangView.frame, p)) {
+                    self.psActionSheet.vm = _selectedVM;
                     [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
                 }
                 else if (CGRectContainsPoint(cell.followView.frame, p)) {
@@ -1053,7 +949,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                     [self showShareView];
                 }
                 
-                else if (CGRectContainsPoint(cell.commentView.frame, p)) {
+                else if ((CGRectContainsPoint(cell.commentView.frame, p))||(CGRectContainsPoint(cell.commentLabel1.frame, p))||(CGRectContainsPoint(cell.commentLabel2.frame, p)) ) {
                     PIECommentViewController* vc = [PIECommentViewController new];
                     vc.vm = _selectedVM;
                     vc.shouldShowHeaderView = NO;
@@ -1067,7 +963,6 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                 
             }
             
-            //关注  作品
             
             else {
                 PIEEliteHotReplyTableViewCell* cell = [_sv.tableHot cellForRowAtIndexPath:_selectedIndexPath];
@@ -1085,10 +980,11 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                 //点击大图
                 else  if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                     //进入热门详情
-                    PIECarouselViewController* vc = [PIECarouselViewController new];
-                    _selectedVM.image = cell.theImageView.image;
+                    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+                    
+//                    _selectedVM.image = cell.theImageView.image;
                     vc.pageVM = _selectedVM;
-                    [self.navigationController pushViewController:vc animated:YES];
+                    [self presentViewController:vc animated:YES completion:nil];
                 }
                 //点击头像
                 else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
@@ -1114,8 +1010,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                 else if (CGRectContainsPoint(cell.collectView.frame, p)) {
                     [self collect:cell.collectView shouldShowHud:NO];
                 }
-                else if (CGRectContainsPoint(cell.commentView.frame, p)) {
-                    PIECommentViewController* vc = [PIECommentViewController new];
+                else if ((CGRectContainsPoint(cell.commentView.frame, p))||(CGRectContainsPoint(cell.commentLabel1.frame, p))||(CGRectContainsPoint(cell.commentLabel2.frame, p)) ) {                    PIECommentViewController* vc = [PIECommentViewController new];
                     vc.vm = _selectedVM;
                     vc.shouldShowHeaderView = NO;
                     [self.navigationController pushViewController:vc animated:YES];
@@ -1130,6 +1025,33 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     }
 }
 
-
+-(HMSegmentedControl *)segmentedControl {
+    if (!_segmentedControl) {
+        WS(ws);
+        _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"热门",@"关注"]];
+        _segmentedControl.frame = CGRectMake(0, 120, 200, 45);
+        _segmentedControl.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor colorWithHex:0x000000 andAlpha:0.6], NSForegroundColorAttributeName, nil];
+        _segmentedControl.selectedTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil];
+        _segmentedControl.selectionIndicatorHeight = 4.0f;
+        _segmentedControl.selectionIndicatorEdgeInsets = UIEdgeInsetsMake(0, 0, -1, 0);
+        _segmentedControl.selectionIndicatorColor = [UIColor yellowColor];
+        _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+        _segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
+        _segmentedControl.backgroundColor = [UIColor clearColor];
+        
+        [_segmentedControl setIndexChangeBlock:^(NSInteger index) {
+            if (index == 0) {
+                [ws.sv toggleWithType:PIEPageTypeEliteHot];
+                [ws getSourceIfEmpty_hot:nil];
+            }
+            else {
+                [ws.sv toggleWithType:PIEPageTypeEliteFollow];
+                [ws getSourceIfEmpty_follow:nil];
+            }
+        }];
+        
+    }
+    return _segmentedControl;
+}
 
 @end

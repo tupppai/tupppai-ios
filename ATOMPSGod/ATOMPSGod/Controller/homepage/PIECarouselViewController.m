@@ -31,6 +31,8 @@
 @property (nonatomic, strong)  JGActionSheet * psActionSheet;
 @property (nonatomic, assign)  NSInteger askCount;
 @property (nonatomic, assign)  NSInteger replyCount;
+@property (weak, nonatomic) IBOutlet UIView *bottomContainerView;
+@property (weak, nonatomic) IBOutlet UIVisualEffectView *bottomDimmerView;
 
 @end
 
@@ -38,30 +40,57 @@
 -(BOOL)hidesBottomBarWhenPushed {
     return YES;
 }
--(void)awakeFromNib {
-    
-}
+
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationItem.titleView = self.segmentedControl;
+    _likeButton.selected = _currentVM.liked;
     [MobClick beginLogPageView:@"进入滚动详情页"];
+}
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.navigationController.navigationBar setBackgroundImage:nil
+                                                  forBarMetrics:UIBarMetricsDefault];
 
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"离开滚动详情页"];
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
+                                                  forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.navigationController.navigationBar.translucent = YES;
+    self.navigationController.view.backgroundColor = [UIColor clearColor];
+    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupBlurredImage];
     [self setupViews];
     [self setupData];
+//    self.edgesForExtendedLayout = UIRectEdgeNone;
+//    [self addDarkEffectOnBlurView];
     [self getDataSource];
 }
+
 -(void)setupData {
     _askCount = 0;
     _replyCount = 0;
+}
+
+- (void)addDarkEffectOnBlurView {
+    
+        UIView* viewLayer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        viewLayer.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2];
+    
+        UIView* viewLayer2 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        viewLayer2.backgroundColor = [UIColor colorWithHex:0xeeeeee andAlpha:0.1];
+    
+        [self.blurView insertSubview:viewLayer atIndex:0];
+        [self.blurView insertSubview:viewLayer2 atIndex:0];
+    
 }
 - (void)setupViews {
     self.view.backgroundColor = [UIColor blackColor];
@@ -72,7 +101,7 @@
     _carousel.pagingEnabled = YES;
     _carousel.bounces = YES;
     _carousel.bounceDistance = 0.21;
-    _avatarView.layer.cornerRadius = 20;
+    _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
     _avatarView.userInteractionEnabled = YES;
     _textView_content.scrollEnabled = YES;
@@ -83,6 +112,16 @@
     _usernameLabel.userInteractionEnabled = YES;
     UITapGestureRecognizer *tapG2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToSeeFriend)];
     [_usernameLabel addGestureRecognizer:tapG2];
+    
+    [_usernameLabel setFont:[UIFont lightTupaiFontOfSize:13]];
+    [_timeLabel setFont:[UIFont lightTupaiFontOfSize:10]];
+    [_usernameLabel setTextColor:[UIColor colorWithHex:0xffffff andAlpha:0.8]];
+    [_timeLabel setTextColor:[UIColor colorWithHex:0xffffff andAlpha:0.5]];
+    
+    UIBlurEffect* effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    _bottomDimmerView.effect = effect;
+    _bottomContainerView.backgroundColor = [UIColor clearColor];
+    
 }
 - (void)pushToSeeFriend {
     PIEFriendViewController * friendVC = [PIEFriendViewController new];
@@ -112,11 +151,11 @@
 
 }
 
-- (void)setupBlurredImage
+- (void)DownloadAndBlurImage
 {
-    [DDService downloadImage:_pageVM.imageURL withBlock:^(UIImage *image) {
+    [DDService downloadImage:_currentVM.imageURL withBlock:^(UIImage *image) {
         if (image) {
-            self.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+            self.blurView.image = [image blurredImageWithRadius:60 iterations:1 tintColor:[UIColor blackColor]];
         } else {
             
         }
@@ -137,7 +176,7 @@
 
         if (view == nil)
         {
-            CGFloat height = self.carousel.frame.size.height-20;
+            CGFloat height = self.carousel.frame.size.height-50;
             view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, height, height)];
             UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, height, height)];
             imageView.backgroundColor = [UIColor clearColor];
@@ -150,6 +189,7 @@
             if([subView isKindOfClass:[UIImageView class]]){
                 UIImageView *imageView = (UIImageView *)subView;
                 [imageView setImageWithURL:[NSURL URLWithString:vm.imageURL]];
+                break;
             }
         }
         return view;
@@ -276,22 +316,37 @@
 -(void)updateUIWithIndex:(NSInteger)index {
     if (_dataSource.count > index) {
         _currentVM = [_dataSource objectAtIndex:index];
-        [_avatarView setImageWithURL:[NSURL URLWithString:_currentVM.avatarURL] placeholderImage:[UIImage new]];
+        
+        [_avatarView setImageWithURL:[NSURL URLWithString:_currentVM.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+ 
         _usernameLabel.text = _currentVM.username;
         _timeLabel.text = _currentVM.publishTime;
         
+        UIView* currentItemView = _carousel.currentItemView;
+        
+        for (UIView *subView in currentItemView.subviews) {
+            if([subView isKindOfClass:[UIImageView class]]){
+                UIImageView *imageView = (UIImageView *)subView;
+                if (imageView.image) {
+                    self.blurView.image = [imageView.image blurredImageWithRadius:60 iterations:1 tintColor:[UIColor blackColor]];
+                } else {
+                    [self DownloadAndBlurImage];
+                }
+                
+                break;
+            }
+        }
+
         NSString * htmlString = _currentVM.content;
         NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
         
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init] ;
         [paragraphStyle setAlignment:NSTextAlignmentCenter];
         [attrStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, attrStr.length)];
-        [attrStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSMakeRange(0, attrStr.length)];
-        [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0xffffff andAlpha:1.0] range:NSMakeRange(0, attrStr.length)];
+        [attrStr addAttribute:NSFontAttributeName value:[UIFont lightTupaiFontOfSize:15] range:NSMakeRange(0, attrStr.length)];
+        [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0xffffff andAlpha:0.95] range:NSMakeRange(0, attrStr.length)];
 
         _textView_content.attributedText = attrStr;
-
-        
         
         _likeButton.selected = _currentVM.liked;
         if (_currentVM.type == PIEPageTypeAsk) {
@@ -332,9 +387,7 @@
             [self.dataSource removeAllObjects];
             [self.dataSource addObjectsFromArray:askArray];
             [self.dataSource addObjectsFromArray: replyArray];
-            [self updateUIWithIndex:0];
             [self initSegmentTitles];
-            [_carousel reloadData];
             [self reorderSourceAndScroll];
         
     }];
@@ -342,25 +395,40 @@
 
 - (void)reorderSourceAndScroll {
 //初始化，把传进来的vm重组，放在原图的下一位，被滚动到此位置。
+    BOOL shouldScroll = NO;
     for (int i =0; i < _dataSource.count; i++) {
         PIEPageVM* vm = [_dataSource objectAtIndex:i];
         //找出与传进来的pageVM匹配的vm
         if (vm.ID == _pageVM.ID && vm.type == _pageVM.type && _pageVM.type == PIEPageTypeReply) {
             if (_dataSource.count >= 2) {
+                shouldScroll = YES;
                 PIEPageVM* vmToCheck = [_dataSource objectAtIndex:1];
                 [_dataSource removeObjectAtIndex:i];
                 if (vmToCheck.type == PIEPageTypeAsk) {
                     [_dataSource insertObject:vm atIndex:2];
+                    [_carousel reloadData];
                     [_carousel scrollToItemAtIndex:2 duration:0];
                 }
                 else {
                     [_dataSource insertObject:vm atIndex:1];
+                    [_carousel reloadData];
                     [_carousel scrollToItemAtIndex:1 duration:0];
                 }
+                break;
             }
             //must animate scroll carousel in order to scroll segment.
         }
+//        else {
+////            [self updateUIWithIndex:0];
+//            [_carousel.delegate carouselCurrentItemIndexDidChange:_carousel];
+//        }
     }
+    if (!shouldScroll) {
+        [_carousel reloadData];
+        [self updateUIWithIndex:0];
+    }
+    
+
 
 }
 - (void)initSegmentTitles {

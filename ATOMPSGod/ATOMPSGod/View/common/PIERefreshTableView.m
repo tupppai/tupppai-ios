@@ -13,8 +13,6 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [self addGifHeaderWithRefreshingTarget:self refreshingAction:@selector(loadNewHotData)];
-        [self addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreHotData)];
         NSMutableArray *animatedImages = [NSMutableArray array];
         for (int i = 1; i<=6; i++) {
             UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"pie_loading_%d", i]];
@@ -25,26 +23,32 @@
             UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"pie_loading%d", i]];
             [idleImages addObject:image];
         }
-        [self.gifHeader setImages:idleImages forState:MJRefreshHeaderStateIdle];
-        [self.gifHeader setImages:animatedImages forState:MJRefreshHeaderStateRefreshing];
-        self.header.updatedTimeHidden = YES;
-        self.header.stateHidden = YES;
-        self.gifFooter.refreshingImages = animatedImages;
-        self.footer.stateHidden = YES;
+        
+        MJRefreshGifHeader *header = [MJRefreshGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewHotData)];
+        header.automaticallyChangeAlpha = YES;
+        // 设置普通状态的动画图片
+        [header setImages:idleImages forState:MJRefreshStateIdle];
+        // 设置即将刷新状态的动画图片（一松开就会刷新的状态）
+        [header setImages:animatedImages forState:MJRefreshStatePulling];
+        // 设置正在刷新状态的动画图片
+        [header setImages:animatedImages forState:MJRefreshStateRefreshing];
+        // 设置header
+        header.lastUpdatedTimeLabel.hidden = YES;
+        header.stateLabel.hidden = YES;
+        self.mj_header = header;
+        
+        MJRefreshAutoGifFooter *footer = [MJRefreshAutoGifFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreHotData)];
+        footer.refreshingTitleHidden = YES;
+        footer.stateLabel.hidden = YES;
+        [footer setImages:animatedImages duration:0.5 forState:MJRefreshStateRefreshing];
+        self.mj_footer = footer;
+        
         self.tableFooterView = [UIView new];
     }
     return self;
 }
 
-//#pragma mark lazy initilize
-//- (ATOMNoDataView *)noDataView {
-//    if (!_noDataView) {
-//        _noDataView = [ATOMNoDataView new];
-//        [self addSubview:_noDataView];
-//        _noDataView.frame = CGRectMake(CGRectGetMidX(self.bounds)-self.bounds.size.width/4, CGRectGetMidY(self.bounds)-self.bounds.size.height/4, self.bounds.size.width/2, self.bounds.size.height/2);
-//    }
-//    return _noDataView;
-//}
+
 -(void) loadNewHotData {
     if (_psDelegate && [_psDelegate respondsToSelector:@selector(didPullRefreshDown:)]) {
         [_psDelegate didPullRefreshDown:self];
@@ -54,21 +58,6 @@
     if (_psDelegate && [_psDelegate respondsToSelector:@selector(didPullRefreshUp:)]) {
         [_psDelegate didPullRefreshUp:self];
     }}
-
-//-(void)reloadData {
-//    [super reloadData];
-//    if (self.noDataView.canShow) {
-//        if (self) {
-//            for (int i = 0; i < [self numberOfSections]; i++) {
-//                if ([self numberOfRowsInSection:i] > 0) {
-//                    self.noDataView.hidden = true;
-//                    break;
-//                }
-//                self.noDataView.hidden = false;
-//            }
-//        }
-//    }
-//}
 
 
 @end

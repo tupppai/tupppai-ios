@@ -8,7 +8,10 @@
 
 #import "PIERefreshCollectionView.h"
 
+
 @implementation PIERefreshCollectionView
+
+@dynamic delegate;
 
 -(instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -26,22 +29,26 @@
 }
 -(void)setToRefreshBottom:(BOOL)toRefreshBottom {
     if (toRefreshBottom) {
-        [self addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreHotData)];
         NSMutableArray *animatedImages = [NSMutableArray array];
         for (int i = 1; i<=6; i++) {
             UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"pie_loading_%d", i]];
             [animatedImages addObject:image];
         }
-        self.gifFooter.refreshingImages = animatedImages;
-        self.footer.stateHidden = YES;
+        
+        MJRefreshAutoGifFooter *footer = [MJRefreshAutoGifFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreHotData)];
+        footer.refreshingTitleHidden = YES;
+        footer.stateLabel.hidden = YES;
+        [footer setImages:animatedImages duration:0.5 forState:MJRefreshStateRefreshing];
+        self.mj_footer = footer;
     } else {
-        [self.gifFooter removeFromSuperview];
+        [self.mj_footer removeFromSuperview];
     }
 
 }
 - (void)setToRefreshTop:(BOOL)toRefreshTop {
     if (toRefreshTop) {
-        [self addGifHeaderWithRefreshingTarget:self refreshingAction:@selector(loadNewHotData)];
+        
+        
         NSMutableArray *animatedImages = [NSMutableArray array];
         for (int i = 1; i<=6; i++) {
             UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"pie_loading_%d", i]];
@@ -52,12 +59,22 @@
             UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"pie_loading%d", i]];
             [idleImages addObject:image];
         }
-        [self.gifHeader setImages:idleImages forState:MJRefreshHeaderStateIdle];
-        [self.gifHeader setImages:animatedImages forState:MJRefreshHeaderStateRefreshing];
-        self.header.updatedTimeHidden = YES;
-        self.header.stateHidden = YES;
+        
+        MJRefreshGifHeader *header = [MJRefreshGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewHotData)];
+        // 设置普通状态的动画图片
+        [header setImages:idleImages forState:MJRefreshStateIdle];
+        // 设置即将刷新状态的动画图片（一松开就会刷新的状态）
+        [header setImages:animatedImages forState:MJRefreshStatePulling];
+        // 设置正在刷新状态的动画图片
+        [header setImages:animatedImages forState:MJRefreshStateRefreshing];
+        // 设置header
+        header.lastUpdatedTimeLabel.hidden = YES;
+        header.stateLabel.hidden = YES;
+        header.automaticallyChangeAlpha = YES;
+        self.mj_header = header;
+
     } else {
-        [self.gifHeader removeFromSuperview];
+        [self.mj_header removeFromSuperview];
     }
  
 }

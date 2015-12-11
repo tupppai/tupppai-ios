@@ -56,8 +56,6 @@
         make.height.equalTo(@40);
     }];
     
-
-    
     [_sendVerifyCodeButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(ws.verifyCodeTextField.mas_bottom).with.offset(10);
         make.left.equalTo(ws.verifyCodeTextField.mas_left);

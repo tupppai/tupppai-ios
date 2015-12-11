@@ -52,18 +52,25 @@
     self.title = @"我的粉丝";
 }
 - (void) setupViews {
-    _myFansView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
-    self.view = _myFansView;
-    _tableView = [[PIERefreshFooterTableView alloc] initWithFrame:_myFansView.bounds];
-    _tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    [_myFansView addSubview:_tableView];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.emptyDataSetSource = self;
-    _tableView.emptyDataSetDelegate = self;
-    _tableView.psDelegate = self;
-    _tapMyFansGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMyFansGesture:)];
-    [_tableView addGestureRecognizer:_tapMyFansGesture];
+    self.view = self.tableView;
+ 
+}
+-(PIERefreshFooterTableView *)tableView {
+    if (!_tableView) {
+        _tableView = [[PIERefreshFooterTableView alloc] initWithFrame:self.view.bounds];
+        _tableView.backgroundColor = [UIColor whiteColor];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        _tableView.emptyDataSetSource = self;
+        _tableView.emptyDataSetDelegate = self;
+        _tableView.psDelegate = self;
+        _tableView.separatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
+        _tableView.separatorInset = UIEdgeInsetsMake(0, 18, 0, 15);
+
+        _tapMyFansGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMyFansGesture:)];
+        [_tableView addGestureRecognizer:_tapMyFansGesture];
+    }
+    return _tableView;
 }
 - (void) initValues {
     _isfirstLoading = YES;
@@ -166,7 +173,7 @@
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [_tableView.footer endRefreshing];
+        [_tableView.mj_footer endRefreshing];
     }
 }
 
@@ -215,7 +222,7 @@
         } else {
             ws.canRefreshFooter = YES;
         }
-        [ws.tableView.footer endRefreshing];
+        [ws.tableView.mj_footer endRefreshing];
         [ws.tableView reloadData];
     }];
 }

@@ -52,7 +52,6 @@
                     
                     PIECommentVM *model = [PIECommentVM new];
                     [model setViewModelData:comment];
-                    //            [ws.commentsNew addObject:model];
                     
                     [recentCommentArray addObject:model];
                 }

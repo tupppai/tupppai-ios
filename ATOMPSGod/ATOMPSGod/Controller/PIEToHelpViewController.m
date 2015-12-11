@@ -16,7 +16,7 @@
 #import "PIECarouselViewController.h"
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
-#import "UITableView+FDTemplateLayoutCell.h"
+//#import "UITableView+FDTemplateLayoutCell.h"
 @interface PIEToHelpViewController () <UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,QBImagePickerControllerDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (nonatomic, strong) NSMutableArray *sourceToHelp;
 @property (nonatomic, assign) NSInteger currentIndex_ToHelp;
@@ -40,12 +40,16 @@
     _sourceToHelp = [NSMutableArray new];
     
     _toHelpTableView = [[PIERefreshTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
-    _toHelpTableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    _toHelpTableView.backgroundColor = [UIColor whiteColor];
     _toHelpTableView.dataSource = self;
     _toHelpTableView.delegate = self;
     _toHelpTableView.emptyDataSetDelegate = self;
     _toHelpTableView.emptyDataSetSource = self;
     _toHelpTableView.psDelegate = self;
+    _toHelpTableView.separatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
+    _toHelpTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    _toHelpTableView.estimatedRowHeight = 100;
+    _toHelpTableView.rowHeight = UITableViewAutomaticDimension;
     self.view = _toHelpTableView;
     UINib* nib = [UINib nibWithNibName:@"PIEToHelpTableViewCell2" bundle:nil];
     [_toHelpTableView registerNib:nib forCellReuseIdentifier:@"PIEToHelpTableViewCell2"];
@@ -104,7 +108,7 @@
 
 - (void)getRemoteSourceToHelp {
     WS(ws);
-    [_toHelpTableView.footer endRefreshing];
+    [_toHelpTableView.mj_footer endRefreshing];
     _currentIndex_ToHelp = 1;
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -128,14 +132,14 @@
             [ws.sourceToHelp addObjectsFromArray:sourceAgent];
         }
         [ws.toHelpTableView reloadData];
-        [ws.toHelpTableView.header endRefreshing];
+        [ws.toHelpTableView.mj_header endRefreshing];
     }];
 }
 
 - (void)getMoreRemoteSourceToHelp {
     WS(ws);
     _currentIndex_ToHelp ++;
-    [_toHelpTableView.header endRefreshing];
+    [_toHelpTableView.mj_header endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(_currentIndex_ToHelp) forKey:@"page"];
@@ -155,7 +159,7 @@
             [ws.sourceToHelp addObjectsFromArray:sourceAgent];
             [ws.toHelpTableView reloadData];
         }
-        [ws.toHelpTableView.footer endRefreshing];
+        [ws.toHelpTableView.mj_footer endRefreshing];
     }];
 }
 
@@ -167,7 +171,7 @@
     if (_canRefreshToHelpFooter) {
         [self getMoreRemoteSourceToHelp];
     } else {
-        [_toHelpTableView.footer endRefreshing];
+        [_toHelpTableView.mj_footer endRefreshing];
     }
 }
 
@@ -227,10 +231,11 @@
 
 #pragma mark - UITableViewDelegate
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [tableView fd_heightForCellWithIdentifier:@"PIEToHelpTableViewCell2"  cacheByIndexPath:indexPath configuration:^(PIEToHelpTableViewCell2 *cell) {
-        [cell injectSource:[_sourceToHelp objectAtIndex:indexPath.row]];
-    }];}
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    return [tableView fd_heightForCellWithIdentifier:@"PIEToHelpTableViewCell2"  cacheByIndexPath:indexPath configuration:^(PIEToHelpTableViewCell2 *cell) {
+//        [cell injectSource:[_sourceToHelp objectAtIndex:indexPath.row]];
+//    }];
+//}
 
 
 #pragma mark - DZNEmptyDataSetSource & delegate

@@ -59,7 +59,7 @@
     
     [_topView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws.mas_centerX);
-        make.top.equalTo(self);
+        make.top.equalTo(self).with.offset(NAV_HEIGHT);
         make.width.equalTo(ws.mas_width);
         make.height.equalTo(@200);
     }];

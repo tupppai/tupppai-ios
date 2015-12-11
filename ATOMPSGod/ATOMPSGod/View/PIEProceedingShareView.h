@@ -27,6 +27,9 @@
 
 @property (strong, nonatomic) PIEProceedingShareSheetView *sheetView;
 @property (nonatomic, weak) id<PIEProceedingShareViewDelegate> delegate;
+@property (nonatomic, assign) BOOL hideDeleteButton;
+@property (strong, nonatomic) UIVisualEffectView *dimmingView;
+
 - (void)showInView:(UIView *)view animated:(BOOL)animated;
 - (void)show;
 -(void)dismiss;

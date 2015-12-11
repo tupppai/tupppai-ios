@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *pageImageView;
+@property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 - (void)injectSauce:(PIENotificationVM*)vm;
 
 @end

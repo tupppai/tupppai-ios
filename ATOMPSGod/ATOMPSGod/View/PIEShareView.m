@@ -9,24 +9,40 @@
 #import "PIEShareView.h"
 #import "AppDelegate.h"
 #import "POP.h"
+#define height_sheet 251.0f
+
 @implementation PIEShareView
 
 -(instancetype)init {
     self = [super init];
     if (self) {
-        self.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.3];
+        self.backgroundColor = [UIColor clearColor];
+        self.frame = [AppDelegate APP].window.bounds;
+        [self addSubview:self.dimmingView];
         [self addSubview:self.sheetView];
         [self.sheetView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.width.equalTo(self).with.multipliedBy(0.98);
-            make.height.equalTo(@240);
+            make.width.equalTo(self).with.multipliedBy(0.965);
+            make.height.equalTo(@(height_sheet));
             make.centerX.equalTo(self);
-            make.bottom.equalTo(self).with.offset(240).with.priorityHigh();
+            make.bottom.equalTo(self).with.offset(height_sheet).with.priorityHigh();
         }];
+//        self.delegate = self;
+        
         [self configClickEvent];
     }
     return self;
 }
+-(UIVisualEffectView *)dimmingView {
+    if (!_dimmingView) {
+        _dimmingView = [[UIVisualEffectView alloc]initWithFrame:self.bounds];
+        _dimmingView.alpha = 0.87;
+        UIBlurEffect* effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+        _dimmingView.effect = effect;
+    }
+    return _dimmingView;
+}
 
+//- (void)
 - (void)toggleCollect_Icon8 {
     self.sheetView.icon8.highlighted = !self.sheetView.icon8.highlighted;
 }
@@ -63,13 +79,15 @@
     
 }
 - (void)tapOnSelf:(UIGestureRecognizer*)gesture {
-    if ([self hitTest:[gesture locationInView:self] withEvent:nil] == self ) {
+    if ([self.dimmingView hitTest:[gesture locationInView:self.dimmingView] withEvent:nil] == self.dimmingView ) {
         [self dismiss];
     }
 }
 - (void)tapGes1:(UIGestureRecognizer*)gesture {
     if (_delegate && [_delegate respondsToSelector:@selector(tapShare1)]) {
         [_delegate tapShare1];
+    } else {
+        
     }
 }
 - (void)tapGes2:(UIGestureRecognizer*)gesture {
@@ -101,6 +119,8 @@
     if (_delegate && [_delegate respondsToSelector:@selector(tapShare7)]) {
         [_delegate tapShare7];
     }
+    (self.reportActionSheet).vm = _vm;
+    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
 }
 - (void)tapGes8:(UIGestureRecognizer*)gesture {
     if (_delegate && [_delegate respondsToSelector:@selector(tapShare8)]) {
@@ -143,7 +163,6 @@
 - (void)show {
     [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
 
-    self.frame = [AppDelegate APP].window.bounds;
     [[AppDelegate APP].window addSubview:self];
     [self layoutIfNeeded];
     [self.sheetView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -164,18 +183,26 @@
                      }
      ];
     
-    
     }
 -(void)dismiss {
     [self.sheetView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self).with.offset(240).with.priorityHigh();
+        make.bottom.equalTo(self).with.offset(height_sheet).with.priorityHigh();
     }];
-    [UIView animateWithDuration:0.20 animations:^{
+    [UIView animateWithDuration:0.12 animations:^{
         [self.sheetView layoutIfNeeded];
+        self.dimmingView.alpha = 0.2;
     } completion:^(BOOL finished) {
         if (finished) {
             [self removeFromSuperview];
+            self.dimmingView.alpha = 0.87;
         }
     }];
+}
+
+-(PIEActionSheet_Report *)reportActionSheet {
+    if (!_reportActionSheet) {
+        _reportActionSheet = [PIEActionSheet_Report new];
+    }
+    return _reportActionSheet;
 }
 @end

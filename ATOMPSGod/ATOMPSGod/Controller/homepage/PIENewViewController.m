@@ -7,6 +7,7 @@
 //
 #import "PIENewViewController.h"
 #import "AppDelegate.h"
+
 #import "PIENewReplyTableCell.h"
 
 
@@ -16,11 +17,10 @@
 #import "DDShareManager.h"
 #import "DDCollectManager.h"
 #import "JGActionSheet.h"
-#import "ATOMReportModel.h"
 #import "HMSegmentedControl.h"
 #import "PIECommentViewController.h"
-#import "UITableView+FDTemplateLayoutCell.h"
-#import "PIECarouselViewController.h"
+//#import "UITableView+FDTemplateLayoutCell.h"
+#import "PIECarouselViewController2.h"
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "PIENewAskCollectionCell.h"
 #import "PIEFriendViewController.h"
@@ -30,6 +30,8 @@
 #import "MRProgressView+AFNetworking.h"
 #import "PIEUploadManager.h"
 #import "PIENewActivityTableViewCell.h"
+#import "PIEActionSheet_PS.h"
+
 @interface PIENewViewController() < UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,PWRefreshBaseCollectionViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,CHTCollectionViewDelegateWaterfallLayout,UICollectionViewDelegate,UICollectionViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
 
@@ -53,59 +55,54 @@
 @property (nonatomic, assign) BOOL canRefreshFooter_reply;
 @property (nonatomic, assign) BOOL canRefreshFooter_activity;
 
-@property (nonatomic, weak) PIERefreshTableView *tableViewActivity;
-@property (nonatomic, weak) PIERefreshCollectionView *collectionView_ask;
-@property (nonatomic, weak) PIERefreshTableView *tableViewReply;
-@property (nonatomic, strong) PIENewScrollView *scrollView;
+@property (nonatomic, weak  ) PIERefreshTableView      *tableViewActivity;
+@property (nonatomic, weak  ) PIERefreshCollectionView *collectionView_ask;
+@property (nonatomic, weak  ) PIERefreshTableView      *tableViewReply;
+@property (nonatomic, strong) PIENewScrollView         *scrollView;
 
-@property (nonatomic, strong)  JGActionSheet * psActionSheet;
-@property (nonatomic, strong)  JGActionSheet * reportActionSheet;
+@property (nonatomic, strong) PIEActionSheet_PS        * psActionSheet;
 
-@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
-@property (nonatomic, strong) PIENewReplyTableCell *selectedReplyCell;
-@property (nonatomic, strong) PIEPageVM *selectedVM;
-@property (nonatomic, strong) PIEShareView *shareView;
-@property (nonatomic, strong) HMSegmentedControl *segmentedControl;
-@property (nonatomic, strong)  MRNavigationBarProgressView* progressView;
+@property (nonatomic, strong) NSIndexPath                 *selectedIndexPath;
+@property (nonatomic, strong) PIENewReplyTableCell        *selectedReplyCell;
+@property (nonatomic, strong) PIEPageVM                   *selectedVM;
+@property (nonatomic, strong) PIEShareView                *shareView;
+@property (nonatomic, strong) HMSegmentedControl          *segmentedControl;
+@property (nonatomic, strong) MRNavigationBarProgressView *progressView;
 
 
 @end
 
 @implementation PIENewViewController
 
-static NSString *CellIdentifier = @"PIENewReplyTableCell";
+static NSString *CellIdentifier  = @"PIENewReplyTableCell";
 static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 
-- (void)updateStatus {
-    if (_selectedIndexPath  && _scrollView.type == PIENewScrollTypeReply) {
-        [_scrollView.tableReply reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    }
-}
-#pragma mark - life cycle
+#pragma mark - UI life cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     [self commonInit];
     [self shouldDoUploadJob];
 }
 
+
+// TODO: AOP needed here. 统计用户数据
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"进入最新页面"];
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.hidesBarsOnSwipe = YES;
+}
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+//    self.navigationController.hidesBarsOnSwipe = NO;
 }
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self updateStatus];
     [MobClick endLogPageView:@"离开最新页面"];
     //tricks to display progressView  if vc re-appear
-}
-
--(void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_New" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UploadRightNow" object:nil];
-    //compiler would call [super dealloc] automatically in ARC.
 }
 
 
@@ -124,39 +121,25 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     [self setupNotifications];
 }
 
-- (void)setupNotifications {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_New" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldDoUploadJob) name:@"UploadRightNow" object:nil];
-}
+#pragma mark - property first initiation
 - (void) setupData {
     //set this before firstGetRemoteSource
     _canRefreshFooter_activity = YES;
-    _canRefreshFooter_reply = YES;
-    _canRefreshFooter_ask = YES;
-    
-    _isfirstLoadingActivity = YES;
-    _isfirstLoadingAsk = YES;
-    _isfirstLoadingReply = YES;
-    
-    _sourceActivity = [NSMutableArray new];
-    _sourceAsk = [NSMutableArray new];
-    _sourceReply = [NSMutableArray new];
+    _canRefreshFooter_reply    = YES;
+    _canRefreshFooter_ask      = YES;
+
+    _isfirstLoadingActivity    = YES;
+    _isfirstLoadingAsk         = YES;
+    _isfirstLoadingReply       = YES;
+
+    _sourceActivity            = [NSMutableArray new];
+    _sourceAsk                 = [NSMutableArray new];
+    _sourceReply               = [NSMutableArray new];
 }
 
-- (void) PleaseDoTheUploadProcess {
-    WS(ws);
-    PIEUploadManager* manager = [PIEUploadManager new];
-    [manager upload:^(CGFloat percentage,BOOL success) {
-        [_progressView setProgress:percentage animated:YES];
-        if (success) {
-            if ([manager.type isEqualToString:@"ask"]) {
-                [ws.scrollView.collectionViewAsk.header beginRefreshing];
-            } else if ([manager.type isEqualToString:@"reply"]) {
-                [ws.scrollView.tableReply.header beginRefreshing];
-            }
-        }
-    }];
-}
+
+
+#pragma mark - UI components setup
 - (void)setupTable_activity {
     _tableViewActivity = _scrollView.tableActivity;
     _tableViewActivity.delegate = self;
@@ -164,18 +147,25 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     _tableViewActivity.psDelegate = self;
     _tableViewActivity.emptyDataSetSource = self;
     _tableViewActivity.emptyDataSetDelegate = self;
+    _tableViewActivity.estimatedRowHeight = SCREEN_WIDTH+145;
+    _tableViewActivity.rowHeight = UITableViewAutomaticDimension;
     UINib* nib = [UINib nibWithNibName:CellIdentifier3 bundle:nil];
     [_tableViewActivity registerNib:nib forCellReuseIdentifier:CellIdentifier3];
     _tableViewActivity.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
     _currentIndex_activity = 1;
 }
 - (void)setupTable_reply {
+    
+    // !!! _tableViewReply 和 _scrollView.tableReply出现了交叉混用的!!!
+    // 建议统一将_scrollView.tableReply转为 _tableViewReply
     _tableViewReply = _scrollView.tableReply;
     _tableViewReply.delegate = self;
     _tableViewReply.dataSource = self;
     _tableViewReply.psDelegate = self;
     _tableViewReply.emptyDataSetSource = self;
     _tableViewReply.emptyDataSetDelegate = self;
+    _tableViewReply.estimatedRowHeight = SCREEN_WIDTH+145;
+    _tableViewReply.rowHeight = UITableViewAutomaticDimension;
     UINib* nib = [UINib nibWithNibName:CellIdentifier bundle:nil];
     [_tableViewReply registerNib:nib forCellReuseIdentifier:CellIdentifier];
     _tableViewReply.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
@@ -193,32 +183,19 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     [_collectionView_ask registerNib:nib forCellWithReuseIdentifier:CellIdentifier2];
     _currentIndex_ask = 1;
 }
-- (void)setupGestures {
-    UITapGestureRecognizer* tapGestureAsk = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnAsk:)];
-    UILongPressGestureRecognizer* longPressGestureAsk = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnAsk:)];
-    
-    UITapGestureRecognizer* tapGestureReply = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnReply:)];
-    UILongPressGestureRecognizer* longPressGestureReply = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnReply:)];
-    
-    UITapGestureRecognizer* tapGestureActivity = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnActivity:)];
-    UILongPressGestureRecognizer* longPressGestureActivity = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnActivity:)];
-    
-    [_tableViewReply addGestureRecognizer:longPressGestureReply];
-    [_tableViewReply addGestureRecognizer:tapGestureReply];
-    [_collectionView_ask addGestureRecognizer:tapGestureAsk];
-    [_collectionView_ask addGestureRecognizer:longPressGestureAsk];
-    [_tableViewActivity addGestureRecognizer:tapGestureActivity];
-    [_tableViewActivity addGestureRecognizer:longPressGestureActivity];
-}
 
-
-
+/**
+ *  add SegmentedControl as the titleView of navigationItem
+ */
 - (void)setupNavBar {
     self.navigationItem.titleView = self.segmentedControl;
 }
 
-#pragma mark - methods
-
+#pragma mark - Notification methods
+- (void)setupNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_New" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldDoUploadJob) name:@"UploadRightNow" object:nil];
+}
 
 - (void)shouldDoUploadJob {
     _progressView = [MRNavigationBarProgressView progressViewForNavigationController:self.navigationController];
@@ -233,20 +210,48 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-
-
 - (void)refreshHeader {
-    if (_scrollView.type == PIENewScrollTypeReply && ![_tableViewReply.header isRefreshing]) {
-        [_tableViewReply.header beginRefreshing];
-    } else if (_scrollView.type == PIENewScrollTypeAsk && ![_collectionView_ask.header isRefreshing]) {
-        [_collectionView_ask.header beginRefreshing];
-    } else if (_scrollView.type == PIENewScrollTypeActivity && ![_tableViewActivity.header isRefreshing]) {
-        [_tableViewActivity.header beginRefreshing];
+    if (_scrollView.type == PIENewScrollTypeReply && !_tableViewReply.mj_header.isRefreshing) {
+        [_tableViewReply.mj_header beginRefreshing];
+    } else if (_scrollView.type == PIENewScrollTypeAsk && !_collectionView_ask.mj_header.isRefreshing) {
+        [_collectionView_ask.mj_header beginRefreshing];
+    } else if (_scrollView.type == PIENewScrollTypeActivity && !_tableViewActivity.mj_header.isRefreshing) {
+        [_tableViewActivity.mj_header beginRefreshing];
     }
 }
 
-#pragma mark - event response
+- (void) PleaseDoTheUploadProcess {
+    WS(ws);
+    PIEUploadManager* manager = [PIEUploadManager new];
+    [manager upload:^(CGFloat percentage,BOOL success) {
+        [_progressView setProgress:percentage animated:YES];
+        if (success) {
+            if ([manager.type isEqualToString:@"ask"]) {
+                ws.segmentedControl.selectedSegmentIndex=1;
+                [ws.scrollView toggleWithType:PIENewScrollTypeAsk];
+                [ws.scrollView.collectionViewAsk.mj_header beginRefreshing];
+            } else if ([manager.type isEqualToString:@"reply"]) {
+                ws.segmentedControl.selectedSegmentIndex=2;
+                [ws.scrollView toggleWithType:PIENewScrollTypeReply];
+                [ws.scrollView.tableReply.mj_header beginRefreshing];
+            }
+        }
+    }];
+}
 
+/**
+ *  Remove ovservers from NSNotificationCenter
+ */
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_New" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UploadRightNow" object:nil];
+    //compiler would call [super dealloc] automatically in ARC.
+}
+
+#pragma mark - event response -- ???
+#pragma mark - these two methods are never used.
+
+//!!! 下面这两个方法，从来没有被调用过。
 - (void)help:(BOOL)shouldDownload {
     NSMutableDictionary* param = [NSMutableDictionary new];
     [param setObject:@"ask" forKey:@"type"];
@@ -275,21 +280,9 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     }
 }
 
-- (void)showShareView {
-    [self.shareView show];
-    
-}
--(PIEShareView *)shareView {
-    if (!_shareView) {
-        _shareView = [PIEShareView new];
-        _shareView.delegate = self;
-    }
-    return _shareView;
-}
 
 
-
-#pragma mark - UIScrollViewDelegate
+#pragma mark - <UIScrollViewDelegate>
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (scrollView == _scrollView) {
@@ -310,7 +303,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
         }
     }
 }
-#pragma mark - UITableViewDataSource
+#pragma mark - <UITableViewDataSource>
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (_tableViewReply == tableView) {
@@ -336,26 +329,22 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     }
 }
 
-#pragma mark - UITableViewDelegate
+#pragma mark - <UITableViewDelegate>
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (_tableViewReply == tableView) {
-        return [tableView fd_heightForCellWithIdentifier:CellIdentifier  cacheByIndexPath:indexPath configuration:^(PIENewReplyTableCell *cell) {
-            [cell injectSauce:_sourceReply[indexPath.row]];
-        }];
-    } else if (_tableViewActivity == tableView) {
-        return [tableView fd_heightForCellWithIdentifier:CellIdentifier3  cacheByIndexPath:indexPath configuration:^(PIENewActivityTableViewCell *cell) {
-            [cell injectSauce:_sourceActivity[indexPath.row]];
-        }];
-    }
-    else {
-        return 0;
-    }
-}
-
-#pragma mark - ATOMViewControllerDelegate
-
-
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if (_tableViewReply == tableView) {
+//        return [tableView fd_heightForCellWithIdentifier:CellIdentifier  cacheByIndexPath:indexPath configuration:^(PIENewReplyTableCell *cell) {
+//            [cell injectSauce:_sourceReply[indexPath.row]];
+//        }];
+//    } else if (_tableViewActivity == tableView) {
+//        return [tableView fd_heightForCellWithIdentifier:CellIdentifier3  cacheByIndexPath:indexPath configuration:^(PIENewActivityTableViewCell *cell) {
+//            [cell injectSauce:_sourceActivity[indexPath.row]];
+//        }];
+//    }
+//    else {
+//        return 0;
+//    }
+//}
 #pragma mark - GetDataSource from DB
 //- (void)firstGetDataSourceFromDataBase {
 //
@@ -364,7 +353,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 //
 ////    _sourceReply = [self fetchDBDataSourceWithHomeType:PIENewScrollTypeReply];
 //}
-#pragma mark - GetDataSource from Server
+#pragma mark - Get DataSource from Server for the first time
 //-(NSMutableArray*)fetchDBDataSourceWithHomeType:(PIEHomeType) homeType {
 //    DDHomePageManager *showHomepage = [DDHomePageManager new];
 //    NSArray * homepageArray = [[showHomepage getHomeImagesWithHomeType:homeType] mutableCopy];
@@ -378,34 +367,36 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 //}
 - (void)firstGetSourceIfEmpty_activity {
     if (_sourceActivity.count <= 0 || _isfirstLoadingActivity) {
-        [self.tableViewActivity.header beginRefreshing];
+        [self.tableViewActivity.mj_header beginRefreshing];
     }
 }
 - (void)firstGetSourceIfEmpty_ask {
     if (_sourceAsk.count <= 0 || _isfirstLoadingAsk) {
-        [self.collectionView_ask.header beginRefreshing];
+        [self.collectionView_ask.mj_header beginRefreshing];
     }
 }
 - (void)firstGetSourceIfEmpty_Reply {
     if (_sourceReply.count <= 0 || _isfirstLoadingReply) {
-        [self.tableViewReply.header beginRefreshing];
+        [self.tableViewReply.mj_header beginRefreshing];
     }
 }
 
+
+#pragma mark - Fetch Data - Activity
 //获取服务器的最新数据
 - (void)getRemoteSource_activity:(void (^)(BOOL finished))block{
     WS(ws);
-    [ws.scrollView.tableActivity.footer endRefreshing];
+    [ws.scrollView.tableActivity.mj_footer endRefreshing];
     _currentIndex_activity = 1;
     NSMutableDictionary *param = [NSMutableDictionary new];
     _timeStamp_activity = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(_timeStamp_activity) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(1) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     
     
-    [ws.scrollView.tableActivity.header endRefreshing];
+    [ws.scrollView.tableActivity.mj_header endRefreshing];
     ws.isfirstLoadingActivity = NO;
     [ws.tableViewActivity reloadData];
     _canRefreshFooter_activity = NO;
@@ -421,7 +412,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 //            _canRefreshFooter_activity = NO;
 //        }
 //        [ws.tableViewActivity reloadData];
-//        [ws.tableViewActivity.header endRefreshing];
+//        [ws.tableViewActivity.mj_header endRefreshing];
 //        if (block) {
 //            block(YES);
 //        }
@@ -430,13 +421,13 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 //拉至底层刷新
 - (void)getMoreRemoteSource_activity {
     WS(ws);
-    [ws.tableViewActivity.header endRefreshing];
+    [ws.tableViewActivity.mj_header endRefreshing];
     _currentIndex_ask++;
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:@(_timeStamp_ask) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(_currentIndex_ask) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     PIEPageManager *pageManager = [PIEPageManager new];
     [pageManager pullAskSource:param block:^(NSMutableArray *homepageArray) {
         if (homepageArray.count) {
@@ -447,14 +438,16 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
             _canRefreshFooter_activity = NO;
         }
         [ws.tableViewActivity reloadData];
-        [ws.tableViewActivity.footer endRefreshing];
+        [ws.tableViewActivity.mj_footer endRefreshing];
     }];
 }
 
+
+#pragma mark - Fetch data Ask
 //获取服务器的最新数据
 - (void)getRemoteAskSource:(void (^)(BOOL finished))block{
     WS(ws);
-    [ws.scrollView.collectionViewAsk.footer endRefreshing];
+    [ws.scrollView.collectionViewAsk.mj_footer endRefreshing];
     _currentIndex_ask = 1;
     NSMutableDictionary *param = [NSMutableDictionary new];
     _timeStamp_ask = [[NSDate date] timeIntervalSince1970];
@@ -473,7 +466,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
             _canRefreshFooter_ask = NO;
         }
         [ws.collectionView_ask reloadData];
-        [ws.scrollView.collectionViewAsk.header endRefreshing];
+        [ws.scrollView.collectionViewAsk.mj_header endRefreshing];
         if (block) {
             block(YES);
         }
@@ -483,7 +476,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 //拉至底层刷新
 - (void)getMoreRemoteAskSource {
     WS(ws);
-    [ws.scrollView.collectionViewAsk.header endRefreshing];
+    [ws.scrollView.collectionViewAsk.mj_header endRefreshing];
     _currentIndex_ask++;
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:@(_timeStamp_ask) forKey:@"last_updated"];
@@ -500,19 +493,21 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
             _canRefreshFooter_ask = NO;
         }
         [ws.collectionView_ask reloadData];
-        [ws.scrollView.collectionViewAsk.footer endRefreshing];
+        [ws.scrollView.collectionViewAsk.mj_footer endRefreshing];
     }];
 }
+
+#pragma mark - Fetch data - Reply
 
 - (void)getRemoteReplySource {
     WS(ws);
     _currentIndex_reply = 1;
-    [_tableViewReply.footer endRefreshing];
+    [_tableViewReply.mj_footer endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary new];
     _timeStamp_reply = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(_timeStamp_reply) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(1) forKey:@"page"];
 
     PIEPageManager *pageManager = [PIEPageManager new];
@@ -526,18 +521,18 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
             _canRefreshFooter_reply = NO;
         }
         [ws.tableViewReply reloadData];
-        [ws.tableViewReply.header endRefreshing];
+        [ws.tableViewReply.mj_header endRefreshing];
     }];
 }
 
 - (void)getMoreRemoteReplySource {
     WS(ws);
     _currentIndex_reply ++;
-    [_tableViewReply.header endRefreshing];
+    [_tableViewReply.mj_header endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:@(_timeStamp_reply) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(_currentIndex_reply) forKey:@"page"];
     PIEPageManager *pageManager = [PIEPageManager new];
     [pageManager pullReplySource:param block:^(NSMutableArray *array) {
@@ -549,14 +544,34 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
             _canRefreshFooter_reply = NO;
         }
         [ws.tableViewReply reloadData];
-        [ws.tableViewReply.footer endRefreshing];
+        [ws.tableViewReply.mj_footer endRefreshing];
     }];
 }
 
+
+#pragma mark - methods on Sharing<ATOMShareViewDelegate>
 - (void)updateShareStatus {
+    
+    /**
+     *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面的点赞数和分享数
+     */
     _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
-        [self updateStatus];
+    [self updateStatus];
 }
+
+
+- (void)showShareView {
+    [self.shareView show];
+    
+}
+-(PIEShareView *)shareView {
+    if (!_shareView) {
+        _shareView = [PIEShareView new];
+        _shareView.delegate = self;
+    }
+    return _shareView;
+}
+
 
 #pragma mark - ATOMShareViewDelegate
 //sina
@@ -584,7 +599,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     [DDShareManager copy:_selectedVM];
 }
 -(void)tapShare7 {
-    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
+    self.shareView.vm = _selectedVM;
 }
 -(void)tapShare8 {
 //    if (_scrollView.type == PIENewScrollTypeAsk) {
@@ -607,6 +622,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 }
 
 
+#pragma mark - ???
 -(void)collect:(PIEPageButton*) collectView shouldShowHud:(BOOL)shouldShowHud {
     NSMutableDictionary *param = [NSMutableDictionary new];
     collectView.selected = !collectView.selected;
@@ -657,6 +673,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     }];
 }
 
+#pragma mark - Reply ???
 -(void)likeReply {
     _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
     [DDService toggleLike:_selectedReplyCell.likeView.selected ID:_selectedVM.ID type:_selectedVM.type  withBlock:^(BOOL success) {
@@ -701,10 +718,10 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 }
 
 - (void)loadMoreData_reply {
-    if (_canRefreshFooter_reply && !_tableViewReply.header.isRefreshing) {
+    if (_canRefreshFooter_reply && !_tableViewReply.mj_header.isRefreshing) {
         [self getMoreRemoteReplySource];
     } else {
-        [_tableViewReply.footer endRefreshing];
+        [_tableViewReply.mj_footer endRefreshing];
     }
 }
 
@@ -713,10 +730,10 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 }
 
 - (void)loadMoreData_activity {
-    if (_canRefreshFooter_activity && !_tableViewActivity.header.isRefreshing) {
+    if (_canRefreshFooter_activity && !_tableViewActivity.mj_header.isRefreshing) {
         [self getMoreRemoteSource_activity];
     } else {
-        [_tableViewActivity.footer endRefreshing];
+        [_tableViewActivity.mj_footer endRefreshing];
     }
 }
 - (void)loadNewData_ask {
@@ -724,14 +741,24 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 }
 
 - (void)loadMoreData_ask {
-    if (_canRefreshFooter_ask && !_collectionView_ask.header.isRefreshing) {
+    if (_canRefreshFooter_ask && !_collectionView_ask.mj_header.isRefreshing) {
         [self getMoreRemoteAskSource];
     } else {
-        [_collectionView_ask.footer endRefreshing];
+        [_collectionView_ask.mj_footer endRefreshing];
     }
 }
 
-#pragma mark - PWRefreshBaseTableViewDelegate
+#pragma mark - Synchronized data with newest action
+/**
+ *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面的点赞数和分享数
+ */
+- (void)updateStatus {
+    if (_selectedIndexPath  && _scrollView.type == PIENewScrollTypeReply) {
+        [_scrollView.tableReply reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
+}
+
+#pragma mark - <PWRefreshBaseTableViewDelegate>
 
 -(void)didPullRefreshDown:(UITableView *)tableView{
     if (tableView == _tableViewReply) {
@@ -749,6 +776,8 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     }
 }
 
+
+#pragma mark - <PWRefreshBaseCollectionViewDelegate>
 -(void)didPullDownCollectionView:(UICollectionView *)collectionView {
     [self loadNewData_ask];
 }
@@ -759,7 +788,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 
 
 
-#pragma mark - UICollectionViewDataSource
+#pragma mark - <UICollectionViewDataSource>
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return _sourceAsk.count;
@@ -770,7 +799,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    PIENewAskCollectionCell*cell =
+    PIENewAskCollectionCell *cell =
     (PIENewAskCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier2
                                                                       forIndexPath:indexPath];
     [cell injectSource:[_sourceAsk objectAtIndex:indexPath.row]];
@@ -782,12 +811,10 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     CGFloat width;
     CGFloat height;
     width = (SCREEN_WIDTH - 20) / 2.0;
-    
     height = vm.imageHeight/vm.imageWidth * width + 129 + (29+20);
     height = MAX(200,height);
     height = MIN(SCREEN_HEIGHT/1.5, height);
     return CGSizeMake(width, height);
-    
 }
 
 #pragma mark - DZNEmptyDataSetSource & delegate
@@ -829,7 +856,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 
 
 #pragma mark - Getters and Setters
-
+#pragma mark - Lazy loadings
 -(PIENewScrollView*)scrollView {
     if (!_scrollView) {
         _scrollView = [PIENewScrollView new];
@@ -838,90 +865,12 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     return _scrollView;
 }
 
-- (JGActionSheet *)psActionSheet {
-    WS(ws);
+- (PIEActionSheet_PS *)psActionSheet {
     if (!_psActionSheet) {
-        _psActionSheet = [JGActionSheet new];
-        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"下载图片帮P", @"添加至进行中",@"取消"] buttonStyle:JGActionSheetButtonStyleDefault];
-        [section setButtonStyle:JGActionSheetButtonStyleCancel forButtonAtIndex:2];
-        NSArray *sections = @[section];
-        _psActionSheet = [JGActionSheet actionSheetWithSections:sections];
-        _psActionSheet.delegate = self;
-        [_psActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
-            [sheet dismissAnimated:YES];
-        }];
-        [_psActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
-            switch (indexPath.row) {
-                case 0:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    [ws help:YES];
-                    break;
-                case 1:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    [ws help:NO];
-                    break;
-                case 2:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    break;
-                default:
-                    [ws.psActionSheet dismissAnimated:YES];
-                    break;
-            }
-        }];
+        _psActionSheet = [PIEActionSheet_PS new];
     }
     return _psActionSheet;
 }
-
-- (JGActionSheet *)reportActionSheet {
-    WS(ws);
-    if (!_reportActionSheet) {
-        _reportActionSheet = [JGActionSheet new];
-        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"色情、淫秽或低俗内容", @"广告或垃圾信息",@"违反法律法规的内容"] buttonStyle:JGActionSheetButtonStyleDefault];
-        NSArray *sections = @[section];
-        _reportActionSheet = [JGActionSheet actionSheetWithSections:sections];
-        _reportActionSheet.delegate = self;
-        [_reportActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
-            [sheet dismissAnimated:YES];
-        }];
-        [_reportActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
-            NSMutableDictionary* param = [NSMutableDictionary new];
-            [param setObject:@(ws.selectedVM.ID) forKey:@"target_id"];
-            [param setObject:@(PIEPageTypeAsk) forKey:@"target_type"];
-            UIButton* b = section.buttons[indexPath.row];
-            switch (indexPath.row) {
-                case 0:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                case 1:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                case 2:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                default:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    break;
-            }
-            [ATOMReportModel report:param withBlock:^(NSError *error) {
-                UIView* view;
-                if (ws.scrollView.type == PIENewScrollTypeReply) {
-                    view = ws.tableViewReply;
-                } else  if (ws.scrollView.type == PIENewScrollTypeAsk) {
-                    view = ws.collectionView_ask;
-                }
-                if(!error) {
-                    [Util ShowTSMessageSuccess:@"已举报"];
-                }
-                
-            }];
-        }];
-    }
-    return _reportActionSheet;
-}
-
 
 
 - (HMSegmentedControl*)segmentedControl {
@@ -956,6 +905,25 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 
 #pragma mark - Gesture Event
 
+- (void)setupGestures {
+    UITapGestureRecognizer* tapGestureAsk = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnAsk:)];
+    UILongPressGestureRecognizer* longPressGestureAsk = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnAsk:)];
+    
+    UITapGestureRecognizer* tapGestureReply = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnReply:)];
+    UILongPressGestureRecognizer* longPressGestureReply = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnReply:)];
+    
+    UITapGestureRecognizer* tapGestureActivity = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnActivity:)];
+    UILongPressGestureRecognizer* longPressGestureActivity = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnActivity:)];
+    
+    [_tableViewReply addGestureRecognizer:longPressGestureReply];
+    [_tableViewReply addGestureRecognizer:tapGestureReply];
+    [_collectionView_ask addGestureRecognizer:tapGestureAsk];
+    [_collectionView_ask addGestureRecognizer:longPressGestureAsk];
+    [_tableViewActivity addGestureRecognizer:tapGestureActivity];
+    [_tableViewActivity addGestureRecognizer:longPressGestureActivity];
+}
+
+
 - (void)tapOnReply:(UITapGestureRecognizer *)gesture {
     if (_scrollView.type == PIENewScrollTypeReply) {
         CGPoint location = [gesture locationInView:_tableViewReply];
@@ -978,10 +946,11 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
             //点击大图
             else  if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
                 //进入热门详情
-                PIECarouselViewController* vc = [PIECarouselViewController new];
+                PIECarouselViewController2* vc = [PIECarouselViewController2 new];
                 _selectedVM.image = _selectedReplyCell.theImageView.image;
                 vc.pageVM = _selectedVM;
-                [self.navigationController pushViewController:vc animated:YES];
+                [self presentViewController:vc animated:YES completion:nil];
+//                [self.navigationController pushViewController:vc animated:YES];
             }
             //点击头像
             else if (CGRectContainsPoint(_selectedReplyCell.avatarView.frame, p)) {
@@ -1068,9 +1037,9 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
             //点击大图
             if (CGRectContainsPoint(cell.leftImageView.frame, p) || CGRectContainsPoint(cell.rightImageView.frame, p)) {
                 if (![_selectedVM.replyCount isEqualToString:@"0"]) {
-                    PIECarouselViewController* vc = [PIECarouselViewController new];
+                    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
                     vc.pageVM = _selectedVM;
-                    [self.navigationController pushViewController:vc animated:YES];
+                    [self presentViewController:vc animated:YES completion:nil];
                 } else {
                     PIECommentViewController* vc = [PIECommentViewController new];
                     vc.vm = _selectedVM;
@@ -1093,6 +1062,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
             }
             //点击帮p
             else if (CGRectContainsPoint(cell.bangView.frame, p)) {
+                self.psActionSheet.vm = _selectedVM;
                 [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
             }
         }

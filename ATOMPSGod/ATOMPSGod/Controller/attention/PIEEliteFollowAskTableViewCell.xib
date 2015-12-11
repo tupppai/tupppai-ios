@@ -24,13 +24,13 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="刚刚" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xwi-w4-KPE">
-                        <rect key="frame" x="46" y="25" width="20" height="14"/>
+                        <rect key="frame" x="47" y="27" width="20" height="14"/>
                         <animations/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="10"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_default" translatesAutoresizingMaskIntoConstraints="NO" id="YEQ-gZ-upE">
+                    <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_default" translatesAutoresizingMaskIntoConstraints="NO" id="YEQ-gZ-upE">
                         <rect key="frame" x="8" y="8" width="30" height="30"/>
                         <animations/>
                         <rect key="contentStretch" x="1" y="1" width="1" height="1"/>
@@ -40,7 +40,7 @@
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1RB-Q4-adE">
-                        <rect key="frame" x="0.0" y="47" width="386" height="386.5"/>
+                        <rect key="frame" x="0.0" y="49" width="386" height="386.5"/>
                         <animations/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -64,7 +64,7 @@
                         </variation>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="Uh0-Nk-WwP">
-                        <rect key="frame" x="8" y="441" width="370" height="65.5"/>
+                        <rect key="frame" x="10" y="443" width="368" height="54.5"/>
                         <animations/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -79,7 +79,7 @@
                         </constraints>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GKG-Pm-OL3" customClass="PIEPageButton">
-                        <rect key="frame" x="13" y="517.5" width="35" height="30"/>
+                        <rect key="frame" x="13" y="517" width="35" height="30"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="30" id="9cv-Lq-925"/>
@@ -93,7 +93,7 @@
                         </variation>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fmz-Ws-G9O" customClass="PIEPageButton">
-                        <rect key="frame" x="58" y="517.5" width="35" height="30"/>
+                        <rect key="frame" x="68" y="517" width="35" height="30"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="siZ-aV-XDk"/>
@@ -108,15 +108,15 @@
                         </variation>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8gN-It-V5K" customClass="PIEBangView">
-                        <rect key="frame" x="331" y="518.5" width="39" height="28"/>
+                        <rect key="frame" x="331" y="517.5" width="39" height="30"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="39" id="pY6-4J-gyj"/>
-                            <constraint firstAttribute="height" constant="28" id="wUk-P3-JSw"/>
+                            <constraint firstAttribute="height" constant="30" id="wUk-P3-JSw"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="INN-E4-qSW">
-                        <rect key="frame" x="0.0" y="564.5" width="386" height="11"/>
+                        <rect key="frame" x="0.0" y="564" width="386" height="11"/>
                         <animations/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -126,22 +126,23 @@
                 </subviews>
                 <animations/>
                 <constraints>
+                    <constraint firstItem="8gN-It-V5K" firstAttribute="bottom" secondItem="GKG-Pm-OL3" secondAttribute="bottom" id="3fn-A5-UWa"/>
                     <constraint firstItem="fmz-Ws-G9O" firstAttribute="height" secondItem="GKG-Pm-OL3" secondAttribute="height" id="950-xq-ByA"/>
-                    <constraint firstItem="xwi-w4-KPE" firstAttribute="bottom" secondItem="YEQ-gZ-upE" secondAttribute="bottom" constant="1" id="Cob-qH-pU5"/>
+                    <constraint firstItem="xwi-w4-KPE" firstAttribute="bottom" secondItem="YEQ-gZ-upE" secondAttribute="bottom" constant="3" id="Cob-qH-pU5"/>
                     <constraint firstItem="xwi-w4-KPE" firstAttribute="top" secondItem="LFV-Bb-iYb" secondAttribute="bottom" constant="5" id="D4K-an-mb6"/>
                     <constraint firstItem="LFV-Bb-iYb" firstAttribute="leading" secondItem="YEQ-gZ-upE" secondAttribute="trailing" constant="8" id="FUa-q9-6v8"/>
                     <constraint firstAttribute="trailingMargin" secondItem="8gN-It-V5K" secondAttribute="trailing" constant="8" id="HZS-Cu-K5M"/>
-                    <constraint firstItem="fmz-Ws-G9O" firstAttribute="leading" secondItem="GKG-Pm-OL3" secondAttribute="trailing" constant="10" id="IM1-HP-eHx"/>
+                    <constraint firstItem="fmz-Ws-G9O" firstAttribute="leading" secondItem="GKG-Pm-OL3" secondAttribute="trailing" constant="20" id="IM1-HP-eHx"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Uh0-Nk-WwP" secondAttribute="trailing" id="QOK-3A-Xc5"/>
                     <constraint firstItem="INN-E4-qSW" firstAttribute="top" secondItem="GKG-Pm-OL3" secondAttribute="bottom" constant="17" id="Shn-zc-7pi"/>
                     <constraint firstAttribute="bottom" secondItem="INN-E4-qSW" secondAttribute="bottom" id="Shr-gw-Igq"/>
                     <constraint firstItem="Uh0-Nk-WwP" firstAttribute="top" secondItem="1RB-Q4-adE" secondAttribute="bottom" constant="8" id="W8M-hC-pmz"/>
-                    <constraint firstItem="Uh0-Nk-WwP" firstAttribute="leading" secondItem="vxa-2U-rDu" secondAttribute="leadingMargin" id="Xa4-Ou-rXF"/>
+                    <constraint firstItem="Uh0-Nk-WwP" firstAttribute="leading" secondItem="vxa-2U-rDu" secondAttribute="leadingMargin" constant="2" id="Xa4-Ou-rXF"/>
                     <constraint firstItem="YEQ-gZ-upE" firstAttribute="leading" secondItem="vxa-2U-rDu" secondAttribute="leadingMargin" id="YhR-tk-Nn0"/>
                     <constraint firstAttribute="bottomMargin" secondItem="GKG-Pm-OL3" secondAttribute="bottom" constant="6.5" id="a2v-hl-McI"/>
                     <constraint firstAttribute="trailingMargin" secondItem="K1Q-jR-LrV" secondAttribute="trailing" constant="8" id="dUp-8s-g00"/>
                     <constraint firstItem="K1Q-jR-LrV" firstAttribute="centerY" secondItem="YEQ-gZ-upE" secondAttribute="centerY" id="e1b-61-YC2"/>
-                    <constraint firstItem="GKG-Pm-OL3" firstAttribute="top" secondItem="Uh0-Nk-WwP" secondAttribute="bottom" constant="10.5" id="fNE-ld-75I"/>
+                    <constraint firstItem="GKG-Pm-OL3" firstAttribute="top" secondItem="Uh0-Nk-WwP" secondAttribute="bottom" constant="20" id="fNE-ld-75I"/>
                     <constraint firstItem="fmz-Ws-G9O" firstAttribute="centerY" secondItem="GKG-Pm-OL3" secondAttribute="centerY" id="fTX-DN-h7m"/>
                     <constraint firstItem="GKG-Pm-OL3" firstAttribute="leading" secondItem="vxa-2U-rDu" secondAttribute="leadingMargin" constant="5" id="flC-ai-NDJ"/>
                     <constraint firstItem="LFV-Bb-iYb" firstAttribute="top" secondItem="YEQ-gZ-upE" secondAttribute="top" id="hfE-HL-MPt"/>
@@ -155,7 +156,7 @@
                     <constraint firstItem="YEQ-gZ-upE" firstAttribute="top" secondItem="vxa-2U-rDu" secondAttribute="topMargin" id="ts7-gs-IXh"/>
                     <constraint firstItem="YEQ-gZ-upE" firstAttribute="top" secondItem="xwi-w4-KPE" secondAttribute="top" constant="-4" id="tuG-JH-C6X"/>
                     <constraint firstItem="1RB-Q4-adE" firstAttribute="leading" secondItem="vxa-2U-rDu" secondAttribute="leading" id="xwn-Ac-cV6"/>
-                    <constraint firstItem="LFV-Bb-iYb" firstAttribute="leading" secondItem="xwi-w4-KPE" secondAttribute="leading" id="zeT-k2-aFB"/>
+                    <constraint firstItem="LFV-Bb-iYb" firstAttribute="leading" secondItem="xwi-w4-KPE" secondAttribute="leading" constant="-1" id="zeT-k2-aFB"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
@@ -164,6 +165,7 @@
                         <exclude reference="D4K-an-mb6"/>
                         <exclude reference="a2v-hl-McI"/>
                         <exclude reference="kEs-Sm-XNb"/>
+                        <exclude reference="kdI-s5-EFe"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>
@@ -184,7 +186,7 @@
     </objects>
     <resources>
         <image name="avatar_default" width="36" height="36"/>
-        <image name="new_reply_follow" width="58" height="28"/>
+        <image name="new_reply_follow" width="50" height="25"/>
         <image name="new_reply_followed" width="58" height="28"/>
     </resources>
 </document>

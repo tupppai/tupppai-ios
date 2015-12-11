@@ -31,7 +31,6 @@ extern NSString * URL_PFGetCommentedPages;
 extern NSString * URL_PFGetLikedPages;
 
 
-
 #pragma mark - Account
 extern NSString * URL_ACUpdateToken;
 extern NSString * URL_ACResetPassword;
@@ -61,7 +60,56 @@ extern NSString * URL_NewestGetReply;
 extern NSString * URL_PFGetFollowPages;
 extern NSString * URL_PFGetHotPages;
 
+#pragma mark - Channels
+
+/**
+ *  首页（活动+频道）
+    接受参数
+    get:
+    page:页面，默认为1
+    size:页面数目，默认为10
+    last_updated:最后下拉更新的时间戳（10位）
+
+ */
+extern NSString * URL_ChannelHomeThreads;
+
+/**
+ *  获取活动相关作品
+    接受参数
+    get:
+    activity_id:活动id
+    page:页面，默认为1
+    size:页面数目，默认为10
+    last_updated:最后下拉更新的时间戳（10位）
+ */
+extern NSString * URL_ChannelGetActivities;
+
+/**
+ *  
+    接受参数
+    get:
+    channel_id: 频道id
+    page:页面，默认为1
+    size:页面数目，默认为10
+    last_updated:最后下拉更新的时间戳（10位）
+ */
+extern NSString * URL_ChannelGetDetailThreads;
+
+
+/**
+ *  获取某频道的最新求P
+ */
+extern NSString * URL_ChannelLatestAskForPS;
+
+/**
+ *  获取在某频道中， 用户（复数）的PS作品
+ */
+extern NSString * URL_ChannelUsersPS;
+
+
+
 #pragma mark - Notification
 extern NSString * URL_NotiGetNotifications;
+
 
 @end

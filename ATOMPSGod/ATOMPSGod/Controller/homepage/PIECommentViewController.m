@@ -18,7 +18,6 @@
 #import "PIECommentHeaderView.h"
 #import "PIEShareView.h"
 #import "JGActionSheet.h"
-#import "ATOMReportModel.h"
 #import "DDCollectManager.h"
 #import "PIEImageEntity.h"
 #import "JTSImageViewController.h"
@@ -26,15 +25,14 @@
 #import "KVCMutableArray.h"
 #import "PIEReplyCollectionViewController.h"
 #import "PIEPageManager.h"
-
 #define DEBUG_CUSTOM_TYPING_INDICATOR 0
 
 static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 @interface PIECommentViewController ()<DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,PIEShareViewDelegate,JGActionSheetDelegate,JTSImageViewControllerInteractionsDelegate>
 
-@property (nonatomic, strong) NSMutableArray *commentsHot;
-@property (nonatomic, strong) KVCMutableArray *commentsNew;
+@property (nonatomic, strong) NSMutableArray *source_hotComment;
+@property (nonatomic, strong) KVCMutableArray *source_newComment;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, strong) UITapGestureRecognizer *tapCommentTableGesture;
 @property (nonatomic, assign) BOOL canRefreshFooter;
@@ -42,13 +40,15 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 @property (nonatomic, strong) NSIndexPath *selectedIndexpath;
 @property (nonatomic, strong) PIEShareView *shareView;
 @property (nonatomic, strong)  JGActionSheet * psActionSheet;
-@property (nonatomic, strong)  JGActionSheet * reportActionSheet;
 @property (nonatomic, assign)  BOOL isFirstLoading;
 
 @end
 
 @implementation PIECommentViewController
 
+//-(BOOL)prefersStatusBarHidden {
+//    return YES;
+//}
 - (id)init
 {
     self = [super initWithTableViewStyle:UITableViewStylePlain];
@@ -116,6 +116,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
 //    [MobClick beginLogPageView:@"进入浏览图片页"];
 }
 - (void)viewWillDisappear:(BOOL)animated
@@ -199,6 +200,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     commentVM.uid = [DDUserManager currentUser].uid;
     commentVM.avatar = [DDUserManager currentUser].avatar;
     commentVM.originText = self.textView.text;
+    commentVM.time = @"刚刚";
     NSString* commentToShow;
     //回复评论
     if (_targetCommentVM) {
@@ -228,7 +230,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     }
 
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [self.commentsNew insertObject:commentVM inArrayAtIndex:0];
+    [self.source_newComment insertObject:commentVM inArrayAtIndex:0];
     [self.tableView beginUpdates];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
@@ -314,7 +316,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 //    if (section == 0) {
 //        return _commentsHot.count;
 //    } else if (section == 1) {
-        return _commentsNew.array.count;
+        return _source_newComment.array.count;
 //    } else {
 //        return 0;
 //    }
@@ -330,7 +332,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 //        if (indexPath.section == 0) {
 //            [cell getSource:_commentsHot[indexPath.row]];
 //        } else if (indexPath.section == 1) {
-            [cell getSource:_commentsNew.array[indexPath.row]];
+            [cell getSource:_source_newComment.array[indexPath.row]];
 //        }
         // Cells must inherit the table view's transform
         // This is very important, since the main table view may be inverted
@@ -349,7 +351,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 //        if (indexPath.section == 0) {
 //            vm = _commentsHot[indexPath.row];
 //        } else if (indexPath.section == 1) {
-            vm = _commentsNew.array[indexPath.row];
+            vm = _source_newComment.array[indexPath.row];
 //        }
         
         NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
@@ -406,7 +408,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 //    if (section == 0) {
 //        _targetCommentVM = _commentsHot[row];
 //    } else if (section == 1) {
-        _targetCommentVM = _commentsNew.array[row];
+        _targetCommentVM = _source_newComment.array[row];
 //    }
     self.textView.placeholder = [NSString stringWithFormat:@"@%@:",_targetCommentVM.username];
     [self.textView becomeFirstResponder];
@@ -423,8 +425,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 #pragma mark init and config
 
 -(void)configTableView {
-    _commentsHot = [NSMutableArray new];
-    _commentsNew = [KVCMutableArray new];
+    _source_hotComment = [NSMutableArray new];
+    _source_newComment = [KVCMutableArray new];
     
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
@@ -444,12 +446,17 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         }
         [self resizeHeaderView];
         
-        [self.commentsNew addObserver:self forKeyPath:@"array" options:NSKeyValueObservingOptionNew context:nil];
+        [self.source_newComment addObserver:self forKeyPath:@"array" options:NSKeyValueObservingOptionNew context:nil];
     } else {
         self.title = @"全部评论";
     }
 }
 
+
+-(void)setVm:(PIEPageVM *)vm {
+    _vm = vm;
+//    NSLog(@"vm %zd %zd",vm.type,vm.ID);
+}
 - (void)resizeHeaderView {
     UIView *header = self.tableView.tableHeaderView;
     [header setNeedsLayout];
@@ -462,12 +469,12 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 -(void)dealloc {
     if (_shouldShowHeaderView) {
-        [self.commentsNew removeObserver:self forKeyPath:@"array"];
+        [self.source_newComment removeObserver:self forKeyPath:@"array"];
     }
 }
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"array"]) {
-        ((PIECommentTableHeaderView_Ask*)self.tableView.tableHeaderView).commentButton.number = _commentsNew.countOfArray;
+        ((PIECommentTableHeaderView_Ask*)self.tableView.tableHeaderView).commentButton.number = _source_newComment.countOfArray;
     }
 }
 - (void) dismissSelf {
@@ -490,14 +497,21 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     self.shouldClearTextAtRightButtonPress = YES;
 }
 - (void)configFooterRefresh {
-    [self.tableView addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    
     NSMutableArray *animatedImages = [NSMutableArray array];
     for (int i = 1; i<=6; i++) {
         UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"pie_loading_%d", i]];
         [animatedImages addObject:image];
     }
-    self.tableView.gifFooter.refreshingImages = animatedImages;
-    self.tableView.footer.stateHidden = YES;
+    
+    MJRefreshAutoGifFooter *footer = [MJRefreshAutoGifFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    footer.refreshingTitleHidden = YES;
+    footer.stateLabel.hidden = YES;
+    
+    [footer setImages:animatedImages duration:0.5 forState:MJRefreshStateRefreshing];
+    
+    self.tableView.mj_footer = footer;
+    
     _canRefreshFooter = NO;
 }
 
@@ -512,8 +526,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 //        NSInteger section = indexPath.section;
         NSInteger row = indexPath.row;
         PIECommentTableCell *cell = (PIECommentTableCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-//        DDCommentVM *model = (section == 0) ? _commentsHot[row] : _commentsNew.array[row];
-        PIECommentVM *model =  _commentsNew.array[row];
+//        DDCommentVM *model = (section == 0) ? _commentsHot[row] : _source_newComment.array[row];
+        PIECommentVM *model =  _source_newComment.array[row];
 
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.avatarView.frame, p)) {
@@ -549,7 +563,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
     }
 }
 
@@ -557,7 +571,10 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 - (void)getDataSource {
     WS(ws);
-
+    UIActivityIndicatorView* activityView = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    activityView.center = CGPointMake(self.view.center.x, 100);
+    [self.view addSubview:activityView];
+    [activityView startAnimating];
     _currentPage = 1;
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -568,8 +585,10 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     
     PIECommentManager *commentManager = [PIECommentManager new];
     [commentManager ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
-        ws.commentsNew.array = recentCommentArray;
-        ws.commentsHot = hotCommentArray;
+        [activityView stopAnimating];
+        [activityView removeFromSuperview];
+        ws.source_newComment.array = recentCommentArray;
+        ws.source_hotComment = hotCommentArray;
         
         if (recentCommentArray.count > 0) {
             _canRefreshFooter = YES;
@@ -588,12 +607,12 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [param setObject:@(10) forKey:@"size"];
     PIECommentManager *commentManager = [PIECommentManager new];
     [commentManager ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
-        [self.commentsNew willChangeValueForKey:@"array"];
-        [ws.commentsNew addArrayObject: recentCommentArray];
-        [self.commentsNew didChangeValueForKey:@"array"];
-        [ws.commentsHot addObjectsFromArray: hotCommentArray];
+        [self.source_newComment willChangeValueForKey:@"array"];
+        [ws.source_newComment addArrayObject: recentCommentArray];
+        [self.source_newComment didChangeValueForKey:@"array"];
+        [ws.source_hotComment addObjectsFromArray: hotCommentArray];
 
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
         [self.tableView reloadData];
         if (recentCommentArray.count == 0) {
             ws.canRefreshFooter = NO;
@@ -617,11 +636,15 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
-
+-(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
+    return !_shouldShowHeaderView && !_isFirstLoading ;
+}
 -(BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
     return YES;
 }
-
+-(CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    return -100;
+}
 #pragma mark - headerView
 
 -(PIECommentTableHeaderView_Ask *)headerView {
@@ -702,7 +725,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
                                                initWithImageInfo:imageInfo
                                                mode:JTSImageViewControllerMode_Image
-                                               backgroundStyle:JTSImageViewControllerBackgroundOption_Scaled];
+                                               backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
     
         // Present the view controller.
         [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOffscreen];
@@ -802,7 +825,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [DDShareManager copy:_vm];
 }
 -(void)tapShare7 {
-    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
+    self.shareView.vm = _vm;
 }
 -(void)tapShare8 {
     [self collect];
@@ -907,49 +930,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     }
     return _shareView;
 }
-- (JGActionSheet *)reportActionSheet {
-    WS(ws);
-    if (!_reportActionSheet) {
-        _reportActionSheet = [JGActionSheet new];
-        JGActionSheetSection *section = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"色情、淫秽或低俗内容", @"广告或垃圾信息",@"违反法律法规的内容"] buttonStyle:JGActionSheetButtonStyleDefault];
-        NSArray *sections = @[section];
-        _reportActionSheet = [JGActionSheet actionSheetWithSections:sections];
-        _reportActionSheet.delegate = self;
-        [_reportActionSheet setOutsidePressBlock:^(JGActionSheet *sheet) {
-            [sheet dismissAnimated:YES];
-        }];
-        [_reportActionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
-            NSMutableDictionary* param = [NSMutableDictionary new];
-            [param setObject:@(ws.vm.ID) forKey:@"target_id"];
-            [param setObject:@(ws.vm.type) forKey:@"target_type"];
-            UIButton* b = section.buttons[indexPath.row];
-            switch (indexPath.row) {
-                case 0:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                case 1:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                case 2:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    [param setObject:b.titleLabel.text forKey:@"content"];
-                    break;
-                default:
-                    [ws.reportActionSheet dismissAnimated:YES];
-                    break;
-            }
-            [ATOMReportModel report:param withBlock:^(NSError *error) {
-                if(!error) {
-                    [Util ShowTSMessageSuccess:@"已举报"];
-                }
-                
-            }];
-        }];
-    }
-    return _reportActionSheet;
-}
+
 
 
 @end

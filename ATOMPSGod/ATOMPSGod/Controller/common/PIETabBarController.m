@@ -7,13 +7,16 @@
 //
 
 #import "PIETabBarController.h"
-#import "PIENewViewController.h"
+#import "PIEChannelViewController.h"
 #import "PIEEliteViewController.h"
 #import "DDNavigationController.h"
 #import "DDService.h"
 #import "PIEMeViewController.h"
 #import "PIECameraViewController.h"
 #import "PIEProceedingViewController.h"
+#import "AppDelegate.h"
+#import "DDLoginNavigationController.h"
+#import "ATOMUserDAO.h"
 
 @interface PIETabBarController ()<UITabBarControllerDelegate>
 @property (nonatomic, strong) DDNavigationController *navigation_new;
@@ -40,31 +43,64 @@
 -(void)viewDidLoad {
     [super viewDidLoad];
     
+    self.delegate = self;
+    [self setupTitle];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NetworkSignOutRET) name:@"NetworkSignOutCall" object:nil];
+    
+}
+- (void)setupTitle {
     [[UITabBarItem appearance] setTitleTextAttributes:@{   NSForegroundColorAttributeName: [UIColor blackColor],                                                           NSFontAttributeName: [UIFont systemFontOfSize:10]
-                                                                                 }
+                                                           }
                                              forState:UIControlStateNormal];
     [[UITabBarItem appearance] setTitleTextAttributes:@{   NSForegroundColorAttributeName: [UIColor blackColor],                                                           NSFontAttributeName: [UIFont systemFontOfSize:10]
                                                            }
                                              forState:UIControlStateSelected];
 
-    self.delegate = self;
 }
 
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkSignOutCall"object:nil];
+}
+-(void) NetworkSignOutRET {
+    SIAlertView *alertView = [KShareManager NetworkErrorOccurredAlertView];
+    [alertView addButtonWithTitle:@"好的"
+                             type:SIAlertViewButtonTypeDefault
+                          handler:^(SIAlertView *alert) {
+                              //清空数据库用户表
+                              [ATOMUserDAO clearUsers];
+                              //清空当前用户
+                              [[DDUserManager currentUser]wipe];
+                              self.navigationController.viewControllers = @[];
+                              PIELaunchViewController *lvc = [[PIELaunchViewController alloc] init];
+                              [AppDelegate APP].window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
+                          }];
+    alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
+    [alertView show];
+}
+
+
 - (void)configureTabBarController {
-    PIENewViewController *homePageViewController = [PIENewViewController new];
+    
+    PIEChannelViewController *channelVc = [PIEChannelViewController new];
     PIEEliteViewController *myAttentionViewController = [PIEEliteViewController new];
     PIEProceedingViewController *proceedingViewController = [PIEProceedingViewController new];
-    PIEMeViewController *vc4 = (PIEMeViewController *)[[UIStoryboard storyboardWithName:@"Me" bundle:nil] instantiateViewControllerWithIdentifier: @"PIEME"];
-    UIViewController* vc = [UIViewController new];
-    homePageViewController.title = @"最新";
+    
+    PIEMeViewController *aboutMeVC = (PIEMeViewController *)[[UIStoryboard storyboardWithName:@"Me" bundle:nil] instantiateViewControllerWithIdentifier: @"PIEME"];
+    UIViewController* takePhotoVC = [UIViewController new];
+    
+    
+    channelVc.title                 = @"图派";
     myAttentionViewController.title = @"首页";
-    proceedingViewController.title = @"进行中";
-    vc4.title = @"我的";
-    _navigation_new = [[DDNavigationController alloc] initWithRootViewController:homePageViewController];
+    proceedingViewController.title  = @"进行中";
+    aboutMeVC.title                 = @"我的";
+    
+    
+    
+    _navigation_new = [[DDNavigationController alloc] initWithRootViewController:channelVc];
     _navigation_elite = [[DDNavigationController alloc] initWithRootViewController:myAttentionViewController];
     _navigation_proceeding = [[DDNavigationController alloc] initWithRootViewController:proceedingViewController];
-    _navigation_me = [[DDNavigationController alloc] initWithRootViewController:vc4];
-    _centerNav = [[DDNavigationController alloc] initWithRootViewController:vc];
+    _navigation_me = [[DDNavigationController alloc] initWithRootViewController:aboutMeVC];
+    _centerNav = [[DDNavigationController alloc] initWithRootViewController:takePhotoVC];
     _preNav = _navigation_elite;
     
     _navigation_elite.tabBarItem.image = [UIImage imageNamed:@"pie_tab_1"];
@@ -77,6 +113,8 @@
     _navigation_me.tabBarItem.selectedImage = [UIImage imageNamed:@"pie_tab_5_selected"];
     
     _centerNav.tabBarItem.image = [UIImage imageNamed:@"pie_tab_3_selected"];
+    
+    
     
     _navigation_new.tabBarItem.image = [ _navigation_new.tabBarItem.image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     _navigation_new.tabBarItem.selectedImage = [ _navigation_new.tabBarItem.selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
@@ -95,10 +133,13 @@
     [_centerNav.tabBarItem setImageInsets:UIEdgeInsetsMake(5, 0, -5, 0)];
     self.viewControllers = [NSArray arrayWithObjects:_navigation_elite, _navigation_new,_centerNav,_navigation_proceeding, _navigation_me, nil];
 }
+
+
+
 -(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
     if (viewController == _navigation_new) {
         if (_preNav == _navigation_new) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshNavigation_New" object:nil];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshNavigation_New" object:nil];
         }
     } else if (viewController == _navigation_elite) {
         if (_preNav == _navigation_elite) {
@@ -117,7 +158,7 @@
 }
 - (void)presentBlurViewController {
     PIECameraViewController *pvc = [PIECameraViewController new];
-//    pvc.blurStyle = UIBlurEffectStyleDark;
+    pvc.blurStyle = UIBlurEffectStyleDark;
     [self presentViewController:pvc animated:YES completion:nil];
 }
 @end

@@ -46,7 +46,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.collectionView.backgroundColor = [UIColor blackColor];
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     self.collectionView.allowsMultipleSelection = self.imagePickerController.allowsMultipleSelection;
@@ -67,7 +68,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.barTintColor = [UIColor darkGrayColor];
+    self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
     [self updateDoneButtonState];
     [self updateSelectionInfo];

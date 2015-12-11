@@ -63,11 +63,41 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.edgesForExtendedLayout = UIRectEdgeAll;
+    self.navigationController.hidesBarsOnSwipe = NO;
     // Do any additional setup after loading the view from its nib.
     [self setupViews];
     [self getDataSource];
     [self setupPageMenu];
     [self setupTapGesture];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
+                                                  forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.navigationController.navigationBar.translucent = YES;
+    self.navigationController.view.backgroundColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+    
+    if (self.navigationController.viewControllers.count <= 1) {
+        [self setupNavBar];
+    }
+}
+
+
+- (void)setupNavBar {
+    UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
+    buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [buttonLeft setImage:[UIImage imageNamed:@"PIE_icon_back"] forState:UIControlStateNormal];
+    [buttonLeft addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonLeft];
+    self.navigationItem.leftBarButtonItem =  buttonItem;
+}
+- (void)dismiss {
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
 - (void)setupViews {
     self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -160,7 +190,7 @@
     self.title = user.nickname;
     [DDService downloadImage:user.avatar withBlock:^(UIImage *image) {
         _avatarView.image = image;
-        _blurView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:nil];
+        _blurView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:[UIColor blackColor]];
     }];
     _followCountLabel.text = [NSString stringWithFormat:@"%zd",user.attentionNumber];
     _fansCountLabel.text = [NSString stringWithFormat:@"%zd",user.fansNumber];
@@ -236,7 +266,7 @@
 
     if (_pageMenu.view.frame.origin.y != 0) {
         [self.pageMenu.view mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.view1.mas_bottom).with.offset(-self.view1.frame.size.height).with.priorityHigh();
+            make.top.equalTo(self.view1.mas_bottom).with.offset(-self.view1.frame.size.height+NAV_HEIGHT).with.priorityHigh();
         }];
         [UIView animateWithDuration:0.5 animations:^{
             [self.pageMenu.view layoutIfNeeded];

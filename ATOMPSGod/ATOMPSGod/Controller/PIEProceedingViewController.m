@@ -23,7 +23,8 @@
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
 #import "PIEProceedingShareView.h"
-#import "UITableView+FDTemplateLayoutCell.h"
+#import "PIEProceedingAskTableViewCell_NoGap.h"
+//#import "UITableView+FDTemplateLayoutCell.h"
 
 #define MyAskCellWidth (SCREEN_WIDTH - 20) / 2.0
 
@@ -67,10 +68,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     [self configData];
     [self createNavBar];
     [self configSubviews];
-    
     [self getSourceIfEmpty_ask];
 }
 
@@ -88,17 +89,17 @@
 
 - (void)getSourceIfEmpty_ask {
     if (_sourceAsk.count <= 0 || _isfirstLoadingAsk) {
-        [self.sv.askTableView.header beginRefreshing];
+        [self.sv.askTableView.mj_header beginRefreshing];
     }
 }
 - (void)getSourceIfEmpty_toHelp {
     if (_sourceToHelp.count <= 0 || _isfirstLoadingToHelp) {
-        [self.sv.toHelpTableView.header beginRefreshing];
+        [self.sv.toHelpTableView.mj_header beginRefreshing];
     }
 }
 - (void)getSourceIfEmpty_done {
     if (_sourceDone.count <= 0 || _isfirstLoadingDone) {
-        [self.sv.doneCollectionView.header beginRefreshing];
+        [self.sv.doneCollectionView.mj_header beginRefreshing];
     }
 }
 #pragma mark - init methods
@@ -136,6 +137,10 @@
     _sv.askTableView.emptyDataSetSource = self;
     UINib* nib = [UINib nibWithNibName:@"PIEProceedingAskTableViewCell" bundle:nil];
     [_sv.askTableView registerNib:nib forCellReuseIdentifier:@"PIEProceedingAskTableViewCell"];
+    
+    UINib* nib2 = [UINib nibWithNibName:@"PIEProceedingAskTableViewCell_NoGap" bundle:nil];
+    [_sv.askTableView registerNib:nib2 forCellReuseIdentifier:@"PIEProceedingAskTableViewCell_NoGap"];
+
 }
 - (void)configDoneCollectionView {
     _sv.doneCollectionView.dataSource = self;
@@ -154,7 +159,10 @@
     _sv.toHelpTableView.emptyDataSetSource = self;
     _sv.toHelpTableView.estimatedRowHeight = 145;
     _sv.toHelpTableView.rowHeight = UITableViewAutomaticDimension;
-    
+    _sv.toHelpTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    _sv.toHelpTableView.separatorInset = UIEdgeInsetsMake(0, 132, 0, 0);
+    _sv.toHelpTableView.separatorColor = [UIColor colorWithHex:0xd8d8d8 andAlpha:1.0];
+
     UINib* nib = [UINib nibWithNibName:@"PIEProceedingToHelpTableViewCell" bundle:nil];
     [_sv.toHelpTableView registerNib:nib forCellReuseIdentifier:@"PIEProceedingToHelpTableViewCell"];
 }
@@ -176,7 +184,7 @@
     _selectedVM = [_sourceAsk objectAtIndex:indexPath.row];
     if (indexPath) {
         //点击图片
-        [self showShareView];
+        [self showShareViewWithToHideDeleteButton:YES];
     }
 }
 - (void)longPressOnToHelp:(UILongPressGestureRecognizer *)gesture {
@@ -186,7 +194,7 @@
     _selectedVM = [_sourceToHelp objectAtIndex:indexPath.row];
     if (indexPath) {
         //点击图片
-        [self showShareView];
+        [self showShareViewWithToHideDeleteButton:NO];
     }
 }
 - (void)tapToHelpTableViewGesture:(UITapGestureRecognizer *)gesture {
@@ -259,7 +267,7 @@
         if (_canRefreshDoneFooter) {
             [self getMoreRemoteSourceDone];
         } else {
-            [_sv.doneCollectionView.footer endRefreshing];
+            [_sv.doneCollectionView.mj_footer endRefreshing];
         }
     }
 }
@@ -275,13 +283,13 @@
         if (_canRefreshAskFooter) {
             [self getMoreRemoteSourceMyAsk];
         } else {
-            [_sv.askTableView.footer endRefreshing];
+            [_sv.askTableView.mj_footer endRefreshing];
         }
     } else if (tableView == _sv.toHelpTableView) {
         if (_canRefreshToHelpFooter) {
             [self getMoreRemoteSourceToHelp];
         } else {
-            [_sv.toHelpTableView.footer endRefreshing];
+            [_sv.toHelpTableView.mj_footer endRefreshing];
         }
     }
 
@@ -394,7 +402,8 @@
     return _QBImagePickerController;
 }
 
-- (void)showShareView {
+- (void)showShareViewWithToHideDeleteButton:(BOOL)hide{
+    self.shareView.hideDeleteButton = hide;
     [self.shareView show];
     
 }
@@ -405,6 +414,7 @@
     }
     return _shareView;
 }
+
 
 #pragma mark - UITableView Datasource and delegate
 
@@ -423,9 +433,15 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == _sv.askTableView) {
-        PIEProceedingAskTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIEProceedingAskTableViewCell"];
-        [cell injectSource:[_sourceAsk objectAtIndex:indexPath.row]];
-        return cell;
+        if (indexPath.row == 0) {
+            PIEProceedingAskTableViewCell_NoGap *cell = [tableView dequeueReusableCellWithIdentifier:@"PIEProceedingAskTableViewCell_NoGap"];
+            [cell injectSource:[_sourceAsk objectAtIndex:indexPath.row]];
+            return cell;
+        } else {
+            PIEProceedingAskTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIEProceedingAskTableViewCell"];
+            [cell injectSource:[_sourceAsk objectAtIndex:indexPath.row]];
+            return cell;
+        }
     }
     else if (tableView == _sv.toHelpTableView) {
         PIEProceedingToHelpTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIEProceedingToHelpTableViewCell"];
@@ -440,24 +456,30 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == _sv.askTableView) {
-        return 180;
+        if (indexPath.row == 0) {
+            return 180-15;
+        } else {
+            return 175;
+        }
+    } else {
+        return UITableViewAutomaticDimension;
     }
-    else if (tableView == _sv.toHelpTableView) {
-        return [tableView fd_heightForCellWithIdentifier:@"PIEProceedingToHelpTableViewCell"  cacheByIndexPath:indexPath configuration:^(PIEProceedingToHelpTableViewCell *cell) {
-            [cell injectSource:[_sourceToHelp objectAtIndex:indexPath.row]];
-        }];
-//        PIEProceedingToHelpTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-//        UITextView* textV = [UITextView new];
-//        textV.text = ((PIEPageVM*)[_sourceToHelp objectAtIndex:indexPath.row]).content;
-//        CGSize size = [textV sizeThatFits:CGSizeMake(200, CGFLOAT_MAX)];
-//        NSLog(@"_contentTextView width %f",cell.contentTextView.frame.size.width);
-//        NSLog(@"_contentTextView height %f",size.height);
-//        return size.height + 72;
-
-    }
-    else {
-        return 0;
-    }
+//    else if (tableView == _sv.toHelpTableView) {
+////        return [tableView fd_heightForCellWithIdentifier:@"PIEProceedingToHelpTableViewCell"  cacheByIndexPath:indexPath configuration:^(PIEProceedingToHelpTableViewCell *cell) {
+////            [cell injectSource:[_sourceToHelp objectAtIndex:indexPath.row]];
+////        }];
+////        PIEProceedingToHelpTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+////        UITextView* textV = [UITextView new];
+////        textV.text = ((PIEPageVM*)[_sourceToHelp objectAtIndex:indexPath.row]).content;
+////        CGSize size = [textV sizeThatFits:CGSizeMake(200, CGFLOAT_MAX)];
+////        NSLog(@"_contentTextView width %f",cell.contentTextView.frame.size.width);
+////        NSLog(@"_contentTextView height %f",size.height);
+////        return size.height + 72;
+//        
+//    }
+//    else {
+//        return 0;
+//    }
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -509,7 +531,7 @@
 
 - (void)getRemoteSourceMyAsk {
     WS(ws);
-    [ws.sv.askTableView.footer endRefreshing];
+    [ws.sv.askTableView.mj_footer endRefreshing];
     _currentIndex_MyAsk = 1;
     _timeStamp_myAsk = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -527,13 +549,13 @@
             [ws.sourceAsk addObjectsFromArray:returnArray];
         }
         [ws.sv.askTableView reloadData];
-        [ws.sv.askTableView.header endRefreshing];
+        [ws.sv.askTableView.mj_header endRefreshing];
     }];
 }
 
 - (void)getMoreRemoteSourceMyAsk {
     WS(ws);
-    [ws.sv.askTableView.header endRefreshing];
+    [ws.sv.askTableView.mj_header endRefreshing];
     _currentIndex_MyAsk++;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_currentIndex_MyAsk) forKey:@"page"];
@@ -548,7 +570,7 @@
             [ws.sourceAsk addObjectsFromArray:returnArray];
         }
         [ws.sv.askTableView reloadData];
-        [ws.sv.askTableView.footer endRefreshing];
+        [ws.sv.askTableView.mj_footer endRefreshing];
     }];
 
 }
@@ -557,7 +579,7 @@
 
 - (void)getRemoteSourceToHelp {
     WS(ws);
-    [_sv.toHelpTableView.footer endRefreshing];
+    [_sv.toHelpTableView.mj_footer endRefreshing];
     _currentIndex_ToHelp = 1;
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -581,14 +603,14 @@
             [ws.sourceToHelp addObjectsFromArray:sourceAgent];
         }
         [ws.sv.toHelpTableView reloadData];
-        [ws.sv.toHelpTableView.header endRefreshing];
+        [ws.sv.toHelpTableView.mj_header endRefreshing];
     }];
 }
 
 - (void)getMoreRemoteSourceToHelp {
     WS(ws);
     _currentIndex_ToHelp ++;
-    [_sv.toHelpTableView.header endRefreshing];
+    [_sv.toHelpTableView.mj_header endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_currentIndex_ToHelp) forKey:@"page"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
@@ -607,13 +629,13 @@
             [ws.sourceToHelp addObjectsFromArray:sourceAgent];
         }
         [ws.sv.toHelpTableView reloadData];
-        [ws.sv.toHelpTableView.footer endRefreshing];
+        [ws.sv.toHelpTableView.mj_footer endRefreshing];
     }];
 }
 
 - (void)getRemoteSourceDone {
     WS(ws);
-    [ws.sv.doneCollectionView.footer endRefreshing];
+    [ws.sv.doneCollectionView.mj_footer endRefreshing];
     _currentIndex_Done = 1;
     _timeStamp_done = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -637,14 +659,14 @@
             [ws.sourceDone removeAllObjects];
             [ws.sourceDone addObjectsFromArray:sourceAgent];
         }
-        [ws.sv.doneCollectionView.header endRefreshing];
+        [ws.sv.doneCollectionView.mj_header endRefreshing];
         [ws.sv.doneCollectionView reloadData];
 
     }];
 }
 - (void)getMoreRemoteSourceDone {
     WS(ws);
-    [ws.sv.doneCollectionView.header endRefreshing];
+    [ws.sv.doneCollectionView.mj_header endRefreshing];
     _currentIndex_Done++;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_currentIndex_Done) forKey:@"page"];
@@ -664,7 +686,7 @@
             }
             [ws.sourceDone addObjectsFromArray:sourceAgent];
         }
-        [ws.sv.doneCollectionView.footer endRefreshing];
+        [ws.sv.doneCollectionView.mj_footer endRefreshing];
         [ws.sv.doneCollectionView reloadData];
 
     }];

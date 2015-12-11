@@ -20,6 +20,7 @@
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, assign) BOOL isfirstLoading;
+@property (nonatomic, assign)  long long timeStamp;
 
 @end
 
@@ -32,22 +33,25 @@
     self.title = @"收到的赞";
     _source = [NSMutableArray array];
     _canRefreshFooter = YES;
-    self.view = self.tableView;
     _isfirstLoading = YES;
-    [self.tableView.header beginRefreshing];
-    self.tableView.emptyDataSetDelegate = self;
-    self.tableView.emptyDataSetSource = self;
+//    self.edgesForExtendedLayout = UIRectEdgeNone;
+    
+//    self.view = self.tableView;
+    [self.view addSubview:self.tableView];
+    [self.tableView.mj_header beginRefreshing];
+
 }
+
 
 #pragma mark - GetDataSource
 - (void)getDataSource {
     _currentIndex = 1;
-    [self.tableView.footer endRefreshing];
+    [self.tableView.mj_footer endRefreshing];
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    _timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(1) forKey:@"page"];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@"like" forKey:@"type"];
     
@@ -62,21 +66,20 @@
         }
         
         [ws.tableView reloadData];
-        [self.tableView.header endRefreshing];
+        [self.tableView.mj_header endRefreshing];
     }];
 }
 
 #pragma mark - GetDataSource
 - (void)getMoreDataSource {
-    [self.tableView.header endRefreshing];
+    [self.tableView.mj_header endRefreshing];
     _currentIndex++;
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(_currentIndex) forKey:@"page"];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [param setObject:@"normal" forKey:@"type"];
+    [param setObject:@"like" forKey:@"type"];
     
     [PIENotificationManager getNotifications:param block:^(NSArray *source) {
         if (source.count>0) {
@@ -87,7 +90,7 @@
         else {
             _canRefreshFooter = NO;
         }
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
     }];
 }
 
@@ -98,16 +101,20 @@
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
     }
 }
 -(PIERefreshTableView *)tableView {
     if (!_tableView) {
-        _tableView = [PIERefreshTableView new];
+        _tableView = [[PIERefreshTableView alloc]initWithFrame:self.view.bounds];
         _tableView.dataSource = self;
         _tableView.delegate = self;
         _tableView.psDelegate = self;
-        
+        _tableView.emptyDataSetDelegate = self;
+        _tableView.emptyDataSetSource = self;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        _tableView.separatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
+        _tableView.separatorInset = UIEdgeInsetsMake(0, 50, 0, 10);
         UITapGestureRecognizer* tapGes = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnTableView:)];
         [_tableView addGestureRecognizer:tapGes];
         
@@ -156,7 +163,7 @@
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 55;
+    return 68;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _source.count;

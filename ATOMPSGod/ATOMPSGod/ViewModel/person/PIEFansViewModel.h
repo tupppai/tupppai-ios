@@ -12,13 +12,13 @@
 @interface PIEFansViewModel : NSObject
 
 @property (nonatomic, assign) NSInteger uid;
-@property (nonatomic, copy) NSString *userName;
-@property (nonatomic, copy) NSString *userSex;
-@property (nonatomic, copy) NSString *avatarURL;
-@property (nonatomic, copy) NSString *fansCount;
-@property (nonatomic, copy) NSString *askCount;
-@property (nonatomic, copy) NSString *replyCount;
-@property (nonatomic, assign) BOOL isFollow;
+@property (nonatomic, copy  ) NSString  *userName;
+@property (nonatomic, copy  ) NSString  *userSex;
+@property (nonatomic, copy  ) NSString  *avatarURL;
+@property (nonatomic, copy  ) NSString  *fansCount;
+@property (nonatomic, copy  ) NSString  *askCount;
+@property (nonatomic, copy  ) NSString  *replyCount;
+@property (nonatomic, assign) BOOL      isFollow;
 @property (nonatomic, assign) NSInteger followStatus;
 
 - (void)setViewModelData:(PIEEntityFan *)fans;

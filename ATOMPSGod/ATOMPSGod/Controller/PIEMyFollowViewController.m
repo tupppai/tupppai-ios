@@ -19,7 +19,7 @@
 @interface PIEMyFollowViewController () < UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
 @property (nonatomic, strong) PIERefreshFooterTableView *tableView;
-@property (nonatomic, strong) UIView *concernView;
+//@property (nonatomic, strong) UIView *concernView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapConcernGesture;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, assign) NSInteger currentPage;
@@ -43,7 +43,7 @@
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [_tableView.footer endRefreshing];
+        [_tableView.mj_footer endRefreshing];
     }
 }
 
@@ -57,24 +57,29 @@
 
 - (void)createUI {
     self.title = @"我的关注";
-    _concernView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
-    self.view = _concernView;
-    _tableView = [[PIERefreshFooterTableView alloc] initWithFrame:_concernView.bounds];
-    _tableView.backgroundColor = [UIColor colorWithHex:0xededed];
-    _tableView.tableFooterView = [UIView new];
-    [_concernView addSubview:_tableView];
-    _tableView.dataSource = self;
-    _tableView.delegate = self;
-    _tableView.psDelegate = self;
-    _tableView.emptyDataSetSource = self;
-    _tableView.emptyDataSetDelegate = self;
-    _tapConcernGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapConcernGesture:)];
-    [_tableView addGestureRecognizer:_tapConcernGesture];
     _canRefreshFooter = YES;
     _isfirstLoading = YES;
+    [self.view addSubview:self.tableView];
     [self getDataSource];
 }
 
+-(PIERefreshFooterTableView *)tableView {
+    if (!_tableView) {
+        _tableView = [[PIERefreshFooterTableView alloc] initWithFrame:self.view.bounds];
+        _tableView.backgroundColor = [UIColor whiteColor];
+        _tableView.tableFooterView = [UIView new];
+        _tableView.dataSource = self;
+        _tableView.delegate = self;
+        _tableView.separatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
+        _tableView.separatorInset = UIEdgeInsetsMake(0, 18, 0, 15);
+        _tableView.psDelegate = self;
+        _tableView.emptyDataSetSource = self;
+        _tableView.emptyDataSetDelegate = self;
+        _tapConcernGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapConcernGesture:)];
+        [_tableView addGestureRecognizer:_tapConcernGesture];
+    }
+    return _tableView;
+}
 #pragma mark - Click Event
 
 #pragma mark - Gesture Event
@@ -203,7 +208,7 @@
         } else {
             ws.canRefreshFooter = YES;
         }
-        [ws.tableView.footer endRefreshing];
+        [ws.tableView.mj_footer endRefreshing];
         [ws.tableView reloadData];
     }];
 }

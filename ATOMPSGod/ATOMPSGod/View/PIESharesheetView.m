@@ -5,6 +5,7 @@
 //  Created by chenpeiwei on 10/13/15.
 //  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
+#define height_sheet 251.0f
 
 #import "PIESharesheetView.h"
 #import "POP.h"
@@ -20,17 +21,28 @@
         
         [self addSubview:self.cancelLabel];
         [self.cancelLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(_icon5.mas_bottom).with.offset(30);
-            make.leading.equalTo(_icon1);
-            make.trailing.equalTo(_icon4);
-            make.height.equalTo(@40);
+            make.height.equalTo(@38);
+            make.bottom.equalTo(self).with.offset(-19);
+            make.leading.equalTo(self).with.offset(26);
+            make.trailing.equalTo(self).with.offset(-26);
         }];
     }
     return self;
 }
 - (void)configSelf {
     self.backgroundColor = [UIColor whiteColor];
-    self.layer.cornerRadius = 10;
+//    self.layer.cornerRadius = 10;
+    self.frame = CGRectMake(0, 0, SCREEN_WIDTH*0.965, height_sheet);
+    UIBezierPath *maskPath;
+    maskPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
+                                     byRoundingCorners:(UIRectCornerTopLeft|UIRectCornerTopRight)
+                                           cornerRadii:CGSizeMake(10.0, 10.0)];
+    
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+    maskLayer.frame = self.bounds;
+    maskLayer.path = maskPath.CGPath;
+    self.layer.mask = maskLayer;
+
 }
 - (void)generateData {
     _iconArray = [NSMutableArray new];
@@ -81,61 +93,63 @@
 }
 - (void)mansoryIcons {
     CGFloat itemWidth = 60;
-    CGFloat itemHeight = 50;
+    CGFloat itemHeight = 55;
 
-    CGFloat rowGap = 20;
+    CGFloat firstGap_V = 36;
+    CGFloat sencondGap_V = 28;
+
     CGFloat columnGap = ( SCREEN_WIDTH*0.98 -  itemWidth*4 ) / 4;
 
     [_icon1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@(itemWidth));
         make.height.equalTo(@(itemHeight));
         make.leading.equalTo(self).with.offset(columnGap/2);
-        make.top.equalTo(self).with.offset(rowGap);
+        make.top.equalTo(self).with.offset(firstGap_V);
     }];
     
     [_icon2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@(itemWidth));
         make.height.equalTo(@(itemHeight));
         make.leading.equalTo(_icon1.mas_trailing).with.offset(columnGap);
-        make.top.equalTo(self).with.offset(rowGap);
+        make.top.equalTo(self).with.offset(firstGap_V);
     }];
 
     [_icon3 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@(itemWidth));
         make.height.equalTo(@(itemHeight));
         make.leading.equalTo(_icon2.mas_trailing).with.offset(columnGap);
-        make.top.equalTo(self).with.offset(rowGap);
+        make.top.equalTo(self).with.offset(firstGap_V);
     }];
 
     [_icon4 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@(itemWidth));
         make.height.equalTo(@(itemHeight));
         make.leading.equalTo(_icon3.mas_trailing).with.offset(columnGap);
-        make.top.equalTo(self).with.offset(rowGap);
+        make.top.equalTo(self).with.offset(firstGap_V);
     }];
     [_icon5 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@(itemWidth));
         make.height.equalTo(@(itemHeight));
         make.leading.equalTo(self).with.offset(columnGap/2);
-        make.top.equalTo(_icon1.mas_bottom).with.offset(rowGap);
+        make.top.equalTo(_icon1.mas_bottom).with.offset(sencondGap_V);
     }];
     [_icon6 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@(itemWidth));
         make.height.equalTo(@(itemHeight));
         make.leading.equalTo(_icon5.mas_trailing).with.offset(columnGap);
-        make.top.equalTo(_icon1.mas_bottom).with.offset(rowGap);
+        make.top.equalTo(_icon1.mas_bottom).with.offset(sencondGap_V);
     }];
     [_icon7 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@(itemWidth));
         make.height.equalTo(@(itemHeight));
         make.leading.equalTo(_icon6.mas_trailing).with.offset(columnGap);
-        make.top.equalTo(_icon1.mas_bottom).with.offset(rowGap);
+        make.top.equalTo(_icon1.mas_bottom).with.offset(sencondGap_V);
     }];
     [_icon8 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@(itemWidth));
         make.height.equalTo(@(itemHeight));
         make.leading.equalTo(_icon7.mas_trailing).with.offset(columnGap);
-        make.top.equalTo(_icon1.mas_bottom).with.offset(rowGap);
+        make.top.equalTo(_icon1.mas_bottom).with.offset(sencondGap_V);
     }];
 }
 
@@ -143,10 +157,10 @@
     if (!_cancelLabel) {
         _cancelLabel = [UILabel new];
         _cancelLabel.text = @"取消";
-        _cancelLabel.font = [UIFont systemFontOfSize:15];
-        _cancelLabel.backgroundColor = [UIColor groupTableViewBackgroundColor];
-        _cancelLabel.textColor = [UIColor darkGrayColor];
-        _cancelLabel.layer.cornerRadius = 10;
+        _cancelLabel.font = [UIFont lightTupaiFontOfSize:15];
+        _cancelLabel.backgroundColor = [UIColor colorWithHex:0xEBEBEB andAlpha:1.0];
+        _cancelLabel.textColor = [UIColor colorWithHex:0x4a4a4a andAlpha:1.0];
+        _cancelLabel.layer.cornerRadius = 20;
         _cancelLabel.clipsToBounds = YES;
         _cancelLabel.textAlignment = NSTextAlignmentCenter;
         _cancelLabel.userInteractionEnabled = YES;
@@ -154,6 +168,7 @@
     }
     return _cancelLabel;
 }
+
 
 
 @end

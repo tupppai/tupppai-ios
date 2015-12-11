@@ -68,6 +68,7 @@
         for (int i = 0; i < data.count; i++) {
             NSDictionary* dic = [data objectAtIndex:i];
             PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:dic error:NULL];
+            entity.uploadTime = [[dic objectForKey:@"comment_time"]integerValue];
             PIEPageVM* vm = [[PIEPageVM alloc]initWithPageEntity:entity];
             vm.content = entity.comment;
             [resultArray addObject:vm];
@@ -129,5 +130,8 @@
         }
     }];
 }
+
+
+
 
 @end

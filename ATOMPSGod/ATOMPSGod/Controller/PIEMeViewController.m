@@ -26,16 +26,18 @@
 @property (weak, nonatomic) IBOutlet UIView *dotView2;
 @property (weak, nonatomic) IBOutlet UIView *dotView1;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
+@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *followCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *fansCountLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *topContainerView;
-@property (weak, nonatomic) IBOutlet UIView *pageMenuContainerView;
+@property (weak, nonatomic) IBOutlet UILabel *likedCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *followView;
 @property (weak, nonatomic) IBOutlet UILabel *fansView;
-@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *likeView;
+
+@property (weak, nonatomic) IBOutlet UIImageView *topContainerView;
+@property (weak, nonatomic) IBOutlet UIView *pageMenuContainerView;
 @property (weak, nonatomic) IBOutlet UIView *avatarContainerView;
 
-@property (weak, nonatomic) IBOutlet UILabel *likedCountLabel;
 @property (nonatomic, strong) PWRefreshFooterCollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *homeImageDataSource;
@@ -100,6 +102,9 @@
 }
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+//
+    
+    self.edgesForExtendedLayout = UIRectEdgeAll;
 
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
                                                   forBarMetrics:UIBarMetricsDefault];
@@ -107,7 +112,7 @@
     self.navigationController.navigationBar.translucent = YES;
     self.navigationController.view.backgroundColor = [UIColor clearColor];
     self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
-    self.edgesForExtendedLayout = UIRectEdgeAll;
+    
     [self updateNoticationStatus];
     [MobClick beginLogPageView:@"进入我的"];
 
@@ -165,11 +170,11 @@
 }
 - (void)pushToSettingViewController {
     PIESettingsViewController* vc = [PIESettingsViewController new];
-    [self.navigationController pushViewController:vc animated:NO];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)pushToMessageViewController {
     PIENotificationViewController* vc = [PIENotificationViewController new];
-    [self.navigationController pushViewController:vc animated:NO];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)setupViews {
     
@@ -185,10 +190,29 @@
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarContainerView.layer.cornerRadius = _avatarContainerView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
-
+    
+    [self setupColorAndFont];
     [self setupTapGesture];
 }
 
+- (void)setupColorAndFont {
+    [ _usernameLabel setFont:[UIFont boldSystemFontOfSize:16]];
+    [ _followCountLabel setFont:[UIFont boldSystemFontOfSize:12]];
+    [ _followView setFont:[UIFont boldSystemFontOfSize:12]];
+    [ _likedCountLabel setFont:[UIFont boldSystemFontOfSize:12]];
+    [ _likeView setFont:[UIFont boldSystemFontOfSize:12]];
+    [ _fansCountLabel setFont:[UIFont boldSystemFontOfSize:12]];
+    [ _fansView setFont:[UIFont boldSystemFontOfSize:12]];
+
+    [_usernameLabel setTextColor:[UIColor colorWithHex:0xffffff andAlpha:1.0]];
+    [_followCountLabel setTextColor:[UIColor colorWithHex:0xffffff andAlpha:0.8]];
+    [_followView setTextColor:[UIColor colorWithHex:0xffffff andAlpha:0.8]];
+    [_fansCountLabel setTextColor:[UIColor colorWithHex:0xffffff andAlpha:0.8]];
+    [_fansView setTextColor:[UIColor colorWithHex:0xffffff andAlpha:0.8]];
+    [_likeView setTextColor:[UIColor colorWithHex:0xffffff andAlpha:0.8]];
+    [_likedCountLabel setTextColor:[UIColor colorWithHex:0xffffff andAlpha:0.8]];
+
+}
 - (void)updateViewsWithData {
     DDUserManager* user = [DDUserManager currentUser];
     _usernameLabel.text = user.username;
@@ -252,7 +276,7 @@
                                  };
     
     _pageMenu = [[CAPSPageMenu alloc] initWithViewControllers:controllerArray frame:CGRectMake(0, 0, SCREEN_WIDTH, 100) options:parameters];
-    _pageMenu.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    _pageMenu.view.backgroundColor = [UIColor whiteColor];
     _pageMenu.view.layer.borderColor = [UIColor colorWithHex:0x000000 andAlpha:0.1].CGColor;
     _pageMenu.view.layer.borderWidth = 0.5;
     [self.view addSubview:_pageMenu.view];

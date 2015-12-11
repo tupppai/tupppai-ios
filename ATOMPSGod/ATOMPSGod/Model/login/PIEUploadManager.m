@@ -12,7 +12,7 @@
 @interface PIEUploadManager()
 @property (nonatomic, strong) NSMutableArray *uploadIdArray;
 @property (nonatomic, strong) NSMutableArray *ratioArray;
-@property (nonatomic, copy) NSString *desc;
+@property (nonatomic, copy)  NSArray* toUploadInfoArray;
 
 @end
 @implementation PIEUploadManager
@@ -66,24 +66,26 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *filePath2 = [documentsDirectory stringByAppendingPathComponent:@"ToUpload.dat"];
-    NSArray* toUploadInfoArray = [NSArray arrayWithContentsOfFile:filePath2];
-    _desc = [toUploadInfoArray lastObject];
+    //@"ask",image1,image2,tag_ids,desc
+    //@"reply",image1,tag_ids,desc
+
+    _toUploadInfoArray = [NSArray arrayWithContentsOfFile:filePath2];
     NSData* dataImage1;
     NSData* dataImage2;
     
     UIImage* image1;
     UIImage* image2;
-    NSInteger uploadCount = toUploadInfoArray.count - 2;
+    NSInteger uploadCount = _toUploadInfoArray.count - 3;
     
-    _type = [toUploadInfoArray objectAtIndex:0];
+    _type = [_toUploadInfoArray objectAtIndex:0];
     if (uploadCount == 1) {
-       dataImage1 = [toUploadInfoArray objectAtIndex:1];
+       dataImage1 = [_toUploadInfoArray objectAtIndex:1];
         image1 = [UIImage imageWithData:dataImage1];
         CGFloat ratio1 = image1.size.height/image1.size.width;
         [self.ratioArray addObject:@(ratio1)];
     } else if (uploadCount == 2) {
-        dataImage1 = [toUploadInfoArray objectAtIndex:1];
-        dataImage2 = [toUploadInfoArray objectAtIndex:2];
+        dataImage1 = [_toUploadInfoArray objectAtIndex:1];
+        dataImage2 = [_toUploadInfoArray objectAtIndex:2];
         image1 = [UIImage imageWithData:dataImage1];
         image2 = [UIImage imageWithData:dataImage2];
         CGFloat ratio1 = image1.size.height/image1.size.width;
@@ -146,10 +148,16 @@
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:self.uploadIdArray forKey:@"upload_ids"];
     [param setObject:self.ratioArray forKey:@"ratios"];
+    
+    NSInteger lastIndex = _toUploadInfoArray.count - 1;
+    NSArray* tag_ids = [_toUploadInfoArray objectAtIndex:lastIndex-1];
+    [param setObject:[_toUploadInfoArray lastObject] forKey:@"desc"];
+    [param setObject:tag_ids forKey:@"tag_ids"];
+
 //    long long timeStamp = [[NSDate date] timeIntervalSince1970];
 //    [param setObject:@(timeStamp) forKey:@"last_updated"];
-
-    [param setObject:_desc forKey:@"desc"];
+    
+    [param setObject:[_toUploadInfoArray lastObject] forKey:@"desc"];
     [DDService ddSaveAsk:param withBlock:^(NSInteger newImageID) {
         if (newImageID!=-1) {
 //            [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:@"shouldNavToAskSegment"];
@@ -175,7 +183,7 @@
     [param setObject:self.ratioArray forKey:@"ratios"];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
-    [param setObject:_desc forKey:@"desc"];
+    [param setObject:[_toUploadInfoArray lastObject] forKey:@"desc"];
     NSInteger askID = [[NSUserDefaults standardUserDefaults]
                        integerForKey:@"AskIDToReply"];
     [param setObject:@(askID) forKey:@"ask_id"];
