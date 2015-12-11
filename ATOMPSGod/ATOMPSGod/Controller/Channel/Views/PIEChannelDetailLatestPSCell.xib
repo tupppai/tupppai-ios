@@ -9,11 +9,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="214" id="KGk-i7-Jjw" customClass="PIEChannelDetailLatestPSCell">
-            <rect key="frame" x="0.0" y="0.0" width="750" height="334"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="168" id="KGk-i7-Jjw" customClass="PIEChannelDetailLatestPSCell">
+            <rect key="frame" x="0.0" y="0.0" width="750" height="288"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="750" height="333.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="750" height="287.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9lc-DF-GbP">
@@ -26,9 +26,8 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j8w-sT-wSv" customClass="SwipeView">
-                        <rect key="frame" x="28" y="103.5" width="722" height="212"/>
+                        <rect key="frame" x="10" y="57.5" width="740" height="212"/>
                         <animations/>
-                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="全部 》" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6rw-Gf-uB2">
                         <rect key="frame" x="707" y="15" width="40" height="12"/>
@@ -42,7 +41,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="最新求P" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8e3-Nu-EjB">
-                        <rect key="frame" x="18" y="15" width="51" height="78.5"/>
+                        <rect key="frame" x="18" y="15" width="51" height="32.5"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="51" id="9C6-b5-Sh6"/>
@@ -53,7 +52,7 @@
                 </subviews>
                 <animations/>
                 <constraints>
-                    <constraint firstItem="j8w-sT-wSv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="20" id="9P1-oD-eKp"/>
+                    <constraint firstItem="j8w-sT-wSv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="9P1-oD-eKp"/>
                     <constraint firstItem="j8w-sT-wSv" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.283" id="ERy-A5-KzP"/>
                     <constraint firstItem="8e3-Nu-EjB" firstAttribute="leading" secondItem="9lc-DF-GbP" secondAttribute="trailing" constant="6" id="Qby-qr-Tor"/>
                     <constraint firstItem="9lc-DF-GbP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Sxy-j5-NlV"/>
@@ -70,7 +69,7 @@
             <connections>
                 <outlet property="swipeView" destination="j8w-sT-wSv" id="Loe-7B-ftb"/>
             </connections>
-            <point key="canvasLocation" x="445" y="219"/>
+            <point key="canvasLocation" x="445" y="196"/>
         </tableViewCell>
     </objects>
 </document>

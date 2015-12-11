@@ -20,6 +20,7 @@
 @implementation DDAuthcodeVC
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     [self createUI];
     [self createVerifyTimer];
 }

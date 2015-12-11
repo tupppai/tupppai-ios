@@ -10,7 +10,45 @@
 
 @implementation PIEChannelDetailAskPSItemView
 -(void)awakeFromNib {
-    _imageView.contentMode = UIViewContentModeScaleAspectFill;
-    _imageView.clipsToBounds = YES;
+
+}
+
+-(instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self addSubview:self.imageView];
+        [self addSubview: self.label];
+        [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.leading.equalTo(self);
+            make.top.equalTo(self);
+            make.trailing.equalTo(self).with.offset(-10);
+            make.width.equalTo(self.imageView.mas_height);
+        }];
+        [self.label mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo (self.imageView.mas_bottom).with.offset(4);
+            make.leading.equalTo(self);
+            make.trailing.equalTo(self);
+            make.bottom.equalTo (self);
+        }];
+    }
+    return self;
+}
+
+-(UIImageView *)imageView {
+    if (!_imageView) {
+        _imageView = [UIImageView new];
+        _imageView.contentMode = UIViewContentModeScaleAspectFill;
+        _imageView.clipsToBounds = YES;
+    }
+    return _imageView;
+}
+-(UILabel *)label {
+    if (!_label) {
+        _label = [UILabel new];
+        _label.font = [UIFont lightTupaiFontOfSize:12];
+        _label.textColor = [UIColor darkGrayColor];
+        _label.minimumScaleFactor = 0.5;
+    }
+    return _label;
 }
 @end
