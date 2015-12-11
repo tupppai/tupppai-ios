@@ -58,17 +58,17 @@
                         </variation>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="我觉得我长得真不错！" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="wdw-j6-aQB">
-                        <rect key="frame" x="10" y="450" width="368" height="104.5"/>
+                        <rect key="frame" x="10" y="450" width="368" height="93.5"/>
                         <animations/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hot_allwork" translatesAutoresizingMaskIntoConstraints="NO" id="u76-JP-qUq">
-                        <rect key="frame" x="8" y="570" width="60" height="19"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hot_allwork" translatesAutoresizingMaskIntoConstraints="NO" id="u76-JP-qUq">
+                        <rect key="frame" x="8" y="559" width="60" height="30"/>
                         <animations/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="19" id="5hz-Qg-q4U"/>
+                            <constraint firstAttribute="height" constant="30" id="5hz-Qg-q4U"/>
                             <constraint firstAttribute="width" constant="60" id="QxC-i2-Vwd"/>
                         </constraints>
                     </imageView>
@@ -81,7 +81,7 @@
                         </constraints>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1t2-Zu-9X4" customClass="PIEPageButton">
-                        <rect key="frame" x="83" y="565" width="35" height="30"/>
+                        <rect key="frame" x="83" y="559.5" width="35" height="30"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="7aP-0K-Qxn"/>
@@ -95,7 +95,7 @@
                         </variation>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eCR-aD-tkR" customClass="PIEPageButton">
-                        <rect key="frame" x="138" y="565" width="35" height="30"/>
+                        <rect key="frame" x="138" y="559.5" width="35" height="30"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="4ag-2h-xR2"/>
@@ -110,7 +110,7 @@
                         </variation>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bZD-SV-wez" customClass="PIEPageButton">
-                        <rect key="frame" x="193" y="565" width="35" height="30"/>
+                        <rect key="frame" x="193" y="559.5" width="35" height="30"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="width" priority="250" constant="35" id="2Qc-yC-yeF"/>
@@ -123,7 +123,7 @@
                         </variation>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="New-cK-IUH" customClass="PIEPageLikeButton">
-                        <rect key="frame" x="345" y="566" width="30" height="28"/>
+                        <rect key="frame" x="345" y="560.5" width="30" height="28"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>

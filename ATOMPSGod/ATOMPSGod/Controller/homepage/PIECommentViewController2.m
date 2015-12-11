@@ -138,10 +138,11 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+
     [self.navigationController.navigationBar setBackgroundImage:nil
                                                   forBarMetrics:UIBarMetricsDefault];
     self.navigationController.hidesBarsOnSwipe = NO;
-    [super viewWillDisappear:animated];
     //    [MobClick endLogPageView:@"离开浏览图片页"];
 }
 
@@ -436,17 +437,17 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     //    NSInteger section = indexPath.section;
-    NSInteger row = indexPath.row;
+//    NSInteger row = indexPath.row;
     //    if (section == 0) {
     //        _targetCommentVM = _commentsHot[row];
     //    } else if (section == 1) {
-    _targetCommentVM = _source_newComment.array[row];
+//    _targetCommentVM = _source_newComment.array[row];
     //    }
-    self.textView.placeholder = [NSString stringWithFormat:@"@%@:",_targetCommentVM.username];
-    [self.textView becomeFirstResponder];
-    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+//    self.textView.placeholder = [NSString stringWithFormat:@"@%@:",_targetCommentVM.username];
+//    [self.textView becomeFirstResponder];
+//    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     
 }
 
@@ -578,14 +579,14 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
             vm.username = model.username;
             opvc.pageVM = vm;
             [self.navigationController pushViewController:opvc animated:YES];
+        } else {
+            NSInteger row = indexPath.row;
+            _targetCommentVM = _source_newComment.array[row];
+            self.textView.placeholder = [NSString stringWithFormat:@"@%@:",_targetCommentVM.username];
+            [self.textView becomeFirstResponder];
+            [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         }
-        //        else if (CGRectContainsPoint(cell.likeButton.frame, p)) {
-        //            //UI
-        //            [cell.likeButton toggleLike];
-        //            //Network
-        //            [model toggleLike];
-        //
-        //    }
+
     }
 }
 
