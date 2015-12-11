@@ -207,17 +207,15 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 
     if (view == nil)
     {
-        view =
-        [[NSBundle mainBundle] loadNibNamed:@"PIEChannelDetailAskPSItemView"
-                                             owner:self options:nil][0];
+        NSInteger height = swipeView.frame.size.height;
+        view = [[PIEChannelDetailAskPSItemView alloc]initWithFrame:CGRectMake(0, 0, height, height)];
     }
     
     // viewModel -> view
     NSURL *imageURL = [NSURL URLWithString:_latestAskForPSSource[index].imageURL];
     [view.imageView setImageWithURL:imageURL
                    placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-    view.desc.text = _latestAskForPSSource[index].content;
-    
+    view.label.text = _latestAskForPSSource[index].content;
     
     return view;
 }
@@ -644,7 +642,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         [_tableView registerNib:[UINib nibWithNibName:@"PIENewReplyTableCell"
                                                bundle:nil]
          forCellReuseIdentifier:PIEDetailUsersPSCellIdentifier];
-        
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   
     }
     return _tableView;

@@ -22,6 +22,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     [self createUI];
 }
 
@@ -48,7 +49,8 @@
            [DDService getAuthCode:param withBlock:^(BOOL success) {
                if (success) {
                    [DDUserManager currentUser].mobile = _mobileRegisterView.mobileTextField.text;
-                   [DDUserManager currentUser].password = [_mobileRegisterView.passwordTextField.text sha1];
+                   [[NSUserDefaults standardUserDefaults]setObject:[_mobileRegisterView.passwordTextField.text sha1] forKey:@"password"];
+                   [[NSUserDefaults standardUserDefaults] synchronize];
                    DDAuthcodeVC *ivcvc = [DDAuthcodeVC new];
 //                   ivcvc.verifyCode = authcode;
                    [self.navigationController pushViewController:ivcvc animated:YES];
@@ -68,7 +70,7 @@
         if (block) { block(NO);}
         [Util ShowTSMessageWarn:@"请输入正确的手机号"];
     }
-    else if ([DDUserManager currentUser].signUpType == ATOMSignUpMobile ) {
+    else if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"SignUpType"]integerValue] == ATOMSignUpMobile ) {
                 NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:_mobileRegisterView.mobileTextField.text,@"phone", nil];
                 [DDService checkPhoneRegistration:param withBlock:^(BOOL isRegistered) {
                     if (isRegistered) {
@@ -103,7 +105,7 @@
         if (![_mobileRegisterView.mobileTextField.text isMobileNumber]) {
             [Util ShowTSMessageWarn:@"请输入正确的手机号"];
         }
-        else if ([DDUserManager currentUser].signUpType == ATOMSignUpMobile )
+        else if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"SignUpType"]integerValue] == ATOMSignUpMobile )
 
         {
             [DDService checkPhoneRegistration:param withBlock:^(BOOL isRegistered) {

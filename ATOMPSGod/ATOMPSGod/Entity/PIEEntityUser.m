@@ -9,7 +9,16 @@
 #import "PIEEntityUser.h"
 
 @implementation PIEEntityUser
-
+-(instancetype)init {
+    self = [super init];
+    if (self) {
+        _avatar = @"";
+        _mobile = @"";
+        _nickname = @"";
+        _token = @"";
+    }
+    return self;
+}
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
              @"uid" : @"uid",

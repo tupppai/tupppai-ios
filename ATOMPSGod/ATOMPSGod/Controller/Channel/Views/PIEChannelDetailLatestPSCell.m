@@ -15,12 +15,8 @@
     // Initialization code
     
     [self setSelectionStyle:UITableViewCellSelectionStyleNone];
-    
     // configure _swipeView
-    _swipeView.alignment         = SwipeViewAlignmentCenter;
-    _swipeView.pagingEnabled     = YES;
-    _swipeView.itemsPerPage      = 1;
-    _swipeView.truncateFinalPage = YES;
+    _swipeView.alignment         = SwipeViewAlignmentEdge;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -42,8 +38,8 @@
 
 - (void)dealloc
 {
-    _swipeView.delegate   = nil;
-    _swipeView.dataSource = nil;
+//    _swipeView.delegate   = nil;
+//    _swipeView.dataSource = nil;
 }
 
 @end
