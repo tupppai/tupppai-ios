@@ -8,6 +8,7 @@
 
 #import "PIEChannelManager.h"
 #import "PIEChannelViewModel.h"
+#import "PIEImageEntity.h"
 @implementation PIEChannelManager
 + (void)getSource_Channel:(NSDictionary *)params
                     block:(void (^)(NSMutableArray<PIEChannelViewModel *> *))block {
@@ -49,119 +50,44 @@
 }
 
 
-+ (void)getSource_latestAskForPS:(NSDictionary *)params
-                           block:(void (^)(NSMutableArray<PIEPageVM *> *resultArray))block
-{
-    /*
-     /thread/get_threads_by_channel
-     URL_ChannelLatestAskForPS
-     返回
-     code = 0;
-     data =     {
-        ask =         (
-     );
-        replies =         (
-     );
-     };
-     data字段里面的ask: 最新求P
-     */
-    
-    [DDBaseService GET:params
-                   url:URL_ChannelLatestAskForPS
-                 block:^(id responseObject) {
-                     if (responseObject != nil) {
-                         NSMutableArray<PIEPageVM *> *retArray = nil;
-                         retArray =
-                         [self pageViewModelsWithResponseObject:responseObject
-                                                     ColumnName:@"ask"];
-                         if (block != nil) {
-                             block(retArray);
-                         }
-                     }
-                 }];
-}
 
-+ (void)getSource_usersPSByChannelID:(NSDictionary *)params
-                               block:(void (^)(NSMutableArray<PIEPageVM *> *resultArray))block
-{
-    
-    /*
-     /thread/get_threads_by_channel
-     URL_ChannelUsersPS
-     返回
-     code = 0;
-     data =     {
-        ask =         (
-     );
-        replies =         (
-     );
-     };
-     data字段里面的replies: 该频道的所有用户的PS作品
-     */
-    
-    [DDBaseService GET:params
-                   url:URL_ChannelUsersPS
-                 block:^(id responseObject) {
-                     if (responseObject){
-                         NSMutableArray<PIEPageVM *> *retArray = nil;
-                         retArray =
-                         [self pageViewModelsWithResponseObject:responseObject
-                                                     ColumnName:@"replies"];
-                         if (block == nil) {
-                             block(retArray);
-                         }
-                     }
-                 }];
-}
-
-/**
- *  Fetch latestAskForArray & usersPSArray at the same time.
- *
- *  @param latestAskForPSBlock 返回latestAskForPS的viewModels
- *  @param usersPSBlock        返回usersPS的viewModels
- */
 + (void)getSource_pageViewModels:(NSDictionary *)params
-             latestAskForPSBlock:(void (^)(NSMutableArray<PIEPageVM *> *latestAskForPSResultArray))latestAskForPSBlock
-                    usersPSBlock:(void (^)(NSMutableArray<PIEPageVM *> *usersPSResultArray))usersPSBlock
+                     resultBlock:(void (^)
+                                  (NSMutableArray<PIEPageVM *>
+                                   *latestAskForPSResultArray,
+                                   NSMutableArray<PIEPageVM *>
+                                   *usersRepliesResultArray))resultBlock
                       completion:(void (^)(void))completionBlock
 {
     [DDBaseService GET:params
-                    url:URL_ChannelGetDetailThreads
-                  block:^(id responseObject) {
-                      if (responseObject != nil)
-                      {
-                          
-                          NSMutableArray<PIEPageVM *> *latestAskForPSResultArray
-                          = nil;
-                          
-                          NSMutableArray<PIEPageVM *> *usersPSResultArray = nil;
-                          
-                          latestAskForPSResultArray =
-                          [self
-                           pageViewModelsWithResponseObject:responseObject
-                           ColumnName:@"ask"];
-                          
-                          usersPSResultArray =
-                          [self
-                           pageViewModelsWithResponseObject:responseObject
-                           ColumnName:@"replies"];
-                          
-                          
-                          if (latestAskForPSBlock != nil)
-                          {
-                              latestAskForPSBlock(latestAskForPSResultArray);
-                          }
-                          
-                          if (usersPSBlock != nil)
-                          {
-                              usersPSBlock(usersPSResultArray);
-                          }
-                          
-                          if (completionBlock != nil) {
-                              completionBlock();
-                          }
-                      }
-                  }];
+                   url:URL_ChannelGetDetailThreads
+                 block:^(id responseObject) {
+                     if (responseObject != nil)
+                     {
+                         NSMutableArray<PIEPageVM *> *latestAskForPSResultArray
+                         = nil;
+                         
+                         NSMutableArray<PIEPageVM *> *usersRepliesResultArray = nil;
+                         
+                         latestAskForPSResultArray =
+                         [self
+                          pageViewModelsWithResponseObject:responseObject
+                          ColumnName:@"ask"];
+                         
+                         usersRepliesResultArray =
+                         [self
+                          pageViewModelsWithResponseObject:responseObject
+                          ColumnName:@"replies"];
+                         
+                         if (resultBlock != nil) {
+                             resultBlock(latestAskForPSResultArray, usersRepliesResultArray);
+                         }
+                         
+                         if (completionBlock != nil) {
+                             completionBlock();
+                         }
+                     }
+                 }];
 }
 
 #pragma mark - private helpers
@@ -185,6 +111,22 @@ pageViewModelsWithResponseObject:(NSDictionary *)responseObject
     for (NSDictionary *dict in pageVMDicts) {
         
         PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:dict error:NULL];
+        
+        /*
+            TODO: TO-BE-REFACTORED
+            NSMutableArray<NSDictionary *> -> NSMutableArray<PIEImageEntity *>, 
+            然后再让前者的指针指向后者（是否会出现类型冲突？或者是歧义？）
+         */
+        NSMutableArray *thumbArray = [NSMutableArray array];
+        for (NSDictionary *imageEntityDict in entity.thumbEntityArray) {
+            PIEImageEntity *imageEntity =
+            [MTLJSONAdapter modelOfClass:[PIEImageEntity class]
+                      fromJSONDictionary:imageEntityDict
+                                   error:nil];
+            [thumbArray addObject:imageEntity];
+        }
+        entity.thumbEntityArray = thumbArray;
+        
         
         PIEPageVM *vm = [[PIEPageVM alloc] initWithPageEntity:entity];
         

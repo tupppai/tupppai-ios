@@ -18,6 +18,7 @@
 #import "PIECommentViewController.h"
 #import "PIEShareView.h"
 #import "PIEReplyCollectionViewController.h"
+#import "DDCollectManager.h"
 
 
 /* Variables */
@@ -416,11 +417,112 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 }
 -(PIEShareView *)shareView {
     if (!_shareView) {
-        _shareView = [PIEShareView new];
+        _shareView          = [PIEShareView new];
         _shareView.delegate = self;
     }
     return _shareView;
 }
+
+#pragma mark - ATOMShareViewDelegate
+//sina
+-(void)tapShare1 {
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeSinaWeibo block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
+}
+//qqzone
+-(void)tapShare2 {
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQZone block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
+}
+//wechat moments
+-(void)tapShare3 {
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatMoments block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
+}
+//wechat friends
+-(void)tapShare4 {
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatFriends block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
+}
+-(void)tapShare5 {
+    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQFriends block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
+    
+}
+
+-(void)tapShare6 {
+    [DDShareManager copy:_selectedVM];
+}
+-(void)tapShare7 {
+    self.shareView.vm = _selectedVM;
+}
+-(void)tapShare8 {
+    //    if (_scrollView.type == PIENewScrollTypeAsk) {
+    //        if (_selectedVM.type == PIEPageTypeAsk) {
+    [self collect];
+    //        }
+    //    } else {
+    //        if (_selectedVM.type == PIEPageTypeAsk) {
+    //            [self collect];
+    //        } else {
+    //            PIENewReplyTableCell* cell = [_scrollView.tableReply cellForRowAtIndexPath:_selectedIndexPath];
+    //            [self collect:cell.collectView shouldShowHud:YES];
+    //        }
+    //    }
+    
+}
+
+-(void)tapShareCancel {
+    [self.shareView dismiss];
+}
+
+#pragma mark - 分享页面的收藏按钮操作
+
+-(void)collect:(PIEPageButton*) collectView shouldShowHud:(BOOL)shouldShowHud {
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    collectView.selected = !collectView.selected;
+    if (collectView.selected) {
+        //收藏
+        [param setObject:@(1) forKey:@"status"];
+    } else {
+        //取消收藏
+        [param setObject:@(0) forKey:@"status"];
+    }
+    [DDCollectManager toggleCollect:param withPageType:_selectedVM.type withID:_selectedVM.ID withBlock:^(NSError *error) {
+        if (!error) {
+            if (shouldShowHud) {
+                if (  collectView.selected) {
+                    [Hud textWithLightBackground:@"收藏成功"];
+                } else {
+                    [Hud textWithLightBackground:@"取消收藏成功"];
+                }
+            }
+            _selectedVM.collected = collectView.selected;
+            _selectedVM.collectCount = collectView.numberString;
+        }   else {
+            collectView.selected = !collectView.selected;
+        }
+    }];
+}
+
+-(void)collect {
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    _selectedVM.collected = !_selectedVM.collected;
+    if (_selectedVM.collected) {
+        //收藏
+        [param setObject:@(1) forKey:@"status"];
+    } else {
+        //取消收藏
+        [param setObject:@(0) forKey:@"status"];
+    }
+    [DDCollectManager toggleCollect:param withPageType:_selectedVM.type withID:_selectedVM.ID withBlock:^(NSError *error) {
+        if (!error) {
+            if (  _selectedVM.collected) {
+                [Hud textWithLightBackground:@"收藏成功"];
+            } else {
+                [Hud textWithLightBackground:@"取消收藏成功"];
+            }
+        }   else {
+            _selectedVM.collected = !_selectedVM.collected;
+        }
+    }];
+}
+
 
 #pragma mark - Synchronized data with newest action
 /**
