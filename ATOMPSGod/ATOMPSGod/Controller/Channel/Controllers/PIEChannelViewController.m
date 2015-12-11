@@ -181,9 +181,6 @@
 
     [PIEChannelManager getSource_Channel:params block:^(NSMutableArray *array) {
         if (array.count) {
-            
-            // FIXME: 使用NSRange插入数组，而不是将数组全部清空
-            // FIXME: tableView只reload最新加载的数据，而不是全部重载。 ([_source addObjectsFromBeginning:array])
             [_source removeAllObjects];
             [_source addObjectsFromArray:array];
             
