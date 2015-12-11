@@ -47,6 +47,9 @@
 /** 点击弹出的分享页面 */
 @property (nonatomic, strong) PIEShareView *shareView;
 
+/** 当前加载的页面 */
+@property (nonatomic, assign) NSUInteger currentPageIndex;
+
 @end
 
 /* Protocols */
@@ -70,6 +73,8 @@ PIEChannelActivityReplyCellIdentifier = @"PIENewReplyTableCell";
 
 static NSString *
 PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifier";
+
+static const NSUInteger kItemsCountPerPage = 10;
 
 #pragma mark - UI life cycles
 - (void)viewDidLoad {
@@ -133,6 +138,9 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 - (void)setupData
 {
     _source_reply = [[NSMutableArray<PIEPageVM *> alloc] init];
+    
+    _currentPageIndex = 0;
+    
 }
 
 #pragma mark - <UITableViewDelegate>
@@ -187,7 +195,8 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     params[@"activity_id"]      = @(1003);
     params[@"page"]             = @(1);
-    params[@"size"]             = @(10);
+    _currentPageIndex           = 1;
+    params[@"size"]             = @(kItemsCountPerPage);
     _timeStamp                  = [[NSDate date] timeIntervalSince1970];
     params[@"last_updated"]     = @(_timeStamp);
     
@@ -223,8 +232,9 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
      */
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     params[@"activity_id"]      = @(1003);
-    params[@"page"]             = @(2);
-    params[@"size"]             = @(10);
+    _currentPageIndex           += 1;
+    params[@"page"]             = @(_currentPageIndex);
+    params[@"size"]             = @(kItemsCountPerPage);
     _timeStamp                  = [[NSDate date] timeIntervalSince1970];
     params[@"last_updated"]     = @(_timeStamp);
     

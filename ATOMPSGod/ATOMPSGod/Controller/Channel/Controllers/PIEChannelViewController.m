@@ -171,7 +171,6 @@
      page:页面，默认为1
      size:页面数目，默认为10
      last_updated:最后下拉更新的时间戳（整数10位）
-     
      */
     [self.tableView.mj_footer endRefreshing];
     _timeStamp                  = [[NSDate date] timeIntervalSince1970];
