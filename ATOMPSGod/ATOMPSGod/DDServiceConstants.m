@@ -44,8 +44,8 @@ NSString * URL_UKEditAsk            = @"ask/edit";
 NSString * URL_UKGetShare           = @"app/share";
 NSString * URL_NewestGetAsk         = @"ask/index";
 NSString * URL_NewestGetReply       = @"reply/index";
-NSString * URL_PFGetFollowPages     = @"Thread/timeline";
-NSString * URL_PFGetHotPages        = @"Thread/popular";
+NSString * URL_PFGetFollowPages     = @"thread/timeline";
+NSString * URL_PFGetHotPages        = @"thread/popular";
 NSString * URL_NotiGetNotifications = @"message/index";
 
 NSString * URL_UKGetUserSearch    = @"user/search";
