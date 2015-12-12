@@ -106,7 +106,10 @@ extern NSString * URL_ChannelLatestAskForPS;
  */
 extern NSString * URL_ChannelUsersPS;
 
-
+/**
+ *  获取某频道的活动
+ */
+extern NSString * URL_ChannelActivity;
 
 #pragma mark - Notification
 extern NSString * URL_NotiGetNotifications;

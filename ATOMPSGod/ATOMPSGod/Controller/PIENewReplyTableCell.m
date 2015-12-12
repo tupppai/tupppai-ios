@@ -50,14 +50,7 @@
     }];
 }
 
--(UIImageView *)blurView {
-    if (!_blurView) {
-        _blurView = [UIImageView new];
-        _blurView.contentMode = UIViewContentModeScaleAspectFill;
-        _blurView.clipsToBounds = YES;
-    }
-    return _blurView;
-}
+
 
 - (void)configThumbAnimateView {
     _thumbView = [PIEThumbAnimateView new];
@@ -76,9 +69,19 @@
     [super prepareForReuse];
     [self mansoryInitThumbAnimateView];
 }
+
+
+
+#pragma mark - public methods
+- (void)hideThumbnailImage
+{
+    // 隐藏右下角的小图
+    self.thumbView.hidden = YES;
+}
+
 - (void)injectSauce:(PIEPageVM *)viewModel {
     WS(ws);
-
+    
     _ID = viewModel.ID;
     _askID = viewModel.askID;
     _followView.highlighted = viewModel.followed;
@@ -88,10 +91,10 @@
     _commentView.imageView.image = [UIImage imageNamed:@"hot_comment"];
     _commentView.numberString = viewModel.commentCount;
     
-//    _collectView.imageView.image = [UIImage imageNamed:@"hot_star"];
-//    _collectView.imageView.highlightedImage = [UIImage imageNamed:@"hot_star_selected"];
-//    _collectView.highlighted = viewModel.collected;
-//    _collectView.numberString = viewModel.collectCount;
+    //    _collectView.imageView.image = [UIImage imageNamed:@"hot_star"];
+    //    _collectView.imageView.highlightedImage = [UIImage imageNamed:@"hot_star_selected"];
+    //    _collectView.highlighted = viewModel.collected;
+    //    _collectView.numberString = viewModel.collectCount;
     
     _likeView.highlighted = viewModel.liked;
     _likeView.numberString = viewModel.likeCount;
@@ -110,12 +113,12 @@
     } failure:nil];
     
     //    CGFloat imageViewHeight = MIN(viewModel.imageHeight, SCREEN_HEIGHT/2) ;
-//    imageViewHeight = MAX(100,imageViewHeight);
-//    imageViewHeight = MIN(SCREEN_WIDTH, imageViewHeight);
-
-//    [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-//        make.height.equalTo(@(SCREEN_WIDTH)).with.priorityHigh();
-//    }];
+    //    imageViewHeight = MAX(100,imageViewHeight);
+    //    imageViewHeight = MIN(SCREEN_WIDTH, imageViewHeight);
+    
+    //    [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
+    //        make.height.equalTo(@(SCREEN_WIDTH)).with.priorityHigh();
+    //    }];
     _thumbView.subviewCounts = viewModel.thumbEntityArray.count;
     if (viewModel.thumbEntityArray.count > 0) {
         PIEImageEntity* entity = [viewModel.thumbEntityArray objectAtIndex:0];
@@ -231,5 +234,13 @@
 }
 
 
-
+#pragma mark - lazy loadings
+-(UIImageView *)blurView {
+    if (!_blurView) {
+        _blurView = [UIImageView new];
+        _blurView.contentMode = UIViewContentModeScaleAspectFill;
+        _blurView.clipsToBounds = YES;
+    }
+    return _blurView;
+}
 @end

@@ -1,249 +1,274 @@
 //
-//  PIEChannelDetailViewController.m
+//  PIEChannelActivityViewController.m
 //  TUPAI
 //
-//  Created by huangwei on 15/12/8.
+//  Created by huangwei on 15/12/11.
 //  Copyright © 2015年 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIEChannelDetailViewController.h"
+#import "PIEChannelActivityViewController.h"
 #import "PIERefreshTableView.h"
-#import "PIEChannelDetailLatestPSCell.h"
-#import "SwipeView.h"
-#import "PIEChannelDetailAskPSItemView.h"
-#import "PIEChannelManager.h"
-
-#import "PIEChannelViewModel.h"
 #import "PIENewReplyTableCell.h"
-#import "PIEShareView.h"
+#import "PIEPageVM.h"
+#import "PIEChannelViewModel.h"
+#import "PIEChannelManager.h"
 #import "PIECarouselViewController2.h"
 #import "PIEFriendViewController.h"
 #import "PIECommentViewController.h"
 #import "PIEReplyCollectionViewController.h"
+#import "PIEShareView.h"
 #import "DDCollectManager.h"
 
+
 /* Variables */
-@interface PIEChannelDetailViewController ()
-@property (nonatomic, strong) PIERefreshTableView           *tableView;
-@property (nonatomic, strong) UIButton                      *takePhotoButton;
+@interface PIEChannelActivityViewController ()
 
-/** 该频道内最新求P */
-@property (nonatomic, strong) NSMutableArray<PIEPageVM *>   *latestAskForPSSource;
-/** 该频道内的用户PS作品 */
-@property (nonatomic, strong) NSMutableArray<PIEPageVM *>   *usersPSSource;
+/*Views*/
+@property (nonatomic, strong) PIERefreshTableView *tableView;
+@property (nonatomic, strong) UIButton            *goPsButton;
 
-/** timeStamp: 刷新数据的时候的时间（整数10位）*/
-@property (nonatomic, assign) long long                     timeStamp;
+/** image from currentChannelVM */
+@property (nonatomic, strong) UIButton            *headerBannerView;
 
-/** 最新求P中的swipeView */
-@property (nonatomic, strong) SwipeView *swipeView;
+/*ViewModels*/
+@property (nonatomic, strong) NSMutableArray<PIEPageVM *> *source_reply;
+@property (nonatomic, strong) PIEPageVM                   *selectedVM;
+@property (nonatomic, strong) PIEChannelViewModel         *currentChannelVM;
+
+/* HTTP Request parameter */
+@property (nonatomic, assign) long long timeStamp;
+
+/* ======= */
+
+@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
+
+@property (nonatomic, strong) PIENewReplyTableCell *selectedReplyCell;
 
 /** 点击弹出的分享页面 */
 @property (nonatomic, strong) PIEShareView *shareView;
 
-/** 用户选中的图片 */
-@property (nonatomic, strong) PIEPageVM *selectedVM;
-
-/** 用户点击的Cell的indexPath */
-@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
-
-/** 用户当前点击的Cell */
-@property (nonatomic, strong) PIENewReplyTableCell *selectedReplyCell;
+/** 当前加载的页面 */
+@property (nonatomic, assign) NSUInteger currentPageIndex;
 
 @end
 
 /* Protocols */
-
-@interface PIEChannelDetailViewController (TableView)
+@interface PIEChannelActivityViewController (TableView)
 <UITableViewDelegate, UITableViewDataSource>
 @end
 
-@interface PIEChannelDetailViewController (PIERefreshTableView)
+@interface PIEChannelActivityViewController (RefreshTableView)
 <PWRefreshBaseTableViewDelegate>
 @end
 
-@interface PIEChannelDetailViewController (SwipeView)
-<SwipeViewDelegate, SwipeViewDataSource>
-@end
-
-@interface PIEChannelDetailViewController (SharingDelegate)
+@interface PIEChannelActivityViewController (SharingDelegate)
 <PIEShareViewDelegate>
+
 @end
 
+@implementation PIEChannelActivityViewController
 
-@implementation PIEChannelDetailViewController
+static NSString *
+PIEChannelActivityReplyCellIdentifier = @"PIENewReplyTableCell";
 
-static NSString *  PIEDetailLatestPSCellIdentifier =
-@"DetailLatestPSCellIdentifier";
+static NSString *
+PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifier";
 
-static NSString *  PIEDetailNormalIdentifier =
-@"PIEDetailNormalIdentifier";
-
-static NSString * PIEDetailUsersPSCellIdentifier =
-@"PIENewReplyTableCell";
+static const NSUInteger kItemsCountPerPage = 10;
 
 #pragma mark - UI life cycles
-/**
- *  不能直接用self.tableView替换掉self.view，而是让self.tableView和self.takePhotoButton
- 同时成为self.view的子视图。
- */
--(BOOL)hidesBottomBarWhenPushed {
-    return YES;
-}
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
+    // Do any additional setup after loading the view.
     
-    /* setup source data */
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    self.title = @"#表情有灵气";
+    
+    // setup data
     [self setupData];
     
-    /* added as subviews & add autolayout constraints */
+    // configure subviews
     [self configureTableView];
-    [self configureTakePhotoButton];
+    [self configureGoPsButton];
     
     /* 设置可以区分reply cell中不同UI元素（头像，关注按钮，分享, etc.）的点击事件回调 */
     [self setupGestures];
-
-    self.title = @"用PS搞创意";
     
-    // pullDownToRefresh for the first time
+    // load data for the first time.
     [self.tableView.mj_header beginRefreshing];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - UI components setup
+- (void)configureTableView
+{
+    // add to subView
+    [self.view addSubview:self.tableView];
+    
+    
+    
+    // set constraints
+    UIEdgeInsets padding = UIEdgeInsetsMake(0, 0, 0, 0);
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view).with.insets(padding);
+    }];
+}
+
+
+- (void)configureGoPsButton
+{
+    // add to subView
+    [self.view addSubview:self.goPsButton];
+    
+    // set constraints
+    [self.goPsButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(50);
+        make.height.mas_equalTo(50);
+        make.bottom.equalTo(self.view.mas_bottom).with.offset(-64);
+        make.centerX.equalTo(self.view.mas_centerX);
+    }];
+}
+
+#pragma mark - data setup
+- (void)setupData
+{
+    _source_reply = [[NSMutableArray<PIEPageVM *> alloc] init];
+    
+    _currentPageIndex = 0;
     
 }
 
 #pragma mark - <UITableViewDelegate>
 
 
-
 #pragma mark - <UITableViewDataSource>
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (NSInteger)tableView:(UITableView *)tableView
+ numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"%s", __func__);
-
-    return self.usersPSSource.count;
+    return  self.source_reply.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView
-         cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%s", __func__);
-
-    if (indexPath.row == 0)
-    {
-        /* first row */
-        PIEChannelDetailLatestPSCell *detailLatestPSCell =
-        [tableView dequeueReusableCellWithIdentifier:PIEDetailLatestPSCellIdentifier];
-        
-        // configure cell
-        
-        // --- set delegate & dataSource
-        detailLatestPSCell.swipeView.delegate   = self;
-        detailLatestPSCell.swipeView.dataSource = self;
-        
-        // ??? 实在是想不到更好地方法了。。。 (BUG AWARE!)
-        self.swipeView = detailLatestPSCell.swipeView;
-        return detailLatestPSCell;
-    }
-    else
-    {
-        PIENewReplyTableCell *cell =
-        [tableView dequeueReusableCellWithIdentifier:PIEDetailUsersPSCellIdentifier];
-        
-        [cell injectSauce:_usersPSSource[indexPath.row]];
-        
-        return cell;
-    }
     
+    PIENewReplyTableCell *replyCell =
+    [tableView dequeueReusableCellWithIdentifier:PIEChannelActivityReplyCellIdentifier];
+    [replyCell hideThumbnailImage];
+    [replyCell injectSauce:_source_reply[indexPath.row]];
+    
+    return replyCell;
 }
-
 #pragma mark - <PWRefreshBaseTableViewDelegate>
-
-/**
- *  上拉加载
-*/
 - (void)didPullRefreshUp:(UITableView *)tableView
 {
-    NSLog(@"%s", __func__);
-
-    [self loadMorePageViewModels];
+    [self loadMoreReplies];
 }
 
-/**
- *  下拉刷新
-*/
 - (void)didPullRefreshDown:(UITableView *)tableView
 {
-    NSLog(@"%s", __func__);
-
-    [self loadNewPageViewModels];
+    [self loadNewReplies];
 }
 
-#pragma mark - <SwipeViewDelegate>
-- (CGSize)swipeViewItemSize:(SwipeView *)swipeView
+#pragma mark - refreshing methods
+- (void)loadNewReplies
 {
     NSLog(@"%s", __func__);
-
     
-    CGFloat screenWidth         = [UIScreen mainScreen].bounds.size.width;
-    CGFloat swipeViewItemWidth  = screenWidth * (180.0 / 750.0);
-    CGFloat swipeViewItemHeight = screenWidth * (214.0 / 750.0);
-    return CGSizeMake(swipeViewItemWidth, swipeViewItemHeight);
-}
-
-#pragma mark - <SwipeViewDataSource>
-- (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
-{
-    NSLog(@"%s", __func__);
-
-    return self.latestAskForPSSource.count;
-}
-
-- (UIView *)swipeView:(SwipeView *)swipeView
-   viewForItemAtIndex:(NSInteger)index
-          reusingView:(PIEChannelDetailAskPSItemView *)view
-{
-    NSLog(@"%s", __func__);
-
-    if (view == nil)
-    {
-        NSInteger height = swipeView.frame.size.height;
-        view = [[PIEChannelDetailAskPSItemView alloc]initWithFrame:CGRectMake(0, 0, height, height)];
-    }
-    
-    // viewModel -> view
-    NSURL *imageURL = [NSURL URLWithString:_latestAskForPSSource[index].imageURL];
-    [view.imageView setImageWithURL:imageURL
-                   placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-    view.label.text = _latestAskForPSSource[index].content;
-    
-    return view;
-}
-
-
-#pragma mark - Sharing-related method
-#pragma mark - methods on Sharing<ATOMShareViewDelegate>
-- (void)updateShareStatus {
-    
-    /**
-     *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面的点赞数和分享数（两个页面的UI元素的同步）
+    /*
+     <h3 id="get_activity_threads">获取活动相关作品</h3>
+     
+     /thread/get_activity_threads
+     URL_ChannelActivity
+     接受参数
+     get:
+     activity_id:活动id (test: 1003)
+     page:页面，默认为1
+     size:页面数目，默认为10
+     last_updated:最后下拉更新的时间戳（10位）
      */
-    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
-    [self updateStatus];
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"activity_id"]      = @(1003);
+    params[@"page"]             = @(1);
+    _currentPageIndex           = 1;
+    params[@"size"]             = @(kItemsCountPerPage);
+    _timeStamp                  = [[NSDate date] timeIntervalSince1970];
+    params[@"last_updated"]     = @(_timeStamp);
+    
+    __weak typeof(self) weakSelf = self;
+    [PIEChannelManager
+     getSource_pageViewModels:params
+     repliesResult:^(NSMutableArray<PIEPageVM *> *repliesResultArray) {
+         [_source_reply removeAllObjects];
+         [_source_reply addObjectsFromArray:repliesResultArray];
+         
+         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+             [weakSelf.tableView.mj_header endRefreshing];
+             [weakSelf.tableView reloadData];
+         }];
+     }];
 }
 
-- (void)showShareView {
-    [self.shareView show];
+- (void)loadMoreReplies
+{
+    NSLog(@"%s", __func__);
+    
+    /*
+     <h3 id="get_activity_threads">获取活动相关作品</h3>
+     
+     /thread/get_activity_threads
+     URL_ChannelActivity
+     接受参数
+     get:
+     activity_id:活动id (test: 1003)
+     page:页面，默认为1
+     size:页面数目，默认为10
+     last_updated:最后下拉更新的时间戳（10位）
+     */
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"activity_id"]      = @(1003);
+    _currentPageIndex           += 1;
+    params[@"page"]             = @(_currentPageIndex);
+    params[@"size"]             = @(kItemsCountPerPage);
+    _timeStamp                  = [[NSDate date] timeIntervalSince1970];
+    params[@"last_updated"]     = @(_timeStamp);
+    
+    __weak typeof(self) weakSelf = self;
+    [PIEChannelManager
+     getSource_pageViewModels:params
+     repliesResult:^(NSMutableArray<PIEPageVM *> *repliesResultArray) {
+         if (repliesResultArray.count == 0) {
+             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                 [weakSelf.tableView.mj_footer endRefreshing];
+             }];
+         }
+         else{
+             [_source_reply addObjectsFromArray:repliesResultArray];
+             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                 [weakSelf.tableView.mj_footer endRefreshing];
+                 [weakSelf.tableView reloadData];
+             }];
+         }
+     }];
     
 }
 
-/**
- *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面的点赞数和分享数
- */
-- (void)updateStatus {
-    if (_selectedIndexPath) {
-        [self.tableView reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-    }
+#pragma mark - Target-actions
+- (void)goPSButtonClicked:(UIButton *)button
+{
+    NSLog(@"%s", __func__);
+
+}
+
+- (void)headerBannerViewClicked:(UIButton *)button
+{
+    NSLog(@"%s", __func__);
+
 }
 
 #pragma mark - Gesture Event - 识别PIENewReplyCell中的不同元素(头像，关注按钮，etc.)的点击事件
@@ -261,12 +286,12 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 - (void)tapOnReply:(UITapGestureRecognizer *)gesture {
     
     PIELog(@"%s", __func__);
-
+    
     CGPoint location = [gesture locationInView:self.tableView];
     _selectedIndexPath = [self.tableView indexPathForRowAtPoint:location];
     if (_selectedIndexPath) {
         _selectedReplyCell = [self.tableView cellForRowAtIndexPath:_selectedIndexPath];
-        _selectedVM = self.usersPSSource[_selectedIndexPath.row];
+        _selectedVM = self.source_reply[_selectedIndexPath.row];
         CGPoint p = [gesture locationInView:_selectedReplyCell];
         
         //点击小图
@@ -336,7 +361,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     _selectedIndexPath = [self.tableView indexPathForRowAtPoint:location];
     if (_selectedIndexPath) {
         _selectedReplyCell = [self.tableView cellForRowAtIndexPath:_selectedIndexPath];
-        _selectedVM        = self.usersPSSource[_selectedIndexPath.row];
+        _selectedVM        = self.source_reply[_selectedIndexPath.row];
         CGPoint p          = [gesture locationInView:_selectedReplyCell];
         
         //点击大图
@@ -356,7 +381,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 -(void)likeReply {
     
     PIELog(@"%s", __func__);
-
+    
     
     _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
     [DDService toggleLike:_selectedReplyCell.likeView.selected ID:_selectedVM.ID type:_selectedVM.type  withBlock:^(BOOL success) {
@@ -379,7 +404,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 -(void)followReplier {
     
     PIELog(@"%s", __func__);
-
+    
     
     _selectedReplyCell.followView.highlighted = !_selectedReplyCell.followView.highlighted;
     NSMutableDictionary *param = [NSMutableDictionary new];
@@ -399,56 +424,82 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     }];
 }
 
+
+#pragma mark - Sharing-related method
+#pragma mark - methods on Sharing<ATOMShareViewDelegate>
+- (void)updateShareStatus {
+    
+    /**
+     *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面的点赞数和分享数（两个页面的UI元素的同步）
+     */
+    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
+    [self updateStatus];
+}
+
+- (void)showShareView {
+    [self.shareView show];
+    
+}
+
+/**
+ *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面的点赞数和分享数
+ */
+- (void)updateStatus {
+    if (_selectedIndexPath) {
+        [self.tableView reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
+}
+
 #pragma mark - <PIEShareViewDelegate>
 /*
-    以下代理方法在用户点击了shareView中的8个button的其中一个（分享到新浪，微信，微博，etc.) 的时候被调用
+ 以下代理方法在用户点击了shareView中的8个button的其中一个（分享到新浪，微信，微博，etc.) 的时候被调用
  */
 
 //sina
 -(void)tapShare1 {
     PIELog(@"%s", __func__);
-
+    
     [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeSinaWeibo block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
 }
 //qqzone
 -(void)tapShare2 {
     PIELog(@"%s", __func__);
-
+    
     [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQZone block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
 }
 //wechat moments
 -(void)tapShare3 {
     PIELog(@"%s", __func__);
-
+    
     [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatMoments block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
 }
 //wechat friends
 -(void)tapShare4 {
     PIELog(@"%s", __func__);
-
+    
     [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatFriends block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
 }
 -(void)tapShare5 {
     PIELog(@"%s", __func__);
-
+    
     [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQFriends block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
     
 }
 
 -(void)tapShare6 {
     PIELog(@"%s", __func__);
-
+    
     [DDShareManager copy:_selectedVM];
 }
 -(void)tapShare7 {
     PIELog(@"%s", __func__);
-
+    
     
     self.shareView.vm = _selectedVM;
 }
 -(void)tapShare8 {
     PIELog(@"%s", __func__);
-
+    
     
     //    if (_scrollView.type == PIENewScrollTypeAsk) {
     //        if (_selectedVM.type == PIEPageTypeAsk) {
@@ -467,7 +518,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 
 -(void)tapShareCancel {
     PIELog(@"%s", __func__);
-
+    
     [self.shareView dismiss];
 }
 
@@ -497,182 +548,85 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 
 
 
-#pragma mark - data first setup
-- (void)setupData
-{
-    _usersPSSource        = [NSMutableArray<PIEPageVM *> array];
-    _latestAskForPSSource = [NSMutableArray<PIEPageVM *> array];
-}
-
-#pragma mark - Refresh methods
-- (void)loadMorePageViewModels
-{
-    NSLog(@"%s", __func__);
-    
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    params[@"channel_id"] = @(self.selectedChannelViewModel.ID);
-    params[@"page"]       = @(2);
-    params[@"size"]       = @(20);
-    
-    // --- Double -> Long long int
-    _timeStamp = [[NSDate date] timeIntervalSince1970];
-    params[@"last_updated"] = @(_timeStamp);
-    
-    __weak typeof(self) weakSelf = self;
-    
-    [PIEChannelManager
-     getSource_pageViewModels:params
-     resultBlock:^(NSMutableArray<PIEPageVM *> *latestAskForPSResultArray,
-                   NSMutableArray<PIEPageVM *> *usersRepliesResultArray) {
-         if (usersRepliesResultArray.count == 0) {
-             [weakSelf.tableView.mj_footer endRefreshing];
-         }
-         else{
-             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                 [weakSelf.tableView reloadData];
-                 [weakSelf.tableView.mj_footer endRefreshing];
-             }];
-         }
-     }
-     completion:^{
-          // nothing.
-     }];
-    
-}
-
-
-- (void)loadNewPageViewModels
-{
-    NSLog(@"%s", __func__);
-    
-    NSMutableDictionary *params  = [NSMutableDictionary dictionary];
-    params[@"channel_id"]        = @(self.selectedChannelViewModel.ID);
-    params[@"page"]              = @(1);
-    params[@"size"]              = @(20);
-
-    // --- Double -> Long long int
-    _timeStamp                   = [[NSDate date] timeIntervalSince1970];
-    params[@"last_updated"]      = @(_timeStamp);
-
-    __weak typeof(self) weakSelf = self;
-    [PIEChannelManager
-     getSource_pageViewModels:params
-     resultBlock:^(NSMutableArray<PIEPageVM *> *latestAskForPSResultArray,
-                   NSMutableArray<PIEPageVM *> *usersRepliesResultArray) {
-         if (usersRepliesResultArray.count != 0) {
-             [_usersPSSource removeAllObjects];
-             [_usersPSSource addObjectsFromArray:usersRepliesResultArray];
-        
-             [_latestAskForPSSource removeAllObjects];
-             [_latestAskForPSSource addObjectsFromArray:latestAskForPSResultArray];
-        }
-     }completion:^{
-         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-             [weakSelf.tableView.mj_header endRefreshing];
-             [weakSelf.tableView reloadData];
-             
-         }];
-     }];
-}
-
-#pragma mark - Target-actions
-- (void)takePhoto:(UIButton *)button
-{
-    NSLog(@"%s", __func__);
-    
-}
-#pragma mark - UI components configuration
-- (void)configureTableView
-{
-    // added as subview
-    [self.view addSubview:self.tableView];
-    
-//    // add constraints
-//    __weak typeof(self) weakSelf = self;
-//    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.edges.equalTo(weakSelf.view);
-//    }];
-}
-
-- (void)configureTakePhotoButton
-{
-    // --- added as subViews
-    [self.view addSubview:self.takePhotoButton];
-    
-    // --- Autolayout constraints
-    __weak typeof(self) weakSelf = self;
-    [_takePhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(weakSelf.view.mas_centerX);
-        make.height.mas_equalTo(50);
-        make.width.mas_equalTo(50);
-        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-64);
-    }];
-}
-
-
-
-#pragma mark - lazy loadings
+#pragma mark - Lazy loadings
 - (PIERefreshTableView *)tableView
 {
     if (_tableView == nil) {
         // instantiate only for once
-        _tableView = [[PIERefreshTableView alloc] initWithFrame:self.view.bounds];
+        _tableView = [[PIERefreshTableView alloc] init];
         
-        // configurations
-        
-//        _tableView.frame = self.view.bounds;
-        
-        // set delegate
         _tableView.delegate   = self;
-        
-        _tableView.dataSource = self;
-        
         _tableView.psDelegate = self;
+        _tableView.dataSource = self;
         
         // iOS 8+, self-sizing cell
         _tableView.estimatedRowHeight = 400;
+        _tableView.rowHeight = UITableViewAutomaticDimension;
         
-        _tableView.rowHeight          = UITableViewAutomaticDimension;
+        // add headerBannerView
+        _tableView.tableHeaderView = self.headerBannerView;
+        
+        _tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         // register cells
-        [_tableView
-         registerNib:[UINib nibWithNibName:@"PIEChannelDetailLatestPSCell" bundle:nil]
-         forCellReuseIdentifier:PIEDetailLatestPSCellIdentifier];
-        
         [_tableView registerNib:[UINib nibWithNibName:@"PIENewReplyTableCell"
                                                bundle:nil]
-         forCellReuseIdentifier:PIEDetailUsersPSCellIdentifier];
-        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-  
+         forCellReuseIdentifier:PIEChannelActivityReplyCellIdentifier];
+        
+        [_tableView registerClass:[UITableViewCell class]
+           forCellReuseIdentifier:PIEChannelActivityNormalCellIdentifier];
     }
-    return _tableView;
+    
+    
+    return  _tableView;
 }
 
-- (UIButton *)takePhotoButton
+
+- (UIButton *)headerBannerView
 {
-    if (_takePhotoButton == nil) {
+    if (_headerBannerView == nil) {
         // instantiate only for once
-        _takePhotoButton = [[UIButton alloc] init];
+        _headerBannerView = [[UIButton alloc] init];
         
-        /* Configurations */
+        // set background image("表情有灵气")
+        [_headerBannerView
+         setBackgroundImage:[UIImage imageNamed:@"pie_channelActivityBanner"]
+         forState:UIControlStateNormal];
         
-        // --- set background image
-        [_takePhotoButton setBackgroundImage:[UIImage imageNamed:@"pie_signup_close"]
-              forState:UIControlStateNormal];
+        // 取消点击变暗的效果
+        _headerBannerView.adjustsImageWhenHighlighted = NO;
         
-        // --- add drop shadows
-        _takePhotoButton.layer.shadowColor  = (__bridge CGColorRef _Nullable)
-        ([UIColor colorWithWhite:0.0 alpha:0.5]);
-        _takePhotoButton.layer.shadowOffset = CGSizeMake(0, 4);
-        _takePhotoButton.layer.shadowRadius = 8.0;
+        // set frame
+        _headerBannerView.frame = CGRectMake(0, 0, SCREEN_WIDTH, (448.0 / 750.0)*SCREEN_WIDTH);
         
-        // --- add target-actions
-        [_takePhotoButton addTarget:self
-                             action:@selector(takePhoto:)
-                   forControlEvents:UIControlEventTouchUpInside];
+        // Target-actions
+        [_headerBannerView addTarget:self
+                              action:@selector(headerBannerViewClicked:)
+                    forControlEvents:UIControlEventTouchUpInside];
     }
-    return _takePhotoButton;
-    
+    return _headerBannerView;
+}
+
+- (UIButton *)goPsButton
+{
+    if (_goPsButton == nil) {
+        // instantiate only for once
+        _goPsButton = [[UIButton alloc] init];
+        
+        // set background image (make-shift case)
+        [_goPsButton setBackgroundImage:[UIImage imageNamed:@"moment"]
+                               forState:UIControlStateNormal];
+        
+        
+        
+        // Target-actions
+        [_goPsButton addTarget:self
+                        action:@selector(goPSButtonClicked:)
+              forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _goPsButton;
+
 }
 
 - (PIEShareView *)shareView
@@ -684,8 +638,6 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         _shareView.delegate = self;
     }
     return  _shareView;
-
 }
-
 
 @end
