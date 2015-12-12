@@ -15,6 +15,9 @@
     [DDBaseService GET:params
                    url:URL_ChannelHomeThreads
                  block:^(id responseObject) {
+                     
+                     NSLog(@"%@", responseObject);
+                     
                      if (responseObject) {
                          NSMutableArray* retArray = [NSMutableArray new];
                          NSDictionary* data       = [responseObject objectForKey:@"data"];
@@ -90,6 +93,26 @@
                  }];
 }
 
++ (void)getSource_pageViewModels:(NSDictionary *)params
+                   repliesResult:(void (^)
+                                  (NSMutableArray<PIEPageVM *> * repliesResultArray))repliesResultBlock
+{
+    [DDBaseService GET:params
+                   url:URL_ChannelActivity
+                 block:^(id responseObject) {
+                     NSMutableArray<PIEPageVM *> *repliesResultArray = nil;
+                     
+                     // 暂付阙疑
+                     repliesResultArray =
+                     [self pageViewModelsWithResponseObject:responseObject ColumnName:@"replies"];
+                     
+                     if (repliesResultBlock != nil) {
+                         repliesResultBlock(repliesResultArray);
+                     }
+                     
+                 }];
+}
+
 #pragma mark - private helpers
 
 /**
@@ -126,7 +149,6 @@ pageViewModelsWithResponseObject:(NSDictionary *)responseObject
             [thumbArray addObject:imageEntity];
         }
         entity.thumbEntityArray = thumbArray;
-        
         
         PIEPageVM *vm = [[PIEPageVM alloc] initWithPageEntity:entity];
         
