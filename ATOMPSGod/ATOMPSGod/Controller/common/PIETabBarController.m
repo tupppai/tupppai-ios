@@ -22,7 +22,7 @@
 @interface PIETabBarController ()<UITabBarControllerDelegate>
 @property (nonatomic, strong) DDNavigationController *navigation_new;
 @property (nonatomic, strong) DDNavigationController *navigation_elite;
-@property (nonatomic, strong) DDNavigationController *centerNav;
+//@property (nonatomic, strong) DDNavigationController *centerNav;
 @property (nonatomic, strong) DDNavigationController *navigation_proceeding;
 @property (nonatomic, strong) DDNavigationController *navigation_me;
 @property (nonatomic, strong) DDNavigationController *preNav;
@@ -119,7 +119,7 @@
     _navigation_elite = [[DDNavigationController alloc] initWithRootViewController:myAttentionViewController];
     _navigation_proceeding = [[DDNavigationController alloc] initWithRootViewController:proceedingViewController];
     _navigation_me = [[DDNavigationController alloc] initWithRootViewController:aboutMeVC];
-    _centerNav = [[DDNavigationController alloc] initWithRootViewController:takePhotoVC];
+//    _centerNav = [[DDNavigationController alloc] initWithRootViewController:takePhotoVC];
     _preNav = _navigation_elite;
     
     _navigation_elite.tabBarItem.image =
@@ -137,16 +137,13 @@
     _navigation_proceeding.tabBarItem.selectedImage =
     [[UIImage imageNamed:@"pie_tab_4_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 
-    _centerNav.tabBarItem.image =
-    [[UIImage imageNamed:@"pie_tab_3_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    
     _navigation_me.tabBarItem.image =
     [[UIImage imageNamed:@"pie_tab_5"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     _navigation_me.tabBarItem.selectedImage =
     [[UIImage imageNamed:@"pie_tab_5_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     [self updateTabbarAvatar];
-        [_centerNav.tabBarItem setImageInsets:UIEdgeInsetsMake(5, 0, -5, 0)];
-    self.viewControllers = [NSArray arrayWithObjects:_navigation_elite, _navigation_new,_centerNav,_navigation_proceeding, _navigation_me, nil];
+//        [_centerNav.tabBarItem setImageInsets:UIEdgeInsetsMake(5, 0, -5, 0)];
+    self.viewControllers = [NSArray arrayWithObjects:_navigation_elite, _navigation_new,_navigation_proceeding, _navigation_me, nil];
 }
 
 
@@ -175,18 +172,18 @@
         _preNav = (DDNavigationController*)viewController;
 }
 
--(BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
-    if (viewController == _centerNav) {
-        [self presentBlurViewController];
-        return NO;
-    }
-    return YES;
-}
-- (void)presentBlurViewController {
-    PIECameraViewController *pvc = [PIECameraViewController new];
-    pvc.blurStyle = UIBlurEffectStyleDark;
-    [self presentViewController:pvc animated:YES completion:nil];
-}
+//-(BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+//    if (viewController == _centerNav) {
+//        [self presentBlurViewController];
+//        return NO;
+//    }
+//    return YES;
+//}
+//- (void)presentBlurViewController {
+//    PIECameraViewController *pvc = [PIECameraViewController new];
+//    pvc.blurStyle = UIBlurEffectStyleDark;
+//    [self presentViewController:pvc animated:YES completion:nil];
+//}
 
 
 @end
