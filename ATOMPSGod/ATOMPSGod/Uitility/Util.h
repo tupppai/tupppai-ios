@@ -20,6 +20,7 @@
 
 @interface Util : NSObject
 + (void)warningBetaTest;
++ (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 +(NSString*)formatPublishTime:(NSDate*)date;
 +(void)ShowTSMessageError:(NSString*)str;
 +(void)ShowTSMessageWarn:(NSString*)str;

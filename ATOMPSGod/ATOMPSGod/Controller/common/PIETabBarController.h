@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface PIETabBarController : UITabBarController
+@property (nonatomic,copy) UIImage* avatarImage;
 
 @end
