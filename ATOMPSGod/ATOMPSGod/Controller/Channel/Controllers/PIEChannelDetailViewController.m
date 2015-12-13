@@ -657,7 +657,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         /* Configurations */
         
         // --- set background image
-        [_takePhotoButton setBackgroundImage:[UIImage imageNamed:@"pie_signup_close"]
+        [_takePhotoButton setBackgroundImage:[UIImage imageNamed:@"pie_channelDetailTakePhotoButton"]
               forState:UIControlStateNormal];
         
         // --- add drop shadows
