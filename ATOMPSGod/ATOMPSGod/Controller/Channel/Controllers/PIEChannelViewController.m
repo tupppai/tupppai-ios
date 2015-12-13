@@ -104,15 +104,45 @@
 {
     if (indexPath.section != 0)
     {
-        PIEChannelDetailViewController *channelDetailViewController =
         
-        [[PIEChannelDetailViewController alloc] init];
-        channelDetailViewController.selectedChannelViewModel =
-        _source[indexPath.row];
+        PIEChannelViewModel *channelViewModel = _source[indexPath.row];
         
-        [self.navigationController
-         pushViewController:channelDetailViewController
-         animated:YES];
+        if (channelViewModel.channelType == PIEChannelTypeChannel) {
+            /* push to ChannelDetail */
+            
+            PIEChannelDetailViewController *channelDetailViewController =
+            
+            [[PIEChannelDetailViewController alloc] init];
+            channelDetailViewController.currentChannelViewModel =
+            channelViewModel;
+            
+            [self.navigationController
+             pushViewController:channelDetailViewController
+             animated:YES];
+            
+        }
+        else if (channelViewModel.channelType == PIEChannelTypeActivity)
+        {
+            /* push to ChannelActivity */
+            PIEChannelActivityViewController *channelActivityViewController =
+            [[PIEChannelActivityViewController alloc] init];
+            
+            channelActivityViewController.currentChannelVM =
+            channelViewModel;
+            
+            [self.navigationController
+             pushViewController:channelActivityViewController
+             animated:YES];
+            
+        }
+        else
+        {
+            /* JSON parsing error! */
+            
+        }
+        
+        
+        
         
     }
 }
@@ -146,7 +176,8 @@
         PIEChannelTableViewCell* cell =
         [tableView dequeueReusableCellWithIdentifier:@"Channel_Cell"];
         cell.vm = [_source objectAtIndex:indexPath.row];
-//        cell.swipeView.delegate = self;
+        // ??? - 为什么不设置swipeView的代理？
+        //        cell.swipeView.delegate = self;
         cell.swipeView.dataSource = self;
         cell.swipeView.tag = indexPath.row;
         return cell;

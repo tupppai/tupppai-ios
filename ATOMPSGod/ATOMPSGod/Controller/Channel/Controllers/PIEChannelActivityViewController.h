@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class PIEChannelViewModel;
 @interface PIEChannelActivityViewController : UIViewController
-
+@property (nonatomic, strong) PIEChannelViewModel     *currentChannelVM;
 @end

@@ -10,7 +10,7 @@
 @class PIEChannelViewModel;
 @interface PIEChannelDetailViewController : DDBaseVC
 
-@property (nonatomic, strong)PIEChannelViewModel *selectedChannelViewModel;
+@property (nonatomic, strong)PIEChannelViewModel *currentChannelViewModel;
 
 
 @end

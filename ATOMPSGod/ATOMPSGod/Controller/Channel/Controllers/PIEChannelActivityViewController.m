@@ -33,7 +33,7 @@
 /*ViewModels*/
 @property (nonatomic, strong) NSMutableArray<PIEPageVM *> *source_reply;
 @property (nonatomic, strong) PIEPageVM                   *selectedVM;
-@property (nonatomic, strong) PIEChannelViewModel         *currentChannelVM;
+
 
 /* HTTP Request parameter */
 @property (nonatomic, assign) long long timeStamp;
@@ -83,7 +83,8 @@ static const NSUInteger kItemsCountPerPage = 10;
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    self.title = @"#表情有灵气";
+    self.title = [NSString stringWithFormat:
+                  @"#%@", self.currentChannelVM.title];
     
     // setup data
     [self setupData];
@@ -127,9 +128,10 @@ static const NSUInteger kItemsCountPerPage = 10;
     
     // set constraints
     [self.goPsButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(50);
-        make.height.mas_equalTo(50);
-        make.bottom.equalTo(self.view.mas_bottom).with.offset(-64);
+        make.width.mas_equalTo(120);
+        make.height.mas_equalTo(32);
+        
+        make.bottom.equalTo(self.view.mas_bottom).with.offset(-74);
         make.centerX.equalTo(self.view.mas_centerX);
     }];
 }
@@ -193,7 +195,7 @@ static const NSUInteger kItemsCountPerPage = 10;
      */
     
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    params[@"activity_id"]      = @(1003);
+    params[@"activity_id"]      = @(self.currentChannelVM.ID);
     params[@"page"]             = @(1);
     _currentPageIndex           = 1;
     params[@"size"]             = @(kItemsCountPerPage);
@@ -231,7 +233,7 @@ static const NSUInteger kItemsCountPerPage = 10;
      last_updated:最后下拉更新的时间戳（10位）
      */
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    params[@"activity_id"]      = @(1003);
+    params[@"activity_id"]      = @(self.currentChannelVM.ID);
     _currentPageIndex           += 1;
     params[@"page"]             = @(_currentPageIndex);
     params[@"size"]             = @(kItemsCountPerPage);
@@ -261,6 +263,7 @@ static const NSUInteger kItemsCountPerPage = 10;
 #pragma mark - Target-actions
 - (void)goPSButtonClicked:(UIButton *)button
 {
+    /* push to webViewController */
     NSLog(@"%s", __func__);
 
 }
@@ -590,9 +593,15 @@ static const NSUInteger kItemsCountPerPage = 10;
         _headerBannerView = [[UIButton alloc] init];
         
         // set background image("表情有灵气")
-        [_headerBannerView
-         setBackgroundImage:[UIImage imageNamed:@"pie_channelActivityBanner"]
-         forState:UIControlStateNormal];
+        
+        
+//        [_headerBannerView
+//         setBackgroundImage:[UIImage imageNamed:@"pie_channelActivityBanner"]
+//         forState:UIControlStateNormal];
+        NSURL *bannerImageUrl = [NSURL URLWithString:self.currentChannelVM.banner_pic];
+//        [_headerBannerView.imageView setImageWithURL:bannerImageUrl];
+        [_headerBannerView setBackgroundImageForState:UIControlStateNormal
+                                              withURL:bannerImageUrl];
         
         // 取消点击变暗的效果
         _headerBannerView.adjustsImageWhenHighlighted = NO;
@@ -615,10 +624,15 @@ static const NSUInteger kItemsCountPerPage = 10;
         _goPsButton = [[UIButton alloc] init];
         
         // set background image (make-shift case)
-        [_goPsButton setBackgroundImage:[UIImage imageNamed:@"moment"]
-                               forState:UIControlStateNormal];
+//        [_goPsButton setBackgroundImage:[UIImage imageNamed:@"moment"]
+//                               forState:UIControlStateNormal];
+//
+        NSURL *backgroundImageUrl = [NSURL URLWithString:
+                                     self.currentChannelVM.post_btn];
+        [_goPsButton setBackgroundImageForState:UIControlStateNormal
+                                        withURL:backgroundImageUrl];
         
-        
+        [_goPsButton setContentMode:UIViewContentModeScaleAspectFit];
         
         // Target-actions
         [_goPsButton addTarget:self
