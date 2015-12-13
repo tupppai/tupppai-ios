@@ -10,7 +10,7 @@
 
 @implementation PIEChannelDetailAskPSItemView
 -(void)awakeFromNib {
-
+    
 }
 
 -(instancetype)initWithFrame:(CGRect)frame {

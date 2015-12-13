@@ -16,7 +16,6 @@
                    url:URL_ChannelHomeThreads
                  block:^(id responseObject) {
                      
-                     NSLog(@"%@", responseObject);
                      
                      if (responseObject) {
                          NSMutableArray* retArray = [NSMutableArray new];
@@ -43,7 +42,6 @@
                              vm.threads = threads_transformed;
                              [retArray addObject:vm];
                          }
-                         NSLog(@"source: %@, source.count: %zd", retArray, retArray.count);
                          
                          if (block) {
                              block(retArray);

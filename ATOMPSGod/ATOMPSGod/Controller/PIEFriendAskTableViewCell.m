@@ -48,16 +48,16 @@
     if (_vmAsk1) {
         PIECarouselViewController* vc = [PIECarouselViewController new];
         vc.pageVM = _vmAsk1;
-        DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-        [nav pushViewController:vc animated:YES ];
+        [self.viewController.parentViewController.view.superview.viewController.navigationController pushViewController:vc animated:YES ];
     }
 }
 - (void)tapOnAsk2 {
     if (_vmAsk2) {
         PIECarouselViewController* vc = [PIECarouselViewController new];
         vc.pageVM = _vmAsk2;
-        DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-        [nav pushViewController:vc animated:YES ];
+        
+        [self.viewController.parentViewController.view.superview.viewController.navigationController pushViewController:vc animated:YES ];
+
     }
 }
 
@@ -132,8 +132,9 @@
 -(void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index {
         PIECarouselViewController* vc = [PIECarouselViewController new];
         vc.pageVM = [_source objectAtIndex:index];
-        DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-        [nav pushViewController:vc animated:YES ];
+
+    //汗，看来还是要写在controller里面
+        [self.viewController.parentViewController.view.superview.viewController.navigationController pushViewController:vc animated:YES ];
 }
 
 

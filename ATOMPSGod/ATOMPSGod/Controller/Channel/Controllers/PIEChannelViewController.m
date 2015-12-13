@@ -159,7 +159,6 @@
 #pragma mark - Refresh methods
 - (void)loadNewChannels
 {
-    NSLog(@"%s", __func__);
 
     // load new channels from server
     
@@ -232,7 +231,6 @@
 - (void)channelBannerCell:(PIEChannelBannerCell *)channelBannerCell
        didClickLeftButton:(UIButton *)button
 {
-    NSLog(@"%s", __func__);
     
     [self.navigationController
      pushViewController:[[PIENewAskMakeUpViewController alloc] init]
@@ -243,16 +241,15 @@
 - (void)channelBannerCell:(PIEChannelBannerCell *)channelBannerCell
       didClickRightButton:(UIButton *)button
 {
-    NSLog(@"%s", __func__);
     
-//    [self.navigationController
-//     pushViewController:[[PIENewReplyViewController alloc] init]
-//     animated:YES];
+    [self.navigationController
+     pushViewController:[[PIENewReplyViewController alloc] init]
+     animated:YES];
     
     // just for testing
-    [self.navigationController
-     pushViewController:[[PIEChannelActivityViewController alloc] init]
-     animated:YES];
+//    [self.navigationController
+//     pushViewController:[[PIEChannelActivityViewController alloc] init]
+//     animated:YES];
 
 }
 
