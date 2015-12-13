@@ -87,8 +87,7 @@
 
 //+ (NSMutableDictionary *)convertCurrentUserToDic;
 
-- (void)setCurrentUser:(PIEEntityUser *)user;
--(void)tellMeEveryThingAboutYou;
+//+ (void)setCurrentUser:(PIEEntityUser *)user ;
 + (void)saveAndUpdateUser:(PIEEntityUser *)user;
 +(void)fetchUserInDBToCurrentUser:(void (^)(BOOL))block;
 +(void)wipe ;

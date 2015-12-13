@@ -43,14 +43,15 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setBackgroundImage:nil
+                                                  forBarMetrics:UIBarMetricsDefault];
     self.navigationItem.titleView = self.segmentedControl;
     _likeButton.selected = _currentVM.liked;
     [MobClick beginLogPageView:@"进入滚动详情页"];
 }
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.navigationController.navigationBar setBackgroundImage:nil
-                                                  forBarMetrics:UIBarMetricsDefault];
+ 
 
 }
 - (void)viewWillDisappear:(BOOL)animated

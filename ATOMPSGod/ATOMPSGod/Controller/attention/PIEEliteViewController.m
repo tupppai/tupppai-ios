@@ -254,7 +254,9 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     for (UIView *subView in view.subviews){
         if([subView isKindOfClass:[UIImageView class]]){
             UIImageView *imageView = (UIImageView *)subView;
-            [imageView setImageWithURL:[NSURL URLWithString:vm.imageUrl]placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+            //            imageView.image = tabbar.avatarImage;
+//            NSLog(@"[DDUserManager currentUser].avatar]%@",[DDUserManager currentUser].avatar);
+            [imageView setImageWithURL:[NSURL URLWithString:vm.imageUrl]];
         }
     }
     ;

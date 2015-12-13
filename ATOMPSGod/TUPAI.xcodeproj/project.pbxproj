@@ -446,6 +446,7 @@
 		F4C0DFF11BE9EF3A000615CF /* PIEFeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4C0DFEF1BE9EF3A000615CF /* PIEFeedbackViewController.xib */; };
 		F4C705DF1C0995840057AA6A /* PIEImageView_BlurBG.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C705DE1C0995840057AA6A /* PIEImageView_BlurBG.m */; };
 		F4C705E21C0998750057AA6A /* PIEImageView_blur.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C705E11C0998750057AA6A /* PIEImageView_blur.m */; };
+		F4C9BE4C1C1D4F8C00A1AE82 /* UIImage+Colors.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C9BE4B1C1D4F8C00A1AE82 /* UIImage+Colors.m */; };
 		F4D015BB1BA6AF7200A28329 /* PIEThumbAnimateView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D015BA1BA6AF7200A28329 /* PIEThumbAnimateView.m */; };
 		F4D07A5D1BBA3AB70016A8B5 /* PIEEliteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D07A5C1BBA3AB70016A8B5 /* PIEEliteManager.m */; };
 		F4D3686C1BA909E300E6C91C /* PIECameraCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D3686A1BA909E300E6C91C /* PIECameraCell.m */; };
@@ -1381,6 +1382,8 @@
 		F4C705DE1C0995840057AA6A /* PIEImageView_BlurBG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEImageView_BlurBG.m; sourceTree = "<group>"; };
 		F4C705E01C0998750057AA6A /* PIEImageView_blur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIEImageView_blur.h; path = login/PIEImageView_blur.h; sourceTree = "<group>"; };
 		F4C705E11C0998750057AA6A /* PIEImageView_blur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIEImageView_blur.m; path = login/PIEImageView_blur.m; sourceTree = "<group>"; };
+		F4C9BE4A1C1D4F8C00A1AE82 /* UIImage+Colors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Colors.h"; sourceTree = "<group>"; };
+		F4C9BE4B1C1D4F8C00A1AE82 /* UIImage+Colors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Colors.m"; sourceTree = "<group>"; };
 		F4D015B91BA6AF7200A28329 /* PIEThumbAnimateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEThumbAnimateView.h; sourceTree = "<group>"; };
 		F4D015BA1BA6AF7200A28329 /* PIEThumbAnimateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEThumbAnimateView.m; sourceTree = "<group>"; };
 		F4D07A5B1BBA3AB70016A8B5 /* PIEEliteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteManager.h; sourceTree = "<group>"; };
@@ -2242,6 +2245,7 @@
 		5CDB05ED1AA400410089121E /* Uitility */ = {
 			isa = PBXGroup;
 			children = (
+				F4C9BE491C1D4F7500A1AE82 /* categories */,
 				F449BB6D1BE496C50019C315 /* MMPlaceHolder */,
 				F4AFCD481BC79A0D00027940 /* UIView+Pop */,
 				E99D2F371B1C7E8D000D7784 /* NSYImagesKit */,
@@ -2265,8 +2269,6 @@
 				E90197361B32D3C100F46B78 /* Util.h */,
 				E90197371B32D3C100F46B78 /* Util.m */,
 				E901973F1B33F73C00F46B78 /* CommonProtocol.h */,
-				E94B03281B7DE6EC00863C6F /* UIColor+PSGod.h */,
-				E94B03291B7DE6EC00863C6F /* UIColor+PSGod.m */,
 			);
 			path = Uitility;
 			sourceTree = "<group>";
@@ -3587,6 +3589,17 @@
 			name = BannerWebView;
 			sourceTree = "<group>";
 		};
+		F4C9BE491C1D4F7500A1AE82 /* categories */ = {
+			isa = PBXGroup;
+			children = (
+				F4C9BE4A1C1D4F8C00A1AE82 /* UIImage+Colors.h */,
+				F4C9BE4B1C1D4F8C00A1AE82 /* UIImage+Colors.m */,
+				E94B03281B7DE6EC00863C6F /* UIColor+PSGod.h */,
+				E94B03291B7DE6EC00863C6F /* UIColor+PSGod.m */,
+			);
+			name = categories;
+			sourceTree = "<group>";
+		};
 		F4D3686E1BA954EB00E6C91C /* ask */ = {
 			isa = PBXGroup;
 			children = (
@@ -4358,6 +4371,7 @@
 				F4EC11071BCE59B5002D1DCF /* PIENotificationLikeTableViewCell.m in Sources */,
 				F4F72C1D1BCCFB2A002FF05A /* PIESharesheetView.m in Sources */,
 				F472054E1BABA63000E0ADA0 /* PIEProceedingScrollView.m in Sources */,
+				F4C9BE4C1C1D4F8C00A1AE82 /* UIImage+Colors.m in Sources */,
 				5C31018D1AAEAB3C00EF529B /* PIEAccountBindingTableViewCell.m in Sources */,
 				E9FC94D91B2F0D0C00B72C60 /* PIEUserProfileViewModel.m in Sources */,
 				F4D368721BA9552B00E6C91C /* PIENewAskCollectionCell.m in Sources */,

@@ -11,6 +11,25 @@
 #import "PIEShareImageView.h"
 
 @implementation Util
+
++ (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize circlize:(BOOL)circlize {
+    //UIGraphicsBeginImageContext(newSize);
+    // In next line, pass 0.0 to use the current device's pixel scaling factor (and thus account for Retina resolution).
+    // Pass 1.0 to force exact pixel size.
+    
+    
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+    CGRect rect = CGRectMake(0, 0, newSize.width, newSize.height);
+    if (circlize) {
+        [[UIBezierPath bezierPathWithRoundedRect:rect
+                                    cornerRadius:newSize.width/2] addClip];
+    }
+    [image drawInRect:rect];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
 + (UIImage *)imageWithColor:(UIColor *)color {
     CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
     UIGraphicsBeginImageContext(rect.size);

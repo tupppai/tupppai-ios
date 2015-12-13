@@ -18,6 +18,7 @@
 #import "DDLoginNavigationController.h"
 #import "ATOMUserDAO.h"
 #import "PIEUploadManager.h"
+#import "UIImage+Colors.h"
 @interface PIETabBarController ()<UITabBarControllerDelegate>
 @property (nonatomic, strong) DDNavigationController *navigation_new;
 @property (nonatomic, strong) DDNavigationController *navigation_elite;
@@ -42,7 +43,6 @@
 }
 -(void)viewDidLoad {
     [super viewDidLoad];
-    
     self.delegate = self;
     [self setupTitle];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NetworkSignOutRET) name:@"NetworkSignOutCall" object:nil];
@@ -56,7 +56,6 @@
     [[UITabBarItem appearance] setTitleTextAttributes:@{   NSForegroundColorAttributeName: [UIColor blackColor],                                                           NSFontAttributeName: [UIFont systemFontOfSize:10]
                                                            }
                                              forState:UIControlStateSelected];
-
 }
 
 -(void)dealloc {
@@ -71,7 +70,6 @@
     PIEUploadManager* manager = [PIEUploadManager new];
     manager.uploadInfo = info;
     [manager upload:^(CGFloat percentage,BOOL success) {
-//        [_progressView setProgress:percentage animated:YES];
         [vc.progressView setProgress:percentage animated:YES];
         if (success) {
             if ([manager.type isEqualToString:@"ask"]) {
@@ -124,38 +122,45 @@
     _centerNav = [[DDNavigationController alloc] initWithRootViewController:takePhotoVC];
     _preNav = _navigation_elite;
     
-    _navigation_elite.tabBarItem.image = [UIImage imageNamed:@"pie_tab_1"];
-    _navigation_elite.tabBarItem.selectedImage = [UIImage imageNamed:@"pie_tab_1_selected"];
-    _navigation_new.tabBarItem.image = [UIImage imageNamed:@"pie_tab_2"];
-    _navigation_new.tabBarItem.selectedImage = [UIImage imageNamed:@"pie_tab_2_selected"];
-    _navigation_proceeding.tabBarItem.image = [UIImage imageNamed:@"pie_tab_4"];
-    _navigation_proceeding.tabBarItem.selectedImage = [UIImage imageNamed:@"pie_tab_4_selected"];
-    _navigation_me.tabBarItem.image = [UIImage imageNamed:@"pie_tab_5"];
-    _navigation_me.tabBarItem.selectedImage = [UIImage imageNamed:@"pie_tab_5_selected"];
+    _navigation_elite.tabBarItem.image =
+    [[UIImage imageNamed:@"pie_tab_1"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+
+    _navigation_elite.tabBarItem.selectedImage =
+    [[UIImage imageNamed:@"pie_tab_1_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
-    _centerNav.tabBarItem.image = [UIImage imageNamed:@"pie_tab_3_selected"];
+    _navigation_new.tabBarItem.image =
+    [[UIImage imageNamed:@"pie_tab_2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    _navigation_new.tabBarItem.selectedImage =
+    [[UIImage imageNamed:@"pie_tab_2_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    _navigation_proceeding.tabBarItem.image =
+    [[UIImage imageNamed:@"pie_tab_4"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    _navigation_proceeding.tabBarItem.selectedImage =
+    [[UIImage imageNamed:@"pie_tab_4_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+
+    _centerNav.tabBarItem.image =
+    [[UIImage imageNamed:@"pie_tab_3_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
-    
-    
-    _navigation_new.tabBarItem.image = [ _navigation_new.tabBarItem.image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    _navigation_new.tabBarItem.selectedImage = [ _navigation_new.tabBarItem.selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    _navigation_elite.tabBarItem.image = [ _navigation_elite.tabBarItem.image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    _navigation_elite.tabBarItem.selectedImage = [ _navigation_elite.tabBarItem.selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    _navigation_proceeding.tabBarItem.image = [ _navigation_proceeding.tabBarItem.image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    _navigation_proceeding.tabBarItem.selectedImage = [ _navigation_proceeding.tabBarItem.selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    _navigation_me.tabBarItem.image = [ _navigation_me.tabBarItem.image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    _navigation_me.tabBarItem.selectedImage = [ _navigation_me.tabBarItem.selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    _centerNav.tabBarItem.image = [ _centerNav.tabBarItem.image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    
-//    [_navigation_new.tabBarItem setImageInsets:UIEdgeInsetsMake(7, 0, -7, 0)];
-//    [_navigation_elite.tabBarItem setImageInsets:UIEdgeInsetsMake(7, 0, -7, 0)];
-//    [_navigation_proceeding.tabBarItem setImageInsets:UIEdgeInsetsMake(7, 0, -7, 0)];
-//    [_navigation_me.tabBarItem setImageInsets:UIEdgeInsetsMake(7, 0, -7, 0)];
-    [_centerNav.tabBarItem setImageInsets:UIEdgeInsetsMake(5, 0, -5, 0)];
+    _navigation_me.tabBarItem.image =
+    [[UIImage imageNamed:@"pie_tab_5"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    _navigation_me.tabBarItem.selectedImage =
+    [[UIImage imageNamed:@"pie_tab_5_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    [self updateTabbarAvatar];
+        [_centerNav.tabBarItem setImageInsets:UIEdgeInsetsMake(5, 0, -5, 0)];
     self.viewControllers = [NSArray arrayWithObjects:_navigation_elite, _navigation_new,_centerNav,_navigation_proceeding, _navigation_me, nil];
 }
 
 
+- (void)updateTabbarAvatar {
+    [DDService downloadImage:[DDUserManager currentUser].avatar withBlock:^(UIImage *image) {
+        if (image) {
+            UIImage* scaledImage = [Util imageWithImage:image scaledToSize:CGSizeMake(28, 28) circlize:YES];
+            _avatarImage = scaledImage;
+            _navigation_me.tabBarItem.image = [_avatarImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+            _navigation_me.tabBarItem.selectedImage = [[_avatarImage maskWithImage:[UIImage imageFromColor:[UIColor colorWithHex:0xffffff andAlpha:0.7]]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        }
+    }];
+
+}
 
 -(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
     if (viewController == _navigation_new) {
@@ -182,4 +187,6 @@
     pvc.blurStyle = UIBlurEffectStyleDark;
     [self presentViewController:pvc animated:YES completion:nil];
 }
+
+
 @end

@@ -87,6 +87,7 @@
             if (_avatar) {
                 //use reactive cocoa to update all avatar view.
                 [DDUserManager currentUser].avatar = _avatar;
+                [[AppDelegate APP].mainTabBarController updateTabbarAvatar];
             }
             [DDUserManager updateDBUserFromCurrentUser];
             

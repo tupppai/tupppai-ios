@@ -217,8 +217,14 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
     PIEPageVM* vm = [_source objectAtIndex:indexPath.row];
     PIECarouselViewController* vc = [PIECarouselViewController new];
     vc.pageVM = vm;
-    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-    [nav pushViewController:vc animated:YES ];
+//    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+    
+    /*
+     PIEFriendViewController -> CAPSViewController
+     PIEFriendViewController.view addSubView CAPSViewController.view
+     CAPSViewController subviewControllers -> friendAsk and friendReply
+     */
+    [self.view.viewController.parentViewController.view.superview.viewController.navigationController pushViewController:vc animated:YES ];
 }
 
 -(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
