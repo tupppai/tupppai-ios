@@ -21,7 +21,8 @@
 #import "PIECommentViewController.h"
 #import "PIEReplyCollectionViewController.h"
 #import "DDCollectManager.h"
-
+#import "PIECameraViewController.h"
+#import "PIENewAskMakeUpViewController.h"
 /* Variables */
 @interface PIEChannelDetailViewController ()
 @property (nonatomic, strong) PIERefreshTableView           *tableView;
@@ -119,7 +120,6 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"%s", __func__);
 
     return self.usersPSSource.count;
 }
@@ -127,7 +127,6 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%s", __func__);
 
     if (indexPath.row == 0)
     {
@@ -164,7 +163,6 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 */
 - (void)didPullRefreshUp:(UITableView *)tableView
 {
-    NSLog(@"%s", __func__);
 
     [self loadMorePageViewModels];
 }
@@ -174,7 +172,6 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 */
 - (void)didPullRefreshDown:(UITableView *)tableView
 {
-    NSLog(@"%s", __func__);
 
     [self loadNewPageViewModels];
 }
@@ -182,8 +179,6 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 #pragma mark - <SwipeViewDelegate>
 - (CGSize)swipeViewItemSize:(SwipeView *)swipeView
 {
-    NSLog(@"%s", __func__);
-
     
     CGFloat screenWidth         = [UIScreen mainScreen].bounds.size.width;
     CGFloat swipeViewItemWidth  = screenWidth * (180.0 / 750.0);
@@ -264,7 +259,14 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 
     CGPoint location = [gesture locationInView:self.tableView];
     _selectedIndexPath = [self.tableView indexPathForRowAtPoint:location];
-    if (_selectedIndexPath) {
+    
+    if (_selectedIndexPath.row == 0) {
+        PIENewAskMakeUpViewController* vc = [PIENewAskMakeUpViewController new];
+        vc.channelVM = _currentChannelViewModel;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    
+    else if (_selectedIndexPath) {
         _selectedReplyCell = [self.tableView cellForRowAtIndexPath:_selectedIndexPath];
         _selectedVM = self.usersPSSource[_selectedIndexPath.row];
         CGPoint p = [gesture locationInView:_selectedReplyCell];
@@ -578,7 +580,10 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 #pragma mark - Target-actions
 - (void)takePhoto:(UIButton *)button
 {
-    NSLog(@"%s", __func__);
+    PIECameraViewController *pvc = [PIECameraViewController new];
+    pvc.blurStyle = UIBlurEffectStyleDark;
+    pvc.channelVM = _currentChannelViewModel;
+    [self presentViewController:pvc animated:YES completion:nil];
     
 }
 #pragma mark - UI components configuration
@@ -598,14 +603,13 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 {
     // --- added as subViews
     [self.view addSubview:self.takePhotoButton];
-    
     // --- Autolayout constraints
     __weak typeof(self) weakSelf = self;
     [_takePhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(weakSelf.view.mas_centerX);
         make.height.mas_equalTo(50);
         make.width.mas_equalTo(50);
-        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-64);
+        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-11);
     }];
 }
 

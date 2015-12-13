@@ -7,20 +7,14 @@
 //
 
 #import "PIEChannelViewController.h"
-#import "Masonry.h"
 #import "PIEChannelTableViewCell.h"
 #import "PIEChannelBannerCell.h"
 #import "PIENewReplyViewController.h"
 #import "PIENewAskMakeUpViewController.h"
-#import "MJRefresh.h"
 #import "PIERefreshTableView.h"
-
-#import "DDBaseService.h"
-#import "DDServiceConstants.h"
 #import "PIEChannelViewModel.h"
 #import "PIEChannelManager.h"
 #import "PIEChannelDetailViewController.h"
-
 #import "PIEChannelActivityViewController.h"
 
 /* Protocols */
@@ -60,7 +54,7 @@
     [self setupTableView];
     [self setupData];
     
-    // load data for the first time!
+    // refresh mj_header and load data for the first time!
     [self.tableView.mj_header beginRefreshing];
 
 }
@@ -102,7 +96,8 @@
 #pragma mark - <UITableViewDelegate>
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section != 0)
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 1)
     {
         
         PIEChannelViewModel *channelViewModel = _source[indexPath.row];

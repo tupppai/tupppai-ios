@@ -65,9 +65,9 @@
     
     _type = [_uploadInfo objectForKey:@"type"];
     if ([[_uploadInfo objectForKey:@"type"] isEqualToString:@"ask"]) {
-        [Hud textWithLightBackground:@"正在后台上传你的求P..."];
+        [Hud text:@"正在后台上传你的求P..."];
     } else {
-        [Hud textWithLightBackground:@"正在后台上传你的作品..."];
+        [Hud text:@"正在后台上传你的作品..."];
     }
     
     NSData* dataImage1;
@@ -153,26 +153,23 @@
     [param setObject:self.uploadIdArray forKey:@"upload_ids"];
     [param setObject:self.ratioArray forKey:@"ratios"];
     
-//    NSInteger lastIndex = _toUploadInfoArray.count - 1;
     NSArray* tag_ids = [_uploadInfo objectForKey:@"tag_ids_array"];
     [param setObject:[_uploadInfo objectForKey:@"text_string"] forKey:@"desc"];
     [param setObject:tag_ids forKey:@"tag_ids"];
-
-//    long long timeStamp = [[NSDate date] timeIntervalSince1970];
-//    [param setObject:@(timeStamp) forKey:@"last_updated"];
     
-//    [param setObject:[_toUploadInfoArray lastObject] forKey:@"desc"];
+    NSNumber *cid = [_uploadInfo objectForKey:@"channelViewModel_id"];
+    if (cid) {
+        [param setObject:cid forKey:@"channel_id"];
+    }
+
     [DDService ddSaveAsk:param withBlock:^(NSInteger newImageID) {
         if (newImageID!=-1) {
-//            [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:@"shouldNavToAskSegment"];
-//            [[NSUserDefaults standardUserDefaults] synchronize];
             [Hud success:@"求P成功,你可以在进行中查看你的求P"];
             if  (block) {
                 block(YES);
             }
         } else {
             [Hud error:@"求P失败,请重试"];
-//            self.navigationItem.rightBarButtonItem.enabled = YES;
             if  (block) {
                 block(NO);
             }
@@ -189,6 +186,12 @@
     [param setObject:@(timeStamp) forKey:@"last_updated"];
 //    [param setObject:[_toUploadInfoArray lastObject] forKey:@"desc"];
     [param setObject:[_uploadInfo objectForKey:@"text_string"] forKey:@"desc"];
+    NSNumber *cid = [_uploadInfo objectForKey:@"channelViewModel_id"];
+    if (cid) {
+        [param setObject:cid forKey:@"channel_id"];
+    }
+
+    
     NSInteger askID = [[NSUserDefaults standardUserDefaults]
                        integerForKey:@"AskIDToReply"];
     [param setObject:@(askID) forKey:@"ask_id"];

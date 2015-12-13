@@ -114,8 +114,22 @@
     _inputTextView.delegate = self;
     _leftImageView.clipsToBounds = YES;
     _rightImageView.clipsToBounds = YES;
-//    _dataArray = [NSMutableArray array];
+    
+    if (_hideSecondView) {
+        _rightImageView.hidden = YES;
+    }
+    
+    [self setupData];
+}
+
+- (void)setupData {
+    
     _uploadInfo = [NSMutableDictionary new];
+    
+    if (_channelVM) {
+        [_uploadInfo setObject:@(_channelVM.ID) forKey:@"channelViewModel_id"];
+    }
+    
     if (_assetsArray.count == 1) {
         _leftImageView.image = [Util getImageFromAsset:[_assetsArray objectAtIndex:0] type:ASSET_PHOTO_SCREEN_SIZE];
         _rightImageView.image = [UIImage imageNamed:@"pie_upload_plus"];
@@ -124,20 +138,16 @@
         [_rightImageView addGestureRecognizer:tapGesure];
         [_uploadInfo setObject:(_leftImageView.image) forKey:@"image1"];
         [_uploadInfo setObject:@1 forKey:@"imageCount"];
-
+        
     } else if (_assetsArray.count == 2) {
         _leftImageView.image = [Util getImageFromAsset:[_assetsArray objectAtIndex:0] type:ASSET_PHOTO_SCREEN_SIZE];
         _rightImageView.image = [Util getImageFromAsset:[_assetsArray objectAtIndex:1] type:ASSET_PHOTO_SCREEN_SIZE];
-        
         [_uploadInfo setObject:(_leftImageView.image) forKey:@"image1"];
         [_uploadInfo setObject:(_rightImageView.image) forKey:@"image2"];
         [_uploadInfo setObject:@2 forKey:@"imageCount"];
+        
+    }
 
-    }
-    
-    if (_hideSecondView) {
-        _rightImageView.hidden = YES;
-    }
 }
 -(void) iWantSelecteMorePhoto {
     [self.navigationController popViewControllerAnimated:YES];
@@ -164,57 +174,6 @@
         [self backToTabbarController];
     }
 }
-//-(void) uploadReply {
-//    [Hud activity:@"上传中" inView:self.view];
-//    [self uploadImage1:^(BOOL success) {
-//        if (success) {
-//            [self uploadReplyRestInfo:^(BOOL success) {
-//                if (success) {
-//                    [self dismissToHome];
-//                }
-//            }];
-//        }
-//        else {
-//            [Hud dismiss:self.view];
-//        }
-//    }];
-//}
-//-(void) uploadAsk {
-
-//    [Hud activity:@"上传中" inView:self.view];
-//    if (_dataArray.count == 2) {
-//        [self uploadImage1:^(BOOL success) {
-//            if (success) {
-//                [self uploadImage2:^(BOOL success) {
-//                    if (success) {
-//                        [self uploadAskRestInfo:^(BOOL success) {
-//                            if (success) {
-//                                [self dismissToHome];
-//                            }
-//                        }];
-//                    }
-//                }];
-//            }
-//            else {
-//                [Hud dismiss:self.view];
-//            }
-//        }
-//         ];
-//    } else if (_dataArray.count == 1) {
-//        [self uploadImage1:^(BOOL success) {
-//            if (success) {
-//                [self uploadAskRestInfo:^(BOOL success) {
-//                    if (success) {
-//                        [self dismissToHome];
-//                    }
-//                }];
-//            }
-//            else {
-//                [Hud dismiss:self.view];
-//            }
-//        }];
-//    }
-//}
 
 - (void)backToTabbarController {
     PIETabBarController *lvc = [AppDelegate APP].mainTabBarController;
@@ -223,109 +182,7 @@
 //    [lvc setSelectedIndex:1];
 }
 
-//- (void) uploadImage2:(void (^)(BOOL success))block {
-//    NSData *data = UIImageJPEGRepresentation(_dataArray[1], 1.0);
-//    PIEUploadManager *uploadImage = [PIEUploadManager new];
-//    [uploadImage UploadImage:data WithBlock:^(PIEEntityImage *imageInfo, NSError *error) {
-//        if (!imageInfo) {
-//            if (block) {
-//                block(NO);
-//            }
-//        } else {
-//            _imageInfo2 = imageInfo;
-//            if (block) {
-//                block(YES);
-//            }
-//        }
-//    }];
-//}
 
-//- (void) uploadImage1:(void (^)(BOOL success))block {
-//        NSData *data = UIImageJPEGRepresentation(_dataArray[0], 1.0);
-//        PIEUploadManager *uploadImage = [PIEUploadManager new];
-//        [uploadImage UploadImage:data WithBlock:^(PIEEntityImage *imageInfo, NSError *error) {
-//            if (!imageInfo) {
-//                if (block) {
-//                    block(NO);
-//                }
-//            } else {
-//                _imageInfo1 = imageInfo;
-//                if (block) {
-//                    block(YES);
-//                }
-//            }
-//        }];
-//}
-
-//- (void)uploadAskRestInfo:(void (^) (BOOL success))block {
-//    NSArray* uploadIds;
-//    NSArray* ratios;
-//    if (_assetsArray.count == 2) {
-//        uploadIds = [NSArray arrayWithObjects:@(_imageInfo1.imageID),@(_imageInfo2.imageID), nil];
-//        UIImage* image1 = _dataArray[0];
-//        UIImage* image2 = _dataArray[1];
-//        CGFloat ratio1 = image1.size.height/image1.size.width;
-//        CGFloat ratio2 = image2.size.height/image2.size.width;
-//        ratios = [NSArray arrayWithObjects:@(ratio1),@(ratio2), nil];
-//    } else {
-//        uploadIds = [NSArray arrayWithObjects:@(_imageInfo1.imageID), nil];
-//        UIImage* image1 = _dataArray[0];
-//        CGFloat ratio1 = image1.size.height/image1.size.width;
-//        ratios = [NSArray arrayWithObjects:@(ratio1), nil];
-//    }
-//    NSMutableDictionary *param = [NSMutableDictionary new];
-//    [param setObject:uploadIds forKey:@"upload_ids"];
-//    [param setObject:ratios forKey:@"ratios"];
-//    [param setObject:_inputTextView.text forKey:@"desc"];
-//    [DDService ddSaveAsk:param withBlock:^(NSInteger newImageID) {
-//        [Hud dismiss:self.view];
-//        [Hud dismiss];
-//        if (newImageID!=-1) {
-//            [self.view endEditing:YES];
-//            [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:@"shouldNavToAskSegment"];
-//            [[NSUserDefaults standardUserDefaults] synchronize];
-//            if  (block) {
-//                block(YES);
-//            }
-//        } else {
-//            [Hud error:@"求P失败,请重试"];
-//            self.navigationItem.rightBarButtonItem.enabled = YES;
-//            if  (block) {
-//                block(NO);
-//            }
-//        }
-//    }];
-//}
-
-//- (void)uploadReplyRestInfo:(void (^) (BOOL success))block {
-//    
-//    UIImage* image1 = _dataArray[0];
-//    CGFloat ratio1 = image1.size.height/image1.size.width;
-//    NSMutableDictionary *param = [NSMutableDictionary new];
-//    [param setObject:@(ratio1) forKey:@"ratio"];
-//    [param setObject:@(_imageInfo1.imageID) forKey:@"upload_id"];
-//    [param setObject:@(_askIDToReply) forKey:@"ask_id"];
-//    [param setObject:_inputTextView.text forKey:@"desc"];
-//
-//    [DDService ddSaveReply:param withBlock:^(BOOL success) {
-//        [Hud dismiss:self.view];
-//        [Hud dismiss];
-//        if (success) {
-//            [Hud success:@"提交作品成功"];
-//            [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:@"shouldNavToHotSegment"];
-//            [[NSUserDefaults standardUserDefaults] synchronize];
-//            if  (block) {
-//                block(YES);
-//            }
-//        } else {
-//            [Hud error:@"上传作品失败,请重试"];
-//            self.navigationItem.rightBarButtonItem.enabled = YES;
-//            if  (block) {
-//                block(NO);
-//            }
-//        }
-//    }];
-//}
 
 - (void)popToAlbumViewController {
     [self.navigationController popToRootViewControllerAnimated:NO];

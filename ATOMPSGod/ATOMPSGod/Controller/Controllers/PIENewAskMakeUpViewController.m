@@ -21,7 +21,8 @@
 #import "PIEUploadManager.h"
 #import "DDCollectManager.h"
 #import "DDShareManager.h"
-
+#import "PIEUploadVC.h"
+#import "QBImagePickerController.h"
 /* Variables */
 @interface PIENewAskMakeUpViewController ()
 
@@ -35,6 +36,9 @@
 @property (nonatomic, strong) PIEShareView                *shareView;
 @property (nonatomic, strong) PIEActionSheet_PS           *psActionSheet;
 @property (nonatomic, strong) MRNavigationBarProgressView *progressView;
+@property (nonatomic, strong) UIButton                      *takePhotoButton;
+@property (nonatomic, strong) QBImagePickerController* QBImagePickerController;
+
 
 @end
 
@@ -43,7 +47,8 @@
 @interface PIENewAskMakeUpViewController (CollectionView)
 <UICollectionViewDataSource, UICollectionViewDelegate, CHTCollectionViewDelegateWaterfallLayout>
 @end
-
+@interface PIENewAskMakeUpViewController () <QBImagePickerControllerDelegate>
+@end
 @interface PIENewAskMakeUpViewController (DZNEmptyDataSet)
 <DZNEmptyDataSetDelegate, DZNEmptyDataSetSource>
 @end
@@ -66,7 +71,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.view = self.collectionView_ask;
+    [self.view addSubview: self.collectionView_ask];
     self.title = @"最新求P";
 //    self.collectionView_ask.backgroundColor = [UIColor whiteColor];
     
@@ -74,6 +79,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [self setupData];
     [self firstGetSourceIfEmpty_ask];
     [self setupNotifications];
+    [self configureTakePhotoButton];
     
 }
 -(void)viewWillAppear:(BOOL)animated {
@@ -117,6 +123,27 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     
 }
 
+
+- (void)configureTakePhotoButton
+{
+    // --- added as subViews
+    [self.view addSubview:self.takePhotoButton];
+    
+    // --- Autolayout constraints
+    __weak typeof(self) weakSelf = self;
+    [_takePhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(weakSelf.view.mas_centerX);
+        make.height.mas_equalTo(50);
+        make.width.mas_equalTo(50);
+        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-11);
+    }];
+    
+    if (_channelVM) {
+        self.takePhotoButton.hidden = YES;
+    }
+}
+
+
 #pragma mark - Get DataSource from Server for the first time
 - (void)firstGetSourceIfEmpty_ask {
     if (_sourceAsk.count <= 0 || _isfirstLoadingAsk) {
@@ -142,8 +169,10 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [param setObject:@(_timeStamp_ask) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(1) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-    
+//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    if (_channelVM) {
+        [param setObject:@(_channelVM.ID) forKey:@"channel_id"];
+    }
     
     
     PIEPageManager *pageManager = [PIEPageManager new];
@@ -180,7 +209,11 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [param setObject:@(_timeStamp_ask) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(_currentIndex_ask) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    if (_channelVM) {
+        [param setObject:@(_channelVM.ID) forKey:@"channel_id"];
+    }
+    
     PIEPageManager *pageManager = [PIEPageManager new];
     
     [pageManager pullAskSource:param block:^(NSMutableArray *homepageArray) {
@@ -492,7 +525,21 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [self.shareView show];
     
 }
+- (void)takePhoto {
+    [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
+}
+#pragma qb_imagePickerController delegate
+-(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
+    PIEUploadVC* vc = [PIEUploadVC new];
+    vc.assetsArray = assets;
+    [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
+}
 
+
+-(void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController {
+    [self.QBImagePickerController.selectedAssetURLs removeAllObjects];
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
 
 -(PIEShareView *)shareView {
     if (!_shareView) {
@@ -513,11 +560,9 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         layout.minimumInteritemSpacing = 10;
         
         
-        _collectionView_ask = [[PIERefreshCollectionView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT) collectionViewLayout:layout];
-        
-        
-        
-        
+        _collectionView_ask = [[PIERefreshCollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
+        _collectionView_ask.psDelegate           = self;
+
         UINib* nib = [UINib nibWithNibName:CellIdentifier2 bundle:nil];
         [_collectionView_ask registerNib:nib forCellWithReuseIdentifier:CellIdentifier2];
 
@@ -525,8 +570,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         _collectionView_ask.delegate             = self;
         _collectionView_ask.emptyDataSetDelegate = self;
         _collectionView_ask.emptyDataSetSource   = self;
-        _collectionView_ask.psDelegate           = self;
-        
+        _collectionView_ask.backgroundColor = [UIColor whiteColor];
         _collectionView_ask.toRefreshBottom              = YES;
         _collectionView_ask.toRefreshTop                 = YES;
         _collectionView_ask.autoresizingMask             = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
@@ -544,5 +588,50 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     }
     return _psActionSheet;
 }
+- (UIButton *)takePhotoButton
+{
+    if (_takePhotoButton == nil) {
+        // instantiate only for once
+        _takePhotoButton = [[UIButton alloc] init];
+        
+        /* Configurations */
+        
+        // --- set background image
+        [_takePhotoButton setBackgroundImage:[UIImage imageNamed:@"pie_channelDetailTakePhotoButton"]
+                                    forState:UIControlStateNormal];
+        
+        // --- add drop shadows
+        _takePhotoButton.layer.shadowColor  = (__bridge CGColorRef _Nullable)
+        ([UIColor colorWithWhite:0.0 alpha:0.5]);
+        _takePhotoButton.layer.shadowOffset = CGSizeMake(0, 4);
+        _takePhotoButton.layer.shadowRadius = 8.0;
+        
+        // --- add target-actions
+        [_takePhotoButton addTarget:self
+                             action:@selector(takePhoto)
+                   forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _takePhotoButton;
+    
+}
+
+
+- (QBImagePickerController* )QBImagePickerController {
+    if (!_QBImagePickerController) {
+        _QBImagePickerController = [QBImagePickerController new];
+        _QBImagePickerController.delegate = self;
+        _QBImagePickerController.filterType = QBImagePickerControllerFilterTypePhotos;
+        _QBImagePickerController.allowsMultipleSelection = YES;
+        _QBImagePickerController.showsNumberOfSelectedAssets = YES;
+        _QBImagePickerController.minimumNumberOfSelection = 1;
+        _QBImagePickerController.maximumNumberOfSelection = 2;
+        //        _QBImagePickerController.prompt = @"选择你要上传的图片";
+    }
+    return _QBImagePickerController;
+}
+
+
+
+
 
 @end

@@ -7,7 +7,8 @@
 //
 
 #import "DDBaseVC.h"
-
+#import "PIEChannelViewModel.h"
 @interface PIEToHelpViewController : DDBaseVC
+@property (nonatomic, strong) PIEChannelViewModel *channelVM;
 
 @end
