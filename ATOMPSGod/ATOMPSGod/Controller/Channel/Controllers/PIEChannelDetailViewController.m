@@ -510,7 +510,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     NSLog(@"%s", __func__);
     
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    params[@"channel_id"] = @(self.selectedChannelViewModel.ID);
+    params[@"channel_id"] = @(self.currentChannelViewModel.ID);
     params[@"page"]       = @(2);
     params[@"size"]       = @(20);
     
@@ -546,7 +546,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     NSLog(@"%s", __func__);
     
     NSMutableDictionary *params  = [NSMutableDictionary dictionary];
-    params[@"channel_id"]        = @(self.selectedChannelViewModel.ID);
+    params[@"channel_id"]        = @(self.currentChannelViewModel.ID);
     params[@"page"]              = @(1);
     params[@"size"]              = @(20);
 
