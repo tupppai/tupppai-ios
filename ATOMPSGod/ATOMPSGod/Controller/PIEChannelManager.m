@@ -25,11 +25,23 @@
                          
                          for (NSDictionary* dic in categories) {
                              PIEChannelViewModel* vm = [PIEChannelViewModel new];
-                             vm.ID       = [[dic objectForKey:@"id"]integerValue];
-                             vm.imageUrl = [dic objectForKey:@"app_pic"];
-                             vm.iconUrl  = [dic objectForKey:@"icon"];
-                             vm.title    = [dic objectForKey:@"display_name"];
-                             vm.content  = [dic objectForKey:@"description"];
+                             vm.ID         = [[dic objectForKey:@"id"]integerValue];
+                             vm.imageUrl   = [dic objectForKey:@"app_pic"];
+                             vm.post_btn   = [dic objectForKey:@"post_btn"];
+                             vm.banner_pic = [dic objectForKey:@"banner_pic"];
+                             vm.iconUrl    = [dic objectForKey:@"icon"];
+                             vm.title      = [dic objectForKey:@"display_name"];
+                             vm.content    = [dic objectForKey:@"description"];
+                             
+                             NSString *category_type = [dic objectForKey:@"category_type"];
+                             if ([category_type isEqualToString:@"activity"]) {
+                                 vm.channelType = PIEChannelTypeActivity;
+                             }
+                             else if ([category_type isEqualToString:@"channel"])
+                             {
+                                 vm.channelType = PIEChannelTypeChannel;
+                             }
+                             
                              
                              NSMutableArray* threads_transformed = [NSMutableArray new];
                              NSArray* threads = [dic objectForKey:@"threads"];

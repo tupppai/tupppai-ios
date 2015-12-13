@@ -244,7 +244,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     }];
 }
 
-#pragma mark - Reply ???
+#pragma mark - ReplyCell中的“喜欢该P图”和“关注P图主”的点击事件
 -(void)likeReply {
     _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
     [DDService toggleLike:_selectedReplyCell.likeView.selected ID:_selectedVM.ID type:_selectedVM.type  withBlock:^(BOOL success) {
@@ -407,7 +407,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 - (void)updateShareStatus {
     
     /**
-     *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面的点赞数和分享数
+     *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面ReplyCell的点赞数和分享数
      */
     _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
     [self updateStatus];
@@ -529,7 +529,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 
 #pragma mark - Synchronized data with newest action
 /**
- *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面的点赞数和分享数
+ *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面中ReplyCell的点赞数和分享数
  */
 - (void)updateStatus {
     if (_selectedIndexPath) {
