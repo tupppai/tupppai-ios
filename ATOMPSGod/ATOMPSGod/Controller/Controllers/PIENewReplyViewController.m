@@ -19,8 +19,9 @@
 #import "PIEShareView.h"
 #import "PIEReplyCollectionViewController.h"
 #import "DDCollectManager.h"
-
-
+#import "DDNavigationController.h"
+#import "AppDelegate.h"
+#import "PIEToHelpViewController.h"
 /* Variables */
 @interface PIENewReplyViewController ()
 
@@ -47,6 +48,8 @@
 @property (nonatomic, strong) PIEPageVM *selectedVM;
 
 @property (nonatomic, strong) PIEShareView *shareView;
+
+@property (nonatomic, strong) UIButton                      *takePhotoButton;
 
 @end
 
@@ -77,12 +80,12 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 #pragma mark UI life cycles
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.view = self.tableViewReply;
     self.title = @"最新作品";
+    self.view.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.tableViewReply ];
+    [self configureTakePhotoButton];
     [self setupGestures];
     [self setupData];
-    [self setupNotifications];
     
     /**
      *  假如model（_source）为空的话，那就重新fetch data
@@ -123,31 +126,20 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 }
 
 #pragma mark - Notification methods
-- (void)setupNotifications {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_New" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldDoUploadJob) name:@"UploadRightNow" object:nil];
-}
 
-- (void)shouldDoUploadJob {
-    _progressView = [MRNavigationBarProgressView progressViewForNavigationController:self.navigationController];
-    _progressView.progressTintColor = [UIColor pieYellowColor];
+
+- (void)configureTakePhotoButton
+{
+    // --- added as subViews
+    [self.view addSubview:self.takePhotoButton];
     
-    BOOL should = [[NSUserDefaults standardUserDefaults]
-                   boolForKey:@"shouldDoUploadJob"];
-    if (should) {
-        [self PleaseDoTheUploadProcess];
-    }
-    [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:@"shouldDoUploadJob"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (void) PleaseDoTheUploadProcess {
-    PIEUploadManager* manager = [PIEUploadManager new];
-    [manager upload:^(CGFloat percentage,BOOL success) {
-        [_progressView setProgress:percentage animated:YES];
-        if (success) {
-            [_tableViewReply.mj_header beginRefreshing];
-        }
+    // --- Autolayout constraints
+    __weak typeof(self) weakSelf = self;
+    [_takePhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(weakSelf.view.mas_centerX);
+        make.height.mas_equalTo(50);
+        make.width.mas_equalTo(50);
+        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-11);
     }];
 }
 
@@ -156,14 +148,16 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
         [_tableViewReply.mj_header beginRefreshing];
     }
 }
+- (void)takePhoto {
+        PIEToHelpViewController* vc = [PIEToHelpViewController new];
+        [self.navigationController pushViewController:vc animated:YES];
+
+}
 
 /**
  *  remove observers while being deallocated.
  */
 -(void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_New" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UploadRightNow" object:nil];
-    //compiler would call [super dealloc] automatically in ARC.
 }
 
 #pragma mark - <UITableViewDataSource>
@@ -220,6 +214,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
         [ws.tableViewReply.mj_header endRefreshing];
     }];
 }
+
 
 - (void)getMoreRemoteReplySource {
     WS(ws);
@@ -540,7 +535,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 #pragma mark - lazy loadings
 -(PIERefreshTableView *)tableViewReply {
     if (_tableViewReply == nil) {
-        _tableViewReply = [[PIERefreshTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*2, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
+        _tableViewReply = [[PIERefreshTableView alloc] initWithFrame:self.view.bounds];
         _tableViewReply.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableViewReply.backgroundColor = [UIColor whiteColor];
         _tableViewReply.showsVerticalScrollIndicator = NO;
@@ -563,5 +558,31 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     return _tableViewReply;
 }
 
+- (UIButton *)takePhotoButton
+{
+    if (_takePhotoButton == nil) {
+        // instantiate only for once
+        _takePhotoButton = [[UIButton alloc] init];
+        
+        /* Configurations */
+        
+        // --- set background image
+        [_takePhotoButton setBackgroundImage:[UIImage imageNamed:@"pie_channelDetailTakePhotoButton"]
+                                    forState:UIControlStateNormal];
+        
+        // --- add drop shadows
+        _takePhotoButton.layer.shadowColor  = (__bridge CGColorRef _Nullable)
+        ([UIColor colorWithWhite:0.0 alpha:0.5]);
+        _takePhotoButton.layer.shadowOffset = CGSizeMake(0, 4);
+        _takePhotoButton.layer.shadowRadius = 8.0;
+        
+        // --- add target-actions
+        [_takePhotoButton addTarget:self
+                             action:@selector(takePhoto)
+                   forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _takePhotoButton;
+    
+}
 
 @end

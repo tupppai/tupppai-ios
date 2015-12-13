@@ -18,10 +18,10 @@
 #import "PIEReplyCollectionViewController.h"
 #import "PIEShareView.h"
 #import "DDCollectManager.h"
-
-
+#import "QBImagePickerController.h"
+#import "PIEUploadVC.h"
 /* Variables */
-@interface PIEChannelActivityViewController ()
+@interface PIEChannelActivityViewController ()<QBImagePickerControllerDelegate>
 
 /*Views*/
 @property (nonatomic, strong) PIERefreshTableView *tableView;
@@ -49,6 +49,9 @@
 
 /** 当前加载的页面 */
 @property (nonatomic, assign) NSUInteger currentPageIndex;
+
+
+@property (nonatomic, strong) QBImagePickerController* QBImagePickerController;
 
 @end
 
@@ -104,7 +107,9 @@ static const NSUInteger kItemsCountPerPage = 10;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+-(BOOL)hidesBottomBarWhenPushed {
+    return  YES;
+}
 #pragma mark - UI components setup
 - (void)configureTableView
 {
@@ -131,7 +136,7 @@ static const NSUInteger kItemsCountPerPage = 10;
         make.width.mas_equalTo(120);
         make.height.mas_equalTo(32);
         
-        make.bottom.equalTo(self.view.mas_bottom).with.offset(-74);
+        make.bottom.equalTo(self.view.mas_bottom).with.offset(-16);
         make.centerX.equalTo(self.view.mas_centerX);
     }];
 }
@@ -265,6 +270,8 @@ static const NSUInteger kItemsCountPerPage = 10;
 {
     /* push to webViewController */
     NSLog(@"%s", __func__);
+    
+    [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
 
 }
 
@@ -525,6 +532,20 @@ static const NSUInteger kItemsCountPerPage = 10;
     [self.shareView dismiss];
 }
 
+#pragma mark - qb_imagePickerController delegate
+-(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
+    PIEUploadVC* vc = [PIEUploadVC new];
+    vc.channelVM = _currentChannelVM;
+    vc.type = PIEUploadTypeReply;
+    vc.assetsArray = assets;
+    vc.hideSecondView = YES;
+    [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
+}
+
+-(void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController {
+    [self.QBImagePickerController.selectedAssetURLs removeAllObjects];
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
 #pragma mark - "收藏"相关操作， shareView中用户点击了"收藏"之后被调用
 -(void)collect {
     NSMutableDictionary *param = [NSMutableDictionary new];
@@ -653,5 +674,22 @@ static const NSUInteger kItemsCountPerPage = 10;
     }
     return  _shareView;
 }
+
+- (QBImagePickerController* )QBImagePickerController {
+    if (!_QBImagePickerController) {
+        _QBImagePickerController = [QBImagePickerController new];
+        _QBImagePickerController.delegate = self;
+        _QBImagePickerController.filterType = QBImagePickerControllerFilterTypePhotos;
+        _QBImagePickerController.allowsMultipleSelection = YES;
+        _QBImagePickerController.showsNumberOfSelectedAssets = YES;
+        _QBImagePickerController.minimumNumberOfSelection = 1;
+        _QBImagePickerController.maximumNumberOfSelection = 1;
+    }
+    return _QBImagePickerController;
+}
+
+
+
+
 
 @end

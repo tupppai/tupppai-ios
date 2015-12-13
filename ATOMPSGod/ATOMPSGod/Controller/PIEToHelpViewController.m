@@ -93,16 +93,6 @@
     }
 }
 
-//- (void)deleteOneToHelp :(NSIndexPath*)indexPath ID:(NSInteger)ID {
-//    NSDictionary* param = [[NSDictionary alloc]initWithObjectsAndKeys:@(ID),@"id", nil];
-//    [DDService deleteProceeding:param withBlock:^(BOOL success) {
-//        if (success) {
-//            [Hud success:@"删除了一条帮p" inView:_toHelpTableView];
-//        }
-//        [_sourceToHelp removeObjectAtIndex:indexPath.row];
-//        [_toHelpTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-//    }];
-//}
 
 #pragma mark - getRemoteSourceToHelp
 
@@ -117,6 +107,9 @@
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(20) forKey:@"size"];
+    if (_channelVM) {
+        [param setObject:@(_channelVM.ID) forKey:@"channel_id"];
+    }
     [PIEProceedingManager getMyToHelp:param withBlock:^(NSMutableArray *resultArray) {
         _isfirstLoading = NO;
         if (resultArray.count == 0) {
@@ -146,6 +139,10 @@
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(20) forKey:@"size"];
+    if (_channelVM) {
+        [param setObject:@(_channelVM.ID) forKey:@"channel_id"];
+    }
+
     [PIEProceedingManager getMyToHelp:param withBlock:^(NSMutableArray *resultArray) {
         if (resultArray.count == 0) {
             _canRefreshToHelpFooter = NO;
@@ -171,7 +168,7 @@
     if (_canRefreshToHelpFooter) {
         [self getMoreRemoteSourceToHelp];
     } else {
-        [_toHelpTableView.mj_footer endRefreshing];
+        [_toHelpTableView.mj_footer endRefreshingWithNoMoreData];
     }
 }
 
@@ -182,6 +179,7 @@
         [array addObject:asset];
     }
     PIEUploadVC* vc = [PIEUploadVC new];
+    vc.channelVM = _channelVM;
     vc.assetsArray = assets;
     vc.hideSecondView = YES;
     vc.type = PIEUploadTypeReply;
@@ -244,7 +242,7 @@
 }
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
 {
-    NSString *text = @"去最新的求P页面逛逛吧";
+    NSString *text = @"还没有帮P的数据";
     
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
                                  NSForegroundColorAttributeName: [UIColor darkGrayColor]};

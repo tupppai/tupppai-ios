@@ -7,7 +7,7 @@
 //
 
 #import "DDBaseVC.h"
-
+#import "PIEChannelViewModel.h"
 @interface PIENewAskMakeUpViewController : DDBaseVC
-
+@property (nonatomic,strong) PIEChannelViewModel* channelVM;
 @end

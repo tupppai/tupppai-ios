@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "VVBlurViewController.h"
+#import "PIEChannelViewModel.h"
 @interface PIECameraViewController : VVBlurViewController
+
+@property (nonatomic, strong) PIEChannelViewModel *channelVM;
+
 @property (weak, nonatomic) IBOutlet UIView *bg1;
 @property (weak, nonatomic) IBOutlet UIView *bg2;
 

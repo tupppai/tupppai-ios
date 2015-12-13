@@ -41,20 +41,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    ((FXBlurView*)self.view).dynamic = NO;
-//    ((FXBlurView*)self.view).tintColor = [UIColor clearColor];
-//    DDNavigationController *nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-//    ((FXBlurView*)self.view).underlyingView =   [nav.viewControllers objectAtIndex:0].view;
-//    ((FXBlurView*)self.view).blurRadius = 25;
-//
-//    UIView* viewLayer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-//    viewLayer.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.2];
-//    [self.view insertSubview:viewLayer atIndex:0];
-//
-//    UIView* viewLayer2 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-//    viewLayer2.backgroundColor = [UIColor colorWithHex:0xeeeeee andAlpha:0.1];
-//    [self.view insertSubview:viewLayer2 atIndex:0];
-
     _askBackgroundView.layer.cornerRadius = _askBackgroundView.frame.size.width/2;
     _replyBackgroundView.layer.cornerRadius = _replyBackgroundView.frame.size.width/2;
     [_closeView addTarget:self action:@selector(dismissViewController) forControlEvents:UIControlEventTouchUpInside];
@@ -82,16 +68,12 @@
 
 - (void)tapOnG1 {
     [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
-//    [self dismissViewControllerAnimated:YES completion:^{
-//        DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-//        [nav presentViewController:self.QBImagePickerController animated:YES completion:nil];
-//    }];
-
 }
 - (void)tapOnG2 {
     [self dismissViewControllerAnimated:YES completion:^{
         DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
         PIEToHelpViewController* vc = [PIEToHelpViewController new];
+        vc.channelVM = _channelVM;
         [nav pushViewController:vc animated:YES];
     }];
 }
@@ -112,22 +94,16 @@
         _QBImagePickerController.showsNumberOfSelectedAssets = YES;
         _QBImagePickerController.minimumNumberOfSelection = 1;
         _QBImagePickerController.maximumNumberOfSelection = 2;
-//        _QBImagePickerController.prompt = @"选择你要上传的图片";
     }
     return _QBImagePickerController;
 }
 
 
 -(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
-    
-//    [self.QBImagePickerController.selectedAssetURLs removeAllObjects];
-
     PIEUploadVC* vc = [PIEUploadVC new];
+    vc.channelVM = _channelVM;
     vc.assetsArray = assets;
-//    if (imagePickerController.maximumNumberOfSelection == 1) {
-//        vc.hideSecondView = YES;
-//        vc.type = PIEUploadTypeReply;
-//    }
+
     [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
 }
 
