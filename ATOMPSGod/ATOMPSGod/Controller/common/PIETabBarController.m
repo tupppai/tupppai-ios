@@ -18,6 +18,7 @@
 #import "DDLoginNavigationController.h"
 #import "ATOMUserDAO.h"
 #import "PIEUploadManager.h"
+#import "UIImage+Colors.h"
 @interface PIETabBarController ()<UITabBarControllerDelegate>
 @property (nonatomic, strong) DDNavigationController *navigation_new;
 @property (nonatomic, strong) DDNavigationController *navigation_elite;
@@ -69,7 +70,6 @@
     PIEUploadManager* manager = [PIEUploadManager new];
     manager.uploadInfo = info;
     [manager upload:^(CGFloat percentage,BOOL success) {
-//        [_progressView setProgress:percentage animated:YES];
         [vc.progressView setProgress:percentage animated:YES];
         if (success) {
             if ([manager.type isEqualToString:@"ask"]) {
@@ -136,33 +136,31 @@
     [[UIImage imageNamed:@"pie_tab_4"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     _navigation_proceeding.tabBarItem.selectedImage =
     [[UIImage imageNamed:@"pie_tab_4_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+
+    _centerNav.tabBarItem.image =
+    [[UIImage imageNamed:@"pie_tab_3_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
     _navigation_me.tabBarItem.image =
     [[UIImage imageNamed:@"pie_tab_5"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     _navigation_me.tabBarItem.selectedImage =
     [[UIImage imageNamed:@"pie_tab_5_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    
-    _centerNav.tabBarItem.image =
-    [[UIImage imageNamed:@"pie_tab_3_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    
-
-    [DDService downloadImage:[DDUserManager currentUser].avatar withBlock:^(UIImage *image) {
-        UIImage* scaledImage = [Util imageWithImage:image scaledToSize:CGSizeMake(44, 44)];
-        NSLog(@"fetchUserInDBToCurrentUser%@",scaledImage);
-        _avatarImage = scaledImage;
-        _navigation_me.tabBarItem.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        _navigation_me.tabBarItem.selectedImage = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    }];
-
-    
-//    [_navigation_new.tabBarItem setImageInsets:UIEdgeInsetsMake(7, 0, -7, 0)];
-//    [_navigation_elite.tabBarItem setImageInsets:UIEdgeInsetsMake(7, 0, -7, 0)];
-//    [_navigation_proceeding.tabBarItem setImageInsets:UIEdgeInsetsMake(7, 0, -7, 0)];
-//    [_navigation_me.tabBarItem setImageInsets:UIEdgeInsetsMake(7, 0, -7, 0)];
-    [_centerNav.tabBarItem setImageInsets:UIEdgeInsetsMake(5, 0, -5, 0)];
+    [self updateTabbarAvatar];
+        [_centerNav.tabBarItem setImageInsets:UIEdgeInsetsMake(5, 0, -5, 0)];
     self.viewControllers = [NSArray arrayWithObjects:_navigation_elite, _navigation_new,_centerNav,_navigation_proceeding, _navigation_me, nil];
 }
 
 
+- (void)updateTabbarAvatar {
+    [DDService downloadImage:[DDUserManager currentUser].avatar withBlock:^(UIImage *image) {
+        if (image) {
+            UIImage* scaledImage = [Util imageWithImage:image scaledToSize:CGSizeMake(28, 28) circlize:YES];
+            _avatarImage = scaledImage;
+            _navigation_me.tabBarItem.image = [_avatarImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+            _navigation_me.tabBarItem.selectedImage = [[_avatarImage maskWithImage:[UIImage imageFromColor:[UIColor colorWithHex:0xffffff andAlpha:0.7]]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        }
+    }];
+
+}
 
 -(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
     if (viewController == _navigation_new) {
@@ -189,4 +187,6 @@
     pvc.blurStyle = UIBlurEffectStyleDark;
     [self presentViewController:pvc animated:YES completion:nil];
 }
+
+
 @end

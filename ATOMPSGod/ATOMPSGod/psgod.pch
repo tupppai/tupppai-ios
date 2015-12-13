@@ -56,7 +56,7 @@
 #import "PIEPageEntity.h"
 #import "PIEPageVM.h"
 #import "UIButton+Pop.h"
-
+#import "NYXImagesKit.h"
 
 // TODO: add PIELog() marco
 //判断是否要Log

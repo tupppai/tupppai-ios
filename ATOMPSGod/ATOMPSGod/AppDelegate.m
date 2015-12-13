@@ -129,6 +129,7 @@
 //                self.mainTabBarController.viewControllers.lastObject.tabBarItem.image = [scaledImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 //                self.mainTabBarController.viewControllers.lastObject.tabBarItem.selectedImage = [scaledImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 //            }];
+            NSLog(@"[DDUserManager currentUser]!!!%@",[DDUserManager currentUser]);
             self.window.rootViewController = self.mainTabBarController;
         } else {
             

@@ -73,67 +73,28 @@ static  PIEEntityUser* _currentUser;
 //}
 
 
-- (void)setCurrentUser:(PIEEntityUser *)user {
-//    _uid = user.uid;
-//    _mobile = user.mobile;
-//    _username = user.nickname;
-//    _sex = user.sex;
-//    _avatar = user.avatar;
-//    _praisedCount = user.likedCount;
-//    _attentionNumber = user.attentionNumber;
-//    _fansNumber = user.fansNumber;
-////    _likeNumber = user.likeNumber;
-//    _uploadNumber = user.uploadNumber;
-//    _replyNumber = user.replyNumber;
-//    _bindWechat = user.bindWechat;
-//    _bindWeibo = user.bindWeibo;
-//    _bindQQ = user.bindQQ;
-//    _token = user.token;
-    
-    
-    _currentUser.uid = user.uid;
-    _currentUser.mobile = user.mobile;
-    _currentUser.nickname = user.nickname;
-    _currentUser.sex = user.sex;
-    _currentUser.avatar = user.avatar;
-    _currentUser.likedCount = user.likedCount;
-    _currentUser.attentionNumber = user.attentionNumber;
-    _currentUser.fansNumber = user.fansNumber;
-    _currentUser.likedCount = user.likedCount;
-    _currentUser.uploadNumber = user.uploadNumber;
-    _currentUser.replyNumber = user.replyNumber;
-    _currentUser.bindWechat = user.bindWechat;
-    _currentUser.bindWeibo = user.bindWeibo;
-    _currentUser.bindQQ = user.bindQQ;
-    _currentUser.token = user.token;
-    
-//    _currentUser = user;
++ (void)setCurrentUser:(PIEEntityUser *)user {
+    self.currentUser.uid = user.uid;
+    self.currentUser.mobile = user.mobile;
+    self.currentUser.nickname = user.nickname;
+    self.currentUser.sex = user.sex;
+    self.currentUser.avatar = user.avatar;
+    self.currentUser.likedCount = user.likedCount;
+    self.currentUser.attentionNumber = user.attentionNumber;
+    self.currentUser.fansNumber = user.fansNumber;
+    self.currentUser.likedCount = user.likedCount;
+    self.currentUser.uploadNumber = user.uploadNumber;
+    self.currentUser.replyNumber = user.replyNumber;
+    self.currentUser.bindWechat = user.bindWechat;
+    self.currentUser.bindWeibo = user.bindWeibo;
+    self.currentUser.bindQQ = user.bindQQ;
+    self.currentUser.token = user.token;
 }
 
 //embarrassing
 + (void)updateDBUserFromCurrentUser {
-//    PIEEntityUser* user = [PIEEntityUser new];
-//    DDUserManager* cUser = [DDUserManager currentUser];
-//    user.uid = cUser.uid;
-//    user.mobile = cUser.mobile;
-//    user.nickname = cUser.username;
-//    user.sex = cUser.sex;
-//    user.avatar = cUser.avatar;
-//    user.attentionNumber = cUser.attentionNumber;
-//    user.fansNumber = cUser.fansNumber;
-////    user.likeNumber = cUser.likeNumber;
-//    user.uploadNumber = cUser.uploadNumber;
-//    user.replyNumber = cUser.replyNumber;
-//    user.bindWechat = cUser.bindWechat;
-//    user.bindWeibo = cUser.bindWeibo;
-//    user.bindQQ = cUser.bindQQ;
-//    user.likedCount = cUser.praisedCount;
-//    user.token = cUser.token;
-    [ATOMUserDAO updateUser:_currentUser];
-}
 
--(void)tellMeEveryThingAboutYou {
-    NSLog(@"%@,%@,%@,_likeNumber%ld id %zd",_username,_mobile,_avatar,(long)_likeNumber,_uid);
+    [ATOMUserDAO updateUser:self.currentUser];
 }
 
 
@@ -141,10 +102,13 @@ static  PIEEntityUser* _currentUser;
     if ([ATOMUserDAO isExistUser:user]) {
         [ATOMUserDAO updateUser:user];
 //        [self setCurrentUser:[ATOMUserDAO  selectUserByUID:user.uid]];
-        _currentUser = [ATOMUserDAO  selectUserByUID:user.uid];
+//        [self setCurrentUser:user];
+        self.currentUser = user;
     } else {
         [ATOMUserDAO insertUser:user];
-        _currentUser = user;
+//        _currentUser = user;
+//        [self setCurrentUser:user];
+        self.currentUser = user;
 //        [self setCurrentUser:user];
     }
 }
@@ -162,10 +126,13 @@ static  PIEEntityUser* _currentUser;
 +(void)fetchUserInDBToCurrentUser:(void (^)(BOOL))block {
   [ATOMUserDAO fetchUser:^(PIEEntityUser *user) {
       if (user) {
-          _currentUser = user;
+          self.currentUser = user;
+          NSLog(@"setCurrentUser %@,%@",self.currentUser,user);
           if (block) {
               block(YES);
           }
+          NSLog(@"setCurrentUser %@,%@",self.currentUser,user);
+
       } else {
           if (block) {
               block(NO);

@@ -10,5 +10,5 @@
 
 @interface PIETabBarController : UITabBarController
 @property (nonatomic,copy) UIImage* avatarImage;
-
+- (void)updateTabbarAvatar;
 @end

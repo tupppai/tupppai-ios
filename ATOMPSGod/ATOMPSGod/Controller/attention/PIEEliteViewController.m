@@ -254,19 +254,9 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     for (UIView *subView in view.subviews){
         if([subView isKindOfClass:[UIImageView class]]){
             UIImageView *imageView = (UIImageView *)subView;
-            PIETabBarController* tabbar = (PIETabBarController*)self.navigationController.tabBarController;
-            
-//            [DDService downloadImage:[DDUserManager currentUser].avatar withBlock:^(UIImage *image) {
-//                UIImage* scaledImage = [Util imageWithImage:image scaledToSize:CGSizeMake(44, 44)];
-//                NSLog(@"fetchUserInDBToCurrentUser%@",scaledImage);
-//                _avatarImage = scaledImage;
-//                _navigation_me.tabBarItem.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//                _navigation_me.tabBarItem.selectedImage = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//            }];
-
-//            imageView.image = tabbar.avatarImage;
-            NSLog(@"[DDUserManager currentUser].avatar]%@",[DDUserManager currentUser].avatar);
-            [imageView setImageWithURL:[NSURL URLWithString:[DDUserManager currentUser].avatar]];
+            //            imageView.image = tabbar.avatarImage;
+//            NSLog(@"[DDUserManager currentUser].avatar]%@",[DDUserManager currentUser].avatar);
+            [imageView setImageWithURL:[NSURL URLWithString:vm.imageUrl]];
         }
     }
     ;
