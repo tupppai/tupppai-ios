@@ -70,15 +70,13 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    [self.view addSubview: self.collectionView_ask];
     self.title = @"最新求P";
+    [self.view addSubview: self.collectionView_ask];
 //    self.collectionView_ask.backgroundColor = [UIColor whiteColor];
     
     [self setupGestures];
     [self setupData];
     [self firstGetSourceIfEmpty_ask];
-    [self setupNotifications];
     [self configureTakePhotoButton];
     
 }
@@ -360,23 +358,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 }
 
 #pragma mark - Notification methods
-- (void)setupNotifications {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_New" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldDoUploadJob) name:@"UploadRightNow" object:nil];
-}
 
-- (void)shouldDoUploadJob {
-    _progressView = [MRNavigationBarProgressView progressViewForNavigationController:self.navigationController];
-    _progressView.progressTintColor = [UIColor pieYellowColor];
-    
-    BOOL should = [[NSUserDefaults standardUserDefaults]
-                   boolForKey:@"shouldDoUploadJob"];
-    if (should) {
-        [self PleaseDoTheUploadProcess];
-    }
-    [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:@"shouldDoUploadJob"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
 
 - (void)refreshHeader {
     if (_collectionView_ask.mj_header.isRefreshing == false) {
@@ -384,27 +366,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     }
 }
 
-- (void) PleaseDoTheUploadProcess {
-    __weak typeof(self) weakSelf = self;
-    PIEUploadManager* manager = [PIEUploadManager new];
-    [manager upload:^(CGFloat percentage,BOOL success) {
-        [_progressView setProgress:percentage animated:YES];
-        if (success) {
-            if ([manager.type isEqualToString:@"ask"]) {
-                [weakSelf.collectionView_ask.mj_header beginRefreshing];
-            }
-        }
-    }];
-}
 
-/**
- *  Remove ovservers from NSNotificationCenter
- */
--(void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_New" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UploadRightNow" object:nil];
-    //compiler would call [super dealloc] automatically in ARC.
-}
 
 #pragma mark - methods on Sharing<ATOMShareViewDelegate>
 
