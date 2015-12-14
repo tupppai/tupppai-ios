@@ -111,6 +111,7 @@ static DDSessionManager *_shareHTTPSessionManager = nil;
             int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
             if (ret == 2) {
                 [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkSignOutCall" object:nil]];
+                
             } else if (ret != 1) {
                 NSString* info = [responseObject objectForKey:@"info"];
                 NSDictionary* userInfo = [NSDictionary dictionaryWithObject:info forKey:@"info"];

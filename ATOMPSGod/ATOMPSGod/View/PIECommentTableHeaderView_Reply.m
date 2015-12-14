@@ -34,7 +34,7 @@
     [self addSubview:self.followButton];
     [self addSubview:self.imageViewBlur];
     [self addSubview:self.imageViewMain];
-    [self addSubview:self.imageViewRight];
+//    [self addSubview:self.imageViewRight];
     [self addSubview:self.textView_content];
     [self addSubview:self.commentButton];
     [self addSubview:self.shareButton];
@@ -77,16 +77,18 @@
     [self.imageViewMain mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_timeLabel.mas_bottom).with.offset(10);
         make.left.equalTo(self).with.offset(0);
-        make.width.equalTo(self).with.priorityHigh();
+//        make.width.equalTo(self).with.priorityHigh();
+        make.right.equalTo(self).with.offset(0);
+
         make.height.equalTo(self.imageViewMain.mas_width);
     }];
     
-    [self.imageViewRight mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.imageViewMain.mas_top);
-        make.left.equalTo(self.imageViewMain.mas_right).with.offset(0);
-        make.right.equalTo(self).with.offset(0);
-        make.bottom.equalTo(self.imageViewMain.mas_bottom).with.offset(0);
-    }];
+//    [self.imageViewRight mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.imageViewMain.mas_top);
+//        make.left.equalTo(self.imageViewMain.mas_right).with.offset(0);
+//        make.right.equalTo(self).with.offset(0);
+//        make.bottom.equalTo(self.imageViewMain.mas_bottom).with.offset(0);
+//    }];
     [self.imageViewBlur mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.imageViewMain);
         make.bottom.equalTo(self.imageViewMain);
@@ -159,15 +161,6 @@
             _imageViewMain.image = image;
         }];
 
-        CGFloat height = vm.imageHeight/vm.imageWidth *SCREEN_WIDTH;
-        if (height > 100) {
-            [_imageViewMain mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.height.equalTo(@(height));
-            }];
-        } else {
-            _imageViewMain.contentMode = UIViewContentModeScaleAspectFit;
-        }
-
         _commentButton.numberString = vm.commentCount;
         _shareButton.numberString = vm.shareCount;
         _likeButton.numberString = vm.likeCount;
@@ -231,7 +224,7 @@
     if (!_imageViewMain) {
         _imageViewMain = [UIImageView new];
         _imageViewMain.contentMode = UIViewContentModeScaleAspectFit;
-        //        _imageViewMain.clipsToBounds = YES;
+//        _imageViewMain.clipsToBounds = YES;
         _imageViewMain.userInteractionEnabled = YES;
     }
     return _imageViewMain;
@@ -244,16 +237,16 @@
     }
     return _imageViewBlur;
 }
--(UIImageView*)imageViewRight {
-    if (!_imageViewRight) {
-        _imageViewRight = [UIImageView new];
-        _imageViewMain.contentMode = UIViewContentModeScaleAspectFit;
-        //        _imageViewMain.clipsToBounds = YES;
-        _imageViewRight.userInteractionEnabled = YES;
-        _imageViewRight.backgroundColor= [ UIColor groupTableViewBackgroundColor];
-    }
-    return _imageViewRight;
-}
+//-(UIImageView*)imageViewRight {
+//    if (!_imageViewRight) {
+//        _imageViewRight = [UIImageView new];
+//        _imageViewMain.contentMode = UIViewContentModeScaleAspectFit;
+//        //        _imageViewMain.clipsToBounds = YES;
+//        _imageViewRight.userInteractionEnabled = YES;
+//        _imageViewRight.backgroundColor= [ UIColor groupTableViewBackgroundColor];
+//    }
+//    return _imageViewRight;
+//}
 - (PIETextView_linkDetection *)textView_content {
     if (!_textView_content) {
         _textView_content = [PIETextView_linkDetection new];

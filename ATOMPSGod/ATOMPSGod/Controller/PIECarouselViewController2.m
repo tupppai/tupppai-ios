@@ -156,7 +156,7 @@ CGFloat startPanLocationY;
     vc.vm = _currentVM;
     DDNavigationController* nav = [[DDNavigationController alloc]initWithRootViewController:vc];
     
-    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
                CGRect frame = self.carousel.currentItemView.frame;
                frame.origin.y -= 30;
         self.carousel.currentItemView.frame = frame;
@@ -180,7 +180,7 @@ CGFloat startPanLocationY;
 - (void)handleGesture_SwipeDown:(id)sender {
 //    [self dismissViewControllerAnimated:NO completion:nil];
 
-   [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+   [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
        CGRect frame = self.carousel.currentItemView.frame;
        frame.origin.y += 20;
 //       [self.carousel setTransform:CGAffineTransformMakeScale(0.3, 0.3)];
