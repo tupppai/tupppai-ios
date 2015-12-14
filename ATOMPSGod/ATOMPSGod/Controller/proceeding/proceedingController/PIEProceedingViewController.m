@@ -400,7 +400,7 @@
 #pragma mark - UI components setup
 - (void)createNavBar {
     WS(ws);
-    _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"我的求P",@"我的帮P",@"已完成"]];
+    _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"我的求P",@"我的帮P"]];
     _segmentedControl.frame = CGRectMake(0, 120, SCREEN_WIDTH-40, 45);
     _segmentedControl.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor colorWithHex:0x000000 andAlpha:0.6], NSForegroundColorAttributeName, nil];
     _segmentedControl.selectedTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil];
@@ -416,11 +416,12 @@
         } else if (index == 1) {
             [ws.sv toggleWithType:PIEProceedingTypeToHelp];
             [ws getSourceIfEmpty_toHelp];
-        } else if (index == 2) {
-//            [ws.sv toggleWithType:PIEProceedingTypeDone];
-//            [ws getSourceIfEmpty_done];
-            // do nothing now.
         }
+//        else if (index == 2) {
+////            [ws.sv toggleWithType:PIEProceedingTypeDone];
+////            [ws getSourceIfEmpty_done];
+//            // do nothing now.
+//        }
     }];
     
     _segmentedControl.backgroundColor = [UIColor clearColor];
