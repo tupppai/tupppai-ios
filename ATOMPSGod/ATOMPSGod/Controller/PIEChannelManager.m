@@ -32,7 +32,7 @@
                              vm.iconUrl    = [dic objectForKey:@"icon"];
                              vm.title      = [dic objectForKey:@"display_name"];
                              vm.content    = [dic objectForKey:@"description"];
-                             
+                             vm.url        = [dic objectForKey:@"url"];
                              NSString *category_type = [dic objectForKey:@"category_type"];
                              if ([category_type isEqualToString:@"activity"]) {
                                  vm.channelType = PIEChannelTypeActivity;

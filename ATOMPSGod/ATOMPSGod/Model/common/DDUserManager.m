@@ -10,7 +10,7 @@
 #import "ATOMUserDao.h"
 @implementation DDUserManager
 
-static dispatch_once_t onceToken;
+//static dispatch_once_t onceToken;
 static  PIEEntityUser* _currentUser;
 
 - (instancetype)init

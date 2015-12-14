@@ -296,7 +296,7 @@
     
     [[NSUserDefaults standardUserDefaults]setObject:@(YES) forKey:@"NotificationNew"];
     [[NSUserDefaults standardUserDefaults]synchronize];
-    [self addRedDotToTabBarItemIndex:4];
+    [self addRedDotToTabBarItemIndex:3];
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"updateNoticationStatus" object:nil]];
 
 }

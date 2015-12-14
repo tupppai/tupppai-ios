@@ -35,7 +35,7 @@
     [self addSubview:self.followButton];
     [self addSubview:self.imageViewBlur];
     [self addSubview:self.imageViewMain];
-    [self addSubview:self.imageViewRight];
+//    [self addSubview:self.imageViewRight];
     [self addSubview:self.textView_content];
     [self addSubview:self.commentButton];
     [self addSubview:self.shareButton];
@@ -75,15 +75,17 @@
     [self.imageViewMain mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_timeLabel.mas_bottom).with.offset(10);
         make.left.equalTo(self).with.offset(0);
-        make.width.equalTo(self).with.priorityHigh();
+//        make.width.equalTo(self).with.priorityHigh();
+        make.right.equalTo(self).with.offset(0);
+
         make.height.equalTo(self.imageViewMain.mas_width);
     }];
-    [self.imageViewRight mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.imageViewMain.mas_top);
-        make.left.equalTo(self.imageViewMain.mas_right).with.offset(0);
-        make.right.equalTo(self).with.offset(0);
-        make.bottom.equalTo(self.imageViewMain.mas_bottom).with.offset(0);
-    }];
+//    [self.imageViewRight mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.imageViewMain.mas_top);
+//        make.left.equalTo(self.imageViewMain.mas_right).with.offset(0);
+//        make.right.equalTo(self).with.offset(0);
+//        make.bottom.equalTo(self.imageViewMain.mas_bottom).with.offset(0);
+//    }];
     [self.imageViewBlur mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.imageViewMain);
         make.bottom.equalTo(self.imageViewMain);
@@ -141,20 +143,20 @@
         _followButton.selected = vm.followed;
         
         if (vm.thumbEntityArray.count == 2) {
-            _imageViewMain.contentMode = UIViewContentModeScaleAspectFill;
-            _imageViewRight.contentMode = UIViewContentModeScaleAspectFill;
-            _imageViewMain.clipsToBounds = YES;
-            _imageViewRight.clipsToBounds = YES;
+//            _imageViewMain.contentMode = UIViewContentModeScaleAspectFill;
+//            _imageViewRight.contentMode = UIViewContentModeScaleAspectFill;
+//            _imageViewMain.clipsToBounds = YES;
+//            _imageViewRight.clipsToBounds = YES;
             
             PIEImageEntity* imgEntity1 = vm.thumbEntityArray[0];
-            PIEImageEntity* imgEntity2 = vm.thumbEntityArray[1];
-            [_imageViewMain mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.width.equalTo(self).with.multipliedBy(0.5).with.priorityHigh();
-                make.height.equalTo(@(SCREEN_WIDTH)).with.priorityHigh();
-            }];
+//            PIEImageEntity* imgEntity2 = vm.thumbEntityArray[1];
+//            [_imageViewMain mas_updateConstraints:^(MASConstraintMaker *make) {
+//                make.width.equalTo(self).with.multipliedBy(0.5).with.priorityHigh();
+//                make.height.equalTo(@(SCREEN_WIDTH)).with.priorityHigh();
+//            }];
 
             [_imageViewMain setImageWithURL:[NSURL URLWithString:imgEntity1.url] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-            [_imageViewRight setImageWithURL:[NSURL URLWithString:imgEntity2.url] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+//            [_imageViewRight setImageWithURL:[NSURL URLWithString:imgEntity2.url] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
         }
         else {
 //            [_imageViewMain setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
@@ -162,14 +164,14 @@
                 _imageViewBlur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
                 _imageViewMain.image = image;
             }];
-            CGFloat height = vm.imageHeight/vm.imageWidth *SCREEN_WIDTH;
-            if (height > 100) {
-                [_imageViewMain mas_updateConstraints:^(MASConstraintMaker *make) {
-                    make.height.equalTo(@(height));
-                }];
-            } else {
-                _imageViewMain.contentMode = UIViewContentModeScaleAspectFit;
-            }
+//            CGFloat height = vm.imageHeight/vm.imageWidth *SCREEN_WIDTH;
+//            if (height > 100) {
+//                [_imageViewMain mas_updateConstraints:^(MASConstraintMaker *make) {
+//                    make.height.equalTo(@(height));
+//                }];
+//            } else {
+//                _imageViewMain.contentMode = UIViewContentModeScaleAspectFit;
+//            }
         }
         _commentButton.numberString = vm.commentCount;
         _shareButton.numberString = vm.shareCount;
@@ -248,14 +250,14 @@
     }
     return _imageViewMain;
 }
--(UIImageView*)imageViewRight {
-    if (!_imageViewRight) {
-        _imageViewRight = [UIImageView new];
-        _imageViewRight.userInteractionEnabled = YES;
-        _imageViewRight.contentMode = UIViewContentModeScaleAspectFit;
-    }
-    return _imageViewRight;
-}
+//-(UIImageView*)imageViewRight {
+//    if (!_imageViewRight) {
+//        _imageViewRight = [UIImageView new];
+//        _imageViewRight.userInteractionEnabled = YES;
+//        _imageViewRight.contentMode = UIViewContentModeScaleAspectFit;
+//    }
+//    return _imageViewRight;
+//}
 - (PIETextView_linkDetection *)textView_content {
     if (!_textView_content) {
         _textView_content = [PIETextView_linkDetection new];
