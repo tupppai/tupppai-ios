@@ -8,7 +8,7 @@
 
 #import "PIEFriendAskTableViewCell.h"
 #import "DDNavigationController.h"
-#import "PIECarouselViewController.h"
+#import "PIECarouselViewController2.h"
 #import "AppDelegate.h"
 
 @interface PIEFriendAskTableViewCell()
@@ -46,17 +46,21 @@
 
 - (void)tapOnAsk1 {
     if (_vmAsk1) {
-        PIECarouselViewController* vc = [PIECarouselViewController new];
+        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
         vc.pageVM = _vmAsk1;
-        [self.viewController.parentViewController.view.superview.viewController.navigationController pushViewController:vc animated:YES ];
+        
+        [self.viewController.parentViewController.view.superview.viewController.navigationController  presentViewController:vc animated:YES completion:nil];
+
+//        [self.viewController.parentViewController.view.superview.viewController.navigationController pushViewController:vc animated:YES ];
     }
 }
 - (void)tapOnAsk2 {
     if (_vmAsk2) {
-        PIECarouselViewController* vc = [PIECarouselViewController new];
+        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
         vc.pageVM = _vmAsk2;
-        
-        [self.viewController.parentViewController.view.superview.viewController.navigationController pushViewController:vc animated:YES ];
+        [self.viewController.parentViewController.view.superview.viewController.navigationController  presentViewController:vc animated:YES completion:nil];
+
+//        [self.viewController.parentViewController.view.superview.viewController.navigationController pushViewController:vc animated:YES ];
 
     }
 }
@@ -130,11 +134,13 @@
 }
 
 -(void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index {
-        PIECarouselViewController* vc = [PIECarouselViewController new];
+        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
         vc.pageVM = [_source objectAtIndex:index];
 
     //汗，看来还是要写在controller里面
-        [self.viewController.parentViewController.view.superview.viewController.navigationController pushViewController:vc animated:YES ];
+    [self.viewController.parentViewController.view.superview.viewController.navigationController  presentViewController:vc animated:YES completion:nil];
+
+//        [self.viewController.parentViewController.view.superview.viewController.navigationController pushViewController:vc animated:YES ];
 }
 
 

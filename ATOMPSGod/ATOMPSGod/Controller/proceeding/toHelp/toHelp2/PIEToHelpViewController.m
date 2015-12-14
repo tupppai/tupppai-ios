@@ -13,7 +13,7 @@
 #import "PIEUploadVC.h"
 #import "PIEToHelpTableViewCell2.h"
 #import "PIEFriendViewController.h"
-#import "PIECarouselViewController.h"
+#import "PIECarouselViewController2.h"
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
 //#import "UITableView+FDTemplateLayoutCell.h"
@@ -83,9 +83,9 @@
             [self.navigationController pushViewController:opvc animated:YES];
         }
         else if (CGRectContainsPoint(cell.theImageView.frame, p)) {
-            PIECarouselViewController* vc = [PIECarouselViewController new];
+            PIECarouselViewController2* vc = [PIECarouselViewController2 new];
             vc.pageVM = vm;
-            [self.navigationController pushViewController:vc animated:YES];
+            [self.navigationController presentViewController:vc animated:YES completion:nil];
         } else {
 //            DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
             [[AppDelegate APP].mainTabBarController presentViewController:self.QBImagePickerController animated:YES completion:nil];

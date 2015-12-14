@@ -12,7 +12,7 @@
 #import "PIENotificationVM.h"
 #import "PIENotificationLikeTableViewCell.h"
 #import "PIEFriendViewController.h"
-#import "PIECarouselViewController.h"
+#import "PIECarouselViewController2.h"
 
 @interface PIENotificationLikedViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (nonatomic, strong) NSMutableArray *source;
@@ -141,13 +141,15 @@
                 vc.name = vm.username;
                 [self.navigationController pushViewController:vc animated:YES];
             } else  if (CGRectContainsPoint(cell.pageImageView.frame,p)) {
-                PIECarouselViewController* vc = [PIECarouselViewController new];
+                PIECarouselViewController2* vc = [PIECarouselViewController2 new];
                 PIEPageVM* pageVM = [PIEPageVM new];
                 pageVM.ID = vm.targetID;
                 pageVM.askID = vm.askID;
                 pageVM.type = vm.targetType;
                 vc.pageVM = pageVM;
-                [self.navigationController pushViewController:vc animated:YES];
+                [self.navigationController presentViewController:vc animated:YES completion:nil];
+
+//                [self.navigationController pushViewController:vc animated:YES];
             }
     }
 }

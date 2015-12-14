@@ -7,7 +7,7 @@
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PIECarouselViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="piecarouselViewController">
             <connections>
                 <outlet property="avatarView" destination="pyi-Yf-Ai7" id="bcS-Su-NIp"/>
                 <outlet property="blurView" destination="s5f-Tj-oBr" id="5CJ-8Q-jnA"/>

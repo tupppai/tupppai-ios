@@ -14,7 +14,7 @@
 #import "PIEFriendReplyViewController.h"
 #import "PIEFriendFollowingViewController.h"
 #import "PIEFriendFansViewController.h"
-#import "PIECarouselViewController.h"
+#import "PIECarouselViewController2.h"
 #import "FXBlurView.h"
 @interface PIEFriendViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;

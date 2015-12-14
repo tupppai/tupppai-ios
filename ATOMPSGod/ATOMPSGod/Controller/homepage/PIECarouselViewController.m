@@ -6,14 +6,14 @@
 //  Copyright (c) 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIECarouselViewController.h"
+#import "piecarouselViewController.h"
 #import "DDHotDetailManager.h"
 #import "PIEFriendViewController.h"
 #import "HMSegmentedControl.h"
 #import "FXBlurView.h"
 #import "PIECommentViewController.h"
 #import "JGActionSheet.h"
-@interface PIECarouselViewController ()<JGActionSheetDelegate>
+@interface piecarouselViewController ()<JGActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *blurView;
 @property (weak, nonatomic) IBOutlet iCarousel *carousel;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
@@ -36,7 +36,7 @@
 
 @end
 
-@implementation PIECarouselViewController
+@implementation piecarouselViewController
 -(BOOL)hidesBottomBarWhenPushed {
     return YES;
 }

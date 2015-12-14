@@ -15,7 +15,7 @@
 
 #import "PIESearchContentCollectionViewCell.h"
 #import "PIEFriendViewController.h"
-#import "PIECarouselViewController.h"
+#import "PIECarouselViewController2.h"
 #import "PIEUserViewModel.h"
 @interface PIESearchViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (weak, nonatomic) IBOutlet HMSegmentedControl *segmentedControl;
@@ -180,9 +180,10 @@
                 vc.pageVM = vm;
                 [self.navigationController pushViewController:vc animated:YES];
             } else if (CGRectContainsPoint(cell.imageView.frame, p)) {
-                PIECarouselViewController* vc = [PIECarouselViewController new];
+                PIECarouselViewController2* vc = [PIECarouselViewController2 new];
                 vc.pageVM = vm;
-                [self.navigationController pushViewController:vc animated:YES];
+                [self.navigationController presentViewController:vc animated:YES completion:nil];
+//                [self.navigationController pushViewController:vc animated:YES];
             }
         }
     }else if (_segmentedControl.selectedSegmentIndex == 0) {
@@ -308,7 +309,7 @@
 
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-//    PIECarouselViewController* vc = [PIECarouselViewController new];
+//    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
 //    vc.pageVM = [_sourceDone objectAtIndex:indexPath.row];
 //    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
 //    [nav pushViewController:vc animated:YES ];

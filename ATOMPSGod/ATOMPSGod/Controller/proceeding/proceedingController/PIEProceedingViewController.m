@@ -19,7 +19,7 @@
 #import "PIEFriendViewController.h"
 #import "DDPageManager.h"
 #import "PIEProceedingAskTableViewCell.h"
-#import "PIECarouselViewController.h"
+#import "PIECarouselViewController2.h"
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
 #import "PIEProceedingShareView.h"
@@ -266,10 +266,10 @@
             [self.navigationController pushViewController:opvc animated:YES];
         }
         else if (CGRectContainsPoint(cell.theImageView.frame, p)) {
-            PIECarouselViewController* vc = [PIECarouselViewController new];
+            PIECarouselViewController2* vc = [PIECarouselViewController2 new];
             vc.pageVM = vm;
             DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-            [nav pushViewController:vc animated:YES ];
+            [nav presentViewController:vc animated:YES completion:nil];
         }
     }
 }
@@ -575,6 +575,7 @@
 //    height = MIN(SCREEN_HEIGHT/2, height);
 //    return CGSizeMake(width, height);
 //}
+
 
 #pragma mark - getRemoteSourceMyAsk
 
