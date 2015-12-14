@@ -105,11 +105,9 @@
     PIEProceedingViewController *proceedingViewController = [PIEProceedingViewController new];
     
     PIEMeViewController *aboutMeVC = (PIEMeViewController *)[[UIStoryboard storyboardWithName:@"Me" bundle:nil] instantiateViewControllerWithIdentifier: @"PIEME"];
-    UIViewController* takePhotoVC = [UIViewController new];
     
-    
-    channelVc.title                 = @"图派";
     myAttentionViewController.title = @"首页";
+    channelVc.title                 = @"图派";
     proceedingViewController.title  = @"进行中";
     aboutMeVC.title                 = @"我的";
     

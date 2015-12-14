@@ -159,12 +159,12 @@
     
     NSNumber *cid = [_uploadInfo objectForKey:@"channelViewModel_id"];
     if (cid) {
-        [param setObject:cid forKey:@"channel_id"];
+        [param setObject:cid forKey:@"category_id"];
     }
 
     [DDService ddSaveAsk:param withBlock:^(NSInteger newImageID) {
         if (newImageID!=-1) {
-            [Hud success:@"求P成功,你可以在进行中查看你的求P"];
+            [Hud success:@"求P成功"];
             if  (block) {
                 block(YES);
             }
@@ -188,7 +188,7 @@
     [param setObject:[_uploadInfo objectForKey:@"text_string"] forKey:@"desc"];
     NSNumber *cid = [_uploadInfo objectForKey:@"channelViewModel_id"];
     if (cid) {
-        [param setObject:cid forKey:@"channel_id"];
+        [param setObject:cid forKey:@"category_id"];
     }
 
     
@@ -197,7 +197,7 @@
     [param setObject:@(askID) forKey:@"ask_id"];
     [DDService ddSaveReply:param withBlock:^(BOOL success) {
         if (success) {
-            [Hud success:@"上传作品成功,你可以在进行中查看已完成的作品"];
+            [Hud success:@"上传作品成功"];
             if  (block) {
                 block(YES);
             }
