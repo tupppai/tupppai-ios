@@ -159,7 +159,7 @@
     
     NSNumber *cid = [_uploadInfo objectForKey:@"channelViewModel_id"];
     if (cid) {
-        [param setObject:cid forKey:@"activity_id"];
+        [param setObject:cid forKey:@"category_id"];
     }
 
     [DDService ddSaveAsk:param withBlock:^(NSInteger newImageID) {
@@ -188,7 +188,7 @@
     [param setObject:[_uploadInfo objectForKey:@"text_string"] forKey:@"desc"];
     NSNumber *cid = [_uploadInfo objectForKey:@"channelViewModel_id"];
     if (cid) {
-        [param setObject:cid forKey:@"activity_id"];
+        [param setObject:cid forKey:@"category_id"];
     }
 
     
