@@ -9,7 +9,7 @@
 #import "PIEMyCommentedPageViewController.h"
 #import "PIERefreshTableView.h"
 #import "PIEMyCommentedPageTableViewCell.h"
-#import "PIECarouselViewController.h"
+#import "PIECarouselViewController2.h"
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
 #import "DDPageManager.h"
@@ -93,11 +93,12 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    PIECarouselViewController* vc = [PIECarouselViewController new];
+//    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
     DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
     PIECommentViewController* vc = [PIECommentViewController new];
     vc.vm = [_dataSource objectAtIndex:indexPath.row];
-    [nav pushViewController:vc animated:YES ];
+//    [nav pushViewController:vc animated:YES ];
+    [nav presentViewController:vc animated:YES completion:nil];
 
 }
 -(void)didPullRefreshDown:(UITableView *)tableView {

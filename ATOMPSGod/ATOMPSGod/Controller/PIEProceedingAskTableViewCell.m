@@ -7,7 +7,7 @@
 //
 
 #import "PIEProceedingAskTableViewCell.h"
-#import "PIECarouselViewController.h"
+#import "PIECarouselViewController2.h"
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
 @interface PIEProceedingAskTableViewCell()
@@ -69,18 +69,19 @@
 }
 - (void)tapOnAsk1 {
     if (_vmAsk1) {
-        PIECarouselViewController* vc = [PIECarouselViewController new];
+        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
         vc.pageVM = _vmAsk1;
         DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-        [nav pushViewController:vc animated:YES ];
+//        [nav pushViewController:vc animated:YES ];
+        [nav presentViewController:vc animated:YES completion:nil];
     }
 }
 - (void)tapOnAsk2 {
     if (_vmAsk2) {
-        PIECarouselViewController* vc = [PIECarouselViewController new];
+        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
         vc.pageVM = _vmAsk2;
         DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-        [nav pushViewController:vc animated:YES ];
+        [nav presentViewController:vc animated:YES completion:nil];
     }
 }
 
@@ -154,10 +155,10 @@
 }
 
 -(void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index {
-    PIECarouselViewController* vc = [PIECarouselViewController new];
+    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
     vc.pageVM = [_source objectAtIndex:index];
     DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-    [nav pushViewController:vc animated:YES ];
+    [nav presentViewController:vc animated:YES completion:nil];
 }
 
 

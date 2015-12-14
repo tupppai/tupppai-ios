@@ -11,7 +11,7 @@
 #import "PIERefreshCollectionView.h"
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "PIEReplyCollectionCell.h"
-#import "PIECarouselViewController.h"
+#import "PIECarouselViewController2.h"
 #import "PIEFriendViewController.h"
 @interface PIEReplyCollectionViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout,PWRefreshBaseCollectionViewDelegate>
 @property (nonatomic, strong) NSMutableArray *source;
@@ -127,7 +127,7 @@
 //                vc.pageVM = vm;
 //                [self.navigationController pushViewController:vc animated:YES];
 //            } else if (CGRectContainsPoint(cell.imageView.frame, p)) {
-//                PIECarouselViewController* vc = [PIECarouselViewController new];
+//                PIECarouselViewController2* vc = [PIECarouselViewController2 new];
 //                vc.pageVM = vm;
 //                [self.navigationController pushViewController:vc animated:YES];
 //            } else {
@@ -203,9 +203,11 @@
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     PIEPageVM* vm = [_source objectAtIndex:indexPath.row];
-    PIECarouselViewController* vc = [PIECarouselViewController new];
+    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
     vc.pageVM = vm;
-    [self.navigationController pushViewController:vc animated:YES];
+    [self.navigationController presentViewController:vc animated:YES completion:nil];
+
+//    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
