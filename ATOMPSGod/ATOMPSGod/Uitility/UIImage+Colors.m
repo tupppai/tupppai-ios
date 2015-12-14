@@ -19,4 +19,7 @@
     UIGraphicsEndImageContext();
     return image;
 }
+
+
 @end
+

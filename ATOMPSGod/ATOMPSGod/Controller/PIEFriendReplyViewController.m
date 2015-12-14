@@ -11,7 +11,7 @@
 #import "PIEFriendReplyCollectionViewCell.h"
 #import "PIERefreshCollectionView.h"
 #import "CHTCollectionViewWaterfallLayout.h"
-#import "PIECarouselViewController.h"
+#import "PIECarouselViewController2.h"
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
 @interface PIEFriendReplyViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,PWRefreshBaseCollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
@@ -215,7 +215,7 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     PIEPageVM* vm = [_source objectAtIndex:indexPath.row];
-    PIECarouselViewController* vc = [PIECarouselViewController new];
+    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
     vc.pageVM = vm;
 //    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
     
@@ -224,7 +224,9 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
      PIEFriendViewController.view addSubView CAPSViewController.view
      CAPSViewController subviewControllers -> friendAsk and friendReply
      */
-    [self.view.viewController.parentViewController.view.superview.viewController.navigationController pushViewController:vc animated:YES ];
+    [self.view.viewController.parentViewController.view.superview.viewController.navigationController   presentViewController:vc animated:YES completion:nil];
+
+//    [self.view.viewController.parentViewController.view.superview.viewController.navigationController pushViewController:vc animated:YES ];
 }
 
 -(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {

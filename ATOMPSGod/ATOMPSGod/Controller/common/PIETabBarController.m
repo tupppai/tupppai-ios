@@ -151,10 +151,9 @@
             UIImage* scaledImage = [Util imageWithImage:image scaledToSize:CGSizeMake(28, 28) circlize:YES];
             _avatarImage = scaledImage;
             _navigation_me.tabBarItem.image = [_avatarImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-            _navigation_me.tabBarItem.selectedImage = [[_avatarImage maskWithImage:[UIImage imageFromColor:[UIColor colorWithHex:0xffffff andAlpha:0.7]]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+            _navigation_me.tabBarItem.selectedImage = [[_avatarImage maskWithImage:[UIImage imageFromColor:[UIColor colorWithHex:0xe23022 andAlpha:0.7]]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         }
     }];
-
 }
 
 -(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {

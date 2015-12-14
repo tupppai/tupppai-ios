@@ -70,7 +70,6 @@ static DDSessionManager *_shareHTTPSessionManager = nil;
     dispatch_once(&onceToken, ^{
         Class class = [self class];
         
-
         SEL originalSelector = @selector(dataTaskWithRequest:completionHandler:);
         SEL swizzledSelector = @selector(xxx_dataTaskWithRequest:completionHandler:);
         Method originalMethod = class_getInstanceMethod(class, originalSelector);
@@ -117,7 +116,10 @@ static DDSessionManager *_shareHTTPSessionManager = nil;
                 NSDictionary* userInfo = [NSDictionary dictionaryWithObject:info forKey:@"info"];
                 [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkShowInfoCall" object:nil userInfo:userInfo]];
             }
-
+        }
+        
+        if (completionHandler) {
+            completionHandler(response,responseObject,error);
         }
     }];
 }
