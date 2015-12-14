@@ -297,7 +297,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 }
 
 -(void)didPullRefreshUp:(UITableView *)tableView {
-        [self loadMoreData_reply];
+    [self loadMoreData_reply];
 }
 
 
@@ -413,13 +413,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     [self.shareView show];
     
 }
--(PIEShareView *)shareView {
-    if (!_shareView) {
-        _shareView          = [PIEShareView new];
-        _shareView.delegate = self;
-    }
-    return _shareView;
-}
+
 
 #pragma mark - ATOMShareViewDelegate
 //sina
@@ -583,6 +577,14 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     }
     return _takePhotoButton;
     
+}
+
+-(PIEShareView *)shareView {
+    if (!_shareView) {
+        _shareView          = [PIEShareView new];
+        _shareView.delegate = self;
+    }
+    return _shareView;
 }
 
 @end
