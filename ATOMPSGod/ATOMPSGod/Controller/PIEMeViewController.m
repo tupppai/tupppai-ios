@@ -131,14 +131,11 @@
 }
 
 - (void)update {
-    [DDOtherUserManager getUserInfo:nil withBlock:^(PIEEntityUser *user) {
-        if (user) {
-//            [[DDUserManager currentUser] saveAndUpdateUser:user];
-            [DDUserManager saveAndUpdateUser:user];
+    [DDUserManager DDGetUserInfoAndUpdateMe:^(BOOL success) {
+        if (success) {
             [self updateViewsWithData];
         }
     }];
-
 }
 
 

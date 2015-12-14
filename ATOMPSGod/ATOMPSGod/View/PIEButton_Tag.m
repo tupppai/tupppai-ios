@@ -20,7 +20,7 @@
         CGSize textSize = [text sizeWithAttributes:@{NSFontAttributeName:[self.titleLabel font]}];
         self.frame = CGRectMake(0, 0, textSize.width+20, textSize.height+12);
         [self setTitle:text forState:UIControlStateNormal];
-        [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self setTitleColor:[UIColor colorWithHex:0x000000 andAlpha:0.4] forState:UIControlStateNormal];
         [self setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
         [self setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
         [self setBackgroundImage:[Util imageWithColor:[UIColor pieYellowColor]] forState:UIControlStateSelected];
