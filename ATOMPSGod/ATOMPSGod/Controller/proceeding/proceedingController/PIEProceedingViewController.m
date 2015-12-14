@@ -28,29 +28,66 @@
 
 #define MyAskCellWidth (SCREEN_WIDTH - 20) / 2.0
 
-@interface PIEProceedingViewController ()<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,PWRefreshBaseCollectionViewDelegate,PWRefreshBaseTableViewDelegate,CHTCollectionViewDelegateWaterfallLayout,UITableViewDataSource,UITableViewDelegate,QBImagePickerControllerDelegate,PIEProceedingShareViewDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
+/* Protocols */
+@interface PIEProceedingViewController (UIScrollView)
+<UIScrollViewDelegate>
+@end
 
+//@interface PIEProceedingViewController (UICollectionView)
+//<UICollectionViewDataSource, UICollectionViewDelegate>
+//@end
+//
+//@interface PIEProceedingViewController (PWRefreshBaseCollectionView)
+//<PWRefreshBaseCollectionViewDelegate>
+//@end
+//
+//@interface PIEProceedingViewController (CHTCollectionViewDelegateWaterfallLayout)
+//<CHTCollectionViewDelegateWaterfallLayout>
+//@end
+
+@interface PIEProceedingViewController (PWRefreshBaseTableView)
+<PWRefreshBaseTableViewDelegate>
+@end
+
+@interface PIEProceedingViewController (UITableView)
+<UITableViewDelegate, UITableViewDataSource>
+@end
+
+@interface PIEProceedingViewController (QBImagePickerController)
+<QBImagePickerControllerDelegate>
+@end
+
+@interface PIEProceedingViewController (PIEProceedingShareView)
+<PIEProceedingShareViewDelegate>
+@end
+
+@interface PIEProceedingViewController (DZNEmptyDataSet)
+<DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
+@end
+
+/* Private variables */
+@interface PIEProceedingViewController ()
 @property (nonatomic, strong) PIEProceedingScrollView *sv;
 
 @property (nonatomic, assign) BOOL isfirstLoadingAsk;
 @property (nonatomic, assign) BOOL isfirstLoadingToHelp;
-@property (nonatomic, assign) BOOL isfirstLoadingDone;
+//@property (nonatomic, assign) BOOL isfirstLoadingDone;
 
 @property (nonatomic, strong) NSMutableArray *sourceAsk;
 @property (nonatomic, strong) NSMutableArray *sourceToHelp;
-@property (nonatomic, strong) NSMutableArray *sourceDone;
+//@property (nonatomic, strong) NSMutableArray *sourceDone;
 
 @property (nonatomic, assign) NSInteger currentIndex_MyAsk;
 @property (nonatomic, assign) NSInteger currentIndex_ToHelp;
-@property (nonatomic, assign) NSInteger currentIndex_Done;
+//@property (nonatomic, assign) NSInteger currentIndex_Done;
 
 @property (nonatomic, assign)  long long timeStamp_myAsk;
 @property (nonatomic, assign)  long long timeStamp_toHelp;
-@property (nonatomic, assign)  long long timeStamp_done;
+//@property (nonatomic, assign)  long long timeStamp_done;
 
 @property (nonatomic, assign) BOOL canRefreshAskFooter;
 @property (nonatomic, assign) BOOL canRefreshToHelpFooter;
-@property (nonatomic, assign) BOOL canRefreshDoneFooter;
+//@property (nonatomic, assign) BOOL canRefreshDoneFooter;
 
 @property (nonatomic, strong) NSIndexPath* selectedIndexPath;
 @property (nonatomic, strong) PIEPageVM* selectedVM;
@@ -65,6 +102,7 @@
 
 @implementation PIEProceedingViewController
 
+#pragma mark - UI life cycles
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -86,7 +124,7 @@
     [MobClick endLogPageView:@"离开进行中"];
 }
 
-
+#pragma mark - Refreshing methods
 - (void)getSourceIfEmpty_ask {
     if (_sourceAsk.count <= 0 || _isfirstLoadingAsk) {
         [self.sv.askTableView.mj_header beginRefreshing];
@@ -97,44 +135,44 @@
         [self.sv.toHelpTableView.mj_header beginRefreshing];
     }
 }
-- (void)getSourceIfEmpty_done {
-    if (_sourceDone.count <= 0 || _isfirstLoadingDone) {
-        [self.sv.doneCollectionView.mj_header beginRefreshing];
-    }
-}
+//- (void)getSourceIfEmpty_done {
+//    if (_sourceDone.count <= 0 || _isfirstLoadingDone) {
+//        [self.sv.doneCollectionView.mj_header beginRefreshing];
+//    }
+//}
 #pragma mark - init methods
 
 - (void)configData {
-    _canRefreshAskFooter = YES;
+    _canRefreshAskFooter    = YES;
     _canRefreshToHelpFooter = YES;
-    _canRefreshDoneFooter = YES;
-    
-    _isfirstLoadingAsk = YES;
-    _isfirstLoadingToHelp = YES;
-    _isfirstLoadingDone = YES;
+//    _canRefreshDoneFooter = YES;
 
-    
-    _currentIndex_MyAsk = 1;
-    _currentIndex_ToHelp = 1;
-    _currentIndex_Done = 1;
-    
-    _sourceAsk = [NSMutableArray new];
-    _sourceToHelp = [NSMutableArray new];
-    _sourceDone = [NSMutableArray new];
+    _isfirstLoadingAsk      = YES;
+    _isfirstLoadingToHelp   = YES;
+//    _isfirstLoadingDone = YES;
+
+
+    _currentIndex_MyAsk     = 1;
+    _currentIndex_ToHelp    = 1;
+//    _currentIndex_Done = 1;
+
+    _sourceAsk              = [NSMutableArray new];
+    _sourceToHelp           = [NSMutableArray new];
+//    _sourceDone = [NSMutableArray new];
 }
 - (void)configSubviews {
     self.view = self.sv;
     [self configAskCollectionView];
     [self configToHelpTableView];
-    [self configDoneCollectionView];
+//    [self configDoneCollectionView];
     [self setupGestures];
 }
 - (void)configAskCollectionView {
-    _sv.askTableView.dataSource = self;
-    _sv.askTableView.delegate = self;
-    _sv.askTableView.psDelegate = self;
+    _sv.askTableView.dataSource           = self;
+    _sv.askTableView.delegate             = self;
+    _sv.askTableView.psDelegate           = self;
     _sv.askTableView.emptyDataSetDelegate = self;
-    _sv.askTableView.emptyDataSetSource = self;
+    _sv.askTableView.emptyDataSetSource   = self;
     UINib* nib = [UINib nibWithNibName:@"PIEProceedingAskTableViewCell" bundle:nil];
     [_sv.askTableView registerNib:nib forCellReuseIdentifier:@"PIEProceedingAskTableViewCell"];
     
@@ -142,30 +180,32 @@
     [_sv.askTableView registerNib:nib2 forCellReuseIdentifier:@"PIEProceedingAskTableViewCell_NoGap"];
 
 }
-- (void)configDoneCollectionView {
-    _sv.doneCollectionView.dataSource = self;
-    _sv.doneCollectionView.delegate = self;
-    _sv.doneCollectionView.psDelegate = self;
-    _sv.doneCollectionView.emptyDataSetSource = self;
-    _sv.doneCollectionView.emptyDataSetDelegate = self;
-    UINib* nib = [UINib nibWithNibName:@"PIEDoneCollectionViewCell" bundle:nil];
-    [_sv.doneCollectionView registerNib:nib forCellWithReuseIdentifier:@"PIEDoneCollectionViewCell"];
-}
+//- (void)configDoneCollectionView {
+//    _sv.doneCollectionView.dataSource = self;
+//    _sv.doneCollectionView.delegate = self;
+//    _sv.doneCollectionView.psDelegate = self;
+//    _sv.doneCollectionView.emptyDataSetSource = self;
+//    _sv.doneCollectionView.emptyDataSetDelegate = self;
+//    UINib* nib = [UINib nibWithNibName:@"PIEDoneCollectionViewCell" bundle:nil];
+//    [_sv.doneCollectionView registerNib:nib forCellWithReuseIdentifier:@"PIEDoneCollectionViewCell"];
+//}
 - (void)configToHelpTableView {
-    _sv.toHelpTableView.dataSource = self;
-    _sv.toHelpTableView.delegate = self;
-    _sv.toHelpTableView.psDelegate = self;
+    _sv.toHelpTableView.dataSource           = self;
+    _sv.toHelpTableView.delegate             = self;
+    _sv.toHelpTableView.psDelegate           = self;
     _sv.toHelpTableView.emptyDataSetDelegate = self;
-    _sv.toHelpTableView.emptyDataSetSource = self;
-    _sv.toHelpTableView.estimatedRowHeight = 145;
-    _sv.toHelpTableView.rowHeight = UITableViewAutomaticDimension;
-    _sv.toHelpTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    _sv.toHelpTableView.separatorInset = UIEdgeInsetsMake(0, 132, 0, 0);
-    _sv.toHelpTableView.separatorColor = [UIColor colorWithHex:0xd8d8d8 andAlpha:1.0];
+    _sv.toHelpTableView.emptyDataSetSource   = self;
+    _sv.toHelpTableView.estimatedRowHeight   = 145;
+    _sv.toHelpTableView.rowHeight            = UITableViewAutomaticDimension;
+    _sv.toHelpTableView.separatorStyle       = UITableViewCellSeparatorStyleSingleLine;
+    _sv.toHelpTableView.separatorInset       = UIEdgeInsetsMake(0, 132, 0, 0);
+    _sv.toHelpTableView.separatorColor       = [UIColor colorWithHex:0xd8d8d8 andAlpha:1.0];
 
     UINib* nib = [UINib nibWithNibName:@"PIEProceedingToHelpTableViewCell" bundle:nil];
     [_sv.toHelpTableView registerNib:nib forCellReuseIdentifier:@"PIEProceedingToHelpTableViewCell"];
 }
+
+#pragma mark - Gesture events
 - (void)setupGestures {
     UITapGestureRecognizer* tapToHelpTableViewGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapToHelpTableViewGesture:)];
     [_sv.toHelpTableView addGestureRecognizer:tapToHelpTableViewGesture];
@@ -244,6 +284,8 @@
     }];
 
 }
+
+#pragma mark - toHelp tableView之内的点击事件
 - (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error
   contextInfo: (void *) contextInfo {
     if(error != NULL){
@@ -257,20 +299,23 @@
 
 #pragma mark - refresh delegate
 
--(void)didPullDownCollectionView:(UICollectionView *)collectionView {
-        if (collectionView == _sv.doneCollectionView) {
-        [self getRemoteSourceDone];
-    }
-}
--(void)didPullUpCollectionViewBottom:(UICollectionView *)collectionView {
-    if (collectionView == _sv.doneCollectionView) {
-        if (_canRefreshDoneFooter) {
-            [self getMoreRemoteSourceDone];
-        } else {
-            [_sv.doneCollectionView.mj_footer endRefreshing];
-        }
-    }
-}
+//-(void)didPullDownCollectionView:(UICollectionView *)collectionView {
+//        if (collectionView == _sv.doneCollectionView) {
+//        [self getRemoteSourceDone];
+//    }
+//}
+//
+//-(void)didPullUpCollectionViewBottom:(UICollectionView *)collectionView {
+//    if (collectionView == _sv.doneCollectionView) {
+//        if (_canRefreshDoneFooter) {
+//            [self getMoreRemoteSourceDone];
+//        } else {
+//            [_sv.doneCollectionView.mj_footer endRefreshing];
+//        }
+//    }
+//}
+
+
 -(void)didPullRefreshDown:(UITableView *)tableView {
     if (tableView == _sv.askTableView) {
         [self getRemoteSourceMyAsk];
@@ -295,7 +340,7 @@
 
 }
 
-#pragma mark - UIScrollViewDelegate
+#pragma mark - <UIScrollViewDelegate>
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (scrollView == _sv) {
@@ -310,15 +355,16 @@
             _sv.type = PIEProceedingTypeToHelp;
             [self getSourceIfEmpty_toHelp];
         }
-        else if (currentPage == 2) {
-            [_segmentedControl setSelectedSegmentIndex:2 animated:YES];
-            _sv.type = PIEProceedingTypeDone;
-            [self getSourceIfEmpty_done];
-
-        }
+//        else if (currentPage == 2) {
+//            [_segmentedControl setSelectedSegmentIndex:2 animated:YES];
+//            _sv.type = PIEProceedingTypeDone;
+//            [self getSourceIfEmpty_done];
+//
+//        }
     }
 }
 
+#pragma mark - <QBImagePickerControllerDelegate>
 -(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
     NSMutableArray* array = [NSMutableArray new];
     for (ALAsset* asset in assets) {
@@ -343,7 +389,7 @@
 }
 
 
-
+#pragma mark - segue methods
 
 //跳到求p页面
 - (void)navToToHelp {
@@ -351,6 +397,7 @@
     [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
 }
 
+#pragma mark - UI components setup
 - (void)createNavBar {
     WS(ws);
     _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"我的求P",@"我的帮P",@"已完成"]];
@@ -370,8 +417,9 @@
             [ws.sv toggleWithType:PIEProceedingTypeToHelp];
             [ws getSourceIfEmpty_toHelp];
         } else if (index == 2) {
-            [ws.sv toggleWithType:PIEProceedingTypeDone];
-            [ws getSourceIfEmpty_done];
+//            [ws.sv toggleWithType:PIEProceedingTypeDone];
+//            [ws getSourceIfEmpty_done];
+            // do nothing now.
         }
     }];
     
@@ -416,9 +464,9 @@
 }
 
 
+#pragma mark - 
 #pragma mark - UITableView Datasource and delegate
-
-#pragma mark - UITableViewDataSource
+#pragma mark - <UITableViewDataSource>
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableView == _sv.askTableView) {
@@ -452,7 +500,7 @@
     
 }
 
-#pragma mark - UITableViewDelegate
+#pragma mark - <UITableViewDelegate>
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == _sv.askTableView) {
@@ -482,50 +530,50 @@
 //    }
 }
 
-#pragma mark - UICollectionViewDataSource
+//#pragma mark - <UICollectionViewDataSource>
+//
+//- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+//    if (collectionView == _sv.doneCollectionView) {
+//        return _sourceDone.count;
+//    }
+//    return 0;
+//}
+//
+//- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+//    return 1;
+//}
+//
+//- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+//    if (collectionView == _sv.doneCollectionView) {
+//        PIEDoneCollectionViewCell *cell =
+//        (PIEDoneCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PIEDoneCollectionViewCell"
+//                                                                               forIndexPath:indexPath];
+//        [cell injectSauce:[_sourceDone objectAtIndex:indexPath.row]];
+//        return cell;
+//    }
+//    return nil;
+//}
+//
+//#pragma mark - <UICollectionViewDelegate>
+//-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+//    PIECarouselViewController* vc = [PIECarouselViewController new];
+//    vc.pageVM = [_sourceDone objectAtIndex:indexPath.row];
+//    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+//    [nav pushViewController:vc animated:YES ];
+//}
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    if (collectionView == _sv.doneCollectionView) {
-        return _sourceDone.count;
-    }
-    return 0;
-}
 
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 1;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (collectionView == _sv.doneCollectionView) {
-        PIEDoneCollectionViewCell *cell =
-        (PIEDoneCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PIEDoneCollectionViewCell"
-                                                                               forIndexPath:indexPath];
-        [cell injectSauce:[_sourceDone objectAtIndex:indexPath.row]];
-        return cell;
-    }
-    return nil;
-}
-
-
--(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    PIECarouselViewController* vc = [PIECarouselViewController new];
-    vc.pageVM = [_sourceDone objectAtIndex:indexPath.row];
-    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-    [nav pushViewController:vc animated:YES ];
-}
-
-
-#pragma mark - CHTCollectionViewDelegateWaterfallLayout
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    PIEPageVM* vm = [_sourceDone objectAtIndex:indexPath.row];
-    CGFloat width;
-    CGFloat height;
-    width = (SCREEN_WIDTH) /2 - 20;
-    height = vm.imageHeight/vm.imageWidth * width;
-    height = MAX(150, height);
-    height = MIN(SCREEN_HEIGHT/2, height);
-    return CGSizeMake(width, height);
-}
+//#pragma mark - <CHTCollectionViewDelegateWaterfallLayout>
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+//    PIEPageVM* vm = [_sourceDone objectAtIndex:indexPath.row];
+//    CGFloat width;
+//    CGFloat height;
+//    width = (SCREEN_WIDTH) /2 - 20;
+//    height = vm.imageHeight/vm.imageWidth * width;
+//    height = MAX(150, height);
+//    height = MIN(SCREEN_HEIGHT/2, height);
+//    return CGSizeMake(width, height);
+//}
 
 #pragma mark - getRemoteSourceMyAsk
 
@@ -633,67 +681,65 @@
     }];
 }
 
-- (void)getRemoteSourceDone {
-    WS(ws);
-    [ws.sv.doneCollectionView.mj_footer endRefreshing];
-    _currentIndex_Done = 1;
-    _timeStamp_done = [[NSDate date] timeIntervalSince1970];
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@(1) forKey:@"page"];
+//- (void)getRemoteSourceDone {
+//    WS(ws);
+//    [ws.sv.doneCollectionView.mj_footer endRefreshing];
+//    _currentIndex_Done = 1;
+//    _timeStamp_done = [[NSDate date] timeIntervalSince1970];
+//    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+//    [param setObject:@(1) forKey:@"page"];
+////    [param setObject:@(SCREEN_WIDTH/2) forKey:@"width"];
+//    [param setObject:@(_timeStamp_done) forKey:@"last_updated"];
+//    [param setObject:@(15) forKey:@"size"];
+//    
+//    [PIEProceedingManager getMyDone:param withBlock:^(NSMutableArray *resultArray) {
+//        ws.isfirstLoadingDone = NO;
+//        if (resultArray.count == 0) {
+//            _canRefreshDoneFooter = NO;
+//        } else {
+//            _canRefreshDoneFooter = YES;
+//            NSMutableArray* sourceAgent = [NSMutableArray new];
+//            for (PIEPageEntity *homeImage in resultArray) {
+//                PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:homeImage];
+//                [sourceAgent addObject:vm];
+//            }
+//            
+//            [ws.sourceDone removeAllObjects];
+//            [ws.sourceDone addObjectsFromArray:sourceAgent];
+//        }
+//        [ws.sv.doneCollectionView.mj_header endRefreshing];
+//        [ws.sv.doneCollectionView reloadData];
+//
+//    }];
+//}
+//- (void)getMoreRemoteSourceDone {
+//    WS(ws);
+//    [ws.sv.doneCollectionView.mj_header endRefreshing];
+//    _currentIndex_Done++;
+//    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+//    [param setObject:@(_currentIndex_Done) forKey:@"page"];
 //    [param setObject:@(SCREEN_WIDTH/2) forKey:@"width"];
-    [param setObject:@(_timeStamp_done) forKey:@"last_updated"];
-    [param setObject:@(15) forKey:@"size"];
-    
-    [PIEProceedingManager getMyDone:param withBlock:^(NSMutableArray *resultArray) {
-        ws.isfirstLoadingDone = NO;
-        if (resultArray.count == 0) {
-            _canRefreshDoneFooter = NO;
-        } else {
-            _canRefreshDoneFooter = YES;
-            NSMutableArray* sourceAgent = [NSMutableArray new];
-            for (PIEPageEntity *homeImage in resultArray) {
-                PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:homeImage];
-                [sourceAgent addObject:vm];
-            }
-            
-            [ws.sourceDone removeAllObjects];
-            [ws.sourceDone addObjectsFromArray:sourceAgent];
-        }
-        [ws.sv.doneCollectionView.mj_header endRefreshing];
-        [ws.sv.doneCollectionView reloadData];
-
-    }];
-}
-- (void)getMoreRemoteSourceDone {
-    WS(ws);
-    [ws.sv.doneCollectionView.mj_header endRefreshing];
-    _currentIndex_Done++;
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@(_currentIndex_Done) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH/2) forKey:@"width"];
-    [param setObject:@(_timeStamp_done) forKey:@"last_updated"];
-    [param setObject:@(15) forKey:@"size"];
-    
-    [PIEProceedingManager getMyDone:param withBlock:^(NSMutableArray *resultArray) {
-        if (resultArray.count == 0) {
-            _canRefreshDoneFooter = NO;
-        } else {
-            _canRefreshDoneFooter = YES;
-            NSMutableArray* sourceAgent = [NSMutableArray new];
-            for (PIEPageEntity *homeImage in resultArray) {
-                PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:homeImage];
-                [sourceAgent addObject:vm];
-            }
-            [ws.sourceDone addObjectsFromArray:sourceAgent];
-        }
-        [ws.sv.doneCollectionView.mj_footer endRefreshing];
-        [ws.sv.doneCollectionView reloadData];
-
-    }];
-}
+//    [param setObject:@(_timeStamp_done) forKey:@"last_updated"];
+//    [param setObject:@(15) forKey:@"size"];
+//    
+//    [PIEProceedingManager getMyDone:param withBlock:^(NSMutableArray *resultArray) {
+//        if (resultArray.count == 0) {
+//            _canRefreshDoneFooter = NO;
+//        } else {
+//            _canRefreshDoneFooter = YES;
+//            NSMutableArray* sourceAgent = [NSMutableArray new];
+//            for (PIEPageEntity *homeImage in resultArray) {
+//                PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:homeImage];
+//                [sourceAgent addObject:vm];
+//            }
+//            [ws.sourceDone addObjectsFromArray:sourceAgent];
+//        }
+//        [ws.sv.doneCollectionView.mj_footer endRefreshing];
+//        [ws.sv.doneCollectionView reloadData];
+//
+//    }];
+//}
 #pragma mark - ATOMShareViewDelegate
-
-
 //sina
 -(void)tapShare1 {
     [self.shareView dismiss];
@@ -734,7 +780,7 @@
     [self.shareView dismiss];
 }
 
-#pragma mark - DZNEmptyDataSetSource & delegate
+#pragma mark - <DZNEmptyDataSetSource & delegate>
 -(UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     return [UIImage imageNamed:@"pie_empty"];
 }
@@ -747,9 +793,10 @@
        text = @"还没发布求P,赶快发布召唤大神";
     } else if (scrollView == _sv.toHelpTableView) {
         text = @"还没认领帮P?就这样少了个炫（装）技（B）的机会咯？";
-    } else if (scrollView == _sv.doneCollectionView) {
-        text = @"还没内容呀，加把劲啊啊啊马上来上传";
     }
+//    else if (scrollView == _sv.doneCollectionView) {
+//        text = @"还没内容呀，加把劲啊啊啊马上来上传";
+//    }
     
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
                                  NSForegroundColorAttributeName: [UIColor darkGrayColor]};
@@ -762,9 +809,10 @@
         return !_isfirstLoadingAsk;
     } else if (scrollView == _sv.toHelpTableView) {
         return !_isfirstLoadingToHelp;
-    } else if (scrollView == _sv.doneCollectionView) {
-        return !_isfirstLoadingDone;
     }
+//    } else if (scrollView == _sv.doneCollectionView) {
+//        return !_isfirstLoadingDone;
+//    }
     return NO;
 }
 -(BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {

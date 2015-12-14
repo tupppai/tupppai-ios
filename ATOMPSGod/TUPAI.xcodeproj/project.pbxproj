@@ -26,6 +26,7 @@
 		0E54C7941C1E8F5E00F431AC /* PIEToHelpTableViewCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E54C7831C1E8F5E00F431AC /* PIEToHelpTableViewCell2.m */; };
 		0E54C7951C1E8F5E00F431AC /* PIEToHelpTableViewCell2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E54C7841C1E8F5E00F431AC /* PIEToHelpTableViewCell2.xib */; };
 		0E54C7961C1E8F5E00F431AC /* PIEToHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E54C7861C1E8F5E00F431AC /* PIEToHelpViewController.m */; };
+		0E54C7991C1E927A00F431AC /* PIEProceedingDoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E54C7981C1E927A00F431AC /* PIEProceedingDoneViewController.m */; };
 		0E6F78FE1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E6F78FC1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.m */; };
 		0E6F78FF1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E6F78FD1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.xib */; };
 		0E6F79031C16EE5C002F9FB6 /* PIEChannelDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E6F79011C16EE5C002F9FB6 /* PIEChannelDetailViewController.m */; };
@@ -566,6 +567,8 @@
 		0E54C7841C1E8F5E00F431AC /* PIEToHelpTableViewCell2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEToHelpTableViewCell2.xib; sourceTree = "<group>"; };
 		0E54C7851C1E8F5E00F431AC /* PIEToHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEToHelpViewController.h; sourceTree = "<group>"; };
 		0E54C7861C1E8F5E00F431AC /* PIEToHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEToHelpViewController.m; sourceTree = "<group>"; };
+		0E54C7971C1E927A00F431AC /* PIEProceedingDoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEProceedingDoneViewController.h; sourceTree = "<group>"; };
+		0E54C7981C1E927A00F431AC /* PIEProceedingDoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEProceedingDoneViewController.m; sourceTree = "<group>"; };
 		0E6F78FB1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelDetailLatestPSCell.h; sourceTree = "<group>"; };
 		0E6F78FC1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelDetailLatestPSCell.m; sourceTree = "<group>"; };
 		0E6F78FD1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEChannelDetailLatestPSCell.xib; sourceTree = "<group>"; };
@@ -1629,6 +1632,8 @@
 				0E54C7731C1E8F5E00F431AC /* PIEDoneCollectionViewCell.h */,
 				0E54C7741C1E8F5E00F431AC /* PIEDoneCollectionViewCell.m */,
 				0E54C7751C1E8F5E00F431AC /* PIEDoneCollectionViewCell.xib */,
+				0E54C7971C1E927A00F431AC /* PIEProceedingDoneViewController.h */,
+				0E54C7981C1E927A00F431AC /* PIEProceedingDoneViewController.m */,
 			);
 			path = done;
 			sourceTree = "<group>";
@@ -4290,6 +4295,7 @@
 				5C561A7F1AB7CAA90052D4D5 /* ATOMCreateTable.m in Sources */,
 				5C4AE3EF1AAED6520020E102 /* PIEFriendFansTableCell.m in Sources */,
 				F4AE73C61BBA988900734BCB /* PIEFriendReplyViewController.m in Sources */,
+				0E54C7991C1E927A00F431AC /* PIEProceedingDoneViewController.m in Sources */,
 				F439303D1BE4BD75006C9437 /* MRIconView.m in Sources */,
 				E93D23811B3D065C0081F632 /* ATOMShare.m in Sources */,
 				F4B02E151BECA43D00406A55 /* PIECommentTableHeaderView_Ask.m in Sources */,

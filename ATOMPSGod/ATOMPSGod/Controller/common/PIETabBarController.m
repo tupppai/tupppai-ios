@@ -105,7 +105,7 @@
     PIEProceedingViewController *proceedingViewController = [PIEProceedingViewController new];
     
     PIEMeViewController *aboutMeVC = (PIEMeViewController *)[[UIStoryboard storyboardWithName:@"Me" bundle:nil] instantiateViewControllerWithIdentifier: @"PIEME"];
-    UIViewController* takePhotoVC = [UIViewController new];
+//    UIViewController* takePhotoVC = [UIViewController new];
     
     
     channelVc.title                 = @"图派";
