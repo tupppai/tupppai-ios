@@ -83,28 +83,6 @@
     return self;
 }
 
--(void)collect {
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    self.collected = !self.collected;
-    if (self.collected) {
-        //收藏
-        [param setObject:@(1) forKey:@"status"];
-    } else {
-        //取消收藏
-        [param setObject:@(0) forKey:@"status"];
-    }
-    [DDCollectManager toggleCollect:param withPageType:self.type withID:self.ID withBlock:^(NSError *error) {
-        if (!error) {
-            if (  self.collected) {
-                [Hud textWithLightBackground:@"收藏成功"];
-            } else {
-                [Hud textWithLightBackground:@"取消收藏成功"];
-            }
-        }   else {
-            self.collected = !self.collected;
-        }
-    }];
-}
 
 
 @end

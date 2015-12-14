@@ -46,7 +46,8 @@
 }
 - (void)generateData {
     _iconArray = [NSMutableArray new];
-    _infoArray = [NSArray arrayWithObjects:@[@"新浪微博",@"pie_share_sina"],
+    _infoArray = [NSArray arrayWithObjects:
+                  @[@"新浪微博",@"pie_share_sina"],
                   @[@"QQ空间",@"pie_share_qqzone"],
                   @[@"朋友圈",@"pie_share_wechatmoments"],
                   @[@"微信朋友",@"pie_share_wechatfriends"],

@@ -409,122 +409,61 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 #pragma mark - methods on Sharing<ATOMShareViewDelegate>
 
 #pragma mark - ATOMShareViewDelegate
-//sina
--(void)tapShare1 {
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeSinaWeibo block:^(BOOL success) {if (success) {
-        /* do nothing */
-    }}];
-}
-//qqzone
--(void)tapShare2 {
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQZone block:^(BOOL success) {if (success) {
-        /* do nothing */
-    }}];
-}
-//wechat moments
--(void)tapShare3 {
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatMoments block:^(BOOL success) {if (success) {
-        
-        /* do nothing */
-    }}];
-}
-//wechat friends
--(void)tapShare4 {
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatFriends block:^(BOOL success) {if (success) {
-        /* do nothing */
-    
-    }}];
-}
--(void)tapShare5 {
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQFriends block:^(BOOL success) {if (success) {
-        /* do nothing */
-    }}];
-    
+
+- (void)shareViewDidShare:(PIEShareView *)shareView socialShareType:(ATOMShareType)shareType
+{
+    [DDShareManager postSocialShare2:_selectedVM
+                 withSocialShareType:ATOMShareTypeSinaWeibo
+                               block:^(BOOL success) {
+                                   
+                               }];
 }
 
-//复制链接
--(void)tapShare6 {
-    [DDShareManager copy:_selectedVM];
-}
--(void)tapShare7 {
-    self.shareView.vm = _selectedVM;
-}
--(void)tapShare8 {
-    //    if (_scrollView.type == PIENewScrollTypeAsk) {
-    //        if (_selectedVM.type == PIEPageTypeAsk) {
-    [self collect];
-    //        }
-    //    } else {
-    //        if (_selectedVM.type == PIEPageTypeAsk) {
-    //            [self collect];
-    //        } else {
-    //            PIENewReplyTableCell* cell = [_scrollView.tableReply cellForRowAtIndexPath:_selectedIndexPath];
-    //            [self collect:cell.collectView shouldShowHud:YES];
-    //        }
-    //    }
-    
+- (void)shareViewDidPaste:(PIEShareView *)shareView
+{
+    shareView.weakVM = _selectedVM;
 }
 
--(void)tapShareCancel {
-    [self.shareView dismiss];
+- (void)shareViewDidReportUnusualUsage:(PIEShareView *)shareView
+{
+    shareView.weakVM = _selectedVM;
+}
+
+- (void)shareViewDidCollect:(PIEShareView *)shareView
+{
+    shareView.weakVM = _selectedVM;
+}
+
+- (void)shareViewDidCancel:(PIEShareView *)shareView
+{
+    [shareView dismiss];
 }
 
 #pragma mark - 分享页面的收藏按钮操作
-
--(void)collect:(PIEPageButton*) collectView shouldShowHud:(BOOL)shouldShowHud {
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    collectView.selected = !collectView.selected;
-    if (collectView.selected) {
-        //收藏
-        [param setObject:@(1) forKey:@"status"];
-    } else {
-        //取消收藏
-        [param setObject:@(0) forKey:@"status"];
-    }
-    [DDCollectManager toggleCollect:param withPageType:_selectedVM.type withID:_selectedVM.ID withBlock:^(NSError *error) {
-        if (!error) {
-            if (shouldShowHud) {
-                if (  collectView.selected) {
-                    [Hud textWithLightBackground:@"收藏成功"];
-                } else {
-                    [Hud textWithLightBackground:@"取消收藏成功"];
-                }
-            }
-            _selectedVM.collected = collectView.selected;
-            _selectedVM.collectCount = collectView.numberString;
-        }   else {
-            collectView.selected = !collectView.selected;
-        }
-    }];
-}
-
--(void)collect {
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    _selectedVM.collected = !_selectedVM.collected;
-    if (_selectedVM.collected) {
-        //收藏
-        [param setObject:@(1) forKey:@"status"];
-    } else {
-        //取消收藏
-        [param setObject:@(0) forKey:@"status"];
-    }
-    [DDCollectManager toggleCollect:param withPageType:_selectedVM.type withID:_selectedVM.ID withBlock:^(NSError *error) {
-        if (!error) {
-            if (  _selectedVM.collected) {
-                [Hud textWithLightBackground:@"收藏成功"];
-            } else {
-                [Hud textWithLightBackground:@"取消收藏成功"];
-            }
-        }   else {
-            _selectedVM.collected = !_selectedVM.collected;
-        }
-    }];
-}
-
 - (void)showShareView {
     [self.shareView show];
     
 }
+
+//- (void)updateShareStatus {
+//    
+//    /**
+//     *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面ReplyCell的点赞数和分享数
+//     */
+//    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
+//    [self updateStatus];
+//}
+//
+///**
+// *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面中ReplyCell的点赞数和分享数
+// */
+//- (void)updateStatus {
+//    if (_selectedIndexPath) {
+//        [_tableViewReply reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+//    }
+//}
+
+#pragma mark - Target-actions
 - (void)takePhoto {
     [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
 }
