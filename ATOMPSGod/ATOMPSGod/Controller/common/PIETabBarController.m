@@ -111,7 +111,7 @@
     channelVc.title                 = @"图派";
     myAttentionViewController.title = @"首页";
     proceedingViewController.title  = @"进行中";
-    aboutMeVC.title                 = @"我的";
+    aboutMeVC.title                 = @"我";
     
     
     
@@ -123,19 +123,19 @@
     _preNav = _navigation_elite;
     
     _navigation_elite.tabBarItem.image =
-    [[UIImage imageNamed:@"pie_tab_1"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    [[UIImage imageNamed:@"tab_home_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 
     _navigation_elite.tabBarItem.selectedImage =
-    [[UIImage imageNamed:@"pie_tab_1_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    [[UIImage imageNamed:@"tab_home_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
     _navigation_new.tabBarItem.image =
-    [[UIImage imageNamed:@"pie_tab_2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    [[UIImage imageNamed:@"tab_new_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     _navigation_new.tabBarItem.selectedImage =
-    [[UIImage imageNamed:@"pie_tab_2_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    [[UIImage imageNamed:@"tab_new_seleted"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     _navigation_proceeding.tabBarItem.image =
-    [[UIImage imageNamed:@"pie_tab_4"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    [[UIImage imageNamed:@"tab_jinxing_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     _navigation_proceeding.tabBarItem.selectedImage =
-    [[UIImage imageNamed:@"pie_tab_4_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    [[UIImage imageNamed:@"tab_jinxing_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 
     _navigation_me.tabBarItem.image =
     [[UIImage imageNamed:@"pie_tab_5"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];

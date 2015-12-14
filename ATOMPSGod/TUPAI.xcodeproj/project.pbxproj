@@ -2092,7 +2092,6 @@
 				E959A56B1B8F025500F90155 /* Notes */,
 				5CDB05C31AA3FE520089121E /* TUPAI */,
 				5CDB05DD1AA3FE520089121E /* ATOMPSGodTests */,
-				5CDB05C21AA3FE520089121E /* Products */,
 				94794CACC85CA9D698472166 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -2104,6 +2103,7 @@
 				5CDB05DA1AA3FE520089121E /* TUPAI.xctest */,
 			);
 			name = Products;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		5CDB05C31AA3FE520089121E /* TUPAI */ = {
@@ -2147,6 +2147,7 @@
 		5CDB05DD1AA3FE520089121E /* ATOMPSGodTests */ = {
 			isa = PBXGroup;
 			children = (
+				5CDB05C21AA3FE520089121E /* Products */,
 				5CDB05E01AA3FE520089121E /* ATOMPSGodTests.m */,
 				5CDB05DE1AA3FE520089121E /* Supporting Files */,
 			);
