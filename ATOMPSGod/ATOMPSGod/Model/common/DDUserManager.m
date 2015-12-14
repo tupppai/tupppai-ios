@@ -27,9 +27,12 @@ static  PIEEntityUser* _currentUser;
 }
 
 + (PIEEntityUser *)currentUser {
-    dispatch_once(&onceToken, ^{
+    if (!_currentUser) {
         _currentUser = [PIEEntityUser new];
-    });
+    }
+//    dispatch_once(&onceToken, ^{
+//        _currentUser = [PIEEntityUser new];
+//    });
     return _currentUser;
 }
 

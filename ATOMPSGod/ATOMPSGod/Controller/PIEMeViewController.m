@@ -56,7 +56,7 @@
     [self setupNavBar];
     [self setupViews];
     [self setupPageMenu];
-    
+    [self updateViewsWithData];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(scrollUp)
                                                  name:@"PIEMeScrollUp"
@@ -115,7 +115,6 @@
     
     [self updateNoticationStatus];
     [MobClick beginLogPageView:@"进入我的"];
-
 }
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -127,7 +126,7 @@
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self update];
+//    [self update];
 }
 
 - (void)update {
