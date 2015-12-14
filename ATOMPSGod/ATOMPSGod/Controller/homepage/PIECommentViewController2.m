@@ -488,10 +488,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     } else {
         self.title = @"全部评论";
     }
-    
-//    [self.navigationController.navigationBar setTranslucent:NO];
-//    [self setUseSuperview:NO];
-//    [self followScrollView:self.tableView];
 
 }
 
