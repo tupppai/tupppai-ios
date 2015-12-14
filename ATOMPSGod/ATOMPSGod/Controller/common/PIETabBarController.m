@@ -88,7 +88,7 @@
                               //清空数据库用户表
                               [ATOMUserDAO clearUsers];
                               //清空当前用户
-                              [DDUserManager wipe];
+                              [DDUserManager clearCurrentUser];
                               self.navigationController.viewControllers = @[];
                               PIELaunchViewController *lvc = [[PIELaunchViewController alloc] init];
                               [AppDelegate APP].window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
@@ -105,11 +105,10 @@
     PIEProceedingViewController *proceedingViewController = [PIEProceedingViewController new];
     
     PIEMeViewController *aboutMeVC = (PIEMeViewController *)[[UIStoryboard storyboardWithName:@"Me" bundle:nil] instantiateViewControllerWithIdentifier: @"PIEME"];
-//    UIViewController* takePhotoVC = [UIViewController new];
+
     
-    
-    channelVc.title                 = @"图派";
     myAttentionViewController.title = @"首页";
+    channelVc.title                 = @"图派";
     proceedingViewController.title  = @"进行中";
     aboutMeVC.title                 = @"我";
     

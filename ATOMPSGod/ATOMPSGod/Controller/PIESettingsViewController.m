@@ -237,7 +237,8 @@
                               //清空数据库用户表
                               [ATOMUserDAO clearUsers];
                               //清空当前用户
-                              [DDUserManager wipe];
+                              [DDUserManager clearCurrentUser];
+                              
                               self.navigationController.viewControllers = @[];
                               PIELaunchViewController *lvc = [[PIELaunchViewController alloc] init];
                               [AppDelegate APP].window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
@@ -268,7 +269,7 @@
                              type:SIAlertViewButtonTypeCancel
                           handler:^(SIAlertView *alert) {
                           }];
-    [alertView addButtonWithTitle:@"欣然前往"
+    [alertView addButtonWithTitle:@"前往"
                              type:SIAlertViewButtonTypeDefault
                           handler:^(SIAlertView *alert) {
                               NSString *iTunesLink = @"http://itunes.apple.com/app/id1056871759";
@@ -299,7 +300,7 @@
                              type:SIAlertViewButtonTypeCancel
                           handler:^(SIAlertView *alert) {
                           }];
-    [alertView addButtonWithTitle:@"坚决清理"
+    [alertView addButtonWithTitle:@"清理"
                              type:SIAlertViewButtonTypeDefault
                           handler:^(SIAlertView *alert) {
                               [[NSURLCache sharedURLCache]removeAllCachedResponses];

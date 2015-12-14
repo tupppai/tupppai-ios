@@ -20,7 +20,7 @@ extern NSString *URL_PFGetPhotos;
 extern NSString *URL_PFGetAsk;
 extern NSString * URL_PFGetToHelp;
 extern NSString * URL_PFGetDone;
-extern NSString * URL_PFGetOtherUserInfo;
+extern NSString * URL_PFGetUserInfo;
 extern NSString * URL_PFGetReply;
 extern NSString * URL_PFGetFriendAsk;
 extern NSString * URL_PFGetCollection;
@@ -42,7 +42,6 @@ extern NSString * URL_ACHasRegistered;
 
 #pragma mark - Unknown
 extern NSString * URL_UKSaveFeedback;
-extern NSString * URL_UKGetInfo;
 extern NSString * URL_UKGetMsg;
 extern NSString * URL_UKSaveAsk;
 extern NSString * URL_UKSaveReply;

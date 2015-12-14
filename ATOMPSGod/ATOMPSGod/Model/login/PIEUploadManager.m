@@ -78,14 +78,11 @@
     NSInteger uploadCount =[[_uploadInfo objectForKey:@"imageCount"]integerValue];
     
     if (uploadCount == 1) {
-//       dataImage1 = [_toUploadInfoArray objectAtIndex:1];
         image1 = [_uploadInfo objectForKey:@"image1"];
         dataImage1 = UIImageJPEGRepresentation(image1, 1.0);
         CGFloat ratio1 = image1.size.height/image1.size.width;
         [self.ratioArray addObject:@(ratio1)];
     } else if (uploadCount == 2) {
-//        dataImage1 = [_toUploadInfoArray objectAtIndex:1];
-//        dataImage2 = [_toUploadInfoArray objectAtIndex:2];
         image1 = [_uploadInfo objectForKey:@"image1"];
         image2 = [_uploadInfo objectForKey:@"image2"];
         CGFloat ratio1 = image1.size.height/image1.size.width;
@@ -159,12 +156,12 @@
     
     NSNumber *cid = [_uploadInfo objectForKey:@"channelViewModel_id"];
     if (cid) {
-        [param setObject:cid forKey:@"channel_id"];
+        [param setObject:cid forKey:@"category_id"];
     }
 
     [DDService ddSaveAsk:param withBlock:^(NSInteger newImageID) {
         if (newImageID!=-1) {
-            [Hud success:@"求P成功,你可以在进行中查看你的求P"];
+            [Hud success:@"求P成功"];
             if  (block) {
                 block(YES);
             }
@@ -184,11 +181,10 @@
     [param setObject:self.ratioArray forKey:@"ratios"];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
-//    [param setObject:[_toUploadInfoArray lastObject] forKey:@"desc"];
     [param setObject:[_uploadInfo objectForKey:@"text_string"] forKey:@"desc"];
     NSNumber *cid = [_uploadInfo objectForKey:@"channelViewModel_id"];
     if (cid) {
-        [param setObject:cid forKey:@"channel_id"];
+        [param setObject:cid forKey:@"category_id"];
     }
 
     
@@ -197,7 +193,7 @@
     [param setObject:@(askID) forKey:@"ask_id"];
     [DDService ddSaveReply:param withBlock:^(BOOL success) {
         if (success) {
-            [Hud success:@"上传作品成功,你可以在进行中查看已完成的作品"];
+            [Hud success:@"上传作品成功"];
             if  (block) {
                 block(YES);
             }

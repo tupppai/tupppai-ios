@@ -257,7 +257,7 @@
     }];
 }
 + (void)ddGetMyInfo:(NSDictionary*)param withBlock:(void (^)(NSDictionary* data))block {
-    [[self class]GET:param url:URL_UKGetInfo block:^(id responseObject) {
+    [[self class]GET:param url:URL_PFGetUserInfo block:^(id responseObject) {
             NSDictionary* data = [responseObject objectForKey:@"data"];
             if (block) { block(data); }
     }];
@@ -289,7 +289,7 @@
 }
 
 + (void)ddGetOtherUserInfo:(NSDictionary*)param withBlock:(void (^)(NSDictionary* data,NSArray *askArray,NSArray *replyArray))block {
-    [[self class]GET:param url:URL_PFGetOtherUserInfo block:^(id responseObject) {
+    [[self class]GET:param url:URL_PFGetUserInfo block:^(id responseObject) {
             NSDictionary *data = [responseObject objectForKey:@"data"];
             NSArray *askArray = [data objectForKey:@"asks"];
             NSArray *replyArray = [data objectForKey:@"replies"];

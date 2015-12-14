@@ -19,6 +19,7 @@
     }
     return self;
 }
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
              @"uid" : @"uid",

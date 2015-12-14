@@ -76,7 +76,7 @@
         make.top.equalTo(_timeLabel.mas_bottom).with.offset(10);
         make.left.equalTo(self).with.offset(0);
         make.width.equalTo(self).with.priorityHigh();
-        make.height.equalTo(self.mas_width);
+        make.height.equalTo(self.imageViewMain.mas_width);
     }];
     [self.imageViewRight mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.imageViewMain.mas_top);
@@ -139,7 +139,6 @@
         _usernameLabel.text = vm.username;
         _timeLabel.text = vm.publishTime;
         _followButton.selected = vm.followed;
-        
         
         if (vm.thumbEntityArray.count == 2) {
             _imageViewMain.contentMode = UIViewContentModeScaleAspectFill;

@@ -88,11 +88,11 @@
 //+ (NSMutableDictionary *)convertCurrentUserToDic;
 
 //+ (void)setCurrentUser:(PIEEntityUser *)user ;
-+ (void)saveAndUpdateUser:(PIEEntityUser *)user;
++ (void)updateCurrentUserFromUser:(PIEEntityUser *)user;
 +(void)fetchUserInDBToCurrentUser:(void (^)(BOOL))block;
-+(void)wipe ;
-+ (void)updateDBUserFromCurrentUser;
-+ (void)DDGetUserInfoAndUpdateMe;
++(void)clearCurrentUser ;
++ (void)updateCurrentUserInDatabase;
++ (void)DDGetUserInfoAndUpdateMe:(void (^)(BOOL success))block;
 + (void )DDRegister:(NSDictionary *)param withBlock:(void (^)(BOOL success))block ;
 + (void )DDLogin:(NSDictionary*)param withBlock:(void (^)(BOOL succeed))block ;
 + (void)DD3PartyAuth:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(bool isRegistered,NSString* info))block;
