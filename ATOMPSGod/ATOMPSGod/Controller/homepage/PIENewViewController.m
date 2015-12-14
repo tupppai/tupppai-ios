@@ -573,8 +573,13 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 }
 
 
-#pragma mark - ATOMShareViewDelegate
+#pragma mark - <ATOMShareViewDelegate>
 //sina
+- (void)shareViewDidShare:(PIEShareView *)shareView
+{
+    
+}
+
 -(void)tapShare1 {
     [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeSinaWeibo block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
 }
@@ -599,7 +604,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     [DDShareManager copy:_selectedVM];
 }
 -(void)tapShare7 {
-    self.shareView.vm = _selectedVM;
+    self.shareView.weakVM = _selectedVM;
 }
 -(void)tapShare8 {
 //    if (_scrollView.type == PIENewScrollTypeAsk) {

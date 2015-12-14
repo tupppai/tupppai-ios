@@ -189,7 +189,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 #pragma mark - <SwipeViewDataSource>
 - (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
 {
-    NSLog(@"%s", __func__);
+
 
     return self.latestAskForPSSource.count;
 }
@@ -198,7 +198,6 @@ static NSString * PIEDetailUsersPSCellIdentifier =
    viewForItemAtIndex:(NSInteger)index
           reusingView:(PIEChannelDetailAskPSItemView *)view
 {
-    NSLog(@"%s", __func__);
 
     if (view == nil)
     {
@@ -406,96 +405,35 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     以下代理方法在用户点击了shareView中的8个button的其中一个（分享到新浪，微信，微博，etc.) 的时候被调用
  */
 
-//sina
--(void)tapShare1 {
-    PIELog(@"%s", __func__);
-
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeSinaWeibo block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
-}
-//qqzone
--(void)tapShare2 {
-    PIELog(@"%s", __func__);
-
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQZone block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
-}
-//wechat moments
--(void)tapShare3 {
-    PIELog(@"%s", __func__);
-
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatMoments block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
-}
-//wechat friends
--(void)tapShare4 {
-    PIELog(@"%s", __func__);
-
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatFriends block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
-}
--(void)tapShare5 {
-    PIELog(@"%s", __func__);
-
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQFriends block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
-    
+- (void)shareViewDidShare:(PIEShareView *)shareView socialShareType:(ATOMShareType)shareType
+{
+    [DDShareManager postSocialShare2:_selectedVM
+                 withSocialShareType:shareType
+                               block:^(BOOL success) {
+                                   [self updateShareStatus];
+                               }];
 }
 
--(void)tapShare6 {
-    PIELog(@"%s", __func__);
-
-    [DDShareManager copy:_selectedVM];
-}
--(void)tapShare7 {
-    PIELog(@"%s", __func__);
-
-    
-    self.shareView.vm = _selectedVM;
-}
--(void)tapShare8 {
-    PIELog(@"%s", __func__);
-
-    
-    //    if (_scrollView.type == PIENewScrollTypeAsk) {
-    //        if (_selectedVM.type == PIEPageTypeAsk) {
-    [self collect];
-    //        }
-    //    } else {
-    //        if (_selectedVM.type == PIEPageTypeAsk) {
-    //            [self collect];
-    //        } else {
-    //            PIENewReplyTableCell* cell = [_scrollView.tableReply cellForRowAtIndexPath:_selectedIndexPath];
-    //            [self collect:cell.collectView shouldShowHud:YES];
-    //        }
-    //    }
-    
+- (void)shareViewDidPaste:(PIEShareView *)shareView
+{
+    shareView.weakVM = _selectedVM;
 }
 
--(void)tapShareCancel {
-    PIELog(@"%s", __func__);
-
-    [self.shareView dismiss];
+- (void)shareViewDidReportUnusualUsage:(PIEShareView *)shareView
+{
+    shareView.weakVM = _selectedVM;
 }
 
-#pragma mark - "收藏"相关操作， shareView中用户点击了"收藏"之后被调用
--(void)collect {
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    _selectedVM.collected = !_selectedVM.collected;
-    if (_selectedVM.collected) {
-        //收藏
-        [param setObject:@(1) forKey:@"status"];
-    } else {
-        //取消收藏
-        [param setObject:@(0) forKey:@"status"];
-    }
-    [DDCollectManager toggleCollect:param withPageType:_selectedVM.type withID:_selectedVM.ID withBlock:^(NSError *error) {
-        if (!error) {
-            if (  _selectedVM.collected) {
-                [Hud textWithLightBackground:@"收藏成功"];
-            } else {
-                [Hud textWithLightBackground:@"取消收藏成功"];
-            }
-        }   else {
-            _selectedVM.collected = !_selectedVM.collected;
-        }
-    }];
+- (void)shareViewDidCollect:(PIEShareView *)shareView
+{
+    shareView.weakVM = _selectedVM;
 }
+
+- (void)shareViewDidCancel:(PIEShareView *)shareView
+{
+    [shareView dismiss];
+}
+
 
 
 

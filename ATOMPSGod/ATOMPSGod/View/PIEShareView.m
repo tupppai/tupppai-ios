@@ -90,41 +90,46 @@
 - (void)tapGes1:(UIGestureRecognizer*)gesture {
     // sina weibo
     
-    if (_delegate != nil && [_delegate respondsToSelector:@selector(shareViewDidShare:)])
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(shareViewDidShare:socialShareType:)])
     {
-        [_delegate shareViewDidShare:self];
+        [_delegate shareViewDidShare:self
+                     socialShareType:ATOMShareTypeSinaWeibo];
     }
 }
 - (void)tapGes2:(UIGestureRecognizer*)gesture {
     
     // QQ zone
     
-    if (_delegate != nil && [_delegate respondsToSelector:@selector(shareViewDidShare:)])
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(shareViewDidShare:socialShareType:)])
     {
-        [_delegate shareViewDidShare:self];
+        [_delegate shareViewDidShare:self
+                     socialShareType:ATOMShareTypeQQZone];
     }
 }
 - (void)tapGes3:(UIGestureRecognizer*)gesture {
     
-    // Weixin Moments
-    if (_delegate != nil && [_delegate respondsToSelector:@selector(shareViewDidShare:)])
+    // Wechat Moments
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(shareViewDidShare:socialShareType:)])
     {
-        [_delegate shareViewDidShare:self];
+        [_delegate shareViewDidShare:self
+                     socialShareType:ATOMShareTypeWechatMoments];
     }
 }
 - (void)tapGes4:(UIGestureRecognizer*)gesture {
     
-    // Weixin Friends
-    if (_delegate != nil && [_delegate respondsToSelector:@selector(shareViewDidShare:)]) {
-        [_delegate shareViewDidShare:self];
+    // Wechat Friends
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(shareViewDidShare:socialShareType:)]) {
+        [_delegate shareViewDidShare:self
+                     socialShareType:ATOMShareTypeWechatFriends];
     }
 }
 - (void)tapGes5:(UIGestureRecognizer*)gesture {
     
     // QQ Friends
     
-    if (_delegate != nil && [_delegate respondsToSelector:@selector(shareViewDidShare:)]) {
-        [_delegate shareViewDidShare:self];
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(shareViewDidShare:socialShareType:)]) {
+        [_delegate shareViewDidShare:self
+                     socialShareType:ATOMShareTypeQQFriends];
     }
 }
 - (void)tapGes6:(UIGestureRecognizer*)gesture {
@@ -132,12 +137,11 @@
     // Copy to pasteboards
 
     // Use DDShareManager here.
-    if (_delegate && [_delegate respondsToSelector:@selector(shareViewDidPaste:pageVM:)]) {
-        [_delegate shareViewDidPaste:self
-                              pageVM:_vm];
+    if (_delegate && [_delegate respondsToSelector:@selector(shareViewDidPaste:)]) {
+        [_delegate shareViewDidPaste:self];
         
-        if (_vm != nil) {
-            [DDShareManager copy:_vm];
+        if (_weakVM != nil) {
+            [DDShareManager copy:_weakVM];
         }
     }
     
@@ -147,13 +151,12 @@
     // report unusual usuage
 
     if (_delegate != nil &&
-        [_delegate respondsToSelector:@selector(shareViewDidReportUnusualUsage:pageVM:)]) {
-        [_delegate shareViewDidReportUnusualUsage:self
-                                           pageVM:_vm];
+        [_delegate respondsToSelector:@selector(shareViewDidReportUnusualUsage:)]) {
+        [_delegate shareViewDidReportUnusualUsage:self];
         
-        if (_vm != nil)
+        if (_weakVM != nil)
         {
-            (self.reportActionSheet).vm = _vm;
+            (self.reportActionSheet).vm = _weakVM;
             [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
         }
     }
@@ -164,14 +167,13 @@
     
     // Collect this PageVM
     if (_delegate != nil &&
-        [_delegate respondsToSelector:@selector(shareViewDidCollect:pageVM:)]) {
-        [_delegate shareViewDidCollect:self
-                                pageVM:_vm];
+        [_delegate respondsToSelector:@selector(shareViewDidCollect:)]) {
+        [_delegate shareViewDidCollect:self];
         
-        if (_vm != nil) {
+        if (_weakVM != nil) {
             NSMutableDictionary *param = [NSMutableDictionary new];
-            _vm.collected = !_vm.collected;
-            if (_vm.collected) {
+            _weakVM.collected = !_weakVM.collected;
+            if (_weakVM.collected) {
                 //收藏
                 [param setObject:@(1) forKey:@"status"];
             } else {
@@ -179,16 +181,16 @@
                 [param setObject:@(0) forKey:@"status"];
             }
             [DDCollectManager toggleCollect:param
-                               withPageType:_vm.type
-                                     withID:_vm.ID withBlock:^(NSError *error) {
+                               withPageType:_weakVM.type
+                                     withID:_weakVM.ID withBlock:^(NSError *error) {
                 if (!error) {
-                    if (  _vm.collected) {
+                    if (  _weakVM.collected) {
                         [Hud textWithLightBackground:@"收藏成功"];
                     } else {
                         [Hud textWithLightBackground:@"取消收藏成功"];
                     }
                 }   else {
-                    _vm.collected = !_vm.collected;
+                    _weakVM.collected = !_weakVM.collected;
                 }
             }];
         }

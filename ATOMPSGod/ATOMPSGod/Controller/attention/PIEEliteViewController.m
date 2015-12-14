@@ -464,34 +464,32 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     }
 
 }
-//sina
--(void)tapShare1 {
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeSinaWeibo block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
+- (void)shareViewDidShare:(PIEShareView *)shareView socialShareType:(ATOMShareType)shareType
+{
+    [DDShareManager postSocialShare2:_selectedVM
+                 withSocialShareType:shareType
+                               block:^(BOOL success) {
+                                   [self updateShareStatus];
+                               }];
 }
-//qqzone
--(void)tapShare2 {
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQZone block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
 
+
+- (void)shareViewDidPaste:(PIEShareView *)shareView
+{
+    shareView.weakVM = _selectedVM;
 }
-//wechat moments
--(void)tapShare3 {
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatMoments block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
+
+- (void)shareViewDidReportUnusualUsage:(PIEShareView *)shareView
+{
+    shareView.weakVM = _selectedVM;
 }
-//wechat friends
--(void)tapShare4 {
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatFriends block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
-}
--(void)tapShare5 {
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQFriends block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
+
+- (void)shareViewDidCollect:(PIEShareView *)shareView
+{
+    //!!! 无奈之举：把weakVM设置为空，这样就不会执行这个代理方法默认的“收藏”方法
+    shareView.weakVM = nil;
     
-}
--(void)tapShare6 {
-    [DDShareManager copy:_selectedVM];
-}
--(void)tapShare7 {
-    self.shareView.vm = _selectedVM;
-}
--(void)tapShare8 {
+    // 下面是直接copy -tapShare8 的代码 = =
     if (_sv.type == PIEPageTypeEliteHot) {
         if (_selectedVM.type == PIEPageTypeAsk) {
             [self collectAsk];
@@ -507,10 +505,32 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
             [self collect:cell.collectView shouldShowHud:YES];
         }
     }
+
 }
 
--(void)tapShareCancel {
-    [self.shareView dismiss];
+// 下面这块要怎么重构呢？为什么会出现一个不一样的收藏PageVM的逻辑……
+-(void)tapShare8 {
+//    if (_sv.type == PIEPageTypeEliteHot) {
+//        if (_selectedVM.type == PIEPageTypeAsk) {
+//            [self collectAsk];
+//        } else {
+//            PIEEliteHotReplyTableViewCell* cell = [_sv.tableHot cellForRowAtIndexPath:_selectedIndexPath];
+//            [self collect:cell.collectView shouldShowHud:YES];
+//        }
+//    } else {
+//        if (_selectedVM.type == PIEPageTypeAsk) {
+//            [self collectAsk];
+//        } else {
+//            PIEEliteFollowReplyTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
+//            [self collect:cell.collectView shouldShowHud:YES];
+//        }
+//    }
+
+}
+
+- (void)shareViewDidCancel:(PIEShareView *)shareView
+{
+    [shareView dismiss];
 }
 
 
