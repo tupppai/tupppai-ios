@@ -14,6 +14,7 @@
     // Initialization code
     
 //    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    // testing...
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
