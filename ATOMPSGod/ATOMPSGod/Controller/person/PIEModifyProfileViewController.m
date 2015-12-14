@@ -89,7 +89,7 @@
                 [DDUserManager currentUser].avatar = _avatar;
                 [[AppDelegate APP].mainTabBarController updateTabbarAvatar];
             }
-            [DDUserManager updateDBUserFromCurrentUser];
+            [DDUserManager updateCurrentUserInDatabase];
             
             DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
             PIEMeViewController* mevc = [nav.viewControllers firstObject];

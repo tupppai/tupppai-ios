@@ -88,7 +88,7 @@
                               //清空数据库用户表
                               [ATOMUserDAO clearUsers];
                               //清空当前用户
-                              [DDUserManager wipe];
+                              [DDUserManager clearCurrentUser];
                               self.navigationController.viewControllers = @[];
                               PIELaunchViewController *lvc = [[PIELaunchViewController alloc] init];
                               [AppDelegate APP].window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];

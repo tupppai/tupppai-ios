@@ -226,9 +226,6 @@
                                          success:(void (^)(NSURLSessionDataTask *, id))success
                                          failure:(void (^)(NSURLSessionDataTask *, NSError *))failure
 {
-#if DEBUG
-    NSLog(@"%@,%@,%@",method,URLString,(NSDictionary*)parameters);
-#endif
     NSError *serializationError = nil;
     NSMutableURLRequest *request = [self.requestSerializer requestWithMethod:method URLString:[[NSURL URLWithString:URLString relativeToURL:self.baseURL] absoluteString] parameters:parameters error:&serializationError];
     if (serializationError) {
@@ -240,32 +237,18 @@
             });
 #pragma clang diagnostic pop
         }
-
         return nil;
     }
 
     __block NSURLSessionDataTask *dataTask = nil;
     dataTask = [self dataTaskWithRequest:request completionHandler:^(NSURLResponse * __unused response, id responseObject, NSError *error) {
-#if DEBUG
-        NSLog(@"success responseObject %@ ,error %@",responseObject,error);
-        
-#endif
         if (error) {
             if (failure) {
                 failure(dataTask, error);
-                [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkErrorCall" object:nil]];
             }
         } else {
             if (success) {
                 success(dataTask, responseObject);
-                int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
-                if (ret == 2) {
-                    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkSignOutCall" object:nil]];
-                } else if (ret != 1) {
-                    NSString* info = [responseObject objectForKey:@"info"];
-                    NSDictionary* userInfo = [NSDictionary dictionaryWithObject:info forKey:@"info"];
-                    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkShowInfoCall" object:nil userInfo:userInfo]];
-                }
             }
         }
     }];

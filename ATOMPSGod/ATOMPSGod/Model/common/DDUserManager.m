@@ -7,7 +7,6 @@
 //
 
 #import "DDUserManager.h"
-//#import "PIEEntityUser.h"
 #import "ATOMUserDao.h"
 @implementation DDUserManager
 
@@ -35,44 +34,6 @@ static  PIEEntityUser* _currentUser;
 }
 
 
-//+ (NSMutableDictionary *)convertCurrentUserToDic {
-//    NSMutableDictionary *dict = [NSMutableDictionary new];
-//    [dict setObject:_currentUser.nickname forKey:@"nickname"];
-//    [dict setObject:_currentUser.mobile forKey:@"mobile"];
-////    [dict setObject:_currentUser.password forKey:@"password"];
-//    [dict setObject:[NSString stringWithFormat:@"%zd", _currentUser.sex] forKey:@"sex"];
-//    [dict setObject:[NSString stringWithFormat:@"%@", _currentUser.avatar] forKey:@"avatar"];
-//
-//    switch (_currentUser.signUpType) {
-//        case ATOMSignUpWechat:
-//            [dict setObject:_currentUser.sourceData[@"openid"] forKey:@"openid"];
-//            [dict setObject:_currentUser.sourceData[@"headimgurl"] forKey:@"avatar_url"];
-//            [dict setObject:@"weixin" forKey:@"type"];
-//            break;
-//        case ATOMSignUpQQ:
-//            [dict setObject:_currentUser.sourceData[@"openid"] forKey:@"openid"];
-//            [dict setObject:_currentUser.sourceData[@"headimgurl"] forKey:@"avatar_url"];
-//            [dict setObject:@"qq" forKey:@"type"];
-//            break;
-//        case ATOMSignUpWeibo:
-//            [dict setObject:_currentUser.sourceData[@"idstr"] forKey:@"openid"];
-//            [dict setObject:_currentUser.sourceData[@"avatar_hd"] forKey:@"avatar_url"];
-//            [dict setObject:_currentUser.sourceData[@"province"] forKey:@"province"];
-//            [dict setObject:_currentUser.sourceData[@"city"] forKey:@"city"];
-//            [dict setObject:@"weibo" forKey:@"type"];
-//            break;
-//        case ATOMSignUpMobile:
-////            [dict setObject:[NSString stringWithFormat:@"%@", _region[@"cityID"]] forKey:@"city"];
-////            [dict setObject:[NSString stringWithFormat:@"%@", _region[@"provinceID"]] forKey:@"province"];
-//            [dict setObject:@"mobile" forKey:@"type"];
-//            break;
-//        default:
-//            break;
-//    }
-//    return [dict mutableCopy];
-//}
-
-
 + (void)setCurrentUser:(PIEEntityUser *)user {
     self.currentUser.uid = user.uid;
     self.currentUser.mobile = user.mobile;
@@ -92,36 +53,33 @@ static  PIEEntityUser* _currentUser;
 }
 
 //embarrassing
-+ (void)updateDBUserFromCurrentUser {
++ (void)updateCurrentUserInDatabase {
 
     [ATOMUserDAO updateUser:self.currentUser];
 }
 
 
-+ (void)saveAndUpdateUser:(PIEEntityUser *)user {
++ (void)updateCurrentUserFromUser:(PIEEntityUser *)user {
     if ([ATOMUserDAO isExistUser:user]) {
         [ATOMUserDAO updateUser:user];
-//        [self setCurrentUser:[ATOMUserDAO  selectUserByUID:user.uid]];
-//        [self setCurrentUser:user];
         self.currentUser = user;
     } else {
         [ATOMUserDAO insertUser:user];
-//        _currentUser = user;
-//        [self setCurrentUser:user];
         self.currentUser = user;
-//        [self setCurrentUser:user];
     }
 }
 
-+(void)wipe {
-    _currentUser.uid = 0;
-    _currentUser.nickname = @"游客";
-    _currentUser.mobile = @"-1";
-    _currentUser.avatar = @"";
-    _currentUser.bindWechat = NO;
-    _currentUser.bindWeibo = NO;
-    _currentUser.bindQQ = NO;
++(void)clearCurrentUser {
+    _currentUser = nil;
+//    _currentUser.uid = 0;
+//    _currentUser.nickname = @"游客";
+//    _currentUser.mobile = @"-1";
+//    _currentUser.avatar = @"";
+//    _currentUser.bindWechat = NO;
+//    _currentUser.bindWeibo = NO;
+//    _currentUser.bindQQ = NO;
 }
+
 
 +(void)fetchUserInDBToCurrentUser:(void (^)(BOOL))block {
   [ATOMUserDAO fetchUser:^(PIEEntityUser *user) {
@@ -141,15 +99,18 @@ static  PIEEntityUser* _currentUser;
    }];
 }
 
-+ (void)DDGetUserInfoAndUpdateMe {
-    [DDService ddGetMyInfo:nil withBlock:^(NSDictionary *data) {
-        if (data) {
-            PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:data error:NULL];
-            //保存更新数据库的user,并更新currentUser
-//            [[DDUserManager currentUser]saveAndUpdateUser:user];
-            [self saveAndUpdateUser:user];
++ (void)DDGetUserInfoAndUpdateMe:(void (^)(BOOL success))block {
+    
+    [DDBaseService GET:nil url:@"view/info" block:^(id responseObject) {
+        NSDictionary* data = [responseObject objectForKey:@"data"];
+        PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:data error:NULL];
+        user.token = [responseObject objectForKey:@"token"];
+        [self updateCurrentUserFromUser:user];
+        if (block) {
+            block (YES);
         }
     }];
+
 }
 
 + (void )DDRegister:(NSDictionary *)param withBlock:(void (^)(BOOL success))block {
@@ -160,7 +121,7 @@ static  PIEEntityUser* _currentUser;
             PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:data error:NULL];
             user.token = [responseObject objectForKey:@"token"];
 //            [[DDUserManager currentUser]saveAndUpdateUser:user];
-            [self saveAndUpdateUser:user];
+            [self updateCurrentUserFromUser:user];
 
             if (block) { block(YES); }
         } else {
@@ -181,9 +142,7 @@ static  PIEEntityUser* _currentUser;
                     PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:data error:nil];
                     //保存更新数据库的user,并更新currentUser
                     user.token = [responseObject objectForKey:@"token"];
-                    NSLog(@"token%@",user.token);
-//                    [[DDUserManager currentUser]saveAndUpdateUser:user];
-                    [self saveAndUpdateUser:user];
+                    [self updateCurrentUserFromUser:user];
 
                     if (block) {block(YES);}
                 } else if (status == 2) {
@@ -213,8 +172,7 @@ static  PIEEntityUser* _currentUser;
                 //已经注册，抓取服务器存储的user对象，更新本地user.
                 PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:userObject error:NULL];
                 user.token = [responseObject objectForKey:@"token"];
-//                [[DDUserManager currentUser]saveAndUpdateUser:user];
-                [self saveAndUpdateUser:user];
+                [self updateCurrentUserFromUser:user];
 
                 block(YES,@"登录成功");
             } else if (isRegistered == NO){
