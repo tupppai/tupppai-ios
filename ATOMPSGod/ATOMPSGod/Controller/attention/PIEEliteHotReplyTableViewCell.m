@@ -78,7 +78,23 @@
     WS(ws);
     _ID = viewModel.ID;
     _askID = viewModel.askID;
-    _followView.highlighted = viewModel.followed;
+    
+    {
+        if (viewModel.isMyFan) {
+            _followView.highlightedImage = [UIImage imageNamed:@"pie_mutualfollow"];
+        } else {
+            _followView.highlightedImage = [UIImage imageNamed:@"new_reply_followed"];
+        }
+        _followView.highlighted = viewModel.followed;
+        if (viewModel.userID == [DDUserManager currentUser].uid) {
+            _followView.hidden = YES;
+        } else {
+            _followView.hidden = NO;
+        }
+
+    }
+
+    
     _shareView.imageView.image = [UIImage imageNamed:@"hot_share"];
     _shareView.numberString = viewModel.shareCount;
     
@@ -96,8 +112,6 @@
     
     [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
     _nameLabel.text = viewModel.username;
-//    _timeLabel.text = viewModel.publishTime;
-//    [ setImageWithURL:[NSURL URLWithString:viewModel.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:viewModel.imageURL]];
     [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
@@ -105,15 +119,7 @@
         ws.theImageView.image = image;
         ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
     } failure:nil];
-    
-//    CGFloat imageViewHeight = viewModel.imageHeight <= SCREEN_HEIGHT/2 ? viewModel.imageHeight : SCREEN_HEIGHT/2;
-//    imageViewHeight = MAX(100, imageViewHeight);
-//    imageViewHeight = MIN(SCREEN_WIDTH, imageViewHeight);
 
-//    [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-//        make.height.equalTo(@(SCREEN_WIDTH)).with.priorityHigh();
-//    }];
-//    
     if (viewModel.hotCommentEntityArray.count > 0) {
         PIECommentEntity* commentEntity1  = viewModel.hotCommentEntityArray[0];
         _commentLabel1.text = [NSString stringWithFormat:@"%@: %@",commentEntity1.nickname,commentEntity1.content];
@@ -157,11 +163,6 @@
             //ws.thumbView.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
         } failure:nil];
     }
-    
-    if (viewModel.userID == [DDUserManager currentUser].uid) {
-        _followView.hidden = YES;
-    }
-    
     
     
 }

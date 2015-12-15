@@ -75,7 +75,23 @@
     WS(ws);
     _ID = viewModel.ID;
     _askID = viewModel.askID;
-    _followView.highlighted = viewModel.followed;
+    
+    {
+        if (viewModel.isMyFan) {
+            _followView.highlightedImage = [UIImage imageNamed:@"pie_mutualfollow"];
+        } else {
+            _followView.highlightedImage = [UIImage imageNamed:@"new_reply_followed"];
+        }
+        _followView.highlighted = viewModel.followed;
+        if (viewModel.userID == [DDUserManager currentUser].uid) {
+            _followView.hidden = YES;
+        } else {
+            _followView.hidden = NO;
+        }
+
+    }
+
+    
     _shareView.imageView.image = [UIImage imageNamed:@"hot_share"];
     _shareView.numberString = viewModel.shareCount;
     _commentView.imageView.image = [UIImage imageNamed:@"hot_comment"];
@@ -112,9 +128,6 @@
         }
     }
 
-    
-    if (viewModel.userID == [DDUserManager currentUser].uid) {
-        _followView.hidden = YES;
-    }
+
 }
 @end

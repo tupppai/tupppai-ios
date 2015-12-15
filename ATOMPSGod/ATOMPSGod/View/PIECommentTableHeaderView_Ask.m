@@ -140,39 +140,24 @@
         [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
         _usernameLabel.text = vm.username;
         _timeLabel.text = vm.publishTime;
+        if (vm.isMyFan) {
+            [_followButton setImage:[UIImage imageNamed:@"pie_mutualfollow"] forState:UIControlStateSelected];
+        } else {
+            [_followButton setImage:[UIImage imageNamed:@"new_reply_followed"] forState:UIControlStateSelected];
+        }
         _followButton.selected = vm.followed;
         
-        if (vm.thumbEntityArray.count == 2) {
-//            _imageViewMain.contentMode = UIViewContentModeScaleAspectFill;
-//            _imageViewRight.contentMode = UIViewContentModeScaleAspectFill;
-//            _imageViewMain.clipsToBounds = YES;
-//            _imageViewRight.clipsToBounds = YES;
-            
-            PIEImageEntity* imgEntity1 = vm.thumbEntityArray[0];
-//            PIEImageEntity* imgEntity2 = vm.thumbEntityArray[1];
-//            [_imageViewMain mas_updateConstraints:^(MASConstraintMaker *make) {
-//                make.width.equalTo(self).with.multipliedBy(0.5).with.priorityHigh();
-//                make.height.equalTo(@(SCREEN_WIDTH)).with.priorityHigh();
-//            }];
+        if (vm.userID == [DDUserManager currentUser].uid) {
+            _followButton.hidden = YES;
+        } else {
+            _followButton.hidden = NO;
+        }
+        
+        [DDService downloadImage:vm.imageURL withBlock:^(UIImage *image) {
+            _imageViewBlur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
+            _imageViewMain.image = image;
+        }];
 
-            [_imageViewMain setImageWithURL:[NSURL URLWithString:imgEntity1.url] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-//            [_imageViewRight setImageWithURL:[NSURL URLWithString:imgEntity2.url] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-        }
-        else {
-//            [_imageViewMain setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-            [DDService downloadImage:vm.imageURL withBlock:^(UIImage *image) {
-                _imageViewBlur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
-                _imageViewMain.image = image;
-            }];
-//            CGFloat height = vm.imageHeight/vm.imageWidth *SCREEN_WIDTH;
-//            if (height > 100) {
-//                [_imageViewMain mas_updateConstraints:^(MASConstraintMaker *make) {
-//                    make.height.equalTo(@(height));
-//                }];
-//            } else {
-//                _imageViewMain.contentMode = UIViewContentModeScaleAspectFit;
-//            }
-        }
         _commentButton.numberString = vm.commentCount;
         _shareButton.numberString = vm.shareCount;
         
@@ -194,14 +179,6 @@
     }];
 }
 
-//
-//_button_name.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-//_label_time.textAlignment = NSTextAlignmentRight;
-//
-//[_button_avatar setTitleColor:[UIColor colorWithHex:0x000000 andAlpha:0.9] forState:UIControlStateNormal];
-//[_button_avatar.titleLabel setFont:[UIFont lightTupaiFontOfSize:13]];
-//[_label_time setTintColor:[UIColor colorWithHex:0x000000 andAlpha:0.4]];
-//[_label_time setFont:[UIFont lightTupaiFontOfSize:10]];
 - (UIImageView *)avatarView
 {
     if (!_avatarView) {

@@ -94,14 +94,20 @@
     _workNumberLabel.text = [NSString stringWithFormat:@"%@作品", viewModel.replyCount];
 
  
-    
-    if (viewModel.followStatus == 1) {
-        self.attentionButton.selected = YES;
-    } else if (viewModel.followStatus == 2) {
+    if (viewModel.isMyFan) {
         [self.attentionButton setImage:[UIImage imageNamed:@"pie_mutualfollow"] forState:UIControlStateSelected];
-        self.attentionButton.selected = YES;
+    } else {
+        [self.attentionButton setImage:[UIImage imageNamed:@"new_reply_followed"] forState:UIControlStateSelected];
     }
+    
+    self.attentionButton.selected = viewModel.isFollow;
 
+    if (viewModel.uid == [DDUserManager currentUser].uid) {
+        _attentionButton.hidden = YES;
+    } else {
+        _attentionButton.hidden = NO;
+    }
+    
 }
 
 

@@ -153,8 +153,19 @@
         [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
         _usernameLabel.text = vm.username;
         _timeLabel.text = vm.publishTime;
+        
+        if (vm.isMyFan) {
+            [_followButton setImage:[UIImage imageNamed:@"pie_mutualfollow"] forState:UIControlStateSelected];
+        } else {
+            [_followButton setImage:[UIImage imageNamed:@"new_reply_followed"] forState:UIControlStateSelected];
+        }
         _followButton.selected = vm.followed;
-//        [_imageViewMain setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+        
+        if (vm.userID == [DDUserManager currentUser].uid) {
+            _followButton.hidden = YES;
+        } else {
+            _followButton.hidden = NO;
+        }
         
         [DDService downloadImage:vm.imageURL withBlock:^(UIImage *image) {
             _imageViewBlur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
@@ -171,7 +182,6 @@
         [attrStr addAttribute:NSFontAttributeName value:[UIFont lightTupaiFontOfSize:15] range:NSMakeRange(0, attrStr.length)];
         [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0x000000 andAlpha:0.9] range:NSMakeRange(0, attrStr.length)];
         _textView_content.attributedText = attrStr;
-
 
     }
     else {
@@ -288,10 +298,6 @@
     return _moreWorkButton;
 }
 
-
-
-
-
 -(UIButton *)followButton {
     if (!_followButton) {
         _followButton = [UIButton new];
@@ -324,14 +330,5 @@
         }
     }];
 }
-//
-//-(BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
-//    PIEWebViewViewController* vc = [PIEWebViewViewController new];
-//    vc.url = [URL absoluteString];
-//    
-//    DDNavigationController* nav = (DDNavigationController*)[AppDelegate APP].mainTabBarController.presentedViewController.presentedViewController;
-//    [nav pushViewController:vc animated:YES ];
-//    return NO;
-//}
 
 @end

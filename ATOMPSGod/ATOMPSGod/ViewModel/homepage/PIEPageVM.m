@@ -45,6 +45,7 @@
         _imageWidth  = entity.imageWidth;
         _imageHeight = entity.imageHeight;
         _followed    = entity.followed;
+        _isMyFan        = entity.isMyFan;
 
         NSDate *publishDate    = [NSDate dateWithTimeIntervalSince1970:entity.uploadTime];
         _publishTime           = [Util formatPublishTime:publishDate];

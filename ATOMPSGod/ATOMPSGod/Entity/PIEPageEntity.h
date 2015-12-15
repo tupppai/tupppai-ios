@@ -19,6 +19,7 @@
 @property (nonatomic, assign) bool liked;
 @property (nonatomic, assign) bool collected;
 @property (nonatomic, assign) bool followed;
+@property (nonatomic, assign) bool isMyFan;
 
 /**
  *  类型：hot ,recent

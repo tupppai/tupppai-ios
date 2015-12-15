@@ -170,7 +170,7 @@
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [_tableView.mj_footer endRefreshing];
+        [_tableView.mj_footer endRefreshingWithNoMoreData];
     }
 }
 
@@ -219,9 +219,9 @@
             ws.canRefreshFooter = NO;
         } else {
             ws.canRefreshFooter = YES;
+            [ws.tableView reloadData];
         }
         [ws.tableView.mj_footer endRefreshing];
-        [ws.tableView reloadData];
     }];
 }
 
