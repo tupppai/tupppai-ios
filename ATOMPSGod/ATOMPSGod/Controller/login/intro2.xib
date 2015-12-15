@@ -12,12 +12,12 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="intro2_desc" translatesAutoresizingMaskIntoConstraints="NO" id="wbO-eT-ObQ" customClass="intro1_title">
-                    <rect key="frame" x="207.5" y="130" width="184" height="12"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="intro2_desc" translatesAutoresizingMaskIntoConstraints="NO" id="wbO-eT-ObQ">
+                    <rect key="frame" x="208" y="130" width="184" height="12"/>
                     <animations/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="intro2.png" translatesAutoresizingMaskIntoConstraints="NO" id="Ffg-2o-YXW">
-                    <rect key="frame" x="100" y="192" width="400" height="408"/>
+                    <rect key="frame" x="11" y="192" width="578" height="408"/>
                     <animations/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="intro2_title" translatesAutoresizingMaskIntoConstraints="NO" id="kt8-AL-inY">
@@ -45,7 +45,7 @@
         </view>
     </objects>
     <resources>
-        <image name="intro2.png" width="400" height="652"/>
+        <image name="intro2.png" width="578" height="927"/>
         <image name="intro2_desc" width="184" height="12"/>
         <image name="intro2_title" width="206" height="21"/>
     </resources>

@@ -83,7 +83,7 @@
     } else if (section == 1) {
         return 3;
     } else if (section ==2) {
-        return 3;
+        return 2;
     } else if (section ==3) {
         return 3;
     }
@@ -140,14 +140,15 @@
         }
         else if (section == 2) {
             if (row == 0) {
-                cell.textLabel.text = @"版本更新";
-            } else if (row == 1) {
                 cell.textLabel.text = @"清理缓存";
             }
+//            else if (row == 1) {
+//                cell.textLabel.text = @"清理缓存";
+//            }
 //            else if (row == 2) {
 //                cell.textLabel.text = @"推荐应用给好友";
 //            }
-            else if (row == 2) {
+            else if (row == 1) {
                 cell.textLabel.text = @"给图派评分";
             }
         }
@@ -193,12 +194,17 @@
     } else if (section == 2) {
         
         if (row == 0) {
-            [UMCheckUpdate checkUpdateWithDelegate:self selector:@selector(UMCheckUpdateReturn:) appkey:@"55b1ecdbe0f55a1de9001164" channel:nil];
-        } else if (row == 1) {
             [self clearCache];
-        } else if (row == 2) {
+
+//            [UMCheckUpdate checkUpdateWithDelegate:self selector:@selector(UMCheckUpdateReturn:) appkey:@"55b1ecdbe0f55a1de9001164" channel:nil];
+        } else if (row == 1) {
             [self alert_evaluation];
+
+//            [self clearCache];
         }
+//        else if (row == 2) {
+//            [self alert_evaluation];
+//        }
     }
     else if (section == 3) {
         if (row == 0) {

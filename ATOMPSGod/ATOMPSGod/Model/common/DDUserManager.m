@@ -88,12 +88,9 @@ static  PIEEntityUser* _currentUser;
   [ATOMUserDAO fetchUser:^(PIEEntityUser *user) {
       if (user) {
           self.currentUser = user;
-          NSLog(@"setCurrentUser %@,%@",self.currentUser,user);
           if (block) {
               block(YES);
           }
-          NSLog(@"setCurrentUser %@,%@",self.currentUser,user);
-
       } else {
           if (block) {
               block(NO);
@@ -123,7 +120,6 @@ static  PIEEntityUser* _currentUser;
         if (data) {
             PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:data error:NULL];
             user.token = [responseObject objectForKey:@"token"];
-//            [[DDUserManager currentUser]saveAndUpdateUser:user];
             [self updateCurrentUserFromUser:user];
 
             if (block) { block(YES); }

@@ -247,6 +247,7 @@
         CGPoint p = [gesture locationInView:cell];
         //点击图片
         if (CGRectContainsPoint(cell.uploadView.frame, p)) {
+            self.QBImagePickerController = nil;
             [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
         }
         else if (CGRectContainsPoint(cell.downloadView.frame, p)) {
@@ -294,8 +295,6 @@
         [Hud customText:@"下载成功\n我猜你会用美图秀秀来P?" inView:[AppDelegate APP].window];
     }
 }
-
-
 
 #pragma mark - refresh delegate
 
@@ -359,7 +358,6 @@
 //            [_segmentedControl setSelectedSegmentIndex:2 animated:YES];
 //            _sv.type = PIEProceedingTypeDone;
 //            [self getSourceIfEmpty_done];
-//
 //        }
     }
 }
