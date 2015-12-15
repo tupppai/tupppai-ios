@@ -315,6 +315,7 @@
         NSArray* arraySelected = [NSArray arrayWithObjects:[UIImage imageNamed:@"createprofile_gender_male_selected"],[UIImage imageNamed:@"createprofile_gender_female_selected"], nil];
         _sexSegment = [[HMSegmentedControl alloc] initWithSectionImages:array sectionSelectedImages:arraySelected];
         _sexSegment.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationNone;
+        _sexSegment.hidden = YES;
         [_sexSegment setIndexChangeBlock:^(NSInteger index) {
             if (index == 0) {
                 _genderIsMan = YES;

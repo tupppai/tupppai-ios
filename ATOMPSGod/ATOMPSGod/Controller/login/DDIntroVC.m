@@ -52,7 +52,7 @@
     intro.pageControl.pageIndicatorTintColor = [UIColor colorWithHex:0xffffff andAlpha:0.5];
     intro.pageControl.currentPageIndicatorTintColor = [UIColor colorWithHex:0xffffff andAlpha:0.9];
     intro.tapToNext = YES;
-    UIButton* button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 150, 50)];
+    UIButton* button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 150, 42)];
     
     [button mas_updateConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@150);

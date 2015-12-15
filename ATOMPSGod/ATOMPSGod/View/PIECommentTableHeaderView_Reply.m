@@ -224,7 +224,6 @@
     if (!_imageViewMain) {
         _imageViewMain = [UIImageView new];
         _imageViewMain.contentMode = UIViewContentModeScaleAspectFit;
-//        _imageViewMain.clipsToBounds = YES;
         _imageViewMain.userInteractionEnabled = YES;
     }
     return _imageViewMain;
