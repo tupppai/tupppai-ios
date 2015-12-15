@@ -30,6 +30,7 @@
 #import "PIEShareImageView.h"
 #import "PIECarouselViewController2.h"
 #import "PIEActionSheet_PS.h"
+#import "DeviceUtil.h"
 
 @interface PIEEliteViewController ()<UITableViewDelegate,UITableViewDataSource,PWRefreshBaseTableViewDelegate,UIScrollViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource,SwipeViewDelegate,SwipeViewDataSource>
 @property (nonatomic, strong) PIEEliteScrollView *sv;
@@ -464,34 +465,32 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     }
 
 }
-//sina
--(void)tapShare1 {
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeSinaWeibo block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
+- (void)shareViewDidShare:(PIEShareView *)shareView socialShareType:(ATOMShareType)shareType
+{
+    [DDShareManager postSocialShare2:_selectedVM
+                 withSocialShareType:shareType
+                               block:^(BOOL success) {
+                                   [self updateShareStatus];
+                               }];
 }
-//qqzone
--(void)tapShare2 {
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQZone block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
 
+
+- (void)shareViewDidPaste:(PIEShareView *)shareView
+{
+    shareView.weakVM = _selectedVM;
 }
-//wechat moments
--(void)tapShare3 {
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatMoments block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
+
+- (void)shareViewDidReportUnusualUsage:(PIEShareView *)shareView
+{
+    shareView.weakVM = _selectedVM;
 }
-//wechat friends
--(void)tapShare4 {
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatFriends block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
-}
--(void)tapShare5 {
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQFriends block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
+
+- (void)shareViewDidCollect:(PIEShareView *)shareView
+{
+    //!!! 无奈之举：把weakVM设置为空，这样就不会执行这个代理方法默认的“收藏”方法
+    shareView.weakVM = nil;
     
-}
--(void)tapShare6 {
-    [DDShareManager copy:_selectedVM];
-}
--(void)tapShare7 {
-    self.shareView.vm = _selectedVM;
-}
--(void)tapShare8 {
+    // 下面是直接copy -tapShare8 的代码 = =
     if (_sv.type == PIEPageTypeEliteHot) {
         if (_selectedVM.type == PIEPageTypeAsk) {
             [self collectAsk];
@@ -507,10 +506,32 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
             [self collect:cell.collectView shouldShowHud:YES];
         }
     }
+
 }
 
--(void)tapShareCancel {
-    [self.shareView dismiss];
+// 下面这块要怎么重构呢？为什么会出现一个不一样的收藏PageVM的逻辑……
+-(void)tapShare8 {
+//    if (_sv.type == PIEPageTypeEliteHot) {
+//        if (_selectedVM.type == PIEPageTypeAsk) {
+//            [self collectAsk];
+//        } else {
+//            PIEEliteHotReplyTableViewCell* cell = [_sv.tableHot cellForRowAtIndexPath:_selectedIndexPath];
+//            [self collect:cell.collectView shouldShowHud:YES];
+//        }
+//    } else {
+//        if (_selectedVM.type == PIEPageTypeAsk) {
+//            [self collectAsk];
+//        } else {
+//            PIEEliteFollowReplyTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
+//            [self collect:cell.collectView shouldShowHud:YES];
+//        }
+//    }
+
+}
+
+- (void)shareViewDidCancel:(PIEShareView *)shareView
+{
+    [shareView dismiss];
 }
 
 
@@ -519,7 +540,19 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    
+    /*
+        BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
+     */
+    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
+        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
+        [param setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
+    }
+    else{
+        [param setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
+    }
+    
+//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [PIEEliteManager getBannerSource:param withBlock:^(NSMutableArray *array) {
         _sourceBanner = array;
         _sv.pageControl_swipeView.numberOfPages = _sourceBanner.count;

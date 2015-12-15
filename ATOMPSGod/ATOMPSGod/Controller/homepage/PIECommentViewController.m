@@ -781,59 +781,42 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 
 
-#pragma mark - ATOMShareViewDelegate
-//sina
--(void)tapShare1 {
-    [DDShareManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeSinaWeibo block:^(BOOL success) {
-        if (success) {
-            _vm.shareCount = [NSString stringWithFormat:@"%zd",[_vm.shareCount integerValue]+1];
-        }
-    } ];
-}
-//qqzone
--(void)tapShare2 {
-    [DDShareManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeQQZone block:^(BOOL success) {
-        if (success) {
-            _vm.shareCount = [NSString stringWithFormat:@"%zd",[_vm.shareCount integerValue]+1];
-        }
-    } ];
-}
-//wechat moments
--(void)tapShare3 {
-    [DDShareManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeWechatMoments block:^(BOOL success) {
-        if (success) {
-            _vm.shareCount = [NSString stringWithFormat:@"%zd",[_vm.shareCount integerValue]+1];
-        }
-    } ];
-}
-//wechat friends
--(void)tapShare4 {
-    [DDShareManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeWechatFriends block:^(BOOL success) {
-        if (success) {
-            _vm.shareCount = [NSString stringWithFormat:@"%zd",[_vm.shareCount integerValue]+1];
-        }
-    } ];
-}
--(void)tapShare5 {
-    [DDShareManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeQQFriends block:^(BOOL success) {
-        if (success) {
-            _vm.shareCount = [NSString stringWithFormat:@"%zd",[_vm.shareCount integerValue]+1];
-        }
-    } ];
-}
--(void)tapShare6 {
-    [DDShareManager copy:_vm];
-}
--(void)tapShare7 {
-    self.shareView.vm = _vm;
-}
--(void)tapShare8 {
-    [self collect];
+#pragma mark - <ATOMShareViewDelegate>
+- (void)updatePageViewModelAfterSharing
+{
+    _vm.shareCount = [NSString stringWithFormat:@"%zd",[_vm.shareCount integerValue] +1];
 }
 
--(void)tapShareCancel {
-    [self.shareView dismiss];
+- (void)shareViewDidShare:(PIEShareView *)shareView socialShareType:(ATOMShareType)shareType
+{
+    [DDShareManager postSocialShare2:_vm
+                 withSocialShareType:shareType
+                               block:^(BOOL success) {
+                                   [self updatePageViewModelAfterSharing];
+                               }];
 }
+
+- (void)shareViewDidPaste:(PIEShareView *)shareView
+{
+    shareView.weakVM = _vm;
+}
+
+- (void)shareViewDidReportUnusualUsage:(PIEShareView *)shareView
+{
+    shareView.weakVM = _vm;
+}
+
+- (void)shareViewDidCollect:(PIEShareView *)shareView
+{
+    shareView.weakVM = _vm;
+}
+
+- (void)shareViewDidCancel:(PIEShareView *)shareView
+{
+    [shareView dismiss];
+}
+
+#pragma mark - Gesture methods
 
 - (void)addGestureToCommentTableView {
     _tapCommentTableGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCommentTable:)];
@@ -843,28 +826,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)showShareView {
     [self.shareView show];
 }
--(void)collect {
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    _vm.collected = !_vm.collected;
-    if (_vm.collected) {
-        //收藏
-        [param setObject:@(1) forKey:@"status"];
-    } else {
-        //取消收藏
-        [param setObject:@(0) forKey:@"status"];
-    }
-    [DDCollectManager toggleCollect:param withPageType:_vm.type withID:_vm.ID  withBlock:^(NSError *error) {
-        if (!error) {
-            if (  _vm.collected ) {
-                [Hud textWithLightBackground:@"收藏成功"];
-            } else {
-                [Hud textWithLightBackground:@"取消收藏成功"];
-            }
-        }   else {
-            _vm.collected = !_vm.collected;
-        }
-    }];
-}
+
 - (JGActionSheet *)psActionSheet {
     WS(ws);
     if (!_psActionSheet) {

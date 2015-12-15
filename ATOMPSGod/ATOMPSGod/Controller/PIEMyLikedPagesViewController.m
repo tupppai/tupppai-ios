@@ -18,6 +18,7 @@
 #import "PIEImageCollectionViewCell.h"
 #import "PIECarouselViewController2.h"
 #import "DDNavigationController.h"
+#import "DeviceUtil.h"
 @interface PIEMyLikedPagesViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,CHTCollectionViewDelegateWaterfallLayout,DZNEmptyDataSetDelegate>
 @property (nonatomic, strong) PIERefreshCollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -70,7 +71,19 @@
     _timeStamp = [[NSDate date] timeIntervalSince1970];
     _currentPage = 1;
     [param setObject:@(_currentPage) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    
+    /*
+     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
+     */
+    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
+        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
+        [param setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
+    }
+    else{
+        [param setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
+    }
+    
+//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getLikedPages:param withBlock:^(NSMutableArray *resultArray) {

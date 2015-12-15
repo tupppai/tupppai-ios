@@ -10,17 +10,24 @@
 #import "PIESharesheetView.h"
 #import "PIEActionSheet_Report.h"
 
+@class PIEShareView;
+@class PIEPageVM;
 @protocol PIEShareViewDelegate <NSObject>
-@optional
-- (void)tapShare1;
-- (void)tapShare2;
-- (void)tapShare3;
-- (void)tapShare4;
-- (void)tapShare5;
-- (void)tapShare6;
-- (void)tapShare7;
-- (void)tapShare8;
-- (void)tapShareCancel;
+
+@required
+
+- (void)shareViewDidShare:(PIEShareView *)shareView
+          socialShareType:(ATOMShareType)shareType;
+
+
+/* !!! 循环引用的隐忧？我主动把PIEPageVM的prperty设置为weak*/
+- (void)shareViewDidPaste:(PIEShareView *)shareView;
+- (void)shareViewDidReportUnusualUsage:(PIEShareView *)shareView;
+- (void)shareViewDidCollect:(PIEShareView *)shareView;
+
+
+- (void)shareViewDidCancel:(PIEShareView *)shareView;
+
 @end
 
 @interface PIEShareView:UIView
@@ -29,7 +36,7 @@
 @property (nonatomic, strong)  PIEActionSheet_Report * reportActionSheet;
 
 @property (nonatomic, weak) id<PIEShareViewDelegate> delegate;
-@property (nonatomic,strong) PIEPageVM* vm;
+@property (nonatomic,weak)  PIEPageVM* weakVM;
 - (void)showInView:(UIView *)view animated:(BOOL)animated;
 - (void)show;
 -(void)dismiss;

@@ -163,6 +163,8 @@
 		5CDF82421AC2BEF900321694 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CDF82411AC2BEF900321694 /* QuartzCore.framework */; };
 		5CE4082F1ACE94D600A56E4B /* UIViewController+ATOMTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CE4082E1ACE94D600A56E4B /* UIViewController+ATOMTracking.m */; };
 		5CEAC0331AD4F9540058037C /* DDMyCollectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CEAC0321AD4F9540058037C /* DDMyCollectionManager.m */; };
+		90FA11701C1FDB8900D8B602 /* DeviceList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 90FA116D1C1FDB8900D8B602 /* DeviceList.plist */; };
+		90FA11711C1FDB8900D8B602 /* DeviceUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FA116F1C1FDB8900D8B602 /* DeviceUtil.m */; };
 		E900919D1B71E04E004623E4 /* DDInputAuthcodePwdFPVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E900919C1B71E04E004623E4 /* DDInputAuthcodePwdFPVC.m */; };
 		E900AB5B1B450E970019BAEA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E900AB5A1B450E970019BAEA /* Images.xcassets */; };
 		E900AB5F1B4513B20019BAEA /* DDCollectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E900AB5E1B4513B20019BAEA /* DDCollectManager.m */; };
@@ -858,6 +860,9 @@
 		5CE4082E1ACE94D600A56E4B /* UIViewController+ATOMTracking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ATOMTracking.m"; sourceTree = "<group>"; };
 		5CEAC0311AD4F9540058037C /* DDMyCollectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMyCollectionManager.h; sourceTree = "<group>"; };
 		5CEAC0321AD4F9540058037C /* DDMyCollectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMyCollectionManager.m; sourceTree = "<group>"; };
+		90FA116D1C1FDB8900D8B602 /* DeviceList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DeviceList.plist; sourceTree = "<group>"; };
+		90FA116E1C1FDB8900D8B602 /* DeviceUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceUtil.h; sourceTree = "<group>"; };
+		90FA116F1C1FDB8900D8B602 /* DeviceUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceUtil.m; sourceTree = "<group>"; };
 		E900919B1B71E04E004623E4 /* DDInputAuthcodePwdFPVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDInputAuthcodePwdFPVC.h; sourceTree = "<group>"; };
 		E900919C1B71E04E004623E4 /* DDInputAuthcodePwdFPVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDInputAuthcodePwdFPVC.m; sourceTree = "<group>"; };
 		E900AB5A1B450E970019BAEA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -2332,6 +2337,7 @@
 				5CDB06161AA428BD0089121E /* Masonry */,
 				5C561A431AB7C51F0052D4D5 /* MTLFMDBAdapter */,
 				5C9BDA5D1AA88BD900715698 /* BJImageCropper */,
+				90FA116C1C1FDB8900D8B602 /* DeviceUtil */,
 				5C6CEF281AF18BA800F06213 /* ATOMConstant.h */,
 				5C6CEF291AF18BA800F06213 /* ATOMConstant.m */,
 				5C4F5BED1AA5893700226F64 /* UIActionSheet+Blocks.h */,
@@ -2460,6 +2466,16 @@
 				5CDB06611AA45C680089121E /* DDCreateProfileVC.m */,
 			);
 			path = login;
+			sourceTree = "<group>";
+		};
+		90FA116C1C1FDB8900D8B602 /* DeviceUtil */ = {
+			isa = PBXGroup;
+			children = (
+				90FA116D1C1FDB8900D8B602 /* DeviceList.plist */,
+				90FA116E1C1FDB8900D8B602 /* DeviceUtil.h */,
+				90FA116F1C1FDB8900D8B602 /* DeviceUtil.m */,
+			);
+			path = DeviceUtil;
 			sourceTree = "<group>";
 		};
 		94794CACC85CA9D698472166 /* Frameworks */ = {
@@ -4062,6 +4078,7 @@
 				0E54C78C1C1E8F5E00F431AC /* PIEProceedingAskTableViewCell_NoGap.xib in Resources */,
 				F42ED3B31BC4FC3B0052A0BF /* Me.storyboard in Resources */,
 				F45ECF4B1BD1DC3F00417A75 /* PIEMyCommentedPageTableViewCell.xib in Resources */,
+				90FA11701C1FDB8900D8B602 /* DeviceList.plist in Resources */,
 				E94289831B5B32A200ED26E4 /* NotificationButtonBackground@2x.png in Resources */,
 				E959A56C1B8F025500F90155 /* Notes in Resources */,
 				F499E45B1BD0F6A100E5F178 /* PIEEliteFollowAskTableViewCell.xib in Resources */,
@@ -4151,6 +4168,7 @@
 				F499E45A1BD0F6A100E5F178 /* PIEEliteFollowAskTableViewCell.m in Sources */,
 				F41BA0C91C0EDCE800979D43 /* MJRefreshAutoNormalFooter.m in Sources */,
 				5CDB06711AA47E760089121E /* DDAuthcodeVC.m in Sources */,
+				90FA11711C1FDB8900D8B602 /* DeviceUtil.m in Sources */,
 				E99D2F5F1B1C7E8D000D7784 /* NYXImagesHelper.m in Sources */,
 				F4EC11201BCE6F9E002D1DCF /* PIENotificationEntity.m in Sources */,
 				5C54DF2D1AB99F5300BDE34D /* DDTipLabelManager.m in Sources */,

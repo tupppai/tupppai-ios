@@ -25,6 +25,7 @@
 #import "PIEProceedingShareView.h"
 #import "PIEProceedingAskTableViewCell_NoGap.h"
 //#import "UITableView+FDTemplateLayoutCell.h"
+#import "DeviceUtil.h"
 
 #define MyAskCellWidth (SCREEN_WIDTH - 20) / 2.0
 
@@ -609,7 +610,19 @@
     _currentIndex_MyAsk++;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_currentIndex_MyAsk) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    
+    /*
+     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
+     */
+    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
+        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
+        [param setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
+    }
+    else{
+        [param setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
+    }
+    
+//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(_timeStamp_myAsk) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getAskWithReplies:param withBlock:^(NSArray *returnArray) {

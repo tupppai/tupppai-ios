@@ -32,7 +32,7 @@
 #import "PIENewActivityTableViewCell.h"
 #import "PIEActionSheet_PS.h"
 
-@interface PIENewViewController() < UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,PWRefreshBaseCollectionViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,CHTCollectionViewDelegateWaterfallLayout,UICollectionViewDelegate,UICollectionViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
+@interface PIENewViewController() < UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,PWRefreshBaseCollectionViewDelegate,JGActionSheetDelegate,CHTCollectionViewDelegateWaterfallLayout,UICollectionViewDelegate,UICollectionViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
 
 @property (nonatomic, assign) BOOL isfirstLoadingAsk;
@@ -567,14 +567,19 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 -(PIEShareView *)shareView {
     if (!_shareView) {
         _shareView = [PIEShareView new];
-        _shareView.delegate = self;
+//        _shareView.delegate = self;
     }
     return _shareView;
 }
 
 
-#pragma mark - ATOMShareViewDelegate
+#pragma mark - <ATOMShareViewDelegate>
 //sina
+- (void)shareViewDidShare:(PIEShareView *)shareView
+{
+    
+}
+
 -(void)tapShare1 {
     [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeSinaWeibo block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
 }
@@ -599,7 +604,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     [DDShareManager copy:_selectedVM];
 }
 -(void)tapShare7 {
-    self.shareView.vm = _selectedVM;
+    self.shareView.weakVM = _selectedVM;
 }
 -(void)tapShare8 {
 //    if (_scrollView.type == PIENewScrollTypeAsk) {
