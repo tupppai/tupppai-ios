@@ -105,7 +105,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     /* 设置可以区分reply cell中不同UI元素（头像，关注按钮，分享, etc.）的点击事件回调 */
     [self setupGestures];
 
-    self.title = @"用PS搞创意";
+    self.title = self.currentChannelViewModel.title;
     
     // pullDownToRefresh for the first time
     [self.tableView.mj_header beginRefreshing];
