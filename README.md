@@ -1,10 +1,9 @@
 #图派iOS客户端
 
-----
-Dev-Log: huangwei, 15-12-13:
-1. 部分UI的细调（按照Tower.im上的需求）
-2. "进行中"tab中，在PIEProceedingViewController中抽离出 PIEProceedingDoneVIewController以备用，并且将后者从前者之中删除。
-3. 重构shareview， 其中：
+###Dev-Log: huangwei, 15-12-13:
+- 部分UI的细调（按照Tower.im上的需求）
+- "进行中"tab中，在PIEProceedingViewController中抽离出 PIEProceedingDoneVIewController以备用，并且将后者从前者之中删除。
+- 重构shareview， 其中：
 ```objc
 // in protocol <PIEShareViewDelegate>
 @protocol PIEShareViewDelegate <NSObject>
@@ -44,7 +43,7 @@ Dev-Log: huangwei, 15-12-13:
     shareView.weakVM = _selectedVM;
 }
 
-- (void)shareViewDidCollect:(PIEShareView *)shareView 
+- (void)shareViewDidCollect:(PIEShareView *)shareView
 {
     shareView.weakVM = _selectedVM;
 }
@@ -89,7 +88,3 @@ data{
 	threads: 数组，里面是装载着PiePageVM的字典数据；
 }
 ```
-
-
-
-
