@@ -139,10 +139,11 @@
 
 #pragma mark - <UICollectionViewDelegate>
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    PIECarouselViewController* vc = [PIECarouselViewController new];
-    vc.pageVM = [_sourceDone objectAtIndex:indexPath.row];
-    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-    [nav pushViewController:vc animated:YES ];
+    
+//    PIECarouselViewController *vc = [PIECarouselViewController new];
+//    vc.pageVM = [_sourceDone objectAtIndex:indexPath.row];
+//    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+//    [nav pushViewController:vc animated:YES ];
 }
 
 #pragma mark - <CHTCollectionViewDelegateWaterfallLayout>
