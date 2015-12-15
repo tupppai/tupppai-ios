@@ -102,6 +102,12 @@
         self.attentionButton.selected = YES;
     }
 
+    if (viewModel.uid == [DDUserManager currentUser].uid) {
+        _attentionButton.hidden = YES;
+    } else {
+        _attentionButton.hidden = NO;
+    }
+    
 }
 
 

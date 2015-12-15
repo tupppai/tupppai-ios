@@ -100,6 +100,11 @@
         [self.attentionButton setImage:[UIImage imageNamed:@"pie_mutualfollow"] forState:UIControlStateSelected];
         self.attentionButton.selected = YES;
     }
+    if (viewModel.uid == [DDUserManager currentUser].uid) {
+        _attentionButton.hidden = YES;
+    } else {
+        _attentionButton.hidden = NO;
+    }
     [self setNeedsLayout];
 }
 
