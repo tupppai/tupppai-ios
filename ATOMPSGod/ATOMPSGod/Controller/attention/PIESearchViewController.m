@@ -223,7 +223,7 @@
         _layout.columnCount = 1;
         _layout.minimumInteritemSpacing = 1;
         _layout.minimumColumnSpacing = 0;
-        _layout.sectionInset = UIEdgeInsetsMake(10, 0, 0, 0);
+        _layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
 
     }
     return _layout;
