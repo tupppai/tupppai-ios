@@ -271,8 +271,12 @@ static const NSUInteger kItemsCountPerPage = 10;
 #pragma mark - Target-actions
 - (void)goPSButtonClicked:(UIButton *)button
 {
-    /* push to webViewController */
-    NSLog(@"%s", __func__);
+    
+    NSMutableDictionary* param = [NSMutableDictionary new];
+    [param setObject:@"ask" forKey:@"type"];
+    [param setObject:@(_currentChannelVM.ID) forKey:@"target"];
+    
+    [DDService signProceeding:param withBlock:nil];
     
     PIEWebViewViewController* vc = [PIEWebViewViewController new];
 //    vc.url = [NSString stringWithFormat:@"%@%@",[[DDSessionManager shareHTTPSessionManager].baseURL absoluteString],_currentChannelVM.url] ;
