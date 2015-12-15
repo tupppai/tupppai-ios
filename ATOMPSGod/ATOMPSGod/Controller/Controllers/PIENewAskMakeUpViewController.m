@@ -267,12 +267,14 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 }
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
+    if (decelerate) {
+        [UIView animateWithDuration:0.3
+                         animations:^{
+                             [self.takePhotoButtonBottomConstraint setOffset:-64];
+                             [self.view layoutIfNeeded];
+                         }];
+    }
     
-    [UIView animateWithDuration:0.3
-                     animations:^{
-                         [self.takePhotoButtonBottomConstraint setOffset:-64];
-                         [self.view layoutIfNeeded];
-                     }];
     
 }
 
