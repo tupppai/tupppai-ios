@@ -51,6 +51,8 @@
 
 @property (nonatomic, strong) UIButton                      *takePhotoButton;
 
+@property (nonatomic, strong) MASConstraint *takePhotoButtonConstraint;
+
 @end
 
 /* Protocols */
@@ -139,7 +141,8 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
         make.centerX.equalTo(weakSelf.view.mas_centerX);
         make.height.mas_equalTo(50);
         make.width.mas_equalTo(50);
-        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-11);
+        self.takePhotoButtonConstraint =
+        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-64);
     }];
 }
 
@@ -158,6 +161,29 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
  *  remove observers while being deallocated.
  */
 -(void)dealloc {
+}
+
+#pragma mark - <UITableViewDelegate>
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [UIView animateWithDuration:0.1
+                     animations:^{
+                         [self.takePhotoButtonConstraint setOffset:50.0];
+                         [self.view layoutIfNeeded];
+                     }];
+    
+    
+    
+}
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         [self.takePhotoButtonConstraint setOffset:-64];
+                         [self.view layoutIfNeeded];
+                     }];
+    
 }
 
 #pragma mark - <UITableViewDataSource>

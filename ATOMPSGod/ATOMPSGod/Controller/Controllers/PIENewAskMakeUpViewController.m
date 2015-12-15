@@ -39,7 +39,7 @@
 @property (nonatomic, strong) UIButton                    *takePhotoButton;
 @property (nonatomic, strong) QBImagePickerController     *QBImagePickerController;
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
-
+@property (nonatomic, strong) MASConstraint               *takePhotoButtonBottomConstraint;
 
 @end
 
@@ -134,7 +134,8 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         make.centerX.equalTo(weakSelf.view.mas_centerX);
         make.height.mas_equalTo(50);
         make.width.mas_equalTo(50);
-        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-11);
+        self.takePhotoButtonBottomConstraint =
+        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-64);
     }];
     
     if (_channelVM) {
@@ -250,6 +251,29 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
 -(void)didPullUpCollectionViewBottom:(UICollectionView *)collectionView {
     [self loadMoreData_ask];
+}
+
+#pragma mark - <UICollectionViewDelegate>
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [UIView animateWithDuration:0.1
+                     animations:^{
+                         [self.takePhotoButtonBottomConstraint setOffset:50.0];
+                         [self.view layoutIfNeeded];
+                     }];
+    
+    
+    
+}
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         [self.takePhotoButtonBottomConstraint setOffset:-64];
+                         [self.view layoutIfNeeded];
+                     }];
+    
 }
 
 #pragma mark - <UICollectionViewDataSource>

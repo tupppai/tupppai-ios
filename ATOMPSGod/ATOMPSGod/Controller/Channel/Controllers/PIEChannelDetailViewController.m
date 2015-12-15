@@ -117,21 +117,24 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 #pragma mark - <UITableViewDelegate>
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-//    self.takePhotoButton.hidden = YES;
-    [UIView animateWithDuration:0.6
+    [UIView animateWithDuration:0.1
                      animations:^{
                          [self.takePhotoButtonConstraint setOffset:50.0];
+                         [self.view layoutIfNeeded];
                      }];
+    
+    
+    
 }
-
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-//    self.takePhotoButton.hidden = NO;
-    [UIView animateWithDuration:0.6
+
+    [UIView animateWithDuration:0.3
                      animations:^{
                          [self.takePhotoButtonConstraint setOffset:-64];
-                         
+                         [self.view layoutIfNeeded];
                      }];
+    
 }
 
 
