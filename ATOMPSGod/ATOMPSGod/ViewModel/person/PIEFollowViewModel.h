@@ -19,6 +19,8 @@
 @property (nonatomic, copy  ) NSString  *askCount;
 @property (nonatomic, copy  ) NSString  *replyCount;
 @property (nonatomic, assign) NSInteger concernStatus;
+@property (nonatomic, assign) BOOL isMyFollow;
+@property (nonatomic, assign) BOOL isMyFan;
 
 - (void)setViewModelData:(PIEEntityFollow *)concern;
 

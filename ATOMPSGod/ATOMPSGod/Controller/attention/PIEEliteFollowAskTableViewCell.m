@@ -62,15 +62,19 @@
     WS(ws);
     _ID = viewModel.ID;
     _askID = viewModel.askID;
-    if (viewModel.followed) {
+    {
         if (viewModel.isMyFan) {
             _followView.highlightedImage = [UIImage imageNamed:@"pie_mutualfollow"];
         } else {
-            _followView.highlightedImage = [UIImage imageNamed:@"new_reply_follow"];
+            _followView.highlightedImage = [UIImage imageNamed:@"new_reply_followed"];
         }
-        _followView.highlighted = YES;
-    } else {
-        _followView.highlighted = NO;
+        _followView.highlighted = viewModel.followed;
+        if (viewModel.userID == [DDUserManager currentUser].uid) {
+            _followView.hidden = YES;
+        } else {
+            _followView.hidden = NO;
+        }
+
     }
     _shareView.imageView.image = [UIImage imageNamed:@"hot_share"];
     _shareView.numberString = viewModel.shareCount;
@@ -93,11 +97,6 @@
 //    [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
 //        make.height.equalTo(@(SCREEN_WIDTH)).with.priorityHigh();
 //    }];
-    
-
-    if (viewModel.userID == [DDUserManager currentUser].uid) {
-        _followView.hidden = YES;
-    }
 }
 
 

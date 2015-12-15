@@ -154,12 +154,18 @@
         _usernameLabel.text = vm.username;
         _timeLabel.text = vm.publishTime;
         
-        if (vm.followed && vm.isMyFan) {
+        if (vm.isMyFan) {
             [_followButton setImage:[UIImage imageNamed:@"pie_mutualfollow"] forState:UIControlStateSelected];
         } else {
-            [_followButton setImage:[UIImage imageNamed:@"new_reply_follow"] forState:UIControlStateSelected];
+            [_followButton setImage:[UIImage imageNamed:@"new_reply_followed"] forState:UIControlStateSelected];
         }
         _followButton.selected = vm.followed;
+        
+        if (vm.userID == [DDUserManager currentUser].uid) {
+            _followButton.hidden = YES;
+        } else {
+            _followButton.hidden = NO;
+        }
         
         [DDService downloadImage:vm.imageURL withBlock:^(UIImage *image) {
             _imageViewBlur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];

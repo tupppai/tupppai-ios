@@ -192,12 +192,23 @@
         _avatarView.image = image;
         _blurView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:[UIColor blackColor]];
     }];
+    
+    
+    if (user.isMyFan) {
+        _followButton.highlightedImage = [UIImage imageNamed:@"pie_mutualfollow"];
+    } else {
+        _followButton.highlightedImage = [UIImage imageNamed:@"new_reply_followed"];
+    }
+    _followButton.highlighted = user.isMyFollow;
+    
     _followCountLabel.text = [NSString stringWithFormat:@"%zd",user.attentionNumber];
     _fansCountLabel.text = [NSString stringWithFormat:@"%zd",user.fansNumber];
     _likedCountLabel.text = [NSString stringWithFormat:@"%zd",user.likedCount];
     _followButton.highlighted = user.isMyFollow;
     if (user.uid == [DDUserManager currentUser].uid) {
         _followButton.hidden = YES;
+    } else {
+        _followButton.hidden = NO;
     }
 }
 
