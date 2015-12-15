@@ -9,7 +9,7 @@
 #import "PIEProceedingDoneViewController.h"
 #import "PIERefreshCollectionView.h"
 #import "PIEDoneCollectionViewCell.h"
-#import "PIECarouselViewController.h"
+#import "PIECarouselViewController2.h"
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
 #import "PIEProceedingManager.h"
@@ -138,12 +138,10 @@
 }
 
 #pragma mark - <UICollectionViewDelegate>
--(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-//    PIECarouselViewController *vc = [PIECarouselViewController new];
-//    vc.pageVM = [_sourceDone objectAtIndex:indexPath.row];
-//    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-//    [nav pushViewController:vc animated:YES ];
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    // do nothing
 }
 
 #pragma mark - <CHTCollectionViewDelegateWaterfallLayout>

@@ -655,14 +655,14 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         UITapGestureRecognizer* tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap1)];
         UITapGestureRecognizer* tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap2)];
         UITapGestureRecognizer* tap3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap3)];
-        UITapGestureRecognizer* tap4 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap4)];
+//        UITapGestureRecognizer* tap4 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap4)];
 
         UITapGestureRecognizer* tap5 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap5)];
         UITapGestureRecognizer* tap6 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapHelp)];
         [_headerView.avatarView addGestureRecognizer:tap1];
         [_headerView.usernameLabel addGestureRecognizer:tap2];
         [_headerView.imageViewMain addGestureRecognizer:tap3];
-        [_headerView.imageViewRight addGestureRecognizer:tap4];
+//        [_headerView.imageViewRight addGestureRecognizer:tap4];
         [_headerView.shareButton addGestureRecognizer:tap5];
         [_headerView.bangView addGestureRecognizer:tap6];
     }
@@ -678,7 +678,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         UITapGestureRecognizer* tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap1)];
         UITapGestureRecognizer* tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap2)];
         UITapGestureRecognizer* tap3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap3)];
-        UITapGestureRecognizer* tap4 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap4)];
+//        UITapGestureRecognizer* tap4 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap4)];
         
         UITapGestureRecognizer* tap5 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap5)];
         UITapGestureRecognizer* tap6 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapAllWorkButton)];
@@ -686,7 +686,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         [_headerView_reply.avatarView addGestureRecognizer:tap1];
         [_headerView_reply.usernameLabel addGestureRecognizer:tap2];
         [_headerView_reply.imageViewMain addGestureRecognizer:tap3];
-        [_headerView_reply.imageViewRight addGestureRecognizer:tap4];
+//        [_headerView_reply.imageViewRight addGestureRecognizer:tap4];
         [_headerView_reply.shareButton addGestureRecognizer:tap5];
         [_headerView_reply.likeButton addGestureRecognizer:tap7];
         [_headerView_reply.moreWorkButton addGestureRecognizer:tap6];
@@ -736,7 +736,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     // Create image info
     JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
     if (_headerView.imageViewMain.image != nil) {
-        imageInfo.image = _headerView.imageViewRight.image;
+//        imageInfo.image = _headerView.imageViewRight.image;
     } else {
         if (_vm.thumbEntityArray.count >= 2) {
             PIEImageEntity* imgEntity = _vm.thumbEntityArray[1];

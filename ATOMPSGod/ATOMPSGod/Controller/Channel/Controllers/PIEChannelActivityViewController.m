@@ -20,6 +20,9 @@
 #import "DDCollectManager.h"
 #import "QBImagePickerController.h"
 #import "PIEUploadVC.h"
+#import "PIEWebViewViewController.h"
+#import "DDSessionManager.h"
+#import "DDNavigationController.h"
 /* Variables */
 @interface PIEChannelActivityViewController ()<QBImagePickerControllerDelegate>
 
@@ -271,7 +274,14 @@ static const NSUInteger kItemsCountPerPage = 10;
     /* push to webViewController */
     NSLog(@"%s", __func__);
     
-    [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
+    PIEWebViewViewController* vc = [PIEWebViewViewController new];
+//    vc.url = [NSString stringWithFormat:@"%@%@",[[DDSessionManager shareHTTPSessionManager].baseURL absoluteString],_currentChannelVM.url] ;
+    vc.url = _currentChannelVM.url;
+    DDNavigationController *nav = [[DDNavigationController alloc]initWithRootViewController:vc];
+
+    [self presentViewController:nav animated:YES completion:nil];
+//    vc.url = _currentChannelVM.
+//    [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
 
 }
 

@@ -16,7 +16,7 @@
 @property (nonatomic, strong) UILabel *timeLabel;
 @property (nonatomic, strong) UIButton *followButton;
 @property (nonatomic, strong) UIImageView *imageViewMain;
-@property (nonatomic, strong) UIImageView *imageViewRight;
+//@property (nonatomic, strong) UIImageView *imageViewRight;
 @property (nonatomic, strong) UIImageView *imageViewBlur;
 @property (nonatomic, strong) PIETextView_linkDetection *textView_content;
 @property (nonatomic, strong) UIButton *moreWorkButton;
