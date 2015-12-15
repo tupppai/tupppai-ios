@@ -129,11 +129,15 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
 
-    [UIView animateWithDuration:0.3
-                     animations:^{
-                         [self.takePhotoButtonConstraint setOffset:-64];
-                         [self.view layoutIfNeeded];
-                     }];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIView animateWithDuration:0.4
+                             animations:^{
+                                 [self.takePhotoButtonConstraint setOffset:-64];
+                                 [self.view layoutIfNeeded];
+                             }];
+        });
+    });
     
 }
 
