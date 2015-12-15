@@ -90,6 +90,12 @@
         NSString* imageName = [[_infoArray objectAtIndex:i]objectAtIndex:1];
         icon.label.text = labelName;
         [icon setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+        
+        // for toggling the state of "Collect" icon
+        if (i == _iconArray.count - 1) {
+            [icon setImage:[UIImage imageNamed:@"pie_social_qq"]
+                  forState:UIControlStateSelected];
+        }
     }
 }
 - (void)mansoryIcons {
