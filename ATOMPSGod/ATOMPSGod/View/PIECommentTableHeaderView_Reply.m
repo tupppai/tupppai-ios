@@ -154,7 +154,6 @@
         _usernameLabel.text = vm.username;
         _timeLabel.text = vm.publishTime;
         _followButton.selected = vm.followed;
-//        [_imageViewMain setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
         
         [DDService downloadImage:vm.imageURL withBlock:^(UIImage *image) {
             _imageViewBlur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
@@ -288,10 +287,6 @@
     return _moreWorkButton;
 }
 
-
-
-
-
 -(UIButton *)followButton {
     if (!_followButton) {
         _followButton = [UIButton new];
@@ -324,14 +319,5 @@
         }
     }];
 }
-//
-//-(BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
-//    PIEWebViewViewController* vc = [PIEWebViewViewController new];
-//    vc.url = [URL absoluteString];
-//    
-//    DDNavigationController* nav = (DDNavigationController*)[AppDelegate APP].mainTabBarController.presentedViewController.presentedViewController;
-//    [nav pushViewController:vc animated:YES ];
-//    return NO;
-//}
 
 @end

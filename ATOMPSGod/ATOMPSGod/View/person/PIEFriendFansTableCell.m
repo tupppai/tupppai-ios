@@ -96,6 +96,7 @@
  
     
     if (viewModel.followStatus == 1) {
+        [self.attentionButton setImage:[UIImage imageNamed:@"new_reply_followed"] forState:UIControlStateSelected];
         self.attentionButton.selected = YES;
     } else if (viewModel.followStatus == 2) {
         [self.attentionButton setImage:[UIImage imageNamed:@"pie_mutualfollow"] forState:UIControlStateSelected];
