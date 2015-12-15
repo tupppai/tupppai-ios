@@ -42,7 +42,7 @@
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [_tableView.mj_footer endRefreshing];
+        [_tableView.mj_footer endRefreshingWithNoMoreData];
     }
 }
 
@@ -194,7 +194,7 @@
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(timestamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [DDFollowManager getFollow:param withBlock:^(NSMutableArray *resultArray,NSMutableArray* recommend) {
+    [DDFollowManager getFollow:param withBlock:^(NSMutableArray *recommend,NSMutableArray* resultArray) {
         for (PIEEntityFollow *concern in resultArray) {
             PIEFollowViewModel *concernViewModel = [PIEFollowViewModel new];
             [concernViewModel setViewModelData:concern];
@@ -204,9 +204,9 @@
             ws.canRefreshFooter = NO;
         } else {
             ws.canRefreshFooter = YES;
+            [ws.tableView reloadData];
         }
         [ws.tableView.mj_footer endRefreshing];
-        [ws.tableView reloadData];
     }];
 }
 
