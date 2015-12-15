@@ -128,16 +128,37 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 }
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
+    if (decelerate) {
+        [self.takePhotoButtonConstraint setOffset:-64];
+        [UIView animateWithDuration:0.6
+                              delay:0.7
+             usingSpringWithDamping:0.3
+              initialSpringVelocity:0
+                            options:0
+                         animations:^{
+                             [self.view layoutIfNeeded];
+                             
+                         } completion:^(BOOL finished) {
+                         }];
+        
+    }
+}
 
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [UIView animateWithDuration:0.4
-                             animations:^{
-                                 [self.takePhotoButtonConstraint setOffset:-64];
-                                 [self.view layoutIfNeeded];
-                             }];
-        });
-    });
+// 处理滚动“戛然而止”的情况
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self.takePhotoButtonConstraint setOffset:-64];
+    [UIView animateWithDuration:0.6
+                          delay:0.7
+         usingSpringWithDamping:0.3
+          initialSpringVelocity:0
+                        options:0
+                     animations:^{
+                         [self.view layoutIfNeeded];
+                         
+                     } completion:^(BOOL finished) {
+                     }];
+    
     
 }
 
