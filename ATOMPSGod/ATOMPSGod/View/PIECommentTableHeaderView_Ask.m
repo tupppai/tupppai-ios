@@ -140,7 +140,11 @@
         [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
         _usernameLabel.text = vm.username;
         _timeLabel.text = vm.publishTime;
-        
+        if (vm.followed && vm.isMyFan) {
+            [_followButton setImage:[UIImage imageNamed:@"pie_mutualfollow"] forState:UIControlStateSelected];
+        } else {
+            [_followButton setImage:[UIImage imageNamed:@"new_reply_follow"] forState:UIControlStateSelected];
+        }
         _followButton.selected = vm.followed;
         
             [DDService downloadImage:vm.imageURL withBlock:^(UIImage *image) {

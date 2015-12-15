@@ -32,6 +32,7 @@
 @property (nonatomic, assign) BOOL liked;
 @property (nonatomic, assign) BOOL collected;
 @property (nonatomic, assign) BOOL followed;
+@property (nonatomic, assign) BOOL isMyFan;
 
 @property (nonatomic, copy) NSString *username;
 @property (nonatomic, copy) NSString *userSex;

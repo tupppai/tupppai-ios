@@ -77,7 +77,17 @@
     WS(ws);
     _ID = viewModel.ID;
     _askID = viewModel.askID;
-    _followView.highlighted = viewModel.followed;
+    
+    if (viewModel.followed) {
+        if (viewModel.isMyFan) {
+            _followView.highlightedImage = [UIImage imageNamed:@"pie_mutualfollow"];
+        } else {
+            _followView.highlightedImage = [UIImage imageNamed:@"new_reply_follow"];
+        }
+        _followView.highlighted = YES;
+    } else {
+        _followView.highlighted = NO;
+    }
     _shareView.imageView.image = [UIImage imageNamed:@"hot_share"];
     _shareView.numberString = viewModel.shareCount;
     
@@ -104,13 +114,7 @@
         ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
     } failure:nil];
     
-    //    CGFloat imageViewHeight = viewModel.imageHeight <= SCREEN_HEIGHT/2 ? viewModel.imageHeight : SCREEN_HEIGHT/2;
-//    imageViewHeight = MAX(100, imageViewHeight);
-//    imageViewHeight = MIN(SCREEN_WIDTH, imageViewHeight);
-//    [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-//        make.height.equalTo(@(SCREEN_WIDTH)).with.priorityHigh();
-//    }];
-//    
+
         [self mansoryThumbAnimateView];
     
         [_thumbView setSubviewCounts:viewModel.thumbEntityArray.count];
@@ -136,16 +140,6 @@
             //ws.thumbView.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
         } failure:nil];
     }
-
-//        if (viewModel.thumbEntityArray.count > 0) {
-//            PIEImageEntity* entity = [viewModel.thumbEntityArray objectAtIndex:0];
-//            [_thumbView.rightView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-//            if (viewModel.thumbEntityArray.count == 2) {
-//                entity = viewModel.thumbEntityArray[1];
-//                [_thumbView.leftView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-//            }
-//        }
-    
 
     if (viewModel.userID == [DDUserManager currentUser].uid) {
         _followView.hidden = YES;

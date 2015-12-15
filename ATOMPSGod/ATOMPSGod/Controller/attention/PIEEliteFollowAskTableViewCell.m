@@ -62,7 +62,16 @@
     WS(ws);
     _ID = viewModel.ID;
     _askID = viewModel.askID;
-    _followView.highlighted = viewModel.followed;
+    if (viewModel.followed) {
+        if (viewModel.isMyFan) {
+            _followView.highlightedImage = [UIImage imageNamed:@"pie_mutualfollow"];
+        } else {
+            _followView.highlightedImage = [UIImage imageNamed:@"new_reply_follow"];
+        }
+        _followView.highlighted = YES;
+    } else {
+        _followView.highlighted = NO;
+    }
     _shareView.imageView.image = [UIImage imageNamed:@"hot_share"];
     _shareView.numberString = viewModel.shareCount;
     _commentView.imageView.image = [UIImage imageNamed:@"hot_comment"];

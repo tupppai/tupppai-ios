@@ -36,6 +36,7 @@
              @"hotCommentEntityArray":@"hot_comments",
              @"followed":@"is_follow",
              @"comment" : @"content",
+             @"isMyFan" : @"is_fan",
              };
 }
 

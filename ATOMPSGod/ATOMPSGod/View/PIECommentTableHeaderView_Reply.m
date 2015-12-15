@@ -153,6 +153,12 @@
         [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
         _usernameLabel.text = vm.username;
         _timeLabel.text = vm.publishTime;
+        
+        if (vm.followed && vm.isMyFan) {
+            [_followButton setImage:[UIImage imageNamed:@"pie_mutualfollow"] forState:UIControlStateSelected];
+        } else {
+            [_followButton setImage:[UIImage imageNamed:@"new_reply_follow"] forState:UIControlStateSelected];
+        }
         _followButton.selected = vm.followed;
         
         [DDService downloadImage:vm.imageURL withBlock:^(UIImage *image) {
@@ -170,7 +176,6 @@
         [attrStr addAttribute:NSFontAttributeName value:[UIFont lightTupaiFontOfSize:15] range:NSMakeRange(0, attrStr.length)];
         [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0x000000 andAlpha:0.9] range:NSMakeRange(0, attrStr.length)];
         _textView_content.attributedText = attrStr;
-
 
     }
     else {
