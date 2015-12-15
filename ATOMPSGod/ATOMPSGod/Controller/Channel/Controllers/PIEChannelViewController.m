@@ -174,7 +174,8 @@
         // ??? - 为什么不设置swipeView的代理？
         //        cell.swipeView.delegate = self;
         cell.swipeView.dataSource = self;
-        cell.swipeView.tag = indexPath.row;
+        cell.swipeView.tag        = indexPath.row;
+        cell.selectionStyle       = UITableViewCellSelectionStyleNone;
         return cell;
     }
     return nil;

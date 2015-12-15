@@ -811,8 +811,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     shareView.weakVM = _vm;
 }
 
--(void)tapShareCancel {
-    [self.shareView dismiss];
+- (void)shareViewDidCancel:(PIEShareView *)shareView
+{
+    [shareView dismiss];
 }
 
 #pragma mark - Gesture methods

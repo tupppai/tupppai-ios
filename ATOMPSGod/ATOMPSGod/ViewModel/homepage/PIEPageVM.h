@@ -52,7 +52,6 @@
 
 - (instancetype)initWithPageEntity:(PIEPageEntity *)entity ;
 
--(void)collect;
 
 @end
 

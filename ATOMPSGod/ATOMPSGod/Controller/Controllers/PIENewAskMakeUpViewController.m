@@ -36,8 +36,9 @@
 @property (nonatomic, strong) PIEShareView                *shareView;
 @property (nonatomic, strong) PIEActionSheet_PS           *psActionSheet;
 @property (nonatomic, strong) MRNavigationBarProgressView *progressView;
-@property (nonatomic, strong) UIButton                      *takePhotoButton;
-@property (nonatomic, strong) QBImagePickerController* QBImagePickerController;
+@property (nonatomic, strong) UIButton                    *takePhotoButton;
+@property (nonatomic, strong) QBImagePickerController     *QBImagePickerController;
+@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 
 
 @end
@@ -303,6 +304,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
     CGPoint location = [gesture locationInView:_collectionView_ask];
     NSIndexPath *indexPath = [_collectionView_ask indexPathForItemAtPoint:location];
+    _selectedIndexPath = indexPath;
     if (indexPath) {
         PIENewAskCollectionCell* cell= (PIENewAskCollectionCell *)[_collectionView_ask cellForItemAtIndexPath:indexPath];
         _selectedVM = _sourceAsk[indexPath.row];
@@ -316,45 +318,46 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 }
 
 - (void)tapOnAsk:(UITapGestureRecognizer *)gesture {
-        CGPoint location = [gesture locationInView:_collectionView_ask];
-        NSIndexPath *indexPath = [_collectionView_ask indexPathForItemAtPoint:location];
-        if (indexPath) {
-            PIENewAskCollectionCell*  cell = (PIENewAskCollectionCell *)[_collectionView_ask cellForItemAtIndexPath:indexPath];
-            _selectedVM                    = _sourceAsk[indexPath.row];
-            CGPoint p                      = [gesture locationInView:cell];
-            
-            //点击大图
-            if (CGRectContainsPoint(cell.leftImageView.frame, p) || CGRectContainsPoint(cell.rightImageView.frame, p)) {
-                if (![_selectedVM.replyCount isEqualToString:@"0"]) {
-                    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-                    vc.pageVM                      = _selectedVM;
-                    [self presentViewController:vc animated:YES completion:nil];
-                } else {
-                    PIECommentViewController* vc = [PIECommentViewController new];
-                    vc.vm                        = _selectedVM;
-                    [self.navigationController pushViewController:vc animated:YES];
-                }
-                
-            }
-            //点击头像
-            else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
-                PIEFriendViewController * friendVC = [PIEFriendViewController new];
-                friendVC.pageVM = _selectedVM;
-                [self.navigationController pushViewController:friendVC animated:YES];
+    CGPoint location = [gesture locationInView:_collectionView_ask];
+    NSIndexPath *indexPath = [_collectionView_ask indexPathForItemAtPoint:location];
+    _selectedIndexPath = indexPath;
+    if (indexPath) {
+        PIENewAskCollectionCell*  cell = (PIENewAskCollectionCell *)[_collectionView_ask cellForItemAtIndexPath:indexPath];
+        _selectedVM                    = _sourceAsk[indexPath.row];
+        CGPoint p                      = [gesture locationInView:cell];
+        
+        //点击大图
+        if (CGRectContainsPoint(cell.leftImageView.frame, p) || CGRectContainsPoint(cell.rightImageView.frame, p)) {
+            if (![_selectedVM.replyCount isEqualToString:@"0"]) {
+                PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+                vc.pageVM                      = _selectedVM;
+                [self presentViewController:vc animated:YES completion:nil];
+            } else {
+                PIECommentViewController* vc = [PIECommentViewController new];
+                vc.vm                        = _selectedVM;
+                [self.navigationController pushViewController:vc animated:YES];
             }
             
-            //点击用户名
-            else if (CGRectContainsPoint(cell.nameLabel.frame, p)) {
-                PIEFriendViewController * friendVC = [PIEFriendViewController new];
-                friendVC.pageVM = _selectedVM;
-                [self.navigationController pushViewController:friendVC animated:YES];
-            }
-            //点击帮p
-            else if (CGRectContainsPoint(cell.bangView.frame, p)) {
-                self.psActionSheet.vm = _selectedVM;
-                [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
-            }
         }
+        //点击头像
+        else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
+            PIEFriendViewController * friendVC = [PIEFriendViewController new];
+            friendVC.pageVM = _selectedVM;
+            [self.navigationController pushViewController:friendVC animated:YES];
+        }
+        
+        //点击用户名
+        else if (CGRectContainsPoint(cell.nameLabel.frame, p)) {
+            PIEFriendViewController * friendVC = [PIEFriendViewController new];
+            friendVC.pageVM = _selectedVM;
+            [self.navigationController pushViewController:friendVC animated:YES];
+        }
+        //点击帮p
+        else if (CGRectContainsPoint(cell.bangView.frame, p)) {
+            self.psActionSheet.vm = _selectedVM;
+            [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
+        }
+    }
 }
 
 #pragma mark - Notification methods
@@ -375,9 +378,10 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 - (void)shareViewDidShare:(PIEShareView *)shareView socialShareType:(ATOMShareType)shareType
 {
     [DDShareManager postSocialShare2:_selectedVM
-                 withSocialShareType:ATOMShareTypeSinaWeibo
+                 withSocialShareType:shareType
                                block:^(BOOL success) {
-                                   
+                                   // update ui elements(点赞数 + 1)
+                                   [self updateShareStatus];
                                }];
 }
 
@@ -407,23 +411,23 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     
 }
 
-//- (void)updateShareStatus {
-//    
-//    /**
-//     *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面ReplyCell的点赞数和分享数
-//     */
-//    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
-//    [self updateStatus];
-//}
-//
-///**
-// *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面中ReplyCell的点赞数和分享数
-// */
-//- (void)updateStatus {
-//    if (_selectedIndexPath) {
-//        [_tableViewReply reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-//    }
-//}
+- (void)updateShareStatus {
+    
+    /**
+     *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面ReplyCell的点赞数和分享数
+     */
+    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
+    [self updateStatus];
+}
+
+/**
+ *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面中ReplyCell的点赞数和分享数
+ */
+- (void)updateStatus {
+    if (_selectedIndexPath) {
+        [_collectionView_ask reloadItemsAtIndexPaths:@[_selectedIndexPath]];
+    }
+}
 
 #pragma mark - Target-actions
 - (void)takePhoto {
