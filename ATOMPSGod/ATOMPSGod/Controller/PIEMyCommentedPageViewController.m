@@ -14,6 +14,7 @@
 #import "AppDelegate.h"
 #import "DDPageManager.h"
 #import "PIECommentViewController.h"
+#import "DeviceUtil.h"
 
 @interface PIEMyCommentedPageViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 @property (nonatomic,strong) PIERefreshTableView *tableView;
@@ -121,7 +122,19 @@
     _timeStamp = [[NSDate date] timeIntervalSince1970];
     _currentPage = 1;
     [param setObject:@(_currentPage) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    
+    /*
+     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
+     */
+    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
+        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
+        [param setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
+    }
+    else{
+        [param setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
+    }
+    
+//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getCommentedPages:param withBlock:^(NSMutableArray *resultArray) {

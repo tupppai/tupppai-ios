@@ -30,6 +30,7 @@
 #import "PIEShareImageView.h"
 #import "PIECarouselViewController2.h"
 #import "PIEActionSheet_PS.h"
+#import "DeviceUtil.h"
 
 @interface PIEEliteViewController ()<UITableViewDelegate,UITableViewDataSource,PWRefreshBaseTableViewDelegate,UIScrollViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource,SwipeViewDelegate,SwipeViewDataSource>
 @property (nonatomic, strong) PIEEliteScrollView *sv;
@@ -539,7 +540,19 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    
+    /*
+        BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
+     */
+    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
+        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
+        [param setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
+    }
+    else{
+        [param setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
+    }
+    
+//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [PIEEliteManager getBannerSource:param withBlock:^(NSMutableArray *array) {
         _sourceBanner = array;
         _sv.pageControl_swipeView.numberOfPages = _sourceBanner.count;
