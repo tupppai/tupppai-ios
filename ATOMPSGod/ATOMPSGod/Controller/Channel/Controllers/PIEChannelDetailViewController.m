@@ -51,6 +51,8 @@
 /** 用户当前点击的Cell */
 @property (nonatomic, strong) PIENewReplyTableCell *selectedReplyCell;
 
+@property (nonatomic, strong) MASConstraint *takePhotoButtonConstraint;
+
 @end
 
 /* Protocols */
@@ -105,7 +107,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     /* 设置可以区分reply cell中不同UI元素（头像，关注按钮，分享, etc.）的点击事件回调 */
     [self setupGestures];
 
-    self.title = @"用PS搞创意";
+    self.title = self.currentChannelViewModel.title;
     
     // pullDownToRefresh for the first time
     [self.tableView.mj_header beginRefreshing];
@@ -113,7 +115,24 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 }
 
 #pragma mark - <UITableViewDelegate>
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+//    self.takePhotoButton.hidden = YES;
+    [UIView animateWithDuration:0.6
+                     animations:^{
+                         [self.takePhotoButtonConstraint setOffset:50.0];
+                     }];
+}
 
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+//    self.takePhotoButton.hidden = NO;
+    [UIView animateWithDuration:0.6
+                     animations:^{
+                         [self.takePhotoButtonConstraint setOffset:-64];
+                         
+                     }];
+}
 
 
 #pragma mark - <UITableViewDataSource>
@@ -547,7 +566,8 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         make.centerX.equalTo(weakSelf.view.mas_centerX);
         make.height.mas_equalTo(50);
         make.width.mas_equalTo(50);
-        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-11);
+        self.takePhotoButtonConstraint =
+        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-64);
     }];
 }
 

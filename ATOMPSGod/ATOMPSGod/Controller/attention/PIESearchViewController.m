@@ -223,7 +223,7 @@
         _layout.columnCount = 1;
         _layout.minimumInteritemSpacing = 1;
         _layout.minimumColumnSpacing = 0;
-        _layout.sectionInset = UIEdgeInsetsMake(10, 0, 0, 0);
+        _layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
 
     }
     return _layout;
@@ -352,7 +352,7 @@
     NSString *text = @"我们的频道很快出版咯，敬请期待～";
 
     if (_notFirstLoading) {
-        text = @"未搜索到用户或内容";
+        text = @"抱歉！暂时没有找到你想要的！";
     }
     
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],

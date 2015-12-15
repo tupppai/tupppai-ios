@@ -102,42 +102,7 @@
         
         PIEChannelViewModel *channelViewModel = _source[indexPath.row];
         
-        if (channelViewModel.channelType == PIEChannelTypeChannel) {
-            /* push to ChannelDetail */
-            
-            PIEChannelDetailViewController *channelDetailViewController =
-            
-            [[PIEChannelDetailViewController alloc] init];
-            channelDetailViewController.currentChannelViewModel =
-            channelViewModel;
-            
-            [self.navigationController
-             pushViewController:channelDetailViewController
-             animated:YES];
-            
-        }
-        else if (channelViewModel.channelType == PIEChannelTypeActivity)
-        {
-            /* push to ChannelActivity */
-            PIEChannelActivityViewController *channelActivityViewController =
-            [[PIEChannelActivityViewController alloc] init];
-            
-            channelActivityViewController.currentChannelVM =
-            channelViewModel;
-            
-            [self.navigationController
-             pushViewController:channelActivityViewController
-             animated:YES];
-            
-        }
-        else
-        {
-            /* JSON parsing error! */
-            
-        }
-        
-        
-        
+        [self pushNextViewControllerWithViewModel:channelViewModel];
         
     }
 }
@@ -171,8 +136,7 @@
         PIEChannelTableViewCell* cell =
         [tableView dequeueReusableCellWithIdentifier:@"Channel_Cell"];
         cell.vm = [_source objectAtIndex:indexPath.row];
-        // ??? - 为什么不设置swipeView的代理？
-        //        cell.swipeView.delegate = self;
+        cell.swipeView.delegate = self;
         cell.swipeView.dataSource = self;
         cell.swipeView.tag        = indexPath.row;
         cell.selectionStyle       = UITableViewCellSelectionStyleNone;
@@ -311,9 +275,14 @@
 }
 
 #pragma mark - <SwipeViewDelegate>
-/*
-    nothing yet.
- */
+- (void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index
+{
+    // no matter what is selected, just push to next view controller
+    
+    // 用swipeView的tag来确定具体是点击到了哪个indexPath的Cell上。然后取得对应的channelViewModel完成跳转
+    PIEChannelViewModel *selectedChannelVM = _source[swipeView.tag];
+    [self pushNextViewControllerWithViewModel:selectedChannelVM];
+}
 
 
 #pragma mark - Lazy loadings
@@ -340,5 +309,48 @@
     return _tableView;
 }
 
+#pragma mark - private helper
+
+/**
+ *  根据ChannelViewModel，跳转到对应的ViewController中（活动or频道详情）
+ *
+ */
+- (void)pushNextViewControllerWithViewModel:(PIEChannelViewModel *)channelViewModel
+{
+    if (channelViewModel.channelType == PIEChannelTypeChannel) {
+        /* push to ChannelDetail */
+        
+        PIEChannelDetailViewController *channelDetailViewController =
+        
+        [[PIEChannelDetailViewController alloc] init];
+        channelDetailViewController.currentChannelViewModel =
+        channelViewModel;
+        
+        [self.navigationController
+         pushViewController:channelDetailViewController
+         animated:YES];
+        
+    }
+    else if (channelViewModel.channelType == PIEChannelTypeActivity)
+    {
+        /* push to ChannelActivity */
+        PIEChannelActivityViewController *channelActivityViewController =
+        [[PIEChannelActivityViewController alloc] init];
+        
+        channelActivityViewController.currentChannelVM =
+        channelViewModel;
+        
+        [self.navigationController
+         pushViewController:channelActivityViewController
+         animated:YES];
+        
+    }
+    else
+    {
+        /* JSON parsing error! */
+        
+    }
+ 
+}
 
 @end
