@@ -352,7 +352,7 @@
     NSString *text = @"我们的频道很快出版咯，敬请期待～";
 
     if (_notFirstLoading) {
-        text = @"未搜索到用户或内容";
+        text = @"抱歉！暂时没有找到你想要的！";
     }
     
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
