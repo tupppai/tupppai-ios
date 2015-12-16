@@ -12,7 +12,9 @@
 #import "DDCollectManager.h"
 
 #define height_sheet 251.0f
-
+@interface PIEShareView ()
+@property (nonatomic,weak)  PIEPageVM* weakVM;
+@end
 @implementation PIEShareView
 
 -(instancetype)init {
@@ -272,6 +274,63 @@
      ];
     
     }
+
+- (void)showInView:(UIView *)view animated:(BOOL)animated pageViewModel:(PIEPageVM *)pageVM
+{
+    self.weakVM = pageVM;
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+    
+    self.frame = view.bounds;
+    [view addSubview:self];
+    
+    [self layoutIfNeeded];
+    [self.sheetView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self).with.offset(0).with.priorityHigh();
+    }];
+    
+    
+    [UIView animateWithDuration:0.35
+                          delay:0
+         usingSpringWithDamping:0.8
+          initialSpringVelocity:0.7
+                        options:0
+                     animations:^{
+                         [self layoutIfNeeded];
+                     } completion:^(BOOL finished) {
+                         if (finished) {
+                             [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+                         }
+                     }
+     ];
+}
+
+- (void)show:(PIEPageVM *)pageVM
+{
+    self.weakVM = pageVM;
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+    
+    [[AppDelegate APP].window addSubview:self];
+    [self layoutIfNeeded];
+    [self.sheetView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self).with.offset(0).with.priorityHigh();
+    }];
+    
+    [UIView animateWithDuration:0.35
+                          delay:0
+         usingSpringWithDamping:0.8
+          initialSpringVelocity:0.7
+                        options:0
+                     animations:^{
+                         [self layoutIfNeeded];
+                     } completion:^(BOOL finished) {
+                         if (finished) {
+                             [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+                         }
+                     }
+     ];
+    
+
+}
 -(void)dismiss {
     [self.sheetView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self).with.offset(height_sheet).with.priorityHigh();

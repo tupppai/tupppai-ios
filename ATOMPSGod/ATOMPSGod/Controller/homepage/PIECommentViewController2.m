@@ -819,18 +819,16 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 - (void)shareViewDidPaste:(PIEShareView *)shareView
 {
-    shareView.weakVM = _vm;
+
 }
 
 
 - (void)shareViewDidReportUnusualUsage:(PIEShareView *)shareView
 {
-    shareView.weakVM = _vm;
 }
 
 - (void)shareViewDidCollect:(PIEShareView *)shareView
 {
-    shareView.weakVM = _vm;
 }
 
 - (void)shareViewDidCancel:(PIEShareView *)shareView

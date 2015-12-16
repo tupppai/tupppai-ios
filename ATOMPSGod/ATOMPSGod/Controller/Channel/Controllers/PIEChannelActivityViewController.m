@@ -536,18 +536,16 @@ static const NSUInteger kItemsCountPerPage = 10;
 
 - (void)shareViewDidPaste:(PIEShareView *)shareView
 {
-    shareView.weakVM = _selectedVM;
+
 }
 
 - (void)shareViewDidReportUnusualUsage:(PIEShareView *)shareView
 {
-    shareView.weakVM = _selectedVM;
 }
 
 
 - (void)shareViewDidCollect:(PIEShareView *)shareView
 {
-    shareView.weakVM = _selectedVM;
 }
 
 - (void)shareViewDidCancel:(PIEShareView *)shareView

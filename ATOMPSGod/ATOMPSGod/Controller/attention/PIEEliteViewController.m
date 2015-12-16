@@ -477,18 +477,16 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
 - (void)shareViewDidPaste:(PIEShareView *)shareView
 {
-    shareView.weakVM = _selectedVM;
+
 }
 
 - (void)shareViewDidReportUnusualUsage:(PIEShareView *)shareView
 {
-    shareView.weakVM = _selectedVM;
 }
 
 - (void)shareViewDidCollect:(PIEShareView *)shareView
 {
     //!!! 无奈之举：把weakVM设置为空，这样就不会执行这个代理方法默认的“收藏”方法
-    shareView.weakVM = nil;
     
     // 下面是直接copy -tapShare8 的代码 = =
     if (_sv.type == PIEPageTypeEliteHot) {

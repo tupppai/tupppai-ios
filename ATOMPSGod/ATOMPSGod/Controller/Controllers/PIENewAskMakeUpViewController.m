@@ -437,17 +437,15 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
 - (void)shareViewDidPaste:(PIEShareView *)shareView
 {
-    shareView.weakVM = _selectedVM;
+
 }
 
 - (void)shareViewDidReportUnusualUsage:(PIEShareView *)shareView
 {
-    shareView.weakVM = _selectedVM;
 }
 
 - (void)shareViewDidCollect:(PIEShareView *)shareView
 {
-    shareView.weakVM = _selectedVM;
 }
 
 - (void)shareViewDidCancel:(PIEShareView *)shareView
