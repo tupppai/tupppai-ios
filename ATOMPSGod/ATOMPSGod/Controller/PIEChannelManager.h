@@ -23,6 +23,6 @@
 
 + (void)getSource_pageViewModels:(NSDictionary *)params
                    repliesResult:(void (^)
-                                  (NSMutableArray<PIEPageVM *> * repliesResultArray))repliesResultBlock;
+                                  (NSMutableArray<PIEPageVM *> * repliesResultArray ,PIEChannelViewModel *vm))repliesResultBlock;
 @end
 

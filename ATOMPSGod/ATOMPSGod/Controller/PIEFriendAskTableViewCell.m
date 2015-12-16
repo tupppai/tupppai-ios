@@ -10,6 +10,7 @@
 #import "DDNavigationController.h"
 #import "PIECarouselViewController2.h"
 #import "AppDelegate.h"
+#import "PIECommentViewController2.h"
 
 @interface PIEFriendAskTableViewCell()
 @property (strong, nonatomic) NSMutableArray *source;
@@ -134,12 +135,19 @@
 }
 
 -(void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index {
+    DDNavigationController* nav = (DDNavigationController*)self.viewController.parentViewController.view.superview.viewController.navigationController;
+    PIEPageVM* vm = [_source objectAtIndex:index];
+    if ([vm.replyCount integerValue] <= 0 && vm.type == PIEPageTypeAsk) {
+        PIECommentViewController2 *vc_comment = [PIECommentViewController2 new];
+        vc_comment.vm = vm;
+        DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];
+        [nav presentViewController:nav2 animated:NO completion:nil];
+    } else {
         PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-        vc.pageVM = [_source objectAtIndex:index];
-
-    //汗，看来还是要写在controller里面
-    [self.viewController.parentViewController.view.superview.viewController.navigationController  presentViewController:vc animated:YES completion:nil];
-
+        vc.pageVM = vm;
+        //汗，看来还是要写在controller里面
+        [nav  presentViewController:vc animated:YES completion:nil];
+    }
 //        [self.viewController.parentViewController.view.superview.viewController.navigationController pushViewController:vc animated:YES ];
 }
 

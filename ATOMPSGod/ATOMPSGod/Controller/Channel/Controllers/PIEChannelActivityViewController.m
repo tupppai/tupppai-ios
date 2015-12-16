@@ -211,17 +211,18 @@ static const NSUInteger kItemsCountPerPage = 10;
     params[@"last_updated"]     = @(_timeStamp);
     
     __weak typeof(self) weakSelf = self;
-    [PIEChannelManager
-     getSource_pageViewModels:params
-     repliesResult:^(NSMutableArray<PIEPageVM *> *repliesResultArray) {
-         [_source_reply removeAllObjects];
-         [_source_reply addObjectsFromArray:repliesResultArray];
-         
-         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-             [weakSelf.tableView.mj_header endRefreshing];
-             [weakSelf.tableView reloadData];
-         }];
-     }];
+    
+    [PIEChannelManager getSource_pageViewModels:params repliesResult:^(NSMutableArray<PIEPageVM *> *repliesResultArray, PIEChannelViewModel *vm) {
+        [_source_reply removeAllObjects];
+        [_source_reply addObjectsFromArray:repliesResultArray];
+        _currentChannelVM.askID = vm.askID;
+        _currentChannelVM.url   = vm.url;
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [weakSelf.tableView.mj_header endRefreshing];
+            [weakSelf.tableView reloadData];
+        }];
+
+    }];
 }
 
 - (void)loadMoreReplies
@@ -249,9 +250,7 @@ static const NSUInteger kItemsCountPerPage = 10;
     params[@"last_updated"]     = @(_timeStamp);
     
     __weak typeof(self) weakSelf = self;
-    [PIEChannelManager
-     getSource_pageViewModels:params
-     repliesResult:^(NSMutableArray<PIEPageVM *> *repliesResultArray) {
+    [PIEChannelManager getSource_pageViewModels:params repliesResult:^(NSMutableArray<PIEPageVM *> *repliesResultArray, PIEChannelViewModel *vm) {
          if (repliesResultArray.count == 0) {
              [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                  [weakSelf.tableView.mj_footer endRefreshing];
@@ -271,27 +270,20 @@ static const NSUInteger kItemsCountPerPage = 10;
 #pragma mark - Target-actions
 - (void)goPSButtonClicked:(UIButton *)button
 {
-    
-    NSMutableDictionary* param = [NSMutableDictionary new];
-    [param setObject:@"ask" forKey:@"type"];
-    [param setObject:@(_currentChannelVM.ID) forKey:@"target"];
-    
-    [DDService signProceeding:param withBlock:nil];
-    
-    PIEWebViewViewController* vc = [PIEWebViewViewController new];
-//    vc.url = [NSString stringWithFormat:@"%@%@",[[DDSessionManager shareHTTPSessionManager].baseURL absoluteString],_currentChannelVM.url] ;
-    vc.url = _currentChannelVM.url;
-    DDNavigationController *nav = [[DDNavigationController alloc]initWithRootViewController:vc];
-
-    [self presentViewController:nav animated:YES completion:nil];
-//    vc.url = _currentChannelVM.
-//    [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
-
+    [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
 }
 
 - (void)headerBannerViewClicked:(UIButton *)button
 {
-    NSLog(@"%s", __func__);
+    NSMutableDictionary* param = [NSMutableDictionary new];
+    [param setObject:@"ask" forKey:@"type"];
+    [param setObject:@(_currentChannelVM.askID) forKey:@"target"];
+    [DDService signProceeding:param withBlock:nil];
+    
+    PIEWebViewViewController* vc = [PIEWebViewViewController new];
+    vc.url = _currentChannelVM.url;
+    DDNavigationController *nav = [[DDNavigationController alloc]initWithRootViewController:vc];
+    [self presentViewController:nav animated:YES completion:nil];
 
 }
 

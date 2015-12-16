@@ -14,7 +14,7 @@
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
 #import "DeviceUtil.h"
-
+#import "PIECommentViewController2.h"
 @interface PIEMyCollectionViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (nonatomic, strong)  PIERefreshTableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -74,10 +74,20 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-    vc.pageVM = [_dataSource objectAtIndex:indexPath.row];
-    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-    [nav presentViewController:vc animated:YES completion:nil];
+    
+    PIEPageVM* vm = [_dataSource objectAtIndex:indexPath.row];
+    if ([vm.replyCount integerValue] <= 0 && vm.type == PIEPageTypeAsk) {
+        PIECommentViewController2 *vc_comment = [PIECommentViewController2 new];
+        vc_comment.vm = vm;
+        DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+        DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];
+        [nav presentViewController:nav2 animated:NO completion:nil];
+    } else {
+        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+        vc.pageVM = vm;
+        DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+        [nav presentViewController:vc animated:NO completion:nil];
+    }
 }
 -(void)didPullRefreshDown:(UITableView *)tableView {
     [self getDataSource];

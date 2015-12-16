@@ -15,6 +15,7 @@
 #import "PIECarouselViewController2.h"
 #import "DDNavigationController.h"
 #import "DeviceUtil.h"
+#import "PIECommentViewController2.h"
 @interface PIEMyAskViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,CHTCollectionViewDelegateWaterfallLayout,DZNEmptyDataSetDelegate>
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *homeImageDataSource;
@@ -111,6 +112,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
+    [self getDataSource];
 }
 
 - (void)createUI {
@@ -142,7 +144,6 @@
     _canRefreshFooter = YES;
     _dataSource = [NSMutableArray array];
     _isfirstLoading = YES;
-    [self getDataSource];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -176,10 +177,20 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
-    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-    vc.pageVM = [_dataSource objectAtIndex:indexPath.row];
-    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-    [nav presentViewController:vc animated:YES completion:nil];
+    PIEPageVM* vm = [_dataSource objectAtIndex:indexPath.row];
+    if ([vm.replyCount integerValue] <= 0) {
+        PIECommentViewController2 *vc_comment = [PIECommentViewController2 new];
+        vc_comment.vm = vm;
+        DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+        DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];
+        [nav presentViewController:nav2 animated:NO completion:nil];
+    } else {
+        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+        vc.pageVM = vm;
+        DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+        [nav presentViewController:vc animated:NO completion:nil];
+    }
+    
 //    [nav pushViewController:vc animated:YES ];
 }
 

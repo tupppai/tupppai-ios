@@ -197,7 +197,7 @@
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [DDFollowManager getFollow:param withBlock:^(NSMutableArray *resultArray,NSMutableArray* recommend) {
+    [DDFollowManager getFollow:param withBlock:^(NSMutableArray *recommend,NSMutableArray* resultArray) {
         for (PIEEntityFollow *concern in resultArray) {
             PIEFollowViewModel *concernViewModel = [PIEFollowViewModel new];
             [concernViewModel setViewModelData:concern];

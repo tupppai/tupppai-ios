@@ -322,12 +322,6 @@ CGFloat startPanLocationY;
 
 #pragma mark iCarousel taps
 
-- (void)carousel:(__unused iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index
-{
-    PIECommentViewController* vc = [PIECommentViewController new];
-    vc.vm = _currentVM;
-    [self.navigationController pushViewController:vc animated:YES];
-}
 -(void)carouselDidEndScrollingAnimation:(iCarousel *)carousel {
     [self flyCurrentItemViewWithDirection:YES];
 }
