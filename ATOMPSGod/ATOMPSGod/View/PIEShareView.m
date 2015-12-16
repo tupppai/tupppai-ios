@@ -12,7 +12,9 @@
 #import "DDCollectManager.h"
 
 #define height_sheet 251.0f
-
+@interface PIEShareView ()
+@property (nonatomic,weak)  PIEPageVM* weakVM;
+@end
 @implementation PIEShareView
 
 -(instancetype)init {
@@ -182,28 +184,31 @@
         
         if (_weakVM != nil) {
             NSMutableDictionary *param = [NSMutableDictionary new];
-            _weakVM.collected = !_weakVM.collected;
+            
             if (_weakVM.collected) {
-                //收藏
-                [param setObject:@(1) forKey:@"status"];
-            } else {
-                //取消收藏
+                //如果之前已经收藏，那么就取消收藏
                 [param setObject:@(0) forKey:@"status"];
+            } else {
+                //反之，收藏
+                [param setObject:@(1) forKey:@"status"];
             }
             [DDCollectManager toggleCollect:param
                                withPageType:_weakVM.type
                                      withID:_weakVM.ID withBlock:^(NSError *error) {
-                if (!error) {
+                if (error == nil) {
+                    // 成功返回数据，代表切换收藏这个状态已经被服务器承认，这个时候再切换状态
+                    _weakVM.collected = !_weakVM.collected;
                     if (  _weakVM.collected) {
                         [Hud textWithLightBackground:@"收藏成功"];
                     } else {
                         [Hud textWithLightBackground:@"取消收藏成功"];
                     }
+                    [self toggleCollectIconStatus:_weakVM.collected];
                     
                 }   else {
-                    _weakVM.collected = !_weakVM.collected;
+                    // error occur on networking
+//                    [Hud textWithLightBackground:@"服务器不鸟你"];
                 }
-                [self toggleCollectIconStatus:_weakVM.collected];
                                          
             }];
         }
@@ -272,6 +277,65 @@
      ];
     
     }
+
+- (void)showInView:(UIView *)view animated:(BOOL)animated pageViewModel:(PIEPageVM *)pageVM
+{
+    self.weakVM = pageVM;
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+    
+    self.frame = view.bounds;
+    [view addSubview:self];
+    
+    [self layoutIfNeeded];
+    [self.sheetView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self).with.offset(0).with.priorityHigh();
+    }];
+    
+    
+    [UIView animateWithDuration:0.35
+                          delay:0
+         usingSpringWithDamping:0.8
+          initialSpringVelocity:0.7
+                        options:0
+                     animations:^{
+                         [self layoutIfNeeded];
+                     } completion:^(BOOL finished) {
+                         if (finished) {
+                             [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+                         }
+                     }
+     ];
+}
+
+- (void)show:(PIEPageVM *)pageVM
+{
+    self.weakVM = pageVM;
+    [self toggleCollectIconStatus:self.weakVM.collected];
+    
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+    
+    [[AppDelegate APP].window addSubview:self];
+    [self layoutIfNeeded];
+    [self.sheetView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self).with.offset(0).with.priorityHigh();
+    }];
+    
+    [UIView animateWithDuration:0.35
+                          delay:0
+         usingSpringWithDamping:0.8
+          initialSpringVelocity:0.7
+                        options:0
+                     animations:^{
+                         [self layoutIfNeeded];
+                     } completion:^(BOOL finished) {
+                         if (finished) {
+                             [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+                         }
+                     }
+     ];
+    
+
+}
 -(void)dismiss {
     [self.sheetView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self).with.offset(height_sheet).with.priorityHigh();

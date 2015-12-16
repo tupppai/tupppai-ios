@@ -75,7 +75,8 @@
     [self like:_pageLikeButton];
 }
 - (void)tapShare {
-    [self.shareView show];
+    // BIG_REFACTOR!!! PIE_SHAREVIEW show/showInView + 赋值！
+//    [self.shareView show];
 }
 - (void)tapComment {
     PIECommentViewController2* vc = [PIECommentViewController2 new];
@@ -258,17 +259,15 @@
 
 - (void)shareViewDidPaste:(PIEShareView *)shareView
 {
-    shareView.weakVM = _vm;
+
 }
 
 - (void)shareViewDidReportUnusualUsage:(PIEShareView *)shareView
 {
-    shareView.weakVM = _vm;
 }
 
 - (void)shareViewDidCollect:(PIEShareView *)shareView
 {
-    shareView.weakVM = _vm;
 }
 
 

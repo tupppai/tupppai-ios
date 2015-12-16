@@ -361,7 +361,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         CGPoint p = [gesture locationInView:cell];
         //点击大图
         if (CGRectContainsPoint(cell.leftImageView.frame, p) || CGRectContainsPoint(cell.rightImageView.frame, p)) {
-            [self showShareView];
+            [self showShareView:_selectedVM];
         }
     }
     
@@ -437,17 +437,15 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
 - (void)shareViewDidPaste:(PIEShareView *)shareView
 {
-    shareView.weakVM = _selectedVM;
+
 }
 
 - (void)shareViewDidReportUnusualUsage:(PIEShareView *)shareView
 {
-    shareView.weakVM = _selectedVM;
 }
 
 - (void)shareViewDidCollect:(PIEShareView *)shareView
 {
-    shareView.weakVM = _selectedVM;
 }
 
 - (void)shareViewDidCancel:(PIEShareView *)shareView
@@ -456,8 +454,8 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 }
 
 #pragma mark - 分享页面的收藏按钮操作
-- (void)showShareView {
-    [self.shareView show];
+- (void)showShareView :(PIEPageVM *)pageVM{
+    [self.shareView show:pageVM];
     
 }
 

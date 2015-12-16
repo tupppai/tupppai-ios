@@ -810,7 +810,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 - (void) didTap5 {
     [self.textView resignFirstResponder];
-    [self showShareView];
+    // BIG_REFACTOR!!! PIE_SHAREVIEW show/showInView + 赋值！
+//    [self showShareView];
 }
 - (void) didTapHelp {
     [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
@@ -846,18 +847,16 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 - (void)shareViewDidPaste:(PIEShareView *)shareView
 {
-    shareView.weakVM = _vm;
+
 }
 
 
 - (void)shareViewDidReportUnusualUsage:(PIEShareView *)shareView
 {
-    shareView.weakVM = _vm;
 }
 
 - (void)shareViewDidCollect:(PIEShareView *)shareView
 {
-    shareView.weakVM = _vm;
 }
 
 - (void)shareViewDidCancel:(PIEShareView *)shareView
@@ -876,8 +875,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     _tapCommentTableGesture.cancelsTouchesInView = NO;
     [self.tableView addGestureRecognizer:_tapCommentTableGesture];
 }
-- (void)showShareView {
-    [self.shareView show];
+- (void)showShareView:(PIEPageVM *)pageVM {
+    [self.shareView show:pageVM];
 }
 -(void)collect {
     NSMutableDictionary *param = [NSMutableDictionary new];

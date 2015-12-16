@@ -560,8 +560,8 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 }
 
 
-- (void)showShareView {
-    [self.shareView show];
+- (void)showShareView:(PIEPageVM *)pageVM {
+    [self.shareView show:pageVM];
     
 }
 -(PIEShareView *)shareView {
@@ -604,7 +604,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     [DDShareManager copy:_selectedVM];
 }
 -(void)tapShare7 {
-    self.shareView.weakVM = _selectedVM;
+
 }
 -(void)tapShare8 {
 //    if (_scrollView.type == PIENewScrollTypeAsk) {
@@ -982,7 +982,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
                 [self followReplier];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.shareView.frame, p)) {
-                [self showShareView];
+                [self showShareView:_selectedVM];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.commentView.frame, p)) {
                 PIECommentViewController* vc = [PIECommentViewController new];
@@ -1009,7 +1009,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
             
             //点击大图
             if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
-                [self showShareView];
+                [self showShareView:_selectedVM];
             }
         }
     }
@@ -1025,7 +1025,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
             CGPoint p = [gesture locationInView:cell];
             //点击大图
             if (CGRectContainsPoint(cell.leftImageView.frame, p) || CGRectContainsPoint(cell.rightImageView.frame, p)) {
-                [self showShareView];
+                [self showShareView:_selectedVM];
             }
         }
     }

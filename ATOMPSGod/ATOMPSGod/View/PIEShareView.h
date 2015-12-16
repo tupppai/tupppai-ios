@@ -36,8 +36,12 @@
 @property (nonatomic, strong)  PIEActionSheet_Report * reportActionSheet;
 
 @property (nonatomic, weak) id<PIEShareViewDelegate> delegate;
-@property (nonatomic,weak)  PIEPageVM* weakVM;
-- (void)showInView:(UIView *)view animated:(BOOL)animated;
-- (void)show;
+
+//- (void)showInView:(UIView *)view animated:(BOOL)animated;
+//- (void)show;
+
+/* 替换版本 */
+- (void)showInView:(UIView *)view animated:(BOOL)animated pageViewModel:(PIEPageVM *)pageVM;
+- (void)show:(PIEPageVM *)pageVM;
 -(void)dismiss;
 @end

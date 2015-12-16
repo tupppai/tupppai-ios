@@ -126,12 +126,16 @@
     //normally we'd use a backing array
     //as shown in the basic iOS example
     //but for this example we haven't bothered
-    return _source.count;
+    
+    // ??? WTF???
+    
+    // Add one more item in the back, "查看更多"
+    return _source.count + 1;
 }
 
 - (UIView *)swipeView:(SwipeView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
 {
-    if (!view)
+    if (view == nil)
     {
         CGFloat width = self.swipeView.frame.size.height;
         view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width+10, width)];
@@ -142,22 +146,51 @@
         imageView.clipsToBounds = YES;
         [view addSubview:imageView];
     }
-    PIEPageVM* vm = [_source objectAtIndex:index];
-    for (UIView *subView in view.subviews){
-        if([subView isKindOfClass:[UIImageView class]]){
-            UIImageView *imageView = (UIImageView *)subView;
-            [imageView setImageWithURL:[NSURL URLWithString:vm.imageURL]];
+    
+    
+
+        for (UIView *subView in view.subviews){
+            if([subView isKindOfClass:[UIImageView class]]){
+                UIImageView *imageView = (UIImageView *)subView;
+                
+//                if (index < _source.count) {
+//                    [imageView setImageWithURL:[NSURL URLWithString:vm.imageURL]];
+//                }
+//                else
+//                {
+//                    // 最后一个Item是特殊的“查看更多”Item；这个方法比_source.count多调用了一次
+//                    imageView.image = [UIImage imageNamed:@"pie_proceeding_checkMore"];
+//                }
+                if (index == _source.count) {
+                    // 最后一个Item是特殊的“查看更多”Item；这个方法比_source.count多调用了一次
+                    imageView.image = [UIImage imageNamed:@"pie_proceeding_checkMore"];
+                }
+                else
+                {
+                    PIEPageVM* vm = [_source objectAtIndex:index];
+                    [imageView setImageWithURL:[NSURL URLWithString:vm.imageURL]];
+                    
+                }
+            }
         }
-    }
-    ;
     return view;
+
 }
 
 -(void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index {
-    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-    vc.pageVM = [_source objectAtIndex:index];
-    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-    [nav presentViewController:vc animated:YES completion:nil];
+    
+    if (index < _source.count) {
+        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+        vc.pageVM = [_source objectAtIndex:index];
+        DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+        [nav presentViewController:vc animated:YES completion:nil];
+    }
+    else
+    {
+        // 最后一张"查看更多"
+        /* Do nothing yet. */
+        NSLog(@"%s\nCheckMoreItem was clicked.", __func__);
+    }
 }
 
 
