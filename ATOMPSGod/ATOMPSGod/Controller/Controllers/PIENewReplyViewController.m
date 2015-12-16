@@ -413,7 +413,8 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
                 [self followReplier];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.shareView.frame, p)) {
-                [self showShareView];
+//                [self showShareView];
+                [self showShareView:_selectedVM];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.commentView.frame, p)) {
                 PIECommentViewController* vc = [PIECommentViewController new];
@@ -440,7 +441,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
         
         //点击大图
         if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
-            [self showShareView];
+            [self showShareView:_selectedVM];
         }
     }
 
@@ -460,9 +461,8 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 }
 
 
-- (void)showShareView {
-    [self.shareView show];
-    
+- (void)showShareView:(PIEPageVM *)pageVM {
+    [self.shareView show:pageVM];
 }
 
 

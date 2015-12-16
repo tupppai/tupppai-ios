@@ -184,28 +184,31 @@
         
         if (_weakVM != nil) {
             NSMutableDictionary *param = [NSMutableDictionary new];
-            _weakVM.collected = !_weakVM.collected;
+            
             if (_weakVM.collected) {
-                //收藏
-                [param setObject:@(1) forKey:@"status"];
-            } else {
-                //取消收藏
+                //如果之前已经收藏，那么就取消收藏
                 [param setObject:@(0) forKey:@"status"];
+            } else {
+                //反之，收藏
+                [param setObject:@(1) forKey:@"status"];
             }
             [DDCollectManager toggleCollect:param
                                withPageType:_weakVM.type
                                      withID:_weakVM.ID withBlock:^(NSError *error) {
-                if (!error) {
+                if (error == nil) {
+                    // 成功返回数据，代表切换收藏这个状态已经被服务器承认，这个时候再切换状态
+                    _weakVM.collected = !_weakVM.collected;
                     if (  _weakVM.collected) {
                         [Hud textWithLightBackground:@"收藏成功"];
                     } else {
                         [Hud textWithLightBackground:@"取消收藏成功"];
                     }
+                    [self toggleCollectIconStatus:_weakVM.collected];
                     
                 }   else {
-                    _weakVM.collected = !_weakVM.collected;
+                    // error occur on networking
+//                    [Hud textWithLightBackground:@"服务器不鸟你"];
                 }
-                [self toggleCollectIconStatus:_weakVM.collected];
                                          
             }];
         }
@@ -307,6 +310,8 @@
 - (void)show:(PIEPageVM *)pageVM
 {
     self.weakVM = pageVM;
+    [self toggleCollectIconStatus:self.weakVM.collected];
+    
     [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     
     [[AppDelegate APP].window addSubview:self];

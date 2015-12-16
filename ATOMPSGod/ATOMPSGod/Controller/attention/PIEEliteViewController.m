@@ -361,8 +361,8 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
 
 
-- (void)showShareView {
-    [self.shareView show];
+- (void)showShareView:(PIEPageVM *)pageVM {
+    [self.shareView show:pageVM];
 }
 
 -(void)follow:(UIImageView*)followView {
@@ -486,28 +486,28 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
 - (void)shareViewDidCollect:(PIEShareView *)shareView
 {
-    //!!! 无奈之举：把weakVM设置为空，这样就不会执行这个代理方法默认的“收藏”方法
+    
     
     // 下面是直接copy -tapShare8 的代码 = =
-    if (_sv.type == PIEPageTypeEliteHot) {
-        if (_selectedVM.type == PIEPageTypeAsk) {
-            [self collectAsk];
-        } else {
-            PIEEliteHotReplyTableViewCell* cell = [_sv.tableHot cellForRowAtIndexPath:_selectedIndexPath];
-            [self collect:cell.collectView shouldShowHud:YES];
-        }
-    } else {
-        if (_selectedVM.type == PIEPageTypeAsk) {
-            [self collectAsk];
-        } else {
-            PIEEliteFollowReplyTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
-            [self collect:cell.collectView shouldShowHud:YES];
-        }
-    }
-    // !!! BUG AWARE!!! TO-BE-REFACTORED 这里不能用shareView集成的collect方法来准确判断修改selected
-    //                                   的时机。只能这样凑合。
-    self.shareView.sheetView.icon8.selected = !self.shareView.sheetView.icon8.selected;
-
+//    if (_sv.type == PIEPageTypeEliteHot) {
+//        if (_selectedVM.type == PIEPageTypeAsk) {
+//            [self collectAsk];
+//        } else {
+//            PIEEliteHotReplyTableViewCell* cell = [_sv.tableHot cellForRowAtIndexPath:_selectedIndexPath];
+//            [self collect:cell.collectView shouldShowHud:YES];
+//        }
+//    } else {
+//        if (_selectedVM.type == PIEPageTypeAsk) {
+//            [self collectAsk];
+//        } else {
+//            PIEEliteFollowReplyTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
+//            [self collect:cell.collectView shouldShowHud:YES];
+//        }
+//    }
+//    // !!! BUG AWARE!!! TO-BE-REFACTORED 这里不能用shareView集成的collect方法来准确判断修改selected
+//    //                                   的时机。只能这样凑合。
+//    self.shareView.sheetView.icon8.selected = !self.shareView.sheetView.icon8.selected;
+//
 }
 
 // 下面这块要怎么重构呢？为什么会出现一个不一样的收藏PageVM的逻辑……
@@ -771,6 +771,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     if (_sv.type == PIEPageTypeEliteFollow) {
         CGPoint location = [gesture locationInView:_sv.tableFollow];
         _selectedIndexPath = [_sv.tableFollow indexPathForRowAtPoint:location];
+        _selectedVM = _sourceFollow[_selectedIndexPath.row];
         if (_selectedIndexPath) {
             //关注  求p
             _selectedVM = _sourceFollow[_selectedIndexPath.row];
@@ -781,7 +782,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                 CGPoint p = [gesture locationInView:cell];
                 if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                     //进入热门详情
-                    [self showShareView];
+                    [self showShareView:_selectedVM];
                 }
             }
             
@@ -790,7 +791,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                 PIEEliteFollowReplyTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
                 CGPoint p = [gesture locationInView:cell];
                 if (CGRectContainsPoint(cell.theImageView.frame, p)) {
-                    [self showShareView];
+                    [self showShareView:_selectedVM];
                 }
             }
         }
@@ -835,7 +836,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                     [self follow:cell.followView];
                 }
                 else if (CGRectContainsPoint(cell.shareView.frame, p)) {
-                    [self showShareView];
+                    [self showShareView:_selectedVM];
                 }
                 
                 else if (CGRectContainsPoint(cell.commentView.frame, p)) {
@@ -895,7 +896,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                     [self follow:cell.followView];
                 }
                 else if (CGRectContainsPoint(cell.shareView.frame, p)) {
-                    [self showShareView];
+                    [self showShareView:_selectedVM];
                 }
                 else if (CGRectContainsPoint(cell.collectView.frame, p)) {
                     [self collect:cell.collectView shouldShowHud:NO];
@@ -928,7 +929,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                 PIEEliteHotAskTableViewCell* cell = [_sv.tableHot cellForRowAtIndexPath:_selectedIndexPath];
                 CGPoint p = [gesture locationInView:cell];
                 if (CGRectContainsPoint(cell.theImageView.frame, p)) {
-                    [self showShareView];
+                    [self showShareView:_selectedVM];
                 }
             }
             //关注  作品
@@ -938,7 +939,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                 CGPoint p = [gesture locationInView:cell];
                 //点击大图
                 if (CGRectContainsPoint(cell.theImageView.frame, p)) {
-                    [self showShareView];
+                    [self showShareView:_selectedVM];
                 }
                 
             }
@@ -986,7 +987,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                     [self follow:cell.followView];
                 }
                 else if (CGRectContainsPoint(cell.shareView.frame, p)) {
-                    [self showShareView];
+                    [self showShareView:_selectedVM];
                 }
                 
                 else if ((CGRectContainsPoint(cell.commentView.frame, p))||(CGRectContainsPoint(cell.commentLabel1.frame, p))||(CGRectContainsPoint(cell.commentLabel2.frame, p)) ) {
@@ -1045,7 +1046,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
                     [self follow:cell.followView];
                 }
                 else if (CGRectContainsPoint(cell.shareView.frame, p)) {
-                    [self showShareView];
+                    [self showShareView:_selectedVM];
                 }
                 else if (CGRectContainsPoint(cell.collectView.frame, p)) {
                     [self collect:cell.collectView shouldShowHud:NO];

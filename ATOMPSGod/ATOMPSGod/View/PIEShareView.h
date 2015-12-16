@@ -37,8 +37,8 @@
 
 @property (nonatomic, weak) id<PIEShareViewDelegate> delegate;
 
-- (void)showInView:(UIView *)view animated:(BOOL)animated;
-- (void)show;
+//- (void)showInView:(UIView *)view animated:(BOOL)animated;
+//- (void)show;
 
 /* 替换版本 */
 - (void)showInView:(UIView *)view animated:(BOOL)animated pageViewModel:(PIEPageVM *)pageVM;

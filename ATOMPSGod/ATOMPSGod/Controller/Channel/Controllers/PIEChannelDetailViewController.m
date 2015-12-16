@@ -273,8 +273,8 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     [self updateStatus];
 }
 
-- (void)showShareView {
-    [self.shareView show];
+- (void)showShareView:(PIEPageVM *)pageVM {
+    [self.shareView show:pageVM];
     
 }
 
@@ -360,7 +360,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
             [self followReplier];
         }
         else if (CGRectContainsPoint(_selectedReplyCell.shareView.frame, p)) {
-            [self showShareView];
+            [self showShareView:_selectedVM];
         }
         else if (CGRectContainsPoint(_selectedReplyCell.commentView.frame, p)) {
             PIECommentViewController* vc = [PIECommentViewController new];
@@ -389,7 +389,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         
         //点击大图
         if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
-            [self showShareView];
+            [self showShareView:_selectedVM];
         }
     }
     
