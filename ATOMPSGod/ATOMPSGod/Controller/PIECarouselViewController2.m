@@ -353,7 +353,7 @@ CGFloat startPanLocationY;
 - (void)getDataSource {
     _currentPage = 1;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH*2) forKey:@"width"];
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(100) forKey:@"size"];
     DDHotDetailManager *manager = [DDHotDetailManager new];

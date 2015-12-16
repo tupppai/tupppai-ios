@@ -131,7 +131,7 @@
         [param setObject:@(_uid) forKey:@"uid"];
     }
     [param setObject:@(15) forKey:@"size"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH*2) forKey:@"width"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(_currentIndex) forKey:@"page"];
     [DDPageManager getAskWithReplies:param withBlock:^(NSArray *returnArray) {
