@@ -110,7 +110,7 @@
         make.width.equalTo(@40).with.priorityMedium();
         make.width.greaterThanOrEqualTo(@40);
         make.height.equalTo(@25);
-        make.left.equalTo(self.shareButton.mas_right).with.offset(18);
+        make.left.equalTo(self.shareButton.mas_right).with.offset(12);
     }];
     [self.bangView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.textView_content.mas_bottom).with.offset(6).with.priorityHigh();
