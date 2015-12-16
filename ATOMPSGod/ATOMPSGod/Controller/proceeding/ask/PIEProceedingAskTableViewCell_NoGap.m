@@ -151,7 +151,7 @@
     // ??? WTF???
     
     // Add one more item in the back, "查看更多"
-    return _source.count ;
+    return _source.count + 1;
 }
 
 - (UIView *)swipeView:(SwipeView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
@@ -182,7 +182,7 @@
 //                    // 最后一个Item是特殊的“查看更多”Item；这个方法比_source.count多调用了一次
 //                    imageView.image = [UIImage imageNamed:@"pie_proceeding_checkMore"];
 //                }
-                if (index == _source.count+2) {
+                if (index == _source.count) {
                     // 最后一个Item是特殊的“查看更多”Item；这个方法比_source.count多调用了一次
                     imageView.image = [UIImage imageNamed:@"pie_proceeding_checkMore"];
                 }
@@ -200,7 +200,7 @@
 
 -(void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index {
     
-    if (index <= _source.count) {
+    if (index < _source.count) {
         PIECarouselViewController2* vc = [PIECarouselViewController2 new];
         vc.pageVM = [_source objectAtIndex:index];
         DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;

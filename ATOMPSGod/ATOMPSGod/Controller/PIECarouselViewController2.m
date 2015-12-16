@@ -374,7 +374,7 @@ CGFloat startPanLocationY;
             [self.dataSource addObjectsFromArray: replyArray];
 //            [_carousel reloadData];
         if (self.dataSource.count > 0) {
-            [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
                 _view_placeHoder.alpha = 0;
             } completion:^(BOOL finished) {
                 [_view_placeHoder removeFromSuperview];
