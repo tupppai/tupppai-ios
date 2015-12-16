@@ -26,7 +26,7 @@
 #import "PIEProceedingAskTableViewCell_NoGap.h"
 //#import "UITableView+FDTemplateLayoutCell.h"
 #import "DeviceUtil.h"
-
+#import "PIECommentViewController2.h"
 #define MyAskCellWidth (SCREEN_WIDTH - 20) / 2.0
 
 /* Protocols */
@@ -273,10 +273,18 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
             [self.navigationController pushViewController:opvc animated:YES];
         }
         else if (CGRectContainsPoint(cell.theImageView.frame, p)) {
-            PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-            vc.pageVM = vm;
-            DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-            [nav presentViewController:vc animated:YES completion:nil];
+            if ([vm.replyCount integerValue]<=0) {
+                PIECommentViewController2 *vc_comment = [PIECommentViewController2 new];
+                vc_comment.vm = vm;
+                DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+                DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];
+                [nav presentViewController:nav2 animated:NO completion:nil];
+            } else {
+                PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+                vc.pageVM = vm;
+                DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+                [nav presentViewController:vc animated:YES completion:nil];
+            }
         }
     }
 }

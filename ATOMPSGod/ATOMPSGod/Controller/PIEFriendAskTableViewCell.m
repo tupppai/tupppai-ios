@@ -47,21 +47,35 @@
 
 - (void)tapOnAsk1 {
     if (_vmAsk1) {
-        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-        vc.pageVM = _vmAsk1;
-        
-        [self.viewController.parentViewController.view.superview.viewController.navigationController  presentViewController:vc animated:YES completion:nil];
+        if ([_vmAsk1.replyCount integerValue]<=0) {
+            PIECommentViewController2 *vc_comment = [PIECommentViewController2 new];
+            vc_comment.vm = _vmAsk1;
+            DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];
+            [self.viewController.parentViewController.view.superview.viewController.navigationController presentViewController:nav2 animated:NO completion:nil];
+
+        }   else    {
+            PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+            vc.pageVM = _vmAsk1;
+            [self.viewController.parentViewController.view.superview.viewController.navigationController  presentViewController:vc animated:YES completion:nil];
+        }
+
 
 //        [self.viewController.parentViewController.view.superview.viewController.navigationController pushViewController:vc animated:YES ];
     }
 }
 - (void)tapOnAsk2 {
     if (_vmAsk2) {
-        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-        vc.pageVM = _vmAsk2;
-        [self.viewController.parentViewController.view.superview.viewController.navigationController  presentViewController:vc animated:YES completion:nil];
-
-//        [self.viewController.parentViewController.view.superview.viewController.navigationController pushViewController:vc animated:YES ];
+        if ([_vmAsk2.replyCount integerValue]<=0) {
+            PIECommentViewController2 *vc_comment = [PIECommentViewController2 new];
+            vc_comment.vm = _vmAsk2;
+            DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];
+            [self.viewController.parentViewController.view.superview.viewController.navigationController presentViewController:nav2 animated:NO completion:nil];
+            
+        }   else    {
+            PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+            vc.pageVM = _vmAsk2;
+            [self.viewController.parentViewController.view.superview.viewController.navigationController  presentViewController:vc animated:YES completion:nil];
+        }
 
     }
 }
@@ -137,17 +151,10 @@
 -(void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index {
     DDNavigationController* nav = (DDNavigationController*)self.viewController.parentViewController.view.superview.viewController.navigationController;
     PIEPageVM* vm = [_source objectAtIndex:index];
-    if ([vm.replyCount integerValue] <= 0 && vm.type == PIEPageTypeAsk) {
-        PIECommentViewController2 *vc_comment = [PIECommentViewController2 new];
-        vc_comment.vm = vm;
-        DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];
-        [nav presentViewController:nav2 animated:NO completion:nil];
-    } else {
         PIECarouselViewController2* vc = [PIECarouselViewController2 new];
         vc.pageVM = vm;
         //汗，看来还是要写在controller里面
         [nav  presentViewController:vc animated:YES completion:nil];
-    }
 //        [self.viewController.parentViewController.view.superview.viewController.navigationController pushViewController:vc animated:YES ];
 }
 

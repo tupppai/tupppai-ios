@@ -26,7 +26,7 @@
 @implementation PIETransitioning_CarouselHome
 
 -(NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-    return 0.6;
+    return 0.2;
 }
 
 -(void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {

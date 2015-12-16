@@ -567,7 +567,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     _timeStamp_follow = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_timeStamp_follow) forKey:@"last_updated"];
-//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH*2) forKey:@"width"];
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
     
@@ -596,7 +596,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     _currentIndex_follow++;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_timeStamp_follow) forKey:@"last_updated"];
-//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH*2) forKey:@"width"];
     [param setObject:@(_currentIndex_follow) forKey:@"page"];
     [param setObject:@(15) forKey:@"size"];
     [PIEEliteManager getMyFollow:param withBlock:^(NSMutableArray *returnArray) {
@@ -642,7 +642,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     _timeStamp_hot = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_timeStamp_hot) forKey:@"last_updated"];
-//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH*2) forKey:@"width"];
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(8) forKey:@"size"];
     
@@ -668,7 +668,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     _currentIndex_hot ++;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_timeStamp_hot) forKey:@"last_updated"];
-//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH*2) forKey:@"width"];
     [param setObject:@(_currentIndex_hot) forKey:@"page"];
     [param setObject:@(15) forKey:@"size"];
     
