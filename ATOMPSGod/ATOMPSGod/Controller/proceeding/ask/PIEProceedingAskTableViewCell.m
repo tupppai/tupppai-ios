@@ -10,6 +10,7 @@
 #import "PIECarouselViewController2.h"
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
+#import "PIECommentViewController2.h"
 @interface PIEProceedingAskTableViewCell()
 @property (strong, nonatomic) NSMutableArray *source;
 @property (strong, nonatomic) PIEPageVM *vmAsk1;
@@ -69,20 +70,38 @@
 }
 - (void)tapOnAsk1 {
     if (_vmAsk1) {
-        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-        vc.pageVM = _vmAsk1;
-        DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-//        [nav pushViewController:vc animated:YES ];
-        [nav presentViewController:vc animated:YES completion:nil];
+        if ([_vmAsk1.replyCount integerValue] <= 0) {
+            PIECommentViewController2 *vc_comment = [PIECommentViewController2 new];
+            vc_comment.vm = _vmAsk1;
+            DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+            DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];
+            [nav presentViewController:nav2 animated:NO completion:nil];
+        } else {
+            PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+            vc.pageVM = _vmAsk1;
+            DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+            //        [nav pushViewController:vc animated:YES ];
+            [nav presentViewController:vc animated:YES completion:nil];
+        }
     }
 }
 - (void)tapOnAsk2 {
     if (_vmAsk2) {
-        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-        vc.pageVM = _vmAsk2;
-        DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-        [nav presentViewController:vc animated:YES completion:nil];
+        if ([_vmAsk1.replyCount integerValue] <= 0) {
+            PIECommentViewController2 *vc_comment = [PIECommentViewController2 new];
+            vc_comment.vm = _vmAsk2;
+            DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+            DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];
+            [nav presentViewController:nav2 animated:NO completion:nil];
+        } else {
+            PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+            vc.pageVM = _vmAsk2;
+            DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+            //        [nav pushViewController:vc animated:YES ];
+            [nav presentViewController:vc animated:YES completion:nil];
+        }
     }
+
 }
 
 -(void)prepareForReuse {
