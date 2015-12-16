@@ -152,9 +152,47 @@
             UIImage* scaledImage = [Util imageWithImage:image scaledToSize:CGSizeMake(28, 28) circlize:YES];
             _avatarImage = scaledImage;
             _navigation_me.tabBarItem.image = [_avatarImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-            _navigation_me.tabBarItem.selectedImage = [[_avatarImage maskWithImage:[UIImage imageFromColor:[UIColor colorWithHex:0xe23022 andAlpha:0.7]]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+            _navigation_me.tabBarItem.selectedImage = [[self retimage] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         }
     }];
+}
+
+- (UIImage*)retimage {
+    // Start the image context
+    
+    UIImage* circleImage = [UIImage imageNamed:@"pie_tab_mask"];
+
+    UIGraphicsBeginImageContextWithOptions(circleImage.size, NO, 0.0);
+    UIImage *resultImage = nil;
+    
+    // Get the graphics context
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    // Draw the first image
+    [circleImage drawInRect:CGRectMake(0, 0, circleImage.size.width, circleImage.size.height)];
+    
+    UIImage* user = _avatarImage;
+    
+    // Get the frame of the second image
+    CGRect rect = CGRectMake(0, 0, user.size.width, user.size.height);
+    
+    // Add the path of an ellipse to the context
+    // If the rect is a square the shape will be a circle
+    CGContextAddEllipseInRect(context, rect);
+    // Clip the context to that path
+    CGContextClip(context);
+    
+    // Do the second image which will be clipped to that circle
+    CGRect rect2 = CGRectMake(1,1, user.size.width-6, user.size.height-6);
+    [user drawInRect:rect2];
+    
+    // Get the result
+    resultImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    // End the image context
+    UIGraphicsEndImageContext();
+    return resultImage;
+    
 }
 
 -(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
