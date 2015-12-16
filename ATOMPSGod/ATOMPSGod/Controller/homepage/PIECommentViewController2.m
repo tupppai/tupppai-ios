@@ -97,16 +97,26 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 
 - (void)setupNavBar {
+    
     UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
     buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [buttonLeft setImage:[UIImage imageNamed:@"PIE_icon_back"] forState:UIControlStateNormal];
-    [buttonLeft addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonLeft];
     self.navigationItem.leftBarButtonItem =  buttonItem;
+
+    if (self.navigationController.viewControllers.count <= 1) {
+        [buttonLeft addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        [buttonLeft addTarget:self action:@selector(popSelf) forControlEvents:UIControlEventTouchUpInside];
+    }
 }
 - (void) dismiss {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+- (void)popSelf {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)getVMSource {
     NSMutableDictionary* param = [NSMutableDictionary new];
     [param setObject:@(_vm.ID) forKey:@"id"];
@@ -125,15 +135,14 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-//    self.navigationController.hidesBarsOnSwipe = YES;
+//    [self.navigationController.navigationBar setBackgroundImage:nil
+//                                                  forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
                                                   forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     self.navigationController.navigationBar.translucent = YES;
-    self.navigationController.navigationBar.backgroundColor = [UIColor colorWithHex:0xffffff andAlpha:0.5];
 
-    self.navigationController.hidesBarsOnSwipe = YES;
+//    self.navigationController.hidesBarsOnSwipe = YES;
         [MobClick beginLogPageView:@"进入浏览图片页"];
 }
 - (void)viewWillDisappear:(BOOL)animated
@@ -142,7 +151,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
     [self.navigationController.navigationBar setBackgroundImage:nil
                                                   forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.hidesBarsOnSwipe = NO;
+//    self.navigationController.hidesBarsOnSwipe = NO;
     //    [MobClick endLogPageView:@"离开浏览图片页"];
 }
 
@@ -236,21 +245,21 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     commentVM.avatar = [DDUserManager currentUser].avatar;
     commentVM.originText = self.textView.text;
     commentVM.time = @"刚刚";
-    NSString* commentToShow;
+//    NSString* commentToShow;
     //回复评论
     if (_targetCommentVM) {
         [commentVM.replyArray addObjectsFromArray:_targetCommentVM.replyArray];
-        //所要回复的评论只有一个回复人，也就是我要回复的评论已经有两个人。
-        if (commentVM.replyArray.count <= 1) {
-            commentToShow = [NSString stringWithFormat:@"%@//@%@:%@",self.textView.text,_targetCommentVM.username,_targetCommentVM.text];
-        }
-        //所要回复的评论多于一个回复人，也就是我要回复的评论已经多于两个人。
-        else {
-            PIEEntityCommentReply* reply1 = commentVM.replyArray[0];
-            commentToShow = [NSString stringWithFormat:@"%@//@%@:%@",self.textView.text,_targetCommentVM.username,_targetCommentVM.originText];
-            commentToShow = [NSString stringWithFormat:@"%@//@%@:%@",commentToShow,reply1.username,reply1.text];
-        }
-        commentVM.text = commentToShow;
+//        //所要回复的评论只有一个回复人，也就是我要回复的评论已经有两个人。
+//        if (commentVM.replyArray.count <= 1) {
+//            commentToShow = [NSString stringWithFormat:@"%@//@%@:%@",self.textView.text,_targetCommentVM.username,_targetCommentVM.text];
+//        }
+//        //所要回复的评论多于一个回复人，也就是我要回复的评论已经多于两个人。
+//        else {
+//            PIEEntityCommentReply* reply1 = commentVM.replyArray[0];
+//            commentToShow = [NSString stringWithFormat:@"%@//@%@:%@",self.textView.text,_targetCommentVM.username,_targetCommentVM.originText];
+//            commentToShow = [NSString stringWithFormat:@"%@//@%@:%@",commentToShow,reply1.username,reply1.text];
+//        }
+        commentVM.text = self.textView.text;
         
         PIEEntityCommentReply* reply = [PIEEntityCommentReply new];
         reply.uid = _targetCommentVM.uid;
@@ -451,7 +460,23 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     
 }
 
-
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Remove seperator inset
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    // Prevent the cell from inheriting the Table View's margin settings
+    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
+        [cell setPreservesSuperviewLayoutMargins:NO];
+    }
+    
+    // Explictly set your cell's layout margins
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
 
 #pragma mark - UIScrollViewDelegate Methods
 
@@ -473,8 +498,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     self.tableView.showsHorizontalScrollIndicator = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
-    self.tableView.separatorInset = UIEdgeInsetsMake(0, 60, 0, 14);
-
     if (_shouldShowHeaderView) {
         self.title = @"浏览图片";
         if (_vm.type == PIEPageTypeAsk) {
@@ -574,6 +597,10 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
             vm.userID = model.uid;
             vm.username = model.username;
             opvc.pageVM = vm;
+            [self.navigationController pushViewController:opvc animated:YES];
+        } else if (CGRectContainsPoint(cell.receiveNameLabel.frame, p)) {
+            PIEFriendViewController *opvc = [PIEFriendViewController new];
+            opvc.uid = cell.receiveNameLabel.tag;
             [self.navigationController pushViewController:opvc animated:YES];
         } else {
             NSInteger row = indexPath.row;

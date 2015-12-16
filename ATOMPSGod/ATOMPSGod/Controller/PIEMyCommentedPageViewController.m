@@ -98,8 +98,7 @@
     DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
     PIECommentViewController* vc = [PIECommentViewController new];
     vc.vm = [_dataSource objectAtIndex:indexPath.row];
-//    [nav pushViewController:vc animated:YES ];
-    [nav presentViewController:vc animated:YES completion:nil];
+    [nav pushViewController:vc animated:YES ];
 
 }
 -(void)didPullRefreshDown:(UITableView *)tableView {

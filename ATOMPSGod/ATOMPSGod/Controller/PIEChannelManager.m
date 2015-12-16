@@ -9,6 +9,7 @@
 #import "PIEChannelManager.h"
 #import "PIEChannelViewModel.h"
 #import "PIEImageEntity.h"
+#import "PIEChannelViewModel.h"
 @implementation PIEChannelManager
 + (void)getSource_Channel:(NSDictionary *)params
                     block:(void (^)(NSMutableArray<PIEChannelViewModel *> *))block {
@@ -105,19 +106,24 @@
 
 + (void)getSource_pageViewModels:(NSDictionary *)params
                    repliesResult:(void (^)
-                                  (NSMutableArray<PIEPageVM *> * repliesResultArray))repliesResultBlock
+                                  (NSMutableArray<PIEPageVM *> * repliesResultArray ,PIEChannelViewModel *vm))repliesResultBlock
 {
     [DDBaseService GET:params
                    url:URL_ChannelActivity
                  block:^(id responseObject) {
                      NSMutableArray<PIEPageVM *> *repliesResultArray = nil;
-                     
                      // 暂付阙疑
                      repliesResultArray =
                      [self pageViewModelsWithResponseObject:responseObject ColumnName:@"replies"];
                      
+                     NSDictionary *dic = [responseObject objectForKey:@"activity"];
+                     PIEChannelViewModel* vm = [PIEChannelViewModel new];
+                     vm.ID         = [[dic objectForKey:@"id"]integerValue];
+                     vm.askID      = [[dic objectForKey:@"askID"]integerValue];
+                     vm.url        = [dic objectForKey:@"url"];
+
                      if (repliesResultBlock != nil) {
-                         repliesResultBlock(repliesResultArray);
+                         repliesResultBlock(repliesResultArray,vm);
                      }
                      
                  }];

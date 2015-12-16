@@ -87,7 +87,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 {
     [super viewDidLoad];
     _isFirstLoading = YES;
-    
+    [self setupNavBar];
     [self configTableView];
     [self configFooterRefresh];
     [self configTextInput];
@@ -112,16 +112,42 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         [self resizeHeaderView];
     }];
 }
+- (void)setupNavBar {
+    
+    UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
+    buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [buttonLeft setImage:[UIImage imageNamed:@"PIE_icon_back"] forState:UIControlStateNormal];
+    UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonLeft];
+    self.navigationItem.leftBarButtonItem =  buttonItem;
+    
+    if (self.navigationController.viewControllers.count <= 1) {
+        [buttonLeft addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        [buttonLeft addTarget:self action:@selector(popSelf) forControlEvents:UIControlEventTouchUpInside];
+    }
+}
+- (void) dismiss {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+- (void)popSelf {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
+                                                  forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.navigationController.navigationBar.translucent = YES;
     self.navigationController.navigationBarHidden = NO;
 //    [MobClick beginLogPageView:@"进入浏览图片页"];
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
+                                                  forBarMetrics:UIBarMetricsDefault];
 //    [MobClick endLogPageView:@"离开浏览图片页"];
 }
 
@@ -192,6 +218,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 -(void)sendComment {
     
+    
     [self.textView resignFirstResponder];
     self.textView.placeholder = @"添加评论";
     
@@ -201,22 +228,22 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     commentVM.avatar = [DDUserManager currentUser].avatar;
     commentVM.originText = self.textView.text;
     commentVM.time = @"刚刚";
-    NSString* commentToShow;
+    //    NSString* commentToShow;
     //回复评论
     if (_targetCommentVM) {
         [commentVM.replyArray addObjectsFromArray:_targetCommentVM.replyArray];
-        //所要回复的评论只有一个回复人，也就是我要回复的评论已经有两个人。
-        if (commentVM.replyArray.count <= 1) {
-            commentToShow = [NSString stringWithFormat:@"%@//@%@:%@",self.textView.text,_targetCommentVM.username,_targetCommentVM.text];
-        }
-        //所要回复的评论多于一个回复人，也就是我要回复的评论已经多于两个人。
-        else {
-            PIEEntityCommentReply* reply1 = commentVM.replyArray[0];
-            commentToShow = [NSString stringWithFormat:@"%@//@%@:%@",self.textView.text,_targetCommentVM.username,_targetCommentVM.originText];
-            commentToShow = [NSString stringWithFormat:@"%@//@%@:%@",commentToShow,reply1.username,reply1.text];
-        }
-        commentVM.text = commentToShow;
-
+        //        //所要回复的评论只有一个回复人，也就是我要回复的评论已经有两个人。
+        //        if (commentVM.replyArray.count <= 1) {
+        //            commentToShow = [NSString stringWithFormat:@"%@//@%@:%@",self.textView.text,_targetCommentVM.username,_targetCommentVM.text];
+        //        }
+        //        //所要回复的评论多于一个回复人，也就是我要回复的评论已经多于两个人。
+        //        else {
+        //            PIEEntityCommentReply* reply1 = commentVM.replyArray[0];
+        //            commentToShow = [NSString stringWithFormat:@"%@//@%@:%@",self.textView.text,_targetCommentVM.username,_targetCommentVM.originText];
+        //            commentToShow = [NSString stringWithFormat:@"%@//@%@:%@",commentToShow,reply1.username,reply1.text];
+        //        }
+        commentVM.text = self.textView.text;
+        
         PIEEntityCommentReply* reply = [PIEEntityCommentReply new];
         reply.uid = _targetCommentVM.uid;
         reply.username = _targetCommentVM.username;
@@ -228,7 +255,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     else {
         commentVM.text  = self.textView.text;
     }
-
+    
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.source_newComment insertObject:commentVM inArrayAtIndex:0];
     [self.tableView beginUpdates];
@@ -402,21 +429,37 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    NSInteger section = indexPath.section;
-    NSInteger row = indexPath.row;
-//    if (section == 0) {
-//        _targetCommentVM = _commentsHot[row];
-//    } else if (section == 1) {
-        _targetCommentVM = _source_newComment.array[row];
-//    }
-    self.textView.placeholder = [NSString stringWithFormat:@"@%@:",_targetCommentVM.username];
-    [self.textView becomeFirstResponder];
-    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+////    NSInteger section = indexPath.section;
+//    NSInteger row = indexPath.row;
+////    if (section == 0) {
+////        _targetCommentVM = _commentsHot[row];
+////    } else if (section == 1) {
+//        _targetCommentVM = _source_newComment.array[row];
+////    }
+//    self.textView.placeholder = [NSString stringWithFormat:@"@%@:",_targetCommentVM.username];
+//    [self.textView becomeFirstResponder];
+//    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 
 }
 
-
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Remove seperator inset
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    // Prevent the cell from inheriting the Table View's margin settings
+    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
+        [cell setPreservesSuperviewLayoutMargins:NO];
+    }
+    
+    // Explictly set your cell's layout margins
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
 
 #pragma mark - UIScrollViewDelegate Methods
 
@@ -431,12 +474,15 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag|UIScrollViewKeyboardDismissModeInteractive;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[PIECommentTableCell class] forCellReuseIdentifier:MessengerCellIdentifier];
     self.tableView.tableFooterView = [UIView new];
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.showsHorizontalScrollIndicator = NO;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    self.tableView.separatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
     
+
     if (_shouldShowHeaderView) {
         self.title = @"浏览图片";
         if (_vm.type == PIEPageTypeAsk) {
@@ -451,6 +497,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         self.title = @"全部评论";
     }
 }
+
 
 
 -(void)setVm:(PIEPageVM *)vm {
@@ -545,6 +592,16 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
             vm.username = model.username;
             opvc.pageVM = vm;
             [self.navigationController pushViewController:opvc animated:YES];
+        } else if (CGRectContainsPoint(cell.receiveNameLabel.frame, p)) {
+            PIEFriendViewController *opvc = [PIEFriendViewController new];
+            opvc.uid = cell.receiveNameLabel.tag;
+            [self.navigationController pushViewController:opvc animated:YES];
+        } else {
+            NSInteger row = indexPath.row;
+            _targetCommentVM = _source_newComment.array[row];
+            self.textView.placeholder = [NSString stringWithFormat:@"@%@:",_targetCommentVM.username];
+            [self.textView becomeFirstResponder];
+            [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         }
 //        else if (CGRectContainsPoint(cell.likeButton.frame, p)) {
 //            //UI

@@ -23,6 +23,7 @@ typedef NS_ENUM(NSInteger, PIEChannelType) {
 @property (nonatomic,copy   ) NSString       * content;
 @property (nonatomic,copy   ) NSString       * banner_pic;
 @property (nonatomic,copy   ) NSString       * post_btn;
+@property (nonatomic,assign ) NSInteger        askID;
 @property (nonatomic,copy   ) NSArray<PIEPageVM *> * threads;
 @property (nonatomic,assign ) PIEChannelType channelType;
 
