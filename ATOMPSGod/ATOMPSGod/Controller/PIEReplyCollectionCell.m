@@ -18,6 +18,15 @@
     self.layer.cornerRadius = 8;
     _imageView.clipsToBounds = YES;
     _imageView.contentMode = UIViewContentModeScaleAspectFill;
+    _likeButton.userInteractionEnabled = NO;
+    [_likeButton setTitleColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.6]
+                      forState:UIControlStateNormal];
+    [_likeButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 6, 0, 0)];
+    [_likeButton setContentEdgeInsets:UIEdgeInsetsMake(0, 30, 0, 0)];
+    [_likeButton setImage:[UIImage imageNamed:@"pie_myCollection_like"]
+                 forState:UIControlStateNormal];
+
+    
 }
 -(void)setSelected:(BOOL)selected {
 }
@@ -31,9 +40,10 @@
     _type = viewModel.type;
 //    _likeButton.highlighted = viewModel.liked;
     _likeButton.imageView.image = [UIImage imageNamed:@"pie_myCollection_like"];
-    _likeButton.numberString = viewModel.likeCount;
-    _likeButton.label.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.6];
-    _likeButton.label.font = [UIFont systemFontOfSize:11];
+       [_likeButton setTitle:viewModel.likeCount
+                 forState:UIControlStateNormal];
+    
+    
 }
 
 @end
