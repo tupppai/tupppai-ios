@@ -49,6 +49,7 @@
 - (void)toggleCollectIconStatus:(BOOL)isSelected{
     if (isSelected) {
         self.sheetView.icon8.selected = YES;
+
     }
     else
     {
@@ -199,10 +200,11 @@
                         [Hud textWithLightBackground:@"取消收藏成功"];
                     }
                     
-                    [self toggleCollectIconStatus:_weakVM.collected];
                 }   else {
                     _weakVM.collected = !_weakVM.collected;
                 }
+                [self toggleCollectIconStatus:_weakVM.collected];
+                                         
             }];
         }
     }

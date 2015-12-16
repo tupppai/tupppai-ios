@@ -103,6 +103,11 @@
 
 @implementation PIEProceedingViewController
 
+static NSString *PIEProceedingAskTableViewCell_NoGapIdentifier = @"PIEProceedingAskTableViewCell_NoGap";
+
+static NSString *PIEProceedingAskTableViewCellIdentifier =
+@"PIEProceedingAskTableViewCell";
+
 #pragma mark - UI life cycles
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -175,10 +180,10 @@
     _sv.askTableView.emptyDataSetDelegate = self;
     _sv.askTableView.emptyDataSetSource   = self;
     UINib* nib = [UINib nibWithNibName:@"PIEProceedingAskTableViewCell" bundle:nil];
-    [_sv.askTableView registerNib:nib forCellReuseIdentifier:@"PIEProceedingAskTableViewCell"];
+    [_sv.askTableView registerNib:nib forCellReuseIdentifier:PIEProceedingAskTableViewCellIdentifier];
     
     UINib* nib2 = [UINib nibWithNibName:@"PIEProceedingAskTableViewCell_NoGap" bundle:nil];
-    [_sv.askTableView registerNib:nib2 forCellReuseIdentifier:@"PIEProceedingAskTableViewCell_NoGap"];
+    [_sv.askTableView registerNib:nib2 forCellReuseIdentifier:PIEProceedingAskTableViewCell_NoGapIdentifier];
 
 }
 //- (void)configDoneCollectionView {
@@ -484,11 +489,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == _sv.askTableView) {
         if (indexPath.row == 0) {
-            PIEProceedingAskTableViewCell_NoGap *cell = [tableView dequeueReusableCellWithIdentifier:@"PIEProceedingAskTableViewCell_NoGap"];
+            PIEProceedingAskTableViewCell_NoGap *cell = [tableView dequeueReusableCellWithIdentifier:PIEProceedingAskTableViewCell_NoGapIdentifier];
             [cell injectSource:[_sourceAsk objectAtIndex:indexPath.row]];
             return cell;
         } else {
-            PIEProceedingAskTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIEProceedingAskTableViewCell"];
+            PIEProceedingAskTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:PIEProceedingAskTableViewCellIdentifier];
             [cell injectSource:[_sourceAsk objectAtIndex:indexPath.row]];
             return cell;
         }

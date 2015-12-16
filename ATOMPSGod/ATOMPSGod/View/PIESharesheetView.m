@@ -54,7 +54,7 @@
                   @[@"QQ好友",@"pie_share_qqfriends"],
                   @[@"复制链接",@"pie_share_copylinks"],
                   @[@"举报",@"pie_share_report"],
-                  @[@"收藏",@"pie_share_collect"], nil];
+                  @[@"收藏",@"pie_share_collect_hollow"], nil];
 }
 - (void)generateIcons {
     _icon1 = [PIEShareIcon new];
@@ -93,7 +93,7 @@
         
         // for toggling the state of "Collect" icon
         if (i == _iconArray.count - 1) {
-            [icon setImage:[UIImage imageNamed:@"pie_social_qq"]
+            [icon setImage:[UIImage imageNamed:@"pie_share_collect"]
                   forState:UIControlStateSelected];
         }
     }
