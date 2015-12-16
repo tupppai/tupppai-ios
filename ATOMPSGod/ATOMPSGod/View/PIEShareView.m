@@ -165,6 +165,7 @@
         if (_weakVM != nil)
         {
             (self.reportActionSheet).vm = _weakVM;
+            [self dismiss];
             [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
         }
     }
