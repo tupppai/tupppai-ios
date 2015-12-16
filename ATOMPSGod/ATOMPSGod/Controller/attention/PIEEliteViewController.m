@@ -506,6 +506,9 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
             [self collect:cell.collectView shouldShowHud:YES];
         }
     }
+    // !!! BUG AWARE!!! TO-BE-REFACTORED 这里不能用shareView集成的collect方法来准确判断修改selected
+    //                                   的时机。只能这样凑合。
+    self.shareView.sheetView.icon8.selected = !self.shareView.sheetView.icon8.selected;
 
 }
 
@@ -943,7 +946,6 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
             }
         }
     }
-    
 }
 - (void)tapGestureHot:(UITapGestureRecognizer *)gesture {
     if (_sv.type == PIEPageTypeEliteHot) {

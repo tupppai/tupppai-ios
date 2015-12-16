@@ -44,10 +44,19 @@
     return _dimmingView;
 }
 
-//- (void)
-- (void)toggleCollect_Icon8 {
-    self.sheetView.icon8.highlighted = !self.sheetView.icon8.highlighted;
+
+
+- (void)toggleCollectIconStatus:(BOOL)isSelected{
+    if (isSelected) {
+        self.sheetView.icon8.selected = YES;
+
+    }
+    else
+    {
+        self.sheetView.icon8.selected = NO;
+    }
 }
+
 -(PIESharesheetView *)sheetView {
     if (!_sheetView) {
         _sheetView = [PIESharesheetView new];
@@ -157,6 +166,7 @@
         if (_weakVM != nil)
         {
             (self.reportActionSheet).vm = _weakVM;
+            [self dismiss];
             [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
         }
     }
@@ -189,9 +199,12 @@
                     } else {
                         [Hud textWithLightBackground:@"取消收藏成功"];
                     }
+                    
                 }   else {
                     _weakVM.collected = !_weakVM.collected;
                 }
+                [self toggleCollectIconStatus:_weakVM.collected];
+                                         
             }];
         }
     }

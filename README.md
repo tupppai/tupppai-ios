@@ -1,6 +1,12 @@
 #图派iOS客户端
 
-###Dev-Log: huangwei, 15-12-13:
+###Dev-Log: huangwei, 15-12-15
+- 优化ShareView的重构代码
+- (需求)频道名称不对。 ( huangwei 昨天 )
+- (需求)分享浮窗，收藏按钮不对。详如内。  ( huangwei 昨天 )
+-  (需求)【频道-单个频道】当往下滑时，发布按钮被隐藏，停顿时，发布按钮在出现。 ( huangwei 昨天 )
+
+###Dev-Log: huangwei, 15-12-14:
 - 部分UI的细调（按照Tower.im上的需求）
 - "进行中"tab中，在PIEProceedingViewController中抽离出 PIEProceedingDoneVIewController以备用，并且将后者从前者之中删除。
 - 重构shareview， 其中：
@@ -88,3 +94,5 @@ data{
 	threads: 数组，里面是装载着PiePageVM的字典数据；
 }
 ```
+
+

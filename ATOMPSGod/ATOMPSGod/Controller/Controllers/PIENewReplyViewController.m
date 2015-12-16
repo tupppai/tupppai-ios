@@ -51,6 +51,8 @@
 
 @property (nonatomic, strong) UIButton                      *takePhotoButton;
 
+@property (nonatomic, strong) MASConstraint *takePhotoButtonConstraint;
+
 @end
 
 /* Protocols */
@@ -139,7 +141,8 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
         make.centerX.equalTo(weakSelf.view.mas_centerX);
         make.height.mas_equalTo(50);
         make.width.mas_equalTo(50);
-        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-11);
+        self.takePhotoButtonConstraint =
+        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-64);
     }];
 }
 
@@ -158,6 +161,54 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
  *  remove observers while being deallocated.
  */
 -(void)dealloc {
+}
+
+#pragma mark - <UITableViewDelegate>
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [UIView animateWithDuration:0.1
+                     animations:^{
+                         [self.takePhotoButtonConstraint setOffset:50.0];
+                         [self.view layoutIfNeeded];
+                     }];
+    
+    
+    
+}
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (decelerate) {
+        [self.takePhotoButtonConstraint setOffset:-64];
+        [UIView animateWithDuration:0.6
+                              delay:0.7
+             usingSpringWithDamping:0.3
+              initialSpringVelocity:0
+                            options:0
+                         animations:^{
+                             [self.view layoutIfNeeded];
+                             
+                         } completion:^(BOOL finished) {
+                         }];
+        
+    }
+}
+
+// 处理滚动“戛然而止”的情况
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self.takePhotoButtonConstraint setOffset:-64];
+    [UIView animateWithDuration:0.6
+                          delay:0.7
+         usingSpringWithDamping:0.3
+          initialSpringVelocity:0
+                        options:0
+                     animations:^{
+                         [self.view layoutIfNeeded];
+                         
+                     } completion:^(BOOL finished) {
+                     }];
+    
+    
 }
 
 #pragma mark - <UITableViewDataSource>

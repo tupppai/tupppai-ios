@@ -23,6 +23,7 @@
 #import "DDShareManager.h"
 #import "PIEUploadVC.h"
 #import "QBImagePickerController.h"
+#import "POP.h"
 /* Variables */
 @interface PIENewAskMakeUpViewController ()
 
@@ -39,7 +40,7 @@
 @property (nonatomic, strong) UIButton                    *takePhotoButton;
 @property (nonatomic, strong) QBImagePickerController     *QBImagePickerController;
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
-
+@property (nonatomic, strong) MASConstraint               *takePhotoButtonBottomConstraint;
 
 @end
 
@@ -134,7 +135,8 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         make.centerX.equalTo(weakSelf.view.mas_centerX);
         make.height.mas_equalTo(50);
         make.width.mas_equalTo(50);
-        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-11);
+        self.takePhotoButtonBottomConstraint =
+        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-64);
     }];
     
     if (_channelVM) {
@@ -250,6 +252,54 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
 -(void)didPullUpCollectionViewBottom:(UICollectionView *)collectionView {
     [self loadMoreData_ask];
+}
+
+#pragma mark - <UICollectionViewDelegate>
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [UIView animateWithDuration:0.1
+                     animations:^{
+                         [self.takePhotoButtonBottomConstraint setOffset:50.0];
+                         [self.view layoutIfNeeded];
+                     }];
+    
+    
+    
+}
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (decelerate) {
+        [self.takePhotoButtonBottomConstraint setOffset:-64];
+        [UIView animateWithDuration:0.6
+                              delay:0.7
+             usingSpringWithDamping:0.3
+              initialSpringVelocity:0
+                            options:0
+                         animations:^{
+                             [self.view layoutIfNeeded];
+
+                         } completion:^(BOOL finished) {
+                         }];
+        
+    }
+}
+
+// 处理滚动“戛然而止”的情况
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self.takePhotoButtonBottomConstraint setOffset:-64];
+    [UIView animateWithDuration:0.6
+                          delay:0.7
+         usingSpringWithDamping:0.3
+          initialSpringVelocity:0
+                        options:0
+                     animations:^{
+                         [self.view layoutIfNeeded];
+                         
+                     } completion:^(BOOL finished) {
+                     }];
+    
+
 }
 
 #pragma mark - <UICollectionViewDataSource>

@@ -56,6 +56,9 @@
 
 @property (nonatomic, strong) QBImagePickerController* QBImagePickerController;
 
+/* Autolayout animation */
+@property (nonatomic, strong) MASConstraint *goPsButtonBottomConstraint;
+
 @end
 
 /* Protocols */
@@ -139,7 +142,8 @@ static const NSUInteger kItemsCountPerPage = 10;
         make.width.mas_equalTo(120);
         make.height.mas_equalTo(32);
         
-        make.bottom.equalTo(self.view.mas_bottom).with.offset(-16);
+        self.goPsButtonBottomConstraint =
+        make.bottom.equalTo(self.view.mas_bottom).with.offset(-64);
         make.centerX.equalTo(self.view.mas_centerX);
     }];
 }
@@ -154,6 +158,52 @@ static const NSUInteger kItemsCountPerPage = 10;
 }
 
 #pragma mark - <UITableViewDelegate>
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [UIView animateWithDuration:0.1
+                     animations:^{
+                         [self.goPsButtonBottomConstraint setOffset:50.0];
+                         [self.view layoutIfNeeded];
+                     }];
+    
+    
+    
+}
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (decelerate) {
+        [self.goPsButtonBottomConstraint setOffset:-64];
+        [UIView animateWithDuration:0.6
+                              delay:0.7
+             usingSpringWithDamping:0.3
+              initialSpringVelocity:0
+                            options:0
+                         animations:^{
+                             [self.view layoutIfNeeded];
+                             
+                         } completion:^(BOOL finished) {
+                         }];
+        
+    }
+}
+
+// 处理滚动“戛然而止”的情况
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self.goPsButtonBottomConstraint setOffset:-64];
+    [UIView animateWithDuration:0.6
+                          delay:0.7
+         usingSpringWithDamping:0.3
+          initialSpringVelocity:0
+                        options:0
+                     animations:^{
+                         [self.view layoutIfNeeded];
+                         
+                     } completion:^(BOOL finished) {
+                     }];
+    
+    
+}
 
 
 #pragma mark - <UITableViewDataSource>
