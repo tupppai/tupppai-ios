@@ -129,6 +129,18 @@
     UIBarButtonItem *barBackButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     self.navigationItem.leftBarButtonItem =  barBackButtonItem;
     UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(tapCancel)];
+    
+    
+    NSShadow *textShadow    = [[NSShadow alloc] init];
+    textShadow.shadowOffset = CGSizeMake(0, 0);
+    textShadow.shadowColor  = [UIColor clearColor];
+    [rightButtonItem setTitleTextAttributes:
+           @{NSShadowAttributeName:textShadow,
+             NSFontAttributeName:[UIFont systemFontOfSize:14.0],
+             NSForegroundColorAttributeName:[UIColor blackColor]}
+                                   forState:UIControlStateNormal];
+    
+    
     self.navigationItem.rightBarButtonItem =  rightButtonItem;
     
     _textField2 = [[UITextField alloc]initWithFrame:CGRectMake(0 , 0, SCREEN_WIDTH - 100, 30)];
