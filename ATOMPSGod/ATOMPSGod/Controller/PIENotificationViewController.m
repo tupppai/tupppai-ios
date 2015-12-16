@@ -53,14 +53,15 @@
     UITapGestureRecognizer* tapGes = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnTableView:)];
     [self.tableView addGestureRecognizer:tapGes];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTableView) name:@"updateNoticationStatus" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardDidHide:)
-                                                 name:UIKeyboardDidHideNotification
-                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(keyboardWillShow:)
+//                                                 name:UIKeyboardWillShowNotification
+//                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(keyboardDidHide:)
+//                                                 name:UIKeyboardDidHideNotification
+//                                               object:nil];
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateNoticationStatus)
                                                  name:@"updateNoticationStatus"
@@ -93,12 +94,13 @@
 - (void)updateNoticationStatus {
     [self getDataSource];
 }
-- (void)keyboardWillShow:(id)sender {
-    self.textInputbarHidden = NO;
-}
-- (void)keyboardDidHide:(id)sender {
-    self.textInputbarHidden = YES;
-}
+//- (void)keyboardWillShow:(id)sender {
+//    self.textInputbarHidden = NO;
+//}
+//- (void)keyboardDidHide:(id)sender {
+//    self.textInputbarHidden = YES;
+//}
+
 
 - (void)tapOnTableView:(UITapGestureRecognizer*)gesture {
     CGPoint location = [gesture locationInView:self.tableView];
@@ -110,9 +112,18 @@
             PIENotificationCommentTableViewCell* cell = [self.tableView cellForRowAtIndexPath:selectedIndexPath];
             CGPoint p = [gesture locationInView:cell];
             if (CGRectContainsPoint(cell.replyLabel.frame,p)) {
-                self.textInputbarHidden = NO;
-                self.textView.placeholder = [NSString stringWithFormat:@"@%@:",vm.username];
-                [self.textView becomeFirstResponder];
+//                self.textInputbarHidden = NO;
+//                self.textView.placeholder = [NSString stringWithFormat:@"@%@:",vm.username];
+//                [self.textView becomeFirstResponder];
+                PIECommentViewController* vc = [PIECommentViewController new];
+                PIEPageVM* pageVM = [PIEPageVM new];
+                pageVM.ID = vm.targetID;
+                pageVM.type = vm.targetType;
+                vc.vm = pageVM;
+                vc.shouldDownloadVMSource = NO;
+                vc.shouldShowHeaderView = NO;
+                [self.navigationController pushViewController:vc animated:YES];
+                
             }     else       if (CGRectContainsPoint(cell.avatarView.frame,p) || (CGRectContainsPoint(cell.usernameLabel.frame,p))) {
                 PIEFriendViewController* vc = [PIEFriendViewController new];
                 vc.uid = vm.senderID;
@@ -124,16 +135,26 @@
                 pageVM.ID = vm.targetID;
                 pageVM.type = vm.targetType;
                 vc.vm = pageVM;
-                vc.shouldDownloadVMSource = YES;
+                vc.shouldDownloadVMSource = NO;
+                vc.shouldShowHeaderView = NO;
                 [self.navigationController pushViewController:vc animated:YES];
             }
         } else    if (vm.type == 2) {
             PIENotificationReplyTableViewCell* cell = [self.tableView cellForRowAtIndexPath:selectedIndexPath];
             CGPoint p = [gesture locationInView:cell];
             if (CGRectContainsPoint(cell.replyLabel.frame,p)) {
-                self.textInputbarHidden = NO;
-                self.textView.placeholder = [NSString stringWithFormat:@"@%@:",vm.username];
-                [self.textView becomeFirstResponder];
+//                self.textInputbarHidden = NO;
+//                self.textView.placeholder = [NSString stringWithFormat:@"@%@:",vm.username];
+//                [self.textView becomeFirstResponder];
+                PIECommentViewController* vc = [PIECommentViewController new];
+                PIEPageVM* pageVM = [PIEPageVM new];
+                pageVM.ID = vm.targetID;
+                pageVM.type = vm.targetType;
+                vc.vm = pageVM;
+                vc.shouldDownloadVMSource = NO;
+                vc.shouldShowHeaderView = NO;
+                [self.navigationController pushViewController:vc animated:YES];
+                
             } else if (CGRectContainsPoint(cell.avatarView.frame,p) || (CGRectContainsPoint(cell.usernameLabel.frame,p))) {
                 PIEFriendViewController* vc = [PIEFriendViewController new];
                 vc.uid = vm.senderID;
@@ -145,7 +166,9 @@
                 pageVM.ID = vm.targetID;
                 pageVM.type = vm.targetType;
                 vc.vm = pageVM;
-                vc.shouldDownloadVMSource = YES;
+                vc.shouldDownloadVMSource = NO;
+                vc.shouldShowHeaderView = NO;
+
                 [self.navigationController pushViewController:vc animated:YES];
             }
         } else if (vm.type == 3) {
@@ -223,6 +246,7 @@
     self.textView.placeholder = @"回复ta";
     self.textInputbarHidden = YES;
 }
+
 - (void)setupRefresh_Footer {
     NSMutableArray *animatedImages = [NSMutableArray array];
     for (int i = 1; i<=6; i++) {

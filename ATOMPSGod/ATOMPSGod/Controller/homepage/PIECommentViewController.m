@@ -87,7 +87,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 {
     [super viewDidLoad];
     _isFirstLoading = YES;
-    
+    [self setupNavBar];
     [self configTableView];
     [self configFooterRefresh];
     [self configTextInput];
@@ -111,6 +111,26 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         }
         [self resizeHeaderView];
     }];
+}
+- (void)setupNavBar {
+    
+    UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
+    buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [buttonLeft setImage:[UIImage imageNamed:@"PIE_icon_back"] forState:UIControlStateNormal];
+    UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonLeft];
+    self.navigationItem.leftBarButtonItem =  buttonItem;
+    
+    if (self.navigationController.viewControllers.count <= 1) {
+        [buttonLeft addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        [buttonLeft addTarget:self action:@selector(popSelf) forControlEvents:UIControlEventTouchUpInside];
+    }
+}
+- (void) dismiss {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+- (void)popSelf {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated

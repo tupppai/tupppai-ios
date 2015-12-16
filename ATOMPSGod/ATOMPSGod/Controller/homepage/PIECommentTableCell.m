@@ -36,8 +36,8 @@
     [_avatarView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView).with.offset(14);
         make.left.equalTo(self.contentView).with.offset(14);
-        make.width.equalTo(@(kMessageTableViewCellAvatarHeight));
-        make.height.equalTo(@(kMessageTableViewCellAvatarHeight));
+        make.width.equalTo(@(28));
+        make.height.equalTo(@(28));
     }];
     [_usernameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView).with.offset(13);
@@ -79,10 +79,17 @@
     [self.avatarView setImageWithURL:[NSURL URLWithString:vm.avatar]];
     if (vm.replyArray.count > 0) {
         PIEEntityCommentReply* replierModal = [vm.replyArray objectAtIndex:0];
-        self.receiveNameLabel.text= replierModal.username;
-        self.receiveNameLabel.tag = replierModal.uid;
-        self.replyLabel.hidden = NO;
-        self.receiveNameLabel.hidden = NO;
+
+        if (replierModal.uid!=[DDUserManager currentUser].uid) {
+            self.receiveNameLabel.text= replierModal.username;
+            self.receiveNameLabel.tag = replierModal.uid;
+            self.replyLabel.hidden = NO;
+            self.receiveNameLabel.hidden = NO;
+        } else {
+            self.replyLabel.hidden = YES;
+            self.receiveNameLabel.hidden = YES;
+        }
+
     } else {
         self.replyLabel.hidden = YES;
         self.receiveNameLabel.hidden = YES;
