@@ -165,7 +165,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     /**
      *  参数：传递上次更新的时间
      *
-     *  @param _timeStamp_ask 上次更新的shijian (NSDate now)
+     *  @param _timeStamp_ask 上次更新的时间 (NSDate now)
      */
     [param setObject:@(_timeStamp_ask) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
@@ -421,32 +421,18 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
 
 
-#pragma mark - methods on Sharing<ATOMShareViewDelegate>
 
-#pragma mark - ATOMShareViewDelegate
+#pragma mark - <PIEShareViewDelegate>
 
 - (void)shareViewDidShare:(PIEShareView *)shareView socialShareType:(ATOMShareType)shareType
 {
-    [DDShareManager postSocialShare2:_selectedVM
-                 withSocialShareType:shareType
-                               block:^(BOOL success) {
-                                   // update ui elements(点赞数 + 1)
-                                   [self updateShareStatus];
-                               }];
+   // refresh ui element on main thread after successful sharing, do nothing otherwise.
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [self updateShareStatus];
+    }];
+    
 }
 
-- (void)shareViewDidPaste:(PIEShareView *)shareView
-{
-
-}
-
-- (void)shareViewDidReportUnusualUsage:(PIEShareView *)shareView
-{
-}
-
-- (void)shareViewDidCollect:(PIEShareView *)shareView
-{
-}
 
 - (void)shareViewDidCancel:(PIEShareView *)shareView
 {
@@ -459,23 +445,19 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     
 }
 
-- (void)updateShareStatus {
-    
-    /**
-     *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面ReplyCell的点赞数和分享数
-     */
-    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
-    [self updateStatus];
-}
-
 /**
- *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面中ReplyCell的点赞数和分享数
+ *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面ReplyCell的分享数
  */
-- (void)updateStatus {
+- (void)updateShareStatus {
+    _selectedVM.shareCount =
+    [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue] +1];
+//    [self updateStatus];
     if (_selectedIndexPath) {
         [_collectionView_ask reloadItemsAtIndexPaths:@[_selectedIndexPath]];
     }
 }
+
+
 
 #pragma mark - Target-actions
 - (void)takePhoto {
@@ -494,13 +476,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
--(PIEShareView *)shareView {
-    if (!_shareView) {
-        _shareView = [PIEShareView new];
-        _shareView.delegate = self;
-    }
-    return _shareView;
-}
 
 
 #pragma mark - Lazy loadings
@@ -584,6 +559,13 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 }
 
 
+-(PIEShareView *)shareView {
+    if (!_shareView) {
+        _shareView = [PIEShareView new];
+        _shareView.delegate = self;
+    }
+    return _shareView;
+}
 
 
 

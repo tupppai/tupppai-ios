@@ -16,7 +16,7 @@
 #import "JGActionSheet.h"
 #import "PIEShareView.h"
 
-@interface PIECarousel_ItemView : PIECustomViewFromXib<UITableViewDataSource,UITableViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate>
+@interface PIECarousel_ItemView : PIECustomViewFromXib
 @property (weak, nonatomic) IBOutlet UIImageView *imageView_type;
 @property (weak, nonatomic) IBOutlet UIButton *button_name;
 @property (weak, nonatomic) IBOutlet UILabel *label_time;

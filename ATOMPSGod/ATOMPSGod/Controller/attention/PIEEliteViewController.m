@@ -32,7 +32,10 @@
 #import "PIEActionSheet_PS.h"
 #import "DeviceUtil.h"
 
-@interface PIEEliteViewController ()<UITableViewDelegate,UITableViewDataSource,PWRefreshBaseTableViewDelegate,UIScrollViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource,SwipeViewDelegate,SwipeViewDataSource>
+
+/* Variables */
+@interface PIEEliteViewController ()
+
 @property (nonatomic, strong) PIEEliteScrollView *sv;
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
 
@@ -52,20 +55,57 @@
 @property (nonatomic, assign)  long long timeStamp_follow;
 @property (nonatomic, assign)  long long timeStamp_hot;
 
-@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
+
+// TO-BE-REFACTOR: selectedIndexPath-> selectedIndexPath_follow, selectedIndexPath_hot
+//@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
+@property (nonatomic, strong) NSIndexPath *selectedIndexPath_follow;
+@property (nonatomic, strong) NSIndexPath *selectedIndexPath_hot;
+
+
 @property (nonatomic, strong) PIEPageVM *selectedVM;
 @property (nonatomic, strong)  PIEActionSheet_PS * psActionSheet;
 @property (nonatomic, strong)  PIEShareView * shareView;
 
 @end
 
+/* Protocols */
+@interface PIEEliteViewController (TableView)
+<UITableViewDelegate,UITableViewDataSource>
+@end
+
+// UITableViewDelegate继承于UIScrollViewDelegate，所以无需再声明。
+//
+//@interface PIEEliteViewController (ScrollView)
+//<UIScrollViewDelegate>
+//@end
+
+@interface PIEEliteViewController (RefreshBaseTableView)
+<PWRefreshBaseTableViewDelegate>
+@end
+
+@interface PIEEliteViewController (PIEShareView)
+<PIEShareViewDelegate>
+@end
+
+@interface PIEEliteViewController (SwipeView)
+<SwipeViewDelegate,SwipeViewDataSource>
+@end
+
+@interface PIEEliteViewController (DZNEmptyDataSet)
+<DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
+@end
+
+@interface PIEEliteViewController (JGActionSheet)
+<JGActionSheetDelegate>
+@end
+
 @implementation PIEEliteViewController
 
-static  NSString* askIndentifier = @"PIEEliteFollowAskTableViewCell";
-static  NSString* replyIndentifier = @"PIEEliteFollowReplyTableViewCell";
+static  NSString* askIndentifier      = @"PIEEliteFollowAskTableViewCell";
+static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
 
 static  NSString* hotReplyIndentifier = @"PIEEliteHotReplyTableViewCell";
-static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
+static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -118,14 +158,30 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
         [self getSourceIfEmpty_banner];
     }
 }
+
+// TO-BE-REFACTOR:updateStatus和updateShareStatus几无二致，而且只在viewWillAppear中调用了一次。
 - (void)updateStatus {
-    if (_selectedIndexPath) {
-        if (_sv.type == PIEPageTypeEliteFollow) {
-            [_sv.tableFollow reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-        } else if (_sv.type == PIEPageTypeEliteHot) {
-            [_sv.tableHot reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-        }
+//    if (_selectedIndexPath) {
+//        if (_sv.type == PIEPageTypeEliteFollow) {
+//            [_sv.tableFollow reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+//        } else if (_sv.type == PIEPageTypeEliteHot) {
+//            [_sv.tableHot reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+//        }
+//    }
+    
+    //以上被注释的是重构前的代码
+    
+    
+    if (_selectedIndexPath_follow != nil &&
+        _sv.type == PIEPageTypeEliteFollow) {
+        [_sv.tableFollow reloadRowsAtIndexPaths:@[_selectedIndexPath_follow]
+                               withRowAnimation:UITableViewRowAnimationAutomatic];
+    }else if (_selectedIndexPath_hot != nil &&
+              _sv.type == PIEPageTypeEliteHot){
+        [_sv.tableHot reloadRowsAtIndexPaths:@[_selectedIndexPath_hot]
+                            withRowAnimation:UITableViewRowAnimationAutomatic];
     }
+    
 }
 #pragma mark - init methods
 
@@ -281,7 +337,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
 #pragma mark - UITableView Datasource and delegate
 
-#pragma mark - UITableViewDataSource
+#pragma mark - <UITableViewDataSource>
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableView == _sv.tableFollow) {
@@ -323,7 +379,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
     return nil;
 }
 
-#pragma mark - UITableViewDelegate
+#pragma mark - <UITableViewDelegate>
 
 //- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 //    if (tableView == _sv.tableFollow) {
@@ -361,9 +417,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 
 
 
-- (void)showShareView:(PIEPageVM *)pageVM {
-    [self.shareView show:pageVM];
-}
+
 
 -(void)follow:(UIImageView*)followView {
     followView.highlighted = !followView.highlighted;
@@ -452,82 +506,14 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 }
 
 
-#pragma mark - ATOMShareViewDelegate
+#pragma mark - <PIEShareViewDelegate> and its related methods
 
-- (void)updateShareStatus {
-    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
-    if (_selectedIndexPath) {
-        if (_sv.type == PIEPageTypeEliteFollow) {
-            [_sv.tableFollow reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        }else {
-            [_sv.tableHot reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        }
-    }
-
-}
-- (void)shareViewDidShare:(PIEShareView *)shareView socialShareType:(ATOMShareType)shareType
+- (void)shareViewDidShare:(PIEShareView *)shareView
 {
-    [DDShareManager postSocialShare2:_selectedVM
-                 withSocialShareType:shareType
-                               block:^(BOOL success) {
-                                   [self updateShareStatus];
-                               }];
-}
-
-
-- (void)shareViewDidPaste:(PIEShareView *)shareView
-{
-
-}
-
-- (void)shareViewDidReportUnusualUsage:(PIEShareView *)shareView
-{
-}
-
-- (void)shareViewDidCollect:(PIEShareView *)shareView
-{
-    
-    
-    // 下面是直接copy -tapShare8 的代码 = =
-//    if (_sv.type == PIEPageTypeEliteHot) {
-//        if (_selectedVM.type == PIEPageTypeAsk) {
-//            [self collectAsk];
-//        } else {
-//            PIEEliteHotReplyTableViewCell* cell = [_sv.tableHot cellForRowAtIndexPath:_selectedIndexPath];
-//            [self collect:cell.collectView shouldShowHud:YES];
-//        }
-//    } else {
-//        if (_selectedVM.type == PIEPageTypeAsk) {
-//            [self collectAsk];
-//        } else {
-//            PIEEliteFollowReplyTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
-//            [self collect:cell.collectView shouldShowHud:YES];
-//        }
-//    }
-//    // !!! BUG AWARE!!! TO-BE-REFACTORED 这里不能用shareView集成的collect方法来准确判断修改selected
-//    //                                   的时机。只能这样凑合。
-//    self.shareView.sheetView.icon8.selected = !self.shareView.sheetView.icon8.selected;
-//
-}
-
-// 下面这块要怎么重构呢？为什么会出现一个不一样的收藏PageVM的逻辑……
--(void)tapShare8 {
-//    if (_sv.type == PIEPageTypeEliteHot) {
-//        if (_selectedVM.type == PIEPageTypeAsk) {
-//            [self collectAsk];
-//        } else {
-//            PIEEliteHotReplyTableViewCell* cell = [_sv.tableHot cellForRowAtIndexPath:_selectedIndexPath];
-//            [self collect:cell.collectView shouldShowHud:YES];
-//        }
-//    } else {
-//        if (_selectedVM.type == PIEPageTypeAsk) {
-//            [self collectAsk];
-//        } else {
-//            PIEEliteFollowReplyTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
-//            [self collect:cell.collectView shouldShowHud:YES];
-//        }
-//    }
-
+    // refresh ui element on main thread after successful sharing, do nothing otherwise.
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [self updateShareStatus];
+    }];
 }
 
 - (void)shareViewDidCancel:(PIEShareView *)shareView
@@ -536,6 +522,58 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 }
 
 
+/**
+ *  用户点击了updateShareStatus之后（在弹出的窗口分享），刷新本页面ReplyCell的分享数
+ */
+- (void)updateShareStatus {
+    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
+//    if (_selectedIndexPath) {
+//        if (_sv.type == PIEPageTypeEliteFollow) {
+//            [_sv.tableFollow reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//        }else {
+//            [_sv.tableHot reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//        }
+//    }
+    
+    // 上面被注释掉的是重构前的代码
+    if (_selectedIndexPath_follow != nil &&
+        _sv.type == PIEPageTypeEliteFollow) {
+        [_sv.tableFollow reloadRowsAtIndexPaths:@[_selectedIndexPath_follow] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+    else if (_selectedIndexPath_hot != nil &&
+             _sv.type == PIEPageTypeEliteHot)
+    {
+        [_sv.tableHot reloadRowsAtIndexPaths:@[_selectedIndexPath_hot]
+                            withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+    
+}
+
+- (void)showShareView:(PIEPageVM *)pageVM {
+    [self.shareView show:pageVM];
+}
+
+/*
+// 下面这块要怎么重构呢？为什么会出现一个不一样的收藏PageVM的逻辑……
+//-(void)tapShare8 {
+    //    if (_sv.type == PIEPageTypeEliteHot) {
+    //        if (_selectedVM.type == PIEPageTypeAsk) {
+    //            [self collectAsk];
+    //        } else {
+    //            PIEEliteHotReplyTableViewCell* cell = [_sv.tableHot cellForRowAtIndexPath:_selectedIndexPath];
+    //            [self collect:cell.collectView shouldShowHud:YES];
+    //        }
+    //    } else {
+    //        if (_selectedVM.type == PIEPageTypeAsk) {
+    //            [self collectAsk];
+    //        } else {
+    //            PIEEliteFollowReplyTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
+    //            [self collect:cell.collectView shouldShowHud:YES];
+    //        }
+    //    }
+    
+//}
+ */
 #pragma mark - getDataSource
 - (void)getRemoteSourceBanner {
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
@@ -770,15 +808,15 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 - (void)longPressOnFollow:(UILongPressGestureRecognizer *)gesture {
     if (_sv.type == PIEPageTypeEliteFollow) {
         CGPoint location = [gesture locationInView:_sv.tableFollow];
-        _selectedIndexPath = [_sv.tableFollow indexPathForRowAtPoint:location];
-        _selectedVM = _sourceFollow[_selectedIndexPath.row];
-        if (_selectedIndexPath) {
+        _selectedIndexPath_follow = [_sv.tableFollow indexPathForRowAtPoint:location];
+        _selectedVM = _sourceFollow[_selectedIndexPath_follow.row];
+        if (_selectedIndexPath_follow) {
             //关注  求p
-            _selectedVM = _sourceFollow[_selectedIndexPath.row];
+            _selectedVM = _sourceFollow[_selectedIndexPath_follow.row];
             
             if (_selectedVM.type == PIEPageTypeAsk) {
                 
-                PIEEliteFollowAskTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
+                PIEEliteFollowAskTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath_follow];
                 CGPoint p = [gesture locationInView:cell];
                 if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                     //进入热门详情
@@ -788,7 +826,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
             
             //关注  作品
             else {
-                PIEEliteFollowReplyTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
+                PIEEliteFollowReplyTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath_follow];
                 CGPoint p = [gesture locationInView:cell];
                 if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                     [self showShareView:_selectedVM];
@@ -800,14 +838,14 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 - (void)tapGestureFollow:(UITapGestureRecognizer *)gesture {
     if (_sv.type == PIEPageTypeEliteFollow) {
         CGPoint location = [gesture locationInView:_sv.tableFollow];
-        _selectedIndexPath = [_sv.tableFollow indexPathForRowAtPoint:location];
-        if (_selectedIndexPath) {
+        _selectedIndexPath_follow = [_sv.tableFollow indexPathForRowAtPoint:location];
+        if (_selectedIndexPath_follow) {
             //关注  求p
-            _selectedVM = _sourceFollow[_selectedIndexPath.row];
+            _selectedVM = _sourceFollow[_selectedIndexPath_follow.row];
             
             if (_selectedVM.type == PIEPageTypeAsk) {
                 
-                PIEEliteFollowAskTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
+                PIEEliteFollowAskTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath_follow];
                 CGPoint p = [gesture locationInView:cell];
                 if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                     //进入热门详情
@@ -856,7 +894,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
             //关注  作品
             
             else {
-                PIEEliteFollowReplyTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath];
+                PIEEliteFollowReplyTableViewCell* cell = [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath_follow];
                 CGPoint p = [gesture locationInView:cell];
                 //点击小图
                 //点击小图
@@ -919,14 +957,14 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 - (void)longPressOnHot:(UILongPressGestureRecognizer *)gesture {
     if (_sv.type == PIEPageTypeEliteHot) {
         CGPoint location = [gesture locationInView:_sv.tableHot];
-        _selectedIndexPath = [_sv.tableHot indexPathForRowAtPoint:location];
-        if (_selectedIndexPath) {
+        _selectedIndexPath_hot = [_sv.tableHot indexPathForRowAtPoint:location];
+        if (_selectedIndexPath_hot) {
             //关注  求p
-            _selectedVM = _sourceHot[_selectedIndexPath.row];
+            _selectedVM = _sourceHot[_selectedIndexPath_hot.row];
             
             if (_selectedVM.type == PIEPageTypeAsk) {
                 
-                PIEEliteHotAskTableViewCell* cell = [_sv.tableHot cellForRowAtIndexPath:_selectedIndexPath];
+                PIEEliteHotAskTableViewCell* cell = [_sv.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
                 CGPoint p = [gesture locationInView:cell];
                 if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                     [self showShareView:_selectedVM];
@@ -935,7 +973,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
             //关注  作品
             
             else {
-                PIEEliteHotReplyTableViewCell* cell = [_sv.tableHot cellForRowAtIndexPath:_selectedIndexPath];
+                PIEEliteHotReplyTableViewCell* cell = [_sv.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
                 CGPoint p = [gesture locationInView:cell];
                 //点击大图
                 if (CGRectContainsPoint(cell.theImageView.frame, p)) {
@@ -949,14 +987,14 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
 - (void)tapGestureHot:(UITapGestureRecognizer *)gesture {
     if (_sv.type == PIEPageTypeEliteHot) {
         CGPoint location = [gesture locationInView:_sv.tableHot];
-        _selectedIndexPath = [_sv.tableHot indexPathForRowAtPoint:location];
-        if (_selectedIndexPath) {
+        _selectedIndexPath_hot = [_sv.tableHot indexPathForRowAtPoint:location];
+        if (_selectedIndexPath_hot) {
             //关注  求p
-            _selectedVM = _sourceHot[_selectedIndexPath.row];
+            _selectedVM = _sourceHot[_selectedIndexPath_hot.row];
             
             if (_selectedVM.type == PIEPageTypeAsk) {
                 
-                PIEEliteHotAskTableViewCell* cell = [_sv.tableHot cellForRowAtIndexPath:_selectedIndexPath];
+                PIEEliteHotAskTableViewCell* cell = [_sv.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
                 CGPoint p = [gesture locationInView:cell];
                 //点击小图
                 //点击大图
@@ -1006,7 +1044,7 @@ static  NSString* hotAskIndentifier = @"PIEEliteHotAskTableViewCell";
             
             
             else {
-                PIEEliteHotReplyTableViewCell* cell = [_sv.tableHot cellForRowAtIndexPath:_selectedIndexPath];
+                PIEEliteHotReplyTableViewCell* cell = [_sv.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
                 CGPoint p = [gesture locationInView:cell];
                 //点击小图
                 if (CGRectContainsPoint(cell.thumbView.frame, p)) {

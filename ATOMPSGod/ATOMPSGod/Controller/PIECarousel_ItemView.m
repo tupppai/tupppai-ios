@@ -23,6 +23,21 @@
 @property (nonatomic, strong)  PIEShareView * shareView;
 
 @end
+
+/* Protocols */
+@interface PIECarousel_ItemView (UITableView)
+<UITableViewDataSource,UITableViewDelegate>
+@end
+
+@interface PIECarousel_ItemView (ShareView)
+<PIEShareViewDelegate>
+@end
+
+@interface PIECarousel_ItemView (JGActionSheet)
+<JGActionSheetDelegate>
+@end
+
+
 @implementation PIECarousel_ItemView
 
 -(instancetype)initWithFrame:(CGRect)frame {
@@ -75,8 +90,9 @@
     [self like:_pageLikeButton];
 }
 - (void)tapShare {
-    // BIG_REFACTOR!!! PIE_SHAREVIEW show/showInView + 赋值！
 //    [self.shareView show];
+   
+    [self showShareView];
 }
 - (void)tapComment {
     PIECommentViewController2* vc = [PIECommentViewController2 new];
@@ -115,59 +131,7 @@
     return self;
 }
 
--(void)setVm:(PIEPageVM *)vm {
-    if (_vm != vm) {
-        _vm = vm;
-    }
-    _pageButton_comment.numberString = vm.commentCount;
-    _pageButton_share.numberString = vm.shareCount;
-    _label_time.text = vm.publishTime;
-//    _label_content.text = vm.content;
-    [_button_name setTitle:vm.username forState:UIControlStateNormal];
-    [_button_avatar setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
-    if (vm.type == PIEPageTypeAsk) {
-        _imageView_type.image = [UIImage imageNamed:@"carousel_type_ask"];
-        _pageLikeButton.hidden = YES;
-        _bangView.hidden = NO;
-        _pageLikeButton.imageView.image = [UIImage imageNamed:@""];
-    } else {
-        _pageLikeButton.hidden = NO;
-        _bangView.hidden = YES;
-        _imageView_type.image = [UIImage imageNamed:@"carousel_type_reply"];
-        _pageLikeButton.hidden = NO;
-        _pageLikeButton.highlighted = vm.liked;
-        _pageLikeButton.numberString = vm.likeCount;
-    }
-    
-//    [_imageView_page setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-    [DDService downloadImage:vm.imageURL withBlock:^(UIImage *image) {
-        _view_pageImage.image = image;
-    }];
-    
-    
-    if ([vm.content isEqualToString:@""]) {
-        [_textView_content mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.equalTo(@0).with.priorityMedium();
-        }];
-    }
-//    else {
-//        NSString * htmlString = vm.content;
-//        NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSRTFTextDocumentType } documentAttributes:nil error:nil];
-//        [attrStr addAttribute:NSFontAttributeName value:[UIFont lightTupaiFontOfSize:15] range:NSMakeRange(0, attrStr.length)];
-//        [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0x000000 andAlpha:0.9] range:NSMakeRange(0, attrStr.length)];
-//        _textView_content.attributedText = attrStr;
-//    }
-    _textView_content.font = [UIFont lightTupaiFontOfSize:15];
-    _textView_content.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.9];
-    _textView_content.text = vm.content;
-    [self getDataSource];
-
-    
-}
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-    
-}
+#pragma mark 0 - <UITableViewDataSource>
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _source_newComment.count;
 }
@@ -186,12 +150,18 @@
     return nil;
 }
 
-
+#pragma mark - <UITableViewDelegate>
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 80;
 }
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+    
+}
+
 
 #pragma mark - GetDataSource
 
@@ -210,22 +180,7 @@
 }
 
 
--(PIEShareView *)shareView {
-    if (!_shareView) {
-        _shareView = [PIEShareView new];
-        _shareView.delegate = self;
-    }
-    return _shareView;
-}
-- (PIEActionSheet_PS *)psActionSheet {
-    if (!_psActionSheet) {
-        _psActionSheet = [PIEActionSheet_PS new];
-        _psActionSheet.vm = _vm;
-    }
-    return _psActionSheet;
-}
-
-
+#pragma mark - Gesture events
 -(void)like:(PIEPageLikeButton*)likeView {
     likeView.selected = !likeView.selected;
     
@@ -243,36 +198,93 @@
     }];
 }
 
-#pragma mark - <PIEShareViewDelegate>
+#pragma mark - <PIEShareViewDelegate> and its related methods
 - (void)updateShareStatus {
+    // ??? 没有重刷UI
     _vm.shareCount = [NSString stringWithFormat:@"%zd",[_vm.shareCount integerValue]+1];
 }
 
-- (void)shareViewDidShare:(PIEShareView *)shareView socialShareType:(ATOMShareType)shareType
+- (void)showShareView
 {
-    [DDShareManager postSocialShare2:_vm
-                 withSocialShareType:shareType
-                               block:^(BOOL success) {
-                                   [self updateShareStatus];
-                               }];
+    [self.shareView show:_vm];
 }
 
-- (void)shareViewDidPaste:(PIEShareView *)shareView
+- (void)shareViewDidShare:(PIEShareView *)shareView
 {
-
+    // refresh ui element on main thread after successful sharing, do nothing otherwise.
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [self updateShareStatus];
+    }];
 }
-
-- (void)shareViewDidReportUnusualUsage:(PIEShareView *)shareView
-{
-}
-
-- (void)shareViewDidCollect:(PIEShareView *)shareView
-{
-}
-
 
 - (void)shareViewDidCancel:(PIEShareView *)shareView
 {
     [shareView dismiss];
+}
+
+#pragma mark - Lazy loadings
+
+- (PIEShareView *)shareView {
+    if (!_shareView) {
+        _shareView = [PIEShareView new];
+        _shareView.delegate = self;
+    }
+    return _shareView;
+}
+- (PIEActionSheet_PS *)psActionSheet {
+    if (!_psActionSheet) {
+        _psActionSheet = [PIEActionSheet_PS new];
+        _psActionSheet.vm = _vm;
+    }
+    return _psActionSheet;
+}
+
+#pragma mark - Setters
+-(void)setVm:(PIEPageVM *)vm {
+    if (_vm != vm) {
+        _vm = vm;
+    }
+    _pageButton_comment.numberString = vm.commentCount;
+    _pageButton_share.numberString = vm.shareCount;
+    _label_time.text = vm.publishTime;
+    //    _label_content.text = vm.content;
+    [_button_name setTitle:vm.username forState:UIControlStateNormal];
+    [_button_avatar setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+    if (vm.type == PIEPageTypeAsk) {
+        _imageView_type.image = [UIImage imageNamed:@"carousel_type_ask"];
+        _pageLikeButton.hidden = YES;
+        _bangView.hidden = NO;
+        _pageLikeButton.imageView.image = [UIImage imageNamed:@""];
+    } else {
+        _pageLikeButton.hidden = NO;
+        _bangView.hidden = YES;
+        _imageView_type.image = [UIImage imageNamed:@"carousel_type_reply"];
+        _pageLikeButton.hidden = NO;
+        _pageLikeButton.highlighted = vm.liked;
+        _pageLikeButton.numberString = vm.likeCount;
+    }
+    
+    //    [_imageView_page setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+    [DDService downloadImage:vm.imageURL withBlock:^(UIImage *image) {
+        _view_pageImage.image = image;
+    }];
+    
+    
+    if ([vm.content isEqualToString:@""]) {
+        [_textView_content mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.equalTo(@0).with.priorityMedium();
+        }];
+    }
+    //    else {
+    //        NSString * htmlString = vm.content;
+    //        NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSRTFTextDocumentType } documentAttributes:nil error:nil];
+    //        [attrStr addAttribute:NSFontAttributeName value:[UIFont lightTupaiFontOfSize:15] range:NSMakeRange(0, attrStr.length)];
+    //        [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0x000000 andAlpha:0.9] range:NSMakeRange(0, attrStr.length)];
+    //        _textView_content.attributedText = attrStr;
+    //    }
+    _textView_content.font = [UIFont lightTupaiFontOfSize:15];
+    _textView_content.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.9];
+    _textView_content.text = vm.content;
+    [self getDataSource];
 }
 @end

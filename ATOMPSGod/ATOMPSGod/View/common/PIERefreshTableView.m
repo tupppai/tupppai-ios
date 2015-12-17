@@ -41,7 +41,7 @@
         footer.refreshingTitleHidden = YES;
         footer.stateLabel.hidden = YES;
         
-        /*BUG FIX: 为了避免因为returnValueCount == 0而让footer一直扯着底部不断死循环加载数据，设置footer要
+        /*!!!: 为了避免因为returnValueCount == 0而让footer一直扯着底部不断死循环加载数据，设置footer要
                    拉高到footer高度的1.4倍的时候再出发loadMore方法。
          */
         footer.triggerAutomaticallyRefreshPercent = 1.4;

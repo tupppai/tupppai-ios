@@ -491,15 +491,34 @@ static const NSUInteger kItemsCountPerPage = 10;
 }
 
 
+#pragma mark - <PIEShareViewDelegate>
+- (void)shareViewDidShare:(PIEShareView *)shareView
+{
+    // refresh ui element on main thread after successful sharing, do nothing otherwise.
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [self updateShareStatus];
+    }];
+}
+
+
+
+- (void)shareViewDidCancel:(PIEShareView *)shareView
+{
+    [shareView dismiss];
+}
+
 #pragma mark - Sharing-related method
-#pragma mark - methods on Sharing<ATOMShareViewDelegate>
+/**
+ *  用户点击了updateShareStatus之后（在弹出的窗口完成分享），刷新本页面的分享数（两个页面的UI元素的同步）
+ */
 - (void)updateShareStatus {
     
-    /**
-     *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面的点赞数和分享数（两个页面的UI元素的同步）
-     */
+    
     _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
-    [self updateStatus];
+    //    [self updateStatus]; 将刷新的方法摆到了这里
+    if (_selectedIndexPath) {
+        [self.tableView reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
 }
 
 - (void)showShareView:(PIEPageVM *)pageVM {
@@ -507,47 +526,8 @@ static const NSUInteger kItemsCountPerPage = 10;
     
 }
 
-/**
- *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面的点赞数和分享数
- */
-- (void)updateStatus {
-    if (_selectedIndexPath) {
-        [self.tableView reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-    }
-}
-
-#pragma mark - <PIEShareViewDelegate>
-/*
- 以下代理方法在用户点击了shareView中的8个button的其中一个（分享到新浪，微信，微博，etc.) 的时候被调用
- */
-
-- (void)shareViewDidShare:(PIEShareView *)shareView socialShareType:(ATOMShareType)shareType
-{
-    [DDShareManager postSocialShare2:_selectedVM
-                 withSocialShareType:shareType
-                               block:^(BOOL success) {
-                                   [self updateShareStatus];
-                               }];
-}
-
-- (void)shareViewDidPaste:(PIEShareView *)shareView
-{
-
-}
-
-- (void)shareViewDidReportUnusualUsage:(PIEShareView *)shareView
-{
-}
 
 
-- (void)shareViewDidCollect:(PIEShareView *)shareView
-{
-}
-
-- (void)shareViewDidCancel:(PIEShareView *)shareView
-{
-    [shareView dismiss];
-}
 
 #pragma mark - qb_imagePickerController delegate
 -(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
