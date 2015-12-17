@@ -476,7 +476,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     params[@"channel_id"] = @(self.currentChannelViewModel.ID);
-    params[@"page"]       = @(2);
+    params[@"page"]       = @(2); // !!! missing currentIndex
     params[@"size"]       = @(20);
     
     // --- Double -> Long long int
