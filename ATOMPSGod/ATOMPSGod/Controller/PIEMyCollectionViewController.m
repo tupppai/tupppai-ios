@@ -14,7 +14,7 @@
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
 #import "DeviceUtil.h"
-#import "PIECommentViewController2.h"
+#import "PIECommentViewController.h"
 @interface PIEMyCollectionViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (nonatomic, strong)  PIERefreshTableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -77,7 +77,7 @@
     
     PIEPageVM* vm = [_dataSource objectAtIndex:indexPath.row];
     if ([vm.replyCount integerValue] <= 0 && vm.type == PIEPageTypeAsk) {
-        PIECommentViewController2 *vc_comment = [PIECommentViewController2 new];
+        PIECommentViewController *vc_comment = [PIECommentViewController new];
         vc_comment.vm = vm;
         DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
         DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];

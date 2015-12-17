@@ -14,15 +14,10 @@
 + (void)getSource_Channel:(NSDictionary *)params
                     block:(void (^)(NSMutableArray<PIEChannelViewModel *> *))block;
 
-+ (void)getSource_pageViewModels:(NSDictionary *)params
-                     resultBlock:(void (^)(NSMutableArray<PIEPageVM *>
-                                           *latestAskForPSResultArray,
-                                           NSMutableArray<PIEPageVM *>
-                                           *usersRepliesResultArray))resultBlock
-                      completion:(void (^)(void))completionBlock;
-
-+ (void)getSource_pageViewModels:(NSDictionary *)params
-                   repliesResult:(void (^)
-                                  (NSMutableArray<PIEPageVM *> * repliesResultArray ,PIEChannelViewModel *vm))repliesResultBlock;
++ (void)getSource_channelPages:(NSDictionary *)params
+                   resultBlock:(void (^)
+                                (NSMutableArray<PIEPageVM *>
+                                 *pageArray))resultBlock
+                    completion:(void (^)(void))completionBlock;
 @end
 

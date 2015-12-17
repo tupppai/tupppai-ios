@@ -26,7 +26,7 @@
 @implementation PIETransitioning_CarouselHome
 
 -(NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-    return 0.2;
+    return 0.3;
 }
 
 -(void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
@@ -39,77 +39,67 @@
     UIView *containerView = [transitionContext containerView];
     
     
-    CGFloat scale_h = (414-40)/414.0;
-    CGFloat scale_v = (736-94)/736.0;
-    
-    CGFloat width  = SCREEN_WIDTH *scale_h;
-    CGFloat height = SCREEN_HEIGHT*scale_v;
-    CGFloat margin_v = (SCREEN_HEIGHT - height);
-    UIView * wView = [UIView new];
-    
-    
-    if (self.isPresentation) {
-        wView.frame = CGRectMake((SCREEN_WIDTH-width)/2, SCREEN_HEIGHT, width, containerView.frame.size.height);
-    } else {
-        wView.frame = CGRectMake((SCREEN_WIDTH-width)/2, margin_v, width, containerView.frame.size.height);
-    }
-    wView.layer.cornerRadius = 10;
-    wView.clipsToBounds = YES;
-
-    wView.backgroundColor = [UIColor whiteColor];
-    if (self.isPresentation) {
+    if ( self.isPresentation) {
         [containerView addSubview:toView];
-        [containerView addSubview:wView];
+        UIViewController *animatingViewController = toViewController;
+        UIView *animatingView = animatingViewController.view;
+        animatingView.alpha = 0.0;
+        
+        CGRect onScreenFrame = [transitionContext finalFrameForViewController:animatingViewController];
+        CGRect offScreenFrame = CGRectOffset(onScreenFrame, 0, onScreenFrame.size.height);
+        animatingView.frame = offScreenFrame;
+        [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0.0 usingSpringWithDamping:2 initialSpringVelocity:1 options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionBeginFromCurrentState animations:^{
+            animatingView.frame = onScreenFrame;
+            animatingView.alpha = 1.0;
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.8 animations:^{
+                animatingView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
+            }];
+
+            [transitionContext completeTransition:YES];
+        }];
     } else {
-//        [containerView addSubview:fromView];
-//        [containerView addSubview:wView];
+        UIViewController *animatingViewController = fromViewController;
+        UIView *animatingView = animatingViewController.view;
+        animatingView.alpha = 1.0;
+        
+        CGRect onScreenFrame = [transitionContext finalFrameForViewController:animatingViewController];
+        CGRect offScreenFrame = CGRectOffset(onScreenFrame, 0, onScreenFrame.size.height);
+        animatingView.frame = onScreenFrame;
+        animatingView.backgroundColor = [UIColor clearColor];
+        [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0.0 usingSpringWithDamping:2 initialSpringVelocity:1 options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionBeginFromCurrentState animations:^{
+            animatingView.frame = offScreenFrame;
+            animatingView.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            [fromView removeFromSuperview];
+            [transitionContext completeTransition:YES];
+        }];
     }
+
+
     
-    
-    UIViewController *animatingViewController = self.isPresentation ? toViewController : fromViewController;
-    UIView *animatingView = self.isPresentation ? toView : fromView;
-    
-    animatingView.alpha = self.isPresentation? 0.0:0.8;
-    
-    CGRect onScreenFrame = [transitionContext finalFrameForViewController:animatingViewController];
-    CGRect offScreenFrame = CGRectOffset(onScreenFrame, 0, onScreenFrame.size.height);
-    
-//    CGRect initialFrame = self.isPresentation ? offScreenFrame : onScreenFrame;
-    CGRect finalFrame = self.isPresentation ? onScreenFrame : offScreenFrame;
-    
-//        animatingView.frame = initialFrame;
-    
-    animatingView.frame = finalFrame;
+}
+
+
+
+//
+//    CGFloat scale_h = (414-40)/414.0;
+//    CGFloat scale_v = (736-94)/736.0;
+//
+//    CGFloat width  = SCREEN_WIDTH *scale_h;
+//    CGFloat height = SCREEN_HEIGHT*scale_v;
+//    CGFloat margin_v = (SCREEN_HEIGHT - height);
+//    UIView * wView = [UIView new];
+
 
 //    if (self.isPresentation) {
-//        animatingView.frame = finalFrame;
+//        wView.frame = CGRectMake((SCREEN_WIDTH-width)/2, SCREEN_HEIGHT, width, containerView.frame.size.height);
 //    } else {
-//        animatingView.frame = initialFrame;
-//        animatingView.backgroundColor = [UIColor whiteColor];
+//        wView.frame = CGRectMake((SCREEN_WIDTH-width)/2, margin_v, width, containerView.frame.size.height);
 //    }
+//    wView.layer.cornerRadius = 10;
+//    wView.clipsToBounds = YES;
 
-
-    [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0.0 usingSpringWithDamping:10 initialSpringVelocity:5 options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionBeginFromCurrentState animations:^{
-        if (!self.isPresentation) {
-            animatingView.frame = finalFrame;
-        }
-        
-        animatingView.alpha = self.isPresentation? 1.0:0.0;
-        if (self.isPresentation) {
-            wView.frame = CGRectMake((SCREEN_WIDTH-width)/2, margin_v, width, containerView.frame.size.height);
-        } else {
-            wView.frame = CGRectMake((SCREEN_WIDTH-width)/2, SCREEN_HEIGHT, width, containerView.frame.size.height);
-        }
-        
-    } completion:^(BOOL finished) {
-//        if (!self.isPresentation) {
-            [fromView removeFromSuperview];
-//        }
-        
-        [wView removeFromSuperview];
-       
-        [transitionContext completeTransition:YES];
-    }];
-}
+//    wView.backgroundColor = [UIColor whiteColor];
 
 @end

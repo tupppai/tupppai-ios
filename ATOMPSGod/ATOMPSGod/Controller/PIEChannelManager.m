@@ -20,8 +20,8 @@
                      
                      if (responseObject) {
                          NSMutableArray* retArray = [NSMutableArray new];
-                         NSDictionary* data       = [responseObject objectForKey:@"data"];
-                         NSArray* categories      = [data objectForKey:@"categories"];
+//                         NSDictionary* data       = [responseObject objectForKey:@"data"];
+                         NSArray* categories      = [responseObject objectForKey:@"data"];
                          
                          
                          for (NSDictionary* dic in categories) {
@@ -34,6 +34,8 @@
                              vm.title      = [dic objectForKey:@"display_name"];
                              vm.content    = [dic objectForKey:@"description"];
                              vm.url        = [dic objectForKey:@"url"];
+                             vm.askID      = [[dic objectForKey:@"ask_id"]integerValue];
+
                              NSString *category_type = [dic objectForKey:@"category_type"];
                              if ([category_type isEqualToString:@"activity"]) {
                                  vm.channelType = PIEChannelTypeActivity;
@@ -63,38 +65,48 @@
                  }];
 }
 
-
-
-+ (void)getSource_pageViewModels:(NSDictionary *)params
++ (void)getSource_channelPages:(NSDictionary *)params
                      resultBlock:(void (^)
                                   (NSMutableArray<PIEPageVM *>
-                                   *latestAskForPSResultArray,
-                                   NSMutableArray<PIEPageVM *>
-                                   *usersRepliesResultArray))resultBlock
+                                   *pageArray))resultBlock
                       completion:(void (^)(void))completionBlock
 {
     [DDBaseService GET:params
-                   url:URL_ChannelGetDetailThreads
+                   url:@"category/threads"
                  block:^(id responseObject) {
                      if (responseObject != nil)
                      {
-                         NSMutableArray<PIEPageVM *> *latestAskForPSResultArray
-                         = nil;
                          
-                         NSMutableArray<PIEPageVM *> *usersRepliesResultArray = nil;
+                         NSMutableArray <PIEPageVM *> *retArray = [NSMutableArray array];
+                         NSArray *dataArray                 = responseObject[@"data"];
                          
-                         latestAskForPSResultArray =
-                         [self
-                          pageViewModelsWithResponseObject:responseObject
-                          ColumnName:@"ask"];
-                         
-                         usersRepliesResultArray =
-                         [self
-                          pageViewModelsWithResponseObject:responseObject
-                          ColumnName:@"replies"];
-                         
+                         // Dictionary -> Model -> ViewModel
+                         for (NSDictionary *dict in dataArray) {
+                             
+                             PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:dict error:NULL];
+                             
+                             /*
+                              TODO: TO-BE-REFACTORED
+                              NSMutableArray<NSDictionary *> -> NSMutableArray<PIEImageEntity *>,
+                              然后再让前者的指针指向后者（是否会出现类型冲突？或者是歧义？）
+                              */
+                             NSMutableArray *thumbArray = [NSMutableArray array];
+                             for (NSDictionary *imageEntityDict in entity.thumbEntityArray) {
+                                 PIEImageEntity *imageEntity =
+                                 [MTLJSONAdapter modelOfClass:[PIEImageEntity class]
+                                           fromJSONDictionary:imageEntityDict
+                                                        error:nil];
+                                 [thumbArray addObject:imageEntity];
+                             }
+                             entity.thumbEntityArray = thumbArray;
+                             
+                             PIEPageVM *vm = [[PIEPageVM alloc] initWithPageEntity:entity];
+                             
+                             [retArray addObject:vm];
+                         }
+
                          if (resultBlock != nil) {
-                             resultBlock(latestAskForPSResultArray, usersRepliesResultArray);
+                             resultBlock(retArray);
                          }
                          
                          if (completionBlock != nil) {
@@ -104,74 +116,5 @@
                  }];
 }
 
-+ (void)getSource_pageViewModels:(NSDictionary *)params
-                   repliesResult:(void (^)
-                                  (NSMutableArray<PIEPageVM *> * repliesResultArray ,PIEChannelViewModel *vm))repliesResultBlock
-{
-    [DDBaseService GET:params
-                   url:URL_ChannelActivity
-                 block:^(id responseObject) {
-                     NSMutableArray<PIEPageVM *> *repliesResultArray = nil;
-                     // 暂付阙疑
-                     repliesResultArray =
-                     [self pageViewModelsWithResponseObject:responseObject ColumnName:@"replies"];
-                     
-                     NSDictionary *dic = [responseObject objectForKey:@"activity"];
-                     PIEChannelViewModel* vm = [PIEChannelViewModel new];
-                     vm.ID         = [[dic objectForKey:@"id"]integerValue];
-                     vm.askID      = [[dic objectForKey:@"askID"]integerValue];
-                     vm.url        = [dic objectForKey:@"url"];
-
-                     if (repliesResultBlock != nil) {
-                         repliesResultBlock(repliesResultArray,vm);
-                     }
-                     
-                 }];
-}
-
-#pragma mark - private helpers
-
-/**
- *  NSDictionary, NSString -> NSArray<PIEPageVM *>;
-    解析JSON数据为PIEPageVM对象数组
- *
- *  @param columnName     JSON的字段名
- *
- */
-+ (NSMutableArray <PIEPageVM *> *)
-pageViewModelsWithResponseObject:(NSDictionary *)responseObject
-                      ColumnName:(NSString *)columnName
-{
-    NSMutableArray <PIEPageVM *> *retArray = [NSMutableArray array];
-    NSDictionary *dataDict                 = responseObject[@"data"];
-    NSArray *pageVMDicts                   = dataDict[columnName];
-    
-    // Dictionary -> Model -> ViewModel
-    for (NSDictionary *dict in pageVMDicts) {
-        
-        PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:dict error:NULL];
-        
-        /*
-            TODO: TO-BE-REFACTORED
-            NSMutableArray<NSDictionary *> -> NSMutableArray<PIEImageEntity *>, 
-            然后再让前者的指针指向后者（是否会出现类型冲突？或者是歧义？）
-         */
-        NSMutableArray *thumbArray = [NSMutableArray array];
-        for (NSDictionary *imageEntityDict in entity.thumbEntityArray) {
-            PIEImageEntity *imageEntity =
-            [MTLJSONAdapter modelOfClass:[PIEImageEntity class]
-                      fromJSONDictionary:imageEntityDict
-                                   error:nil];
-            [thumbArray addObject:imageEntity];
-        }
-        entity.thumbEntityArray = thumbArray;
-        
-        PIEPageVM *vm = [[PIEPageVM alloc] initWithPageEntity:entity];
-        
-        [retArray addObject:vm];
-    }
-    
-    return retArray;
-}
 
 @end

@@ -12,8 +12,4 @@
 
 @property (nonatomic, strong)PIEChannelViewModel *currentChannelViewModel;
 
-
-
-
-
 @end

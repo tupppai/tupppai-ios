@@ -62,8 +62,6 @@
     }
 }
 -(void) loadMoreHotData {
-    NSLog(@"%s", __func__);
-
     if (_psDelegate && [_psDelegate respondsToSelector:@selector(didPullRefreshUp:)]) {
         __weak typeof(self) weakSelf = self;
         [_psDelegate didPullRefreshUp:weakSelf];

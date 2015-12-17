@@ -11,7 +11,7 @@
 #import "PIECommentTableCell.h"
 #import "PIEFriendViewController.h"
 #import "DDNavigationController.h"
-#import "PIECommentViewController2.h"
+#import "PIECommentViewController.h"
 #import "AppDelegate.h"
 #import "PIEActionSheet_PS.h"
 //#import "PIEWebViewViewController.h"
@@ -95,7 +95,7 @@
     [self showShareView];
 }
 - (void)tapComment {
-    PIECommentViewController2* vc = [PIECommentViewController2 new];
+    PIECommentViewController* vc = [PIECommentViewController new];
     vc.vm = _vm;
     [vc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     DDNavigationController* nav = [[DDNavigationController alloc]initWithRootViewController:vc];

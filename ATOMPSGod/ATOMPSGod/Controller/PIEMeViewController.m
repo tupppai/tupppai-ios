@@ -47,7 +47,11 @@
 @property (nonatomic, assign) CGPoint startPanLocation;
 
 @property (nonatomic) CAPSPageMenu *pageMenu;
+
+@property (nonatomic, assign) long long timeStamp_updateCurrentUser;
+
 @end
+
 
 @implementation PIEMeViewController
 
@@ -56,7 +60,7 @@
     [self setupNavBar];
     [self setupViews];
     [self setupPageMenu];
-    [self updateViewsWithData];
+//    [self updateViewsWithData];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(scrollUp)
                                                  name:@"PIEMeScrollUp"
@@ -126,15 +130,34 @@
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-//    [self update];
+    [self update];
 }
 
 - (void)update {
-    [DDUserManager DDGetUserInfoAndUpdateMe:^(BOOL success) {
-        if (success) {
-            [self updateViewsWithData];
+    BOOL shouldUpdate = NO;
+    long long currentTimeStamp = [[NSDate date]timeIntervalSince1970];
+    if (_timeStamp_updateCurrentUser) {
+        long long timeStamp_gap = currentTimeStamp - _timeStamp_updateCurrentUser;
+        if (timeStamp_gap>300) {
+            shouldUpdate = YES;
+            _timeStamp_updateCurrentUser = currentTimeStamp;
+        } else {
+            shouldUpdate = NO;
         }
-    }];
+    } else {
+        shouldUpdate = YES;
+        _timeStamp_updateCurrentUser = currentTimeStamp;
+    }
+    
+    if (shouldUpdate) {
+        
+        [DDUserManager DDGetUserInfoAndUpdateMe:^(BOOL success) {
+            if (success) {
+                [self updateViewsWithData];
+            }
+        }];
+    }
+
 }
 
 

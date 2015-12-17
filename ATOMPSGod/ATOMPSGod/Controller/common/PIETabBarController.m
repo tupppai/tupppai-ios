@@ -26,6 +26,8 @@
 @property (nonatomic, strong) DDNavigationController *navigation_proceeding;
 @property (nonatomic, strong) DDNavigationController *navigation_me;
 @property (nonatomic, strong) DDNavigationController *preNav;
+@property (nonatomic, assign) long long timeStamp_error;
+
 @end
 
 @implementation PIETabBarController
@@ -45,6 +47,7 @@
     [super viewDidLoad];
     self.delegate = self;
     [self setupTitle];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorOccuredRET) name:@"NetworkErrorCall" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NetworkSignOutRET) name:@"NetworkSignOutCall" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DoUploadJob:) name:@"UploadCall" object:nil];
 }
@@ -61,6 +64,27 @@
 -(void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UploadCall"object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkSignOutCall"object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkErrorCall" object:nil];
+}
+-(void) errorOccuredRET {
+    BOOL shouldShowError = NO;
+    long long currentTimeStamp = [[NSDate date]timeIntervalSince1970];
+    if (_timeStamp_error) {
+        long long timeStamp_gap = currentTimeStamp - _timeStamp_error;
+        if (timeStamp_gap>10) {
+            shouldShowError = YES;
+            _timeStamp_error = currentTimeStamp;
+        } else {
+            shouldShowError = NO;
+        }
+    } else {
+        shouldShowError = YES;
+        _timeStamp_error = currentTimeStamp;
+    }
+    
+    if (shouldShowError) {
+        [Hud text:@"网路好像有点问题～" inView:self.view];
+    }
 }
 - (void) DoUploadJob:(NSNotification *)notification
 {
@@ -93,7 +117,7 @@
                               PIELaunchViewController *lvc = [[PIELaunchViewController alloc] init];
                               [AppDelegate APP].window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
                           }];
-    alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
+    alertView.transitionStyle = SIAlertViewTransitionStyleDropDown;
     [alertView show];
 }
 
@@ -141,7 +165,6 @@
     _navigation_me.tabBarItem.selectedImage =
     [[UIImage imageNamed:@"pie_tab_5_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     [self updateTabbarAvatar];
-//        [_centerNav.tabBarItem setImageInsets:UIEdgeInsetsMake(5, 0, -5, 0)];
     self.viewControllers = [NSArray arrayWithObjects:_navigation_elite, _navigation_new,_navigation_proceeding, _navigation_me, nil];
 }
 
@@ -149,12 +172,33 @@
 - (void)updateTabbarAvatar {
     [DDService downloadImage:[DDUserManager currentUser].avatar withBlock:^(UIImage *image) {
         if (image) {
-            UIImage* scaledImage = [Util imageWithImage:image scaledToSize:CGSizeMake(28, 28) circlize:YES];
+            UIImage* scaledImage = [Util imageWithImage:image scaledToSize:CGSizeMake(26,26) circlize:YES];
             _avatarImage = scaledImage;
             _navigation_me.tabBarItem.image = [_avatarImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-            _navigation_me.tabBarItem.selectedImage = [[_avatarImage maskWithImage:[UIImage imageFromColor:[UIColor colorWithHex:0xe23022 andAlpha:0.7]]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+            _navigation_me.tabBarItem.selectedImage = [[self getSelectedTabImage] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         }
     }];
+}
+
+- (UIImage*)getSelectedTabImage {
+    
+    UIImage* maskImage = [UIImage imageNamed:@"pie_tab_mask"];
+    UIImage *resultImage = nil;
+    UIGraphicsBeginImageContextWithOptions(_avatarImage.size, NO, 0.0);
+
+    CGFloat width  = _avatarImage.size.width;
+    CGFloat height = _avatarImage.size.height;
+
+    [maskImage drawInRect:CGRectMake(0, 0, width, height)];
+    
+    CGRect rect2 = CGRectMake(1,1, width-2, height-2);
+    [_avatarImage drawInRect:rect2];
+    
+    resultImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    return resultImage;
+    
 }
 
 -(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
