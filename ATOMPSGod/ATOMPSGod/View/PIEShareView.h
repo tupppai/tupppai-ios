@@ -16,24 +16,15 @@
 
 @required
 
-- (void)shareViewDidShare:(PIEShareView *)shareView
-          socialShareType:(ATOMShareType)shareType;
-
-
-/* !!! 循环引用的隐忧？我主动把PIEPageVM的prperty设置为weak*/
-- (void)shareViewDidPaste:(PIEShareView *)shareView;
-- (void)shareViewDidReportUnusualUsage:(PIEShareView *)shareView;
-- (void)shareViewDidCollect:(PIEShareView *)shareView;
-
-
-- (void)shareViewDidCancel:(PIEShareView *)shareView;
+- (void)shareViewDidShare:(nonnull PIEShareView *)shareView;
+- (void)shareViewDidCancel:(nonnull PIEShareView *)shareView;
 
 @end
 
 @interface PIEShareView:UIView
-@property (strong, nonatomic) PIESharesheetView *sheetView;
-@property (strong, nonatomic) UIVisualEffectView *dimmingView;
-@property (nonatomic, strong)  PIEActionSheet_Report * reportActionSheet;
+@property (nonnull, strong, nonatomic) PIESharesheetView *sheetView;
+@property (nonnull, strong, nonatomic) UIVisualEffectView *dimmingView;
+@property (nonnull, nonatomic, strong)  PIEActionSheet_Report * reportActionSheet;
 
 @property (nonatomic, weak) id<PIEShareViewDelegate> delegate;
 
@@ -41,7 +32,10 @@
 //- (void)show;
 
 /* 替换版本 */
-- (void)showInView:(UIView *)view animated:(BOOL)animated pageViewModel:(PIEPageVM *)pageVM;
-- (void)show:(PIEPageVM *)pageVM;
+- (void)showInView:(nonnull UIView *)view
+          animated:(BOOL)animated
+     pageViewModel:(nonnull PIEPageVM *)pageVM;
+
+- (void)show:(nonnull PIEPageVM *)pageVM;
 -(void)dismiss;
 @end

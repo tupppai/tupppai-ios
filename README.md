@@ -1,4 +1,69 @@
 #图派iOS客户端
+###Dev-Log: huangwei, 15-12-17
+#### shareView代理的重构思路：
+
+```objc
+// in protocol <PIEShareViewDelegate>
+@protocol PIEShareViewDelegate <NSObject>
+@required
+- (void)shareViewDidShare:(PIEShareView *)shareView;
+- (void)shareViewDidCancel:(PIEShareView *)shareView;
+```
+
+在shareView的public方法中，在show的时候就传入viewModel参数：
+
+```objc
+- (void)showInView:(UIView *)view animated:(BOOL)animated pageViewModel:(PIEPageVM *)pageVM;
+- (void)show:(PIEPageVM *)pageVM;
+-(void)dismiss;
+```
+
+所以，一个shareView在一打开的时候就由传入的viewModel决定了里面需要分享的是哪一张求P，而到了网络请求没问题受到回复之后，再修改shareView里面的icon的selected状态：
+
+```objc
+- (void)tapGes8:(UIGestureRecognizer*)gesture {
+    
+    // Collect this PageVM
+    if (_delegate != nil &&
+        [_delegate respondsToSelector:@selector(shareViewDidCollect:)]) {
+        [_delegate shareViewDidCollect:self];
+        
+        if (_weakVM != nil) {
+            NSMutableDictionary *param = [NSMutableDictionary new];
+            
+            if (_weakVM.collected) {
+                //如果之前已经收藏，那么就取消收藏
+                [param setObject:@(0) forKey:@"status"];
+            } else {
+                //反之，收藏
+                [param setObject:@(1) forKey:@"status"];
+            }
+            [DDCollectManager toggleCollect:param
+                               withPageType:_weakVM.type
+                                     withID:_weakVM.ID withBlock:^(NSError *error) {
+                if (error == nil) {
+                    // 成功返回数据，代表切换收藏这个状态已经被服务器承认，这个时候再切换状态
+                    _weakVM.collected = !_weakVM.collected;
+                    if (  _weakVM.collected) {
+                        [Hud textWithLightBackground:@"收藏成功"];
+                    } else {
+                        [Hud textWithLightBackground:@"取消收藏成功"];
+                    }
+                    [self toggleCollectIconStatus:_weakVM.collected];
+                    
+                }   else {
+                    // error occur on networking
+//                    [Hud textWithLightBackground:@"服务器不鸟你"];
+                }
+                                         
+            }];
+        }
+    }
+}
+
+```
+
+在两个代理方法中，shareViewDidShare回调到控制器让它更新本页面的点赞数；cancel则让控制器dismiss shareView。其他操作一概与控制器***无关***。
 
 ###Dev-Log: huangwei, 15-12-16
 - (需求)举报弹窗，应该是在替换分享浮窗显示，而不是在分享浮窗之上显示。详如内。
@@ -17,6 +82,7 @@
 - 部分UI的细调（按照Tower.im上的需求）
 - "进行中"tab中，在PIEProceedingViewController中抽离出 PIEProceedingDoneVIewController以备用，并且将后者从前者之中删除。
 - 重构shareview， 其中：
+
 ```objc
 // in protocol <PIEShareViewDelegate>
 @protocol PIEShareViewDelegate <NSObject>
