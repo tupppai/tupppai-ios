@@ -140,7 +140,6 @@
     
 }
 - (void)tapGes8:(UIGestureRecognizer*)gesture {
-    
     // Collect this PageVM
     
     // ASSUMPTION: _weakVM is not nil
@@ -277,13 +276,41 @@
      withID:pageViewModel.ID withBlock:^(NSError *error) {
          if (error == nil) {
              // 成功返回数据，代表切换收藏这个状态已经被服务器承认，这个时候再切换状态
+             
              pageViewModel.collected = !pageViewModel.collected;
+             NSInteger collectedCount = [pageViewModel.collectCount integerValue];
+             collectedCount += 1;
+             pageViewModel.collectCount = [NSString stringWithFormat:@"%zd", collectedCount];
+             
+             
              if (pageViewModel.collected) {
                  [Hud textWithLightBackground:@"收藏成功"];
              } else {
                  [Hud textWithLightBackground:@"取消收藏成功"];
              }
+             
+             /* 
+              收藏成功，需要刷新三个地方的UI元素：
+                - 自己shareView的收藏Icon(星星：实心 < -- > 空心) 这个是toggleCollectionIconStatus搞定；
+                - 触发shareView的controller自己页面的replyCell, askCell的收藏（仅在EliteHomeVC里面的Cell自带星星，其他的controller中的cell是没有收藏Icon了。使用代理回调）
+                - (最蛋痛)EliteHomeVC -> Carousel_ItemView -> PIECommentVC, 假如是在PIECommentVC点开了
+                    shareview点击了收藏，那么得通知到两级以上的EliteHomeVC中的Cell去更新星星的icon。可选方案：
+                    KVO，Notification。(观察者模式)
+              */
+             
+             // 刷新UI-1
              [self toggleCollectIconStatus:pageViewModel.collected];
+             
+             // 刷新UI-2
+             if (_delegate != nil &&
+                 [_delegate respondsToSelector:@selector(shareViewDidCollect:)]) {
+                 
+                 // 很遗憾，使用代理刷新UI，只能影响上一层的viewController。
+                 [_delegate shareViewDidCollect:self];
+             }
+             
+             // 刷新UI-3
+             // nothing yet, TODO
              
          }   else {
              // error occur on networking, do not toggle _weakVM.collected.

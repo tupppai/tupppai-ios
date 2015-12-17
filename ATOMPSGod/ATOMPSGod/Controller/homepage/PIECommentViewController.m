@@ -849,6 +849,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 {
     // ??? 没有重刷UI
     _vm.shareCount = [NSString stringWithFormat:@"%zd",[_vm.shareCount integerValue] +1];
+    
 }
 
 - (void)shareViewDidShare:(PIEShareView *)shareView
