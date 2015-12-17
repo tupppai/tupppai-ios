@@ -14,6 +14,9 @@
 #define height_sheet 251.0f
 @interface PIEShareView ()
 @property (nonatomic,weak)  PIEPageVM* weakVM;
+@property (nonnull, strong, nonatomic) PIESharesheetView     *sheetView;
+@property (nonnull, strong, nonatomic) UIVisualEffectView    *dimmingView;
+@property (nonnull, nonatomic, strong) PIEActionSheet_Report * reportActionSheet;
 @end
 @implementation PIEShareView
 

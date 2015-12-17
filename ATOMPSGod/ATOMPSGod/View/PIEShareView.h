@@ -22,20 +22,28 @@
 @end
 
 @interface PIEShareView:UIView
-@property (nonnull, strong, nonatomic) PIESharesheetView *sheetView;
-@property (nonnull, strong, nonatomic) UIVisualEffectView *dimmingView;
-@property (nonnull, nonatomic, strong)  PIEActionSheet_Report * reportActionSheet;
 
-@property (nonatomic, weak) id<PIEShareViewDelegate> delegate;
 
-//- (void)showInView:(UIView *)view animated:(BOOL)animated;
-//- (void)show;
+@property (nonatomic, weak           ) id<PIEShareViewDelegate > delegate;
 
-/* 替换版本 */
+
+/**
+ *  show shareView on a certain PIEPageVM(a view Model)
+ */
 - (void)showInView:(nonnull UIView *)view
           animated:(BOOL)animated
      pageViewModel:(nonnull PIEPageVM *)pageVM;
 
+
+/**
+ *  show shareView on a certain PIEPageVM(a viewModel)
+ *
+ *  @param pageVM <#pageVM description#>
+ */
 - (void)show:(nonnull PIEPageVM *)pageVM;
--(void)dismiss;
+
+/**
+ *  dismiss shareView
+ */
+- (void)dismiss;
 @end

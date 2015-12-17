@@ -65,6 +65,36 @@
 
 在两个代理方法中，shareViewDidShare回调到控制器让它更新本页面的点赞数；cancel则让控制器dismiss shareView。其他操作一概与控制器***无关***。
 
+####将来备用：可疑的tableView无穷上拉加载调用的bug的解决办法：
+在PIERefreshTableView的initWithFrame:中：
+
+```objc
+/*
+BUG FIX: 为了避免因为returnValueCount == 0而让footer一直扯着底部不断死循环加载数据，设置footer要拉高到footer高度的1.4倍的时候再出发loadMore方法。
+ */
+ footer.triggerAutomaticallyRefreshPercent = 1.4;
+```
+####遗留问题：PIECommentViewController 和 PIECommentViewController打开shareView的疑惑：
+这两个controller里面都有一个didTap5的方法。原意应该是想着要调用一个shareView进行分享。不过这里的viewModel不是PIEPageVM类型的，所以让我左支右绌。
+```objc
+- (void) didTap5 {
+    [self.textView resignFirstResponder];
+    
+    //!!!  BIG_REFACTOR PIE_SHAREVIEW show/showInView + 赋值！
+
+//    [self showShareView];
+//    [self showShareView:_vm];
+    
+    /*
+        问题是，我不知道这里是否应该调用showShareView：，因为这里的viewModel不是
+        PIEPageVM类型的。
+     */
+    
+}
+```
+#全局代码搜索"BIG_REFATOR"定位以上代码。#
+
+
 ###Dev-Log: huangwei, 15-12-16
 - (需求)举报弹窗，应该是在替换分享浮窗显示，而不是在分享浮窗之上显示。详如内。
 - (需求)【搜索页界面问题】“取消”两个字下泛白块，详如内。加黑白的位置不对，向安卓看齐。

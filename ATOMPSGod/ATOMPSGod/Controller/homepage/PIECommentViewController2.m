@@ -810,7 +810,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 - (void) didTap5 {
     [self.textView resignFirstResponder];
-    // BIG_REFACTOR!!! PIE_SHAREVIEW show/showInView + 赋值！
+    // BIG_REFACTOR !!! PIE_SHAREVIEW show/showInView + 赋值！
 //    [self showShareView];
 }
 - (void) didTapHelp {
@@ -836,36 +836,24 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 #pragma mark - ATOMShareViewDelegate
 
-- (void)shareViewDidShare:(PIEShareView *)shareView socialShareType:(ATOMShareType)shareType
+- (void)shareViewDidShare:(PIEShareView *)shareView
 {
-    [DDShareManager postSocialShare2:_vm
-                 withSocialShareType:shareType
-                               block:^(BOOL success) {
-                                   [self updatePageViewModelAfterSharing];
-                               }];
-}
-
-- (void)shareViewDidPaste:(PIEShareView *)shareView
-{
-
-}
-
-
-- (void)shareViewDidReportUnusualUsage:(PIEShareView *)shareView
-{
-}
-
-- (void)shareViewDidCollect:(PIEShareView *)shareView
-{
+    // refresh ui element on main thread after successful sharing, do nothing otherwise.
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [self updateShareStatus];
+    }];
 }
 
 - (void)shareViewDidCancel:(PIEShareView *)shareView
 {
     [shareView dismiss];
 }
-
-- (void)updatePageViewModelAfterSharing
+/**
+ *  用户点击了updateShareStatus之后（在弹出的窗口分享），刷新本页面ReplyCell的分享数
+ */
+- (void)updateShareStatus
 {
+    /*??? 分享结束之后没有刷新UI，reload tableView之类的*/
     _vm.shareCount = [NSString stringWithFormat:@"%zd",[_vm.shareCount integerValue]+1];
 }
 
