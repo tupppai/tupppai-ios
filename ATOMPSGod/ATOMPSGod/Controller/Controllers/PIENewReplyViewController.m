@@ -142,7 +142,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
         make.height.mas_equalTo(50);
         make.width.mas_equalTo(50);
         self.takePhotoButtonConstraint =
-        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-64);
+        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-12);
     }];
 }
 
@@ -178,7 +178,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     if (decelerate) {
-        [self.takePhotoButtonConstraint setOffset:-64];
+        [self.takePhotoButtonConstraint setOffset:-12];
         [UIView animateWithDuration:0.6
                               delay:0.7
              usingSpringWithDamping:0.3
@@ -196,7 +196,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 // 处理滚动“戛然而止”的情况
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    [self.takePhotoButtonConstraint setOffset:-64];
+    [self.takePhotoButtonConstraint setOffset:-12];
     [UIView animateWithDuration:0.6
                           delay:0.7
          usingSpringWithDamping:0.3
@@ -386,7 +386,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
                 PIECarouselViewController2* vc = [PIECarouselViewController2 new];
                 _selectedVM.image = _selectedReplyCell.theImageView.image;
                 vc.pageVM = _selectedVM;
-                [self presentViewController:vc animated:YES completion:nil];
+                [self presentViewController:vc animated:NO completion:nil];
                 //                [self.navigationController pushViewController:vc animated:YES];
             }
             //点击头像

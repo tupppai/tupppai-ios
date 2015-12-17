@@ -13,7 +13,6 @@
 #import "PIEEliteManager.h"
 #import "PIEFriendViewController.h"
 #import "PIECommentViewController.h"
-#import "PIECommentViewController2.h"
 
 #import "DDCollectManager.h"
 #import "PIEReplyCollectionViewController.h"

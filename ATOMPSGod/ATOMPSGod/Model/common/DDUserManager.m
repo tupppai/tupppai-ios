@@ -105,9 +105,11 @@ static  PIEEntityUser* _currentUser;
         NSDictionary* data = [responseObject objectForKey:@"data"];
         PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:data error:NULL];
         user.token = [responseObject objectForKey:@"token"];
-        [self updateCurrentUserFromUser:user];
-        if (block) {
-            block (YES);
+        if (user) {
+            [self updateCurrentUserFromUser:user];
+            if (block) {
+                block (YES);
+            }
         }
     }];
 

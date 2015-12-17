@@ -136,7 +136,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         make.height.mas_equalTo(50);
         make.width.mas_equalTo(50);
         self.takePhotoButtonBottomConstraint =
-        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-64);
+        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-12);
     }];
     
     if (_channelVM) {
@@ -269,7 +269,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     if (decelerate) {
-        [self.takePhotoButtonBottomConstraint setOffset:-64];
+        [self.takePhotoButtonBottomConstraint setOffset:-12];
         [UIView animateWithDuration:0.6
                               delay:0.7
              usingSpringWithDamping:0.3
@@ -287,7 +287,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 // 处理滚动“戛然而止”的情况
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    [self.takePhotoButtonBottomConstraint setOffset:-64];
+    [self.takePhotoButtonBottomConstraint setOffset:-12];
     [UIView animateWithDuration:0.6
                           delay:0.7
          usingSpringWithDamping:0.3
@@ -381,7 +381,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
             if (![_selectedVM.replyCount isEqualToString:@"0"]) {
                 PIECarouselViewController2* vc = [PIECarouselViewController2 new];
                 vc.pageVM                      = _selectedVM;
-                [self presentViewController:vc animated:YES completion:nil];
+                [self presentViewController:vc animated:NO completion:nil];
             } else {
                 PIECommentViewController* vc = [PIECommentViewController new];
                 vc.vm                        = _selectedVM;

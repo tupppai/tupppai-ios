@@ -11,11 +11,10 @@
 #import "PIEFriendViewController.h"
 #import "HMSegmentedControl.h"
 #import "FXBlurView.h"
-#import "PIECommentViewController.h"
 //#import "JGActionSheet.h"
 #import "PIECarousel_ItemView.h"
 #import "DDNavigationController.h"
-#import "PIECommentViewController2.h"
+#import "PIECommentViewController.h"
 #import "PIEActionSheet_PS.h"
 
 
@@ -65,6 +64,10 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"进入滚动详情页"];
+//    [UIView animateWithDuration:0.3 animations:^{
+//        self.view.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
+//    }];
+
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -77,7 +80,10 @@
     [self setupData];
     [self getDataSource];
 }
-
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    self.view.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
+}
 -(void)setupData {
     _askCount = 0;
     _replyCount = 0;
@@ -109,7 +115,6 @@
 
 - (void)setupViews {
     self.edgesForExtendedLayout = UIRectEdgeAll;
-    self.view.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
     [self setModalPresentationStyle:UIModalPresentationOverCurrentContext];
 //    [self setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     _dataSource = [NSMutableArray array];
@@ -151,7 +156,7 @@ CGFloat startPanLocationY;
 - (void)handleGesture_SwipeUp:(id)sender {
     
     
-    PIECommentViewController2* vc = [PIECommentViewController2 new];
+    PIECommentViewController* vc = [PIECommentViewController new];
     vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     vc.vm = _currentVM;
     DDNavigationController* nav = [[DDNavigationController alloc]initWithRootViewController:vc];
@@ -165,7 +170,7 @@ CGFloat startPanLocationY;
     } completion:^(BOOL finished) {
         if (finished) {
 //            [self.carousel.currentItemView setTransform:CGAffineTransformIdentity];
-            [self presentViewController:nav animated:YES completion:^{
+            [self presentViewController:nav animated:NO completion:^{
                 self.view.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
                 CGRect frame = self.carousel.currentItemView.frame;
                 frame.origin.y += 30;
@@ -183,14 +188,11 @@ CGFloat startPanLocationY;
    [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
        CGRect frame = self.carousel.currentItemView.frame;
        frame.origin.y += 20;
-//       [self.carousel setTransform:CGAffineTransformMakeScale(0.3, 0.3)];
-//       self.view.alpha = 0.1;
-//       frame.origin.y += SCREEN_HEIGHT;
        self.carousel.currentItemView.frame = frame;
        self.view.backgroundColor = [UIColor clearColor];
    } completion:^(BOOL finished) {
        if (finished) {
-           [self dismissViewControllerAnimated:NO completion:nil];
+           [self dismissViewControllerAnimated:YES completion:nil];
        }
    }];
 }

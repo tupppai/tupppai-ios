@@ -59,6 +59,8 @@
 /* Autolayout animation */
 @property (nonatomic, strong) MASConstraint *goPsButtonBottomConstraint;
 
+@property (nonatomic, assign) NSInteger                     currentPage_Reply;
+
 @end
 
 /* Protocols */
@@ -83,7 +85,6 @@ PIEChannelActivityReplyCellIdentifier = @"PIENewReplyTableCell";
 static NSString *
 PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifier";
 
-static const NSUInteger kItemsCountPerPage = 10;
 
 #pragma mark - UI life cycles
 - (void)viewDidLoad {
@@ -143,7 +144,7 @@ static const NSUInteger kItemsCountPerPage = 10;
         make.height.mas_equalTo(32);
         
         self.goPsButtonBottomConstraint =
-        make.bottom.equalTo(self.view.mas_bottom).with.offset(-64);
+        make.bottom.equalTo(self.view.mas_bottom).with.offset(-17);
         make.centerX.equalTo(self.view.mas_centerX);
     }];
 }
@@ -163,7 +164,7 @@ static const NSUInteger kItemsCountPerPage = 10;
     [UIView animateWithDuration:0.1
                      animations:^{
                          [self.goPsButtonBottomConstraint setOffset:50.0];
-                         [self.view layoutIfNeeded];
+                         [self.goPsButton layoutIfNeeded];
                      }];
     
     
@@ -172,14 +173,14 @@ static const NSUInteger kItemsCountPerPage = 10;
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     if (decelerate) {
-        [self.goPsButtonBottomConstraint setOffset:-64];
+        [self.goPsButtonBottomConstraint setOffset:-17];
         [UIView animateWithDuration:0.6
                               delay:0.7
              usingSpringWithDamping:0.3
               initialSpringVelocity:0
                             options:0
                          animations:^{
-                             [self.view layoutIfNeeded];
+                             [self.goPsButton layoutIfNeeded];
                              
                          } completion:^(BOOL finished) {
                          }];
@@ -190,14 +191,14 @@ static const NSUInteger kItemsCountPerPage = 10;
 // 处理滚动“戛然而止”的情况
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    [self.goPsButtonBottomConstraint setOffset:-64];
+    [self.goPsButtonBottomConstraint setOffset:-17];
     [UIView animateWithDuration:0.6
                           delay:0.7
          usingSpringWithDamping:0.3
           initialSpringVelocity:0
                         options:0
                      animations:^{
-                         [self.view layoutIfNeeded];
+                         [self.goPsButton layoutIfNeeded];
                          
                      } completion:^(BOOL finished) {
                      }];
@@ -224,97 +225,52 @@ static const NSUInteger kItemsCountPerPage = 10;
     return replyCell;
 }
 #pragma mark - <PWRefreshBaseTableViewDelegate>
-- (void)didPullRefreshUp:(UITableView *)tableView
-{
-    [self loadMoreReplies];
-}
+
 
 - (void)didPullRefreshDown:(UITableView *)tableView
 {
-    [self loadNewReplies];
+    [self getSource_Reply];
+}
+- (void)didPullRefreshUp:(UITableView *)tableView
+{
+    [self getMoreSource_Reply];
 }
 
-#pragma mark - refreshing methods
-- (void)loadNewReplies
-{
-    NSLog(@"%s", __func__);
+- (void)getSource_Reply {
+    WS(ws);
+    _currentPage_Reply = 1;
+    NSMutableDictionary *params  = [NSMutableDictionary dictionary];
+    params[@"category_id"]        = @(self.currentChannelVM.ID);
+    params[@"page"]              = @(1);
+    params[@"size"]              = @(10);
+    params[@"type"]              = @"reply";
+    _timeStamp                   = [[NSDate date] timeIntervalSince1970];
+    params[@"last_updated"]      = @(_timeStamp);
     
-    /*
-     <h3 id="get_activity_threads">获取活动相关作品</h3>
-     
-     /thread/get_activity_threads
-     URL_ChannelActivity
-     接受参数
-     get:
-     activity_id:活动id (test: 1003)
-     page:页面，默认为1
-     size:页面数目，默认为10
-     last_updated:最后下拉更新的时间戳（10位）
-     */
-    
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    params[@"activity_id"]      = @(self.currentChannelVM.ID);
-    params[@"page"]             = @(1);
-    _currentPageIndex           = 1;
-    params[@"size"]             = @(kItemsCountPerPage);
-    _timeStamp                  = [[NSDate date] timeIntervalSince1970];
-    params[@"last_updated"]     = @(_timeStamp);
-    
-    __weak typeof(self) weakSelf = self;
-    
-    [PIEChannelManager getSource_pageViewModels:params repliesResult:^(NSMutableArray<PIEPageVM *> *repliesResultArray, PIEChannelViewModel *vm) {
+    [PIEChannelManager getSource_channelPages:params resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
         [_source_reply removeAllObjects];
-        [_source_reply addObjectsFromArray:repliesResultArray];
-        _currentChannelVM.askID = vm.askID;
-        _currentChannelVM.url   = vm.url;
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            [weakSelf.tableView.mj_header endRefreshing];
-            [weakSelf.tableView reloadData];
-        }];
-
+        [_source_reply addObjectsFromArray:pageArray];
+    } completion:^{
+        [ws.tableView.mj_header endRefreshing];
+        [ws.tableView reloadData];
     }];
 }
-
-- (void)loadMoreReplies
-{
-    NSLog(@"%s", __func__);
+- (void)getMoreSource_Reply {
+    WS(ws);
+    _currentPage_Reply++;
+    NSMutableDictionary *params  = [NSMutableDictionary dictionary];
+    params[@"category_id"]        = @(self.currentChannelVM.ID);
+    params[@"page"]              = @(_currentPage_Reply);
+    params[@"size"]              = @(10);
+    params[@"type"]              = @"reply";
+    params[@"last_updated"]      = @(_timeStamp);
     
-    /*
-     <h3 id="get_activity_threads">获取活动相关作品</h3>
-     
-     /thread/get_activity_threads
-     URL_ChannelActivity
-     接受参数
-     get:
-     activity_id:活动id (test: 1003)
-     page:页面，默认为1
-     size:页面数目，默认为10
-     last_updated:最后下拉更新的时间戳（10位）
-     */
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    params[@"activity_id"]      = @(self.currentChannelVM.ID);
-    _currentPageIndex           += 1;
-    params[@"page"]             = @(_currentPageIndex);
-    params[@"size"]             = @(kItemsCountPerPage);
-    _timeStamp                  = [[NSDate date] timeIntervalSince1970];
-    params[@"last_updated"]     = @(_timeStamp);
-    
-    __weak typeof(self) weakSelf = self;
-    [PIEChannelManager getSource_pageViewModels:params repliesResult:^(NSMutableArray<PIEPageVM *> *repliesResultArray, PIEChannelViewModel *vm) {
-         if (repliesResultArray.count == 0) {
-             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                 [weakSelf.tableView.mj_footer endRefreshing];
-             }];
-         }
-         else{
-             [_source_reply addObjectsFromArray:repliesResultArray];
-             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                 [weakSelf.tableView.mj_footer endRefreshing];
-                 [weakSelf.tableView reloadData];
-             }];
-         }
-     }];
-    
+    [PIEChannelManager getSource_channelPages:params resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
+        [_source_reply addObjectsFromArray:pageArray];
+    } completion:^{
+        [ws.tableView.mj_footer endRefreshing];
+        [ws.tableView reloadData];
+    }];
 }
 
 #pragma mark - Target-actions
