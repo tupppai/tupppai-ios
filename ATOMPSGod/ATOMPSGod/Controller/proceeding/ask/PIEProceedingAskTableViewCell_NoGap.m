@@ -151,7 +151,7 @@
     // ??? WTF???
     
     // Add one more item in the back, "查看更多"
-    return _source.count + 1;
+    return _source.count;
 }
 
 - (UIView *)swipeView:(SwipeView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
@@ -182,16 +182,16 @@
 //                    // 最后一个Item是特殊的“查看更多”Item；这个方法比_source.count多调用了一次
 //                    imageView.image = [UIImage imageNamed:@"pie_proceeding_checkMore"];
 //                }
-                if (index == _source.count) {
-                    // 最后一个Item是特殊的“查看更多”Item；这个方法比_source.count多调用了一次
-                    imageView.image = [UIImage imageNamed:@"pie_proceeding_checkMore"];
-                }
-                else
-                {
+//                if (index == _source.count) {
+//                    // 最后一个Item是特殊的“查看更多”Item；这个方法比_source.count多调用了一次
+//                    imageView.image = [UIImage imageNamed:@"pie_proceeding_checkMore"];
+//                }
+//                else
+//                {
                     PIEPageVM* vm = [_source objectAtIndex:index];
                     [imageView setImageWithURL:[NSURL URLWithString:vm.imageURL]];
                     
-                }
+//                }
             }
         }
     return view;
@@ -200,18 +200,18 @@
 
 -(void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index {
     
-    if (index < _source.count) {
+//    if (index < _source.count) {
         PIECarouselViewController2* vc = [PIECarouselViewController2 new];
         vc.pageVM = [_source objectAtIndex:index];
         DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
         [nav presentViewController:vc animated:YES completion:nil];
-    }
-    else
-    {
-        // 最后一张"查看更多"
-        /* Do nothing yet. */
-        NSLog(@"%s\nCheckMoreItem was clicked.", __func__);
-    }
+//    }
+//    else
+//    {
+//        // 最后一张"查看更多"
+//        /* Do nothing yet. */
+//        NSLog(@"%s\nCheckMoreItem was clicked.", __func__);
+//    }
 }
 
 

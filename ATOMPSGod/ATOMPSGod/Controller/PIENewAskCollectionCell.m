@@ -55,7 +55,7 @@
 //    }
 //    else if (vm.thumbEntityArray.count == 1) {
         PIEImageEntity* entity1 = [vm.thumbEntityArray objectAtIndex:0];
-        [_leftImageView setImageWithURL:[NSURL URLWithString:entity1.url]placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+        [_leftImageView setImageWithURL:[NSURL URLWithString:entity1.url]placeholderImage:[UIImage imageNamed:@"cell_holder_portrait.png"]];
         [_rightImageView mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.width.equalTo(@(0));
         }];
