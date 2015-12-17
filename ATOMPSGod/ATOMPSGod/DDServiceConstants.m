@@ -51,7 +51,7 @@ NSString * URL_UKGetUserSearch    = @"user/search";
 NSString * URL_UKGetContentSearch = @"thread/search";
 NSString * URL_UKGetBanner        = @"banner/get_banner_list";
 
-NSString * URL_ChannelHomeThreads      = @"/thread/home";
+NSString * URL_ChannelHomeThreads      = @"category/index";
 NSString * URL_ChannelGetActivities    = @"/thread/get_activity_threads";
 NSString * URL_ChannelGetDetailThreads = @"/thread/get_threads_by_channel";
 

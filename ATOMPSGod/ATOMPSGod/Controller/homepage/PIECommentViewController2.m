@@ -163,7 +163,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     if (scrollOffset < - 90) {
         [self dismissViewControllerAnimated:YES completion:nil];
     }
-
 }
 -(void)dealloc {
     if (_shouldShowHeaderView) {

@@ -117,7 +117,7 @@
                               PIELaunchViewController *lvc = [[PIELaunchViewController alloc] init];
                               [AppDelegate APP].window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
                           }];
-    alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
+    alertView.transitionStyle = SIAlertViewTransitionStyleDropDown;
     [alertView show];
 }
 
@@ -186,19 +186,31 @@
     
     UIImage* circleImage = [UIImage imageNamed:@"pie_tab_mask"];
 
-    UIGraphicsBeginImageContextWithOptions(circleImage.size, NO, 0.0);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(28, 28), NO, 0.0);
     UIImage *resultImage = nil;
     
     // Get the graphics context
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    // Draw the first image
-    [circleImage drawInRect:CGRectMake(0, 0, circleImage.size.width, circleImage.size.height)];
+//    CGRect rectB = CGRectMake(0, 0, 30, 30);
+
+    CGMutablePathRef path = CGPathCreateMutable();
+    //    [[UIColor redColor] setFill];
+    CGPathMoveToPoint(path, NULL, 0, 0);
+    CGPathAddArc(path, NULL, 14, 14, 10, -M_PI, M_PI_2, NO);
+    CGPathCloseSubpath(path);
     
+    [[UIColor greenColor] setStroke];
+    CGContextAddPath(context, path);
+    CGContextDrawPath(context, kCGPathFillStroke);
+    CGPathRelease(path);
+    
+    // Draw the first image
+    [circleImage drawInRect:CGRectMake(0, 0, 28, 28)];
     UIImage* user = _avatarImage;
     
     // Get the frame of the second image
-    CGRect rect = CGRectMake(0, 0, user.size.width, user.size.height);
+    CGRect rect = CGRectMake(0, 0, 28, 28);
     
     // Add the path of an ellipse to the context
     // If the rect is a square the shape will be a circle
@@ -207,9 +219,11 @@
     CGContextClip(context);
     
     // Do the second image which will be clipped to that circle
-    CGRect rect2 = CGRectMake(1,1, user.size.width-6, user.size.height-6);
+    CGRect rect2 = CGRectMake(0.5,0.5, 27, 27);
     [user drawInRect:rect2];
     
+
+
     // Get the result
     resultImage = UIGraphicsGetImageFromCurrentImageContext();
     

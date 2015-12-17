@@ -29,12 +29,13 @@
 @property (nonatomic, strong) UIButton                      *takePhotoButton;
 
 /** 该频道内最新求P */
-@property (nonatomic, strong) NSMutableArray<PIEPageVM *>   *latestAskForPSSource;
+@property (nonatomic, strong) NSMutableArray<PIEPageVM *>   *source_ask;
 /** 该频道内的用户PS作品 */
-@property (nonatomic, strong) NSMutableArray<PIEPageVM *>   *usersPSSource;
+@property (nonatomic, strong) NSMutableArray<PIEPageVM *>   *source_reply;
 
 /** timeStamp: 刷新数据的时候的时间（整数10位）*/
 @property (nonatomic, assign) long long                     timeStamp;
+@property (nonatomic, assign) NSInteger                     currentPage_Reply;
 
 /** 最新求P中的swipeView */
 @property (nonatomic, strong) SwipeView *swipeView;
@@ -109,9 +110,9 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 
     self.title = self.currentChannelViewModel.title;
     
-    // pullDownToRefresh for the first time
+    [self getSource_Ask];
     [self.tableView.mj_header beginRefreshing];
-    
+
 }
 
 #pragma mark - <UITableViewDelegate>
@@ -120,7 +121,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     [UIView animateWithDuration:0.1
                      animations:^{
                          [self.takePhotoButtonConstraint setOffset:50.0];
-                         [self.view layoutIfNeeded];
+                         [self.takePhotoButton layoutIfNeeded];
                      }];
     
     
@@ -129,14 +130,14 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     if (decelerate) {
-        [self.takePhotoButtonConstraint setOffset:-64];
+        [self.takePhotoButtonConstraint setOffset:-12];
         [UIView animateWithDuration:0.6
                               delay:0.7
              usingSpringWithDamping:0.3
               initialSpringVelocity:0
                             options:0
                          animations:^{
-                             [self.view layoutIfNeeded];
+                             [self.takePhotoButton layoutIfNeeded];
                              
                          } completion:^(BOOL finished) {
                          }];
@@ -147,15 +148,14 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 // 处理滚动“戛然而止”的情况
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    [self.takePhotoButtonConstraint setOffset:-64];
+    [self.takePhotoButtonConstraint setOffset:-12];
     [UIView animateWithDuration:0.6
                           delay:0.7
          usingSpringWithDamping:0.3
           initialSpringVelocity:0
                         options:0
                      animations:^{
-                         [self.view layoutIfNeeded];
-                         
+                         [self.takePhotoButton layoutIfNeeded];
                      } completion:^(BOOL finished) {
                      }];
     
@@ -168,7 +168,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
-    return self.usersPSSource.count;
+    return self.source_reply.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -196,7 +196,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         PIENewReplyTableCell *cell =
         [tableView dequeueReusableCellWithIdentifier:PIEDetailUsersPSCellIdentifier];
         
-        [cell injectSauce:_usersPSSource[indexPath.row]];
+        [cell injectSauce:_source_reply[indexPath.row]];
         
         return cell;
     }
@@ -211,7 +211,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 - (void)didPullRefreshUp:(UITableView *)tableView
 {
 
-    [self loadMorePageViewModels];
+    [self getMoreSource_Reply];
 }
 
 /**
@@ -220,7 +220,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 - (void)didPullRefreshDown:(UITableView *)tableView
 {
 
-    [self loadNewPageViewModels];
+    [self getSource_Reply];
 }
 
 #pragma mark - <SwipeViewDelegate>
@@ -238,7 +238,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 {
 
 
-    return self.latestAskForPSSource.count;
+    return self.source_ask.count;
 }
 
 - (UIView *)swipeView:(SwipeView *)swipeView
@@ -253,10 +253,10 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     }
     
     // viewModel -> view
-    NSURL *imageURL = [NSURL URLWithString:_latestAskForPSSource[index].imageURL];
+    NSURL *imageURL = [NSURL URLWithString:_source_ask[index].imageURL];
     [view.imageView setImageWithURL:imageURL
                    placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-    view.label.text = _latestAskForPSSource[index].content;
+    view.label.text = _source_ask[index].content;
     
     return view;
 }
@@ -314,7 +314,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     
     else if (_selectedIndexPath) {
         _selectedReplyCell = [self.tableView cellForRowAtIndexPath:_selectedIndexPath];
-        _selectedVM = self.usersPSSource[_selectedIndexPath.row];
+        _selectedVM = self.source_reply[_selectedIndexPath.row];
         CGPoint p = [gesture locationInView:_selectedReplyCell];
         
         //点击小图
@@ -384,7 +384,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     _selectedIndexPath = [self.tableView indexPathForRowAtPoint:location];
     if (_selectedIndexPath) {
         _selectedReplyCell = [self.tableView cellForRowAtIndexPath:_selectedIndexPath];
-        _selectedVM        = self.usersPSSource[_selectedIndexPath.row];
+        _selectedVM        = self.source_reply[_selectedIndexPath.row];
         CGPoint p          = [gesture locationInView:_selectedReplyCell];
         
         //点击大图
@@ -485,80 +485,63 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 #pragma mark - data first setup
 - (void)setupData
 {
-    _usersPSSource        = [NSMutableArray<PIEPageVM *> array];
-    _latestAskForPSSource = [NSMutableArray<PIEPageVM *> array];
+    _source_reply        = [NSMutableArray<PIEPageVM *> array];
+    _source_ask = [NSMutableArray<PIEPageVM *> array];
 }
 
-#pragma mark - Refresh methods
-- (void)loadMorePageViewModels
-{
-    NSLog(@"%s", __func__);
-    
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    params[@"channel_id"] = @(self.currentChannelViewModel.ID);
-    params[@"page"]       = @(2);
-    params[@"size"]       = @(20);
-    
-    // --- Double -> Long long int
-    _timeStamp = [[NSDate date] timeIntervalSince1970];
-    params[@"last_updated"] = @(_timeStamp);
-    
-    __weak typeof(self) weakSelf = self;
-    
-    [PIEChannelManager
-     getSource_pageViewModels:params
-     resultBlock:^(NSMutableArray<PIEPageVM *> *latestAskForPSResultArray,
-                   NSMutableArray<PIEPageVM *> *usersRepliesResultArray) {
-         if (usersRepliesResultArray.count == 0) {
-             [weakSelf.tableView.mj_footer endRefreshing];
-         }
-         else{
-             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                 [weakSelf.tableView reloadData];
-                 [weakSelf.tableView.mj_footer endRefreshing];
-             }];
-         }
-     }
-     completion:^{
-          // nothing.
-     }];
-    
-}
-
-
-- (void)loadNewPageViewModels
-{
-    NSLog(@"%s", __func__);
-    
+- (void)getSource_Ask {
     NSMutableDictionary *params  = [NSMutableDictionary dictionary];
-    params[@"channel_id"]        = @(self.currentChannelViewModel.ID);
+    params[@"category_id"]        = @(self.currentChannelViewModel.ID);
+    params[@"page"]              = @(1);
+    params[@"size"]              = @(10);
+    params[@"type"]              = @"ask";
+    [PIEChannelManager getSource_channelPages:params resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
+        [_source_ask removeAllObjects];
+        [_source_ask addObjectsFromArray:pageArray];
+
+    } completion:^{
+        [self.swipeView reloadData];
+
+    }];
+    
+}
+- (void)getSource_Reply {
+    WS(ws);
+    _currentPage_Reply = 1;
+    NSMutableDictionary *params  = [NSMutableDictionary dictionary];
+    params[@"category_id"]        = @(self.currentChannelViewModel.ID);
     params[@"page"]              = @(1);
     params[@"size"]              = @(20);
-
-    // --- Double -> Long long int
+    params[@"type"]              = @"reply";
     _timeStamp                   = [[NSDate date] timeIntervalSince1970];
     params[@"last_updated"]      = @(_timeStamp);
 
-    __weak typeof(self) weakSelf = self;
-    [PIEChannelManager
-     getSource_pageViewModels:params
-     resultBlock:^(NSMutableArray<PIEPageVM *> *latestAskForPSResultArray,
-                   NSMutableArray<PIEPageVM *> *usersRepliesResultArray) {
-         if (usersRepliesResultArray.count != 0) {
-             [_usersPSSource removeAllObjects];
-             [_usersPSSource addObjectsFromArray:usersRepliesResultArray];
-        
-             [_latestAskForPSSource removeAllObjects];
-             [_latestAskForPSSource addObjectsFromArray:latestAskForPSResultArray];
-        }
-     }completion:^{
-         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-             [weakSelf.tableView.mj_header endRefreshing];
-             [weakSelf.tableView reloadData];
-             
-         }];
-     }];
+    [PIEChannelManager getSource_channelPages:params resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
+        [_source_reply removeAllObjects];
+        [_source_reply addObjectsFromArray:pageArray];
+    } completion:^{
+        [ws.tableView.mj_header endRefreshing];
+        [ws.tableView reloadData];
+    }];
 }
+- (void)getMoreSource_Reply {
+    WS(ws);
+    _currentPage_Reply++;
+    NSMutableDictionary *params  = [NSMutableDictionary dictionary];
+    params[@"category_id"]        = @(self.currentChannelViewModel.ID);
+    params[@"page"]              = @(_currentPage_Reply);
+    params[@"size"]              = @(20);
+    params[@"type"]              = @"reply";
+    params[@"last_updated"]      = @(_timeStamp);
+    
+    [PIEChannelManager getSource_channelPages:params resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
+        [_source_reply addObjectsFromArray:pageArray];
+    } completion:^{
+        [ws.tableView.mj_footer endRefreshing];
+        [ws.tableView reloadData];
+    }];
+}
+
 
 #pragma mark - Target-actions
 - (void)takePhoto:(UIButton *)button
@@ -593,7 +576,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         make.height.mas_equalTo(50);
         make.width.mas_equalTo(50);
         self.takePhotoButtonConstraint =
-        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-64);
+        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-12);
     }];
 }
 
