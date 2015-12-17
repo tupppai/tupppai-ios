@@ -123,7 +123,13 @@
             _avatarView.image = image;
             if (vm.type == PIEPageTypeReply) {
                 if (vm.thumbEntityArray.count>0) {
-                    PIEImageEntity* entity = [vm.thumbEntityArray objectAtIndex:0];
+                    PIEImageEntity *entity = nil;
+                    id object = [vm.thumbEntityArray objectAtIndex:0];
+                    if ([object isKindOfClass:[PIEImageEntity class]]) {
+                        entity = object;
+                    } else if ([object isKindOfClass:[NSDictionary class]]) {
+                        entity = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:object error:NULL];
+                    }
                     [DDService downloadImage:entity.url withBlock:^(UIImage *image) {
                         _imageView_thumb.image = image;
                         _imageView_thumb.hidden = NO;
@@ -132,13 +138,10 @@
                         
                         [DDBaseService GET:nil url:@"app/qrcode" block:^(id responseObject) {
                             NSString* url = [[responseObject objectForKey:@"data"]objectForKey:@"url"];
-                            NSLog(@"url %@",url);
                             [DDService downloadImage:url withBlock:^(UIImage *image) {
                                 _QRCodeView.image = image;
                                 block(YES);
                             }];
-                            NSDictionary* dic;
-                            [dic objectForKey:@"test"];
                         }];
                     }];
                 }

@@ -54,15 +54,6 @@
                 entity.imageWidth = imgEntity.width;
                 entity.imageHeight = imgEntity.height;
                 
-                NSMutableArray* thumbArray = [NSMutableArray new];
-                for (int i = 0; i<entity.thumbEntityArray.count; i++) {
-                    PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.thumbEntityArray[i] error:NULL];
-                    [thumbArray addObject:entity2];
-                }
-                
-                entity.thumbEntityArray = thumbArray;
-
-                
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 
                 [askRETArray addObject:vm];
@@ -73,7 +64,6 @@
                 PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:[replyArray objectAtIndex:i] error:NULL];
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [replyRETArray addObject:vm];
-
             }
             if (block) {
                 block(askRETArray, replyRETArray);
