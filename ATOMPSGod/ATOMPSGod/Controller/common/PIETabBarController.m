@@ -165,7 +165,6 @@
     _navigation_me.tabBarItem.selectedImage =
     [[UIImage imageNamed:@"pie_tab_5_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     [self updateTabbarAvatar];
-//        [_centerNav.tabBarItem setImageInsets:UIEdgeInsetsMake(5, 0, -5, 0)];
     self.viewControllers = [NSArray arrayWithObjects:_navigation_elite, _navigation_new,_navigation_proceeding, _navigation_me, nil];
 }
 
@@ -173,61 +172,30 @@
 - (void)updateTabbarAvatar {
     [DDService downloadImage:[DDUserManager currentUser].avatar withBlock:^(UIImage *image) {
         if (image) {
-            UIImage* scaledImage = [Util imageWithImage:image scaledToSize:CGSizeMake(28, 28) circlize:YES];
+            UIImage* scaledImage = [Util imageWithImage:image scaledToSize:CGSizeMake(26,26) circlize:YES];
             _avatarImage = scaledImage;
             _navigation_me.tabBarItem.image = [_avatarImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-            _navigation_me.tabBarItem.selectedImage = [[self retimage] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+            _navigation_me.tabBarItem.selectedImage = [[self getSelectedTabImage] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         }
     }];
 }
 
-- (UIImage*)retimage {
-    // Start the image context
+- (UIImage*)getSelectedTabImage {
     
-    UIImage* circleImage = [UIImage imageNamed:@"pie_tab_mask"];
-
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(28, 28), NO, 0.0);
+    UIImage* maskImage = [UIImage imageNamed:@"pie_tab_mask"];
     UIImage *resultImage = nil;
-    
-    // Get the graphics context
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-//    CGRect rectB = CGRectMake(0, 0, 30, 30);
+    UIGraphicsBeginImageContextWithOptions(_avatarImage.size, NO, 0.0);
 
-    CGMutablePathRef path = CGPathCreateMutable();
-    //    [[UIColor redColor] setFill];
-    CGPathMoveToPoint(path, NULL, 0, 0);
-    CGPathAddArc(path, NULL, 14, 14, 10, -M_PI, M_PI_2, NO);
-    CGPathCloseSubpath(path);
-    
-    [[UIColor greenColor] setStroke];
-    CGContextAddPath(context, path);
-    CGContextDrawPath(context, kCGPathFillStroke);
-    CGPathRelease(path);
-    
-    // Draw the first image
-    [circleImage drawInRect:CGRectMake(0, 0, 28, 28)];
-    UIImage* user = _avatarImage;
-    
-    // Get the frame of the second image
-    CGRect rect = CGRectMake(0, 0, 28, 28);
-    
-    // Add the path of an ellipse to the context
-    // If the rect is a square the shape will be a circle
-    CGContextAddEllipseInRect(context, rect);
-    // Clip the context to that path
-    CGContextClip(context);
-    
-    // Do the second image which will be clipped to that circle
-    CGRect rect2 = CGRectMake(0.5,0.5, 27, 27);
-    [user drawInRect:rect2];
-    
+    CGFloat width  = _avatarImage.size.width;
+    CGFloat height = _avatarImage.size.height;
 
-
-    // Get the result
+    [maskImage drawInRect:CGRectMake(0, 0, width, height)];
+    
+    CGRect rect2 = CGRectMake(1,1, width-2, height-2);
+    [_avatarImage drawInRect:rect2];
+    
     resultImage = UIGraphicsGetImageFromCurrentImageContext();
     
-    // End the image context
     UIGraphicsEndImageContext();
     return resultImage;
     

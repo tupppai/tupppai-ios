@@ -11,7 +11,6 @@
 #import "PIEFriendViewController.h"
 #import "HMSegmentedControl.h"
 #import "FXBlurView.h"
-#import "PIECommentViewController.h"
 //#import "JGActionSheet.h"
 #import "PIECarousel_ItemView.h"
 #import "DDNavigationController.h"
