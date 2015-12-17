@@ -832,7 +832,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 
 
-
 #pragma mark - ATOMShareViewDelegate
 
 - (void)shareViewDidShare:(PIEShareView *)shareView
