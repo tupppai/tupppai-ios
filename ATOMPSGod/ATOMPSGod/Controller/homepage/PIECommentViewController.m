@@ -816,15 +816,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void) didTap5 {
     [self.textView resignFirstResponder];
     
-    //!!!  BIG_REFACTOR PIE_SHAREVIEW show/showInView + 赋值！
-
 //    [self showShareView];
-//    [self showShareView:_vm];
-    
-    /*
-        问题是，我不知道这里是否应该调用showShareView：，因为这里的viewModel不是
-        PIEPageVM类型的。
-     */
+    [self showShareView:_vm];
     
 }
 - (void) didTapHelp {

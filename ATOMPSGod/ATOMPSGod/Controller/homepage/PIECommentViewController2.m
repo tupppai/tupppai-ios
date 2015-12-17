@@ -810,8 +810,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 - (void) didTap5 {
     [self.textView resignFirstResponder];
-    // BIG_REFACTOR !!! PIE_SHAREVIEW show/showInView + 赋值！
-//    [self showShareView];
+
+    [self showShareView:_vm];
 }
 - (void) didTapHelp {
     [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
