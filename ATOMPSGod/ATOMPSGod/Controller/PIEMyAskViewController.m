@@ -15,7 +15,7 @@
 #import "PIECarouselViewController2.h"
 #import "DDNavigationController.h"
 #import "DeviceUtil.h"
-#import "PIECommentViewController2.h"
+#import "PIECommentViewController.h"
 @interface PIEMyAskViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,CHTCollectionViewDelegateWaterfallLayout,DZNEmptyDataSetDelegate>
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *homeImageDataSource;
@@ -179,7 +179,7 @@
 
     PIEPageVM* vm = [_dataSource objectAtIndex:indexPath.row];
     if ([vm.replyCount integerValue] <= 0) {
-        PIECommentViewController2 *vc_comment = [PIECommentViewController2 new];
+        PIECommentViewController *vc_comment = [PIECommentViewController new];
         vc_comment.vm = vm;
         DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
         DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];

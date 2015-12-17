@@ -14,6 +14,9 @@
 #define height_sheet 251.0f
 @interface PIEShareView ()
 @property (nonatomic,weak)  PIEPageVM* weakVM;
+@property (nonnull, strong, nonatomic) PIESharesheetView     *sheetView;
+@property (nonnull, strong, nonatomic) UIVisualEffectView    *dimmingView;
+@property (nonnull, nonatomic, strong) PIEActionSheet_Report * reportActionSheet;
 @end
 @implementation PIEShareView
 
@@ -30,7 +33,6 @@
             make.centerX.equalTo(self);
             make.bottom.equalTo(self).with.offset(height_sheet).with.priorityHigh();
         }];
-//        self.delegate = self;
         
         [self configClickEvent];
     }
@@ -48,16 +50,7 @@
 
 
 
-- (void)toggleCollectIconStatus:(BOOL)isSelected{
-    if (isSelected) {
-        self.sheetView.icon8.selected = YES;
 
-    }
-    else
-    {
-        self.sheetView.icon8.selected = NO;
-    }
-}
 
 -(PIESharesheetView *)sheetView {
     if (!_sheetView) {
@@ -100,184 +93,72 @@
 
 - (void)tapGes1:(UIGestureRecognizer*)gesture {
     // sina weibo
+    [self postShareType:ATOMShareTypeSinaWeibo
+      selectedViewModel:_weakVM];
     
-    if (_delegate != nil && [_delegate respondsToSelector:@selector(shareViewDidShare:socialShareType:)])
-    {
-        [_delegate shareViewDidShare:self
-                     socialShareType:ATOMShareTypeSinaWeibo];
-    }
 }
 - (void)tapGes2:(UIGestureRecognizer*)gesture {
     
     // QQ zone
+    [self postShareType:ATOMShareTypeQQZone
+      selectedViewModel:_weakVM];
     
-    if (_delegate != nil && [_delegate respondsToSelector:@selector(shareViewDidShare:socialShareType:)])
-    {
-        [_delegate shareViewDidShare:self
-                     socialShareType:ATOMShareTypeQQZone];
-    }
 }
 - (void)tapGes3:(UIGestureRecognizer*)gesture {
     
     // Wechat Moments
-    if (_delegate != nil && [_delegate respondsToSelector:@selector(shareViewDidShare:socialShareType:)])
-    {
-        [_delegate shareViewDidShare:self
-                     socialShareType:ATOMShareTypeWechatMoments];
-    }
+    [self postShareType:ATOMShareTypeWechatMoments
+      selectedViewModel:_weakVM];
 }
 - (void)tapGes4:(UIGestureRecognizer*)gesture {
     
     // Wechat Friends
-    if (_delegate != nil && [_delegate respondsToSelector:@selector(shareViewDidShare:socialShareType:)]) {
-        [_delegate shareViewDidShare:self
-                     socialShareType:ATOMShareTypeWechatFriends];
-    }
+    [self postShareType:ATOMShareTypeWechatFriends
+      selectedViewModel:_weakVM];
 }
 - (void)tapGes5:(UIGestureRecognizer*)gesture {
     
     // QQ Friends
     
-    if (_delegate != nil && [_delegate respondsToSelector:@selector(shareViewDidShare:socialShareType:)]) {
-        [_delegate shareViewDidShare:self
-                     socialShareType:ATOMShareTypeQQFriends];
-    }
+   [self postShareType:ATOMShareTypeQQFriends
+     selectedViewModel:_weakVM];
 }
 - (void)tapGes6:(UIGestureRecognizer*)gesture {
     
     // Copy to pasteboards
-
-    // Use DDShareManager here.
-    if (_delegate && [_delegate respondsToSelector:@selector(shareViewDidPaste:)]) {
-        [_delegate shareViewDidPaste:self];
-        
-        if (_weakVM != nil) {
-            [DDShareManager copy:_weakVM];
-        }
-    }
-    
+    [DDShareManager copy:_weakVM];
 }
 - (void)tapGes7:(UIGestureRecognizer*)gesture {
-    
     // report unusual usuage
-
-    if (_delegate != nil &&
-        [_delegate respondsToSelector:@selector(shareViewDidReportUnusualUsage:)]) {
-        [_delegate shareViewDidReportUnusualUsage:self];
-        
-        if (_weakVM != nil)
-        {
-            (self.reportActionSheet).vm = _weakVM;
-            [self dismiss];
-            [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
-        }
-    }
     
+    // ASSUMPTION: _weakVM is no nil.
+    
+    (self.reportActionSheet).vm = _weakVM;
+    // dismiss shareView while reportActionSheet shows up
+    [self dismiss];
+    [self.reportActionSheet showInView:[AppDelegate APP].window animated:YES];
     
 }
 - (void)tapGes8:(UIGestureRecognizer*)gesture {
     
     // Collect this PageVM
-    if (_delegate != nil &&
-        [_delegate respondsToSelector:@selector(shareViewDidCollect:)]) {
-        [_delegate shareViewDidCollect:self];
-        
-        if (_weakVM != nil) {
-            NSMutableDictionary *param = [NSMutableDictionary new];
-            
-            if (_weakVM.collected) {
-                //如果之前已经收藏，那么就取消收藏
-                [param setObject:@(0) forKey:@"status"];
-            } else {
-                //反之，收藏
-                [param setObject:@(1) forKey:@"status"];
-            }
-            [DDCollectManager toggleCollect:param
-                               withPageType:_weakVM.type
-                                     withID:_weakVM.ID withBlock:^(NSError *error) {
-                if (error == nil) {
-                    // 成功返回数据，代表切换收藏这个状态已经被服务器承认，这个时候再切换状态
-                    _weakVM.collected = !_weakVM.collected;
-                    if (  _weakVM.collected) {
-                        [Hud textWithLightBackground:@"收藏成功"];
-                    } else {
-                        [Hud textWithLightBackground:@"取消收藏成功"];
-                    }
-                    [self toggleCollectIconStatus:_weakVM.collected];
-                    
-                }   else {
-                    // error occur on networking
-//                    [Hud textWithLightBackground:@"服务器不鸟你"];
-                }
-                                         
-            }];
-        }
-    }
+    
+    // ASSUMPTION: _weakVM is not nil
+    [self collectPageViewModel:_weakVM];
+
 }
 
 
 - (void)tapGesCancel:(UIGestureRecognizer*)gesture {
     
-    if (_delegate && [_delegate respondsToSelector:@selector(shareViewDidCancel:)])
+    if (_delegate != nil &&
+        [_delegate respondsToSelector:@selector(shareViewDidCancel:)])
     {
         [_delegate shareViewDidCancel:self];
     }
 }
 
-
-
-- (void)showInView:(UIView *)view animated:(BOOL)animated {
-    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
-
-    self.frame = view.bounds;
-    [view addSubview:self];
-    
-    [self layoutIfNeeded];
-    [self.sheetView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self).with.offset(0).with.priorityHigh();
-    }];
-    
-    
-    [UIView animateWithDuration:0.35
-                          delay:0
-         usingSpringWithDamping:0.8
-          initialSpringVelocity:0.7
-                        options:0
-                     animations:^{
-                         [self layoutIfNeeded];
-                     } completion:^(BOOL finished) {
-                         if (finished) {
-                             [[UIApplication sharedApplication] endIgnoringInteractionEvents];
-                         }
-                     }
-     ];
-}
-
-- (void)show {
-    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
-
-    [[AppDelegate APP].window addSubview:self];
-    [self layoutIfNeeded];
-    [self.sheetView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self).with.offset(0).with.priorityHigh();
-    }];
-    
-    [UIView animateWithDuration:0.35
-                          delay:0
-         usingSpringWithDamping:0.8
-          initialSpringVelocity:0.7
-                        options:0
-                     animations:^{
-                         [self layoutIfNeeded];
-                     } completion:^(BOOL finished) {
-                         if (finished) {
-                             [[UIApplication sharedApplication] endIgnoringInteractionEvents];
-                         }
-                     }
-     ];
-    
-    }
-
+#pragma mark - public methods
 - (void)showInView:(UIView *)view animated:(BOOL)animated pageViewModel:(PIEPageVM *)pageVM
 {
     self.weakVM = pageVM;
@@ -351,10 +232,84 @@
     }];
 }
 
+
+
+#pragma mark - helper methods
+- (void)postShareType:(ATOMShareType)shareType
+    selectedViewModel:(PIEPageVM *)selectedVM
+{
+    // ASSUMPTION: selectedVM is not nil
+    [DDShareManager
+     postSocialShare2:selectedVM
+     withSocialShareType:shareType
+     block:^(BOOL success) {
+         
+         if (success) {
+             if (_delegate != nil &&
+                 [_delegate respondsToSelector:@selector(shareViewDidShare:)])
+             {
+                 [_delegate shareViewDidShare:self];
+             }
+         }
+         else
+         {
+             /* evoke a network error prompt message to user. */
+         }
+         
+     }];
+}
+
+- (void)collectPageViewModel:(PIEPageVM *)pageViewModel
+{
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    
+    if (pageViewModel.collected) {
+        //如果之前已经收藏，那么就取消收藏
+        [param setObject:@(0) forKey:@"status"];
+    } else {
+        //反之，收藏
+        [param setObject:@(1) forKey:@"status"];
+    }
+    
+    [DDCollectManager
+     toggleCollect:param
+     withPageType:pageViewModel.type
+     withID:pageViewModel.ID withBlock:^(NSError *error) {
+         if (error == nil) {
+             // 成功返回数据，代表切换收藏这个状态已经被服务器承认，这个时候再切换状态
+             pageViewModel.collected = !pageViewModel.collected;
+             if (pageViewModel.collected) {
+                 [Hud textWithLightBackground:@"收藏成功"];
+             } else {
+                 [Hud textWithLightBackground:@"取消收藏成功"];
+             }
+             [self toggleCollectIconStatus:pageViewModel.collected];
+             
+         }   else {
+             // error occur on networking, do not toggle _weakVM.collected.
+             [Hud textWithLightBackground:@"服务器不鸟你"];
+         }
+         
+     }];
+}
+
+- (void)toggleCollectIconStatus:(BOOL)isSelected{
+    if (isSelected) {
+        self.sheetView.icon8.selected = YES;
+        
+    }
+    else
+    {
+        self.sheetView.icon8.selected = NO;
+    }
+}
+
+#pragma mark - lazy loadings
 -(PIEActionSheet_Report *)reportActionSheet {
     if (!_reportActionSheet) {
         _reportActionSheet = [PIEActionSheet_Report new];
     }
     return _reportActionSheet;
 }
+
 @end

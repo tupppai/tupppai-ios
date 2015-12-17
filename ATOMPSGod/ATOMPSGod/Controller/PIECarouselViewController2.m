@@ -14,7 +14,7 @@
 //#import "JGActionSheet.h"
 #import "PIECarousel_ItemView.h"
 #import "DDNavigationController.h"
-#import "PIECommentViewController2.h"
+#import "PIECommentViewController.h"
 #import "PIEActionSheet_PS.h"
 
 
@@ -156,7 +156,7 @@ CGFloat startPanLocationY;
 - (void)handleGesture_SwipeUp:(id)sender {
     
     
-    PIECommentViewController2* vc = [PIECommentViewController2 new];
+    PIECommentViewController* vc = [PIECommentViewController new];
     vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     vc.vm = _currentVM;
     DDNavigationController* nav = [[DDNavigationController alloc]initWithRootViewController:vc];

@@ -142,7 +142,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
         make.height.mas_equalTo(50);
         make.width.mas_equalTo(50);
         self.takePhotoButtonConstraint =
-        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-64);
+        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-12);
     }];
 }
 
@@ -178,7 +178,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     if (decelerate) {
-        [self.takePhotoButtonConstraint setOffset:-64];
+        [self.takePhotoButtonConstraint setOffset:-12];
         [UIView animateWithDuration:0.6
                               delay:0.7
              usingSpringWithDamping:0.3
@@ -196,7 +196,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 // 处理滚动“戛然而止”的情况
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    [self.takePhotoButtonConstraint setOffset:-64];
+    [self.takePhotoButtonConstraint setOffset:-12];
     [UIView animateWithDuration:0.6
                           delay:0.7
          usingSpringWithDamping:0.3
@@ -448,46 +448,13 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     
 }
 
-#pragma mark - Sharing-related method
+#pragma mark - <PIEShareViewDelegate> and its related methods
 
-#pragma mark - methods on Sharing<ATOMShareViewDelegate>
-- (void)updateShareStatus {
-    
-    /**
-     *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面ReplyCell的点赞数和分享数
-     */
-    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
-    [self updateStatus];
-}
-
-
-- (void)showShareView:(PIEPageVM *)pageVM {
-    [self.shareView show:pageVM];
-}
-
-
-#pragma mark - ATOMShareViewDelegate
-
-- (void)shareViewDidShare:(PIEShareView *)shareView socialShareType:(ATOMShareType)shareType
+- (void)shareViewDidShare:(PIEShareView *)shareView
 {
-    [DDShareManager postSocialShare2:_selectedVM
-                 withSocialShareType:shareType
-                               block:^(BOOL success) {
-                                   [self updateShareStatus];
-                               }];
-}
-
-- (void)shareViewDidPaste:(PIEShareView *)shareView
-{
-
-}
-
-- (void)shareViewDidReportUnusualUsage:(PIEShareView *)shareView
-{
-}
-
-- (void)shareViewDidCollect:(PIEShareView *)shareView 
-{
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [self updateShareStatus];
+    }];
 }
 
 - (void)shareViewDidCancel:(PIEShareView *)shareView
@@ -495,15 +462,27 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     [shareView dismiss];
 }
 
-#pragma mark - Synchronized data with newest action
 /**
- *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面中ReplyCell的点赞数和分享数
+ *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面ReplyCell的分享数
  */
-- (void)updateStatus {
+- (void)updateShareStatus {
+    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
+    // 将分散在updateShareStatus 和 updateStatus  "同步分享数"的方法写到一起。
+    //    [self updateStatus];
     if (_selectedIndexPath) {
         [_tableViewReply reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
+
+/**
+ *  打开shareView
+ *
+ *  @param pageVM 想要分享的求P作品
+ */
+- (void)showShareView:(PIEPageVM *)pageVM {
+    [self.shareView show:pageVM];
+}
+
 
 #pragma mark - lazy loadings
 -(PIERefreshTableView *)tableViewReply {

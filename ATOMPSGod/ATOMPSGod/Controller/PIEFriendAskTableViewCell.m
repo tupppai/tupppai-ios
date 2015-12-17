@@ -10,7 +10,7 @@
 #import "DDNavigationController.h"
 #import "PIECarouselViewController2.h"
 #import "AppDelegate.h"
-#import "PIECommentViewController2.h"
+#import "PIECommentViewController.h"
 
 @interface PIEFriendAskTableViewCell()
 @property (strong, nonatomic) NSMutableArray *source;
@@ -48,7 +48,7 @@
 - (void)tapOnAsk1 {
     if (_vmAsk1) {
         if ([_vmAsk1.replyCount integerValue]<=0) {
-            PIECommentViewController2 *vc_comment = [PIECommentViewController2 new];
+            PIECommentViewController *vc_comment = [PIECommentViewController new];
             vc_comment.vm = _vmAsk1;
             DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];
             [self.viewController.parentViewController.view.superview.viewController.navigationController presentViewController:nav2 animated:NO completion:nil];
@@ -66,7 +66,7 @@
 - (void)tapOnAsk2 {
     if (_vmAsk2) {
         if ([_vmAsk2.replyCount integerValue]<=0) {
-            PIECommentViewController2 *vc_comment = [PIECommentViewController2 new];
+            PIECommentViewController *vc_comment = [PIECommentViewController new];
             vc_comment.vm = _vmAsk2;
             DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];
             [self.viewController.parentViewController.view.superview.viewController.navigationController presentViewController:nav2 animated:NO completion:nil];

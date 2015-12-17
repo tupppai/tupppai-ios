@@ -10,7 +10,7 @@
 #import "PIECarouselViewController2.h"
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
-#import "PIECommentViewController2.h"
+#import "PIECommentViewController.h"
 
 @interface PIEProceedingAskTableViewCell_NoGap()
 @property (strong, nonatomic) NSMutableArray *source;
@@ -72,7 +72,7 @@
 - (void)tapOnAsk1 {
     if (_vmAsk1) {
         if ([_vmAsk1.replyCount integerValue] <= 0) {
-            PIECommentViewController2 *vc_comment = [PIECommentViewController2 new];
+            PIECommentViewController *vc_comment = [PIECommentViewController new];
             vc_comment.vm = _vmAsk1;
             DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
             DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];
@@ -89,7 +89,7 @@
 - (void)tapOnAsk2 {
     if (_vmAsk2) {
         if ([_vmAsk2.replyCount integerValue] <= 0) {
-            PIECommentViewController2 *vc_comment = [PIECommentViewController2 new];
+            PIECommentViewController *vc_comment = [PIECommentViewController new];
             vc_comment.vm = _vmAsk2;
             DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
             DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];

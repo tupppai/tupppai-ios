@@ -26,7 +26,7 @@
 #import "PIEProceedingAskTableViewCell_NoGap.h"
 //#import "UITableView+FDTemplateLayoutCell.h"
 #import "DeviceUtil.h"
-#import "PIECommentViewController2.h"
+#import "PIECommentViewController.h"
 #define MyAskCellWidth (SCREEN_WIDTH - 20) / 2.0
 
 /* Protocols */
@@ -274,7 +274,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
         }
         else if (CGRectContainsPoint(cell.theImageView.frame, p)) {
             if ([vm.replyCount integerValue]<=0) {
-                PIECommentViewController2 *vc_comment = [PIECommentViewController2 new];
+                PIECommentViewController *vc_comment = [PIECommentViewController new];
                 vc_comment.vm = vm;
                 DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
                 DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];
