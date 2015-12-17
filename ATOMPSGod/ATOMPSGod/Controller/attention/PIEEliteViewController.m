@@ -55,8 +55,6 @@
 @property (nonatomic, assign)  long long timeStamp_hot;
 
 
-// TO-BE-REFACTOR: selectedIndexPath-> selectedIndexPath_follow, selectedIndexPath_hot
-//@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath_follow;
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath_hot;
 
@@ -186,16 +184,16 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 
 - (void)configData {
     _canRefreshFooterFollow = YES;
-    _canRefreshFooterHot = YES;
+    _canRefreshFooterHot    = YES;
 
-    _currentIndex_follow = 1;
-    _currentIndex_hot = 1;
-    
-    _isfirstLoadingFollow = YES;
-    _isfirstLoadingHot = YES;
-    
-    _sourceFollow = [NSMutableArray new];
-    _sourceHot = [NSMutableArray new];
+    _currentIndex_follow    = 1;
+    _currentIndex_hot       = 1;
+
+    _isfirstLoadingFollow   = YES;
+    _isfirstLoadingHot      = YES;
+
+    _sourceFollow           = [NSMutableArray new];
+    _sourceHot              = [NSMutableArray new];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_Elite" object:nil];
 }
@@ -520,6 +518,24 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     [shareView dismiss];
 }
 
+- (void)shareViewDidCollect:(PIEShareView *)shareView
+{
+    // Optional的代理方法：仅在EliteViewController才有星星需要更新状态
+    if (_sv.type == PIEPageTypeEliteHot) {
+        /* 取得PIEEliteHotReplyTableViewCell的实例，修改星星的状态和个数 */
+        PIEEliteHotReplyTableViewCell *cell =
+        [_sv.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
+        cell.collectView.highlighted  = _selectedVM.collected;
+        cell.collectView.numberString = _selectedVM.collectCount;
+    }
+    else if (_sv.type == PIEPageTypeEliteFollow){
+        /* 取得PIEEliteFollowReplyTableViewCell的实例，修改星星的状态和个数 */
+        PIEEliteFollowReplyTableViewCell *cell =
+        [_sv.tableFollow cellForRowAtIndexPath:_selectedIndexPath_follow];
+        cell.collectView.highlighted  = _selectedVM.collected;
+        cell.collectView.numberString = _selectedVM.collectCount;
+    }
+}
 
 /**
  *  用户点击了updateShareStatus之后（在弹出的窗口分享），刷新本页面ReplyCell的分享数
@@ -545,6 +561,14 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
         [_sv.tableHot reloadRowsAtIndexPaths:@[_selectedIndexPath_hot]
                             withRowAnimation:UITableViewRowAnimationAutomatic];
     }
+    
+}
+
+/**
+ *  在<PIEShareViewDelegate>的shareViewDidCollect:方法中被调用，用于刷新自己Cell上面的星星
+ */
+- (void)updateCollectedStatus
+{
     
 }
 
