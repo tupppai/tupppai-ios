@@ -172,7 +172,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [param setObject:@(1) forKey:@"page"];
 //    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     if (_channelVM) {
-        [param setObject:@(_channelVM.ID) forKey:@"channel_id"];
+        [param setObject:@(_channelVM.ID) forKey:@"category_id"];
     }
     
     
@@ -212,7 +212,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [param setObject:@(_currentIndex_ask) forKey:@"page"];
 //    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     if (_channelVM) {
-        [param setObject:@(_channelVM.ID) forKey:@"channel_id"];
+        [param setObject:@(_channelVM.ID) forKey:@"category_id"];
     }
     
     PIEPageManager *pageManager = [PIEPageManager new];
