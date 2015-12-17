@@ -381,7 +381,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
             if (![_selectedVM.replyCount isEqualToString:@"0"]) {
                 PIECarouselViewController2* vc = [PIECarouselViewController2 new];
                 vc.pageVM                      = _selectedVM;
-                [self presentViewController:vc animated:YES completion:nil];
+                [self presentViewController:vc animated:NO completion:nil];
             } else {
                 PIECommentViewController* vc = [PIECommentViewController new];
                 vc.vm                        = _selectedVM;

@@ -26,6 +26,8 @@
 @property (nonatomic, strong) DDNavigationController *navigation_proceeding;
 @property (nonatomic, strong) DDNavigationController *navigation_me;
 @property (nonatomic, strong) DDNavigationController *preNav;
+@property (nonatomic, assign) long long timeStamp_error;
+
 @end
 
 @implementation PIETabBarController
@@ -45,6 +47,7 @@
     [super viewDidLoad];
     self.delegate = self;
     [self setupTitle];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorOccuredRET) name:@"NetworkErrorCall" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NetworkSignOutRET) name:@"NetworkSignOutCall" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DoUploadJob:) name:@"UploadCall" object:nil];
 }
@@ -61,6 +64,27 @@
 -(void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UploadCall"object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkSignOutCall"object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkErrorCall" object:nil];
+}
+-(void) errorOccuredRET {
+    BOOL shouldShowError = NO;
+    long long currentTimeStamp = [[NSDate date]timeIntervalSince1970];
+    if (_timeStamp_error) {
+        long long timeStamp_gap = currentTimeStamp - _timeStamp_error;
+        if (timeStamp_gap>10) {
+            shouldShowError = YES;
+            _timeStamp_error = currentTimeStamp;
+        } else {
+            shouldShowError = NO;
+        }
+    } else {
+        shouldShowError = YES;
+        _timeStamp_error = currentTimeStamp;
+    }
+    
+    if (shouldShowError) {
+        [Hud text:@"网路好像有点问题～" inView:self.view];
+    }
 }
 - (void) DoUploadJob:(NSNotification *)notification
 {

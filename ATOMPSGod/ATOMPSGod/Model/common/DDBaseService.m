@@ -38,7 +38,6 @@
 
 + (void) POST :(NSDictionary*)param url:(NSString*)url block:(void (^)(id responseObject))block {
     if (url) {
-
          [[DDSessionManager shareHTTPSessionManager] POST:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
              
             NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];

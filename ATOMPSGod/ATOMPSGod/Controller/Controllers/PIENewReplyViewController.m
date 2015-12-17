@@ -386,7 +386,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
                 PIECarouselViewController2* vc = [PIECarouselViewController2 new];
                 _selectedVM.image = _selectedReplyCell.theImageView.image;
                 vc.pageVM = _selectedVM;
-                [self presentViewController:vc animated:YES completion:nil];
+                [self presentViewController:vc animated:NO completion:nil];
                 //                [self.navigationController pushViewController:vc animated:YES];
             }
             //点击头像

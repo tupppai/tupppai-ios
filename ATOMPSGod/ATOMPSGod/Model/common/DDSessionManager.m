@@ -101,7 +101,7 @@ static DDSessionManager *_shareHTTPSessionManager = nil;
 -(NSURLSessionDataTask *)xxx_dataTaskWithRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLResponse * _Nonnull, id _Nullable, NSError * _Nullable))completionHandler {
     return [self xxx_dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id _Nullable responseObject, NSError * _Nullable error) {
         #if DEBUG
-                NSLog(@"xxx_dataTaskWithRequest Hello! request/n%@ \n Hi! responseObject \n %@",request,responseObject);
+                NSLog(@"request  %@ \n responseObject \n %@",request,responseObject);
         #endif
         
         if (error) {
