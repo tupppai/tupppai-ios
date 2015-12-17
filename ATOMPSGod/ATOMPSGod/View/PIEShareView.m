@@ -276,18 +276,18 @@
      withID:pageViewModel.ID withBlock:^(NSError *error) {
          if (error == nil) {
              // 成功返回数据，代表切换收藏这个状态已经被服务器承认，这个时候再切换状态
-             
              pageViewModel.collected = !pageViewModel.collected;
              NSInteger collectedCount = [pageViewModel.collectCount integerValue];
-             collectedCount += 1;
-             pageViewModel.collectCount = [NSString stringWithFormat:@"%zd", collectedCount];
-             
              
              if (pageViewModel.collected) {
                  [Hud textWithLightBackground:@"收藏成功"];
+                 collectedCount += 1;
+
              } else {
                  [Hud textWithLightBackground:@"取消收藏成功"];
+                 collectedCount -= 1;
              }
+             pageViewModel.collectCount = [NSString stringWithFormat:@"%zd", collectedCount];
              
              /* 
               收藏成功，需要刷新三个地方的UI元素：

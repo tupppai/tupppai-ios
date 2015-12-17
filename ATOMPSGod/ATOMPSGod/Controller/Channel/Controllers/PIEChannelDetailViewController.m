@@ -469,6 +469,10 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     _source_ask = [NSMutableArray<PIEPageVM *> array];
 }
 
+
+/**
+ *  what the hell is this?
+ */
 - (void)getSource_Ask {
     NSMutableDictionary *params  = [NSMutableDictionary dictionary];
     params[@"category_id"]        = @(self.currentChannelViewModel.ID);
