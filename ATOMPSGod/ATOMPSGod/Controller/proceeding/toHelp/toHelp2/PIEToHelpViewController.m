@@ -121,7 +121,7 @@
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(20) forKey:@"size"];
     if (_channelVM) {
-        [param setObject:@(_channelVM.ID) forKey:@"channel_id"];
+        [param setObject:@(_channelVM.ID) forKey:@"category_id"];
     }
     [PIEProceedingManager getMyToHelp:param withBlock:^(NSMutableArray *resultArray) {
         _isfirstLoading = NO;
@@ -153,7 +153,7 @@
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(20) forKey:@"size"];
     if (_channelVM) {
-        [param setObject:@(_channelVM.ID) forKey:@"channel_id"];
+        [param setObject:@(_channelVM.ID) forKey:@"category_id"];
     }
 
     [PIEProceedingManager getMyToHelp:param withBlock:^(NSMutableArray *resultArray) {
