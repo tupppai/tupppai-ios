@@ -116,7 +116,7 @@
     _likeView.numberString = viewModel.likeCount;
     _contentLabel.text = viewModel.content;
     
-    [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+    [_avatarView sd_setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
     
     _nameLabel.text = viewModel.username;
     _timeLabel.text = viewModel.publishTime;
@@ -146,7 +146,7 @@
         } failure:nil];
         if (viewModel.thumbEntityArray.count == 2) {
             entity = viewModel.thumbEntityArray[1];
-            [_thumbView.leftView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+            [_thumbView.leftView sd_setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
         }
     }
     else {

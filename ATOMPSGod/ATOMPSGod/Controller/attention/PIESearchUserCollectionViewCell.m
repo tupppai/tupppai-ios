@@ -68,7 +68,7 @@
     for (UIView *subView in view.subviews){
         if([subView isKindOfClass:[UIImageView class]]){
             UIImageView *imageView = (UIImageView *)subView;
-            [imageView setImageWithURL:[NSURL URLWithString:vm.imageURL]];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:vm.imageURL]];
         }
     }
     return view;

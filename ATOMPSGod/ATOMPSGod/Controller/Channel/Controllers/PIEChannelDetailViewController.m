@@ -254,7 +254,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     
     // viewModel -> view
     NSURL *imageURL = [NSURL URLWithString:_source_ask[index].imageURL];
-    [view.imageView setImageWithURL:imageURL
+    [view.imageView sd_setImageWithURL:imageURL
                    placeholderImage:[UIImage imageNamed:@"cellHolder"]];
     view.label.text = _source_ask[index].content;
     

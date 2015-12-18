@@ -310,7 +310,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
             UIImageView *imageView = (UIImageView *)subView;
             //            imageView.image = tabbar.avatarImage;
 //            NSLog(@"[DDUserManager currentUser].avatar]%@",[DDUserManager currentUser].avatar);
-            [imageView setImageWithURL:[NSURL URLWithString:vm.imageUrl]];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:vm.imageUrl]];
         }
     }
     ;

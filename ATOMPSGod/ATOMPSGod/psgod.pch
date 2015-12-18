@@ -58,6 +58,8 @@
 #import "UIButton+Pop.h"
 #import "NYXImagesKit.h"
 
+#import "UIImageView+WebCache.h"
+
 // TODO: add PIELog() marco
 //判断是否要Log
 #ifdef DEBUG

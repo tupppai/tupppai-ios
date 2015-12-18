@@ -27,7 +27,7 @@
 #pragma mark - Setters for View models
 -(void)setVm:(PIEChannelViewModel *)vm {
     _vm = vm;
-    [_imageView_banner setImageWithURL:[NSURL URLWithString:vm.imageUrl]];
+    [_imageView_banner sd_setImageWithURL:[NSURL URLWithString:vm.imageUrl]];
 }
 
 @end

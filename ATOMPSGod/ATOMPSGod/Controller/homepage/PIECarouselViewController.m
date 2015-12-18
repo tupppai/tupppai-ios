@@ -189,7 +189,7 @@
         for (UIView *subView in view.subviews){
             if([subView isKindOfClass:[UIImageView class]]){
                 UIImageView *imageView = (UIImageView *)subView;
-                [imageView setImageWithURL:[NSURL URLWithString:vm.imageURL]];
+                [imageView sd_setImageWithURL:[NSURL URLWithString:vm.imageURL]];
                 break;
             }
         }
@@ -318,7 +318,7 @@
     if (_dataSource.count > index) {
         _currentVM = [_dataSource objectAtIndex:index];
         
-        [_avatarView setImageWithURL:[NSURL URLWithString:_currentVM.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+        [_avatarView sd_setImageWithURL:[NSURL URLWithString:_currentVM.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
  
         _usernameLabel.text = _currentVM.username;
         _timeLabel.text = _currentVM.publishTime;

@@ -549,7 +549,7 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 //         setBackgroundImage:[UIImage imageNamed:@"pie_channelActivityBanner"]
 //         forState:UIControlStateNormal];
         NSURL *bannerImageUrl = [NSURL URLWithString:self.currentChannelVM.banner_pic];
-//        [_headerBannerView.imageView setImageWithURL:bannerImageUrl];
+//        [_headerBannerView.imageView sd_setImageWithURL:bannerImageUrl];
         [_headerBannerView setBackgroundImageForState:UIControlStateNormal
                                               withURL:bannerImageUrl];
         
