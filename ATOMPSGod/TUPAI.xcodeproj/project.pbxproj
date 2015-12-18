@@ -165,6 +165,9 @@
 		5CDF82421AC2BEF900321694 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CDF82411AC2BEF900321694 /* QuartzCore.framework */; };
 		5CE4082F1ACE94D600A56E4B /* UIViewController+ATOMTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CE4082E1ACE94D600A56E4B /* UIViewController+ATOMTracking.m */; };
 		5CEAC0331AD4F9540058037C /* DDMyCollectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CEAC0321AD4F9540058037C /* DDMyCollectionManager.m */; };
+		903E09DE1C23DF9E006C87B8 /* PIEEliteViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 903E09DD1C23DF9E006C87B8 /* PIEEliteViewController2.m */; };
+		903E09E11C23F2B0006C87B8 /* PIEEliteTestVC1.m in Sources */ = {isa = PBXBuildFile; fileRef = 903E09E01C23F2B0006C87B8 /* PIEEliteTestVC1.m */; };
+		903E09E71C23F416006C87B8 /* PIEEliteTestVC2.m in Sources */ = {isa = PBXBuildFile; fileRef = 903E09E61C23F416006C87B8 /* PIEEliteTestVC2.m */; };
 		90FA11701C1FDB8900D8B602 /* DeviceList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 90FA116D1C1FDB8900D8B602 /* DeviceList.plist */; };
 		90FA11711C1FDB8900D8B602 /* DeviceUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FA116F1C1FDB8900D8B602 /* DeviceUtil.m */; };
 		E900919D1B71E04E004623E4 /* DDInputAuthcodePwdFPVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E900919C1B71E04E004623E4 /* DDInputAuthcodePwdFPVC.m */; };
@@ -865,6 +868,12 @@
 		5CE4082E1ACE94D600A56E4B /* UIViewController+ATOMTracking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ATOMTracking.m"; sourceTree = "<group>"; };
 		5CEAC0311AD4F9540058037C /* DDMyCollectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMyCollectionManager.h; sourceTree = "<group>"; };
 		5CEAC0321AD4F9540058037C /* DDMyCollectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMyCollectionManager.m; sourceTree = "<group>"; };
+		903E09DC1C23DF9E006C87B8 /* PIEEliteViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteViewController2.h; sourceTree = "<group>"; };
+		903E09DD1C23DF9E006C87B8 /* PIEEliteViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteViewController2.m; sourceTree = "<group>"; };
+		903E09DF1C23F2B0006C87B8 /* PIEEliteTestVC1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteTestVC1.h; sourceTree = "<group>"; };
+		903E09E01C23F2B0006C87B8 /* PIEEliteTestVC1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteTestVC1.m; sourceTree = "<group>"; };
+		903E09E51C23F416006C87B8 /* PIEEliteTestVC2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteTestVC2.h; sourceTree = "<group>"; };
+		903E09E61C23F416006C87B8 /* PIEEliteTestVC2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteTestVC2.m; sourceTree = "<group>"; };
 		90FA116D1C1FDB8900D8B602 /* DeviceList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DeviceList.plist; sourceTree = "<group>"; };
 		90FA116E1C1FDB8900D8B602 /* DeviceUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceUtil.h; sourceTree = "<group>"; };
 		90FA116F1C1FDB8900D8B602 /* DeviceUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceUtil.m; sourceTree = "<group>"; };
@@ -1871,6 +1880,12 @@
 				F46117F21BAE558C001A6F1A /* PIEEliteScrollView.m */,
 				F46117EE1BAE556B001A6F1A /* PIEEliteViewController.h */,
 				F46117EF1BAE556B001A6F1A /* PIEEliteViewController.m */,
+				903E09DC1C23DF9E006C87B8 /* PIEEliteViewController2.h */,
+				903E09DD1C23DF9E006C87B8 /* PIEEliteViewController2.m */,
+				903E09DF1C23F2B0006C87B8 /* PIEEliteTestVC1.h */,
+				903E09E01C23F2B0006C87B8 /* PIEEliteTestVC1.m */,
+				903E09E51C23F416006C87B8 /* PIEEliteTestVC2.h */,
+				903E09E61C23F416006C87B8 /* PIEEliteTestVC2.m */,
 				0E5CE0B91C22E1BF000A5B55 /* PIEEliteHotReplyViewController.h */,
 				0E5CE0BA1C22E1BF000A5B55 /* PIEEliteHotReplyViewController.m */,
 				0E5CE0BC1C22E1D4000A5B55 /* PIEEliteFollowReplyViewController.h */,
@@ -4118,6 +4133,7 @@
 			files = (
 				5CDB05CA1AA3FE520089121E /* AppDelegate.m in Sources */,
 				5C83A8961AC66F910071A024 /* POPVector.mm in Sources */,
+				903E09DE1C23DF9E006C87B8 /* PIEEliteViewController2.m in Sources */,
 				F41BA0CF1C0EDCE800979D43 /* MJRefreshNormalHeader.m in Sources */,
 				F4275A121BE0786400BBE7E4 /* SLKTextView.m in Sources */,
 				5C83A8921AC66F910071A024 /* POPLayerExtras.mm in Sources */,
@@ -4267,6 +4283,7 @@
 				F4EC11111BCE5A73002D1DCF /* PIENotificationReplyTableViewCell.m in Sources */,
 				0EF2F5C51C154A5700F27D61 /* PIEChannelBannerCell.m in Sources */,
 				F4E72E731C070C6C0056791D /* PIECustomViewFromXib.m in Sources */,
+				903E09E71C23F416006C87B8 /* PIEEliteTestVC2.m in Sources */,
 				0E6F78FE1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.m in Sources */,
 				5CDB06061AA405A40089121E /* UIColor+iOS7.m in Sources */,
 				F4275A1D1BE0B9ED00BBE7E4 /* PIEMyFollowViewController.m in Sources */,
@@ -4445,6 +4462,7 @@
 				0E54C78D1C1E8F5E00F431AC /* PIEDoneCollectionViewCell.m in Sources */,
 				F47EF0881C031FF500BFB442 /* VVBlurTransitioning.m in Sources */,
 				F499E44F1BD0E90100E5F178 /* PIESignOutTableViewCell.m in Sources */,
+				903E09E11C23F2B0006C87B8 /* PIEEliteTestVC1.m in Sources */,
 				F4993CED1BE5B32C007F9BE4 /* UIButton+AFNetworking.m in Sources */,
 				3BE1AECA1B9FE9C900CE2303 /* QBAssetCell.m in Sources */,
 				F4EC11161BCE5B9E002D1DCF /* PIENotificationSystemTableViewCell.m in Sources */,
@@ -4732,7 +4750,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tupppai.www;
 				PRODUCT_NAME = TUPAI;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "d7a94fec-a9dd-4f42-9398-72bc32df65c4";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				VALIDATE_PRODUCT = NO;
 				VALID_ARCHS = " armv7 armv7s arm64 arm6";
