@@ -23,6 +23,7 @@
 #import "PIEWebViewViewController.h"
 #import "DDSessionManager.h"
 #import "DDNavigationController.h"
+#import "DeviceUtil.h"
 /* Variables */
 @interface PIEChannelActivityViewController ()<QBImagePickerControllerDelegate>
 
@@ -247,6 +248,17 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     _timeStamp                   = [[NSDate date] timeIntervalSince1970];
     params[@"last_updated"]      = @(_timeStamp);
     
+    /*
+     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
+     */
+    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
+        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
+        [params setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
+    }
+    else{
+        [params setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
+    }
+    
     [PIEChannelManager getSource_channelPages:params resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
         [_source_reply removeAllObjects];
         [_source_reply addObjectsFromArray:pageArray];
@@ -264,7 +276,16 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     params[@"size"]              = @(10);
     params[@"type"]              = @"reply";
     params[@"last_updated"]      = @(_timeStamp);
-    
+    /*
+     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
+     */
+    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
+        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
+        [params setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
+    }
+    else{
+        [params setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
+    }
     [PIEChannelManager getSource_channelPages:params resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
         [_source_reply addObjectsFromArray:pageArray];
     } completion:^{

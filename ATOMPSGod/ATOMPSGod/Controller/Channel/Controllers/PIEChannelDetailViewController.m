@@ -23,6 +23,7 @@
 #import "DDCollectManager.h"
 #import "PIECameraViewController.h"
 #import "PIENewAskMakeUpViewController.h"
+#import "DeviceUtil.h"
 /* Variables */
 @interface PIEChannelDetailViewController ()
 @property (nonatomic, strong) PIERefreshTableView           *tableView;
@@ -469,12 +470,28 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     _source_ask = [NSMutableArray<PIEPageVM *> array];
 }
 
+
+/**
+ *  what the hell is this?
+ */
 - (void)getSource_Ask {
     NSMutableDictionary *params  = [NSMutableDictionary dictionary];
     params[@"category_id"]        = @(self.currentChannelViewModel.ID);
     params[@"page"]              = @(1);
     params[@"size"]              = @(10);
     params[@"type"]              = @"ask";
+    
+    /*
+     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
+     */
+    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
+        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
+        [params setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
+    }
+    else{
+        [params setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
+    }
+    
     [PIEChannelManager getSource_channelPages:params resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
         [_source_ask removeAllObjects];
         [_source_ask addObjectsFromArray:pageArray];
@@ -493,7 +510,18 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     params[@"type"]              = @"reply";
     _timeStamp                   = [[NSDate date] timeIntervalSince1970];
     params[@"last_updated"]      = @(_timeStamp);
-
+    
+    /*
+     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
+     */
+    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
+        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
+        [params setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
+    }
+    else{
+        [params setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
+    }
+    
     [PIEChannelManager getSource_channelPages:params resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
         [_source_reply removeAllObjects];
         [_source_reply addObjectsFromArray:pageArray];
@@ -511,7 +539,16 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     params[@"size"]              = @(20);
     params[@"type"]              = @"reply";
     params[@"last_updated"]      = @(_timeStamp);
-    
+    /*
+     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
+     */
+    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
+        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
+        [params setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
+    }
+    else{
+        [params setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
+    }
     [PIEChannelManager getSource_channelPages:params resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
         [_source_reply addObjectsFromArray:pageArray];
     } completion:^{

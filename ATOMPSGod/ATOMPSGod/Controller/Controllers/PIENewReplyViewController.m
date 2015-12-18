@@ -22,6 +22,7 @@
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
 #import "PIEToHelpViewController.h"
+#import "DeviceUtil.h"
 /* Variables */
 @interface PIENewReplyViewController ()
 
@@ -251,6 +252,17 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     //    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(1) forKey:@"page"];
     
+    /*
+     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
+     */
+    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
+        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
+        [param setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
+    }
+    else{
+        [param setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
+    }
+    
     PIEPageManager *pageManager = [PIEPageManager new];
     [pageManager pullReplySource:param block:^(NSMutableArray *array) {
         ws.isfirstLoadingReply = NO;
@@ -276,6 +288,19 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     [param setObject:@(15) forKey:@"size"];
     //    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(_currentIndex_reply) forKey:@"page"];
+    
+    /*
+     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
+     */
+    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
+        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
+        [param setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
+    }
+    else{
+        [param setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
+    }
+    
+    
     PIEPageManager *pageManager = [PIEPageManager new];
     [pageManager pullReplySource:param block:^(NSMutableArray *array) {
         if (array.count) {
