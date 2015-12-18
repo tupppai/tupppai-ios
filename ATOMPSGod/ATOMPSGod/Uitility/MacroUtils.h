@@ -17,6 +17,7 @@
 #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
 
+#define SCREEN_WIDTH_1x (1.0 * SCREEN_WIDTH)
 #define SCREEN_WIDTH_2x (2.0 * SCREEN_WIDTH)
 #define SCREEN_WIDTH_3x (3.0 * SCREEN_WIDTH)
 
