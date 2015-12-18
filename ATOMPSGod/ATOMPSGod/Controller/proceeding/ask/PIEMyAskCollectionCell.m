@@ -18,7 +18,7 @@
 
 //put a needle injecting into cell's ass.
 - (void)injectSource:(PIEPageVM*)vm {
-    [_theImageView setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+    [_theImageView sd_setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
     _contentLabel.text = vm.content;
 }
 

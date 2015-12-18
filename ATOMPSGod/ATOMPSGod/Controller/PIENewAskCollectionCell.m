@@ -33,7 +33,7 @@
 
 //put a needle injecting into cell's ass.
 - (void)injectSource:(PIEPageVM*)vm {
-    [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+    [_avatarView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
     _nameLabel.text = vm.username;
     _timeLabel.text = vm.publishTime;
     _contentLabel.text = vm.content;
@@ -46,8 +46,8 @@
 //    if (vm.thumbEntityArray.count == 2) {
 //        PIEImageEntity* entity1 = [vm.thumbEntityArray objectAtIndex:0];
 //        PIEImageEntity* entity2 = [vm.thumbEntityArray objectAtIndex:1];
-//        [_leftImageView setImageWithURL:[NSURL URLWithString:entity1.url]placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-//        [_rightImageView setImageWithURL:[NSURL URLWithString:entity2.url]placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+//        [_leftImageView sd_setImageWithURL:[NSURL URLWithString:entity1.url]placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+//        [_rightImageView sd_setImageWithURL:[NSURL URLWithString:entity2.url]placeholderImage:[UIImage imageNamed:@"cellHolder"]];
 //        [_rightImageView mas_updateConstraints:^(MASConstraintMaker *make) {
 //            make.width.equalTo(@(self.frame.size.width/2));
 //        }];
@@ -55,7 +55,7 @@
 //    }
 //    else if (vm.thumbEntityArray.count == 1) {
         PIEImageEntity* entity1 = [vm.thumbEntityArray objectAtIndex:0];
-        [_leftImageView setImageWithURL:[NSURL URLWithString:entity1.url]placeholderImage:[UIImage imageNamed:@"cell_holder_portrait.png"]];
+        [_leftImageView sd_setImageWithURL:[NSURL URLWithString:entity1.url]placeholderImage:[UIImage imageNamed:@"cell_holder_portrait.png"]];
         [_rightImageView mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.width.equalTo(@(0));
         }];

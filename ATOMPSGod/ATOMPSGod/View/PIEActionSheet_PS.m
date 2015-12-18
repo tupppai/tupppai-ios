@@ -53,7 +53,7 @@
     [DDService signProceeding:param withBlock:^(NSString *imageUrl) {
         if (imageUrl != nil) {
             if (shouldDownload) {
-                [DDService downloadImage:imageUrl withBlock:^(UIImage *image) {
+                [DDService sd_downloadImage:imageUrl withBlock:^(UIImage *image) {
                     UIImageWriteToSavedPhotosAlbum(image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
                 }];
             }

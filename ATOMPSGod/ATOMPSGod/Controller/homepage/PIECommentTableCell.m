@@ -76,7 +76,7 @@
     self.usernameLabel.text = vm.username;
     self.commentLabel.text = vm.text;
     self.timeLabel.text = vm.time;
-    [self.avatarView setImageWithURL:[NSURL URLWithString:vm.avatar]];
+    [self.avatarView sd_setImageWithURL:[NSURL URLWithString:vm.avatar]];
     if (vm.replyArray.count > 0) {
         PIEEntityCommentReply* replierModal = [vm.replyArray objectAtIndex:0];
 
@@ -165,7 +165,7 @@
         _avatarView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
         _avatarView.layer.cornerRadius = kMessageTableViewCellAvatarHeight/2.0;
         _avatarView.layer.masksToBounds = YES;
-        [self.avatarView setImageWithURL:[NSURL URLWithString:[DDUserManager currentUser].avatar]];
+        [self.avatarView sd_setImageWithURL:[NSURL URLWithString:[DDUserManager currentUser].avatar]];
     }
     return _avatarView;
 }

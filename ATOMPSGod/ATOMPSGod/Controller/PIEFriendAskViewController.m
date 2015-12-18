@@ -90,19 +90,8 @@
         [param setObject:@(_uid) forKey:@"uid"];
     }
     [param setObject:@(15) forKey:@"size"];
-    
-    /*
-     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
-     */
-    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
-        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
-        [param setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
-    }
-    else{
-        [param setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
-    }
-//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-    
+
+    [param setObject:@(SCREEN_WIDTH*0.5) forKey:@"width"];
     
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(1) forKey:@"page"];
@@ -131,7 +120,7 @@
         [param setObject:@(_uid) forKey:@"uid"];
     }
     [param setObject:@(15) forKey:@"size"];
-    [param setObject:@(SCREEN_WIDTH*2) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH*0.5) forKey:@"width"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(_currentIndex) forKey:@"page"];
     [DDPageManager getAskWithReplies:param withBlock:^(NSArray *returnArray) {
