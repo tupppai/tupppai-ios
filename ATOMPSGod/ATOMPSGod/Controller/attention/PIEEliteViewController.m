@@ -30,6 +30,7 @@
 #import "PIECarouselViewController2.h"
 #import "PIEActionSheet_PS.h"
 #import "DeviceUtil.h"
+#import "SwipeView.h"
 
 
 /* Variables */
@@ -129,6 +130,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     [super viewWillAppear:animated];
 //    self.navigationController.hidesBarsOnSwipe = YES;
     [self bindProgressView];
+    
     //update status of like button
     [self updateStatus];
     //make it always visible when coming back to this vc from other vc.
