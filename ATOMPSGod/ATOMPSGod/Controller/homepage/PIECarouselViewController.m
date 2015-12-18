@@ -154,7 +154,7 @@
 
 - (void)DownloadAndBlurImage
 {
-    [DDService downloadImage:_currentVM.imageURL withBlock:^(UIImage *image) {
+    [DDService sd_downloadImage:_currentVM.imageURL withBlock:^(UIImage *image) {
         if (image) {
             self.blurView.image = [image blurredImageWithRadius:60 iterations:1 tintColor:[UIColor blackColor]];
         } else {
@@ -528,7 +528,7 @@
     [DDService signProceeding:param withBlock:^(NSString *imageUrl) {
         if (imageUrl != nil) {
             if (shouldDownload) {
-                [DDService downloadImage:imageUrl withBlock:^(UIImage *image) {
+                [DDService sd_downloadImage:imageUrl withBlock:^(UIImage *image) {
 
                     UIImageWriteToSavedPhotosAlbum(image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
                 }];

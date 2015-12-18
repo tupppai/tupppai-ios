@@ -102,12 +102,12 @@
     _nameLabel.text = viewModel.username;
 //    _timeLabel.text = viewModel.publishTime;
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:viewModel.imageURL]];
-    [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
-    [_theImageView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellHolder"] success:^ void(NSURLRequest * request, NSHTTPURLResponse * response, UIImage * image) {
-        ws.theImageView.image = image;
-        ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
-    } failure:nil];
+    
+    [_theImageView sd_setImageWithURL:[NSURL URLWithString:viewModel.imageURL]
+                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                ws.theImageView.image = image;
+                                ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+    }];
     
     if (viewModel.hotCommentEntityArray.count > 0) {
         PIECommentEntity* commentEntity1  = viewModel.hotCommentEntityArray[0];

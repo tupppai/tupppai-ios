@@ -261,7 +261,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
         NSLog(@"signProceeding");
         if (imageUrl != nil) {
             if (shouldDownload) {
-                [DDService downloadImage:imageUrl withBlock:^(UIImage *image) {
+                [DDService sd_downloadImage:imageUrl withBlock:^(UIImage *image) {
                     UIImageWriteToSavedPhotosAlbum(image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
                 }];
             }

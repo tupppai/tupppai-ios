@@ -189,7 +189,7 @@
 }
 - (void)updateUserInterface:(PIEEntityUser*)user {
     self.title = user.nickname;
-    [DDService downloadImage:user.avatar withBlock:^(UIImage *image) {
+    [DDService sd_downloadImage:user.avatar withBlock:^(UIImage *image) {
         _avatarView.image = image;
         _blurView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:[UIColor blackColor]];
     }];

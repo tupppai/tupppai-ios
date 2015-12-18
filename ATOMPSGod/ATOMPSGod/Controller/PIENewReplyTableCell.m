@@ -121,13 +121,11 @@
     _nameLabel.text = viewModel.username;
     _timeLabel.text = viewModel.publishTime;
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:viewModel.imageURL]];
-    [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
-    [_theImageView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellHolder"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
-        ws.theImageView.image = image;
-        ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
-    } failure:nil];
-    
+    [_theImageView sd_setImageWithURL:[NSURL URLWithString:viewModel.imageURL]
+                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                ws.theImageView.image = image;
+                                ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+                            }];
     //    CGFloat imageViewHeight = MIN(viewModel.imageHeight, SCREEN_HEIGHT/2) ;
     //    imageViewHeight = MAX(100,imageViewHeight);
     //    imageViewHeight = MIN(SCREEN_WIDTH, imageViewHeight);
@@ -138,25 +136,20 @@
     _thumbView.subviewCounts = viewModel.thumbEntityArray.count;
     if (viewModel.thumbEntityArray.count > 0) {
         PIEImageEntity* entity = [viewModel.thumbEntityArray objectAtIndex:0];
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:entity.url]];
-        [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
-        [self.thumbView.rightView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellHolder"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
-            ws.thumbView.rightView.image = image;
-            //ws.thumbView.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
-        } failure:nil];
+        [self.thumbView.rightView sd_setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
         if (viewModel.thumbEntityArray.count == 2) {
             entity = viewModel.thumbEntityArray[1];
             [_thumbView.leftView sd_setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
         }
     }
-    else {
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:viewModel.imageURL]];
-        [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
-        [self.thumbView.rightView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellHolder"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
-            ws.thumbView.rightView.image = image;
-            //ws.thumbView.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
-        } failure:nil];
-    }
+//    else {
+//        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:viewModel.imageURL]];
+//        [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
+//        [self.thumbView.rightView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellHolder"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
+//            ws.thumbView.rightView.image = image;
+//            //ws.thumbView.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+//        } failure:nil];
+//    }
 }
 
 - (void)animateToggleExpanded {

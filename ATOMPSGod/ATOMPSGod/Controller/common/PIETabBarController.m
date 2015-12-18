@@ -170,7 +170,7 @@
 
 
 - (void)updateTabbarAvatar {
-    [DDService downloadImage:[DDUserManager currentUser].avatar withBlock:^(UIImage *image) {
+    [DDService sd_downloadImage:[DDUserManager currentUser].avatar withBlock:^(UIImage *image) {
         if (image) {
             UIImage* scaledImage = [Util imageWithImage:image scaledToSize:CGSizeMake(26,26) circlize:YES];
             _avatarImage = scaledImage;

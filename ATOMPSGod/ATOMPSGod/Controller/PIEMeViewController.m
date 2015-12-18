@@ -182,7 +182,7 @@
     }
 }
 -(void)updateAvatar {
-        [DDService downloadImage:[DDUserManager currentUser].avatar withBlock:^(UIImage *image) {
+        [DDService sd_downloadImage:[DDUserManager currentUser].avatar withBlock:^(UIImage *image) {
             _avatarView.image = image;
             _topContainerView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:nil];
     }];

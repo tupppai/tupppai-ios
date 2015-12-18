@@ -52,7 +52,7 @@
 + (void)  ddSaveAsk :(NSDictionary*)param withBlock:(void (^)(NSInteger newImageID))block;
 + (void)  ddSaveReply :(NSDictionary*)param withBlock:(void (^)(BOOL success))block;
 + (void)toggleLike:(BOOL)like ID:(NSInteger)ID type:(PIEPageType)type  withBlock:(void (^)(BOOL success))block;
-+ (void)downloadImage:(NSString*)url withBlock:(void (^)(UIImage* image))block;
++ (void)sd_downloadImage:(NSString*)url withBlock:(void (^)(UIImage* image))block;
 + (void)editAsk :(NSDictionary*)param withBlock:(void (^)(BOOL success))block;
 + (void)getShareInfo:(NSDictionary*)param withBlock:(void (^)(NSDictionary *))block;
 + (void)ddGetSearchContentResult:(NSDictionary*)param withBlock:(void (^)(NSArray* data))block;

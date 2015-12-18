@@ -46,6 +46,7 @@
 }
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+    self.navigationController.navigationBarHidden = NO;
     self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
 }
 #pragma mark - Refresh
