@@ -12,6 +12,9 @@
 #import "PIEEliteTestVC2.h"
 #import "PIESearchViewController.h"
 
+#import "PIEEliteHotReplyViewController.h"
+#import "PIEEliteFollowReplyViewController.h"
+
 
 /* Variables */
 @interface PIEEliteViewController2 ()
@@ -27,6 +30,11 @@
 @end
 
 /* Protocols */
+
+@interface PIEEliteViewController2 (ScrollView)
+<UIScrollViewDelegate>
+@end
+
 
 @implementation PIEEliteViewController2
 
@@ -45,6 +53,8 @@
 {
     [super viewDidLoad];
     
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    
     // setup navigationItem
     [self setupNavigationItem];
     
@@ -53,11 +63,12 @@
     [self setupViewControllers];
     
     
-    
     // add view controllers as child view controllers
     [self configureViewControllers];
     
     
+    
+    // fetch the initial dat
     
 }
 
@@ -76,11 +87,20 @@
 #pragma mark - UI components setup
 - (void)setupViewControllers
 {
-    PIEEliteTestVC1 *vc1 = [[PIEEliteTestVC1 alloc] init];
-    PIEEliteTestVC2 *vc2 = [[PIEEliteTestVC2 alloc] init];
+//    PIEEliteTestVC1 *vc1 = [[PIEEliteTestVC1 alloc] init];
+//    PIEEliteTestVC2 *vc2 = [[PIEEliteTestVC2 alloc] init];
+//    
+//    [self.eliteViewControllers addObject:vc1];
+//    [self.eliteViewControllers addObject:vc2];
     
-    [self.eliteViewControllers addObject:vc1];
-    [self.eliteViewControllers addObject:vc2];
+    PIEEliteHotReplyViewController *hotReplyViewController =
+    [[PIEEliteHotReplyViewController alloc] init];
+    
+    PIEEliteFollowReplyViewController *followReplyViewController =
+    [[PIEEliteFollowReplyViewController alloc] init];
+    
+    [self.eliteViewControllers addObject:hotReplyViewController];
+    [self.eliteViewControllers addObject:followReplyViewController];
     
 }
 
@@ -99,6 +119,19 @@
         [vc didMoveToParentViewController:self];
     }
 }
+
+#pragma mark - <UIScrollViewDelegate>
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+        int currentPage = (scrollView.contentOffset.x + CGWidth(scrollView.frame) * 0.1) / CGWidth(scrollView.frame);
+        if (currentPage == 0) {
+            [self.segmentedControl setSelectedSegmentIndex:0 animated:YES];
+//            [self getSourceIfEmpty_hot:nil];
+        } else if (currentPage == 1) {
+            [self.segmentedControl setSelectedSegmentIndex:1 animated:YES];
+//            [self getSourceIfEmpty_follow:nil];
+        }
+}
+
 
 - (void)setupNavigationItem
 {
@@ -142,13 +175,15 @@
     if (_scrollView == nil) {
         _scrollView = [[UIScrollView alloc] init];
         
-        self.scrollView.frame                          = [UIScreen mainScreen].bounds;
-        self.scrollView.showsVerticalScrollIndicator   = NO;
-        self.scrollView.showsHorizontalScrollIndicator = YES;
-        self.scrollView.contentSize                    = CGSizeMake(SCREEN_WIDTH * 2, 0);
-        self.scrollView.pagingEnabled                  = YES;
-        self.scrollView.scrollsToTop                   = NO;
-        self.scrollView.backgroundColor                = [UIColor groupTableViewBackgroundColor];
+        _scrollView.frame                          = [UIScreen mainScreen].bounds;
+        _scrollView.showsVerticalScrollIndicator   = NO;
+        _scrollView.showsHorizontalScrollIndicator = YES;
+        _scrollView.contentSize                    = CGSizeMake(SCREEN_WIDTH * 2, 0);
+        _scrollView.pagingEnabled                  = YES;
+        _scrollView.scrollsToTop                   = NO;
+        _scrollView.backgroundColor                = [UIColor groupTableViewBackgroundColor];
+        _scrollView.delegate = self;
+        
     }
     
     return _scrollView;

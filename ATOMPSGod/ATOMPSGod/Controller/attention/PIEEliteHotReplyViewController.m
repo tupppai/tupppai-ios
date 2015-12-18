@@ -43,7 +43,7 @@
 
 @property (nonatomic, assign) BOOL canRefreshFooterHot;
 
-@property (nonatomic, assign)  long long timeStamp_hot;
+@property (nonatomic, assign) long long timeStamp_hot;
 
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath_hot;
 
@@ -93,11 +93,26 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     // Do any additional setup after loading the view.
     [self configData];
     self.edgesForExtendedLayout = UIRectEdgeNone;
+    
+    
+    
     [self configTableViewHot];
+    
     [self setupGestures];
     
-    [self getSourceIfEmpty_hot:nil];
-    [self getSourceIfEmpty_banner];
+   
+    
+    [self configureSwipeView];
+
+    
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self.swipeView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -120,6 +135,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     
     _sourceHot              = [NSMutableArray new];
     
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_Elite" object:nil];
 }
 
@@ -129,28 +145,37 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 
 - (void)configTableViewHot {
     
-    _tableHot.dataSource = self;
-    _tableHot.delegate = self;
-    _tableHot.psDelegate = self;
-    _tableHot.emptyDataSetDelegate = self;
-    _tableHot.emptyDataSetSource = self;
-    _tableHot.estimatedRowHeight = SCREEN_WIDTH+225;
-    _tableHot.rowHeight = UITableViewAutomaticDimension;
-    UINib* nib = [UINib nibWithNibName:hotReplyIndentifier bundle:nil];
-    [_tableHot registerNib:nib forCellReuseIdentifier:hotReplyIndentifier];
-    UINib* nib2 = [UINib nibWithNibName:hotAskIndentifier bundle:nil];
-    [_tableHot registerNib:nib2 forCellReuseIdentifier:hotAskIndentifier];
-    _swipeView.dataSource = self;
-    _swipeView.delegate = self;
+    // add as subview, then add constraints
+    [self.view addSubview:self.tableHot];
+    
+
+    __weak typeof(self) weakSelf = self;
+    [self.tableHot mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(weakSelf.view);
+    }];
+    
+    
+    /*
+        我靠，SwipeView你够了喔！你他丫的竟然在delegate的setter方法里reload自己！
+        我一开始是在swipeView的懒加载方法里放创建并设置swipeView，在懒加载那里设置delegate & dataSource不过分吧？
+        你好学不学竟然在delegate的setter方法里做手脚reload自己，我数据源返回得到数据之后再reload又没反应。东搞西搞把下面两句
+        放到tableView的configure方法底下，swipeView就刷出数据了！这是闹哪样？
+     
+     */
+    self.swipeView.dataSource = self;
+    self.swipeView.delegate = self;
+}
+
+- (void)configureSwipeView{
     
 }
 
 - (void)setupGestures {
     UITapGestureRecognizer* tapGestureHot = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureHot:)];
-    [_tableHot addGestureRecognizer:tapGestureHot];
+    [self.tableHot addGestureRecognizer:tapGestureHot];
     
     UILongPressGestureRecognizer* longPressGestureHot = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnHot:)];
-    [_tableHot addGestureRecognizer:longPressGestureHot];
+    [self.tableHot addGestureRecognizer:longPressGestureHot];
    
     
 }
@@ -158,30 +183,30 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 
 #pragma mark - Notification methods
 - (void)refreshHeader {
-    if (_tableHot.mj_header.isRefreshing == false) {
-        [ _tableHot.mj_header beginRefreshing];
+    if (self.tableHot.mj_header.isRefreshing == false) {
+        [self.tableHot.mj_header beginRefreshing];
     }
 }
 
 #pragma mark - <SwipeViewDataSource>
 - (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
 {
-    return _sourceBanner.count;
+    return self.sourceBanner.count;
 }
 
 - (UIView *)swipeView:(SwipeView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
 {
     if (view == nil)
     {
-        CGFloat width = _swipeView.frame.size.width;
-        CGFloat height = _swipeView.frame.size.height;
+        CGFloat width = self.swipeView.frame.size.width;
+        CGFloat height = self.swipeView.frame.size.height;
         
         view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
         UIImageView* imageView = [[UIImageView alloc] initWithFrame:view.bounds];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         [view addSubview:imageView];
     }
-    PIEBannerViewModel* vm = [_sourceBanner objectAtIndex:index];
+    PIEBannerViewModel* vm = [self.sourceBanner objectAtIndex:index];
     for (UIView *subView in view.subviews){
         if([subView isKindOfClass:[UIImageView class]]){
             UIImageView *imageView = (UIImageView *)subView;
@@ -201,15 +226,10 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 
 -(void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index {
     PIEWebViewViewController* vc = [PIEWebViewViewController new];
-    vc.viewModel = [_sourceBanner objectAtIndex:index];
+    vc.viewModel = [self.sourceBanner objectAtIndex:index];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-// 以下方法没有被调用过
-- (void)tapPageControl:(SMPageControl *)sender
-{
-    [_swipeView scrollToItemAtIndex:sender.currentPage duration:0.5];
-}
 
 #pragma mark - <UITableViewDataSource>
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -257,7 +277,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 {
     /* 取得PIEEliteHotReplyTableViewCell的实例，修改星星的状态和个数 */
     PIEEliteHotReplyTableViewCell *cell =
-    [_tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
+    [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
     cell.collectView.highlighted  = _selectedVM.collected;
     cell.collectView.numberString = _selectedVM.collectCount;
 }
@@ -272,7 +292,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     
    if (_selectedIndexPath_hot != nil)
     {
-        [_tableHot reloadRowsAtIndexPaths:@[_selectedIndexPath_hot]
+        [self.tableHot reloadRowsAtIndexPaths:@[_selectedIndexPath_hot]
                             withRowAnimation:UITableViewRowAnimationAutomatic];
     }
     
@@ -292,7 +312,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     if (_canRefreshFooterHot) {
         [self getMoreRemoteSourceHot];
     } else {
-        [_tableHot.mj_footer endRefreshingWithNoMoreData];
+        [self.tableHot.mj_footer endRefreshingWithNoMoreData];
     }
 
 }
@@ -337,15 +357,15 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 
 #pragma mark - Gesture events
 - (void)longPressOnHot:(UILongPressGestureRecognizer *)gesture {
-    CGPoint location = [gesture locationInView:_tableHot];
-    _selectedIndexPath_hot = [_tableHot indexPathForRowAtPoint:location];
+    CGPoint location = [gesture locationInView:self.tableHot];
+    _selectedIndexPath_hot = [self.tableHot indexPathForRowAtPoint:location];
     if (_selectedIndexPath_hot) {
         //关注  求p
         _selectedVM = _sourceHot[_selectedIndexPath_hot.row];
         
         if (_selectedVM.type == PIEPageTypeAsk) {
             
-            PIEEliteHotAskTableViewCell* cell = [_tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
+            PIEEliteHotAskTableViewCell* cell = [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
             CGPoint p = [gesture locationInView:cell];
             if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                 [self showShareView:_selectedVM];
@@ -354,7 +374,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
         //关注  作品
         
         else {
-            PIEEliteHotReplyTableViewCell* cell = [_tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
+            PIEEliteHotReplyTableViewCell* cell = [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
             CGPoint p = [gesture locationInView:cell];
             //点击大图
             if (CGRectContainsPoint(cell.theImageView.frame, p)) {
@@ -366,15 +386,15 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 }
 
 - (void)tapGestureHot:(UITapGestureRecognizer *)gesture {
-        CGPoint location = [gesture locationInView:_tableHot];
-        _selectedIndexPath_hot = [_tableHot indexPathForRowAtPoint:location];
+        CGPoint location = [gesture locationInView:self.tableHot];
+        _selectedIndexPath_hot = [self.tableHot indexPathForRowAtPoint:location];
         if (_selectedIndexPath_hot) {
             //关注  求p
             _selectedVM = _sourceHot[_selectedIndexPath_hot.row];
             
             if (_selectedVM.type == PIEPageTypeAsk) {
                 
-                PIEEliteHotAskTableViewCell* cell = [_tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
+                PIEEliteHotAskTableViewCell* cell = [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
                 CGPoint p = [gesture locationInView:cell];
                 //点击小图
                 //点击大图
@@ -424,7 +444,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
             
             
             else {
-                PIEEliteHotReplyTableViewCell* cell = [_tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
+                PIEEliteHotReplyTableViewCell* cell = [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
                 CGPoint p = [gesture locationInView:cell];
                 //点击小图
                 if (CGRectContainsPoint(cell.thumbView.frame, p)) {
@@ -546,7 +566,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     [DDCollectManager toggleCollect:param withPageType:_selectedVM.type withID:_selectedVM.ID withBlock:^(NSError *error) {
         if (!error) {
             if (shouldShowHud) {
-                if (  collectView.selected) {
+                if (collectView.selected) {
                     [Hud textWithLightBackground:@"收藏成功"];
                 } else {
                     [Hud textWithLightBackground:@"取消收藏成功"];
@@ -558,6 +578,12 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
             collectView.selected = !collectView.selected;
         }
     }];
+}
+
+#pragma mark - target-actions
+- (void) onTimer
+{
+    [self.swipeView scrollByNumberOfItems:1 duration:0.5];
 }
 
 #pragma mark - Fetch _source data
@@ -579,29 +605,32 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     
     //    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [PIEEliteManager getBannerSource:param withBlock:^(NSMutableArray *array) {
-        _sourceBanner = array;
-        _pageControl_swipeView.numberOfPages = _sourceBanner.count;
-        [_swipeView reloadData];
+        [self.sourceBanner addObjectsFromArray:array];
+        
+//        _pageControl_swipeView.numberOfPages = self.sourceBanner.count;
+        [self.swipeView reloadData];
+ 
+
     }];
 }
 
 /** getSourceIfEmpty_xxx 这两个方法给我一种匪夷所思的感觉 */
 - (void)getSourceIfEmpty_banner {
-    if (_sourceBanner.count <= 0) {
+    if (self.sourceBanner.count <= 0) {
         [self getRemoteSourceBanner];
     }
 }
 
 - (void)getSourceIfEmpty_hot:(void (^)(BOOL finished))block {
     if (_isfirstLoadingHot || _sourceHot.count <= 0) {
-        [_tableHot.mj_header beginRefreshing];
+        [self.tableHot.mj_header beginRefreshing];
     }
 }
 
 - (void)getRemoteSourceHot:(void (^)(BOOL finished))block {
     __weak typeof(self) weakSelf = self;
     
-    [_tableHot.mj_footer endRefreshing];
+    [self.tableHot.mj_footer endRefreshing];
     _currentIndex_hot = 1;
     _timeStamp_hot = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -636,11 +665,13 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
             block(YES);
         }
     }];
+    
+    [self getRemoteSourceBanner];
 }
 
 - (void)getMoreRemoteSourceHot {
     __weak typeof(self) weakSelf = self;
-    [_tableHot.mj_header endRefreshing];
+    [self.tableHot.mj_header endRefreshing];
     _currentIndex_hot ++;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_timeStamp_hot) forKey:@"last_updated"];
@@ -675,6 +706,57 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 
 #pragma mark - Lazy loadings
 
+- (PIERefreshTableView *)tableHot
+{
+    if (_tableHot == nil) {
+        _tableHot = [[PIERefreshTableView alloc] init];
+        _tableHot.dataSource           = self;
+        _tableHot.delegate             = self;
+        _tableHot.psDelegate           = self;
+        _tableHot.emptyDataSetDelegate = self;
+        _tableHot.emptyDataSetSource   = self;
+        
+        _tableHot.estimatedRowHeight   = SCREEN_WIDTH+225;
+        _tableHot.rowHeight = UITableViewAutomaticDimension;
+        
+        _tableHot.tableHeaderView = self.swipeView;
+
+        
+        UINib* nib = [UINib nibWithNibName:hotReplyIndentifier bundle:nil];
+        [_tableHot registerNib:nib forCellReuseIdentifier:hotReplyIndentifier];
+        UINib* nib2 = [UINib nibWithNibName:hotAskIndentifier bundle:nil];
+        [_tableHot registerNib:nib2 forCellReuseIdentifier:hotAskIndentifier];
+    }
+    
+    return _tableHot;
+}
+
+- (SwipeView *)swipeView
+{
+    if (_swipeView == nil) {
+        _swipeView = [[SwipeView alloc] init];
+        
+        CGFloat height = 333.0/750 * SCREEN_WIDTH;
+        _swipeView =
+        [[SwipeView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, height)];
+        _swipeView.backgroundColor = [UIColor clearColor];
+        _swipeView.wrapEnabled = YES;
+        
+        
+        [_swipeView addSubview:self.pageControl_swipeView];
+        
+        CGPoint center = self.pageControl_swipeView.center;
+        
+        center.x = _swipeView.center.x;
+        center.y = _swipeView.center.y+69;
+        self.pageControl_swipeView.center = center;
+        
+        [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
+    }
+    
+    return _swipeView;
+}
+
 -(PIEShareView *)shareView {
     if (!_shareView) {
         _shareView = [PIEShareView new];
@@ -689,4 +771,24 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     }
     return _psActionSheet;
 }
+
+- (SMPageControl *)pageControl_swipeView
+{
+    if (_pageControl_swipeView == nil) {
+        _pageControl_swipeView =
+        [[SMPageControl alloc]initWithFrame:CGRectMake(0,0, 200, 20)];
+    }
+    
+    return _pageControl_swipeView;
+}
+
+- (NSMutableArray<PIEBannerViewModel *> *)sourceBanner
+{
+    if (_sourceBanner == nil) {
+        _sourceBanner = [NSMutableArray<PIEBannerViewModel *> array];
+    }
+    
+    return _sourceBanner;
+}
+
 @end

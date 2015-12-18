@@ -75,9 +75,13 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     
+    [self configData];
     
+    [self configTableViewFollow];
     
+    [self setupGestures];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -104,34 +108,29 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
 
 #pragma mark - UI components setup
 - (void)configTableViewFollow {
-    _tableFollow.dataSource           = self;
-    _tableFollow.delegate             = self;
-    _tableFollow.psDelegate           = self;
-    _tableFollow.emptyDataSetSource   = self;
-    _tableFollow.emptyDataSetDelegate = self;
-    _tableFollow.estimatedRowHeight   = SCREEN_WIDTH+155;
-    _tableFollow.rowHeight            = UITableViewAutomaticDimension;
-    UINib* nib2 = [UINib nibWithNibName:askIndentifier bundle:nil];
-    [_tableFollow registerNib:nib2 forCellReuseIdentifier:askIndentifier];
-    UINib* nib3 = [UINib nibWithNibName:replyIndentifier bundle:nil];
-    [_tableFollow registerNib:nib3 forCellReuseIdentifier:replyIndentifier];
+    // add as subview and add constraint
+    [self.view addSubview:self.tableFollow];
+    
+    [self.tableFollow mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
 }
 
 - (void)setupGestures {
     
     UITapGestureRecognizer* tapGestureFollow = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureFollow:)];
-    [_tableFollow addGestureRecognizer:tapGestureFollow];
+    [self.tableFollow addGestureRecognizer:tapGestureFollow];
    
     UILongPressGestureRecognizer* longPressGestureFollow = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnFollow:)];
-    [_tableFollow addGestureRecognizer:longPressGestureFollow];
+    [self.tableFollow addGestureRecognizer:longPressGestureFollow];
     
 }
 
 
 #pragma mark - Notification Methods
 - (void)refreshHeader {
-    if (_tableFollow.mj_header.isRefreshing == false) {
-        [_tableFollow.mj_header beginRefreshing];
+    if (self.tableFollow.mj_header.isRefreshing == false) {
+        [self.tableFollow.mj_header beginRefreshing];
     }
 }
 
@@ -258,7 +257,7 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
    
     /* 取得PIEEliteFollowReplyTableViewCell的实例，修改星星的状态和个数 */
     PIEEliteFollowReplyTableViewCell *cell =
-    [_tableFollow cellForRowAtIndexPath:_selectedIndexPath_follow];
+    [self.tableFollow cellForRowAtIndexPath:_selectedIndexPath_follow];
     cell.collectView.highlighted  = _selectedVM.collected;
     cell.collectView.numberString = _selectedVM.collectCount;
     
@@ -271,7 +270,7 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
     _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
 
     if (_selectedIndexPath_follow != nil) {
-        [_tableFollow reloadRowsAtIndexPaths:@[_selectedIndexPath_follow] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableFollow reloadRowsAtIndexPaths:@[_selectedIndexPath_follow] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
     
 }
@@ -284,7 +283,7 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
 #pragma mark - fetch data source
 - (void)getRemoteSourceFollow {
     WS(ws);
-    [_tableFollow.mj_footer endRefreshing];
+    [self.tableFollow.mj_footer endRefreshing];
     _currentIndex_follow = 1;
     _timeStamp_follow = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -326,7 +325,7 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
 
 - (void)getMoreRemoteSourceFollow {
     WS(ws);
-    [_tableFollow.mj_header endRefreshing];
+    [self.tableFollow.mj_header endRefreshing];
     _currentIndex_follow++;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_timeStamp_follow) forKey:@"last_updated"];
@@ -364,7 +363,7 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
 
 - (void)getSourceIfEmpty_follow:(void (^)(BOOL finished))block {
     if (_isfirstLoadingFollow || _sourceFollow.count <= 0) {
-        [_tableFollow.mj_header beginRefreshing];
+        [self.tableFollow.mj_header beginRefreshing];
     }
 }
 
@@ -377,7 +376,7 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
     if (_canRefreshFooterFollow) {
         [self getMoreRemoteSourceFollow];
     } else {
-        [_tableFollow.mj_footer endRefreshingWithNoMoreData];
+        [self.tableFollow.mj_footer endRefreshingWithNoMoreData];
     }
 }
 
@@ -422,8 +421,8 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
 #pragma mark - Gesture Event
 
 - (void)longPressOnFollow:(UILongPressGestureRecognizer *)gesture {
-        CGPoint location = [gesture locationInView:_tableFollow];
-        _selectedIndexPath_follow = [_tableFollow indexPathForRowAtPoint:location];
+        CGPoint location = [gesture locationInView:self.tableFollow];
+        _selectedIndexPath_follow = [self.tableFollow indexPathForRowAtPoint:location];
         _selectedVM = _sourceFollow[_selectedIndexPath_follow.row];
         if (_selectedIndexPath_follow) {
             //关注  求p
@@ -431,7 +430,7 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
             
             if (_selectedVM.type == PIEPageTypeAsk) {
                 
-                PIEEliteFollowAskTableViewCell* cell = [_tableFollow cellForRowAtIndexPath:_selectedIndexPath_follow];
+                PIEEliteFollowAskTableViewCell* cell = [self.tableFollow cellForRowAtIndexPath:_selectedIndexPath_follow];
                 CGPoint p = [gesture locationInView:cell];
                 if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                     //进入热门详情
@@ -441,7 +440,7 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
             
             //关注  作品
             else {
-                PIEEliteFollowReplyTableViewCell* cell = [_tableFollow cellForRowAtIndexPath:_selectedIndexPath_follow];
+                PIEEliteFollowReplyTableViewCell* cell = [self.tableFollow cellForRowAtIndexPath:_selectedIndexPath_follow];
                 CGPoint p = [gesture locationInView:cell];
                 if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                     [self showShareView:_selectedVM];
@@ -452,15 +451,15 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
 }
 
 - (void)tapGestureFollow:(UITapGestureRecognizer *)gesture {
-        CGPoint location = [gesture locationInView:_tableFollow];
-        _selectedIndexPath_follow = [_tableFollow indexPathForRowAtPoint:location];
+        CGPoint location = [gesture locationInView:self.tableFollow];
+        _selectedIndexPath_follow = [self.tableFollow indexPathForRowAtPoint:location];
         if (_selectedIndexPath_follow) {
             //关注  求p
             _selectedVM = _sourceFollow[_selectedIndexPath_follow.row];
             
             if (_selectedVM.type == PIEPageTypeAsk) {
                 
-                PIEEliteFollowAskTableViewCell* cell = [_tableFollow cellForRowAtIndexPath:_selectedIndexPath_follow];
+                PIEEliteFollowAskTableViewCell* cell = [self.tableFollow cellForRowAtIndexPath:_selectedIndexPath_follow];
                 CGPoint p = [gesture locationInView:cell];
                 if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                     //进入热门详情
@@ -509,7 +508,7 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
             //关注  作品
             
             else {
-                PIEEliteFollowReplyTableViewCell* cell = [_tableFollow cellForRowAtIndexPath:_selectedIndexPath_follow];
+                PIEEliteFollowReplyTableViewCell* cell = [self.tableFollow cellForRowAtIndexPath:_selectedIndexPath_follow];
                 CGPoint p = [gesture locationInView:cell];
                 //点击小图
                 //点击小图
@@ -570,6 +569,34 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
 }
 
 #pragma mark - Lazy loadings
+- (PIERefreshTableView *)tableFollow
+{
+    if (_tableFollow == nil) {
+        _tableFollow = [[PIERefreshTableView alloc] init];
+        
+        _tableFollow.dataSource           = self;
+        _tableFollow.delegate             = self;
+        _tableFollow.psDelegate           = self;
+        _tableFollow.emptyDataSetSource   = self;
+        _tableFollow.emptyDataSetDelegate = self;
+        
+        
+        _tableFollow.estimatedRowHeight   = SCREEN_WIDTH+155;
+        _tableFollow.rowHeight            = UITableViewAutomaticDimension;
+        
+        
+        UINib* nib2 = [UINib nibWithNibName:askIndentifier bundle:nil];
+        [self.tableFollow registerNib:nib2 forCellReuseIdentifier:askIndentifier];
+        UINib* nib3 = [UINib nibWithNibName:replyIndentifier bundle:nil];
+        [self.tableFollow registerNib:nib3 forCellReuseIdentifier:replyIndentifier];
+        
+        
+    }
+    
+    return _tableFollow;
+}
+
+
 -(PIEActionSheet_PS *)psActionSheet {
     if (!_psActionSheet) {
         _psActionSheet = [PIEActionSheet_PS new];
