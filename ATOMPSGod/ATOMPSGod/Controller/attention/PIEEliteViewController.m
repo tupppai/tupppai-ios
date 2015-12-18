@@ -414,11 +414,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 //}
 //
 
-
-
-
-
--(void)follow:(UIImageView*)followView {
+- (void)follow:(UIImageView*)followView {
     followView.highlighted = !followView.highlighted;
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:@(_selectedVM.userID) forKey:@"uid"];
@@ -794,6 +790,8 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     }];
 }
 
+#pragma mark - <PWRefreshBaseTableViewDelegate>
+
 -(void)didPullRefreshDown:(UITableView *)tableView {
     if (tableView == _sv.tableFollow) {
         [self getRemoteSourceFollow];
@@ -817,6 +815,11 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     }
 }
 
+#pragma mark - <UIScrollViewDelegate>
+
+/*
+    判断scrollView是否是_sv(即：判断用户到底是在上下滑动还是左右滑动）；如果是左右滑动（scrollView == _sv），那么就让navigationView的segmentedControl数字改变，并且刷新“关注”或“热门”（当且仅当数据源为空的时候）
+ */
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (scrollView == _sv) {
         int currentPage = (scrollView.contentOffset.x + CGWidth(scrollView.frame) * 0.1) / CGWidth(scrollView.frame);
