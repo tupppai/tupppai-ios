@@ -20,7 +20,9 @@
     _avatarButton.clipsToBounds = YES;
     _avatarButton.backgroundColor = [UIColor lightGrayColor];
     _avatarButton.userInteractionEnabled = NO;
-    _nameLabel.alpha = 0.8;
+    
+    _nameLabel.font = [UIFont lightTupaiFontOfSize:11];
+    _nameLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
 }
 
 - (void)injectSauce:(PIEPageVM*)vm {

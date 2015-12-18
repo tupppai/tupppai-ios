@@ -16,9 +16,12 @@
     _avatarButton.layer.cornerRadius = _avatarButton.frame.size.width/2;
     _avatarButton.clipsToBounds = YES;
     _avatarButton.backgroundColor = [UIColor lightGrayColor];
-    _countLabel.textColor = [UIColor colorWithHex:0x4a4a4a andAlpha:0.8];
     _followButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
     _nameButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [_nameButton.titleLabel setFont:[UIFont lightTupaiFontOfSize:14]];
+    _countLabel.font = [UIFont lightTupaiFontOfSize:11];
+    [_nameButton setTitleColor:[UIColor colorWithHex:0x000000 andAlpha:0.9] forState:UIControlStateNormal];
+    _countLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
     _avatarButton.userInteractionEnabled = NO;
     _nameButton.userInteractionEnabled = NO;
     _followButton.userInteractionEnabled = NO;
@@ -60,7 +63,6 @@
         UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, width, width)];
         imageView.backgroundColor = [UIColor lightGrayColor];
         imageView.contentMode = UIViewContentModeScaleAspectFill;
-        imageView.layer.cornerRadius = 3.0;
         imageView.clipsToBounds = YES;
         [view addSubview:imageView];
     }
