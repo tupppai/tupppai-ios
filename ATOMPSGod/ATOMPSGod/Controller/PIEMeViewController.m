@@ -60,7 +60,7 @@
     [self setupNavBar];
     [self setupViews];
     [self setupPageMenu];
-//    [self updateViewsWithData];
+    [self updateViewsWithData];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(scrollUp)
                                                  name:@"PIEMeScrollUp"
@@ -186,7 +186,6 @@
             _avatarView.image = image;
             _topContainerView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:nil];
     }];
-    self.usernameLabel.text = [DDUserManager currentUser].nickname;
 }
 - (void)pushToSettingViewController {
     PIESettingsViewController* vc = [PIESettingsViewController new];
