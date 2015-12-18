@@ -249,19 +249,9 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     _timeStamp_reply = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(_timeStamp_reply) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    //    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(1) forKey:@"page"];
-    
-    /*
-     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
-     */
-    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
-        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
-        [param setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
-    }
-    else{
-        [param setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
-    }
+    [param setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
+
     
     PIEPageManager *pageManager = [PIEPageManager new];
     [pageManager pullReplySource:param block:^(NSMutableArray *array) {
@@ -286,20 +276,8 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:@(_timeStamp_reply) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    //    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
     [param setObject:@(_currentIndex_reply) forKey:@"page"];
-    
-    /*
-     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
-     */
-    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
-        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
-        [param setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
-    }
-    else{
-        [param setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
-    }
-    
     
     PIEPageManager *pageManager = [PIEPageManager new];
     [pageManager pullReplySource:param block:^(NSMutableArray *array) {

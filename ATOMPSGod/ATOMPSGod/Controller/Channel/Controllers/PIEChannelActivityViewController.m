@@ -247,18 +247,8 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     params[@"type"]              = @"reply";
     _timeStamp                   = [[NSDate date] timeIntervalSince1970];
     params[@"last_updated"]      = @(_timeStamp);
-    
-    /*
-     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
-     */
-    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
-        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
-        [params setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
-    }
-    else{
-        [params setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
-    }
-    
+    [params setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
+
     [PIEChannelManager getSource_channelPages:params resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
         [_source_reply removeAllObjects];
         [_source_reply addObjectsFromArray:pageArray];
@@ -276,16 +266,8 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     params[@"size"]              = @(10);
     params[@"type"]              = @"reply";
     params[@"last_updated"]      = @(_timeStamp);
-    /*
-     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
-     */
-    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
-        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
-        [params setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
-    }
-    else{
-        [params setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
-    }
+    [params setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
+
     [PIEChannelManager getSource_channelPages:params resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
         [_source_reply addObjectsFromArray:pageArray];
     } completion:^{
@@ -323,12 +305,11 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnReply:)];
     [self.tableView addGestureRecognizer:longPressGestureReply];
     [self.tableView addGestureRecognizer:tapGestureReply];
-    
 }
 
 - (void)tapOnReply:(UITapGestureRecognizer *)gesture {
     
-    PIELog(@"%s", __func__);
+
     
     CGPoint location = [gesture locationInView:self.tableView];
     _selectedIndexPath = [self.tableView indexPathForRowAtPoint:location];
@@ -398,7 +379,7 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 }
 - (void)longPressOnReply:(UILongPressGestureRecognizer *)gesture {
     
-    PIELog(@"%s", __func__);
+
     
     CGPoint location   = [gesture locationInView:self.tableView];
     _selectedIndexPath = [self.tableView indexPathForRowAtPoint:location];
@@ -423,7 +404,7 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
  */
 -(void)likeReply {
     
-    PIELog(@"%s", __func__);
+
     
     
     _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
@@ -446,7 +427,7 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
  */
 -(void)followReplier {
     
-    PIELog(@"%s", __func__);
+
     
     
     _selectedReplyCell.followView.highlighted = !_selectedReplyCell.followView.highlighted;

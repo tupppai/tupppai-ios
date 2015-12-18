@@ -49,17 +49,12 @@
 - (void)getRemoteSource {
     _currentPage = 1;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(15) forKey:@"size"];
     DDHotDetailManager *manager = [DDHotDetailManager new];
     [manager fetchAllReply:param ID:_pageVM.askID withBlock:^(NSMutableArray *askArray, NSMutableArray *replyArray) {
         if (replyArray.count>0) {
-//            NSMutableArray* arrayAgent = [NSMutableArray new];
-//            for (PIEPageEntity *entity in replyArray) {
-//                PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
-//                [arrayAgent addObject:vm];
-//            }
             [_source removeAllObjects];
             [_source addObjectsFromArray:replyArray];
             [self.collectionView reloadData];
@@ -74,20 +69,7 @@
 - (void)getMoreRemoteSource {
     _currentPage ++;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    
-    
-    /*
-     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
-     */
-    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
-        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
-        [param setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
-    }
-    else{
-        [param setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
-    }
-    
-//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(15) forKey:@"size"];
     DDHotDetailManager *manager = [DDHotDetailManager new];

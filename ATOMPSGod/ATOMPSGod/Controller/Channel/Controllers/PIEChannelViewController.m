@@ -170,17 +170,7 @@
     params[@"page"]             = @1;
     params[@"size"]             = @5;
     params[@"last_updated"]     = @(_timeStamp);
-    
-    /*
-     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
-     */
-    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
-        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
-        [params setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
-    }
-    else{
-        [params setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
-    }
+    [params setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
 
     [PIEChannelManager getSource_Channel:params block:^(NSMutableArray *array) {
         if (array.count) {
@@ -204,17 +194,8 @@
     params[@"page"] = @(_currentIndex);
     params[@"size"] = @5;
     params[@"last_updated"] = @(_timeStamp);
-    
-    /*
-     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
-     */
-    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
-        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
-        [params setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
-    }
-    else{
-        [params setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
-    }
+    [params setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
+
     
     [PIEChannelManager getSource_Channel:params block:^(NSMutableArray *array) {
         if (array.count) {

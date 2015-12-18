@@ -60,22 +60,6 @@
 
 #import "UIImageView+WebCache.h"
 
-// TODO: add PIELog() marco
-//判断是否要Log
-#ifdef DEBUG
-#define PIELog(format, ...) \
-//Log定义...
-PIELog(@"<%@ : %d : %s>-: %@", \
-          [[NSString stringWithUTF8String:__FILE__] lastPathComponent], \
-          __LINE__, \
-          __FUNCTION__, \
-          [NSString stringWithFormat:format, ##__VA_ARGS__]);
-#else
-#define PIELog(format, ...)
-#endif
-
-
-
 #endif
 
 

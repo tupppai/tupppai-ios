@@ -599,22 +599,9 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
  */
 #pragma mark - getDataSource
 - (void)getRemoteSourceBanner {
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
-    
-    /*
-        BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
-     */
-    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
-        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
-        [param setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
-    }
-    else{
-        [param setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
-    }
-    
-//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
+
     [PIEEliteManager getBannerSource:param withBlock:^(NSMutableArray *array) {
         _sourceBanner = array;
         _sv.pageControl_swipeView.numberOfPages = _sourceBanner.count;
@@ -628,21 +615,10 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     _timeStamp_follow = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_timeStamp_follow) forKey:@"last_updated"];
-    
-    /*
-     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
-     */
-    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
-        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
-        [param setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
-    }
-    else{
-        [param setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
-    }
-    
-
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
+    [param setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
+
     
     [PIEEliteManager getMyFollow:param withBlock:^(NSMutableArray *returnArray) {
         ws.isfirstLoadingFollow = NO;
@@ -669,21 +645,10 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     _currentIndex_follow++;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_timeStamp_follow) forKey:@"last_updated"];
-    
-    /*
-     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
-     */
-    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
-        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
-        [param setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
-    }
-    else{
-        [param setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
-    }
-    
-    
     [param setObject:@(_currentIndex_follow) forKey:@"page"];
     [param setObject:@(15) forKey:@"size"];
+    [param setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
+
     [PIEEliteManager getMyFollow:param withBlock:^(NSMutableArray *returnArray) {
         if (returnArray.count == 0) {
             _canRefreshFooterFollow = NO;
@@ -727,21 +692,9 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     _timeStamp_hot = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_timeStamp_hot) forKey:@"last_updated"];
-    
-    /*
-     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
-     */
-    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
-        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
-        [param setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
-    }
-    else{
-        [param setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
-    }
-    
+    [param setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(8) forKey:@"size"];
-    
     [PIEEliteManager getHotPages:param withBlock:^(NSMutableArray *returnArray) {
         ws.isfirstLoadingHot = NO;
         if (returnArray.count == 0) {
@@ -764,19 +717,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     _currentIndex_hot ++;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_timeStamp_hot) forKey:@"last_updated"];
-    
-    /*
-     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
-     */
-    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
-        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
-        [param setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
-    }
-    else{
-        [param setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
-    }
-    
-    
+    [param setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
     [param setObject:@(_currentIndex_hot) forKey:@"page"];
     [param setObject:@(15) forKey:@"size"];
     

@@ -165,7 +165,7 @@
     _timeStamp_done            = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(1) forKey:@"page"];
-    //    [param setObject:@(SCREEN_WIDTH/2) forKey:@"width"];
+    //    [param setObject:@(SCREEN_WIDTH*0.5) forKey:@"width"];
     [param setObject:@(_timeStamp_done) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     
@@ -195,7 +195,7 @@
     _currentIndex_Done++;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_currentIndex_Done) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH/2) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH*0.5) forKey:@"width"];
     [param setObject:@(_timeStamp_done) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     

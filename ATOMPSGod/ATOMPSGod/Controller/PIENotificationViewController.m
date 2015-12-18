@@ -275,19 +275,7 @@
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     _timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(1) forKey:@"page"];
-    
-    /*
-     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
-     */
-    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
-        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
-        [param setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
-    }
-    else{
-        [param setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
-    }
-    
-//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH*0.25) forKey:@"width"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(100) forKey:@"size"];
     [PIENotificationManager getNotifications:param block:^(NSArray *source) {
@@ -333,7 +321,7 @@
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_currentIndex) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH*0.25) forKey:@"width"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [PIENotificationManager getNotifications:param block:^(NSArray *source) {
