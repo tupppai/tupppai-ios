@@ -230,9 +230,9 @@
     return _notFirstLoading;
 }
 
-//-(CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-//    return -100;
-//}
+-(CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    return -100;
+}
 
 -(void)didPullUpCollectionViewBottom:(UICollectionView *)collectionView {
 //    [self searchMoreRemote];

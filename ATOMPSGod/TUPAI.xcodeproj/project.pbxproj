@@ -464,6 +464,7 @@
 		F4DC3D401BC131BA00DCF72F /* PIEFriendAskTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4DC3D3E1BC131BA00DCF72F /* PIEFriendAskTableViewCell.xib */; };
 		F4DE44F61C06E4BC00BEEB96 /* cellHolder.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DE44F51C06E4BC00BEEB96 /* cellHolder.png */; };
 		F4DE44FA1C06F47B00BEEB96 /* PIECarouselViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DE44F81C06F47B00BEEB96 /* PIECarouselViewController2.m */; };
+		F4E155281C24EF000015A721 /* PIEActionSheet_UserAbuse.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E155271C24EF000015A721 /* PIEActionSheet_UserAbuse.m */; };
 		F4E5308F1BD4985400FAA65D /* PIESignUpSheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E5308E1BD4985400FAA65D /* PIESignUpSheetView.m */; };
 		F4E530921BD49AE800FAA65D /* PIESignUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E530911BD49AE800FAA65D /* PIESignUpView.m */; };
 		F4E530961BD4CFB800FAA65D /* PIELoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E530941BD4CFB800FAA65D /* PIELoginViewController.m */; };
@@ -1432,6 +1433,8 @@
 		F4DE44F51C06E4BC00BEEB96 /* cellHolder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cellHolder.png; sourceTree = "<group>"; };
 		F4DE44F71C06F47B00BEEB96 /* PIECarouselViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECarouselViewController2.h; sourceTree = "<group>"; };
 		F4DE44F81C06F47B00BEEB96 /* PIECarouselViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECarouselViewController2.m; sourceTree = "<group>"; };
+		F4E155261C24EF000015A721 /* PIEActionSheet_UserAbuse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEActionSheet_UserAbuse.h; sourceTree = "<group>"; };
+		F4E155271C24EF000015A721 /* PIEActionSheet_UserAbuse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEActionSheet_UserAbuse.m; sourceTree = "<group>"; };
 		F4E5308D1BD4985400FAA65D /* PIESignUpSheetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIESignUpSheetView.h; sourceTree = "<group>"; };
 		F4E5308E1BD4985400FAA65D /* PIESignUpSheetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIESignUpSheetView.m; sourceTree = "<group>"; };
 		F4E530901BD49AE800FAA65D /* PIESignUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIESignUpView.h; sourceTree = "<group>"; };
@@ -3359,6 +3362,8 @@
 				F44A527E1C0C335000707281 /* PIEActionSheet_Report.m */,
 				F44A52801C0C336500707281 /* PIEActionSheet_PS.h */,
 				F44A52811C0C336500707281 /* PIEActionSheet_PS.m */,
+				F4E155261C24EF000015A721 /* PIEActionSheet_UserAbuse.h */,
+				F4E155271C24EF000015A721 /* PIEActionSheet_UserAbuse.m */,
 			);
 			name = actionsheet;
 			sourceTree = "<group>";
@@ -4453,6 +4458,7 @@
 				E9A5B66A1B903C270059754C /* DDService.m in Sources */,
 				F4F28F2B1C23AE9B0067F2E4 /* UIView+WebCacheOperation.m in Sources */,
 				F4C9BE4D1C214BBE00A1AE82 /* PIEMyCommentedPageViewController.m in Sources */,
+				F4E155281C24EF000015A721 /* PIEActionSheet_UserAbuse.m in Sources */,
 				F46117D71BAD1101001A6F1A /* IQUITextFieldView+Additions.m in Sources */,
 				F41BA0D31C0EDCE800979D43 /* UIScrollView+MJExtension.m in Sources */,
 				5C561A8B1AB857870052D4D5 /* NSString+ATOMValidate.m in Sources */,
@@ -4791,7 +4797,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tupppai.www;
 				PRODUCT_NAME = TUPAI;
-				PROVISIONING_PROFILE = "cc9a746b-6fd3-4129-bfc3-4cd6c44f7c85";
+				PROVISIONING_PROFILE = "71318ccb-337c-46d6-ab28-371bfc9b3e05";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
@@ -4965,7 +4971,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tupppai.www;
 				PRODUCT_NAME = TUPAI;
-				PROVISIONING_PROFILE = "cc9a746b-6fd3-4129-bfc3-4cd6c44f7c85";
+				PROVISIONING_PROFILE = "71318ccb-337c-46d6-ab28-371bfc9b3e05";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = NO;

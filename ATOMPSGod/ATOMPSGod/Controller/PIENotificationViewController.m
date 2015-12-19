@@ -120,8 +120,8 @@
                 pageVM.ID = vm.targetID;
                 pageVM.type = vm.targetType;
                 vc.vm = pageVM;
-                vc.shouldDownloadVMSource = NO;
-                vc.shouldShowHeaderView = NO;
+                vc.shouldDownloadVMSource = YES;
+                vc.shouldShowHeaderView = YES;
                 [self.navigationController pushViewController:vc animated:YES];
                 
             }     else       if (CGRectContainsPoint(cell.avatarView.frame,p) || (CGRectContainsPoint(cell.usernameLabel.frame,p))) {
@@ -135,8 +135,8 @@
                 pageVM.ID = vm.targetID;
                 pageVM.type = vm.targetType;
                 vc.vm = pageVM;
-                vc.shouldDownloadVMSource = NO;
-                vc.shouldShowHeaderView = NO;
+                vc.shouldDownloadVMSource = YES;
+                vc.shouldShowHeaderView = YES;
                 [self.navigationController pushViewController:vc animated:YES];
             }
         } else    if (vm.type == 2) {
@@ -151,8 +151,8 @@
                 pageVM.ID = vm.targetID;
                 pageVM.type = vm.targetType;
                 vc.vm = pageVM;
-                vc.shouldDownloadVMSource = NO;
-                vc.shouldShowHeaderView = NO;
+                vc.shouldDownloadVMSource = YES;
+                vc.shouldShowHeaderView = YES;
                 [self.navigationController pushViewController:vc animated:YES];
                 
             } else if (CGRectContainsPoint(cell.avatarView.frame,p) || (CGRectContainsPoint(cell.usernameLabel.frame,p))) {
@@ -166,8 +166,8 @@
                 pageVM.ID = vm.targetID;
                 pageVM.type = vm.targetType;
                 vc.vm = pageVM;
-                vc.shouldDownloadVMSource = NO;
-                vc.shouldShowHeaderView = NO;
+                vc.shouldDownloadVMSource = YES;
+                vc.shouldShowHeaderView = YES;
 
                 [self.navigationController pushViewController:vc animated:YES];
             }
