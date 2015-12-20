@@ -107,10 +107,10 @@
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
     
-    if ([_lastSearchKeyword isEqualToString: textField.text ] ) {
+    if ([_lastSearchKeyword isEqualToString: textField.text ] && _lastIndex == _pageMenu.currentPageIndex ) {
     } else {
         _lastSearchKeyword = textField.text;
-        
+        _lastIndex = _pageMenu.currentPageIndex;
             if (_pageMenu.currentPageIndex == 0) {
                 PIESearchUserViewController *vc = [_pageMenu.controllerArray objectAtIndex:0];;
                 vc.textToSearch = textField.text;
