@@ -150,7 +150,12 @@
 //                    [DDUserManager currentUser].signUpType = type;
 //                    [DDUserManager currentUser].sdkUser = sdkUser;
                     [[NSUserDefaults standardUserDefaults]setObject:@(type) forKey:@"SignUpType"];
-                    [[NSUserDefaults standardUserDefaults]setObject:sdkUser forKey:@"SdkUser"];
+                    NSMutableDictionary* dic = [NSMutableDictionary new];
+                    [dic setObject:sdkUser.uid forKey:@"uid"];
+                    [dic setObject:sdkUser.icon forKey:@"icon"];
+                    [dic setObject:@(sdkUser.gender) forKey:@"gender"];
+                    [dic setObject:sdkUser.nickname forKey:@"nickname"];
+                    [[NSUserDefaults standardUserDefaults]setObject:dic forKey:@"SdkUser"];
                     DDCreateProfileVC *cpvc = [DDCreateProfileVC new];
                     [self.navigationController pushViewController:cpvc animated:YES];
                 }

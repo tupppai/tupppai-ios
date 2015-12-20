@@ -81,9 +81,9 @@
     
     [_createProfileView.protocolButton addTarget:self action:@selector(tapProtocol) forControlEvents:UIControlEventTouchUpInside];
     
-    SSDKUser* sdkUser = [[NSUserDefaults standardUserDefaults]valueForKey:@"SdkUser"];
+    NSDictionary* sdkUser = [[NSUserDefaults standardUserDefaults]valueForKey:@"SdkUser"];
 
-    if (sdkUser.gender == 1) {
+    if ([sdkUser[@"gender"]integerValue] == 1) {
         [_createProfileView.sexSegment setSelectedSegmentIndex:1];
     }
     
@@ -99,10 +99,10 @@
 #pragma mark - Third party sign up
 -(void)setupWithSourceData {
     if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"SignUpType"]integerValue] != ATOMSignUpMobile) {
-        SSDKUser* sdkUser = [[NSUserDefaults standardUserDefaults]valueForKey:@"SdkUser"];
-        NSString* avatarUrl = sdkUser.icon;
-        [DDUserManager currentUser].sex = sdkUser.gender == 0 ? YES:NO;
-        NSString* name = sdkUser.nickname;
+        NSDictionary* sdkUser = [[NSUserDefaults standardUserDefaults]valueForKey:@"SdkUser"];
+        NSString* avatarUrl = sdkUser[@"icon"];
+        [DDUserManager currentUser].sex = [sdkUser[@"gender"]integerValue] == 0 ? YES:NO;
+        NSString* name = sdkUser[@"nickname"];
         [DDUserManager currentUser].avatar = avatarUrl;
         [_createProfileView.userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString: avatarUrl] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
         _createProfileView.nicknameTextField.text = name;
