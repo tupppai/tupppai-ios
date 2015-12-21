@@ -166,10 +166,22 @@
         [UIView animateWithDuration:0.3 animations:^{
             self.scrollView.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
         }];
+        
+        // start loading data for the first time.
+        PIEEliteFollowReplyViewController *controller =
+        (PIEEliteFollowReplyViewController *)_eliteViewControllers[1];
+        [controller getSourceIfEmpty_follow:nil];
+        
     } else {
         [UIView animateWithDuration:0.3 animations:^{
             self.scrollView.contentOffset = CGPointMake(0, 0);
         }];
+        
+        // start loading data for the first time.
+        PIEEliteHotReplyViewController *controller =
+        (PIEEliteHotReplyViewController *)_eliteViewControllers[0];
+        [controller getSourceIfEmpty_banner];
+        [controller getSourceIfEmpty_hot:nil];
     }
     
 }

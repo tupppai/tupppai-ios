@@ -664,7 +664,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     [PIEEliteManager getBannerSource:param withBlock:^(NSMutableArray *array) {
         [self.sourceBanner addObjectsFromArray:array];
         
-//        _pageControl_swipeView.numberOfPages = self.sourceBanner.count;
+        _pageControl_swipeView.numberOfPages = self.sourceBanner.count;
         [self.swipeView reloadData];
  
 
@@ -805,7 +805,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
         CGPoint center = self.pageControl_swipeView.center;
         
         center.x = _swipeView.center.x;
-        center.y = _swipeView.center.y+69;
+        center.y = _swipeView.center.y+55;
         self.pageControl_swipeView.center = center;
         
         [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
