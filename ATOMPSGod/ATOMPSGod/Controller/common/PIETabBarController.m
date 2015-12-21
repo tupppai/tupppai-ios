@@ -50,6 +50,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorOccuredRET) name:@"NetworkErrorCall" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NetworkSignOutRET) name:@"NetworkSignOutCall" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DoUploadJob:) name:@"UploadCall" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showInfoRET:) name:@"NetworkShowInfoCall" object:nil];
 }
 
 - (void)setupTitle {
@@ -65,6 +66,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UploadCall"object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkSignOutCall"object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkErrorCall" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkShowInfoCall" object:nil];
 }
 -(void) errorOccuredRET {
     BOOL shouldShowError = NO;
@@ -85,6 +87,11 @@
     if (shouldShowError) {
         [Hud text:@"网路好像有点问题～" inView:self.view];
     }
+}
+
+-(void) showInfoRET:(NSNotification *)notification {
+    NSString* info = [[notification userInfo] valueForKey:@"info"];
+    [Hud text:info inView:self.view];
 }
 - (void) DoUploadJob:(NSNotification *)notification
 {
