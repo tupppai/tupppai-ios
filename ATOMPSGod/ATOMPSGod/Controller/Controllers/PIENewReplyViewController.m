@@ -491,7 +491,11 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
  *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面ReplyCell的分享数
  */
 - (void)updateShareStatus {
-    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
+    /*
+     _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
+     
+     */
+//    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
     // 将分散在updateShareStatus 和 updateStatus  "同步分享数"的方法写到一起。
     //    [self updateStatus];
     if (_selectedIndexPath) {

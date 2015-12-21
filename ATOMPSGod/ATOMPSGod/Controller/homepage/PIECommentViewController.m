@@ -851,8 +851,13 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
  */
 - (void)updateShareStatus
 {
-    /*??? 分享结束之后没有刷新UI，reload tableView之类的*/
-    _vm.shareCount = [NSString stringWithFormat:@"%zd",[_vm.shareCount integerValue]+1];
+    /*
+     _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
+     
+     */
+    
+//    /*??? 分享结束之后没有刷新UI，reload tableView之类的*/
+//    _vm.shareCount = [NSString stringWithFormat:@"%zd",[_vm.shareCount integerValue]+1];
 }
 
 #pragma mark - Gesture methods

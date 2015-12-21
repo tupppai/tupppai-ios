@@ -12,3 +12,4 @@ extern NSString *const PIESharedIconStatusChangedNotification;
 extern NSString *const PIECollectedIconIsCollectedKey;
 
 extern NSString *const PIECollectedIconCollectedCountKey;
+

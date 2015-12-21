@@ -490,8 +490,9 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
  */
 - (void)updateShareStatus {
     
+    // _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
     
-    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
+//    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
     //    [self updateStatus]; 将刷新的方法摆到了这里
     if (_selectedIndexPath) {
         [self.tableView reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];

@@ -250,6 +250,11 @@
              {
                  [_delegate shareViewDidShare:self];
              }
+             
+             
+             // 将对_selectedVM的副作用集中在shareView之中。
+            selectedVM.shareCount =
+             [NSString stringWithFormat:@"%zd",[selectedVM.shareCount integerValue]+1];
          }
          else
          {

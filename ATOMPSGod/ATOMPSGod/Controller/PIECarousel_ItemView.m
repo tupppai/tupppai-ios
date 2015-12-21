@@ -203,8 +203,8 @@
 
 #pragma mark - <PIEShareViewDelegate> and its related methods
 - (void)updateShareStatus {
-    // ??? 没有重刷UI
-    _vm.shareCount = [NSString stringWithFormat:@"%zd",[_vm.shareCount integerValue]+1];
+    // _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
+    
 }
 
 - (void)showShareView

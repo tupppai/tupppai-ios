@@ -284,7 +284,14 @@ static NSString * PIEDetailUsersPSCellIdentifier =
  */
 - (void)updateShareStatus {
    
-    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
+    /* 
+     _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
+     
+     */
+    
+    
+    
+//    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
     
 //    [self updateStatus]; 将刷新UI的这个方法挪到这里来
     if (_selectedIndexPath) {

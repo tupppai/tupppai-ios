@@ -317,8 +317,13 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
  */
 - (void)updateShareStatus {
     
-    // update view models; refresh UI element.
-    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
+    /*
+     _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
+     
+     */
+    
+//    // update view models; refresh UI element.
+//    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
     
    if (_selectedIndexPath_hot != nil)
     {

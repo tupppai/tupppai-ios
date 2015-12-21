@@ -540,7 +540,14 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
  *  用户点击了updateShareStatus之后（在弹出的窗口分享），刷新本页面ReplyCell的分享数
  */
 - (void)updateShareStatus {
-    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
+    
+    /*
+     _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
+     
+     */
+    
+//    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
+    
 //    if (_selectedIndexPath) {
 //        if (_sv.type == PIEPageTypeEliteFollow) {
 //            [_sv.tableFollow reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];

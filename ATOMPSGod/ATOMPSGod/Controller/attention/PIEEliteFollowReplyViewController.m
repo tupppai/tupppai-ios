@@ -161,6 +161,9 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
 - (void)collectedIconStatusDidChanged:(NSNotification *)notification
 {
     NSLog(@"%s, %@", __func__, notification.userInfo);
+    
+    
+    
     BOOL isCollected = [notification.userInfo[PIECollectedIconIsCollectedKey] boolValue];
     NSString *collectedCount = notification.userInfo[PIECollectedIconCollectedCountKey];
     
@@ -300,7 +303,13 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
  *  用户点击了updateShareStatus之后（在弹出的窗口分享），刷新本页面ReplyCell的分享数
  */
 - (void)updateShareStatus {
-    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
+    
+    /*
+     _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
+     
+     */
+    
+//    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
 
     if (_selectedIndexPath_follow != nil) {
         [self.tableFollow reloadRowsAtIndexPaths:@[_selectedIndexPath_follow] withRowAnimation:UITableViewRowAnimationAutomatic];
