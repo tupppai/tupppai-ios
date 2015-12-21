@@ -8,8 +8,7 @@
 
 #import "PIEEliteViewController2.h"
 #import "HMSegmentedControl.h"
-#import "PIEEliteTestVC1.h"
-#import "PIEEliteTestVC2.h"
+
 #import "PIESearchViewController.h"
 
 #import "PIEEliteHotReplyViewController.h"
@@ -126,9 +125,15 @@
         if (currentPage == 0) {
             [self.segmentedControl setSelectedSegmentIndex:0 animated:YES];
 //            [self getSourceIfEmpty_hot:nil];
+            PIEEliteHotReplyViewController *controller = (PIEEliteHotReplyViewController *)_eliteViewControllers[0];
+            [controller getSourceIfEmpty_hot:nil];
+            
         } else if (currentPage == 1) {
             [self.segmentedControl setSelectedSegmentIndex:1 animated:YES];
 //            [self getSourceIfEmpty_follow:nil];
+            PIEEliteFollowReplyViewController *controller =
+            (PIEEliteFollowReplyViewController *)_eliteViewControllers[1];
+            [controller getSourceIfEmpty_follow:nil];
         }
 }
 

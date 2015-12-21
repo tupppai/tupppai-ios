@@ -413,6 +413,7 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
     }];
 }
 
+/** 以下方法设置为Public */
 - (void)getSourceIfEmpty_follow:(void (^)(BOOL finished))block {
     if (_isfirstLoadingFollow || _sourceFollow.count <= 0) {
         [self.tableFollow.mj_header beginRefreshing];

@@ -10,4 +10,6 @@
 
 @interface PIEEliteFollowReplyViewController : DDBaseVC
 
+- (void)getSourceIfEmpty_follow:(void (^)(BOOL finished))block;
+
 @end

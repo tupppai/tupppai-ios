@@ -101,7 +101,10 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     [self configTableViewHot];
     
     [self setupGestures];
+   
+    [self getSourceIfEmpty_hot:nil];
     
+    [self getSourceIfEmpty_banner];
    
     
     [self configureSwipeView];
@@ -668,7 +671,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     }];
 }
 
-/** getSourceIfEmpty_xxx 这两个方法给我一种匪夷所思的感觉 */
+/** getSourceIfEmpty_xxx : 以下两个方法是public 方法 */
 - (void)getSourceIfEmpty_banner {
     if (self.sourceBanner.count <= 0) {
         [self getRemoteSourceBanner];

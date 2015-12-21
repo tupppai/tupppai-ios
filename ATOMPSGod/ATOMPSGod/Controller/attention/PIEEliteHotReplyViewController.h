@@ -10,4 +10,8 @@
 
 @interface PIEEliteHotReplyViewController : DDBaseVC
 
+- (void)getSourceIfEmpty_banner;
+- (void)getSourceIfEmpty_hot:(void (^)(BOOL finished))block;
+
+
 @end
