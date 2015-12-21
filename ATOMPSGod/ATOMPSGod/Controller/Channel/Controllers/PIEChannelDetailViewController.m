@@ -24,6 +24,7 @@
 #import "PIECameraViewController.h"
 #import "PIENewAskMakeUpViewController.h"
 #import "DeviceUtil.h"
+#import "PIECellIconStatusChangedNotificationKey.h"
 /* Variables */
 @interface PIEChannelDetailViewController ()
 @property (nonatomic, strong) PIERefreshTableView           *tableView;
@@ -102,6 +103,9 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     /* setup source data */
     [self setupData];
     
+    /* setup NSNotificationCenter observer */
+    [self setupNotificationObserver];
+    
     /* added as subviews & add autolayout constraints */
     [self configureTableView];
     [self configureTakePhotoButton];
@@ -114,6 +118,22 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     [self getSource_Ask];
     [self.tableView.mj_header beginRefreshing];
 
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:PIESharedIconStatusChangedNotification
+                                                  object:nil];
+}
+
+#pragma mark - NSNotification Observer Setup
+- (void)setupNotificationObserver
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateShareStatus)
+                                                 name:PIESharedIconStatusChangedNotification
+                                               object:nil];
 }
 
 #pragma mark - <UITableViewDelegate>
@@ -279,25 +299,6 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     [shareView dismiss];
 }
 
-/**
- *  用户点击了updateShareStatus之后（在弹出的窗口完成分享），刷新本页面的分享数（UI元素的同步）
- */
-- (void)updateShareStatus {
-   
-    /* 
-     _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
-     
-     */
-    
-    
-    
-//    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
-    
-//    [self updateStatus]; 将刷新UI的这个方法挪到这里来
-    if (_selectedIndexPath) {
-        [self.tableView reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-    }
-}
 
 - (void)showShareView:(PIEPageVM *)pageVM {
     [self.shareView show:pageVM];
@@ -562,6 +563,25 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         [ws.tableView.mj_footer endRefreshing];
         [ws.tableView reloadData];
     }];
+}
+
+#pragma mark - Notification methods
+
+/**
+ *  用户点击了updateShareStatus之后（在弹出的窗口完成分享），刷新本页面的分享数（UI元素的同步）
+ */
+- (void)updateShareStatus {
+    
+    /*
+     _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
+     
+     */
+    //    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
+    
+    //    [self updateStatus]; 将刷新UI的这个方法挪到这里来
+    if (_selectedIndexPath) {
+        [self.tableView reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
 }
 
 

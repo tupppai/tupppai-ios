@@ -245,16 +245,25 @@
      block:^(BOOL success) {
          
          if (success) {
-             if (_delegate != nil &&
-                 [_delegate respondsToSelector:@selector(shareViewDidShare:)])
-             {
-                 [_delegate shareViewDidShare:self];
-             }
+             
+             /* No more delegate methods */
+//             if (_delegate != nil &&
+//                 [_delegate respondsToSelector:@selector(shareViewDidShare:)])
+//             {
+//                 [_delegate shareViewDidShare:self];
+//             }
              
              
-             // 将对_selectedVM的副作用集中在shareView之中。
+             // 将对_selectedVM的副作用全部集中在shareView之中。
             selectedVM.shareCount =
              [NSString stringWithFormat:@"%zd",[selectedVM.shareCount integerValue]+1];
+             
+             // 这里是通知PIESharedIconStatusChangedNotification 唯一发布的地方
+             [[NSNotificationCenter defaultCenter]
+              postNotificationName:PIESharedIconStatusChangedNotification
+              object:nil
+              userInfo:@{PIESharedIconSharedCountKey: selectedVM.shareCount}];
+             
          }
          else
          {

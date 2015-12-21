@@ -25,6 +25,7 @@
 #import "KVCMutableArray.h"
 #import "PIEReplyCollectionViewController.h"
 #import "PIEPageManager.h"
+#import "PIECellIconStatusChangedNotificationKey.h"
 
 #define DEBUG_CUSTOM_TYPING_INDICATOR 0
 
@@ -86,6 +87,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [super viewDidLoad];
     _isFirstLoading = YES;
     [self setupNavBar];
+    
+    [self setupNotificationObserver];
+    
     [self configTableView];
     [self configFooterRefresh];
     [self configTextInput];
@@ -110,6 +114,15 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         [buttonLeft addTarget:self action:@selector(popSelf) forControlEvents:UIControlEventTouchUpInside];
     }
 }
+
+- (void)setupNotificationObserver
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateShareStatus:)
+                                                 name:PIESharedIconStatusChangedNotification
+                                               object:nil];
+}
+
 - (void) dismiss {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -164,10 +177,15 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
+
 -(void)dealloc {
     if (_shouldShowHeaderView) {
         [self.source_newComment removeObserver:self forKeyPath:@"array"];
     }
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:PIESharedIconStatusChangedNotification
+                                                  object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -832,7 +850,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 
 
-#pragma mark - ATOMShareViewDelegate
+#pragma mark - <PIEShareViewDelegate>
 
 - (void)shareViewDidShare:(PIEShareView *)shareView
 {
@@ -846,19 +864,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 {
     [shareView dismiss];
 }
-/**
- *  用户点击了updateShareStatus之后（在弹出的窗口分享），刷新本页面ReplyCell的分享数
- */
-- (void)updateShareStatus
-{
-    /*
-     _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
-     
-     */
-    
-//    /*??? 分享结束之后没有刷新UI，reload tableView之类的*/
-//    _vm.shareCount = [NSString stringWithFormat:@"%zd",[_vm.shareCount integerValue]+1];
-}
+
 
 #pragma mark - Gesture methods
 - (void)addGestureToCommentTableView {
@@ -908,5 +914,31 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 
 
-
+#pragma mark - Notification methods
+/**
+ *  用户点击了updateShareStatus之后（在弹出的窗口分享），刷新本页面ReplyCell的分享数
+ */
+- (void)updateShareStatus:(NSNotification *)notification
+{
+    /*
+     _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
+     
+     */
+    
+    //    /*??? 分享结束之后没有刷新UI，reload tableView之类的*/
+    //    _vm.shareCount = [NSString stringWithFormat:@"%zd",[_vm.shareCount integerValue]+1];
+    
+    NSString *numberString = notification.userInfo[PIESharedIconSharedCountKey];
+   
+    if (_vm.type == PIEPageTypeAsk && _headerView != nil) {
+        _headerView.shareButton.numberString = numberString;
+    }
+    else if (_vm.type == PIEPageTypeReply && _headerView_reply != nil){
+        _headerView_reply.shareButton.numberString = numberString;
+    }
+    else{
+        /* nothing happened. */
+    }
+    
+}
 @end

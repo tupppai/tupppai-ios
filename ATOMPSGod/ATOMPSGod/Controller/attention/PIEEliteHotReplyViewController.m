@@ -130,6 +130,10 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     [[NSNotificationCenter defaultCenter] removeObserver:self name:PIECollectedIconStatusChangedNotification
                                                   object:nil];
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:PIESharedIconStatusChangedNotification
+                                                  object:nil];
+    
     
 }
 
@@ -157,6 +161,11 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
                                              selector:@selector(collectedIconStatusDidChanged:)
                                                  name:PIECollectedIconStatusChangedNotification
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateShareStatus)
+                                                 name:PIESharedIconStatusChangedNotification
+                                               object:nil];
 }
 
 #pragma mark - UI components setup
@@ -172,7 +181,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
         make.edges.equalTo(weakSelf.view);
     }];
     
-    
+   
     /*
         我靠，SwipeView你够了喔！你他丫的竟然在delegate的setter方法里reload自己！
         我一开始是在swipeView的懒加载方法里放创建并设置swipeView，在懒加载那里设置delegate & dataSource不过分吧？
@@ -312,26 +321,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 }
 
 
-/**
- *  用户点击了updateShareStatus之后（在弹出的窗口分享），刷新本页面ReplyCell的分享数
- */
-- (void)updateShareStatus {
-    
-    /*
-     _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
-     
-     */
-    
-//    // update view models; refresh UI element.
-//    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
-    
-   if (_selectedIndexPath_hot != nil)
-    {
-        [self.tableHot reloadRowsAtIndexPaths:@[_selectedIndexPath_hot]
-                            withRowAnimation:UITableViewRowAnimationAutomatic];
-    }
-    
-}
+
 
 /** 分享当前pageVM对应的图片 */
 - (void)showShareView:(PIEPageVM *)pageVM {
@@ -617,6 +607,28 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
             collectView.selected = !collectView.selected;
         }
     }];
+}
+
+#pragma mark - Notification methods
+/**
+ *  用户点击了updateShareStatus之后（在弹出的窗口分享），刷新本页面ReplyCell的分享数
+ */
+- (void)updateShareStatus {
+    
+    /*
+     _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
+     
+     */
+    
+    //    // update view models; refresh UI element.
+    //    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
+    
+    if (_selectedIndexPath_hot != nil)
+    {
+        [self.tableHot reloadRowsAtIndexPaths:@[_selectedIndexPath_hot]
+                             withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+    
 }
 
 #pragma mark - target-actions

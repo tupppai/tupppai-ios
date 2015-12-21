@@ -101,6 +101,9 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:PIECollectedIconStatusChangedNotification
                                                   object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:PIESharedIconStatusChangedNotification
+                                                  object:nil];
 }
 
 #pragma mark - data setup
@@ -126,6 +129,13 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
      addObserver:self
      selector:@selector(collectedIconStatusDidChanged:)
      name:PIECollectedIconStatusChangedNotification
+     object:nil];
+    
+    // 响应下一级的PIECarouselItemView和下下一级的PIECommentViewController的“分享”icon的数字的同步事件
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(updateShareStatus)
+     name:PIESharedIconStatusChangedNotification
      object:nil];
 }
 

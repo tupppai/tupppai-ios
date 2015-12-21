@@ -25,6 +25,7 @@
 #import "QBImagePickerController.h"
 #import "POP.h"
 #import "DeviceUtil.h"
+#import "PIECellIconStatusChangedNotificationKey.h"
 /* Variables */
 @interface PIENewAskMakeUpViewController ()
 
@@ -79,6 +80,9 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     
     [self setupGestures];
     [self setupData];
+    
+    [self setupNotificationObserver];
+    
     [self firstGetSourceIfEmpty_ask];
     [self configureTakePhotoButton];
     
@@ -102,7 +106,12 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     // Dispose of any resources that can be recreated.
 }
 
-
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:PIESharedIconStatusChangedNotification
+                                                  object:nil];
+}
 #pragma mark - property first initiation
 - (void) setupData {
     //set this before firstGetRemoteSource
@@ -117,6 +126,14 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
 }
 
+#pragma mark - Notification Observer setup
+- (void)setupNotificationObserver
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateShareStatus)
+                                                 name:PIESharedIconStatusChangedNotification
+                                               object:nil];
+}
 
 #pragma mark - UI components setup
 
@@ -468,6 +485,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     
 }
 
+#pragma mark - Notification Methods
 /**
  *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面ReplyCell的分享数
  */
@@ -477,14 +495,13 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
      
      */
     
-//    _selectedVM.shareCount =
-//    [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue] +1];
-//    [self updateStatus];
+    //    _selectedVM.shareCount =
+    //    [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue] +1];
+    //    [self updateStatus];
     if (_selectedIndexPath) {
         [_collectionView_ask reloadItemsAtIndexPaths:@[_selectedIndexPath]];
     }
 }
-
 
 
 #pragma mark - Target-actions

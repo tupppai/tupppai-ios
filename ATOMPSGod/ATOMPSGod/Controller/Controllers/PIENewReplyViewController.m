@@ -23,6 +23,7 @@
 #import "AppDelegate.h"
 #import "PIEToHelpViewController.h"
 #import "DeviceUtil.h"
+#import "PIECellIconStatusChangedNotificationKey.h"
 /* Variables */
 @interface PIENewReplyViewController ()
 
@@ -90,6 +91,8 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     [self setupGestures];
     [self setupData];
     
+    [self setupNotificationObserver];
+    
     /**
      *  假如model（_source）为空的话，那就重新fetch data
      */
@@ -128,7 +131,13 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     _sourceReply            = [NSMutableArray new];
 }
 
-#pragma mark - Notification methods
+- (void)setupNotificationObserver
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateShareStatus)
+                                                 name:PIESharedIconStatusChangedNotification
+                                               object:nil];
+}
 
 
 - (void)configureTakePhotoButton
@@ -162,6 +171,9 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
  *  remove observers while being deallocated.
  */
 -(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:PIESharedIconStatusChangedNotification
+                                                  object:nil];
 }
 
 #pragma mark - <UITableViewDelegate>

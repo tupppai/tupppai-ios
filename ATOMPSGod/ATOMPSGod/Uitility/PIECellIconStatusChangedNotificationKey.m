@@ -8,13 +8,11 @@
 
 NSString *const PIECollectedIconStatusChangedNotification =
 @"PIECollectedIconStatusChangedNotification";
-NSString *const PIESharedIconStatusChangedNotification =
-@"PIESharedIconStatusChangedNotification";
-
-
 NSString *const PIECollectedIconIsCollectedKey =
 @"PIECollectedIconIsCollectedKey";
 NSString *const PIECollectedIconCollectedCountKey =
 @"PIECollectedIconCollectedCountKey";
 
 
+NSString *const PIESharedIconStatusChangedNotification = @"PIESharedIconStatusChangedNotification";
+NSString *const PIESharedIconSharedCountKey = @"PIESharedIconSharedCountKey";
