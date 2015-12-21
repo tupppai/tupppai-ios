@@ -450,9 +450,9 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 - (void)shareViewDidShare:(PIEShareView *)shareView socialShareType:(ATOMShareType)shareType
 {
    // refresh ui element on main thread after successful sharing, do nothing otherwise.
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        [self updateShareStatus];
-    }];
+//    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+//        [self updateShareStatus];
+//    }];
     
 }
 

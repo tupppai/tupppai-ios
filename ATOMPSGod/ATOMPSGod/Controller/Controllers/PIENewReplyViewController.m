@@ -477,9 +477,9 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 
 - (void)shareViewDidShare:(PIEShareView *)shareView
 {
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        [self updateShareStatus];
-    }];
+//    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+//        [self updateShareStatus];
+//    }];
 }
 
 - (void)shareViewDidCancel:(PIEShareView *)shareView

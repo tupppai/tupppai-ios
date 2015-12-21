@@ -201,11 +201,15 @@
     }];
 }
 
-#pragma mark - <PIEShareViewDelegate> and its related methods
+#pragma mark - Notification Methods
 - (void)updateShareStatus {
     // _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
     
+    // 重刷UI
 }
+
+#pragma mark - <PIEShareViewDelegate> and its related methods
+
 
 - (void)showShareView
 {
@@ -215,9 +219,9 @@
 - (void)shareViewDidShare:(PIEShareView *)shareView
 {
     // refresh ui element on main thread after successful sharing, do nothing otherwise.
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        [self updateShareStatus];
-    }];
+//    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+//        [self updateShareStatus];
+//    }];
 }
 
 - (void)shareViewDidCancel:(PIEShareView *)shareView

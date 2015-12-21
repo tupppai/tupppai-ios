@@ -268,9 +268,9 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 - (void)shareViewDidShare:(PIEShareView *)shareView
 {
     // refresh ui element on main thread after successful sharing, do nothing otherwise.
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        [self updateShareStatus];
-    }];
+//    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+//        [self updateShareStatus];
+//    }];
     
 }
 
