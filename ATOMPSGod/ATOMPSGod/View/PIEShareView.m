@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "POP.h"
 #import "DDCollectManager.h"
+#import "PIECellIconStatusChangedNotificationKey.h"
 
 #define height_sheet 251.0f
 @interface PIEShareView ()
@@ -275,7 +276,7 @@
      withPageType:pageViewModel.type
      withID:pageViewModel.ID withBlock:^(NSError *error) {
          if (error == nil) {
-             // 成功返回数据，代表切换收藏这个状态已经被服务器承认，这个时候再切换状态
+             // 成功返回数据，代表切换收藏这个状态已经被服务器承认，这个时候再切换状态(只有这里一次会对pageViewModel产生副作用！)
              pageViewModel.collected = !pageViewModel.collected;
              NSInteger collectedCount = [pageViewModel.collectCount integerValue];
              
@@ -288,6 +289,8 @@
                  collectedCount -= 1;
              }
              pageViewModel.collectCount = [NSString stringWithFormat:@"%zd", collectedCount];
+             
+             // ============================================================================ //
              
              /* 
               收藏成功，需要刷新三个地方的UI元素：
@@ -309,12 +312,16 @@
                  [_delegate shareViewDidCollect:self];
              }
              
-             // 刷新UI-3
-             // nothing yet, TODO
+             // 刷新UI-3: 发通知(匿名): (PIECellIconStatusChangedNotification.h)
+             [[NSNotificationCenter defaultCenter]
+              postNotificationName:PIECollectedIconStatusChangedNotification
+              object:nil
+              userInfo:@{PIECollectedIconIsCollectedKey:@(pageViewModel.collected),
+                         PIECollectedIconCollectedCountKey:pageViewModel.collectCount}];;
              
          }   else {
              // error occur on networking, do not toggle _weakVM.collected.
-             [Hud textWithLightBackground:@"服务器不鸟你"];
+             [Hud textWithLightBackground:@"服务器不鸟你，你点收藏也没用～"];
          }
          
      }];

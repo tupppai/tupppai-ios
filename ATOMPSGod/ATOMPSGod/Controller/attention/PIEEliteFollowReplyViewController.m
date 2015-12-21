@@ -21,6 +21,8 @@
 #import "PIECommentViewController.h"
 #import "PIEReplyCollectionViewController.h"
 
+#import "PIECellIconStatusChangedNotificationKey.h"
+
 /* Variables */
 @interface PIEEliteFollowReplyViewController ()
 @property (nonatomic, strong) NSMutableArray *sourceFollow;
@@ -79,14 +81,26 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
     
     [self configData];
     
+    [self setupNotificationObserver];
+    
     [self configTableViewFollow];
     
     [self setupGestures];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_Elite" object:nil];
+    
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:PIECollectedIconStatusChangedNotification
+                                                  object:nil];
 }
 
 #pragma mark - data setup
@@ -99,12 +113,22 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
     
     _sourceFollow           = [NSMutableArray new];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_Elite" object:nil];
+   
 }
 
--(void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_Elite" object:nil];
+#pragma mark - Notification Setup
+- (void)setupNotificationObserver
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_Elite" object:nil];
+    
+    // 响应下一级PIECarouselItemView和下下一级的PIECommentViewController的“收藏”Icon同步事件
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(collectedIconStatusDidChanged:)
+     name:PIECollectedIconStatusChangedNotification
+     object:nil];
 }
+
 
 #pragma mark - UI components setup
 - (void)configTableViewFollow {
@@ -134,7 +158,20 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
     }
 }
 
-
+- (void)collectedIconStatusDidChanged:(NSNotification *)notification
+{
+    NSLog(@"%s, %@", __func__, notification.userInfo);
+    BOOL isCollected = [notification.userInfo[PIECollectedIconIsCollectedKey] boolValue];
+    NSString *collectedCount = notification.userInfo[PIECollectedIconCollectedCountKey];
+    
+    
+    /* 取得PIEEliteFollowReplyTableViewCell的实例，修改星星的状态和个数 */
+    PIEEliteFollowReplyTableViewCell *cell =
+    [self.tableFollow cellForRowAtIndexPath:_selectedIndexPath_follow];
+    cell.collectView.highlighted  = isCollected;
+    cell.collectView.numberString = collectedCount;
+    
+}
 #pragma mark - <UITableViewDataSource>
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -255,11 +292,7 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
 {
     // Optional的代理方法：仅在EliteViewController才有星星需要更新状态
    
-    /* 取得PIEEliteFollowReplyTableViewCell的实例，修改星星的状态和个数 */
-    PIEEliteFollowReplyTableViewCell *cell =
-    [self.tableFollow cellForRowAtIndexPath:_selectedIndexPath_follow];
-    cell.collectView.highlighted  = _selectedVM.collected;
-    cell.collectView.numberString = _selectedVM.collectCount;
+    
     
 }
 
@@ -467,6 +500,8 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
                     //                    _selectedVM.image = cell.theImageView.image;
                     vc.pageVM = _selectedVM;
                     [self presentViewController:vc animated:YES completion:nil];
+                    
+                    
                 }
                 //点击头像
                 else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
@@ -528,6 +563,8 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
                     //                    _selectedVM.image = cell.theImageView.image;
                     vc.pageVM = _selectedVM;
                     [self presentViewController:vc animated:YES completion:nil];
+                    
+                   
                 }
                 //点击头像
                 else if (CGRectContainsPoint(cell.avatarView.frame, p)) {

@@ -168,6 +168,7 @@
 		903E09DE1C23DF9E006C87B8 /* PIEEliteViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 903E09DD1C23DF9E006C87B8 /* PIEEliteViewController2.m */; };
 		903E09E11C23F2B0006C87B8 /* PIEEliteTestVC1.m in Sources */ = {isa = PBXBuildFile; fileRef = 903E09E01C23F2B0006C87B8 /* PIEEliteTestVC1.m */; };
 		903E09E71C23F416006C87B8 /* PIEEliteTestVC2.m in Sources */ = {isa = PBXBuildFile; fileRef = 903E09E61C23F416006C87B8 /* PIEEliteTestVC2.m */; };
+		90B3A07C1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B3A07B1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m */; };
 		90FA11701C1FDB8900D8B602 /* DeviceList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 90FA116D1C1FDB8900D8B602 /* DeviceList.plist */; };
 		90FA11711C1FDB8900D8B602 /* DeviceUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FA116F1C1FDB8900D8B602 /* DeviceUtil.m */; };
 		E900919D1B71E04E004623E4 /* DDInputAuthcodePwdFPVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E900919C1B71E04E004623E4 /* DDInputAuthcodePwdFPVC.m */; };
@@ -874,6 +875,8 @@
 		903E09E01C23F2B0006C87B8 /* PIEEliteTestVC1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteTestVC1.m; sourceTree = "<group>"; };
 		903E09E51C23F416006C87B8 /* PIEEliteTestVC2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteTestVC2.h; sourceTree = "<group>"; };
 		903E09E61C23F416006C87B8 /* PIEEliteTestVC2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteTestVC2.m; sourceTree = "<group>"; };
+		90B3A07A1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECellIconStatusChangedNotificationKey.h; sourceTree = "<group>"; };
+		90B3A07B1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECellIconStatusChangedNotificationKey.m; sourceTree = "<group>"; };
 		90FA116D1C1FDB8900D8B602 /* DeviceList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DeviceList.plist; sourceTree = "<group>"; };
 		90FA116E1C1FDB8900D8B602 /* DeviceUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceUtil.h; sourceTree = "<group>"; };
 		90FA116F1C1FDB8900D8B602 /* DeviceUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceUtil.m; sourceTree = "<group>"; };
@@ -2361,6 +2364,8 @@
 				5C561A431AB7C51F0052D4D5 /* MTLFMDBAdapter */,
 				5C9BDA5D1AA88BD900715698 /* BJImageCropper */,
 				90FA116C1C1FDB8900D8B602 /* DeviceUtil */,
+				90B3A07A1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.h */,
+				90B3A07B1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m */,
 				5C6CEF281AF18BA800F06213 /* ATOMConstant.h */,
 				5C6CEF291AF18BA800F06213 /* ATOMConstant.m */,
 				5C4F5BED1AA5893700226F64 /* UIActionSheet+Blocks.h */,
@@ -4176,6 +4181,7 @@
 				5C54DF261AB97B8400BDE34D /* PIECommentEntity.m in Sources */,
 				F4993CF11BE5B32C007F9BE4 /* UIWebView+AFNetworking.m in Sources */,
 				F41FF0E71BDDFCE800566A12 /* UIApplication+JTSImageViewController.m in Sources */,
+				90B3A07C1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m in Sources */,
 				5C54DF1F1AB9738E00BDE34D /* DDNavigationController.m in Sources */,
 				5C83A8971AC66F910071A024 /* TransformationMatrix.cpp in Sources */,
 				5CEAC0331AD4F9540058037C /* DDMyCollectionManager.m in Sources */,

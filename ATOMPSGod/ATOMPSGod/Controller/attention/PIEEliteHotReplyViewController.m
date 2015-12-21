@@ -25,6 +25,7 @@
 #import "PIECommentViewController.h"
 #import "PIEReplyCollectionViewController.h"
 #import "DDCollectManager.h"
+#import "PIECellIconStatusChangedNotificationKey.h"
 
 /* Variables */
 @interface PIEEliteHotReplyViewController ()
@@ -94,6 +95,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     [self configData];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
+    [self setupNotificationObserver];
     
     
     [self configTableViewHot];
@@ -122,6 +124,13 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 
 -(void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_Elite" object:nil];
+    
+
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:PIECollectedIconStatusChangedNotification
+                                                  object:nil];
+    
+    
 }
 
 #pragma mark - data setup
@@ -136,10 +145,19 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     _sourceHot              = [NSMutableArray new];
     
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_Elite" object:nil];
+    
 }
 
-
+#pragma mark - Notification setup
+- (void)setupNotificationObserver
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_Elite" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(collectedIconStatusDidChanged:)
+                                                 name:PIECollectedIconStatusChangedNotification
+                                               object:nil];
+}
 
 #pragma mark - UI components setup
 
@@ -186,6 +204,21 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     if (self.tableHot.mj_header.isRefreshing == false) {
         [self.tableHot.mj_header beginRefreshing];
     }
+}
+
+- (void)collectedIconStatusDidChanged:(NSNotification *)notification
+{
+    NSLog(@"%s, %@", __func__, notification.userInfo);
+    
+    BOOL isCollected = [notification.userInfo[PIECollectedIconIsCollectedKey] boolValue];
+    NSString *collectedCount = notification.userInfo[PIECollectedIconCollectedCountKey];
+    /* 取得PIEEliteHotReplyTableViewCell的实例，修改星星的状态和个数 */
+    
+    PIEEliteHotReplyTableViewCell *cell =
+    [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
+    cell.collectView.highlighted  = isCollected;
+    cell.collectView.numberString = collectedCount;
+
 }
 
 #pragma mark - <SwipeViewDataSource>
@@ -275,12 +308,9 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 // @optional的代理方法：仅在EliteViewController才有星星需要更新状态
 - (void)shareViewDidCollect:(PIEShareView *)shareView
 {
-    /* 取得PIEEliteHotReplyTableViewCell的实例，修改星星的状态和个数 */
-    PIEEliteHotReplyTableViewCell *cell =
-    [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
-    cell.collectView.highlighted  = _selectedVM.collected;
-    cell.collectView.numberString = _selectedVM.collectCount;
+    // do nothing now: use notification instead.
 }
+
 
 /**
  *  用户点击了updateShareStatus之后（在弹出的窗口分享），刷新本页面ReplyCell的分享数
@@ -404,6 +434,10 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
                     //                    _selectedVM.image = cell.theImageView.image;
                     vc.pageVM = _selectedVM;
                     [self presentViewController:vc animated:YES completion:nil];
+                    
+                    
+
+                    
                 }
                 //点击头像
                 else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
@@ -581,6 +615,9 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 }
 
 #pragma mark - target-actions
+/**
+ *  每隔0.5秒让swipeView转一页
+ */
 - (void) onTimer
 {
     [self.swipeView scrollByNumberOfItems:1 duration:0.5];

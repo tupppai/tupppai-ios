@@ -31,6 +31,7 @@
 #import "PIEActionSheet_PS.h"
 #import "DeviceUtil.h"
 #import "SwipeView.h"
+#import "PIECellIconStatusChangedNotificationKey.h"
 
 
 /* Variables */
@@ -928,6 +929,10 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 //                    _selectedVM.image = cell.theImageView.image;
                     vc.pageVM = _selectedVM;
                     [self presentViewController:vc animated:YES completion:nil];
+                    
+                    
+                    
+                    
                 }
                 //点击头像
                 else if (CGRectContainsPoint(cell.avatarView.frame, p)) {

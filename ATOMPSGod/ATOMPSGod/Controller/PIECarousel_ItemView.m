@@ -40,6 +40,7 @@
 
 @implementation PIECarousel_ItemView
 
+
 -(instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -64,10 +65,12 @@
 
         [self setupTableView];
         [self addEvent];
-        
     }
     return self;
 }
+
+
+
 - (void)addEvent {
     [_button_avatar addTarget:self action:@selector(pushToUser) forControlEvents:UIControlEventTouchUpInside];
     [_button_name addTarget:self action:@selector(pushToUser) forControlEvents:UIControlEventTouchUpInside];
