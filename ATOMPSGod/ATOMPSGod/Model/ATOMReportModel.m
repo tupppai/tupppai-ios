@@ -12,6 +12,7 @@
 
 + (NSURLSessionDataTask *)report :(NSDictionary*)param withBlock:(void (^)(NSError *))block {
     return [[DDSessionManager shareHTTPSessionManager] POST:@"inform/report_abuse" parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSLog(@"%@",param);
         NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
         if (ret == 1) {
             if (block) {

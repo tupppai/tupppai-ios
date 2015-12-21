@@ -73,29 +73,31 @@
     [dict setObject:[DDUserManager currentUser].nickname forKey:@"nickname"];
     [dict setObject:[DDUserManager currentUser].mobile forKey:@"mobile"];
     NSString* password = [[NSUserDefaults standardUserDefaults]valueForKey:@"password"];
-    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"password"];
     [dict setObject:password forKey:@"password"];
     [dict setObject:@([DDUserManager currentUser].sex) forKey:@"sex"];
     [dict setObject:[DDUserManager currentUser].avatar forKey:@"avatar"];
-    SSDKUser* sdkUser = [[NSUserDefaults standardUserDefaults]valueForKey:@"SdkUser"];
+    NSDictionary* sdkUser = [[NSUserDefaults standardUserDefaults]valueForKey:@"SdkUser"];
+    NSString* icon = [sdkUser objectForKey:@"icon"];
+    NSString* uid = [sdkUser objectForKey:@"uid"];
+
     switch ([[[NSUserDefaults standardUserDefaults]valueForKey:@"SignUpType"] integerValue]) {
 
         case ATOMSignUpWechat:
             [dict setObject:@"weixin" forKey:@"type"];
-            [dict setObject:sdkUser.uid forKey:@"openid"];
-            [dict setObject:sdkUser.icon forKey:@"avatar_url"];
+            [dict setObject:uid forKey:@"openid"];
+            [dict setObject:icon forKey:@"avatar_url"];
 
             break;
         case ATOMSignUpQQ:
             [dict setObject:@"qq" forKey:@"type"];
-            [dict setObject:sdkUser.uid forKey:@"openid"];
-            [dict setObject:sdkUser.icon forKey:@"avatar_url"];
+            [dict setObject:uid forKey:@"openid"];
+            [dict setObject:icon forKey:@"avatar_url"];
 
             break;
         case ATOMSignUpWeibo:
             [dict setObject:@"weibo" forKey:@"type"];
-            [dict setObject:sdkUser.uid forKey:@"openid"];
-            [dict setObject:sdkUser.icon forKey:@"avatar_url"];
+            [dict setObject:uid forKey:@"openid"];
+            [dict setObject:icon forKey:@"avatar_url"];
 
             break;
         case ATOMSignUpMobile:
@@ -116,10 +118,14 @@
 
     [DDUserManager DDRegister:dict withBlock:^(BOOL success) {
         if (success) {
+            
+            [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"password"];
+
             [self.navigationController setViewControllers:[NSArray new]];
             [AppDelegate APP].mainTabBarController = nil;
             [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
             ;
+            
         }
     }];
 

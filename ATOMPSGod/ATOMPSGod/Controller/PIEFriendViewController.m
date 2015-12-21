@@ -16,7 +16,8 @@
 #import "PIEFriendFansViewController.h"
 #import "PIECarouselViewController2.h"
 #import "FXBlurView.h"
-#import "DeviceUtil.h"
+#import "PIEActionSheet_UserAbuse.h"
+#import "AppDelegate.h"
 @interface PIEFriendViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
 @property (weak, nonatomic) IBOutlet UIImageView *followButton;
@@ -83,22 +84,51 @@
     self.navigationController.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
     
-    if (self.navigationController.viewControllers.count <= 1) {
+    
+
+
+    
+//    if (self.navigationController.viewControllers.count <= 1) {
         [self setupNavBar];
-    }
+//    }
 }
 
 
 - (void)setupNavBar {
     UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
     buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [buttonLeft setImage:[UIImage imageNamed:@"PIE_icon_back"] forState:UIControlStateNormal];
-    [buttonLeft addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    [buttonLeft setImage:[UIImage imageNamed:@"back_white"] forState:UIControlStateNormal];
+    
+    if (self.navigationController.viewControllers.count <= 1) {
+        [buttonLeft addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        [buttonLeft addTarget:self action:@selector(pop) forControlEvents:UIControlEventTouchUpInside];
+    }
     UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonLeft];
     self.navigationItem.leftBarButtonItem =  buttonItem;
+    
+    UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
+    button2.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [button2 setImage:[UIImage imageNamed:@"pie_more"] forState:UIControlStateNormal];
+    [button2 addTarget:self action:@selector(abuseAction) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *buttonItem2 = [[UIBarButtonItem alloc] initWithCustomView:button2];
+    self.navigationItem.rightBarButtonItem =  buttonItem2;
 }
 - (void)dismiss {
     [self dismissViewControllerAnimated:NO completion:nil];
+}
+- (void)pop {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+- (void)abuseAction {
+    PIEActionSheet_UserAbuse* actionSheet = [[PIEActionSheet_UserAbuse alloc]initWithUser:_user];
+//    actionSheet.user = _user;
+    if (_uid) {
+        actionSheet.uid = _uid;
+    } else if (_pageVM){
+        actionSheet.uid = _pageVM.userID;
+    }
+    [actionSheet showInView:[AppDelegate APP].window animated:YES];
 }
 - (void)setupViews {
     self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -313,6 +343,7 @@
     [DDOtherUserManager getUserInfo:param withBlock:^(PIEEntityUser *user) {
         if (user) {
             [self updateUserInterface:user];
+            _user = user;
         }
     }];
 }
