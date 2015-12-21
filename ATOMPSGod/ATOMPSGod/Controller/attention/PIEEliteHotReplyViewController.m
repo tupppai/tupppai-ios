@@ -257,7 +257,9 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
             UIImageView *imageView = (UIImageView *)subView;
             //            imageView.image = tabbar.avatarImage;
             //            NSLog(@"[DDUserManager currentUser].avatar]%@",[DDUserManager currentUser].avatar);
-            [imageView setImageWithURL:[NSURL URLWithString:vm.imageUrl]];
+//            [imageView setImageWithURL:[NSURL URLWithString:vm.imageUrl]];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:vm.imageUrl]];
+
         }
     }
 
@@ -649,16 +651,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     
-    /*
-     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
-     */
-    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
-        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
-        [param setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
-    }
-    else{
-        [param setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
-    }
+    [param setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
     
     //    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [PIEEliteManager getBannerSource:param withBlock:^(NSMutableArray *array) {
@@ -693,17 +686,8 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_timeStamp_hot) forKey:@"last_updated"];
     
-    /*
-     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
-     */
-    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
-        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
-        [param setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
-    }
-    else{
-        [param setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
-    }
-    
+    [param setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
+
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(8) forKey:@"size"];
     
@@ -733,17 +717,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_timeStamp_hot) forKey:@"last_updated"];
     
-    /*
-     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
-     */
-    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
-        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
-        [param setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
-    }
-    else{
-        [param setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
-    }
-    
+    [param setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
     
     [param setObject:@(_currentIndex_hot) forKey:@"page"];
     [param setObject:@(15) forKey:@"size"];

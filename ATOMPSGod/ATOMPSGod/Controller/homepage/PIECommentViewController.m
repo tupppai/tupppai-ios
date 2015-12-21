@@ -124,7 +124,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 
 - (void) dismiss {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
 - (void)popSelf {
     [self.navigationController popViewControllerAnimated:YES];
@@ -134,6 +134,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     NSMutableDictionary* param = [NSMutableDictionary new];
     [param setObject:@(_vm.ID) forKey:@"id"];
     [param setObject:@(_vm.type) forKey:@"type"];
+    [param setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
+
     [PIEPageManager getPageSource:param block:^(PIEPageVM *remoteVM) {
         _vm = remoteVM;
         if (_vm.type == PIEPageTypeAsk) {

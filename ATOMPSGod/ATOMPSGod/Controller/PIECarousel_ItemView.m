@@ -290,11 +290,7 @@
         _pageLikeButton.numberString = vm.likeCount;
     }
     
-    //    [_imageView_page setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-    [DDService downloadImage:vm.imageURL withBlock:^(UIImage *image) {
-        _view_pageImage.image = image;
-    }];
-    
+    _view_pageImage.url = vm.imageURL;
     
     if ([vm.content isEqualToString:@""]) {
         [_textView_content mas_updateConstraints:^(MASConstraintMaker *make) {

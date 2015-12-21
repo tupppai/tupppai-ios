@@ -16,6 +16,7 @@
         _mobile = @"";
         _nickname = @"";
         _token = @"";
+        _blocked = NO;
     }
     return self;
 }
@@ -42,6 +43,7 @@
              @"isMyFan":@"is_fan",
              @"isMyFollow":@"is_follow",
              @"token":@"token",
+             @"blocked": @"is_block",
              };
 }
 + (NSDictionary *)FMDBColumnsByPropertyKey {
@@ -70,6 +72,7 @@
              @"isMyFollow":@"isMyFan",
              @"token":@"token",
              @"likedCount":@"likedCount",
+             @"blocked":@"blocked",
              };
 }
 

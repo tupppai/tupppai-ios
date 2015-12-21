@@ -275,7 +275,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     
     // viewModel -> view
     NSURL *imageURL = [NSURL URLWithString:_source_ask[index].imageURL];
-    [view.imageView setImageWithURL:imageURL
+    [view.imageView sd_setImageWithURL:imageURL
                    placeholderImage:[UIImage imageNamed:@"cellHolder"]];
     view.label.text = _source_ask[index].content;
     
@@ -320,7 +320,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 
 - (void)tapOnReply:(UITapGestureRecognizer *)gesture {
     
-    PIELog(@"%s", __func__);
+
 
     CGPoint location = [gesture locationInView:self.tableView];
     _selectedIndexPath = [self.tableView indexPathForRowAtPoint:location];
@@ -397,7 +397,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 }
 - (void)longPressOnReply:(UILongPressGestureRecognizer *)gesture {
     
-    PIELog(@"%s", __func__);
+
     
     CGPoint location   = [gesture locationInView:self.tableView];
     _selectedIndexPath = [self.tableView indexPathForRowAtPoint:location];
@@ -422,7 +422,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
  */
 -(void)likeReply {
     
-    PIELog(@"%s", __func__);
+
 
     
     _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
@@ -445,7 +445,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
  */
 -(void)followReplier {
     
-    PIELog(@"%s", __func__);
+
 
     
     _selectedReplyCell.followView.highlighted = !_selectedReplyCell.followView.highlighted;
@@ -488,17 +488,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     params[@"page"]              = @(1);
     params[@"size"]              = @(10);
     params[@"type"]              = @"ask";
-    
-    /*
-     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
-     */
-    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
-        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
-        [params setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
-    }
-    else{
-        [params setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
-    }
+    [params setObject:@(SCREEN_WIDTH*0.5) forKey:@"width"];
     
     [PIEChannelManager getSource_channelPages:params resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
         [_source_ask removeAllObjects];
@@ -518,17 +508,8 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     params[@"type"]              = @"reply";
     _timeStamp                   = [[NSDate date] timeIntervalSince1970];
     params[@"last_updated"]      = @(_timeStamp);
-    
-    /*
-     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
-     */
-    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
-        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
-        [params setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
-    }
-    else{
-        [params setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
-    }
+    [params setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
+
     
     [PIEChannelManager getSource_channelPages:params resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
         [_source_reply removeAllObjects];
@@ -547,16 +528,8 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     params[@"size"]              = @(20);
     params[@"type"]              = @"reply";
     params[@"last_updated"]      = @(_timeStamp);
-    /*
-     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
-     */
-    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
-        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
-        [params setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
-    }
-    else{
-        [params setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
-    }
+    [params setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
+
     [PIEChannelManager getSource_channelPages:params resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
         [_source_reply addObjectsFromArray:pageArray];
     } completion:^{

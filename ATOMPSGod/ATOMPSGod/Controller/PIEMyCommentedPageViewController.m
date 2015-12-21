@@ -49,6 +49,7 @@
 }
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+    self.navigationController.navigationBarHidden = NO;
     self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
 }
 
@@ -122,18 +123,8 @@
     _currentPage = 1;
     [param setObject:@(_currentPage) forKey:@"page"];
     
-    /*
-     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
-     */
-    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
-        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
-        [param setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
-    }
-    else{
-        [param setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
-    }
-    
-//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    //我评论过的界面的图片一般都已经cache ,可以任性使用。
+    [param setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getCommentedPages:param withBlock:^(NSMutableArray *resultArray) {
@@ -156,7 +147,7 @@
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     _currentPage++;
     [param setObject:@(_currentPage) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getCommentedPages:param withBlock:^(NSMutableArray *resultArray) {

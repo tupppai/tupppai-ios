@@ -188,17 +188,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [param setObject:@(_timeStamp_ask) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(1) forKey:@"page"];
-
-    /*
-     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
-     */
-    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
-        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
-        [param setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
-    }
-    else{
-        [param setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
-    }
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     
     if (_channelVM) {
         [param setObject:@(_channelVM.ID) forKey:@"category_id"];
@@ -239,17 +229,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [param setObject:@(_timeStamp_ask) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(_currentIndex_ask) forKey:@"page"];
-    
-    /*
-     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
-     */
-    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
-        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
-        [param setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
-    }
-    else{
-        [param setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
-    }
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     
     if (_channelVM) {
         [param setObject:@(_channelVM.ID) forKey:@"category_id"];

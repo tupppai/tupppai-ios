@@ -598,7 +598,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
     _timeStamp_myAsk = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(1) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH/2) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH*0.5) forKey:@"width"];
     [param setObject:@(_timeStamp_myAsk) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getAskWithReplies:param withBlock:^(NSArray *returnArray) {
@@ -621,19 +621,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
     _currentIndex_MyAsk++;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_currentIndex_MyAsk) forKey:@"page"];
-    
-    /*
-     BUG FIXED: 这里要判断设备的机型分别@2x，@3x，否则返回的图片PPI不够。
-     */
-    if ([DeviceUtil hardware] == IPHONE_6_PLUS ||
-        [DeviceUtil hardware] == IPHONE_6S_PLUS) {
-        [param setObject:@(SCREEN_WIDTH_3x) forKey:@"width"];
-    }
-    else{
-        [param setObject:@(SCREEN_WIDTH_2x) forKey:@"width"];
-    }
-    
-//    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH*0.5) forKey:@"width"];
     [param setObject:@(_timeStamp_myAsk) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getAskWithReplies:param withBlock:^(NSArray *returnArray) {
@@ -659,7 +647,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     _timeStamp_toHelp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(1) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH*0.5) forKey:@"width"];
     [param setObject:@(_timeStamp_toHelp) forKey:@"last_updated"];
     [param setObject:@(20) forKey:@"size"];
     [PIEProceedingManager getMyToHelp:param withBlock:^(NSMutableArray *resultArray) {
@@ -687,7 +675,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
     [_sv.toHelpTableView.mj_header endRefreshing];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:@(_currentIndex_ToHelp) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH*0.5) forKey:@"width"];
     [param setObject:@(_timeStamp_toHelp) forKey:@"last_updated"];
     [param setObject:@(20) forKey:@"size"];
     [PIEProceedingManager getMyToHelp:param withBlock:^(NSMutableArray *resultArray) {
@@ -714,7 +702,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
 //    _timeStamp_done = [[NSDate date] timeIntervalSince1970];
 //    NSMutableDictionary *param = [NSMutableDictionary dictionary];
 //    [param setObject:@(1) forKey:@"page"];
-////    [param setObject:@(SCREEN_WIDTH/2) forKey:@"width"];
+////    [param setObject:@(SCREEN_WIDTH*0.5) forKey:@"width"];
 //    [param setObject:@(_timeStamp_done) forKey:@"last_updated"];
 //    [param setObject:@(15) forKey:@"size"];
 //    
@@ -744,7 +732,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
 //    _currentIndex_Done++;
 //    NSMutableDictionary *param = [NSMutableDictionary dictionary];
 //    [param setObject:@(_currentIndex_Done) forKey:@"page"];
-//    [param setObject:@(SCREEN_WIDTH/2) forKey:@"width"];
+//    [param setObject:@(SCREEN_WIDTH*0.5) forKey:@"width"];
 //    [param setObject:@(_timeStamp_done) forKey:@"last_updated"];
 //    [param setObject:@(15) forKey:@"size"];
 //    

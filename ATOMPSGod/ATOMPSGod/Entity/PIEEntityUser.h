@@ -26,6 +26,7 @@ typedef enum {
 @property (nonatomic, assign) bool bindWeibo;
 @property (nonatomic, assign) bool bindWechat;
 @property (nonatomic, assign) bool bindQQ;
+@property (nonatomic, assign) bool blocked;
 
 /**
  *  此用户是否我的粉丝

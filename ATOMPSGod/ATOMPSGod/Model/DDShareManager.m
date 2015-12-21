@@ -131,7 +131,9 @@
 
                     }];
                 }    else   {
-                    [DDService downloadImage:vm.imageURL withBlock:^(UIImage *image) {
+                    
+
+                    [DDService sd_downloadImage:vm.imageURL withBlock:^(UIImage *image) {
 
                     [shareParams SSDKSetupWeChatParamsByText:desc title:shareTitle url:sUrl thumbImage:image image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeWebPage forPlatformSubType:SSDKPlatformSubTypeWechatSession];
                     [self shareStep2:SSDKPlatformTypeWechat withShareParams:shareParams block:^(BOOL success) {
@@ -160,7 +162,7 @@
                         }];
                 }
                 else {
-                    [DDService downloadImage:vm.imageURL withBlock:^(UIImage *image) {
+                    [DDService sd_downloadImage:vm.imageURL withBlock:^(UIImage *image) {
                         [shareParams SSDKSetupWeChatParamsByText:desc title:shareTitle url:sUrl thumbImage:image image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeWebPage forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
                         [self shareStep2:SSDKPlatformSubTypeWechatTimeline withShareParams:shareParams block:^(BOOL success) {
                             if (block) {
@@ -185,7 +187,7 @@
 
                     }];
                 } else {
-                    [DDService downloadImage:vm.imageURL withBlock:^(UIImage *image) {
+                    [DDService sd_downloadImage:vm.imageURL withBlock:^(UIImage *image) {
                         [shareParams SSDKSetupSinaWeiboShareParamsByText:desc title:shareTitle image:image url:sUrl latitude:0 longitude:0 objectID:nil type:SSDKContentTypeWebPage];
                         [self shareStep2:SSDKPlatformTypeSinaWeibo withShareParams:shareParams block:^(BOOL success) {
                             if (block) {

@@ -82,21 +82,15 @@
     _commentView.numberString = viewModel.commentCount;
     _contentLabel.text = viewModel.content;
     
-    [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+    [_avatarView sd_setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
     _nameLabel.text = viewModel.username;
     _timeLabel.text = viewModel.publishTime;
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:viewModel.imageURL]];
-    [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
-    [_theImageView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellHolder"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
-        ws.theImageView.image = image;
-        ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
-    } failure:nil];
-//    CGFloat imageViewHeight = viewModel.imageHeight <= SCREEN_HEIGHT/2 ? viewModel.imageHeight : SCREEN_HEIGHT/2;
-//    imageViewHeight = MAX(200, imageViewHeight);
+    [_theImageView sd_setImageWithURL:[NSURL URLWithString:viewModel.imageURL]
+                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                ws.theImageView.image = image;
+                                ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+                            }];
 
-//    [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-//        make.height.equalTo(@(SCREEN_WIDTH)).with.priorityHigh();
-//    }];
 }
 
 

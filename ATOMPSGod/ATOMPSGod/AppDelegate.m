@@ -116,21 +116,10 @@
 
 }
 -(void)initializeAfterDB {
-    
-//    DDIntroVC* vc = [DDIntroVC new];
-//    self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:vc];
-//    self.window.rootViewController = self.baseNav;
-//            [self.window makeKeyAndVisible];
-//
 
     [DDUserManager fetchUserInDBToCurrentUser:^(BOOL success) {
         if (success) {
-//            [DDService downloadImage:[DDUserManager currentUser].avatar withBlock:^(UIImage *image) {
-//                UIImage* scaledImage = [Util imageWithImage:image scaledToSize:CGSizeMake(44, 44)];
-//                NSLog(@"fetchUserInDBToCurrentUser%@",scaledImage);
-//                self.mainTabBarController.viewControllers.lastObject.tabBarItem.image = [scaledImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//                self.mainTabBarController.viewControllers.lastObject.tabBarItem.selectedImage = [scaledImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//            }];
+
             self.window.rootViewController = self.mainTabBarController;
         } else {
             

@@ -137,7 +137,7 @@
 -(void)setVm:(PIEPageVM *)vm {
     _vm = vm;
     if (vm) {
-        [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+        [_avatarView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
         _usernameLabel.text = vm.username;
         _timeLabel.text = vm.publishTime;
         if (vm.isMyFan) {
@@ -153,7 +153,9 @@
             _followButton.hidden = NO;
         }
         
-        [DDService downloadImage:vm.imageURL withBlock:^(UIImage *image) {
+        
+        
+        [DDService sd_downloadImage:vm.imageURL withBlock:^(UIImage *image) {
             _imageViewBlur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
             _imageViewMain.image = image;
         }];

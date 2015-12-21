@@ -20,6 +20,10 @@
     _followButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
 
     _nameButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [_nameButton.titleLabel setFont:[UIFont lightTupaiFontOfSize:14]];
+    _countLabel.font = [UIFont lightTupaiFontOfSize:11];
+    [_nameButton setTitleColor:[UIColor colorWithHex:0x000000 andAlpha:0.9] forState:UIControlStateNormal];
+    _countLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
     _avatarButton.userInteractionEnabled = NO;
     _nameButton.userInteractionEnabled = NO;
     _followButton.userInteractionEnabled = NO;

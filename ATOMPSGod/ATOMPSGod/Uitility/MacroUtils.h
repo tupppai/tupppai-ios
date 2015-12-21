@@ -16,23 +16,18 @@
 
 #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
-
-#define SCREEN_WIDTH_1x (1.0 * SCREEN_WIDTH)
-#define SCREEN_WIDTH_2x (2.0 * SCREEN_WIDTH)
-#define SCREEN_WIDTH_3x (3.0 * SCREEN_WIDTH)
-
+#define SCREEN_SCALE [[UIScreen mainScreen] scale]
+#define SCREEN_WIDTH_RESOLUTION (SCREEN_SCALE * SCREEN_WIDTH)
 #define NAV_HEIGHT 64
 #define TAB_HEIGHT 49
 #define CGWidth(rect)                   rect.size.width
 #define CGHeight(rect)                  rect.size.height
 #define CGOriginX(rect)                 rect.origin.x
 #define CGOriginY(rect)                 rect.origin.y
-#define SEXRADIUS 15
 
 #define baseURLString @"http://api.qiupsdashen.com/"
 #define baseURLString_Test @"http://api.loiter.us/"
 
 #define _S(number) (number*[ATOMBaseView scaleInView])
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self
-
 #endif
