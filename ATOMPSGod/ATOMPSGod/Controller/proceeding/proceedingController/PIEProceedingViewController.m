@@ -90,7 +90,10 @@
 @property (nonatomic, assign) BOOL canRefreshToHelpFooter;
 //@property (nonatomic, assign) BOOL canRefreshDoneFooter;
 
-@property (nonatomic, strong) NSIndexPath* selectedIndexPath;
+
+@property (nonatomic, strong) NSIndexPath* selectedIndexPath_ask;
+@property (nonatomic, strong) NSIndexPath* selectedIndexPath_toHelp;
+
 @property (nonatomic, strong) PIEPageVM* selectedVM;
 
 @property (nonatomic, strong) QBImagePickerController* QBImagePickerController;
@@ -226,7 +229,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
 - (void)longPressOnAsk:(UILongPressGestureRecognizer *)gesture {
     CGPoint location = [gesture locationInView:_sv.askTableView];
     NSIndexPath *indexPath = [_sv.askTableView indexPathForRowAtPoint:location];
-    _selectedIndexPath = indexPath;
+    _selectedIndexPath_ask = indexPath;
     _selectedVM = [_sourceAsk objectAtIndex:indexPath.row];
     if (indexPath) {
         //点击图片
@@ -236,7 +239,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
 - (void)longPressOnToHelp:(UILongPressGestureRecognizer *)gesture {
     CGPoint location = [gesture locationInView:_sv.toHelpTableView];
     NSIndexPath *indexPath = [_sv.toHelpTableView indexPathForRowAtPoint:location];
-    _selectedIndexPath = indexPath;
+    _selectedIndexPath_toHelp = indexPath;
     _selectedVM = [_sourceToHelp objectAtIndex:indexPath.row];
     if (indexPath) {
         //点击图片
@@ -246,7 +249,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
 - (void)tapToHelpTableViewGesture:(UITapGestureRecognizer *)gesture {
     CGPoint location = [gesture locationInView:_sv.toHelpTableView];
     NSIndexPath *indexPath = [_sv.toHelpTableView indexPathForRowAtPoint:location];
-    _selectedIndexPath = indexPath;
+    _selectedIndexPath_toHelp = indexPath;
     PIEPageVM* vm = [_sourceToHelp objectAtIndex:indexPath.row];
     if (indexPath) {
         PIEProceedingToHelpTableViewCell *cell = (PIEProceedingToHelpTableViewCell *)[_sv.toHelpTableView cellForRowAtIndexPath:indexPath];
@@ -341,13 +344,13 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
         if (_canRefreshAskFooter) {
             [self getMoreRemoteSourceMyAsk];
         } else {
-            [_sv.askTableView.mj_footer endRefreshing];
+            [_sv.askTableView.mj_footer endRefreshingWithNoMoreData];
         }
     } else if (tableView == _sv.toHelpTableView) {
         if (_canRefreshToHelpFooter) {
             [self getMoreRemoteSourceToHelp];
         } else {
-            [_sv.toHelpTableView.mj_footer endRefreshing];
+            [_sv.toHelpTableView.mj_footer endRefreshingWithNoMoreData];
         }
     }
 
@@ -386,7 +389,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
     vc.assetsArray = assets;
     vc.hideSecondView = YES;
     vc.type = PIEUploadTypeReply;
-    PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath.row];
+    PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath_toHelp.row];
     vc.askIDToReply = vm.askID;
     
     [[NSUserDefaults standardUserDefaults] setObject:@(vm.askID) forKey:@"AskIDToReply"];
@@ -785,8 +788,8 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
 -(void)tapShare7 {
     [self.shareView dismiss];
     if (_sv.type == PIEProceedingTypeToHelp) {
-        PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath.row];
-        [self deleteOneToHelp:_selectedIndexPath ID:vm.ID];
+        PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath_ask.row];
+        [self deleteOneToHelp:_selectedIndexPath_toHelp ID:vm.ID];
     }
 }
 

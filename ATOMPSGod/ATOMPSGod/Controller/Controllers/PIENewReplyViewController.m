@@ -190,10 +190,9 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 }
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    if (decelerate) {
         [self.takePhotoButtonConstraint setOffset:-12];
         [UIView animateWithDuration:0.6
-                              delay:0.7
+                              delay:1.0
              usingSpringWithDamping:0.3
               initialSpringVelocity:0
                             options:0
@@ -203,26 +202,9 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
                          } completion:^(BOOL finished) {
                          }];
         
-    }
 }
 
-// 处理滚动“戛然而止”的情况
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    [self.takePhotoButtonConstraint setOffset:-12];
-    [UIView animateWithDuration:0.6
-                          delay:0.7
-         usingSpringWithDamping:0.3
-          initialSpringVelocity:0
-                        options:0
-                     animations:^{
-                         [self.view layoutIfNeeded];
-                         
-                     } completion:^(BOOL finished) {
-                     }];
-    
-    
-}
+
 
 #pragma mark - <UITableViewDataSource>
 
