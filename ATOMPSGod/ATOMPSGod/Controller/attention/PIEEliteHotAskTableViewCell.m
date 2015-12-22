@@ -73,6 +73,14 @@
 }
 - (void)injectSauce:(PIEPageVM *)viewModel {
     WS(ws);
+    NSString *urlString_avatar = [viewModel.avatarURL trimToImageWidth:_avatarView.frame.size.width*SCREEN_SCALE];
+    NSString *urlString_imageView = [viewModel.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
+    [_theImageView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView]
+                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                ws.theImageView.image = image;
+                                ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+                            }];
+    [_avatarView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
     _ID = viewModel.ID;
     _askID = viewModel.askID;
     
@@ -98,16 +106,11 @@
     _commentView.numberString = viewModel.commentCount;
     _contentLabel.text = viewModel.content;
     
-    [_avatarView sd_setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+
     _nameLabel.text = viewModel.username;
-//    _timeLabel.text = viewModel.publishTime;
     
     
-    [_theImageView sd_setImageWithURL:[NSURL URLWithString:viewModel.imageURL]
-                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                                ws.theImageView.image = image;
-                                ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
-    }];
+
     
     if (viewModel.hotCommentEntityArray.count > 0) {
         PIECommentEntity* commentEntity1  = viewModel.hotCommentEntityArray[0];

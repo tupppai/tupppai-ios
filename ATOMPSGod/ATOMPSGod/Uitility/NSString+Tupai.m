@@ -37,6 +37,8 @@
 }
 
 - (NSString*) trimToImageWidth :(int)width {
+    //先去掉问号以及问号之后所有内容，再补上?imageView2/2/w/width
+    
     NSRange range = [self rangeOfString:@"?"];
     NSString *result = nil;
     
@@ -46,6 +48,7 @@
     } else {
         result = self;
     }
+    
     NSString* suffixString = [NSString stringWithFormat:@"?imageView2/2/w/%d",width];
     result = [result stringByAppendingString:suffixString];
     return result;

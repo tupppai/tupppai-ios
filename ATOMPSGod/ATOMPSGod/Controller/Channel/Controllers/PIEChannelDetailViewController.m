@@ -8,7 +8,6 @@
 
 #import "PIEChannelDetailViewController.h"
 #import "PIERefreshTableView.h"
-#import "PIEChannelDetailLatestPSCell.h"
 #import "SwipeView.h"
 #import "PIEChannelDetailAskPSItemView.h"
 #import "PIEChannelManager.h"
@@ -80,7 +79,7 @@
 @implementation PIEChannelDetailViewController
 
 static NSString *  PIEDetailLatestPSCellIdentifier =
-@"DetailLatestPSCellIdentifier";
+@"PIEChannelDetailAskCell";
 
 static NSString *  PIEDetailNormalIdentifier =
 @"PIEDetailNormalIdentifier";
@@ -199,7 +198,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     if (indexPath.row == 0)
     {
         /* first row */
-        PIEChannelDetailLatestPSCell *detailLatestPSCell =
+        PIEChannelDetailAskCell *detailLatestPSCell =
         [tableView dequeueReusableCellWithIdentifier:PIEDetailLatestPSCellIdentifier];
         
         // configure cell
@@ -622,7 +621,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         
         // register cells
         [_tableView
-         registerNib:[UINib nibWithNibName:@"PIEChannelDetailLatestPSCell" bundle:nil]
+         registerNib:[UINib nibWithNibName:@"PIEDetailAskCell" bundle:nil]
          forCellReuseIdentifier:PIEDetailLatestPSCellIdentifier];
         
         [_tableView registerNib:[UINib nibWithNibName:@"PIENewReplyTableCell"
