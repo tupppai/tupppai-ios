@@ -6,10 +6,10 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "NSString+ATOMValidate.h"
+#import "NSString+Tupai.h"
 #import <CommonCrypto/CommonDigest.h>
 
-@implementation NSString (ATOMValidate)
+@implementation NSString (Tupai)
 
 - (BOOL)isMobileNumber {
 //    return [self rangeOfString:@"^1[34578]{1}[0-9]{9}$" options:NSRegularExpressionSearch].location != NSNotFound;
@@ -34,6 +34,21 @@
         [output appendFormat:@"%02x", digest[i]];
     
     return output;
+}
+
+- (NSString*) trimToImageWidth :(int)width {
+    NSRange range = [self rangeOfString:@"?"];
+    NSString *result = nil;
+    
+    if (range.location != NSNotFound)
+    {
+        result = [self substringToIndex:range.location];
+    } else {
+        result = self;
+    }
+    NSString* suffixString = [NSString stringWithFormat:@"?imageView2/2/w/%d",width];
+    result = [result stringByAppendingString:suffixString];
+    return result;
 }
 
 @end

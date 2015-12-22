@@ -35,7 +35,7 @@
 #import "FMDB.h"
 #import "MTLFMDBAdapter.h"
 #import "MJRefresh.h"
-#import "NSString+ATOMValidate.h"
+#import "NSString+Tupai.h"
 #import "JSONKit.h"
 #import "UIImageView+AFNetworking.h"
 #import "UIButton+AFNetworking.h"

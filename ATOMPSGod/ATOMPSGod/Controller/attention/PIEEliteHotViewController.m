@@ -9,7 +9,7 @@
 #import "PIEEliteHotViewController.h"
 #import "PIEActionSheet_PS.h"
 #import "PIEShareView.h"
-#import "PIEEliteViewController.h"
+#import "Old_PIEEliteViewController.h"
 #import "SwipeView.h"
 #import "PIEBannerViewModel.h"
 #import "PIERefreshTableView.h"
