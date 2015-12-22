@@ -15,6 +15,12 @@
         * type:
         * userID:
  **/
+typedef NS_ENUM(NSInteger, PIEPageType) {
+    PIEPageTypeAsk = 1,
+    PIEPageTypeReply,
+    PIEPageTypeEliteFollow,
+    PIEPageTypeEliteHot,
+};
 
 @class PIEPageEntity;
 
