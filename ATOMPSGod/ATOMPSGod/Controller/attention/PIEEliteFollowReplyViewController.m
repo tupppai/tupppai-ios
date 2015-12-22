@@ -180,16 +180,20 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
 
 - (void)collectedIconStatusDidChanged:(NSNotification *)notification
 {
-    NSLog(@"%s, %@", __func__, notification.userInfo);
-    
-    BOOL isCollected = [notification.userInfo[PIECollectedIconIsCollectedKey] boolValue];
-    NSString *collectedCount = notification.userInfo[PIECollectedIconCollectedCountKey];
+    if (_selectedIndexPath_follow) {
+//        BOOL isCollected = [notification.userInfo[PIECollectedIconIsCollectedKey] boolValue];
+//        NSString *collectedCount = notification.userInfo[PIECollectedIconCollectedCountKey];
+        PIEPageVM* vm = [_sourceFollow objectAtIndex:_selectedIndexPath_follow.row];
+        if (vm.type == PIEPageTypeReply) {
+            /* 取得PIEEliteFollowReplyTableViewCell的实例，修改星星的状态和个数 */
+            PIEEliteFollowReplyTableViewCell *cell =
+            [self.tableFollow cellForRowAtIndexPath:_selectedIndexPath_follow];
+            cell.collectView.highlighted  = vm.collected;
+            cell.collectView.numberString = vm.collectCount;
+        }
 
-    /* 取得PIEEliteFollowReplyTableViewCell的实例，修改星星的状态和个数 */
-    PIEEliteFollowReplyTableViewCell *cell =
-    [self.tableFollow cellForRowAtIndexPath:_selectedIndexPath_follow];
-    cell.collectView.highlighted  = isCollected;
-    cell.collectView.numberString = collectedCount;
+    }
+    
 }
 
 /**

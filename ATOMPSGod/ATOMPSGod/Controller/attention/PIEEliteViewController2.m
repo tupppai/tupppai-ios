@@ -71,6 +71,12 @@
     
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self bindProgressView];
+
+}
 - (void)dealloc
 {
     // remove child view controllers
@@ -138,6 +144,7 @@
 }
 
 
+
 - (void)setupNavigationItem
 {
     self.navigationItem.titleView    = self.segmentedControl;
@@ -151,6 +158,11 @@
     [backButton addTarget:self action:@selector(searchBarButtonDidClick)
          forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = barBackButtonItem;
+}
+
+- (void)bindProgressView {
+    _progressView = [MRNavigationBarProgressView progressViewForNavigationController:self.navigationController];
+    _progressView.progressTintColor = [UIColor pieYellowColor];
 }
 
 #pragma mark - Target actions
@@ -194,7 +206,7 @@
         
         _scrollView.frame                          = [UIScreen mainScreen].bounds;
         _scrollView.showsVerticalScrollIndicator   = NO;
-        _scrollView.showsHorizontalScrollIndicator = YES;
+        _scrollView.showsHorizontalScrollIndicator = NO;
         _scrollView.contentSize                    = CGSizeMake(SCREEN_WIDTH * 2, 0);
         _scrollView.pagingEnabled                  = YES;
         _scrollView.scrollsToTop                   = NO;
