@@ -276,6 +276,7 @@
 - (void)collectPageViewModel:(PIEPageVM *)pageViewModel
 {
     
+    self.sheetView.icon8.selected = !self.sheetView.icon8.selected;
     NSMutableDictionary *param = [NSMutableDictionary new];
     
     if (pageViewModel.collected) {
@@ -318,7 +319,6 @@
               */
              
              // 刷新UI-1
-             [self toggleCollectIconStatus:pageViewModel.collected];
              
              // 刷新UI-2
              if (_delegate != nil &&
@@ -337,7 +337,7 @@
              
          }   else {
              // error occur on networking, do not toggle _weakVM.collected.
-             [Hud textWithLightBackground:@"服务器不鸟你，你点收藏也没用～"];
+             self.sheetView.icon8.selected = !self.sheetView.icon8.selected ;
          }
          
      }];

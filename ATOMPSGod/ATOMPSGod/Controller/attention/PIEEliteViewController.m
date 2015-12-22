@@ -95,11 +95,6 @@
 #pragma mark - UI components setup
 - (void)setupViewControllers
 {
-//    PIEEliteTestVC1 *vc1 = [[PIEEliteTestVC1 alloc] init];
-//    PIEEliteTestVC2 *vc2 = [[PIEEliteTestVC2 alloc] init];
-//    
-//    [self.eliteViewControllers addObject:vc1];
-//    [self.eliteViewControllers addObject:vc2];
     
     PIEEliteHotViewController *hotReplyViewController =
     [[PIEEliteHotViewController alloc] init];
