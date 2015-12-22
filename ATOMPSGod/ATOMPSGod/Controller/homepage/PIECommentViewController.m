@@ -346,7 +346,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [super didCancelTextEditing:sender];
 }
 -(void)didPasteMediaContent:(NSDictionary *)userInfo {
-    NSLog(@"didPasteMediaContent%@",userInfo);
 }
 - (BOOL)canPressRightButton
 {
@@ -549,9 +548,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         ((PIECommentTableHeaderView_Ask*)self.tableView.tableHeaderView).commentButton.number = _source_newComment.countOfArray;
     }
 }
-- (void) dismissSelf {
-    [self dismissViewControllerAnimated:NO completion:nil];
-}
+
 -(void)configTextInput {
     self.bounces = NO;
     self.shakeToClearEnabled = NO;

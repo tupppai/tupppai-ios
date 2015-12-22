@@ -220,16 +220,23 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 
 - (void)collectedIconStatusDidChanged:(NSNotification *)notification
 {
-    NSLog(@"%s, %@", __func__, notification.userInfo);
+//    NSLog(@"%s, %@", __func__, notification.userInfo);
     
-    BOOL isCollected = [notification.userInfo[PIECollectedIconIsCollectedKey] boolValue];
-    NSString *collectedCount = notification.userInfo[PIECollectedIconCollectedCountKey];
-    /* 取得PIEEliteHotReplyTableViewCell的实例，修改星星的状态和个数 */
-    
-    PIEEliteHotReplyTableViewCell *cell =
-    [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
-    cell.collectView.highlighted  = isCollected;
-    cell.collectView.numberString = collectedCount;
+    if (_selectedIndexPath_hot) {
+        
+//        BOOL isCollected = [notification.userInfo[PIECollectedIconIsCollectedKey] boolValue];
+//        NSString *collectedCount = notification.userInfo[PIECollectedIconCollectedCountKey];
+        /* 取得PIEEliteHotReplyTableViewCell的实例，修改星星的状态和个数 */
+        PIEPageVM* vm = [_sourceHot objectAtIndex:_selectedIndexPath_hot.row];
+        if (vm.type == PIEPageTypeReply) {
+            PIEEliteHotReplyTableViewCell *cell =
+            [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
+            cell.collectView.highlighted  = vm.collected;
+            cell.collectView.numberString = vm.collectCount;
+        }
+    }
+
+
 
 }
 

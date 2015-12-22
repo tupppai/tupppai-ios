@@ -15,6 +15,12 @@
         * type:
         * userID:
  **/
+typedef NS_ENUM(NSInteger, PIEPageType) {
+    PIEPageTypeAsk = 1,
+    PIEPageTypeReply,
+    PIEPageTypeEliteFollow,
+    PIEPageTypeEliteHot,
+};
 
 // !!! 为_type单独设置NS_ENUM: ASK or REPLY
 

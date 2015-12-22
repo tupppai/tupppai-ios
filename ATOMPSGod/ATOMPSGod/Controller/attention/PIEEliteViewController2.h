@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MRNavigationBarProgressView.h"
 
 @interface PIEEliteViewController2 : DDBaseVC
-
+@property (nonatomic, strong) MRNavigationBarProgressView *progressView;
 @end

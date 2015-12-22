@@ -275,6 +275,7 @@
 
 - (void)collectPageViewModel:(PIEPageVM *)pageViewModel
 {
+    
     NSMutableDictionary *param = [NSMutableDictionary new];
     
     if (pageViewModel.collected) {
@@ -303,7 +304,8 @@
                  collectedCount -= 1;
              }
              pageViewModel.collectCount = [NSString stringWithFormat:@"%zd", collectedCount];
-             
+
+
              // ============================================================================ //
              
              /* 

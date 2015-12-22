@@ -247,7 +247,6 @@
 {
     [shareView dismiss];
 }
-
 #pragma mark - Lazy loadings
 
 - (PIEShareView *)shareView {

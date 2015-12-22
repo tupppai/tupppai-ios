@@ -205,8 +205,6 @@
         if (self.refreshingBlock) {
             self.refreshingBlock();
         }
-        
-        NSLog(@"%s", __func__);
         if ([self.refreshingTarget respondsToSelector:self.refreshingAction]) {
             MJRefreshMsgSend(MJRefreshMsgTarget(self.refreshingTarget), self.refreshingAction, self);
         }
