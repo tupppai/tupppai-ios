@@ -121,6 +121,11 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
                                              selector:@selector(updateShareStatus:)
                                                  name:PIESharedIconStatusChangedNotification
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateLikedStatus:)
+                                                 name:PIELikedIconStatusChangedNotification
+                                               object:nil];
 }
 
 - (void) dismiss {
@@ -187,6 +192,10 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:PIESharedIconStatusChangedNotification
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:PIELikedIconStatusChangedNotification
                                                   object:nil];
 }
 
@@ -833,17 +842,35 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
 }
 - (void) didTapLike {
-    _headerView_reply.likeButton.selected = !_headerView_reply.likeButton.selected;
-    [DDService toggleLike:_headerView_reply.likeButton.selected ID:_vm.ID type:_vm.type  withBlock:^(BOOL success) {
+    
+    /**
+     *  准备发往服务器的“点赞”的状态（特地这么明显地写出来以防出错）
+     */
+    BOOL likeButtonSelectedStatusToSend = !_headerView_reply.likeButton.selected;
+    
+    [DDService toggleLike:likeButtonSelectedStatusToSend ID:_vm.ID type:_vm.type  withBlock:^(BOOL success) {
         if (success) {
-            _vm.liked =  _headerView_reply.likeButton.selected;
+            // 自己发送的通知自己也会监听，和其他观察者一同刷新UI
+            // 发通知后所有观察者只负责刷新UI不修改ViewModel；谁发通知就由谁更新ViewModel（副作用只发生一次！）。
+            
+            // 在这一步只修改ViewModel
+            _vm.liked =  !_headerView_reply.likeButton.selected;
             if ( _headerView_reply.likeButton.selected) {
                 _vm.likeCount = [NSString stringWithFormat:@"%zd",_vm.likeCount.integerValue + 1];
             } else {
                 _vm.likeCount = [NSString stringWithFormat:@"%zd",_vm.likeCount.integerValue - 1];
             }
-        } else {
-            _headerView_reply.likeButton.selected = !_headerView_reply.likeButton.selected;
+            
+            // 由最终的_vm.liked作为通知发送携带的值的最终标准
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:PIELikedIconStatusChangedNotification
+             object:nil
+             userInfo:@{PIELikedIconIsLikedKey:@(_vm.liked)}];
+            
+        }
+        else {
+            // 服务器没有确认这次”点赞“的行为，所以既不刷新UI也不对ViewModel做任何修改
+            [Hud text:@"服务器不鸟你～"];
         }
     }];
 }
@@ -939,5 +966,15 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         /* nothing happened. */
     }
     
+}
+
+- (void)updateLikedStatus:(NSNotification *)notification
+{
+    // 只有在服务器顺利返回结果之后再刷新UI。
+//    _headerView_reply.likeButton.selected = !_headerView_reply.likeButton.selected;
+    
+    // 严格按照通知传来的值来刷新UI状态，可免去不少麻烦；
+    BOOL isLiked = notification.userInfo[PIELikedIconIsLikedKey];
+    _headerView_reply.likeButton.selected = isLiked;
 }
 @end
