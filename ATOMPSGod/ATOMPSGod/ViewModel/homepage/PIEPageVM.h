@@ -22,6 +22,9 @@ typedef NS_ENUM(NSInteger, PIEPageType) {
     PIEPageTypeEliteHot,
 };
 
+// !!! 为_type单独设置NS_ENUM: ASK or REPLY
+
+
 @class PIEPageEntity;
 
 @interface PIEPageVM : NSObject

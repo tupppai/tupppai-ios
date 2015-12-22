@@ -23,6 +23,7 @@
 #import "AppDelegate.h"
 #import "PIEToHelpViewController.h"
 #import "DeviceUtil.h"
+#import "PIECellIconStatusChangedNotificationKey.h"
 /* Variables */
 @interface PIENewReplyViewController ()
 
@@ -90,6 +91,8 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     [self setupGestures];
     [self setupData];
     
+    [self setupNotificationObserver];
+    
     /**
      *  假如model（_source）为空的话，那就重新fetch data
      */
@@ -128,7 +131,13 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     _sourceReply            = [NSMutableArray new];
 }
 
-#pragma mark - Notification methods
+- (void)setupNotificationObserver
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateShareStatus)
+                                                 name:PIESharedIconStatusChangedNotification
+                                               object:nil];
+}
 
 
 - (void)configureTakePhotoButton
@@ -162,6 +171,9 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
  *  remove observers while being deallocated.
  */
 -(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:PIESharedIconStatusChangedNotification
+                                                  object:nil];
 }
 
 #pragma mark - <UITableViewDelegate>
@@ -455,9 +467,9 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 
 - (void)shareViewDidShare:(PIEShareView *)shareView
 {
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        [self updateShareStatus];
-    }];
+//    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+//        [self updateShareStatus];
+//    }];
 }
 
 - (void)shareViewDidCancel:(PIEShareView *)shareView
@@ -469,7 +481,11 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
  *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面ReplyCell的分享数
  */
 - (void)updateShareStatus {
-    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
+    /*
+     _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
+     
+     */
+//    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
     // 将分散在updateShareStatus 和 updateStatus  "同步分享数"的方法写到一起。
     //    [self updateStatus];
     if (_selectedIndexPath) {

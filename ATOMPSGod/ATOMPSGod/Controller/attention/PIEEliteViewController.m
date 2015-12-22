@@ -30,6 +30,8 @@
 #import "PIECarouselViewController2.h"
 #import "PIEActionSheet_PS.h"
 #import "DeviceUtil.h"
+#import "SwipeView.h"
+#import "PIECellIconStatusChangedNotificationKey.h"
 
 
 /* Variables */
@@ -129,6 +131,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     [super viewWillAppear:animated];
 //    self.navigationController.hidesBarsOnSwipe = YES;
     [self bindProgressView];
+    
     //update status of like button
     [self updateStatus];
     //make it always visible when coming back to this vc from other vc.
@@ -412,11 +415,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 //}
 //
 
-
-
-
-
--(void)follow:(UIImageView*)followView {
+- (void)follow:(UIImageView*)followView {
     followView.highlighted = !followView.highlighted;
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:@(_selectedVM.userID) forKey:@"uid"];
@@ -508,9 +507,9 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 - (void)shareViewDidShare:(PIEShareView *)shareView
 {
     // refresh ui element on main thread after successful sharing, do nothing otherwise.
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        [self updateShareStatus];
-    }];
+//    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+//        [self updateShareStatus];
+//    }];
 }
 
 - (void)shareViewDidCancel:(PIEShareView *)shareView
@@ -541,7 +540,14 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
  *  用户点击了updateShareStatus之后（在弹出的窗口分享），刷新本页面ReplyCell的分享数
  */
 - (void)updateShareStatus {
-    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
+    
+    /*
+     _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
+     
+     */
+    
+//    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
+    
 //    if (_selectedIndexPath) {
 //        if (_sv.type == PIEPageTypeEliteFollow) {
 //            [_sv.tableFollow reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -733,6 +739,8 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     }];
 }
 
+#pragma mark - <PWRefreshBaseTableViewDelegate>
+
 -(void)didPullRefreshDown:(UITableView *)tableView {
     if (tableView == _sv.tableFollow) {
         [self getRemoteSourceFollow];
@@ -756,6 +764,11 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     }
 }
 
+#pragma mark - <UIScrollViewDelegate>
+
+/*
+    判断scrollView是否是_sv(即：判断用户到底是在上下滑动还是左右滑动）；如果是左右滑动（scrollView == _sv），那么就让navigationView的segmentedControl数字改变，并且刷新“关注”或“热门”（当且仅当数据源为空的时候）
+ */
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (scrollView == _sv) {
         int currentPage = (scrollView.contentOffset.x + CGWidth(scrollView.frame) * 0.1) / CGWidth(scrollView.frame);
@@ -864,6 +877,10 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 //                    _selectedVM.image = cell.theImageView.image;
                     vc.pageVM = _selectedVM;
                     [self presentViewController:vc animated:YES completion:nil];
+                    
+                    
+                    
+                    
                 }
                 //点击头像
                 else if (CGRectContainsPoint(cell.avatarView.frame, p)) {

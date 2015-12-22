@@ -27,6 +27,8 @@
 		0E54C7951C1E8F5E00F431AC /* PIEToHelpTableViewCell2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E54C7841C1E8F5E00F431AC /* PIEToHelpTableViewCell2.xib */; };
 		0E54C7961C1E8F5E00F431AC /* PIEToHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E54C7861C1E8F5E00F431AC /* PIEToHelpViewController.m */; };
 		0E54C7991C1E927A00F431AC /* PIEProceedingDoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E54C7981C1E927A00F431AC /* PIEProceedingDoneViewController.m */; };
+		0E5CE0BB1C22E1BF000A5B55 /* PIEEliteHotReplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E5CE0BA1C22E1BF000A5B55 /* PIEEliteHotReplyViewController.m */; };
+		0E5CE0BE1C22E1D4000A5B55 /* PIEEliteFollowReplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E5CE0BD1C22E1D4000A5B55 /* PIEEliteFollowReplyViewController.m */; };
 		0E6F78FE1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E6F78FC1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.m */; };
 		0E6F78FF1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E6F78FD1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.xib */; };
 		0E6F79031C16EE5C002F9FB6 /* PIEChannelDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E6F79011C16EE5C002F9FB6 /* PIEChannelDetailViewController.m */; };
@@ -163,6 +165,8 @@
 		5CDF82421AC2BEF900321694 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CDF82411AC2BEF900321694 /* QuartzCore.framework */; };
 		5CE4082F1ACE94D600A56E4B /* UIViewController+ATOMTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CE4082E1ACE94D600A56E4B /* UIViewController+ATOMTracking.m */; };
 		5CEAC0331AD4F9540058037C /* DDMyCollectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CEAC0321AD4F9540058037C /* DDMyCollectionManager.m */; };
+		903E09DE1C23DF9E006C87B8 /* PIEEliteViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 903E09DD1C23DF9E006C87B8 /* PIEEliteViewController2.m */; };
+		90B3A07C1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B3A07B1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m */; };
 		90FA11701C1FDB8900D8B602 /* DeviceList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 90FA116D1C1FDB8900D8B602 /* DeviceList.plist */; };
 		90FA11711C1FDB8900D8B602 /* DeviceUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FA116F1C1FDB8900D8B602 /* DeviceUtil.m */; };
 		E900919D1B71E04E004623E4 /* DDInputAuthcodePwdFPVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E900919C1B71E04E004623E4 /* DDInputAuthcodePwdFPVC.m */; };
@@ -588,6 +592,10 @@
 		0E54C7861C1E8F5E00F431AC /* PIEToHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEToHelpViewController.m; sourceTree = "<group>"; };
 		0E54C7971C1E927A00F431AC /* PIEProceedingDoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEProceedingDoneViewController.h; sourceTree = "<group>"; };
 		0E54C7981C1E927A00F431AC /* PIEProceedingDoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEProceedingDoneViewController.m; sourceTree = "<group>"; };
+		0E5CE0B91C22E1BF000A5B55 /* PIEEliteHotReplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteHotReplyViewController.h; sourceTree = "<group>"; };
+		0E5CE0BA1C22E1BF000A5B55 /* PIEEliteHotReplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteHotReplyViewController.m; sourceTree = "<group>"; };
+		0E5CE0BC1C22E1D4000A5B55 /* PIEEliteFollowReplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteFollowReplyViewController.h; sourceTree = "<group>"; };
+		0E5CE0BD1C22E1D4000A5B55 /* PIEEliteFollowReplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteFollowReplyViewController.m; sourceTree = "<group>"; };
 		0E6F78FB1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelDetailLatestPSCell.h; sourceTree = "<group>"; };
 		0E6F78FC1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelDetailLatestPSCell.m; sourceTree = "<group>"; };
 		0E6F78FD1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEChannelDetailLatestPSCell.xib; sourceTree = "<group>"; };
@@ -877,6 +885,10 @@
 		5CE4082E1ACE94D600A56E4B /* UIViewController+ATOMTracking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ATOMTracking.m"; sourceTree = "<group>"; };
 		5CEAC0311AD4F9540058037C /* DDMyCollectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMyCollectionManager.h; sourceTree = "<group>"; };
 		5CEAC0321AD4F9540058037C /* DDMyCollectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMyCollectionManager.m; sourceTree = "<group>"; };
+		903E09DC1C23DF9E006C87B8 /* PIEEliteViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteViewController2.h; sourceTree = "<group>"; };
+		903E09DD1C23DF9E006C87B8 /* PIEEliteViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteViewController2.m; sourceTree = "<group>"; };
+		90B3A07A1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECellIconStatusChangedNotificationKey.h; sourceTree = "<group>"; };
+		90B3A07B1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECellIconStatusChangedNotificationKey.m; sourceTree = "<group>"; };
 		90FA116D1C1FDB8900D8B602 /* DeviceList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DeviceList.plist; sourceTree = "<group>"; };
 		90FA116E1C1FDB8900D8B602 /* DeviceUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceUtil.h; sourceTree = "<group>"; };
 		90FA116F1C1FDB8900D8B602 /* DeviceUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceUtil.m; sourceTree = "<group>"; };
@@ -1920,6 +1932,12 @@
 				F46117F21BAE558C001A6F1A /* PIEEliteScrollView.m */,
 				F46117EE1BAE556B001A6F1A /* PIEEliteViewController.h */,
 				F46117EF1BAE556B001A6F1A /* PIEEliteViewController.m */,
+				903E09DC1C23DF9E006C87B8 /* PIEEliteViewController2.h */,
+				903E09DD1C23DF9E006C87B8 /* PIEEliteViewController2.m */,
+				0E5CE0B91C22E1BF000A5B55 /* PIEEliteHotReplyViewController.h */,
+				0E5CE0BA1C22E1BF000A5B55 /* PIEEliteHotReplyViewController.m */,
+				0E5CE0BC1C22E1D4000A5B55 /* PIEEliteFollowReplyViewController.h */,
+				0E5CE0BD1C22E1D4000A5B55 /* PIEEliteFollowReplyViewController.m */,
 				F4D07A5B1BBA3AB70016A8B5 /* PIEEliteManager.h */,
 				F4D07A5C1BBA3AB70016A8B5 /* PIEEliteManager.m */,
 			);
@@ -2393,6 +2411,8 @@
 				5C561A431AB7C51F0052D4D5 /* MTLFMDBAdapter */,
 				5C9BDA5D1AA88BD900715698 /* BJImageCropper */,
 				90FA116C1C1FDB8900D8B602 /* DeviceUtil */,
+				90B3A07A1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.h */,
+				90B3A07B1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m */,
 				5C6CEF281AF18BA800F06213 /* ATOMConstant.h */,
 				5C6CEF291AF18BA800F06213 /* ATOMConstant.m */,
 				5C4F5BED1AA5893700226F64 /* UIActionSheet+Blocks.h */,
@@ -4210,6 +4230,7 @@
 			files = (
 				5CDB05CA1AA3FE520089121E /* AppDelegate.m in Sources */,
 				5C83A8961AC66F910071A024 /* POPVector.mm in Sources */,
+				903E09DE1C23DF9E006C87B8 /* PIEEliteViewController2.m in Sources */,
 				F41BA0CF1C0EDCE800979D43 /* MJRefreshNormalHeader.m in Sources */,
 				F4275A121BE0786400BBE7E4 /* SLKTextView.m in Sources */,
 				5C83A8921AC66F910071A024 /* POPLayerExtras.mm in Sources */,
@@ -4253,6 +4274,7 @@
 				5C54DF261AB97B8400BDE34D /* PIECommentEntity.m in Sources */,
 				F4993CF11BE5B32C007F9BE4 /* UIWebView+AFNetworking.m in Sources */,
 				F41FF0E71BDDFCE800566A12 /* UIApplication+JTSImageViewController.m in Sources */,
+				90B3A07C1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m in Sources */,
 				5C54DF1F1AB9738E00BDE34D /* DDNavigationController.m in Sources */,
 				5C83A8971AC66F910071A024 /* TransformationMatrix.cpp in Sources */,
 				5CEAC0331AD4F9540058037C /* DDMyCollectionManager.m in Sources */,
@@ -4319,6 +4341,7 @@
 				0E3FB9EB1C15603A0012E290 /* PIENewReplyViewController.m in Sources */,
 				5C3101841AAE8D9900EF529B /* ATOMModifyPasswordView.m in Sources */,
 				5C54DF161AB9529200BDE34D /* PIENewScrollView.m in Sources */,
+				0E5CE0BB1C22E1BF000A5B55 /* PIEEliteHotReplyViewController.m in Sources */,
 				E93D237E1B3CFA4D0081F632 /* DDShareManager.m in Sources */,
 				F46117F01BAE556B001A6F1A /* PIEEliteViewController.m in Sources */,
 				F46117D91BAD1101001A6F1A /* IQUIViewController+Additions.m in Sources */,
@@ -4331,6 +4354,7 @@
 				F4EA4DB81BF49CB700486304 /* PIEAgreementsViewController.m in Sources */,
 				E9F890901B86C4AB0057ECBF /* FMDatabasePool.m in Sources */,
 				5C0D282D1ACA333200491452 /* PIECommentManager.m in Sources */,
+				0E5CE0BE1C22E1D4000A5B55 /* PIEEliteFollowReplyViewController.m in Sources */,
 				F4D015BB1BA6AF7200A28329 /* PIEThumbAnimateView.m in Sources */,
 				5CE4082F1ACE94D600A56E4B /* UIViewController+ATOMTracking.m in Sources */,
 				F4275A101BE0786400BBE7E4 /* SLKTextInputbar.m in Sources */,
