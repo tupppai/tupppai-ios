@@ -398,16 +398,25 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         
         //点击大图
         if (CGRectContainsPoint(cell.leftImageView.frame, p) || CGRectContainsPoint(cell.rightImageView.frame, p)) {
-            if (![_selectedVM.replyCount isEqualToString:@"0"]) {
-                PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-                vc.pageVM                      = _selectedVM;
-                [self presentViewController:vc animated:NO completion:nil];
-            } else {
-                PIECommentViewController* vc = [PIECommentViewController new];
-                vc.vm                        = _selectedVM;
-                [self.navigationController pushViewController:vc animated:YES];
-            }
             
+            /* 
+             （需求补充）点击随意求P后，不论用户的求P是一张还是两张，统一先进入PIECarousel_ItemView（多图详情页，横着滚的），
+             然后上拉进入PIECommentViewController（单图详情页，竖着滚的） 
+            */
+//            
+//            if (![_selectedVM.replyCount isEqualToString:@"0"]) {
+//                PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+//                vc.pageVM                      = _selectedVM;
+//                [self presentViewController:vc animated:NO completion:nil];
+//            } else {
+//                PIECommentViewController* vc = [PIECommentViewController new];
+//                vc.vm                        = _selectedVM;
+//                [self.navigationController pushViewController:vc animated:YES];
+//            }
+            
+            PIECarouselViewController2 *vc = [PIECarouselViewController2 new];
+            vc.pageVM = _selectedVM;
+            [self presentViewController:vc animated:NO completion:nil];
         }
         //点击头像
         else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
