@@ -60,8 +60,15 @@
 }
 - (void)injectSauce:(PIEPageVM *)viewModel {
     WS(ws);
-    _ID = viewModel.ID;
-    _askID = viewModel.askID;
+    NSString *urlString_avatar = [viewModel.avatarURL trimToImageWidth:_avatarView.frame.size.width*SCREEN_SCALE];
+    NSString *urlString_imageView = [viewModel.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
+    [_theImageView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView]
+                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                ws.theImageView.image = image;
+                                ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+                            }];
+    [_avatarView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+
     {
         if (viewModel.isMyFan) {
             _followView.highlightedImage = [UIImage imageNamed:@"pie_mutualfollow"];
@@ -76,20 +83,16 @@
         }
 
     }
+    _ID = viewModel.ID;
+    _askID = viewModel.askID;
     _shareView.imageView.image = [UIImage imageNamed:@"hot_share"];
-    _shareView.numberString = viewModel.shareCount;
     _commentView.imageView.image = [UIImage imageNamed:@"hot_comment"];
+    _shareView.numberString = viewModel.shareCount;
     _commentView.numberString = viewModel.commentCount;
     _contentLabel.text = viewModel.content;
-    
-    [_avatarView sd_setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
     _nameLabel.text = viewModel.username;
     _timeLabel.text = viewModel.publishTime;
-    [_theImageView sd_setImageWithURL:[NSURL URLWithString:viewModel.imageURL]
-                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                                ws.theImageView.image = image;
-                                ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
-                            }];
+ 
 
 }
 

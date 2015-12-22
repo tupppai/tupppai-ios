@@ -1,14 +1,15 @@
 //
-//  PIEEliteViewController2.h
-//  TUPAI
+//  PIEFollowViewController.h
+//  ATOMPSGod
 //
-//  Created by TUPAI-Huangwei on 12/18/15.
+//  Created by chenpeiwei on 9/20/15.
 //  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "MRNavigationBarProgressView.h"
 
-@interface PIEEliteViewController2 : DDBaseVC
+@interface Old_PIEEliteViewController : DDBaseVC
 @property (nonatomic, strong) MRNavigationBarProgressView *progressView;
+
 @end

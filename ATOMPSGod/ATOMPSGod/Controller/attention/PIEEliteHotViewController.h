@@ -8,7 +8,7 @@
 
 #import "DDBaseVC.h"
 
-@interface PIEEliteHotReplyViewController : DDBaseVC
+@interface PIEEliteHotViewController : DDBaseVC
 
 - (void)getSourceIfEmpty_banner;
 - (void)getSourceIfEmpty_hot:(void (^)(BOOL finished))block;

@@ -8,7 +8,7 @@
 
 #import "PIETabBarController.h"
 #import "PIEChannelViewController.h"
-#import "PIEEliteViewController.h"
+#import "Old_PIEEliteViewController.h"
 #import "DDNavigationController.h"
 #import "DDService.h"
 #import "PIEMeViewController.h"
@@ -21,7 +21,7 @@
 #import "UIImage+Colors.h"
 
 
-#import "PIEEliteViewController2.h"
+#import "PIEEliteViewController.h"
 
 
 @interface PIETabBarController ()<UITabBarControllerDelegate>
@@ -102,7 +102,7 @@
 {
     NSDictionary *info = [notification userInfo];
     
-    PIEEliteViewController2* vc = (PIEEliteViewController2*)((DDNavigationController*)[self.viewControllers objectAtIndex:0]).topViewController;
+    PIEEliteViewController* vc = (PIEEliteViewController*)((DDNavigationController*)[self.viewControllers objectAtIndex:0]).topViewController;
     PIEUploadManager* manager = [PIEUploadManager new];
     manager.uploadInfo = info;
     [manager upload:^(CGFloat percentage,BOOL success) {
@@ -139,7 +139,7 @@
     PIEChannelViewController *channelVc = [PIEChannelViewController new];
 //    PIEEliteViewController *myAttentionViewController = [PIEEliteViewController new];
     // for testing PIEEliteViewController2
-    PIEEliteViewController2 *myAttentionViewController = [PIEEliteViewController2 new];
+    PIEEliteViewController *myAttentionViewController = [PIEEliteViewController new];
     PIEProceedingViewController *proceedingViewController = [PIEProceedingViewController new];
     
     PIEMeViewController *aboutMeVC = (PIEMeViewController *)[[UIStoryboard storyboardWithName:@"Me" bundle:nil] instantiateViewControllerWithIdentifier: @"PIEME"];

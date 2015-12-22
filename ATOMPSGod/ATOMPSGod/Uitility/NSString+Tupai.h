@@ -8,10 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSString (ATOMValidate)
+@interface NSString (Tupai)
 
 - (BOOL)isMobileNumber;
 - (BOOL)isPassword;
 - (NSString *)sha1;
-
+- (NSString*) trimToImageWidth :(int)width ;
 @end

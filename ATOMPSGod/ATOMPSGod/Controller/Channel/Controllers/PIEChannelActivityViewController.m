@@ -566,16 +566,14 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
         // instantiate only for once
         _headerBannerView = [[UIButton alloc] init];
         
-        // set background image("表情有灵气")
+        NSString* urlString = [self.currentChannelVM.banner_pic trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
+        NSURL *bannerImageUrl = [NSURL URLWithString:urlString];
         
+        SDWebImageManager* manager = [SDWebImageManager sharedManager];
+        [manager downloadImageWithURL:bannerImageUrl options:SDWebImageAllowInvalidSSLCertificates progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+            [_headerBannerView setBackgroundImage:image forState:UIControlStateNormal];
+        }];
         
-//        [_headerBannerView
-//         setBackgroundImage:[UIImage imageNamed:@"pie_channelActivityBanner"]
-//         forState:UIControlStateNormal];
-        NSURL *bannerImageUrl = [NSURL URLWithString:self.currentChannelVM.banner_pic];
-//        [_headerBannerView.imageView sd_setImageWithURL:bannerImageUrl];
-        [_headerBannerView setBackgroundImageForState:UIControlStateNormal
-                                              withURL:bannerImageUrl];
         
         // 取消点击变暗的效果
         _headerBannerView.adjustsImageWhenHighlighted = NO;

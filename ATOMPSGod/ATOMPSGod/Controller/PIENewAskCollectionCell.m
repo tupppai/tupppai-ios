@@ -33,32 +33,19 @@
 
 //put a needle injecting into cell's ass.
 - (void)injectSource:(PIEPageVM*)vm {
-    [_avatarView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+    
+    NSString *urlString_avatar = [vm.avatarURL trimToImageWidth:_avatarView.frame.size.width*SCREEN_SCALE];
+    NSString *urlString_imageView = [vm.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
+    [_leftImageView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView] placeholderImage:[UIImage imageNamed:@"cell_holder_portrait"]];
+    [_avatarView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
     _nameLabel.text = vm.username;
     _timeLabel.text = vm.publishTime;
     _contentLabel.text = vm.content;
 
-        if (vm.thumbEntityArray.count >= 2) {
-            _imageView_multiAskSign.hidden = NO;
-        } else {
-            _imageView_multiAskSign.hidden = YES;
-        }
-//    if (vm.thumbEntityArray.count == 2) {
-//        PIEImageEntity* entity1 = [vm.thumbEntityArray objectAtIndex:0];
-//        PIEImageEntity* entity2 = [vm.thumbEntityArray objectAtIndex:1];
-//        [_leftImageView sd_setImageWithURL:[NSURL URLWithString:entity1.url]placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-//        [_rightImageView sd_setImageWithURL:[NSURL URLWithString:entity2.url]placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-//        [_rightImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-//            make.width.equalTo(@(self.frame.size.width/2));
-//        }];
-//
-//    }
-//    else if (vm.thumbEntityArray.count == 1) {
-        PIEImageEntity* entity1 = [vm.thumbEntityArray objectAtIndex:0];
-        [_leftImageView sd_setImageWithURL:[NSURL URLWithString:entity1.url]placeholderImage:[UIImage imageNamed:@"cell_holder_portrait.png"]];
-        [_rightImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.width.equalTo(@(0));
-        }];
-//    }
+    if (vm.thumbEntityArray.count >= 2) {
+        _imageView_multiAskSign.hidden = NO;
+    } else {
+        _imageView_multiAskSign.hidden = YES;
+    }
 }
 @end

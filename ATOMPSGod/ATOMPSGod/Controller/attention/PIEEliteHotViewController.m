@@ -6,10 +6,10 @@
 //  Copyright © 2015年 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIEEliteHotReplyViewController.h"
+#import "PIEEliteHotViewController.h"
 #import "PIEActionSheet_PS.h"
 #import "PIEShareView.h"
-#import "PIEEliteViewController.h"
+#import "Old_PIEEliteViewController.h"
 #import "SwipeView.h"
 #import "PIEBannerViewModel.h"
 #import "PIERefreshTableView.h"
@@ -28,7 +28,7 @@
 #import "PIECellIconStatusChangedNotificationKey.h"
 
 /* Variables */
-@interface PIEEliteHotReplyViewController ()
+@interface PIEEliteHotViewController ()
 
 @property (nonatomic, strong) PIERefreshTableView *tableHot;
 
@@ -59,23 +59,23 @@
 @end
 
 /* Protocols */
-@interface PIEEliteHotReplyViewController (TableView)
+@interface PIEEliteHotViewController (TableView)
 <UITableViewDelegate,UITableViewDataSource>
 @end
 
-@interface PIEEliteHotReplyViewController (RefreshBaseTableView)
+@interface PIEEliteHotViewController (RefreshBaseTableView)
 <PWRefreshBaseTableViewDelegate>
 @end
 
-@interface PIEEliteHotReplyViewController (PIEShareView)
+@interface PIEEliteHotViewController (PIEShareView)
 <PIEShareViewDelegate>
 @end
 
-@interface PIEEliteHotReplyViewController (SwipeView)
+@interface PIEEliteHotViewController (SwipeView)
 <SwipeViewDelegate,SwipeViewDataSource>
 @end
 
-@interface PIEEliteHotReplyViewController (DZNEmptyDataSet)
+@interface PIEEliteHotViewController (DZNEmptyDataSet)
 <DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @end
 
@@ -83,7 +83,7 @@
 //<JGActionSheetDelegate>
 //@end
 
-@implementation PIEEliteHotReplyViewController
+@implementation PIEEliteHotViewController
 
 static  NSString* hotReplyIndentifier = @"PIEEliteHotReplyTableViewCell";
 static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
@@ -126,7 +126,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 }
 
 -(void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_Elite" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_Elite_Hot" object:nil];
     
 
     
@@ -158,7 +158,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 #pragma mark - Notification setup
 - (void)setupNotificationObserver
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_Elite" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_Elite_Hot" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(collectedIconStatusDidChanged:)
@@ -170,10 +170,10 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
                                                  name:PIESharedIconStatusChangedNotification
                                                object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateLikedStatus:)
-                                                 name:PIELikedIconStatusChangedNotification
-                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(updateLikedStatus:)
+//                                                 name:PIELikedIconStatusChangedNotification
+//                                               object:nil];
 }
 
 #pragma mark - UI components setup
@@ -554,32 +554,24 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     /**
      *  准备发往服务器的“点赞”的状态（特地这么明显地写出来以防出错）
      */
+    likeView.selected = !likeView.selected;
+//    BOOL likeButtonSelectedStatusToSend = likeView.selected;
     
-    BOOL likeButtonSelectedStatusToSend = !likeView.selected;
-    
-    [DDService toggleLike:likeButtonSelectedStatusToSend ID:_selectedVM.ID type:_selectedVM.type  withBlock:^(BOOL success) {
+    [DDService toggleLike:likeView.selected ID:_selectedVM.ID type:_selectedVM.type  withBlock:^(BOOL success) {
         if (success) {
             // 自己发送的通知自己也会监听，和其他观察者一同刷新UI
             // 发通知后所有观察者只负责刷新UI不修改ViewModel；谁发通知就由谁更新ViewModel（副作用只发生一次！）。
             
             // 在这一步只修改ViewModel
-            _selectedVM.liked =  !likeView.selected;
+            _selectedVM.liked =  likeView.selected;
             if (likeView.selected) {
                 _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue + 1];
             } else {
                 _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue - 1];
             }
-            
-            // 由最终的_vm.liked作为通知发送携带的值的最终标准
-            [[NSNotificationCenter defaultCenter]
-             postNotificationName:PIELikedIconStatusChangedNotification
-             object:nil
-             userInfo:@{PIELikedIconIsLikedKey:@(_selectedVM.liked)}];
-            
         }
         else {
-            // 服务器没有确认这次”点赞“的行为，所以既不刷新UI也不对ViewModel做任何修改
-            [Hud text:@"服务器不鸟你～"];
+            likeView.selected = !likeView.selected;
         }
     }];
 }
@@ -651,14 +643,6 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
  */
 - (void)updateShareStatus {
     
-    /*
-     _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
-     
-     */
-    
-    //    // update view models; refresh UI element.
-    //    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
-    
     if (_selectedIndexPath_hot != nil)
     {
         [self.tableHot reloadRowsAtIndexPaths:@[_selectedIndexPath_hot]
@@ -667,22 +651,6 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     
 }
 
-- (void)updateLikedStatus:(NSNotification *)notification
-{
-    // 严格按照通知传来的值来刷新UI状态，可免去不少麻烦；
-    BOOL isLiked = notification.userInfo[PIELikedIconIsLikedKey];
-//    _headerView_reply.likeButton.selected = isLiked;
-    
-    // BUG AWARE!
-    // 这里不知道怎么判断pageViewModel的类型（eliteFollow?eliteHot?Ask?Reply? 这四个枚举值又不可以用"||"叠加,只能居其一）
-    // 所以有个Pre-Assumption: 带着“点赞”按钮的cell，类型只能是reply(只能点赞其他人的帮P）
-    // 假如将来需求有变，这里可能会出现BAD_ACCESS_EXEC的崩溃错误。
-    // 刷新UI
-    /* 其他人的帮P */
-    PIEEliteHotReplyTableViewCell *cell = [_tableHot dequeueReusableCellWithIdentifier:hotReplyIndentifier
-                                                                          forIndexPath:_selectedIndexPath_hot];
-    cell.likeView.selected = isLiked;
-}
 
 #pragma mark - target-actions
 /**

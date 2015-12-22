@@ -8,7 +8,7 @@
 
 #import "DDBaseVC.h"
 
-@interface PIEEliteFollowReplyViewController : DDBaseVC
+@interface PIEEliteFollowViewController : DDBaseVC
 
 - (void)getSourceIfEmpty_follow:(void (^)(BOOL finished))block;
 
