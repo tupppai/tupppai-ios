@@ -17,6 +17,7 @@
 //#import "PIEWebViewViewController.h"
 //#import "DDNavigationController.h"
 //#import "AppDelegate.h"
+#import "PIECellIconStatusChangedNotificationKey.h"
 @interface PIECarousel_ItemView()
 @property (nonatomic, strong) NSMutableArray *source_newComment;
 @property (nonatomic, strong)  PIEActionSheet_PS * psActionSheet;
@@ -39,6 +40,7 @@
 
 
 @implementation PIECarousel_ItemView
+
 
 -(instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -64,10 +66,18 @@
 
         [self setupTableView];
         [self addEvent];
-        
+        [self setupNotificationObserver];
     }
     return self;
 }
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]
+     removeObserver:self
+     name:PIESharedIconStatusChangedNotification object:nil];
+}
+
 - (void)addEvent {
     [_button_avatar addTarget:self action:@selector(pushToUser) forControlEvents:UIControlEventTouchUpInside];
     [_button_name addTarget:self action:@selector(pushToUser) forControlEvents:UIControlEventTouchUpInside];
@@ -83,6 +93,15 @@
     [_pageButton_comment addGestureRecognizer:tapComment];
     [_pageLikeButton addGestureRecognizer:tapLike];
 }
+
+- (void)setupNotificationObserver
+{
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(updateShareStatus:)
+     name:PIESharedIconStatusChangedNotification object:nil];
+}
+
 -(void) tapPS {
     [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
 }
@@ -198,11 +217,18 @@
     }];
 }
 
-#pragma mark - <PIEShareViewDelegate> and its related methods
-- (void)updateShareStatus {
-    // ??? 没有重刷UI
-    _vm.shareCount = [NSString stringWithFormat:@"%zd",[_vm.shareCount integerValue]+1];
+#pragma mark - Notification Methods
+- (void)updateShareStatus:(NSNotification *)notification {
+    // _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
+    
+    // 重刷UI
+    NSString *numberString = notification.userInfo[PIESharedIconSharedCountKey];
+    _pageButton_share.numberString = numberString;
+    
 }
+
+#pragma mark - <PIEShareViewDelegate> and its related methods
+
 
 - (void)showShareView
 {
@@ -212,9 +238,9 @@
 - (void)shareViewDidShare:(PIEShareView *)shareView
 {
     // refresh ui element on main thread after successful sharing, do nothing otherwise.
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        [self updateShareStatus];
-    }];
+//    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+//        [self updateShareStatus];
+//    }];
 }
 
 - (void)shareViewDidCancel:(PIEShareView *)shareView

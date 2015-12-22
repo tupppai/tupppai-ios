@@ -19,6 +19,11 @@
 #import "ATOMUserDAO.h"
 #import "PIEUploadManager.h"
 #import "UIImage+Colors.h"
+
+
+#import "PIEEliteViewController2.h"
+
+
 @interface PIETabBarController ()<UITabBarControllerDelegate>
 @property (nonatomic, strong) DDNavigationController *navigation_new;
 @property (nonatomic, strong) DDNavigationController *navigation_elite;
@@ -49,7 +54,9 @@
     [self setupTitle];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorOccuredRET) name:@"NetworkErrorCall" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NetworkSignOutRET) name:@"NetworkSignOutCall" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DoUploadJob:) name:@"UploadCall" object:nil];
+    
+    // for testing PIEEliteViewController2:
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DoUploadJob:) name:@"UploadCall" object:nil];
 }
 
 - (void)setupTitle {
@@ -125,7 +132,9 @@
 - (void)configureTabBarController {
     
     PIEChannelViewController *channelVc = [PIEChannelViewController new];
-    PIEEliteViewController *myAttentionViewController = [PIEEliteViewController new];
+//    PIEEliteViewController *myAttentionViewController = [PIEEliteViewController new];
+    // for testing PIEEliteViewController2
+    PIEEliteViewController2 *myAttentionViewController = [PIEEliteViewController2 new];
     PIEProceedingViewController *proceedingViewController = [PIEProceedingViewController new];
     
     PIEMeViewController *aboutMeVC = (PIEMeViewController *)[[UIStoryboard storyboardWithName:@"Me" bundle:nil] instantiateViewControllerWithIdentifier: @"PIEME"];
