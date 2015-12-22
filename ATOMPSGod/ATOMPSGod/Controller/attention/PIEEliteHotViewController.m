@@ -6,7 +6,7 @@
 //  Copyright © 2015年 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIEEliteHotReplyViewController.h"
+#import "PIEEliteHotViewController.h"
 #import "PIEActionSheet_PS.h"
 #import "PIEShareView.h"
 #import "PIEEliteViewController.h"
@@ -28,7 +28,7 @@
 #import "PIECellIconStatusChangedNotificationKey.h"
 
 /* Variables */
-@interface PIEEliteHotReplyViewController ()
+@interface PIEEliteHotViewController ()
 
 @property (nonatomic, strong) PIERefreshTableView *tableHot;
 
@@ -59,23 +59,23 @@
 @end
 
 /* Protocols */
-@interface PIEEliteHotReplyViewController (TableView)
+@interface PIEEliteHotViewController (TableView)
 <UITableViewDelegate,UITableViewDataSource>
 @end
 
-@interface PIEEliteHotReplyViewController (RefreshBaseTableView)
+@interface PIEEliteHotViewController (RefreshBaseTableView)
 <PWRefreshBaseTableViewDelegate>
 @end
 
-@interface PIEEliteHotReplyViewController (PIEShareView)
+@interface PIEEliteHotViewController (PIEShareView)
 <PIEShareViewDelegate>
 @end
 
-@interface PIEEliteHotReplyViewController (SwipeView)
+@interface PIEEliteHotViewController (SwipeView)
 <SwipeViewDelegate,SwipeViewDataSource>
 @end
 
-@interface PIEEliteHotReplyViewController (DZNEmptyDataSet)
+@interface PIEEliteHotViewController (DZNEmptyDataSet)
 <DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @end
 
@@ -83,7 +83,7 @@
 //<JGActionSheetDelegate>
 //@end
 
-@implementation PIEEliteHotReplyViewController
+@implementation PIEEliteHotViewController
 
 static  NSString* hotReplyIndentifier = @"PIEEliteHotReplyTableViewCell";
 static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
@@ -126,7 +126,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 }
 
 -(void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_Elite" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_Elite_Hot" object:nil];
     
 
     
@@ -158,7 +158,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 #pragma mark - Notification setup
 - (void)setupNotificationObserver
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_Elite" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_Elite_Hot" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(collectedIconStatusDidChanged:)
@@ -170,10 +170,10 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
                                                  name:PIESharedIconStatusChangedNotification
                                                object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateLikedStatus:)
-                                                 name:PIELikedIconStatusChangedNotification
-                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(updateLikedStatus:)
+//                                                 name:PIELikedIconStatusChangedNotification
+//                                               object:nil];
 }
 
 #pragma mark - UI components setup
@@ -667,22 +667,22 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     
 }
 
-- (void)updateLikedStatus:(NSNotification *)notification
-{
-    // 严格按照通知传来的值来刷新UI状态，可免去不少麻烦；
-    BOOL isLiked = notification.userInfo[PIELikedIconIsLikedKey];
-//    _headerView_reply.likeButton.selected = isLiked;
-    
-    // BUG AWARE!
-    // 这里不知道怎么判断pageViewModel的类型（eliteFollow?eliteHot?Ask?Reply? 这四个枚举值又不可以用"||"叠加,只能居其一）
-    // 所以有个Pre-Assumption: 带着“点赞”按钮的cell，类型只能是reply(只能点赞其他人的帮P）
-    // 假如将来需求有变，这里可能会出现BAD_ACCESS_EXEC的崩溃错误。
-    // 刷新UI
-    /* 其他人的帮P */
-    PIEEliteHotReplyTableViewCell *cell = [_tableHot dequeueReusableCellWithIdentifier:hotReplyIndentifier
-                                                                          forIndexPath:_selectedIndexPath_hot];
-    cell.likeView.selected = isLiked;
-}
+//- (void)updateLikedStatus:(NSNotification *)notification
+//{
+//    // 严格按照通知传来的值来刷新UI状态，可免去不少麻烦；
+//    BOOL isLiked = notification.userInfo[PIELikedIconIsLikedKey];
+////    _headerView_reply.likeButton.selected = isLiked;
+//    
+//    // BUG AWARE!
+//    // 这里不知道怎么判断pageViewModel的类型（eliteFollow?eliteHot?Ask?Reply? 这四个枚举值又不可以用"||"叠加,只能居其一）
+//    // 所以有个Pre-Assumption: 带着“点赞”按钮的cell，类型只能是reply(只能点赞其他人的帮P）
+//    // 假如将来需求有变，这里可能会出现BAD_ACCESS_EXEC的崩溃错误。
+//    // 刷新UI
+//    /* 其他人的帮P */
+//    PIEEliteHotReplyTableViewCell *cell = [_tableHot dequeueReusableCellWithIdentifier:hotReplyIndentifier
+//                                                                          forIndexPath:_selectedIndexPath_hot];
+//    cell.likeView.selected = isLiked;
+//}
 
 #pragma mark - target-actions
 /**

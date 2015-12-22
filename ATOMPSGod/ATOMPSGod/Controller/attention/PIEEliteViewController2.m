@@ -11,8 +11,8 @@
 
 #import "PIESearchViewController.h"
 
-#import "PIEEliteHotReplyViewController.h"
-#import "PIEEliteFollowReplyViewController.h"
+#import "PIEEliteHotViewController.h"
+#import "PIEEliteFollowViewController.h"
 
 
 /* Variables */
@@ -65,6 +65,7 @@
     // add view controllers as child view controllers
     [self configureViewControllers];
     
+    [self setupNotifications];
     
     
     // fetch the initial dat
@@ -79,6 +80,8 @@
 }
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_Elite" object:nil];
+
     // remove child view controllers
     for (int i = 0; i < self.eliteViewControllers.count ; i++) {
         UIViewController *vc = self.eliteViewControllers[i];
@@ -98,11 +101,11 @@
 //    [self.eliteViewControllers addObject:vc1];
 //    [self.eliteViewControllers addObject:vc2];
     
-    PIEEliteHotReplyViewController *hotReplyViewController =
-    [[PIEEliteHotReplyViewController alloc] init];
+    PIEEliteHotViewController *hotReplyViewController =
+    [[PIEEliteHotViewController alloc] init];
     
-    PIEEliteFollowReplyViewController *followReplyViewController =
-    [[PIEEliteFollowReplyViewController alloc] init];
+    PIEEliteFollowViewController *followReplyViewController =
+    [[PIEEliteFollowViewController alloc] init];
     
     [self.eliteViewControllers addObject:hotReplyViewController];
     [self.eliteViewControllers addObject:followReplyViewController];
@@ -125,20 +128,32 @@
     }
 }
 
+- (void)setupNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_Elite" object:nil];
+    
+}
+
+- (void)refreshHeader {
+    if (self.segmentedControl.selectedSegmentIndex == 0) {
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"RefreshNavigation_Elite_Hot" object:nil];
+    } else if (self.segmentedControl.selectedSegmentIndex == 1) {
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"RefreshNavigation_Elite_Follow" object:nil];
+    }
+}
 #pragma mark - <UIScrollViewDelegate>
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
         int currentPage = (scrollView.contentOffset.x + CGWidth(scrollView.frame) * 0.1) / CGWidth(scrollView.frame);
         if (currentPage == 0) {
             [self.segmentedControl setSelectedSegmentIndex:0 animated:YES];
 //            [self getSourceIfEmpty_hot:nil];
-            PIEEliteHotReplyViewController *controller = (PIEEliteHotReplyViewController *)_eliteViewControllers[0];
+            PIEEliteHotViewController *controller = (PIEEliteHotViewController *)_eliteViewControllers[0];
             [controller getSourceIfEmpty_hot:nil];
             
         } else if (currentPage == 1) {
             [self.segmentedControl setSelectedSegmentIndex:1 animated:YES];
 //            [self getSourceIfEmpty_follow:nil];
-            PIEEliteFollowReplyViewController *controller =
-            (PIEEliteFollowReplyViewController *)_eliteViewControllers[1];
+            PIEEliteFollowViewController *controller =
+            (PIEEliteFollowViewController *)_eliteViewControllers[1];
             [controller getSourceIfEmpty_follow:nil];
         }
 }
@@ -180,8 +195,8 @@
         }];
         
         // start loading data for the first time.
-        PIEEliteFollowReplyViewController *controller =
-        (PIEEliteFollowReplyViewController *)_eliteViewControllers[1];
+        PIEEliteFollowViewController *controller =
+        (PIEEliteFollowViewController *)_eliteViewControllers[1];
         [controller getSourceIfEmpty_follow:nil];
         
     } else {
@@ -190,8 +205,8 @@
         }];
         
         // start loading data for the first time.
-        PIEEliteHotReplyViewController *controller =
-        (PIEEliteHotReplyViewController *)_eliteViewControllers[0];
+        PIEEliteHotViewController *controller =
+        (PIEEliteHotViewController *)_eliteViewControllers[0];
         [controller getSourceIfEmpty_banner];
         [controller getSourceIfEmpty_hot:nil];
     }
