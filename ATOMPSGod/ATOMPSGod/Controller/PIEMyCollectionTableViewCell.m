@@ -47,10 +47,14 @@
         _originView.image = [UIImage imageNamed:@"pie_origin"];
     }
     else if (vm.type == PIEPageTypeReply) {
-        _likeView.hidden = NO;
-        _likeCountLabel.hidden = NO;
-        _likeCountLabel.text = vm.likeCount;
-        _originView.image = [UIImage imageNamed:@"pie_reply"];
+        
+        // (需求) 我的个人主页，去掉“求P”，留下“作品”&“收藏”，收藏去掉“赞数”
+        //        _likeView.hidden = NO;
+//        _likeCountLabel.hidden = NO;
+        _likeView.hidden       = YES;
+        _likeCountLabel.hidden = YES;
+        _likeCountLabel.text   = vm.likeCount;
+        _originView.image      = [UIImage imageNamed:@"pie_reply"];
     }
     
     [_avatarView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL]placeholderImage:[UIImage imageNamed:@"avatar_default"]];
