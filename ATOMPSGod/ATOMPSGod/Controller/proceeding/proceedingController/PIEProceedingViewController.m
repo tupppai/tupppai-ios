@@ -139,7 +139,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
     [MobClick endLogPageView:@"离开进行中"];
 }
 
-#pragma mark - Refreshing methods
+#pragma mark - initial Refreshing methods
 - (void)getSourceIfEmpty_ask {
     if (_sourceAsk.count <= 0 || _isfirstLoadingAsk) {
         [self.sv.askTableView.mj_header beginRefreshing];
@@ -182,6 +182,8 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
 //    [self configDoneCollectionView];
     [self setupGestures];
 }
+
+// 函数命名错误：askTableView是一个tableView，不是collectionView
 - (void)configAskCollectionView {
     _sv.askTableView.dataSource           = self;
     _sv.askTableView.delegate             = self;
@@ -364,6 +366,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
 
 #pragma mark - <UIScrollViewDelegate>
 
+/** 控制segmentedControl上面的按钮变化 */
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (scrollView == _sv) {
         int currentPage = (scrollView.contentOffset.x + CGWidth(scrollView.frame) * 0.1) / CGWidth(scrollView.frame);
@@ -412,7 +415,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
 
 #pragma mark - segue methods
 
-//跳到求p页面
+//跳到求p页面(PIEProceedingViewController2的工作)
 - (void)navToToHelp {
     [_sv toggleWithType:PIEProceedingTypeToHelp];
     [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
