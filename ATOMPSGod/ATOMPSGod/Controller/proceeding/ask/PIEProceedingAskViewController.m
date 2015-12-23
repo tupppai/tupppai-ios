@@ -73,7 +73,9 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    [self configData];
     
+    [self configAskTableView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -94,6 +96,8 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
 
 
 - (void)configAskTableView {
+    
+    _askTableView = [[PIERefreshTableView alloc] init];
     _askTableView.dataSource           = self;
     _askTableView.delegate             = self;
     _askTableView.psDelegate           = self;
@@ -104,6 +108,14 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
     
     UINib* nib2 = [UINib nibWithNibName:@"PIEProceedingAskTableViewCell_NoGap" bundle:nil];
     [_askTableView registerNib:nib2 forCellReuseIdentifier:PIEProceedingAskTableViewCell_NoGapIdentifier];
+    
+    [self.view addSubview:_askTableView];
+    
+    [_askTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
+    
+    
     
 }
 

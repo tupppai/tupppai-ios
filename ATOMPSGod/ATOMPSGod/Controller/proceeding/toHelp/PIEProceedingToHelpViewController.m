@@ -77,6 +77,9 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self configData];
+    
+    [self configToHelpTableView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -96,6 +99,9 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
 }
 
 - (void)configToHelpTableView {
+    
+    _toHelpTableView = [[PIERefreshTableView alloc] init];
+
     _toHelpTableView.dataSource           = self;
     _toHelpTableView.delegate             = self;
     _toHelpTableView.psDelegate           = self;
@@ -109,6 +115,12 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     
     UINib* nib = [UINib nibWithNibName:@"PIEProceedingToHelpTableViewCell" bundle:nil];
     [_toHelpTableView registerNib:nib forCellReuseIdentifier:PIEProceedingToHelpTableViewCellIdentifier];
+    
+    
+    [self.view addSubview:_toHelpTableView];
+    [_toHelpTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
 }
 
 #pragma mark - Gesture events

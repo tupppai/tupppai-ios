@@ -10,6 +10,9 @@
 #import "HMSegmentedControl.h"
 #import "PIEProceedingTestVC1.h"
 #import "PIEProceedingTestVC2.h"
+#import "PIEProceedingToHelpViewController.h"
+#import "PIEProceedingAskViewController.h"
+
 
 /* Variables */
 @interface PIEProceedingViewController2 ()
@@ -80,12 +83,12 @@ typedef NS_ENUM(NSUInteger, PIEProceedingControllerType) {
 - (void)setupViewControllers
 {
     // create view controllers and add them to array
-    PIEProceedingTestVC1 *vc1 = [[PIEProceedingTestVC1 alloc] init];
-    PIEProceedingTestVC2 *vc2 = [[PIEProceedingTestVC2 alloc] init];
+
+    PIEProceedingAskViewController *askViewController       = [PIEProceedingAskViewController new];
+    PIEProceedingToHelpViewController *toHelpViewController = [PIEProceedingToHelpViewController new];
     
-    [self.proceedingViewControllers addObject:vc1];
-    [self.proceedingViewControllers addObject:vc2];
-    
+    [self.proceedingViewControllers addObject:askViewController];
+    [self.proceedingViewControllers addObject:toHelpViewController];
 }
 
 - (void)configureViewControllers
