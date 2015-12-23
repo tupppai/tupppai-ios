@@ -60,6 +60,8 @@ typedef NS_ENUM(NSInteger, PIEPageType) {
 @property (nonatomic, strong) NSArray *thumbEntityArray;
 @property (nonatomic, strong) NSArray *hotCommentEntityArray;
 
+
+
 - (instancetype)initWithPageEntity:(PIEPageEntity *)entity ;
 
 

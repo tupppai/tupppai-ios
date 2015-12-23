@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -17,7 +17,6 @@
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="T6T-1x-ryS">
                         <rect key="frame" x="8" y="6" width="25" height="25"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="25" id="Cjr-zj-vJO"/>
                             <constraint firstAttribute="height" constant="25" id="acr-tq-XY9"/>
@@ -25,13 +24,11 @@
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="245" translatesAutoresizingMaskIntoConstraints="NO" id="5JV-PE-0Yh">
                         <rect key="frame" x="37" y="18" width="245" height="0.0"/>
-                        <animations/>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OZP-Ga-yYx">
                         <rect key="frame" x="0.0" y="37" width="292" height="251"/>
-                        <animations/>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ErX-Hn-nxd">
                         <rect key="frame" x="0.0" y="288" width="292" height="40"/>
@@ -44,7 +41,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                             </button>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="6Vp-IZ-kTq"/>
@@ -55,10 +51,8 @@
                         </constraints>
                     </view>
                 </subviews>
-                <animations/>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
-            <animations/>
             <constraints>
                 <constraint firstItem="T6T-1x-ryS" firstAttribute="top" secondItem="Hux-uY-nfQ" secondAttribute="top" constant="6" id="34E-QU-kWM"/>
                 <constraint firstItem="5JV-PE-0Yh" firstAttribute="leading" secondItem="T6T-1x-ryS" secondAttribute="trailing" constant="4" id="Ij2-Yb-P6b"/>
