@@ -19,11 +19,11 @@
     _imageView.clipsToBounds = YES;
     _imageView.contentMode = UIViewContentModeScaleAspectFill;
     _likeButton.userInteractionEnabled = NO;
-    [_likeButton setTitleColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.6]
+    [_likeButton setTitleColor:[UIColor colorWithHex:0x999999]
                       forState:UIControlStateNormal];
-    [_likeButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 6, 0, 0)];
+    [_likeButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 7, 0, 0)];
     [_likeButton setContentEdgeInsets:UIEdgeInsetsMake(0, 30, 0, 0)];
-    [_likeButton setImage:[UIImage imageNamed:@"pie_myCollection_like"]
+    [_likeButton setImage:[UIImage imageNamed:@"sharpCornerLike"]
                  forState:UIControlStateNormal];
 
     
