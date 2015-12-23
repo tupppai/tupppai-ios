@@ -120,6 +120,12 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
     [self createNavBar];
     [self configSubviews];
     [self getSourceIfEmpty_ask];
+    
+    
+    /*
+        Ready to be refactored!
+     
+     */
 }
 
 - (void)viewWillAppear:(BOOL)animated
