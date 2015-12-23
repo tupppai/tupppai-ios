@@ -50,8 +50,14 @@
         _button_avatar.imageView.contentMode = UIViewContentModeScaleAspectFill;
         _button_avatar.layer.cornerRadius = _button_avatar.frame.size.width/2;
         _button_avatar.clipsToBounds = YES;
-        _pageButton_comment.imageView.image = [UIImage imageNamed:@"hot_comment"];
-        _pageButton_share.imageView.image   = [UIImage imageNamed:@"hot_share"];
+        
+//        _pageButton_comment.imageView.image = [UIImage imageNamed:@"hot_comment"];
+//        _pageButton_share.imageView.image   = [UIImage imageNamed:@"hot_share"];
+        
+        /* (新需求：界面微调https://hk.tower.im/projects/4f243f767d914b289ae0b91ef393305f/todos/7c9c0562f5864aa2a2e7e58ed9db9d7d/）
+         */
+        _pageButton_comment.imageView.image = [UIImage imageNamed:@"pieSquaredCommentIcon"];
+        _pageButton_share.imageView.image   = [UIImage imageNamed:@"pieSquaredShareIcon"];
         
         _button_name.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         _label_time.textAlignment = NSTextAlignmentRight;
