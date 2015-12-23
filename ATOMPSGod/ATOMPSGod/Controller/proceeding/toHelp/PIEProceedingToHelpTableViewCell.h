@@ -18,5 +18,13 @@
 @property (weak, nonatomic) IBOutlet UIImageView *downloadView;
 @property (weak, nonatomic) IBOutlet UIImageView *uploadView;
 @property (weak, nonatomic) IBOutlet PIETextView_linkDetection *contentTextView;
+
+
+// (新需求）：“进行中”添加频道信息
+@property (weak, nonatomic) IBOutlet UILabel *categoryNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *updateTimeLabel;
+
+
+
 - (void)injectSource:(PIEPageVM*)vm;
 @end

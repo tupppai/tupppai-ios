@@ -271,9 +271,9 @@
     // Array to keep track of controllers in page menu
     
     NSMutableArray *controllerArray = [NSMutableArray array];
-    PIEMyAskViewController *controller3 = [PIEMyAskViewController new];
-    controller3.title = @"求P";
-    [controllerArray addObject:controller3];
+//    PIEMyAskViewController *controller3 = [PIEMyAskViewController new];
+//    controller3.title = @"求P";
+//    [controllerArray addObject:controller3];
     
     PIEMyReplyViewController *controller = [PIEMyReplyViewController new];
     controller.title = @"作品";

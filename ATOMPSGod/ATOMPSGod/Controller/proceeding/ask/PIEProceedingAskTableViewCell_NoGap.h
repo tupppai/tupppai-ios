@@ -25,5 +25,11 @@
 @property (weak, nonatomic) IBOutlet PIEImageView *originView2;
 
 
+// (新需求)：“进行中”的cell添加频道信息
+@property (weak, nonatomic) IBOutlet UILabel *categoryNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *uploadTimeLabel;
+
+
+
 - (void)injectSource:(NSArray*)array;
 @end
