@@ -24,7 +24,7 @@
              @"totalPraiseNumber" : @"up_count",
              @"totalCommentNumber" : @"comment_count",
              @"totalShareNumber" : @"share_count",
-             @"totalWXShareNumber" : @"weixin_share_count",
+//             @"totalWXShareNumber" : @"weixin_share_count",
              @"totalWorkNumber" : @"reply_count",
              @"collectCount" : @"collect_count",
              @"imageWidth" : @"image_width",
@@ -35,8 +35,9 @@
              @"thumbEntityArray":@"ask_uploads",
              @"hotCommentEntityArray":@"hot_comments",
              @"followed":@"is_follow",
-             @"comment" : @"content",
+//             @"comment" : @"content",
              @"isMyFan" : @"is_fan",
+             @"imageRatio":@"image_ratio",
              };
 }
 
@@ -54,11 +55,11 @@
              @"totalPraiseNumber" : @"totalPraiseNumber",
              @"totalCommentNumber" : @"totalCommentNumber",
              @"totalShareNumber" : @"totalShareNumber",
-             @"totalWXShareNumber" : @"totalWXShareNumber",
+//             @"totalWXShareNumber" : @"totalWXShareNumber",
              @"totalWorkNumber" : @"totalWorkNumber",
              @"imageWidth" : @"imageWidth",
              @"imageHeight" : @"imageHeight",
-             @"homePageType":  @"homePageType",
+//             @"homePageType":  @"homePageType",
              @"liked" :@"liked",
              @"collected":@"collected",
              @"type":@"type",
