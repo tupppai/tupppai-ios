@@ -87,7 +87,6 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
     
     _isfirstLoadingAsk      = YES;
     
-    
     _currentIndex_MyAsk     = 1;
     
     _sourceAsk              = [NSMutableArray<NSMutableArray *> new];

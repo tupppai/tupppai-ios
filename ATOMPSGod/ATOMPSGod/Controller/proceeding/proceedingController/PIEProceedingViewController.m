@@ -111,6 +111,9 @@ static NSString *PIEProceedingAskTableViewCell_NoGapIdentifier = @"PIEProceeding
 static NSString *PIEProceedingAskTableViewCellIdentifier =
 @"PIEProceedingAskTableViewCell";
 
+static NSString *PIEProceedingToHelpTableViewCellIdentifier =
+@"PIEProceedingToHelpTableViewCell";
+
 #pragma mark - UI life cycles
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -219,7 +222,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
     _sv.toHelpTableView.separatorColor       = [UIColor colorWithHex:0xd8d8d8 andAlpha:1.0];
 
     UINib* nib = [UINib nibWithNibName:@"PIEProceedingToHelpTableViewCell" bundle:nil];
-    [_sv.toHelpTableView registerNib:nib forCellReuseIdentifier:@"PIEProceedingToHelpTableViewCell"];
+    [_sv.toHelpTableView registerNib:nib forCellReuseIdentifier:PIEProceedingToHelpTableViewCellIdentifier];
 }
 
 #pragma mark - Gesture events
@@ -517,7 +520,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
         }
     }
     else if (tableView == _sv.toHelpTableView) {
-        PIEProceedingToHelpTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIEProceedingToHelpTableViewCell"];
+        PIEProceedingToHelpTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:PIEProceedingToHelpTableViewCellIdentifier];
         [cell injectSource:[_sourceToHelp objectAtIndex:indexPath.row]];
         return cell;
     }
@@ -797,7 +800,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
 -(void)tapShare7 {
     [self.shareView dismiss];
     if (_sv.type == PIEProceedingTypeToHelp) {
-        PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath_ask.row];
+        PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath_toHelp.row];
         [self deleteOneToHelp:_selectedIndexPath_toHelp ID:vm.ID];
     }
 }
