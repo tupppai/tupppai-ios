@@ -158,11 +158,13 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="avatarView" destination="sYa-tU-P7O" id="WO9-H6-WCj"/>
+                <outlet property="categoryNameLabel" destination="HgW-a3-LCI" id="3ca-ju-YEw"/>
                 <outlet property="contentTextView" destination="Yct-mv-EsS" id="cYz-OK-92V"/>
                 <outlet property="downloadView" destination="Lbh-Lf-Jft" id="HVW-bt-D3K"/>
                 <outlet property="nameLabel" destination="BR1-nB-eCk" id="Gx0-sc-Fhg"/>
                 <outlet property="theImageView" destination="ndz-zu-xAp" id="aos-ze-DU6"/>
                 <outlet property="timeLabel" destination="F8M-lF-NuA" id="5km-D1-7kB"/>
+                <outlet property="updateTimeLabel" destination="4LA-KG-KOX" id="FNr-EH-Nfd"/>
                 <outlet property="uploadView" destination="dJb-NP-nLF" id="Hll-ns-jEd"/>
             </connections>
             <point key="canvasLocation" x="331" y="283.5"/>

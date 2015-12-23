@@ -212,6 +212,7 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="allWorkDescLabel" destination="8sL-ek-knS" id="XZQ-aA-jDZ"/>
+                <outlet property="categoryNameLabel" destination="t32-5m-Gim" id="e6h-xB-dWk"/>
                 <outlet property="contentLabel" destination="zIg-s2-acb" id="1Sr-zB-uVS"/>
                 <outlet property="contentTextField" destination="anF-uE-APk" id="TQ3-Eq-ucU"/>
                 <outlet property="editButton" destination="hhD-JV-ltv" id="dUo-Xz-stw"/>
@@ -219,6 +220,7 @@
                 <outlet property="originView2" destination="dLB-ND-Est" id="MFU-4C-euH"/>
                 <outlet property="swipeView" destination="vQZ-tg-eG2" id="smD-aN-iO6"/>
                 <outlet property="timeLabel" destination="PwP-Zo-KXU" id="CGD-P1-Hf8"/>
+                <outlet property="uploadTimeLabel" destination="B1p-Gj-qzE" id="dD0-cN-JTX"/>
             </connections>
             <point key="canvasLocation" x="291" y="355.5"/>
         </tableViewCell>
