@@ -16,15 +16,11 @@
  */
 @property (nonatomic, assign) NSInteger ID;
 @property (nonatomic, assign) NSInteger askID;
-@property (nonatomic, assign) bool liked;
-@property (nonatomic, assign) bool collected;
-@property (nonatomic, assign) bool followed;
-@property (nonatomic, assign) bool isMyFan;
+@property (nonatomic, assign) BOOL liked;
+@property (nonatomic, assign) BOOL collected;
+@property (nonatomic, assign) BOOL followed;
+@property (nonatomic, assign) BOOL isMyFan;
 
-/**
- *  类型：hot ,recent
- */
-//@property (nonatomic, copy) NSString *homePageType;
 /**
  *  求P，作品：PIEPageTypeAsk ,PIEPageTypeReply
  */
@@ -63,46 +59,17 @@
  *  总分享数
  */
 @property (nonatomic, assign) NSInteger totalShareNumber;
-/**
- *  总微信分享数
- */
-@property (nonatomic, assign) NSInteger totalWXShareNumber;
-/**
- *  总被P数
- */
+
 @property (nonatomic, assign) NSInteger collectCount;
 
 @property (nonatomic, assign) NSInteger totalWorkNumber;
 @property (nonatomic, assign) CGFloat imageWidth;
 @property (nonatomic, assign) CGFloat imageHeight;
+@property (nonatomic, assign) CGFloat imageRatio;
 
 
 @property (nonatomic, copy) NSArray *thumbEntityArray;
 @property (nonatomic, copy) NSArray *hotCommentEntityArray;
-@property (nonatomic, copy) NSString *comment;
-
-/**
- *  作品的标签数组
- */
-//@property (nonatomic, strong) NSMutableArray *tipLabelArray;
-/**
- *  回复人数组
- */
-//@property (nonatomic, strong) NSMutableArray *replierArray;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

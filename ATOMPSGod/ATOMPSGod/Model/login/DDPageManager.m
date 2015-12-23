@@ -70,7 +70,7 @@
             PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:dic error:NULL];
             entity.uploadTime = [[dic objectForKey:@"comment_time"]integerValue];
             PIEPageVM* vm = [[PIEPageVM alloc]initWithPageEntity:entity];
-            vm.content = entity.comment;
+            vm.content = [dic objectForKey:@"content"];
             [resultArray addObject:vm];
         }
         if (block) {
