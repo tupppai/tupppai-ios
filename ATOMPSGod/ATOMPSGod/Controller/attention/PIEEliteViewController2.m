@@ -8,12 +8,9 @@
 
 #import "PIEEliteViewController2.h"
 #import "HMSegmentedControl.h"
-
 #import "PIESearchViewController.h"
-
 #import "PIEEliteHotReplyViewController.h"
 #import "PIEEliteFollowReplyViewController.h"
-
 
 /* Variables */
 @interface PIEEliteViewController2 ()
@@ -67,7 +64,7 @@
     
     
     
-    // fetch the initial dat
+    // fetch the initial data
     
 }
 

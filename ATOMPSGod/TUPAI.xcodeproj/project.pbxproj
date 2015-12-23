@@ -170,6 +170,8 @@
 		90EC3D5C1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC3D5B1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m */; };
 		90EC3D5F1C2A78E20085A7BE /* PIEProceedingAskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC3D5E1C2A78E20085A7BE /* PIEProceedingAskViewController.m */; };
 		90EC3D621C2A79030085A7BE /* PIEProceedingViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC3D611C2A79030085A7BE /* PIEProceedingViewController2.m */; };
+		90EC3D651C2ABABE0085A7BE /* PIEProceedingTestVC1.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC3D641C2ABABE0085A7BE /* PIEProceedingTestVC1.m */; };
+		90EC3D681C2ABACC0085A7BE /* PIEProceedingTestVC2.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC3D671C2ABACC0085A7BE /* PIEProceedingTestVC2.m */; };
 		90FA11701C1FDB8900D8B602 /* DeviceList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 90FA116D1C1FDB8900D8B602 /* DeviceList.plist */; };
 		90FA11711C1FDB8900D8B602 /* DeviceUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FA116F1C1FDB8900D8B602 /* DeviceUtil.m */; };
 		E900919D1B71E04E004623E4 /* DDInputAuthcodePwdFPVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E900919C1B71E04E004623E4 /* DDInputAuthcodePwdFPVC.m */; };
@@ -898,6 +900,10 @@
 		90EC3D5E1C2A78E20085A7BE /* PIEProceedingAskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEProceedingAskViewController.m; sourceTree = "<group>"; };
 		90EC3D601C2A79030085A7BE /* PIEProceedingViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEProceedingViewController2.h; sourceTree = "<group>"; };
 		90EC3D611C2A79030085A7BE /* PIEProceedingViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEProceedingViewController2.m; sourceTree = "<group>"; };
+		90EC3D631C2ABABE0085A7BE /* PIEProceedingTestVC1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEProceedingTestVC1.h; sourceTree = "<group>"; };
+		90EC3D641C2ABABE0085A7BE /* PIEProceedingTestVC1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEProceedingTestVC1.m; sourceTree = "<group>"; };
+		90EC3D661C2ABACC0085A7BE /* PIEProceedingTestVC2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEProceedingTestVC2.h; sourceTree = "<group>"; };
+		90EC3D671C2ABACC0085A7BE /* PIEProceedingTestVC2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEProceedingTestVC2.m; sourceTree = "<group>"; };
 		90FA116D1C1FDB8900D8B602 /* DeviceList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DeviceList.plist; sourceTree = "<group>"; };
 		90FA116E1C1FDB8900D8B602 /* DeviceUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceUtil.h; sourceTree = "<group>"; };
 		90FA116F1C1FDB8900D8B602 /* DeviceUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceUtil.m; sourceTree = "<group>"; };
@@ -1728,6 +1734,10 @@
 				0E54C77A1C1E8F5E00F431AC /* PIEProceedingViewController.m */,
 				90EC3D601C2A79030085A7BE /* PIEProceedingViewController2.h */,
 				90EC3D611C2A79030085A7BE /* PIEProceedingViewController2.m */,
+				90EC3D631C2ABABE0085A7BE /* PIEProceedingTestVC1.h */,
+				90EC3D641C2ABABE0085A7BE /* PIEProceedingTestVC1.m */,
+				90EC3D661C2ABACC0085A7BE /* PIEProceedingTestVC2.h */,
+				90EC3D671C2ABACC0085A7BE /* PIEProceedingTestVC2.m */,
 			);
 			path = proceedingController;
 			sourceTree = "<group>";
@@ -4300,6 +4310,7 @@
 				F4F28F251C23AE9B0067F2E4 /* UIButton+WebCache.m in Sources */,
 				3BE1AECC1B9FE9C900CE2303 /* QBCheckmarkView.m in Sources */,
 				5C5DDBCB1AD3D0DC00F4B845 /* DDOtherUserManager.m in Sources */,
+				90EC3D681C2ABACC0085A7BE /* PIEProceedingTestVC2.m in Sources */,
 				F4993CEB1BE5B32C007F9BE4 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				F499E45A1BD0F6A100E5F178 /* PIEEliteFollowAskTableViewCell.m in Sources */,
 				F41BA0C91C0EDCE800979D43 /* MJRefreshAutoNormalFooter.m in Sources */,
@@ -4504,6 +4515,7 @@
 				5C561A8B1AB857870052D4D5 /* NSString+ATOMValidate.m in Sources */,
 				F43930401BE4BD75006C9437 /* MRProgressView.m in Sources */,
 				E93D23871B3FA6FB0081F632 /* DDMySettingsManager.m in Sources */,
+				90EC3D651C2ABABE0085A7BE /* PIEProceedingTestVC1.m in Sources */,
 				F41BA0C81C0EDCE800979D43 /* MJRefreshAutoGifFooter.m in Sources */,
 				E95691B71B22E88300DA84BB /* NSValueTransformer+MTLInversionAdditions.m in Sources */,
 				E95691AE1B22E88300DA84BB /* MTLManagedObjectAdapter.m in Sources */,

@@ -22,6 +22,7 @@
 
 
 #import "PIEEliteViewController2.h"
+#import "PIEProceedingViewController2.h"
 
 
 @interface PIETabBarController ()<UITabBarControllerDelegate>
@@ -140,7 +141,11 @@
 //    PIEEliteViewController *myAttentionViewController = [PIEEliteViewController new];
     // for testing PIEEliteViewController2
     PIEEliteViewController2 *myAttentionViewController = [PIEEliteViewController2 new];
-    PIEProceedingViewController *proceedingViewController = [PIEProceedingViewController new];
+//    PIEProceedingViewController *proceedingViewController = [PIEProceedingViewController new];
+    
+    // for testing dev-refactor-proceedingViewController
+    PIEProceedingViewController2 *proceedingViewController =
+    [PIEProceedingViewController2 new];
     
     PIEMeViewController *aboutMeVC = (PIEMeViewController *)[[UIStoryboard storyboardWithName:@"Me" bundle:nil] instantiateViewControllerWithIdentifier: @"PIEME"];
 
