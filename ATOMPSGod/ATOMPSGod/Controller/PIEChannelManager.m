@@ -20,7 +20,6 @@
                      
                      if (responseObject) {
                          NSMutableArray* retArray = [NSMutableArray new];
-//                         NSDictionary* data       = [responseObject objectForKey:@"data"];
                          NSArray* categories      = [responseObject objectForKey:@"data"];
                          
                          
@@ -84,21 +83,6 @@
                          for (NSDictionary *dict in dataArray) {
                              
                              PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:dict error:NULL];
-                             
-                             /*
-                              TODO: TO-BE-REFACTORED
-                              NSMutableArray<NSDictionary *> -> NSMutableArray<PIEImageEntity *>,
-                              然后再让前者的指针指向后者（是否会出现类型冲突？或者是歧义？）
-                              */
-                             NSMutableArray *thumbArray = [NSMutableArray array];
-                             for (NSDictionary *imageEntityDict in entity.thumbEntityArray) {
-                                 PIEImageEntity *imageEntity =
-                                 [MTLJSONAdapter modelOfClass:[PIEImageEntity class]
-                                           fromJSONDictionary:imageEntityDict
-                                                        error:nil];
-                                 [thumbArray addObject:imageEntity];
-                             }
-                             entity.thumbEntityArray = thumbArray;
                              
                              PIEPageVM *vm = [[PIEPageVM alloc] initWithPageEntity:entity];
                              

@@ -7,6 +7,8 @@
 //
 
 
+#import  "PIEImageEntity.h"
+#import  "PIECommentEntity.h"
 
 @implementation PIEPageEntity
 
@@ -66,7 +68,12 @@
              @"thumbEntityArray":@"thumbEntityArray",
              };
 }
-
++ (NSValueTransformer*)thumbEntityArrayJSONTransformer {
+    return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[PIEImageEntity class]];
+}
++ (NSValueTransformer*)hotCommentEntityArrayJSONTransformer {
+    return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[PIECommentEntity class]];
+}
 + (NSArray *)FMDBPrimaryKeys {
     return @[@"ID"];
 }

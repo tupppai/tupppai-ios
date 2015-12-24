@@ -7,8 +7,8 @@
 //
 
 #import "ATOMBaseModel.h"
-@class PIEEntityUser;
-
+@class PIECommentEntity;
+@class PIEImageEntity;
 @interface PIEPageEntity : ATOMBaseModel <MTLFMDBSerializing>
 
 /**
@@ -68,8 +68,8 @@
 @property (nonatomic, assign) CGFloat imageRatio;
 
 
-@property (nonatomic, copy) NSArray *thumbEntityArray;
-@property (nonatomic, copy) NSArray *hotCommentEntityArray;
+@property (nonatomic, copy) NSArray <PIEImageEntity*>*thumbEntityArray;
+@property (nonatomic, copy) NSArray <PIECommentEntity*>*hotCommentEntityArray;
 
 
 

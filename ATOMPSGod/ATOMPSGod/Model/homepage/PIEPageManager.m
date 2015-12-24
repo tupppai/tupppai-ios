@@ -40,12 +40,6 @@
             NSMutableArray *returnArray = [NSMutableArray array];
             for (int i = 0; i < data.count; i++) {
                 PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
-                NSMutableArray* thumbArray = [NSMutableArray new];
-                for (int i = 0; i<entity.thumbEntityArray.count; i++) {
-                    PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.thumbEntityArray[i] error:NULL];
-                    [thumbArray addObject:entity2];
-                }
-                entity.thumbEntityArray = thumbArray;
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [returnArray addObject:vm];
             }
@@ -65,12 +59,6 @@
             NSMutableArray *returnArray = [NSMutableArray array];
             for (int i = 0; i < data.count; i++) {
                 PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
-                NSMutableArray* thumbArray = [NSMutableArray new];
-                for (int i = 0; i<entity.thumbEntityArray.count; i++) {
-                    PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.thumbEntityArray[i] error:NULL];
-                    [thumbArray addObject:entity2];
-                }
-                entity.thumbEntityArray = thumbArray;
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [returnArray addObject:vm];
             }
@@ -89,14 +77,6 @@
     [DDBaseService GET:param url:@"thread/item" block:^(id responseObject) {
         PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:                    [responseObject objectForKey:@"data"] error:NULL];
         if (entity) {
-            if (entity.type == PIEPageTypeAsk) {
-                NSMutableArray* thumbArray = [NSMutableArray new];
-                for (int i = 0; i<entity.thumbEntityArray.count; i++) {
-                    PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.thumbEntityArray[i] error:NULL];
-                    [thumbArray addObject:entity2];
-                }
-                entity.thumbEntityArray = thumbArray;
-            }
             PIEPageVM* vm = [[PIEPageVM alloc]initWithPageEntity:entity];
             if (block) {
                 block(vm);
