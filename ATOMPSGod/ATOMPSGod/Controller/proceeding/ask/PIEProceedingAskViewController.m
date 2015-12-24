@@ -22,7 +22,8 @@
 
 @property (nonatomic, assign) BOOL isfirstLoadingAsk;
 
-@property (nonatomic, strong) NSMutableArray<NSMutableArray *> *sourceAsk;
+@property (nonatomic, strong)
+NSMutableArray <NSMutableArray<PIEPageVM *> *> *sourceAsk;
 
 @property (nonatomic, assign) NSInteger currentIndex_MyAsk;
 
@@ -91,7 +92,8 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
     
     _currentIndex_MyAsk     = 1;
     
-    _sourceAsk              = [NSMutableArray<NSMutableArray *> new];
+    _sourceAsk              =
+    [NSMutableArray<NSMutableArray<PIEPageVM *> *> new];
 }
 
 
@@ -133,8 +135,13 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
     
     /** BUG AWARE!! 类型错误！_sourceAsk里面是的每个元素，都是包含着PIEPageVM的数组！
         crash everytime the cell is being long-pressed and then sharing.
+        
+        _selectedVM = [_sourceAsk objectAtIndex:indexPath.row];
+    
      */
-    _selectedVM = [_sourceAsk objectAtIndex:indexPath.row];
+    /* Bug fixed! */
+    _selectedVM = [[_sourceAsk objectAtIndex:indexPath.row] firstObject];
+    
     if (indexPath) {
         //点击图片
         [self showShareViewWithToHideDeleteButton:YES];
