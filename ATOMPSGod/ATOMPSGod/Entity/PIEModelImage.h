@@ -8,7 +8,7 @@
 
 #import "ATOMBaseModel.h"
 
-@interface PIEImageEntity : ATOMBaseModel<MTLFMDBSerializing>
+@interface PIEModelImage : ATOMBaseModel<MTLFMDBSerializing>
 @property (nonatomic, assign) NSInteger ID;
 @property (nonatomic, assign) NSInteger height;
 @property (nonatomic, assign) NSInteger width;

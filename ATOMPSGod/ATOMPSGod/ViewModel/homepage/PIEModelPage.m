@@ -31,7 +31,7 @@
     return self;
 }
 
-- (instancetype)initWithPageEntity:(PIEPageEntity *)entity {
+- (instancetype)initWithPageEntity:(PIEModelPage *)entity {
     self = [self init];
     if (self) {
         _ID          = entity.ID;
@@ -53,8 +53,6 @@
         _type                  = entity.type;
         _models_ask      = entity.models_ask;
         _models_comment = entity.models_comment;
-        _isV = entity.isV;
-        _lovedCount = entity.lovedCount;
         
         if (entity.totalPraiseNumber>999999) {
             _likeCount    = kfcMaxNumberString;

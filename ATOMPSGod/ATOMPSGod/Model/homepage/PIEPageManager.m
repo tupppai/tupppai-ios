@@ -14,7 +14,7 @@
 #import "PIEPageDAO.h"
 #import "PIENewScrollView.h"
 //#import "PIEAskImageDao.h"
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 
 
 @interface PIEPageManager ()

@@ -19,7 +19,7 @@
 #import "PIEShareView.h"
 #import "PIEActionSheet_PS.h"
 #import "DDCollectManager.h"
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 #import "JTSImageViewController.h"
 #import "JTSImageInfo.h"
 #import "KVCMutableArray.h"
@@ -816,7 +816,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 //        imageInfo.image = _headerView.imageViewRight.image;
     } else {
         if (_vm.models_ask.count >= 2) {
-            PIEImageEntity* imgEntity = _vm.models_ask[1];
+            PIEModelImage* imgEntity = _vm.models_ask[1];
             imageInfo.imageURL = [NSURL URLWithString:imgEntity.url];
         }
     }

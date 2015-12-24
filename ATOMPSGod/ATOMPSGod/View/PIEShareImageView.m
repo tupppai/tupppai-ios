@@ -7,7 +7,7 @@
 //
 
 #import "PIEShareImageView.h"
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 @interface PIEShareImageView()
 @property (nonatomic,strong) UIView* bottomView;
 @property (nonatomic,assign) NSInteger height;
@@ -123,12 +123,12 @@
             _avatarView.image = image;
             if (vm.type == PIEPageTypeReply) {
                 if (vm.models_ask.count>0) {
-                    PIEImageEntity *entity = nil;
+                    PIEModelImage *entity = nil;
                     id object = [vm.models_ask objectAtIndex:0];
-                    if ([object isKindOfClass:[PIEImageEntity class]]) {
+                    if ([object isKindOfClass:[PIEModelImage class]]) {
                         entity = object;
                     } else if ([object isKindOfClass:[NSDictionary class]]) {
-                        entity = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:object error:NULL];
+                        entity = [MTLJSONAdapter modelOfClass:[PIEModelImage class] fromJSONDictionary:object error:NULL];
                     }
                     [DDService sd_downloadImage:entity.url withBlock:^(UIImage *image) {
                         _imageView_thumb.image = image;

@@ -8,7 +8,7 @@
 
 #import "PIEEliteManager.h"
 #import "PIECommentEntity.h"
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 @implementation PIEEliteManager
 + (void)getMyFollow:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *))block {
     [DDService getFollowPages:param withBlock:^(NSArray *data) {

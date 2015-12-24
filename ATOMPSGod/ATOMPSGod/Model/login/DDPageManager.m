@@ -8,7 +8,7 @@
 
 #import "DDPageManager.h"
 #import "PIEEntityUser.h"
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 //
 
 
@@ -101,10 +101,10 @@
             NSArray* askImageDic = [[returnArray objectAtIndex:i]objectForKey:@"ask_uploads"];
             NSMutableArray* askImageEntities = [NSMutableArray array];
             for (NSDictionary* dic in askImageDic) {
-                PIEImageEntity* ie = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:dic error:NULL];
+                PIEModelImage* ie = [MTLJSONAdapter modelOfClass:[PIEModelImage class] fromJSONDictionary:dic error:NULL];
                 [askImageEntities addObject:ie];
             }
-            for (PIEImageEntity* ie in askImageEntities) {
+            for (PIEModelImage* ie in askImageEntities) {
                 PIEPageEntity *askEntity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:[returnArray objectAtIndex:i] error:NULL];
                 askEntity.imageWidth = ie.width;
                 askEntity.imageHeight = ie.height;

@@ -7,7 +7,7 @@
 //
 
 #import "PIEEliteHotAskTableViewCell.h"
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 #import "PIECommentEntity.h"
 @interface PIEEliteHotAskTableViewCell()
 @property (nonatomic, strong) UIImageView* blurView;

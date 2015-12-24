@@ -7,7 +7,7 @@
 //
 
 #import "PIENewAskCollectionCell.h"
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 @implementation PIENewAskCollectionCell
 
 - (void)awakeFromNib {

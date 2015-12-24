@@ -7,7 +7,7 @@
 //
 
 
-#import  "PIEImageEntity.h"
+#import  "PIEModelImage.h"
 #import  "PIECommentEntity.h"
 #import "PIEModelCatogory.h"
 
@@ -47,19 +47,13 @@
 
 
 + (NSValueTransformer*)models_askJSONTransformer {
-    return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[PIEImageEntity class]];
+    return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[PIEModelImage class]];
 }
 + (NSValueTransformer*)models_commentJSONTransformer {
     return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[PIECommentEntity class]];
 }
 + (NSValueTransformer*)models_categoryJSONTransformer {
     return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[PIEModelCatogory class]];
-}
-+ (NSValueTransformer *)typeJSONTransformer {
-    return [NSValueTransformer mtl_valueMappingTransformerWithDictionary:@{
-                                                                           @1: @(PIEPageTypeAsk),
-                                                                           @2: @(PIEPageTypeReply)
-                                                                           }];
 }
 
 @end
