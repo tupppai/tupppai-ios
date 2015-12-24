@@ -69,7 +69,7 @@
 
 
 @property (nonatomic, copy) NSArray <PIEImageEntity*>*thumbEntityArray;
-@property (nonatomic, copy) NSArray <PIECommentEntity*>*hotCommentEntityArray;
+@property (nonatomic, copy) NSArray <PIECommentEntity*>*models_comment;
 
 
 

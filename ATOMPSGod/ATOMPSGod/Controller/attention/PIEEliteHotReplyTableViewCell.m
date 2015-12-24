@@ -123,21 +123,21 @@
                                 ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
                             }];
     
-    if (viewModel.hotCommentEntityArray.count > 0) {
-        PIECommentEntity* commentEntity1  = viewModel.hotCommentEntityArray[0];
+    if (viewModel.models_comment.count > 0) {
+        PIECommentEntity* commentEntity1  = viewModel.models_comment[0];
         _commentLabel1.text = [NSString stringWithFormat:@"%@: %@",commentEntity1.nickname,commentEntity1.content];
        
         [_commentLabel2 mas_updateConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(_gapView.mas_top).with.offset(-25).with.priorityHigh();
         }];
         
-        if (viewModel.hotCommentEntityArray.count > 1) {
+        if (viewModel.models_comment.count > 1) {
             
             [_commentLabel1 mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.bottom.equalTo(_commentLabel2.mas_top).with.offset(-10).with.priorityHigh();
             }];
             
-            PIECommentEntity* commentEntity2  = viewModel.hotCommentEntityArray[1];
+            PIECommentEntity* commentEntity2  = viewModel.models_comment[1];
             _commentLabel2.text = [NSString stringWithFormat:@"%@: %@",commentEntity2.nickname,commentEntity2.content];
         }
     }

@@ -35,7 +35,7 @@
              @"collected" : @"collected",
              @"type" : @"type",
              @"thumbEntityArray":@"ask_uploads",
-             @"hotCommentEntityArray":@"hot_comments",
+             @"models_comment":@"hot_comments",
              @"followed":@"is_follow",
 //             @"comment" : @"content",
              @"isMyFan" : @"is_fan",
@@ -71,7 +71,7 @@
 + (NSValueTransformer*)thumbEntityArrayJSONTransformer {
     return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[PIEImageEntity class]];
 }
-+ (NSValueTransformer*)hotCommentEntityArrayJSONTransformer {
++ (NSValueTransformer*)models_commentJSONTransformer {
     return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[PIECommentEntity class]];
 }
 + (NSArray *)FMDBPrimaryKeys {

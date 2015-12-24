@@ -52,7 +52,7 @@
         _content               = entity.userDescription;
         _type                  = entity.type;
         _thumbEntityArray      = entity.thumbEntityArray;
-        _hotCommentEntityArray = entity.hotCommentEntityArray;
+        _models_comment = entity.models_comment;
         
         if (entity.totalPraiseNumber>999999) {
             _likeCount    = kfcMaxNumberString;
