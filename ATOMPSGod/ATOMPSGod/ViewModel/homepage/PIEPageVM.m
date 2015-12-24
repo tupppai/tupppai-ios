@@ -51,7 +51,7 @@
         _publishTime           = [Util formatPublishTime:publishDate];
         _content               = entity.userDescription;
         _type                  = entity.type;
-        _thumbEntityArray      = entity.thumbEntityArray;
+        _models_ask      = entity.models_ask;
         _models_comment = entity.models_comment;
         
         if (entity.totalPraiseNumber>999999) {

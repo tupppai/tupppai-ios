@@ -68,8 +68,8 @@
 @property (nonatomic, assign) CGFloat imageRatio;
 
 
-@property (nonatomic, copy) NSArray <PIEImageEntity*>*thumbEntityArray;
-@property (nonatomic, copy) NSArray <PIECommentEntity*>*models_comment;
+@property (nonatomic, copy) NSArray <PIEImageEntity*>   *models_ask;
+@property (nonatomic, copy) NSArray <PIECommentEntity*> *models_comment;
 
 
 

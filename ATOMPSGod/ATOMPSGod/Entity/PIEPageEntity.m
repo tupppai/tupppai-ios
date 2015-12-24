@@ -34,7 +34,7 @@
              @"liked" :@"uped",
              @"collected" : @"collected",
              @"type" : @"type",
-             @"thumbEntityArray":@"ask_uploads",
+             @"models_ask":@"ask_uploads",
              @"models_comment":@"hot_comments",
              @"followed":@"is_follow",
 //             @"comment" : @"content",
@@ -57,18 +57,16 @@
              @"totalPraiseNumber" : @"totalPraiseNumber",
              @"totalCommentNumber" : @"totalCommentNumber",
              @"totalShareNumber" : @"totalShareNumber",
-//             @"totalWXShareNumber" : @"totalWXShareNumber",
              @"totalWorkNumber" : @"totalWorkNumber",
              @"imageWidth" : @"imageWidth",
              @"imageHeight" : @"imageHeight",
-//             @"homePageType":  @"homePageType",
              @"liked" :@"liked",
              @"collected":@"collected",
              @"type":@"type",
-             @"thumbEntityArray":@"thumbEntityArray",
+             @"models_ask":@"models_ask",
              };
 }
-+ (NSValueTransformer*)thumbEntityArrayJSONTransformer {
++ (NSValueTransformer*)models_askJSONTransformer {
     return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[PIEImageEntity class]];
 }
 + (NSValueTransformer*)models_commentJSONTransformer {

@@ -57,7 +57,7 @@ typedef NS_ENUM(NSInteger, PIEPageType) {
 
 @property (nonatomic, strong) UIImage *image;
 //求p 的图片对象数组
-@property (nonatomic, strong) NSArray *thumbEntityArray;
+@property (nonatomic, strong) NSArray *models_ask;
 @property (nonatomic, strong) NSArray *models_comment;
 
 
