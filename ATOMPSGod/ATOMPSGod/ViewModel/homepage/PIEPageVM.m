@@ -46,13 +46,13 @@
         _imageHeight = entity.imageHeight;
         _followed    = entity.followed;
         _isMyFan        = entity.isMyFan;
-
+        _models_catogory = entity.models_category;
         NSDate *publishDate    = [NSDate dateWithTimeIntervalSince1970:entity.uploadTime];
         _publishTime           = [Util formatPublishTime:publishDate];
         _content               = entity.userDescription;
         _type                  = entity.type;
-        _thumbEntityArray      = entity.thumbEntityArray;
-        _hotCommentEntityArray = entity.hotCommentEntityArray;
+        _models_ask      = entity.models_ask;
+        _models_comment = entity.models_comment;
         
         if (entity.totalPraiseNumber>999999) {
             _likeCount    = kfcMaxNumberString;

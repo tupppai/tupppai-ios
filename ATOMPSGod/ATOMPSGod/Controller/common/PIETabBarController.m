@@ -8,7 +8,6 @@
 
 #import "PIETabBarController.h"
 #import "PIEChannelViewController.h"
-#import "Old_PIEEliteViewController.h"
 #import "DDNavigationController.h"
 #import "DDService.h"
 #import "PIEMeViewController.h"
@@ -19,8 +18,6 @@
 #import "ATOMUserDAO.h"
 #import "PIEUploadManager.h"
 #import "UIImage+Colors.h"
-
-
 #import "PIEEliteViewController.h"
 
 
@@ -137,8 +134,6 @@
 - (void)configureTabBarController {
     
     PIEChannelViewController *channelVc = [PIEChannelViewController new];
-//    PIEEliteViewController *myAttentionViewController = [PIEEliteViewController new];
-    // for testing PIEEliteViewController2
     PIEEliteViewController *myAttentionViewController = [PIEEliteViewController new];
     PIEProceedingViewController *proceedingViewController = [PIEProceedingViewController new];
     

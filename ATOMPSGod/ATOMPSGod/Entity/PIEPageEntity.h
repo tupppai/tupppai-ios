@@ -7,9 +7,19 @@
 //
 
 #import "ATOMBaseModel.h"
-@class PIEEntityUser;
+@class PIECommentEntity;
+@class PIEImageEntity;
+@class PIEModelCatogory;
 
-@interface PIEPageEntity : ATOMBaseModel <MTLFMDBSerializing>
+
+typedef NS_ENUM(NSInteger, PIEPageType) {
+    PIEPageTypeAsk = 1,
+    PIEPageTypeReply,
+};
+
+
+@interface PIEPageEntity : ATOMBaseModel
+//<MTLFMDBSerializing>
 
 /**
  *  自己的ID
@@ -18,19 +28,11 @@
 @property (nonatomic, assign) NSInteger askID;
 @property (nonatomic, assign) BOOL liked;
 @property (nonatomic, assign) BOOL collected;
-@property (nonatomic, assign) BOOL followed;
-@property (nonatomic, assign) BOOL isMyFan;
 
 /**
  *  求P，作品：PIEPageTypeAsk ,PIEPageTypeReply
  */
-@property (nonatomic, assign) NSInteger type;
-/**
- *  求P人 ID
- */
-@property (nonatomic, assign) NSInteger uid;
-@property (nonatomic, copy) NSString *nickname;
-@property (nonatomic, copy) NSString *avatar;
+@property (nonatomic, assign) PIEPageType type;
 /**
  *  作品上传时间
  */
@@ -67,10 +69,18 @@
 @property (nonatomic, assign) CGFloat imageHeight;
 @property (nonatomic, assign) CGFloat imageRatio;
 
+@property (nonatomic, copy) NSArray <PIEImageEntity*>   *models_ask;
+@property (nonatomic, copy) NSArray <PIECommentEntity*> *models_comment;
+@property (nonatomic, copy) NSArray <PIEModelCatogory*> *models_category;
 
-@property (nonatomic, copy) NSArray *thumbEntityArray;
-@property (nonatomic, copy) NSArray *hotCommentEntityArray;
 
-
+//用户属性
+@property (nonatomic, assign) NSInteger uid;
+@property (nonatomic, copy) NSString *nickname;
+@property (nonatomic, copy) NSString *avatar;
+@property (nonatomic, assign) BOOL followed;
+@property (nonatomic, assign) BOOL isMyFan;
+@property (nonatomic, assign) BOOL isV;
+@property (nonatomic, assign) NSInteger lovedCount;
 
 @end

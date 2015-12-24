@@ -40,12 +40,6 @@
             NSMutableArray *returnArray = [NSMutableArray array];
             for (int i = 0; i < data.count; i++) {
                 PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
-                NSMutableArray* thumbArray = [NSMutableArray new];
-                for (int i = 0; i<entity.thumbEntityArray.count; i++) {
-                    PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.thumbEntityArray[i] error:NULL];
-                    [thumbArray addObject:entity2];
-                }
-                entity.thumbEntityArray = thumbArray;
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [returnArray addObject:vm];
             }
@@ -65,12 +59,6 @@
             NSMutableArray *returnArray = [NSMutableArray array];
             for (int i = 0; i < data.count; i++) {
                 PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
-                NSMutableArray* thumbArray = [NSMutableArray new];
-                for (int i = 0; i<entity.thumbEntityArray.count; i++) {
-                    PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.thumbEntityArray[i] error:NULL];
-                    [thumbArray addObject:entity2];
-                }
-                entity.thumbEntityArray = thumbArray;
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [returnArray addObject:vm];
             }
@@ -89,14 +77,6 @@
     [DDBaseService GET:param url:@"thread/item" block:^(id responseObject) {
         PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:                    [responseObject objectForKey:@"data"] error:NULL];
         if (entity) {
-            if (entity.type == PIEPageTypeAsk) {
-                NSMutableArray* thumbArray = [NSMutableArray new];
-                for (int i = 0; i<entity.thumbEntityArray.count; i++) {
-                    PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.thumbEntityArray[i] error:NULL];
-                    [thumbArray addObject:entity2];
-                }
-                entity.thumbEntityArray = thumbArray;
-            }
             PIEPageVM* vm = [[PIEPageVM alloc]initWithPageEntity:entity];
             if (block) {
                 block(vm);
@@ -116,7 +96,7 @@
 //        } else {
 //            [self.homeImageDAO insertHomeImage:homeImage];
 //        }
-//        NSArray *imageEntities = homeImage.thumbEntityArray;
+//        NSArray *imageEntities = homeImage.models_ask;
 //        for ( PIEImageEntity * entity in imageEntities) {
 //            if ([PIEAskImageDao isExist:entity]) {
 //                [PIEAskImageDao update:entity];
@@ -130,7 +110,7 @@
 //- (NSArray *)getHomeImages {
 //    NSArray *array = [self.homeImageDAO selectHomeImages];
 //    for (PIEPageEntity *homeImage in array) {
-//        homeImage.thumbEntityArray = [PIEAskImageDao selectByID:homeImage.ID];
+//        homeImage.models_ask = [PIEAskImageDao selectByID:homeImage.ID];
 //    }
 //    return array;
 //}
@@ -139,7 +119,7 @@
 //    
 ////    NSArray *array = [self.homeImageDAO selectHomeImagesWithHomeType:homeType];
 ////    for (PIEPageEntity *homeImage in array) {
-////        homeImage.thumbEntityArray = [PIEAskImageDao selectByID:homeImage.ID];
+////        homeImage.models_ask = [PIEAskImageDao selectByID:homeImage.ID];
 ////    }
 //    NSArray *array;
 //    return array;

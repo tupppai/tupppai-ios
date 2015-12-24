@@ -14,7 +14,10 @@
 #import "PIEEliteHotViewController.h"
 #import "PIEEliteFollowViewController.h"
 
-
+typedef NS_ENUM(NSInteger, PIEEliteType) {
+    PIEEliteTypeFollow = 1,
+    PIEEliteTypeHot,
+};
 /* Variables */
 @interface PIEEliteViewController ()
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
@@ -183,8 +186,8 @@
 }
 
 #pragma mark - toggle viewController
-- (void)toggleWithType:(PIEPageType)type {
-    if (type == PIEPageTypeEliteFollow) {
+- (void)toggleWithType:(PIEEliteType)type {
+    if (type == PIEEliteTypeFollow) {
         [UIView animateWithDuration:0.3 animations:^{
             self.scrollView.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
         }];
@@ -250,16 +253,16 @@
             
             // toggle view controllers
             if (index == 0) {
-                [weakSelf toggleWithType:PIEPageTypeEliteHot];
-                weakSelf.currentPageType = PIEPageTypeEliteHot;
+                [weakSelf toggleWithType:PIEEliteTypeHot];
+                weakSelf.currentPageType = PIEEliteTypeHot;
                 
                 // refresh HotReply viewController if is first loaded.
                 //                [ws getSourceIfEmpty_hot:nil];
 
             }
             else {
-                [weakSelf toggleWithType:PIEPageTypeEliteFollow];
-                weakSelf.currentPageType = PIEPageTypeEliteFollow;
+                [weakSelf toggleWithType:PIEEliteTypeFollow];
+                weakSelf.currentPageType = PIEEliteTypeFollow;
                 
                 // refresh FollowReply viewController if is first loaded.
                 //                [ws getSourceIfEmpty_follow:nil];
