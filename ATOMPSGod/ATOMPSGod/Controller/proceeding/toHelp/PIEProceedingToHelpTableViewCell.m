@@ -7,7 +7,7 @@
 //
 
 #import "PIEProceedingToHelpTableViewCell.h"
-
+#import "PIEModelCatogory.h"
 @implementation PIEProceedingToHelpTableViewCell
 
 - (void)awakeFromNib {
@@ -25,16 +25,17 @@
 
 //put a needle injecting into cell's ass.
 - (void)injectSource:(PIEPageVM*)vm {
+    
     [_avatarView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
     [_theImageView sd_setImageWithURL:[NSURL URLWithString:vm.imageURL]placeholderImage:[UIImage imageNamed:@"cellHolder"]];
     
     _nameLabel.text = vm.username;
-    _timeLabel.text = vm.publishTime;
+//    _timeLabel.text = vm.publishTime;
     
     _nameLabel.font = [UIFont lightTupaiFontOfSize:11];
-    _timeLabel.font = [UIFont lightTupaiFontOfSize:10];
+//    _timeLabel.font = [UIFont lightTupaiFontOfSize:10];
     _nameLabel.textColor = [UIColor colorWithHex:0x4a4a4a andAlpha:1.0];
-    _timeLabel.textColor = [UIColor colorWithHex:0x4a4a4a andAlpha:1.0];
+//    _timeLabel.textColor = [UIColor colorWithHex:0x4a4a4a andAlpha:1.0];
 
     NSString * htmlString = vm.content;
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init] ;
@@ -46,6 +47,16 @@
     [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0x000000 andAlpha:0.9] range:NSMakeRange(0, attrStr.length)];
     
     _contentTextView.attributedText = attrStr;
+    
+    _updateTimeLabel.text = vm.publishTime;
+
+    if (vm.models_catogory.count>0) {
+        PIEModelCatogory* category = [vm.models_catogory objectAtIndex:0];
+        _categoryNameLabel.text = category.title;
+    } else {
+        _categoryNameLabel.text = @"随意求p区";
+    }
+    
 }
 
 

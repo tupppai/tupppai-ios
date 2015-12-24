@@ -179,6 +179,8 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
 - (void)configAskCollectionView {
     _sv.askTableView.dataSource           = self;
     _sv.askTableView.delegate             = self;
+    _sv.askTableView.estimatedRowHeight = 100;
+    _sv.askTableView.rowHeight = UITableViewAutomaticDimension;
     _sv.askTableView.psDelegate           = self;
     _sv.askTableView.emptyDataSetDelegate = self;
     _sv.askTableView.emptyDataSetSource   = self;
@@ -519,15 +521,15 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
 #pragma mark - <UITableViewDelegate>
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableView == _sv.askTableView) {
-        if (indexPath.row == 0) {
-            return 180-15;
-        } else {
-            return 175;
-        }
-    } else {
+//    if (tableView == _sv.askTableView) {
+//        if (indexPath.row == 0) {
+//            return 180-15;
+//        } else {
+//            return 175;
+//        }
+//    } else {
         return UITableViewAutomaticDimension;
-    }
+//    }
 //    else if (tableView == _sv.toHelpTableView) {
 ////        return [tableView fd_heightForCellWithIdentifier:@"PIEProceedingToHelpTableViewCell"  cacheByIndexPath:indexPath configuration:^(PIEProceedingToHelpTableViewCell *cell) {
 ////            [cell injectSource:[_sourceToHelp objectAtIndex:indexPath.row]];

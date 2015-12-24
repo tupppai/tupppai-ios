@@ -9,7 +9,9 @@
 #import "ATOMBaseModel.h"
 @class PIECommentEntity;
 @class PIEImageEntity;
-@interface PIEPageEntity : ATOMBaseModel <MTLFMDBSerializing>
+@class PIEModelCatogory;
+@interface PIEPageEntity : ATOMBaseModel
+//<MTLFMDBSerializing>
 
 /**
  *  自己的ID
@@ -67,10 +69,8 @@
 @property (nonatomic, assign) CGFloat imageHeight;
 @property (nonatomic, assign) CGFloat imageRatio;
 
-
 @property (nonatomic, copy) NSArray <PIEImageEntity*>   *models_ask;
 @property (nonatomic, copy) NSArray <PIECommentEntity*> *models_comment;
-
-
+@property (nonatomic, copy) NSArray <PIEModelCatogory*> *models_category;
 
 @end

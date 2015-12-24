@@ -9,7 +9,7 @@
 
 #import  "PIEImageEntity.h"
 #import  "PIECommentEntity.h"
-
+#import "PIEModelCatogory.h"
 @implementation PIEPageEntity
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
@@ -26,7 +26,6 @@
              @"totalPraiseNumber" : @"up_count",
              @"totalCommentNumber" : @"comment_count",
              @"totalShareNumber" : @"share_count",
-//             @"totalWXShareNumber" : @"weixin_share_count",
              @"totalWorkNumber" : @"reply_count",
              @"collectCount" : @"collect_count",
              @"imageWidth" : @"image_width",
@@ -37,47 +36,22 @@
              @"models_ask":@"ask_uploads",
              @"models_comment":@"hot_comments",
              @"followed":@"is_follow",
-//             @"comment" : @"content",
              @"isMyFan" : @"is_fan",
              @"imageRatio":@"image_ratio",
+             @"models_category":@"categories",
              };
 }
 
-+ (NSDictionary *)FMDBColumnsByPropertyKey {
-    return @{
-             @"ID" : @"ID",
-             @"askID" : @"askID",
-             @"uid" : @"uid",
-             @"nickname" : @"nickname",
-             @"avatar" : @"avatar",
-             @"uploadTime" : @"uploadTime",
-             @"imageURL" : @"imageURL",
-             @"userDescription" : @"userDescription",
-             @"isDownload" : @"isDownload",
-             @"totalPraiseNumber" : @"totalPraiseNumber",
-             @"totalCommentNumber" : @"totalCommentNumber",
-             @"totalShareNumber" : @"totalShareNumber",
-             @"totalWorkNumber" : @"totalWorkNumber",
-             @"imageWidth" : @"imageWidth",
-             @"imageHeight" : @"imageHeight",
-             @"liked" :@"liked",
-             @"collected":@"collected",
-             @"type":@"type",
-             @"models_ask":@"models_ask",
-             };
-}
+
 + (NSValueTransformer*)models_askJSONTransformer {
     return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[PIEImageEntity class]];
 }
 + (NSValueTransformer*)models_commentJSONTransformer {
     return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[PIECommentEntity class]];
 }
-+ (NSArray *)FMDBPrimaryKeys {
-    return @[@"ID"];
++ (NSValueTransformer*)models_categoryJSONTransformer {
+    return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[PIEModelCatogory class]];
 }
 
-+ (NSString *)FMDBTableName {
-    return @"PIEPageEntity";
-}
 
 @end
