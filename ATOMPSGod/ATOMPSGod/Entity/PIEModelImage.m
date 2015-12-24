@@ -6,9 +6,9 @@
 //  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 
-@implementation PIEImageEntity
+@implementation PIEModelImage
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
              @"height" : @"image_height",
@@ -31,7 +31,7 @@
 }
 
 + (NSString *)FMDBTableName {
-    return @"PIEImageEntity";
+    return @"PIEModelImage";
 }
 
 @end

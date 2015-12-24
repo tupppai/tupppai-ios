@@ -7,7 +7,7 @@
 //
 
 #import "PIEEliteFollowAskTableViewCell.h"
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 #import "FXBlurView.h"
 @interface PIEEliteFollowAskTableViewCell()
 @property (nonatomic, strong) UIImageView* blurView;

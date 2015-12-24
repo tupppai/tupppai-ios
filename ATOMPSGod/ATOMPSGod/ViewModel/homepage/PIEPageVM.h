@@ -8,23 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "PIEPageEntity.h"
-/**
-    PIEPageVM is the overall info of a image waiting to be or has been PS'ed, where:
-        * ID: 
-        * askID:
-        * type:
-        * userID:
- **/
-//typedef NS_ENUM(NSInteger, PIEPageType) {
-//    PIEPageTypeAsk = 1,
-//    PIEPageTypeReply,
-//    PIEPageTypeEliteFollow,
-//    PIEPageTypeEliteHot,
-//};
-
-// !!! 为_type单独设置NS_ENUM: ASK or REPLY
-
-
 
 @interface PIEPageVM : NSObject
 
@@ -60,7 +43,8 @@
 @property (nonatomic, copy) NSString *avatarURL;
 @property (nonatomic, assign) BOOL followed;
 @property (nonatomic, assign) BOOL isMyFan;
-
+@property (nonatomic, assign) BOOL isV;
+@property (nonatomic, assign) NSInteger lovedCount;
 
 - (instancetype)initWithPageEntity:(PIEPageEntity *)entity ;
 

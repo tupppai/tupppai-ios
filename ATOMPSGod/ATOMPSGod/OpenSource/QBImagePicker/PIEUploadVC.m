@@ -12,7 +12,7 @@
 #import "AppDelegate.h"
 #import "PIETabBarController.h"
 #import "PIEUploadManager.h"
-#import "PIEEntityImage.h"
+#import "PIEModelImageInfo.h"
 #import "PIETagsView.h"
 #import "PIETagModel.h"
 
@@ -29,8 +29,8 @@
 
 @property (strong, nonatomic) NSMutableDictionary *uploadInfo;
 
-@property (nonatomic, strong) PIEEntityImage *imageInfo1;
-@property (nonatomic, strong) PIEEntityImage *imageInfo2;
+@property (nonatomic, strong) PIEModelImageInfo *imageInfo1;
+@property (nonatomic, strong) PIEModelImageInfo *imageInfo2;
 
 @property (weak, nonatomic) IBOutlet UIView *shareBanner;
 @property (weak, nonatomic) IBOutlet UILabel *label_chooseTag;

@@ -8,7 +8,7 @@
 
 #import "ATOMBaseModel.h"
 @class PIECommentEntity;
-@class PIEImageEntity;
+@class PIEModelImage;
 @class PIEModelCatogory;
 
 
@@ -69,7 +69,7 @@ typedef NS_ENUM(NSInteger, PIEPageType) {
 @property (nonatomic, assign) CGFloat imageHeight;
 @property (nonatomic, assign) CGFloat imageRatio;
 
-@property (nonatomic, copy) NSArray <PIEImageEntity*>   *models_ask;
+@property (nonatomic, copy) NSArray <PIEModelImage*>   *models_ask;
 @property (nonatomic, copy) NSArray <PIECommentEntity*> *models_comment;
 @property (nonatomic, copy) NSArray <PIEModelCatogory*> *models_category;
 

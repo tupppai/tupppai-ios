@@ -7,7 +7,7 @@
 //
 
 #import "PIENewReplyTableCell.h"
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 #import "POP.h"
 //#import "MMPlaceHolder.h"
 @interface PIENewReplyTableCell()
@@ -128,7 +128,7 @@
 
     _thumbView.subviewCounts = viewModel.models_ask.count;
     if (viewModel.models_ask.count > 0) {
-        PIEImageEntity* entity = [viewModel.models_ask objectAtIndex:0];
+        PIEModelImage* entity = [viewModel.models_ask objectAtIndex:0];
         NSString *urlString_imageView1 = [entity.url trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
 
         [self.thumbView.rightView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView1] placeholderImage:[UIImage imageNamed:@"cellHolder"]];

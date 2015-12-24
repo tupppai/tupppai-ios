@@ -10,7 +10,7 @@
 
 //
 #import "PIEEntityUser.h"
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 @implementation DDOtherUserManager
 
 + (void)getUserInfo:(NSDictionary *)param withBlock:(void (^)(PIEEntityUser *user))block {

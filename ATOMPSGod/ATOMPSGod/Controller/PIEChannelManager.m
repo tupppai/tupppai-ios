@@ -8,7 +8,7 @@
 
 #import "PIEChannelManager.h"
 #import "PIEChannelViewModel.h"
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 #import "PIEChannelViewModel.h"
 @implementation PIEChannelManager
 + (void)getSource_Channel:(NSDictionary *)params

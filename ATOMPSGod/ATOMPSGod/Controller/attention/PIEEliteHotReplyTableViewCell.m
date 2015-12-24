@@ -7,7 +7,7 @@
 //
 
 #import "PIEEliteHotReplyTableViewCell.h"
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 #import "PIECommentEntity.h"
 #import "FXBlurView.h"
 @interface PIEEliteHotReplyTableViewCell()
@@ -146,7 +146,7 @@
         [_thumbView setSubviewCounts:viewModel.models_ask.count];
     
     if (viewModel.models_ask.count > 0) {
-        PIEImageEntity* entity = [viewModel.models_ask objectAtIndex:0];
+        PIEModelImage* entity = [viewModel.models_ask objectAtIndex:0];
         NSString *urlString_imageView1 = [entity.url trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
 
         [self.thumbView.rightView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView1] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
