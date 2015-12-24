@@ -10,6 +10,7 @@
 #import  "PIEImageEntity.h"
 #import  "PIECommentEntity.h"
 #import "PIEModelCatogory.h"
+
 @implementation PIEPageEntity
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
@@ -39,6 +40,8 @@
              @"isMyFan" : @"is_fan",
              @"imageRatio":@"image_ratio",
              @"models_category":@"categories",
+             @"isV":@"is_star",
+             @"lovedCount":@"love_count",
              };
 }
 
@@ -52,6 +55,11 @@
 + (NSValueTransformer*)models_categoryJSONTransformer {
     return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[PIEModelCatogory class]];
 }
-
++ (NSValueTransformer *)typeJSONTransformer {
+    return [NSValueTransformer mtl_valueMappingTransformerWithDictionary:@{
+                                                                           @1: @(PIEPageTypeAsk),
+                                                                           @2: @(PIEPageTypeReply)
+                                                                           }];
+}
 
 @end
