@@ -77,6 +77,8 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
     [self configData];
     
     [self configAskTableView];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -145,6 +147,13 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
     if (indexPath) {
         //点击图片
         [self showShareViewWithToHideDeleteButton:YES];
+    }
+}
+
+#pragma mark - Public methods
+- (void)getSourceIfEmpty_ask {
+    if (_sourceAsk.count <= 0 || _isfirstLoadingAsk) {
+        [self.askTableView.mj_header beginRefreshing];
     }
 }
 

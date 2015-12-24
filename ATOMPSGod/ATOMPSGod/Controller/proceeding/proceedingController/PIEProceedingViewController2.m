@@ -8,8 +8,6 @@
 
 #import "PIEProceedingViewController2.h"
 #import "HMSegmentedControl.h"
-#import "PIEProceedingTestVC1.h"
-#import "PIEProceedingTestVC2.h"
 #import "PIEProceedingToHelpViewController.h"
 #import "PIEProceedingAskViewController.h"
 
@@ -61,6 +59,11 @@ typedef NS_ENUM(NSUInteger, PIEProceedingControllerType) {
     
     // add view controllers as child view controllers
     [self configureViewControllers];
+    
+    // call the first view controller to start refresh & fetch data
+    PIEProceedingAskViewController *controller =
+    (PIEProceedingAskViewController *)[self.proceedingViewControllers firstObject];
+    [controller getSourceIfEmpty_ask];
     
 }
 
@@ -116,6 +119,17 @@ typedef NS_ENUM(NSUInteger, PIEProceedingControllerType) {
     
 }
 
+#pragma mark - Public methods
+- (void)navToToHelp
+{
+
+    // toggle to "toHelp" viewController
+    
+    // 直接修改segmentedControl的index，让segmentedControl触发“ControlValueChanged”
+    [self.segmentedControl setSelectedSegmentIndex:1 animated:YES notify:YES];
+    
+}
+
 #pragma mark - Toggle view controllers
 - (void)toggleViewController:(PIEProceedingControllerType)controllerType
 {
@@ -142,10 +156,20 @@ typedef NS_ENUM(NSUInteger, PIEProceedingControllerType) {
     if (currentPage == 0) {
         [self.segmentedControl setSelectedSegmentIndex:0 animated:YES];
         // refresh if is first loaded.
+        
+        PIEProceedingAskViewController *controller =
+        (PIEProceedingAskViewController *)self.proceedingViewControllers[currentPage];
+        [controller getSourceIfEmpty_ask];
+        
     }
     else if (currentPage == 1){
         [self.segmentedControl setSelectedSegmentIndex:1 animated:YES];
         // refresh if is first loaded.
+        
+        PIEProceedingToHelpViewController *controller =
+        (PIEProceedingToHelpViewController *)self.proceedingViewControllers[currentPage];
+        [controller getSourceIfEmpty_toHelp];
+        
     }
 }
 
@@ -183,10 +207,20 @@ typedef NS_ENUM(NSUInteger, PIEProceedingControllerType) {
         [_segmentedControl setIndexChangeBlock:^(NSInteger index) {
             if (index == 0) {
                 [weakSelf toggleViewController:PIEProceedingControllerTypeAsk];
-                //                [ws getSourceIfEmpty_ask];
+                
+                // fetch & reload data if is first loaded
+                PIEProceedingAskViewController *controller =
+                (PIEProceedingAskViewController *)weakSelf.proceedingViewControllers[index];
+                [controller getSourceIfEmpty_ask];
+                
             } else if (index == 1) {
                 [weakSelf toggleViewController:PIEProceedingControllerTypeToHelp];
-                //                [ws getSourceIfEmpty_toHelp];
+                
+                // fetch & reload data if is first loaded.
+                PIEProceedingToHelpViewController *controller =
+                (PIEProceedingToHelpViewController *)weakSelf.proceedingViewControllers[index];
+                [controller getSourceIfEmpty_toHelp];
+                
             }
 
         }];

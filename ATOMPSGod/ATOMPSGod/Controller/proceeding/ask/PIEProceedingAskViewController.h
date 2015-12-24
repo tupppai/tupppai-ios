@@ -10,4 +10,6 @@
 
 @interface PIEProceedingAskViewController : DDBaseVC
 
+- (void)getSourceIfEmpty_ask;
+
 @end

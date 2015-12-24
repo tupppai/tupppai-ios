@@ -89,11 +89,6 @@
 #pragma mark - UI components setup
 - (void)setupViewControllers
 {
-//    PIEEliteTestVC1 *vc1 = [[PIEEliteTestVC1 alloc] init];
-//    PIEEliteTestVC2 *vc2 = [[PIEEliteTestVC2 alloc] init];
-//    
-//    [self.eliteViewControllers addObject:vc1];
-//    [self.eliteViewControllers addObject:vc2];
     
     PIEEliteHotReplyViewController *hotReplyViewController =
     [[PIEEliteHotReplyViewController alloc] init];
@@ -125,15 +120,14 @@
 #pragma mark - <UIScrollViewDelegate>
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
         int currentPage = (scrollView.contentOffset.x + CGWidth(scrollView.frame) * 0.1) / CGWidth(scrollView.frame);
+    
         if (currentPage == 0) {
             [self.segmentedControl setSelectedSegmentIndex:0 animated:YES];
-//            [self getSourceIfEmpty_hot:nil];
             PIEEliteHotReplyViewController *controller = (PIEEliteHotReplyViewController *)_eliteViewControllers[0];
             [controller getSourceIfEmpty_hot:nil];
             
         } else if (currentPage == 1) {
             [self.segmentedControl setSelectedSegmentIndex:1 animated:YES];
-//            [self getSourceIfEmpty_follow:nil];
             PIEEliteFollowReplyViewController *controller =
             (PIEEliteFollowReplyViewController *)_eliteViewControllers[1];
             [controller getSourceIfEmpty_follow:nil];

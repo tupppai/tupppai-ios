@@ -214,6 +214,13 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     }
 }
 
+#pragma mark - Public methods
+- (void)getSourceIfEmpty_toHelp{
+    if (_sourceToHelp.count <= 0 || _isfirstLoadingToHelp) {
+        [self.toHelpTableView.mj_header beginRefreshing];
+    }
+}
+
 #pragma mark - <PWRefreshBaseTableViewDelegate>
 -(void)didPullRefreshDown:(UITableView *)tableView {
     

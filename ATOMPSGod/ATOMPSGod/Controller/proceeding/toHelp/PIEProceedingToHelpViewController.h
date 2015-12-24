@@ -10,4 +10,6 @@
 
 @interface PIEProceedingToHelpViewController : DDBaseVC
 
+- (void)getSourceIfEmpty_toHelp;
+
 @end
