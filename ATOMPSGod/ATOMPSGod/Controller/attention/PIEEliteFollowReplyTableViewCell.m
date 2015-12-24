@@ -29,6 +29,8 @@
     _theImageView.backgroundColor = [UIColor clearColor];
     _collectView.userInteractionEnabled = YES;
     
+    [_followView setContentMode:UIViewContentModeCenter];
+    
     [_nameLabel setFont:[UIFont lightTupaiFontOfSize:13]];
     [_contentLabel setFont:[UIFont lightTupaiFontOfSize:15]];
     [_timeLabel setFont:[UIFont lightTupaiFontOfSize:10]];
