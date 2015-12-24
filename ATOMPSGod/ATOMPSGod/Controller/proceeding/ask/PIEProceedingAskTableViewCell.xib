@@ -54,6 +54,7 @@
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="rsE-vi-lO8"/>
+                                        <exclude reference="tWr-49-dXI"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -135,7 +136,7 @@
                             <constraint firstItem="HAK-LR-uig" firstAttribute="leading" secondItem="9aJ-wv-jpY" secondAttribute="leading" id="2rV-Hc-aeb"/>
                             <constraint firstItem="PTy-6A-dzm" firstAttribute="leading" secondItem="6dw-qo-oSJ" secondAttribute="leading" constant="31" id="3yc-C7-v5T"/>
                             <constraint firstItem="29e-zX-BN2" firstAttribute="height" secondItem="HAK-LR-uig" secondAttribute="height" id="5wz-Lv-1lS"/>
-                            <constraint firstItem="HAK-LR-uig" firstAttribute="top" secondItem="WQv-Q2-j9w" secondAttribute="bottom" constant="12" id="9HJ-NO-SvZ"/>
+                            <constraint firstItem="HAK-LR-uig" firstAttribute="top" relation="greaterThanOrEqual" secondItem="WQv-Q2-j9w" secondAttribute="bottom" constant="10" id="9HJ-NO-SvZ"/>
                             <constraint firstItem="PTy-6A-dzm" firstAttribute="leading" secondItem="39M-2O-8QD" secondAttribute="trailing" constant="3" id="9fA-FH-u1V"/>
                             <constraint firstItem="0PM-KU-bdY" firstAttribute="top" secondItem="WQv-Q2-j9w" secondAttribute="top" id="9uU-nK-hGh"/>
                             <constraint firstAttribute="trailingMargin" secondItem="9aJ-wv-jpY" secondAttribute="trailing" id="APe-aO-JmF"/>
@@ -161,6 +162,7 @@
                             <constraint firstItem="stF-57-Ks0" firstAttribute="leading" secondItem="29e-zX-BN2" secondAttribute="trailing" priority="250" constant="5" id="Vc8-Ye-Lrd"/>
                             <constraint firstItem="stF-57-Ks0" firstAttribute="leading" secondItem="29e-zX-BN2" secondAttribute="trailing" constant="10" id="YIY-TD-Lbb"/>
                             <constraint firstItem="stF-57-Ks0" firstAttribute="centerY" secondItem="29e-zX-BN2" secondAttribute="centerY" id="bVX-zp-EJn"/>
+                            <constraint firstItem="29e-zX-BN2" firstAttribute="top" secondItem="9aJ-wv-jpY" secondAttribute="bottom" constant="10" id="drJ-dF-dga"/>
                             <constraint firstItem="39M-2O-8QD" firstAttribute="top" secondItem="6dw-qo-oSJ" secondAttribute="topMargin" constant="5" id="dxp-wg-hBx"/>
                             <constraint firstItem="PTy-6A-dzm" firstAttribute="centerY" secondItem="39M-2O-8QD" secondAttribute="centerY" id="eSO-ED-5cU"/>
                             <constraint firstAttribute="trailing" secondItem="29e-zX-BN2" secondAttribute="trailing" constant="40" id="gzX-qv-qAI"/>
@@ -172,6 +174,7 @@
                             <constraint firstItem="HAK-LR-uig" firstAttribute="leading" secondItem="WQv-Q2-j9w" secondAttribute="leading" id="r9a-uy-tz5"/>
                             <constraint firstItem="qRC-22-192" firstAttribute="centerY" secondItem="RlB-ca-XYc" secondAttribute="centerY" id="sia-Kq-ypA"/>
                             <constraint firstItem="29e-zX-BN2" firstAttribute="bottom" secondItem="HAK-LR-uig" secondAttribute="bottom" id="soQ-gO-Aee"/>
+                            <constraint firstItem="9aJ-wv-jpY" firstAttribute="height" secondItem="WQv-Q2-j9w" secondAttribute="height" id="u1S-Hb-2MR"/>
                             <constraint firstItem="39M-2O-8QD" firstAttribute="leading" secondItem="6dw-qo-oSJ" secondAttribute="leadingMargin" constant="8" id="vNh-Kn-aCh"/>
                             <constraint firstItem="4fj-ig-iVh" firstAttribute="top" secondItem="HAK-LR-uig" secondAttribute="bottom" constant="10" id="vhW-R8-dWb"/>
                             <constraint firstItem="39M-2O-8QD" firstAttribute="leading" secondItem="6dw-qo-oSJ" secondAttribute="leading" constant="8" id="vi4-cs-PJ5"/>
