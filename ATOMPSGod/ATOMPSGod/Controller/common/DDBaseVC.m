@@ -14,7 +14,6 @@
 #import "SIAlertView.h"
 #import "PIELaunchViewController.h"
 #import "PIENewViewController.h"
-#import "PIEEliteViewController.h"
 #import "PIEProceedingViewController.h"
 #import "PIEMeViewController.h"
 

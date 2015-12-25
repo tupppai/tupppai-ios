@@ -9,7 +9,7 @@
 #import "PIECommentTableHeaderView_Ask.h"
 //#import "ATOMTipButton.h"
 //#import "DDTipLabelVM.h"
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 #import "FXBlurView.h"
 
 

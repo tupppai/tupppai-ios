@@ -13,7 +13,7 @@
 //#import "ATOMDetailImageDAO.h"
 //#import "PIEPageDAO.h"
 
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 @interface DDHotDetailManager ()
 //@property (nonatomic, strong) ATOMDetailImageDAO *detailImageDAO;
 //@property (nonatomic, strong) ATOMCommentDAO *commentDAO;
@@ -49,7 +49,7 @@
             
             for (NSDictionary* object in askImageEntities) {
                 PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:askObject error:NULL];
-                PIEImageEntity* imgEntity = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:object error:NULL];
+                PIEModelImage* imgEntity = [MTLJSONAdapter modelOfClass:[PIEModelImage class] fromJSONDictionary:object error:NULL];
                 entity.imageURL = imgEntity.url;
                 entity.imageWidth = imgEntity.width;
                 entity.imageHeight = imgEntity.height;

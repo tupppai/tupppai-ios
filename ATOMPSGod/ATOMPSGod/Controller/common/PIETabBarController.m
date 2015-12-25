@@ -8,7 +8,6 @@
 
 #import "PIETabBarController.h"
 #import "PIEChannelViewController.h"
-#import "PIEEliteViewController.h"
 #import "DDNavigationController.h"
 #import "DDService.h"
 #import "PIEMeViewController.h"
@@ -20,10 +19,8 @@
 #import "PIEUploadManager.h"
 #import "UIImage+Colors.h"
 
-
-#import "PIEEliteViewController2.h"
 #import "PIEProceedingViewController2.h"
-
+#import "PIEEliteViewController.h"
 
 @interface PIETabBarController ()<UITabBarControllerDelegate>
 @property (nonatomic, strong) DDNavigationController *navigation_new;
@@ -103,7 +100,7 @@
 {
     NSDictionary *info = [notification userInfo];
     
-    PIEEliteViewController2* vc = (PIEEliteViewController2*)((DDNavigationController*)[self.viewControllers objectAtIndex:0]).topViewController;
+    PIEEliteViewController* vc = (PIEEliteViewController*)((DDNavigationController*)[self.viewControllers objectAtIndex:0]).topViewController;
     PIEUploadManager* manager = [PIEUploadManager new];
     manager.uploadInfo = info;
     [manager upload:^(CGFloat percentage,BOOL success) {
@@ -138,14 +135,9 @@
 - (void)configureTabBarController {
     
     PIEChannelViewController *channelVc = [PIEChannelViewController new];
-//    PIEEliteViewController *myAttentionViewController = [PIEEliteViewController new];
-    // for testing PIEEliteViewController2
-    PIEEliteViewController2 *myAttentionViewController = [PIEEliteViewController2 new];
-//    PIEProceedingViewController *proceedingViewController = [PIEProceedingViewController new];
-    
-    // for testing dev-refactor-proceedingViewController
-    PIEProceedingViewController2 *proceedingViewController =
-    [PIEProceedingViewController2 new];
+
+    PIEEliteViewController *myAttentionViewController = [PIEEliteViewController new];
+    PIEProceedingViewController2 *proceedingViewController = [PIEProceedingViewController2 new];
     
     PIEMeViewController *aboutMeVC = (PIEMeViewController *)[[UIStoryboard storyboardWithName:@"Me" bundle:nil] instantiateViewControllerWithIdentifier: @"PIEME"];
 

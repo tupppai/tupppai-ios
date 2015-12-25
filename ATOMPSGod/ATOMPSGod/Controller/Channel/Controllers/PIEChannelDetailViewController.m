@@ -112,12 +112,12 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     
     /* 设置可以区分reply cell中不同UI元素（头像，关注按钮，分享, etc.）的点击事件回调 */
     [self setupGestures];
-
+    
     self.title = self.currentChannelViewModel.title;
     
     [self getSource_Ask];
     [self.tableView.mj_header beginRefreshing];
-
+    
 }
 
 - (void)dealloc
@@ -171,14 +171,14 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-
+    
     return self.source_reply.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    
     if (indexPath.row == 0)
     {
         /* first row */
@@ -211,19 +211,19 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 
 /**
  *  上拉加载
-*/
+ */
 - (void)didPullRefreshUp:(UITableView *)tableView
 {
-
+    
     [self getMoreSource_Reply];
 }
 
 /**
  *  下拉刷新
-*/
+ */
 - (void)didPullRefreshDown:(UITableView *)tableView
 {
-
+    
     [self getSource_Reply];
 }
 
@@ -240,8 +240,8 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 #pragma mark - <SwipeViewDataSource>
 - (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
 {
-
-
+    
+    
     return self.source_ask.count;
 }
 
@@ -249,17 +249,17 @@ static NSString * PIEDetailUsersPSCellIdentifier =
    viewForItemAtIndex:(NSInteger)index
           reusingView:(PIEChannelDetailAskPSItemView *)view
 {
-
+    
     if (view == nil)
     {
         NSInteger height = swipeView.frame.size.height;
         view = [[PIEChannelDetailAskPSItemView alloc]initWithFrame:CGRectMake(0, 0, height, height)];
     }
     
-    // viewModel -> view
-    NSURL *imageURL = [NSURL URLWithString:_source_ask[index].imageURL];
+    NSString* urlString = [_source_ask[index].imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION*0.25];
+    NSURL *imageURL = [NSURL URLWithString:urlString];
     [view.imageView sd_setImageWithURL:imageURL
-                   placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+                      placeholderImage:[UIImage imageNamed:@"cellHolder"]];
     view.label.text = _source_ask[index].content;
     
     return view;
@@ -271,9 +271,9 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 - (void)shareViewDidShare:(PIEShareView *)shareView
 {
     // refresh ui element on main thread after successful sharing, do nothing otherwise.
-//    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-//        [self updateShareStatus];
-//    }];
+    //    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+    //        [self updateShareStatus];
+    //    }];
     
 }
 
@@ -303,8 +303,8 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 
 - (void)tapOnReply:(UITapGestureRecognizer *)gesture {
     
-
-
+    
+    
     CGPoint location = [gesture locationInView:self.tableView];
     _selectedIndexPath = [self.tableView indexPathForRowAtPoint:location];
     
@@ -380,7 +380,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 }
 - (void)longPressOnReply:(UILongPressGestureRecognizer *)gesture {
     
-
+    
     
     CGPoint location   = [gesture locationInView:self.tableView];
     _selectedIndexPath = [self.tableView indexPathForRowAtPoint:location];
@@ -405,8 +405,8 @@ static NSString * PIEDetailUsersPSCellIdentifier =
  */
 -(void)likeReply {
     
-
-
+    
+    
     
     _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
     [DDService toggleLike:_selectedReplyCell.likeView.selected ID:_selectedVM.ID type:_selectedVM.type  withBlock:^(BOOL success) {
@@ -428,8 +428,8 @@ static NSString * PIEDetailUsersPSCellIdentifier =
  */
 -(void)followReplier {
     
-
-
+    
+    
     
     _selectedReplyCell.followView.highlighted = !_selectedReplyCell.followView.highlighted;
     NSMutableDictionary *param = [NSMutableDictionary new];
@@ -478,7 +478,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         [_source_ask addObjectsFromArray:pageArray];
     } completion:^{
         [self.swipeView reloadData];
-
+        
     }];
 }
 - (void)getSource_Reply {
@@ -492,7 +492,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     _timeStamp                   = [[NSDate date] timeIntervalSince1970];
     params[@"last_updated"]      = @(_timeStamp);
     [params setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
-
+    
     
     [PIEChannelManager getSource_channelPages:params resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
         [_source_reply removeAllObjects];
@@ -512,7 +512,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     params[@"type"]              = @"reply";
     params[@"last_updated"]      = @(_timeStamp);
     [params setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
-
+    
     [PIEChannelManager getSource_channelPages:params resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
         [_source_reply addObjectsFromArray:pageArray];
     } completion:^{
@@ -556,11 +556,11 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     // added as subview
     [self.view addSubview:self.tableView];
     
-//    // add constraints
-//    __weak typeof(self) weakSelf = self;
-//    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.edges.equalTo(weakSelf.view);
-//    }];
+    //    // add constraints
+    //    __weak typeof(self) weakSelf = self;
+    //    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+    //        make.edges.equalTo(weakSelf.view);
+    //    }];
 }
 
 - (void)configureTakePhotoButton
@@ -589,7 +589,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         
         // configurations
         
-//        _tableView.frame = self.view.bounds;
+        //        _tableView.frame = self.view.bounds;
         
         // set delegate
         _tableView.delegate   = self;
@@ -612,7 +612,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
                                                bundle:nil]
          forCellReuseIdentifier:PIEDetailUsersPSCellIdentifier];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-  
+        
     }
     return _tableView;
 }
@@ -627,7 +627,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         
         // --- set background image
         [_takePhotoButton setBackgroundImage:[UIImage imageNamed:@"pie_channelDetailTakePhotoButton"]
-              forState:UIControlStateNormal];
+                                    forState:UIControlStateNormal];
         
         // --- add drop shadows
         _takePhotoButton.layer.shadowColor  = (__bridge CGColorRef _Nullable)
@@ -653,7 +653,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         _shareView.delegate = self;
     }
     return  _shareView;
-
+    
 }
 
 

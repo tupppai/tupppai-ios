@@ -11,13 +11,13 @@
 
 @interface PIEPageDAO : ATOMBaseDAO
 
-- (void)insertHomeImage:(PIEPageEntity *)page;
-- (void)updateHomeImage:(PIEPageEntity *)page;
-- (PIEPageEntity *)selectHomeImageByImageID:(NSInteger)imageID;
-- (NSArray *)selectHomeImages;
-//- (NSArray *)selectHomeImagesWithHomeType:(NSInteger)homeType;
-- (BOOL)isExistHomeImage:(PIEPageEntity *)homeImage;
-- (void)clearHomeImages;
-- (void)clearHomeImagesWithHomeType:(NSString *)homeType;
+//- (void)insertHomeImage:(PIEPageEntity *)page;
+//- (void)updateHomeImage:(PIEPageEntity *)page;
+//- (PIEPageEntity *)selectHomeImageByImageID:(NSInteger)imageID;
+//- (NSArray *)selectHomeImages;
+////- (NSArray *)selectHomeImagesWithHomeType:(NSInteger)homeType;
+//- (BOOL)isExistHomeImage:(PIEPageEntity *)homeImage;
+//- (void)clearHomeImages;
+//- (void)clearHomeImagesWithHomeType:(NSString *)homeType;
 
 @end

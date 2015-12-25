@@ -7,7 +7,7 @@
 //
 
 #import "PIEEliteFollowReplyTableViewCell.h"
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 @interface PIEEliteFollowReplyTableViewCell()
 @property (nonatomic, strong) UIImageView* blurView;
 @end
@@ -77,6 +77,16 @@
 
 - (void)injectSauce:(PIEPageVM *)viewModel {
     WS(ws);
+    NSString *urlString_avatar = [viewModel.avatarURL trimToImageWidth:_avatarView.frame.size.width*SCREEN_SCALE];
+    NSString *urlString_imageView = [viewModel.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
+
+    [_theImageView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView]
+                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                ws.theImageView.image = image;
+                                ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+                            }];
+    [_avatarView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+
     _ID = viewModel.ID;
     _askID = viewModel.askID;
     
@@ -110,27 +120,25 @@
     _likeView.numberString = viewModel.likeCount;
     _contentLabel.text = viewModel.content;
     
-    [_avatarView sd_setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+
     _nameLabel.text = viewModel.username;
     _timeLabel.text = viewModel.publishTime;
     
-    [_theImageView sd_setImageWithURL:[NSURL URLWithString:viewModel.imageURL]
-                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                                ws.theImageView.image = image;
-                                ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
-                            }];
     
 
         [self mansoryThumbAnimateView];
     
-        [_thumbView setSubviewCounts:viewModel.thumbEntityArray.count];
+        [_thumbView setSubviewCounts:viewModel.models_ask.count];
     
-    if (viewModel.thumbEntityArray.count > 0) {
-        PIEImageEntity* entity = [viewModel.thumbEntityArray objectAtIndex:0];
-        [self.thumbView.rightView sd_setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-        if (viewModel.thumbEntityArray.count == 2) {
-            entity = viewModel.thumbEntityArray[1];
-            [_thumbView.leftView sd_setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+    if (viewModel.models_ask.count > 0) {
+        PIEModelImage* entity = [viewModel.models_ask objectAtIndex:0];
+        NSString *urlString_imageView1 = [entity.url trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
+
+        [self.thumbView.rightView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView1] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+        if (viewModel.models_ask.count == 2) {
+            entity = viewModel.models_ask[1];
+            NSString *urlString_imageView2 = [entity.url trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
+            [_thumbView.leftView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView2] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
         }
     }
 

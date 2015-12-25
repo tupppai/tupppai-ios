@@ -8,7 +8,7 @@
 
 #import "ATOMBaseModel.h"
 
-@interface PIENotificationEntity : ATOMBaseModel
+@interface PIEModelNotification : ATOMBaseModel
 
 @property (nonatomic, copy) NSString *avatarUrl;
 @property (nonatomic, assign) NSInteger commentId;

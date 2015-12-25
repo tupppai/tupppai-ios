@@ -7,7 +7,7 @@
 //
 
 #import "PIECommentTableHeaderView_Reply.h"
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 #import "FXBlurView.h"
 
 #define MAXHEIGHT (SCREEN_WIDTH-kPadding15*2)*4/3

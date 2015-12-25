@@ -6,7 +6,7 @@
 //  Copyright © 2015年 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIEEliteFollowReplyViewController.h"
+#import "PIEEliteFollowViewController.h"
 #import "PIEActionSheet_PS.h"
 #import "PIEShareView.h"
 #import "PIERefreshTableView.h"
@@ -24,7 +24,7 @@
 #import "PIECellIconStatusChangedNotificationKey.h"
 
 /* Variables */
-@interface PIEEliteFollowReplyViewController ()
+@interface PIEEliteFollowViewController ()
 @property (nonatomic, strong) NSMutableArray *sourceFollow;
 
 @property (nonatomic, strong) PIERefreshTableView *tableFollow;
@@ -48,27 +48,27 @@
 @end
 
 /* Protocols */
-@interface PIEEliteFollowReplyViewController (TableView)
+@interface PIEEliteFollowViewController (TableView)
 <UITableViewDelegate,UITableViewDataSource>
 @end
 
-@interface PIEEliteFollowReplyViewController (PWRefreshBaseTableView)
+@interface PIEEliteFollowViewController (PWRefreshBaseTableView)
 <PWRefreshBaseTableViewDelegate>
 @end
 
-@interface PIEEliteFollowReplyViewController (PIEShareView)
+@interface PIEEliteFollowViewController (PIEShareView)
 <PIEShareViewDelegate>
 @end
 
-@interface PIEEliteFollowReplyViewController (DZNEmptyDataSet)
+@interface PIEEliteFollowViewController (DZNEmptyDataSet)
 <DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
 @end
 
-@interface PIEEliteFollowReplyViewController (JGActionSheet)
+@interface PIEEliteFollowViewController (JGActionSheet)
 <JGActionSheetDelegate>
 @end
 
-@implementation PIEEliteFollowReplyViewController
+@implementation PIEEliteFollowViewController
 
 static  NSString* askIndentifier      = @"PIEEliteFollowAskTableViewCell";
 static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
@@ -96,8 +96,7 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
 }
 
 -(void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_Elite" object:nil];
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_Elite_Follow" object:nil];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:PIECollectedIconStatusChangedNotification
                                                   object:nil];
@@ -125,7 +124,7 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
 #pragma mark - Notification Setup
 - (void)setupNotificationObserver
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_Elite" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_Elite_Follow" object:nil];
     
     // 响应下一级PIECarouselItemView和下下一级的PIECommentViewController的“收藏”Icon同步事件
     [[NSNotificationCenter defaultCenter]
@@ -140,13 +139,13 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
      selector:@selector(updateShareStatus)
      name:PIESharedIconStatusChangedNotification
      object:nil];
-    
-    // 响应下一级的PIECarouselItemView和下下一级的PIECommentViewController的“点赞”icon的数字的同步事件
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(updateLikedStatus:)
-     name:PIELikedIconStatusChangedNotification
-     object:nil];
+//    
+//    // 响应下一级的PIECarouselItemView和下下一级的PIECommentViewController的“点赞”icon的数字的同步事件
+//    [[NSNotificationCenter defaultCenter]
+//     addObserver:self
+//     selector:@selector(updateLikedStatus:)
+//     name:PIELikedIconStatusChangedNotification
+//     object:nil];
 }
 
 

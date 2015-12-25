@@ -107,6 +107,10 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
     _askTableView.psDelegate           = self;
     _askTableView.emptyDataSetDelegate = self;
     _askTableView.emptyDataSetSource   = self;
+
+    _askTableView.estimatedRowHeight   = 175;
+    _askTableView.rowHeight            = UITableViewAutomaticDimension;
+    
     UINib* nib = [UINib nibWithNibName:@"PIEProceedingAskTableViewCell" bundle:nil];
     [_askTableView registerNib:nib forCellReuseIdentifier:PIEProceedingAskTableViewCellIdentifier];
     
@@ -135,12 +139,6 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
     _selectedIndexPath_ask = indexPath;
     
     
-    /** BUG AWARE!! 类型错误！_sourceAsk里面是的每个元素，都是包含着PIEPageVM的数组！
-        crash everytime the cell is being long-pressed and then sharing.
-        
-        _selectedVM = [_sourceAsk objectAtIndex:indexPath.row];
-    
-     */
     /* Bug fixed! */
     _selectedVM = [[_sourceAsk objectAtIndex:indexPath.row] firstObject];
     
@@ -192,14 +190,8 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
 
 
 #pragma mark - <UITableViewDelegate>
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row == 0) {
-        return 180-15;
-    } else {
-        return 175;
-    }
-}
+/* nothing yet. */
+
 
 #pragma mark - fetching remote data
 - (void)getRemoteSourceMyAsk {

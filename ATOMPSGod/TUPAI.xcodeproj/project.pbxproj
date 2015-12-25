@@ -27,10 +27,8 @@
 		0E54C7951C1E8F5E00F431AC /* PIEToHelpTableViewCell2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E54C7841C1E8F5E00F431AC /* PIEToHelpTableViewCell2.xib */; };
 		0E54C7961C1E8F5E00F431AC /* PIEToHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E54C7861C1E8F5E00F431AC /* PIEToHelpViewController.m */; };
 		0E54C7991C1E927A00F431AC /* PIEProceedingDoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E54C7981C1E927A00F431AC /* PIEProceedingDoneViewController.m */; };
-		0E5CE0BB1C22E1BF000A5B55 /* PIEEliteHotReplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E5CE0BA1C22E1BF000A5B55 /* PIEEliteHotReplyViewController.m */; };
-		0E5CE0BE1C22E1D4000A5B55 /* PIEEliteFollowReplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E5CE0BD1C22E1D4000A5B55 /* PIEEliteFollowReplyViewController.m */; };
-		0E6F78FE1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E6F78FC1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.m */; };
-		0E6F78FF1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E6F78FD1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.xib */; };
+		0E5CE0BB1C22E1BF000A5B55 /* PIEEliteHotViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E5CE0BA1C22E1BF000A5B55 /* PIEEliteHotViewController.m */; };
+		0E5CE0BE1C22E1D4000A5B55 /* PIEEliteFollowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E5CE0BD1C22E1D4000A5B55 /* PIEEliteFollowViewController.m */; };
 		0E6F79031C16EE5C002F9FB6 /* PIEChannelDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E6F79011C16EE5C002F9FB6 /* PIEChannelDetailViewController.m */; };
 		0ECED3461C17CC4E00D3F097 /* PIEChannelDetailAskPSItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECED3451C17CC4E00D3F097 /* PIEChannelDetailAskPSItemView.m */; };
 		0EF2F5C51C154A5700F27D61 /* PIEChannelBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF2F5C01C154A5700F27D61 /* PIEChannelBannerCell.m */; };
@@ -82,7 +80,6 @@
 		5C4C70DA1AB6FD5700358989 /* DDPageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4C70D31AB6FD5700358989 /* DDPageManager.m */; };
 		5C4C70DB1AB6FD5700358989 /* PIEUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4C70D51AB6FD5700358989 /* PIEUploadManager.m */; };
 		5C4F5BDC1AA555F900226F64 /* PIENewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BDB1AA555F900226F64 /* PIENewViewController.m */; };
-		5C4F5BEF1AA5893700226F64 /* UIActionSheet+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F5BEE1AA5893700226F64 /* UIActionSheet+Blocks.m */; };
 		5C535CB51AF1FC8A00BF30D1 /* ATOMBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C535CB01AF1FC8A00BF30D1 /* ATOMBaseView.m */; };
 		5C54DF161AB9529200BDE34D /* PIENewScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C54DF151AB9529200BDE34D /* PIENewScrollView.m */; };
 		5C54DF1E1AB9738E00BDE34D /* DDBaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C54DF191AB9738E00BDE34D /* DDBaseVC.m */; };
@@ -93,12 +90,12 @@
 		5C54DF2D1AB99F5300BDE34D /* DDTipLabelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C54DF2C1AB99F5300BDE34D /* DDTipLabelManager.m */; };
 		5C561A461AB7C51F0052D4D5 /* MTLFMDBAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A451AB7C51F0052D4D5 /* MTLFMDBAdapter.m */; };
 		5C561A491AB7C7720052D4D5 /* ATOMUserDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A481AB7C7720052D4D5 /* ATOMUserDAO.m */; };
-		5C561A501AB7C8210052D4D5 /* PIEEntityImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A4D1AB7C8210052D4D5 /* PIEEntityImage.m */; };
+		5C561A501AB7C8210052D4D5 /* PIEModelImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A4D1AB7C8210052D4D5 /* PIEModelImageInfo.m */; };
 		5C561A511AB7C8210052D4D5 /* PIEEntityUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A4F1AB7C8210052D4D5 /* PIEEntityUser.m */; };
 		5C561A541AB7C8670052D4D5 /* ATOMBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A531AB7C8670052D4D5 /* ATOMBaseModel.m */; };
 		5C561A7C1AB7C9FB0052D4D5 /* ATOMBaseDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A7B1AB7C9FB0052D4D5 /* ATOMBaseDAO.m */; };
 		5C561A7F1AB7CAA90052D4D5 /* ATOMCreateTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A7E1AB7CAA90052D4D5 /* ATOMCreateTable.m */; };
-		5C561A8B1AB857870052D4D5 /* NSString+ATOMValidate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A8A1AB857870052D4D5 /* NSString+ATOMValidate.m */; };
+		5C561A8B1AB857870052D4D5 /* NSString+Tupai.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A8A1AB857870052D4D5 /* NSString+Tupai.m */; };
 		5C5DDBCB1AD3D0DC00F4B845 /* DDOtherUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5DDBCA1AD3D0DC00F4B845 /* DDOtherUserManager.m */; };
 		5C653B9B1AA96C820025814B /* BJImageCropper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C653B9A1AA96C820025814B /* BJImageCropper.m */; };
 		5C67FB271AB2B41F004EFF05 /* ATOMHeaderImageCropperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C67FB261AB2B41F004EFF05 /* ATOMHeaderImageCropperViewController.m */; };
@@ -158,14 +155,13 @@
 		5CDB06661AA45C680089121E /* DDCreateProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB06611AA45C680089121E /* DDCreateProfileVC.m */; };
 		5CDB06681AA45C680089121E /* DDPhoneRegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB06651AA45C680089121E /* DDPhoneRegisterVC.m */; };
 		5CDB066B1AA45C920089121E /* ATOMMobileRegisterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB066A1AA45C920089121E /* ATOMMobileRegisterView.m */; };
-		5CDB066E1AA46E6F0089121E /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB066D1AA46E6F0089121E /* UIAlertView+Blocks.m */; };
 		5CDB06711AA47E760089121E /* DDAuthcodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB06701AA47E760089121E /* DDAuthcodeVC.m */; };
 		5CDB06741AA47EEC0089121E /* ATOMInputVerifyCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB06731AA47EEC0089121E /* ATOMInputVerifyCodeView.m */; };
 		5CDF82401AC2BEEA00321694 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CDF823F1AC2BEEA00321694 /* SystemConfiguration.framework */; };
 		5CDF82421AC2BEF900321694 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CDF82411AC2BEF900321694 /* QuartzCore.framework */; };
 		5CE4082F1ACE94D600A56E4B /* UIViewController+ATOMTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CE4082E1ACE94D600A56E4B /* UIViewController+ATOMTracking.m */; };
 		5CEAC0331AD4F9540058037C /* DDMyCollectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CEAC0321AD4F9540058037C /* DDMyCollectionManager.m */; };
-		903E09DE1C23DF9E006C87B8 /* PIEEliteViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 903E09DD1C23DF9E006C87B8 /* PIEEliteViewController2.m */; };
+		903E09DE1C23DF9E006C87B8 /* PIEEliteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 903E09DD1C23DF9E006C87B8 /* PIEEliteViewController.m */; };
 		90B3A07C1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B3A07B1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m */; };
 		90EC3D5C1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC3D5B1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m */; };
 		90EC3D5F1C2A78E20085A7BE /* PIEProceedingAskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC3D5E1C2A78E20085A7BE /* PIEProceedingAskViewController.m */; };
@@ -287,7 +283,7 @@
 		F402F0FE1BE8953F004988B4 /* PIESearchContentCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F402F0FC1BE8953F004988B4 /* PIESearchContentCollectionViewCell.xib */; };
 		F402F1011BE89CB4004988B4 /* PIESearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F402F1001BE89CB4004988B4 /* PIESearchManager.m */; };
 		F402F1041BE8A327004988B4 /* PIEUserViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F402F1031BE8A327004988B4 /* PIEUserViewModel.m */; };
-		F409AA871BAFE39000736B0D /* PIEImageEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = F409AA861BAFE39000736B0D /* PIEImageEntity.m */; };
+		F409AA871BAFE39000736B0D /* PIEModelImage.m in Sources */ = {isa = PBXBuildFile; fileRef = F409AA861BAFE39000736B0D /* PIEModelImage.m */; };
 		F41205B11C1986D500EE959F /* baozou.png in Resources */ = {isa = PBXBuildFile; fileRef = F41205B01C1986D500EE959F /* baozou.png */; };
 		F41366951BBE73D900EE0C4E /* PIEReplyCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F41366941BBE73D900EE0C4E /* PIEReplyCollectionCell.xib */; };
 		F413B0501C167AB500F9BA27 /* PIECarouselPageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F413B04E1C167AB500F9BA27 /* PIECarouselPageTableViewCell.m */; };
@@ -377,6 +373,7 @@
 		F44A52791C0BF91500707281 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F44A52781C0BF91500707281 /* libxml2.2.tbd */; };
 		F44A527F1C0C335000707281 /* PIEActionSheet_Report.m in Sources */ = {isa = PBXBuildFile; fileRef = F44A527E1C0C335000707281 /* PIEActionSheet_Report.m */; };
 		F44A52821C0C336500707281 /* PIEActionSheet_PS.m in Sources */ = {isa = PBXBuildFile; fileRef = F44A52811C0C336500707281 /* PIEActionSheet_PS.m */; };
+		F45057271C2BDA5B00F7A302 /* PIEModelCatogory.m in Sources */ = {isa = PBXBuildFile; fileRef = F45057261C2BDA5B00F7A302 /* PIEModelCatogory.m */; };
 		F45D8FA41BD87CFD005946E8 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F45D8F881BD87CFD005946E8 /* TencentOpenAPI.framework */; };
 		F45D8FA51BD87CFD005946E8 /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F45D8F891BD87CFD005946E8 /* TencentOpenApi_IOS_Bundle.bundle */; };
 		F45D8FA61BD87CFD005946E8 /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F45D8F8B1BD87CFD005946E8 /* libWeiboSDK.a */; };
@@ -410,8 +407,8 @@
 		F46117E11BAD1101001A6F1A /* IQToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = F46117D01BAD1101001A6F1A /* IQToolbar.m */; };
 		F46117E21BAD1101001A6F1A /* IQUIView+IQKeyboardToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = F46117D21BAD1101001A6F1A /* IQUIView+IQKeyboardToolbar.m */; };
 		F46117E31BAD1102001A6F1A /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F46117D51BAD1101001A6F1A /* IQKeyboardManager.bundle */; };
-		F46117F01BAE556B001A6F1A /* PIEEliteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F46117EF1BAE556B001A6F1A /* PIEEliteViewController.m */; };
-		F46117F31BAE558C001A6F1A /* PIEEliteScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F46117F21BAE558C001A6F1A /* PIEEliteScrollView.m */; };
+		F465C6FC1C294EAE00D8A410 /* PIEChannelDetailLatestPSCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F465C6FA1C294EAE00D8A410 /* PIEChannelDetailLatestPSCell.m */; };
+		F465C6FD1C294EAE00D8A410 /* PIEChannelDetailLatestPSCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F465C6FB1C294EAE00D8A410 /* PIEChannelDetailLatestPSCell.xib */; };
 		F46FB6DF1C102F9400FEB2E7 /* intro2.png in Resources */ = {isa = PBXBuildFile; fileRef = F46FB6DE1C102F9400FEB2E7 /* intro2.png */; };
 		F46FB6E11C10357000FEB2E7 /* intro1.png in Resources */ = {isa = PBXBuildFile; fileRef = F46FB6E01C10357000FEB2E7 /* intro1.png */; };
 		F47EF0861C031FF500BFB442 /* VVBlurPresentationController.m in Sources */ = {isa = PBXBuildFile; fileRef = F47EF07F1C031FF500BFB442 /* VVBlurPresentationController.m */; };
@@ -508,7 +505,7 @@
 		F4EC11111BCE5A73002D1DCF /* PIENotificationReplyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EC110F1BCE5A73002D1DCF /* PIENotificationReplyTableViewCell.m */; };
 		F4EC11161BCE5B9E002D1DCF /* PIENotificationSystemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EC11141BCE5B9E002D1DCF /* PIENotificationSystemTableViewCell.m */; };
 		F4EC111C1BCE6B9A002D1DCF /* PIENotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EC111B1BCE6B9A002D1DCF /* PIENotificationManager.m */; };
-		F4EC11201BCE6F9E002D1DCF /* PIENotificationEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EC111F1BCE6F9E002D1DCF /* PIENotificationEntity.m */; };
+		F4EC11201BCE6F9E002D1DCF /* PIEModelNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EC111F1BCE6F9E002D1DCF /* PIEModelNotification.m */; };
 		F4EC11231BCF456E002D1DCF /* PIENotificationVM.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EC11221BCF456E002D1DCF /* PIENotificationVM.m */; };
 		F4EC11251BCF55C8002D1DCF /* PIENotificationFollowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4EC11241BCF55C8002D1DCF /* PIENotificationFollowTableViewCell.xib */; };
 		F4EC11271BCF55EC002D1DCF /* PIENotificationLikeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4EC11261BCF55EC002D1DCF /* PIENotificationLikeTableViewCell.xib */; };
@@ -595,13 +592,10 @@
 		0E54C7861C1E8F5E00F431AC /* PIEToHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEToHelpViewController.m; sourceTree = "<group>"; };
 		0E54C7971C1E927A00F431AC /* PIEProceedingDoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEProceedingDoneViewController.h; sourceTree = "<group>"; };
 		0E54C7981C1E927A00F431AC /* PIEProceedingDoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEProceedingDoneViewController.m; sourceTree = "<group>"; };
-		0E5CE0B91C22E1BF000A5B55 /* PIEEliteHotReplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteHotReplyViewController.h; sourceTree = "<group>"; };
-		0E5CE0BA1C22E1BF000A5B55 /* PIEEliteHotReplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteHotReplyViewController.m; sourceTree = "<group>"; };
-		0E5CE0BC1C22E1D4000A5B55 /* PIEEliteFollowReplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteFollowReplyViewController.h; sourceTree = "<group>"; };
-		0E5CE0BD1C22E1D4000A5B55 /* PIEEliteFollowReplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteFollowReplyViewController.m; sourceTree = "<group>"; };
-		0E6F78FB1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelDetailLatestPSCell.h; sourceTree = "<group>"; };
-		0E6F78FC1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelDetailLatestPSCell.m; sourceTree = "<group>"; };
-		0E6F78FD1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEChannelDetailLatestPSCell.xib; sourceTree = "<group>"; };
+		0E5CE0B91C22E1BF000A5B55 /* PIEEliteHotViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteHotViewController.h; sourceTree = "<group>"; };
+		0E5CE0BA1C22E1BF000A5B55 /* PIEEliteHotViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteHotViewController.m; sourceTree = "<group>"; };
+		0E5CE0BC1C22E1D4000A5B55 /* PIEEliteFollowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteFollowViewController.h; sourceTree = "<group>"; };
+		0E5CE0BD1C22E1D4000A5B55 /* PIEEliteFollowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteFollowViewController.m; sourceTree = "<group>"; };
 		0E6F79001C16EE5C002F9FB6 /* PIEChannelDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelDetailViewController.h; sourceTree = "<group>"; };
 		0E6F79011C16EE5C002F9FB6 /* PIEChannelDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelDetailViewController.m; sourceTree = "<group>"; };
 		0ECE8FB11C16AB4500E98CB5 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
@@ -699,8 +693,6 @@
 		5C4C70D51AB6FD5700358989 /* PIEUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEUploadManager.m; sourceTree = "<group>"; };
 		5C4F5BDA1AA555F900226F64 /* PIENewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIENewViewController.h; path = homepage/PIENewViewController.h; sourceTree = "<group>"; };
 		5C4F5BDB1AA555F900226F64 /* PIENewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIENewViewController.m; path = homepage/PIENewViewController.m; sourceTree = "<group>"; };
-		5C4F5BED1AA5893700226F64 /* UIActionSheet+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActionSheet+Blocks.h"; sourceTree = "<group>"; };
-		5C4F5BEE1AA5893700226F64 /* UIActionSheet+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+Blocks.m"; sourceTree = "<group>"; };
 		5C51B2551AB908D200F442A6 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		5C535CAF1AF1FC8A00BF30D1 /* ATOMBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMBaseView.h; sourceTree = "<group>"; };
 		5C535CB01AF1FC8A00BF30D1 /* ATOMBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMBaseView.m; sourceTree = "<group>"; };
@@ -722,8 +714,8 @@
 		5C561A451AB7C51F0052D4D5 /* MTLFMDBAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTLFMDBAdapter.m; sourceTree = "<group>"; };
 		5C561A471AB7C7720052D4D5 /* ATOMUserDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATOMUserDAO.h; path = login/ATOMUserDAO.h; sourceTree = "<group>"; };
 		5C561A481AB7C7720052D4D5 /* ATOMUserDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATOMUserDAO.m; path = login/ATOMUserDAO.m; sourceTree = "<group>"; };
-		5C561A4C1AB7C8210052D4D5 /* PIEEntityImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEntityImage.h; sourceTree = "<group>"; };
-		5C561A4D1AB7C8210052D4D5 /* PIEEntityImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEntityImage.m; sourceTree = "<group>"; };
+		5C561A4C1AB7C8210052D4D5 /* PIEModelImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEModelImageInfo.h; sourceTree = "<group>"; };
+		5C561A4D1AB7C8210052D4D5 /* PIEModelImageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEModelImageInfo.m; sourceTree = "<group>"; };
 		5C561A4E1AB7C8210052D4D5 /* PIEEntityUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEntityUser.h; sourceTree = "<group>"; };
 		5C561A4F1AB7C8210052D4D5 /* PIEEntityUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEntityUser.m; sourceTree = "<group>"; };
 		5C561A521AB7C8670052D4D5 /* ATOMBaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMBaseModel.h; sourceTree = "<group>"; };
@@ -732,8 +724,8 @@
 		5C561A7B1AB7C9FB0052D4D5 /* ATOMBaseDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATOMBaseDAO.m; path = common/ATOMBaseDAO.m; sourceTree = "<group>"; };
 		5C561A7D1AB7CAA90052D4D5 /* ATOMCreateTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATOMCreateTable.h; path = common/ATOMCreateTable.h; sourceTree = "<group>"; };
 		5C561A7E1AB7CAA90052D4D5 /* ATOMCreateTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATOMCreateTable.m; path = common/ATOMCreateTable.m; sourceTree = "<group>"; };
-		5C561A891AB857870052D4D5 /* NSString+ATOMValidate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ATOMValidate.h"; sourceTree = "<group>"; };
-		5C561A8A1AB857870052D4D5 /* NSString+ATOMValidate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ATOMValidate.m"; sourceTree = "<group>"; };
+		5C561A891AB857870052D4D5 /* NSString+Tupai.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Tupai.h"; sourceTree = "<group>"; };
+		5C561A8A1AB857870052D4D5 /* NSString+Tupai.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Tupai.m"; sourceTree = "<group>"; };
 		5C5DDBC91AD3D0DC00F4B845 /* DDOtherUserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDOtherUserManager.h; sourceTree = "<group>"; };
 		5C5DDBCA1AD3D0DC00F4B845 /* DDOtherUserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDOtherUserManager.m; sourceTree = "<group>"; };
 		5C653B991AA96C820025814B /* BJImageCropper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BJImageCropper.h; sourceTree = "<group>"; };
@@ -876,8 +868,6 @@
 		5CDB06651AA45C680089121E /* DDPhoneRegisterVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDPhoneRegisterVC.m; sourceTree = "<group>"; };
 		5CDB06691AA45C920089121E /* ATOMMobileRegisterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMMobileRegisterView.h; sourceTree = "<group>"; };
 		5CDB066A1AA45C920089121E /* ATOMMobileRegisterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMMobileRegisterView.m; sourceTree = "<group>"; };
-		5CDB066C1AA46E6F0089121E /* UIAlertView+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Blocks.h"; sourceTree = "<group>"; };
-		5CDB066D1AA46E6F0089121E /* UIAlertView+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Blocks.m"; sourceTree = "<group>"; };
 		5CDB066F1AA47E760089121E /* DDAuthcodeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAuthcodeVC.h; sourceTree = "<group>"; };
 		5CDB06701AA47E760089121E /* DDAuthcodeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDAuthcodeVC.m; sourceTree = "<group>"; };
 		5CDB06721AA47EEC0089121E /* ATOMInputVerifyCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMInputVerifyCodeView.h; sourceTree = "<group>"; };
@@ -888,8 +878,8 @@
 		5CE4082E1ACE94D600A56E4B /* UIViewController+ATOMTracking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ATOMTracking.m"; sourceTree = "<group>"; };
 		5CEAC0311AD4F9540058037C /* DDMyCollectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMyCollectionManager.h; sourceTree = "<group>"; };
 		5CEAC0321AD4F9540058037C /* DDMyCollectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMyCollectionManager.m; sourceTree = "<group>"; };
-		903E09DC1C23DF9E006C87B8 /* PIEEliteViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteViewController2.h; sourceTree = "<group>"; };
-		903E09DD1C23DF9E006C87B8 /* PIEEliteViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteViewController2.m; sourceTree = "<group>"; };
+		903E09DC1C23DF9E006C87B8 /* PIEEliteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteViewController.h; sourceTree = "<group>"; };
+		903E09DD1C23DF9E006C87B8 /* PIEEliteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteViewController.m; sourceTree = "<group>"; };
 		90B3A07A1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECellIconStatusChangedNotificationKey.h; sourceTree = "<group>"; };
 		90B3A07B1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECellIconStatusChangedNotificationKey.m; sourceTree = "<group>"; };
 		90EC3D5A1C2A78D10085A7BE /* PIEProceedingToHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEProceedingToHelpViewController.h; sourceTree = "<group>"; };
@@ -1104,8 +1094,8 @@
 		F402F1001BE89CB4004988B4 /* PIESearchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIESearchManager.m; sourceTree = "<group>"; };
 		F402F1021BE8A327004988B4 /* PIEUserViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEUserViewModel.h; sourceTree = "<group>"; };
 		F402F1031BE8A327004988B4 /* PIEUserViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEUserViewModel.m; sourceTree = "<group>"; };
-		F409AA851BAFE39000736B0D /* PIEImageEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEImageEntity.h; sourceTree = "<group>"; };
-		F409AA861BAFE39000736B0D /* PIEImageEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEImageEntity.m; sourceTree = "<group>"; };
+		F409AA851BAFE39000736B0D /* PIEModelImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEModelImage.h; sourceTree = "<group>"; };
+		F409AA861BAFE39000736B0D /* PIEModelImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEModelImage.m; sourceTree = "<group>"; };
 		F41205B01C1986D500EE959F /* baozou.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = baozou.png; path = ../baozou.png; sourceTree = "<group>"; };
 		F41366941BBE73D900EE0C4E /* PIEReplyCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEReplyCollectionCell.xib; sourceTree = "<group>"; };
 		F413B04D1C167AB500F9BA27 /* PIECarouselPageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECarouselPageTableViewCell.h; sourceTree = "<group>"; };
@@ -1277,6 +1267,8 @@
 		F44A527E1C0C335000707281 /* PIEActionSheet_Report.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEActionSheet_Report.m; sourceTree = "<group>"; };
 		F44A52801C0C336500707281 /* PIEActionSheet_PS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEActionSheet_PS.h; sourceTree = "<group>"; };
 		F44A52811C0C336500707281 /* PIEActionSheet_PS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEActionSheet_PS.m; sourceTree = "<group>"; };
+		F45057251C2BDA5B00F7A302 /* PIEModelCatogory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEModelCatogory.h; sourceTree = "<group>"; };
+		F45057261C2BDA5B00F7A302 /* PIEModelCatogory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEModelCatogory.m; sourceTree = "<group>"; };
 		F45D8F881BD87CFD005946E8 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		F45D8F891BD87CFD005946E8 /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
 		F45D8F8B1BD87CFD005946E8 /* libWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeiboSDK.a; sourceTree = "<group>"; };
@@ -1346,10 +1338,9 @@
 		F46117D21BAD1101001A6F1A /* IQUIView+IQKeyboardToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQUIView+IQKeyboardToolbar.m"; sourceTree = "<group>"; };
 		F46117D31BAD1101001A6F1A /* KeyboardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardManager.h; sourceTree = "<group>"; };
 		F46117D51BAD1101001A6F1A /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IQKeyboardManager.bundle; sourceTree = "<group>"; };
-		F46117EE1BAE556B001A6F1A /* PIEEliteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteViewController.h; sourceTree = "<group>"; };
-		F46117EF1BAE556B001A6F1A /* PIEEliteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteViewController.m; sourceTree = "<group>"; };
-		F46117F11BAE558C001A6F1A /* PIEEliteScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteScrollView.h; sourceTree = "<group>"; };
-		F46117F21BAE558C001A6F1A /* PIEEliteScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteScrollView.m; sourceTree = "<group>"; };
+		F465C6F91C294EAE00D8A410 /* PIEChannelDetailLatestPSCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelDetailLatestPSCell.h; sourceTree = "<group>"; };
+		F465C6FA1C294EAE00D8A410 /* PIEChannelDetailLatestPSCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelDetailLatestPSCell.m; sourceTree = "<group>"; };
+		F465C6FB1C294EAE00D8A410 /* PIEChannelDetailLatestPSCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEChannelDetailLatestPSCell.xib; sourceTree = "<group>"; };
 		F46FB6DE1C102F9400FEB2E7 /* intro2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro2.png; sourceTree = "<group>"; };
 		F46FB6E01C10357000FEB2E7 /* intro1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro1.png; sourceTree = "<group>"; };
 		F47EF07E1C031FF500BFB442 /* VVBlurPresentationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VVBlurPresentationController.h; sourceTree = "<group>"; };
@@ -1522,8 +1513,8 @@
 		F4EC11141BCE5B9E002D1DCF /* PIENotificationSystemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENotificationSystemTableViewCell.m; sourceTree = "<group>"; };
 		F4EC111A1BCE6B9A002D1DCF /* PIENotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIENotificationManager.h; sourceTree = "<group>"; };
 		F4EC111B1BCE6B9A002D1DCF /* PIENotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENotificationManager.m; sourceTree = "<group>"; };
-		F4EC111E1BCE6F9E002D1DCF /* PIENotificationEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIENotificationEntity.h; sourceTree = "<group>"; };
-		F4EC111F1BCE6F9E002D1DCF /* PIENotificationEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENotificationEntity.m; sourceTree = "<group>"; };
+		F4EC111E1BCE6F9E002D1DCF /* PIEModelNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEModelNotification.h; sourceTree = "<group>"; };
+		F4EC111F1BCE6F9E002D1DCF /* PIEModelNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEModelNotification.m; sourceTree = "<group>"; };
 		F4EC11211BCF456E002D1DCF /* PIENotificationVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIENotificationVM.h; sourceTree = "<group>"; };
 		F4EC11221BCF456E002D1DCF /* PIENotificationVM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENotificationVM.m; sourceTree = "<group>"; };
 		F4EC11241BCF55C8002D1DCF /* PIENotificationFollowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIENotificationFollowTableViewCell.xib; sourceTree = "<group>"; };
@@ -1671,13 +1662,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		0E3FB9E81C155E8E0012E290 /* Categories */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Categories;
-			sourceTree = "<group>";
-		};
 		0E54C7671C1E8F5E00F431AC /* proceeding */ = {
 			isa = PBXGroup;
 			children = (
@@ -1818,9 +1802,9 @@
 				0EF2F5C21C154A5700F27D61 /* PIEChannelTableViewCell.h */,
 				0EF2F5C31C154A5700F27D61 /* PIEChannelTableViewCell.m */,
 				0EF2F5C41C154A5700F27D61 /* PIEChannelTableViewCell.xib */,
-				0E6F78FB1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.h */,
-				0E6F78FC1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.m */,
-				0E6F78FD1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.xib */,
+				F465C6F91C294EAE00D8A410 /* PIEChannelDetailLatestPSCell.h */,
+				F465C6FA1C294EAE00D8A410 /* PIEChannelDetailLatestPSCell.m */,
+				F465C6FB1C294EAE00D8A410 /* PIEChannelDetailLatestPSCell.xib */,
 				0ECED3441C17CC4E00D3F097 /* PIEChannelDetailAskPSItemView.h */,
 				0ECED3451C17CC4E00D3F097 /* PIEChannelDetailAskPSItemView.m */,
 			);
@@ -1943,16 +1927,12 @@
 				F4C0DFE71BE9D443000615CF /* BannerWebView */,
 				F4D9F6C91BBFC5390023A53B /* follow */,
 				F4D9F6C81BBFC5310023A53B /* hot */,
-				F46117F11BAE558C001A6F1A /* PIEEliteScrollView.h */,
-				F46117F21BAE558C001A6F1A /* PIEEliteScrollView.m */,
-				F46117EE1BAE556B001A6F1A /* PIEEliteViewController.h */,
-				F46117EF1BAE556B001A6F1A /* PIEEliteViewController.m */,
-				903E09DC1C23DF9E006C87B8 /* PIEEliteViewController2.h */,
-				903E09DD1C23DF9E006C87B8 /* PIEEliteViewController2.m */,
-				0E5CE0B91C22E1BF000A5B55 /* PIEEliteHotReplyViewController.h */,
-				0E5CE0BA1C22E1BF000A5B55 /* PIEEliteHotReplyViewController.m */,
-				0E5CE0BC1C22E1D4000A5B55 /* PIEEliteFollowReplyViewController.h */,
-				0E5CE0BD1C22E1D4000A5B55 /* PIEEliteFollowReplyViewController.m */,
+				903E09DC1C23DF9E006C87B8 /* PIEEliteViewController.h */,
+				903E09DD1C23DF9E006C87B8 /* PIEEliteViewController.m */,
+				0E5CE0B91C22E1BF000A5B55 /* PIEEliteHotViewController.h */,
+				0E5CE0BA1C22E1BF000A5B55 /* PIEEliteHotViewController.m */,
+				0E5CE0BC1C22E1D4000A5B55 /* PIEEliteFollowViewController.h */,
+				0E5CE0BD1C22E1D4000A5B55 /* PIEEliteFollowViewController.m */,
 				F4D07A5B1BBA3AB70016A8B5 /* PIEEliteManager.h */,
 				F4D07A5C1BBA3AB70016A8B5 /* PIEEliteManager.m */,
 			);
@@ -2086,18 +2066,20 @@
 		5C561A4B1AB7C8210052D4D5 /* model */ = {
 			isa = PBXGroup;
 			children = (
-				F4EC111E1BCE6F9E002D1DCF /* PIENotificationEntity.h */,
-				F4EC111F1BCE6F9E002D1DCF /* PIENotificationEntity.m */,
 				5C54DF211AB9772000BDE34D /* PIEPageEntity.h */,
 				5C54DF221AB9772000BDE34D /* PIEPageEntity.m */,
+				F4EC111E1BCE6F9E002D1DCF /* PIEModelNotification.h */,
+				F4EC111F1BCE6F9E002D1DCF /* PIEModelNotification.m */,
+				F45057251C2BDA5B00F7A302 /* PIEModelCatogory.h */,
+				F45057261C2BDA5B00F7A302 /* PIEModelCatogory.m */,
 				5C561A521AB7C8670052D4D5 /* ATOMBaseModel.h */,
 				5C561A531AB7C8670052D4D5 /* ATOMBaseModel.m */,
 				E93D237F1B3D065C0081F632 /* ATOMShare.h */,
 				E93D23801B3D065C0081F632 /* ATOMShare.m */,
-				5C561A4C1AB7C8210052D4D5 /* PIEEntityImage.h */,
-				5C561A4D1AB7C8210052D4D5 /* PIEEntityImage.m */,
-				F409AA851BAFE39000736B0D /* PIEImageEntity.h */,
-				F409AA861BAFE39000736B0D /* PIEImageEntity.m */,
+				5C561A4C1AB7C8210052D4D5 /* PIEModelImageInfo.h */,
+				5C561A4D1AB7C8210052D4D5 /* PIEModelImageInfo.m */,
+				F409AA851BAFE39000736B0D /* PIEModelImage.h */,
+				F409AA861BAFE39000736B0D /* PIEModelImage.m */,
 				5C561A4E1AB7C8210052D4D5 /* PIEEntityUser.h */,
 				5C561A4F1AB7C8210052D4D5 /* PIEEntityUser.m */,
 				5C54DF241AB97B8400BDE34D /* PIECommentEntity.h */,
@@ -2289,7 +2271,6 @@
 				5CDB05EA1AA400410089121E /* Controller */,
 				5CDB05EC1AA400410089121E /* Vendor */,
 				5CDB05ED1AA400410089121E /* Uitility */,
-				0E3FB9E81C155E8E0012E290 /* Categories */,
 				5CDB05C81AA3FE520089121E /* AppDelegate.h */,
 				5CDB05C91AA3FE520089121E /* AppDelegate.m */,
 				5C6CE6B81ADBE8A10035F522 /* EmojisList.plist */,
@@ -2430,13 +2411,7 @@
 				90B3A07B1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m */,
 				5C6CEF281AF18BA800F06213 /* ATOMConstant.h */,
 				5C6CEF291AF18BA800F06213 /* ATOMConstant.m */,
-				5C4F5BED1AA5893700226F64 /* UIActionSheet+Blocks.h */,
-				5C4F5BEE1AA5893700226F64 /* UIActionSheet+Blocks.m */,
-				5CDB066C1AA46E6F0089121E /* UIAlertView+Blocks.h */,
-				5CDB066D1AA46E6F0089121E /* UIAlertView+Blocks.m */,
 				5CDB06081AA4078E0089121E /* MacroUtils.h */,
-				5C561A891AB857870052D4D5 /* NSString+ATOMValidate.h */,
-				5C561A8A1AB857870052D4D5 /* NSString+ATOMValidate.m */,
 				5C84062A1ABA67CC00068F35 /* JSONKit.h */,
 				5C84062B1ABA67CC00068F35 /* JSONKit.m */,
 				E90C7C5E1B20A0FC00CF0E6A /* KShareManager.h */,
@@ -3755,6 +3730,8 @@
 				F4C9BE4B1C1D4F8C00A1AE82 /* UIImage+Colors.m */,
 				E94B03281B7DE6EC00863C6F /* UIColor+PSGod.h */,
 				E94B03291B7DE6EC00863C6F /* UIColor+PSGod.m */,
+				5C561A891AB857870052D4D5 /* NSString+Tupai.h */,
+				5C561A8A1AB857870052D4D5 /* NSString+Tupai.m */,
 			);
 			name = categories;
 			sourceTree = "<group>";
@@ -4152,6 +4129,7 @@
 				E942897F1B5B32A200ED26E4 /* NotificationBackgroundWarning@2x.png in Resources */,
 				E942897A1B5B32A200ED26E4 /* NotificationBackgroundSuccess.png in Resources */,
 				3B2D90FF1BA03FB000D6A243 /* LICENSE in Resources */,
+				F465C6FD1C294EAE00D8A410 /* PIEChannelDetailLatestPSCell.xib in Resources */,
 				E942897C1B5B32A200ED26E4 /* NotificationBackgroundSuccessIcon.png in Resources */,
 				F4C0DFEC1BE9D45F000615CF /* PIEWebViewViewController.xib in Resources */,
 				F41366951BBE73D900EE0C4E /* PIEReplyCollectionCell.xib in Resources */,
@@ -4221,7 +4199,6 @@
 				F45D8FAA1BD87CFD005946E8 /* ShareSDK.bundle in Resources */,
 				E991EF0D1B7371D200025108 /* bg1@2x.png in Resources */,
 				F4E713391BE3557E0046C7A9 /* PIEFriendReplyCollectionViewCell.xib in Resources */,
-				0E6F78FF1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.xib in Resources */,
 				F4F72C051BCB8F08002FF05A /* PIEMyCollectionViewController.xib in Resources */,
 				0EF2F5C61C154A5700F27D61 /* PIEChannelBannerCell.xib in Resources */,
 				F4EC11251BCF55C8002D1DCF /* PIENotificationFollowTableViewCell.xib in Resources */,
@@ -4245,7 +4222,7 @@
 			files = (
 				5CDB05CA1AA3FE520089121E /* AppDelegate.m in Sources */,
 				5C83A8961AC66F910071A024 /* POPVector.mm in Sources */,
-				903E09DE1C23DF9E006C87B8 /* PIEEliteViewController2.m in Sources */,
+				903E09DE1C23DF9E006C87B8 /* PIEEliteViewController.m in Sources */,
 				F41BA0CF1C0EDCE800979D43 /* MJRefreshNormalHeader.m in Sources */,
 				F4275A121BE0786400BBE7E4 /* SLKTextView.m in Sources */,
 				5C83A8921AC66F910071A024 /* POPLayerExtras.mm in Sources */,
@@ -4258,13 +4235,11 @@
 				5C83A8941AC66F910071A024 /* POPPropertyAnimation.mm in Sources */,
 				F4F28F201C23AE9B0067F2E4 /* SDWebImageDecoder.m in Sources */,
 				F41BA0C71C0EDCE800979D43 /* MJRefreshHeader.m in Sources */,
-				5CDB066E1AA46E6F0089121E /* UIAlertView+Blocks.m in Sources */,
 				E95691B81B22E88300DA84BB /* NSValueTransformer+MTLPredefinedTransformerAdditions.m in Sources */,
 				F4993CEC1BE5B32C007F9BE4 /* UIAlertView+AFNetworking.m in Sources */,
 				E9F8908E1B86C4AB0057ECBF /* FMDatabase.m in Sources */,
 				F4D3A3B01BD09227009760E8 /* SwipeView.m in Sources */,
 				3BE1AED01B9FE9C900CE2303 /* QBVideoIndicatorView.m in Sources */,
-				F46117F31BAE558C001A6F1A /* PIEEliteScrollView.m in Sources */,
 				F439303C1BE4BD75006C9437 /* MRCircularProgressView.m in Sources */,
 				E95691B61B22E88300DA84BB /* NSObject+MTLComparisonAdditions.m in Sources */,
 				5C31017E1AAE852F00EF529B /* PIESettingsTableViewCell.m in Sources */,
@@ -4295,9 +4270,11 @@
 				5CEAC0331AD4F9540058037C /* DDMyCollectionManager.m in Sources */,
 				F4F72C201BCCFB7B002FF05A /* PIEShareIcon.m in Sources */,
 				3BD87D081B9E8888003B2310 /* PIECarouselViewController.m in Sources */,
+				F465C6FC1C294EAE00D8A410 /* PIEChannelDetailLatestPSCell.m in Sources */,
 				0E54C7891C1E8F5E00F431AC /* PIEProceedingAskTableViewCell.m in Sources */,
 				F41BA0D41C0EDCE800979D43 /* UIScrollView+MJRefresh.m in Sources */,
 				F4F28F251C23AE9B0067F2E4 /* UIButton+WebCache.m in Sources */,
+				F45057271C2BDA5B00F7A302 /* PIEModelCatogory.m in Sources */,
 				3BE1AECC1B9FE9C900CE2303 /* QBCheckmarkView.m in Sources */,
 				5C5DDBCB1AD3D0DC00F4B845 /* DDOtherUserManager.m in Sources */,
 				F4993CEB1BE5B32C007F9BE4 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
@@ -4306,7 +4283,7 @@
 				5CDB06711AA47E760089121E /* DDAuthcodeVC.m in Sources */,
 				90FA11711C1FDB8900D8B602 /* DeviceUtil.m in Sources */,
 				E99D2F5F1B1C7E8D000D7784 /* NYXImagesHelper.m in Sources */,
-				F4EC11201BCE6F9E002D1DCF /* PIENotificationEntity.m in Sources */,
+				F4EC11201BCE6F9E002D1DCF /* PIEModelNotification.m in Sources */,
 				5C54DF2D1AB99F5300BDE34D /* DDTipLabelManager.m in Sources */,
 				F4309E2D1BC8C05C0035033C /* PIEModifyProfileViewController.m in Sources */,
 				5CDB06031AA405A40089121E /* UIColor+Hex.m in Sources */,
@@ -4356,9 +4333,8 @@
 				0E3FB9EB1C15603A0012E290 /* PIENewReplyViewController.m in Sources */,
 				5C3101841AAE8D9900EF529B /* ATOMModifyPasswordView.m in Sources */,
 				5C54DF161AB9529200BDE34D /* PIENewScrollView.m in Sources */,
-				0E5CE0BB1C22E1BF000A5B55 /* PIEEliteHotReplyViewController.m in Sources */,
+				0E5CE0BB1C22E1BF000A5B55 /* PIEEliteHotViewController.m in Sources */,
 				E93D237E1B3CFA4D0081F632 /* DDShareManager.m in Sources */,
-				F46117F01BAE556B001A6F1A /* PIEEliteViewController.m in Sources */,
 				F46117D91BAD1101001A6F1A /* IQUIViewController+Additions.m in Sources */,
 				0E54C7961C1E8F5E00F431AC /* PIEToHelpViewController.m in Sources */,
 				3BE1AECE1B9FE9C900CE2303 /* QBImagePickerController.m in Sources */,
@@ -4369,7 +4345,7 @@
 				F4EA4DB81BF49CB700486304 /* PIEAgreementsViewController.m in Sources */,
 				E9F890901B86C4AB0057ECBF /* FMDatabasePool.m in Sources */,
 				5C0D282D1ACA333200491452 /* PIECommentManager.m in Sources */,
-				0E5CE0BE1C22E1D4000A5B55 /* PIEEliteFollowReplyViewController.m in Sources */,
+				0E5CE0BE1C22E1D4000A5B55 /* PIEEliteFollowViewController.m in Sources */,
 				F4D015BB1BA6AF7200A28329 /* PIEThumbAnimateView.m in Sources */,
 				5CE4082F1ACE94D600A56E4B /* UIViewController+ATOMTracking.m in Sources */,
 				F4275A101BE0786400BBE7E4 /* SLKTextInputbar.m in Sources */,
@@ -4403,7 +4379,6 @@
 				F4EC11111BCE5A73002D1DCF /* PIENotificationReplyTableViewCell.m in Sources */,
 				0EF2F5C51C154A5700F27D61 /* PIEChannelBannerCell.m in Sources */,
 				F4E72E731C070C6C0056791D /* PIECustomViewFromXib.m in Sources */,
-				0E6F78FE1C16E7BE002F9FB6 /* PIEChannelDetailLatestPSCell.m in Sources */,
 				5CDB06061AA405A40089121E /* UIColor+iOS7.m in Sources */,
 				F4275A1D1BE0B9ED00BBE7E4 /* PIEMyFollowViewController.m in Sources */,
 				F4324CDF1C0956CD005C61AC /* PIECommentViewController.m in Sources */,
@@ -4428,7 +4403,6 @@
 				5C4C70DB1AB6FD5700358989 /* PIEUploadManager.m in Sources */,
 				F47EF0861C031FF500BFB442 /* VVBlurPresentationController.m in Sources */,
 				F46117E21BAD1101001A6F1A /* IQUIView+IQKeyboardToolbar.m in Sources */,
-				5C4F5BEF1AA5893700226F64 /* UIActionSheet+Blocks.m in Sources */,
 				F4BBE7721BBE3F9D00003CDE /* PIEReplyCollectionViewController.m in Sources */,
 				F45ECF511BD1E39500417A75 /* PIEMyLikedPagesViewController.m in Sources */,
 				F42ED3B11BC4FC2D0052A0BF /* PIEMeViewController.m in Sources */,
@@ -4501,7 +4475,7 @@
 				F4E155281C24EF000015A721 /* PIEActionSheet_UserAbuse.m in Sources */,
 				F46117D71BAD1101001A6F1A /* IQUITextFieldView+Additions.m in Sources */,
 				F41BA0D31C0EDCE800979D43 /* UIScrollView+MJExtension.m in Sources */,
-				5C561A8B1AB857870052D4D5 /* NSString+ATOMValidate.m in Sources */,
+				5C561A8B1AB857870052D4D5 /* NSString+Tupai.m in Sources */,
 				F43930401BE4BD75006C9437 /* MRProgressView.m in Sources */,
 				E93D23871B3FA6FB0081F632 /* DDMySettingsManager.m in Sources */,
 				F41BA0C81C0EDCE800979D43 /* MJRefreshAutoGifFooter.m in Sources */,
@@ -4613,7 +4587,7 @@
 				F4F28F2E1C23F70A0067F2E4 /* PIESearchUserViewController.m in Sources */,
 				F4F72BEE1BCB4EF7002FF05A /* FXBlurView.m in Sources */,
 				E9CBFF4C1B5214FB00DC8ED4 /* SIAlertView.m in Sources */,
-				5C561A501AB7C8210052D4D5 /* PIEEntityImage.m in Sources */,
+				5C561A501AB7C8210052D4D5 /* PIEModelImageInfo.m in Sources */,
 				F4C705E21C0998750057AA6A /* PIEImageView_blur.m in Sources */,
 				F4AE73BD1BBA770000734BCB /* PIEFriendViewController.m in Sources */,
 				5C83A8881AC66F910071A024 /* POPAnimationEvent.mm in Sources */,
@@ -4636,7 +4610,7 @@
 				0E3FB9E41C155E0C0012E290 /* PIENewAskMakeUpViewController.m in Sources */,
 				F4993CEF1BE5B32C007F9BE4 /* UIProgressView+AFNetworking.m in Sources */,
 				E94B032A1B7DE6EC00863C6F /* UIColor+PSGod.m in Sources */,
-				F409AA871BAFE39000736B0D /* PIEImageEntity.m in Sources */,
+				F409AA871BAFE39000736B0D /* PIEModelImage.m in Sources */,
 				5C0D28301ACA83C400491452 /* PIEEntityCommentReply.m in Sources */,
 				F45ECF441BD1DB5B00417A75 /* PIEEliteHotReplyTableViewCell.m in Sources */,
 				F4F72BFF1BCB6CD6002FF05A /* PIEMyCollectionTableViewCell.m in Sources */,

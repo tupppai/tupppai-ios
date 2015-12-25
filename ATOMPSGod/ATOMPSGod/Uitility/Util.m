@@ -69,7 +69,7 @@
     return s;
 }
 
-+ (void) imageWithVm:(PIEPageVM*)vm block:(void(^)(UIImage*))block
++ (void) generateShareImageFromViewModel:(PIEPageVM*)vm block:(void(^)(UIImage*))block
 {
     
     PIEShareImageView* view = [PIEShareImageView new];

@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "PIEEntityImage.h"
+#import "PIEModelImageInfo.h"
 
-@implementation PIEEntityImage
+@implementation PIEModelImageInfo
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{

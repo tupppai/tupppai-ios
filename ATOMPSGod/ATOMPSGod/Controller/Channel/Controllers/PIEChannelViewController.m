@@ -272,7 +272,8 @@
     for (UIView *subView in view.subviews) {
         if([subView isKindOfClass:[UIImageView class]]){
             UIImageView *imageView = (UIImageView *)subView;
-            [imageView sd_setImageWithURL:[NSURL URLWithString:vm.imageURL]];
+            NSString* urlString = [vm.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION*0.2];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:urlString]];
         }
     }
     return view;

@@ -8,7 +8,7 @@
 
 #import "ATOMBaseModel.h"
 
-@interface PIEEntityImage : ATOMBaseModel
+@interface PIEModelImageInfo : ATOMBaseModel
 
 @property (nonatomic, assign) NSInteger imageID;
 @property (nonatomic, copy) NSString *imageURL;

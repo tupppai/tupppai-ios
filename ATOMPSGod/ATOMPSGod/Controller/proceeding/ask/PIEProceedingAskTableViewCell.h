@@ -21,6 +21,8 @@
 
 @property (weak, nonatomic) IBOutlet PIEImageView *originView1;
 @property (weak, nonatomic) IBOutlet PIEImageView *originView2;
+@property (weak, nonatomic) IBOutlet UILabel *category_name;
+@property (weak, nonatomic) IBOutlet UILabel *update_time;
 
 
 - (void)injectSource:(NSArray*)array;
