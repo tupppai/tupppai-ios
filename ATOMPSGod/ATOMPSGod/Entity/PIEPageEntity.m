@@ -7,6 +7,9 @@
 //
 
 
+#import  "PIEModelImage.h"
+#import  "PIECommentEntity.h"
+#import "PIEModelCatogory.h"
 
 @implementation PIEPageEntity
 
@@ -24,7 +27,6 @@
              @"totalPraiseNumber" : @"up_count",
              @"totalCommentNumber" : @"comment_count",
              @"totalShareNumber" : @"share_count",
-             @"totalWXShareNumber" : @"weixin_share_count",
              @"totalWorkNumber" : @"reply_count",
              @"collectCount" : @"collect_count",
              @"imageWidth" : @"image_width",
@@ -32,45 +34,26 @@
              @"liked" :@"uped",
              @"collected" : @"collected",
              @"type" : @"type",
-             @"thumbEntityArray":@"ask_uploads",
-             @"hotCommentEntityArray":@"hot_comments",
+             @"models_ask":@"ask_uploads",
+             @"models_comment":@"hot_comments",
              @"followed":@"is_follow",
-             @"comment" : @"content",
+             @"isMyFan" : @"is_fan",
+             @"imageRatio":@"image_ratio",
+             @"models_category":@"categories",
+             @"isV":@"is_star",
+             @"lovedCount":@"love_count",
              };
 }
 
-+ (NSDictionary *)FMDBColumnsByPropertyKey {
-    return @{
-             @"ID" : @"ID",
-             @"askID" : @"askID",
-             @"uid" : @"uid",
-             @"nickname" : @"nickname",
-             @"avatar" : @"avatar",
-             @"uploadTime" : @"uploadTime",
-             @"imageURL" : @"imageURL",
-             @"userDescription" : @"userDescription",
-             @"isDownload" : @"isDownload",
-             @"totalPraiseNumber" : @"totalPraiseNumber",
-             @"totalCommentNumber" : @"totalCommentNumber",
-             @"totalShareNumber" : @"totalShareNumber",
-             @"totalWXShareNumber" : @"totalWXShareNumber",
-             @"totalWorkNumber" : @"totalWorkNumber",
-             @"imageWidth" : @"imageWidth",
-             @"imageHeight" : @"imageHeight",
-             @"homePageType":  @"homePageType",
-             @"liked" :@"liked",
-             @"collected":@"collected",
-             @"type":@"type",
-             @"thumbEntityArray":@"thumbEntityArray",
-             };
-}
 
-+ (NSArray *)FMDBPrimaryKeys {
-    return @[@"ID"];
++ (NSValueTransformer*)models_askJSONTransformer {
+    return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[PIEModelImage class]];
 }
-
-+ (NSString *)FMDBTableName {
-    return @"PIEPageEntity";
++ (NSValueTransformer*)models_commentJSONTransformer {
+    return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[PIECommentEntity class]];
+}
++ (NSValueTransformer*)models_categoryJSONTransformer {
+    return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[PIEModelCatogory class]];
 }
 
 @end

@@ -47,7 +47,11 @@
 @property (nonatomic, assign) CGPoint startPanLocation;
 
 @property (nonatomic) CAPSPageMenu *pageMenu;
+
+@property (nonatomic, assign) long long timeStamp_updateCurrentUser;
+
 @end
+
 
 @implementation PIEMeViewController
 
@@ -56,7 +60,7 @@
     [self setupNavBar];
     [self setupViews];
     [self setupPageMenu];
-    
+    [self updateViewsWithData];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(scrollUp)
                                                  name:@"PIEMeScrollUp"
@@ -115,7 +119,6 @@
     
     [self updateNoticationStatus];
     [MobClick beginLogPageView:@"进入我的"];
-
 }
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -131,12 +134,29 @@
 }
 
 - (void)update {
-    [DDOtherUserManager getUserInfo:nil withBlock:^(PIEEntityUser *user) {
-        if (user) {
-            [[DDUserManager currentUser] saveAndUpdateUser:user];
-            [self updateViewsWithData];
+    BOOL shouldUpdate = NO;
+    long long currentTimeStamp = [[NSDate date]timeIntervalSince1970];
+    if (_timeStamp_updateCurrentUser) {
+        long long timeStamp_gap = currentTimeStamp - _timeStamp_updateCurrentUser;
+        if (timeStamp_gap>300) {
+            shouldUpdate = YES;
+            _timeStamp_updateCurrentUser = currentTimeStamp;
+        } else {
+            shouldUpdate = NO;
         }
-    }];
+    } else {
+        shouldUpdate = YES;
+        _timeStamp_updateCurrentUser = currentTimeStamp;
+    }
+    
+    if (shouldUpdate) {
+        
+        [DDUserManager DDGetUserInfoAndUpdateMe:^(BOOL success) {
+            if (success) {
+                [self updateViewsWithData];
+            }
+        }];
+    }
 
 }
 
@@ -162,11 +182,10 @@
     }
 }
 -(void)updateAvatar {
-        [DDService downloadImage:[DDUserManager currentUser].avatar withBlock:^(UIImage *image) {
+        [DDService sd_downloadImage:[DDUserManager currentUser].avatar withBlock:^(UIImage *image) {
             _avatarView.image = image;
             _topContainerView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:nil];
     }];
-    self.usernameLabel.text = [DDUserManager currentUser].username;
 }
 - (void)pushToSettingViewController {
     PIESettingsViewController* vc = [PIESettingsViewController new];
@@ -214,11 +233,11 @@
 
 }
 - (void)updateViewsWithData {
-    DDUserManager* user = [DDUserManager currentUser];
-    _usernameLabel.text = user.username;
+    PIEEntityUser* user = [DDUserManager currentUser];
+    _usernameLabel.text = user.nickname;
     _followCountLabel.text = [NSString stringWithFormat:@"%zd",user.attentionNumber];
     _fansCountLabel.text = [NSString stringWithFormat:@"%zd",user.fansNumber];
-    _likedCountLabel.text = [NSString stringWithFormat:@"%zd",user.praisedCount];
+    _likedCountLabel.text = [NSString stringWithFormat:@"%zd",user.likedCount];
     [self updateAvatar];
 }
 
@@ -252,9 +271,9 @@
     // Array to keep track of controllers in page menu
     
     NSMutableArray *controllerArray = [NSMutableArray array];
-    PIEMyAskViewController *controller3 = [PIEMyAskViewController new];
-    controller3.title = @"求P";
-    [controllerArray addObject:controller3];
+//    PIEMyAskViewController *controller3 = [PIEMyAskViewController new];
+//    controller3.title = @"求P";
+//    [controllerArray addObject:controller3];
     
     PIEMyReplyViewController *controller = [PIEMyReplyViewController new];
     controller.title = @"作品";

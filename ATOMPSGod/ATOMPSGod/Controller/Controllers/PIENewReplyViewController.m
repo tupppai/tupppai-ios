@@ -18,8 +18,12 @@
 #import "PIECommentViewController.h"
 #import "PIEShareView.h"
 #import "PIEReplyCollectionViewController.h"
-
-
+#import "DDCollectManager.h"
+#import "DDNavigationController.h"
+#import "AppDelegate.h"
+#import "PIEToHelpViewController.h"
+#import "DeviceUtil.h"
+#import "PIECellIconStatusChangedNotificationKey.h"
 /* Variables */
 @interface PIENewReplyViewController ()
 
@@ -46,6 +50,10 @@
 @property (nonatomic, strong) PIEPageVM *selectedVM;
 
 @property (nonatomic, strong) PIEShareView *shareView;
+
+@property (nonatomic, strong) UIButton                      *takePhotoButton;
+
+@property (nonatomic, strong) MASConstraint *takePhotoButtonConstraint;
 
 @end
 
@@ -76,12 +84,14 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 #pragma mark UI life cycles
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.view = self.tableViewReply;
     self.title = @"最新作品";
+    self.view.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.tableViewReply ];
+    [self configureTakePhotoButton];
     [self setupGestures];
     [self setupData];
-    [self setupNotifications];
+    
+    [self setupNotificationObserver];
     
     /**
      *  假如model（_source）为空的话，那就重新fetch data
@@ -121,32 +131,28 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     _sourceReply            = [NSMutableArray new];
 }
 
-#pragma mark - Notification methods
-- (void)setupNotifications {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_New" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldDoUploadJob) name:@"UploadRightNow" object:nil];
+- (void)setupNotificationObserver
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateShareStatus)
+                                                 name:PIESharedIconStatusChangedNotification
+                                               object:nil];
 }
 
-- (void)shouldDoUploadJob {
-    _progressView = [MRNavigationBarProgressView progressViewForNavigationController:self.navigationController];
-    _progressView.progressTintColor = [UIColor pieYellowColor];
+
+- (void)configureTakePhotoButton
+{
+    // --- added as subViews
+    [self.view addSubview:self.takePhotoButton];
     
-    BOOL should = [[NSUserDefaults standardUserDefaults]
-                   boolForKey:@"shouldDoUploadJob"];
-    if (should) {
-        [self PleaseDoTheUploadProcess];
-    }
-    [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:@"shouldDoUploadJob"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (void) PleaseDoTheUploadProcess {
-    PIEUploadManager* manager = [PIEUploadManager new];
-    [manager upload:^(CGFloat percentage,BOOL success) {
-        [_progressView setProgress:percentage animated:YES];
-        if (success) {
-            [_tableViewReply.mj_header beginRefreshing];
-        }
+    // --- Autolayout constraints
+    __weak typeof(self) weakSelf = self;
+    [_takePhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(weakSelf.view.mas_centerX);
+        make.height.mas_equalTo(50);
+        make.width.mas_equalTo(50);
+        self.takePhotoButtonConstraint =
+        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-12);
     }];
 }
 
@@ -155,15 +161,50 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
         [_tableViewReply.mj_header beginRefreshing];
     }
 }
+- (void)takePhoto {
+        PIEToHelpViewController* vc = [PIEToHelpViewController new];
+        [self.navigationController pushViewController:vc animated:YES];
+
+}
 
 /**
  *  remove observers while being deallocated.
  */
 -(void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_New" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UploadRightNow" object:nil];
-    //compiler would call [super dealloc] automatically in ARC.
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:PIESharedIconStatusChangedNotification
+                                                  object:nil];
 }
+
+#pragma mark - <UITableViewDelegate>
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [UIView animateWithDuration:0.1
+                     animations:^{
+                         [self.takePhotoButtonConstraint setOffset:50.0];
+                         [self.view layoutIfNeeded];
+                     }];
+    
+    
+    
+}
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+        [self.takePhotoButtonConstraint setOffset:-12];
+        [UIView animateWithDuration:0.6
+                              delay:1.0
+             usingSpringWithDamping:0.3
+              initialSpringVelocity:0
+                            options:0
+                         animations:^{
+                             [self.view layoutIfNeeded];
+                             
+                         } completion:^(BOOL finished) {
+                         }];
+        
+}
+
+
 
 #pragma mark - <UITableViewDataSource>
 
@@ -202,8 +243,9 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     _timeStamp_reply = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(_timeStamp_reply) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    //    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(1) forKey:@"page"];
+    [param setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
+
     
     PIEPageManager *pageManager = [PIEPageManager new];
     [pageManager pullReplySource:param block:^(NSMutableArray *array) {
@@ -220,6 +262,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     }];
 }
 
+
 - (void)getMoreRemoteReplySource {
     WS(ws);
     _currentIndex_reply ++;
@@ -227,8 +270,9 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:@(_timeStamp_reply) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    //    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
     [param setObject:@(_currentIndex_reply) forKey:@"page"];
+    
     PIEPageManager *pageManager = [PIEPageManager new];
     [pageManager pullReplySource:param block:^(NSMutableArray *array) {
         if (array.count) {
@@ -243,7 +287,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     }];
 }
 
-#pragma mark - Reply ???
+#pragma mark - ReplyCell中的“喜欢该P图”和“关注P图主”的点击事件
 -(void)likeReply {
     _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
     [DDService toggleLike:_selectedReplyCell.likeView.selected ID:_selectedVM.ID type:_selectedVM.type  withBlock:^(BOOL success) {
@@ -301,7 +345,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 }
 
 -(void)didPullRefreshUp:(UITableView *)tableView {
-        [self loadMoreData_reply];
+    [self loadMoreData_reply];
 }
 
 
@@ -339,7 +383,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
                 PIECarouselViewController2* vc = [PIECarouselViewController2 new];
                 _selectedVM.image = _selectedReplyCell.theImageView.image;
                 vc.pageVM = _selectedVM;
-                [self presentViewController:vc animated:YES completion:nil];
+                [self presentViewController:vc animated:NO completion:nil];
                 //                [self.navigationController pushViewController:vc animated:YES];
             }
             //点击头像
@@ -366,7 +410,8 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
                 [self followReplier];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.shareView.frame, p)) {
-                [self showShareView];
+//                [self showShareView];
+                [self showShareView:_selectedVM];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.commentView.frame, p)) {
                 PIECommentViewController* vc = [PIECommentViewController new];
@@ -393,52 +438,57 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
         
         //点击大图
         if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
-            [self showShareView];
+            [self showShareView:_selectedVM];
         }
     }
 
     
 }
 
-#pragma mark - Sharing-related method
+#pragma mark - <PIEShareViewDelegate> and its related methods
 
-#pragma mark - methods on Sharing<ATOMShareViewDelegate>
-- (void)updateShareStatus {
-    
-    /**
-     *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面的点赞数和分享数
-     */
-    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
-    [self updateStatus];
+- (void)shareViewDidShare:(PIEShareView *)shareView
+{
+//    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+//        [self updateShareStatus];
+//    }];
 }
 
-
-- (void)showShareView {
-    [self.shareView show];
-    
-}
--(PIEShareView *)shareView {
-    if (!_shareView) {
-        _shareView = [PIEShareView new];
-        _shareView.delegate = self;
-    }
-    return _shareView;
+- (void)shareViewDidCancel:(PIEShareView *)shareView
+{
+    [shareView dismiss];
 }
 
-#pragma mark - Synchronized data with newest action
 /**
- *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面的点赞数和分享数
+ *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面ReplyCell的分享数
  */
-- (void)updateStatus {
+- (void)updateShareStatus {
+    /*
+     _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
+     
+     */
+//    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
+    // 将分散在updateShareStatus 和 updateStatus  "同步分享数"的方法写到一起。
+    //    [self updateStatus];
     if (_selectedIndexPath) {
         [_tableViewReply reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
 
+/**
+ *  打开shareView
+ *
+ *  @param pageVM 想要分享的求P作品
+ */
+- (void)showShareView:(PIEPageVM *)pageVM {
+    [self.shareView show:pageVM];
+}
+
+
 #pragma mark - lazy loadings
 -(PIERefreshTableView *)tableViewReply {
     if (_tableViewReply == nil) {
-        _tableViewReply = [[PIERefreshTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*2, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_HEIGHT)];
+        _tableViewReply = [[PIERefreshTableView alloc] initWithFrame:self.view.bounds];
         _tableViewReply.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableViewReply.backgroundColor = [UIColor whiteColor];
         _tableViewReply.showsVerticalScrollIndicator = NO;
@@ -461,5 +511,39 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     return _tableViewReply;
 }
 
+- (UIButton *)takePhotoButton
+{
+    if (_takePhotoButton == nil) {
+        // instantiate only for once
+        _takePhotoButton = [[UIButton alloc] init];
+        
+        /* Configurations */
+        
+        // --- set background image
+        [_takePhotoButton setBackgroundImage:[UIImage imageNamed:@"pie_channelDetailTakePhotoButton"]
+                                    forState:UIControlStateNormal];
+        
+        // --- add drop shadows
+        _takePhotoButton.layer.shadowColor  = (__bridge CGColorRef _Nullable)
+        ([UIColor colorWithWhite:0.0 alpha:0.5]);
+        _takePhotoButton.layer.shadowOffset = CGSizeMake(0, 4);
+        _takePhotoButton.layer.shadowRadius = 8.0;
+        
+        // --- add target-actions
+        [_takePhotoButton addTarget:self
+                             action:@selector(takePhoto)
+                   forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _takePhotoButton;
+    
+}
+
+-(PIEShareView *)shareView {
+    if (!_shareView) {
+        _shareView          = [PIEShareView new];
+        _shareView.delegate = self;
+    }
+    return _shareView;
+}
 
 @end

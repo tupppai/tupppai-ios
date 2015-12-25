@@ -11,7 +11,7 @@
 #import "DDPhoneRegisterVC.h"
 #import "ATOMHeaderImageCropperViewController.h"
 #import "PIEUploadManager.h"
-#import "PIEEntityImage.h"
+#import "PIEModelImageInfo.h"
 #import "JGActionSheet.h"
 #import "AppDelegate.h"
 #import "DDNavigationController.h"
@@ -76,19 +76,20 @@
         [param setObject:_avatar forKey:@"avatar"];
     }
     [param setObject:@(_createProfileView.genderIsMan) forKey:@"sex"];
-    if (![[DDUserManager currentUser].username isEqualToString:_createProfileView.nicknameTextField.text]) {
+    if (![[DDUserManager currentUser].nickname isEqualToString:_createProfileView.nicknameTextField.text]) {
         [param setObject:_createProfileView.nicknameTextField.text forKey:@"nickname"];
     }
     [DDService updateProfile:param withBlock:^(BOOL success) {
         if (success) {
             [Hud success:@"修改成功"];
-            [DDUserManager currentUser].username = _createProfileView.nicknameTextField.text;
+            [DDUserManager currentUser].nickname = _createProfileView.nicknameTextField.text;
             [DDUserManager currentUser].sex = _createProfileView.genderIsMan;
             if (_avatar) {
                 //use reactive cocoa to update all avatar view.
                 [DDUserManager currentUser].avatar = _avatar;
+                [[AppDelegate APP].mainTabBarController updateTabbarAvatar];
             }
-            [DDUserManager updateDBUserFromCurrentUser];
+            [DDUserManager updateCurrentUserInDatabase];
             
             DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
             PIEMeViewController* mevc = [nav.viewControllers firstObject];
@@ -137,7 +138,7 @@
     NSData *data = UIImageJPEGRepresentation(image, 0.2);
     [_createProfileView.userHeaderButton setImage:image forState:UIControlStateNormal];
     PIEUploadManager *uploadImage = [PIEUploadManager new];
-    [uploadImage UploadImage:data WithBlock:^(PIEEntityImage *imageInfomation, NSError *error) {
+    [uploadImage UploadImage:data WithBlock:^(PIEModelImageInfo *imageInfomation, NSError *error) {
         if (error) {
             return ;
         }

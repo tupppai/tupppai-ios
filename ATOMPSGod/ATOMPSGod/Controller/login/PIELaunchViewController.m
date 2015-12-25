@@ -157,8 +157,16 @@
                     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
                     ;
                 } else {
-                    [DDUserManager currentUser].signUpType = type;
-                    [DDUserManager currentUser].sdkUser = sdkUser;
+                    [[NSUserDefaults standardUserDefaults]setObject:@(type) forKey:@"SignUpType"];
+                    
+                    NSMutableDictionary* dic = [NSMutableDictionary new];
+                    [dic setObject:sdkUser.uid forKey:@"uid"];
+                    [dic setObject:sdkUser.icon forKey:@"icon"];
+                    [dic setObject:@(sdkUser.gender) forKey:@"gender"];
+                    [dic setObject:sdkUser.nickname forKey:@"nickname"];
+                    [[NSUserDefaults standardUserDefaults]setObject:dic forKey:@"SdkUser"];
+//                    [DDUserManager currentUser].signUpType = type;
+//                    [DDUserManager currentUser].sdkUser = sdkUser;
                     DDCreateProfileVC *cpvc = [DDCreateProfileVC new];
                     [self.navigationController pushViewController:cpvc animated:YES];
                 }
@@ -184,36 +192,7 @@
 
 -(void)tapSignUp1 {
     
-//    [Util warningBetaTest];
-//    [self.signUpView dismiss];
-//    [DDShareManager authorize2:SSDKPlatformTypeQQ withBlock:^(SSDKUser *sdkUser) {
-//            NSString* openID = sdkUser.uid;
-//            NSMutableDictionary* param = [NSMutableDictionary new];
-//            [param setObject:openID forKey:@"openid"];
-//            [DDUserManager DD3PartyAuth:param AndType:@"qq" withBlock:^(bool isRegistered, NSString *info) {
-//                if (isRegistered) {
-//                    [Hud activity:@"" inView:self.view];
-//                    [self.navigationController setViewControllers:[NSArray array]];
-//                    [AppDelegate APP].mainTabBarController = nil;
-//                    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
-//                    ;
-//                } else {
-//                    [DDUserManager currentUser].signUpType = ATOMSignUpQQ;
-//                    [DDUserManager currentUser].sourceData = sdkUser.rawData;
-//                    PIEUserProfileViewModel* ipvm = [PIEUserProfileViewModel new];
-//                    ipvm.nickName = sdkUser.nickname;
-//                    ipvm.avatarURL = sdkUser.icon;
-//                    if (sdkUser.gender == 1) {
-//                        ipvm.gender = @"女";
-//                    } else {
-//                        ipvm.gender = @"男";
-//                    }
-//                    DDCreateProfileVC *cpvc = [DDCreateProfileVC new];
-//                    cpvc.userProfileViewModel = ipvm;
-//                    [self.navigationController pushViewController:cpvc animated:YES];
-//                }
-//            }];
-//    }];
+
     [self.signUpView dismiss];
     [self login:ATOMSignUpQQ];
 
@@ -221,46 +200,12 @@
 -(void)tapSignUp2 {
     [self.signUpView dismiss];
     [self login:ATOMSignUpWechat];
-//    [DDShareManager authorize:SSDKPlatformTypeWechat withBlock:^(NSDictionary *sourceData) {
-//        if (sourceData) {
-//            NSString* openid = sourceData[@"openid"];
-//            NSMutableDictionary* param = [NSMutableDictionary new];
-//            [param setObject:openid forKey:@"openid"];
-//            
-//            [DDUserManager DD3PartyAuth:param AndType:@"weixin" withBlock:^(bool isRegistered, NSString *info) {
-//                if (isRegistered) {
-//                    [Hud activity:@"登录中" inView:self.view];
-//                    [self.navigationController setViewControllers:[NSArray array]];
-//                    [AppDelegate APP].mainTabBarController = nil;
-//                    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
-//                    ;
-//                } else  {
-//                    [DDUserManager currentUser].signUpType = ATOMSignUpWechat;
-//                    [DDUserManager currentUser].sourceData = sourceData;
-//                    PIEUserProfileViewModel* ipvm = [PIEUserProfileViewModel new];
-//                    ipvm.nickName = sourceData[@"nickname"];
-////                    ipvm.province = sourceData[@"province"];
-////                    ipvm.city = sourceData[@"city"];
-//                    ipvm.avatarURL = sourceData[@"headimgurl"];
-//                    if ((BOOL)sourceData[@"sex"] == YES) {
-//                        ipvm.gender = @"男";
-//                    } else {
-//                        ipvm.gender = @"女";
-//                    }
-//                    DDCreateProfileVC *cpvc = [DDCreateProfileVC new];
-//                    cpvc.userProfileViewModel = ipvm;
-//                    [self.navigationController pushViewController:cpvc animated:YES];
-//                }
-//            }];
-//        }
-//        else {
-//            NSLog(@"获取不到第三平台的数据");
-//        }
-//    }];
+
 }
 -(void)tapSignUp3 {
     [self.signUpView dismiss];
-    [DDUserManager currentUser].signUpType = ATOMSignUpMobile;
+    [[NSUserDefaults standardUserDefaults]setObject:@(ATOMSignUpMobile) forKey:@"SignUpType"];
+
     DDCreateProfileVC *cpvc = [DDCreateProfileVC new];
     [self.navigationController pushViewController:cpvc animated:YES];
 }

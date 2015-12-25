@@ -7,7 +7,7 @@
 //
 
 #import "DDBaseVC.h"
-
+#import "PIEChannelViewModel.h"
 typedef NS_ENUM(NSInteger, PIEUploadType) {
     PIEUploadTypeAsk = 0,
     PIEUploadTypeReply
@@ -19,5 +19,6 @@ typedef NS_ENUM(NSInteger, PIEUploadType) {
 @property (nonatomic,assign) PIEUploadType type;
 
 @property (nonatomic,assign) NSInteger askIDToReply;
+@property (nonatomic, strong) PIEChannelViewModel *channelVM;
 
 @end

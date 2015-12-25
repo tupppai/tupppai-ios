@@ -20,6 +20,7 @@
 
 @interface Util : NSObject
 + (void)warningBetaTest;
++ (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize circlize:(BOOL)circlize ;
 +(NSString*)formatPublishTime:(NSDate*)date;
 +(void)ShowTSMessageError:(NSString*)str;
 +(void)ShowTSMessageWarn:(NSString*)str;
@@ -28,7 +29,7 @@ NSString* deviceName();
 +(void)showWeAreWorkingOnThisFeature;
 + (UIImage *)getImageFromAsset:(ALAsset *)asset type:(NSInteger)nType;
 + (void)copyIntoPasteboard:(NSString*)string;
-+ (void) imageWithVm:(PIEPageVM*)vm block:(void(^)(UIImage*))block;
++ (void) generateShareImageFromViewModel:(PIEPageVM*)vm block:(void(^)(UIImage*))block;
 +(NSString *) stringByStrippingHTML:(NSString*)s;
 + (UIImage *)imageWithColor:(UIColor *)color;
 @end

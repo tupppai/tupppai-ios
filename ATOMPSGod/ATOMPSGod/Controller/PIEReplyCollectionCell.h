@@ -16,7 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (nonatomic, assign) NSInteger ID;
 @property (nonatomic, assign) PIEPageType type;
-@property (weak, nonatomic) IBOutlet PIEPageLikeButton *likeButton;
+@property (weak, nonatomic) IBOutlet UIButton *likeButton;
 @property (nonatomic, strong) PIEPageVM *viewModel;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
 

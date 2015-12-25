@@ -8,6 +8,8 @@
 ;
 
 #import "PIEModifySelfView.h"
+#import "PIEEntityUser.h"
+
 @interface PIEModifySelfView()
 @property (nonatomic, strong) UIView *nicknameView;
 @property (nonatomic, strong) UIView *protocolView;
@@ -37,7 +39,7 @@
 
 - (void)injectSource {
     [self.userHeaderButton setImageForState:UIControlStateNormal withURL:[[NSURL alloc]initWithString:[DDUserManager currentUser].avatar]];
-    self.nicknameTextField.text = [DDUserManager currentUser].username;
+    self.nicknameTextField.text = [DDUserManager currentUser].nickname;
     NSInteger index = [DDUserManager currentUser].sex ? 0:1;
     [self.sexSegment setSelectedSegmentIndex:index];
 }
@@ -295,6 +297,7 @@
         NSArray* arraySelected = [NSArray arrayWithObjects:[UIImage imageNamed:@"createprofile_gender_male_selected"],[UIImage imageNamed:@"createprofile_gender_female_selected"], nil];
         _sexSegment = [[HMSegmentedControl alloc] initWithSectionImages:array sectionSelectedImages:arraySelected];
         _sexSegment.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationNone;
+        _sexSegment.hidden = YES;
         [_sexSegment setIndexChangeBlock:^(NSInteger index) {
             if (index == 0) {
                 _genderIsMan = YES;

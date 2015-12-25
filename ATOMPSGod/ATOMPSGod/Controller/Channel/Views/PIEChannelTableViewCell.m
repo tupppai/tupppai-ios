@@ -13,7 +13,8 @@
 - (void)awakeFromNib {
     // Initialization code
     
-    self.selectionStyle = UITableViewCellSelectionStyleNone;
+//    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    // testing...
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -26,7 +27,8 @@
 #pragma mark - Setters for View models
 -(void)setVm:(PIEChannelViewModel *)vm {
     _vm = vm;
-    [_imageView_banner setImageWithURL:[NSURL URLWithString:vm.imageUrl]];
+    NSString* urlString = [vm.imageUrl trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
+    [_imageView_banner sd_setImageWithURL:[NSURL URLWithString:urlString]];
 }
 
 @end

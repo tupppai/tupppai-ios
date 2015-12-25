@@ -7,19 +7,16 @@
 //
 
 #import "PIEChannelViewController.h"
-#import "Masonry.h"
 #import "PIEChannelTableViewCell.h"
 #import "PIEChannelBannerCell.h"
 #import "PIENewReplyViewController.h"
 #import "PIENewAskMakeUpViewController.h"
-#import "MJRefresh.h"
 #import "PIERefreshTableView.h"
-
-#import "DDBaseService.h"
-#import "DDServiceConstants.h"
 #import "PIEChannelViewModel.h"
 #import "PIEChannelManager.h"
 #import "PIEChannelDetailViewController.h"
+#import "PIEChannelActivityViewController.h"
+#import "DeviceUtil.h"
 
 /* Protocols */
 
@@ -58,7 +55,7 @@
     [self setupTableView];
     [self setupData];
     
-    // load data for the first time!
+    // refresh mj_header and load data for the first time!
     [self.tableView.mj_header beginRefreshing];
 
 }
@@ -100,17 +97,13 @@
 #pragma mark - <UITableViewDelegate>
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section != 0)
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 1)
     {
-        PIEChannelDetailViewController *channelDetailViewController =
         
-        [[PIEChannelDetailViewController alloc] init];
-        channelDetailViewController.selectedChannelViewModel =
-        _source[indexPath.row];
+        PIEChannelViewModel *channelViewModel = _source[indexPath.row];
         
-        [self.navigationController
-         pushViewController:channelDetailViewController
-         animated:YES];
+        [self pushNextViewControllerWithViewModel:channelViewModel];
         
     }
 }
@@ -144,9 +137,10 @@
         PIEChannelTableViewCell* cell =
         [tableView dequeueReusableCellWithIdentifier:@"Channel_Cell"];
         cell.vm = [_source objectAtIndex:indexPath.row];
-//        cell.swipeView.delegate = self;
+        cell.swipeView.delegate = self;
         cell.swipeView.dataSource = self;
-        cell.swipeView.tag = indexPath.row;
+        cell.swipeView.tag        = indexPath.row;
+        cell.selectionStyle       = UITableViewCellSelectionStyleNone;
         return cell;
     }
     return nil;
@@ -157,7 +151,6 @@
 #pragma mark - Refresh methods
 - (void)loadNewChannels
 {
-    NSLog(@"%s", __func__);
 
     // load new channels from server
     
@@ -169,7 +162,6 @@
      page:页面，默认为1
      size:页面数目，默认为10
      last_updated:最后下拉更新的时间戳（整数10位）
-     
      */
     [self.tableView.mj_footer endRefreshing];
     _timeStamp                  = [[NSDate date] timeIntervalSince1970];
@@ -178,12 +170,10 @@
     params[@"page"]             = @1;
     params[@"size"]             = @5;
     params[@"last_updated"]     = @(_timeStamp);
+    [params setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
 
     [PIEChannelManager getSource_Channel:params block:^(NSMutableArray *array) {
         if (array.count) {
-            
-            // FIXME: 使用NSRange插入数组，而不是将数组全部清空
-            // FIXME: tableView只reload最新加载的数据，而不是全部重载。 ([_source addObjectsFromBeginning:array])
             [_source removeAllObjects];
             [_source addObjectsFromArray:array];
             
@@ -204,6 +194,8 @@
     params[@"page"] = @(_currentIndex);
     params[@"size"] = @5;
     params[@"last_updated"] = @(_timeStamp);
+    [params setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
+
     
     [PIEChannelManager getSource_Channel:params block:^(NSMutableArray *array) {
         if (array.count) {
@@ -234,7 +226,6 @@
 - (void)channelBannerCell:(PIEChannelBannerCell *)channelBannerCell
        didClickLeftButton:(UIButton *)button
 {
-    NSLog(@"%s", __func__);
     
     [self.navigationController
      pushViewController:[[PIENewAskMakeUpViewController alloc] init]
@@ -245,11 +236,15 @@
 - (void)channelBannerCell:(PIEChannelBannerCell *)channelBannerCell
       didClickRightButton:(UIButton *)button
 {
-    NSLog(@"%s", __func__);
     
     [self.navigationController
      pushViewController:[[PIENewReplyViewController alloc] init]
      animated:YES];
+    
+    // just for testing
+//    [self.navigationController
+//     pushViewController:[[PIEChannelActivityViewController alloc] init]
+//     animated:YES];
 
 }
 
@@ -277,16 +272,22 @@
     for (UIView *subView in view.subviews) {
         if([subView isKindOfClass:[UIImageView class]]){
             UIImageView *imageView = (UIImageView *)subView;
-            [imageView setImageWithURL:[NSURL URLWithString:vm.imageURL]];
+            NSString* urlString = [vm.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION*0.2];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:urlString]];
         }
     }
     return view;
 }
 
 #pragma mark - <SwipeViewDelegate>
-/*
-    nothing yet.
- */
+- (void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index
+{
+    // no matter what is selected, just push to next view controller
+    
+    // 用swipeView的tag来确定具体是点击到了哪个indexPath的Cell上。然后取得对应的channelViewModel完成跳转
+    PIEChannelViewModel *selectedChannelVM = _source[swipeView.tag];
+    [self pushNextViewControllerWithViewModel:selectedChannelVM];
+}
 
 
 #pragma mark - Lazy loadings
@@ -313,5 +314,48 @@
     return _tableView;
 }
 
+#pragma mark - private helper
+
+/**
+ *  根据ChannelViewModel，跳转到对应的ViewController中（活动or频道详情）
+ *
+ */
+- (void)pushNextViewControllerWithViewModel:(PIEChannelViewModel *)channelViewModel
+{
+    if (channelViewModel.channelType == PIEChannelTypeChannel) {
+        /* push to ChannelDetail */
+        
+        PIEChannelDetailViewController *channelDetailViewController =
+        
+        [[PIEChannelDetailViewController alloc] init];
+        channelDetailViewController.currentChannelViewModel =
+        channelViewModel;
+        
+        [self.navigationController
+         pushViewController:channelDetailViewController
+         animated:YES];
+        
+    }
+    else if (channelViewModel.channelType == PIEChannelTypeActivity)
+    {
+        /* push to ChannelActivity */
+        PIEChannelActivityViewController *channelActivityViewController =
+        [[PIEChannelActivityViewController alloc] init];
+        
+        channelActivityViewController.currentChannelVM =
+        channelViewModel;
+        
+        [self.navigationController
+         pushViewController:channelActivityViewController
+         animated:YES];
+        
+    }
+    else
+    {
+        /* JSON parsing error! */
+        
+    }
+ 
+}
 
 @end

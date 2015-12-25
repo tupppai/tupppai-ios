@@ -11,9 +11,10 @@
 #import "PIEFriendReplyCollectionViewCell.h"
 #import "PIERefreshCollectionView.h"
 #import "CHTCollectionViewWaterfallLayout.h"
-#import "PIECarouselViewController.h"
+#import "PIECarouselViewController2.h"
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
+#import "DeviceUtil.h"
 @interface PIEFriendReplyViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,PWRefreshBaseCollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (nonatomic, strong) NSMutableArray *source;
 @property (nonatomic, assign) NSInteger currentIndex;
@@ -62,6 +63,7 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
         [param setObject:@(_uid) forKey:@"uid"];
     }
     [param setObject:@(15) forKey:@"size"];
+    
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(1) forKey:@"page"];
@@ -73,7 +75,6 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
             _canRefreshFooter = YES;
             for (PIEPageEntity *entity in returnArray) {
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
-                NSLog(@"NAME %@",vm.username);
                 [arrayAgent addObject:vm];
             }
             [_source removeAllObjects];
@@ -215,10 +216,18 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     PIEPageVM* vm = [_source objectAtIndex:indexPath.row];
-    PIECarouselViewController* vc = [PIECarouselViewController new];
+    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
     vc.pageVM = vm;
-    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-    [nav pushViewController:vc animated:YES ];
+//    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+    
+    /*
+     PIEFriendViewController -> CAPSViewController
+     PIEFriendViewController.view addSubView CAPSViewController.view
+     CAPSViewController subviewControllers -> friendAsk and friendReply
+     */
+    [self.view.viewController.parentViewController.view.superview.viewController.navigationController   presentViewController:vc animated:YES completion:nil];
+
+//    [self.view.viewController.parentViewController.view.superview.viewController.navigationController pushViewController:vc animated:YES ];
 }
 
 -(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {

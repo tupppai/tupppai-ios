@@ -13,5 +13,6 @@
 
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, copy) NSString* name;
+@property (nonatomic, strong) PIEEntityUser* user;
 
 @end

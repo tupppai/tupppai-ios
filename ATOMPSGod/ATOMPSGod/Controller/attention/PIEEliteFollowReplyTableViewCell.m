@@ -7,7 +7,7 @@
 //
 
 #import "PIEEliteFollowReplyTableViewCell.h"
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 @interface PIEEliteFollowReplyTableViewCell()
 @property (nonatomic, strong) UIImageView* blurView;
 @end
@@ -28,6 +28,8 @@
     _theImageView.clipsToBounds = YES;
     _theImageView.backgroundColor = [UIColor clearColor];
     _collectView.userInteractionEnabled = YES;
+    
+    [_followView setContentMode:UIViewContentModeCenter];
     
     [_nameLabel setFont:[UIFont lightTupaiFontOfSize:13]];
     [_contentLabel setFont:[UIFont lightTupaiFontOfSize:15]];
@@ -75,9 +77,34 @@
 
 - (void)injectSauce:(PIEPageVM *)viewModel {
     WS(ws);
+    NSString *urlString_avatar = [viewModel.avatarURL trimToImageWidth:_avatarView.frame.size.width*SCREEN_SCALE];
+    NSString *urlString_imageView = [viewModel.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
+
+    [_theImageView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView]
+                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                ws.theImageView.image = image;
+                                ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+                            }];
+    [_avatarView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+
     _ID = viewModel.ID;
     _askID = viewModel.askID;
-    _followView.highlighted = viewModel.followed;
+    
+    
+    {
+        if (viewModel.isMyFan) {
+            _followView.highlightedImage = [UIImage imageNamed:@"pie_mutualfollow"];
+        } else {
+            _followView.highlightedImage = [UIImage imageNamed:@"new_reply_followed"];
+        }
+        _followView.highlighted = viewModel.followed;
+        if (viewModel.userID == [DDUserManager currentUser].uid) {
+            _followView.hidden = YES;
+        } else {
+            _followView.hidden = NO;
+        }
+    }
+    
     _shareView.imageView.image = [UIImage imageNamed:@"hot_share"];
     _shareView.numberString = viewModel.shareCount;
     
@@ -93,63 +120,28 @@
     _likeView.numberString = viewModel.likeCount;
     _contentLabel.text = viewModel.content;
     
-    [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+
     _nameLabel.text = viewModel.username;
     _timeLabel.text = viewModel.publishTime;
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:viewModel.imageURL]];
-    [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
-    [_theImageView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellHolder"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
-        ws.theImageView.image = image;
-        ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
-    } failure:nil];
     
-    //    CGFloat imageViewHeight = viewModel.imageHeight <= SCREEN_HEIGHT/2 ? viewModel.imageHeight : SCREEN_HEIGHT/2;
-//    imageViewHeight = MAX(100, imageViewHeight);
-//    imageViewHeight = MIN(SCREEN_WIDTH, imageViewHeight);
-//    [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-//        make.height.equalTo(@(SCREEN_WIDTH)).with.priorityHigh();
-//    }];
-//    
+
         [self mansoryThumbAnimateView];
     
-        [_thumbView setSubviewCounts:viewModel.thumbEntityArray.count];
+        [_thumbView setSubviewCounts:viewModel.models_ask.count];
     
-    if (viewModel.thumbEntityArray.count > 0) {
-        PIEImageEntity* entity = [viewModel.thumbEntityArray objectAtIndex:0];
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:entity.url]];
-        [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
-        [self.thumbView.rightView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellHolder"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
-            ws.thumbView.rightView.image = image;
-//            //ws.thumbView.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
-        } failure:nil];
-        if (viewModel.thumbEntityArray.count == 2) {
-            entity = viewModel.thumbEntityArray[1];
-            [_thumbView.leftView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+    if (viewModel.models_ask.count > 0) {
+        PIEModelImage* entity = [viewModel.models_ask objectAtIndex:0];
+        NSString *urlString_imageView1 = [entity.url trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
+
+        [self.thumbView.rightView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView1] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+        if (viewModel.models_ask.count == 2) {
+            entity = viewModel.models_ask[1];
+            NSString *urlString_imageView2 = [entity.url trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
+            [_thumbView.leftView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView2] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
         }
     }
-    else {
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:viewModel.imageURL]];
-        [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
-        [self.thumbView.rightView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellHolder"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
-            ws.thumbView.rightView.image = image;
-            //ws.thumbView.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
-        } failure:nil];
-    }
 
-//        if (viewModel.thumbEntityArray.count > 0) {
-//            PIEImageEntity* entity = [viewModel.thumbEntityArray objectAtIndex:0];
-//            [_thumbView.rightView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-//            if (viewModel.thumbEntityArray.count == 2) {
-//                entity = viewModel.thumbEntityArray[1];
-//                [_thumbView.leftView setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-//            }
-//        }
-    
-
-    if (viewModel.userID == [DDUserManager currentUser].uid) {
-        _followView.hidden = YES;
-    }
 }
 -(PIEThumbAnimateView *)thumbView {
     if (!_thumbView) {

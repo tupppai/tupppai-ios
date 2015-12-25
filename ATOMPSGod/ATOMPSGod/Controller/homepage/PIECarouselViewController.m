@@ -6,14 +6,14 @@
 //  Copyright (c) 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIECarouselViewController.h"
+#import "piecarouselViewController.h"
 #import "DDHotDetailManager.h"
 #import "PIEFriendViewController.h"
 #import "HMSegmentedControl.h"
 #import "FXBlurView.h"
 #import "PIECommentViewController.h"
 #import "JGActionSheet.h"
-@interface PIECarouselViewController ()<JGActionSheetDelegate>
+@interface piecarouselViewController ()<JGActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *blurView;
 @property (weak, nonatomic) IBOutlet iCarousel *carousel;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
@@ -36,21 +36,22 @@
 
 @end
 
-@implementation PIECarouselViewController
+@implementation piecarouselViewController
 -(BOOL)hidesBottomBarWhenPushed {
     return YES;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setBackgroundImage:nil
+                                                  forBarMetrics:UIBarMetricsDefault];
     self.navigationItem.titleView = self.segmentedControl;
     _likeButton.selected = _currentVM.liked;
     [MobClick beginLogPageView:@"进入滚动详情页"];
 }
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.navigationController.navigationBar setBackgroundImage:nil
-                                                  forBarMetrics:UIBarMetricsDefault];
+ 
 
 }
 - (void)viewWillDisappear:(BOOL)animated
@@ -153,7 +154,7 @@
 
 - (void)DownloadAndBlurImage
 {
-    [DDService downloadImage:_currentVM.imageURL withBlock:^(UIImage *image) {
+    [DDService sd_downloadImage:_currentVM.imageURL withBlock:^(UIImage *image) {
         if (image) {
             self.blurView.image = [image blurredImageWithRadius:60 iterations:1 tintColor:[UIColor blackColor]];
         } else {
@@ -188,7 +189,7 @@
         for (UIView *subView in view.subviews){
             if([subView isKindOfClass:[UIImageView class]]){
                 UIImageView *imageView = (UIImageView *)subView;
-                [imageView setImageWithURL:[NSURL URLWithString:vm.imageURL]];
+                [imageView sd_setImageWithURL:[NSURL URLWithString:vm.imageURL]];
                 break;
             }
         }
@@ -260,7 +261,7 @@
 }
 - (void)updateSegment:(NSInteger)index {
     //务必要_currentVM更新之后才调用此函数
-    //thumbEntityArray.count 即 有count张原图
+    //models_ask.count 即 有count张原图
     NSMutableArray* segmentDescArray = [NSMutableArray new];
     //如果此时滚到ask
     if (_currentVM.type == PIEPageTypeAsk) {
@@ -317,7 +318,7 @@
     if (_dataSource.count > index) {
         _currentVM = [_dataSource objectAtIndex:index];
         
-        [_avatarView setImageWithURL:[NSURL URLWithString:_currentVM.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+        [_avatarView sd_setImageWithURL:[NSURL URLWithString:_currentVM.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
  
         _usernameLabel.text = _currentVM.username;
         _timeLabel.text = _currentVM.publishTime;
@@ -435,7 +436,7 @@
 
     WS(ws);
     NSMutableArray* segmentDescArray = [NSMutableArray new];
-    if (_pageVM.thumbEntityArray.count == 1) {
+    if (_pageVM.models_ask.count == 1) {
         NSString* desc = @"原图";
         [segmentDescArray addObject:desc];
     }
@@ -444,7 +445,7 @@
             [segmentDescArray addObject:desc];
     }
     
-    NSString* desc = [NSString stringWithFormat:@"作品(%zd)",_dataSource.count - _pageVM.thumbEntityArray.count];
+    NSString* desc = [NSString stringWithFormat:@"作品(%zd)",_dataSource.count - _pageVM.models_ask.count];
     [segmentDescArray addObject:desc];
     
     self.segmentedControl.sectionTitles = segmentDescArray;
@@ -455,10 +456,10 @@
         }
         else {
           
-            if (_pageVM.thumbEntityArray.count >= 2 && _dataSource.count >= 3) {
+            if (_pageVM.models_ask.count >= 2 && _dataSource.count >= 3) {
                 [ws.carousel scrollToItemAtIndex:2 animated:NO];
             }
-            else if (_pageVM.thumbEntityArray.count == 1 && _dataSource.count >= 2){
+            else if (_pageVM.models_ask.count == 1 && _dataSource.count >= 2){
                 [ws.carousel scrollToItemAtIndex:1 animated:NO];
             }
         }
@@ -527,7 +528,7 @@
     [DDService signProceeding:param withBlock:^(NSString *imageUrl) {
         if (imageUrl != nil) {
             if (shouldDownload) {
-                [DDService downloadImage:imageUrl withBlock:^(UIImage *image) {
+                [DDService sd_downloadImage:imageUrl withBlock:^(UIImage *image) {
 
                     UIImageWriteToSavedPhotosAlbum(image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
                 }];

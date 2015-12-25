@@ -83,7 +83,7 @@
     } else if (section == 1) {
         return 3;
     } else if (section ==2) {
-        return 3;
+        return 2;
     } else if (section ==3) {
         return 3;
     }
@@ -140,14 +140,15 @@
         }
         else if (section == 2) {
             if (row == 0) {
-                cell.textLabel.text = @"版本更新";
-            } else if (row == 1) {
                 cell.textLabel.text = @"清理缓存";
             }
+//            else if (row == 1) {
+//                cell.textLabel.text = @"清理缓存";
+//            }
 //            else if (row == 2) {
 //                cell.textLabel.text = @"推荐应用给好友";
 //            }
-            else if (row == 2) {
+            else if (row == 1) {
                 cell.textLabel.text = @"给图派评分";
             }
         }
@@ -193,12 +194,17 @@
     } else if (section == 2) {
         
         if (row == 0) {
-            [UMCheckUpdate checkUpdateWithDelegate:self selector:@selector(UMCheckUpdateReturn:) appkey:@"55b1ecdbe0f55a1de9001164" channel:nil];
-        } else if (row == 1) {
             [self clearCache];
-        } else if (row == 2) {
+
+//            [UMCheckUpdate checkUpdateWithDelegate:self selector:@selector(UMCheckUpdateReturn:) appkey:@"55b1ecdbe0f55a1de9001164" channel:nil];
+        } else if (row == 1) {
             [self alert_evaluation];
+
+//            [self clearCache];
         }
+//        else if (row == 2) {
+//            [self alert_evaluation];
+//        }
     }
     else if (section == 3) {
         if (row == 0) {
@@ -237,7 +243,8 @@
                               //清空数据库用户表
                               [ATOMUserDAO clearUsers];
                               //清空当前用户
-                              [[DDUserManager currentUser]wipe];
+                              [DDUserManager clearCurrentUser];
+                              
                               self.navigationController.viewControllers = @[];
                               PIELaunchViewController *lvc = [[PIELaunchViewController alloc] init];
                               [AppDelegate APP].window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
@@ -268,7 +275,7 @@
                              type:SIAlertViewButtonTypeCancel
                           handler:^(SIAlertView *alert) {
                           }];
-    [alertView addButtonWithTitle:@"欣然前往"
+    [alertView addButtonWithTitle:@"前往"
                              type:SIAlertViewButtonTypeDefault
                           handler:^(SIAlertView *alert) {
                               NSString *iTunesLink = @"http://itunes.apple.com/app/id1056871759";
@@ -299,7 +306,7 @@
                              type:SIAlertViewButtonTypeCancel
                           handler:^(SIAlertView *alert) {
                           }];
-    [alertView addButtonWithTitle:@"坚决清理"
+    [alertView addButtonWithTitle:@"清理"
                              type:SIAlertViewButtonTypeDefault
                           handler:^(SIAlertView *alert) {
                               [[NSURLCache sharedURLCache]removeAllCachedResponses];

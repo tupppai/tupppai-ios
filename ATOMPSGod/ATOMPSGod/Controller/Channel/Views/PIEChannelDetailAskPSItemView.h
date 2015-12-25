@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface PIEChannelDetailAskPSItemView : UIView
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
-@property (weak, nonatomic) IBOutlet UILabel *desc;
-
-
+@property (strong, nonatomic)  UIImageView *imageView;
+@property (strong, nonatomic)  UILabel *label;
 @end

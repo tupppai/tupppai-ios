@@ -14,8 +14,10 @@
 #import "PIEFriendReplyViewController.h"
 #import "PIEFriendFollowingViewController.h"
 #import "PIEFriendFansViewController.h"
-#import "PIECarouselViewController.h"
+#import "PIECarouselViewController2.h"
 #import "FXBlurView.h"
+#import "PIEActionSheet_UserAbuse.h"
+#import "AppDelegate.h"
 @interface PIEFriendViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
 @property (weak, nonatomic) IBOutlet UIImageView *followButton;
@@ -82,22 +84,54 @@
     self.navigationController.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
     
-    if (self.navigationController.viewControllers.count <= 1) {
+    NSDictionary *titleTextAttrs = @{NSForegroundColorAttributeName: [UIColor whiteColor],
+                                     NSFontAttributeName:[UIFont systemFontOfSize:14]};
+    self.navigationController.navigationBar.titleTextAttributes = titleTextAttrs;
+    
+
+
+    
+//    if (self.navigationController.viewControllers.count <= 1) {
         [self setupNavBar];
-    }
+//    }
 }
 
 
 - (void)setupNavBar {
     UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
     buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [buttonLeft setImage:[UIImage imageNamed:@"PIE_icon_back"] forState:UIControlStateNormal];
-    [buttonLeft addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    [buttonLeft setImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
+    
+    if (self.navigationController.viewControllers.count <= 1) {
+        [buttonLeft addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        [buttonLeft addTarget:self action:@selector(pop) forControlEvents:UIControlEventTouchUpInside];
+    }
     UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonLeft];
     self.navigationItem.leftBarButtonItem =  buttonItem;
+    
+    UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
+    button2.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [button2 setImage:[UIImage imageNamed:@"nav_more"] forState:UIControlStateNormal];
+    [button2 addTarget:self action:@selector(abuseAction) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *buttonItem2 = [[UIBarButtonItem alloc] initWithCustomView:button2];
+    self.navigationItem.rightBarButtonItem =  buttonItem2;
 }
 - (void)dismiss {
     [self dismissViewControllerAnimated:NO completion:nil];
+}
+- (void)pop {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+- (void)abuseAction {
+    PIEActionSheet_UserAbuse* actionSheet = [[PIEActionSheet_UserAbuse alloc]initWithUser:_user];
+//    actionSheet.user = _user;
+    if (_uid) {
+        actionSheet.uid = _uid;
+    } else if (_pageVM){
+        actionSheet.uid = _pageVM.userID;
+    }
+    [actionSheet showInView:[AppDelegate APP].window animated:YES];
 }
 - (void)setupViews {
     self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -188,16 +222,27 @@
 }
 - (void)updateUserInterface:(PIEEntityUser*)user {
     self.title = user.nickname;
-    [DDService downloadImage:user.avatar withBlock:^(UIImage *image) {
+    [DDService sd_downloadImage:user.avatar withBlock:^(UIImage *image) {
         _avatarView.image = image;
         _blurView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:[UIColor blackColor]];
     }];
+    
+    
+    if (user.isMyFan) {
+        _followButton.highlightedImage = [UIImage imageNamed:@"pie_mutualfollow"];
+    } else {
+        _followButton.highlightedImage = [UIImage imageNamed:@"new_reply_followed"];
+    }
+    _followButton.highlighted = user.isMyFollow;
+    
     _followCountLabel.text = [NSString stringWithFormat:@"%zd",user.attentionNumber];
     _fansCountLabel.text = [NSString stringWithFormat:@"%zd",user.fansNumber];
     _likedCountLabel.text = [NSString stringWithFormat:@"%zd",user.likedCount];
     _followButton.highlighted = user.isMyFollow;
     if (user.uid == [DDUserManager currentUser].uid) {
         _followButton.hidden = YES;
+    } else {
+        _followButton.hidden = NO;
     }
 }
 
@@ -295,13 +340,13 @@
     } else {
         [param setObject:@(_uid) forKey:@"uid"];
     }
-    //    [param setObject:@(15) forKey:@"size"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     
     [DDOtherUserManager getUserInfo:param withBlock:^(PIEEntityUser *user) {
         if (user) {
             [self updateUserInterface:user];
+            _user = user;
         }
     }];
 }

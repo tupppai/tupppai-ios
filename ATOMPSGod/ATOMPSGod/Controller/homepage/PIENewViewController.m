@@ -32,7 +32,7 @@
 #import "PIENewActivityTableViewCell.h"
 #import "PIEActionSheet_PS.h"
 
-@interface PIENewViewController() < UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,PWRefreshBaseCollectionViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate,CHTCollectionViewDelegateWaterfallLayout,UICollectionViewDelegate,UICollectionViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
+@interface PIENewViewController() < UITableViewDelegate, UITableViewDataSource,PWRefreshBaseTableViewDelegate,PWRefreshBaseCollectionViewDelegate,JGActionSheetDelegate,CHTCollectionViewDelegateWaterfallLayout,UICollectionViewDelegate,UICollectionViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
 
 @property (nonatomic, assign) BOOL isfirstLoadingAsk;
@@ -261,7 +261,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
         NSLog(@"signProceeding");
         if (imageUrl != nil) {
             if (shouldDownload) {
-                [DDService downloadImage:imageUrl withBlock:^(UIImage *image) {
+                [DDService sd_downloadImage:imageUrl withBlock:^(UIImage *image) {
                     UIImageWriteToSavedPhotosAlbum(image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
                 }];
             }
@@ -560,21 +560,26 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 }
 
 
-- (void)showShareView {
-    [self.shareView show];
+- (void)showShareView:(PIEPageVM *)pageVM {
+    [self.shareView show:pageVM];
     
 }
 -(PIEShareView *)shareView {
     if (!_shareView) {
         _shareView = [PIEShareView new];
-        _shareView.delegate = self;
+//        _shareView.delegate = self;
     }
     return _shareView;
 }
 
 
-#pragma mark - ATOMShareViewDelegate
+#pragma mark - <ATOMShareViewDelegate>
 //sina
+- (void)shareViewDidShare:(PIEShareView *)shareView
+{
+    
+}
+
 -(void)tapShare1 {
     [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeSinaWeibo block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
 }
@@ -599,7 +604,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
     [DDShareManager copy:_selectedVM];
 }
 -(void)tapShare7 {
-    self.shareView.vm = _selectedVM;
+
 }
 -(void)tapShare8 {
 //    if (_scrollView.type == PIENewScrollTypeAsk) {
@@ -622,7 +627,8 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
 }
 
 
-#pragma mark - ???
+#pragma mark - 分享页面的收藏按钮
+
 -(void)collect:(PIEPageButton*) collectView shouldShowHud:(BOOL)shouldShowHud {
     NSMutableDictionary *param = [NSMutableDictionary new];
     collectView.selected = !collectView.selected;
@@ -976,7 +982,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
                 [self followReplier];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.shareView.frame, p)) {
-                [self showShareView];
+                [self showShareView:_selectedVM];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.commentView.frame, p)) {
                 PIECommentViewController* vc = [PIECommentViewController new];
@@ -1003,7 +1009,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
             
             //点击大图
             if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
-                [self showShareView];
+                [self showShareView:_selectedVM];
             }
         }
     }
@@ -1019,7 +1025,7 @@ static NSString *CellIdentifier3 = @"PIENewActivityTableViewCell";
             CGPoint p = [gesture locationInView:cell];
             //点击大图
             if (CGRectContainsPoint(cell.leftImageView.frame, p) || CGRectContainsPoint(cell.rightImageView.frame, p)) {
-                [self showShareView];
+                [self showShareView:_selectedVM];
             }
         }
     }

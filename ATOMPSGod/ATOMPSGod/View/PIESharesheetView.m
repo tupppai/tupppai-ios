@@ -46,14 +46,15 @@
 }
 - (void)generateData {
     _iconArray = [NSMutableArray new];
-    _infoArray = [NSArray arrayWithObjects:@[@"新浪微博",@"pie_share_sina"],
+    _infoArray = [NSArray arrayWithObjects:
+                  @[@"新浪微博",@"pie_share_sina"],
                   @[@"QQ空间",@"pie_share_qqzone"],
                   @[@"朋友圈",@"pie_share_wechatmoments"],
                   @[@"微信朋友",@"pie_share_wechatfriends"],
                   @[@"QQ好友",@"pie_share_qqfriends"],
                   @[@"复制链接",@"pie_share_copylinks"],
                   @[@"举报",@"pie_share_report"],
-                  @[@"收藏",@"pie_share_collect"], nil];
+                  @[@"收藏",@"pie_share_collect_hollow"], nil];
 }
 - (void)generateIcons {
     _icon1 = [PIEShareIcon new];
@@ -89,6 +90,12 @@
         NSString* imageName = [[_infoArray objectAtIndex:i]objectAtIndex:1];
         icon.label.text = labelName;
         [icon setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+        
+        // for toggling the state of "Collect" icon
+        if (i == _iconArray.count - 1) {
+            [icon setImage:[UIImage imageNamed:@"pie_share_collect"]
+                  forState:UIControlStateSelected];
+        }
     }
 }
 - (void)mansoryIcons {

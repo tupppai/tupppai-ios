@@ -10,10 +10,11 @@
 #import "PIERefreshTableView.h"
 #import "DDPageManager.h"
 #import "PIEMyCollectionTableViewCell.h"
-#import "PIECarouselViewController.h"
+#import "PIECarouselViewController2.h"
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
-
+#import "DeviceUtil.h"
+#import "PIECommentViewController.h"
 @interface PIEMyCollectionViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (nonatomic, strong)  PIERefreshTableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -73,10 +74,20 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    PIECarouselViewController* vc = [PIECarouselViewController new];
-    vc.pageVM = [_dataSource objectAtIndex:indexPath.row];
-    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-    [nav pushViewController:vc animated:YES ];
+    
+    PIEPageVM* vm = [_dataSource objectAtIndex:indexPath.row];
+    if ([vm.replyCount integerValue] <= 0 && vm.type == PIEPageTypeAsk) {
+        PIECommentViewController *vc_comment = [PIECommentViewController new];
+        vc_comment.vm = vm;
+        DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+        DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];
+        [nav presentViewController:nav2 animated:NO completion:nil];
+    } else {
+        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+        vc.pageVM = vm;
+        DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+        [nav presentViewController:vc animated:NO completion:nil];
+    }
 }
 -(void)didPullRefreshDown:(UITableView *)tableView {
     [self getDataSource];
@@ -100,7 +111,7 @@
 
     _currentPage = 1;
     [param setObject:@(_currentPage) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH*0.5) forKey:@"width"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getCollection:param withBlock:^(NSMutableArray *resultArray) {
@@ -128,7 +139,7 @@
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     _currentPage++;
     [param setObject:@(_currentPage) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH*0.5) forKey:@"width"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getCollection:param withBlock:^(NSMutableArray *resultArray) {

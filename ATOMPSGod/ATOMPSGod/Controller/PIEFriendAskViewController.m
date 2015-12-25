@@ -12,6 +12,7 @@
 //#import "UITableView+FDTemplateLayoutCell.h"
 #import "PIEFriendAskTableViewCell.h"
 #import "DDPageManager.h"
+#import "DeviceUtil.h"
 
 @interface PIEFriendAskViewController ()<PWRefreshBaseTableViewDelegate,UITableViewDataSource,UITableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 @property (nonatomic, strong) NSMutableArray *source;
@@ -89,7 +90,9 @@
         [param setObject:@(_uid) forKey:@"uid"];
     }
     [param setObject:@(15) forKey:@"size"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+
+    [param setObject:@(SCREEN_WIDTH*0.5) forKey:@"width"];
+    
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(1) forKey:@"page"];
     [DDPageManager getAskWithReplies:param withBlock:^(NSArray *returnArray) {
@@ -117,7 +120,7 @@
         [param setObject:@(_uid) forKey:@"uid"];
     }
     [param setObject:@(15) forKey:@"size"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH*0.5) forKey:@"width"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(_currentIndex) forKey:@"page"];
     [DDPageManager getAskWithReplies:param withBlock:^(NSArray *returnArray) {

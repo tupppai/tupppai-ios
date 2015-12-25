@@ -13,7 +13,7 @@
 //#import "ATOMDetailImageDAO.h"
 //#import "PIEPageDAO.h"
 
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 @interface DDHotDetailManager ()
 //@property (nonatomic, strong) ATOMDetailImageDAO *detailImageDAO;
 //@property (nonatomic, strong) ATOMCommentDAO *commentDAO;
@@ -49,19 +49,10 @@
             
             for (NSDictionary* object in askImageEntities) {
                 PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:askObject error:NULL];
-                PIEImageEntity* imgEntity = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:object error:NULL];
+                PIEModelImage* imgEntity = [MTLJSONAdapter modelOfClass:[PIEModelImage class] fromJSONDictionary:object error:NULL];
                 entity.imageURL = imgEntity.url;
                 entity.imageWidth = imgEntity.width;
                 entity.imageHeight = imgEntity.height;
-                
-                NSMutableArray* thumbArray = [NSMutableArray new];
-                for (int i = 0; i<entity.thumbEntityArray.count; i++) {
-                    PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.thumbEntityArray[i] error:NULL];
-                    [thumbArray addObject:entity2];
-                }
-                
-                entity.thumbEntityArray = thumbArray;
-
                 
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 
@@ -73,7 +64,6 @@
                 PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:[replyArray objectAtIndex:i] error:NULL];
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [replyRETArray addObject:vm];
-
             }
             if (block) {
                 block(askRETArray, replyRETArray);

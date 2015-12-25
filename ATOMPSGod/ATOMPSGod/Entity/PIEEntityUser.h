@@ -7,6 +7,16 @@
 //
 
 #import "ATOMBaseModel.h"
+#import "MTLFMDBAdapter.h"
+
+typedef enum {
+    ATOMSignUpWechat = 0,
+    ATOMSignUpWeibo,
+    ATOMSignUpMobile,
+    ATOMSignUpQQ
+}ATOMSignUpType;
+
+
 
 @interface PIEEntityUser : ATOMBaseModel <MTLFMDBSerializing>
 /**
@@ -16,6 +26,7 @@
 @property (nonatomic, assign) bool bindWeibo;
 @property (nonatomic, assign) bool bindWechat;
 @property (nonatomic, assign) bool bindQQ;
+@property (nonatomic, assign) bool blocked;
 
 /**
  *  此用户是否我的粉丝
@@ -32,6 +43,8 @@
 @property (nonatomic, copy) NSString *mobile;
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *avatar;
+@property (nonatomic, copy) NSString* token;
+
 /**
  *  背景图url
  */
@@ -73,11 +86,12 @@
 /**
  *  关注作品数
  */
+
 @property (nonatomic, assign) NSInteger attentionWorkNumber;
 
-@property (nonatomic, copy) NSString* token;
-
-
-
+////@property (nonatomic, copy) NSString* password;
+//@property (nonatomic, strong) SSDKUser *sdkUser;
+//@property (nonatomic, strong) NSDictionary *sourceData;
+//@property (nonatomic, assign) ATOMSignUpType signUpType;
 
 @end

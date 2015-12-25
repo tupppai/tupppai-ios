@@ -16,8 +16,9 @@
 #import "AppDelegate.h"
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "PIEImageCollectionViewCell.h"
-#import "PIECarouselViewController.h"
+#import "PIECarouselViewController2.h"
 #import "DDNavigationController.h"
+#import "DeviceUtil.h"
 @interface PIEMyLikedPagesViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,CHTCollectionViewDelegateWaterfallLayout,DZNEmptyDataSetDelegate>
 @property (nonatomic, strong) PIERefreshCollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -45,6 +46,7 @@
 }
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+    self.navigationController.navigationBarHidden = NO;
     self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
 }
 #pragma mark - Refresh
@@ -70,7 +72,7 @@
     _timeStamp = [[NSDate date] timeIntervalSince1970];
     _currentPage = 1;
     [param setObject:@(_currentPage) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH*0.5) forKey:@"width"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getLikedPages:param withBlock:^(NSMutableArray *resultArray) {
@@ -92,11 +94,10 @@
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     ws.currentPage++;
     [param setObject:@(ws.currentPage) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH*0.5) forKey:@"width"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     
-
     [DDPageManager getLikedPages:param withBlock:^(NSMutableArray *resultArray) {
 
         [ws.dataSource addObjectsFromArray:resultArray];
@@ -162,10 +163,10 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    PIECarouselViewController* vc = [PIECarouselViewController new];
+    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
     vc.pageVM = [_dataSource objectAtIndex:indexPath.row];
     DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-    [nav pushViewController:vc animated:YES ];
+    [nav presentViewController:vc animated:YES completion:nil];
 }
 
 

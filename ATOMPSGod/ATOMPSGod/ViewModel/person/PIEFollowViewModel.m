@@ -19,13 +19,8 @@
     _fansCount  = [NSString stringWithFormat:@"%zd", concern.fansCount];
     _askCount   = [NSString stringWithFormat:@"%zd", concern.askCount];
     _replyCount = [NSString stringWithFormat:@"%zd", concern.replyCount];
-    if (concern.isMyFollow == YES && concern.isMyFan == YES) {
-        _concernStatus = 2;
-    } else if(concern.isMyFollow == YES){
-        _concernStatus = 1;
-    } else if (concern.isMyFollow == NO) {
-        _concernStatus = 0;
-    }
+    _isMyFan = concern.isMyFan;
+    _isMyFollow = concern.isMyFollow;
 }
 
 @end

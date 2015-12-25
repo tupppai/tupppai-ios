@@ -9,7 +9,7 @@
 #import "PIENotificationVM.h"
 
 @implementation PIENotificationVM
--(instancetype)initWithEntity:(PIENotificationEntity *)entity {
+-(instancetype)initWithEntity:(PIEModelNotification *)entity {
     self = [super init];
     if (self) {
         _avatarUrl          = entity.avatarUrl;

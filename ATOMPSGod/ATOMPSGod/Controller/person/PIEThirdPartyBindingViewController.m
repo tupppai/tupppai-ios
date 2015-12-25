@@ -48,7 +48,7 @@
 }
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [DDUserManager updateDBUserFromCurrentUser];
+    [DDUserManager updateCurrentUserInDatabase];
 }
 
 #pragma mark - UITableViewDataSource
@@ -215,7 +215,7 @@
                         default:
                             break;
                     }
-                    [DDUserManager updateDBUserFromCurrentUser];
+                    [DDUserManager updateCurrentUserInDatabase];
                     [Hud success:@"绑定成功" inView:self.view];
                 }
             }];

@@ -113,7 +113,10 @@
                 desc = @"我在#图派#app分享了一张图片，你也来看看吧";
             }
             NSURL* sUrl = [[NSURL alloc]initWithString:share.url];
-            NSURL* imageUrl = [[NSURL alloc]initWithString:[NSString stringWithFormat:@"%@",share.imageUrl]];
+            
+            NSString* imageUrl_trimmed = [share.imageUrl trimToImageWidth:100];
+            NSLog(@"imageUrl_trimmed %@",imageUrl_trimmed);
+            NSURL* imageUrl = [[NSURL alloc]initWithString:[NSString stringWithFormat:@"%@",imageUrl_trimmed]];
             NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
             //注释掉的话 微博自动分享
             [shareParams SSDKEnableUseClientShare];
@@ -121,7 +124,7 @@
             if (shareType == ATOMShareTypeWechatFriends) {
                 if ([share.type isEqualToString:@"image" ]) {
                     //这里要自己生成图片
-                    [Util imageWithVm:vm block:^(UIImage *img2) {
+                    [Util generateShareImageFromViewModel:vm block:^(UIImage *img2) {
                         [shareParams SSDKSetupWeChatParamsByText:desc title:nil url:nil thumbImage:nil image:img2 musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeImage forPlatformSubType:SSDKPlatformSubTypeWechatSession];
                         [self shareStep2:SSDKPlatformTypeWechat withShareParams:shareParams block:^(BOOL success) {
                             if (block) {
@@ -131,8 +134,10 @@
 
                     }];
                 }    else   {
-                    [DDService downloadImage:vm.imageURL withBlock:^(UIImage *image) {
+                    
 
+                    [DDService sd_downloadImage:vm.imageURL withBlock:^(UIImage *image) {
+                        
                     [shareParams SSDKSetupWeChatParamsByText:desc title:shareTitle url:sUrl thumbImage:image image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeWebPage forPlatformSubType:SSDKPlatformSubTypeWechatSession];
                     [self shareStep2:SSDKPlatformTypeWechat withShareParams:shareParams block:^(BOOL success) {
                         if (block) {
@@ -148,7 +153,7 @@
             
             else if (shareType == ATOMShareTypeWechatMoments) {
                 if ([share.type isEqualToString:@"image" ]) {
-                   [Util imageWithVm:vm block:^(UIImage *image) {
+                   [Util generateShareImageFromViewModel:vm block:^(UIImage *image) {
                                   [shareParams SSDKSetupWeChatParamsByText:nil title:@"图派" url:nil thumbImage:nil image:image musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeImage forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
                        [self shareStep2:SSDKPlatformSubTypeWechatTimeline withShareParams:shareParams block:^(BOOL success) {
                            if (block) {
@@ -160,7 +165,7 @@
                         }];
                 }
                 else {
-                    [DDService downloadImage:vm.imageURL withBlock:^(UIImage *image) {
+                    [DDService sd_downloadImage:vm.imageURL withBlock:^(UIImage *image) {
                         [shareParams SSDKSetupWeChatParamsByText:desc title:shareTitle url:sUrl thumbImage:image image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeWebPage forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
                         [self shareStep2:SSDKPlatformSubTypeWechatTimeline withShareParams:shareParams block:^(BOOL success) {
                             if (block) {
@@ -175,7 +180,7 @@
             
             else if (shareType == ATOMShareTypeSinaWeibo) {
                 if ([share.type isEqualToString:@"image"]) {
-                    [Util imageWithVm:vm block:^(UIImage *img) {
+                    [Util generateShareImageFromViewModel:vm block:^(UIImage *img) {
                         [shareParams SSDKSetupSinaWeiboShareParamsByText:desc title:nil image:img url:nil latitude:0 longitude:0 objectID:nil type:SSDKContentTypeImage];
                         [self shareStep2:SSDKPlatformTypeSinaWeibo withShareParams:shareParams block:^(BOOL success) {
                             if (block) {
@@ -185,7 +190,7 @@
 
                     }];
                 } else {
-                    [DDService downloadImage:vm.imageURL withBlock:^(UIImage *image) {
+                    [DDService sd_downloadImage:vm.imageURL withBlock:^(UIImage *image) {
                         [shareParams SSDKSetupSinaWeiboShareParamsByText:desc title:shareTitle image:image url:sUrl latitude:0 longitude:0 objectID:nil type:SSDKContentTypeWebPage];
                         [self shareStep2:SSDKPlatformTypeSinaWeibo withShareParams:shareParams block:^(BOOL success) {
                             if (block) {
@@ -199,7 +204,7 @@
             }
             else if (shareType == ATOMShareTypeQQFriends) {
                 if ([share.type isEqualToString:@"image" ]) {
-                    [Util imageWithVm:vm block:^(UIImage *img) {
+                    [Util generateShareImageFromViewModel:vm block:^(UIImage *img) {
                         [shareParams SSDKSetupQQParamsByText:desc title:shareTitle url:sUrl thumbImage:imageUrl image:img type:SSDKContentTypeImage forPlatformSubType:SSDKPlatformSubTypeQQFriend];
                         [self shareStep2:SSDKPlatformSubTypeQQFriend withShareParams:shareParams block:^(BOOL success) {
                             if (block) {

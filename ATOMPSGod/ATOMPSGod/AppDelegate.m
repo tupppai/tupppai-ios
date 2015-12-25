@@ -46,6 +46,8 @@
     [self setupUmengPush:launchOptions];
     [self setupBarButtonItem];
     [[IQKeyboardManager sharedManager] disableInViewControllerClass:[PIECommentViewController class]];
+//    [[IQKeyboardManager sharedManager] disableInViewControllerClass:[PIECommentViewController2 class]];
+
     [[IQKeyboardManager sharedManager] disableInViewControllerClass:[PIENotificationViewController class]];
     [[IQKeyboardManager sharedManager]setEnableAutoToolbar:NO];
     
@@ -114,15 +116,10 @@
 
 }
 -(void)initializeAfterDB {
-    
-//    DDIntroVC* vc = [DDIntroVC new];
-//    self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:vc];
-//    self.window.rootViewController = self.baseNav;
-//            [self.window makeKeyAndVisible];
-//
 
     [DDUserManager fetchUserInDBToCurrentUser:^(BOOL success) {
         if (success) {
+
             self.window.rootViewController = self.mainTabBarController;
         } else {
             
@@ -289,7 +286,7 @@
     
     [[NSUserDefaults standardUserDefaults]setObject:@(YES) forKey:@"NotificationNew"];
     [[NSUserDefaults standardUserDefaults]synchronize];
-    [self addRedDotToTabBarItemIndex:4];
+    [self addRedDotToTabBarItemIndex:3];
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"updateNoticationStatus" object:nil]];
 
 }

@@ -10,27 +10,43 @@
 #import "PIESharesheetView.h"
 #import "PIEActionSheet_Report.h"
 
+@class PIEShareView;
+@class PIEPageVM;
 @protocol PIEShareViewDelegate <NSObject>
+
+@required
+
+- (void)shareViewDidShare:(nonnull PIEShareView *)shareView;
+- (void)shareViewDidCancel:(nonnull PIEShareView *)shareView;
+
+/* 以下代理方法仅在EliteViewController中实现，因为只有那里的replyCell，askCell有一个星星需要刷新（UI刷新） */
 @optional
-- (void)tapShare1;
-- (void)tapShare2;
-- (void)tapShare3;
-- (void)tapShare4;
-- (void)tapShare5;
-- (void)tapShare6;
-- (void)tapShare7;
-- (void)tapShare8;
-- (void)tapShareCancel;
+- (void)shareViewDidCollect:(nonnull PIEShareView *)shareView;
 @end
 
 @interface PIEShareView:UIView
-@property (strong, nonatomic) PIESharesheetView *sheetView;
-@property (strong, nonatomic) UIVisualEffectView *dimmingView;
-@property (nonatomic, strong)  PIEActionSheet_Report * reportActionSheet;
 
-@property (nonatomic, weak) id<PIEShareViewDelegate> delegate;
-@property (nonatomic,strong) PIEPageVM* vm;
-- (void)showInView:(UIView *)view animated:(BOOL)animated;
-- (void)show;
--(void)dismiss;
+
+@property (nonatomic, weak           ) id<PIEShareViewDelegate > delegate;
+
+
+/**
+ *  show shareView on a certain PIEPageVM(a view Model)
+ */
+- (void)showInView:(nonnull UIView *)view
+          animated:(BOOL)animated
+     pageViewModel:(nonnull PIEPageVM *)pageVM;
+
+
+/**
+ *  show shareView on a certain PIEPageVM(a viewModel)
+ *
+ *  @param pageVM <#pageVM description#>
+ */
+- (void)show:(nonnull PIEPageVM *)pageVM;
+
+/**
+ *  dismiss shareView
+ */
+- (void)dismiss;
 @end

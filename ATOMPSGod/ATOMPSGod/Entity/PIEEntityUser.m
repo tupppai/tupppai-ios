@@ -9,6 +9,17 @@
 #import "PIEEntityUser.h"
 
 @implementation PIEEntityUser
+-(instancetype)init {
+    self = [super init];
+    if (self) {
+        _avatar = @"";
+        _mobile = @"";
+        _nickname = @"";
+        _token = @"";
+        _blocked = NO;
+    }
+    return self;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
@@ -32,6 +43,7 @@
              @"isMyFan":@"is_fan",
              @"isMyFollow":@"is_follow",
              @"token":@"token",
+             @"blocked": @"is_block",
              };
 }
 + (NSDictionary *)FMDBColumnsByPropertyKey {
@@ -60,6 +72,7 @@
              @"isMyFollow":@"isMyFan",
              @"token":@"token",
              @"likedCount":@"likedCount",
+             @"blocked":@"blocked",
              };
 }
 
@@ -70,6 +83,9 @@
 + (NSString *)FMDBTableName {
     return @"PIEUserTable";
 }
+
+
+
 
 
 @end

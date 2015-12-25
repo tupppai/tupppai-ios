@@ -45,13 +45,16 @@
         _imageWidth  = entity.imageWidth;
         _imageHeight = entity.imageHeight;
         _followed    = entity.followed;
-
+        _isMyFan        = entity.isMyFan;
+        _models_catogory = entity.models_category;
         NSDate *publishDate    = [NSDate dateWithTimeIntervalSince1970:entity.uploadTime];
         _publishTime           = [Util formatPublishTime:publishDate];
         _content               = entity.userDescription;
         _type                  = entity.type;
-        _thumbEntityArray      = entity.thumbEntityArray;
-        _hotCommentEntityArray = entity.hotCommentEntityArray;
+        _models_ask      = entity.models_ask;
+        _models_comment = entity.models_comment;
+        _isV = entity.isV;
+        _lovedCount = entity.lovedCount;
         
         if (entity.totalPraiseNumber>999999) {
             _likeCount    = kfcMaxNumberString;
@@ -83,28 +86,6 @@
     return self;
 }
 
--(void)collect {
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    self.collected = !self.collected;
-    if (self.collected) {
-        //收藏
-        [param setObject:@(1) forKey:@"status"];
-    } else {
-        //取消收藏
-        [param setObject:@(0) forKey:@"status"];
-    }
-    [DDCollectManager toggleCollect:param withPageType:self.type withID:self.ID withBlock:^(NSError *error) {
-        if (!error) {
-            if (  self.collected) {
-                [Hud textWithLightBackground:@"收藏成功"];
-            } else {
-                [Hud textWithLightBackground:@"取消收藏成功"];
-            }
-        }   else {
-            self.collected = !self.collected;
-        }
-    }];
-}
 
 
 @end

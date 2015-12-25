@@ -11,5 +11,5 @@
 @interface DDSessionManager : AFHTTPSessionManager
 
 + (instancetype)shareHTTPSessionManager;
-
+//@property (nonatomic,assign) long long timeStamp_error;
 @end

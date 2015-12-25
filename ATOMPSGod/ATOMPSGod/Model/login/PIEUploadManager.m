@@ -8,20 +8,19 @@
 
 #import "PIEUploadManager.h"
 #import "DDSessionManager.h"
-#import "PIEEntityImage.h"
+#import "PIEModelImageInfo.h"
 @interface PIEUploadManager()
 @property (nonatomic, strong) NSMutableArray *uploadIdArray;
 @property (nonatomic, strong) NSMutableArray *ratioArray;
-@property (nonatomic, copy)  NSArray* toUploadInfoArray;
 
 @end
 @implementation PIEUploadManager
 
-- (NSURLSessionDataTask *)UploadImage:(NSData *)data WithBlock:(void (^)(PIEEntityImage *, NSError *))block {
+- (NSURLSessionDataTask *)UploadImage:(NSData *)data WithBlock:(void (^)(PIEModelImageInfo *, NSError *))block {
     return [[DDSessionManager shareHTTPSessionManager] POST:@"image/upload" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         [formData appendPartWithFileData:data name:@"images" fileName:@"iOSTupaiApp" mimeType:@"image/png"];
     } success:^(NSURLSessionDataTask *task, id responseObject) {
-        PIEEntityImage *imageInfomation = [MTLJSONAdapter modelOfClass:[PIEEntityImage class] fromJSONDictionary:responseObject error:NULL];
+        PIEModelImageInfo *imageInfomation = [MTLJSONAdapter modelOfClass:[PIEModelImageInfo class] fromJSONDictionary:responseObject error:NULL];
         if (block) {
             block(imageInfomation, nil);
         }
@@ -63,33 +62,35 @@
 }
 
 - (void)upload:(void (^)(CGFloat percentage,BOOL success))block {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *filePath2 = [documentsDirectory stringByAppendingPathComponent:@"ToUpload.dat"];
-    //@"ask",image1,image2,tag_ids,desc
-    //@"reply",image1,tag_ids,desc
-
-    _toUploadInfoArray = [NSArray arrayWithContentsOfFile:filePath2];
+    
+    _type = [_uploadInfo objectForKey:@"type"];
+    if ([[_uploadInfo objectForKey:@"type"] isEqualToString:@"ask"]) {
+        [Hud text:@"正在后台上传你的求P..."];
+    } else {
+        [Hud text:@"正在后台上传你的作品..."];
+    }
+    
     NSData* dataImage1;
     NSData* dataImage2;
     
     UIImage* image1;
     UIImage* image2;
-    NSInteger uploadCount = _toUploadInfoArray.count - 3;
+    NSInteger uploadCount =[[_uploadInfo objectForKey:@"imageCount"]integerValue];
     
-    _type = [_toUploadInfoArray objectAtIndex:0];
     if (uploadCount == 1) {
-       dataImage1 = [_toUploadInfoArray objectAtIndex:1];
-        image1 = [UIImage imageWithData:dataImage1];
+        image1 = [_uploadInfo objectForKey:@"image1"];
+        dataImage1 = UIImageJPEGRepresentation(image1, 1.0);
         CGFloat ratio1 = image1.size.height/image1.size.width;
         [self.ratioArray addObject:@(ratio1)];
     } else if (uploadCount == 2) {
-        dataImage1 = [_toUploadInfoArray objectAtIndex:1];
-        dataImage2 = [_toUploadInfoArray objectAtIndex:2];
-        image1 = [UIImage imageWithData:dataImage1];
-        image2 = [UIImage imageWithData:dataImage2];
+        image1 = [_uploadInfo objectForKey:@"image1"];
+        image2 = [_uploadInfo objectForKey:@"image2"];
         CGFloat ratio1 = image1.size.height/image1.size.width;
         CGFloat ratio2 = image2.size.height/image2.size.width;
+        
+        dataImage1 = UIImageJPEGRepresentation(image1, 1.0);
+        dataImage2 = UIImageJPEGRepresentation(image2, 1.0);
+
         [self.ratioArray addObject:@(ratio1)];
         [self.ratioArray addObject:@(ratio2)];
     }
@@ -149,26 +150,23 @@
     [param setObject:self.uploadIdArray forKey:@"upload_ids"];
     [param setObject:self.ratioArray forKey:@"ratios"];
     
-    NSInteger lastIndex = _toUploadInfoArray.count - 1;
-    NSArray* tag_ids = [_toUploadInfoArray objectAtIndex:lastIndex-1];
-    [param setObject:[_toUploadInfoArray lastObject] forKey:@"desc"];
+    NSArray* tag_ids = [_uploadInfo objectForKey:@"tag_ids_array"];
+    [param setObject:[_uploadInfo objectForKey:@"text_string"] forKey:@"desc"];
     [param setObject:tag_ids forKey:@"tag_ids"];
-
-//    long long timeStamp = [[NSDate date] timeIntervalSince1970];
-//    [param setObject:@(timeStamp) forKey:@"last_updated"];
     
-    [param setObject:[_toUploadInfoArray lastObject] forKey:@"desc"];
+    NSNumber *cid = [_uploadInfo objectForKey:@"channelViewModel_id"];
+    if (cid) {
+        [param setObject:cid forKey:@"category_id"];
+    }
+
     [DDService ddSaveAsk:param withBlock:^(NSInteger newImageID) {
         if (newImageID!=-1) {
-//            [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:@"shouldNavToAskSegment"];
-//            [[NSUserDefaults standardUserDefaults] synchronize];
             [Hud success:@"求P成功"];
             if  (block) {
                 block(YES);
             }
         } else {
             [Hud error:@"求P失败,请重试"];
-//            self.navigationItem.rightBarButtonItem.enabled = YES;
             if  (block) {
                 block(NO);
             }
@@ -183,13 +181,19 @@
     [param setObject:self.ratioArray forKey:@"ratios"];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
-    [param setObject:[_toUploadInfoArray lastObject] forKey:@"desc"];
+    [param setObject:[_uploadInfo objectForKey:@"text_string"] forKey:@"desc"];
+    NSNumber *cid = [_uploadInfo objectForKey:@"channelViewModel_id"];
+    if (cid) {
+        [param setObject:cid forKey:@"category_id"];
+    }
+
+    
     NSInteger askID = [[NSUserDefaults standardUserDefaults]
                        integerForKey:@"AskIDToReply"];
     [param setObject:@(askID) forKey:@"ask_id"];
     [DDService ddSaveReply:param withBlock:^(BOOL success) {
         if (success) {
-            [Hud success:@"提交作品成功"];
+            [Hud success:@"上传作品成功"];
             if  (block) {
                 block(YES);
             }

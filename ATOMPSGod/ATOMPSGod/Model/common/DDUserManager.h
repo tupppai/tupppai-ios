@@ -9,14 +9,18 @@
 #import <Foundation/Foundation.h>
 #import "PIELaunchViewController.h"
 #import <ShareSDK/SSDKUser.h>
-@class PIEEntityUser;
 
-typedef enum {
-    ATOMSignUpWechat = 0,
-    ATOMSignUpWeibo,
-    ATOMSignUpMobile,
-    ATOMSignUpQQ
-}ATOMSignUpType;
+//@class PIEEntityUser;
+
+#import "PIEEntityUser.h"
+
+
+//typedef enum {
+//    ATOMSignUpWechat = 0,
+//    ATOMSignUpWeibo,
+//    ATOMSignUpMobile,
+//    ATOMSignUpQQ
+//}ATOMSignUpType;
 
 @interface DDUserManager : NSObject
 
@@ -79,18 +83,16 @@ typedef enum {
 @property (nonatomic, assign) bool bindQQ;
 
 
-+ (DDUserManager *)currentUser;
++ (PIEEntityUser *)currentUser;
 
-- (NSMutableDictionary *)dictionaryFromModel;
+//+ (NSMutableDictionary *)convertCurrentUserToDic;
 
-- (void)setCurrentUser:(PIEEntityUser *)user;
--(void)tellMeEveryThingAboutYou;
-- (void)saveAndUpdateUser:(PIEEntityUser *)user;
+//+ (void)setCurrentUser:(PIEEntityUser *)user ;
++ (void)updateCurrentUserFromUser:(PIEEntityUser *)user;
 +(void)fetchUserInDBToCurrentUser:(void (^)(BOOL))block;
--(void)wipe;
-
-+ (void)updateDBUserFromCurrentUser;
-+ (void)DDGetUserInfoAndUpdateMe;
++(void)clearCurrentUser ;
++ (void)updateCurrentUserInDatabase;
++ (void)DDGetUserInfoAndUpdateMe:(void (^)(BOOL success))block;
 + (void )DDRegister:(NSDictionary *)param withBlock:(void (^)(BOOL success))block ;
 + (void )DDLogin:(NSDictionary*)param withBlock:(void (^)(BOOL succeed))block ;
 + (void)DD3PartyAuth:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(bool isRegistered,NSString* info))block;

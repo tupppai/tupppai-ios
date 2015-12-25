@@ -47,7 +47,7 @@
                             <constraint firstAttribute="height" constant="30" id="gIY-5e-sPG"/>
                         </constraints>
                     </imageView>
-                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="new_reply_follow" highlightedImage="new_reply_followed" translatesAutoresizingMaskIntoConstraints="NO" id="4B8-5j-F6n">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="new_reply_follow" highlightedImage="new_reply_followed" translatesAutoresizingMaskIntoConstraints="NO" id="4B8-5j-F6n">
                         <rect key="frame" x="315" y="7" width="54" height="32"/>
                         <animations/>
                         <constraints>
