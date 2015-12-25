@@ -544,7 +544,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [header layoutIfNeeded];
     CGFloat height = [header systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
     CGRect frame = header.frame;
-    frame.size.height = height;
+    frame = CGRectMake(0, 0, SCREEN_WIDTH, height);
+
     header.frame = frame;
     self.tableView.tableHeaderView = header;
 }

@@ -49,8 +49,8 @@
         self.backgroundColor = [UIColor clearColor];
         _imageView_type.contentMode = UIViewContentModeScaleAspectFit;
         _button_avatar.imageView.contentMode = UIViewContentModeScaleAspectFill;
-//        _button_avatar.layer.cornerRadius = _button_avatar.frame.size.width/2;
-//        _button_avatar.clipsToBounds = YES;
+        _button_avatar.layer.cornerRadius = _button_avatar.frame.size.width/2;
+        _button_avatar.clipsToBounds = YES;
         
         _pageButton_comment.imageView.image = [UIImage imageNamed:@"pieSquaredCommentIcon"];
         _pageButton_share.imageView.image   = [UIImage imageNamed:@"pieSquaredShareIcon"];
