@@ -12,8 +12,8 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
-    _avatarView.clipsToBounds = YES;
+//    _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
+//    _avatarView.clipsToBounds = YES;
     _theImageView.clipsToBounds = YES;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
@@ -27,6 +27,10 @@
 - (void)injectSource:(PIEPageVM*)vm {
     
     [_avatarView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+//    _avatarView.isV = vm.isV;
+    _avatarView.isV = YES;
+    
+    
     [_theImageView sd_setImageWithURL:[NSURL URLWithString:vm.imageURL]placeholderImage:[UIImage imageNamed:@"cellHolder"]];
     
     _nameLabel.text = vm.username;

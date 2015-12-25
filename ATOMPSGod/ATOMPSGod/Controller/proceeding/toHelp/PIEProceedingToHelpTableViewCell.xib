@@ -15,7 +15,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="540" height="264.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sYa-tU-P7O">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sYa-tU-P7O" customClass="PIEAvatarImageView">
                         <rect key="frame" x="129" y="10" width="20" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="20" id="VU3-H3-1Jb"/>
@@ -143,7 +143,7 @@
                 </variation>
             </tableViewCellContentView>
             <connections>
-                <outlet property="avatarView" destination="sYa-tU-P7O" id="WO9-H6-WCj"/>
+                <outlet property="avatarView" destination="sYa-tU-P7O" id="nT8-dz-j7G"/>
                 <outlet property="categoryNameLabel" destination="HgW-a3-LCI" id="3ca-ju-YEw"/>
                 <outlet property="contentTextView" destination="Yct-mv-EsS" id="cYz-OK-92V"/>
                 <outlet property="downloadView" destination="Lbh-Lf-Jft" id="HVW-bt-D3K"/>
