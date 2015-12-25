@@ -63,22 +63,8 @@
                             </mask>
                         </variation>
                     </view>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DU7-cv-TGA" customClass="PIEPageButton">
-                        <rect key="frame" x="137" y="479.5" width="35" height="30"/>
-                        <constraints>
-                            <constraint firstAttribute="width" priority="250" constant="35" id="JhG-eR-QDx"/>
-                            <constraint firstAttribute="height" constant="30" id="brD-sF-Gd0"/>
-                            <constraint firstAttribute="width" constant="30" id="jlM-aS-RKd"/>
-                        </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="brD-sF-Gd0"/>
-                                <exclude reference="jlM-aS-RKd"/>
-                            </mask>
-                        </variation>
-                    </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sgj-ub-LZu" customClass="PIEPageButton">
-                        <rect key="frame" x="187" y="479.5" width="35" height="30"/>
+                        <rect key="frame" x="137" y="479.5" width="35" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="TbX-9K-7Fx"/>
                             <constraint firstAttribute="width" priority="250" constant="35" id="tuv-oa-ROe"/>
@@ -164,24 +150,21 @@
                     <constraint firstItem="cg3-rv-3zG" firstAttribute="leading" secondItem="r7k-a1-VTN" secondAttribute="leading" id="Ad3-em-PKB"/>
                     <constraint firstAttribute="trailing" secondItem="jz8-n6-016" secondAttribute="trailing" id="BaB-Gf-RmL"/>
                     <constraint firstItem="Nz0-bb-Mel" firstAttribute="top" secondItem="VBu-vK-E8O" secondAttribute="bottom" constant="10" id="C3Z-fu-ali"/>
-                    <constraint firstItem="Sgj-ub-LZu" firstAttribute="leading" secondItem="DU7-cv-TGA" secondAttribute="trailing" constant="15" id="ECW-aK-peh"/>
-                    <constraint firstItem="DU7-cv-TGA" firstAttribute="leading" secondItem="hvb-nQ-yFa" secondAttribute="trailing" constant="15" id="FIx-QV-zyj"/>
                     <constraint firstItem="nKA-JB-Smk" firstAttribute="leading" secondItem="Nz0-bb-Mel" secondAttribute="leading" id="LPf-NG-SHW"/>
-                    <constraint firstItem="DU7-cv-TGA" firstAttribute="centerY" secondItem="hvb-nQ-yFa" secondAttribute="centerY" id="Pwm-Jz-jW4"/>
                     <constraint firstAttribute="trailingMargin" secondItem="4B8-5j-F6n" secondAttribute="trailing" constant="9" id="R8D-Hf-fIr"/>
                     <constraint firstItem="O1g-xB-hP3" firstAttribute="top" secondItem="cg3-rv-3zG" secondAttribute="bottom" constant="15" id="TBE-mu-uKa"/>
-                    <constraint firstItem="Sgj-ub-LZu" firstAttribute="centerY" secondItem="DU7-cv-TGA" secondAttribute="centerY" id="ZGP-E0-LOK"/>
+                    <constraint firstItem="Sgj-ub-LZu" firstAttribute="leading" secondItem="hvb-nQ-yFa" secondAttribute="trailing" constant="15" id="YJK-Ww-T3e"/>
                     <constraint firstItem="jz8-n6-016" firstAttribute="leading" secondItem="r7k-a1-VTN" secondAttribute="leading" id="ZQW-pr-w71"/>
+                    <constraint firstItem="Sgj-ub-LZu" firstAttribute="centerY" secondItem="hvb-nQ-yFa" secondAttribute="centerY" id="ZWg-as-zAN"/>
                     <constraint firstItem="VBu-vK-E8O" firstAttribute="leading" secondItem="r7k-a1-VTN" secondAttribute="leadingMargin" constant="4" id="aUc-0L-gX3"/>
                     <constraint firstItem="kwf-rd-ff2" firstAttribute="leading" secondItem="fJb-ve-xhh" secondAttribute="trailing" constant="8" id="asH-lM-NAi"/>
                     <constraint firstItem="VBu-vK-E8O" firstAttribute="top" secondItem="O1g-xB-hP3" secondAttribute="bottom" constant="15" id="bAO-tN-T2Y"/>
                     <constraint firstItem="Jc3-XI-5t8" firstAttribute="centerY" secondItem="hvb-nQ-yFa" secondAttribute="centerY" id="bPX-UQ-gTa"/>
                     <constraint firstItem="nKA-JB-Smk" firstAttribute="top" secondItem="Nz0-bb-Mel" secondAttribute="bottom" priority="251" id="cwK-1m-Keh"/>
-                    <constraint firstItem="DU7-cv-TGA" firstAttribute="height" secondItem="hvb-nQ-yFa" secondAttribute="height" id="iVE-bQ-4fk"/>
-                    <constraint firstItem="Sgj-ub-LZu" firstAttribute="height" secondItem="DU7-cv-TGA" secondAttribute="height" id="k9a-Jt-dsT"/>
                     <constraint firstItem="fJb-ve-xhh" firstAttribute="leading" secondItem="r7k-a1-VTN" secondAttribute="leadingMargin" id="kPw-mK-JAr"/>
                     <constraint firstItem="hvb-nQ-yFa" firstAttribute="centerY" secondItem="VBu-vK-E8O" secondAttribute="centerY" id="lHH-qb-1XC"/>
                     <constraint firstItem="cg3-rv-3zG" firstAttribute="top" secondItem="fJb-ve-xhh" secondAttribute="bottom" constant="9" id="mY3-KK-b2A"/>
+                    <constraint firstItem="Sgj-ub-LZu" firstAttribute="height" secondItem="hvb-nQ-yFa" secondAttribute="height" id="maj-sc-QTv"/>
                     <constraint firstItem="Nz0-bb-Mel" firstAttribute="leading" secondItem="VBu-vK-E8O" secondAttribute="leading" constant="3" id="qLE-bR-kWC"/>
                     <constraint firstAttribute="trailingMargin" secondItem="nKA-JB-Smk" secondAttribute="trailing" id="r4S-o5-izC"/>
                     <constraint firstItem="jz8-n6-016" firstAttribute="top" secondItem="nKA-JB-Smk" secondAttribute="bottom" priority="250" id="rqN-UP-vRJ"/>
@@ -203,7 +186,6 @@
             <connections>
                 <outlet property="allWorkView" destination="VBu-vK-E8O" id="ptQ-3C-t0M"/>
                 <outlet property="avatarView" destination="fJb-ve-xhh" id="w1l-zw-97G"/>
-                <outlet property="collectView" destination="DU7-cv-TGA" id="PBV-3X-RYv"/>
                 <outlet property="commentLabel1" destination="Nz0-bb-Mel" id="QJV-CI-Uhh"/>
                 <outlet property="commentLabel2" destination="nKA-JB-Smk" id="jfl-J5-NMF"/>
                 <outlet property="commentView" destination="Sgj-ub-LZu" id="aJu-7o-E02"/>

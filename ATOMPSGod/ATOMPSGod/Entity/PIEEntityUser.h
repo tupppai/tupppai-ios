@@ -23,19 +23,20 @@ typedef enum {
  *  用户唯一ID
  */
 @property (nonatomic, assign) NSInteger uid;
-@property (nonatomic, assign) bool bindWeibo;
-@property (nonatomic, assign) bool bindWechat;
-@property (nonatomic, assign) bool bindQQ;
-@property (nonatomic, assign) bool blocked;
+@property (nonatomic, assign) BOOL bindWeibo;
+@property (nonatomic, assign) BOOL bindWechat;
+@property (nonatomic, assign) BOOL bindQQ;
+@property (nonatomic, assign) BOOL blocked;
+@property (nonatomic, assign) BOOL isV;
 
 /**
  *  此用户是否我的粉丝
  */
-@property (nonatomic, assign) bool isMyFan;
+@property (nonatomic, assign) BOOL isMyFan;
 /**
  *  此用户是否我的关注
  */
-@property (nonatomic, assign) bool isMyFollow;
+@property (nonatomic, assign) BOOL isMyFollow;
 @property (nonatomic, assign) NSInteger cityID;
 @property (nonatomic, assign) NSInteger provinceID;
 @property (nonatomic, assign) NSInteger locationID;
@@ -88,10 +89,5 @@ typedef enum {
  */
 
 @property (nonatomic, assign) NSInteger attentionWorkNumber;
-
-////@property (nonatomic, copy) NSString* password;
-//@property (nonatomic, strong) SSDKUser *sdkUser;
-//@property (nonatomic, strong) NSDictionary *sourceData;
-//@property (nonatomic, assign) ATOMSignUpType signUpType;
 
 @end
