@@ -127,6 +127,8 @@
                             }];
     
     if (viewModel.models_comment.count > 0) {
+    
+        _commentIndeicatorImageView.hidden = NO;
         PIECommentEntity* commentEntity1  = viewModel.models_comment[0];
         _commentLabel1.text = [NSString stringWithFormat:@"%@: %@",commentEntity1.nickname,commentEntity1.content];
        
@@ -143,6 +145,9 @@
             PIECommentEntity* commentEntity2  = viewModel.models_comment[1];
             _commentLabel2.text = [NSString stringWithFormat:@"%@: %@",commentEntity2.nickname,commentEntity2.content];
         }
+    }
+    else{
+        _commentIndeicatorImageView.hidden = YES;
     }
     
         [self mansoryThumbAnimateView];
