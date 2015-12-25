@@ -26,7 +26,7 @@
 //}
 
 //+ (NSString *)createHomeImage {
-//    return @"create table PIEPageEntity (ID integer ,askID integer ,uid integer, nickname integer, avatar text, uploadTime bigint, imageURL text, userDescription text, isDownload integer, totalPraiseNumber integer, totalCommentNumber integer, totalShareNumber integer, totalWXShareNumber integer, totalWorkNumber integer, imageWidth real, imageHeight real,homePageType text,liked bool,collected bool,type integer,models_ask null)";
+//    return @"create table PIEPageEntity (ID integer ,askID integer ,uid integer, nickname integer, avatar text, uploadTime bigint, imageURL text, userDescription text, isDownload integer, totalPraiseNumber integer, totalCommentNumber integer, totalShareNumber integer, totalWXShareNumber integer, totalWorkNumber integer, imageWidth real, imageHeight real,homePageType text,liked bool,collected bool,type integer,models_image null)";
 //}
 
 //+ (NSString *)createComment {

@@ -127,8 +127,8 @@
   
     [self.likeButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.commentButton);
-        make.width.equalTo(@32).priorityHigh();
-        make.width.greaterThanOrEqualTo(@32);
+        make.width.equalTo(@35).priorityHigh();
+        make.width.greaterThanOrEqualTo(@35);
         make.height.equalTo(@32);
         make.right.equalTo(self).with.offset(-17);
     }];
@@ -174,8 +174,7 @@
 
         _commentButton.numberString = vm.commentCount;
         _shareButton.numberString = vm.shareCount;
-        _likeButton.numberString = vm.likeCount;
-        _likeButton.highlighted = vm.liked;
+        [_likeButton initStatus:vm.lovedCount numberString:vm.likeCount];
         
         NSString * htmlString = vm.content;
         NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
@@ -280,9 +279,9 @@
     return _shareButton;
 }
 
--(PIEPageLikeButton *)likeButton {
+-(PIELoveButton *)likeButton {
     if (!_likeButton) {
-        _likeButton = [PIEPageLikeButton new];
+        _likeButton = [PIELoveButton new];
         _likeButton.imageSize = CGSizeMake(19,19);
     }
     return _likeButton;

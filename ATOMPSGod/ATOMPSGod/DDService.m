@@ -363,9 +363,9 @@
 + (void)toggleLike:(BOOL)like ID:(NSInteger)ID type:(PIEPageType)type  withBlock:(void (^)(BOOL success))block {
     NSString* url;
     if (type == PIEPageTypeAsk) {
-        url = [NSString stringWithFormat:@"ask/upask/%ld",(long)ID];
+        url = [NSString stringWithFormat:@"ask/upask/%zd",ID];
     } else if (type == PIEPageTypeReply) {
-        url = [NSString stringWithFormat:@"reply/upreply/%ld",(long)ID];
+        url = [NSString stringWithFormat:@"reply/upreply/%zd",ID];
     }
     NSInteger status = like?1:0;
     NSDictionary *param = [NSDictionary dictionaryWithObject:@(status) forKey:@"status"];
@@ -386,7 +386,16 @@
         }
     }];
 }
-
++ (void)loveReply:(NSMutableDictionary*)param ID:(NSInteger)ID  withBlock:(void (^)(BOOL succeed))block {
+    NSString* url = [NSString stringWithFormat:@"reply/loveReply/%zd",ID];
+ 
+    [DDBaseService GET:param url:url block:^(id responseObject) {
+        if (responseObject) {
+            block(YES);
+        } else {
+            block(NO);
+        }
+    }];}
 
 
 @end

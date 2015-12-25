@@ -11,6 +11,8 @@
 
 @interface PIEFollowViewModel : NSObject
 
+@property (nonatomic, strong) PIEEntityFollow *model;
+
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, copy  ) NSString  *userName;
 @property (nonatomic, copy  ) NSString  *userSex;

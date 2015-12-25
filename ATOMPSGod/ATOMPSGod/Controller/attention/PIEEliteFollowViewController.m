@@ -22,7 +22,7 @@
 #import "PIEReplyCollectionViewController.h"
 
 #import "PIECellIconStatusChangedNotificationKey.h"
-
+#import "PIEPageManager.h"
 /* Variables */
 @interface PIEEliteFollowViewController ()
 @property (nonatomic, strong) NSMutableArray *sourceFollow;
@@ -102,9 +102,6 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
                                                   object:nil];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:PIESharedIconStatusChangedNotification
-                                                  object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:PIELikedIconStatusChangedNotification
                                                   object:nil];
 }
 
@@ -213,21 +210,6 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
     
 }
 
-- (void)updateLikedStatus:(NSNotification *)notification
-{
-    // 严格按照通知传来的值来刷新UI状态，可免去不少麻烦；
-    BOOL isLiked = notification.userInfo[PIELikedIconIsLikedKey];
-    // 刷新UI
-    
-    // BUG AWARE!
-    // 这里不知道怎么判断pageViewModel的类型（eliteFollow?eliteHot?Ask?Reply? 这四个枚举值又不可以用"||"叠加但意义又有交集,却只能居其一）
-    // 所以有个Pre-Assumption: 带着“点赞”按钮的cell，类型只能是reply(只能点赞其他人的帮P）
-    // 假如将来需求有变，这里可能会出现BAD_ACCESS_EXEC的崩溃错误。
-    
-    PIEEliteFollowReplyTableViewCell *cell =[_tableFollow dequeueReusableCellWithIdentifier:replyIndentifier
-                                                                               forIndexPath:_selectedIndexPath_follow];
-    cell.likeView.selected = isLiked;
-}
 
 #pragma mark - <UITableViewDataSource>
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -313,41 +295,6 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
     }];
 }
 
-/** Cell点击 － 点赞 */
--(void)like:(PIEPageLikeButton*)likeView {
-    /**
-     *  准备发往服务器的“点赞”的状态（特地这么明显地写出来以防出错）
-     */
-    
-    BOOL likeButtonSelectedStatusToSend = !likeView.selected;
-    
-    [DDService toggleLike:likeButtonSelectedStatusToSend ID:_selectedVM.ID type:_selectedVM.type  withBlock:^(BOOL success) {
-        if (success) {
-            // 自己发送的通知自己也会监听，和其他观察者一同刷新UI
-            // 发通知后所有观察者只负责刷新UI不修改ViewModel；谁发通知就由谁更新ViewModel（副作用只发生一次！）。
-            
-            // 在这一步只修改ViewModel
-            _selectedVM.liked =  !likeView.selected;
-            if (likeView.selected) {
-                _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue + 1];
-            } else {
-                _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue - 1];
-            }
-            
-            // 由最终的_vm.liked作为通知发送携带的值的最终标准
-            [[NSNotificationCenter defaultCenter]
-             postNotificationName:PIELikedIconStatusChangedNotification
-             object:nil
-             userInfo:@{PIELikedIconIsLikedKey:@(_selectedVM.liked)}];
-            
-        }
-        else {
-            // 服务器没有确认这次”点赞“的行为，所以既不刷新UI也不对ViewModel做任何修改
-            [Hud text:@"服务器不鸟你～"];
-        }
-    }];
-
-}
 
 #pragma mark - <PIEShareViewDelegate> and its related methods
 - (void)shareViewDidShare:(PIEShareView *)shareView
@@ -513,8 +460,7 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
                 if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                     //进入热门详情
                     [self showShareView:_selectedVM];
-                }
-            }
+                }            }
             
             //关注  作品
             else {
@@ -522,7 +468,10 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
                 CGPoint p = [gesture locationInView:cell];
                 if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                     [self showShareView:_selectedVM];
+                }      else if (CGRectContainsPoint(cell.likeView.frame, p)) {
+                    [PIEPageManager love:cell.likeView viewModel:_selectedVM revert:YES];
                 }
+
             }
         }
     
@@ -624,7 +573,7 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
                     [self.navigationController pushViewController:friendVC animated:YES];
                 }
                 else if (CGRectContainsPoint(cell.likeView.frame, p)) {
-                    [self like:cell.likeView];
+                    [PIEPageManager love:cell.likeView viewModel:_selectedVM revert:NO];
                 }
                 else if (CGRectContainsPoint(cell.followView.frame, p)) {
                     [self follow:cell.followView];

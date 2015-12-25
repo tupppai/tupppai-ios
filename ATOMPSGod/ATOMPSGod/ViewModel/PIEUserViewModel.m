@@ -12,6 +12,7 @@
 {
     self = [super init];
     if (self) {
+        _model = user;
         _uid              = user.uid;
         _mobile           = user.mobile;
         _username         = user.nickname;

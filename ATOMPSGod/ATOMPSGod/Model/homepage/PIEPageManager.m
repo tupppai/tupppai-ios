@@ -15,7 +15,7 @@
 #import "PIENewScrollView.h"
 //#import "PIEAskImageDao.h"
 #import "PIEModelImage.h"
-
+#import "PIELoveButton.h"
 
 @interface PIEPageManager ()
 
@@ -88,6 +88,33 @@
         }
     }];
 }
+
+/** Cell点击 － 点赞 */
++(void)love:(PIELoveButton*)likeView viewModel:(PIEPageVM*)vm revert:(BOOL)revert {
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    if (revert) {
+        [param setObject:@"0" forKey:@"status"];
+    } else {
+        [param setObject:@(likeView.status) forKey:@"num"];
+    }
+    
+    if (revert) {
+        [likeView revert];
+    } else {
+        [likeView increaseStatus];
+    }
+    
+    [DDService loveReply:param ID:vm.ID withBlock:^(BOOL succeed) {
+        if (succeed) {
+            vm.lovedCount = likeView.status;
+            vm.likeCount = likeView.numberString;
+        } else {
+            [likeView decreaseStatus];
+        }
+    }];
+    
+}
+
 //
 //- (void)saveHomeImagesInDB:(NSMutableArray *)homeImages {
 //    for (PIEPageEntity *homeImage in homeImages) {
@@ -96,7 +123,7 @@
 //        } else {
 //            [self.homeImageDAO insertHomeImage:homeImage];
 //        }
-//        NSArray *imageEntities = homeImage.models_ask;
+//        NSArray *imageEntities = homeImage.models_image;
 //        for ( PIEImageEntity * entity in imageEntities) {
 //            if ([PIEAskImageDao isExist:entity]) {
 //                [PIEAskImageDao update:entity];
@@ -110,7 +137,7 @@
 //- (NSArray *)getHomeImages {
 //    NSArray *array = [self.homeImageDAO selectHomeImages];
 //    for (PIEPageEntity *homeImage in array) {
-//        homeImage.models_ask = [PIEAskImageDao selectByID:homeImage.ID];
+//        homeImage.models_image = [PIEAskImageDao selectByID:homeImage.ID];
 //    }
 //    return array;
 //}
@@ -119,7 +146,7 @@
 //    
 ////    NSArray *array = [self.homeImageDAO selectHomeImagesWithHomeType:homeType];
 ////    for (PIEPageEntity *homeImage in array) {
-////        homeImage.models_ask = [PIEAskImageDao selectByID:homeImage.ID];
+////        homeImage.models_image = [PIEAskImageDao selectByID:homeImage.ID];
 ////    }
 //    NSArray *array;
 //    return array;

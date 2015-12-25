@@ -122,9 +122,9 @@
         [DDService sd_downloadImage:vm.avatarURL withBlock:^(UIImage *image) {
             _avatarView.image = image;
             if (vm.type == PIEPageTypeReply) {
-                if (vm.models_ask.count>0) {
+                if (vm.models_image.count>0) {
                     PIEModelImage *entity = nil;
-                    id object = [vm.models_ask objectAtIndex:0];
+                    id object = [vm.models_image objectAtIndex:0];
                     if ([object isKindOfClass:[PIEModelImage class]]) {
                         entity = object;
                     } else if ([object isKindOfClass:[NSDictionary class]]) {

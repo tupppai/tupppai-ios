@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PIECustomViewFromXib.h"
-#import "PIEPageLikeButton.h"
+#import "PIELoveButton.h"
 #import "PIEPageButton.h"
 #import "PIEImageView_BlurBG.h"
 #import "PIEBangView.h"
@@ -30,6 +30,6 @@
 //@property (weak, nonatomic) IBOutlet UILabel *label_content;
 @property (weak, nonatomic) IBOutlet PIEPageButton *pageButton_share;
 @property (weak, nonatomic) IBOutlet PIEPageButton *pageButton_comment;
-@property (weak, nonatomic) IBOutlet PIEPageLikeButton *pageLikeButton;
+@property (weak, nonatomic) IBOutlet PIELoveButton *pageLikeButton;
 @property (nonatomic,strong) PIEPageVM* vm;
 @end

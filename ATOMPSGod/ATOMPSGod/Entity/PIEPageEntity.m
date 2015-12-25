@@ -34,7 +34,7 @@
              @"liked" :@"uped",
              @"collected" : @"collected",
              @"type" : @"type",
-             @"models_ask":@"ask_uploads",
+             @"models_image":@"ask_uploads",
              @"models_comment":@"hot_comments",
              @"followed":@"is_follow",
              @"isMyFan" : @"is_fan",
@@ -46,7 +46,7 @@
 }
 
 
-+ (NSValueTransformer*)models_askJSONTransformer {
++ (NSValueTransformer*)models_imageJSONTransformer {
     return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[PIEModelImage class]];
 }
 + (NSValueTransformer*)models_commentJSONTransformer {

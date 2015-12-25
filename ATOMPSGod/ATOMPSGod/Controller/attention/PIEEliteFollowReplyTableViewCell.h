@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PIEThumbAnimateView.h"
 #import "PIEPageButton.h"
-#import "PIEPageLikeButton.h"
+#import "PIELoveButton.h"
 #import "PIEBangView.h"
 
 
@@ -24,7 +24,7 @@
 @property (weak, nonatomic) IBOutlet PIEPageButton *shareView;
 @property (weak, nonatomic) IBOutlet PIEPageButton *collectView;
 @property (weak, nonatomic) IBOutlet PIEPageButton *commentView;
-@property (weak, nonatomic) IBOutlet PIEPageLikeButton *likeView;
+@property (weak, nonatomic) IBOutlet PIELoveButton *likeView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *followView;
 @property (strong, nonatomic) PIEThumbAnimateView *thumbView;

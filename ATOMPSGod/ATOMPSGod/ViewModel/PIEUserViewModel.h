@@ -10,9 +10,9 @@
 #import "PIEEntityUser.h"
 
 @interface PIEUserViewModel : NSObject
-/**
- *  省份provinceName,provinceID,城市cityName,cityID
- */
+
+@property (nonatomic, strong) PIEEntityUser *model;
+
 
 @property (nonatomic, strong) NSMutableArray *replies;
 
@@ -64,5 +64,7 @@
 @property (nonatomic, assign) bool bindWechat;
 @property (nonatomic, assign) bool bindWeibo;
 @property (nonatomic, assign) bool bindQQ;
+
+
 - (instancetype)initWithEntity:(PIEEntityUser*)user;
 @end

@@ -14,6 +14,7 @@
 #import "PIECommentViewController.h"
 #import "AppDelegate.h"
 #import "PIEActionSheet_PS.h"
+#import "PIEPageManager.h"
 //#import "PIEWebViewViewController.h"
 //#import "DDNavigationController.h"
 //#import "AppDelegate.h"
@@ -51,11 +52,6 @@
         _button_avatar.layer.cornerRadius = _button_avatar.frame.size.width/2;
         _button_avatar.clipsToBounds = YES;
         
-//        _pageButton_comment.imageView.image = [UIImage imageNamed:@"hot_comment"];
-//        _pageButton_share.imageView.image   = [UIImage imageNamed:@"hot_share"];
-        
-        /* (新需求：界面微调https://hk.tower.im/projects/4f243f767d914b289ae0b91ef393305f/todos/7c9c0562f5864aa2a2e7e58ed9db9d7d/）
-         */
         _pageButton_comment.imageView.image = [UIImage imageNamed:@"pieSquaredCommentIcon"];
         _pageButton_share.imageView.image   = [UIImage imageNamed:@"pieSquaredShareIcon"];
         
@@ -66,9 +62,6 @@
         [_button_avatar.titleLabel setFont:[UIFont lightTupaiFontOfSize:13]];
         _label_time.textColor =[UIColor colorWithHex:0x000000 andAlpha:0.4];
         [_label_time setFont:[UIFont lightTupaiFontOfSize:10]];
-//        _textView_content.delegate = self;
-//        [_label_content setTintColor:[UIColor colorWithHex:0x000000 andAlpha:0.8]];
-//        [_label_content setFont:[UIFont lightTupaiFontOfSize:15]];
 
         [self setupTableView];
         [self addEvent];
@@ -82,11 +75,6 @@
     [[NSNotificationCenter defaultCenter]
      removeObserver:self
      name:PIESharedIconStatusChangedNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter]
-     removeObserver:self
-     name:PIELikedIconStatusChangedNotification
-     object:nil];
 }
 
 - (void)addEvent {
@@ -96,13 +84,14 @@
     UITapGestureRecognizer* tapShare = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapShare)];
     UITapGestureRecognizer* tapComment = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapComment)];
     UITapGestureRecognizer* tapLike = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapLike)];
-    
+    UILongPressGestureRecognizer* longpressLike = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longpressLike)];
     UITapGestureRecognizer* tapPS = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapPS)];
 
     [_bangView addGestureRecognizer:tapPS];
     [_pageButton_share addGestureRecognizer:tapShare];
     [_pageButton_comment addGestureRecognizer:tapComment];
     [_pageLikeButton addGestureRecognizer:tapLike];
+    [_pageLikeButton addGestureRecognizer:longpressLike];
 }
 
 - (void)setupNotificationObserver
@@ -111,21 +100,17 @@
      addObserver:self
      selector:@selector(updateShareStatus:)
      name:PIESharedIconStatusChangedNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(updateLikedStatus:)
-     name:PIELikedIconStatusChangedNotification
-     object:nil];
-    
-    
 }
 
 -(void) tapPS {
     [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
 }
+
+- (void)longpressLike {
+    [PIEPageManager love:_pageLikeButton viewModel:_vm revert:YES];
+}
 - (void)tapLike {
-    [self like:_pageLikeButton];
+    [PIEPageManager love:_pageLikeButton viewModel:_vm revert:NO];
 }
 - (void)tapShare {
 //    [self.shareView show];
@@ -218,40 +203,6 @@
 }
 
 
-#pragma mark - Gesture events
--(void)like:(PIEPageLikeButton*)likeView {
-    /**
-     *  准备发往服务器的“点赞”的状态（特地这么明显地写出来以防出错）
-     */
-    
-    BOOL likeButtonSelectedStatusToSend = !likeView.selected;
-    
-    [DDService toggleLike:likeButtonSelectedStatusToSend ID:_vm.ID type:_vm.type  withBlock:^(BOOL success) {
-        if (success) {
-            // 自己发送的通知自己也会监听，和其他观察者一同刷新UI
-            // 发通知后所有观察者只负责刷新UI不修改ViewModel；谁发通知就由谁更新ViewModel（副作用只发生一次！）。
-        
-            // 在这一步只修改ViewModel
-            _vm.liked =  !likeView.selected;
-            if (likeView.selected) {
-                _vm.likeCount = [NSString stringWithFormat:@"%zd",_vm.likeCount.integerValue + 1];
-            } else {
-                _vm.likeCount = [NSString stringWithFormat:@"%zd",_vm.likeCount.integerValue - 1];
-            }
-            
-            // 由最终的_vm.liked作为通知发送携带的值的最终标准
-            [[NSNotificationCenter defaultCenter]
-             postNotificationName:PIELikedIconStatusChangedNotification
-             object:nil
-             userInfo:@{PIELikedIconIsLikedKey:@(_vm.liked)}];
-            
-        }
-        else {
-            // 服务器没有确认这次”点赞“的行为，所以既不刷新UI也不对ViewModel做任何修改
-            [Hud text:@"服务器不鸟你～"];
-        }
-    }];
-}
 
 #pragma mark - Notification Methods
 - (void)updateShareStatus:(NSNotification *)notification {
@@ -263,13 +214,6 @@
     
 }
 
-- (void)updateLikedStatus:(NSNotification *)notification
-{
-    // 严格按照通知传来的值来刷新UI状态，可免去不少麻烦；
-    BOOL isLiked = notification.userInfo[PIELikedIconIsLikedKey];
-    
-    self.pageLikeButton.selected = isLiked;
-}
 
 #pragma mark - <PIEShareViewDelegate> and its related methods
 
@@ -329,8 +273,7 @@
         _bangView.hidden = YES;
         _imageView_type.image = [UIImage imageNamed:@"carousel_type_reply"];
         _pageLikeButton.hidden = NO;
-        _pageLikeButton.highlighted = vm.liked;
-        _pageLikeButton.numberString = vm.likeCount;
+        [_pageLikeButton initStatus:vm.lovedCount numberString:vm.likeCount];
     }
     
     _view_pageImage.url = vm.imageURL;
@@ -340,16 +283,16 @@
             make.height.equalTo(@0).with.priorityMedium();
         }];
     }
-    //    else {
-    //        NSString * htmlString = vm.content;
-    //        NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSRTFTextDocumentType } documentAttributes:nil error:nil];
-    //        [attrStr addAttribute:NSFontAttributeName value:[UIFont lightTupaiFontOfSize:15] range:NSMakeRange(0, attrStr.length)];
-    //        [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0x000000 andAlpha:0.9] range:NSMakeRange(0, attrStr.length)];
-    //        _textView_content.attributedText = attrStr;
-    //    }
-    _textView_content.font = [UIFont lightTupaiFontOfSize:15];
-    _textView_content.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.9];
-    _textView_content.text = vm.content;
+        else {
+            NSString * htmlString = vm.content;
+            NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSRTFTextDocumentType } documentAttributes:nil error:nil];
+            [attrStr addAttribute:NSFontAttributeName value:[UIFont lightTupaiFontOfSize:15] range:NSMakeRange(0, attrStr.length)];
+            [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0x000000 andAlpha:0.9] range:NSMakeRange(0, attrStr.length)];
+            _textView_content.attributedText = attrStr;
+        }
+//    _textView_content.font = [UIFont lightTupaiFontOfSize:15];
+//    _textView_content.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.9];
+//    _textView_content.text = vm.content;
     [self getDataSource];
 }
 @end

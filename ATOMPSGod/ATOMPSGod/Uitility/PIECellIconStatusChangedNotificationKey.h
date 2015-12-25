@@ -17,6 +17,6 @@ extern NSString *const PIESharedIconStatusChangedNotification;
 extern NSString *const PIESharedIconSharedCountKey;
 
 /* cell - “点赞” */
-extern NSString *const PIELikedIconStatusChangedNotification;
-extern NSString *const PIELikedIconIsLikedKey;
+//extern NSString *const PIELikedIconStatusChangedNotification;
+//extern NSString *const PIELikedIconIsLikedKey;
 
