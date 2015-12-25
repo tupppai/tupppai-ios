@@ -48,8 +48,8 @@
         self.backgroundColor = [UIColor clearColor];
         _imageView_type.contentMode = UIViewContentModeScaleAspectFit;
         _button_avatar.imageView.contentMode = UIViewContentModeScaleAspectFill;
-        _button_avatar.layer.cornerRadius = _button_avatar.frame.size.width/2;
-        _button_avatar.clipsToBounds = YES;
+//        _button_avatar.layer.cornerRadius = _button_avatar.frame.size.width/2;
+//        _button_avatar.clipsToBounds = YES;
         
 //        _pageButton_comment.imageView.image = [UIImage imageNamed:@"hot_comment"];
 //        _pageButton_share.imageView.image   = [UIImage imageNamed:@"hot_share"];
@@ -319,6 +319,10 @@
     //    _label_content.text = vm.content;
     [_button_name setTitle:vm.username forState:UIControlStateNormal];
     [_button_avatar setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+//    _button_avatar.isV = vm.isV;
+    _button_avatar.isV = YES;
+    
+    
     if (vm.type == PIEPageTypeAsk) {
         _imageView_type.image = [UIImage imageNamed:@"carousel_type_ask"];
         _pageLikeButton.hidden = YES;
@@ -352,4 +356,7 @@
     _textView_content.text = vm.content;
     [self getDataSource];
 }
+
+
+
 @end

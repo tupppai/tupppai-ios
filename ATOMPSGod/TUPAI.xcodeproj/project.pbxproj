@@ -162,6 +162,7 @@
 		5CE4082F1ACE94D600A56E4B /* UIViewController+ATOMTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CE4082E1ACE94D600A56E4B /* UIViewController+ATOMTracking.m */; };
 		5CEAC0331AD4F9540058037C /* DDMyCollectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CEAC0321AD4F9540058037C /* DDMyCollectionManager.m */; };
 		9021B9691C2CE7FC008C8F0B /* PIEAvatarImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9021B9681C2CE7FC008C8F0B /* PIEAvatarImageView.m */; };
+		9021B96C1C2D2591008C8F0B /* PIEAvatarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9021B96B1C2D2591008C8F0B /* PIEAvatarButton.m */; };
 		903E09DE1C23DF9E006C87B8 /* PIEEliteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 903E09DD1C23DF9E006C87B8 /* PIEEliteViewController.m */; };
 		90B3A07C1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B3A07B1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m */; };
 		90EC3D5C1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC3D5B1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m */; };
@@ -881,6 +882,8 @@
 		5CEAC0321AD4F9540058037C /* DDMyCollectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMyCollectionManager.m; sourceTree = "<group>"; };
 		9021B9671C2CE7FC008C8F0B /* PIEAvatarImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEAvatarImageView.h; sourceTree = "<group>"; };
 		9021B9681C2CE7FC008C8F0B /* PIEAvatarImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEAvatarImageView.m; sourceTree = "<group>"; };
+		9021B96A1C2D2591008C8F0B /* PIEAvatarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEAvatarButton.h; sourceTree = "<group>"; };
+		9021B96B1C2D2591008C8F0B /* PIEAvatarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEAvatarButton.m; sourceTree = "<group>"; };
 		903E09DC1C23DF9E006C87B8 /* PIEEliteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteViewController.h; sourceTree = "<group>"; };
 		903E09DD1C23DF9E006C87B8 /* PIEEliteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteViewController.m; sourceTree = "<group>"; };
 		90B3A07A1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECellIconStatusChangedNotificationKey.h; sourceTree = "<group>"; };
@@ -2542,6 +2545,8 @@
 			children = (
 				9021B9671C2CE7FC008C8F0B /* PIEAvatarImageView.h */,
 				9021B9681C2CE7FC008C8F0B /* PIEAvatarImageView.m */,
+				9021B96A1C2D2591008C8F0B /* PIEAvatarButton.h */,
+				9021B96B1C2D2591008C8F0B /* PIEAvatarButton.m */,
 			);
 			path = avatar;
 			sourceTree = "<group>";
@@ -4298,6 +4303,7 @@
 				E99D2F5F1B1C7E8D000D7784 /* NYXImagesHelper.m in Sources */,
 				F4EC11201BCE6F9E002D1DCF /* PIEModelNotification.m in Sources */,
 				5C54DF2D1AB99F5300BDE34D /* DDTipLabelManager.m in Sources */,
+				9021B96C1C2D2591008C8F0B /* PIEAvatarButton.m in Sources */,
 				F4309E2D1BC8C05C0035033C /* PIEModifyProfileViewController.m in Sources */,
 				5CDB06031AA405A40089121E /* UIColor+Hex.m in Sources */,
 				F4AE609B1BC129ED007BCA2A /* PIEFriendReplyCollectionViewCell.m in Sources */,
