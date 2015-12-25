@@ -33,12 +33,18 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ErX-Hn-nxd">
                         <rect key="frame" x="0.0" y="288" width="292" height="40"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JY8-sJ-8GF">
-                                <rect key="frame" x="219" y="5" width="60" height="27"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JY8-sJ-8GF">
+                                <rect key="frame" x="252" y="7" width="30" height="26"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="mlO-1v-QA9"/>
                                     <constraint firstAttribute="width" priority="750" constant="60" id="rMD-Su-Vs2"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="rMD-Su-Vs2"/>
+                                    </mask>
+                                </variation>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -49,6 +55,12 @@
                             <constraint firstItem="JY8-sJ-8GF" firstAttribute="top" secondItem="ErX-Hn-nxd" secondAttribute="top" constant="5" id="TyM-uY-DW8"/>
                             <constraint firstAttribute="trailing" secondItem="JY8-sJ-8GF" secondAttribute="trailing" constant="10" id="XNB-HE-T8t"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="T5v-1s-Dqx"/>
+                                <exclude reference="TyM-uY-DW8"/>
+                            </mask>
+                        </variation>
                     </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

@@ -27,7 +27,7 @@
     _theImageView.contentMode = UIViewContentModeScaleAspectFit;
     _theImageView.clipsToBounds = YES;
     _theImageView.backgroundColor = [UIColor clearColor];
-    _collectView.userInteractionEnabled = YES;
+//    _collectView.userInteractionEnabled = YES;
     
     [_followView setContentMode:UIViewContentModeCenter];
     
@@ -110,11 +110,11 @@
     
     _commentView.imageView.image = [UIImage imageNamed:@"hot_comment"];
     _commentView.numberString = viewModel.commentCount;
-    
-    _collectView.imageView.image = [UIImage imageNamed:@"hot_star"];
-    _collectView.imageView.highlightedImage = [UIImage imageNamed:@"hot_star_selected"];
-    _collectView.highlighted = viewModel.collected;
-    _collectView.numberString = viewModel.collectCount;
+//    
+//    _collectView.imageView.image = [UIImage imageNamed:@"hot_star"];
+//    _collectView.imageView.highlightedImage = [UIImage imageNamed:@"hot_star_selected"];
+//    _collectView.highlighted = viewModel.collected;
+//    _collectView.numberString = viewModel.collectCount;
     
     [_likeView initStatus:viewModel.lovedCount numberString:viewModel.likeCount];
 //    _likeView.highlighted = viewModel.liked;

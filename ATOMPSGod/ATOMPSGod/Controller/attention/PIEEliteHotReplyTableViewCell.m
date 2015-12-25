@@ -26,7 +26,7 @@
     _theImageView.contentMode = UIViewContentModeScaleAspectFit;
     _theImageView.clipsToBounds = YES;
     _theImageView.backgroundColor = [UIColor clearColor];
-    _collectView.userInteractionEnabled = YES;
+//    _collectView.userInteractionEnabled = YES;
 
     [_nameLabel setFont:[UIFont lightTupaiFontOfSize:13]];
     [_contentLabel setFont:[UIFont lightTupaiFontOfSize:15]];
@@ -107,14 +107,12 @@
     _commentView.imageView.image = [UIImage imageNamed:@"hot_comment"];
     _commentView.numberString = viewModel.commentCount;
     
-    _collectView.imageView.image = [UIImage imageNamed:@"hot_star"];
-    _collectView.imageView.highlightedImage = [UIImage imageNamed:@"hot_star_selected"];
-    _collectView.highlighted = viewModel.collected;
-    _collectView.numberString = viewModel.collectCount;
+//    _collectView.imageView.image = [UIImage imageNamed:@"hot_star"];
+//    _collectView.imageView.highlightedImage = [UIImage imageNamed:@"hot_star_selected"];
+//    _collectView.highlighted = viewModel.collected;
+//    _collectView.numberString = viewModel.collectCount;
     
     [_likeView initStatus:viewModel.lovedCount numberString:viewModel.likeCount];
-//    _likeView.highlighted = viewModel.liked;
-//    _likeView.numberString = viewModel.likeCount;
     _contentLabel.text = viewModel.content;
     
     [_avatarView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];

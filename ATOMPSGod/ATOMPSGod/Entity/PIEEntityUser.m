@@ -44,6 +44,7 @@
              @"isMyFollow":@"is_follow",
              @"token":@"token",
              @"blocked": @"is_block",
+             @"isV":@"is_star",
              };
 }
 + (NSDictionary *)FMDBColumnsByPropertyKey {
@@ -55,7 +56,6 @@
              @"backgroundImage" : @"backgroundImage",
              @"attentionNumber" : @"attentionNumber",
              @"fansNumber" : @"fansNumber",
-//             @"likeNumber" : @"likeNumber",
              @"uploadNumber" : @"uploadNumber",
              @"replyNumber" : @"replyNumber",
              @"proceedingNumber" : @"proceedingNumber",
@@ -73,6 +73,7 @@
              @"token":@"token",
              @"likedCount":@"likedCount",
              @"blocked":@"blocked",
+             @"isV":@"isV",
              };
 }
 

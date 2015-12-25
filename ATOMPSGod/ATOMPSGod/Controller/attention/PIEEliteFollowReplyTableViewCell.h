@@ -22,7 +22,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *allWorkView;
 @property (weak, nonatomic) IBOutlet PIEPageButton *shareView;
-@property (weak, nonatomic) IBOutlet PIEPageButton *collectView;
+//@property (weak, nonatomic) IBOutlet PIEPageButton *collectView;
 @property (weak, nonatomic) IBOutlet PIEPageButton *commentView;
 @property (weak, nonatomic) IBOutlet PIELoveButton *likeView;
 
