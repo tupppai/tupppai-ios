@@ -127,8 +127,8 @@
   
     [self.likeButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.commentButton);
-        make.width.equalTo(@32).priorityHigh();
-        make.width.greaterThanOrEqualTo(@32);
+        make.width.equalTo(@35).priorityHigh();
+        make.width.greaterThanOrEqualTo(@35);
         make.height.equalTo(@32);
         make.right.equalTo(self).with.offset(-17);
     }];

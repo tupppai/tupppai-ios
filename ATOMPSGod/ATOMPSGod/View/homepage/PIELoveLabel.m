@@ -13,59 +13,47 @@
 -(void)awakeFromNib {
     _numberString = @"0";
     _number = 0;
-    self.font = [UIFont systemFontOfSize:11];
-    self.layer.cornerRadius = self.frame.size.height/2;
+    self.font = [UIFont lightTupaiFontOfSize:10];
+    self.layer.cornerRadius = 6.5;
     self.clipsToBounds = YES;
-    self.textColor = [UIColor blackColor];
+    self.textColor = [UIColor whiteColor];
+    self.textAlignment = NSTextAlignmentCenter;
 }
 -(instancetype)init {
     self = [super init];
     if (self) {
         _numberString = @"0";
         _number = 0;
-        self.font = [UIFont systemFontOfSize:11];
-        self.layer.cornerRadius = 6;
+        self.font = [UIFont systemFontOfSize:10];
+        self.layer.cornerRadius = 6.5;
         self.clipsToBounds = YES;
-        self.textColor = [UIColor blackColor];
+        self.textColor = [UIColor whiteColor];
         self.textAlignment = NSTextAlignmentCenter;
     }
     return self;
 }
-//-(void)setHighlighted:(BOOL)highlighted {
-//    [super setHighlighted:highlighted];
-//    if (highlighted) {
-//        self.backgroundColor = [UIColor colorWithHex:PIEColorHex];
-//    } else {
-//        self.backgroundColor = [UIColor colorWithHex:0x4a4a4a andAlpha:0.3];
-//    }
-//}
-//
-//-(void)setSelected:(BOOL)selected {
-//    if (selected) {
-//        self.backgroundColor = [UIColor colorWithHex:PIEColorHex];
-//        self.number++;
-//    } else {
-//        self.backgroundColor = [UIColor colorWithHex:0x4a4a4a andAlpha:0.3];
-//        self.number--;
-//    }
-//}
+
 
 -(void)setStatus:(PIELoveButtonStatus)status {
     _status = status;
     switch (status) {
         case PIELoveButtonStatusNormal:
-            self.backgroundColor = [UIColor lightGrayColor];
+            self.backgroundColor = [UIColor blackColor];
+            self.textColor = [UIColor whiteColor];
             break;
         case PIELoveButtonStatusSelectedLow:
-            self.backgroundColor = [UIColor grayColor];
-            
+            self.backgroundColor = [UIColor colorWithHex:0xFF5B3F];
+            self.textColor = [UIColor whiteColor];
+
             break;
         case PIELoveButtonStatusSelectedMedium:
-            self.backgroundColor = [UIColor blackColor];
+            self.backgroundColor = [UIColor colorWithHex:0xF5A623];
+            self.textColor = [UIColor whiteColor];
 
             break;
         case PIELoveButtonStatusSelectedHigh:
-            self.backgroundColor = [UIColor pieYellowColor];
+            self.backgroundColor = [UIColor colorWithHex:0xFFEF00];
+            self.textColor = [UIColor blackColor];
 
             break;
         default:

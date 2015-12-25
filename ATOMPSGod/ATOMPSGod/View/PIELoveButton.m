@@ -50,8 +50,7 @@
         _label = [PIELoveLabel new];
         [self addSubview:_imageView];
         [self addSubview:_label];
-        _imageView.image = [UIImage imageNamed:@"pieLike"];
-        _imageView.highlightedImage = [UIImage imageNamed:@"pieLike_selected"];
+        _imageView.image = [UIImage imageNamed:@"love_normal"];
         [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.width.equalTo(@15);
             make.height.equalTo(@15);
@@ -61,7 +60,7 @@
         [_label mas_makeConstraints:^(MASConstraintMaker *make) {
             make.leading.equalTo(_imageView.mas_trailing).with.offset(1).with.priorityHigh();
             make.top.equalTo(_imageView).with.offset(-3);
-            make.width.greaterThanOrEqualTo(@12);
+            make.width.greaterThanOrEqualTo(@18);
             make.height.equalTo(@12);
             make.trailing.equalTo(self).with.priorityMedium();
         }];
