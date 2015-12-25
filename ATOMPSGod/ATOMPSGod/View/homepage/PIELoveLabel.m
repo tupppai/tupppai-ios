@@ -73,7 +73,7 @@
     }
 }
 
-- (void)commitCount {
+- (void)increaseCount {
     //利用变化后的status
     switch (self.status) {
         case PIELoveButtonStatusNormal:
@@ -92,8 +92,7 @@
             break;
     }
 }
-
-- (void)revertCount {
+- (void)decreaseCount {
     switch (self.status) {
         case PIELoveButtonStatusNormal:
             self.number -= 1;
@@ -110,6 +109,24 @@
         default:
             break;
     }
+}
+- (void)revert {
+    switch (self.status) {
+        case PIELoveButtonStatusNormal:
+            break;
+        case PIELoveButtonStatusSelectedLow:
+            self.number -= 1;
+            break;
+        case PIELoveButtonStatusSelectedMedium:
+            self.number -= 2;
+            break;
+        case PIELoveButtonStatusSelectedHigh:
+            self.number -= 3;
+            break;
+        default:
+            break;
+    }
+    self.status = PIELoveButtonStatusNormal;
 }
 -(void)setNumber:(NSInteger)number {
     _number = number;

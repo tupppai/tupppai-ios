@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -13,26 +13,23 @@
             <rect key="frame" x="0.0" y="0.0" width="386" height="556"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="386" height="555"/>
+                <rect key="frame" x="0.0" y="0.0" width="386" height="555.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="沉沉" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tXl-3D-7si">
                         <rect key="frame" x="46" y="8" width="28" height="20"/>
-                        <animations/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="14"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="刚刚" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tZ7-6S-wLe">
                         <rect key="frame" x="47" y="27" width="20" height="14"/>
-                        <animations/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="10"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_default" translatesAutoresizingMaskIntoConstraints="NO" id="6r6-EV-L6Y">
                         <rect key="frame" x="8" y="8" width="30" height="30"/>
-                        <animations/>
                         <rect key="contentStretch" x="1" y="1" width="1" height="1"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="AhA-tC-A2R"/>
@@ -41,7 +38,6 @@
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Qz0-1D-vqQ">
                         <rect key="frame" x="0.0" y="47" width="386" height="386"/>
-                        <animations/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="228" id="Jfg-pO-BAf"/>
@@ -59,14 +55,12 @@
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="755" text="我觉得我长得真不错！" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="XLA-1a-yzs">
                         <rect key="frame" x="8" y="444" width="370" height="45"/>
-                        <animations/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hot_allwork" translatesAutoresizingMaskIntoConstraints="NO" id="yHw-He-aWh">
                         <rect key="frame" x="8" y="499.5" width="60" height="30"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="60" id="2PZ-9m-JcL"/>
                             <constraint firstAttribute="height" constant="20" id="FHc-37-K3b"/>
@@ -84,7 +78,6 @@
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="new_reply_follow" highlightedImage="new_reply_followed" translatesAutoresizingMaskIntoConstraints="NO" id="ov8-cU-PvT">
                         <rect key="frame" x="316" y="7" width="54" height="32"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="54" id="HN2-kb-c1t"/>
                             <constraint firstAttribute="height" constant="32" id="eQj-1Y-Cc1"/>
@@ -92,7 +85,6 @@
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CWC-Fy-Ux9" customClass="PIEPageButton">
                         <rect key="frame" x="83" y="499" width="35" height="30"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="30" id="BRk-Pn-6X1"/>
                             <constraint firstAttribute="width" priority="250" constant="35" id="gam-jx-StX"/>
@@ -107,7 +99,6 @@
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wlr-Je-B2P" customClass="PIEPageButton">
                         <rect key="frame" x="140" y="499" width="35" height="30"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="JaG-UI-z75"/>
                             <constraint firstAttribute="width" priority="250" constant="35" id="cPf-Lb-7o8"/>
@@ -120,15 +111,13 @@
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OK5-wj-zoL">
                         <rect key="frame" x="0.0" y="544" width="386" height="11"/>
-                        <animations/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="11" id="4Fi-RT-vIv"/>
                         </constraints>
                     </view>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tse-As-wf5" customClass="PIEPageLikeButton">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tse-As-wf5" customClass="PIELoveButton">
                         <rect key="frame" x="336" y="500" width="25" height="28"/>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" priority="250" constant="25" id="Mem-Qs-sQ0"/>
@@ -136,7 +125,6 @@
                         </constraints>
                     </view>
                 </subviews>
-                <animations/>
                 <constraints>
                     <constraint firstItem="Wlr-Je-B2P" firstAttribute="centerY" secondItem="CWC-Fy-Ux9" secondAttribute="centerY" id="1Yx-qu-1k7"/>
                     <constraint firstItem="CWC-Fy-Ux9" firstAttribute="leading" secondItem="yHw-He-aWh" secondAttribute="trailing" constant="15" id="6xJ-jC-a4v"/>
@@ -190,7 +178,6 @@
                     </mask>
                 </variation>
             </tableViewCellContentView>
-            <animations/>
             <connections>
                 <outlet property="allWorkView" destination="yHw-He-aWh" id="7og-lK-zw8"/>
                 <outlet property="avatarView" destination="6r6-EV-L6Y" id="ecD-3k-u7N"/>
@@ -208,8 +195,8 @@
     </objects>
     <resources>
         <image name="avatar_default" width="36" height="36"/>
-        <image name="hot_allwork" width="53" height="24"/>
-        <image name="new_reply_follow" width="50" height="25"/>
-        <image name="new_reply_followed" width="58" height="28"/>
+        <image name="hot_allwork" width="68" height="15"/>
+        <image name="new_reply_follow" width="18" height="18"/>
+        <image name="new_reply_followed" width="19" height="13"/>
     </resources>
 </document>

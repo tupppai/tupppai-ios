@@ -288,20 +288,46 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 }
 
 #pragma mark - ReplyCell中的“喜欢该P图”和“关注P图主”的点击事件
--(void)likeReply {
-    _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
-    [DDService toggleLike:_selectedReplyCell.likeView.selected ID:_selectedVM.ID type:_selectedVM.type  withBlock:^(BOOL success) {
-        if (success) {
-            _selectedVM.liked = _selectedReplyCell.likeView.selected;
-            if (_selectedReplyCell.likeView.selected) {
-                _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue + 1];
-            } else {
-                _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue - 1];
-            }
+//-(void)likeReply {
+//    _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
+//    [DDService toggleLike:_selectedReplyCell.likeView.selected ID:_selectedVM.ID type:_selectedVM.type  withBlock:^(BOOL success) {
+//        if (success) {
+//            _selectedVM.liked = _selectedReplyCell.likeView.selected;
+//            if (_selectedReplyCell.likeView.selected) {
+//                _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue + 1];
+//            } else {
+//                _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue - 1];
+//            }
+//        } else {
+//            _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
+//        }
+//    }];
+//}
+
+/** Cell点击 － 点赞 */
+-(void)like:(PIELoveButton*)likeView revert:(BOOL)revert {
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    if (revert) {
+        [param setObject:@"0" forKey:@"status"];
+    } else {
+        [param setObject:@(likeView.status) forKey:@"num"];
+    }
+    
+    if (revert) {
+        [likeView revert];
+    } else {
+        [likeView increaseStatus];
+    }
+    
+    [DDService loveReply:param ID:_selectedVM.ID withBlock:^(BOOL succeed) {
+        if (succeed) {
+            _selectedVM.lovedCount = likeView.status;
+            _selectedVM.likeCount = likeView.numberString;
         } else {
-            _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
+            [likeView decreaseStatus];
         }
     }];
+    
 }
 
 -(void)followReplier {
@@ -404,7 +430,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
             //                [self collect];
             //            }
             else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
-                [self likeReply];
+                [self like:_selectedReplyCell.likeView revert:NO];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.followView.frame, p)) {
                 [self followReplier];
@@ -439,7 +465,11 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
         //点击大图
         if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
             [self showShareView:_selectedVM];
+        }          else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
+            [PIEPageManager love:_selectedReplyCell.likeView viewModel:_selectedVM revert:YES];
+//            [self like:_selectedReplyCell.likeView revert:YES];
         }
+
     }
 
     

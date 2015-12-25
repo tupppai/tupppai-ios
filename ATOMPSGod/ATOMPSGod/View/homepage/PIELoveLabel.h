@@ -18,6 +18,7 @@ typedef NS_ENUM(NSInteger, PIELoveButtonStatus) {
 @property (nonatomic, assign) NSInteger number;
 @property (nonatomic, copy) NSString* numberString;
 @property (nonatomic, assign) PIELoveButtonStatus status;
-- (void)commitCount;
-- (void)revertCount ;
+- (void)increaseCount;
+- (void)decreaseCount ;
+- (void)revert;
 @end

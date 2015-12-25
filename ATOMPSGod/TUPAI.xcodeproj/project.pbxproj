@@ -163,6 +163,9 @@
 		5CEAC0331AD4F9540058037C /* DDMyCollectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CEAC0321AD4F9540058037C /* DDMyCollectionManager.m */; };
 		903E09DE1C23DF9E006C87B8 /* PIEEliteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 903E09DD1C23DF9E006C87B8 /* PIEEliteViewController.m */; };
 		90B3A07C1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B3A07B1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m */; };
+		90EC3D5C1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC3D5B1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m */; };
+		90EC3D5F1C2A78E20085A7BE /* PIEProceedingAskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC3D5E1C2A78E20085A7BE /* PIEProceedingAskViewController.m */; };
+		90EC3D621C2A79030085A7BE /* PIEProceedingViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC3D611C2A79030085A7BE /* PIEProceedingViewController2.m */; };
 		90FA11701C1FDB8900D8B602 /* DeviceList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 90FA116D1C1FDB8900D8B602 /* DeviceList.plist */; };
 		90FA11711C1FDB8900D8B602 /* DeviceUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FA116F1C1FDB8900D8B602 /* DeviceUtil.m */; };
 		E900919D1B71E04E004623E4 /* DDInputAuthcodePwdFPVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E900919C1B71E04E004623E4 /* DDInputAuthcodePwdFPVC.m */; };
@@ -881,6 +884,12 @@
 		903E09DD1C23DF9E006C87B8 /* PIEEliteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteViewController.m; sourceTree = "<group>"; };
 		90B3A07A1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECellIconStatusChangedNotificationKey.h; sourceTree = "<group>"; };
 		90B3A07B1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECellIconStatusChangedNotificationKey.m; sourceTree = "<group>"; };
+		90EC3D5A1C2A78D10085A7BE /* PIEProceedingToHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEProceedingToHelpViewController.h; sourceTree = "<group>"; };
+		90EC3D5B1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEProceedingToHelpViewController.m; sourceTree = "<group>"; };
+		90EC3D5D1C2A78E20085A7BE /* PIEProceedingAskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEProceedingAskViewController.h; sourceTree = "<group>"; };
+		90EC3D5E1C2A78E20085A7BE /* PIEProceedingAskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEProceedingAskViewController.m; sourceTree = "<group>"; };
+		90EC3D601C2A79030085A7BE /* PIEProceedingViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEProceedingViewController2.h; sourceTree = "<group>"; };
+		90EC3D611C2A79030085A7BE /* PIEProceedingViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEProceedingViewController2.m; sourceTree = "<group>"; };
 		90FA116D1C1FDB8900D8B602 /* DeviceList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DeviceList.plist; sourceTree = "<group>"; };
 		90FA116E1C1FDB8900D8B602 /* DeviceUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceUtil.h; sourceTree = "<group>"; };
 		90FA116F1C1FDB8900D8B602 /* DeviceUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceUtil.m; sourceTree = "<group>"; };
@@ -1682,6 +1691,8 @@
 				0E54C76F1C1E8F5E00F431AC /* PIEProceedingAskTableViewCell_NoGap.h */,
 				0E54C7701C1E8F5E00F431AC /* PIEProceedingAskTableViewCell_NoGap.m */,
 				0E54C7711C1E8F5E00F431AC /* PIEProceedingAskTableViewCell_NoGap.xib */,
+				90EC3D5D1C2A78E20085A7BE /* PIEProceedingAskViewController.h */,
+				90EC3D5E1C2A78E20085A7BE /* PIEProceedingAskViewController.m */,
 			);
 			path = ask;
 			sourceTree = "<group>";
@@ -1705,6 +1716,8 @@
 				0E54C7781C1E8F5E00F431AC /* PIEProceedingScrollView.m */,
 				0E54C7791C1E8F5E00F431AC /* PIEProceedingViewController.h */,
 				0E54C77A1C1E8F5E00F431AC /* PIEProceedingViewController.m */,
+				90EC3D601C2A79030085A7BE /* PIEProceedingViewController2.h */,
+				90EC3D611C2A79030085A7BE /* PIEProceedingViewController2.m */,
 			);
 			path = proceedingController;
 			sourceTree = "<group>";
@@ -1717,6 +1730,8 @@
 				0E54C77E1C1E8F5E00F431AC /* PIEProceedingToHelpTableViewCell.xib */,
 				0E54C77F1C1E8F5E00F431AC /* PIETextView_linkDetection.h */,
 				0E54C7801C1E8F5E00F431AC /* PIETextView_linkDetection.m */,
+				90EC3D5A1C2A78D10085A7BE /* PIEProceedingToHelpViewController.h */,
+				90EC3D5B1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m */,
 				0E54C7811C1E8F5E00F431AC /* toHelp2 */,
 			);
 			path = toHelp;
@@ -4463,6 +4478,7 @@
 				E99D2F5C1B1C7E8D000D7784 /* UIScrollView+Screenshot.m in Sources */,
 				E94289881B5B32A200ED26E4 /* TSMessageView.m in Sources */,
 				F42131B91BF1E012004D48F8 /* PIECommentTableHeaderView_Reply.m in Sources */,
+				90EC3D621C2A79030085A7BE /* PIEProceedingViewController2.m in Sources */,
 				E9A5B66A1B903C270059754C /* DDService.m in Sources */,
 				F4F28F2B1C23AE9B0067F2E4 /* UIView+WebCacheOperation.m in Sources */,
 				F4C9BE4D1C214BBE00A1AE82 /* PIEMyCommentedPageViewController.m in Sources */,
@@ -4492,6 +4508,7 @@
 				E99D2F541B1C7E8D000D7784 /* UIImage+Blurring.m in Sources */,
 				F41BA0D21C0EDCE800979D43 /* MJRefreshConst.m in Sources */,
 				F4993CF01BE5B32C007F9BE4 /* UIRefreshControl+AFNetworking.m in Sources */,
+				90EC3D5C1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m in Sources */,
 				E9FBCD2F1B6A042000BF7096 /* DDLoginNavigationController.m in Sources */,
 				F43930421BE4BD75006C9437 /* MRActivityIndicatorView+AFNetworking.m in Sources */,
 				5C83A88E1AC66F910071A024 /* POPCGUtils.mm in Sources */,
@@ -4530,6 +4547,7 @@
 				F4E5F5F51BD9D2E100AB8B31 /* AFHTTPRequestOperation.m in Sources */,
 				0EF2F5CC1C154A6200F27D61 /* PIEChannelViewController.m in Sources */,
 				F46CBC7D1C2CDE0D00A64474 /* PIELoveButton.m in Sources */,
+				90EC3D5F1C2A78E20085A7BE /* PIEProceedingAskViewController.m in Sources */,
 				E90C7C601B20A0FC00CF0E6A /* KShareManager.m in Sources */,
 				F46117E11BAD1101001A6F1A /* IQToolbar.m in Sources */,
 				E99D2F561B1C7E8D000D7784 /* UIImage+Filtering.m in Sources */,

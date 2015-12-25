@@ -114,9 +114,18 @@
             if (_pageMenu.currentPageIndex == 0) {
                 PIESearchUserViewController *vc = [_pageMenu.controllerArray objectAtIndex:0];;
                 vc.textToSearch = textField.text;
+                
+                // 需求：两边一起刷新数据
+                PIESearchPageViewController *vc2 = [_pageMenu.controllerArray objectAtIndex:1];
+                vc2.textToSearch = textField.text;
+                
             } else if (_pageMenu.currentPageIndex == 1) {
                 PIESearchPageViewController *vc = [_pageMenu.controllerArray objectAtIndex:1];;
                 vc.textToSearch = textField.text;
+                
+                // 需求：两边一起刷新数据
+                PIESearchUserViewController *vc1 = [_pageMenu.controllerArray objectAtIndex:0];
+                vc1.textToSearch= textField.text;
             }
         
     }
@@ -126,8 +135,8 @@
 }
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-        [self.navigationController.navigationBar setBackgroundImage:nil
-                                                      forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setBackgroundImage:nil
+                                                  forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithHex:0xfff119];
 }
 - (void) tapSearch {

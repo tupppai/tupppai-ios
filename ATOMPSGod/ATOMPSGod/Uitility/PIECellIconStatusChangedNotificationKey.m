@@ -17,5 +17,5 @@ NSString *const PIECollectedIconCollectedCountKey =
 NSString *const PIESharedIconStatusChangedNotification = @"PIESharedIconStatusChangedNotification";
 NSString *const PIESharedIconSharedCountKey = @"PIESharedIconSharedCountKey";
 
-NSString *const PIELikedIconStatusChangedNotification = @"PIELikedIconStatusChangedNotification";
-NSString *const PIELikedIconIsLikedKey = @"PIELikedIconIsLikedKey";
+//NSString *const PIELikedIconStatusChangedNotification = @"PIELikedIconStatusChangedNotification";
+//NSString *const PIELikedIconIsLikedKey = @"PIELikedIconIsLikedKey";

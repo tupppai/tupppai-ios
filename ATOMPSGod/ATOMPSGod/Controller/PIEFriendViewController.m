@@ -84,6 +84,9 @@
     self.navigationController.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
     
+    NSDictionary *titleTextAttrs = @{NSForegroundColorAttributeName: [UIColor whiteColor],
+                                     NSFontAttributeName:[UIFont systemFontOfSize:14]};
+    self.navigationController.navigationBar.titleTextAttributes = titleTextAttrs;
     
 
 
@@ -97,7 +100,7 @@
 - (void)setupNavBar {
     UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
     buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [buttonLeft setImage:[UIImage imageNamed:@"back_white"] forState:UIControlStateNormal];
+    [buttonLeft setImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
     
     if (self.navigationController.viewControllers.count <= 1) {
         [buttonLeft addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
@@ -109,7 +112,7 @@
     
     UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
     button2.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [button2 setImage:[UIImage imageNamed:@"pie_more"] forState:UIControlStateNormal];
+    [button2 setImage:[UIImage imageNamed:@"nav_more"] forState:UIControlStateNormal];
     [button2 addTarget:self action:@selector(abuseAction) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem2 = [[UIBarButtonItem alloc] initWithCustomView:button2];
     self.navigationItem.rightBarButtonItem =  buttonItem2;

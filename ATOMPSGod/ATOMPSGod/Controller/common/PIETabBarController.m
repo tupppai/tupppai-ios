@@ -18,8 +18,9 @@
 #import "ATOMUserDAO.h"
 #import "PIEUploadManager.h"
 #import "UIImage+Colors.h"
-#import "PIEEliteViewController.h"
 
+#import "PIEProceedingViewController2.h"
+#import "PIEEliteViewController.h"
 
 @interface PIETabBarController ()<UITabBarControllerDelegate>
 @property (nonatomic, strong) DDNavigationController *navigation_new;
@@ -134,8 +135,9 @@
 - (void)configureTabBarController {
     
     PIEChannelViewController *channelVc = [PIEChannelViewController new];
+
     PIEEliteViewController *myAttentionViewController = [PIEEliteViewController new];
-    PIEProceedingViewController *proceedingViewController = [PIEProceedingViewController new];
+    PIEProceedingViewController2 *proceedingViewController = [PIEProceedingViewController2 new];
     
     PIEMeViewController *aboutMeVC = (PIEMeViewController *)[[UIStoryboard storyboardWithName:@"Me" bundle:nil] instantiateViewControllerWithIdentifier: @"PIEME"];
 

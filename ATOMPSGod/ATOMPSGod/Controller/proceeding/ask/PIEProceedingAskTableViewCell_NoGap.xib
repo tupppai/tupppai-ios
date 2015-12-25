@@ -54,6 +54,7 @@
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="VIL-yH-Tl6"/>
+                                        <exclude reference="pHy-Ou-Id5"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -145,6 +146,7 @@
                             <constraint firstItem="Ifq-AW-v3W" firstAttribute="leading" secondItem="zIg-s2-acb" secondAttribute="leading" id="BLZ-HE-ppE"/>
                             <constraint firstItem="PwP-Zo-KXU" firstAttribute="leading" secondItem="vnN-LY-HJZ" secondAttribute="trailing" constant="3" id="CJd-WF-vLV"/>
                             <constraint firstItem="anF-uE-APk" firstAttribute="centerY" secondItem="zIg-s2-acb" secondAttribute="centerY" id="D0S-9v-Y9d"/>
+                            <constraint firstItem="vQZ-tg-eG2" firstAttribute="height" secondItem="NZK-ha-AqP" secondAttribute="height" id="EKQ-0s-1w9"/>
                             <constraint firstItem="vnN-LY-HJZ" firstAttribute="top" secondItem="jeY-1J-VBC" secondAttribute="topMargin" constant="5" id="GmI-WO-KNU"/>
                             <constraint firstAttribute="trailing" secondItem="hhD-JV-ltv" secondAttribute="trailing" constant="14" id="Gqu-0U-aPh"/>
                             <constraint firstItem="zIg-s2-acb" firstAttribute="top" secondItem="vQZ-tg-eG2" secondAttribute="bottom" constant="12" id="IL4-Oe-JhJ"/>
@@ -154,7 +156,7 @@
                             <constraint firstItem="hhD-JV-ltv" firstAttribute="leading" secondItem="anF-uE-APk" secondAttribute="trailing" constant="10" id="M8P-0u-79A"/>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="W9S-Uz-hWO" secondAttribute="bottom" constant="10" id="NJX-HL-dV9"/>
                             <constraint firstItem="anF-uE-APk" firstAttribute="bottom" secondItem="zIg-s2-acb" secondAttribute="bottom" id="R10-Sq-9oE"/>
-                            <constraint firstItem="zIg-s2-acb" firstAttribute="top" secondItem="NZK-ha-AqP" secondAttribute="bottom" constant="12" id="Rot-qh-rHN"/>
+                            <constraint firstItem="zIg-s2-acb" firstAttribute="top" relation="greaterThanOrEqual" secondItem="NZK-ha-AqP" secondAttribute="bottom" constant="10" id="Rot-qh-rHN"/>
                             <constraint firstAttribute="trailing" secondItem="anF-uE-APk" secondAttribute="trailing" constant="40" id="Svr-cj-LaK"/>
                             <constraint firstItem="zIg-s2-acb" firstAttribute="leading" secondItem="NZK-ha-AqP" secondAttribute="leading" id="TWe-46-Lzo"/>
                             <constraint firstItem="vnN-LY-HJZ" firstAttribute="leading" secondItem="jeY-1J-VBC" secondAttribute="leadingMargin" constant="8" id="TX4-08-g4j"/>

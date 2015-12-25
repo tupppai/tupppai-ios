@@ -18,6 +18,7 @@
 @property (nonatomic, assign) CGSize imageSize;
 @property (nonatomic, assign) PIELoveButtonStatus status;
 - (void)initStatus :(PIELoveButtonStatus)status numberString:(NSString*)numberString ;
-- (void)commitStatus ;
-- (void)revertStatus;
+- (void)increaseStatus ;
+- (void)decreaseStatus;
+- (void)revert;
 @end

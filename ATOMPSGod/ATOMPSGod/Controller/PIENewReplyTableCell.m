@@ -117,8 +117,9 @@
     _commentView.numberString = viewModel.commentCount;
 
     
-    _likeView.highlighted = viewModel.liked;
-    _likeView.numberString = viewModel.likeCount;
+//    _likeView.highlighted = viewModel.liked;
+//    _likeView.numberString = viewModel.likeCount;
+    [_likeView initStatus:viewModel.lovedCount numberString:viewModel.likeCount];
     _contentLabel.text = viewModel.content;
     
     

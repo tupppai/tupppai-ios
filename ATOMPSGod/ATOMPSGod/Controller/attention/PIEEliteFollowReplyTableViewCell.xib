@@ -73,8 +73,8 @@
                             <constraint firstAttribute="width" constant="54" id="dsQ-52-Prw"/>
                         </constraints>
                     </imageView>
-                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1t2-Zu-9X4" customClass="PIEPageButton">
-                        <rect key="frame" x="83" y="560" width="35" height="30"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1t2-Zu-9X4" customClass="PIEPageButton">
+                        <rect key="frame" x="83" y="559" width="35" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="7aP-0K-Qxn"/>
                             <constraint firstAttribute="width" constant="30" id="HY6-km-LYS"/>
@@ -86,8 +86,8 @@
                             </mask>
                         </variation>
                     </view>
-                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eCR-aD-tkR" customClass="PIEPageButton">
-                        <rect key="frame" x="138" y="560" width="35" height="30"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eCR-aD-tkR" customClass="PIEPageButton">
+                        <rect key="frame" x="138" y="559" width="35" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="4ag-2h-xR2"/>
                             <constraint firstAttribute="width" priority="250" constant="35" id="HxB-zh-R6W"/>
@@ -100,8 +100,8 @@
                             </mask>
                         </variation>
                     </view>
-                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bZD-SV-wez" customClass="PIEPageButton">
-                        <rect key="frame" x="193" y="560" width="35" height="30"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bZD-SV-wez" customClass="PIEPageButton">
+                        <rect key="frame" x="193" y="559" width="35" height="30"/>
                         <constraints>
                             <constraint firstAttribute="width" priority="250" constant="35" id="2Qc-yC-yeF"/>
                             <constraint firstAttribute="height" constant="15" id="ea7-h8-0vg"/>
@@ -112,8 +112,8 @@
                             </mask>
                         </variation>
                     </view>
-                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="New-cK-IUH" customClass="PIEPageLikeButton">
-                        <rect key="frame" x="345" y="561" width="30" height="28"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="New-cK-IUH" customClass="PIELoveButton">
+                        <rect key="frame" x="345" y="560" width="30" height="28"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="UVr-LV-pc6"/>
@@ -194,8 +194,8 @@
     </objects>
     <resources>
         <image name="avatar_default" width="36" height="36"/>
-        <image name="hot_allwork" width="53" height="24"/>
-        <image name="new_reply_follow" width="50" height="25"/>
-        <image name="new_reply_followed" width="58" height="28"/>
+        <image name="hot_allwork" width="68" height="15"/>
+        <image name="new_reply_follow" width="18" height="18"/>
+        <image name="new_reply_followed" width="19" height="13"/>
     </resources>
 </document>

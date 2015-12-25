@@ -386,11 +386,9 @@
         }
     }];
 }
-+ (void)loveReply:(NSMutableDictionary*)param ID:(NSInteger)ID reborn:(BOOL)reborn withBlock:(void (^)(BOOL succeed))block {
++ (void)loveReply:(NSMutableDictionary*)param ID:(NSInteger)ID  withBlock:(void (^)(BOOL succeed))block {
     NSString* url = [NSString stringWithFormat:@"reply/loveReply/%zd",ID];
-    if (reborn) {
-        [param setObject:@"0" forKey:@"status"];
-    }
+ 
     [DDBaseService GET:param url:url block:^(id responseObject) {
         if (responseObject) {
             block(YES);

@@ -29,6 +29,8 @@
     _theImageView.backgroundColor = [UIColor clearColor];
     _collectView.userInteractionEnabled = YES;
     
+    [_followView setContentMode:UIViewContentModeCenter];
+    
     [_nameLabel setFont:[UIFont lightTupaiFontOfSize:13]];
     [_contentLabel setFont:[UIFont lightTupaiFontOfSize:15]];
     [_timeLabel setFont:[UIFont lightTupaiFontOfSize:10]];
@@ -114,8 +116,9 @@
     _collectView.highlighted = viewModel.collected;
     _collectView.numberString = viewModel.collectCount;
     
-    _likeView.highlighted = viewModel.liked;
-    _likeView.numberString = viewModel.likeCount;
+    [_likeView initStatus:viewModel.lovedCount numberString:viewModel.likeCount];
+//    _likeView.highlighted = viewModel.liked;
+//    _likeView.numberString = viewModel.likeCount;
     _contentLabel.text = viewModel.content;
     
 
