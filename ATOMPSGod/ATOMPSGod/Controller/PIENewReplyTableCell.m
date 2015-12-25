@@ -26,8 +26,8 @@
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     self.clipsToBounds = YES;
-    _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
-    _avatarView.clipsToBounds = YES;
+//    _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
+//    _avatarView.clipsToBounds = YES;
     _theImageView.contentMode = UIViewContentModeScaleAspectFit;
     _theImageView.backgroundColor = [UIColor clearColor];
     _theImageView.clipsToBounds = YES;
@@ -38,6 +38,8 @@
     [_nameLabel setTextColor:[UIColor colorWithHex:0x4a4a4a andAlpha:1.0]];
     [_timeLabel setTextColor:[UIColor colorWithHex:0x4a4a4a andAlpha:0.3]];
     [_contentLabel setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.9]];
+    
+    _followView.contentMode = UIViewContentModeCenter;
 
     [self configThumbAnimateView];
     
@@ -91,6 +93,8 @@
                                 ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
                             }];
     [_avatarView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+//    _avatarView.isV = viewModel.isV;
+    _avatarView.isV = YES;
 
     _ID = viewModel.ID;
     _askID = viewModel.askID;

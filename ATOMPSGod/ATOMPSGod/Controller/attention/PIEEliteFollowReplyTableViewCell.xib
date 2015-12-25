@@ -28,7 +28,7 @@
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_default" translatesAutoresizingMaskIntoConstraints="NO" id="TWu-n5-KN3">
+                    <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_default" translatesAutoresizingMaskIntoConstraints="NO" id="TWu-n5-KN3" customClass="PIEAvatarImageView">
                         <rect key="frame" x="8" y="8" width="30" height="30"/>
                         <rect key="contentStretch" x="1" y="1" width="1" height="1"/>
                         <constraints>
@@ -178,7 +178,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="allWorkView" destination="u76-JP-qUq" id="mqb-ld-Ifb"/>
-                <outlet property="avatarView" destination="TWu-n5-KN3" id="XQD-Wb-uHt"/>
+                <outlet property="avatarView" destination="TWu-n5-KN3" id="MdY-PZ-mYT"/>
                 <outlet property="collectView" destination="eCR-aD-tkR" id="Xn9-k1-Pwf"/>
                 <outlet property="commentView" destination="bZD-SV-wez" id="tbS-ED-6Ct"/>
                 <outlet property="contentLabel" destination="wdw-j6-aQB" id="NUc-DZ-Vdk"/>
@@ -189,13 +189,13 @@
                 <outlet property="theImageView" destination="Eja-Cl-SLu" id="hEj-34-oOL"/>
                 <outlet property="timeLabel" destination="v7C-yt-vHr" id="5Q3-yT-R37"/>
             </connections>
-            <point key="canvasLocation" x="247" y="523"/>
+            <point key="canvasLocation" x="112" y="473"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="avatar_default" width="36" height="36"/>
-        <image name="hot_allwork" width="53" height="24"/>
-        <image name="new_reply_follow" width="50" height="25"/>
-        <image name="new_reply_followed" width="58" height="28"/>
+        <image name="hot_allwork" width="68" height="15"/>
+        <image name="new_reply_follow" width="18" height="18"/>
+        <image name="new_reply_followed" width="19" height="13"/>
     </resources>
 </document>
