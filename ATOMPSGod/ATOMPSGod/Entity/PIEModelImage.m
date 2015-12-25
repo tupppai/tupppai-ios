@@ -11,27 +11,27 @@
 @implementation PIEModelImage
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
-             @"height" : @"image_height",
-             @"width" : @"image_width",
-             @"url" : @"image_url"
+//             @"height" : @"image_height",
+//             @"width" : @"image_width",
+             @"url" : @"image_url",
              };
 }
 
-+ (NSDictionary *)FMDBColumnsByPropertyKey {
-    return @{
-             @"ID" : @"ID",
-             @"height" : @"height",
-             @"width" : @"width",
-             @"url" : @"url",
-             };
-}
-
-+ (NSArray *)FMDBPrimaryKeys {
-    return @[@"ID"];
-}
-
-+ (NSString *)FMDBTableName {
-    return @"PIEModelImage";
-}
+//+ (NSDictionary *)FMDBColumnsByPropertyKey {
+//    return @{
+//             @"ID" : @"ID",
+//             @"height" : @"height",
+//             @"width" : @"width",
+//             @"url" : @"url",
+//             };
+//}
+//
+//+ (NSArray *)FMDBPrimaryKeys {
+//    return @[@"ID"];
+//}
+//
+//+ (NSString *)FMDBTableName {
+//    return @"PIEModelImage";
+//}
 
 @end

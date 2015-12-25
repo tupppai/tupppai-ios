@@ -12,6 +12,7 @@
 -(instancetype)initWithEntity:(PIEModelNotification *)entity {
     self = [super init];
     if (self) {
+        _model = entity;
         _avatarUrl          = entity.avatarUrl;
         _commentId          = entity.commentId;
         _content            = entity.content;

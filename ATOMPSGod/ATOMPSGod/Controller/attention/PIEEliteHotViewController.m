@@ -10,7 +10,7 @@
 #import "PIEActionSheet_PS.h"
 #import "PIEShareView.h"
 #import "SwipeView.h"
-#import "PIEBannerViewModel.h"
+#import "PIEModelBanner.h"
 #import "PIERefreshTableView.h"
 #import "PIEWebViewViewController.h"
 #import "SMPageControl.h"
@@ -25,7 +25,7 @@
 #import "PIEReplyCollectionViewController.h"
 #import "DDCollectManager.h"
 #import "PIECellIconStatusChangedNotificationKey.h"
-
+#import "PIEPageManager.h"
 /* Variables */
 @interface PIEEliteHotViewController ()
 
@@ -35,7 +35,7 @@
 
 @property (nonatomic, strong) NSMutableArray<PIEPageVM *> *sourceHot;
 
-@property (nonatomic, strong) NSMutableArray<PIEBannerViewModel *> *sourceBanner;
+@property (nonatomic, strong) NSMutableArray<PIEModelBanner *> *sourceBanner;
 
 @property (nonatomic, assign) BOOL isfirstLoadingHot;
 
@@ -128,9 +128,9 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_Elite_Hot" object:nil];
     
 
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:PIECollectedIconStatusChangedNotification
-                                                  object:nil];
+//    
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:PIECollectedIconStatusChangedNotification
+//                                                  object:nil];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:PIESharedIconStatusChangedNotification
@@ -159,10 +159,10 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_Elite_Hot" object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(collectedIconStatusDidChanged:)
-                                                 name:PIECollectedIconStatusChangedNotification
-                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(collectedIconStatusDidChanged:)
+//                                                 name:PIECollectedIconStatusChangedNotification
+//                                               object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateShareStatus)
@@ -217,26 +217,26 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 
 
 
-- (void)collectedIconStatusDidChanged:(NSNotification *)notification
-{
-//    NSLog(@"%s, %@", __func__, notification.userInfo);
-    
-    if (_selectedIndexPath_hot) {
-        
-//        BOOL isCollected = [notification.userInfo[PIECollectedIconIsCollectedKey] boolValue];
-//        NSString *collectedCount = notification.userInfo[PIECollectedIconCollectedCountKey];
-        /* 取得PIEEliteHotReplyTableViewCell的实例，修改星星的状态和个数 */
-        PIEPageVM* vm = [_sourceHot objectAtIndex:_selectedIndexPath_hot.row];
-        if (vm.type == PIEPageTypeReply) {
-            PIEEliteHotReplyTableViewCell *cell =
-            [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
-            cell.collectView.highlighted  = vm.collected;
-            cell.collectView.numberString = vm.collectCount;
-        }
-    }
-
-
-}
+//- (void)collectedIconStatusDidChanged:(NSNotification *)notification
+//{
+////    NSLog(@"%s, %@", __func__, notification.userInfo);
+//    
+//    if (_selectedIndexPath_hot) {
+//        
+////        BOOL isCollected = [notification.userInfo[PIECollectedIconIsCollectedKey] boolValue];
+////        NSString *collectedCount = notification.userInfo[PIECollectedIconCollectedCountKey];
+//        /* 取得PIEEliteHotReplyTableViewCell的实例，修改星星的状态和个数 */
+//        PIEPageVM* vm = [_sourceHot objectAtIndex:_selectedIndexPath_hot.row];
+//        if (vm.type == PIEPageTypeReply) {
+//            PIEEliteHotReplyTableViewCell *cell =
+//            [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
+//            cell.collectView.highlighted  = vm.collected;
+//            cell.collectView.numberString = vm.collectCount;
+//        }
+//    }
+//
+//
+//}
 
 #pragma mark - <SwipeViewDataSource>
 - (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
@@ -256,7 +256,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         [view addSubview:imageView];
     }
-    PIEBannerViewModel* vm = [self.sourceBanner objectAtIndex:index];
+    PIEModelBanner* vm = [self.sourceBanner objectAtIndex:index];
     for (UIView *subView in view.subviews){
         if([subView isKindOfClass:[UIImageView class]]){
             UIImageView *imageView = (UIImageView *)subView;
@@ -404,7 +404,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
             CGPoint p = [gesture locationInView:cell];
             if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                 [self showShareView:_selectedVM];
-            }
+            }          // 点赞
         }
         //关注  作品
         
@@ -414,7 +414,11 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
             //点击大图
             if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                 [self showShareView:_selectedVM];
+            } else if (CGRectContainsPoint(cell.likeView.frame, p)) {
+                [PIEPageManager love:cell.likeView viewModel:_selectedVM revert:YES];
+                
             }
+
             
         }
     }
@@ -518,7 +522,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
                 }
                 // 点赞
                 else if (CGRectContainsPoint(cell.likeView.frame, p)) {
-                    [self like:cell.likeView];
+                    [PIEPageManager love:cell.likeView viewModel:_selectedVM revert:NO];
                 }
                 // 关注
                 else if (CGRectContainsPoint(cell.followView.frame, p)) {
@@ -528,10 +532,10 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
                 else if (CGRectContainsPoint(cell.shareView.frame, p)) {
                     [self showShareView:_selectedVM];
                 }
-                // 收藏
-                else if (CGRectContainsPoint(cell.collectView.frame, p)) {
-                    [self collect:cell.collectView shouldShowHud:NO];
-                }
+//                // 收藏
+//                else if (CGRectContainsPoint(cell.collectView.frame, p)) {
+//                    [self collect:cell.collectView shouldShowHud:NO];
+//                }
                 else if ((CGRectContainsPoint(cell.commentView.frame, p))||(CGRectContainsPoint(cell.commentLabel1.frame, p))||(CGRectContainsPoint(cell.commentLabel2.frame, p)) ) {                    PIECommentViewController* vc = [PIECommentViewController new];
                     vc.vm = _selectedVM;
                     vc.shouldShowHeaderView = NO;
@@ -548,32 +552,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 
 #pragma mark - Gesture actions
 
-/** Cell点击 － 点赞 */
--(void)like:(PIEPageLikeButton*)likeView {
-    /**
-     *  准备发往服务器的“点赞”的状态（特地这么明显地写出来以防出错）
-     */
-    likeView.selected = !likeView.selected;
-//    BOOL likeButtonSelectedStatusToSend = likeView.selected;
-    
-    [DDService toggleLike:likeView.selected ID:_selectedVM.ID type:_selectedVM.type  withBlock:^(BOOL success) {
-        if (success) {
-            // 自己发送的通知自己也会监听，和其他观察者一同刷新UI
-            // 发通知后所有观察者只负责刷新UI不修改ViewModel；谁发通知就由谁更新ViewModel（副作用只发生一次！）。
-            
-            // 在这一步只修改ViewModel
-            _selectedVM.liked =  likeView.selected;
-            if (likeView.selected) {
-                _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue + 1];
-            } else {
-                _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue - 1];
-            }
-        }
-        else {
-            likeView.selected = !likeView.selected;
-        }
-    }];
-}
+
 
 /** Cell-点击 － 关注 */
 - (void)follow:(UIImageView*)followView {
@@ -596,37 +575,6 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     }];
 }
 
-/** Cell-点击 收藏 */
--(void)collect:(PIEPageButton*) collectView shouldShowHud:(BOOL)shouldShowHud {
-    
-    // 这里的“收藏”方法的逻辑和shareView中的完全一样，可以考虑将下面的代码统一封装到DDCollectionManager之中，
-    // 让controller的collet：方法和shareView的collect方法调用
-    
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    collectView.selected = !collectView.selected;
-    if (collectView.selected) {
-        //收藏
-        [param setObject:@(1) forKey:@"status"];
-    } else {
-        //取消收藏
-        [param setObject:@(0) forKey:@"status"];
-    }
-    [DDCollectManager toggleCollect:param withPageType:_selectedVM.type withID:_selectedVM.ID withBlock:^(NSError *error) {
-        if (!error) {
-            if (shouldShowHud) {
-                if (collectView.selected) {
-                    [Hud textWithLightBackground:@"收藏成功"];
-                } else {
-                    [Hud textWithLightBackground:@"取消收藏成功"];
-                }
-            }
-            _selectedVM.collected = collectView.selected;
-            _selectedVM.collectCount = collectView.numberString;
-        }   else {
-            collectView.selected = !collectView.selected;
-        }
-    }];
-}
 
 #pragma mark - Notification methods
 
@@ -637,9 +585,6 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 }
 
 
-/**
- *  用户点击了updateShareStatus之后（在弹出的窗口分享），刷新本页面ReplyCell的分享数
- */
 - (void)updateShareStatus {
     
     if (_selectedIndexPath_hot != nil)
@@ -652,9 +597,6 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 
 
 #pragma mark - target-actions
-/**
- *  每隔0.5秒让swipeView转一页
- */
 - (void) onTimer
 {
     [self.swipeView scrollByNumberOfItems:1 duration:0.5];
@@ -828,10 +770,10 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     return _pageControl_swipeView;
 }
 
-- (NSMutableArray<PIEBannerViewModel *> *)sourceBanner
+- (NSMutableArray<PIEModelBanner *> *)sourceBanner
 {
     if (_sourceBanner == nil) {
-        _sourceBanner = [NSMutableArray<PIEBannerViewModel *> array];
+        _sourceBanner = [NSMutableArray<PIEModelBanner *> array];
     }
     
     return _sourceBanner;

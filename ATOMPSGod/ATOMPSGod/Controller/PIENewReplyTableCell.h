@@ -10,8 +10,9 @@
 
 #import "PIEThumbAnimateView.h"
 #import "PIEPageButton.h"
-#import "PIEPageLikeButton.h"
+
 #import "PIEAvatarImageView.h"
+#import "PIELoveButton.h"
 
 @interface PIENewReplyTableCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet PIEAvatarImageView *avatarView;
@@ -24,7 +25,7 @@
 @property (weak, nonatomic) IBOutlet PIEPageButton *shareView;
 //@property (weak, nonatomic) IBOutlet PIEPageButton *collectView;
 @property (weak, nonatomic) IBOutlet PIEPageButton *commentView;
-@property (weak, nonatomic) IBOutlet PIEPageLikeButton *likeView;
+@property (weak, nonatomic) IBOutlet PIELoveButton *likeView;
 @property (weak, nonatomic) IBOutlet UIImageView *followView;
 @property (nonatomic, assign) NSInteger ID;
 @property (nonatomic, assign) NSInteger askID;

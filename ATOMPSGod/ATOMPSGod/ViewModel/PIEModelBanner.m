@@ -6,9 +6,9 @@
 //  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIEBannerViewModel.h"
+#import "PIEModelBanner.h"
 
-@implementation PIEBannerViewModel
+@implementation PIEModelBanner
 
 
 @end

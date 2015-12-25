@@ -13,18 +13,13 @@
 //static dispatch_once_t onceToken;
 static  PIEEntityUser* _currentUser;
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        _region = [NSMutableDictionary new];
-        _bindWechat = NO;
-        _bindWeibo = NO;
-        _mobile = @"-1";
-        _username = @"我";
-    }
-    return self;
-}
+//- (instancetype)init
+//{
+//    self = [super init];
+//    if (self) {
+//    }
+//    return self;
+//}
 
 + (PIEEntityUser *)currentUser {
     if (!_currentUser) {

@@ -8,10 +8,11 @@
 
 #import "ATOMBaseModel.h"
 
-@interface PIEModelImage : ATOMBaseModel<MTLFMDBSerializing>
-@property (nonatomic, assign) NSInteger ID;
-@property (nonatomic, assign) NSInteger height;
-@property (nonatomic, assign) NSInteger width;
+@interface PIEModelImage : ATOMBaseModel
+//<MTLFMDBSerializing>
+//@property (nonatomic, assign) NSInteger ID;
+//@property (nonatomic, assign) NSInteger height;
+//@property (nonatomic, assign) NSInteger width;
 @property (nonatomic, copy) NSString *url;
 
 @end

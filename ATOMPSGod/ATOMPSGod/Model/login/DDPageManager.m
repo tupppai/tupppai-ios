@@ -106,8 +106,8 @@
             }
             for (PIEModelImage* ie in askImageEntities) {
                 PIEPageEntity *askEntity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:[returnArray objectAtIndex:i] error:NULL];
-                askEntity.imageWidth = ie.width;
-                askEntity.imageHeight = ie.height;
+//                askEntity.imageWidth = ie.width;
+//                askEntity.imageHeight = ie.height;
                 askEntity.imageURL = ie.url;
                 PIEPageVM* vm = [[PIEPageVM alloc]initWithPageEntity:askEntity];
                 [source addObject:vm];

@@ -121,11 +121,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
                                              selector:@selector(updateShareStatus:)
                                                  name:PIESharedIconStatusChangedNotification
                                                object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateLikedStatus:)
-                                                 name:PIELikedIconStatusChangedNotification
-                                               object:nil];
 }
 
 - (void) dismiss {
@@ -194,9 +189,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
                                                     name:PIESharedIconStatusChangedNotification
                                                   object:nil];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:PIELikedIconStatusChangedNotification
-                                                  object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -760,17 +752,14 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         _headerView_reply.vm = _vm;
         UITapGestureRecognizer* tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap1)];
         UITapGestureRecognizer* tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap2)];
-//        UITapGestureRecognizer* tap3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap3)];
-//        UITapGestureRecognizer* tap4 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap4)];
-        
         UITapGestureRecognizer* tap5 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap5)];
         UITapGestureRecognizer* tap6 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapAllWorkButton)];
         UITapGestureRecognizer* tap7 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapLike)];
+        UILongPressGestureRecognizer* longpress7 = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(didLongpressLike)];
         [_headerView_reply.avatarView addGestureRecognizer:tap1];
         [_headerView_reply.usernameLabel addGestureRecognizer:tap2];
-//        [_headerView_reply.imageViewMain addGestureRecognizer:tap3];
-//        [_headerView_reply.imageViewRight addGestureRecognizer:tap4];
         [_headerView_reply.shareButton addGestureRecognizer:tap5];
+        [_headerView_reply.likeButton addGestureRecognizer:longpress7];
         [_headerView_reply.likeButton addGestureRecognizer:tap7];
         [_headerView_reply.moreWorkButton addGestureRecognizer:tap6];
     }
@@ -821,8 +810,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     if (_headerView.imageViewMain.image != nil) {
 //        imageInfo.image = _headerView.imageViewRight.image;
     } else {
-        if (_vm.models_ask.count >= 2) {
-            PIEModelImage* imgEntity = _vm.models_ask[1];
+        if (_vm.models_image.count >= 2) {
+            PIEModelImage* imgEntity = _vm.models_image[1];
             imageInfo.imageURL = [NSURL URLWithString:imgEntity.url];
         }
     }
@@ -849,38 +838,14 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 - (void) didTapLike {
     
-    /**
-     *  准备发往服务器的“点赞”的状态（特地这么明显地写出来以防出错）
-     */
-    BOOL likeButtonSelectedStatusToSend = !_headerView_reply.likeButton.selected;
-    
-    [DDService toggleLike:likeButtonSelectedStatusToSend ID:_vm.ID type:_vm.type  withBlock:^(BOOL success) {
-        if (success) {
-            // 自己发送的通知自己也会监听，和其他观察者一同刷新UI
-            // 发通知后所有观察者只负责刷新UI不修改ViewModel；谁发通知就由谁更新ViewModel（副作用只发生一次！）。
-            
-            // 在这一步只修改ViewModel
-            _vm.liked =  !_headerView_reply.likeButton.selected;
-            if ( _headerView_reply.likeButton.selected) {
-                _vm.likeCount = [NSString stringWithFormat:@"%zd",_vm.likeCount.integerValue + 1];
-            } else {
-                _vm.likeCount = [NSString stringWithFormat:@"%zd",_vm.likeCount.integerValue - 1];
-            }
-            
-            // 由最终的_vm.liked作为通知发送携带的值的最终标准
-            [[NSNotificationCenter defaultCenter]
-             postNotificationName:PIELikedIconStatusChangedNotification
-             object:nil
-             userInfo:@{PIELikedIconIsLikedKey:@(_vm.liked)}];
-            
-        }
-        else {
-            // 服务器没有确认这次”点赞“的行为，所以既不刷新UI也不对ViewModel做任何修改
-            [Hud text:@"服务器不鸟你～"];
-        }
-    }];
-}
+    [PIEPageManager love:_headerView_reply.likeButton viewModel:_vm revert:NO];
 
+}
+- (void) didLongpressLike {
+    
+    [PIEPageManager love:_headerView_reply.likeButton viewModel:_vm revert:YES];
+    
+}
 
 #pragma mark - <PIEShareViewDelegate>
 
@@ -974,13 +939,5 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     
 }
 
-- (void)updateLikedStatus:(NSNotification *)notification
-{
-    // 只有在服务器顺利返回结果之后再刷新UI。
-//    _headerView_reply.likeButton.selected = !_headerView_reply.likeButton.selected;
-    
-    // 严格按照通知传来的值来刷新UI状态，可免去不少麻烦；
-    BOOL isLiked = [notification.userInfo[PIELikedIconIsLikedKey] boolValue];
-    _headerView_reply.likeButton.selected = isLiked;
-}
+
 @end

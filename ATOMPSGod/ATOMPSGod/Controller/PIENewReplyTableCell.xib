@@ -116,12 +116,13 @@
                             <constraint firstAttribute="height" constant="11" id="4Fi-RT-vIv"/>
                         </constraints>
                     </view>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tse-As-wf5" customClass="PIEPageLikeButton">
-                        <rect key="frame" x="336" y="500" width="25" height="28"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tse-As-wf5" customClass="PIELoveButton">
+                        <rect key="frame" x="326" y="500" width="35" height="28"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="width" priority="250" constant="25" id="Mem-Qs-sQ0"/>
+                            <constraint firstAttribute="width" priority="250" constant="35" id="Mem-Qs-sQ0"/>
                             <constraint firstAttribute="height" constant="28" id="izC-BR-7UU"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="35" id="wxT-mB-EVa"/>
                         </constraints>
                     </view>
                 </subviews>

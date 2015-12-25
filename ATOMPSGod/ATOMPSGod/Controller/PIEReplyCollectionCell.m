@@ -39,7 +39,7 @@
     _ID = viewModel.ID;
     _type = viewModel.type;
 //    _likeButton.highlighted = viewModel.liked;
-    _likeButton.imageView.image = [UIImage imageNamed:@"pie_myCollection_like"];
+//    _likeButton.imageView.image = [UIImage imageNamed:@"pie_myCollection_like"];
        [_likeButton setTitle:viewModel.likeCount
                  forState:UIControlStateNormal];
     

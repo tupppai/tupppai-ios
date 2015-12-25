@@ -25,7 +25,7 @@
     _theImageView.contentMode = UIViewContentModeScaleAspectFit;
     _theImageView.clipsToBounds = YES;
     _theImageView.backgroundColor = [UIColor clearColor];
-    _collectView.userInteractionEnabled = YES;
+//    _collectView.userInteractionEnabled = YES;
 
     [_nameLabel setFont:[UIFont lightTupaiFontOfSize:13]];
     [_contentLabel setFont:[UIFont lightTupaiFontOfSize:15]];
@@ -106,13 +106,12 @@
     _commentView.imageView.image = [UIImage imageNamed:@"hot_comment"];
     _commentView.numberString = viewModel.commentCount;
     
-    _collectView.imageView.image = [UIImage imageNamed:@"hot_star"];
-    _collectView.imageView.highlightedImage = [UIImage imageNamed:@"hot_star_selected"];
-    _collectView.highlighted = viewModel.collected;
-    _collectView.numberString = viewModel.collectCount;
+//    _collectView.imageView.image = [UIImage imageNamed:@"hot_star"];
+//    _collectView.imageView.highlightedImage = [UIImage imageNamed:@"hot_star_selected"];
+//    _collectView.highlighted = viewModel.collected;
+//    _collectView.numberString = viewModel.collectCount;
     
-    _likeView.highlighted = viewModel.liked;
-    _likeView.numberString = viewModel.likeCount;
+    [_likeView initStatus:viewModel.lovedCount numberString:viewModel.likeCount];
     _contentLabel.text = viewModel.content;
     
     [_avatarView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
@@ -151,16 +150,16 @@
     }
     
         [self mansoryThumbAnimateView];
-        [_thumbView setSubviewCounts:viewModel.models_ask.count];
+        [_thumbView setSubviewCounts:viewModel.models_image.count];
     
-    if (viewModel.models_ask.count > 0) {
-        PIEModelImage* entity = [viewModel.models_ask objectAtIndex:0];
-        NSString *urlString_imageView1 = [entity.url trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
+    if (viewModel.models_image.count > 0) {
+        PIEModelImage* entity = [viewModel.models_image objectAtIndex:0];
 
+        NSString *urlString_imageView1 = [entity.url trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
         [self.thumbView.rightView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView1] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
         
-        if (viewModel.models_ask.count == 2) {
-            entity = viewModel.models_ask[1];
+        if (viewModel.models_image.count == 2) {
+            entity = viewModel.models_image[1];
             NSString *urlString_imageView2 = [entity.url trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
 
             [_thumbView.leftView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView2] placeholderImage:[UIImage imageNamed:@"cellHolder"]];

@@ -24,6 +24,7 @@
 }
 
 - (void)setViewModelData:(PIECommentEntity *)comment {
+    _model = comment;
     _originText  = comment.content;
     _uid         = comment.uid;
     _username    = comment.nickname;

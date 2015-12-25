@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+
+
+//to be refactor -peiwei
 @interface PIEUserProfileViewModel : NSObject
 
 @property (nonatomic, copy) NSString *nickName;

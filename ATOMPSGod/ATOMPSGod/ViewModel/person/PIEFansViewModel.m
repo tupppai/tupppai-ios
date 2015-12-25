@@ -12,8 +12,11 @@
 @implementation PIEFansViewModel
 
 - (void)setViewModelData:(PIEEntityFan *)fans {
+    _model = fans;
     _uid        = fans.uid;
     _userName   = fans.nickname;
+    
+    //refactor this shit
     _userSex    = fans.sex ? @"man" : @"woman";
     _avatarURL  = fans.avatar;
     _fansCount  = [NSString stringWithFormat:@"%d", (int)fans.fansCount];
@@ -21,13 +24,7 @@
     _replyCount = [NSString stringWithFormat:@"%d", (int)fans.replyCount];
     _isFollow   = fans.isFollow;
     _isMyFan    = fans.isMyFan;
-//    if (fans.isFollow == YES && fans.isMyFan == YES) {
-//        _followStatus = 2;
-//    } else if(fans.isFollow == YES){
-//        _followStatus = 1;
-//    } else if (fans.isFollow == NO) {
-//        _followStatus = 0;
-//    }
+
 }
 
 @end
