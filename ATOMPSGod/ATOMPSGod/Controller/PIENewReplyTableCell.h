@@ -13,6 +13,9 @@
 #import "PIELoveButton.h"
 
 @interface PIENewReplyTableCell : UITableViewCell
+
+@property (nonatomic,strong) PIEPageVM* vm;
+
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;

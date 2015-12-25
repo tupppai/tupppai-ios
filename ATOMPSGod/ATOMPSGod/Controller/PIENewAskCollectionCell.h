@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface PIENewAskCollectionCell : UICollectionViewCell
+@property (nonatomic,strong) PIEPageVM* vm;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;

@@ -81,7 +81,7 @@
 
 - (void)injectSauce:(PIEPageVM *)viewModel {
     WS(ws);
-    
+    _vm = viewModel;
     NSString *urlString_avatar = [viewModel.avatarURL trimToImageWidth:_avatarView.frame.size.width*SCREEN_SCALE];
     NSString *urlString_imageView = [viewModel.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
     

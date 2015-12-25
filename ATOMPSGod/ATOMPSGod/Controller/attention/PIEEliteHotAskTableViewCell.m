@@ -73,6 +73,7 @@
 }
 - (void)injectSauce:(PIEPageVM *)viewModel {
     WS(ws);
+    _vm = viewModel;
     NSString *urlString_avatar = [viewModel.avatarURL trimToImageWidth:_avatarView.frame.size.width*SCREEN_SCALE];
     NSString *urlString_imageView = [viewModel.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
     [_theImageView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView]
@@ -81,8 +82,6 @@
                                 ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
                             }];
     [_avatarView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
-    _ID = viewModel.ID;
-    _askID = viewModel.askID;
     
     {
         if (viewModel.isMyFan) {

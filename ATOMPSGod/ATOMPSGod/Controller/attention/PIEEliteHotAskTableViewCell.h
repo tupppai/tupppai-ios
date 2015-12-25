@@ -13,6 +13,7 @@
 #import "PIEBangView.h"
 
 @interface PIEEliteHotAskTableViewCell : UITableViewCell
+@property (nonatomic,strong) PIEPageVM* vm;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 //@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
@@ -28,7 +29,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *commentLabel2;
 
 @property (weak, nonatomic) IBOutlet UIImageView *followView;
-@property (nonatomic, assign) NSInteger ID;
-@property (nonatomic, assign) NSInteger askID;
+//@property (nonatomic, assign) NSInteger ID;
+//@property (nonatomic, assign) NSInteger askID;
 - (void)injectSauce:(PIEPageVM *)viewModel;
 @end

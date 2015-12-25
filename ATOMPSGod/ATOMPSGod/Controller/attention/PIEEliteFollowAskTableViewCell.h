@@ -12,6 +12,8 @@
 #import "PIEBangView.h"
 
 @interface PIEEliteFollowAskTableViewCell : UITableViewCell
+
+@property (nonatomic,strong) PIEPageVM* vm;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
@@ -23,8 +25,8 @@
 @property (weak, nonatomic) IBOutlet PIEBangView *bangView;
 @property (weak, nonatomic) IBOutlet UIImageView *followView;
 //@property (strong, nonatomic) PIEThumbAnimateView *thumbView;
-@property (nonatomic, assign) NSInteger ID;
-@property (nonatomic, assign) NSInteger askID;
+
+
 - (void)injectSauce:(PIEPageVM *)viewModel;
 //- (void)animateToggleExpanded ;
 @end
