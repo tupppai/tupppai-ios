@@ -36,6 +36,8 @@
     [_contentLabel setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.9]];
     [_timeLabel setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.3]];
     
+    [_followView setContentMode:UIViewContentModeCenter];
+    
     [self.contentView insertSubview:self.blurView belowSubview:_theImageView];
     [self.blurView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.theImageView);
