@@ -29,6 +29,7 @@ typedef NS_ENUM(NSInteger, PIENotificationType) {
 @property (nonatomic, assign) NSInteger askID;
 @property (nonatomic, assign) NSInteger replyID;
 @property (nonatomic, copy  ) NSString  *time;
+@property (nonatomic, strong  ) PIEModelNotification  *model;
 
 - (instancetype)initWithEntity:(PIEModelNotification *)entity ;
 

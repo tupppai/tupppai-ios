@@ -51,8 +51,8 @@
                 PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:askObject error:NULL];
                 PIEModelImage* imgEntity = [MTLJSONAdapter modelOfClass:[PIEModelImage class] fromJSONDictionary:object error:NULL];
                 entity.imageURL = imgEntity.url;
-                entity.imageWidth = imgEntity.width;
-                entity.imageHeight = imgEntity.height;
+//                entity.imageWidth = imgEntity.width;
+//                entity.imageHeight = imgEntity.height;
                 
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 

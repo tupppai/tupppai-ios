@@ -4,67 +4,8 @@
 3.Hugging => content does not want to grow
 Compression Resistance => content does not want to shrink
 
-
-//
-//  MRAFNetworkingSupportViewController.m
-//  Example
-//
-//  Created by Marius Rackwitz on 16.07.14.
-//  Copyright (c) 2014 Marius Rackwitz. All rights reserved.
-//
-
-#import "MRAFNetworkingSupportViewController.h"
-#import "AFNetworking.h"
-#import "MRActivityIndicatorView.h"
-#import "MRCircularProgressView.h"
-#import "MRNavigationBarProgressView.h"
-#import "MRActivityIndicatorView+AFNetworking.h"
-#import "MRProgressView+AFNetworking.h"
-#import "MRProgressOverlayView+AFNetworking.h"
-
-
-@interface MRAFNetworkingSupportViewController ()
-
-@property (weak, nonatomic) IBOutlet MRActivityIndicatorView *activityIndicatorView;
-@property (weak, nonatomic) IBOutlet MRCircularProgressView *circularProgressView;
-
-@property (nonatomic, strong) AFHTTPSessionManager *sessionManager;
-
-@end
-
-
-@implementation MRAFNetworkingSupportViewController
-
-- (void)viewDidLoad {
-[super viewDidLoad];
-
-self.activityIndicatorView.hidesWhenStopped = NO;
-
-NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-config.requestCachePolicy = NSURLRequestReloadIgnoringCacheData;
-
-AFHTTPSessionManager *sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:@"https://httpbin.org/"] sessionConfiguration:config];
-sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
-self.sessionManager = sessionManager;
-}
-
-- (NSURLSessionDownloadTask *)bytesDownloadTask {
-NSProgress *downloadProgress = nil;
-NSURLSessionDownloadTask *task = [self.sessionManager downloadTaskWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"/bytes/1000000" relativeToURL:self.sessionManager.baseURL]]
-progress:&downloadProgress
-destination:nil
-completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error){
-NSLog(@"Task completed with error: %@", error);
-}];
-[task resume];
-return task;
-}
-
-
-- (IBAction)onNavigationBarProgressViewGo:(id)sender {
-NSURLSessionDownloadTask *task = [self bytesDownloadTask];
-[[MRNavigationBarProgressView progressViewForNavigationController:self.navigationController]
-setProgressWithDownloadProgressOfTask:task animated:YES];
-}
-
-@end
+4.
+The relationships between the three components of the MVVM pattern are simpler than the MVC equivalents, following these strict rules:
+The View has a reference to the ViewModel, but not vice-versa.
+The ViewModel has a reference to the Model, but not vice-versa.
+If you break either of these rules, you’re doing MVVM wrong!

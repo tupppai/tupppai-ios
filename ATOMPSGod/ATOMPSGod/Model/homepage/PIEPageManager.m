@@ -96,7 +96,7 @@
 //        } else {
 //            [self.homeImageDAO insertHomeImage:homeImage];
 //        }
-//        NSArray *imageEntities = homeImage.models_ask;
+//        NSArray *imageEntities = homeImage.models_image;
 //        for ( PIEImageEntity * entity in imageEntities) {
 //            if ([PIEAskImageDao isExist:entity]) {
 //                [PIEAskImageDao update:entity];
@@ -110,7 +110,7 @@
 //- (NSArray *)getHomeImages {
 //    NSArray *array = [self.homeImageDAO selectHomeImages];
 //    for (PIEPageEntity *homeImage in array) {
-//        homeImage.models_ask = [PIEAskImageDao selectByID:homeImage.ID];
+//        homeImage.models_image = [PIEAskImageDao selectByID:homeImage.ID];
 //    }
 //    return array;
 //}
@@ -119,7 +119,7 @@
 //    
 ////    NSArray *array = [self.homeImageDAO selectHomeImagesWithHomeType:homeType];
 ////    for (PIEPageEntity *homeImage in array) {
-////        homeImage.models_ask = [PIEAskImageDao selectByID:homeImage.ID];
+////        homeImage.models_image = [PIEAskImageDao selectByID:homeImage.ID];
 ////    }
 //    NSArray *array;
 //    return array;

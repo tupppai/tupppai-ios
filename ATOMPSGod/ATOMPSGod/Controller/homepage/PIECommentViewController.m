@@ -815,8 +815,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     if (_headerView.imageViewMain.image != nil) {
 //        imageInfo.image = _headerView.imageViewRight.image;
     } else {
-        if (_vm.models_ask.count >= 2) {
-            PIEModelImage* imgEntity = _vm.models_ask[1];
+        if (_vm.models_image.count >= 2) {
+            PIEModelImage* imgEntity = _vm.models_image[1];
             imageInfo.imageURL = [NSURL URLWithString:imgEntity.url];
         }
     }

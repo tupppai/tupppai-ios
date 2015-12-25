@@ -11,6 +11,8 @@
 
 @interface PIEFansViewModel : NSObject
 
+@property (nonatomic, strong) PIEEntityFan *model;
+
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, copy  ) NSString  *userName;
 @property (nonatomic, copy  ) NSString  *userSex;

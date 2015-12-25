@@ -406,6 +406,8 @@
 		F46117E31BAD1102001A6F1A /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F46117D51BAD1101001A6F1A /* IQKeyboardManager.bundle */; };
 		F465C6FC1C294EAE00D8A410 /* PIEChannelDetailLatestPSCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F465C6FA1C294EAE00D8A410 /* PIEChannelDetailLatestPSCell.m */; };
 		F465C6FD1C294EAE00D8A410 /* PIEChannelDetailLatestPSCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F465C6FB1C294EAE00D8A410 /* PIEChannelDetailLatestPSCell.xib */; };
+		F46CBC7D1C2CDE0D00A64474 /* PIELoveButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F46CBC7C1C2CDE0C00A64474 /* PIELoveButton.m */; };
+		F46CBC801C2CE03200A64474 /* PIELoveLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F46CBC7F1C2CE03200A64474 /* PIELoveLabel.m */; };
 		F46FB6DF1C102F9400FEB2E7 /* intro2.png in Resources */ = {isa = PBXBuildFile; fileRef = F46FB6DE1C102F9400FEB2E7 /* intro2.png */; };
 		F46FB6E11C10357000FEB2E7 /* intro1.png in Resources */ = {isa = PBXBuildFile; fileRef = F46FB6E01C10357000FEB2E7 /* intro1.png */; };
 		F47EF0861C031FF500BFB442 /* VVBlurPresentationController.m in Sources */ = {isa = PBXBuildFile; fileRef = F47EF07F1C031FF500BFB442 /* VVBlurPresentationController.m */; };
@@ -443,7 +445,7 @@
 		F4BBE7721BBE3F9D00003CDE /* PIEReplyCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE7701BBE3F9D00003CDE /* PIEReplyCollectionViewController.m */; };
 		F4BBE77C1BBE420400003CDE /* PIEReplyCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE77A1BBE420400003CDE /* PIEReplyCollectionCell.m */; };
 		F4BDF4CB1BDF345100DA3575 /* BBBadgeBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BDF4CA1BDF345100DA3575 /* BBBadgeBarButtonItem.m */; };
-		F4C0DFE61BE9D1B7000615CF /* PIEBannerViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C0DFE51BE9D1B7000615CF /* PIEBannerViewModel.m */; };
+		F4C0DFE61BE9D1B7000615CF /* PIEModelBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C0DFE51BE9D1B7000615CF /* PIEModelBanner.m */; };
 		F4C0DFEB1BE9D45F000615CF /* PIEWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C0DFE91BE9D45F000615CF /* PIEWebViewViewController.m */; };
 		F4C0DFEC1BE9D45F000615CF /* PIEWebViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4C0DFEA1BE9D45F000615CF /* PIEWebViewViewController.xib */; };
 		F4C0DFF01BE9EF3A000615CF /* PIEFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C0DFEE1BE9EF3A000615CF /* PIEFeedbackViewController.m */; };
@@ -1332,6 +1334,10 @@
 		F465C6F91C294EAE00D8A410 /* PIEChannelDetailLatestPSCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelDetailLatestPSCell.h; sourceTree = "<group>"; };
 		F465C6FA1C294EAE00D8A410 /* PIEChannelDetailLatestPSCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelDetailLatestPSCell.m; sourceTree = "<group>"; };
 		F465C6FB1C294EAE00D8A410 /* PIEChannelDetailLatestPSCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEChannelDetailLatestPSCell.xib; sourceTree = "<group>"; };
+		F46CBC7B1C2CDE0C00A64474 /* PIELoveButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIELoveButton.h; sourceTree = "<group>"; };
+		F46CBC7C1C2CDE0C00A64474 /* PIELoveButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIELoveButton.m; sourceTree = "<group>"; };
+		F46CBC7E1C2CE03200A64474 /* PIELoveLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIELoveLabel.h; path = homepage/PIELoveLabel.h; sourceTree = "<group>"; };
+		F46CBC7F1C2CE03200A64474 /* PIELoveLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIELoveLabel.m; path = homepage/PIELoveLabel.m; sourceTree = "<group>"; };
 		F46FB6DE1C102F9400FEB2E7 /* intro2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro2.png; sourceTree = "<group>"; };
 		F46FB6E01C10357000FEB2E7 /* intro1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro1.png; sourceTree = "<group>"; };
 		F47EF07E1C031FF500BFB442 /* VVBlurPresentationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VVBlurPresentationController.h; sourceTree = "<group>"; };
@@ -1400,8 +1406,8 @@
 		F4BBE77A1BBE420400003CDE /* PIEReplyCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEReplyCollectionCell.m; sourceTree = "<group>"; };
 		F4BDF4C91BDF345100DA3575 /* BBBadgeBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBBadgeBarButtonItem.h; sourceTree = "<group>"; };
 		F4BDF4CA1BDF345100DA3575 /* BBBadgeBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBBadgeBarButtonItem.m; sourceTree = "<group>"; };
-		F4C0DFE41BE9D1B7000615CF /* PIEBannerViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEBannerViewModel.h; sourceTree = "<group>"; };
-		F4C0DFE51BE9D1B7000615CF /* PIEBannerViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEBannerViewModel.m; sourceTree = "<group>"; };
+		F4C0DFE41BE9D1B7000615CF /* PIEModelBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIEModelBanner.h; path = ../ViewModel/PIEModelBanner.h; sourceTree = "<group>"; };
+		F4C0DFE51BE9D1B7000615CF /* PIEModelBanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIEModelBanner.m; path = ../ViewModel/PIEModelBanner.m; sourceTree = "<group>"; };
 		F4C0DFE81BE9D45F000615CF /* PIEWebViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEWebViewViewController.h; sourceTree = "<group>"; };
 		F4C0DFE91BE9D45F000615CF /* PIEWebViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEWebViewViewController.m; sourceTree = "<group>"; };
 		F4C0DFEA1BE9D45F000615CF /* PIEWebViewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEWebViewViewController.xib; sourceTree = "<group>"; };
@@ -2075,6 +2081,8 @@
 				5C0F04D11ADCA8E2002003AE /* PIEEntityFan.m */,
 				5C0F04FB1ADD0D88002003AE /* PIEEntityFollow.h */,
 				5C0F04FC1ADD0D88002003AE /* PIEEntityFollow.m */,
+				F4C0DFE41BE9D1B7000615CF /* PIEModelBanner.h */,
+				F4C0DFE51BE9D1B7000615CF /* PIEModelBanner.m */,
 			);
 			name = model;
 			path = Entity;
@@ -2195,8 +2203,6 @@
 				F402F1031BE8A327004988B4 /* PIEUserViewModel.m */,
 				F4EC11211BCF456E002D1DCF /* PIENotificationVM.h */,
 				F4EC11221BCF456E002D1DCF /* PIENotificationVM.m */,
-				F4C0DFE41BE9D1B7000615CF /* PIEBannerViewModel.h */,
-				F4C0DFE51BE9D1B7000615CF /* PIEBannerViewModel.m */,
 				5C9BDA061AA84D1000715698 /* PIECommentVM.h */,
 				5C9BDA071AA84D1000715698 /* PIECommentVM.m */,
 				E9FC94D71B2F0D0C00B72C60 /* PIEUserProfileViewModel.h */,
@@ -2411,10 +2417,10 @@
 		5CDB05EE1AA400410089121E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F43159C71BB5547300DCA292 /* 2.1 */,
 				F41BA04C1C0E9A0F00979D43 /* tag */,
 				F44A527C1C0C332700707281 /* actionsheet */,
 				F4E72E701C070C460056791D /* customViewFromXib */,
-				F43159C71BB5547300DCA292 /* 2.1 */,
 				E959A5691B8EFCB700F90155 /* refresh */,
 				5C535CAE1AF1FC8A00BF30D1 /* common */,
 				5C4F5BF01AA593CD00226F64 /* homepage */,
@@ -3240,6 +3246,10 @@
 				F43159CC1BB5567000DCA292 /* PIEPageButton.m */,
 				F45FF9AD1BB65BE6009C4203 /* PIEPageLikeButton.h */,
 				F45FF9AE1BB65BE6009C4203 /* PIEPageLikeButton.m */,
+				F46CBC7B1C2CDE0C00A64474 /* PIELoveButton.h */,
+				F46CBC7C1C2CDE0C00A64474 /* PIELoveButton.m */,
+				F46CBC7E1C2CE03200A64474 /* PIELoveLabel.h */,
+				F46CBC7F1C2CE03200A64474 /* PIELoveLabel.m */,
 				F4D9F6CD1BBFDDE10023A53B /* PIEBangView.h */,
 				F4D9F6CE1BBFDDE10023A53B /* PIEBangView.m */,
 				F4BB27BD1BD0AD8200C50F58 /* PIEImageView.h */,
@@ -4355,7 +4365,7 @@
 				E991EF051B735C2E00025108 /* EARestrictedScrollView.m in Sources */,
 				F45ECF4A1BD1DC3F00417A75 /* PIEMyCommentedPageTableViewCell.m in Sources */,
 				F4DE44FA1C06F47B00BEEB96 /* PIECarouselViewController2.m in Sources */,
-				F4C0DFE61BE9D1B7000615CF /* PIEBannerViewModel.m in Sources */,
+				F4C0DFE61BE9D1B7000615CF /* PIEModelBanner.m in Sources */,
 				5CDB06341AA428BD0089121E /* NSArray+MASAdditions.m in Sources */,
 				E9FF94AC1B7476FC00F06819 /* HMSegmentedControl.m in Sources */,
 				F43930431BE4BD75006C9437 /* MRProgressOverlayView+AFNetworking.m in Sources */,
@@ -4519,6 +4529,7 @@
 				F4D3686C1BA909E300E6C91C /* PIECameraCell.m in Sources */,
 				F4E5F5F51BD9D2E100AB8B31 /* AFHTTPRequestOperation.m in Sources */,
 				0EF2F5CC1C154A6200F27D61 /* PIEChannelViewController.m in Sources */,
+				F46CBC7D1C2CDE0D00A64474 /* PIELoveButton.m in Sources */,
 				E90C7C601B20A0FC00CF0E6A /* KShareManager.m in Sources */,
 				F46117E11BAD1101001A6F1A /* IQToolbar.m in Sources */,
 				E99D2F561B1C7E8D000D7784 /* UIImage+Filtering.m in Sources */,
@@ -4589,6 +4600,7 @@
 				E90197351B32D2F800F46B78 /* MBProgressHUD.m in Sources */,
 				E99D2F5D1B1C7E8D000D7784 /* UIView+Screenshot.m in Sources */,
 				F4AFCD4B1BC79A3100027940 /* UIButton+Pop.m in Sources */,
+				F46CBC801C2CE03200A64474 /* PIELoveLabel.m in Sources */,
 				0E3FB9E41C155E0C0012E290 /* PIENewAskMakeUpViewController.m in Sources */,
 				F4993CEF1BE5B32C007F9BE4 /* UIProgressView+AFNetworking.m in Sources */,
 				E94B032A1B7DE6EC00863C6F /* UIColor+PSGod.m in Sources */,

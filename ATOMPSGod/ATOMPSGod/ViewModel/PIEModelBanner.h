@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface PIEBannerViewModel : NSObject
+@interface PIEModelBanner : NSObject
 @property (nonatomic, assign) NSInteger ID;
 @property (nonatomic, copy  ) NSString  * url;
 @property (nonatomic, copy  ) NSString  * imageUrl;

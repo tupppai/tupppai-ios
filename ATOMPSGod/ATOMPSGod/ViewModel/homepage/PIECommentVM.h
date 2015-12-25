@@ -10,6 +10,7 @@
 @class PIECommentEntity;
 
 @interface PIECommentVM : NSObject
+@property (nonatomic, strong) PIECommentEntity* model;
 
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, copy  ) NSString  *username;

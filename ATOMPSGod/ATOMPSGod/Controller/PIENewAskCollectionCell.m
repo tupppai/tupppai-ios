@@ -42,7 +42,7 @@
     _timeLabel.text = vm.publishTime;
     _contentLabel.text = vm.content;
 
-    if (vm.models_ask.count >= 2) {
+    if (vm.models_image.count >= 2) {
         _imageView_multiAskSign.hidden = NO;
     } else {
         _imageView_multiAskSign.hidden = YES;

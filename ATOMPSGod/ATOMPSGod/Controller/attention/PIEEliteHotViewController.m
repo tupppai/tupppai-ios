@@ -10,7 +10,7 @@
 #import "PIEActionSheet_PS.h"
 #import "PIEShareView.h"
 #import "SwipeView.h"
-#import "PIEBannerViewModel.h"
+#import "PIEModelBanner.h"
 #import "PIERefreshTableView.h"
 #import "PIEWebViewViewController.h"
 #import "SMPageControl.h"
@@ -35,7 +35,7 @@
 
 @property (nonatomic, strong) NSMutableArray<PIEPageVM *> *sourceHot;
 
-@property (nonatomic, strong) NSMutableArray<PIEBannerViewModel *> *sourceBanner;
+@property (nonatomic, strong) NSMutableArray<PIEModelBanner *> *sourceBanner;
 
 @property (nonatomic, assign) BOOL isfirstLoadingHot;
 
@@ -256,7 +256,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         [view addSubview:imageView];
     }
-    PIEBannerViewModel* vm = [self.sourceBanner objectAtIndex:index];
+    PIEModelBanner* vm = [self.sourceBanner objectAtIndex:index];
     for (UIView *subView in view.subviews){
         if([subView isKindOfClass:[UIImageView class]]){
             UIImageView *imageView = (UIImageView *)subView;
@@ -828,10 +828,10 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     return _pageControl_swipeView;
 }
 
-- (NSMutableArray<PIEBannerViewModel *> *)sourceBanner
+- (NSMutableArray<PIEModelBanner *> *)sourceBanner
 {
     if (_sourceBanner == nil) {
-        _sourceBanner = [NSMutableArray<PIEBannerViewModel *> array];
+        _sourceBanner = [NSMutableArray<PIEModelBanner *> array];
     }
     
     return _sourceBanner;
