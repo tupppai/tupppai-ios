@@ -403,7 +403,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         //点击头像
         else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
             PIEFriendViewController * friendVC = [PIEFriendViewController new];
-            friendVC.pageVM = _selectedVM;
+            friendVC.uid = _selectedVM.userID;
             [self.navigationController pushViewController:friendVC animated:YES];
         }
         

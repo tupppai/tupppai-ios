@@ -549,30 +549,40 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 #pragma mark - Gesture actions
 
 /** Cell点击 － 点赞 */
--(void)like:(PIEPageLikeButton*)likeView {
-    /**
-     *  准备发往服务器的“点赞”的状态（特地这么明显地写出来以防出错）
-     */
-    likeView.selected = !likeView.selected;
-//    BOOL likeButtonSelectedStatusToSend = likeView.selected;
+-(void)like:(PIELoveButton*)likeView {
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    [param setObject:@(likeView.status) forKey:@"num"];
     
-    [DDService toggleLike:likeView.selected ID:_selectedVM.ID type:_selectedVM.type  withBlock:^(BOOL success) {
-        if (success) {
-            // 自己发送的通知自己也会监听，和其他观察者一同刷新UI
-            // 发通知后所有观察者只负责刷新UI不修改ViewModel；谁发通知就由谁更新ViewModel（副作用只发生一次！）。
-            
-            // 在这一步只修改ViewModel
-            _selectedVM.liked =  likeView.selected;
-            if (likeView.selected) {
-                _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue + 1];
-            } else {
-                _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue - 1];
-            }
-        }
-        else {
-            likeView.selected = !likeView.selected;
+    [likeView commitStatus];
+
+    [DDService loveReply:param ID:_selectedVM.ID reborn:NO withBlock:^(BOOL succeed) {
+        if (succeed) {
+            _selectedVM.lovedCount = likeView.status;
+            _selectedVM.likeCount = likeView.numberString;
+        } else {
+            [likeView revertStatus];
         }
     }];
+
+    
+//
+//    [DDService toggleLike:likeView.selected ID:_selectedVM.ID type:_selectedVM.type  withBlock:^(BOOL success) {
+//        if (success) {
+//            // 自己发送的通知自己也会监听，和其他观察者一同刷新UI
+//            // 发通知后所有观察者只负责刷新UI不修改ViewModel；谁发通知就由谁更新ViewModel（副作用只发生一次！）。
+//            
+//            // 在这一步只修改ViewModel
+//            _selectedVM.liked =  likeView.selected;
+//            if (likeView.selected) {
+//                _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue + 1];
+//            } else {
+//                _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue - 1];
+//            }
+//        }
+//        else {
+//            likeView.selected = !likeView.selected;
+//        }
+//    }];   
 }
 
 /** Cell-点击 － 关注 */

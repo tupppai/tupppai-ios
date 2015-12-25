@@ -74,13 +74,59 @@
     self.numberString = numberString;
 }
 
-- (void)switchStatus :(PIELoveButtonStatus)status {
-    self.status = status;
-    [_label switchStatus:status];
+- (void)commitStatus {
+    switch (self.status) {
+        case PIELoveButtonStatusNormal:
+            self.status = PIELoveButtonStatusSelectedLow;
+            break;
+        case PIELoveButtonStatusSelectedLow:
+            self.status = PIELoveButtonStatusSelectedMedium;
+            
+            break;
+        case PIELoveButtonStatusSelectedMedium:
+            self.status = PIELoveButtonStatusSelectedHigh;
+            
+            break;
+        case PIELoveButtonStatusSelectedHigh:
+            self.status = PIELoveButtonStatusNormal;
+            
+            break;
+        default:
+            break;
+    }
+
+    [_label commitCount];
+    self.number = _label.number;
 }
 
+- (void)revertStatus {
+    switch (self.status) {
+        case PIELoveButtonStatusNormal:
+            self.status = PIELoveButtonStatusSelectedHigh;
+            break;
+        case PIELoveButtonStatusSelectedLow:
+            self.status = PIELoveButtonStatusNormal;
+            
+            break;
+        case PIELoveButtonStatusSelectedMedium:
+            self.status = PIELoveButtonStatusSelectedLow;
+            
+            break;
+        case PIELoveButtonStatusSelectedHigh:
+            self.status = PIELoveButtonStatusSelectedMedium;
+            
+            break;
+        default:
+            break;
+    }
+    
+    [_label revertCount];
+    self.number = _label.number;
+
+}
 
 - (void)setStatus:(PIELoveButtonStatus)status {
+    _status = status;
     _label.status = status;
     switch (status) {
         case PIELoveButtonStatusNormal:

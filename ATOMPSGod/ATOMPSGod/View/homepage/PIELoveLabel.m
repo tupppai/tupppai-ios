@@ -51,6 +51,7 @@
 //}
 
 -(void)setStatus:(PIELoveButtonStatus)status {
+    _status = status;
     switch (status) {
         case PIELoveButtonStatusNormal:
             self.backgroundColor = [UIColor lightGrayColor];
@@ -72,9 +73,9 @@
     }
 }
 
-- (void)switchStatus:(PIELoveButtonStatus)status {
-    self.status = status;
-    switch (status) {
+- (void)commitCount {
+    //利用变化后的status
+    switch (self.status) {
         case PIELoveButtonStatusNormal:
             self.number -= 3;
             break;
@@ -86,6 +87,25 @@
             break;
         case PIELoveButtonStatusSelectedHigh:
             self.number += 1;
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)revertCount {
+    switch (self.status) {
+        case PIELoveButtonStatusNormal:
+            self.number -= 1;
+            break;
+        case PIELoveButtonStatusSelectedLow:
+            self.number -= 1;
+            break;
+        case PIELoveButtonStatusSelectedMedium:
+            self.number -= 1;
+            break;
+        case PIELoveButtonStatusSelectedHigh:
+            self.number += 3;
             break;
         default:
             break;

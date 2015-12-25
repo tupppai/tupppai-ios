@@ -32,6 +32,7 @@
 @property (nonatomic, copy) NSString *collectCount;
 @property (nonatomic, copy) NSString *content;
 @property (nonatomic, copy) NSString *imageURL;
+@property (nonatomic, assign) NSInteger lovedCount;
 
 @property (nonatomic, strong) UIImage *image;
 //求p 的图片对象数组
@@ -47,7 +48,6 @@
 @property (nonatomic, assign) BOOL followed;
 @property (nonatomic, assign) BOOL isMyFan;
 @property (nonatomic, assign) BOOL isV;
-@property (nonatomic, assign) NSInteger lovedCount;
 
 
 - (instancetype)initWithPageEntity:(PIEPageEntity *)entity ;

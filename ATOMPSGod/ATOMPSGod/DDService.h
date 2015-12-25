@@ -67,6 +67,6 @@
  */
 + (void)ddGetMsg:(NSDictionary*)param withBlock:(void (^)(id data))block;
 + (void)ddGetNotifications:(NSDictionary*)param withBlock:(void (^)(id data))block;
-
++ (void)loveReply:(NSMutableDictionary*)param ID:(NSInteger)ID reborn:(BOOL)reborn withBlock:(void (^)(BOOL succeed))block;
 
 @end

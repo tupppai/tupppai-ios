@@ -110,8 +110,9 @@
     _collectView.highlighted = viewModel.collected;
     _collectView.numberString = viewModel.collectCount;
     
-    _likeView.highlighted = viewModel.liked;
-    _likeView.numberString = viewModel.likeCount;
+    [_likeView initStatus:viewModel.lovedCount numberString:viewModel.likeCount];
+//    _likeView.highlighted = viewModel.liked;
+//    _likeView.numberString = viewModel.likeCount;
     _contentLabel.text = viewModel.content;
     
     [_avatarView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
