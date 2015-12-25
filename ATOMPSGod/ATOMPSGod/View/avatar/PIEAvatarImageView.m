@@ -46,6 +46,8 @@
             make.centerY.equalTo(self.mas_bottom).with.offset(-3);
         }];
         
+//        [self layoutIfNeeded];
+        
         // 不知道怎么才能做出需求的“圆角 ＋ V”的效果。先放一边。
 //        self.layer.cornerRadius = self.frame.size.width/2;
 //        self.clipsToBounds = YES;

@@ -207,6 +207,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         //        [self scrollElegant];
         _isFirstLoading = NO;
     }
+    
 }
 - (void)scrollElegant {
     
@@ -516,6 +517,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     
     _source_newComment = [KVCMutableArray new];
     
+    
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag|UIScrollViewKeyboardDismissModeInteractive;
@@ -525,6 +527,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     self.tableView.showsHorizontalScrollIndicator = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
+    
+    
+    
     if (_shouldShowHeaderView) {
         self.title = @"浏览图片";
         if (_vm.type == PIEPageTypeAsk) {
@@ -728,6 +733,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     if (!_headerView) {
         _headerView = [PIECommentTableHeaderView_Ask new];
         _headerView.vm = _vm;
+        
         
         UITapGestureRecognizer* tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap1)];
         UITapGestureRecognizer* tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap2)];
@@ -974,7 +980,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 //    _headerView_reply.likeButton.selected = !_headerView_reply.likeButton.selected;
     
     // 严格按照通知传来的值来刷新UI状态，可免去不少麻烦；
-    BOOL isLiked = notification.userInfo[PIELikedIconIsLikedKey];
+    BOOL isLiked = [notification.userInfo[PIELikedIconIsLikedKey] boolValue];
     _headerView_reply.likeButton.selected = isLiked;
 }
 @end

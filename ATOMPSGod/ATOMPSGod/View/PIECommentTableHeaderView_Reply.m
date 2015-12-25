@@ -151,6 +151,10 @@
     if (vm) {
         _vm = vm;
         [_avatarView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+        
+        /* BUG FOUND HERE!!! layout big error!!! */
+//        _avatarView.isV = YES;
+
         _usernameLabel.text = vm.username;
         _timeLabel.text = vm.publishTime;
         
@@ -197,10 +201,10 @@
 
 
 
-- (UIImageView *)avatarView
+- (PIEAvatarImageView *)avatarView
 {
     if (!_avatarView) {
-        _avatarView = [UIImageView new];
+        _avatarView = [PIEAvatarImageView new];
         _avatarView.userInteractionEnabled = YES;
         _avatarView.contentMode = UIViewContentModeScaleToFill;
         _avatarView.clipsToBounds = YES;

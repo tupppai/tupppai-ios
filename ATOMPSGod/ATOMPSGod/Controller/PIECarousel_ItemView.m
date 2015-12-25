@@ -266,7 +266,7 @@
 - (void)updateLikedStatus:(NSNotification *)notification
 {
     // 严格按照通知传来的值来刷新UI状态，可免去不少麻烦；
-    BOOL isLiked = notification.userInfo[PIELikedIconIsLikedKey];
+    BOOL isLiked = [notification.userInfo[PIELikedIconIsLikedKey] boolValue];
     
     self.pageLikeButton.selected = isLiked;
 }

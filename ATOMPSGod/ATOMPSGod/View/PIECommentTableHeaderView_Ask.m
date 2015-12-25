@@ -138,8 +138,14 @@
     _vm = vm;
     if (vm) {
         [_avatarView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+        
+        
+        
         _usernameLabel.text = vm.username;
         _timeLabel.text = vm.publishTime;
+        
+        
+        
         if (vm.isMyFan) {
             [_followButton setImage:[UIImage imageNamed:@"pie_mutualfollow"] forState:UIControlStateSelected];
         } else {
@@ -181,10 +187,10 @@
     }];
 }
 
-- (UIImageView *)avatarView
+- (PIEAvatarImageView *)avatarView
 {
     if (!_avatarView) {
-        _avatarView = [UIImageView new];
+        _avatarView = [PIEAvatarImageView new];
         _avatarView.userInteractionEnabled = YES;
         _avatarView.contentMode = UIViewContentModeScaleToFill;
         _avatarView.clipsToBounds = YES;
