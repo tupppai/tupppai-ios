@@ -12,7 +12,7 @@
 
 
 @implementation PIEActionSheet_UserAbuse
--(instancetype)initWithUser:(PIEEntityUser* )user {
+-(instancetype)initWithUser:(PIEUserModel* )user {
     WS(ws);
     _user = user;
     NSString* blockStr = _user.blocked ? @"解除屏蔽":@"屏蔽此用户";

@@ -7,14 +7,14 @@
 //
 
 #import "PIEEliteManager.h"
-#import "PIECommentEntity.h"
+#import "PIECommentModel.h"
 #import "PIEModelImage.h"
 @implementation PIEEliteManager
 + (void)getMyFollow:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *))block {
     [DDService getFollowPages:param withBlock:^(NSArray *data) {
         NSMutableArray *returnArray = [NSMutableArray array];
         for (int i = 0; i < data.count; i++) {
-            PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
+            PIEPageModel *entity = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:data[i] error:NULL];
             [returnArray addObject:entity];
         }
         if (block) {
@@ -28,7 +28,7 @@
     [DDBaseService GET:param url:URL_UKGetBanner block:^(id responseObject) {
         NSMutableArray* retArray = [NSMutableArray array];
         for (NSDictionary* dic in [responseObject objectForKey:@"data"]) {
-            PIEModelBanner* vm = [PIEModelBanner new];
+            PIEBannerModel* vm = [PIEBannerModel new];
             vm.ID = (NSInteger)[dic objectForKey:@"id"];
             vm.desc = [dic objectForKey:@"desc"];
             vm.url = [dic objectForKey:@"url"];
@@ -45,7 +45,7 @@
     [DDService getHotPages:param withBlock:^(NSArray *data) {
         NSMutableArray *returnArray = [NSMutableArray array];
         for (int i = 0; i < data.count; i++) {
-            PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:[data objectAtIndex:i] error:NULL];
+            PIEPageModel *entity = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:[data objectAtIndex:i] error:NULL];
             if (entity) {
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [returnArray addObject:vm];

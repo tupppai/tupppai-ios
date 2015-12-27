@@ -6,9 +6,9 @@
 //  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "ATOMBaseModel.h"
+#import "PIEBaseModel.h"
 
-@interface PIEModelImage : ATOMBaseModel
+@interface PIEModelImage : PIEBaseModel
 //<MTLFMDBSerializing>
 //@property (nonatomic, assign) NSInteger ID;
 //@property (nonatomic, assign) NSInteger height;

@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMBaseModel.h"
+#import "PIEBaseModel.h"
 #import "MTLFMDBAdapter.h"
 
 typedef enum {
@@ -18,7 +18,7 @@ typedef enum {
 
 
 
-@interface PIEEntityUser : ATOMBaseModel <MTLFMDBSerializing>
+@interface PIEUserModel : PIEBaseModel <MTLFMDBSerializing>
 /**
  *  用户唯一ID
  */

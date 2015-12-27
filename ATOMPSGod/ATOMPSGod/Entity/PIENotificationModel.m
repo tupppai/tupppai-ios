@@ -6,9 +6,9 @@
 //  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIEModelNotification.h"
+#import "PIENotificationModel.h"
 
-@implementation PIEModelNotification
+@implementation PIENotificationModel
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
              @"avatarUrl" : @"avatar",

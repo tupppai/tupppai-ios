@@ -73,7 +73,7 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
         NSMutableArray* arrayAgent = [NSMutableArray array];
         if (returnArray.count) {
             _canRefreshFooter = YES;
-            for (PIEPageEntity *entity in returnArray) {
+            for (PIEPageModel *entity in returnArray) {
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [arrayAgent addObject:vm];
             }
@@ -104,7 +104,7 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
         NSMutableArray* arrayAgent = [NSMutableArray array];
         if (returnArray.count) {
             _canRefreshFooter = YES;
-            for (PIEPageEntity *entity in returnArray) {
+            for (PIEPageModel *entity in returnArray) {
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [arrayAgent addObject:vm];
             }

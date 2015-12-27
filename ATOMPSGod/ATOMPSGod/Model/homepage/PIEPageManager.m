@@ -39,7 +39,7 @@
         if (data) {
             NSMutableArray *returnArray = [NSMutableArray array];
             for (int i = 0; i < data.count; i++) {
-                PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
+                PIEPageModel *entity = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:data[i] error:NULL];
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [returnArray addObject:vm];
             }
@@ -58,7 +58,7 @@
         if (data) {
             NSMutableArray *returnArray = [NSMutableArray array];
             for (int i = 0; i < data.count; i++) {
-                PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
+                PIEPageModel *entity = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:data[i] error:NULL];
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [returnArray addObject:vm];
             }
@@ -75,7 +75,7 @@
 
 + (void)getPageSource:(NSDictionary *)param block:(void (^)(PIEPageVM *))block {
     [DDBaseService GET:param url:@"thread/item" block:^(id responseObject) {
-        PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:                    [responseObject objectForKey:@"data"] error:NULL];
+        PIEPageModel *entity = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:                    [responseObject objectForKey:@"data"] error:NULL];
         if (entity) {
             PIEPageVM* vm = [[PIEPageVM alloc]initWithPageEntity:entity];
             if (block) {
@@ -119,7 +119,7 @@
 
 //
 //- (void)saveHomeImagesInDB:(NSMutableArray *)homeImages {
-//    for (PIEPageEntity *homeImage in homeImages) {
+//    for (PIEPageModel *homeImage in homeImages) {
 //        if ([self.homeImageDAO isExistHomeImage:homeImage]) {
 //            [self.homeImageDAO updateHomeImage:homeImage];
 //        } else {
@@ -138,7 +138,7 @@
 //
 //- (NSArray *)getHomeImages {
 //    NSArray *array = [self.homeImageDAO selectHomeImages];
-//    for (PIEPageEntity *homeImage in array) {
+//    for (PIEPageModel *homeImage in array) {
 //        homeImage.models_image = [PIEAskImageDao selectByID:homeImage.ID];
 //    }
 //    return array;
@@ -147,7 +147,7 @@
 //- (NSArray *)getHomeImagesWithHomeType:(NSInteger)homeType {
 //    
 ////    NSArray *array = [self.homeImageDAO selectHomeImagesWithHomeType:homeType];
-////    for (PIEPageEntity *homeImage in array) {
+////    for (PIEPageModel *homeImage in array) {
 ////        homeImage.models_image = [PIEAskImageDao selectByID:homeImage.ID];
 ////    }
 //    NSArray *array;

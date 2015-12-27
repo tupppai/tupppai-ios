@@ -9,7 +9,7 @@
 #import "PIELoginViewController.h"
 #import "PIETabBarController.h"
 #import "AppDelegate.h"
-#import "PIEEntityUser.h"
+#import "PIEUserModel.h"
 #import "PIEUserProfileViewModel.h"
 #import "DDCreateProfileVC.h"
 

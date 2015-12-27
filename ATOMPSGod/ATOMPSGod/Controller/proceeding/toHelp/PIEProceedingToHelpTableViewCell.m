@@ -7,7 +7,7 @@
 //
 
 #import "PIEProceedingToHelpTableViewCell.h"
-#import "PIEModelCatogory.h"
+#import "PIECategoryModel.h"
 @implementation PIEProceedingToHelpTableViewCell
 
 - (void)awakeFromNib {
@@ -58,7 +58,7 @@
     _updateTimeLabel.text = vm.publishTime;
 
     if (vm.models_catogory.count>0) {
-        PIEModelCatogory* category = [vm.models_catogory objectAtIndex:0];
+        PIECategoryModel* category = [vm.models_catogory objectAtIndex:0];
         _categoryNameLabel.text = category.title;
     } else {
         _categoryNameLabel.text = @"随意求p区";

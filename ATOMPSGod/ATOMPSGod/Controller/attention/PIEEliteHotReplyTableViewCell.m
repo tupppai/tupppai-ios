@@ -8,7 +8,7 @@
 
 #import "PIEEliteHotReplyTableViewCell.h"
 #import "PIEModelImage.h"
-#import "PIECommentEntity.h"
+#import "PIECommentModel.h"
 #import "FXBlurView.h"
 @interface PIEEliteHotReplyTableViewCell()
 @property (weak, nonatomic) IBOutlet UIView *gapView;
@@ -134,7 +134,7 @@
     if (viewModel.models_comment.count > 0) {
     
         _commentIndeicatorImageView.hidden = NO;
-        PIECommentEntity* commentEntity1  = viewModel.models_comment[0];
+        PIECommentModel* commentEntity1  = viewModel.models_comment[0];
         _commentLabel1.text = [NSString stringWithFormat:@"%@: %@",commentEntity1.nickname,commentEntity1.content];
        
         [_commentLabel2 mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -147,7 +147,7 @@
                 make.bottom.equalTo(_commentLabel2.mas_top).with.offset(-10).with.priorityHigh();
             }];
             
-            PIECommentEntity* commentEntity2  = viewModel.models_comment[1];
+            PIECommentModel* commentEntity2  = viewModel.models_comment[1];
             _commentLabel2.text = [NSString stringWithFormat:@"%@: %@",commentEntity2.nickname,commentEntity2.content];
         }
     }

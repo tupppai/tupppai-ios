@@ -10,7 +10,7 @@
 
 @interface DDOtherUserManager : NSObject
 
-+ (void)getUserInfo:(NSDictionary *)param withBlock:(void (^)(PIEEntityUser *user))block;
++ (void)getUserInfo:(NSDictionary *)param withBlock:(void (^)(PIEUserModel *user))block;
 + (void)getFriendReply:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *returnArray))block;
 //+ (void)getAskWithReplies:(NSDictionary *)param withBlock:(void (^)(NSArray *returnArray))block;
 @end

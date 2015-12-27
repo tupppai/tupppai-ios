@@ -6,9 +6,9 @@
 //  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "ATOMBaseModel.h"
+#import "PIEBaseModel.h"
 
-@interface PIEModelNotification : ATOMBaseModel
+@interface PIENotificationModel : PIEBaseModel
 
 @property (nonatomic, copy) NSString *avatarUrl;
 @property (nonatomic, assign) NSInteger commentId;

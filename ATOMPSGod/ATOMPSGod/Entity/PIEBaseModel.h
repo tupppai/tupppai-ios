@@ -1,5 +1,5 @@
 //
-//  ATOMBaseModel.h
+//  PIEBaseModel.h
 //  ATOMPSGod
 //
 //  Created by atom on 15/3/16.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ATOMBaseModel : MTLModel <MTLJSONSerializing>
+@interface PIEBaseModel : MTLModel <MTLJSONSerializing>
 
 
 @end
