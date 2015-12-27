@@ -12,11 +12,9 @@
 #import "PIEAvatarImageView.h"
 @interface PIEProceedingToHelpTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet PIEAvatarImageView *avatarView;
-//@property (weak, nonatomic) IBOutlet UIImageView *avatarView;
+
 @property (weak, nonatomic) IBOutlet UIImageView *theImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-//@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-//@property (weak, nonatomic) IBOutlet TTTAttributedLabel *contentLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *downloadView;
 @property (weak, nonatomic) IBOutlet UIImageView *uploadView;
 @property (weak, nonatomic) IBOutlet PIETextView_linkDetection *contentTextView;

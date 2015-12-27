@@ -79,7 +79,10 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     // Do any additional setup after loading the view.
     [self configData];
     
+    
     [self configToHelpTableView];
+    
+    [self setupGestures];
 }
 
 - (void)didReceiveMemoryWarning {
