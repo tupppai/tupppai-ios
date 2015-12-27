@@ -31,7 +31,7 @@
     return self;
 }
 
-- (instancetype)initWithPageEntity:(PIEPageEntity *)entity {
+- (instancetype)initWithPageEntity:(PIEPageModel *)entity {
     self = [self init];
     if (self) {
         

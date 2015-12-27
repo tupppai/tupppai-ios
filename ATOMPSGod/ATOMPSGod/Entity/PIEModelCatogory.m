@@ -34,6 +34,6 @@
 }
 
 + (NSValueTransformer *)threadsJSONTransformer {
-    return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[PIEPageEntity class]];
+    return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[PIEPageModel class]];
 }
 @end

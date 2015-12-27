@@ -116,7 +116,7 @@
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getCollection:param withBlock:^(NSMutableArray *resultArray) {
         NSMutableArray* arrayAgent = [NSMutableArray new];
-        for (PIEPageEntity *entity in resultArray) {
+        for (PIEPageModel *entity in resultArray) {
             PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
             [arrayAgent addObject:vm];
         }
@@ -143,7 +143,7 @@
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getCollection:param withBlock:^(NSMutableArray *resultArray) {
-        for (PIEPageEntity *entity in resultArray) {
+        for (PIEPageModel *entity in resultArray) {
             PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
             [_dataSource addObject:vm];
         }

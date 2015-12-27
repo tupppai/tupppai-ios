@@ -49,7 +49,7 @@
                              NSArray* threads = [dic objectForKey:@"threads"];
                              for (NSDictionary*dic in threads) {
                                  //entity就是model
-                                 PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:dic error:NULL];
+                                 PIEPageModel *entity = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:dic error:NULL];
                                  PIEPageVM* vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                                  [threads_transformed addObject:vm];
                              }
@@ -82,7 +82,7 @@
                          // Dictionary -> Model -> ViewModel
                          for (NSDictionary *dict in dataArray) {
                              
-                             PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:dict error:NULL];
+                             PIEPageModel *entity = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:dict error:NULL];
                              
                              PIEPageVM *vm = [[PIEPageVM alloc] initWithPageEntity:entity];
                              

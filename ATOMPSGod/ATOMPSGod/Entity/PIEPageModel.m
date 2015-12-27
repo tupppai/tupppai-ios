@@ -11,7 +11,7 @@
 #import  "PIECommentEntity.h"
 #import "PIEModelCatogory.h"
 
-@implementation PIEPageEntity
+@implementation PIEPageModel
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{

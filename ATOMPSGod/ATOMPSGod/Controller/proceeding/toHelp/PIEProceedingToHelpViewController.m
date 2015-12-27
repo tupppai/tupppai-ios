@@ -305,7 +305,7 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
         } else {
             _canRefreshToHelpFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
-            for (PIEPageEntity *homeImage in resultArray) {
+            for (PIEPageModel *homeImage in resultArray) {
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:homeImage];
                 [sourceAgent addObject:vm];
             }
@@ -332,7 +332,7 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
         } else {
             _canRefreshToHelpFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
-            for (PIEPageEntity *homeImage in resultArray) {
+            for (PIEPageModel *homeImage in resultArray) {
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:homeImage];
                 [sourceAgent addObject:vm];
             }

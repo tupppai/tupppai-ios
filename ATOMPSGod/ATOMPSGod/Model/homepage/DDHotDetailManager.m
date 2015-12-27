@@ -48,7 +48,7 @@
             NSArray *askImageEntities = [askObject objectForKey:@"ask_uploads"];
             
             for (NSDictionary* object in askImageEntities) {
-                PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:askObject error:NULL];
+                PIEPageModel *entity = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:askObject error:NULL];
                 PIEModelImage* imgEntity = [MTLJSONAdapter modelOfClass:[PIEModelImage class] fromJSONDictionary:object error:NULL];
                 entity.imageURL = imgEntity.url;
 //                entity.imageWidth = imgEntity.width;
@@ -61,7 +61,7 @@
             }
 
             for (int i = 0; i < replyArray.count; i++) {
-                PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:[replyArray objectAtIndex:i] error:NULL];
+                PIEPageModel *entity = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:[replyArray objectAtIndex:i] error:NULL];
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [replyRETArray addObject:vm];
             }

@@ -20,7 +20,7 @@
            NSArray* replies = [data[i]objectForKey:@"replies"];
 
             for (NSDictionary* dic in replies) {
-                PIEPageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:dic error:NULL];
+                PIEPageModel *entity2 = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:dic error:NULL];
                 PIEPageVM* vm2 = [[PIEPageVM alloc]initWithPageEntity:entity2];
                 [vm.replies addObject:vm2];
             }
@@ -37,7 +37,7 @@
         NSMutableArray* retArray = [NSMutableArray new];
 
         for (NSDictionary* dic in data) {
-            PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:dic error:NULL];
+            PIEPageModel *entity = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:dic error:NULL];
             PIEPageVM* vm = [[PIEPageVM alloc]initWithPageEntity:entity];
             [retArray addObject:vm];
         }

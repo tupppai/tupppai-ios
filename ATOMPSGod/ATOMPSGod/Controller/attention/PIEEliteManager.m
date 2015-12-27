@@ -14,7 +14,7 @@
     [DDService getFollowPages:param withBlock:^(NSArray *data) {
         NSMutableArray *returnArray = [NSMutableArray array];
         for (int i = 0; i < data.count; i++) {
-            PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
+            PIEPageModel *entity = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:data[i] error:NULL];
             [returnArray addObject:entity];
         }
         if (block) {
@@ -45,7 +45,7 @@
     [DDService getHotPages:param withBlock:^(NSArray *data) {
         NSMutableArray *returnArray = [NSMutableArray array];
         for (int i = 0; i < data.count; i++) {
-            PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:[data objectAtIndex:i] error:NULL];
+            PIEPageModel *entity = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:[data objectAtIndex:i] error:NULL];
             if (entity) {
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [returnArray addObject:vm];

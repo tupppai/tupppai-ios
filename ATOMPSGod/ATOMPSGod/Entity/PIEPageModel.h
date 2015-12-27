@@ -18,7 +18,7 @@ typedef NS_ENUM(NSInteger, PIEPageType) {
 };
 
 
-@interface PIEPageEntity : ATOMBaseModel
+@interface PIEPageModel : ATOMBaseModel
 //<MTLFMDBSerializing>
 
 /**

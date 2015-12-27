@@ -28,7 +28,7 @@
     [DDService ddGetReply:param withBlock:^(NSArray *returnArray) {
             NSMutableArray *array = [NSMutableArray array];
             for (int i = 0; i < returnArray.count; i++) {
-                PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:returnArray[i] error:NULL];
+                PIEPageModel *entity = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:returnArray[i] error:NULL];
                 [array addObject:entity];
             }
             if (block) {

@@ -9,7 +9,7 @@
 #import "PIENotificationVM.h"
 
 @implementation PIENotificationVM
--(instancetype)initWithEntity:(PIEModelNotification *)entity {
+-(instancetype)initWithEntity:(PIENotificationModel *)entity {
     self = [super init];
     if (self) {
         _model = entity;

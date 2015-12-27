@@ -346,7 +346,7 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
         } else {
             _canRefreshFooterFollow = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
-            for (PIEPageEntity *entity in returnArray) {
+            for (PIEPageModel *entity in returnArray) {
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [sourceAgent addObject:vm];
                 [ws.sourceFollow removeAllObjects];
@@ -375,7 +375,7 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
         } else {
             _canRefreshFooterFollow = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
-            for (PIEPageEntity *entity in returnArray) {
+            for (PIEPageModel *entity in returnArray) {
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [sourceAgent addObject:vm];
             }

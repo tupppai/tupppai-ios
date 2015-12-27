@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PIEPageEntity.h"
+#import "PIEPageModel.h"
 
 @interface PIEPageVM : NSObject
 
-@property (nonatomic, strong) PIEPageEntity *model;
+@property (nonatomic, strong) PIEPageModel *model;
 
 @property (nonatomic, assign) NSInteger ID;
 @property (nonatomic, assign) NSInteger askID;
@@ -50,7 +50,7 @@
 @property (nonatomic, assign) BOOL isV;
 
 
-- (instancetype)initWithPageEntity:(PIEPageEntity *)entity ;
+- (instancetype)initWithPageEntity:(PIEPageModel *)entity ;
 - (void)increaseLoveStatus;
 - (void)revertStatus ;
 @end
