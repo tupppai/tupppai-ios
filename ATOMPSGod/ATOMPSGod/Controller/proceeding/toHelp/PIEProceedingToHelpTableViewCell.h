@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *downloadView;
 @property (weak, nonatomic) IBOutlet UIImageView *uploadView;
 @property (weak, nonatomic) IBOutlet PIETextView_linkDetection *contentTextView;
+@property (weak, nonatomic) IBOutlet UIView *separator;
 
 
 // (新需求）：“进行中”添加频道信息

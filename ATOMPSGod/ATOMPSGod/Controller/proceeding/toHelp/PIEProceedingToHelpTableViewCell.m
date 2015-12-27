@@ -16,6 +16,9 @@
 //    _avatarView.clipsToBounds = YES;
     _theImageView.clipsToBounds = YES;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self.separator mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(0.5);
+    }];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

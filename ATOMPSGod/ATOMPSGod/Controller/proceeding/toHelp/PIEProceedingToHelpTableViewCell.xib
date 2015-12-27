@@ -65,7 +65,7 @@
                         <rect key="frame" x="2" y="141" width="525" height="1"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="1" id="KwT-GU-PU4"/>
+                            <constraint firstAttribute="height" priority="750" constant="1" id="KwT-GU-PU4"/>
                         </constraints>
                     </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pieProceedingChannelIndicator" translatesAutoresizingMaskIntoConstraints="NO" id="DAu-Kh-qlX">
@@ -148,11 +148,12 @@
                 <outlet property="contentTextView" destination="Yct-mv-EsS" id="cYz-OK-92V"/>
                 <outlet property="downloadView" destination="Lbh-Lf-Jft" id="HVW-bt-D3K"/>
                 <outlet property="nameLabel" destination="BR1-nB-eCk" id="Gx0-sc-Fhg"/>
+                <outlet property="separator" destination="7VA-YS-LCD" id="aK0-z1-BJ5"/>
                 <outlet property="theImageView" destination="ndz-zu-xAp" id="aos-ze-DU6"/>
                 <outlet property="updateTimeLabel" destination="4LA-KG-KOX" id="FNr-EH-Nfd"/>
                 <outlet property="uploadView" destination="dJb-NP-nLF" id="Hll-ns-jEd"/>
             </connections>
-            <point key="canvasLocation" x="331" y="283.5"/>
+            <point key="canvasLocation" x="125" y="136.5"/>
         </tableViewCell>
     </objects>
     <resources>
