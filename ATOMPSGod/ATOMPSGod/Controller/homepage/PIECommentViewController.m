@@ -12,7 +12,7 @@
 #import "PIECommentVM.h"
 #import "AppDelegate.h"
 #import "PIEFriendViewController.h"
-#import "PIECommentEntity.h"
+#import "PIECommentModel.h"
 #import "PIECommentManager.h"
 #import "PIEEntityCommentReply.h"
 #import "PIECommentHeaderView.h"

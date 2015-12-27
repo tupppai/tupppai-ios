@@ -37,7 +37,7 @@
 @property (nonatomic, strong) UIImage *image;
 //求p 的图片对象数组
 @property (nonatomic, strong) NSArray <PIEModelImage*> *models_image;
-@property (nonatomic, strong) NSArray <PIECommentEntity*> *models_comment;
+@property (nonatomic, strong) NSArray <PIECommentModel*> *models_comment;
 @property (nonatomic, strong) NSArray <PIECategoryModel*> *models_catogory;
 
 

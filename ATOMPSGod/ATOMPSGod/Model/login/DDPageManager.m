@@ -7,7 +7,7 @@
 //
 
 #import "DDPageManager.h"
-#import "PIEEntityUser.h"
+#import "PIEUserModel.h"
 #import "PIEModelImage.h"
 //
 

@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMBaseModel.h"
+#import "PIEBaseModel.h"
 
-@interface PIEEntityFan : ATOMBaseModel
+@interface PIEEntityFan : PIEBaseModel
 
 /**
  *  每一条记录的ID

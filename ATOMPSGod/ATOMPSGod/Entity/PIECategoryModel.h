@@ -13,7 +13,7 @@ typedef NS_ENUM(NSInteger, PIECategoryType) {
     PIECategoryTypeActivity ,
 };
 @class PIEPageVM;
-@interface PIECategoryModel : ATOMBaseModel
+@interface PIECategoryModel : PIEBaseModel
 @property (nonatomic,assign ) NSNumber       * ID;
 @property (nonatomic,assign ) NSNumber       * askID;
 @property (nonatomic,assign ) PIECategoryType type;

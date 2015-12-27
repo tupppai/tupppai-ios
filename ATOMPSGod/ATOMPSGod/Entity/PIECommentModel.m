@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "PIECommentEntity.h"
+#import "PIECommentModel.h"
 
-@implementation PIECommentEntity
+@implementation PIECommentModel
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
@@ -48,7 +48,7 @@
 }
 
 + (NSString *)FMDBTableName {
-    return @"PIECommentEntity";
+    return @"PIECommentModel";
 }
 
 @end

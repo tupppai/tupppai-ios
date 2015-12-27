@@ -7,7 +7,7 @@
 //
 
 #import "PIEEliteManager.h"
-#import "PIECommentEntity.h"
+#import "PIECommentModel.h"
 #import "PIEModelImage.h"
 @implementation PIEEliteManager
 + (void)getMyFollow:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *))block {

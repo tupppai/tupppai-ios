@@ -8,7 +8,7 @@
 
 #import "DDHotDetailManager.h"
 #import "DDSessionManager.h"
-#import "PIECommentEntity.h"
+#import "PIECommentModel.h"
 //#import "ATOMCommentDAO.h"
 //#import "ATOMDetailImageDAO.h"
 //#import "PIEPageDAO.h"

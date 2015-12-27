@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "PIEEntityUser.h"
+#import "PIEUserModel.h"
 
-@implementation PIEEntityUser
+@implementation PIEUserModel
 -(instancetype)init {
     self = [super init];
     if (self) {

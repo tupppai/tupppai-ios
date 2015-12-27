@@ -11,6 +11,6 @@
 @interface PIEActionSheet_UserAbuse : JGActionSheet<JGActionSheetDelegate>
 @property (nonatomic,assign) NSInteger uid;
 @property (nonatomic,strong) SIAlertView *alertView;
-@property (nonatomic,strong) PIEEntityUser *user;
--(instancetype)initWithUser:(PIEEntityUser*) user ;
+@property (nonatomic,strong) PIEUserModel *user;
+-(instancetype)initWithUser:(PIEUserModel*) user ;
 @end

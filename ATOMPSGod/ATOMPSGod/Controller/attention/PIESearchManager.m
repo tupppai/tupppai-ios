@@ -7,14 +7,14 @@
 //
 
 #import "PIESearchManager.h"
-#import "PIEEntityUser.h"
+#import "PIEUserModel.h"
 #import "PIEUserViewModel.h"
 @implementation PIESearchManager
 + (void)getSearchUserResult:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *))block {
     [DDService ddGetSearchUserResult:param withBlock:^(NSArray* data) {
         NSMutableArray* retArray = [NSMutableArray new];
         for (int i = 0; i<data.count; i++) {
-            PIEEntityUser *entity = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:data[i] error:NULL];
+            PIEUserModel *entity = [MTLJSONAdapter modelOfClass:[PIEUserModel class] fromJSONDictionary:data[i] error:NULL];
             PIEUserViewModel* vm = [[PIEUserViewModel alloc]initWithEntity:entity];
             
            NSArray* replies = [data[i]objectForKey:@"replies"];

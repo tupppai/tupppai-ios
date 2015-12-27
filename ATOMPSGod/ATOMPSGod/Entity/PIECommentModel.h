@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMBaseModel.h"
+#import "PIEBaseModel.h"
 
-@interface PIECommentEntity : ATOMBaseModel <MTLFMDBSerializing>
+@interface PIECommentModel : PIEBaseModel <MTLFMDBSerializing>
 
 /**
  *  求P ID

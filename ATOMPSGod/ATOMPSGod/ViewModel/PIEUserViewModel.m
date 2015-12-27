@@ -8,7 +8,7 @@
 
 #import "PIEUserViewModel.h"
 @implementation PIEUserViewModel
-- (instancetype)initWithEntity:(PIEEntityUser*)user
+- (instancetype)initWithEntity:(PIEUserModel*)user
 {
     self = [super init];
     if (self) {

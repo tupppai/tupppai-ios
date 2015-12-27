@@ -233,7 +233,7 @@
 
 }
 - (void)updateViewsWithData {
-    PIEEntityUser* user = [DDUserManager currentUser];
+    PIEUserModel* user = [DDUserManager currentUser];
     _usernameLabel.text = user.nickname;
     _followCountLabel.text = [NSString stringWithFormat:@"%zd",user.attentionNumber];
     _fansCountLabel.text = [NSString stringWithFormat:@"%zd",user.fansNumber];

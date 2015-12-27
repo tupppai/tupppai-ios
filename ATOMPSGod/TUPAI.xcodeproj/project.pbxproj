@@ -86,13 +86,13 @@
 		5C54DF1F1AB9738E00BDE34D /* DDNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C54DF1B1AB9738E00BDE34D /* DDNavigationController.m */; };
 		5C54DF201AB9738E00BDE34D /* PIETabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C54DF1D1AB9738E00BDE34D /* PIETabBarController.m */; };
 		5C54DF231AB9772000BDE34D /* PIEPageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C54DF221AB9772000BDE34D /* PIEPageModel.m */; };
-		5C54DF261AB97B8400BDE34D /* PIECommentEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C54DF251AB97B8400BDE34D /* PIECommentEntity.m */; };
+		5C54DF261AB97B8400BDE34D /* PIECommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C54DF251AB97B8400BDE34D /* PIECommentModel.m */; };
 		5C54DF2D1AB99F5300BDE34D /* DDTipLabelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C54DF2C1AB99F5300BDE34D /* DDTipLabelManager.m */; };
 		5C561A461AB7C51F0052D4D5 /* MTLFMDBAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A451AB7C51F0052D4D5 /* MTLFMDBAdapter.m */; };
 		5C561A491AB7C7720052D4D5 /* ATOMUserDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A481AB7C7720052D4D5 /* ATOMUserDAO.m */; };
 		5C561A501AB7C8210052D4D5 /* PIEModelImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A4D1AB7C8210052D4D5 /* PIEModelImageInfo.m */; };
-		5C561A511AB7C8210052D4D5 /* PIEEntityUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A4F1AB7C8210052D4D5 /* PIEEntityUser.m */; };
-		5C561A541AB7C8670052D4D5 /* ATOMBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A531AB7C8670052D4D5 /* ATOMBaseModel.m */; };
+		5C561A511AB7C8210052D4D5 /* PIEUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A4F1AB7C8210052D4D5 /* PIEUserModel.m */; };
+		5C561A541AB7C8670052D4D5 /* PIEBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A531AB7C8670052D4D5 /* PIEBaseModel.m */; };
 		5C561A7C1AB7C9FB0052D4D5 /* ATOMBaseDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A7B1AB7C9FB0052D4D5 /* ATOMBaseDAO.m */; };
 		5C561A7F1AB7CAA90052D4D5 /* ATOMCreateTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A7E1AB7CAA90052D4D5 /* ATOMCreateTable.m */; };
 		5C561A8B1AB857870052D4D5 /* NSString+Tupai.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C561A8A1AB857870052D4D5 /* NSString+Tupai.m */; };
@@ -708,8 +708,8 @@
 		5C54DF1D1AB9738E00BDE34D /* PIETabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIETabBarController.m; sourceTree = "<group>"; };
 		5C54DF211AB9772000BDE34D /* PIEPageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEPageModel.h; sourceTree = "<group>"; };
 		5C54DF221AB9772000BDE34D /* PIEPageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEPageModel.m; sourceTree = "<group>"; };
-		5C54DF241AB97B8400BDE34D /* PIECommentEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECommentEntity.h; sourceTree = "<group>"; };
-		5C54DF251AB97B8400BDE34D /* PIECommentEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECommentEntity.m; sourceTree = "<group>"; };
+		5C54DF241AB97B8400BDE34D /* PIECommentModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECommentModel.h; sourceTree = "<group>"; };
+		5C54DF251AB97B8400BDE34D /* PIECommentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECommentModel.m; sourceTree = "<group>"; };
 		5C54DF2B1AB99F5300BDE34D /* DDTipLabelManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTipLabelManager.h; sourceTree = "<group>"; };
 		5C54DF2C1AB99F5300BDE34D /* DDTipLabelManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTipLabelManager.m; sourceTree = "<group>"; };
 		5C561A441AB7C51F0052D4D5 /* MTLFMDBAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTLFMDBAdapter.h; sourceTree = "<group>"; };
@@ -718,10 +718,10 @@
 		5C561A481AB7C7720052D4D5 /* ATOMUserDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATOMUserDAO.m; path = login/ATOMUserDAO.m; sourceTree = "<group>"; };
 		5C561A4C1AB7C8210052D4D5 /* PIEModelImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEModelImageInfo.h; sourceTree = "<group>"; };
 		5C561A4D1AB7C8210052D4D5 /* PIEModelImageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEModelImageInfo.m; sourceTree = "<group>"; };
-		5C561A4E1AB7C8210052D4D5 /* PIEEntityUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEntityUser.h; sourceTree = "<group>"; };
-		5C561A4F1AB7C8210052D4D5 /* PIEEntityUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEntityUser.m; sourceTree = "<group>"; };
-		5C561A521AB7C8670052D4D5 /* ATOMBaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATOMBaseModel.h; sourceTree = "<group>"; };
-		5C561A531AB7C8670052D4D5 /* ATOMBaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATOMBaseModel.m; sourceTree = "<group>"; };
+		5C561A4E1AB7C8210052D4D5 /* PIEUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEUserModel.h; sourceTree = "<group>"; };
+		5C561A4F1AB7C8210052D4D5 /* PIEUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEUserModel.m; sourceTree = "<group>"; };
+		5C561A521AB7C8670052D4D5 /* PIEBaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEBaseModel.h; sourceTree = "<group>"; };
+		5C561A531AB7C8670052D4D5 /* PIEBaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEBaseModel.m; sourceTree = "<group>"; };
 		5C561A7A1AB7C9FB0052D4D5 /* ATOMBaseDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATOMBaseDAO.h; path = common/ATOMBaseDAO.h; sourceTree = "<group>"; };
 		5C561A7B1AB7C9FB0052D4D5 /* ATOMBaseDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATOMBaseDAO.m; path = common/ATOMBaseDAO.m; sourceTree = "<group>"; };
 		5C561A7D1AB7CAA90052D4D5 /* ATOMCreateTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATOMCreateTable.h; path = common/ATOMCreateTable.h; sourceTree = "<group>"; };
@@ -2072,24 +2072,24 @@
 		5C561A4B1AB7C8210052D4D5 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				5C561A521AB7C8670052D4D5 /* PIEBaseModel.h */,
+				5C561A531AB7C8670052D4D5 /* PIEBaseModel.m */,
 				5C54DF211AB9772000BDE34D /* PIEPageModel.h */,
 				5C54DF221AB9772000BDE34D /* PIEPageModel.m */,
 				F4EC111E1BCE6F9E002D1DCF /* PIENotificationModel.h */,
 				F4EC111F1BCE6F9E002D1DCF /* PIENotificationModel.m */,
 				F45057251C2BDA5B00F7A302 /* PIECategoryModel.h */,
 				F45057261C2BDA5B00F7A302 /* PIECategoryModel.m */,
-				5C561A521AB7C8670052D4D5 /* ATOMBaseModel.h */,
-				5C561A531AB7C8670052D4D5 /* ATOMBaseModel.m */,
+				5C54DF241AB97B8400BDE34D /* PIECommentModel.h */,
+				5C54DF251AB97B8400BDE34D /* PIECommentModel.m */,
 				E93D237F1B3D065C0081F632 /* ATOMShare.h */,
 				E93D23801B3D065C0081F632 /* ATOMShare.m */,
 				5C561A4C1AB7C8210052D4D5 /* PIEModelImageInfo.h */,
 				5C561A4D1AB7C8210052D4D5 /* PIEModelImageInfo.m */,
 				F409AA851BAFE39000736B0D /* PIEModelImage.h */,
 				F409AA861BAFE39000736B0D /* PIEModelImage.m */,
-				5C561A4E1AB7C8210052D4D5 /* PIEEntityUser.h */,
-				5C561A4F1AB7C8210052D4D5 /* PIEEntityUser.m */,
-				5C54DF241AB97B8400BDE34D /* PIECommentEntity.h */,
-				5C54DF251AB97B8400BDE34D /* PIECommentEntity.m */,
+				5C561A4E1AB7C8210052D4D5 /* PIEUserModel.h */,
+				5C561A4F1AB7C8210052D4D5 /* PIEUserModel.m */,
 				5C0D282E1ACA83C400491452 /* PIEEntityCommentReply.h */,
 				5C0D282F1ACA83C400491452 /* PIEEntityCommentReply.m */,
 				5C0F04D01ADCA8E2002003AE /* PIEEntityFan.h */,
@@ -4272,7 +4272,7 @@
 				5C9BDA081AA84D1000715698 /* PIECommentVM.m in Sources */,
 				5C67FB2A1AB2B634004EFF05 /* PIEImageCropperView.m in Sources */,
 				5CDB06331AA428BD0089121E /* MASViewConstraint.m in Sources */,
-				5C54DF261AB97B8400BDE34D /* PIECommentEntity.m in Sources */,
+				5C54DF261AB97B8400BDE34D /* PIECommentModel.m in Sources */,
 				F4993CF11BE5B32C007F9BE4 /* UIWebView+AFNetworking.m in Sources */,
 				F41FF0E71BDDFCE800566A12 /* UIApplication+JTSImageViewController.m in Sources */,
 				90B3A07C1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m in Sources */,
@@ -4409,9 +4409,9 @@
 				F4275A151BE0786400BBE7E4 /* UIResponder+SLKAdditions.m in Sources */,
 				F4E7133D1BE35F230046C7A9 /* PIEModifyPasswordViewController.m in Sources */,
 				F43930391BE4BD75006C9437 /* MRBlurView.m in Sources */,
-				5C561A511AB7C8210052D4D5 /* PIEEntityUser.m in Sources */,
+				5C561A511AB7C8210052D4D5 /* PIEUserModel.m in Sources */,
 				0E54C7941C1E8F5E00F431AC /* PIEToHelpTableViewCell2.m in Sources */,
-				5C561A541AB7C8670052D4D5 /* ATOMBaseModel.m in Sources */,
+				5C561A541AB7C8670052D4D5 /* PIEBaseModel.m in Sources */,
 				5C4C70DB1AB6FD5700358989 /* PIEUploadManager.m in Sources */,
 				F47EF0861C031FF500BFB442 /* VVBlurPresentationController.m in Sources */,
 				F46117E21BAD1101001A6F1A /* IQUIView+IQKeyboardToolbar.m in Sources */,

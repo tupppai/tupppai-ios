@@ -9,15 +9,15 @@
 #import "DDOtherUserManager.h"
 
 //
-#import "PIEEntityUser.h"
+#import "PIEUserModel.h"
 #import "PIEModelImage.h"
 @implementation DDOtherUserManager
 
-+ (void)getUserInfo:(NSDictionary *)param withBlock:(void (^)(PIEEntityUser *user))block {
++ (void)getUserInfo:(NSDictionary *)param withBlock:(void (^)(PIEUserModel *user))block {
     [DDService ddGetOtherUserInfo:param withBlock:^(NSDictionary *data, NSArray *askArray, NSArray *replyArray) {
         {
 
-            PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:data error:NULL];
+            PIEUserModel* user = [MTLJSONAdapter modelOfClass:[PIEUserModel class] fromJSONDictionary:data error:NULL];
             if (block) {
                 block(user);
             }
