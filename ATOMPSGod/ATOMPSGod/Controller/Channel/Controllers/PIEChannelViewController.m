@@ -240,11 +240,7 @@
     [self.navigationController
      pushViewController:[[PIENewReplyViewController alloc] init]
      animated:YES];
-    
-    // just for testing
-//    [self.navigationController
-//     pushViewController:[[PIEChannelActivityViewController alloc] init]
-//     animated:YES];
+
 
 }
 
@@ -300,7 +296,7 @@
         _tableView.estimatedRowHeight = 120;
 
         _tableView.rowHeight = UITableViewAutomaticDimension;
-        _tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        _tableView.backgroundColor = [UIColor colorWithHex:0xF8F8F8];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [_tableView registerNib:[UINib nibWithNibName:@"PIEChannelTableViewCell"
                                                bundle:nil]
