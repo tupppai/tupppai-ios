@@ -90,6 +90,19 @@
     return self;
 }
 
+- (void)increaseLoveStatus {
+    if (_lovedCount && _lovedCount == 3) {
+        self.lovedCount = 0;
+        self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] - 3];
+    } else {
+        self.lovedCount++;
+        self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] + 1];
+    }
+}
 
+- (void)revertStatus {
+    self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] - _lovedCount];
+    self.lovedCount = 0;
+}
 
 @end

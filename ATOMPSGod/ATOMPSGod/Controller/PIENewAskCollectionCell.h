@@ -10,6 +10,7 @@
 #import "PIEAvatarImageView.h"
 
 @interface PIENewAskCollectionCell : UICollectionViewCell
+@property (nonatomic,strong) PIEPageVM* vm;
 //@property (weak, nonatomic) IBOutlet UIImageView *avatarView;
 @property (weak, nonatomic) IBOutlet PIEAvatarImageView *avatarView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;

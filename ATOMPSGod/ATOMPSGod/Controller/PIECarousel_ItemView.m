@@ -75,6 +75,7 @@
     [[NSNotificationCenter defaultCenter]
      removeObserver:self
      name:PIESharedIconStatusChangedNotification object:nil];
+    [self removeKVO];
 }
 
 - (void)addEvent {
@@ -253,11 +254,11 @@
     return _psActionSheet;
 }
 
+
 #pragma mark - Setters
 -(void)setVm:(PIEPageVM *)vm {
-    if (_vm != vm) {
-        _vm = vm;
-    }
+    _vm = vm;
+    [self addKVO];
     _pageButton_comment.numberString = vm.commentCount;
     _pageButton_share.numberString = vm.shareCount;
     _label_time.text = vm.publishTime;
@@ -295,12 +296,28 @@
             [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0x000000 andAlpha:0.9] range:NSMakeRange(0, attrStr.length)];
             _textView_content.attributedText = attrStr;
         }
-//    _textView_content.font = [UIFont lightTupaiFontOfSize:15];
-//    _textView_content.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.9];
-//    _textView_content.text = vm.content;
     [self getDataSource];
 }
 
 
+- (void)addKVO {
+    [_vm addObserver:self forKeyPath:@"lovedCount" options:NSKeyValueObservingOptionNew context:NULL];
+    [_vm addObserver:self forKeyPath:@"likeCount" options:NSKeyValueObservingOptionNew context:NULL];
+}
+- (void)removeKVO {
+    [_vm removeObserver:self forKeyPath:@"lovedCount"];
+    [_vm removeObserver:self forKeyPath:@"likeCount"];
+}
+
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"lovedCount"]) {
+        NSInteger newLovedCount = [[change objectForKey:@"new"]integerValue];
+        self.pageLikeButton.status = newLovedCount;
+    } else     if ([keyPath isEqualToString:@"likeCount"]) {
+        NSInteger newLikeCount = [[change objectForKey:@"new"]integerValue];
+        self.pageLikeButton.number = newLikeCount;
+    }
+}
 
 @end

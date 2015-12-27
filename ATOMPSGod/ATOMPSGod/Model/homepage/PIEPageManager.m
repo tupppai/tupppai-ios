@@ -99,17 +99,19 @@
     }
     
     if (revert) {
-        [likeView revert];
+//        [likeView revert];
+        [vm revertStatus];
     } else {
-        [likeView increaseStatus];
+//        [likeView increaseStatus];
+        [vm increaseLoveStatus];
     }
     
     [DDService loveReply:param ID:vm.ID withBlock:^(BOOL succeed) {
         if (succeed) {
-            vm.lovedCount = likeView.status;
-            vm.likeCount = likeView.numberString;
+//            vm.lovedCount = likeView.status;
+//            vm.likeCount = likeView.numberString;
         } else {
-            [likeView decreaseStatus];
+//            [likeView decreaseStatus];
         }
     }];
     
