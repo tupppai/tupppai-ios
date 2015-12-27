@@ -38,7 +38,7 @@
 //求p 的图片对象数组
 @property (nonatomic, strong) NSArray <PIEModelImage*> *models_image;
 @property (nonatomic, strong) NSArray <PIECommentEntity*> *models_comment;
-@property (nonatomic, strong) NSArray <PIEModelCatogory*> *models_catogory;
+@property (nonatomic, strong) NSArray <PIECategoryModel*> *models_catogory;
 
 
 @property (nonatomic, assign) NSInteger userID;

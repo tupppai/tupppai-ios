@@ -1,14 +1,14 @@
 //
-//  PIEModelCatogory.m
+//  PIECategoryModel.m
 //  TUPAI
 //
 //  Created by chenpeiwei on 12/24/15.
 //  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIEModelCatogory.h"
+#import "PIECategoryModel.h"
 
-@implementation PIEModelCatogory
+@implementation PIECategoryModel
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
 

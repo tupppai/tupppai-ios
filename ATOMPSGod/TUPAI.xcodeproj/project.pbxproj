@@ -375,7 +375,7 @@
 		F44A52791C0BF91500707281 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F44A52781C0BF91500707281 /* libxml2.2.tbd */; };
 		F44A527F1C0C335000707281 /* PIEActionSheet_Report.m in Sources */ = {isa = PBXBuildFile; fileRef = F44A527E1C0C335000707281 /* PIEActionSheet_Report.m */; };
 		F44A52821C0C336500707281 /* PIEActionSheet_PS.m in Sources */ = {isa = PBXBuildFile; fileRef = F44A52811C0C336500707281 /* PIEActionSheet_PS.m */; };
-		F45057271C2BDA5B00F7A302 /* PIEModelCatogory.m in Sources */ = {isa = PBXBuildFile; fileRef = F45057261C2BDA5B00F7A302 /* PIEModelCatogory.m */; };
+		F45057271C2BDA5B00F7A302 /* PIECategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F45057261C2BDA5B00F7A302 /* PIECategoryModel.m */; };
 		F45D8FA41BD87CFD005946E8 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F45D8F881BD87CFD005946E8 /* TencentOpenAPI.framework */; };
 		F45D8FA51BD87CFD005946E8 /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F45D8F891BD87CFD005946E8 /* TencentOpenApi_IOS_Bundle.bundle */; };
 		F45D8FA61BD87CFD005946E8 /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F45D8F8B1BD87CFD005946E8 /* libWeiboSDK.a */; };
@@ -1273,8 +1273,8 @@
 		F44A527E1C0C335000707281 /* PIEActionSheet_Report.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEActionSheet_Report.m; sourceTree = "<group>"; };
 		F44A52801C0C336500707281 /* PIEActionSheet_PS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEActionSheet_PS.h; sourceTree = "<group>"; };
 		F44A52811C0C336500707281 /* PIEActionSheet_PS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEActionSheet_PS.m; sourceTree = "<group>"; };
-		F45057251C2BDA5B00F7A302 /* PIEModelCatogory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEModelCatogory.h; sourceTree = "<group>"; };
-		F45057261C2BDA5B00F7A302 /* PIEModelCatogory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEModelCatogory.m; sourceTree = "<group>"; };
+		F45057251C2BDA5B00F7A302 /* PIECategoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECategoryModel.h; sourceTree = "<group>"; };
+		F45057261C2BDA5B00F7A302 /* PIECategoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECategoryModel.m; sourceTree = "<group>"; };
 		F45D8F881BD87CFD005946E8 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		F45D8F891BD87CFD005946E8 /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
 		F45D8F8B1BD87CFD005946E8 /* libWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeiboSDK.a; sourceTree = "<group>"; };
@@ -2076,8 +2076,8 @@
 				5C54DF221AB9772000BDE34D /* PIEPageModel.m */,
 				F4EC111E1BCE6F9E002D1DCF /* PIENotificationModel.h */,
 				F4EC111F1BCE6F9E002D1DCF /* PIENotificationModel.m */,
-				F45057251C2BDA5B00F7A302 /* PIEModelCatogory.h */,
-				F45057261C2BDA5B00F7A302 /* PIEModelCatogory.m */,
+				F45057251C2BDA5B00F7A302 /* PIECategoryModel.h */,
+				F45057261C2BDA5B00F7A302 /* PIECategoryModel.m */,
 				5C561A521AB7C8670052D4D5 /* ATOMBaseModel.h */,
 				5C561A531AB7C8670052D4D5 /* ATOMBaseModel.m */,
 				E93D237F1B3D065C0081F632 /* ATOMShare.h */,
@@ -4285,7 +4285,7 @@
 				0E54C7891C1E8F5E00F431AC /* PIEProceedingAskTableViewCell.m in Sources */,
 				F41BA0D41C0EDCE800979D43 /* UIScrollView+MJRefresh.m in Sources */,
 				F4F28F251C23AE9B0067F2E4 /* UIButton+WebCache.m in Sources */,
-				F45057271C2BDA5B00F7A302 /* PIEModelCatogory.m in Sources */,
+				F45057271C2BDA5B00F7A302 /* PIECategoryModel.m in Sources */,
 				3BE1AECC1B9FE9C900CE2303 /* QBCheckmarkView.m in Sources */,
 				5C5DDBCB1AD3D0DC00F4B845 /* DDOtherUserManager.m in Sources */,
 				F4993CEB1BE5B32C007F9BE4 /* UIActivityIndicatorView+AFNetworking.m in Sources */,

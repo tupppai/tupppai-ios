@@ -1,5 +1,5 @@
 //
-//  PIEModelCatogory.h
+//  PIECategoryModel.h
 //  TUPAI
 //
 //  Created by chenpeiwei on 12/24/15.
@@ -13,7 +13,7 @@ typedef NS_ENUM(NSInteger, PIECategoryType) {
     PIECategoryTypeActivity ,
 };
 @class PIEPageVM;
-@interface PIEModelCatogory : ATOMBaseModel
+@interface PIECategoryModel : ATOMBaseModel
 @property (nonatomic,assign ) NSNumber       * ID;
 @property (nonatomic,assign ) NSNumber       * askID;
 @property (nonatomic,assign ) PIECategoryType type;

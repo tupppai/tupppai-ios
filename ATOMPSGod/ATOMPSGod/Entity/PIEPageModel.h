@@ -9,7 +9,7 @@
 #import "ATOMBaseModel.h"
 @class PIECommentEntity;
 @class PIEModelImage;
-@class PIEModelCatogory;
+@class PIECategoryModel;
 
 
 typedef NS_ENUM(NSInteger, PIEPageType) {
@@ -71,7 +71,7 @@ typedef NS_ENUM(NSInteger, PIEPageType) {
 
 @property (nonatomic, copy) NSArray <PIEModelImage*>   *models_image;
 @property (nonatomic, copy) NSArray <PIECommentEntity*> *models_comment;
-@property (nonatomic, copy) NSArray <PIEModelCatogory*> *models_category;
+@property (nonatomic, copy) NSArray <PIECategoryModel*> *models_category;
 
 
 //用户属性

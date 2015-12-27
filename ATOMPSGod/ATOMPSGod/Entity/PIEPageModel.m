@@ -9,7 +9,7 @@
 
 #import  "PIEModelImage.h"
 #import  "PIECommentEntity.h"
-#import "PIEModelCatogory.h"
+#import "PIECategoryModel.h"
 
 @implementation PIEPageModel
 
@@ -53,7 +53,7 @@
     return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[PIECommentEntity class]];
 }
 + (NSValueTransformer*)models_categoryJSONTransformer {
-    return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[PIEModelCatogory class]];
+    return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[PIECategoryModel class]];
 }
 
 @end
