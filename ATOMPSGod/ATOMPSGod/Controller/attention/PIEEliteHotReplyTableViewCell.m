@@ -39,6 +39,8 @@
     
     [_followView setContentMode:UIViewContentModeCenter];
     
+    
+    
     [self.contentView addSubview:self.thumbView];
     [self.contentView insertSubview:self.blurView belowSubview:_theImageView];
 
