@@ -17,7 +17,9 @@
     // Initialization code
     [self commonInit];
 }
-
+-(void)dealloc {
+    [self removeKVO];
+}
 - (void)commonInit {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
@@ -27,7 +29,6 @@
     _theImageView.contentMode = UIViewContentModeScaleAspectFit;
     _theImageView.clipsToBounds = YES;
     _theImageView.backgroundColor = [UIColor clearColor];
-//    _collectView.userInteractionEnabled = YES;
     
     [_followView setContentMode:UIViewContentModeCenter];
     
@@ -73,11 +74,15 @@
 -(void)prepareForReuse {
     [super prepareForReuse];
     _followView.hidden = NO;
+    [self removeKVO];
 }
 
 - (void)injectSauce:(PIEPageVM *)viewModel {
     WS(ws);
-    _vm = viewModel;
+    {
+        _vm = viewModel;
+        [self addKVO];
+    }
     NSString *urlString_avatar = [viewModel.avatarURL trimToImageWidth:_avatarView.frame.size.width*SCREEN_SCALE];
     NSString *urlString_imageView = [viewModel.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
 
@@ -237,4 +242,23 @@
      ];
 }
 
+- (void)addKVO {
+    [_vm addObserver:self forKeyPath:@"lovedCount" options:NSKeyValueObservingOptionNew context:NULL];
+    [_vm addObserver:self forKeyPath:@"likeCount" options:NSKeyValueObservingOptionNew context:NULL];
+}
+- (void)removeKVO {
+    [_vm removeObserver:self forKeyPath:@"lovedCount"];
+    [_vm removeObserver:self forKeyPath:@"likeCount"];
+}
+
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"lovedCount"]) {
+        NSInteger newLovedCount = [[change objectForKey:@"new"]integerValue];
+        self.likeView.status = newLovedCount;
+    } else     if ([keyPath isEqualToString:@"likeCount"]) {
+        NSInteger newLikeCount = [[change objectForKey:@"new"]integerValue];
+        self.likeView.number = newLikeCount;
+    }
+}
 @end

@@ -51,7 +51,7 @@
 
 
 - (instancetype)initWithPageEntity:(PIEPageEntity *)entity ;
-
-
+- (void)increaseLoveStatus;
+- (void)revertStatus ;
 @end
 

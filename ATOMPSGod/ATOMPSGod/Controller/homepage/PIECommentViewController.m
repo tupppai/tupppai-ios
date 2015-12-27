@@ -188,7 +188,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:PIESharedIconStatusChangedNotification
                                                   object:nil];
-    
+    [self removeKVO];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -199,6 +199,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         //        [self scrollElegant];
         _isFirstLoading = NO;
     }
+    
+    [self addKVO];
 }
 - (void)scrollElegant {
     
@@ -544,11 +546,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     self.tableView.tableHeaderView = header;
 }
 
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"array"]) {
-        ((PIECommentTableHeaderView_Ask*)self.tableView.tableHeaderView).commentButton.number = _source_newComment.countOfArray;
-    }
-}
+
 
 -(void)configTextInput {
     self.bounces = NO;
@@ -931,6 +929,40 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         /* nothing happened. */
     }
     
+}
+
+
+
+- (void)addKVO {
+    if (_vm.type == PIEPageTypeReply) {
+        [_vm addObserver:self forKeyPath:@"lovedCount" options:NSKeyValueObservingOptionNew context:NULL];
+        [_vm addObserver:self forKeyPath:@"likeCount" options:NSKeyValueObservingOptionNew context:NULL];
+    }
+
+}
+- (void)removeKVO {
+    [_vm removeObserver:self forKeyPath:@"lovedCount"];
+    [_vm removeObserver:self forKeyPath:@"likeCount"];
+}
+
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"lovedCount"]) {
+        NSInteger newLovedCount = [[change objectForKey:@"new"]integerValue];
+        self.headerView_reply.likeButton.status = newLovedCount;
+    } else     if ([keyPath isEqualToString:@"likeCount"]) {
+        NSInteger newLikeCount = [[change objectForKey:@"new"]integerValue];
+        self.headerView_reply.likeButton.number = newLikeCount;
+
+    } else     if ([keyPath isEqualToString:@"array"]) {
+        
+        if (_vm.type == PIEPageTypeAsk) {
+            ((PIECommentTableHeaderView_Ask*)self.tableView.tableHeaderView).commentButton.number = _source_newComment.countOfArray;
+        }    else    if (_vm.type == PIEPageTypeReply) {
+            ((PIECommentTableHeaderView_Reply*)self.tableView.tableHeaderView).commentButton.number = _source_newComment.countOfArray;
+        }
+    }
+
 }
 
 @end
