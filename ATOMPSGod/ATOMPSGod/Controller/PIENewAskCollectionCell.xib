@@ -14,26 +14,27 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="323" height="515"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_default" translatesAutoresizingMaskIntoConstraints="NO" id="t6N-sk-Gt2" customClass="PIEAvatarImageView">
-                        <rect key="frame" x="8" y="14" width="26" height="26"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="26" id="GLl-g0-1Tq"/>
-                            <constraint firstAttribute="width" constant="26" id="vtz-xa-srZ"/>
-                        </constraints>
-                    </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="游客" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DIa-GT-Bof">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="游客" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DIa-GT-Bof">
                         <rect key="frame" x="43" y="12" width="26" height="18.5"/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="刚刚" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UP6-ZS-j1n">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="刚刚" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UP6-ZS-j1n">
                         <rect key="frame" x="44" y="33" width="20" height="14"/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="10"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="755" translatesAutoresizingMaskIntoConstraints="NO" id="tSi-M5-pb6" userLabel="LeftImageView">
+                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Hr-kB-8S8" userLabel="avatarView" customClass="PIEAvatarView">
+                        <rect key="frame" x="8" y="14" width="26" height="26"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="26" id="VkL-bB-DcS"/>
+                            <constraint firstAttribute="height" constant="26" id="oCu-PB-Vv4"/>
+                        </constraints>
+                    </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="755" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tSi-M5-pb6" userLabel="LeftImageView">
                         <rect key="frame" x="0.0" y="53" width="323" height="351"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="130" id="6DR-iK-E7b"/>
@@ -47,7 +48,7 @@
                             </mask>
                         </variation>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="755" translatesAutoresizingMaskIntoConstraints="NO" id="HuN-1e-EeQ" userLabel="RightImageView">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="755" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HuN-1e-EeQ" userLabel="RightImageView">
                         <rect key="frame" x="323" y="53" width="0.0" height="351"/>
                         <constraints>
                             <constraint firstAttribute="width" priority="750" id="Zcd-hE-Eqs"/>
@@ -110,17 +111,18 @@
                 <constraint firstItem="HuN-1e-EeQ" firstAttribute="leading" secondItem="tSi-M5-pb6" secondAttribute="trailing" id="0ge-MS-aFi"/>
                 <constraint firstItem="kZC-OW-G6f" firstAttribute="top" secondItem="sZw-7M-qG8" secondAttribute="bottom" constant="14" id="3Ld-76-bvu"/>
                 <constraint firstItem="sZw-7M-qG8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leadingMargin" id="6D0-OM-ukQ"/>
-                <constraint firstItem="DIa-GT-Bof" firstAttribute="leading" secondItem="t6N-sk-Gt2" secondAttribute="trailing" constant="9" id="6Gg-N8-U1U"/>
+                <constraint firstItem="0Hr-kB-8S8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="6" id="850-cQ-yWF"/>
+                <constraint firstItem="0Hr-kB-8S8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="topMargin" id="9rd-DT-flu"/>
+                <constraint firstItem="DIa-GT-Bof" firstAttribute="leading" secondItem="0Hr-kB-8S8" secondAttribute="trailing" constant="9" id="A28-Gh-fc3"/>
                 <constraint firstItem="8Xc-4p-F4O" firstAttribute="trailing" secondItem="tSi-M5-pb6" secondAttribute="trailing" constant="-16" id="BBI-aj-blG"/>
                 <constraint firstAttribute="bottom" secondItem="kZC-OW-G6f" secondAttribute="bottom" constant="8" id="HiG-yr-FH2"/>
-                <constraint firstItem="t6N-sk-Gt2" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="topMargin" constant="6" id="P43-8Q-cBB"/>
                 <constraint firstAttribute="trailing" secondItem="HuN-1e-EeQ" secondAttribute="trailing" priority="750" id="QaL-7G-72n"/>
-                <constraint firstItem="tSi-M5-pb6" firstAttribute="top" secondItem="t6N-sk-Gt2" secondAttribute="bottom" constant="13" id="RDi-Lg-xjH"/>
+                <constraint firstItem="0Hr-kB-8S8" firstAttribute="top" secondItem="DIa-GT-Bof" secondAttribute="top" id="SwV-4b-Jmw"/>
                 <constraint firstItem="kZC-OW-G6f" firstAttribute="leading" secondItem="sZw-7M-qG8" secondAttribute="trailing" constant="-178.5" id="Sz3-7O-ZDf"/>
                 <constraint firstItem="UP6-ZS-j1n" firstAttribute="top" secondItem="DIa-GT-Bof" secondAttribute="bottom" constant="8" id="TgX-0I-R68"/>
-                <constraint firstItem="UP6-ZS-j1n" firstAttribute="bottom" secondItem="t6N-sk-Gt2" secondAttribute="bottom" constant="-1" id="YdC-jB-Pbo"/>
+                <constraint firstItem="0Hr-kB-8S8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leadingMargin" id="W41-mC-N4L"/>
+                <constraint firstItem="tSi-M5-pb6" firstAttribute="top" secondItem="0Hr-kB-8S8" secondAttribute="bottom" constant="13" id="X4c-OC-28a"/>
                 <constraint firstItem="HuN-1e-EeQ" firstAttribute="top" secondItem="tSi-M5-pb6" secondAttribute="top" id="bSZ-m7-vwm"/>
-                <constraint firstItem="t6N-sk-Gt2" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leadingMargin" id="bit-nJ-sG9"/>
                 <constraint firstItem="tSi-M5-pb6" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="clC-yz-Bzo"/>
                 <constraint firstItem="HuN-1e-EeQ" firstAttribute="leading" secondItem="tSi-M5-pb6" secondAttribute="trailing" priority="750" id="cyd-jG-VgB"/>
                 <constraint firstAttribute="centerX" secondItem="kZC-OW-G6f" secondAttribute="centerX" id="jQX-Qo-JJd"/>
@@ -133,15 +135,14 @@
                 <constraint firstItem="sZw-7M-qG8" firstAttribute="trailing" secondItem="gTV-IL-0wX" secondAttribute="trailingMargin" id="vg5-jr-ZHC"/>
                 <constraint firstItem="8Xc-4p-F4O" firstAttribute="leading" secondItem="tSi-M5-pb6" secondAttribute="trailing" constant="-60" id="vrR-Oi-OBW"/>
                 <constraint firstAttribute="trailing" secondItem="tSi-M5-pb6" secondAttribute="trailing" id="w2s-jd-x8b"/>
-                <constraint firstItem="DIa-GT-Bof" firstAttribute="top" secondItem="t6N-sk-Gt2" secondAttribute="top" constant="-2" id="xWz-LT-5F0"/>
                 <constraint firstItem="kZC-OW-G6f" firstAttribute="top" secondItem="sZw-7M-qG8" secondAttribute="top" constant="9" id="zlA-KR-eTI"/>
             </constraints>
             <size key="customSize" width="323" height="515"/>
             <variation key="default">
                 <mask key="constraints">
+                    <exclude reference="850-cQ-yWF"/>
                     <exclude reference="w2s-jd-x8b"/>
                     <exclude reference="TgX-0I-R68"/>
-                    <exclude reference="YdC-jB-Pbo"/>
                     <exclude reference="0ge-MS-aFi"/>
                     <exclude reference="tFq-jJ-B8h"/>
                     <exclude reference="vrR-Oi-OBW"/>
@@ -150,7 +151,7 @@
                 </mask>
             </variation>
             <connections>
-                <outlet property="avatarView" destination="t6N-sk-Gt2" id="JRd-jE-vi4"/>
+                <outlet property="avatarView" destination="0Hr-kB-8S8" id="s5n-ED-Noa"/>
                 <outlet property="bangView" destination="kZC-OW-G6f" id="Vbv-Co-8jw"/>
                 <outlet property="contentLabel" destination="sZw-7M-qG8" id="CLh-MH-Gth"/>
                 <outlet property="imageView_multiAskSign" destination="8Xc-4p-F4O" id="ZJW-wk-GSN"/>
@@ -163,7 +164,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="avatar_default" width="36" height="36"/>
         <image name="pie_ask_help" width="40" height="42"/>
         <image name="pie_new_multiask_sign" width="18" height="19"/>
     </resources>

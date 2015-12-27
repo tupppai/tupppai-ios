@@ -24,6 +24,7 @@
     if (self = [super initWithFrame:frame]) {
         [self addSubview:self.avatarImageView];
         [self addSubview:self.psGodView];
+        self.backgroundColor = [UIColor clearColor] ;
     }
     
     return self;
@@ -34,6 +35,7 @@
     if (self = [super initWithCoder:aDecoder]) {
         [self addSubview:self.avatarImageView];
         [self addSubview:self.psGodView];
+        self.backgroundColor = [UIColor clearColor] ;
     }
     
     return self;
