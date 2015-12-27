@@ -10,8 +10,11 @@
 //#import "TTTAttributedLabel.h"
 #import "PIETextView_linkDetection.h"
 #import "PIEAvatarImageView.h"
+#import "PIEAvatarView.h"
 @interface PIEProceedingToHelpTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet PIEAvatarImageView *avatarView;
+//@property (weak, nonatomic) IBOutlet PIEAvatarImageView *avatarView;
+@property (weak, nonatomic) IBOutlet PIEAvatarView *avatarView;
+
 
 @property (weak, nonatomic) IBOutlet UIImageView *theImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
