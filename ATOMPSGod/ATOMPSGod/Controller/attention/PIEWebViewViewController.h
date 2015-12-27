@@ -7,9 +7,9 @@
 //
 
 #import "DDBaseVC.h"
-#import "PIEModelBanner.h"
+#import "PIEBannerModel.h"
 @interface PIEWebViewViewController : DDBaseVC
-@property (nonatomic,strong)PIEModelBanner* viewModel;
+@property (nonatomic,strong)PIEBannerModel* viewModel;
 @property (nonatomic,strong)NSString* url;
 
 @end

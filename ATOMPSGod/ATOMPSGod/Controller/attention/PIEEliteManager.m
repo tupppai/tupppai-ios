@@ -28,7 +28,7 @@
     [DDBaseService GET:param url:URL_UKGetBanner block:^(id responseObject) {
         NSMutableArray* retArray = [NSMutableArray array];
         for (NSDictionary* dic in [responseObject objectForKey:@"data"]) {
-            PIEModelBanner* vm = [PIEModelBanner new];
+            PIEBannerModel* vm = [PIEBannerModel new];
             vm.ID = (NSInteger)[dic objectForKey:@"id"];
             vm.desc = [dic objectForKey:@"desc"];
             vm.url = [dic objectForKey:@"url"];

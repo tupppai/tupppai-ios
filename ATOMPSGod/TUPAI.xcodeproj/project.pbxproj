@@ -450,7 +450,7 @@
 		F4BBE7721BBE3F9D00003CDE /* PIEReplyCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE7701BBE3F9D00003CDE /* PIEReplyCollectionViewController.m */; };
 		F4BBE77C1BBE420400003CDE /* PIEReplyCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBE77A1BBE420400003CDE /* PIEReplyCollectionCell.m */; };
 		F4BDF4CB1BDF345100DA3575 /* BBBadgeBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BDF4CA1BDF345100DA3575 /* BBBadgeBarButtonItem.m */; };
-		F4C0DFE61BE9D1B7000615CF /* PIEModelBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C0DFE51BE9D1B7000615CF /* PIEModelBanner.m */; };
+		F4C0DFE61BE9D1B7000615CF /* PIEBannerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C0DFE51BE9D1B7000615CF /* PIEBannerModel.m */; };
 		F4C0DFEB1BE9D45F000615CF /* PIEWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C0DFE91BE9D45F000615CF /* PIEWebViewViewController.m */; };
 		F4C0DFEC1BE9D45F000615CF /* PIEWebViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4C0DFEA1BE9D45F000615CF /* PIEWebViewViewController.xib */; };
 		F4C0DFF01BE9EF3A000615CF /* PIEFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C0DFEE1BE9EF3A000615CF /* PIEFeedbackViewController.m */; };
@@ -1419,8 +1419,8 @@
 		F4BBE77A1BBE420400003CDE /* PIEReplyCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEReplyCollectionCell.m; sourceTree = "<group>"; };
 		F4BDF4C91BDF345100DA3575 /* BBBadgeBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBBadgeBarButtonItem.h; sourceTree = "<group>"; };
 		F4BDF4CA1BDF345100DA3575 /* BBBadgeBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBBadgeBarButtonItem.m; sourceTree = "<group>"; };
-		F4C0DFE41BE9D1B7000615CF /* PIEModelBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIEModelBanner.h; path = ../ViewModel/PIEModelBanner.h; sourceTree = "<group>"; };
-		F4C0DFE51BE9D1B7000615CF /* PIEModelBanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIEModelBanner.m; path = ../ViewModel/PIEModelBanner.m; sourceTree = "<group>"; };
+		F4C0DFE41BE9D1B7000615CF /* PIEBannerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIEBannerModel.h; path = ../ViewModel/PIEBannerModel.h; sourceTree = "<group>"; };
+		F4C0DFE51BE9D1B7000615CF /* PIEBannerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIEBannerModel.m; path = ../ViewModel/PIEBannerModel.m; sourceTree = "<group>"; };
 		F4C0DFE81BE9D45F000615CF /* PIEWebViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEWebViewViewController.h; sourceTree = "<group>"; };
 		F4C0DFE91BE9D45F000615CF /* PIEWebViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEWebViewViewController.m; sourceTree = "<group>"; };
 		F4C0DFEA1BE9D45F000615CF /* PIEWebViewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEWebViewViewController.xib; sourceTree = "<group>"; };
@@ -2076,28 +2076,28 @@
 				5C561A531AB7C8670052D4D5 /* PIEBaseModel.m */,
 				5C54DF211AB9772000BDE34D /* PIEPageModel.h */,
 				5C54DF221AB9772000BDE34D /* PIEPageModel.m */,
-				F4EC111E1BCE6F9E002D1DCF /* PIENotificationModel.h */,
-				F4EC111F1BCE6F9E002D1DCF /* PIENotificationModel.m */,
+				5C561A4E1AB7C8210052D4D5 /* PIEUserModel.h */,
+				5C561A4F1AB7C8210052D4D5 /* PIEUserModel.m */,
 				F45057251C2BDA5B00F7A302 /* PIECategoryModel.h */,
 				F45057261C2BDA5B00F7A302 /* PIECategoryModel.m */,
 				5C54DF241AB97B8400BDE34D /* PIECommentModel.h */,
 				5C54DF251AB97B8400BDE34D /* PIECommentModel.m */,
+				F4C0DFE41BE9D1B7000615CF /* PIEBannerModel.h */,
+				F4C0DFE51BE9D1B7000615CF /* PIEBannerModel.m */,
+				F4EC111E1BCE6F9E002D1DCF /* PIENotificationModel.h */,
+				F4EC111F1BCE6F9E002D1DCF /* PIENotificationModel.m */,
 				E93D237F1B3D065C0081F632 /* ATOMShare.h */,
 				E93D23801B3D065C0081F632 /* ATOMShare.m */,
 				5C561A4C1AB7C8210052D4D5 /* PIEModelImageInfo.h */,
 				5C561A4D1AB7C8210052D4D5 /* PIEModelImageInfo.m */,
 				F409AA851BAFE39000736B0D /* PIEModelImage.h */,
 				F409AA861BAFE39000736B0D /* PIEModelImage.m */,
-				5C561A4E1AB7C8210052D4D5 /* PIEUserModel.h */,
-				5C561A4F1AB7C8210052D4D5 /* PIEUserModel.m */,
 				5C0D282E1ACA83C400491452 /* PIEEntityCommentReply.h */,
 				5C0D282F1ACA83C400491452 /* PIEEntityCommentReply.m */,
 				5C0F04D01ADCA8E2002003AE /* PIEEntityFan.h */,
 				5C0F04D11ADCA8E2002003AE /* PIEEntityFan.m */,
 				5C0F04FB1ADD0D88002003AE /* PIEEntityFollow.h */,
 				5C0F04FC1ADD0D88002003AE /* PIEEntityFollow.m */,
-				F4C0DFE41BE9D1B7000615CF /* PIEModelBanner.h */,
-				F4C0DFE51BE9D1B7000615CF /* PIEModelBanner.m */,
 			);
 			name = model;
 			path = Entity;
@@ -4382,7 +4382,7 @@
 				E991EF051B735C2E00025108 /* EARestrictedScrollView.m in Sources */,
 				F45ECF4A1BD1DC3F00417A75 /* PIEMyCommentedPageTableViewCell.m in Sources */,
 				F4DE44FA1C06F47B00BEEB96 /* PIECarouselViewController2.m in Sources */,
-				F4C0DFE61BE9D1B7000615CF /* PIEModelBanner.m in Sources */,
+				F4C0DFE61BE9D1B7000615CF /* PIEBannerModel.m in Sources */,
 				5CDB06341AA428BD0089121E /* NSArray+MASAdditions.m in Sources */,
 				E9FF94AC1B7476FC00F06819 /* HMSegmentedControl.m in Sources */,
 				F43930431BE4BD75006C9437 /* MRProgressOverlayView+AFNetworking.m in Sources */,
