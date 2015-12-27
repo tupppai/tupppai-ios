@@ -13,6 +13,7 @@
 #import "PIEProceedingAskTableViewCell_NoGap.h"
 #import "PIEProceedingAskTableViewCell.h"
 #import "DDPageManager.h"
+#import "MMPlaceHolder.h"
 
 
 /* Variables */
@@ -108,7 +109,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
     _askTableView.emptyDataSetDelegate = self;
     _askTableView.emptyDataSetSource   = self;
 
-    _askTableView.estimatedRowHeight   = 175;
+    _askTableView.estimatedRowHeight   = 201;
     _askTableView.rowHeight            = UITableViewAutomaticDimension;
     
     UINib* nib = [UINib nibWithNibName:@"PIEProceedingAskTableViewCell" bundle:nil];

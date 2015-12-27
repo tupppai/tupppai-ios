@@ -28,7 +28,7 @@
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_default" translatesAutoresizingMaskIntoConstraints="NO" id="YEQ-gZ-upE">
+                    <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_default" translatesAutoresizingMaskIntoConstraints="NO" id="YEQ-gZ-upE" customClass="PIEAvatarImageView">
                         <rect key="frame" x="8" y="8" width="30" height="30"/>
                         <rect key="contentStretch" x="1" y="1" width="1" height="1"/>
                         <constraints>
@@ -159,7 +159,7 @@
                 </variation>
             </tableViewCellContentView>
             <connections>
-                <outlet property="avatarView" destination="YEQ-gZ-upE" id="Vaa-p7-kZW"/>
+                <outlet property="avatarView" destination="YEQ-gZ-upE" id="7BE-ea-bLQ"/>
                 <outlet property="bangView" destination="8gN-It-V5K" id="j59-le-ef6"/>
                 <outlet property="commentView" destination="fmz-Ws-G9O" id="EsX-Wg-vW4"/>
                 <outlet property="contentLabel" destination="Uh0-Nk-WwP" id="Q77-jK-DjO"/>

@@ -12,13 +12,13 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    self.backgroundColor = [UIColor whiteColor];
-    self.layer.cornerRadius = 6;
-    _imageView.contentMode = UIViewContentModeScaleAspectFill;
-    _imageView.clipsToBounds = YES;
-    _avatarButton.layer.cornerRadius = _avatarButton.frame.size.width/2;
-    _avatarButton.clipsToBounds = YES;
-    _avatarButton.backgroundColor = [UIColor lightGrayColor];
+    self.backgroundColor                 = [UIColor whiteColor];
+    self.layer.cornerRadius              = 6;
+    _imageView.contentMode               = UIViewContentModeScaleAspectFill;
+    _imageView.clipsToBounds             = YES;
+//    _avatarButton.layer.cornerRadius     = _avatarButton.frame.size.width/2;
+//    _avatarButton.clipsToBounds          = YES;
+    _avatarButton.backgroundColor        = [UIColor lightGrayColor];
     _avatarButton.userInteractionEnabled = NO;
     
     _nameLabel.font = [UIFont lightTupaiFontOfSize:11];
@@ -27,6 +27,10 @@
 
 - (void)injectSauce:(PIEPageVM*)vm {
     [_avatarButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+    
+//    _avatarButton.isV = vm.isV;
+    _avatarButton.isV = YES;
+    
     _nameLabel.text = vm.username;
     _contentLabel.text = vm.content;
     [_imageView sd_setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];

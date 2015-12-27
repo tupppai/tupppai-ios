@@ -137,26 +137,26 @@
 //        }
 //}
 
-- (void)like {
-    NSLog(@"like");
-    PIEPageVM* vm = [_source objectAtIndex:_selectedIndexPath.row];
-    PIEReplyCollectionCell* cell = (PIEReplyCollectionCell*)[self.collectionView cellForItemAtIndexPath:_selectedIndexPath];
-
-    cell.likeButton.selected = !cell.likeButton.selected;
-    [DDService toggleLike:cell.likeButton.selected ID:vm.ID type:vm.type withBlock:^(BOOL success) {
-        if (!success) {
-            cell.likeButton.selected = !cell.likeButton.selected;
-        } else {
-            
-            if (cell.likeButton.selected) {
-                vm.likeCount = [NSString stringWithFormat:@"%zd",vm.likeCount.integerValue + 1];
-            } else {
-                vm.likeCount = [NSString stringWithFormat:@"%zd",vm.likeCount.integerValue - 1];
-            }
-            vm.liked = cell.likeButton.selected;
-        }
-    }];
-}
+//- (void)like {
+//    NSLog(@"like");
+//    PIEPageVM* vm = [_source objectAtIndex:_selectedIndexPath.row];
+//    PIEReplyCollectionCell* cell = (PIEReplyCollectionCell*)[self.collectionView cellForItemAtIndexPath:_selectedIndexPath];
+//
+//    cell.likeButton.selected = !cell.likeButton.selected;
+//    [DDService toggleLike:cell.likeButton.selected ID:vm.ID type:vm.type withBlock:^(BOOL success) {
+//        if (!success) {
+//            cell.likeButton.selected = !cell.likeButton.selected;
+//        } else {
+//            
+//            if (cell.likeButton.selected) {
+//                vm.likeCount = [NSString stringWithFormat:@"%zd",vm.likeCount.integerValue + 1];
+//            } else {
+//                vm.likeCount = [NSString stringWithFormat:@"%zd",vm.likeCount.integerValue - 1];
+//            }
+//            vm.liked = cell.likeButton.selected;
+//        }
+//    }];
+//}
 
 #pragma mark - refresh delegate
 

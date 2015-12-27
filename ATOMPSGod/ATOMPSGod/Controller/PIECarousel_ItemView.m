@@ -216,6 +216,7 @@
 }
 
 
+
 #pragma mark - <PIEShareViewDelegate> and its related methods
 
 
@@ -264,6 +265,10 @@
     //    _label_content.text = vm.content;
     [_button_name setTitle:vm.username forState:UIControlStateNormal];
     [_button_avatar setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+//    _button_avatar.isV = vm.isV;
+    _button_avatar.isV = YES;
+    
+    
     if (vm.type == PIEPageTypeAsk) {
         _imageView_type.image = [UIImage imageNamed:@"carousel_type_ask"];
         _pageLikeButton.hidden = YES;
@@ -314,4 +319,5 @@
         self.pageLikeButton.number = newLikeCount;
     }
 }
+
 @end

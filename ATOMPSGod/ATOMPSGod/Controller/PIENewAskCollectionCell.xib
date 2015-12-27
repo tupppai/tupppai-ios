@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -14,9 +14,8 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="323" height="515"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_default" translatesAutoresizingMaskIntoConstraints="NO" id="t6N-sk-Gt2">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_default" translatesAutoresizingMaskIntoConstraints="NO" id="t6N-sk-Gt2" customClass="PIEAvatarImageView">
                         <rect key="frame" x="8" y="14" width="26" height="26"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="26" id="GLl-g0-1Tq"/>
                             <constraint firstAttribute="width" constant="26" id="vtz-xa-srZ"/>
@@ -24,21 +23,18 @@
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="游客" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DIa-GT-Bof">
                         <rect key="frame" x="43" y="12" width="26" height="18.5"/>
-                        <animations/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="13"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="刚刚" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UP6-ZS-j1n">
                         <rect key="frame" x="44" y="33" width="20" height="14"/>
-                        <animations/>
                         <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="10"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="755" translatesAutoresizingMaskIntoConstraints="NO" id="tSi-M5-pb6" userLabel="LeftImageView">
                         <rect key="frame" x="0.0" y="53" width="323" height="351"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="130" id="6DR-iK-E7b"/>
                             <constraint firstAttribute="height" constant="348" id="Ngn-Bj-NmF"/>
@@ -53,14 +49,12 @@
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="755" translatesAutoresizingMaskIntoConstraints="NO" id="HuN-1e-EeQ" userLabel="RightImageView">
                         <rect key="frame" x="323" y="53" width="0.0" height="351"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" priority="750" id="Zcd-hE-Eqs"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="sZw-7M-qG8">
                         <rect key="frame" x="8" y="413" width="307" height="35"/>
-                        <animations/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="35" id="o78-YR-T9w"/>
@@ -74,7 +68,6 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pie_ask_help" translatesAutoresizingMaskIntoConstraints="NO" id="4pT-By-Nmk">
                                 <rect key="frame" x="15" y="0.0" width="20" height="30"/>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="6jW-dX-F5c"/>
                                     <constraint firstAttribute="width" constant="20" id="DqI-XS-qgL"/>
@@ -82,12 +75,10 @@
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BANG" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SKU-78-X4k">
                                 <rect key="frame" x="11" y="33" width="28.5" height="14"/>
-                                <animations/>
                                 <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="10"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="SKU-78-X4k" firstAttribute="top" secondItem="4pT-By-Nmk" secondAttribute="bottom" constant="3" id="8ot-Yp-pOb"/>
@@ -106,17 +97,14 @@
                     </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pie_new_multiask_sign" translatesAutoresizingMaskIntoConstraints="NO" id="8Xc-4p-F4O">
                         <rect key="frame" x="279" y="370" width="28" height="28"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="28" id="4Sl-OR-qT8"/>
                             <constraint firstAttribute="height" constant="28" id="mk2-Ql-Jie"/>
                         </constraints>
                     </imageView>
                 </subviews>
-                <animations/>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
-            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="HuN-1e-EeQ" firstAttribute="leading" secondItem="tSi-M5-pb6" secondAttribute="trailing" id="0ge-MS-aFi"/>
@@ -162,7 +150,7 @@
                 </mask>
             </variation>
             <connections>
-                <outlet property="avatarView" destination="t6N-sk-Gt2" id="NvF-NI-zwk"/>
+                <outlet property="avatarView" destination="t6N-sk-Gt2" id="JRd-jE-vi4"/>
                 <outlet property="bangView" destination="kZC-OW-G6f" id="Vbv-Co-8jw"/>
                 <outlet property="contentLabel" destination="sZw-7M-qG8" id="CLh-MH-Gth"/>
                 <outlet property="imageView_multiAskSign" destination="8Xc-4p-F4O" id="ZJW-wk-GSN"/>

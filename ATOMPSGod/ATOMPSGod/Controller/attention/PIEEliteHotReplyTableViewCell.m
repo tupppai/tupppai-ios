@@ -27,8 +27,7 @@
 - (void)commonInit {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-    _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
-    _avatarView.clipsToBounds = YES;
+
     _theImageView.contentMode = UIViewContentModeScaleAspectFit;
     _theImageView.clipsToBounds = YES;
     _theImageView.backgroundColor = [UIColor clearColor];
@@ -45,6 +44,8 @@
     [_commentLabel2 setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.8]];
     
     [_followView setContentMode:UIViewContentModeCenter];
+    
+    
     
     [self.contentView addSubview:self.thumbView];
     [self.contentView insertSubview:self.blurView belowSubview:_theImageView];
@@ -120,6 +121,8 @@
     _contentLabel.text = viewModel.content;
     
     [_avatarView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+    _avatarView.isV = YES;
+    
     _nameLabel.text = viewModel.username;
     
     [_theImageView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView]
@@ -129,6 +132,8 @@
                             }];
     
     if (viewModel.models_comment.count > 0) {
+    
+        _commentIndeicatorImageView.hidden = NO;
         PIECommentEntity* commentEntity1  = viewModel.models_comment[0];
         _commentLabel1.text = [NSString stringWithFormat:@"%@: %@",commentEntity1.nickname,commentEntity1.content];
        
@@ -145,6 +150,9 @@
             PIECommentEntity* commentEntity2  = viewModel.models_comment[1];
             _commentLabel2.text = [NSString stringWithFormat:@"%@: %@",commentEntity2.nickname,commentEntity2.content];
         }
+    }
+    else{
+        _commentIndeicatorImageView.hidden = YES;
     }
     
         [self mansoryThumbAnimateView];
