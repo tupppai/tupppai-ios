@@ -9,7 +9,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PIECarousel_ItemView">
             <connections>
                 <outlet property="bangView" destination="ws4-hF-8Cy" id="PmN-8R-j3s"/>
-                <outlet property="button_avatar" destination="naZ-AK-noy" id="6LQ-kX-WKz"/>
+                <outlet property="button_avatar" destination="naZ-AK-noy" id="FG8-gX-mdE"/>
                 <outlet property="button_name" destination="YhE-XW-aA7" id="7HJ-9b-bkF"/>
                 <outlet property="imageView_type" destination="OKZ-mD-zAS" id="D0v-pC-fvD"/>
                 <outlet property="label_time" destination="xfO-mT-AcC" id="jdk-27-Irt"/>
@@ -49,7 +49,7 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="naZ-AK-noy">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="naZ-AK-noy" customClass="PIEAvatarButton">
                     <rect key="frame" x="359" y="12" width="31" height="31"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="31" id="JgH-aK-W8e"/>

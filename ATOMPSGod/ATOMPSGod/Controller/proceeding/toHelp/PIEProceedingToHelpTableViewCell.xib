@@ -15,7 +15,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="540" height="264.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sYa-tU-P7O">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sYa-tU-P7O" customClass="PIEAvatarImageView">
                         <rect key="frame" x="129" y="10" width="20" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="20" id="VU3-H3-1Jb"/>
@@ -65,7 +65,7 @@
                         <rect key="frame" x="2" y="141" width="525" height="1"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="1" id="KwT-GU-PU4"/>
+                            <constraint firstAttribute="height" priority="750" constant="1" id="KwT-GU-PU4"/>
                         </constraints>
                     </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pieProceedingChannelIndicator" translatesAutoresizingMaskIntoConstraints="NO" id="DAu-Kh-qlX">
@@ -84,7 +84,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="update_time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4LA-KG-KOX">
                         <rect key="frame" x="101.5" y="151" width="64.5" height="13.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -143,16 +143,17 @@
                 </variation>
             </tableViewCellContentView>
             <connections>
-                <outlet property="avatarView" destination="sYa-tU-P7O" id="WO9-H6-WCj"/>
+                <outlet property="avatarView" destination="sYa-tU-P7O" id="nT8-dz-j7G"/>
                 <outlet property="categoryNameLabel" destination="HgW-a3-LCI" id="3ca-ju-YEw"/>
                 <outlet property="contentTextView" destination="Yct-mv-EsS" id="cYz-OK-92V"/>
                 <outlet property="downloadView" destination="Lbh-Lf-Jft" id="HVW-bt-D3K"/>
                 <outlet property="nameLabel" destination="BR1-nB-eCk" id="Gx0-sc-Fhg"/>
+                <outlet property="separator" destination="7VA-YS-LCD" id="aK0-z1-BJ5"/>
                 <outlet property="theImageView" destination="ndz-zu-xAp" id="aos-ze-DU6"/>
                 <outlet property="updateTimeLabel" destination="4LA-KG-KOX" id="FNr-EH-Nfd"/>
                 <outlet property="uploadView" destination="dJb-NP-nLF" id="Hll-ns-jEd"/>
             </connections>
-            <point key="canvasLocation" x="331" y="283.5"/>
+            <point key="canvasLocation" x="125" y="136.5"/>
         </tableViewCell>
     </objects>
     <resources>

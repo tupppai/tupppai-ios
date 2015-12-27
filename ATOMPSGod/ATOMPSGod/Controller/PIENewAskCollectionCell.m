@@ -13,8 +13,8 @@
 - (void)awakeFromNib {
     self.layer.cornerRadius = 6;
     self.backgroundColor = [UIColor whiteColor];
-    _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
-    _avatarView.clipsToBounds = YES;
+//    _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
+//    _avatarView.clipsToBounds = YES;
     _leftImageView.clipsToBounds = YES;
     _rightImageView.clipsToBounds = YES;
     _leftImageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -38,6 +38,8 @@
     NSString *urlString_imageView = [vm.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
     [_leftImageView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView] placeholderImage:[UIImage imageNamed:@"cell_holder_portrait"]];
     [_avatarView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+//    _avatarView.isV = vm.isV;
+    _avatarView.isV = YES;
     _nameLabel.text = vm.username;
     _timeLabel.text = vm.publishTime;
     _contentLabel.text = vm.content;

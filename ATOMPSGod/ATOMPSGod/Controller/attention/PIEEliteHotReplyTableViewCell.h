@@ -11,21 +11,30 @@
 #import "PIEPageButton.h"
 #import "PIELoveButton.h"
 #import "PIEBangView.h"
+#import "PIEAvatarImageView.h"
+
 
 @interface PIEEliteHotReplyTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *avatarView;
+//@property (weak, nonatomic) IBOutlet UIImageView *avatarView;
+@property (weak, nonatomic) IBOutlet PIEAvatarImageView *avatarView;
+
+
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 //@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *theImageView;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *allWorkView;
+
+
+
 @property (weak, nonatomic) IBOutlet PIEPageButton *shareView;
-//@property (weak, nonatomic) IBOutlet PIEPageButton *collectView;
+
 @property (weak, nonatomic) IBOutlet PIEPageButton *commentView;
 @property (weak, nonatomic) IBOutlet PIELoveButton *likeView;
 @property (weak, nonatomic) IBOutlet UILabel *commentLabel1;
 @property (weak, nonatomic) IBOutlet UILabel *commentLabel2;
+@property (weak, nonatomic) IBOutlet UIImageView *commentIndeicatorImageView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *followView;
 @property (strong, nonatomic) PIEThumbAnimateView *thumbView;

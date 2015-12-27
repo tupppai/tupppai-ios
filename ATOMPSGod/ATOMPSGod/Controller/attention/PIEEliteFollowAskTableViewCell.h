@@ -10,9 +10,11 @@
 #import "PIEPageButton.h"
 //#import "PIEPageLikeButton.h"
 #import "PIEBangView.h"
+#import "PIEAvatarImageView.h"
 
 @interface PIEEliteFollowAskTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *avatarView;
+//@property (weak, nonatomic) IBOutlet UIImageView *avatarView;
+@property (weak, nonatomic) IBOutlet PIEAvatarImageView *avatarView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *theImageView;

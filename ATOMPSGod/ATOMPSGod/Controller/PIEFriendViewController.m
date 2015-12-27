@@ -18,8 +18,12 @@
 #import "FXBlurView.h"
 #import "PIEActionSheet_UserAbuse.h"
 #import "AppDelegate.h"
+#import "PIEAvatarImageView.h"
+
 @interface PIEFriendViewController ()
-@property (weak, nonatomic) IBOutlet UIImageView *avatarView;
+//@property (weak, nonatomic) IBOutlet UIImageView *avatarView;
+@property (weak, nonatomic) IBOutlet PIEAvatarImageView *avatarView;
+
 @property (weak, nonatomic) IBOutlet UIImageView *followButton;
 @property (weak, nonatomic) IBOutlet UILabel *followCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *fansCountLabel;
@@ -141,13 +145,15 @@
     gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor whiteColor] CGColor], (id)[[UIColor blackColor] CGColor], nil];
     [_view1.layer insertSublayer:gradient atIndex:0];
 
-    _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
-    _avatarView.clipsToBounds = YES;
+//    _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
+//    _avatarView.clipsToBounds = YES;
     _avatarView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
     _dotView1.layer.cornerRadius = _dotView1.frame.size.width/2;
     _dotView2.layer.cornerRadius = _dotView2.frame.size.width/2;
     _blurView.contentMode = UIViewContentModeScaleAspectFill;
     _blurView.clipsToBounds = YES;
+    
+    _followButton.contentMode = UIViewContentModeCenter;
 
 }
 - (void)setupTapGesture {
@@ -225,6 +231,10 @@
     NSString* avatarUrlString = [user.avatar trimToImageWidth:_avatarView.frame.size.width*2];
     [DDService sd_downloadImage:avatarUrlString withBlock:^(UIImage *image) {
         _avatarView.image = image;
+        
+//        _avatarView.isV = self.pageVM.isV;
+        _avatarView.isV = YES;
+        
         _blurView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:[UIColor blackColor]];
     }];
     

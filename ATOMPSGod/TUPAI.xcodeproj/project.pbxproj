@@ -161,6 +161,8 @@
 		5CDF82421AC2BEF900321694 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CDF82411AC2BEF900321694 /* QuartzCore.framework */; };
 		5CE4082F1ACE94D600A56E4B /* UIViewController+ATOMTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CE4082E1ACE94D600A56E4B /* UIViewController+ATOMTracking.m */; };
 		5CEAC0331AD4F9540058037C /* DDMyCollectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CEAC0321AD4F9540058037C /* DDMyCollectionManager.m */; };
+		9021B9691C2CE7FC008C8F0B /* PIEAvatarImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9021B9681C2CE7FC008C8F0B /* PIEAvatarImageView.m */; };
+		9021B96C1C2D2591008C8F0B /* PIEAvatarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9021B96B1C2D2591008C8F0B /* PIEAvatarButton.m */; };
 		903E09DE1C23DF9E006C87B8 /* PIEEliteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 903E09DD1C23DF9E006C87B8 /* PIEEliteViewController.m */; };
 		90B3A07C1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B3A07B1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m */; };
 		90EC3D5C1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC3D5B1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m */; };
@@ -880,6 +882,10 @@
 		5CE4082E1ACE94D600A56E4B /* UIViewController+ATOMTracking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ATOMTracking.m"; sourceTree = "<group>"; };
 		5CEAC0311AD4F9540058037C /* DDMyCollectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMyCollectionManager.h; sourceTree = "<group>"; };
 		5CEAC0321AD4F9540058037C /* DDMyCollectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMyCollectionManager.m; sourceTree = "<group>"; };
+		9021B9671C2CE7FC008C8F0B /* PIEAvatarImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEAvatarImageView.h; sourceTree = "<group>"; };
+		9021B9681C2CE7FC008C8F0B /* PIEAvatarImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEAvatarImageView.m; sourceTree = "<group>"; };
+		9021B96A1C2D2591008C8F0B /* PIEAvatarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEAvatarButton.h; sourceTree = "<group>"; };
+		9021B96B1C2D2591008C8F0B /* PIEAvatarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEAvatarButton.m; sourceTree = "<group>"; };
 		903E09DC1C23DF9E006C87B8 /* PIEEliteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteViewController.h; sourceTree = "<group>"; };
 		903E09DD1C23DF9E006C87B8 /* PIEEliteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteViewController.m; sourceTree = "<group>"; };
 		90B3A07A1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECellIconStatusChangedNotificationKey.h; sourceTree = "<group>"; };
@@ -2432,6 +2438,7 @@
 		5CDB05EE1AA400410089121E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				9021B9661C2CE7C5008C8F0B /* avatar */,
 				F43159C71BB5547300DCA292 /* 2.1 */,
 				F41BA04C1C0E9A0F00979D43 /* tag */,
 				F44A527C1C0C332700707281 /* actionsheet */,
@@ -2537,6 +2544,17 @@
 				5CDB06611AA45C680089121E /* DDCreateProfileVC.m */,
 			);
 			path = login;
+			sourceTree = "<group>";
+		};
+		9021B9661C2CE7C5008C8F0B /* avatar */ = {
+			isa = PBXGroup;
+			children = (
+				9021B9671C2CE7FC008C8F0B /* PIEAvatarImageView.h */,
+				9021B9681C2CE7FC008C8F0B /* PIEAvatarImageView.m */,
+				9021B96A1C2D2591008C8F0B /* PIEAvatarButton.h */,
+				9021B96B1C2D2591008C8F0B /* PIEAvatarButton.m */,
+			);
+			path = avatar;
 			sourceTree = "<group>";
 		};
 		90FA116C1C1FDB8900D8B602 /* DeviceUtil */ = {
@@ -4295,6 +4313,7 @@
 				E99D2F5F1B1C7E8D000D7784 /* NYXImagesHelper.m in Sources */,
 				F4EC11201BCE6F9E002D1DCF /* PIEModelNotification.m in Sources */,
 				5C54DF2D1AB99F5300BDE34D /* DDTipLabelManager.m in Sources */,
+				9021B96C1C2D2591008C8F0B /* PIEAvatarButton.m in Sources */,
 				F4309E2D1BC8C05C0035033C /* PIEModifyProfileViewController.m in Sources */,
 				5CDB06031AA405A40089121E /* UIColor+Hex.m in Sources */,
 				F4AE609B1BC129ED007BCA2A /* PIEFriendReplyCollectionViewCell.m in Sources */,
@@ -4422,6 +4441,7 @@
 				E991EF001B735B7000025108 /* EAIntroPage.m in Sources */,
 				E95691AF1B22E88300DA84BB /* MTLModel+NSCoding.m in Sources */,
 				F41FF0E81BDDFCE800566A12 /* UIImage+JTSImageEffects.m in Sources */,
+				9021B9691C2CE7FC008C8F0B /* PIEAvatarImageView.m in Sources */,
 				F41BA0C51C0EDCE800979D43 /* MJRefreshComponent.m in Sources */,
 				0E54C7901C1E8F5E00F431AC /* PIEProceedingViewController.m in Sources */,
 				5C561A491AB7C7720052D4D5 /* ATOMUserDAO.m in Sources */,
@@ -4825,7 +4845,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tupppai.www;
 				PRODUCT_NAME = TUPAI;
-				PROVISIONING_PROFILE = "71318ccb-337c-46d6-ab28-371bfc9b3e05";
+				PROVISIONING_PROFILE = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
@@ -4870,7 +4890,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tupppai.www;
 				PRODUCT_NAME = TUPAI;
-				PROVISIONING_PROFILE = "d7a94fec-a9dd-4f42-9398-72bc32df65c4";
+				PROVISIONING_PROFILE = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = NO;
@@ -4999,7 +5019,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tupppai.www;
 				PRODUCT_NAME = TUPAI;
-				PROVISIONING_PROFILE = "71318ccb-337c-46d6-ab28-371bfc9b3e05";
+				PROVISIONING_PROFILE = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = NO;

@@ -13,8 +13,8 @@
 - (void)awakeFromNib {
     // Initialization code
     self.backgroundColor = [UIColor whiteColor];
-    _avatarButton.layer.cornerRadius = _avatarButton.frame.size.width/2;
-    _avatarButton.clipsToBounds = YES;
+//    _avatarButton.layer.cornerRadius = _avatarButton.frame.size.width/2;
+//    _avatarButton.clipsToBounds = YES;
     _avatarButton.backgroundColor = [UIColor lightGrayColor];
     _followButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
     _nameButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -37,6 +37,11 @@
 - (void)injectSauce:(PIEUserViewModel*)vm {
     _vm = vm;
     [_avatarButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:vm.avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+    
+    // 目前接口没有提供isV的数据
+    //    _avatarButton.isV =
+    _avatarButton.isV = YES;
+    
     [_nameButton setTitle:vm.username forState:UIControlStateNormal];
     _countLabel.text = [NSString stringWithFormat:@"%zd 作品   %zd 粉丝   %zd 关注",vm.replyNumber,vm.fansNumber,vm.attentionNumber];
     _followButton.selected = vm.followed;

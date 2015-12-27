@@ -53,6 +53,7 @@
     [self mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@(SCREEN_WIDTH));
     }];
+    
     [self.avatarView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self).with.offset(10);
         make.right.equalTo(self).with.offset(-12);
@@ -151,6 +152,15 @@
     if (vm) {
         _vm = vm;
         [_avatarView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+        
+        /* BUG FOUND HERE!!! layout big error!!! */
+        /*
+            BUG FIXED: 在avatarView添加子控件psGodView的时候，不使用autolayout，而是在layoutSubviews中手写
+                       Frame布局，药到病除。
+         */
+        _avatarView.isV = YES;
+        
+
         _usernameLabel.text = vm.username;
         _timeLabel.text = vm.publishTime;
         
@@ -196,10 +206,10 @@
 
 
 
-- (UIImageView *)avatarView
+- (PIEAvatarImageView *)avatarView
 {
     if (!_avatarView) {
-        _avatarView = [UIImageView new];
+        _avatarView = [PIEAvatarImageView new];
         _avatarView.userInteractionEnabled = YES;
         _avatarView.contentMode = UIViewContentModeScaleToFill;
         _avatarView.clipsToBounds = YES;

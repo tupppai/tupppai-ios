@@ -33,34 +33,28 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ErX-Hn-nxd">
                         <rect key="frame" x="0.0" y="288" width="292" height="40"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JY8-sJ-8GF">
-                                <rect key="frame" x="252" y="7" width="30" height="26"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="like_count" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MTA-EZ-E4P">
+                                <rect key="frame" x="208" y="11" width="76" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="INQ-BJ-16B" userLabel="like_image">
+                                <rect key="frame" x="195" y="16" width="12" height="12"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="mlO-1v-QA9"/>
-                                    <constraint firstAttribute="width" priority="750" constant="60" id="rMD-Su-Vs2"/>
+                                    <constraint firstAttribute="height" constant="9" id="Hu9-D7-Y5v"/>
+                                    <constraint firstAttribute="width" constant="11" id="RwF-vd-v8k"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="rMD-Su-Vs2"/>
-                                    </mask>
-                                </variation>
-                            </button>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="6Vp-IZ-kTq"/>
-                            <constraint firstItem="JY8-sJ-8GF" firstAttribute="centerY" secondItem="ErX-Hn-nxd" secondAttribute="centerY" id="Edo-E2-27n"/>
-                            <constraint firstAttribute="bottom" secondItem="JY8-sJ-8GF" secondAttribute="bottom" constant="5" id="T5v-1s-Dqx"/>
-                            <constraint firstItem="JY8-sJ-8GF" firstAttribute="top" secondItem="ErX-Hn-nxd" secondAttribute="top" constant="5" id="TyM-uY-DW8"/>
-                            <constraint firstAttribute="trailing" secondItem="JY8-sJ-8GF" secondAttribute="trailing" constant="10" id="XNB-HE-T8t"/>
+                            <constraint firstItem="MTA-EZ-E4P" firstAttribute="centerY" secondItem="ErX-Hn-nxd" secondAttribute="centerY" id="QSG-Rh-RbM"/>
+                            <constraint firstItem="INQ-BJ-16B" firstAttribute="centerY" secondItem="MTA-EZ-E4P" secondAttribute="centerY" id="Rrn-CP-E1N"/>
+                            <constraint firstAttribute="trailing" secondItem="MTA-EZ-E4P" secondAttribute="trailing" constant="8" id="Vuy-V8-xrR"/>
+                            <constraint firstItem="MTA-EZ-E4P" firstAttribute="leading" secondItem="INQ-BJ-16B" secondAttribute="trailing" constant="2" id="ZJ7-t9-aFZ"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="T5v-1s-Dqx"/>
-                                <exclude reference="TyM-uY-DW8"/>
-                            </mask>
-                        </variation>
                     </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -84,7 +78,8 @@
                 <outlet property="avatarView" destination="T6T-1x-ryS" id="2Bu-Kb-sxO"/>
                 <outlet property="bottomView" destination="ErX-Hn-nxd" id="0r5-eA-bF2"/>
                 <outlet property="imageView" destination="OZP-Ga-yYx" id="TR2-Ex-kK3"/>
-                <outlet property="likeButton" destination="JY8-sJ-8GF" id="8JB-sO-mvT"/>
+                <outlet property="likeCountLabel" destination="MTA-EZ-E4P" id="gku-mR-Ypj"/>
+                <outlet property="likeImageView" destination="INQ-BJ-16B" id="sRf-SL-quE"/>
                 <outlet property="usernameLabel" destination="5JV-PE-0Yh" id="8PR-jI-V9W"/>
             </connections>
             <point key="canvasLocation" x="608" y="590"/>
