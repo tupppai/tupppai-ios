@@ -948,9 +948,12 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 }
 - (void)removeKVO {
-    [_vm removeObserver:self forKeyPath:@"lovedCount"];
-    [_vm removeObserver:self forKeyPath:@"likeCount"];
-}
+    @try{
+        [_vm removeObserver:self forKeyPath:@"lovedCount"];
+        [_vm removeObserver:self forKeyPath:@"likeCount"];
+    }@catch(id anException){
+        //do nothing, obviously it wasn't attached because an exception was thrown
+    }}
 
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {

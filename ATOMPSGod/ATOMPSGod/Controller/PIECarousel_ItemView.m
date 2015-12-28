@@ -108,10 +108,12 @@
 }
 
 - (void)longpressLike {
-    [PIEPageManager love:_pageLikeButton viewModel:_vm revert:YES];
+//    [PIEPageManager love:_pageLikeButton viewModel:_vm revert:YES];
+    [_vm love:YES];
 }
 - (void)tapLike {
     [PIEPageManager love:_pageLikeButton viewModel:_vm revert:NO];
+    [_vm love:NO];
 }
 - (void)tapShare {
 //    [self.shareView show];
@@ -305,9 +307,12 @@
     [_vm addObserver:self forKeyPath:@"likeCount" options:NSKeyValueObservingOptionNew context:NULL];
 }
 - (void)removeKVO {
-    [_vm removeObserver:self forKeyPath:@"lovedCount"];
-    [_vm removeObserver:self forKeyPath:@"likeCount"];
-}
+    @try{
+        [_vm removeObserver:self forKeyPath:@"lovedCount"];
+        [_vm removeObserver:self forKeyPath:@"likeCount"];
+    }@catch(id anException){
+        //do nothing, obviously it wasn't attached because an exception was thrown
+    }}
 
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {

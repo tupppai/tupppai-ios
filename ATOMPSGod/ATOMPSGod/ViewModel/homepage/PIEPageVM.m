@@ -99,10 +99,44 @@
         self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] + 1];
     }
 }
+- (void)decreaseLoveStatus {
+    if (_lovedCount && _lovedCount == 0) {
+        self.lovedCount = 3;
+        self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] + 3];
+    } else {
+        self.lovedCount--;
+        self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] - 1];
+    }
+}
 
 - (void)revertStatus {
     self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] - _lovedCount];
     self.lovedCount = 0;
 }
+
+
+/** Cell点击 － 点赞 */
+-(void)love:(BOOL)revert {
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    if (revert) {
+        [param setObject:@"0" forKey:@"status"];
+    } else {
+        [param setObject:@(self.lovedCount) forKey:@"num"];
+    }
+    
+    if (revert) {
+        [self revertStatus];
+    } else {
+        //        [likeView increaseStatus];
+        [self increaseLoveStatus];
+    }
+    
+    [DDService loveReply:param ID:self.ID withBlock:^(BOOL succeed) {
+        if (!succeed) {
+            [self decreaseLoveStatus];
+        }
+    }];
+}
+
 
 @end
