@@ -15,16 +15,16 @@
                 <rect key="frame" x="0.0" y="0.0" width="540" height="306.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PVa-bS-Hcw" userLabel="avatarView" customClass="PIEAvatarView">
-                        <rect key="frame" x="129" y="13" width="20" height="20"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PVa-bS-Hcw" userLabel="avatarView" customClass="PIEAvatarView">
+                        <rect key="frame" x="135" y="13" width="20" height="20"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="DLH-3f-Jj1"/>
                             <constraint firstAttribute="width" constant="20" id="gBc-rN-RHR"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" misplaced="YES" text="惹不起的大神" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BR1-nB-eCk">
-                        <rect key="frame" x="154" y="13" width="66" height="13.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="惹不起的大神" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BR1-nB-eCk">
+                        <rect key="frame" x="165" y="13" width="66" height="20"/>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -36,18 +36,18 @@
                             <constraint firstAttribute="width" constant="113" id="FtQ-SH-XRh"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="proceeding_download" translatesAutoresizingMaskIntoConstraints="NO" id="Lbh-Lf-Jft">
-                        <rect key="frame" x="400" y="90" width="60" height="23"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="proceeding_download" translatesAutoresizingMaskIntoConstraints="NO" id="Lbh-Lf-Jft">
+                        <rect key="frame" x="400" y="93" width="60" height="23"/>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="proceeding_upload" translatesAutoresizingMaskIntoConstraints="NO" id="dJb-NP-nLF">
-                        <rect key="frame" x="467" y="90" width="60" height="23"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="proceeding_upload" translatesAutoresizingMaskIntoConstraints="NO" id="dJb-NP-nLF">
+                        <rect key="frame" x="467" y="93" width="60" height="23"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="60" id="AYF-Hj-87G"/>
                             <constraint firstAttribute="height" constant="23" id="buv-qC-zqA"/>
                         </constraints>
                     </imageView>
-                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="249" misplaced="YES" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Yct-mv-EsS" customClass="PIETextView_linkDetection">
-                        <rect key="frame" x="129" y="35" width="391" height="50"/>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="249" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Yct-mv-EsS" customClass="PIETextView_linkDetection">
+                        <rect key="frame" x="135" y="38" width="385" height="50"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="250" constant="50" id="hGb-Us-vKt"/>
@@ -88,8 +88,8 @@
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="cell_separator" translatesAutoresizingMaskIntoConstraints="NO" id="pCw-KY-woo">
-                        <rect key="frame" x="0.0" y="288" width="540" height="20"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cell_separator" translatesAutoresizingMaskIntoConstraints="NO" id="pCw-KY-woo">
+                        <rect key="frame" x="0.0" y="286.5" width="540" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="eua-ij-dQt"/>
                         </constraints>
@@ -103,7 +103,7 @@
                     <constraint firstItem="DAu-Kh-qlX" firstAttribute="leading" secondItem="7VA-YS-LCD" secondAttribute="leading" id="Ay8-w7-BTC"/>
                     <constraint firstItem="BR1-nB-eCk" firstAttribute="top" secondItem="PVa-bS-Hcw" secondAttribute="top" id="Ckr-m6-vHD"/>
                     <constraint firstItem="dJb-NP-nLF" firstAttribute="trailing" secondItem="Lbh-Lf-Jft" secondAttribute="trailing" id="DBs-Xr-SPF"/>
-                    <constraint firstItem="BR1-nB-eCk" firstAttribute="leading" secondItem="PVa-bS-Hcw" secondAttribute="trailing" constant="5" id="DKC-qn-PZa"/>
+                    <constraint firstItem="BR1-nB-eCk" firstAttribute="leading" secondItem="PVa-bS-Hcw" secondAttribute="trailing" constant="10" id="DKC-qn-PZa"/>
                     <constraint firstAttribute="bottomMargin" secondItem="7VA-YS-LCD" secondAttribute="bottom" constant="10" id="Dgs-9g-xWq"/>
                     <constraint firstItem="Lbh-Lf-Jft" firstAttribute="height" secondItem="dJb-NP-nLF" secondAttribute="height" id="DyQ-OX-pw7"/>
                     <constraint firstItem="PVa-bS-Hcw" firstAttribute="leading" secondItem="ndz-zu-xAp" secondAttribute="trailing" constant="10" id="FKI-MZ-ORv"/>
@@ -158,7 +158,7 @@
                 <outlet property="updateTimeLabel" destination="4LA-KG-KOX" id="FNr-EH-Nfd"/>
                 <outlet property="uploadView" destination="dJb-NP-nLF" id="Hll-ns-jEd"/>
             </connections>
-            <point key="canvasLocation" x="125" y="157.5"/>
+            <point key="canvasLocation" x="-32" y="140.5"/>
         </tableViewCell>
     </objects>
     <resources>

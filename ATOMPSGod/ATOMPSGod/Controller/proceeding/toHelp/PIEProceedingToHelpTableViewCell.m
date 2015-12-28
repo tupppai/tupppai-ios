@@ -19,6 +19,8 @@
     [self.separator mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(0.5);
     }];
+    
+    self.separator.backgroundColor = [UIColor colorWithHex:0xE5E5E5];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
