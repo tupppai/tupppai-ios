@@ -437,6 +437,7 @@
 		F499E4561BD0F69100E5F178 /* PIEEliteFollowReplyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F499E4541BD0F69100E5F178 /* PIEEliteFollowReplyTableViewCell.xib */; };
 		F499E45A1BD0F6A100E5F178 /* PIEEliteFollowAskTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F499E4581BD0F6A100E5F178 /* PIEEliteFollowAskTableViewCell.m */; };
 		F499E45B1BD0F6A100E5F178 /* PIEEliteFollowAskTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F499E4591BD0F6A100E5F178 /* PIEEliteFollowAskTableViewCell.xib */; };
+		F49B9FD71C3112B100B65881 /* PIEUploadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F49B9FD61C3112B100B65881 /* PIEUploadModel.m */; };
 		F4AE609B1BC129ED007BCA2A /* PIEFriendReplyCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE609A1BC129ED007BCA2A /* PIEFriendReplyCollectionViewCell.m */; };
 		F4AE73BD1BBA770000734BCB /* PIEFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE73BB1BBA770000734BCB /* PIEFriendViewController.m */; };
 		F4AE73BE1BBA770000734BCB /* PIEFriendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4AE73BC1BBA770000734BCB /* PIEFriendViewController.xib */; };
@@ -1396,6 +1397,8 @@
 		F499E4571BD0F6A100E5F178 /* PIEEliteFollowAskTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteFollowAskTableViewCell.h; sourceTree = "<group>"; };
 		F499E4581BD0F6A100E5F178 /* PIEEliteFollowAskTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteFollowAskTableViewCell.m; sourceTree = "<group>"; };
 		F499E4591BD0F6A100E5F178 /* PIEEliteFollowAskTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEEliteFollowAskTableViewCell.xib; sourceTree = "<group>"; };
+		F49B9FD51C3112B100B65881 /* PIEUploadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEUploadModel.h; sourceTree = "<group>"; };
+		F49B9FD61C3112B100B65881 /* PIEUploadModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEUploadModel.m; sourceTree = "<group>"; };
 		F4AE60991BC129ED007BCA2A /* PIEFriendReplyCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEFriendReplyCollectionViewCell.h; sourceTree = "<group>"; };
 		F4AE609A1BC129ED007BCA2A /* PIEFriendReplyCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEFriendReplyCollectionViewCell.m; sourceTree = "<group>"; };
 		F4AE73BA1BBA770000734BCB /* PIEFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEFriendViewController.h; sourceTree = "<group>"; };
@@ -2101,6 +2104,8 @@
 				5C0F04D11ADCA8E2002003AE /* PIEEntityFan.m */,
 				5C0F04FB1ADD0D88002003AE /* PIEEntityFollow.h */,
 				5C0F04FC1ADD0D88002003AE /* PIEEntityFollow.m */,
+				F49B9FD51C3112B100B65881 /* PIEUploadModel.h */,
+				F49B9FD61C3112B100B65881 /* PIEUploadModel.m */,
 			);
 			name = model;
 			path = Entity;
@@ -4624,6 +4629,7 @@
 				E95691B31B22E88300DA84BB /* NSArray+MTLManipulationAdditions.m in Sources */,
 				F4E5F5F71BD9D2E100AB8B31 /* AFHTTPSessionManager.m in Sources */,
 				E90197351B32D2F800F46B78 /* MBProgressHUD.m in Sources */,
+				F49B9FD71C3112B100B65881 /* PIEUploadModel.m in Sources */,
 				E99D2F5D1B1C7E8D000D7784 /* UIView+Screenshot.m in Sources */,
 				F4AFCD4B1BC79A3100027940 /* UIButton+Pop.m in Sources */,
 				F46CBC801C2CE03200A64474 /* PIELoveLabel.m in Sources */,
