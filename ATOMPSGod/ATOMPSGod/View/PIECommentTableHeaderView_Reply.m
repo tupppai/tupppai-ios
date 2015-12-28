@@ -158,8 +158,10 @@
             BUG FIXED: 在avatarView添加子控件psGodView的时候，不使用autolayout，而是在layoutSubviews中手写
                        Frame布局，药到病除。
          */
-        _avatarView.isV = YES;
+        _avatarView.isV = vm.isV;
         
+        //testing
+        //        _avatarView.isV = (vm.askID % 2 == 0);
 
         _usernameLabel.text = vm.username;
         _timeLabel.text = vm.publishTime;

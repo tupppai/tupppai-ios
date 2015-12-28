@@ -33,8 +33,11 @@
     
     [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
 //    _avatarView.isV = vm.isV;
-    _avatarView.isV = YES;
-    
+//    _avatarView.isV = YES;
+   
+    // testing
+//    _avatarView.isV = (vm.askID % 2 == 0);
+    _avatarView.isV = vm.isV;
     
     [_theImageView sd_setImageWithURL:[NSURL URLWithString:vm.imageURL]placeholderImage:[UIImage imageNamed:@"cellHolder"]];
     

@@ -891,7 +891,6 @@
 		90B3A07B1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECellIconStatusChangedNotificationKey.m; sourceTree = "<group>"; };
 		90C60B251C2FD9A300D7F51D /* PIEAvatarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEAvatarView.h; sourceTree = "<group>"; };
 		90C60B261C2FD9A300D7F51D /* PIEAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEAvatarView.m; sourceTree = "<group>"; };
-		90C60B371C30D8F000D7F51D /* LxDBAnything.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LxDBAnything.h; sourceTree = "<group>"; };
 		90EC3D5A1C2A78D10085A7BE /* PIEProceedingToHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEProceedingToHelpViewController.h; sourceTree = "<group>"; };
 		90EC3D5B1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEProceedingToHelpViewController.m; sourceTree = "<group>"; };
 		90EC3D5D1C2A78E20085A7BE /* PIEProceedingAskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEProceedingAskViewController.h; sourceTree = "<group>"; };
@@ -2368,7 +2367,6 @@
 		5CDB05EC1AA400410089121E /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				90C60B371C30D8F000D7F51D /* LxDBAnything.h */,
 				F4F28EFA1C23AE9B0067F2E4 /* SDWebImage */,
 				0ECE8FB01C16AB2B00E98CB5 /* Reveal */,
 				F41BA0961C0EDCE800979D43 /* MJRefresh */,

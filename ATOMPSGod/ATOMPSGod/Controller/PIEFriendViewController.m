@@ -260,8 +260,11 @@
     [DDService sd_downloadImage:avatarUrlString withBlock:^(UIImage *image) {
         _avatarView.avatarImageView.image = image;
         
-//        _avatarView.isV = self.pageVM.isV;
-        _avatarView.isV = YES;
+        _avatarView.isV = self.pageVM.isV;
+//        _avatarView.isV = YES;
+        
+        //testing
+        // _avatarView.isV = (self.pageVM.isV % 2 == 0);
         
         _blurView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:[UIColor blackColor]];
     }];

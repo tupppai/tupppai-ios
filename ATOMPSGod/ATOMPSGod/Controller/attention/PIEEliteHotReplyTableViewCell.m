@@ -126,6 +126,12 @@
 
     
     _avatarView.url = urlString_avatar;
+    
+    
+    // testing
+//    _avatarView.isV = viewModel.isV;
+//    _avatarView.isV = (viewModel.askID % 2 == 0);
+    
     _avatarView.isV = viewModel.isV;
     
     _nameLabel.text = viewModel.username;
