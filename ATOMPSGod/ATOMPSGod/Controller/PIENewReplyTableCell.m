@@ -70,8 +70,12 @@
 -(void)prepareForReuse {
     [super prepareForReuse];
     [self mansoryInitThumbAnimateView];
+    [self removeKVO];
 }
 
+-(void)dealloc {
+    [self removeKVO];
+}
 
 
 #pragma mark - public methods
@@ -84,6 +88,7 @@
 - (void)injectSauce:(PIEPageVM *)viewModel {
     WS(ws);
     _vm = viewModel;
+    [self addKVO];
     NSString *urlString_avatar = [viewModel.avatarURL trimToImageWidth:_avatarView.frame.size.width*SCREEN_SCALE];
     NSString *urlString_imageView = [viewModel.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
     
@@ -245,5 +250,30 @@
         _blurView.clipsToBounds = YES;
     }
     return _blurView;
+}
+
+
+- (void)addKVO {
+    [_vm addObserver:self forKeyPath:@"lovedCount" options:NSKeyValueObservingOptionNew context:NULL];
+    [_vm addObserver:self forKeyPath:@"likeCount" options:NSKeyValueObservingOptionNew context:NULL];
+}
+- (void)removeKVO {
+    @try{
+        [_vm removeObserver:self forKeyPath:@"lovedCount"];
+        [_vm removeObserver:self forKeyPath:@"likeCount"];
+    }@catch(id anException){
+        //do nothing, obviously it wasn't attached because an exception was thrown
+    }
+}
+
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"lovedCount"]) {
+        NSInteger newLovedCount = [[change objectForKey:@"new"]integerValue];
+        self.likeView.status = newLovedCount;
+    } else     if ([keyPath isEqualToString:@"likeCount"]) {
+        NSInteger newLikeCount = [[change objectForKey:@"new"]integerValue];
+        self.likeView.number = newLikeCount;
+    }
 }
 @end

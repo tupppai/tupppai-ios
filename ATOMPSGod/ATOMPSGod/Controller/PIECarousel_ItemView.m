@@ -48,18 +48,13 @@
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         _imageView_type.contentMode = UIViewContentModeScaleAspectFit;
-        _button_avatar.imageView.contentMode = UIViewContentModeScaleAspectFill;
-        _button_avatar.layer.cornerRadius = _button_avatar.frame.size.width/2;
-        _button_avatar.clipsToBounds = YES;
-        
+
         _pageButton_comment.imageView.image = [UIImage imageNamed:@"pieSquaredCommentIcon"];
         _pageButton_share.imageView.image   = [UIImage imageNamed:@"pieSquaredShareIcon"];
         
         _button_name.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         _label_time.textAlignment = NSTextAlignmentRight;
 
-        [_button_avatar setTitleColor:[UIColor colorWithHex:0x000000 andAlpha:0.9] forState:UIControlStateNormal];
-        [_button_avatar.titleLabel setFont:[UIFont lightTupaiFontOfSize:13]];
         _label_time.textColor =[UIColor colorWithHex:0x000000 andAlpha:0.4];
         [_label_time setFont:[UIFont lightTupaiFontOfSize:10]];
 
@@ -108,10 +103,12 @@
 }
 
 - (void)longpressLike {
-    [PIEPageManager love:_pageLikeButton viewModel:_vm revert:YES];
+//    [PIEPageManager love:_pageLikeButton viewModel:_vm revert:YES];
+    [_vm love:YES];
 }
 - (void)tapLike {
-    [PIEPageManager love:_pageLikeButton viewModel:_vm revert:NO];
+//    [PIEPageManager love:_pageLikeButton viewModel:_vm revert:NO];
+    [_vm love:NO];
 }
 - (void)tapShare {
 //    [self.shareView show];
@@ -264,8 +261,14 @@
     _label_time.text = vm.publishTime;
     //    _label_content.text = vm.content;
     [_button_name setTitle:vm.username forState:UIControlStateNormal];
-    [_button_avatar setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
-//    _button_avatar.isV = vm.isV;
+    
+    NSString* urlString_avatar = [vm.avatarURL trimToImageWidth:_button_avatar.frame.size.height*SCREEN_SCALE];
+    [DDService sd_downloadImage:urlString_avatar withBlock:^(UIImage *image) {
+        [_button_avatar setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+        [_button_avatar setImage:image forState:UIControlStateNormal];
+
+    }];
+    
     _button_avatar.isV = YES;
     
     
@@ -307,6 +310,13 @@
 - (void)removeKVO {
     [_vm removeObserver:self forKeyPath:@"lovedCount"];
     [_vm removeObserver:self forKeyPath:@"likeCount"];
+
+//    @try{
+//        [_vm removeObserver:self forKeyPath:@"lovedCount"];
+//        [_vm removeObserver:self forKeyPath:@"likeCount"];
+//    }@catch(id anException){
+//        //do nothing, obviously it wasn't attached because an exception was thrown
+//    }
 }
 
 

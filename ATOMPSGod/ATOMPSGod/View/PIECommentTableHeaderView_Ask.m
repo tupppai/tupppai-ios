@@ -138,7 +138,6 @@
     _vm = vm;
     if (vm) {
         [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
-        
         _avatarView.isV = YES;
         
         _usernameLabel.text = vm.username;
@@ -190,7 +189,7 @@
 - (PIEAvatarView *)avatarView
 {
     if (!_avatarView) {
-        _avatarView = [PIEAvatarView new];
+        _avatarView = [[PIEAvatarView alloc]initWithFrame:CGRectMake(0, 0, 32, 32)];
         _avatarView.userInteractionEnabled = YES;
     }
     return _avatarView;

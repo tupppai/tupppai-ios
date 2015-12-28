@@ -183,12 +183,12 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 -(void)dealloc {
     if (_shouldShowHeaderView) {
         [self.source_newComment removeObserver:self forKeyPath:@"array"];
+        [self removeKVO];
     }
     
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:PIESharedIconStatusChangedNotification
                                                   object:nil];
-    [self removeKVO];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -724,8 +724,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     if (!_headerView) {
         _headerView = [PIECommentTableHeaderView_Ask new];
         _headerView.vm = _vm;
-        
-        
         UITapGestureRecognizer* tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap1)];
         UITapGestureRecognizer* tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap2)];
 //        UITapGestureRecognizer* tap3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap3)];
@@ -837,13 +835,13 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 - (void) didTapLike {
     
-    [PIEPageManager love:_headerView_reply.likeButton viewModel:_vm revert:NO];
-
+//    [PIEPageManager love:_headerView_reply.likeButton viewModel:_vm revert:NO];
+    [_vm love:NO];
 }
 - (void) didLongpressLike {
     
-    [PIEPageManager love:_headerView_reply.likeButton viewModel:_vm revert:YES];
-    
+//    [PIEPageManager love:_headerView_reply.likeButton viewModel:_vm revert:YES];
+    [_vm love:YES];
 }
 
 #pragma mark - <PIEShareViewDelegate>
@@ -941,15 +939,18 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 
 - (void)addKVO {
-    if (_vm.type == PIEPageTypeReply) {
+    if (_shouldShowHeaderView) {
         [_vm addObserver:self forKeyPath:@"lovedCount" options:NSKeyValueObservingOptionNew context:NULL];
         [_vm addObserver:self forKeyPath:@"likeCount" options:NSKeyValueObservingOptionNew context:NULL];
     }
-
 }
 - (void)removeKVO {
-    [_vm removeObserver:self forKeyPath:@"lovedCount"];
-    [_vm removeObserver:self forKeyPath:@"likeCount"];
+    @try{
+        [_vm removeObserver:self forKeyPath:@"lovedCount"];
+        [_vm removeObserver:self forKeyPath:@"likeCount"];
+    }@catch(id anException){
+        //do nothing, obviously it wasn't attached because an exception was thrown
+    }
 }
 
 
@@ -960,7 +961,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     } else     if ([keyPath isEqualToString:@"likeCount"]) {
         NSInteger newLikeCount = [[change objectForKey:@"new"]integerValue];
         self.headerView_reply.likeButton.number = newLikeCount;
-
     } else     if ([keyPath isEqualToString:@"array"]) {
         
         if (_vm.type == PIEPageTypeAsk) {

@@ -22,56 +22,54 @@
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
+        self.backgroundColor = [UIColor clearColor];
         [self addSubview:self.avatarImageView];
-        [self addSubview:self.psGodView];
-        self.backgroundColor = [UIColor clearColor] ;
-        _avatarImageView.layer.cornerRadius = self.bounds.size.width / 2.0;
-        [_avatarImageView clipsToBounds];
 
     }
-    
     return self;
 }
+
+
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     if (self = [super initWithCoder:aDecoder]) {
+        self.backgroundColor = [UIColor clearColor];
         [self addSubview:self.avatarImageView];
-        [self addSubview:self.psGodView];
-        self.backgroundColor = [UIColor clearColor] ;
-        _avatarImageView.layer.cornerRadius = self.bounds.size.width / 2.0;
- 
-        [_avatarImageView clipsToBounds];
 
+        [self.avatarImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self);
+            make.leading.equalTo(self);
+            make.trailing.equalTo(self);
+            make.bottom.equalTo(self);
+        }];
     }
-    
     return self;
 }
 
-#pragma mark - layout methods
-- (void)layoutSubviews
-{
-    self.avatarImageView.frame = self.bounds;
-    
 
-    CGFloat psGodWH = self.avatarImageView.frame.size.width / 2;
-    CGFloat psGodY  = self.avatarImageView.frame.size.height - psGodWH;
-    CGFloat psGodX  = self.avatarImageView.frame.size.width  - psGodWH + 3;
-    
-    self.psGodView.frame = CGRectMake(psGodX, psGodY, psGodWH, psGodWH);
-    
-   
+- (void) addPSGodView {
+    [self addSubview:self.psGodView];
+    [self.psGodView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.avatarImageView).with.offset(2);
+        make.centerX.equalTo(self.avatarImageView.mas_trailing);
+        make.width.equalTo(self.avatarImageView).with.multipliedBy(28.0/62.0).with.priorityMedium();
+        make.height.equalTo(self.avatarImageView).with.multipliedBy(28.0/62.0).with.priorityMedium();
+        make.width.lessThanOrEqualTo(@18);
+        make.height.lessThanOrEqualTo(@18);
+    }];
 }
-
-
 
 #pragma mark - lazy loadings
 - (UIImageView *)avatarImageView
 {
     if (_avatarImageView == nil) {
-        _avatarImageView = [[UIImageView alloc] init];
-        [_avatarImageView setContentMode:UIViewContentModeScaleToFill];
-        
+
+        _avatarImageView = [[UIImageView alloc]initWithFrame:self.bounds];
+        _avatarImageView.layer.cornerRadius = self.bounds.size.width / 2.0;
+        [_avatarImageView setContentMode:UIViewContentModeScaleAspectFill];
+        _avatarImageView.image = [UIImage imageNamed:@"cellHolder"];
+        _avatarImageView.clipsToBounds = YES;
     }
     
     return _avatarImageView;
@@ -82,10 +80,15 @@
     if (_psGodView == nil) {
         _psGodView = [[UIImageView alloc] init];
         [_psGodView setImage:[UIImage imageNamed:@"icon_psGOD"]];
-        [_avatarImageView setContentMode:UIViewContentModeScaleToFill];
+
+        [_psGodView setContentMode:UIViewContentModeScaleAspectFit];
     }
     
     return _psGodView;
+}
+
+-(void)setImage:(UIImage *)image {
+    self.avatarImageView.image = image;
 }
 
 #pragma mark - setters
@@ -93,10 +96,19 @@
 - (void)setIsV:(BOOL)isV
 {
     _isV = isV;
-    
-    self.psGodView.hidden = !isV;
 
+    if (_isV) {
+        [self addPSGodView];
+        _psGodView.hidden = NO;
+    } else {
+        if (_psGodView) {
+            _psGodView.hidden = YES;
+        }
+    }
 }
-
+-(void)setUrl:(NSString *)url {
+    _url = url;
+    [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:url]];
+}
 
 @end

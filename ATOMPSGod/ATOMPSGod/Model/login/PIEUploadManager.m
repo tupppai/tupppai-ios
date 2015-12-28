@@ -154,7 +154,7 @@
     [param setObject:[_uploadInfo objectForKey:@"text_string"] forKey:@"desc"];
     [param setObject:tag_ids forKey:@"tag_ids"];
     
-    NSNumber *cid = [_uploadInfo objectForKey:@"channelViewModel_id"];
+    NSNumber *cid = [_uploadInfo objectForKey:@"channel_id"];
     if (cid) {
         [param setObject:cid forKey:@"category_id"];
     }
@@ -182,7 +182,7 @@
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:[_uploadInfo objectForKey:@"text_string"] forKey:@"desc"];
-    NSNumber *cid = [_uploadInfo objectForKey:@"channelViewModel_id"];
+    NSNumber *cid = [_uploadInfo objectForKey:@"channel_id"];
     if (cid) {
         [param setObject:cid forKey:@"category_id"];
     }

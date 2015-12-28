@@ -5,11 +5,11 @@
         "mode" : "3-part-horizontal",
         "center" : {
           "mode" : "tile",
-          "width" : 6
+          "width" : 8
         },
         "cap-insets" : {
-          "right" : 0,
-          "left" : 3
+          "right" : 2,
+          "left" : 2
         }
       },
       "idiom" : "universal",
@@ -21,11 +21,11 @@
         "mode" : "3-part-horizontal",
         "center" : {
           "mode" : "tile",
-          "width" : 5
+          "width" : 1
         },
         "cap-insets" : {
           "right" : 4,
-          "left" : 0
+          "left" : 4
         }
       },
       "idiom" : "universal",
@@ -37,11 +37,11 @@
         "mode" : "3-part-horizontal",
         "center" : {
           "mode" : "tile",
-          "width" : 2
+          "width" : 3
         },
         "cap-insets" : {
-          "right" : 5,
-          "left" : 4
+          "right" : 7,
+          "left" : 5
         }
       },
       "idiom" : "universal",

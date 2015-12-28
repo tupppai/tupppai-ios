@@ -357,7 +357,8 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         //                [self collect];
         //            }
         else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
-            [PIEPageManager love:_selectedReplyCell.likeView viewModel:_selectedVM revert:NO];
+//            [PIEPageManager love:_selectedReplyCell.likeView viewModel:_selectedVM revert:NO];
+            [_selectedVM love:NO];
         }
         else if (CGRectContainsPoint(_selectedReplyCell.followView.frame, p)) {
             [self followReplier];
@@ -394,7 +395,8 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
             [self showShareView:_selectedVM];
         }        else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
-            [PIEPageManager love:_selectedReplyCell.likeView viewModel:_selectedVM revert:YES];
+//            [PIEPageManager love:_selectedReplyCell.likeView viewModel:_selectedVM revert:YES];
+            [_selectedVM love:YES];
         }
 
     }
