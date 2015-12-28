@@ -120,8 +120,9 @@
     [_likeView initStatus:viewModel.lovedCount numberString:viewModel.likeCount];
     _contentLabel.text = viewModel.content;
     
-    [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
-    _avatarView.isV = YES;
+    
+    _avatarView.url = urlString_avatar;
+    _avatarView.isV = viewModel.isV;
     
     _nameLabel.text = viewModel.username;
     

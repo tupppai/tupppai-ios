@@ -209,9 +209,8 @@
 - (PIEAvatarView *)avatarView
 {
     if (!_avatarView) {
-        _avatarView = [PIEAvatarView new];
+        _avatarView = [[PIEAvatarView alloc]initWithFrame:CGRectMake(0, 0, 32, 32)];
         _avatarView.userInteractionEnabled = YES;
-        
     }
     return _avatarView;
 }

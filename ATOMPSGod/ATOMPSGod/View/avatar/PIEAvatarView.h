@@ -10,9 +10,13 @@
 
 @interface PIEAvatarView : UIView
 
-/** toggle the "psGod" badge on the buttom right */
 @property (nonatomic, assign) BOOL isV;
+@property (nonatomic, copy) NSString *url;
 
+
+//should be removed
 @property (nonatomic, strong) UIImageView *avatarImageView;
+
+//@property (nonatomic, strong) UIImage *image;
 
 @end

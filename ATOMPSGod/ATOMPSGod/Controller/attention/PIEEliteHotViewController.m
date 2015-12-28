@@ -444,9 +444,6 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
                     vc.pageVM = _selectedVM;
                     [self presentViewController:vc animated:YES completion:nil];
                     
-                    
-
-                    
                 }
                 //点击头像
                 else if (CGRectContainsPoint(cell.avatarView.frame, p)) {

@@ -117,7 +117,6 @@
 
 /** Cell点击 － 点赞 */
 -(void)love:(BOOL)revert {
-    NSLog(@"PIEPageVM Love");
     NSMutableDictionary *param = [NSMutableDictionary new];
     if (revert) {
         [param setObject:@"0" forKey:@"status"];
