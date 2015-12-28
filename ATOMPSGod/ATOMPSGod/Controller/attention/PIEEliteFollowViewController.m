@@ -470,7 +470,8 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
                 if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                     [self showShareView:_selectedVM];
                 }      else if (CGRectContainsPoint(cell.likeView.frame, p)) {
-                    [PIEPageManager love:cell.likeView viewModel:_selectedVM revert:YES];
+//                    [PIEPageManager love:cell.likeView viewModel:_selectedVM revert:YES];
+                    [_selectedVM love:YES];
                 }
 
             }
@@ -574,7 +575,8 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
                     [self.navigationController pushViewController:friendVC animated:YES];
                 }
                 else if (CGRectContainsPoint(cell.likeView.frame, p)) {
-                    [PIEPageManager love:cell.likeView viewModel:_selectedVM revert:NO];
+//                    [PIEPageManager love:cell.likeView viewModel:_selectedVM revert:NO];
+                    [_selectedVM love:NO];
                 }
                 else if (CGRectContainsPoint(cell.followView.frame, p)) {
                     [self follow:cell.followView];

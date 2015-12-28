@@ -120,8 +120,9 @@
     [_likeView initStatus:viewModel.lovedCount numberString:viewModel.likeCount];
     _contentLabel.text = viewModel.content;
     
-    [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
-    _avatarView.isV = YES;
+    
+    _avatarView.url = urlString_avatar;
+    _avatarView.isV = viewModel.isV;
     
     _nameLabel.text = viewModel.username;
     
@@ -280,8 +281,12 @@
     [_vm addObserver:self forKeyPath:@"likeCount" options:NSKeyValueObservingOptionNew context:NULL];
 }
 - (void)removeKVO {
-    [_vm removeObserver:self forKeyPath:@"lovedCount"];
-    [_vm removeObserver:self forKeyPath:@"likeCount"];
+    @try{
+        [_vm removeObserver:self forKeyPath:@"lovedCount"];
+        [_vm removeObserver:self forKeyPath:@"likeCount"];
+    }@catch(id anException){
+        //do nothing, obviously it wasn't attached because an exception was thrown
+    }
 }
 
 

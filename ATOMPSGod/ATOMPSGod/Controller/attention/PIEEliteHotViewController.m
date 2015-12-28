@@ -415,8 +415,8 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
             if (CGRectContainsPoint(cell.theImageView.frame, p)) {
                 [self showShareView:_selectedVM];
             } else if (CGRectContainsPoint(cell.likeView.frame, p)) {
-                [PIEPageManager love:cell.likeView viewModel:_selectedVM revert:YES];
-                
+//                [PIEPageManager love:cell.likeView viewModel:_selectedVM revert:YES];
+                [_selectedVM love:YES];
             }
 
             
@@ -443,9 +443,6 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
                     //                    _selectedVM.image = cell.theImageView.image;
                     vc.pageVM = _selectedVM;
                     [self presentViewController:vc animated:YES completion:nil];
-                    
-                    
-
                     
                 }
                 //点击头像
@@ -522,7 +519,8 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
                 }
                 // 点赞
                 else if (CGRectContainsPoint(cell.likeView.frame, p)) {
-                    [PIEPageManager love:cell.likeView viewModel:_selectedVM revert:NO];
+//                    [PIEPageManager love:cell.likeView viewModel:_selectedVM revert:NO];
+                    [_selectedVM love:NO];
                 }
                 // 关注
                 else if (CGRectContainsPoint(cell.followView.frame, p)) {

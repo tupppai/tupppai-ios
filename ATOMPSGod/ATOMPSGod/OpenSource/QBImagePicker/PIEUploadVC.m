@@ -127,7 +127,7 @@
     _uploadInfo = [NSMutableDictionary new];
     
     if (_channelVM) {
-        [_uploadInfo setObject:@(_channelVM.ID) forKey:@"channelViewModel_id"];
+        [_uploadInfo setObject:@(_channelVM.ID) forKey:@"channel_id"];
     }
     
     if (_assetsArray.count == 1) {
