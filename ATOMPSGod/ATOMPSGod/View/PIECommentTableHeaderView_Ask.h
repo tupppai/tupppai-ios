@@ -6,18 +6,19 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-//评论VC的Header
+//评论VC的Headerix
 #import "PIEPageButton.h"
 #import "PIEBangView.h"
 #import "PIELoveButton.h"
 #import "PIETextView_linkDetection.h"
 
 #import "PIEAvatarImageView.h"
+#import "PIEAvatarView.h"
 
 
 @interface PIECommentTableHeaderView_Ask : UIView
 
-@property (nonatomic, strong) PIEAvatarImageView *avatarView;
+@property (nonatomic, strong) PIEAvatarView *avatarView;
 @property (nonatomic, strong) UIButton *followButton;
 @property (nonatomic, strong) UILabel *usernameLabel;
 @property (nonatomic, strong) UILabel *timeLabel;

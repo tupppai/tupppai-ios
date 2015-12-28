@@ -151,7 +151,7 @@
 -(void)setVm:(PIEPageVM *)vm {
     if (vm) {
         _vm = vm;
-        [_avatarView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+        [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
         
         /* BUG FOUND HERE!!! layout big error!!! */
         /*
@@ -206,14 +206,12 @@
 
 
 
-- (PIEAvatarImageView *)avatarView
+- (PIEAvatarView *)avatarView
 {
     if (!_avatarView) {
-        _avatarView = [PIEAvatarImageView new];
+        _avatarView = [PIEAvatarView new];
         _avatarView.userInteractionEnabled = YES;
-        _avatarView.contentMode = UIViewContentModeScaleToFill;
-        _avatarView.clipsToBounds = YES;
-        _avatarView.layer.cornerRadius = 16;
+        
     }
     return _avatarView;
 }
