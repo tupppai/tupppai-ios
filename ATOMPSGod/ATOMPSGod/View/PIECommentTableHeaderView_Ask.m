@@ -137,9 +137,9 @@
 -(void)setVm:(PIEPageVM *)vm {
     _vm = vm;
     if (vm) {
-        [_avatarView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+        [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
         
-        
+        _avatarView.isV = YES;
         
         _usernameLabel.text = vm.username;
         _timeLabel.text = vm.publishTime;
@@ -187,14 +187,11 @@
     }];
 }
 
-- (PIEAvatarImageView *)avatarView
+- (PIEAvatarView *)avatarView
 {
     if (!_avatarView) {
-        _avatarView = [PIEAvatarImageView new];
+        _avatarView = [PIEAvatarView new];
         _avatarView.userInteractionEnabled = YES;
-        _avatarView.contentMode = UIViewContentModeScaleToFill;
-        _avatarView.clipsToBounds = YES;
-        _avatarView.layer.cornerRadius = 16;
     }
     return _avatarView;
 }
