@@ -25,6 +25,9 @@
         [self addSubview:self.avatarImageView];
         [self addSubview:self.psGodView];
         self.backgroundColor = [UIColor clearColor] ;
+        _avatarImageView.layer.cornerRadius = self.bounds.size.width / 2.0;
+        [_avatarImageView clipsToBounds];
+
     }
     
     return self;
@@ -36,6 +39,10 @@
         [self addSubview:self.avatarImageView];
         [self addSubview:self.psGodView];
         self.backgroundColor = [UIColor clearColor] ;
+        _avatarImageView.layer.cornerRadius = self.bounds.size.width / 2.0;
+ 
+        [_avatarImageView clipsToBounds];
+
     }
     
     return self;
@@ -46,8 +53,6 @@
 {
     self.avatarImageView.frame = self.bounds;
     
-    // 也许是这里代码的设计有点问题，先后次序没搞对：设置corderRadius一定要在这里，其他地方bounds 没有值。(懒加载的时机不对？)
-    _avatarImageView.layer.cornerRadius = self.bounds.size.width / 2.0;
 
     CGFloat psGodWH = self.avatarImageView.frame.size.width / 2;
     CGFloat psGodY  = self.avatarImageView.frame.size.height - psGodWH;
@@ -55,7 +60,7 @@
     
     self.psGodView.frame = CGRectMake(psGodX, psGodY, psGodWH, psGodWH);
     
-    [super layoutSubviews];
+   
 }
 
 
@@ -67,7 +72,6 @@
         _avatarImageView = [[UIImageView alloc] init];
         [_avatarImageView setContentMode:UIViewContentModeScaleToFill];
         
-        [_avatarImageView clipsToBounds];
     }
     
     return _avatarImageView;
@@ -79,7 +83,6 @@
         _psGodView = [[UIImageView alloc] init];
         [_psGodView setImage:[UIImage imageNamed:@"icon_psGOD"]];
         [_avatarImageView setContentMode:UIViewContentModeScaleToFill];
-        
     }
     
     return _psGodView;
@@ -92,6 +95,7 @@
     _isV = isV;
     
     self.psGodView.hidden = !isV;
+
 }
 
 

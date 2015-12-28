@@ -14,8 +14,7 @@
 
 @property (weak, nonatomic) IBOutlet PIEAvatarView *avatarView;
 @property (nonatomic,strong) PIEPageVM* vm;
-//@property (weak, nonatomic) IBOutlet UIImageView *avatarView;
-//@property (weak, nonatomic) IBOutlet PIEAvatarImageView *avatarView;
+
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *leftImageView;

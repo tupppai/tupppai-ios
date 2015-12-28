@@ -15,4 +15,5 @@
 
 @property (nonatomic, strong) UIImageView *avatarImageView;
 
+
 @end
