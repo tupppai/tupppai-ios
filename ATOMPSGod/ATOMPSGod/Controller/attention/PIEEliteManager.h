@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PIEModelBanner.h"
+#import "PIEBannerModel.h"
 
 //#import "PIEEliteEntity.h"
 @interface PIEEliteManager : NSObject

@@ -7,7 +7,7 @@
 //
 
 #import "PIENotificationManager.h"
-#import "PIEModelNotification.h"
+#import "PIENotificationModel.h"
 #import "PIENotificationVM.h"
 @implementation PIENotificationManager
 + (void)getNotifications:(NSDictionary *)param block:(void (^)(NSArray *))block {
@@ -16,7 +16,7 @@
             NSArray* dataArray = data;
             NSMutableArray* returnArray = [NSMutableArray new];
             for (NSDictionary* dic in dataArray) {
-                PIEModelNotification* entity = [MTLJSONAdapter modelOfClass:[PIEModelNotification class] fromJSONDictionary:dic error:NULL];
+                PIENotificationModel* entity = [MTLJSONAdapter modelOfClass:[PIENotificationModel class] fromJSONDictionary:dic error:NULL];
                 PIENotificationVM* vm = [[PIENotificationVM alloc]initWithEntity:entity];
 //                if (vm.type != PIENotificationTypeLike && vm.type != PIENotificationTypeSystem) {
                     [returnArray addObject:vm];

@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 ATOM. All rights reserved.
 //
 
-#import "ATOMBaseModel.h"
+#import "PIEBaseModel.h"
 
-@interface ATOMShare : ATOMBaseModel
+@interface ATOMShare : PIEBaseModel
 @property (nonatomic, copy) NSString *desc;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *type;

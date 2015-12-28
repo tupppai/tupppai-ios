@@ -8,7 +8,7 @@
 
 #import "PIEEliteHotReplyTableViewCell.h"
 #import "PIEModelImage.h"
-#import "PIECommentEntity.h"
+#import "PIECommentModel.h"
 #import "FXBlurView.h"
 @interface PIEEliteHotReplyTableViewCell()
 @property (weak, nonatomic) IBOutlet UIView *gapView;
@@ -17,6 +17,12 @@
 @implementation PIEEliteHotReplyTableViewCell
 - (void)awakeFromNib {
     [self commonInit];
+
+}
+
+
+-(void)dealloc {
+    [self removeKVO];
 }
 - (void)commonInit {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -74,18 +80,16 @@
     [_commentLabel2 mas_updateConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(_gapView.mas_top).with.offset(0).priorityHigh();
     }];
-
+    
+    [self removeKVO];
 }
 
 - (void)injectSauce:(PIEPageVM *)viewModel {
     WS(ws);
-    
+    _vm = viewModel;
+    [self addKVO];
     NSString *urlString_avatar = [viewModel.avatarURL trimToImageWidth:_avatarView.frame.size.width*SCREEN_SCALE];
     NSString *urlString_imageView = [viewModel.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
-
-    _ID = viewModel.ID;
-    _askID = viewModel.askID;
-    
     {
         if (viewModel.isMyFan) {
             _followView.highlightedImage = [UIImage imageNamed:@"pie_mutualfollow"];
@@ -130,7 +134,7 @@
     if (viewModel.models_comment.count > 0) {
     
         _commentIndeicatorImageView.hidden = NO;
-        PIECommentEntity* commentEntity1  = viewModel.models_comment[0];
+        PIECommentModel* commentEntity1  = viewModel.models_comment[0];
         _commentLabel1.text = [NSString stringWithFormat:@"%@: %@",commentEntity1.nickname,commentEntity1.content];
        
         [_commentLabel2 mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -143,7 +147,7 @@
                 make.bottom.equalTo(_commentLabel2.mas_top).with.offset(-10).with.priorityHigh();
             }];
             
-            PIECommentEntity* commentEntity2  = viewModel.models_comment[1];
+            PIECommentModel* commentEntity2  = viewModel.models_comment[1];
             _commentLabel2.text = [NSString stringWithFormat:@"%@: %@",commentEntity2.nickname,commentEntity2.content];
         }
     }
@@ -270,4 +274,24 @@
      ];
 }
 
+
+- (void)addKVO {
+    [_vm addObserver:self forKeyPath:@"lovedCount" options:NSKeyValueObservingOptionNew context:NULL];
+    [_vm addObserver:self forKeyPath:@"likeCount" options:NSKeyValueObservingOptionNew context:NULL];
+}
+- (void)removeKVO {
+    [_vm removeObserver:self forKeyPath:@"lovedCount"];
+    [_vm removeObserver:self forKeyPath:@"likeCount"];
+}
+
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"lovedCount"]) {
+        NSInteger newLovedCount = [[change objectForKey:@"new"]integerValue];
+        self.likeView.status = newLovedCount;
+    } else     if ([keyPath isEqualToString:@"likeCount"]) {
+        NSInteger newLikeCount = [[change objectForKey:@"new"]integerValue];
+        self.likeView.number = newLikeCount;
+    }
+}
 @end

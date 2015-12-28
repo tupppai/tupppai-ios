@@ -176,7 +176,7 @@
         } else {
             _canRefreshDoneFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
-            for (PIEPageEntity *homeImage in resultArray) {
+            for (PIEPageModel *homeImage in resultArray) {
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:homeImage];
                 [sourceAgent addObject:vm];
             }
@@ -205,7 +205,7 @@
         } else {
             _canRefreshDoneFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
-            for (PIEPageEntity *homeImage in resultArray) {
+            for (PIEPageModel *homeImage in resultArray) {
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:homeImage];
                 [sourceAgent addObject:vm];
             }

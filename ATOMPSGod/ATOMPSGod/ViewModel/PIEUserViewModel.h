@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PIEEntityUser.h"
+#import "PIEUserModel.h"
 
 @interface PIEUserViewModel : NSObject
 
-@property (nonatomic, strong) PIEEntityUser *model;
+@property (nonatomic, strong) PIEUserModel *model;
 
 
 @property (nonatomic, strong) NSMutableArray *replies;
@@ -66,5 +66,5 @@
 @property (nonatomic, assign) bool bindQQ;
 
 
-- (instancetype)initWithEntity:(PIEEntityUser*)user;
+- (instancetype)initWithEntity:(PIEUserModel*)user;
 @end

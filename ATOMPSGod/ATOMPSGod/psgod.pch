@@ -53,7 +53,7 @@
 #import "DDService.h"
 #import "DDBaseService.h"
 
-#import "PIEPageEntity.h"
+#import "PIEPageModel.h"
 #import "PIEPageVM.h"
 #import "UIButton+Pop.h"
 #import "NYXImagesKit.h"

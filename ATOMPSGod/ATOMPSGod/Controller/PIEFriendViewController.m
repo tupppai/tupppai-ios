@@ -8,7 +8,7 @@
 
 #import "PIEFriendViewController.h"
 #import "DDOtherUserManager.h"
-#import "PIEEntityUser.h"
+#import "PIEUserModel.h"
 #import "CAPSPageMenu.h"
 #import "PIEFriendAskViewController.h"
 #import "PIEFriendReplyViewController.h"
@@ -228,7 +228,7 @@
         }
     }];
 }
-- (void)updateUserInterface:(PIEEntityUser*)user {
+- (void)updateUserInterface:(PIEUserModel*)user {
     self.title = user.nickname;
     NSString* avatarUrlString = [user.avatar trimToImageWidth:_avatarView.frame.size.width*2];
     [DDService sd_downloadImage:avatarUrlString withBlock:^(UIImage *image) {
@@ -356,7 +356,7 @@
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     
-    [DDOtherUserManager getUserInfo:param withBlock:^(PIEEntityUser *user) {
+    [DDOtherUserManager getUserInfo:param withBlock:^(PIEUserModel *user) {
         if (user) {
             [self updateUserInterface:user];
             _user = user;

@@ -10,9 +10,9 @@
 #import "PIELaunchViewController.h"
 #import <ShareSDK/SSDKUser.h>
 
-//@class PIEEntityUser;
+//@class PIEUserModel;
 
-#import "PIEEntityUser.h"
+#import "PIEUserModel.h"
 
 
 //typedef enum {
@@ -83,12 +83,12 @@
 //@property (nonatomic, assign) bool bindQQ;
 
 
-+ (PIEEntityUser *)currentUser;
++ (PIEUserModel *)currentUser;
 
 //+ (NSMutableDictionary *)convertCurrentUserToDic;
 
-//+ (void)setCurrentUser:(PIEEntityUser *)user ;
-+ (void)updateCurrentUserFromUser:(PIEEntityUser *)user;
+//+ (void)setCurrentUser:(PIEUserModel *)user ;
++ (void)updateCurrentUserFromUser:(PIEUserModel *)user;
 +(void)fetchUserInDBToCurrentUser:(void (^)(BOOL))block;
 +(void)clearCurrentUser ;
 + (void)updateCurrentUserInDatabase;

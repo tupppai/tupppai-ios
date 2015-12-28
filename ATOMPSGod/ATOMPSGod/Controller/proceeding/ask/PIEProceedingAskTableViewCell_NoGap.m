@@ -11,7 +11,7 @@
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
 #import "PIECommentViewController.h"
-#import "PIEModelCatogory.h"
+#import "PIECategoryModel.h"
 @interface PIEProceedingAskTableViewCell_NoGap()
 @property (strong, nonatomic) NSMutableArray *source;
 @property (strong, nonatomic) PIEPageVM *vmAsk1;
@@ -137,7 +137,7 @@
     [self.swipeView reloadData];
     
     if (_vmAsk1.models_catogory.count>0) {
-        PIEModelCatogory* model = [_vmAsk1.models_catogory objectAtIndex:0];
+        PIECategoryModel* model = [_vmAsk1.models_catogory objectAtIndex:0];
         _categoryNameLabel.text = model.title;
     } else {
         _categoryNameLabel.text = @"随意求P区";

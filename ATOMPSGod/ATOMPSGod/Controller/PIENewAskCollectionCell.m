@@ -34,6 +34,7 @@
 //put a needle injecting into cell's ass.
 - (void)injectSource:(PIEPageVM*)vm {
     
+    _vm = vm;
     NSString *urlString_avatar = [vm.avatarURL trimToImageWidth:_avatarView.frame.size.width*SCREEN_SCALE];
     NSString *urlString_imageView = [vm.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
     [_leftImageView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView] placeholderImage:[UIImage imageNamed:@"cell_holder_portrait"]];

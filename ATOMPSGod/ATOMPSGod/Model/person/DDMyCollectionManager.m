@@ -16,7 +16,7 @@
     [DDService ddGetCollection:param withBlock:^(NSArray* data) {
             NSMutableArray *resultArray = [NSMutableArray array];
             for (int i = 0; i < data.count; i++) {
-                PIEPageEntity *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
+                PIEPageModel *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:data[i] error:NULL];
                 [resultArray addObject:homeImage];
             }
             if (block) {

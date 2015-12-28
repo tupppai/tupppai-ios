@@ -6,10 +6,10 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMBaseModel.h"
-@class PIECommentEntity;
+#import "PIEBaseModel.h"
+@class PIECommentModel;
 @class PIEModelImage;
-@class PIEModelCatogory;
+@class PIECategoryModel;
 
 
 typedef NS_ENUM(NSInteger, PIEPageType) {
@@ -18,7 +18,7 @@ typedef NS_ENUM(NSInteger, PIEPageType) {
 };
 
 
-@interface PIEPageEntity : ATOMBaseModel
+@interface PIEPageModel : PIEBaseModel
 //<MTLFMDBSerializing>
 
 /**
@@ -70,8 +70,8 @@ typedef NS_ENUM(NSInteger, PIEPageType) {
 @property (nonatomic, assign) CGFloat imageRatio;
 
 @property (nonatomic, copy) NSArray <PIEModelImage*>   *models_image;
-@property (nonatomic, copy) NSArray <PIECommentEntity*> *models_comment;
-@property (nonatomic, copy) NSArray <PIEModelCatogory*> *models_category;
+@property (nonatomic, copy) NSArray <PIECommentModel*> *models_comment;
+@property (nonatomic, copy) NSArray <PIECategoryModel*> *models_category;
 
 
 //用户属性

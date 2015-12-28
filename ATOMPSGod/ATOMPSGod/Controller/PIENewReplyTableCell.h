@@ -16,7 +16,8 @@
 #import "PIEAvatarView.h"
 
 @interface PIENewReplyTableCell : UITableViewCell
-//@property (weak, nonatomic) IBOutlet PIEAvatarImageView *avatarView;
+@property (nonatomic,strong) PIEPageVM* vm;
+
 //@property (weak, nonatomic) IBOutlet UIImageView *avatarView;
 @property (weak, nonatomic) IBOutlet PIEAvatarView *avatarView;
 

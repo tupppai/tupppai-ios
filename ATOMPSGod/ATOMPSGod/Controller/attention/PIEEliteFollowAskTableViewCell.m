@@ -61,6 +61,7 @@
 }
 - (void)injectSauce:(PIEPageVM *)viewModel {
     WS(ws);
+    _vm = viewModel;
     NSString *urlString_avatar = [viewModel.avatarURL trimToImageWidth:_avatarView.frame.size.width*SCREEN_SCALE];
     NSString *urlString_imageView = [viewModel.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
     [_theImageView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView]
@@ -87,8 +88,7 @@
         }
 
     }
-    _ID = viewModel.ID;
-    _askID = viewModel.askID;
+
     _shareView.imageView.image = [UIImage imageNamed:@"hot_share"];
     _commentView.imageView.image = [UIImage imageNamed:@"hot_comment"];
     _shareView.numberString = viewModel.shareCount;

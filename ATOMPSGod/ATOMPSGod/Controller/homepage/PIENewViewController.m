@@ -358,7 +358,7 @@
 ////    DDHomePageManager *showHomepage = [DDHomePageManager new];
 ////    NSArray * homepageArray = [[showHomepage getHomeImagesWithHomeType:homeType] mutableCopy];
 ////    NSMutableArray* tableViewDataSource = [NSMutableArray array];
-////    for (PIEPageEntity *homeImage in homepageArray) {
+////    for (PIEPageModel *homeImage in homepageArray) {
 ////        PIEPageVM *model = [PIEPageVM new];
 ////        [model setViewModelData:homeImage];
 ////        [tableViewDataSource addObject:model];

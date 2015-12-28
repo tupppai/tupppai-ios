@@ -7,14 +7,14 @@
 //
 
 #import "ATOMBaseDAO.h"
-@class PIEEntityUser;
+@class PIEUserModel;
 
 @interface ATOMUserDAO : ATOMBaseDAO
 
-+ (void)insertUser:(PIEEntityUser *)user;
-+ (PIEEntityUser *)selectUserByUID:(NSInteger)uid;
-+ (BOOL)isExistUser:(PIEEntityUser *)user;
-+ (void)updateUser:(PIEEntityUser *)user;
-+ (void)fetchUser:(void (^)(PIEEntityUser*))block;
++ (void)insertUser:(PIEUserModel *)user;
++ (PIEUserModel *)selectUserByUID:(NSInteger)uid;
++ (BOOL)isExistUser:(PIEUserModel *)user;
++ (void)updateUser:(PIEUserModel *)user;
++ (void)fetchUser:(void (^)(PIEUserModel*))block;
 +(void)clearUsers;
 @end

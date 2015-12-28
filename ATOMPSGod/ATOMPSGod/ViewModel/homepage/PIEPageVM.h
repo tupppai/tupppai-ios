@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PIEPageEntity.h"
+#import "PIEPageModel.h"
 
 @interface PIEPageVM : NSObject
 
-@property (nonatomic, strong) PIEPageEntity *model;
+@property (nonatomic, strong) PIEPageModel *model;
 
 @property (nonatomic, assign) NSInteger ID;
 @property (nonatomic, assign) NSInteger askID;
@@ -37,8 +37,8 @@
 @property (nonatomic, strong) UIImage *image;
 //求p 的图片对象数组
 @property (nonatomic, strong) NSArray <PIEModelImage*> *models_image;
-@property (nonatomic, strong) NSArray <PIECommentEntity*> *models_comment;
-@property (nonatomic, strong) NSArray <PIEModelCatogory*> *models_catogory;
+@property (nonatomic, strong) NSArray <PIECommentModel*> *models_comment;
+@property (nonatomic, strong) NSArray <PIECategoryModel*> *models_catogory;
 
 
 @property (nonatomic, assign) NSInteger userID;
@@ -50,8 +50,8 @@
 @property (nonatomic, assign) BOOL isV;
 
 
-- (instancetype)initWithPageEntity:(PIEPageEntity *)entity ;
-
-
+- (instancetype)initWithPageEntity:(PIEPageModel *)entity ;
+- (void)increaseLoveStatus;
+- (void)revertStatus ;
 @end
 
