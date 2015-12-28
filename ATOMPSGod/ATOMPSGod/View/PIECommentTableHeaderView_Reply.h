@@ -11,9 +11,11 @@
 #import "PIELoveButton.h"
 #import "PIETextView_linkDetection.h"
 #import "PIEAvatarImageView.h"
+#import "PIEAvatarView.h"
+
 @interface PIECommentTableHeaderView_Reply : UIView
 
-@property (nonatomic, strong) PIEAvatarImageView *avatarView;
+@property (nonatomic, strong) PIEAvatarView *avatarView;
 @property (nonatomic, strong) UILabel *usernameLabel;
 @property (nonatomic, strong) UILabel *timeLabel;
 @property (nonatomic, strong) UIButton *followButton;

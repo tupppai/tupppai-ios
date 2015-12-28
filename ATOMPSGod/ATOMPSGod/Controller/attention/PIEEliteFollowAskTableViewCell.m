@@ -69,8 +69,10 @@
                                 ws.theImageView.image = image;
                                 ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
                             }];
-    [_avatarView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+//    [_avatarView.avatarImageView setImage:[UIImage imageNamed:@"avatar_default"]];
+    [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
     _avatarView.isV = YES;
+    
 
     {
         if (viewModel.isMyFan) {

@@ -19,10 +19,12 @@
 #import "PIEActionSheet_UserAbuse.h"
 #import "AppDelegate.h"
 #import "PIEAvatarImageView.h"
+#import "PIEAvatarView.h"
 
 @interface PIEFriendViewController ()
 //@property (weak, nonatomic) IBOutlet UIImageView *avatarView;
-@property (weak, nonatomic) IBOutlet PIEAvatarImageView *avatarView;
+//@property (weak, nonatomic) IBOutlet PIEAvatarImageView *avatarView;
+@property (weak, nonatomic) IBOutlet PIEAvatarView *avatarView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *followButton;
 @property (weak, nonatomic) IBOutlet UILabel *followCountLabel;
@@ -230,7 +232,7 @@
     self.title = user.nickname;
     NSString* avatarUrlString = [user.avatar trimToImageWidth:_avatarView.frame.size.width*2];
     [DDService sd_downloadImage:avatarUrlString withBlock:^(UIImage *image) {
-        _avatarView.image = image;
+        _avatarView.avatarImageView.image = image;
         
 //        _avatarView.isV = self.pageVM.isV;
         _avatarView.isV = YES;
