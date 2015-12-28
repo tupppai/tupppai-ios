@@ -12,12 +12,14 @@
 #import "PIELoveButton.h"
 #import "PIEBangView.h"
 #import "PIEAvatarImageView.h"
+#import "PIEAvatarView.h"
 
 
 @interface PIEEliteHotReplyTableViewCell : UITableViewCell
 
 //@property (weak, nonatomic) IBOutlet UIImageView *avatarView;
-@property (weak, nonatomic) IBOutlet PIEAvatarImageView *avatarView;
+//@property (weak, nonatomic) IBOutlet PIEAvatarImageView *avatarView;
+@property (weak, nonatomic) IBOutlet PIEAvatarView *avatarView;
 
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
