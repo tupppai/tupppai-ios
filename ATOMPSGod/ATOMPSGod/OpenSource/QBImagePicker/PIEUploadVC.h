@@ -8,16 +8,14 @@
 
 #import "DDBaseVC.h"
 #import "PIEChannelViewModel.h"
-typedef NS_ENUM(NSInteger, PIEUploadType) {
-    PIEUploadTypeAsk = 0,
-    PIEUploadTypeReply
-};
+#import "PIEUploadManager.h"
+
+//typedef NS_ENUM(NSInteger, PIEUploadType) {
+//    PIEUploadTypeAsk = 0,
+//    PIEUploadTypeReply
+//};
 
 @interface PIEUploadVC : DDBaseVC
 @property (nonatomic,copy) NSArray* assetsArray;
 @property (nonatomic,assign) BOOL hideSecondView;
-@property (nonatomic,assign) PIEUploadType type;
-@property (nonatomic,assign) NSInteger askIDToReply;
-@property (nonatomic, strong) PIEChannelViewModel *channelVM;
-
 @end

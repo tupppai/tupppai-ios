@@ -183,16 +183,16 @@
         [array addObject:asset];
     }
     PIEUploadVC* vc = [PIEUploadVC new];
-    vc.channelVM = _channelVM;
+//    vc.channelVM = _channelVM;
     vc.assetsArray = assets;
     vc.hideSecondView = YES;
-    vc.type = PIEUploadTypeReply;
     PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath.row];
-    vc.askIDToReply = vm.askID;
     
+    [PIEUploadManager shareManager].model.channel_id = _channelVM.ID;
     [PIEUploadManager shareManager].model.ask_id = vm.askID;
-//
-//    
+    [PIEUploadManager shareManager].model.type = PIEPageTypeReply;
+
+
 //    [[NSUserDefaults standardUserDefaults] setObject:@(vm.askID) forKey:@"AskIDToReply"];
 //    [[NSUserDefaults standardUserDefaults] synchronize];
 

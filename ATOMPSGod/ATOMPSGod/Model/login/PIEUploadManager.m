@@ -37,6 +37,11 @@ static PIEUploadManager *shareManager;
         return shareManager;
 }
 
+- (void)resetModel {
+    _model = nil;
+    _model = [PIEUploadModel new];
+}
+
 - (NSURLSessionDataTask *)UploadImage:(NSData *)data WithBlock:(void (^)(PIEModelImageInfo *, NSError *))block {
     return [[DDSessionManager shareHTTPSessionManager] POST:@"image/upload" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         [formData appendPartWithFileData:data name:@"images" fileName:@"iOSTupaiApp" mimeType:@"image/png"];

@@ -501,12 +501,16 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 
 #pragma mark - qb_imagePickerController delegate
 -(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
+    
+    [PIEUploadManager shareManager].model.channel_id = _currentChannelVM.ID;
+
+    [PIEUploadManager shareManager].model.type = PIEPageTypeReply;
     PIEUploadVC* vc = [PIEUploadVC new];
-    vc.channelVM = _currentChannelVM;
-    vc.type = PIEUploadTypeReply;
+//    vc.channelVM = _currentChannelVM;
     vc.assetsArray = assets;
     vc.hideSecondView = YES;
     [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
+    
 }
 
 -(void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController {

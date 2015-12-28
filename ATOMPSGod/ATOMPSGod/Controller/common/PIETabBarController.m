@@ -98,20 +98,14 @@
 }
 - (void) DoUploadJob:(NSNotification *)notification
 {
-//    NSDictionary *info = [notification userInfo];
-    
+    NSLog(@"DoUploadJob");
     PIEEliteViewController* vc = (PIEEliteViewController*)((DDNavigationController*)[self.viewControllers objectAtIndex:0]).topViewController;
-//    PIEUploadManager* manager = [PIEUploadManager new];
-//    manager.uploadInfo = info;
+
     [[PIEUploadManager shareManager] upload:^(CGFloat percentage,BOOL success) {
         [vc.progressView setProgress:percentage animated:YES];
-//        if (success) {
-//            if ([PIEUploadManager shareManager].model.type ==PIEPageTypeAsk ) {
-//                
-//            } else if ([PIEUploadManager shareManager].model.type == PIEPageTypeReply ) {
-//
-//            }
-//        }
+        if (success) {
+            [[PIEUploadManager shareManager] resetModel];
+        }
     }];
 }
 -(void) NetworkSignOutRET {

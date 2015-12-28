@@ -334,7 +334,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     CGFloat width;
     CGFloat height;
     width         = (SCREEN_WIDTH - 20) / 2.0;
-    height        = vm.imageHeight/vm.imageWidth * width + 129 + (29+20);
+    height        = vm.model.imageRatio * width + 158;
     height        = MAX(200,height);
     height        = MIN(SCREEN_HEIGHT/1.5, height);
     return CGSizeMake(width, height);
@@ -362,7 +362,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         _selectedVM = _sourceAsk[indexPath.row];
         CGPoint p = [gesture locationInView:cell];
         //点击大图
-        if (CGRectContainsPoint(cell.leftImageView.frame, p) || CGRectContainsPoint(cell.rightImageView.frame, p)) {
+        if (CGRectContainsPoint(cell.leftImageView.frame, p)) {
             [self showShareView:_selectedVM];
         }
     }
@@ -379,7 +379,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         CGPoint p                      = [gesture locationInView:cell];
         
         //点击大图
-        if (CGRectContainsPoint(cell.leftImageView.frame, p) || CGRectContainsPoint(cell.rightImageView.frame, p)) {
+        if (CGRectContainsPoint(cell.leftImageView.frame, p) ) {
             
             /* 
              （需求补充）点击随意求P后，不论用户的求P是一张还是两张，统一先进入PIECarousel_ItemView（多图详情页，横着滚的），

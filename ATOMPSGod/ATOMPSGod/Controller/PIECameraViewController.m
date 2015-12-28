@@ -101,8 +101,9 @@
 
 -(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
     PIEUploadVC* vc = [PIEUploadVC new];
-    vc.channelVM = _channelVM;
+//    vc.channelVM = _channelVM;
     vc.assetsArray = assets;
+    [PIEUploadManager shareManager].model.channel_id = _channelVM.ID;
 
     [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
 }

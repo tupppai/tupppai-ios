@@ -16,7 +16,9 @@
         _imageArray = [NSMutableArray new];
         _uploadIdArray = [NSMutableArray new];
         _ratioArray = [NSMutableArray new];
+        _type = PIEPageTypeAsk;
     }
     return self;
 }
+
 @end

@@ -252,15 +252,10 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     PIEUploadVC* vc = [PIEUploadVC new];
     vc.assetsArray = assets;
     vc.hideSecondView = YES;
-    vc.type = PIEUploadTypeReply;
     PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath_toHelp.row];
-    vc.askIDToReply = vm.askID;
-    
-    
-//    [[NSUserDefaults standardUserDefaults] setObject:@(vm.askID) forKey:@"AskIDToReply"];
-//    [[NSUserDefaults standardUserDefaults] synchronize];
     [PIEUploadManager shareManager].model.ask_id = vm.askID;
-    
+    [PIEUploadManager shareManager].model.type = PIEPageTypeReply;
+
     [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
 }
 
