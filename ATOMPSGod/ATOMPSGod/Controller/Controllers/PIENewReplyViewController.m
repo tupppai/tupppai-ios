@@ -304,31 +304,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 //    }];
 //}
 
-/** Cell点击 － 点赞 */
--(void)like:(PIELoveButton*)likeView revert:(BOOL)revert {
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    if (revert) {
-        [param setObject:@"0" forKey:@"status"];
-    } else {
-        [param setObject:@(likeView.status) forKey:@"num"];
-    }
-    
-    if (revert) {
-        [likeView revert];
-    } else {
-        [likeView increaseStatus];
-    }
-    
-    [DDService loveReply:param ID:_selectedVM.ID withBlock:^(BOOL succeed) {
-        if (succeed) {
-            _selectedVM.lovedCount = likeView.status;
-            _selectedVM.likeCount = likeView.numberString;
-        } else {
-            [likeView decreaseStatus];
-        }
-    }];
-    
-}
+
 
 -(void)followReplier {
     _selectedReplyCell.followView.highlighted = !_selectedReplyCell.followView.highlighted;
@@ -430,7 +406,8 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
             //                [self collect];
             //            }
             else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
-                [self like:_selectedReplyCell.likeView revert:NO];
+//                [self like:_selectedReplyCell.likeView revert:NO];
+                [_selectedVM love:NO];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.followView.frame, p)) {
                 [self followReplier];
@@ -466,8 +443,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
         if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
             [self showShareView:_selectedVM];
         }          else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
-            [PIEPageManager love:_selectedReplyCell.likeView viewModel:_selectedVM revert:YES];
-//            [self like:_selectedReplyCell.likeView revert:YES];
+            [_selectedVM love:YES];
         }
 
     }

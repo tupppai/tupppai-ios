@@ -112,7 +112,7 @@
     [_vm love:YES];
 }
 - (void)tapLike {
-    [PIEPageManager love:_pageLikeButton viewModel:_vm revert:NO];
+//    [PIEPageManager love:_pageLikeButton viewModel:_vm revert:NO];
     [_vm love:NO];
 }
 - (void)tapShare {

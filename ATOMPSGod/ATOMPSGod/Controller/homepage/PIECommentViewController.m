@@ -837,13 +837,13 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 - (void) didTapLike {
     
-    [PIEPageManager love:_headerView_reply.likeButton viewModel:_vm revert:NO];
-
+//    [PIEPageManager love:_headerView_reply.likeButton viewModel:_vm revert:NO];
+    [_vm love:NO];
 }
 - (void) didLongpressLike {
     
-    [PIEPageManager love:_headerView_reply.likeButton viewModel:_vm revert:YES];
-    
+//    [PIEPageManager love:_headerView_reply.likeButton viewModel:_vm revert:YES];
+    [_vm love:YES];
 }
 
 #pragma mark - <PIEShareViewDelegate>
