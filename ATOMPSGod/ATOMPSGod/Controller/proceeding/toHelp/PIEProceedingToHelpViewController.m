@@ -19,6 +19,7 @@
 #import "PIEUploadVC.h"
 #import "PIEProceedingManager.h"
 #import "PIEUploadManager.h"
+#import "PIECategoryModel.h"
 /* Variables */
 @interface PIEProceedingToHelpViewController ()
 
@@ -255,7 +256,11 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath_toHelp.row];
     [PIEUploadManager shareManager].model.ask_id = vm.askID;
     [PIEUploadManager shareManager].model.type = PIEPageTypeReply;
-
+    
+    if (vm.models_catogory && vm.models_catogory.count > 0) {
+        PIECategoryModel* model = [vm.models_catogory objectAtIndex:0];
+        [PIEUploadManager shareManager].model.channel_id = [model.ID integerValue];
+    }
     [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
 }
 

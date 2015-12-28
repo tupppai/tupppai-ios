@@ -79,7 +79,6 @@ static PIEUploadManager *shareManager;
             if (block) {
                 block(percentDone,NO);
             }
-//            NSLog(@"progress updated(percentDone) : %f ,totalBytesExpectedToWrite %lld", percentDone,totalBytesExpectedToWrite);
         }];
     } else {
         [Hud error:@"图片数据为空"];
@@ -89,7 +88,6 @@ static PIEUploadManager *shareManager;
 
 - (void)upload:(void (^)(CGFloat percentage,BOOL success))block {
     
-//    _type = [_uploadInfo objectForKey:@"type"];
     if (self.model.type == PIEPageTypeAsk) {
         [Hud text:@"正在后台上传你的求P..."];
     } else {
@@ -129,6 +127,7 @@ static PIEUploadManager *shareManager;
                     [self uploadRestInfo:^(BOOL success) {
                         if (block) {
                             block(1.0,success);
+                            [[PIEUploadManager shareManager] resetModel];
                         }
                     }];
                 }
@@ -145,6 +144,7 @@ static PIEUploadManager *shareManager;
                                 if (block) {
                                     block(1.0,success);
                                 }
+                                [[PIEUploadManager shareManager] resetModel];
                             }];
                         }
                     }];
@@ -160,6 +160,7 @@ static PIEUploadManager *shareManager;
                     [self uploadReplyRestInfo:^(BOOL success) {
                         if (block) {
                             block(1.0,success);
+                            [[PIEUploadManager shareManager] resetModel];
                         }
                     }];
                 }

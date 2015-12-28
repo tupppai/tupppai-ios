@@ -98,13 +98,12 @@
 }
 - (void) DoUploadJob:(NSNotification *)notification
 {
-    NSLog(@"DoUploadJob");
+    NSLog(@"DoUploadJob!!");
     PIEEliteViewController* vc = (PIEEliteViewController*)((DDNavigationController*)[self.viewControllers objectAtIndex:0]).topViewController;
 
     [[PIEUploadManager shareManager] upload:^(CGFloat percentage,BOOL success) {
         [vc.progressView setProgress:percentage animated:YES];
         if (success) {
-            [[PIEUploadManager shareManager] resetModel];
         }
     }];
 }

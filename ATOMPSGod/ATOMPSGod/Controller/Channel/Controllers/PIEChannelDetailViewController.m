@@ -406,29 +406,6 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 
 #pragma mark - reply cell 中的点击事件：喜欢该P图，关注P图主。
 
-/**
- *  点击事件： 喜欢这张P图
-// */
-//-(void)likeReply {
-//    
-//    
-//    
-//    
-//    _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
-//    [DDService toggleLike:_selectedReplyCell.likeView.selected ID:_selectedVM.ID type:_selectedVM.type  withBlock:^(BOOL success) {
-//        if (success) {
-//            _selectedVM.liked = _selectedReplyCell.likeView.selected;
-//            if (_selectedReplyCell.likeView.selected) {
-//                _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue + 1];
-//            } else {
-//                _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue - 1];
-//            }
-//        } else {
-//            _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
-//        }
-//    }];
-//}
-
 
 /**
  *  关注这张P图的P图主
