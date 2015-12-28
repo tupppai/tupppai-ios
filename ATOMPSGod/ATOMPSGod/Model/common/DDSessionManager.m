@@ -58,6 +58,12 @@ static DDSessionManager *_shareHTTPSessionManager = nil;
     });
     return _shareHTTPSessionManager;
 }
+
++ (void)resetSharedInstance {
+    _shareHTTPSessionManager = nil;
+    NSString *baseURL = [[NSUserDefaults standardUserDefaults] valueForKey:@"BASEURL"];
+    _shareHTTPSessionManager = [[DDSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseURL]];
+}
 @end
 
 

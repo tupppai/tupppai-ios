@@ -88,25 +88,28 @@
 
     if ([[[DDSessionManager shareHTTPSessionManager].baseURL absoluteString] isEqualToString: baseURLString]) {
         [[NSUserDefaults standardUserDefaults]setObject:baseURLString_Test forKey:@"BASEURL"];
-        [Hud activity:@"切换到->测试服,你的程序准备爆炸"];
+        [Hud activity:@"切换到到测试服测试服测试服测试服"];
         [UIView animateWithDuration:2 animations:^{
             self.view.backgroundColor = [UIColor blackColor];
             self.view.alpha = 0.0;
         } completion:^(BOOL finished) {
             self.view.alpha = 1.0;
-            NSArray *array = [NSArray new];
-            NSLog(@"%@",[array objectAtIndex:8]);
+            [imgView removeFromSuperview];
+            [Hud dismiss];
+            [DDSessionManager resetSharedInstance];
         }];
     } else {
         [[NSUserDefaults standardUserDefaults]setObject:baseURLString forKey:@"BASEURL"];
-        [Hud activity:@"切换到->正式服,你的程序准备爆炸"];
+        [Hud activity:@"切换到正式服正式服正式服正式服正式服"];
         [UIView animateWithDuration:2 animations:^{
             self.view.backgroundColor = [UIColor blackColor];
             self.view.alpha = 0.0;
         } completion:^(BOOL finished) {
             self.view.alpha = 1.0;
-            NSArray *array = [NSArray new];
-            NSLog(@"%@",[array objectAtIndex:8]);
+            [imgView removeFromSuperview];
+            [Hud dismiss];
+            [DDSessionManager resetSharedInstance];
+
         }];
     }
 }

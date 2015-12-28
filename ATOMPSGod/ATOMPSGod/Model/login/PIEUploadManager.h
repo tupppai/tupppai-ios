@@ -7,12 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PIEUploadModel.h"
 @class PIEModelImageInfo;
-@class PIEUploadModel;
 @interface PIEUploadManager : NSObject
-@property (nonatomic, copy) NSString *type;
+//@property (nonatomic, copy) NSString *type;
 //@property (nonatomic, copy)  NSArray* toUploadInfoArray;
-@property (nonatomic, copy)  NSDictionary* uploadInfo;
+//@property (nonatomic, copy)  NSDictionary* uploadInfo;
 
 @property (nonatomic, strong)  PIEUploadModel *model;
 

@@ -27,6 +27,7 @@
 //#import "UITableView+FDTemplateLayoutCell.h"
 #import "DeviceUtil.h"
 #import "PIECommentViewController.h"
+#import "PIEUploadManager.h"
 #define MyAskCellWidth (SCREEN_WIDTH - 20) / 2.0
 
 /* Protocols */
@@ -406,8 +407,10 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath_toHelp.row];
     vc.askIDToReply = vm.askID;
     
-    [[NSUserDefaults standardUserDefaults] setObject:@(vm.askID) forKey:@"AskIDToReply"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [PIEUploadManager shareManager].model.ask_id = vm.askID;
+
+//    [[NSUserDefaults standardUserDefaults] setObject:@(vm.askID) forKey:@"AskIDToReply"];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
     
     [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
 }

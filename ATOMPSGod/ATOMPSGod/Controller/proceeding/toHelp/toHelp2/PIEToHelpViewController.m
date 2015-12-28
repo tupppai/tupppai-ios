@@ -18,6 +18,8 @@
 #import "AppDelegate.h"
 //#import "UITableView+FDTemplateLayoutCell.h"
 #import "DeviceUtil.h"
+#import "PIEUploadManager.h"
+
 @interface PIEToHelpViewController () <UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,QBImagePickerControllerDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (nonatomic, strong) NSMutableArray *sourceToHelp;
 @property (nonatomic, assign) NSInteger currentIndex_ToHelp;
@@ -187,8 +189,12 @@
     vc.type = PIEUploadTypeReply;
     PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath.row];
     vc.askIDToReply = vm.askID;
-    [[NSUserDefaults standardUserDefaults] setObject:@(vm.askID) forKey:@"AskIDToReply"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [PIEUploadManager shareManager].model.ask_id = vm.askID;
+//
+//    
+//    [[NSUserDefaults standardUserDefaults] setObject:@(vm.askID) forKey:@"AskIDToReply"];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
 
     [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
 }

@@ -18,6 +18,7 @@
 #import "AppDelegate.h"
 #import "PIEUploadVC.h"
 #import "PIEProceedingManager.h"
+#import "PIEUploadManager.h"
 /* Variables */
 @interface PIEProceedingToHelpViewController ()
 
@@ -255,8 +256,10 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath_toHelp.row];
     vc.askIDToReply = vm.askID;
     
-    [[NSUserDefaults standardUserDefaults] setObject:@(vm.askID) forKey:@"AskIDToReply"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+//    [[NSUserDefaults standardUserDefaults] setObject:@(vm.askID) forKey:@"AskIDToReply"];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
+    [PIEUploadManager shareManager].model.ask_id = vm.askID;
     
     [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
 }

@@ -280,7 +280,13 @@
     [controllerArray addObject:controller];
     
     PIEMyCollectionViewController *controller2 = [PIEMyCollectionViewController new];
-    controller2.title = @"收藏";
+    
+    NSString* titleString = @"收藏";
+    NSString *baseURL = [[NSUserDefaults standardUserDefaults] valueForKey:@"BASEURL"];
+    if ([baseURL isEqualToString:baseURLString_Test]) {
+        titleString = @"测试";
+    }
+    controller2.title = titleString;
     [controllerArray addObject:controller2];
     NSDictionary *parameters = @{
                                  CAPSPageMenuOptionScrollMenuBackgroundColor: [UIColor whiteColor],

@@ -127,8 +127,10 @@
     _uploadInfo = [NSMutableDictionary new];
     
     if (_channelVM) {
+        [PIEUploadManager shareManager].model.channel_id = _channelVM.ID;
         [_uploadInfo setObject:@(_channelVM.ID) forKey:@"channel_id"];
     }
+    
     
     if (_assetsArray.count == 1) {
         _leftImageView.image = [Util getImageFromAsset:[_assetsArray objectAtIndex:0] type:ASSET_PHOTO_SCREEN_SIZE];
@@ -138,6 +140,8 @@
         [_rightImageView addGestureRecognizer:tapGesure];
         [_uploadInfo setObject:(_leftImageView.image) forKey:@"image1"];
         [_uploadInfo setObject:@1 forKey:@"imageCount"];
+        [[PIEUploadManager shareManager].model.imageArray addObject:_leftImageView.image];
+
         
     } else if (_assetsArray.count == 2) {
         _leftImageView.image = [Util getImageFromAsset:[_assetsArray objectAtIndex:0] type:ASSET_PHOTO_SCREEN_SIZE];
@@ -146,6 +150,8 @@
         [_uploadInfo setObject:(_rightImageView.image) forKey:@"image2"];
         [_uploadInfo setObject:@2 forKey:@"imageCount"];
         
+        [[PIEUploadManager shareManager].model.imageArray addObject:_leftImageView.image];
+        [[PIEUploadManager shareManager].model.imageArray addObject:_rightImageView.image];
     }
 
 }
@@ -162,11 +168,15 @@
     } else {
         if (_type == PIEUploadTypeAsk) {
             [_uploadInfo setObject:@"ask" forKey:@"type"];
-
+            [PIEUploadManager shareManager].model.type = PIEPageTypeAsk;
         } else if (_type == PIEUploadTypeReply) {
             [_uploadInfo setObject:@"reply" forKey:@"type"];
+            
+            [PIEUploadManager shareManager].model.type = PIEPageTypeReply;
         }
-        
+        [PIEUploadManager shareManager].model.tagIDArray = _view_tag.array_selectedId;
+        [PIEUploadManager shareManager].model.content = _inputTextView.text;
+
         [_uploadInfo setObject:_view_tag.array_selectedId forKey:@"tag_ids_array"];
         [_uploadInfo setObject:_inputTextView.text forKey:@"text_string"];
 

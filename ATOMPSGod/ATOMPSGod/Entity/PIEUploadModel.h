@@ -11,6 +11,8 @@
 @interface PIEUploadModel : NSObject
 
 @property (nonatomic,copy) NSArray* tagIDArray;
+@property (nonatomic,copy) NSString* content;
+
 @property (nonatomic,assign) NSInteger ID;
 @property (nonatomic,assign) NSInteger ask_id;
 @property (nonatomic,assign) NSInteger channel_id;
