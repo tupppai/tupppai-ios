@@ -28,7 +28,6 @@ typedef NS_ENUM(NSInteger, PIEEliteType) {
 
 @property (nonatomic, strong) NSMutableArray <UIViewController *> *eliteViewControllers;
 
-
 @end
 
 /* Protocols */

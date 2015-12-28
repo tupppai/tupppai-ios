@@ -9,12 +9,33 @@
 #import "PIEUploadManager.h"
 #import "DDSessionManager.h"
 #import "PIEModelImageInfo.h"
+
+#import "PIEUploadModel.h"
+
 @interface PIEUploadManager()
 @property (nonatomic, strong) NSMutableArray *uploadIdArray;
 @property (nonatomic, strong) NSMutableArray *ratioArray;
-
 @end
+
+static dispatch_once_t onceToken;
+
+static PIEUploadManager *shareManager;
+
 @implementation PIEUploadManager
+
+-(instancetype)init {
+    self = [super init];
+    if (self) {
+        _model = [PIEUploadModel new];
+    }
+    return self;
+}
++(PIEUploadManager *)shareManager {
+        dispatch_once(&onceToken, ^{
+            shareManager = [PIEUploadManager new];
+        });
+        return shareManager;
+}
 
 - (NSURLSessionDataTask *)UploadImage:(NSData *)data WithBlock:(void (^)(PIEModelImageInfo *, NSError *))block {
     return [[DDSessionManager shareHTTPSessionManager] POST:@"image/upload" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {

@@ -18,7 +18,6 @@
 #import "AppDelegate.h"
 #import "PIEUploadVC.h"
 #import "PIEProceedingManager.h"
-
 /* Variables */
 @interface PIEProceedingToHelpViewController ()
 
@@ -160,6 +159,8 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
         CGPoint p = [gesture locationInView:cell];
         //点击图片
         if (CGRectContainsPoint(cell.uploadView.frame, p)) {
+            
+            
             self.QBImagePickerController = nil;
             [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
         }
