@@ -24,6 +24,7 @@
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor clearColor];
         [self addSubview:self.avatarImageView];
+
     }
     return self;
 }
@@ -35,6 +36,7 @@
     if (self = [super initWithCoder:aDecoder]) {
         self.backgroundColor = [UIColor clearColor];
         [self addSubview:self.avatarImageView];
+
         [self.avatarImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self);
             make.leading.equalTo(self);
@@ -44,6 +46,7 @@
     }
     return self;
 }
+
 
 - (void) addPSGodView {
     [self addSubview:self.psGodView];
@@ -61,6 +64,7 @@
 - (UIImageView *)avatarImageView
 {
     if (_avatarImageView == nil) {
+
         _avatarImageView = [[UIImageView alloc]initWithFrame:self.bounds];
         _avatarImageView.layer.cornerRadius = self.bounds.size.width / 2.0;
         [_avatarImageView setContentMode:UIViewContentModeScaleAspectFill];
@@ -76,6 +80,7 @@
     if (_psGodView == nil) {
         _psGodView = [[UIImageView alloc] init];
         [_psGodView setImage:[UIImage imageNamed:@"icon_psGOD"]];
+
         [_psGodView setContentMode:UIViewContentModeScaleAspectFit];
     }
     
@@ -91,6 +96,7 @@
 - (void)setIsV:(BOOL)isV
 {
     _isV = isV;
+
     if (_isV) {
         [self addPSGodView];
         _psGodView.hidden = NO;

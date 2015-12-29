@@ -147,6 +147,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     
     // --- Autolayout constraints
     __weak typeof(self) weakSelf = self;
+    
     [_takePhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(weakSelf.view.mas_centerX);
         make.height.mas_equalTo(50);
@@ -321,6 +322,14 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
             _selectedVM.followed = _selectedReplyCell.followView.highlighted;
         } else {
             _selectedReplyCell.followView.highlighted = !_selectedReplyCell.followView.highlighted;
+            [Hud text:@"网络异常，请重试"];
+            
+        }
+        
+        if (_selectedReplyCell.followView.highlighted) {
+            [Hud text:@"关注成功"];
+        }else{
+            [Hud text:@"已取消关注"];
         }
     }];
 }

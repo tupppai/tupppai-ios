@@ -44,8 +44,7 @@
 //       [_likeButton setTitle:viewModel.likeCount
 //                 forState:UIControlStateNormal];
 //    _likeCountLabel.text = viewModel.likeCount;
-    _likeCountLabel.text = @"100000000000";
-    
+    _likeCountLabel.text = viewModel.likeCount;
 }
 
 @end

@@ -17,6 +17,6 @@
 //should be removed
 @property (nonatomic, strong) UIImageView *avatarImageView;
 
-//@property (nonatomic, strong) UIImage *image;
+
 
 @end

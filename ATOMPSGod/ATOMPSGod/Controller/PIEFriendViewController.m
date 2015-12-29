@@ -22,11 +22,13 @@
 #import "PIEAvatarView.h"
 
 @interface PIEFriendViewController ()
-//@property (weak, nonatomic) IBOutlet UIImageView *avatarView;
-//@property (weak, nonatomic) IBOutlet PIEAvatarImageView *avatarView;
-@property (weak, nonatomic) IBOutlet PIEAvatarView *avatarView;
 
-@property (weak, nonatomic) IBOutlet UIImageView *followButton;
+@property (weak, nonatomic) IBOutlet PIEAvatarView *avatarView;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *psGodCertificateImageView;
+
+//@property (weak, nonatomic) IBOutlet UIImageView *followButton;
+@property (weak, nonatomic) UIButton *followButton;
 @property (weak, nonatomic) IBOutlet UILabel *followCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *fansCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *likedCountLabel;
@@ -57,7 +59,6 @@
 -(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-//        NSLog(@"PIEFriendViewController initWithNibName");
 
     }
     return self;
@@ -73,7 +74,7 @@
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeAll;
     self.navigationController.hidesBarsOnSwipe = NO;
-    // Do any additional setup after loading the view from its nib.
+    
     [self setupViews];
     [self getDataSource];
     [self setupPageMenu];
@@ -93,9 +94,6 @@
     NSDictionary *titleTextAttrs = @{NSForegroundColorAttributeName: [UIColor whiteColor],
                                      NSFontAttributeName:[UIFont systemFontOfSize:14]};
     self.navigationController.navigationBar.titleTextAttributes = titleTextAttrs;
-    
-
-
     
 //    if (self.navigationController.viewControllers.count <= 1) {
         [self setupNavBar];
@@ -121,7 +119,22 @@
     [button2 setImage:[UIImage imageNamed:@"nav_more"] forState:UIControlStateNormal];
     [button2 addTarget:self action:@selector(abuseAction) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem2 = [[UIBarButtonItem alloc] initWithCustomView:button2];
-    self.navigationItem.rightBarButtonItem =  buttonItem2;
+//    self.navigationItem.rightBarButtonItem =  buttonItem2;
+    
+    UIButton *button3 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 18, 18)];
+    button3.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    
+    [button3 setImage:[UIImage imageNamed:@"navigationbar_addFollow"]
+             forState:UIControlStateNormal];
+    
+    [button3 addTarget:self action:@selector(follow:)
+      forControlEvents:UIControlEventTouchUpInside];
+
+    UIBarButtonItem *buttonItem3 = [[UIBarButtonItem alloc] initWithCustomView:button3];
+    self.navigationItem.rightBarButtonItems = @[buttonItem2, buttonItem3];
+    self.followButton = button3;
+    
+    
 }
 - (void)dismiss {
     [self dismissViewControllerAnimated:NO completion:nil];
@@ -147,25 +160,23 @@
     gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor whiteColor] CGColor], (id)[[UIColor blackColor] CGColor], nil];
     [_view1.layer insertSublayer:gradient atIndex:0];
 
-//    _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
-//    _avatarView.clipsToBounds = YES;
-//    _avatarView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
+
     _dotView1.layer.cornerRadius = _dotView1.frame.size.width/2;
     _dotView2.layer.cornerRadius = _dotView2.frame.size.width/2;
     _blurView.contentMode = UIViewContentModeScaleAspectFill;
     _blurView.clipsToBounds = YES;
     
-    _followButton.contentMode = UIViewContentModeCenter;
+//    _followButton.contentMode = UIViewContentModeCenter;
 
 }
 - (void)setupTapGesture {
-    _followButton.userInteractionEnabled = YES;
+//    _followButton.userInteractionEnabled = YES;
     _followCountLabel.userInteractionEnabled = YES;
     _followDescLabel.userInteractionEnabled = YES;
     _fansCountLabel.userInteractionEnabled = YES;
     _fansDescLabel.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tapG1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(follow)];
-    [_followButton addGestureRecognizer:tapG1];
+//    UITapGestureRecognizer *tapG1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(follow)];
+//    [_followButton addGestureRecognizer:tapG1];
     UITapGestureRecognizer *tapG2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToFollowingVC)];
     UITapGestureRecognizer *tapG22 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToFollowingVC)];
     
@@ -213,8 +224,8 @@
 }
 
 
-- (void)follow {
-    _followButton.highlighted = !_followButton.highlighted;
+- (void)follow:(UIButton *)followButton {
+    followButton.selected = !followButton.selected;
     NSMutableDictionary *param = [NSMutableDictionary new];
     if (_pageVM) {
         [param setObject:@(_pageVM.userID) forKey:@"uid"];
@@ -223,35 +234,55 @@
     }
     [DDService follow:param withBlock:^(BOOL success) {
         if (!success) {
-            _followButton.highlighted = !_followButton.highlighted;
+//            _followButton.highlighted = !_followButton.highlighted;
+            followButton.selected = !followButton.selected;
+            [Hud text:@"网络状态不佳，操作失败"];
         } else {
+            if (followButton.selected) {
+               [Hud text:@"关注成功"];
+            }
+            else{
+                [Hud text:@"已取消关注"];
+            }
+            
         }
     }];
 }
 - (void)updateUserInterface:(PIEUserModel*)user {
     self.title = user.nickname;
+    
+    self.nameLabel.text = user.nickname;
+    
+//    self.psGodCertificateImageView.hidden = !user.isV;
+    self.psGodCertificateImageView.hidden = NO;
+    
     NSString* avatarUrlString = [user.avatar trimToImageWidth:_avatarView.frame.size.width*2];
     [DDService sd_downloadImage:avatarUrlString withBlock:^(UIImage *image) {
         _avatarView.avatarImageView.image = image;
         
-//        _avatarView.isV = self.pageVM.isV;
-        _avatarView.isV = YES;
+        _avatarView.isV = self.pageVM.isV;
+//        _avatarView.isV = YES;
+        
+        //testing
+        // _avatarView.isV = (self.pageVM.isV % 2 == 0);
         
         _blurView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:[UIColor blackColor]];
     }];
     
     
     if (user.isMyFan) {
-        _followButton.highlightedImage = [UIImage imageNamed:@"pie_mutualfollow"];
-    } else {
-        _followButton.highlightedImage = [UIImage imageNamed:@"new_reply_followed"];
+        [self.followButton setImage:[UIImage imageNamed:@"navigationbar_mutualFollow"]
+                 forState:UIControlStateSelected];
+    }else{
+        [self.followButton setImage:[UIImage imageNamed:@"navigationbar_followed"]
+                 forState:UIControlStateSelected];
     }
-    _followButton.highlighted = user.isMyFollow;
+    self.followButton.selected = user.isMyFollow;
     
     _followCountLabel.text = [NSString stringWithFormat:@"%zd",user.attentionNumber];
     _fansCountLabel.text = [NSString stringWithFormat:@"%zd",user.fansNumber];
     _likedCountLabel.text = [NSString stringWithFormat:@"%zd",user.likedCount];
-    _followButton.highlighted = user.isMyFollow;
+    
     if (user.uid == [DDUserManager currentUser].uid) {
         _followButton.hidden = YES;
     } else {

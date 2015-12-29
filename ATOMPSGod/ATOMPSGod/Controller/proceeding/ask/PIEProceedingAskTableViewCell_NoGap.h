@@ -14,6 +14,7 @@
 #import "PIEImageView.h"
 
 @interface PIEProceedingAskTableViewCell_NoGap : UITableViewCell<SwipeViewDelegate,SwipeViewDataSource>
+@property (weak, nonatomic) IBOutlet UIView *separator;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *allWorkDescLabel;
 @property (weak, nonatomic) IBOutlet SwipeView *swipeView;

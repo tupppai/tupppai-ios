@@ -226,6 +226,7 @@
                 <outlet property="editButton" destination="stF-57-Ks0" id="U21-Jb-act"/>
                 <outlet property="originView1" destination="WQv-Q2-j9w" id="Nww-d6-juL"/>
                 <outlet property="originView2" destination="0PM-KU-bdY" id="SYI-RC-fMF"/>
+                <outlet property="separator" destination="4fj-ig-iVh" id="Pxl-fI-oJ9"/>
                 <outlet property="swipeView" destination="9aJ-wv-jpY" id="KaL-VB-vco"/>
                 <outlet property="timeLabel" destination="PTy-6A-dzm" id="i3C-u2-5EC"/>
                 <outlet property="update_time" destination="jqX-c3-YOP" id="FEW-Ha-wOU"/>

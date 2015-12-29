@@ -13,6 +13,7 @@
 
 @interface PIEProceedingAskTableViewCell : UITableViewCell<SwipeViewDelegate,SwipeViewDataSource>
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UIView *separator;
 @property (weak, nonatomic) IBOutlet UILabel *allWorkDescLabel;
 @property (weak, nonatomic) IBOutlet SwipeView *swipeView;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
