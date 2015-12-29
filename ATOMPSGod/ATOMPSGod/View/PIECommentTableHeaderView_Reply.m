@@ -153,11 +153,6 @@
         _vm = vm;
         [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
         
-        /* BUG FOUND HERE!!! layout big error!!! */
-        /*
-            BUG FIXED: 在avatarView添加子控件psGodView的时候，不使用autolayout，而是在layoutSubviews中手写
-                       Frame布局，药到病除。
-         */
         _avatarView.isV = vm.isV;
         
         //testing

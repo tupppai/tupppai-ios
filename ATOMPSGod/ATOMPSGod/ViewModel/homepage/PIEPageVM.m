@@ -137,6 +137,24 @@
         }
     }];
 }
+-(void)follow {
+    
+    self.followed = !self.followed;
+
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    NSNumber *followStatus = self.followed ? @1:@0;
+    [param setObject:followStatus forKey:@"status"];
+    [param setObject:@(self.userID) forKey:@"uid"];
+
+    [DDService follow:param withBlock:^(BOOL success) {
+        if (!success) {
+            self.followed = !self.followed;
+        }
+    }];
+
+    
+    
+}
 
 
 @end
