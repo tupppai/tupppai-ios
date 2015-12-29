@@ -23,6 +23,7 @@
         self.imageView.contentMode = UIViewContentModeScaleAspectFill;
         self.imageView.layer.cornerRadius = self.imageView.frame.size.width/2;
         self.imageView.clipsToBounds = YES;
+
     }
     return self;
 }
@@ -43,6 +44,16 @@
         make.width.equalTo(self.imageView).with.multipliedBy(28.0/62.0);
         make.height.equalTo(self.imageView).with.multipliedBy(28.0/62.0);
     }];
+}
+
+#pragma mark - layout methods
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    // 在第二次布局的时候，重新设置圆角半径（没有下面两行代码，button在PIECarousel_ItemView中显示正常，但是在PIESearch中不行
+    self.imageView.layer.cornerRadius = self.imageView.frame.size.width/2;
+    self.imageView.clipsToBounds = YES;
 }
 #pragma mark - lazy loadings
 - (UIImageView *)psGodView
