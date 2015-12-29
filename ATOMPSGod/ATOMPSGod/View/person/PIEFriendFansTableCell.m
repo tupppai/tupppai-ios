@@ -50,7 +50,7 @@
     }];
     [self.userNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.userHeaderButton).with.offset(-2);
-        make.left.equalTo(self.userHeaderButton.mas_right).with.offset(5);
+        make.left.equalTo(self.userHeaderButton.mas_right).with.offset(10);
     }];
     [self.fansNumberLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_userNameLabel);
@@ -85,13 +85,24 @@
 }
 
 - (void)setViewModel:(PIEFansViewModel *)viewModel {
-    
     _viewModel = viewModel;
-    [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-    _userNameLabel.text = viewModel.userName;
-    _fansNumberLabel.text = [NSString stringWithFormat:@"%@粉丝", viewModel.fansCount];
+
+    
+    [_userHeaderButton setImageForState:UIControlStateNormal
+                                withURL:[NSURL URLWithString:viewModel.avatarURL]
+                       placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+    
+    // testing
+//    _userHeaderButton.isV = ([viewModel.fansCount integerValue] % 2 == 0);
+    
+    // property 'isV' to be added for viewModel soon
+    _userHeaderButton.isV   = YES;
+    
+
+    _userNameLabel.text     = viewModel.userName;
+    _fansNumberLabel.text   = [NSString stringWithFormat:@"%@粉丝", viewModel.fansCount];
     _uploadNumberLabel.text = [NSString stringWithFormat:@"%@求P", viewModel.askCount];
-    _workNumberLabel.text = [NSString stringWithFormat:@"%@作品", viewModel.replyCount];
+    _workNumberLabel.text   = [NSString stringWithFormat:@"%@作品", viewModel.replyCount];
 
  
     if (viewModel.isMyFan) {
@@ -111,16 +122,15 @@
 }
 
 
--(UIButton*)userHeaderButton {
+-(PIEAvatarButton *)userHeaderButton {
     if (!_userHeaderButton) {
-        _userHeaderButton = [UIButton new];
-        _userHeaderButton.userInteractionEnabled = NO;
-        _userHeaderButton.layer.cornerRadius = kfcAvatarWidth / 2;
-        _userHeaderButton.layer.masksToBounds = YES;
-        [_userHeaderButton setBackgroundImage:[UIImage imageNamed:@"avatar_default"] forState:UIControlStateNormal];
+        _userHeaderButton = [PIEAvatarButton new];
+      
     }
     return _userHeaderButton;
 }
+
+
 -(UIButton*)attentionButton {
     if (!_attentionButton) {
         _attentionButton = [UIButton new];

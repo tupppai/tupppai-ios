@@ -50,7 +50,7 @@
     }];
     [self.userNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.userHeaderButton).with.offset(-2);
-        make.left.equalTo(self.userHeaderButton.mas_right).with.offset(5);
+        make.left.equalTo(self.userHeaderButton.mas_right).with.offset(10);
     }];
     [self.fansNumberLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_userNameLabel);
@@ -85,12 +85,22 @@
 }
 
 
-
-
 - (void)setViewModel:(PIEFollowViewModel *)viewModel {
     _viewModel = viewModel;
-    [self.userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+    
+    [self.userHeaderButton setImageForState:UIControlStateNormal
+                                    withURL:[NSURL URLWithString:viewModel.avatarURL]
+                           placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+
+    // testing
+//    self.userHeaderButton.isV = ([viewModel.fansCount integerValue] % 2 == 0);
+    
+    // TODO: model's property 'isV' to be added
+    self.userHeaderButton.isV = YES;
+    
     self.userNameLabel.text = viewModel.userName;
+    
+    
     self.fansNumberLabel.text = [NSString stringWithFormat:@"%@粉丝",viewModel.fansCount];
     self.uploadNumberLabel.text = [NSString stringWithFormat:@"%@求p", viewModel.askCount];
     self.workNumberLabel.text = [NSString stringWithFormat:@"%@作品", viewModel.replyCount];
@@ -111,13 +121,10 @@
 }
 
 
--(UIButton*)userHeaderButton {
+-(PIEAvatarButton *)userHeaderButton {
     if (!_userHeaderButton) {
-        _userHeaderButton = [UIButton new];
-        _userHeaderButton.userInteractionEnabled = NO;
-        _userHeaderButton.layer.cornerRadius = kfcAvatarWidth / 2;
-        _userHeaderButton.layer.masksToBounds = YES;
-        [_userHeaderButton setBackgroundImage:[UIImage imageNamed:@"avatar_default"] forState:UIControlStateNormal];
+        _userHeaderButton = [PIEAvatarButton new];
+        _userHeaderButton.userInteractionEnabled = YES;
     }
     return _userHeaderButton;
 }
