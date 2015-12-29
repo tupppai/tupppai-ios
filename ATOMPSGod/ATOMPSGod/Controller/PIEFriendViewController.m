@@ -253,18 +253,16 @@
     
     self.nameLabel.text = user.nickname;
     
-//    self.psGodCertificateImageView.hidden = !user.isV;
-    self.psGodCertificateImageView.hidden = NO;
+    self.psGodCertificateImageView.hidden = !user.isV;
     
     NSString* avatarUrlString = [user.avatar trimToImageWidth:_avatarView.frame.size.width*2];
     [DDService sd_downloadImage:avatarUrlString withBlock:^(UIImage *image) {
         _avatarView.avatarImageView.image = image;
         
-        _avatarView.isV = self.pageVM.isV;
-//        _avatarView.isV = YES;
         
-        //testing
-        // _avatarView.isV = (self.pageVM.isV % 2 == 0);
+        //testing...done
+        
+        _avatarView.isV = user.isV;
         
         _blurView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:[UIColor blackColor]];
     }];

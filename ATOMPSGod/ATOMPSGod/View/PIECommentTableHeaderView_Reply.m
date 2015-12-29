@@ -161,7 +161,7 @@
         _avatarView.isV = vm.isV;
         
         //testing
-        //        _avatarView.isV = (vm.askID % 2 == 0);
+//        _avatarView.isV = (vm.askID % 2 == 0);
 
         _usernameLabel.text = vm.username;
         _timeLabel.text = vm.publishTime;
