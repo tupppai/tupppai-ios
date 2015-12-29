@@ -8,5 +8,5 @@
 
 #import <Foundation/Foundation.h>
 @interface DDFollowManager : NSObject
-+ (void )getFollow:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *recommendArray, NSMutableArray *myFollowArray))block;
++ (void)getFollow:(NSDictionary *)param withBlock:(void (^)(NSArray *recommendArray, NSArray *myFollowArray))block ;
 @end

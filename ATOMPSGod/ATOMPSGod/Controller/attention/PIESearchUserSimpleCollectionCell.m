@@ -37,12 +37,12 @@
     
     // 目前接口还没有提供数据
 //    _avatarButton.isV
-    _avatarButton.isV = YES;
+    _avatarButton.isV = vm.model.isV;
     
     
     [_nameButton setTitle:vm.username forState:UIControlStateNormal];
-    _countLabel.text = [NSString stringWithFormat:@"%zd 作品   %zd 粉丝   %zd 关注",vm.replyNumber,vm.fansNumber,vm.attentionNumber];
-    _followButton.selected = vm.followed;
+    _countLabel.text = [NSString stringWithFormat:@"%@ 作品   %@ 粉丝   %@ 关注",vm.replyCount,vm.fansCount,vm.followCount];
+    _followButton.selected = vm.model.isMyFollow;
 }
 
 @end

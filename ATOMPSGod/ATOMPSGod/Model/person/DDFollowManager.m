@@ -11,20 +11,14 @@
 
 @implementation DDFollowManager
 
-+ (void)getFollow:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *recommendArray, NSMutableArray *myFollowArray))block {
++ (void)getFollow:(NSDictionary *)param withBlock:(void (^)(NSArray *recommendArray, NSArray *myFollowArray))block {
     [DDService ddGetFollow:param withBlock:^(NSArray *recommendArray, NSArray *myFollowArray) {
-        NSMutableArray *retRecommend = [NSMutableArray array];
-        NSMutableArray *retMine = [NSMutableArray array];
-        for (int i = 0; i < recommendArray.count; i++) {
-            PIEEntityFollow *concern = [MTLJSONAdapter modelOfClass:[PIEEntityFollow class] fromJSONDictionary:recommendArray[i] error:NULL];
-            [retRecommend addObject:concern];
-        }
-        for (int i = 0; i < myFollowArray.count; i++) {
-            PIEEntityFollow *concern = [MTLJSONAdapter modelOfClass:[PIEEntityFollow class] fromJSONDictionary:myFollowArray[i] error:NULL];
-            [retMine addObject:concern];
-        }
+
+        NSArray* recommends = [MTLJSONAdapter modelsOfClass:[PIEUserModel class] fromJSONArray:recommendArray error:NULL];
+        NSArray* followers = [MTLJSONAdapter modelsOfClass:[PIEUserModel class] fromJSONArray:myFollowArray error:NULL];
+
         if (block) {
-            block(retRecommend, retMine);
+            block(recommends, followers);
         }
     }];
 }
