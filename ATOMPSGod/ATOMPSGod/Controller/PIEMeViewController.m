@@ -220,6 +220,8 @@
     _dotView2.layer.cornerRadius = _dotView2.frame.size.width/2;
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarContainerView.layer.cornerRadius = _avatarContainerView.frame.size.width/2;
+    _avatarView.layer.borderWidth = 2.0f;
+    _avatarView.layer.borderColor = [UIColor whiteColor].CGColor;
     _avatarView.clipsToBounds = YES;
     
     self.usernameLabel.font = [UIFont mediumTupaiFontOfSize:17];

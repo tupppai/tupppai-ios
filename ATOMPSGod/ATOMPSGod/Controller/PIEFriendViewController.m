@@ -162,8 +162,9 @@
     gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor whiteColor] CGColor], (id)[[UIColor blackColor] CGColor], nil];
     [_view1.layer insertSublayer:gradient atIndex:0];
     
+    self.avatarView.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.avatarView.avatarImageView.layer.borderWidth = 3.0f;
     
-
     _dotView1.layer.cornerRadius = _dotView1.frame.size.width/2;
     _dotView2.layer.cornerRadius = _dotView2.frame.size.width/2;
     _blurView.contentMode = UIViewContentModeScaleAspectFill;
