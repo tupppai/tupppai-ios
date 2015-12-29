@@ -35,7 +35,12 @@
     [_leftImageView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView]];
     [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
 //    _avatarView.isV = vm.isV;
-    _avatarView.isV = YES;
+    
+    // testing
+//    _avatarView.isV = YES;
+//    _avatarView.isV = (vm.askID % 2 == 0);
+    _avatarView.isV = vm.isV;
+    
     _nameLabel.text = vm.username;
     _timeLabel.text = vm.publishTime;
     _contentLabel.text = vm.content;

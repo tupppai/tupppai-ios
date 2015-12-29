@@ -82,9 +82,11 @@
                                 ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
                             }];
     [_avatarView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
-    _avatarView.isV = viewModel.isV;
     
-    {
+    // testing:
+//    _avatarView.isV = viewModel.isV;
+    _avatarView.isV = YES;
+ 
         if (viewModel.isMyFan) {
             _followView.highlightedImage = [UIImage imageNamed:@"pie_mutualfollow"];
         } else {
@@ -97,7 +99,7 @@
             _followView.hidden = NO;
         }
 
-    }
+
 
     
     _shareView.imageView.image = [UIImage imageNamed:@"hot_share"];

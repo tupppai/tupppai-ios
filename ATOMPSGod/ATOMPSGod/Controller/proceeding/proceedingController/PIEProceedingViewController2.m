@@ -181,7 +181,7 @@ typedef NS_ENUM(NSUInteger, PIEProceedingControllerType) {
         
         _scrollView.frame                          = [UIScreen mainScreen].bounds;
         _scrollView.showsVerticalScrollIndicator   = NO;
-        _scrollView.showsHorizontalScrollIndicator = YES;
+        _scrollView.showsHorizontalScrollIndicator = NO;
 //        _scrollView.contentSize                    = CGSizeMake(SCREEN_WIDTH * 2, 0);
         _scrollView.pagingEnabled                  = YES;
         _scrollView.scrollsToTop                   = NO;

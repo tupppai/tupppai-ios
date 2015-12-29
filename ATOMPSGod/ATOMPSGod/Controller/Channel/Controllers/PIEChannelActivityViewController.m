@@ -467,6 +467,14 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
             _selectedVM.followed = _selectedReplyCell.followView.highlighted;
         } else {
             _selectedReplyCell.followView.highlighted = !_selectedReplyCell.followView.highlighted;
+            
+            [Hud text:@"网络异常，请稍后再试"];
+        }
+        
+        if (_selectedReplyCell.followView.highlighted) {
+            [Hud text:@"关注成功"];
+        }else{
+            [Hud text:@"已取消关注"];
         }
     }];
 }

@@ -199,6 +199,7 @@
             <connections>
                 <outlet property="allWorkView" destination="VBu-vK-E8O" id="ptQ-3C-t0M"/>
                 <outlet property="avatarView" destination="bwm-3T-NMU" id="n5I-GG-p8W"/>
+                <outlet property="commentIndeicatorImageView" destination="I1R-dy-cUb" id="2R9-D7-dBS"/>
                 <outlet property="commentLabel1" destination="Nz0-bb-Mel" id="QJV-CI-Uhh"/>
                 <outlet property="commentLabel2" destination="nKA-JB-Smk" id="jfl-J5-NMF"/>
                 <outlet property="commentView" destination="Sgj-ub-LZu" id="aJu-7o-E02"/>

@@ -260,6 +260,12 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
             _selectedVM.followed = followView.highlighted;
         } else {
             followView.highlighted = !followView.highlighted;
+            [Hud text:@"网络异常，请稍后再试"];
+        }
+        if (followView.highlighted) {
+            [Hud text:@"关注成功"];
+        }else{
+            [Hud text:@"已取消关注"];
         }
     }];
 }
@@ -496,8 +502,6 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
                     //                    _selectedVM.image = cell.theImageView.image;
                     vc.pageVM = _selectedVM;
                     [self presentViewController:vc animated:YES completion:nil];
-                    
-                    
                 }
                 //点击头像
                 else if (CGRectContainsPoint(cell.avatarView.frame, p)) {

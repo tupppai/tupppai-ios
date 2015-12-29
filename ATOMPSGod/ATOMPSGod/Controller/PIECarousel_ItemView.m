@@ -269,7 +269,11 @@
 
     }];
     
-    _button_avatar.isV = YES;
+    
+    _button_avatar.isV = vm.isV;
+    
+    //testing
+//    _button_avatar.isV = (vm.askID % 2 == 0);
     
     
     if (vm.type == PIEPageTypeAsk) {

@@ -111,6 +111,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
 
     _askTableView.estimatedRowHeight   = 201;
     _askTableView.rowHeight            = UITableViewAutomaticDimension;
+    _askTableView.separatorStyle       = UITableViewCellSeparatorStyleNone;
     
     UINib* nib = [UINib nibWithNibName:@"PIEProceedingAskTableViewCell" bundle:nil];
     [_askTableView registerNib:nib forCellReuseIdentifier:PIEProceedingAskTableViewCellIdentifier];

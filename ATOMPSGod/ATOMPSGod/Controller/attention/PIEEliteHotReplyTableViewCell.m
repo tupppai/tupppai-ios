@@ -28,6 +28,8 @@
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 
+    _avatarView.backgroundColor = [UIColor clearColor];
+    
     _theImageView.contentMode = UIViewContentModeScaleAspectFit;
     _theImageView.clipsToBounds = YES;
     _theImageView.backgroundColor = [UIColor clearColor];
@@ -74,6 +76,8 @@
     _commentLabel2.text = @"";
     _commentLabel1.text = @"";
     
+    _avatarView.avatarImageView.layer.cornerRadius = _avatarView.frame.size.width / 2.0;
+    
     [_commentLabel1 mas_updateConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(_commentLabel2.mas_top).with.offset(0).priorityHigh();
     }];
@@ -105,7 +109,6 @@
 
     }
 
-    
     _shareView.imageView.image = [UIImage imageNamed:@"hot_share"];
     _shareView.numberString = viewModel.shareCount;
     
@@ -120,8 +123,15 @@
     [_likeView initStatus:viewModel.lovedCount numberString:viewModel.likeCount];
     _contentLabel.text = viewModel.content;
     
+
     
     _avatarView.url = urlString_avatar;
+    
+    
+    // testing
+//    _avatarView.isV = viewModel.isV;
+//    _avatarView.isV = (viewModel.askID % 2 == 0);
+    
     _avatarView.isV = viewModel.isV;
     
     _nameLabel.text = viewModel.username;
