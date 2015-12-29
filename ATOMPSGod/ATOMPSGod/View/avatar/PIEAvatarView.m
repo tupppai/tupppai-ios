@@ -35,6 +35,28 @@
 {
     if (self = [super initWithCoder:aDecoder]) {
         self.backgroundColor = [UIColor clearColor];
+        
+        /* dirty code begins: */
+        UIView *backgroundView = [[UIView alloc] init];
+        backgroundView.backgroundColor = [UIColor whiteColor];
+        
+        [self addSubview:backgroundView];
+
+        /*
+            TO-BE-OVERWRITTEN! 非常损耗性能的一种添加白色border的方法！
+         */
+        [backgroundView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.width.equalTo(self).with.offset(7);
+            make.height.equalTo(self).with.offset(7);
+            make.center.equalTo(self);
+        }];
+        
+        backgroundView.clipsToBounds = YES;
+        backgroundView.layer.cornerRadius = (self.bounds.size.width + 7) / 2.0;
+        
+        
+        /* dirty  code ends */
+        
         [self addSubview:self.avatarImageView];
 
         [self.avatarImageView mas_makeConstraints:^(MASConstraintMaker *make) {

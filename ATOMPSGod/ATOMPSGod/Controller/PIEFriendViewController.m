@@ -252,6 +252,7 @@
     //testing
     //self.psGodIcon_big.hidden = (_pageVM.ID % 2 == 0);
     
+    user.isV = YES;
     self.psGodIcon_big.hidden             = !user.isV;
     self.psGodCertificateImageView.hidden = !user.isV;
     
