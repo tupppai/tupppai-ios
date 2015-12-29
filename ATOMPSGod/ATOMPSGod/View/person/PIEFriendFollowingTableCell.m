@@ -94,7 +94,7 @@
 
     // testing
 //    self.userHeaderButton.isV = ([viewModel.fansCount integerValue] % 2 == 0);
-    
+
     // TODO: model's property 'isV' to be added
     self.userHeaderButton.isV = YES;
     

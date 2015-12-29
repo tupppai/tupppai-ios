@@ -20,6 +20,7 @@
                 <outlet property="likedDescLabel" destination="Nhs-wV-RdY" id="pbq-Bb-6cK"/>
                 <outlet property="nameLabel" destination="2UE-Cq-PhH" id="rDT-vZ-8XT"/>
                 <outlet property="psGodCertificateImageView" destination="BUw-Sa-VFF" id="hwM-PW-Fwq"/>
+                <outlet property="psGodIcon_big" destination="VfQ-BJ-dw2" id="oYs-GR-TuU"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="view1" destination="bvf-p6-pCL" id="YR7-VD-KRr"/>
                 <outlet property="view2" destination="ZpA-KX-YfT" id="HfX-aE-hXz"/>
@@ -50,6 +51,13 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WGQ-wd-hPM" customClass="PIEAvatarView">
+                            <rect key="frame" x="260" y="80" width="80" height="80"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="80" id="5IK-J1-rlg"/>
+                                <constraint firstAttribute="height" constant="80" id="Dap-Q3-mar"/>
+                            </constraints>
+                        </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="关注" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="99r-5M-bNC">
                             <rect key="frame" x="237" y="199" width="24" height="14.5"/>
                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
@@ -88,13 +96,6 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WGQ-wd-hPM" customClass="PIEAvatarView">
-                            <rect key="frame" x="260" y="80" width="80" height="80"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="80" id="5IK-J1-rlg"/>
-                                <constraint firstAttribute="height" constant="80" id="Dap-Q3-mar"/>
-                            </constraints>
-                        </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2UE-Cq-PhH" userLabel="nameLabel">
                             <rect key="frame" x="296" y="170" width="7.5" height="20.5"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
@@ -108,15 +109,20 @@
                                 <constraint firstAttribute="width" constant="50" id="xiH-I7-Sf3"/>
                             </constraints>
                         </imageView>
+                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_psGod_big" translatesAutoresizingMaskIntoConstraints="NO" id="VfQ-BJ-dw2">
+                            <rect key="frame" x="315" y="140" width="20" height="20"/>
+                        </imageView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="WGQ-wd-hPM" firstAttribute="centerY" secondItem="bvf-p6-pCL" secondAttribute="centerY" id="1c6-vn-l5l"/>
                         <constraint firstItem="J7D-t2-hRQ" firstAttribute="leading" secondItem="99r-5M-bNC" secondAttribute="trailing" constant="2" id="3RA-JE-oLf"/>
                         <constraint firstItem="Nhs-wV-RdY" firstAttribute="leading" secondItem="3jc-pE-j2n" secondAttribute="trailing" constant="7" id="5BF-b8-asr"/>
+                        <constraint firstItem="VfQ-BJ-dw2" firstAttribute="trailing" secondItem="WGQ-wd-hPM" secondAttribute="trailing" constant="-5" id="8rM-KU-g0d"/>
                         <constraint firstItem="Nhs-wV-RdY" firstAttribute="centerY" secondItem="3jc-pE-j2n" secondAttribute="centerY" id="9xW-jb-D6N"/>
                         <constraint firstItem="J7D-t2-hRQ" firstAttribute="centerY" secondItem="YpL-7O-eX4" secondAttribute="centerY" id="C8v-up-hsF"/>
                         <constraint firstItem="BUw-Sa-VFF" firstAttribute="leading" secondItem="2UE-Cq-PhH" secondAttribute="trailing" constant="10" id="DXB-j9-ZIQ"/>
+                        <constraint firstItem="VfQ-BJ-dw2" firstAttribute="bottom" secondItem="WGQ-wd-hPM" secondAttribute="bottom" id="Dut-V8-xCq"/>
                         <constraint firstItem="H8I-ov-3eC" firstAttribute="top" secondItem="bvf-p6-pCL" secondAttribute="top" id="EYQ-WD-e4t"/>
                         <constraint firstItem="YpL-7O-eX4" firstAttribute="centerY" secondItem="76X-ft-nwv" secondAttribute="centerY" id="Iw8-V2-FOt"/>
                         <constraint firstItem="76X-ft-nwv" firstAttribute="centerX" secondItem="WGQ-wd-hPM" secondAttribute="centerX" id="Mko-sL-LZp"/>
@@ -126,9 +132,11 @@
                         <constraint firstItem="H8I-ov-3eC" firstAttribute="leading" secondItem="bvf-p6-pCL" secondAttribute="leading" id="TS2-cd-5SG"/>
                         <constraint firstItem="BgH-Pa-b5p" firstAttribute="centerY" secondItem="76X-ft-nwv" secondAttribute="centerY" id="VHP-yA-8gd"/>
                         <constraint firstAttribute="height" constant="240" id="Vca-ib-9vN"/>
+                        <constraint firstItem="VfQ-BJ-dw2" firstAttribute="height" secondItem="WGQ-wd-hPM" secondAttribute="height" multiplier="0.25" id="W5J-Jw-UUn"/>
                         <constraint firstItem="6HZ-RE-Tz3" firstAttribute="leading" secondItem="Nhs-wV-RdY" secondAttribute="trailing" constant="2" id="Wf9-Px-nJE"/>
                         <constraint firstItem="Nhs-wV-RdY" firstAttribute="leading" secondItem="76X-ft-nwv" secondAttribute="trailing" constant="36" id="diL-H7-5TS"/>
                         <constraint firstAttribute="bottom" secondItem="H8I-ov-3eC" secondAttribute="bottom" id="e8P-mF-hmY"/>
+                        <constraint firstItem="VfQ-BJ-dw2" firstAttribute="leading" secondItem="WGQ-wd-hPM" secondAttribute="trailing" constant="-24" id="fqH-8C-XdT"/>
                         <constraint firstItem="WGQ-wd-hPM" firstAttribute="centerX" secondItem="bvf-p6-pCL" secondAttribute="centerX" id="gH9-u1-Rto"/>
                         <constraint firstItem="6HZ-RE-Tz3" firstAttribute="centerY" secondItem="Nhs-wV-RdY" secondAttribute="centerY" id="gbI-yw-AnT"/>
                         <constraint firstAttribute="trailing" secondItem="H8I-ov-3eC" secondAttribute="trailing" id="hhQ-H2-NxK"/>
@@ -138,11 +146,13 @@
                         <constraint firstItem="99r-5M-bNC" firstAttribute="top" secondItem="J7D-t2-hRQ" secondAttribute="bottom" constant="8" id="qFp-qu-tif"/>
                         <constraint firstItem="99r-5M-bNC" firstAttribute="centerY" secondItem="J7D-t2-hRQ" secondAttribute="centerY" id="uUq-8I-MIt"/>
                         <constraint firstItem="BgH-Pa-b5p" firstAttribute="leading" secondItem="76X-ft-nwv" secondAttribute="trailing" constant="2" id="vNY-3w-aJ5"/>
+                        <constraint firstItem="VfQ-BJ-dw2" firstAttribute="width" secondItem="WGQ-wd-hPM" secondAttribute="width" multiplier="0.25" id="vdM-bG-PBl"/>
                         <constraint firstItem="YpL-7O-eX4" firstAttribute="leading" secondItem="J7D-t2-hRQ" secondAttribute="trailing" constant="7" id="yNl-V6-TKi"/>
                         <constraint firstItem="3jc-pE-j2n" firstAttribute="leading" secondItem="BgH-Pa-b5p" secondAttribute="trailing" constant="7" id="yt6-9N-lhI"/>
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
+                            <exclude reference="fqH-8C-XdT"/>
                             <exclude reference="qFp-qu-tif"/>
                             <exclude reference="diL-H7-5TS"/>
                         </mask>
@@ -173,6 +183,7 @@
         </view>
     </objects>
     <resources>
+        <image name="icon_psGod_big" width="26" height="26"/>
         <image name="piePsGodCertificate" width="40" height="12"/>
     </resources>
 </document>

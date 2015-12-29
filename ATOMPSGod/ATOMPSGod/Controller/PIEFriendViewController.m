@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet PIEAvatarView *avatarView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *psGodCertificateImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *psGodIcon_big;
 
 //@property (weak, nonatomic) IBOutlet UIImageView *followButton;
 @property (weak, nonatomic) UIButton *followButton;
@@ -159,7 +160,8 @@
     gradient.frame = _view1.bounds;
     gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor whiteColor] CGColor], (id)[[UIColor blackColor] CGColor], nil];
     [_view1.layer insertSublayer:gradient atIndex:0];
-
+    
+    
 
     _dotView1.layer.cornerRadius = _dotView1.frame.size.width/2;
     _dotView2.layer.cornerRadius = _dotView2.frame.size.width/2;
@@ -167,6 +169,12 @@
     _blurView.clipsToBounds = YES;
     
 //    _followButton.contentMode = UIViewContentModeCenter;
+    
+//    [self.psGodImageView_big mas_updateConstraints:^(MASConstraintMaker *make) {
+//        
+//        make.left.equalTo(self.avatarView.mas_right);
+//    }];
+    [self.view1 layoutIfNeeded];
 
 }
 - (void)setupTapGesture {
@@ -249,10 +257,16 @@
     }];
 }
 - (void)updateUserInterface:(PIEUserModel*)user {
-    self.title = user.nickname;
+//    self.title = user.nickname;
     
     self.nameLabel.text = user.nickname;
     
+    
+//    self.psGodIcon_big.hidden = YES;
+    // testing
+//    self.psGodIcon_big.hidden = (_pageVM.ID % 2 == 0);
+    
+    self.psGodIcon_big.hidden             = !user.isV;
     self.psGodCertificateImageView.hidden = !user.isV;
     
     NSString* avatarUrlString = [user.avatar trimToImageWidth:_avatarView.frame.size.width*2];
