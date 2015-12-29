@@ -155,6 +155,7 @@
 }
 - (void)setupViews {
     self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    self.nameLabel.font = [UIFont mediumTupaiFontOfSize:17];
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = _view1.bounds;

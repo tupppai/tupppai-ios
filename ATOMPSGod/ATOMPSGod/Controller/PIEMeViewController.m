@@ -46,6 +46,7 @@
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, assign) CGPoint startPanLocation;
+@property (weak, nonatomic) IBOutlet UIImageView *psGodCertificate;
 
 @property (nonatomic) CAPSPageMenu *pageMenu;
 
@@ -182,6 +183,7 @@
         }
     }
 }
+
 -(void)updateAvatar {
         [DDService sd_downloadImage:[DDUserManager currentUser].avatar withBlock:^(UIImage *image) {
             _avatarView.image = image;
@@ -189,7 +191,10 @@
     }];
     PIEUserModel* user = [DDUserManager currentUser];
 //    self.psGodIcon_big.hidden = (user.uid % 2 == 0);
-    self.psGodIcon_big.hidden = !user.isV;
+    
+    
+    self.psGodIcon_big.hidden    = !user.isV;
+    self.psGodCertificate.hidden = !user.isV;
     
 }
 - (void)pushToSettingViewController {
@@ -209,11 +214,15 @@
     [viewBG.layer insertSublayer:gradient atIndex:0];
     [self.view insertSubview:viewBG belowSubview:self.topContainerView];
     
+    
+    
     _dotView1.layer.cornerRadius = _dotView1.frame.size.width/2;
     _dotView2.layer.cornerRadius = _dotView2.frame.size.width/2;
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarContainerView.layer.cornerRadius = _avatarContainerView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
+    
+    self.usernameLabel.font = [UIFont mediumTupaiFontOfSize:17];
     
     [self setupColorAndFont];
     [self setupTapGesture];
