@@ -21,4 +21,19 @@
     return self;
 }
 
+//- (id)copyWithZone:(NSZone *)zone
+//{
+//    id copy = [[[self class] alloc] init];
+//    
+//    if (copy)
+//    {
+//        // Copy NSObject subclasses
+//        [copy setAsk_id:[self.ask_id copyWithZone:zone]];
+//        
+//        // Set primitives
+//    }
+//    
+//    return copy;
+//}
+
 @end

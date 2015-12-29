@@ -124,7 +124,6 @@ static DDSessionManager *_shareHTTPSessionManager = nil;
                 [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkShowInfoCall" object:nil userInfo:userInfo]];
             }
         }
-        
         if (completionHandler) {
             completionHandler(response,responseObject,error);
         }
