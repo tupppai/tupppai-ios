@@ -288,52 +288,6 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     }];
 }
 
-#pragma mark - ReplyCell中的“喜欢该P图”和“关注P图主”的点击事件
-//-(void)likeReply {
-//    _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
-//    [DDService toggleLike:_selectedReplyCell.likeView.selected ID:_selectedVM.ID type:_selectedVM.type  withBlock:^(BOOL success) {
-//        if (success) {
-//            _selectedVM.liked = _selectedReplyCell.likeView.selected;
-//            if (_selectedReplyCell.likeView.selected) {
-//                _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue + 1];
-//            } else {
-//                _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue - 1];
-//            }
-//        } else {
-//            _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
-//        }
-//    }];
-//}
-
-
-
--(void)followReplier {
-    _selectedReplyCell.followView.highlighted = !_selectedReplyCell.followView.highlighted;
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    [param setObject:@(_selectedVM.userID) forKey:@"uid"];
-    if (_selectedReplyCell.followView.highlighted) {
-        [param setObject:@1 forKey:@"status"];
-    }
-    else {
-        [param setObject:@0 forKey:@"status"];
-    }
-    [DDService follow:param withBlock:^(BOOL success) {
-        if (success) {
-            _selectedVM.followed = _selectedReplyCell.followView.highlighted;
-        } else {
-            _selectedReplyCell.followView.highlighted = !_selectedReplyCell.followView.highlighted;
-            [Hud text:@"网络异常，请重试"];
-            
-        }
-        
-        if (_selectedReplyCell.followView.highlighted) {
-            [Hud text:@"关注成功"];
-        }else{
-            [Hud text:@"已取消关注"];
-        }
-    }];
-}
-
 
 #pragma mark - Refresh
 
@@ -419,7 +373,8 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
                 [_selectedVM love:NO];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.followView.frame, p)) {
-                [self followReplier];
+//                [self followReplier];
+                [_selectedVM follow];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.shareView.frame, p)) {
 //                [self showShareView];

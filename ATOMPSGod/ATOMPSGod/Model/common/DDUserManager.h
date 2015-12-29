@@ -96,5 +96,6 @@
 + (void )DDRegister:(NSDictionary *)param withBlock:(void (^)(BOOL success))block ;
 + (void )DDLogin:(NSDictionary*)param withBlock:(void (^)(BOOL succeed))block ;
 + (void)DD3PartyAuth:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(bool isRegistered,NSString* info))block;
-
++ (void)getMyFans:(NSDictionary *)param withBlock:(void (^)(NSArray *))block;
++ (void)getMyFollows:(NSDictionary *)param withBlock:(void (^)(NSArray *recommendArray, NSArray *myFollowArray))block;
 @end

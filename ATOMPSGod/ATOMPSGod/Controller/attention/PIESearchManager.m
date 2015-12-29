@@ -22,7 +22,7 @@
             for (NSDictionary* dic in replies) {
                 PIEPageModel *entity2 = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:dic error:NULL];
                 PIEPageVM* vm2 = [[PIEPageVM alloc]initWithPageEntity:entity2];
-                [vm.replies addObject:vm2];
+                [vm.replyPages addObject:vm2];
             }
             [retArray addObject:vm];
         }

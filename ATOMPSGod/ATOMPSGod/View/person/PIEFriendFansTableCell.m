@@ -7,7 +7,7 @@
 //
 
 #import "PIEFriendFansTableCell.h"
-#import "PIEFansViewModel.h"
+
 
 @interface PIEFriendFansTableCell ()
 
@@ -84,25 +84,25 @@
     }];
 }
 
-- (void)setViewModel:(PIEFansViewModel *)viewModel {
+- (void)setViewModel:(PIEUserViewModel *)viewModel {
     
     _viewModel = viewModel;
-    [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-    _userNameLabel.text = viewModel.userName;
+    [_userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatar] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+    _userNameLabel.text = viewModel.username;
     _fansNumberLabel.text = [NSString stringWithFormat:@"%@粉丝", viewModel.fansCount];
     _uploadNumberLabel.text = [NSString stringWithFormat:@"%@求P", viewModel.askCount];
     _workNumberLabel.text = [NSString stringWithFormat:@"%@作品", viewModel.replyCount];
 
  
-    if (viewModel.isMyFan) {
+    if (viewModel.model.isMyFan) {
         [self.attentionButton setImage:[UIImage imageNamed:@"pie_mutualfollow"] forState:UIControlStateSelected];
     } else {
         [self.attentionButton setImage:[UIImage imageNamed:@"new_reply_followed"] forState:UIControlStateSelected];
     }
     
-    self.attentionButton.selected = viewModel.isFollow;
+    self.attentionButton.selected = viewModel.model.isMyFollow;
 
-    if (viewModel.uid == [DDUserManager currentUser].uid) {
+    if (viewModel.model.uid == [DDUserManager currentUser].uid) {
         _attentionButton.hidden = YES;
     } else {
         _attentionButton.hidden = NO;

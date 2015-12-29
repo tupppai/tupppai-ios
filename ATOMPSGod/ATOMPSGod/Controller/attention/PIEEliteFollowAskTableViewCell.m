@@ -55,13 +55,18 @@
     return _blurView;
 }
 
+-(void)dealloc {
+    [self removeKVO];
+}
 -(void)prepareForReuse {
     [super prepareForReuse];
     _followView.hidden = NO;
+    [self removeKVO];
 }
 - (void)injectSauce:(PIEPageVM *)viewModel {
     WS(ws);
     _vm = viewModel;
+    [self addKVO];
     NSString *urlString_avatar = [viewModel.avatarURL trimToImageWidth:_avatarView.frame.size.width*SCREEN_SCALE];
     NSString *urlString_imageView = [viewModel.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
     [_theImageView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView]
@@ -100,8 +105,25 @@
     _contentLabel.text = viewModel.content;
     _nameLabel.text = viewModel.username;
     _timeLabel.text = viewModel.publishTime;
- 
+}
 
+- (void)addKVO {
+    [_vm addObserver:self forKeyPath:@"followed" options:NSKeyValueObservingOptionNew context:NULL];
+}
+- (void)removeKVO {
+    @try{
+        [_vm removeObserver:self forKeyPath:@"followed"];
+    }@catch(id anException){
+        //do nothing, obviously it wasn't attached because an exception was thrown
+    }
+}
+
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"followed"]) {
+        BOOL newFollowed = [[change objectForKey:@"new"]boolValue];
+        self.followView.highlighted = newFollowed;
+    }
 }
 
 

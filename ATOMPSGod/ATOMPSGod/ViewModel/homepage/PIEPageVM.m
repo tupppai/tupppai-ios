@@ -93,26 +93,37 @@
 - (void)increaseLoveStatus {
     if (_lovedCount && _lovedCount == 3) {
         self.lovedCount = 0;
-        self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] - 3];
+        if (![self.likeCount isEqualToString:kfcMaxNumberString]) {
+            self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] - 3];
+        }
     } else {
         self.lovedCount++;
-        self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] + 1];
+        if (![self.likeCount isEqualToString:kfcMaxNumberString]) {
+            self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] + 1];
+        }
     }
 }
 - (void)decreaseLoveStatus {
     if (_lovedCount && _lovedCount == 0) {
         self.lovedCount = 3;
-        self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] + 3];
+        if (![self.likeCount isEqualToString:kfcMaxNumberString]) {
+            self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] + 3];
+        }
     } else {
         self.lovedCount--;
-        self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] - 1];
+        if (![self.likeCount isEqualToString:kfcMaxNumberString]) {
+            self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] - 1];
+        }
     }
 }
 
 - (void)revertStatus {
-    self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] - _lovedCount];
     self.lovedCount = 0;
+    if (![self.likeCount isEqualToString:kfcMaxNumberString]) {
+        self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] - _lovedCount];
+    }
 }
+
 
 
 /** Cell点击 － 点赞 */
@@ -136,6 +147,24 @@
             [self decreaseLoveStatus];
         }
     }];
+}
+-(void)follow {
+    
+    self.followed = !self.followed;
+
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    NSNumber *followStatus = self.followed ? @1:@0;
+    [param setObject:followStatus forKey:@"status"];
+    [param setObject:@(self.userID) forKey:@"uid"];
+
+    [DDService follow:param withBlock:^(BOOL success) {
+        if (!success) {
+            self.followed = !self.followed;
+        }
+    }];
+
+    
+    
 }
 
 

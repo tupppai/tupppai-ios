@@ -150,7 +150,8 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
 - (void)configTableViewFollow {
     // add as subview and add constraint
     [self.view addSubview:self.tableFollow];
-    
+    self.tableFollow.separatorStyle = UITableViewCellSeparatorStyleNone;
+
     [self.tableFollow mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
@@ -165,7 +166,6 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
     [self.tableFollow addGestureRecognizer:longPressGestureFollow];
     
 }
-
 
 #pragma mark - Notification Methods
 - (void)refreshHeader {
@@ -242,33 +242,33 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
 /* Nothing yet. */
 
 #pragma mark - Cell 点击事件
-
-/** Cell-点击 － 关注 */
-- (void)follow:(UIImageView*)followView {
-    followView.highlighted = !followView.highlighted;
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    [param setObject:@(_selectedVM.userID) forKey:@"uid"];
-    if (followView.highlighted) {
-        [param setObject:@1 forKey:@"status"];
-    }
-    else {
-        [param setObject:@0 forKey:@"status"];
-    }
-    
-    [DDService follow:param withBlock:^(BOOL success) {
-        if (success) {
-            _selectedVM.followed = followView.highlighted;
-        } else {
-            followView.highlighted = !followView.highlighted;
-            [Hud text:@"网络异常，请稍后再试"];
-        }
-        if (followView.highlighted) {
-            [Hud text:@"关注成功"];
-        }else{
-            [Hud text:@"已取消关注"];
-        }
-    }];
-}
+//
+///** Cell-点击 － 关注 */
+//- (void)follow:(UIImageView*)followView {
+//    followView.highlighted = !followView.highlighted;
+//    NSMutableDictionary *param = [NSMutableDictionary new];
+//    [param setObject:@(_selectedVM.userID) forKey:@"uid"];
+//    if (followView.highlighted) {
+//        [param setObject:@1 forKey:@"status"];
+//    }
+//    else {
+//        [param setObject:@0 forKey:@"status"];
+//    }
+//    
+//    [DDService follow:param withBlock:^(BOOL success) {
+//        if (success) {
+//            _selectedVM.followed = followView.highlighted;
+//        } else {
+//            followView.highlighted = !followView.highlighted;
+//            [Hud text:@"网络异常，请稍后再试"];
+//        }
+//        if (followView.highlighted) {
+//            [Hud text:@"关注成功"];
+//        }else{
+//            [Hud text:@"已取消关注"];
+//        }
+//    }];
+//}
 
 //* Cell-点击 收藏 
 //-(void)collect:(PIEPageButton*) collectView shouldShowHud:(BOOL)shouldShowHud {
@@ -520,7 +520,8 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
                     [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
                 }
                 else if (CGRectContainsPoint(cell.followView.frame, p)) {
-                    [self follow:cell.followView];
+//                    [self follow:cell.followView];
+                    [_selectedVM follow];
                 }
                 else if (CGRectContainsPoint(cell.shareView.frame, p)) {
                     [self showShareView:_selectedVM];
@@ -583,7 +584,7 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
                     [_selectedVM love:NO];
                 }
                 else if (CGRectContainsPoint(cell.followView.frame, p)) {
-                    [self follow:cell.followView];
+                    [_selectedVM follow];
                 }
                 else if (CGRectContainsPoint(cell.shareView.frame, p)) {
                     [self showShareView:_selectedVM];
