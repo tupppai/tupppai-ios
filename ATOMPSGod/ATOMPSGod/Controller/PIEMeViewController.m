@@ -33,6 +33,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *followView;
 @property (weak, nonatomic) IBOutlet UILabel *fansView;
 @property (weak, nonatomic) IBOutlet UILabel *likeView;
+@property (weak, nonatomic) IBOutlet UIImageView *psGodIcon_big;
 
 @property (weak, nonatomic) IBOutlet UIImageView *topContainerView;
 @property (weak, nonatomic) IBOutlet UIView *pageMenuContainerView;
@@ -186,6 +187,10 @@
             _avatarView.image = image;
             _topContainerView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:nil];
     }];
+    PIEUserModel* user = [DDUserManager currentUser];
+//    self.psGodIcon_big.hidden = (user.uid % 2 == 0);
+    self.psGodIcon_big.hidden = !user.isV;
+    
 }
 - (void)pushToSettingViewController {
     PIESettingsViewController* vc = [PIESettingsViewController new];

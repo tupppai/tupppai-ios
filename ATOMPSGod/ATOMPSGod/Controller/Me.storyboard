@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Me View Controller-->
@@ -112,6 +113,9 @@
                                             </mask>
                                         </variation>
                                     </view>
+                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_psGod_big" translatesAutoresizingMaskIntoConstraints="NO" id="NaS-Kd-wkR" userLabel="psGod_big">
+                                        <rect key="frame" x="314.5" y="119.5" width="19.5" height="19.5"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -127,18 +131,22 @@
                                     <constraint firstItem="quq-3A-g9a" firstAttribute="centerX" secondItem="Wvc-KJ-tOw" secondAttribute="centerX" id="92A-Us-zvg"/>
                                     <constraint firstItem="quq-3A-g9a" firstAttribute="centerY" secondItem="yAp-sS-H6c" secondAttribute="centerY" id="FqY-CZ-SPd"/>
                                     <constraint firstItem="UHf-uB-TMZ" firstAttribute="centerX" secondItem="quq-3A-g9a" secondAttribute="centerX" constant="-4" id="Hju-TA-nH3"/>
+                                    <constraint firstItem="NaS-Kd-wkR" firstAttribute="bottom" secondItem="Wvc-KJ-tOw" secondAttribute="bottom" id="JYf-1y-w0Z"/>
                                     <constraint firstItem="qzW-PX-U7Y" firstAttribute="leading" secondItem="JTg-Op-4Qr" secondAttribute="trailing" constant="7" id="O7K-X2-wKp"/>
                                     <constraint firstItem="UHf-uB-TMZ" firstAttribute="centerX" secondItem="yAp-sS-H6c" secondAttribute="centerX" id="PyN-UY-df0"/>
                                     <constraint firstItem="yAp-sS-H6c" firstAttribute="top" secondItem="0eW-Qd-Lp1" secondAttribute="top" constant="60" id="SAv-9I-HN2"/>
                                     <constraint firstItem="UHf-uB-TMZ" firstAttribute="top" secondItem="0f8-Kd-RTM" secondAttribute="bottom" constant="-4" id="Ste-bB-jyU"/>
                                     <constraint firstItem="gng-se-MP8" firstAttribute="leading" secondItem="gx7-sZ-8Me" secondAttribute="trailing" constant="2" id="V8X-wH-yOY"/>
+                                    <constraint firstItem="NaS-Kd-wkR" firstAttribute="height" secondItem="Wvc-KJ-tOw" secondAttribute="height" multiplier="0.25" id="XIf-WB-hsO"/>
                                     <constraint firstItem="JTg-Op-4Qr" firstAttribute="leading" secondItem="0f8-Kd-RTM" secondAttribute="trailing" constant="7" id="YiM-5B-xrd"/>
                                     <constraint firstItem="0f8-Kd-RTM" firstAttribute="centerY" secondItem="UHf-uB-TMZ" secondAttribute="centerY" id="fI5-ig-kcE"/>
                                     <constraint firstItem="Jt2-sH-511" firstAttribute="centerX" secondItem="yAp-sS-H6c" secondAttribute="centerX" id="gfQ-Io-YhE"/>
                                     <constraint firstItem="gng-se-MP8" firstAttribute="centerY" secondItem="gx7-sZ-8Me" secondAttribute="centerY" id="hRg-JN-luR"/>
                                     <constraint firstItem="qzW-PX-U7Y" firstAttribute="centerY" secondItem="UHf-uB-TMZ" secondAttribute="centerY" id="i8Z-31-DKF"/>
+                                    <constraint firstItem="NaS-Kd-wkR" firstAttribute="trailing" secondItem="Wvc-KJ-tOw" secondAttribute="trailing" constant="-5" id="iPY-P3-VYc"/>
                                     <constraint firstItem="Jt2-sH-511" firstAttribute="leading" secondItem="gng-se-MP8" secondAttribute="trailing" constant="7" id="l4J-rH-WhH"/>
                                     <constraint firstItem="Gy0-hx-9KW" firstAttribute="centerY" secondItem="qzW-PX-U7Y" secondAttribute="centerY" id="lgg-ZS-7M9"/>
+                                    <constraint firstItem="NaS-Kd-wkR" firstAttribute="width" secondItem="Wvc-KJ-tOw" secondAttribute="width" multiplier="0.25" id="lhl-Ui-Whv"/>
                                     <constraint firstItem="Jt2-sH-511" firstAttribute="centerY" secondItem="UHf-uB-TMZ" secondAttribute="centerY" id="oUX-xQ-HdS"/>
                                     <constraint firstItem="UHf-uB-TMZ" firstAttribute="leading" secondItem="Jt2-sH-511" secondAttribute="trailing" constant="7" id="oZ7-gQ-c1d"/>
                                     <constraint firstItem="JTg-Op-4Qr" firstAttribute="leading" secondItem="UHf-uB-TMZ" secondAttribute="trailing" constant="17" id="pq3-ho-A5u"/>
@@ -192,13 +200,14 @@
                         <outlet property="followView" destination="gx7-sZ-8Me" id="scz-qJ-RcT"/>
                         <outlet property="likeView" destination="qzW-PX-U7Y" id="uh9-4q-Uh0"/>
                         <outlet property="likedCountLabel" destination="Gy0-hx-9KW" id="xNo-3z-Wka"/>
+                        <outlet property="psGodIcon_big" destination="NaS-Kd-wkR" id="7W6-Ze-uec"/>
                         <outlet property="topContainerView" destination="0eW-Qd-Lp1" id="BnU-jc-QkQ"/>
                         <outlet property="usernameLabel" destination="quq-3A-g9a" id="Mz4-Iu-gA7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cUA-6r-hde" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1618" y="318"/>
+            <point key="canvasLocation" x="1480" y="231"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="QcH-eE-unB">
@@ -220,6 +229,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="icon_psGod_big" width="26" height="26"/>
         <image name="pie_message" width="23" height="18"/>
     </resources>
 </document>
