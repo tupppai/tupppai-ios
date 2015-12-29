@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "PIEPageLikeButton.h"
+#import "PIEAvatarView.h"
+
 @interface PIEMyCollectionTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *pageImageView;
-@property (weak, nonatomic) IBOutlet UIImageView *avatarView;
+@property (weak, nonatomic) IBOutlet PIEAvatarView *avatarView;
+
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *likeView;

@@ -8,11 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "PIEPageLikeButton.h"
+#import "PIEAvatarView.h"
 
 @interface PIEReplyCollectionCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 //@property (weak, nonatomic) IBOutlet UIImageView *likeView;
-@property (weak, nonatomic) IBOutlet UIImageView *avatarView;
+//@property (weak, nonatomic) IBOutlet UIImageView *avatarView;
+@property (weak, nonatomic) IBOutlet PIEAvatarView *avatarView;
+
+
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (nonatomic, assign) NSInteger ID;
 @property (nonatomic, assign) PIEPageType type;

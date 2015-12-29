@@ -74,7 +74,8 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = self.channelVM.title;
+    self.title = @"最新求P";
+    
     [self.view addSubview: self.collectionView_ask];
 //    self.collectionView_ask.backgroundColor = [UIColor whiteColor];
     

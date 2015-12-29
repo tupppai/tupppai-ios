@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet PIEAvatarView *avatarView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *psGodCertificateImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *psGodIcon_big;
 
 //@property (weak, nonatomic) IBOutlet UIImageView *followButton;
 @property (weak, nonatomic) UIButton *followButton;
@@ -154,18 +155,22 @@
 }
 - (void)setupViews {
     self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    self.nameLabel.font = [UIFont mediumTupaiFontOfSize:17];
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = _view1.bounds;
     gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor whiteColor] CGColor], (id)[[UIColor blackColor] CGColor], nil];
     [_view1.layer insertSublayer:gradient atIndex:0];
-
-
+    
+    self.avatarView.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.avatarView.avatarImageView.layer.borderWidth = 3.0f;
+    
     _dotView1.layer.cornerRadius = _dotView1.frame.size.width/2;
     _dotView2.layer.cornerRadius = _dotView2.frame.size.width/2;
     _blurView.contentMode = UIViewContentModeScaleAspectFill;
     _blurView.clipsToBounds = YES;
     
+
 }
 - (void)setupTapGesture {
     _followCountLabel.userInteractionEnabled = YES;
@@ -239,24 +244,26 @@
     }];
 }
 - (void)updateUserInterface:(PIEUserModel*)user {
-    self.title = user.nickname;
+//    self.title = user.nickname;
     
     self.nameLabel.text = user.nickname;
     
-//    self.psGodCertificateImageView.hidden = !user.isV;
-    self.psGodCertificateImageView.hidden = NO;
+    
+    //self.psGodIcon_big.hidden = YES;
+    //testing
+    //self.psGodIcon_big.hidden = (_pageVM.ID % 2 == 0);
+    
+    user.isV = YES;
+    self.psGodIcon_big.hidden             = !user.isV;
+    self.psGodCertificateImageView.hidden = !user.isV;
     
     NSString* avatarUrlString = [user.avatar trimToImageWidth:_avatarView.frame.size.width*2];
     [DDService sd_downloadImage:avatarUrlString withBlock:^(UIImage *image) {
         _avatarView.avatarImageView.image = image;
         
-        _avatarView.isV = self.pageVM.isV;
-//        _avatarView.isV = YES;
+    //testing...done
         
-        //testing
-        // _avatarView.isV = (self.pageVM.isV % 2 == 0);
-        
-        _blurView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:[UIColor blackColor]];
+    _blurView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:[UIColor blackColor]];
     }];
     
     

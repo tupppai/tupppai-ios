@@ -13,16 +13,14 @@
 - (void)awakeFromNib {
     // Initialization code
     self.backgroundColor = [UIColor whiteColor];
-//    _avatarButton.layer.cornerRadius = _avatarButton.frame.size.width/2;
-//    _avatarButton.clipsToBounds = YES;
-    _avatarButton.backgroundColor = [UIColor lightGrayColor];
+
     _followButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
     _nameButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [_nameButton.titleLabel setFont:[UIFont lightTupaiFontOfSize:14]];
     _countLabel.font = [UIFont lightTupaiFontOfSize:11];
     [_nameButton setTitleColor:[UIColor colorWithHex:0x000000 andAlpha:0.9] forState:UIControlStateNormal];
     _countLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
-    _avatarButton.userInteractionEnabled = NO;
+    _avatarButton.userInteractionEnabled = YES;
     _nameButton.userInteractionEnabled = NO;
     _followButton.userInteractionEnabled = NO;
     _swipeView.dataSource = self;
@@ -36,8 +34,11 @@
 
 - (void)injectSauce:(PIEUserViewModel*)vm {
     _vm = vm;
-    [_avatarButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:vm.avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+    [_avatarButton setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:vm.avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
 
+    //    _avatarButton.isV = YES;
+    // testing
+    //    _avatarButton.isV = (vm.fansNumber % 2 == 0);
     _avatarButton.isV = vm.model.isV;
     
     [_nameButton setTitle:vm.username forState:UIControlStateNormal];
