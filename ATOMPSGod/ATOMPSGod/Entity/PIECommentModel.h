@@ -44,10 +44,6 @@
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *avatar;
-//@property (nonatomic, assign) NSInteger sex;
-/**
- *  @数组
- */
 @property (nonatomic, strong) NSMutableArray *atCommentArray;
 @property (nonatomic, assign) bool liked;
 @end

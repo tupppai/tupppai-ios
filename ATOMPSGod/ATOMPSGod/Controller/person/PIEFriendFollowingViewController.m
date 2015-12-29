@@ -9,10 +9,10 @@
 #import "PIEFriendFollowingViewController.h"
 #import "PIEFriendFollowingTableCell.h"
 #import "PIEFriendViewController.h"
-#import "DDFollowManager.h"
-//#import "PIEEntityFollow.h"
+
+//
 #import "DDService.h"
-//#import "PIEFollowViewModel.h"
+//
 #import "PIERefreshFooterTableView.h"
 //#import "PIEUserViewModel.h"
 
@@ -175,7 +175,7 @@
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(_uid) forKeyedSubscript:@"uid"];
     [Hud activity:@"" inView:self.view];
-    [DDFollowManager getFollow:param withBlock:^(NSArray *recommend,NSArray* resultArray) {
+    [DDUserManager getMyFollows:param withBlock:^(NSArray *recommend,NSArray* resultArray) {
         [Hud dismiss:self.view];
         [_dataSource removeAllObjects];
         for (PIEUserModel *model in resultArray) {
@@ -196,7 +196,7 @@
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(timestamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [DDFollowManager getFollow:param withBlock:^(NSArray *recommend,NSArray* resultArray) {
+    [DDUserManager getMyFollows:param withBlock:^(NSArray *recommend,NSArray* resultArray) {
         for (PIEUserModel *model in resultArray) {
             PIEUserViewModel *vm = [[PIEUserViewModel alloc]initWithEntity:model];
             [ws.dataSource addObject:vm];

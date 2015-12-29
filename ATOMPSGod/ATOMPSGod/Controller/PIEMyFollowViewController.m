@@ -9,17 +9,11 @@
 #import "PIEMyFollowViewController.h"
 #import "PIEFriendFollowingTableCell.h"
 #import "PIEFriendViewController.h"
-#import "DDFollowManager.h"
-//#import "PIEEntityFollow.h"
-#import "DDService.h"
-//#import "PIEFollowViewModel.h"
 #import "PIERefreshFooterTableView.h"
-
 
 @interface PIEMyFollowViewController () < UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
 @property (nonatomic, strong) PIERefreshFooterTableView *tableView;
-//@property (nonatomic, strong) UIView *concernView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapConcernGesture;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, assign) NSInteger currentPage;
@@ -43,7 +37,7 @@
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [_tableView.mj_footer endRefreshing];
+        [_tableView.mj_footer endRefreshingWithNoMoreData];
     }
 }
 
@@ -177,7 +171,7 @@
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@([DDUserManager currentUser].uid) forKeyedSubscript:@"uid"];
     [Hud activity:@"" inView:self.view];
-    [DDFollowManager getFollow:param withBlock:^(NSArray *recommend,NSArray* resultArray) {
+    [DDUserManager getMyFollows:param withBlock:^(NSArray *recommend,NSArray* resultArray) {
         [Hud dismiss:self.view];
         for (PIEUserModel *model in resultArray) {
             PIEUserViewModel *vm = [[PIEUserViewModel alloc]initWithEntity:model];
@@ -196,7 +190,7 @@
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [DDFollowManager getFollow:param withBlock:^(NSArray *recommend,NSArray* resultArray) {
+    [DDUserManager getMyFollows:param withBlock:^(NSArray *recommend,NSArray* resultArray) {
         for (PIEUserModel *model in resultArray) {
             PIEUserViewModel *vm = [[PIEUserViewModel alloc]initWithEntity:model];
             [ws.dataSource addObject:vm];

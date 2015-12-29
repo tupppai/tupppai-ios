@@ -7,7 +7,7 @@
 //
 
 #import "PIEFriendFollowingTableCell.h"
-#import "PIEFollowViewModel.h"
+
 @interface PIEFriendFollowingTableCell ()
 
 @property (nonatomic, strong) UIView *dotView1;
