@@ -185,12 +185,12 @@
 }
 
 -(void)updateAvatar {
-        [DDService sd_downloadImage:[DDUserManager currentUser].avatar withBlock:^(UIImage *image) {
-            _avatarView.image = image;
-            _topContainerView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:nil];
+    [DDService sd_downloadImage:
+     [DDUserManager currentUser].avatar withBlock:^(UIImage *image) {
+         _avatarView.image       = image;
+         _topContainerView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:nil];
     }];
     PIEUserModel* user = [DDUserManager currentUser];
-//    self.psGodIcon_big.hidden = (user.uid % 2 == 0);
     
     
     self.psGodIcon_big.hidden    = !user.isV;
