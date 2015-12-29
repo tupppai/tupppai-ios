@@ -128,7 +128,7 @@
     [button3 setImage:[UIImage imageNamed:@"navigationbar_addFollow"]
              forState:UIControlStateNormal];
     
-    [button3 addTarget:self action:@selector(follow:)
+    [button3 addTarget:self action:@selector(follow)
       forControlEvents:UIControlEventTouchUpInside];
 
     UIBarButtonItem *buttonItem3 = [[UIBarButtonItem alloc] initWithCustomView:button3];
@@ -168,17 +168,9 @@
     _blurView.contentMode = UIViewContentModeScaleAspectFill;
     _blurView.clipsToBounds = YES;
     
-//    _followButton.contentMode = UIViewContentModeCenter;
-    
-//    [self.psGodImageView_big mas_updateConstraints:^(MASConstraintMaker *make) {
-//        
-//        make.left.equalTo(self.avatarView.mas_right);
-//    }];
-    [self.view1 layoutIfNeeded];
 
 }
 - (void)setupTapGesture {
-//    _followButton.userInteractionEnabled = YES;
     _followCountLabel.userInteractionEnabled = YES;
     _followDescLabel.userInteractionEnabled = YES;
     _fansCountLabel.userInteractionEnabled = YES;
@@ -232,27 +224,20 @@
 }
 
 
-- (void)follow:(UIButton *)followButton {
-    followButton.selected = !followButton.selected;
+- (void)follow {
+    
+    _user.isMyFollow = !_user.isMyFollow;
+
     NSMutableDictionary *param = [NSMutableDictionary new];
-    if (_pageVM) {
-        [param setObject:@(_pageVM.userID) forKey:@"uid"];
-    } else {
-        [param setObject:@(_uid) forKey:@"uid"];
-    }
+    [param setObject:@(_user.uid) forKey:@"uid"];
+    NSNumber *status = _user.isMyFollow ? @1:@0;
+    [param setObject:status forKey:@"status"];
+    
     [DDService follow:param withBlock:^(BOOL success) {
-        if (!success) {
-//            _followButton.highlighted = !_followButton.highlighted;
-            followButton.selected = !followButton.selected;
-            [Hud text:@"网络状态不佳，操作失败"];
+        if (success) {
+            _pageVM.followed = _user.isMyFollow;
         } else {
-            if (followButton.selected) {
-               [Hud text:@"关注成功"];
-            }
-            else{
-                [Hud text:@"已取消关注"];
-            }
-            
+            _user.isMyFollow = !_user.isMyFollow;
         }
     }];
 }
@@ -262,9 +247,9 @@
     self.nameLabel.text = user.nickname;
     
     
-//    self.psGodIcon_big.hidden = YES;
-    // testing
-//    self.psGodIcon_big.hidden = (_pageVM.ID % 2 == 0);
+    //self.psGodIcon_big.hidden = YES;
+    //testing
+    //self.psGodIcon_big.hidden = (_pageVM.ID % 2 == 0);
     
     self.psGodIcon_big.hidden             = !user.isV;
     self.psGodCertificateImageView.hidden = !user.isV;
@@ -273,12 +258,9 @@
     [DDService sd_downloadImage:avatarUrlString withBlock:^(UIImage *image) {
         _avatarView.avatarImageView.image = image;
         
+    //testing...done
         
-        //testing...done
-        
-        _avatarView.isV = user.isV;
-        
-        _blurView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:[UIColor blackColor]];
+    _blurView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:[UIColor blackColor]];
     }];
     
     
@@ -344,24 +326,9 @@
         make.right.equalTo(self.view);
         make.bottom.equalTo(self.view);
     }];
-    
-//    UIPanGestureRecognizer* panGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panGesture:)];
-//    [_pageMenu.view addGestureRecognizer:panGesture];
+
 }
-//- (void)panGesture:(UIPanGestureRecognizer *)sender {
-//    if (sender.state == UIGestureRecognizerStateBegan) {
-//        _startPanLocationY = [sender locationInView:self.view].y;
-//    }
-//    if (_pageMenu.view.frame.origin.y >= 0 && _pageMenu.view.frame.origin.y <= 180) {
-//        
-//        CGFloat dif = [sender locationInView:self.view].y - _startPanLocationY;
-//        CGFloat y = _pageMenu.view.frame.origin.y +  dif ;
-//        y = MIN(y, 180);
-//        y = MAX(y, 0);
-//        _pageMenu.view.frame = CGRectMake(0, y, SCREEN_WIDTH, SCREEN_HEIGHT-NAV_HEIGHT-y);
-//        _startPanLocationY = [sender locationInView:self.view].y;
-//    }
-//}
+
 
 - (void)scrollUp {
 
@@ -403,11 +370,34 @@
         if (user) {
             [self updateUserInterface:user];
             _user = user;
+            [self addKVOTo:_user];
         }
     }];
 }
 
 
+-(void)dealloc {
+    [self removeKVOFrom:_user];
+}
+- (void)addKVOTo:(id)receive{
+    [receive addObserver:self forKeyPath:@"isMyFollow" options:NSKeyValueObservingOptionNew context:NULL];
+}
+- (void)removeKVOFrom:(id)receiver {
+    @try{
+        [receiver removeObserver:self forKeyPath:@"isMyFollow"];
+    }@catch(id anException){
+        //do nothing, obviously it wasn't attached because an exception was thrown
+    }
+}
 
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+
+    if ([keyPath isEqualToString:@"isMyFollow"]) {
+        BOOL newFollowed = [[change objectForKey:@"new"]boolValue];
+        self.followButton.selected = newFollowed;
+    }
+    
+}
 
 @end

@@ -70,10 +70,15 @@
     [_commentLabel1 mas_updateConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(_commentLabel2.mas_top).with.offset(0).priorityHigh();
     }];
+    [self removeKVO];
+}
+-(void)dealloc {
+    [self removeKVO];
 }
 - (void)injectSauce:(PIEPageVM *)viewModel {
     WS(ws);
     _vm = viewModel;
+    [self addKVO];
     NSString *urlString_avatar = [viewModel.avatarURL trimToImageWidth:_avatarView.frame.size.width*SCREEN_SCALE];
     NSString *urlString_imageView = [viewModel.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
     [_theImageView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView]
@@ -134,6 +139,26 @@
         }
     }
 
-
 }
+
+
+- (void)addKVO {
+    [_vm addObserver:self forKeyPath:@"followed" options:NSKeyValueObservingOptionNew context:NULL];
+}
+- (void)removeKVO {
+    @try{
+        [_vm removeObserver:self forKeyPath:@"followed"];
+    }@catch(id anException){
+        //do nothing, obviously it wasn't attached because an exception was thrown
+    }
+}
+
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"followed"]) {
+        BOOL newFollowed = [[change objectForKey:@"new"]boolValue];
+        self.followView.highlighted = newFollowed;
+    }
+}
+
 @end

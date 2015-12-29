@@ -9,17 +9,17 @@
 #import "PIEFriendFollowingViewController.h"
 #import "PIEFriendFollowingTableCell.h"
 #import "PIEFriendViewController.h"
-#import "DDFollowManager.h"
-#import "PIEEntityFollow.h"
-#import "DDService.h"
-#import "PIEFollowViewModel.h"
-#import "PIERefreshFooterTableView.h"
 
+//
+#import "DDService.h"
+//
+#import "PIERefreshFooterTableView.h"
+//#import "PIEUserViewModel.h"
 
 @interface PIEFriendFollowingViewController () < UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
 @property (nonatomic, strong) PIERefreshFooterTableView *tableView;
-@property (nonatomic, strong) UIView *concernView;
+//@property (nonatomic, strong) UIView *concernView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapConcernGesture;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, assign) NSInteger currentPage;
@@ -51,29 +51,33 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self createUI];
-}
-
-- (void)createUI {
+    self.view.backgroundColor = [UIColor whiteColor];
     self.title = [NSString stringWithFormat:@"%@的关注", _userName];
-    _concernView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-    self.view = _concernView;
-    _tableView = [[PIERefreshFooterTableView alloc] initWithFrame:_concernView.bounds];
-    _tableView.backgroundColor = [UIColor whiteColor];
-    _tableView.tableFooterView = [UIView new];
-    [_concernView addSubview:_tableView];
-    _tableView.dataSource = self;
-    _tableView.delegate = self;
-    _tableView.psDelegate = self;
-    _tableView.emptyDataSetSource = self;
-    _tableView.emptyDataSetDelegate = self;
-    _tableView.separatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
-    _tableView.separatorInset = UIEdgeInsetsMake(0, 18, 0, 15);
-    _tapConcernGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapConcernGesture:)];
-    [_tableView addGestureRecognizer:_tapConcernGesture];
+    [self.view addSubview:self.tableView];
     _canRefreshFooter = YES;
     _isfirstLoading = YES;
+    _dataSource = [NSMutableArray array];
+
     [self getDataSource];
+}
+
+
+-(PIERefreshFooterTableView *)tableView {
+    if (!_tableView) {
+        _tableView = [[PIERefreshFooterTableView alloc] initWithFrame:self.view.bounds];
+        _tableView.backgroundColor = [UIColor whiteColor];
+        _tableView.tableFooterView = [UIView new];
+        _tableView.dataSource = self;
+        _tableView.delegate = self;
+        _tableView.psDelegate = self;
+        _tableView.emptyDataSetSource = self;
+        _tableView.emptyDataSetDelegate = self;
+        _tableView.separatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
+        _tableView.separatorInset = UIEdgeInsetsMake(0, 18, 0, 15);
+        _tapConcernGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapConcernGesture:)];
+        [_tableView addGestureRecognizer:_tapConcernGesture];
+    }
+    return _tableView;
 }
 
 #pragma mark - Click Event
@@ -84,20 +88,20 @@
     CGPoint location = [gesture locationInView:_tableView];
     NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:location];
     if (indexPath) {
-        PIEFollowViewModel *viewModel = _dataSource[indexPath.row];
+        PIEUserViewModel *viewModel = _dataSource[indexPath.row];
         PIEFriendFollowingTableCell *cell = (PIEFriendFollowingTableCell *)[_tableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
             PIEFriendViewController *opvc = [PIEFriendViewController new];
             PIEPageVM* vm = [PIEPageVM new];
-            vm.userID = viewModel.uid;
-            vm.username = viewModel.userName;
+            vm.userID = viewModel.model.uid;
+            vm.username = viewModel.username;
             opvc.pageVM = vm;
             [self.navigationController pushViewController:opvc animated:YES];
         } else if (CGRectContainsPoint(cell.attentionButton.frame, p)) {
             cell.attentionButton.selected = !cell.attentionButton.selected;
             NSMutableDictionary* param = [NSMutableDictionary new];
-            [param setObject:@(cell.viewModel.uid) forKey:@"uid"];
+            [param setObject:@(cell.viewModel.model.uid) forKey:@"uid"];
             if (!cell.attentionButton.selected) {
                     [param setObject:@0 forKey:@"status"];
                 }
@@ -165,20 +169,18 @@
     WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     long long timeStamp = [[NSDate date] timeIntervalSince1970];
-    _dataSource = nil;
-    _dataSource = [NSMutableArray array];
     _currentPage = 1;
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@(_uid) forKeyedSubscript:@"uid"];
     [Hud activity:@"" inView:self.view];
-    [DDFollowManager getFollow:param withBlock:^(NSMutableArray *recommend,NSMutableArray* resultArray) {
+    [DDUserManager getMyFollows:param withBlock:^(NSArray *recommend,NSArray* resultArray) {
         [Hud dismiss:self.view];
-        for (PIEEntityFollow *concern in resultArray) {
-            PIEFollowViewModel *concernViewModel = [PIEFollowViewModel new];
-            [concernViewModel setViewModelData:concern];
-            [ws.dataSource addObject:concernViewModel];
+        [_dataSource removeAllObjects];
+        for (PIEUserModel *model in resultArray) {
+            PIEUserViewModel *vm = [[PIEUserViewModel alloc]initWithEntity:model];
+            [ws.dataSource addObject:vm];
         }
         ws.isfirstLoading = NO;
         [ws.tableView reloadData];
@@ -194,12 +196,12 @@
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(timestamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [DDFollowManager getFollow:param withBlock:^(NSMutableArray *recommend,NSMutableArray* resultArray) {
-        for (PIEEntityFollow *concern in resultArray) {
-            PIEFollowViewModel *concernViewModel = [PIEFollowViewModel new];
-            [concernViewModel setViewModelData:concern];
-            [ws.dataSource addObject:concernViewModel];
+    [DDUserManager getMyFollows:param withBlock:^(NSArray *recommend,NSArray* resultArray) {
+        for (PIEUserModel *model in resultArray) {
+            PIEUserViewModel *vm = [[PIEUserViewModel alloc]initWithEntity:model];
+            [ws.dataSource addObject:vm];
         }
+
         if (resultArray.count == 0) {
             ws.canRefreshFooter = NO;
         } else {

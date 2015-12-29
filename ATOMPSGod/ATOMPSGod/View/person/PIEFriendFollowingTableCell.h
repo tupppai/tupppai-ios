@@ -7,20 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+
+#import "PIEUserViewModel.h"
 #import "PIEAvatarButton.h"
 
-@class PIEFollowViewModel;
 
 @interface PIEFriendFollowingTableCell : UITableViewCell
-
 @property (nonatomic, strong) PIEAvatarButton *userHeaderButton;
+@property (nonatomic, strong) PIEUserViewModel *viewModel;
 
 @property (nonatomic, strong) UILabel *userNameLabel;
 @property (nonatomic, strong) UIButton *attentionButton;
 @property (nonatomic, strong) UILabel *fansNumberLabel;
 @property (nonatomic, strong) UILabel *uploadNumberLabel;
 @property (nonatomic, strong) UILabel *workNumberLabel;
-@property (nonatomic, strong) PIEFollowViewModel *viewModel;
 
 
 @end

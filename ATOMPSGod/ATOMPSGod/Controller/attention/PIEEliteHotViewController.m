@@ -181,7 +181,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     
     // add as subview, then add constraints
     [self.view addSubview:self.tableHot];
-    
+    self.tableHot.separatorStyle = UITableViewCellSeparatorStyleNone;
 
     __weak typeof(self) weakSelf = self;
     [self.tableHot mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -462,7 +462,8 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
                     [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
                 }
                 else if (CGRectContainsPoint(cell.followView.frame, p)) {
-                    [self follow:cell.followView];
+//                    [self follow:cell.followView];
+                    [_selectedVM follow];
                 }
                 else if (CGRectContainsPoint(cell.shareView.frame, p)) {
                     [self showShareView:_selectedVM];
@@ -524,7 +525,8 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
                 }
                 // 关注
                 else if (CGRectContainsPoint(cell.followView.frame, p)) {
-                    [self follow:cell.followView];
+//                    [self follow:cell.followView];
+                    [_selectedVM follow];
                 }
                 // 分享
                 else if (CGRectContainsPoint(cell.shareView.frame, p)) {
@@ -552,33 +554,33 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 
 
 
-/** Cell-点击 － 关注 */
-- (void)follow:(UIImageView*)followView {
-    followView.highlighted = !followView.highlighted;
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    [param setObject:@(_selectedVM.userID) forKey:@"uid"];
-    if (followView.highlighted) {
-        [param setObject:@1 forKey:@"status"];
-    }
-    else {
-        [param setObject:@0 forKey:@"status"];
-    }
-    
-    [DDService follow:param withBlock:^(BOOL success) {
-        if (success) {
-            _selectedVM.followed = followView.highlighted;
-        } else {
-            followView.highlighted = !followView.highlighted;
-            [Hud text:@"网络异常，请稍后再试"];
-        }
-        
-        if (followView.highlighted) {
-            [Hud text:@"关注成功"];
-        }else{
-            [Hud text:@"已取消关注"];
-        }
-    }];
-}
+///** Cell-点击 － 关注 */
+//- (void)follow:(UIImageView*)followView {
+//    followView.highlighted = !followView.highlighted;
+//    NSMutableDictionary *param = [NSMutableDictionary new];
+//    [param setObject:@(_selectedVM.userID) forKey:@"uid"];
+//    if (followView.highlighted) {
+//        [param setObject:@1 forKey:@"status"];
+//    }
+//    else {
+//        [param setObject:@0 forKey:@"status"];
+//    }
+//    
+//    [DDService follow:param withBlock:^(BOOL success) {
+//        if (success) {
+//            _selectedVM.followed = followView.highlighted;
+//        } else {
+//            followView.highlighted = !followView.highlighted;
+//            [Hud text:@"网络异常，请稍后再试"];
+//        }
+//        
+//        if (followView.highlighted) {
+//            [Hud text:@"关注成功"];
+//        }else{
+//            [Hud text:@"已取消关注"];
+//        }
+//    }];
+//}
 
 
 #pragma mark - Notification methods
@@ -713,7 +715,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
         _tableHot.rowHeight = UITableViewAutomaticDimension;
         
         _tableHot.tableHeaderView = self.swipeView;
-
+        
         
         UINib* nib = [UINib nibWithNibName:hotReplyIndentifier bundle:nil];
         [_tableHot registerNib:nib forCellReuseIdentifier:hotReplyIndentifier];

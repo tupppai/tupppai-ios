@@ -261,11 +261,13 @@
 - (void)addKVO {
     [_vm addObserver:self forKeyPath:@"lovedCount" options:NSKeyValueObservingOptionNew context:NULL];
     [_vm addObserver:self forKeyPath:@"likeCount" options:NSKeyValueObservingOptionNew context:NULL];
+    [_vm addObserver:self forKeyPath:@"followed" options:NSKeyValueObservingOptionNew context:NULL];
 }
 - (void)removeKVO {
     @try{
         [_vm removeObserver:self forKeyPath:@"lovedCount"];
         [_vm removeObserver:self forKeyPath:@"likeCount"];
+        [_vm removeObserver:self forKeyPath:@"followed"];
     }@catch(id anException){
         //do nothing, obviously it wasn't attached because an exception was thrown
     }
@@ -279,6 +281,10 @@
     } else     if ([keyPath isEqualToString:@"likeCount"]) {
         NSInteger newLikeCount = [[change objectForKey:@"new"]integerValue];
         self.likeView.number = newLikeCount;
+    } else     if ([keyPath isEqualToString:@"followed"]) {
+        BOOL newFollowed = [[change objectForKey:@"new"]boolValue];
+        self.followView.highlighted = newFollowed;
     }
 }
+
 @end

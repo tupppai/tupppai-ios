@@ -18,7 +18,8 @@
 #import "AppDelegate.h"
 #import "PIEUploadVC.h"
 #import "PIEProceedingManager.h"
-
+#import "PIEUploadManager.h"
+#import "PIECategoryModel.h"
 /* Variables */
 @interface PIEProceedingToHelpViewController ()
 
@@ -162,6 +163,8 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
         CGPoint p = [gesture locationInView:cell];
         //点击图片
         if (CGRectContainsPoint(cell.uploadView.frame, p)) {
+            
+            
             self.QBImagePickerController = nil;
             [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
         }
@@ -252,13 +255,14 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     PIEUploadVC* vc = [PIEUploadVC new];
     vc.assetsArray = assets;
     vc.hideSecondView = YES;
-    vc.type = PIEUploadTypeReply;
     PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath_toHelp.row];
-    vc.askIDToReply = vm.askID;
+    [PIEUploadManager shareManager].model.ask_id = vm.askID;
+    [PIEUploadManager shareManager].model.type = PIEPageTypeReply;
     
-    [[NSUserDefaults standardUserDefaults] setObject:@(vm.askID) forKey:@"AskIDToReply"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
+    if (vm.models_catogory && vm.models_catogory.count > 0) {
+        PIECategoryModel* model = [vm.models_catogory objectAtIndex:0];
+        [PIEUploadManager shareManager].model.channel_id = [model.ID integerValue];
+    }
     [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
 }
 

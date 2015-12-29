@@ -180,4 +180,27 @@ static  PIEUserModel* _currentUser;
     }];
 
 }
+
+
++ (void)getMyFans:(NSDictionary *)param withBlock:(void (^)(NSArray *))block {
+    [DDService ddGetFans:param withBlock:^(NSArray *data) {
+        NSArray *resultArray = [MTLJSONAdapter modelsOfClass:[PIEUserModel class] fromJSONArray:data error:NULL];
+        if (block) {
+            block(resultArray);
+        }
+    }];
+}
+
++ (void)getMyFollows:(NSDictionary *)param withBlock:(void (^)(NSArray *recommendArray, NSArray *myFollowArray))block {
+    [DDService ddGetFollow:param withBlock:^(NSArray *recommendArray, NSArray *myFollowArray) {
+        
+        NSArray* recommends = [MTLJSONAdapter modelsOfClass:[PIEUserModel class] fromJSONArray:recommendArray error:NULL];
+        NSArray* followers = [MTLJSONAdapter modelsOfClass:[PIEUserModel class] fromJSONArray:myFollowArray error:NULL];
+        
+        if (block) {
+            block(recommends, followers);
+        }
+    }];
+}
+
 @end

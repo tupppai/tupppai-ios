@@ -34,24 +34,18 @@
 
 - (void)injectSauce:(PIEUserViewModel*)vm {
     _vm = vm;
-    
-    
-    [_avatarButton setImageForState:UIControlStateNormal
-                            withURL:[NSURL URLWithString:vm.avatar]
-                   placeholderImage:[UIImage imageNamed:@"avatar_default"]];
-    
-    
-//    _avatarButton.isV = YES;
+    [_avatarButton setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:vm.avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+
+    //    _avatarButton.isV = YES;
     // testing
-//    _avatarButton.isV = (vm.fansNumber % 2 == 0);
+    //    _avatarButton.isV = (vm.fansNumber % 2 == 0);
     _avatarButton.isV = vm.model.isV;
     
-    
-    
     [_nameButton setTitle:vm.username forState:UIControlStateNormal];
-    _countLabel.text = [NSString stringWithFormat:@"%zd 作品   %zd 粉丝   %zd 关注",vm.replyNumber,vm.fansNumber,vm.attentionNumber];
-    _followButton.selected = vm.followed;
+    _countLabel.text = [NSString stringWithFormat:@"%@ 作品   %@ 粉丝   %@ 关注",vm.replyCount,vm.fansCount,vm.followCount];
+    _followButton.selected = vm.model.isMyFollow;
     [_swipeView reloadData];
+    
 }
 -(void)prepareForReuse {
     [super prepareForReuse];
@@ -62,7 +56,7 @@
 
 - (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
 {
-    return MIN(_vm.replies.count, 4);
+    return MIN(_vm.replyPages.count, 4);
 }
 
 - (UIView *)swipeView:(SwipeView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
@@ -77,7 +71,7 @@
         imageView.clipsToBounds = YES;
         [view addSubview:imageView];
     }
-    PIEPageVM* vm = [_vm.replies objectAtIndex:index];
+    PIEPageVM* vm = [_vm.replyPages objectAtIndex:index];
     for (UIView *subView in view.subviews){
         if([subView isKindOfClass:[UIImageView class]]){
             UIImageView *imageView = (UIImageView *)subView;

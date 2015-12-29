@@ -7,11 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+
+#import "PIEUserViewModel.h"
 #import "PIEAvatarButton.h"
-
-
-@class PIEFansViewModel;
-
 @interface PIEFriendFansTableCell : UITableViewCell
 
 @property (nonatomic, strong) PIEAvatarButton *userHeaderButton;
@@ -21,6 +19,6 @@
 @property (nonatomic, strong) UILabel *uploadNumberLabel;
 @property (nonatomic, strong) UILabel *workNumberLabel;
 
-@property (nonatomic, strong) PIEFansViewModel *viewModel;
+@property (nonatomic, strong) PIEUserViewModel *viewModel;
 
 @end

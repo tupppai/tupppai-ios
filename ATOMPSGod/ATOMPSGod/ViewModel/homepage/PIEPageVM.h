@@ -55,5 +55,6 @@
 - (void)decreaseLoveStatus;
 - (void)revertStatus ;
 -(void)love:(BOOL)revert;
+-(void)follow;
 @end
 

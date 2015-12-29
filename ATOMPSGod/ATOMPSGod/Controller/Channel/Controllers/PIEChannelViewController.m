@@ -69,10 +69,12 @@
 - (void)setupTableView
 {
     [self.view addSubview:self.tableView];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     UIEdgeInsets padding = UIEdgeInsetsMake(0, 0, 0, 0);
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view).with.insets(padding);
     }];
+
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -297,7 +299,6 @@
 
         _tableView.rowHeight = UITableViewAutomaticDimension;
         _tableView.backgroundColor = [UIColor colorWithHex:0xF8F8F8];
-        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [_tableView registerNib:[UINib nibWithNibName:@"PIEChannelTableViewCell"
                                                bundle:nil]
          forCellReuseIdentifier:@"Channel_Cell"];

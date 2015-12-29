@@ -18,6 +18,9 @@
 #import "AppDelegate.h"
 //#import "UITableView+FDTemplateLayoutCell.h"
 #import "DeviceUtil.h"
+#import "PIECategoryModel.h"
+//#import "PIEUploadManager.h"
+
 @interface PIEToHelpViewController () <UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,QBImagePickerControllerDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (nonatomic, strong) NSMutableArray *sourceToHelp;
 @property (nonatomic, assign) NSInteger currentIndex_ToHelp;
@@ -144,6 +147,7 @@
     if (_channelVM) {
         [param setObject:@(_channelVM.ID) forKey:@"category_id"];
     }
+    
 
     [PIEProceedingManager getMyToHelp:param withBlock:^(NSMutableArray *resultArray) {
         if (resultArray.count == 0) {
@@ -181,14 +185,16 @@
         [array addObject:asset];
     }
     PIEUploadVC* vc = [PIEUploadVC new];
-    vc.channelVM = _channelVM;
     vc.assetsArray = assets;
     vc.hideSecondView = YES;
-    vc.type = PIEUploadTypeReply;
     PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath.row];
-    vc.askIDToReply = vm.askID;
-    [[NSUserDefaults standardUserDefaults] setObject:@(vm.askID) forKey:@"AskIDToReply"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    if (vm.models_catogory && vm.models_catogory.count>0) {
+        PIECategoryModel *model = [vm.models_catogory objectAtIndex:0];
+        [PIEUploadManager shareManager].model.channel_id = [model.ID integerValue];
+    }
+    [PIEUploadManager shareManager].model.ask_id = vm.askID;
+    [PIEUploadManager shareManager].model.type = PIEPageTypeReply;
 
     [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
 }

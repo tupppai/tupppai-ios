@@ -380,6 +380,7 @@ CGFloat startPanLocationY;
         if (vm.ID == _pageVM.ID && vm.type == _pageVM.type ) {
             
             //为了数据能够同步
+            _pageVM.imageURL = vm.imageURL;
             vm = _pageVM;
 
             if (_pageVM.type == PIEPageTypeReply) {
