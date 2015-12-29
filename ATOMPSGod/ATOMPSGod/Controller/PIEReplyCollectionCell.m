@@ -12,8 +12,8 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
-    _avatarView.clipsToBounds = YES;
+//    _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
+//    _avatarView.clipsToBounds = YES;
     self.backgroundColor = [UIColor whiteColor];
     self.layer.cornerRadius = 8;
     _imageView.clipsToBounds = YES;
@@ -30,12 +30,20 @@
     
 }
 -(void)setSelected:(BOOL)selected {
+    
 }
 
 - (void)injectSauce:(PIEPageVM *)viewModel {
     _viewModel = viewModel;
     [_imageView sd_setImageWithURL:[NSURL URLWithString:viewModel.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-    [_avatarView sd_setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+    [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+//    _avatarView.isV = YES;
+    
+    // testing:
+//    _avatarView.isV = ([viewModel.likeCount integerValue] % 2 == 0);
+    
+    _avatarView.isV = viewModel.isV;
+    
     _usernameLabel.text = viewModel.username;
     _ID = viewModel.ID;
     _type = viewModel.type;
