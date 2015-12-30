@@ -9,25 +9,25 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="278" id="KGk-i7-Jjw" customClass="PIEChannelTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="467" height="278"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="359" id="KGk-i7-Jjw" customClass="PIEChannelTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="467" height="359"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="467" height="277.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="467" height="358.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gKv-rV-B0d">
-                        <rect key="frame" x="9" y="10" width="449" height="144"/>
+                        <rect key="frame" x="9" y="10" width="449" height="143.5"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="gKv-rV-B0d" secondAttribute="height" multiplier="714:228" id="abI-Vm-wQ3"/>
                         </constraints>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EsH-Of-MTP" userLabel="containerView">
-                        <rect key="frame" x="9" y="154" width="449" height="105"/>
+                        <rect key="frame" x="9" y="153.5" width="449" height="105"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FtG-wG-PzG" customClass="SwipeView">
-                                <rect key="frame" x="11" y="7" width="427" height="90"/>
+                                <rect key="frame" x="11" y="7" width="427" height="177.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
@@ -39,7 +39,18 @@
                             <constraint firstItem="FtG-wG-PzG" firstAttribute="leading" secondItem="EsH-Of-MTP" secondAttribute="leading" constant="11" id="cBV-pz-rQr"/>
                             <constraint firstAttribute="bottom" secondItem="FtG-wG-PzG" secondAttribute="bottom" constant="8" id="s1r-AZ-sc7"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="s1r-AZ-sc7"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cell_separator" translatesAutoresizingMaskIntoConstraints="NO" id="zCq-so-dHH" userLabel="cell_separator">
+                        <rect key="frame" x="0.0" y="348" width="467" height="10"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="10" id="USG-Q9-v6v"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
@@ -48,8 +59,12 @@
                     <constraint firstAttribute="bottomMargin" secondItem="EsH-Of-MTP" secondAttribute="bottom" priority="750" id="9d9-1l-GeK"/>
                     <constraint firstAttribute="trailingMargin" secondItem="EsH-Of-MTP" secondAttribute="trailing" constant="1" id="EpY-lN-Hrk"/>
                     <constraint firstItem="gKv-rV-B0d" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Ydh-93-TNZ"/>
+                    <constraint firstAttribute="trailing" secondItem="zCq-so-dHH" secondAttribute="trailing" id="aak-kv-3Nj"/>
+                    <constraint firstItem="zCq-so-dHH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="iDp-u5-s5l"/>
                     <constraint firstAttribute="trailingMargin" secondItem="gKv-rV-B0d" secondAttribute="trailing" constant="1" id="l6e-Le-n1M"/>
                     <constraint firstItem="gKv-rV-B0d" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="1" id="msz-53-EKs"/>
+                    <constraint firstAttribute="bottom" secondItem="zCq-so-dHH" secondAttribute="bottom" id="oTk-Bn-xhb"/>
+                    <constraint firstItem="zCq-so-dHH" firstAttribute="top" secondItem="FtG-wG-PzG" secondAttribute="bottom" constant="10" id="pE1-gz-aEv"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -57,7 +72,10 @@
                 <outlet property="imageView_banner" destination="gKv-rV-B0d" id="3nG-Gm-Etx"/>
                 <outlet property="swipeView" destination="FtG-wG-PzG" id="YXz-97-hel"/>
             </connections>
-            <point key="canvasLocation" x="291.5" y="312"/>
+            <point key="canvasLocation" x="291.5" y="352.5"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="cell_separator" width="3" height="21"/>
+    </resources>
 </document>
