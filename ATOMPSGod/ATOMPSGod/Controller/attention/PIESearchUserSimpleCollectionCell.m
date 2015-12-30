@@ -31,11 +31,6 @@
 
 - (void)injectSauce:(PIEUserViewModel*)vm {
     _vm = vm;
-
-//    [_avatarButton setImageForState:UIControlStateNormal
-//                            withURL:[NSURL URLWithString:vm.avatar]
-//                   placeholderImage:[UIImage imageNamed:@"avatar_default"]];
-//
     NSString *avatar_url = [vm.avatar trimToImageWidth:_avatarButton.frame.size.width];
     [DDService sd_downloadImage:avatar_url
                       withBlock:^(UIImage *image) {
@@ -43,8 +38,6 @@
                                          forState:UIControlStateNormal];
                       }];
 
-//    _avatarButton.isV = YES;
-//    _avatarButton.isV = (vm.fansNumber % 2 == 0);
     _avatarButton.isV = vm.model.isV;
     
     [_nameButton setTitle:vm.username forState:UIControlStateNormal];

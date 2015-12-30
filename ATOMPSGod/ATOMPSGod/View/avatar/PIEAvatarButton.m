@@ -17,46 +17,11 @@
 
 @implementation PIEAvatarButton
 
--(instancetype)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        self.imageView.contentMode = UIViewContentModeScaleAspectFill;
-        self.imageView.layer.cornerRadius = self.imageView.frame.size.width/2;
-        self.imageView.clipsToBounds = YES;
-        // for speeding-up
-        self.imageView.layer.shouldRasterize = YES;
-        
-        [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self);
-        }];
-    }
-    return self;
-}
--(instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        self.imageView.contentMode = UIViewContentModeScaleAspectFill;
-        self.imageView.layer.cornerRadius = self.imageView.frame.size.width/2;
-        self.imageView.clipsToBounds = YES;
-        
-        // for speeding up
-        self.imageView.layer.shouldRasterize = YES;
-        
-        [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self);
-        }];
-    }
-    return self;
-}
 - (void) addPSGodView {
     [self addSubview:self.psGodView];
     [self.psGodView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.bottom.equalTo(self.imageView).with.offset(2);
-//        make.centerX.equalTo(self.imageView.mas_trailing);
-        
         make.bottom.equalTo(self.imageView);
-        make.right.equalTo(self.imageView.mas_right).with.offset(1);
-        
+        make.trailing.equalTo(self.imageView);
         
         make.width.equalTo(self.imageView).with.multipliedBy(22.0/62.0).with.priorityHigh();
         make.height.equalTo(self.imageView).with.multipliedBy(22.0/62.0).with.priorityHigh();
@@ -71,16 +36,19 @@
     self.psGodView.layer.masksToBounds = YES;
     self.psGodView.layer.shouldRasterize = YES;
     
+    self.imageView.userInteractionEnabled = YES;
 }
 
 #pragma mark - layout methods
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    
-    // 在第二次布局的时候，重新设置圆角半径（没有下面两行代码，button在PIECarousel_ItemView中显示正常，但是在PIESearch中不行
+
+    self.imageView.frame = self.bounds;
+    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     self.imageView.layer.cornerRadius = self.imageView.frame.size.width/2;
     self.imageView.clipsToBounds = YES;
+    self.imageView.layer.shouldRasterize = YES;
 }
 #pragma mark - lazy loadings
 - (UIImageView *)psGodView
@@ -88,6 +56,7 @@
     if (_psGodView == nil) {
          _psGodView = [[UIImageView alloc] init];
         [_psGodView setImage:[UIImage imageNamed:@"icon_psGOD"]];
+        _psGodView.userInteractionEnabled = YES;
         _psGodView.contentMode = UIViewContentModeScaleAspectFit;
     }
     

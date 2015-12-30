@@ -88,8 +88,6 @@
 
 - (void)setViewModel:(PIEUserViewModel *)viewModel {
     _viewModel = viewModel;
-//    [self.userHeaderButton setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
-    
     
     NSString *avatar_url = [viewModel.avatar trimToImageWidth:self.userHeaderButton.frame.size.width * SCREEN_SCALE];
     [DDService sd_downloadImage:avatar_url
@@ -97,12 +95,8 @@
                           [self.userHeaderButton setImage:image
                                                  forState:UIControlStateNormal];
                       }];
-    
-    // testing
-    //    self.userHeaderButton.isV = ([viewModel.fansCount integerValue] % 2 == 0);
-    
-    // TODO: model's property 'isV' to be added
-    self.userHeaderButton.isV = YES;
+
+    self.userHeaderButton.isV = viewModel.model.isV;
     
     self.userNameLabel.text = viewModel.username;
     self.fansNumberLabel.text = [NSString stringWithFormat:@"%@粉丝",viewModel.fansCount];

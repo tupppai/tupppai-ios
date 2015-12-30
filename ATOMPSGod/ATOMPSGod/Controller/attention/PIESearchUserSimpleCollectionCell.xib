@@ -14,7 +14,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="486" height="65"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h9T-ol-K5Y" customClass="PIEAvatarButton">
-                        <rect key="frame" x="8" y="15" width="30" height="30"/>
+                        <rect key="frame" x="8" y="17.5" width="30" height="30"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="LI1-ZZ-vUH"/>
@@ -22,20 +22,20 @@
                         </constraints>
                     </button>
                     <button opaque="NO" alpha="0.89999997615814209" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="208-aK-zyn">
-                        <rect key="frame" x="50" y="3" width="30" height="29"/>
+                        <rect key="frame" x="50" y="5.5" width="30" height="29"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <state key="normal">
                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Eo-XU-yXI">
-                        <rect key="frame" x="50" y="32" width="381" height="0.0"/>
+                        <rect key="frame" x="50" y="34.5" width="381" height="0.0"/>
                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="izc-HQ-PKb">
-                        <rect key="frame" x="432" y="15" width="46" height="30"/>
+                        <rect key="frame" x="432" y="17.5" width="46" height="30"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="46" id="59Z-nN-ViH"/>
                             <constraint firstAttribute="height" constant="30" id="wFp-AA-l3z"/>
@@ -61,10 +61,12 @@
                 <constraint firstItem="208-aK-zyn" firstAttribute="leading" secondItem="h9T-ol-K5Y" secondAttribute="trailing" constant="12" id="bHa-zm-n38"/>
                 <constraint firstItem="208-aK-zyn" firstAttribute="top" secondItem="h9T-ol-K5Y" secondAttribute="top" constant="-12" id="sxK-nl-0EP"/>
                 <constraint firstItem="izc-HQ-PKb" firstAttribute="centerY" secondItem="h9T-ol-K5Y" secondAttribute="centerY" id="w93-xs-QIs"/>
+                <constraint firstItem="h9T-ol-K5Y" firstAttribute="centerY" secondItem="qvX-CX-i0J" secondAttribute="centerY" id="wFh-Nd-J8e"/>
             </constraints>
             <size key="customSize" width="486" height="65"/>
             <variation key="default">
                 <mask key="constraints">
+                    <exclude reference="UO9-RE-Lbe"/>
                     <exclude reference="49q-8p-kX9"/>
                     <exclude reference="UeG-NQ-KoH"/>
                     <exclude reference="KsR-cD-Qzs"/>

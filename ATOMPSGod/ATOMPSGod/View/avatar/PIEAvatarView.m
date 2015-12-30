@@ -98,11 +98,8 @@
         _avatarImageView.layer.cornerRadius = self.bounds.size.width / 2.0;
         [_avatarImageView setContentMode:UIViewContentModeScaleAspectFill];
         
-        
         // for speeding up
         _avatarImageView.layer.shouldRasterize = YES;
-        
-        _avatarImageView.image = [UIImage imageNamed:@"cellHolder"];
         _avatarImageView.clipsToBounds = YES;
     }
     
