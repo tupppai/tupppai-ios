@@ -10,7 +10,6 @@
 
 @interface PIEUploadModel : NSObject
 
-@property (nonatomic,copy) NSArray* tagIDArray;
 @property (nonatomic,copy) NSString* content;
 
 @property (nonatomic,assign) NSInteger ID;
@@ -21,6 +20,7 @@
 @property (nonatomic,strong) NSMutableArray* imageArray;
 @property (nonatomic, strong) NSMutableArray *uploadIdArray;
 @property (nonatomic, strong) NSMutableArray *ratioArray;
+@property (nonatomic,copy) NSArray* tagIDArray;
 
 
 @end

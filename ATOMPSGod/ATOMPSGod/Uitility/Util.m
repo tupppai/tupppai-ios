@@ -83,6 +83,7 @@
                 block(snapshotImage);
             }
         } else {
+            NSLog(@"无法生成图片");
         }
     }];
 }

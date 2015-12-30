@@ -510,9 +510,9 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 #pragma mark - qb_imagePickerController delegate
 -(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
     
-    [PIEUploadManager shareManager].model.channel_id = _currentChannelVM.ID;
+    [PIEUploadManager shareModel].channel_id = _currentChannelVM.ID;
 
-    [PIEUploadManager shareManager].model.type = PIEPageTypeReply;
+    [PIEUploadManager shareModel].type = PIEPageTypeReply;
     PIEUploadVC* vc = [PIEUploadVC new];
 //    vc.channelVM = _currentChannelVM;
     vc.assetsArray = assets;

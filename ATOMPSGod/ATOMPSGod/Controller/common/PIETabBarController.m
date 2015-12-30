@@ -99,8 +99,7 @@
 - (void) DoUploadJob:(NSNotification *)notification
 {
     PIEEliteViewController* vc = (PIEEliteViewController*)((DDNavigationController*)[self.viewControllers objectAtIndex:0]).topViewController;
-    PIEUploadManager* manager = [PIEUploadManager new];
-    manager.model = [[PIEUploadManager shareManager].model copy];
+    PIEUploadManager* manager = [[PIEUploadManager alloc]initWithShareModel];
     [manager upload:^(CGFloat percentage,BOOL success) {
         [vc.progressView setProgress:percentage animated:YES];
         if (success) {

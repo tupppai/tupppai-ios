@@ -8,6 +8,7 @@
 
 #import "PIEActionSheet_PS.h"
 #import "AppDelegate.h"
+#import "PIECategoryModel.h"
 @implementation PIEActionSheet_PS
 
 -(instancetype)init {
@@ -49,6 +50,10 @@
     NSMutableDictionary* param = [NSMutableDictionary new];
     [param setObject:@(_vm.ID) forKey:@"target"];
     [param setObject:@"ask" forKey:@"type"];
+    if (_vm.models_catogory.count >= 1) {
+        PIECategoryModel* model = [_vm.models_catogory objectAtIndex:0];
+        [param setObject:model.ID forKey:@"category_id"];
+    }
     
     [DDService signProceeding:param withBlock:^(NSString *imageUrl) {
         if (imageUrl != nil) {

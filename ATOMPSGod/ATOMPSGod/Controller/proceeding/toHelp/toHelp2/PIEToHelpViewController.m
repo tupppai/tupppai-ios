@@ -191,10 +191,10 @@
     
     if (vm.models_catogory && vm.models_catogory.count>0) {
         PIECategoryModel *model = [vm.models_catogory objectAtIndex:0];
-        [PIEUploadManager shareManager].model.channel_id = [model.ID integerValue];
+        [PIEUploadManager shareModel].channel_id = [model.ID integerValue];
     }
-    [PIEUploadManager shareManager].model.ask_id = vm.askID;
-    [PIEUploadManager shareManager].model.type = PIEPageTypeReply;
+    [PIEUploadManager shareModel].ask_id = vm.askID;
+    [PIEUploadManager shareModel].type = PIEPageTypeReply;
 
     [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
 }

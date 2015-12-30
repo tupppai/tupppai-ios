@@ -39,7 +39,7 @@
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="130" id="6DR-iK-E7b"/>
                             <constraint firstAttribute="height" constant="348" id="Ngn-Bj-NmF"/>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="cZo-vc-FYi"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="cZo-vc-FYi"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
