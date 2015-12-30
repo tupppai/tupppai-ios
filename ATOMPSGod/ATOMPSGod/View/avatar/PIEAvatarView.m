@@ -37,10 +37,10 @@
         self.backgroundColor = [UIColor clearColor];
         
         /* dirty code begins: */
-        UIView *backgroundView = [[UIView alloc] init];
-        backgroundView.backgroundColor = [UIColor whiteColor];
-        
-        [self addSubview:backgroundView];
+//        UIView *backgroundView = [[UIView alloc] init];
+//        backgroundView.backgroundColor = [UIColor whiteColor];
+//        
+//        [self addSubview:backgroundView];
 
 //        /*
 //            TO-BE-OVERWRITTEN! 非常损耗性能的一种添加白色border的方法！
@@ -90,6 +90,11 @@
         _avatarImageView = [[UIImageView alloc]initWithFrame:self.bounds];
         _avatarImageView.layer.cornerRadius = self.bounds.size.width / 2.0;
         [_avatarImageView setContentMode:UIViewContentModeScaleAspectFill];
+        
+        // for speeding up
+        _avatarImageView.layer.shouldRasterize = YES;
+        
+        
         _avatarImageView.image = [UIImage imageNamed:@"cellHolder"];
         _avatarImageView.clipsToBounds = YES;
     }

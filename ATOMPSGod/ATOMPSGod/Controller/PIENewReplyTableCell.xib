@@ -30,7 +30,7 @@
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nih-jX-jzj" userLabel="avatarView" customClass="PIEAvatarView">
                         <rect key="frame" x="8" y="8" width="30" height="30"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="Kz8-6u-nRX"/>
                             <constraint firstAttribute="width" constant="30" id="vci-Zd-CmA"/>

@@ -1,31 +1,19 @@
 {
   "images" : [
     {
-      "resizing" : {
-        "mode" : "3-part-horizontal",
-        "center" : {
-          "mode" : "tile",
-          "width" : 8
-        },
-        "cap-insets" : {
-          "right" : 2,
-          "left" : 2
-        }
-      },
       "idiom" : "universal",
-      "filename" : "cell_separator.png",
       "scale" : "1x"
     },
     {
       "resizing" : {
         "mode" : "3-part-horizontal",
         "center" : {
-          "mode" : "tile",
+          "mode" : "stretch",
           "width" : 1
         },
         "cap-insets" : {
-          "right" : 4,
-          "left" : 4
+          "right" : 3,
+          "left" : 3
         }
       },
       "idiom" : "universal",
@@ -36,12 +24,12 @@
       "resizing" : {
         "mode" : "3-part-horizontal",
         "center" : {
-          "mode" : "tile",
-          "width" : 3
+          "mode" : "stretch",
+          "width" : 1
         },
         "cap-insets" : {
-          "right" : 7,
-          "left" : 5
+          "right" : 2,
+          "left" : 2
         }
       },
       "idiom" : "universal",

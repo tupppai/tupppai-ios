@@ -87,7 +87,16 @@
 - (void)setViewModel:(PIEUserViewModel *)viewModel {
     
     _viewModel = viewModel;
-    [_userHeaderButton setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatar] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+//    [_userHeaderButton setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatar] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+//
+    
+   [DDService sd_downloadImage:viewModel.avatar
+                     withBlock:^(UIImage *image) {
+                        [_userHeaderButton setImage:image
+                                           forState:UIControlStateNormal];
+                     }];
+    
+    
     // testing
     //    _userHeaderButton.isV = ([viewModel.fansCount integerValue] % 2 == 0);
     
