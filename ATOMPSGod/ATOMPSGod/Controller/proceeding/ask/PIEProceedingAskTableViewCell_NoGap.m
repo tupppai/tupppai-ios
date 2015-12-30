@@ -46,10 +46,9 @@
     
     _contentLabel.textColor = [UIColor colorWithHex:0x50484B andAlpha:1];
     _contentTextField.textColor = [UIColor colorWithHex:0x50484B andAlpha:1];
-    _allWorkDescLabel.textColor = [UIColor colorWithHex:0xE67660 andAlpha:1];
+
     _contentLabel.font = [UIFont lightTupaiFontOfSize:14];
     _contentTextField.font = [UIFont lightTupaiFontOfSize:14];
-    _allWorkDescLabel.font = [UIFont lightTupaiFontOfSize:11];
     
     _contentTextField.enabled = NO;
     [_editButton setTitleColor:[UIColor colorWithHex:0xff6d3f] forState:UIControlStateSelected];
@@ -138,8 +137,6 @@
             }];
         }
     }
-    _timeLabel.text = _vmAsk1.publishTime;
-    _allWorkDescLabel.text = [NSString stringWithFormat:@"已有%@个作品",_vmAsk1.replyCount];
     //    _contentLabel.text = [NSString stringWithFormat:@"要求:%@",_vmAsk1.content];
     _contentTextField.text = _vmAsk1.content;
     [self.swipeView reloadData];

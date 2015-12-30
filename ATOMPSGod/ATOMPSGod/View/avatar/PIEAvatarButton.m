@@ -25,6 +25,10 @@
         self.imageView.clipsToBounds = YES;
         // for speeding-up
         self.imageView.layer.shouldRasterize = YES;
+        
+        [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self);
+        }];
     }
     return self;
 }
@@ -37,6 +41,10 @@
         
         // for speeding up
         self.imageView.layer.shouldRasterize = YES;
+        
+        [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self);
+        }];
     }
     return self;
 }

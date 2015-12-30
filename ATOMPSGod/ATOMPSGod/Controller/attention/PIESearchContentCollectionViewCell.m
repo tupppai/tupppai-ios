@@ -33,7 +33,11 @@
 //                            withURL:[NSURL URLWithString:vm.avatarURL]
 //                   placeholderImage:[UIImage imageNamed:@"avatar_default"]];
     
-    [DDService sd_downloadImage:vm.avatarURL
+    
+    NSString *avatar_url =
+    [vm.avatarURL trimToImageWidth:_avatarButton.frame.size.width * SCREEN_SCALE];
+    
+    [DDService sd_downloadImage:avatar_url
                       withBlock:^(UIImage *image) {
                           [_avatarButton setImage:image
                                          forState:UIControlStateNormal];

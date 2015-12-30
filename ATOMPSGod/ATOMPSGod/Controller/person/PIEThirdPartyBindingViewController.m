@@ -77,7 +77,7 @@
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,40)];
-    view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    view.backgroundColor = [UIColor colorWithHex:0xF8F8F8];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 100,40)];
     label.backgroundColor = [UIColor clearColor];
     [view addSubview:label];

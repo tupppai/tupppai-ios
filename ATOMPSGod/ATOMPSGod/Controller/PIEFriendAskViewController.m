@@ -139,7 +139,7 @@
     if (!_table) {
         _table = [[PIERefreshTableView alloc] initWithFrame:CGRectZero];
         _table.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _table.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        _table.backgroundColor = [UIColor colorWithHex:0xF8F8F8];
         _table.showsVerticalScrollIndicator = NO;
         _table.delegate = self;
         _table.dataSource = self;

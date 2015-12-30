@@ -520,7 +520,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         _collectionView_ask.toRefreshTop                 = YES;
         _collectionView_ask.autoresizingMask             = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         _collectionView_ask.showsVerticalScrollIndicator = NO;
-        _collectionView_ask.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        _collectionView_ask.backgroundColor = [UIColor colorWithHex:0xF8F8F8];
         
     }
     return _collectionView_ask;

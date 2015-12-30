@@ -18,12 +18,6 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jeY-1J-VBC">
                         <rect key="frame" x="0.0" y="0.0" width="440" height="294.5"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8sL-ek-knS">
-                                <rect key="frame" x="427" y="18" width="0.0" height="0.0"/>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
-                                <color key="textColor" red="0.99607843137254903" green="0.6705882352941176" blue="0.58039215686274515" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vQZ-tg-eG2" customClass="SwipeView">
                                 <rect key="frame" x="94" y="36" width="338" height="84"/>
                                 <constraints>
@@ -138,7 +132,6 @@
                             <constraint firstItem="t32-5m-Gim" firstAttribute="leading" secondItem="W9S-Uz-hWO" secondAttribute="trailing" constant="5" id="YGD-Sq-zKS"/>
                             <constraint firstItem="W9S-Uz-hWO" firstAttribute="top" secondItem="Ifq-AW-v3W" secondAttribute="bottom" constant="10" id="Ydi-P5-Nci"/>
                             <constraint firstItem="anF-uE-APk" firstAttribute="leading" secondItem="zIg-s2-acb" secondAttribute="trailing" id="aGF-59-gXd"/>
-                            <constraint firstItem="8sL-ek-knS" firstAttribute="top" secondItem="NZK-ha-AqP" secondAttribute="top" id="bNZ-DW-4q2"/>
                             <constraint firstAttribute="trailingMargin" secondItem="vQZ-tg-eG2" secondAttribute="trailing" id="coX-xP-Gjh"/>
                             <constraint firstItem="vQZ-tg-eG2" firstAttribute="leading" secondItem="dLB-ND-Est" secondAttribute="trailing" constant="2" id="dVy-iu-cYX"/>
                             <constraint firstItem="Ifq-AW-v3W" firstAttribute="top" secondItem="zIg-s2-acb" secondAttribute="bottom" constant="5" id="i4E-vv-rLp"/>
@@ -148,7 +141,6 @@
                             <constraint firstAttribute="trailingMargin" secondItem="zIg-s2-acb" secondAttribute="trailing" constant="5" id="rsR-f5-CQn"/>
                             <constraint firstItem="zIg-s2-acb" firstAttribute="leading" secondItem="vQZ-tg-eG2" secondAttribute="leading" id="sl9-8M-BLh"/>
                             <constraint firstItem="dLB-ND-Est" firstAttribute="top" secondItem="NZK-ha-AqP" secondAttribute="top" id="wda-v5-AdA"/>
-                            <constraint firstAttribute="trailing" secondItem="8sL-ek-knS" secondAttribute="trailing" constant="12" id="wn0-UC-Xm2"/>
                             <constraint firstItem="B1p-Gj-qzE" firstAttribute="leading" secondItem="t32-5m-Gim" secondAttribute="trailing" constant="10" id="xpn-qj-CHh"/>
                         </constraints>
                         <variation key="default">
@@ -197,7 +189,6 @@
             </tableViewCellContentView>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
-                <outlet property="allWorkDescLabel" destination="8sL-ek-knS" id="kYp-EZ-YY5"/>
                 <outlet property="categoryNameLabel" destination="t32-5m-Gim" id="e6h-xB-dWk"/>
                 <outlet property="contentLabel" destination="zIg-s2-acb" id="1Sr-zB-uVS"/>
                 <outlet property="contentTextField" destination="anF-uE-APk" id="TQ3-Eq-ucU"/>
@@ -212,7 +203,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="cell_separator" width="3" height="21"/>
+        <image name="cell_separator" width="3" height="20"/>
         <image name="pieProceedingChannelIndicator" width="10" height="11"/>
         <image name="pie_proceeding_ask_edit" width="15" height="15"/>
     </resources>

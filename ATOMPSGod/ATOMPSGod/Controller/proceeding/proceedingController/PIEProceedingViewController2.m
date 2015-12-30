@@ -185,7 +185,7 @@ typedef NS_ENUM(NSUInteger, PIEProceedingControllerType) {
 //        _scrollView.contentSize                    = CGSizeMake(SCREEN_WIDTH * 2, 0);
         _scrollView.pagingEnabled                  = YES;
         _scrollView.scrollsToTop                   = NO;
-        _scrollView.backgroundColor                = [UIColor groupTableViewBackgroundColor];
+        _scrollView.backgroundColor                = [UIColor colorWithHex:0xF8F8F8];
         _scrollView.delegate                       = self;
     }
     return _scrollView;
