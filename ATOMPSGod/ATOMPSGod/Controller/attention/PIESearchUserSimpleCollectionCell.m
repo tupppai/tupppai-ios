@@ -25,7 +25,7 @@
     _avatarButton.userInteractionEnabled = NO;
     _nameButton.userInteractionEnabled = NO;
     _followButton.userInteractionEnabled = NO;
-    
+    _avatarButton.imageView.userInteractionEnabled = YES;
 }
 
 

@@ -35,8 +35,6 @@
     self.psGodView.layer.cornerRadius = (self.bounds.size.width * (22.0 / 62.0)) / 2;
     self.psGodView.layer.masksToBounds = YES;
     self.psGodView.layer.shouldRasterize = YES;
-    
-    self.imageView.userInteractionEnabled = YES;
 }
 
 #pragma mark - layout methods
@@ -44,7 +42,7 @@
 {
     [super layoutSubviews];
 
-    self.imageView.frame = self.bounds;
+    self.imageView.frame = self.bounds; 
     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     self.imageView.layer.cornerRadius = self.imageView.frame.size.width/2;
     self.imageView.clipsToBounds = YES;
@@ -56,7 +54,6 @@
     if (_psGodView == nil) {
          _psGodView = [[UIImageView alloc] init];
         [_psGodView setImage:[UIImage imageNamed:@"icon_psGOD"]];
-        _psGodView.userInteractionEnabled = YES;
         _psGodView.contentMode = UIViewContentModeScaleAspectFit;
     }
     
