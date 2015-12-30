@@ -103,10 +103,10 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="piePsGodCertificate" translatesAutoresizingMaskIntoConstraints="NO" id="BUw-Sa-VFF" userLabel="psGodCertificateView">
-                            <rect key="frame" x="316.5" y="159" width="50" height="17"/>
+                            <rect key="frame" x="316.5" y="159" width="38" height="13"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="17" id="c2m-hv-f8E"/>
-                                <constraint firstAttribute="width" constant="50" id="xiH-I7-Sf3"/>
+                                <constraint firstAttribute="height" constant="13" id="c2m-hv-f8E"/>
+                                <constraint firstAttribute="width" constant="38" id="xiH-I7-Sf3"/>
                             </constraints>
                         </imageView>
                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_psGod_big" translatesAutoresizingMaskIntoConstraints="NO" id="VfQ-BJ-dw2">
@@ -128,7 +128,7 @@
                         <constraint firstItem="YpL-7O-eX4" firstAttribute="centerY" secondItem="76X-ft-nwv" secondAttribute="centerY" id="Iw8-V2-FOt"/>
                         <constraint firstItem="76X-ft-nwv" firstAttribute="centerX" secondItem="WGQ-wd-hPM" secondAttribute="centerX" id="Mko-sL-LZp"/>
                         <constraint firstItem="76X-ft-nwv" firstAttribute="top" secondItem="2UE-Cq-PhH" secondAttribute="bottom" constant="21" id="Nk8-OT-BDL"/>
-                        <constraint firstItem="BUw-Sa-VFF" firstAttribute="centerY" secondItem="2UE-Cq-PhH" secondAttribute="centerY" constant="2.25" id="RIb-W6-TUE"/>
+                        <constraint firstItem="BUw-Sa-VFF" firstAttribute="centerY" secondItem="2UE-Cq-PhH" secondAttribute="centerY" id="RIb-W6-TUE"/>
                         <constraint firstItem="3jc-pE-j2n" firstAttribute="centerY" secondItem="BgH-Pa-b5p" secondAttribute="centerY" id="SmW-L5-Jm7"/>
                         <constraint firstItem="H8I-ov-3eC" firstAttribute="leading" secondItem="bvf-p6-pCL" secondAttribute="leading" id="TS2-cd-5SG"/>
                         <constraint firstItem="BgH-Pa-b5p" firstAttribute="centerY" secondItem="76X-ft-nwv" secondAttribute="centerY" id="VHP-yA-8gd"/>
@@ -186,6 +186,6 @@
     </objects>
     <resources>
         <image name="icon_psGod_big" width="26" height="26"/>
-        <image name="piePsGodCertificate" width="40" height="12"/>
+        <image name="piePsGodCertificate" width="38" height="13"/>
     </resources>
 </document>

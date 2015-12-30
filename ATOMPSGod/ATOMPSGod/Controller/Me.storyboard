@@ -117,10 +117,10 @@
                                         <rect key="frame" x="317.5" y="122.5" width="16.5" height="16.5"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="piePsGodCertificate" translatesAutoresizingMaskIntoConstraints="NO" id="0nZ-YX-Z6e">
-                                        <rect key="frame" x="316.5" y="157" width="50" height="17"/>
+                                        <rect key="frame" x="316.5" y="159" width="38" height="13"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="17" id="48L-BZ-R4F"/>
-                                            <constraint firstAttribute="width" constant="50" id="Y8X-T6-V6c"/>
+                                            <constraint firstAttribute="height" constant="13" id="48L-BZ-R4F"/>
+                                            <constraint firstAttribute="width" constant="38" id="Y8X-T6-V6c"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
@@ -240,7 +240,7 @@
     </scenes>
     <resources>
         <image name="icon_psGod_big" width="26" height="26"/>
-        <image name="piePsGodCertificate" width="40" height="12"/>
+        <image name="piePsGodCertificate" width="38" height="13"/>
         <image name="pie_message" width="23" height="18"/>
     </resources>
 </document>

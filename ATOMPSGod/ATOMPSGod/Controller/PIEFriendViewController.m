@@ -163,7 +163,7 @@
     [_view1.layer insertSublayer:gradient atIndex:0];
     
     self.avatarView.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
-    self.avatarView.avatarImageView.layer.borderWidth = 3.0f;
+    self.avatarView.avatarImageView.layer.borderWidth = 1.5f;
     
     _dotView1.layer.cornerRadius = _dotView1.frame.size.width/2;
     _dotView2.layer.cornerRadius = _dotView2.frame.size.width/2;
