@@ -21,6 +21,6 @@
 @property (nonatomic, strong) NSMutableArray *uploadIdArray;
 @property (nonatomic, strong) NSMutableArray *ratioArray;
 @property (nonatomic,copy) NSArray* tagIDArray;
-
+- (void)reset;
 
 @end
