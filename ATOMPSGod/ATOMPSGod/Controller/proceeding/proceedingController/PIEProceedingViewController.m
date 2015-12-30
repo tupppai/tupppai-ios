@@ -405,8 +405,8 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     vc.hideSecondView = YES;
     PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath_toHelp.row];
     
-    [PIEUploadManager shareManager].model.ask_id = vm.askID;
-    [PIEUploadManager shareManager].model.type = PIEPageTypeReply;
+    [PIEUploadManager shareModel].ask_id = vm.askID;
+    [PIEUploadManager shareModel].type = PIEPageTypeReply;
 
 //    [[NSUserDefaults standardUserDefaults] setObject:@(vm.askID) forKey:@"AskIDToReply"];
 //    [[NSUserDefaults standardUserDefaults] synchronize];

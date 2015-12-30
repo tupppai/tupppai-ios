@@ -120,6 +120,7 @@
         [self adjustHeight:image.size];
         
         [DDService sd_downloadImage:vm.avatarURL withBlock:^(UIImage *image) {
+
             _avatarView.image = image;
             if (vm.type == PIEPageTypeReply) {
                 if (vm.models_image.count>0) {
@@ -130,7 +131,8 @@
                     } else if ([object isKindOfClass:[NSDictionary class]]) {
                         entity = [MTLJSONAdapter modelOfClass:[PIEModelImage class] fromJSONDictionary:object error:NULL];
                     }
-                    [DDService sd_downloadImage:entity.url withBlock:^(UIImage *image) {
+                    NSString* url = [entity.url trimToImageWidth:SCREEN_WIDTH_RESOLUTION*0.5];
+                    [DDService sd_downloadImage:url withBlock:^(UIImage *image) {
                         _imageView_thumb.image = image;
                         _imageView_thumb.hidden = NO;
                         _imageView_thumb_bg.hidden = NO;

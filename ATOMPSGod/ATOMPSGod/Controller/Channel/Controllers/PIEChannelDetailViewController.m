@@ -530,14 +530,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
  *  用户点击了updateShareStatus之后（在弹出的窗口完成分享），刷新本页面的分享数（UI元素的同步）
  */
 - (void)updateShareStatus {
-    
-    /*
-     _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
-     
-     */
-    //    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
-    
-    //    [self updateStatus]; 将刷新UI的这个方法挪到这里来
+
     if (_selectedIndexPath) {
         [self.tableView reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
@@ -587,14 +580,8 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 - (PIERefreshTableView *)tableView
 {
     if (_tableView == nil) {
-        // instantiate only for once
         _tableView = [[PIERefreshTableView alloc] initWithFrame:self.view.bounds];
-        
-        // configurations
-        
-        //        _tableView.frame = self.view.bounds;
-        
-        // set delegate
+   
         _tableView.delegate   = self;
         
         _tableView.dataSource = self;

@@ -7,40 +7,46 @@
 //
 
 #import "PIEUploadManager.h"
-#import "DDSessionManager.h"
 #import "PIEModelImageInfo.h"
 
-#import "PIEUploadModel.h"
-
 @interface PIEUploadManager()
-//@property (nonatomic, strong) NSMutableArray *uploadIdArray;
-//@property (nonatomic, strong) NSMutableArray *ratioArray;
 @end
 
 static dispatch_once_t onceToken;
-
-static PIEUploadManager *shareManager;
+static PIEUploadModel *shareModel;
 
 @implementation PIEUploadManager
 
--(instancetype)init {
+
+- (instancetype)initWithShareModel {
     self = [super init];
     if (self) {
         _model = [PIEUploadModel new];
-    }
+        _model.content = shareModel.content;
+        _model.ID = shareModel.ID;
+        _model.ask_id = shareModel.ask_id;
+        _model.channel_id = shareModel.channel_id;
+        _model.type = shareModel.type;
+        _model.imageArray = [shareModel.imageArray copy];
+        _model.tagIDArray = shareModel.tagIDArray;
+        
+        [self resetShareModel];
+
+        }
     return self;
 }
-+(PIEUploadManager *)shareManager {
-        dispatch_once(&onceToken, ^{
-            shareManager = [PIEUploadManager new];
-        });
-        return shareManager;
+
++(PIEUploadModel *)shareModel {
+    dispatch_once(&onceToken, ^{
+        shareModel = [PIEUploadModel new];
+    });
+    return shareModel;
 }
 
-- (void)resetModel {
-    _model = nil;
-    _model = [PIEUploadModel new];
+- (void)resetShareModel {
+    [shareModel reset];
 }
+
 
 - (NSURLSessionDataTask *)UploadImage:(NSData *)data WithBlock:(void (^)(PIEModelImageInfo *, NSError *))block {
     return [[DDSessionManager shareHTTPSessionManager] POST:@"image/upload" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
@@ -68,11 +74,9 @@ static PIEUploadManager *shareManager;
             }
             [formData appendPartWithFileData:imageData name:attachmentName fileName:@"AppTupaiImage_iOS" mimeType:@"image/png"];
         }  success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//            NSLog(@"operation success: %@\n %@", operation, responseObject);
             [self.model.uploadIdArray addObject:responseObject[@"data"][@"id"]];
             block(1,YES);
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//            NSLog(@"Error: %@", error);
         }];
         [requestOperation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
             double percentDone = (double)totalBytesWritten / (double)totalBytesExpectedToWrite;
@@ -106,7 +110,7 @@ static PIEUploadManager *shareManager;
         dataImage1 = UIImageJPEGRepresentation(image1, 1.0);
         CGFloat ratio1 = image1.size.height/image1.size.width;
         [self.model.ratioArray addObject:@(ratio1)];
-    } else if (uploadCount == 2) {
+    } else if (uploadCount >= 2) {
         image1 = [self.model.imageArray objectAtIndex:0];
         image2 = [self.model.imageArray objectAtIndex:1];
         CGFloat ratio1 = image1.size.height/image1.size.width;
@@ -127,12 +131,11 @@ static PIEUploadManager *shareManager;
                     [self uploadRestInfo:^(BOOL success) {
                         if (block) {
                             block(1.0,success);
-                            [[PIEUploadManager shareManager] resetModel];
                         }
                     }];
                 }
             }];
-        } else  if (uploadCount == 2) {
+        } else  if (uploadCount >= 2) {
             [self uploadImage:dataImage1 Type:@"ask" withBlock:^(CGFloat percentage,BOOL success) {
                 if (!success) {
                     block(percentage/(100/45),NO);
@@ -144,7 +147,6 @@ static PIEUploadManager *shareManager;
                                 if (block) {
                                     block(1.0,success);
                                 }
-                                [[PIEUploadManager shareManager] resetModel];
                             }];
                         }
                     }];
@@ -153,14 +155,13 @@ static PIEUploadManager *shareManager;
             }];
         }
     } else if (self.model.type == PIEPageTypeReply) {
-        if (uploadCount == 1) {
+        if (uploadCount >= 1) {
             [self uploadImage:dataImage1 Type:@"reply" withBlock:^(CGFloat percentage,BOOL success) {
                 block(percentage/1.1,NO);
                 if (success) {
                     [self uploadReplyRestInfo:^(BOOL success) {
                         if (block) {
                             block(1.0,success);
-                            [[PIEUploadManager shareManager] resetModel];
                         }
                     }];
                 }
@@ -172,13 +173,13 @@ static PIEUploadManager *shareManager;
 
 
 - (void)uploadRestInfo:(void (^) (BOOL success))block {
-
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:self.model.uploadIdArray forKey:@"upload_ids"];
     [param setObject:self.model.ratioArray forKey:@"ratios"];
     [param setObject:self.model.content forKey:@"desc"];
     [param setObject:self.model.tagIDArray forKey:@"tag_ids"];
     [param setObject:@(self.model.channel_id) forKey:@"category_id"];
+
 
     [DDService ddSaveAsk:param withBlock:^(NSInteger newImageID) {
         if (newImageID!=-1) {
@@ -196,18 +197,14 @@ static PIEUploadManager *shareManager;
 }
 
 - (void)uploadReplyRestInfo:(void (^) (BOOL success))block {
-    
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:self.model.uploadIdArray forKey:@"upload_ids"];
     [param setObject:self.model.ratioArray forKey:@"ratios"];
     [param setObject:self.model.content forKey:@"desc"];
     [param setObject:@(self.model.channel_id) forKey:@"category_id"];
-
-    //    long long timeStamp = [[NSDate date] timeIntervalSince1970];
-    //    [param setObject:@(timeStamp) forKey:@"last_updated"];
-//    NSInteger askID = [[NSUserDefaults standardUserDefaults]
-//                       integerForKey:@"AskIDToReply"];
     [param setObject:@(self.model.ask_id) forKey:@"ask_id"];
+    
+
     [DDService ddSaveReply:param withBlock:^(BOOL success) {
         if (success) {
             [Hud success:@"上传作品成功"];
@@ -224,16 +221,4 @@ static PIEUploadManager *shareManager;
 }
 
 
-//-(NSMutableArray *)ratioArray {
-//    if (!_ratioArray) {
-//        _ratioArray = [NSMutableArray array];
-//    }
-//    return _ratioArray;
-//}
-//-(NSMutableArray *)uploadIdArray {
-//    if (!_uploadIdArray) {
-//        _uploadIdArray = [NSMutableArray array];
-//    }
-//    return _uploadIdArray;
-//}
 @end
