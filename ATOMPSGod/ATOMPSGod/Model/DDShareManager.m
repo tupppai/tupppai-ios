@@ -115,7 +115,6 @@
             NSURL* sUrl = [[NSURL alloc]initWithString:share.url];
             
             NSString* imageUrl_trimmed = [share.imageUrl trimToImageWidth:100];
-            NSLog(@"imageUrl_trimmed %@",imageUrl_trimmed);
             NSURL* imageUrl = [[NSURL alloc]initWithString:[NSString stringWithFormat:@"%@",imageUrl_trimmed]];
             NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
             //注释掉的话 微博自动分享
