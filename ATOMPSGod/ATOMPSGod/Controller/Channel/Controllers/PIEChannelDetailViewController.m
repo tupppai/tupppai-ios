@@ -238,6 +238,17 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     return CGSizeMake(swipeViewItemWidth, swipeViewItemHeight);
 }
 
+
+- (void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index
+{
+    
+    PIECommentViewController* vc = [PIECommentViewController new];
+    vc.vm = _source_ask[index];
+    vc.shouldShowHeaderView = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+
+}
+
 #pragma mark - <SwipeViewDataSource>
 - (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
 {
