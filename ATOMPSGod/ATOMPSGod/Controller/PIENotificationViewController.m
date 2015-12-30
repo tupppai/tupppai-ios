@@ -53,14 +53,6 @@
     UITapGestureRecognizer* tapGes = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnTableView:)];
     [self.tableView addGestureRecognizer:tapGes];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTableView) name:@"updateNoticationStatus" object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(keyboardWillShow:)
-//                                                 name:UIKeyboardWillShowNotification
-//                                               object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(keyboardDidHide:)
-//                                                 name:UIKeyboardDidHideNotification
-//                                               object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateNoticationStatus)
@@ -395,7 +387,7 @@
             cell.textLabel.text = @"收到的赞";
             cell.badgeNumber = [[[NSUserDefaults standardUserDefaults]objectForKey:@"NotificationLike"]integerValue];
         }
-        cell.textLabel.font = [UIFont systemFontOfSize:14];
+        cell.textLabel.font = [UIFont lightTupaiFontOfSize:14];
         return cell;
     }
     return nil;

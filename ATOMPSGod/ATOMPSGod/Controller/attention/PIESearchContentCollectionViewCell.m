@@ -19,8 +19,9 @@
 //    _avatarButton.layer.cornerRadius     = _avatarButton.frame.size.width/2;
 //    _avatarButton.clipsToBounds          = YES;
 
-    _avatarButton.userInteractionEnabled = YES;
-    
+    _avatarButton.userInteractionEnabled = NO;
+    _avatarButton.imageView.userInteractionEnabled = YES;
+
     _nameLabel.font = [UIFont lightTupaiFontOfSize:11];
     _nameLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
 }

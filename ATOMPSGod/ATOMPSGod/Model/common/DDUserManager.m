@@ -10,7 +10,7 @@
 #import "ATOMUserDao.h"
 @implementation DDUserManager
 
-//static dispatch_once_t onceToken;
+static dispatch_once_t onceToken;
 static  PIEUserModel* _currentUser;
 
 //- (instancetype)init
@@ -22,12 +22,12 @@ static  PIEUserModel* _currentUser;
 //}
 
 + (PIEUserModel *)currentUser {
-    if (!_currentUser) {
-        _currentUser = [PIEUserModel new];
-    }
-//    dispatch_once(&onceToken, ^{
+//    if (!_currentUser) {
 //        _currentUser = [PIEUserModel new];
-//    });
+//    }
+    dispatch_once(&onceToken, ^{
+        _currentUser = [PIEUserModel new];
+    });
     return _currentUser;
 }
 
@@ -48,6 +48,7 @@ static  PIEUserModel* _currentUser;
     self.currentUser.bindWeibo = user.bindWeibo;
     self.currentUser.bindQQ = user.bindQQ;
     self.currentUser.token = user.token;
+    self.currentUser.isV = user.isV;
 }
 
 //embarrassing
@@ -69,6 +70,7 @@ static  PIEUserModel* _currentUser;
 
 +(void)clearCurrentUser {
     _currentUser = nil;
+    _currentUser = [PIEUserModel new];
 //    _currentUser.uid = 0;
 //    _currentUser.nickname = @"游客";
 //    _currentUser.mobile = @"-1";

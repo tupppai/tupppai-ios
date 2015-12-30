@@ -53,6 +53,11 @@
     [super layoutSubviews];
     self.imageView.frame = CGRectMake(20,(self.frame.size.height-15)/2,20,15);
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    
+    self.textLabel.center = self.imageView.center;
+    CGRect frame = self.textLabel.frame;
+    frame.origin.x = self.imageView.frame.origin.x+self.imageView.frame.size.width + 20;
+    self.textLabel.frame = frame;
 }
 
 

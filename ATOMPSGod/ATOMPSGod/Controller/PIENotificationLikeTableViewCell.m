@@ -14,7 +14,8 @@
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarView.clipsToBounds = YES;
-    
+    _pageImageView.contentMode = UIViewContentModeScaleAspectFill;
+    _pageImageView.clipsToBounds = YES;
     _usernameLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:1.0];
     _timeLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
     _typeLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
