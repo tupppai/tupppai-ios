@@ -95,7 +95,7 @@
         _collectionView.emptyDataSetDelegate = self;
         _collectionView.emptyDataSetSource = self;
         _collectionView.collectionViewLayout = self.layout;
-        _collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        _collectionView.backgroundColor = [UIColor colorWithHex:0xF8F8F8];
         _collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
         
         UINib* nib = [UINib nibWithNibName:@"PIESearchUserCollectionViewCell" bundle:nil];

@@ -34,7 +34,7 @@
     self.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
     self.pagingEnabled = YES;
     self.scrollsToTop = NO;
-    self.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    self.backgroundColor = [UIColor colorWithHex:0xF8F8F8];
     self.type = PIENewScrollTypeAsk;
 }
 

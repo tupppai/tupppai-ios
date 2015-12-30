@@ -545,7 +545,7 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
         // add headerBannerView
         _tableView.tableHeaderView = self.headerBannerView;
         
-        _tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        _tableView.backgroundColor = [UIColor colorWithHex:0xF8F8F8];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         // register cells
