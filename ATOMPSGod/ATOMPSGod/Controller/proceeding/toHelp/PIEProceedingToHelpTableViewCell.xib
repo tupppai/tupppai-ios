@@ -17,7 +17,7 @@
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PVa-bS-Hcw" userLabel="avatarView" customClass="PIEAvatarView">
                         <rect key="frame" x="135" y="13" width="20" height="20"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="DLH-3f-Jj1"/>
                             <constraint firstAttribute="width" constant="20" id="gBc-rN-RHR"/>
@@ -79,7 +79,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="category_name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HgW-a3-LCI">
                         <rect key="frame" x="27" y="156" width="79.5" height="13.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="update_time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4LA-KG-KOX">
@@ -89,9 +89,9 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cell_separator" translatesAutoresizingMaskIntoConstraints="NO" id="pCw-KY-woo">
-                        <rect key="frame" x="0.0" y="286.5" width="540" height="20"/>
+                        <rect key="frame" x="0.0" y="296.5" width="540" height="10"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="20" id="eua-ij-dQt"/>
+                            <constraint firstAttribute="height" constant="10" id="eua-ij-dQt"/>
                         </constraints>
                     </imageView>
                 </subviews>
@@ -162,7 +162,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="cell_separator" width="12" height="21"/>
+        <image name="cell_separator" width="3" height="21"/>
         <image name="pieProceedingChannelIndicator" width="10" height="11"/>
         <image name="proceeding_download" width="57" height="23"/>
         <image name="proceeding_upload" width="57" height="23"/>

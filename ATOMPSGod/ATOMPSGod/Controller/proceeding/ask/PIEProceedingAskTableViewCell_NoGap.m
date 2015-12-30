@@ -31,7 +31,6 @@
     _originView1.thumbImageView.image = [UIImage imageNamed:@"pie_origin"];
     _originView2.thumbImageView.image = [UIImage imageNamed:@"pie_origin"];
     
-    
     [_separator mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(0.5);
     }];
@@ -47,7 +46,7 @@
     
     _contentLabel.textColor = [UIColor colorWithHex:0x50484B andAlpha:1];
     _contentTextField.textColor = [UIColor colorWithHex:0x50484B andAlpha:1];
-    _allWorkDescLabel.textColor = [UIColor colorWithHex:0xFEAA2B andAlpha:1];
+    _allWorkDescLabel.textColor = [UIColor colorWithHex:0xE67660 andAlpha:1];
     _contentLabel.font = [UIFont lightTupaiFontOfSize:14];
     _contentTextField.font = [UIFont lightTupaiFontOfSize:14];
     _allWorkDescLabel.font = [UIFont lightTupaiFontOfSize:11];
