@@ -20,6 +20,7 @@
 #import "AppDelegate.h"
 #import "PIEAvatarImageView.h"
 #import "PIEAvatarView.h"
+#import "UINavigationBar+Awesome.h"
 
 @interface PIEFriendViewController ()
 
@@ -44,6 +45,8 @@
 @property (nonatomic,assign) CGFloat startPanLocationY;
 @property (weak, nonatomic) IBOutlet UIImageView *blurView;
 
+@property (weak, nonatomic) UIButton *settingBarButton;
+@property (weak, nonatomic) UIButton *messageBarButton;
 
 @property (nonatomic) CAPSPageMenu *pageMenu;
 
@@ -57,6 +60,8 @@
 -(void)awakeFromNib {
 
 }
+
+#pragma mark - UI life cycles
 -(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
@@ -85,22 +90,32 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
-                                                  forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.shadowImage = [UIImage new];
-    self.navigationController.navigationBar.translucent = YES;
-    self.navigationController.view.backgroundColor = [UIColor whiteColor];
-    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
+//                                                  forBarMetrics:UIBarMetricsDefault];
+//    self.navigationController.navigationBar.shadowImage = [UIImage new];
+//    self.navigationController.navigationBar.translucent = YES;
+//    self.navigationController.view.backgroundColor = [UIColor whiteColor];
+//    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
     
-    NSDictionary *titleTextAttrs = @{NSForegroundColorAttributeName: [UIColor whiteColor],
+    
+//    
+    NSDictionary *titleTextAttrs = @{NSForegroundColorAttributeName: [UIColor blackColor],
                                      NSFontAttributeName:[UIFont systemFontOfSize:14]};
     self.navigationController.navigationBar.titleTextAttributes = titleTextAttrs;
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    
+    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
     
 //    if (self.navigationController.viewControllers.count <= 1) {
-        [self setupNavBar];
+    [self setupNavBar];
 //    }
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar lt_reset];
+}
 
 - (void)setupNavBar {
     UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
@@ -137,6 +152,10 @@
     
     
 }
+
+
+
+#pragma mark - target actions
 - (void)dismiss {
     [self dismissViewControllerAnimated:NO completion:nil];
 }
@@ -341,6 +360,14 @@
         }];
         [UIView animateWithDuration:0.5 animations:^{
             [self.pageMenu.view layoutIfNeeded];
+            
+            // GOD DAMN USEFUL PIECE OF CODES!
+            [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor whiteColor]];
+            self.navigationItem.title = @"hahahhahahah";
+            
+            
+            
+            
         }];
     }
 }
@@ -351,6 +378,10 @@
         }];
         [UIView animateWithDuration:0.5 animations:^{
             [self.pageMenu.view layoutIfNeeded];
+            [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
+            self.navigationItem.title = @"";
+            
+            //
         }];
     }
 }
