@@ -58,6 +58,12 @@ static DDSessionManager *_shareHTTPSessionManager = nil;
     });
     return _shareHTTPSessionManager;
 }
+
++ (void)resetSharedInstance {
+    _shareHTTPSessionManager = nil;
+    NSString *baseURL = [[NSUserDefaults standardUserDefaults] valueForKey:@"BASEURL"];
+    _shareHTTPSessionManager = [[DDSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseURL]];
+}
 @end
 
 
@@ -118,7 +124,6 @@ static DDSessionManager *_shareHTTPSessionManager = nil;
                 [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkShowInfoCall" object:nil userInfo:userInfo]];
             }
         }
-        
         if (completionHandler) {
             completionHandler(response,responseObject,error);
         }

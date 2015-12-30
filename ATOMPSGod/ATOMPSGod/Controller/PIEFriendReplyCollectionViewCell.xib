@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -15,35 +15,31 @@
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kNl-8F-PHi">
                         <rect key="frame" x="0.0" y="0.0" width="286" height="187"/>
-                        <animations/>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H1H-Tw-ge8">
-                        <rect key="frame" x="0.0" y="169" width="286" height="18"/>
+                        <rect key="frame" x="0.0" y="157" width="286" height="30"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Svm-iz-hqh">
-                                <rect key="frame" x="269" y="4.5" width="7" height="13.5"/>
-                                <animations/>
+                                <rect key="frame" x="269" y="9" width="7" height="13.5"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pie_myreply_like" translatesAutoresizingMaskIntoConstraints="NO" id="08N-Nd-Lch">
-                                <rect key="frame" x="252" y="1" width="15" height="16"/>
-                                <animations/>
+                                <rect key="frame" x="251" y="8.5" width="13" height="13"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="15" id="mf9-FT-Pps"/>
-                                    <constraint firstAttribute="height" constant="16" id="xdp-L9-IaZ"/>
+                                    <constraint firstAttribute="width" constant="13" id="mf9-FT-Pps"/>
+                                    <constraint firstAttribute="height" constant="13" id="xdp-L9-IaZ"/>
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Svm-iz-hqh" firstAttribute="centerY" secondItem="H1H-Tw-ge8" secondAttribute="centerY" id="7mj-jJ-oXg"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Svm-iz-hqh" secondAttribute="trailing" constant="10" id="GEH-aJ-iGd"/>
                             <constraint firstItem="08N-Nd-Lch" firstAttribute="centerY" secondItem="H1H-Tw-ge8" secondAttribute="centerY" id="SfF-1R-Gma"/>
-                            <constraint firstItem="Svm-iz-hqh" firstAttribute="leading" secondItem="08N-Nd-Lch" secondAttribute="trailing" constant="2" id="V72-Ua-Xtq"/>
-                            <constraint firstAttribute="height" constant="18" id="Zwc-nA-Y8Y"/>
+                            <constraint firstItem="Svm-iz-hqh" firstAttribute="leading" secondItem="08N-Nd-Lch" secondAttribute="trailing" constant="5" id="V72-Ua-Xtq"/>
+                            <constraint firstAttribute="height" constant="30" id="Zwc-nA-Y8Y"/>
                             <constraint firstItem="Svm-iz-hqh" firstAttribute="bottom" secondItem="08N-Nd-Lch" secondAttribute="bottom" constant="1" id="gKd-Yk-wsi"/>
                             <constraint firstItem="08N-Nd-Lch" firstAttribute="baseline" secondItem="Svm-iz-hqh" secondAttribute="baseline" id="gXp-Zc-ItJ"/>
                             <constraint firstItem="08N-Nd-Lch" firstAttribute="centerY" secondItem="Svm-iz-hqh" secondAttribute="centerY" id="ole-hs-bhM"/>
@@ -58,10 +54,8 @@
                         </variation>
                     </view>
                 </subviews>
-                <animations/>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
-            <animations/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="kNl-8F-PHi" secondAttribute="trailing" id="IbE-Hd-OWb"/>
                 <constraint firstAttribute="trailing" secondItem="H1H-Tw-ge8" secondAttribute="trailing" id="NJQ-6C-hZO"/>
@@ -82,6 +76,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="pie_myreply_like" width="12" height="12"/>
+        <image name="pie_myreply_like" width="12" height="9"/>
     </resources>
 </document>

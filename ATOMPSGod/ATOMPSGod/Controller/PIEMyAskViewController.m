@@ -58,7 +58,7 @@
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getAsk:param withBlock:^(NSMutableArray *resultArray) {
         NSMutableArray* arrayAgent = [NSMutableArray new];
-        for (PIEPageEntity *entity in resultArray) {
+        for (PIEPageModel *entity in resultArray) {
             PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
             [arrayAgent addObject:vm];
         }
@@ -81,7 +81,7 @@
     [param setObject:@(15) forKey:@"size"];
     
     [DDPageManager getAsk:param withBlock:^(NSMutableArray *resultArray) {
-        for (PIEPageEntity *entity in resultArray) {
+        for (PIEPageModel *entity in resultArray) {
             PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
             [ws.dataSource addObject:vm];
         }

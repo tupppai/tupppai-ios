@@ -8,7 +8,7 @@
 ;
 
 #import "PIEModifySelfView.h"
-#import "PIEEntityUser.h"
+#import "PIEUserModel.h"
 
 @interface PIEModifySelfView()
 @property (nonatomic, strong) UIView *nicknameView;

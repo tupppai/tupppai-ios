@@ -7,7 +7,7 @@
 //
 
 #import "PIEEliteFollowAskTableViewCell.h"
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 #import "FXBlurView.h"
 @interface PIEEliteFollowAskTableViewCell()
 @property (nonatomic, strong) UIImageView* blurView;
@@ -24,8 +24,7 @@
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     self.clipsToBounds = YES;
-    _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
-    _avatarView.clipsToBounds = YES;
+
     _theImageView.contentMode = UIViewContentModeScaleAspectFit;
     _theImageView.clipsToBounds = YES;
     _theImageView.backgroundColor = [UIColor clearColor];
@@ -35,6 +34,8 @@
     [_nameLabel setTextColor:[UIColor colorWithHex:0x4a4a4a andAlpha:1.0]];
     [_contentLabel setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.9]];
     [_timeLabel setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.3]];
+    
+    [_followView setContentMode:UIViewContentModeCenter];
     
     [self.contentView insertSubview:self.blurView belowSubview:_theImageView];
     [self.blurView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -54,14 +55,34 @@
     return _blurView;
 }
 
+-(void)dealloc {
+    [self removeKVO];
+}
 -(void)prepareForReuse {
     [super prepareForReuse];
     _followView.hidden = NO;
+    [self removeKVO];
 }
 - (void)injectSauce:(PIEPageVM *)viewModel {
     WS(ws);
-    _ID = viewModel.ID;
-    _askID = viewModel.askID;
+    _vm = viewModel;
+    [self addKVO];
+    NSString *urlString_avatar = [viewModel.avatarURL trimToImageWidth:_avatarView.frame.size.width*SCREEN_SCALE];
+    NSString *urlString_imageView = [viewModel.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
+    [_theImageView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView]
+                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                ws.theImageView.image = image;
+                                ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+                            }];
+//    [_avatarView.avatarImageView setImage:[UIImage imageNamed:@"avatar_default"]];
+    [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+    
+    // testing
+//    _avatarView.isV = YES;
+//    _avatarView.isV = (viewModel.askID % 2 == 0);
+//    _avatarView.isV = YES;
+    _avatarView.isV = viewModel.isV;
+
     {
         if (viewModel.isMyFan) {
             _followView.highlightedImage = [UIImage imageNamed:@"pie_mutualfollow"];
@@ -76,21 +97,33 @@
         }
 
     }
+    
     _shareView.imageView.image = [UIImage imageNamed:@"hot_share"];
-    _shareView.numberString = viewModel.shareCount;
     _commentView.imageView.image = [UIImage imageNamed:@"hot_comment"];
+    _shareView.numberString = viewModel.shareCount;
     _commentView.numberString = viewModel.commentCount;
     _contentLabel.text = viewModel.content;
-    
-    [_avatarView sd_setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
     _nameLabel.text = viewModel.username;
     _timeLabel.text = viewModel.publishTime;
-    [_theImageView sd_setImageWithURL:[NSURL URLWithString:viewModel.imageURL]
-                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                                ws.theImageView.image = image;
-                                ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
-                            }];
+}
 
+- (void)addKVO {
+    [_vm addObserver:self forKeyPath:@"followed" options:NSKeyValueObservingOptionNew context:NULL];
+}
+- (void)removeKVO {
+    @try{
+        [_vm removeObserver:self forKeyPath:@"followed"];
+    }@catch(id anException){
+        //do nothing, obviously it wasn't attached because an exception was thrown
+    }
+}
+
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"followed"]) {
+        BOOL newFollowed = [[change objectForKey:@"new"]boolValue];
+        self.followView.highlighted = newFollowed;
+    }
 }
 
 

@@ -7,8 +7,8 @@
 //
 
 #import "PIEEliteHotReplyTableViewCell.h"
-#import "PIEImageEntity.h"
-#import "PIECommentEntity.h"
+#import "PIEModelImage.h"
+#import "PIECommentModel.h"
 #import "FXBlurView.h"
 @interface PIEEliteHotReplyTableViewCell()
 @property (weak, nonatomic) IBOutlet UIView *gapView;
@@ -17,16 +17,23 @@
 @implementation PIEEliteHotReplyTableViewCell
 - (void)awakeFromNib {
     [self commonInit];
+
+}
+
+
+-(void)dealloc {
+    [self removeKVO];
 }
 - (void)commonInit {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-    _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
-    _avatarView.clipsToBounds = YES;
+
+    _avatarView.backgroundColor = [UIColor clearColor];
+    
     _theImageView.contentMode = UIViewContentModeScaleAspectFit;
     _theImageView.clipsToBounds = YES;
     _theImageView.backgroundColor = [UIColor clearColor];
-    _collectView.userInteractionEnabled = YES;
+//    _collectView.userInteractionEnabled = YES;
 
     [_nameLabel setFont:[UIFont lightTupaiFontOfSize:13]];
     [_contentLabel setFont:[UIFont lightTupaiFontOfSize:15]];
@@ -37,7 +44,11 @@
     [_contentLabel setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.9]];
     [_commentLabel1 setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.8]];
     [_commentLabel2 setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.8]];
-
+    
+    [_followView setContentMode:UIViewContentModeCenter];
+    
+    
+    
     [self.contentView addSubview:self.thumbView];
     [self.contentView insertSubview:self.blurView belowSubview:_theImageView];
 
@@ -65,20 +76,24 @@
     _commentLabel2.text = @"";
     _commentLabel1.text = @"";
     
+    _avatarView.avatarImageView.layer.cornerRadius = _avatarView.frame.size.width / 2.0;
+    
     [_commentLabel1 mas_updateConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(_commentLabel2.mas_top).with.offset(0).priorityHigh();
     }];
     [_commentLabel2 mas_updateConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(_gapView.mas_top).with.offset(0).priorityHigh();
     }];
-
+    
+    [self removeKVO];
 }
 
 - (void)injectSauce:(PIEPageVM *)viewModel {
     WS(ws);
-    _ID = viewModel.ID;
-    _askID = viewModel.askID;
-    
+    _vm = viewModel;
+    [self addKVO];
+    NSString *urlString_avatar = [viewModel.avatarURL trimToImageWidth:_avatarView.frame.size.width*SCREEN_SCALE];
+    NSString *urlString_imageView = [viewModel.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
     {
         if (viewModel.isMyFan) {
             _followView.highlightedImage = [UIImage imageNamed:@"pie_mutualfollow"];
@@ -94,60 +109,77 @@
 
     }
 
-    
     _shareView.imageView.image = [UIImage imageNamed:@"hot_share"];
     _shareView.numberString = viewModel.shareCount;
     
     _commentView.imageView.image = [UIImage imageNamed:@"hot_comment"];
     _commentView.numberString = viewModel.commentCount;
     
-    _collectView.imageView.image = [UIImage imageNamed:@"hot_star"];
-    _collectView.imageView.highlightedImage = [UIImage imageNamed:@"hot_star_selected"];
-    _collectView.highlighted = viewModel.collected;
-    _collectView.numberString = viewModel.collectCount;
+//    _collectView.imageView.image = [UIImage imageNamed:@"hot_star"];
+//    _collectView.imageView.highlightedImage = [UIImage imageNamed:@"hot_star_selected"];
+//    _collectView.highlighted = viewModel.collected;
+//    _collectView.numberString = viewModel.collectCount;
     
-    _likeView.highlighted = viewModel.liked;
-    _likeView.numberString = viewModel.likeCount;
+    [_likeView initStatus:viewModel.lovedCount numberString:viewModel.likeCount];
     _contentLabel.text = viewModel.content;
     
-    [_avatarView sd_setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+
+    
+    _avatarView.url = urlString_avatar;
+    
+    
+    // testing
+//    _avatarView.isV = viewModel.isV;
+//    _avatarView.isV = (viewModel.askID % 2 == 0);
+    
+    _avatarView.isV = viewModel.isV;
+    
     _nameLabel.text = viewModel.username;
     
-    [_theImageView sd_setImageWithURL:[NSURL URLWithString:viewModel.imageURL]
+    [_theImageView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView]
                             completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                                 ws.theImageView.image = image;
                                 ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
                             }];
     
-    if (viewModel.hotCommentEntityArray.count > 0) {
-        PIECommentEntity* commentEntity1  = viewModel.hotCommentEntityArray[0];
+    if (viewModel.models_comment.count > 0) {
+    
+        _commentIndeicatorImageView.hidden = NO;
+        PIECommentModel* commentEntity1  = viewModel.models_comment[0];
         _commentLabel1.text = [NSString stringWithFormat:@"%@: %@",commentEntity1.nickname,commentEntity1.content];
        
         [_commentLabel2 mas_updateConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(_gapView.mas_top).with.offset(-25).with.priorityHigh();
         }];
         
-        if (viewModel.hotCommentEntityArray.count > 1) {
+        if (viewModel.models_comment.count > 1) {
             
             [_commentLabel1 mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.bottom.equalTo(_commentLabel2.mas_top).with.offset(-10).with.priorityHigh();
             }];
             
-            PIECommentEntity* commentEntity2  = viewModel.hotCommentEntityArray[1];
+            PIECommentModel* commentEntity2  = viewModel.models_comment[1];
             _commentLabel2.text = [NSString stringWithFormat:@"%@: %@",commentEntity2.nickname,commentEntity2.content];
         }
     }
+    else{
+        _commentIndeicatorImageView.hidden = YES;
+    }
     
         [self mansoryThumbAnimateView];
-        [_thumbView setSubviewCounts:viewModel.thumbEntityArray.count];
+        [_thumbView setSubviewCounts:viewModel.models_image.count];
     
-    if (viewModel.thumbEntityArray.count > 0) {
-        PIEImageEntity* entity = [viewModel.thumbEntityArray objectAtIndex:0];
-        [self.thumbView.rightView sd_setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+    if (viewModel.models_image.count > 0) {
+        PIEModelImage* entity = [viewModel.models_image objectAtIndex:0];
+
+        NSString *urlString_imageView1 = [entity.url trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
+        [self.thumbView.rightView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView1] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
         
-        if (viewModel.thumbEntityArray.count == 2) {
-            entity = viewModel.thumbEntityArray[1];
-            [_thumbView.leftView sd_setImageWithURL:[NSURL URLWithString:entity.url] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+        if (viewModel.models_image.count == 2) {
+            entity = viewModel.models_image[1];
+            NSString *urlString_imageView2 = [entity.url trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
+
+            [_thumbView.leftView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView2] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
         }
     }
 }
@@ -253,4 +285,33 @@
      ];
 }
 
+
+- (void)addKVO {
+    [_vm addObserver:self forKeyPath:@"lovedCount" options:NSKeyValueObservingOptionNew context:NULL];
+    [_vm addObserver:self forKeyPath:@"likeCount" options:NSKeyValueObservingOptionNew context:NULL];
+    [_vm addObserver:self forKeyPath:@"followed" options:NSKeyValueObservingOptionNew context:NULL];
+}
+- (void)removeKVO {
+    @try{
+        [_vm removeObserver:self forKeyPath:@"lovedCount"];
+        [_vm removeObserver:self forKeyPath:@"likeCount"];
+        [_vm removeObserver:self forKeyPath:@"followed"];
+    }@catch(id anException){
+        //do nothing, obviously it wasn't attached because an exception was thrown
+    }
+}
+
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"lovedCount"]) {
+        NSInteger newLovedCount = [[change objectForKey:@"new"]integerValue];
+        self.likeView.status = newLovedCount;
+    } else     if ([keyPath isEqualToString:@"likeCount"]) {
+        NSInteger newLikeCount = [[change objectForKey:@"new"]integerValue];
+        self.likeView.number = newLikeCount;
+    } else     if ([keyPath isEqualToString:@"followed"]) {
+        BOOL newFollowed = [[change objectForKey:@"new"]boolValue];
+        self.followView.highlighted = newFollowed;
+    }
+}
 @end

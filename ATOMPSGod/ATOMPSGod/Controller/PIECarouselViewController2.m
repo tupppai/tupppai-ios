@@ -64,9 +64,6 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"进入滚动详情页"];
-//    [UIView animateWithDuration:0.3 animations:^{
-//        self.view.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
-//    }];
 
 }
 - (void)viewWillDisappear:(BOOL)animated
@@ -128,29 +125,18 @@
     [self.carousel addGestureRecognizer:swipe2];
     UITapGestureRecognizer* tapGes = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnSelf:)];
     [self.view addGestureRecognizer:tapGes];
-//    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(pan:)];
-//    [self.carousel addGestureRecognizer:pan];
+
     [self setupPlaceHoder];
 }
 
 - (void) tapOnSelf:(UIGestureRecognizer*)sender {
+    
     if ([self.view hitTest:[sender locationInView:self.view] withEvent:nil] == self.view )  {
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 CGFloat startPanLocationY;
 
-//- (void)pan:(UIPanGestureRecognizer *)sender
-//{
-//    if ( sender.state == UIGestureRecognizerStateBegan) {
-//        startPanLocationY = [sender locationInView:self.carousel].y;
-//    }
-//    NSLog(@"startPanLocationY%f, new y %f",startPanLocationY,[sender locationInView:self.carousel].y);
-//    CGRect frame = self.carousel.currentItemView.frame;
-//    frame.origin.y += [sender locationInView:self.carousel].y - startPanLocationY;
-//    self.carousel.currentItemView.frame = frame;
-//    startPanLocationY = [sender locationInView:self.carousel].y;
-//}
 
 
 - (void)handleGesture_SwipeUp:(id)sender {
@@ -215,27 +201,6 @@ CGFloat startPanLocationY;
     friendVC.pageVM = _currentVM;
     [self.navigationController pushViewController:friendVC animated:YES];
 }
-//- (IBAction)tapLikeButton:(id)sender {
-//    if (_currentVM.type == PIEPageTypeReply) {
-//        _likeButton.selected = !_likeButton.selected;
-//        [_likeButton scaleAnimation];
-//        [DDService toggleLike:_likeButton.selected ID:_currentVM.ID type:_currentVM.type  withBlock:^(BOOL success) {
-//            if (success) {
-//                _pageVM.liked = _likeButton.selected;
-//                if (_pageVM.liked) {
-//                    _pageVM.likeCount = [NSString stringWithFormat:@"%zd",[_pageVM.likeCount integerValue]+1];
-//                } else {
-//                    _pageVM.likeCount = [NSString stringWithFormat:@"%zd",[_pageVM.likeCount integerValue]-1];
-//                }
-//            } else {
-//                _likeButton.selected = !_likeButton.selected;
-//            }
-//        }];
-//    }
-//    else {
-//        [self.psActionSheet showInView:self.view animated:YES];
-//    }
-//}
 
 
 #pragma mark iCarousel methods
@@ -255,9 +220,6 @@ CGFloat startPanLocationY;
             view.tag = index;
 
             CGFloat width  = SCREEN_WIDTH *scale_h;
-//            CGFloat height = SCREEN_HEIGHT*scale_v;
-//            CGFloat margin_h = (SCREEN_WIDTH - width)/2.0;
-//            CGFloat margin_v = (SCREEN_HEIGHT - height);
             
             view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, width, self.view.bounds.size.height)];
             view.backgroundColor = [UIColor clearColor];
@@ -415,23 +377,33 @@ CGFloat startPanLocationY;
     for (int i =0; i < _dataSource.count; i++) {
         PIEPageVM* vm = [_dataSource objectAtIndex:i];
         //找出与传进来的pageVM匹配的vm
-        if (vm.ID == _pageVM.ID && vm.type == _pageVM.type && _pageVM.type == PIEPageTypeReply) {
-            if (_dataSource.count >= 2) {
-                shouldScroll = YES;
-                PIEPageVM* vmToCheck = [_dataSource objectAtIndex:1];
-                [_dataSource removeObjectAtIndex:i];
-                if (vmToCheck.type == PIEPageTypeAsk) {
-                    [_dataSource insertObject:vm atIndex:2];
-                    [_carousel reloadData];
-                    [_carousel scrollToItemAtIndex:2 animated:NO];
+        if (vm.ID == _pageVM.ID && vm.type == _pageVM.type ) {
+            
+            //为了数据能够同步
+            _pageVM.imageURL = vm.imageURL;
+            vm = _pageVM;
+
+            if (_pageVM.type == PIEPageTypeReply) {
+                
+                if (_dataSource.count >= 2) {
+                    shouldScroll = YES;
+                    PIEPageVM* vmToCheck = [_dataSource objectAtIndex:1];
+                    [_dataSource removeObjectAtIndex:i];
+                    if (vmToCheck.type == PIEPageTypeAsk) {
+                        [_dataSource insertObject:vm atIndex:2];
+                        [_carousel reloadData];
+                        [_carousel scrollToItemAtIndex:2 animated:NO];
+                    }
+                    else {
+                        [_dataSource insertObject:vm atIndex:1];
+                        [_carousel reloadData];
+                        [_carousel scrollToItemAtIndex:1 animated:NO];
+                    }
+                    break;
                 }
-                else {
-                    [_dataSource insertObject:vm atIndex:1];
-                    [_carousel reloadData];
-                    [_carousel scrollToItemAtIndex:1 animated:NO];
-                }
-                break;
+
             }
+
         }
     }
     if (!shouldScroll) {

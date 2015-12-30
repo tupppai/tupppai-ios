@@ -95,7 +95,7 @@
         _collectionView.emptyDataSetDelegate = self;
         _collectionView.emptyDataSetSource = self;
         _collectionView.collectionViewLayout = self.layout;
-        _collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        _collectionView.backgroundColor = [UIColor colorWithHex:0xF8F8F8];
         _collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
         
         UINib* nib = [UINib nibWithNibName:@"PIESearchUserCollectionViewCell" bundle:nil];
@@ -119,13 +119,13 @@
             CGPoint p = [gesture locationInView:cell];
             if (CGRectContainsPoint(cell.avatarButton.frame, p) || CGRectContainsPoint(cell.nameButton.frame, p)) {
                 PIEFriendViewController* vc = [PIEFriendViewController new];
-                vc.uid = vm.uid;
+                vc.uid = vm.model.uid;
                 vc.name = vm.username;
                 [self.parentViewController.view.superview.viewController.navigationController  pushViewController:vc animated:YES];
             } else if (CGRectContainsPoint(cell.followButton.frame, p)) {
                 cell.followButton.selected = !cell.followButton.selected;
                 NSMutableDictionary *param = [NSMutableDictionary new];
-                [param setObject:@(vm.uid) forKey:@"uid"];
+                [param setObject:@(vm.model.uid) forKey:@"uid"];
                 [DDService follow:param withBlock:^(BOOL success) {
                     if (!success) {
                         cell.followButton.selected = !cell.followButton.selected;
@@ -163,7 +163,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
         PIEUserViewModel* vm = [_source objectAtIndex:indexPath.row];
-        if (vm.replies.count<=0) {
+        if (vm.replyPages.count<=0) {
             PIESearchUserSimpleCollectionCell *cell =
             (PIESearchUserSimpleCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PIESearchUserSimpleCollectionCell"
                                                                                            forIndexPath:indexPath];
@@ -187,7 +187,7 @@
     
         if (_source.count > indexPath.row) {
             PIEUserViewModel* vm = [_source objectAtIndex:indexPath.row];
-            if (vm.replies.count > 0) {
+            if (vm.replyPages.count > 0) {
                 return CGSizeMake(SCREEN_WIDTH, 150);
             }
             else {

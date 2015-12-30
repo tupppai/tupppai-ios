@@ -14,8 +14,7 @@
     // Initialization code
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     _likeView.hidden = YES;
-    _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
-    _avatarView.clipsToBounds = YES;
+
     _pageImageView.clipsToBounds = YES;
     _nameLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.6];
     _contentLabel.textColor =[UIColor colorWithHex:0x000000 andAlpha:0.8];
@@ -47,13 +46,18 @@
         _originView.image = [UIImage imageNamed:@"pie_origin"];
     }
     else if (vm.type == PIEPageTypeReply) {
-        _likeView.hidden = NO;
-        _likeCountLabel.hidden = NO;
-        _likeCountLabel.text = vm.likeCount;
-        _originView.image = [UIImage imageNamed:@"pie_reply"];
+        
+        // (需求) 我的个人主页，去掉“求P”，留下“作品”&“收藏”，收藏去掉“赞数”
+        //        _likeView.hidden = NO;
+//        _likeCountLabel.hidden = NO;
+        _likeView.hidden       = YES;
+        _likeCountLabel.hidden = YES;
+        _likeCountLabel.text   = vm.likeCount;
+        _originView.image      = [UIImage imageNamed:@"pie_reply"];
     }
     
-    [_avatarView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL]placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+    [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL]placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+    _avatarView.isV = vm.isV;
     [_pageImageView sd_setImageWithURL:[NSURL URLWithString:vm.imageURL]placeholderImage:[UIImage imageNamed:@"cellHolder"]];
     _nameLabel.text = vm.username;
     _contentLabel.text = vm.content;

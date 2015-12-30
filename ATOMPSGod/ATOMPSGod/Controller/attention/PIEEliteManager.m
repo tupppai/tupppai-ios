@@ -7,20 +7,14 @@
 //
 
 #import "PIEEliteManager.h"
-#import "PIECommentEntity.h"
-#import "PIEImageEntity.h"
+#import "PIECommentModel.h"
+#import "PIEModelImage.h"
 @implementation PIEEliteManager
 + (void)getMyFollow:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *))block {
     [DDService getFollowPages:param withBlock:^(NSArray *data) {
         NSMutableArray *returnArray = [NSMutableArray array];
         for (int i = 0; i < data.count; i++) {
-            PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
-            NSMutableArray* thumbArray = [NSMutableArray new];
-            for (int i = 0; i<entity.thumbEntityArray.count; i++) {
-                PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.thumbEntityArray[i] error:NULL];
-                [thumbArray addObject:entity2];
-            }
-            entity.thumbEntityArray = thumbArray;
+            PIEPageModel *entity = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:data[i] error:NULL];
             [returnArray addObject:entity];
         }
         if (block) {
@@ -34,7 +28,7 @@
     [DDBaseService GET:param url:URL_UKGetBanner block:^(id responseObject) {
         NSMutableArray* retArray = [NSMutableArray array];
         for (NSDictionary* dic in [responseObject objectForKey:@"data"]) {
-            PIEBannerViewModel* vm = [PIEBannerViewModel new];
+            PIEBannerModel* vm = [PIEBannerModel new];
             vm.ID = (NSInteger)[dic objectForKey:@"id"];
             vm.desc = [dic objectForKey:@"desc"];
             vm.url = [dic objectForKey:@"url"];
@@ -51,22 +45,8 @@
     [DDService getHotPages:param withBlock:^(NSArray *data) {
         NSMutableArray *returnArray = [NSMutableArray array];
         for (int i = 0; i < data.count; i++) {
-            PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:[data objectAtIndex:i] error:NULL];
+            PIEPageModel *entity = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:[data objectAtIndex:i] error:NULL];
             if (entity) {
-                NSMutableArray* thumbArray = [NSMutableArray new];
-                for (int i = 0; i<entity.thumbEntityArray.count; i++) {
-                    PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.thumbEntityArray[i] error:NULL];
-                    [thumbArray addObject:entity2];
-                }
-                entity.thumbEntityArray = thumbArray;
-                
-                NSMutableArray* commentEntityArray = [NSMutableArray new];
-
-                for (int i = 0; i<entity.hotCommentEntityArray.count; i++) {
-                    PIECommentEntity *commentEntity = [MTLJSONAdapter modelOfClass:[PIECommentEntity class] fromJSONDictionary:                    entity.hotCommentEntityArray[i] error:NULL];
-                    [commentEntityArray addObject:commentEntity];
-                }
-                entity.hotCommentEntityArray = commentEntityArray;
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [returnArray addObject:vm];
             }

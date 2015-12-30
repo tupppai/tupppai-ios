@@ -68,11 +68,14 @@
 #pragma mark - UI components & data setup
 - (void)setupTableView
 {
+    self.view.backgroundColor = [UIColor colorWithHex:0xF8F8F8];
     [self.view addSubview:self.tableView];
-    UIEdgeInsets padding = UIEdgeInsetsMake(0, 0, 0, 0);
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    UIEdgeInsets padding = UIEdgeInsetsMake(0,10, 0, 10);
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view).with.insets(padding);
     }];
+
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -240,11 +243,7 @@
     [self.navigationController
      pushViewController:[[PIENewReplyViewController alloc] init]
      animated:YES];
-    
-    // just for testing
-//    [self.navigationController
-//     pushViewController:[[PIEChannelActivityViewController alloc] init]
-//     animated:YES];
+
 
 }
 
@@ -272,7 +271,8 @@
     for (UIView *subView in view.subviews) {
         if([subView isKindOfClass:[UIImageView class]]){
             UIImageView *imageView = (UIImageView *)subView;
-            [imageView sd_setImageWithURL:[NSURL URLWithString:vm.imageURL]];
+            NSString* urlString = [vm.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION*0.2];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:urlString]];
         }
     }
     return view;
@@ -297,10 +297,11 @@
         _tableView.dataSource         = self;
         _tableView.psDelegate         = self;
         _tableView.estimatedRowHeight = 120;
-
+        _tableView.showsHorizontalScrollIndicator = NO;
+        _tableView.showsVerticalScrollIndicator = NO;
+        
         _tableView.rowHeight = UITableViewAutomaticDimension;
-        _tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        
         [_tableView registerNib:[UINib nibWithNibName:@"PIEChannelTableViewCell"
                                                bundle:nil]
          forCellReuseIdentifier:@"Channel_Cell"];

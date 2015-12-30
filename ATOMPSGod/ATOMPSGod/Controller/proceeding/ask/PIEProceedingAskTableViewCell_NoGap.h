@@ -14,8 +14,8 @@
 #import "PIEImageView.h"
 
 @interface PIEProceedingAskTableViewCell_NoGap : UITableViewCell<SwipeViewDelegate,SwipeViewDataSource>
-@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *allWorkDescLabel;
+@property (weak, nonatomic) IBOutlet UIView *separator;
+
 @property (weak, nonatomic) IBOutlet SwipeView *swipeView;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 @property (weak, nonatomic) IBOutlet UITextField *contentTextField;
@@ -23,6 +23,12 @@
 
 @property (weak, nonatomic) IBOutlet PIEImageView *originView1;
 @property (weak, nonatomic) IBOutlet PIEImageView *originView2;
+
+
+// (新需求)：“进行中”的cell添加频道信息
+@property (weak, nonatomic) IBOutlet UILabel *categoryNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *uploadTimeLabel;
+
 
 
 - (void)injectSource:(NSArray*)array;

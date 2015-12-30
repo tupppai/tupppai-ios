@@ -33,6 +33,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *followView;
 @property (weak, nonatomic) IBOutlet UILabel *fansView;
 @property (weak, nonatomic) IBOutlet UILabel *likeView;
+@property (weak, nonatomic) IBOutlet UIImageView *psGodIcon_big;
 
 @property (weak, nonatomic) IBOutlet UIImageView *topContainerView;
 @property (weak, nonatomic) IBOutlet UIView *pageMenuContainerView;
@@ -45,6 +46,7 @@
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, assign) CGPoint startPanLocation;
+@property (weak, nonatomic) IBOutlet UIImageView *psGodCertificate;
 
 @property (nonatomic) CAPSPageMenu *pageMenu;
 
@@ -181,11 +183,19 @@
         }
     }
 }
+
 -(void)updateAvatar {
-        [DDService sd_downloadImage:[DDUserManager currentUser].avatar withBlock:^(UIImage *image) {
-            _avatarView.image = image;
-            _topContainerView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:nil];
+    [DDService sd_downloadImage:
+     [DDUserManager currentUser].avatar withBlock:^(UIImage *image) {
+         _avatarView.image       = image;
+         _topContainerView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:nil];
     }];
+    PIEUserModel* user = [DDUserManager currentUser];
+    
+//    user.isV = YES;
+    self.psGodIcon_big.hidden    = !user.isV;
+    self.psGodCertificate.hidden = !user.isV;
+    
 }
 - (void)pushToSettingViewController {
     PIESettingsViewController* vc = [PIESettingsViewController new];
@@ -204,11 +214,17 @@
     [viewBG.layer insertSublayer:gradient atIndex:0];
     [self.view insertSubview:viewBG belowSubview:self.topContainerView];
     
+    
+    
     _dotView1.layer.cornerRadius = _dotView1.frame.size.width/2;
     _dotView2.layer.cornerRadius = _dotView2.frame.size.width/2;
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarContainerView.layer.cornerRadius = _avatarContainerView.frame.size.width/2;
+    _avatarView.layer.borderWidth = 1.5f;
+    _avatarView.layer.borderColor = [UIColor whiteColor].CGColor;
     _avatarView.clipsToBounds = YES;
+    
+    self.usernameLabel.font = [UIFont mediumTupaiFontOfSize:17];
     
     [self setupColorAndFont];
     [self setupTapGesture];
@@ -233,7 +249,7 @@
 
 }
 - (void)updateViewsWithData {
-    PIEEntityUser* user = [DDUserManager currentUser];
+    PIEUserModel* user = [DDUserManager currentUser];
     _usernameLabel.text = user.nickname;
     _followCountLabel.text = [NSString stringWithFormat:@"%zd",user.attentionNumber];
     _fansCountLabel.text = [NSString stringWithFormat:@"%zd",user.fansNumber];
@@ -271,16 +287,22 @@
     // Array to keep track of controllers in page menu
     
     NSMutableArray *controllerArray = [NSMutableArray array];
-    PIEMyAskViewController *controller3 = [PIEMyAskViewController new];
-    controller3.title = @"求P";
-    [controllerArray addObject:controller3];
+//    PIEMyAskViewController *controller3 = [PIEMyAskViewController new];
+//    controller3.title = @"求P";
+//    [controllerArray addObject:controller3];
     
     PIEMyReplyViewController *controller = [PIEMyReplyViewController new];
     controller.title = @"作品";
     [controllerArray addObject:controller];
     
     PIEMyCollectionViewController *controller2 = [PIEMyCollectionViewController new];
-    controller2.title = @"收藏";
+    
+    NSString* titleString = @"收藏";
+    NSString *baseURL = [[NSUserDefaults standardUserDefaults] valueForKey:@"BASEURL"];
+    if ([baseURL isEqualToString:baseURLString_Test]) {
+        titleString = @"测试";
+    }
+    controller2.title = titleString;
     [controllerArray addObject:controller2];
     NSDictionary *parameters = @{
                                  CAPSPageMenuOptionScrollMenuBackgroundColor: [UIColor whiteColor],

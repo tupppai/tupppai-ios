@@ -7,23 +7,19 @@
 //
 
 #import "PIENewAskCollectionCell.h"
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 @implementation PIENewAskCollectionCell
 
 - (void)awakeFromNib {
     self.layer.cornerRadius = 6;
     self.backgroundColor = [UIColor whiteColor];
-    _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
-    _avatarView.clipsToBounds = YES;
     _leftImageView.clipsToBounds = YES;
-    _rightImageView.clipsToBounds = YES;
-    _leftImageView.contentMode = UIViewContentModeScaleAspectFill;
-    _rightImageView.contentMode = UIViewContentModeScaleAspectFill;
+    _leftImageView.contentMode = UIViewContentModeScaleAspectFit;
+//    _leftImageView.backgroundColor = [UIColor whiteColor];
     _contentLabel.text = @"";
     [_nameLabel setFont:[UIFont lightTupaiFontOfSize:12]];
     [_contentLabel setFont:[UIFont lightTupaiFontOfSize:12]];
     [_timeLabel setFont:[UIFont lightTupaiFontOfSize:9]];
-
     [_nameLabel setTextColor:[UIColor colorWithHex:0x4a4a4a andAlpha:1.0]];
     [_timeLabel setTextColor:[UIColor colorWithHex:0x4a4a4a andAlpha:0.3]];
     [_contentLabel setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.9]];
@@ -33,32 +29,26 @@
 
 //put a needle injecting into cell's ass.
 - (void)injectSource:(PIEPageVM*)vm {
-    [_avatarView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+    _vm = vm;
+    NSString *urlString_avatar = [vm.avatarURL trimToImageWidth:_avatarView.frame.size.width*SCREEN_SCALE];
+    NSString *urlString_imageView = [vm.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
+    [_leftImageView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView]];
+    [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+//    _avatarView.isV = vm.isV;
+    
+    // testing
+//    _avatarView.isV = YES;
+//    _avatarView.isV = (vm.askID % 2 == 0);
+    _avatarView.isV = vm.isV;
+    
     _nameLabel.text = vm.username;
     _timeLabel.text = vm.publishTime;
     _contentLabel.text = vm.content;
 
-        if (vm.thumbEntityArray.count >= 2) {
-            _imageView_multiAskSign.hidden = NO;
-        } else {
-            _imageView_multiAskSign.hidden = YES;
-        }
-//    if (vm.thumbEntityArray.count == 2) {
-//        PIEImageEntity* entity1 = [vm.thumbEntityArray objectAtIndex:0];
-//        PIEImageEntity* entity2 = [vm.thumbEntityArray objectAtIndex:1];
-//        [_leftImageView sd_setImageWithURL:[NSURL URLWithString:entity1.url]placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-//        [_rightImageView sd_setImageWithURL:[NSURL URLWithString:entity2.url]placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-//        [_rightImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-//            make.width.equalTo(@(self.frame.size.width/2));
-//        }];
-//
-//    }
-//    else if (vm.thumbEntityArray.count == 1) {
-        PIEImageEntity* entity1 = [vm.thumbEntityArray objectAtIndex:0];
-        [_leftImageView sd_setImageWithURL:[NSURL URLWithString:entity1.url]placeholderImage:[UIImage imageNamed:@"cell_holder_portrait.png"]];
-        [_rightImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.width.equalTo(@(0));
-        }];
-//    }
+    if (vm.models_image.count >= 2) {
+        _imageView_multiAskSign.hidden = NO;
+    } else {
+        _imageView_multiAskSign.hidden = YES;
+    }
 }
 @end

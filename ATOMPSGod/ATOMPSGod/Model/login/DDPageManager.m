@@ -7,8 +7,8 @@
 //
 
 #import "DDPageManager.h"
-#import "PIEEntityUser.h"
-#import "PIEImageEntity.h"
+#import "PIEUserModel.h"
+#import "PIEModelImage.h"
 //
 
 
@@ -19,7 +19,7 @@
     [DDService getPhotos:param withBlock:^(NSArray *data) {
             NSMutableArray *returnArray = [NSMutableArray array];
             for (int i = 0; i < data.count; i++) {
-                PIEPageEntity *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:[data objectAtIndex:i] error:NULL];
+                PIEPageModel *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:[data objectAtIndex:i] error:NULL];
                 [returnArray addObject:homeImage];
             }
             if (block) { block(returnArray); }
@@ -30,7 +30,7 @@
     [DDService getAsk:param withBlock:^(NSArray *data) {
         NSMutableArray *returnArray = [NSMutableArray array];
         for (int i = 0; i < data.count; i++) {
-            PIEPageEntity *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:[data objectAtIndex:i] error:NULL];
+            PIEPageModel *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:[data objectAtIndex:i] error:NULL];
             [returnArray addObject:homeImage];
         }
         if (block) { block(returnArray); }
@@ -41,7 +41,7 @@
     [DDService getReply:param withBlock:^(NSArray *data) {
         NSMutableArray *returnArray = [NSMutableArray array];
         for (int i = 0; i < data.count; i++) {
-            PIEPageEntity *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:[data objectAtIndex:i] error:NULL];
+            PIEPageModel *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:[data objectAtIndex:i] error:NULL];
             [returnArray addObject:homeImage];
         }
         if (block) { block(returnArray); }
@@ -52,7 +52,7 @@
     [DDService ddGetCollection:param withBlock:^(NSArray* data) {
         NSMutableArray *resultArray = [NSMutableArray array];
         for (int i = 0; i < data.count; i++) {
-            PIEPageEntity *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
+            PIEPageModel *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:data[i] error:NULL];
             [resultArray addObject:homeImage];
         }
         if (block) {
@@ -67,10 +67,10 @@
         NSMutableArray *resultArray = [NSMutableArray array];
         for (int i = 0; i < data.count; i++) {
             NSDictionary* dic = [data objectAtIndex:i];
-            PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:dic error:NULL];
+            PIEPageModel *entity = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:dic error:NULL];
             entity.uploadTime = [[dic objectForKey:@"comment_time"]integerValue];
             PIEPageVM* vm = [[PIEPageVM alloc]initWithPageEntity:entity];
-            vm.content = entity.comment;
+            vm.content = [dic objectForKey:@"content"];
             [resultArray addObject:vm];
         }
         if (block) {
@@ -83,7 +83,7 @@
     [DDService getLikedPages:param withBlock:^(NSArray* data) {
         NSMutableArray *resultArray = [NSMutableArray array];
         for (int i = 0; i < data.count; i++) {
-            PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
+            PIEPageModel *entity = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:data[i] error:NULL];
             PIEPageVM* vm = [[PIEPageVM alloc]initWithPageEntity:entity];
             [resultArray addObject:vm];
         }
@@ -101,13 +101,13 @@
             NSArray* askImageDic = [[returnArray objectAtIndex:i]objectForKey:@"ask_uploads"];
             NSMutableArray* askImageEntities = [NSMutableArray array];
             for (NSDictionary* dic in askImageDic) {
-                PIEImageEntity* ie = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:dic error:NULL];
+                PIEModelImage* ie = [MTLJSONAdapter modelOfClass:[PIEModelImage class] fromJSONDictionary:dic error:NULL];
                 [askImageEntities addObject:ie];
             }
-            for (PIEImageEntity* ie in askImageEntities) {
-                PIEPageEntity *askEntity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:[returnArray objectAtIndex:i] error:NULL];
-                askEntity.imageWidth = ie.width;
-                askEntity.imageHeight = ie.height;
+            for (PIEModelImage* ie in askImageEntities) {
+                PIEPageModel *askEntity = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:[returnArray objectAtIndex:i] error:NULL];
+//                askEntity.imageWidth = ie.width;
+//                askEntity.imageHeight = ie.height;
                 askEntity.imageURL = ie.url;
                 PIEPageVM* vm = [[PIEPageVM alloc]initWithPageEntity:askEntity];
                 [source addObject:vm];
@@ -115,7 +115,7 @@
             
             NSArray* repliesDic = [[returnArray objectAtIndex:i]objectForKey:@"replies"];
             for (NSDictionary* dic in repliesDic) {
-                PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:dic error:NULL];
+                PIEPageModel *entity = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:dic error:NULL];
                 PIEPageVM* vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [source addObject:vm];
             }

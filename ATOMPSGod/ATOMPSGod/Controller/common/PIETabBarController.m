@@ -8,7 +8,6 @@
 
 #import "PIETabBarController.h"
 #import "PIEChannelViewController.h"
-#import "PIEEliteViewController.h"
 #import "DDNavigationController.h"
 #import "DDService.h"
 #import "PIEMeViewController.h"
@@ -20,9 +19,8 @@
 #import "PIEUploadManager.h"
 #import "UIImage+Colors.h"
 
-
-#import "PIEEliteViewController2.h"
-
+#import "PIEProceedingViewController2.h"
+#import "PIEEliteViewController.h"
 
 @interface PIETabBarController ()<UITabBarControllerDelegate>
 @property (nonatomic, strong) DDNavigationController *navigation_new;
@@ -54,9 +52,8 @@
     [self setupTitle];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorOccuredRET) name:@"NetworkErrorCall" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NetworkSignOutRET) name:@"NetworkSignOutCall" object:nil];
-    
     // for testing PIEEliteViewController2:
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DoUploadJob:) name:@"UploadCall" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DoUploadJob:) name:@"UploadCall" object:nil];
 }
 
 - (void)setupTitle {
@@ -72,6 +69,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UploadCall"object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkSignOutCall"object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkErrorCall" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkShowInfoCall" object:nil];
 }
 -(void) errorOccuredRET {
     BOOL shouldShowError = NO;
@@ -93,21 +91,19 @@
         [Hud text:@"网路好像有点问题～" inView:self.view];
     }
 }
+
+-(void) showInfoRET:(NSNotification *)notification {
+    NSString* info = [[notification userInfo] valueForKey:@"info"];
+    [Hud text:info inView:self.view];
+}
 - (void) DoUploadJob:(NSNotification *)notification
 {
-    NSDictionary *info = [notification userInfo];
-    
     PIEEliteViewController* vc = (PIEEliteViewController*)((DDNavigationController*)[self.viewControllers objectAtIndex:0]).topViewController;
-    PIEUploadManager* manager = [PIEUploadManager new];
-    manager.uploadInfo = info;
-    [manager upload:^(CGFloat percentage,BOOL success) {
+//    PIEUploadManager* manager = [PIEUploadManager new];
+//    manager.model = [PIEUploadManager shareManager].model;
+    [[PIEUploadManager shareManager] upload:^(CGFloat percentage,BOOL success) {
         [vc.progressView setProgress:percentage animated:YES];
         if (success) {
-            if ([manager.type isEqualToString:@"ask"]) {
-                
-            } else if ([manager.type isEqualToString:@"reply"]) {
-
-            }
         }
     }];
 }
@@ -132,10 +128,9 @@
 - (void)configureTabBarController {
     
     PIEChannelViewController *channelVc = [PIEChannelViewController new];
-//    PIEEliteViewController *myAttentionViewController = [PIEEliteViewController new];
-    // for testing PIEEliteViewController2
-    PIEEliteViewController2 *myAttentionViewController = [PIEEliteViewController2 new];
-    PIEProceedingViewController *proceedingViewController = [PIEProceedingViewController new];
+
+    PIEEliteViewController *myAttentionViewController = [PIEEliteViewController new];
+    PIEProceedingViewController2 *proceedingViewController = [PIEProceedingViewController2 new];
     
     PIEMeViewController *aboutMeVC = (PIEMeViewController *)[[UIStoryboard storyboardWithName:@"Me" bundle:nil] instantiateViewControllerWithIdentifier: @"PIEME"];
 

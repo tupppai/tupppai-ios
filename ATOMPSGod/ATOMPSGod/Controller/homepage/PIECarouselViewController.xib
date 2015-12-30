@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -28,11 +28,9 @@
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="s5f-Tj-oBr" userLabel="blurView">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                    <animations/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gaH-5k-Hr1" userLabel="iCarousel" customClass="iCarousel">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="250"/>
-                    <animations/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="gaH-5k-Hr1" secondAttribute="height" multiplier="1.2" id="3Jq-LZ-nA0"/>
@@ -62,7 +60,6 @@
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sig-Ve-fot" customClass="UIVisualEffectView">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                    <animations/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YJO-Is-7zc">
@@ -70,7 +67,6 @@
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="cellHolder.png" translatesAutoresizingMaskIntoConstraints="NO" id="pyi-Yf-Ai7">
                             <rect key="frame" x="284" y="-16" width="32" height="32"/>
-                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="32" id="NHx-rK-Vgx">
                                     <variation key="widthClass=compact" constant="40"/>
@@ -84,7 +80,6 @@
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="center" lineBreakMode="tailTruncation" minimumScaleFactor="0.59999999999999998" translatesAutoresizingMaskIntoConstraints="NO" id="Ej0-jf-tRH">
                             <rect key="frame" x="225" y="21" width="150" height="17"/>
-                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="ggh-JF-BOD"/>
                                 <constraint firstAttribute="width" constant="150" id="iK4-Kv-JRf"/>
@@ -102,7 +97,6 @@
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" translatesAutoresizingMaskIntoConstraints="NO" id="Tnj-17-4nM">
                             <rect key="frame" x="200" y="40" width="200" height="12"/>
-                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="200" id="SvT-0b-IKx"/>
                                 <constraint firstAttribute="height" constant="17" id="nHI-5a-PNx"/>
@@ -118,7 +112,6 @@
                         </label>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="right" translatesAutoresizingMaskIntoConstraints="NO" id="QWn-hM-tb6" customClass="PIETextView_linkDetection">
                             <rect key="frame" x="10" y="52" width="580" height="210"/>
-                            <animations/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -126,7 +119,6 @@
                         </textView>
                         <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F9S-X3-Axq">
                             <rect key="frame" x="279" y="270" width="42" height="42"/>
-                            <animations/>
                             <state key="normal" image="pie_like">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -135,7 +127,6 @@
                             </connections>
                         </button>
                     </subviews>
-                    <animations/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="Ej0-jf-tRH" firstAttribute="centerX" secondItem="pyi-Yf-Ai7" secondAttribute="centerX" id="2MR-qo-2jt"/>
@@ -173,7 +164,6 @@
                     </variation>
                 </view>
             </subviews>
-            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="gaH-5k-Hr1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="807-PI-7hd">

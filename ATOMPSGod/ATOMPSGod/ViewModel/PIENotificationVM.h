@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PIENotificationEntity.h"
+#import "PIENotificationModel.h"
 typedef NS_ENUM(NSInteger, PIENotificationType) {
     PIENotificationTypeSystem  = 0,
     PIENotificationTypeComment = 1,
@@ -29,8 +29,9 @@ typedef NS_ENUM(NSInteger, PIENotificationType) {
 @property (nonatomic, assign) NSInteger askID;
 @property (nonatomic, assign) NSInteger replyID;
 @property (nonatomic, copy  ) NSString  *time;
+@property (nonatomic, strong  ) PIENotificationModel  *model;
 
-- (instancetype)initWithEntity:(PIENotificationEntity *)entity ;
+- (instancetype)initWithEntity:(PIENotificationModel *)entity ;
 
 @end
 

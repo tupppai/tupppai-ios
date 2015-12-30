@@ -13,6 +13,7 @@
 
 @interface PIEProceedingAskTableViewCell : UITableViewCell<SwipeViewDelegate,SwipeViewDataSource>
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UIView *separator;
 @property (weak, nonatomic) IBOutlet UILabel *allWorkDescLabel;
 @property (weak, nonatomic) IBOutlet SwipeView *swipeView;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
@@ -21,6 +22,8 @@
 
 @property (weak, nonatomic) IBOutlet PIEImageView *originView1;
 @property (weak, nonatomic) IBOutlet PIEImageView *originView2;
+@property (weak, nonatomic) IBOutlet UILabel *category_name;
+@property (weak, nonatomic) IBOutlet UILabel *update_time;
 
 
 - (void)injectSource:(NSArray*)array;

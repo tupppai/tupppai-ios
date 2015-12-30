@@ -12,14 +12,14 @@
 #import "PIECommentVM.h"
 #import "AppDelegate.h"
 #import "PIEFriendViewController.h"
-#import "PIECommentEntity.h"
+#import "PIECommentModel.h"
 #import "PIECommentManager.h"
 #import "PIEEntityCommentReply.h"
 #import "PIECommentHeaderView.h"
 #import "PIEShareView.h"
 #import "PIEActionSheet_PS.h"
 #import "DDCollectManager.h"
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 #import "JTSImageViewController.h"
 #import "JTSImageInfo.h"
 #import "KVCMutableArray.h"
@@ -183,6 +183,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 -(void)dealloc {
     if (_shouldShowHeaderView) {
         [self.source_newComment removeObserver:self forKeyPath:@"array"];
+        [self removeKVO];
     }
     
     [[NSNotificationCenter defaultCenter] removeObserver:self
@@ -198,6 +199,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         //        [self scrollElegant];
         _isFirstLoading = NO;
     }
+    
+    [self addKVO];
+
 }
 - (void)scrollElegant {
     
@@ -346,7 +350,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [super didCancelTextEditing:sender];
 }
 -(void)didPasteMediaContent:(NSDictionary *)userInfo {
-    NSLog(@"didPasteMediaContent%@",userInfo);
 }
 - (BOOL)canPressRightButton
 {
@@ -508,6 +511,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     
     _source_newComment = [KVCMutableArray new];
     
+    
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag|UIScrollViewKeyboardDismissModeInteractive;
@@ -517,6 +521,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     self.tableView.showsHorizontalScrollIndicator = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
+    
+    
+    
     if (_shouldShowHeaderView) {
         self.title = @"浏览图片";
         if (_vm.type == PIEPageTypeAsk) {
@@ -539,19 +546,14 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [header layoutIfNeeded];
     CGFloat height = [header systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
     CGRect frame = header.frame;
-    frame.size.height = height;
+    frame = CGRectMake(0, 0, SCREEN_WIDTH, height);
+
     header.frame = frame;
     self.tableView.tableHeaderView = header;
 }
 
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"array"]) {
-        ((PIECommentTableHeaderView_Ask*)self.tableView.tableHeaderView).commentButton.number = _source_newComment.countOfArray;
-    }
-}
-- (void) dismissSelf {
-    [self dismissViewControllerAnimated:NO completion:nil];
-}
+
+
 -(void)configTextInput {
     self.bounces = NO;
     self.shakeToClearEnabled = NO;
@@ -722,7 +724,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     if (!_headerView) {
         _headerView = [PIECommentTableHeaderView_Ask new];
         _headerView.vm = _vm;
-        
         UITapGestureRecognizer* tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap1)];
         UITapGestureRecognizer* tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap2)];
 //        UITapGestureRecognizer* tap3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap3)];
@@ -748,17 +749,14 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         _headerView_reply.vm = _vm;
         UITapGestureRecognizer* tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap1)];
         UITapGestureRecognizer* tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap2)];
-//        UITapGestureRecognizer* tap3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap3)];
-//        UITapGestureRecognizer* tap4 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap4)];
-        
         UITapGestureRecognizer* tap5 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap5)];
         UITapGestureRecognizer* tap6 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapAllWorkButton)];
         UITapGestureRecognizer* tap7 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapLike)];
+        UILongPressGestureRecognizer* longpress7 = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(didLongpressLike)];
         [_headerView_reply.avatarView addGestureRecognizer:tap1];
         [_headerView_reply.usernameLabel addGestureRecognizer:tap2];
-//        [_headerView_reply.imageViewMain addGestureRecognizer:tap3];
-//        [_headerView_reply.imageViewRight addGestureRecognizer:tap4];
         [_headerView_reply.shareButton addGestureRecognizer:tap5];
+        [_headerView_reply.likeButton addGestureRecognizer:longpress7];
         [_headerView_reply.likeButton addGestureRecognizer:tap7];
         [_headerView_reply.moreWorkButton addGestureRecognizer:tap6];
     }
@@ -809,8 +807,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     if (_headerView.imageViewMain.image != nil) {
 //        imageInfo.image = _headerView.imageViewRight.image;
     } else {
-        if (_vm.thumbEntityArray.count >= 2) {
-            PIEImageEntity* imgEntity = _vm.thumbEntityArray[1];
+        if (_vm.models_image.count >= 2) {
+            PIEModelImage* imgEntity = _vm.models_image[1];
             imageInfo.imageURL = [NSURL URLWithString:imgEntity.url];
         }
     }
@@ -836,21 +834,15 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
 }
 - (void) didTapLike {
-    _headerView_reply.likeButton.selected = !_headerView_reply.likeButton.selected;
-    [DDService toggleLike:_headerView_reply.likeButton.selected ID:_vm.ID type:_vm.type  withBlock:^(BOOL success) {
-        if (success) {
-            _vm.liked =  _headerView_reply.likeButton.selected;
-            if ( _headerView_reply.likeButton.selected) {
-                _vm.likeCount = [NSString stringWithFormat:@"%zd",_vm.likeCount.integerValue + 1];
-            } else {
-                _vm.likeCount = [NSString stringWithFormat:@"%zd",_vm.likeCount.integerValue - 1];
-            }
-        } else {
-            _headerView_reply.likeButton.selected = !_headerView_reply.likeButton.selected;
-        }
-    }];
+    
+//    [PIEPageManager love:_headerView_reply.likeButton viewModel:_vm revert:NO];
+    [_vm love:NO];
 }
-
+- (void) didLongpressLike {
+    
+//    [PIEPageManager love:_headerView_reply.likeButton viewModel:_vm revert:YES];
+    [_vm love:YES];
+}
 
 #pragma mark - <PIEShareViewDelegate>
 
@@ -943,4 +935,42 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     }
     
 }
+
+
+
+- (void)addKVO {
+    if (_shouldShowHeaderView) {
+        [_vm addObserver:self forKeyPath:@"lovedCount" options:NSKeyValueObservingOptionNew context:NULL];
+        [_vm addObserver:self forKeyPath:@"likeCount" options:NSKeyValueObservingOptionNew context:NULL];
+    }
+}
+- (void)removeKVO {
+    @try{
+        [_vm removeObserver:self forKeyPath:@"lovedCount"];
+        [_vm removeObserver:self forKeyPath:@"likeCount"];
+    }@catch(id anException){
+        //do nothing, obviously it wasn't attached because an exception was thrown
+    }
+}
+
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"lovedCount"]) {
+        NSInteger newLovedCount = [[change objectForKey:@"new"]integerValue];
+        self.headerView_reply.likeButton.status = newLovedCount;
+    } else     if ([keyPath isEqualToString:@"likeCount"]) {
+        NSInteger newLikeCount = [[change objectForKey:@"new"]integerValue];
+        self.headerView_reply.likeButton.number = newLikeCount;
+    } else     if ([keyPath isEqualToString:@"array"]) {
+        
+        if (_vm.type == PIEPageTypeAsk) {
+            ((PIECommentTableHeaderView_Ask*)self.tableView.tableHeaderView).commentButton.number = _source_newComment.countOfArray;
+        }    else    if (_vm.type == PIEPageTypeReply) {
+            ((PIECommentTableHeaderView_Reply*)self.tableView.tableHeaderView).commentButton.number = _source_newComment.countOfArray;
+        }
+    }
+
+}
+
+
 @end

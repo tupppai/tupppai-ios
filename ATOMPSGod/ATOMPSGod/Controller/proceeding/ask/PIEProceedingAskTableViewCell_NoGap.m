@@ -11,7 +11,7 @@
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
 #import "PIECommentViewController.h"
-
+#import "PIECategoryModel.h"
 @interface PIEProceedingAskTableViewCell_NoGap()
 @property (strong, nonatomic) NSMutableArray *source;
 @property (strong, nonatomic) PIEPageVM *vmAsk1;
@@ -31,6 +31,14 @@
     _originView1.thumbImageView.image = [UIImage imageNamed:@"pie_origin"];
     _originView2.thumbImageView.image = [UIImage imageNamed:@"pie_origin"];
     
+    [_separator mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(0.5);
+    }];
+    
+    _separator.backgroundColor = [UIColor colorWithHex:0xE5E5E5];
+    
+    
+    
     UITapGestureRecognizer* tapOnAsk1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnAsk1)];
     UITapGestureRecognizer* tapOnAsk2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnAsk2)];
     [self.originView1 addGestureRecognizer:tapOnAsk1];
@@ -38,10 +46,9 @@
     
     _contentLabel.textColor = [UIColor colorWithHex:0x50484B andAlpha:1];
     _contentTextField.textColor = [UIColor colorWithHex:0x50484B andAlpha:1];
-    _allWorkDescLabel.textColor = [UIColor colorWithHex:0xFEAA2B andAlpha:1];
+
     _contentLabel.font = [UIFont lightTupaiFontOfSize:14];
     _contentTextField.font = [UIFont lightTupaiFontOfSize:14];
-    _allWorkDescLabel.font = [UIFont lightTupaiFontOfSize:11];
     
     _contentTextField.enabled = NO;
     [_editButton setTitleColor:[UIColor colorWithHex:0xff6d3f] forState:UIControlStateSelected];
@@ -130,12 +137,18 @@
             }];
         }
     }
-    _timeLabel.text = _vmAsk1.publishTime;
-    _allWorkDescLabel.text = [NSString stringWithFormat:@"已有%@个作品",_vmAsk1.replyCount];
     //    _contentLabel.text = [NSString stringWithFormat:@"要求:%@",_vmAsk1.content];
     _contentTextField.text = _vmAsk1.content;
     [self.swipeView reloadData];
     
+    if (_vmAsk1.models_catogory.count>0) {
+        PIECategoryModel* model = [_vmAsk1.models_catogory objectAtIndex:0];
+        _categoryNameLabel.text = model.title;
+    } else {
+        _categoryNameLabel.text = @"随意求P区";
+    }
+    _uploadTimeLabel.text = _vmAsk1.publishTime;
+
 }
 
 #pragma mark iCarousel methods

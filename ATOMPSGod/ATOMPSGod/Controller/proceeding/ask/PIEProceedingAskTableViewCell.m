@@ -11,6 +11,7 @@
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
 #import "PIECommentViewController.h"
+#import "PIECategoryModel.h"
 @interface PIEProceedingAskTableViewCell()
 @property (strong, nonatomic) NSMutableArray *source;
 @property (strong, nonatomic) PIEPageVM *vmAsk1;
@@ -29,6 +30,14 @@
     
     _originView1.thumbImageView.image = [UIImage imageNamed:@"pie_origin"];
     _originView2.thumbImageView.image = [UIImage imageNamed:@"pie_origin"];
+    
+    
+    [_separator mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(0.5);
+    }];
+    _separator.backgroundColor = [UIColor colorWithHex:0xE5E5E5];
+    
+    
     
     UITapGestureRecognizer* tapOnAsk1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnAsk1)];
     UITapGestureRecognizer* tapOnAsk2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnAsk2)];
@@ -118,6 +127,15 @@
     [_originView1.imageView sd_setImageWithURL:[NSURL URLWithString:_vmAsk1.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
     [_source removeObjectAtIndex:0];
     
+    
+    if (_vmAsk1.models_catogory.count>0) {
+        PIECategoryModel* model = [_vmAsk1.models_catogory objectAtIndex:0];
+        _category_name.text = model.title;
+    } else {
+        _category_name.text = @"随意求P区";
+    }
+    _update_time.text = _vmAsk1.publishTime;
+    
     if (_source.count >= 1) {
         _vmAsk2 = [_source objectAtIndex:0];
         if (_vmAsk2.type != PIEPageTypeReply) {
@@ -134,6 +152,7 @@
 //    _contentLabel.text = [NSString stringWithFormat:@"要求:%@",_vmAsk1.content];
     _contentTextField.text = _vmAsk1.content;
     [self.swipeView reloadData];
+    
     
 }
 

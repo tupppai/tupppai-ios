@@ -8,12 +8,9 @@
 
 #import "PIEEliteViewController2.h"
 #import "HMSegmentedControl.h"
-
 #import "PIESearchViewController.h"
-
 #import "PIEEliteHotReplyViewController.h"
 #import "PIEEliteFollowReplyViewController.h"
-
 
 /* Variables */
 @interface PIEEliteViewController2 ()
@@ -67,10 +64,16 @@
     
     
     
-    // fetch the initial dat
+    // fetch the initial data
     
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self bindProgressView];
+
+}
 - (void)dealloc
 {
     // remove child view controllers
@@ -86,11 +89,6 @@
 #pragma mark - UI components setup
 - (void)setupViewControllers
 {
-//    PIEEliteTestVC1 *vc1 = [[PIEEliteTestVC1 alloc] init];
-//    PIEEliteTestVC2 *vc2 = [[PIEEliteTestVC2 alloc] init];
-//    
-//    [self.eliteViewControllers addObject:vc1];
-//    [self.eliteViewControllers addObject:vc2];
     
     PIEEliteHotReplyViewController *hotReplyViewController =
     [[PIEEliteHotReplyViewController alloc] init];
@@ -122,20 +120,20 @@
 #pragma mark - <UIScrollViewDelegate>
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
         int currentPage = (scrollView.contentOffset.x + CGWidth(scrollView.frame) * 0.1) / CGWidth(scrollView.frame);
+    
         if (currentPage == 0) {
             [self.segmentedControl setSelectedSegmentIndex:0 animated:YES];
-//            [self getSourceIfEmpty_hot:nil];
             PIEEliteHotReplyViewController *controller = (PIEEliteHotReplyViewController *)_eliteViewControllers[0];
             [controller getSourceIfEmpty_hot:nil];
             
         } else if (currentPage == 1) {
             [self.segmentedControl setSelectedSegmentIndex:1 animated:YES];
-//            [self getSourceIfEmpty_follow:nil];
             PIEEliteFollowReplyViewController *controller =
             (PIEEliteFollowReplyViewController *)_eliteViewControllers[1];
             [controller getSourceIfEmpty_follow:nil];
         }
 }
+
 
 
 - (void)setupNavigationItem
@@ -151,6 +149,11 @@
     [backButton addTarget:self action:@selector(searchBarButtonDidClick)
          forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = barBackButtonItem;
+}
+
+- (void)bindProgressView {
+    _progressView = [MRNavigationBarProgressView progressViewForNavigationController:self.navigationController];
+    _progressView.progressTintColor = [UIColor pieYellowColor];
 }
 
 #pragma mark - Target actions
@@ -194,7 +197,7 @@
         
         _scrollView.frame                          = [UIScreen mainScreen].bounds;
         _scrollView.showsVerticalScrollIndicator   = NO;
-        _scrollView.showsHorizontalScrollIndicator = YES;
+        _scrollView.showsHorizontalScrollIndicator = NO;
         _scrollView.contentSize                    = CGSizeMake(SCREEN_WIDTH * 2, 0);
         _scrollView.pagingEnabled                  = YES;
         _scrollView.scrollsToTop                   = NO;

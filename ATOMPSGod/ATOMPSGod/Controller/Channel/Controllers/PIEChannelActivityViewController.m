@@ -25,6 +25,7 @@
 #import "DDNavigationController.h"
 #import "DeviceUtil.h"
 #import "PIECellIconStatusChangedNotificationKey.h"
+#import "PIEPageManager.h"
 /* Variables */
 @interface PIEChannelActivityViewController ()<QBImagePickerControllerDelegate>
 
@@ -191,39 +192,23 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 }
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    if (decelerate) {
-        [self.goPsButtonBottomConstraint setOffset:-17];
-        [UIView animateWithDuration:0.6
-                              delay:0.7
-             usingSpringWithDamping:0.3
-              initialSpringVelocity:0
-                            options:0
-                         animations:^{
-                             [self.goPsButton layoutIfNeeded];
-                             
-                         } completion:^(BOOL finished) {
-                         }];
-        
-    }
-}
-
-// 处理滚动“戛然而止”的情况
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    [self.goPsButtonBottomConstraint setOffset:-17];
-    [UIView animateWithDuration:0.6
-                          delay:0.7
-         usingSpringWithDamping:0.3
+    [self.goPsButtonBottomConstraint setOffset:-12];
+    [UIView animateWithDuration:0.2
+                          delay:1.0
+         usingSpringWithDamping:0
           initialSpringVelocity:0
-                        options:0
+                        options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
-                         [self.goPsButton layoutIfNeeded];
+                         [self.view layoutIfNeeded];
                          
                      } completion:^(BOOL finished) {
                      }];
     
-    
 }
+
+
+
+
 
 
 #pragma mark - <UITableViewDataSource>
@@ -388,7 +373,8 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
         //                [self collect];
         //            }
         else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
-            [self likeReply];
+//            [PIEPageManager love:_selectedReplyCell.likeView viewModel:_selectedVM revert:NO];
+            [_selectedVM love:NO];
         }
         else if (CGRectContainsPoint(_selectedReplyCell.followView.frame, p)) {
             [self followReplier];
@@ -424,7 +410,11 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
         //点击大图
         if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
             [self showShareView:_selectedVM];
+        }        else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
+//            [PIEPageManager love:_selectedReplyCell.likeView viewModel:_selectedVM revert:YES];
+            [_selectedVM love:YES];
         }
+
     }
     
     
@@ -435,25 +425,25 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 /**
  *  点击事件： 喜欢这张P图
  */
--(void)likeReply {
-    
-
-    
-    
-    _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
-    [DDService toggleLike:_selectedReplyCell.likeView.selected ID:_selectedVM.ID type:_selectedVM.type  withBlock:^(BOOL success) {
-        if (success) {
-            _selectedVM.liked = _selectedReplyCell.likeView.selected;
-            if (_selectedReplyCell.likeView.selected) {
-                _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue + 1];
-            } else {
-                _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue - 1];
-            }
-        } else {
-            _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
-        }
-    }];
-}
+//-(void)likeReply {
+//    
+//
+//    
+//    
+//    _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
+//    [DDService toggleLike:_selectedReplyCell.likeView.selected ID:_selectedVM.ID type:_selectedVM.type  withBlock:^(BOOL success) {
+//        if (success) {
+//            _selectedVM.liked = _selectedReplyCell.likeView.selected;
+//            if (_selectedReplyCell.likeView.selected) {
+//                _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue + 1];
+//            } else {
+//                _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue - 1];
+//            }
+//        } else {
+//            _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
+//        }
+//    }];
+//}
 
 /**
  *  关注这张P图的P图主
@@ -477,6 +467,14 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
             _selectedVM.followed = _selectedReplyCell.followView.highlighted;
         } else {
             _selectedReplyCell.followView.highlighted = !_selectedReplyCell.followView.highlighted;
+            
+            [Hud text:@"网络异常，请稍后再试"];
+        }
+        
+        if (_selectedReplyCell.followView.highlighted) {
+            [Hud text:@"关注成功"];
+        }else{
+            [Hud text:@"已取消关注"];
         }
     }];
 }
@@ -511,12 +509,16 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 
 #pragma mark - qb_imagePickerController delegate
 -(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
+    
+    [PIEUploadManager shareManager].model.channel_id = _currentChannelVM.ID;
+
+    [PIEUploadManager shareManager].model.type = PIEPageTypeReply;
     PIEUploadVC* vc = [PIEUploadVC new];
-    vc.channelVM = _currentChannelVM;
-    vc.type = PIEUploadTypeReply;
+//    vc.channelVM = _currentChannelVM;
     vc.assetsArray = assets;
     vc.hideSecondView = YES;
     [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
+    
 }
 
 -(void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController {
@@ -543,7 +545,7 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
         // add headerBannerView
         _tableView.tableHeaderView = self.headerBannerView;
         
-        _tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        _tableView.backgroundColor = [UIColor colorWithHex:0xF8F8F8];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         // register cells
@@ -566,16 +568,14 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
         // instantiate only for once
         _headerBannerView = [[UIButton alloc] init];
         
-        // set background image("表情有灵气")
+        NSString* urlString = [self.currentChannelVM.banner_pic trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
+        NSURL *bannerImageUrl = [NSURL URLWithString:urlString];
         
+        SDWebImageManager* manager = [SDWebImageManager sharedManager];
+        [manager downloadImageWithURL:bannerImageUrl options:SDWebImageAllowInvalidSSLCertificates progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+            [_headerBannerView setBackgroundImage:image forState:UIControlStateNormal];
+        }];
         
-//        [_headerBannerView
-//         setBackgroundImage:[UIImage imageNamed:@"pie_channelActivityBanner"]
-//         forState:UIControlStateNormal];
-        NSURL *bannerImageUrl = [NSURL URLWithString:self.currentChannelVM.banner_pic];
-//        [_headerBannerView.imageView sd_setImageWithURL:bannerImageUrl];
-        [_headerBannerView setBackgroundImageForState:UIControlStateNormal
-                                              withURL:bannerImageUrl];
         
         // 取消点击变暗的效果
         _headerBannerView.adjustsImageWhenHighlighted = NO;

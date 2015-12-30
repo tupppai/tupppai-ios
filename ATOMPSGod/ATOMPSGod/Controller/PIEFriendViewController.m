@@ -8,7 +8,7 @@
 
 #import "PIEFriendViewController.h"
 #import "DDOtherUserManager.h"
-#import "PIEEntityUser.h"
+#import "PIEUserModel.h"
 #import "CAPSPageMenu.h"
 #import "PIEFriendAskViewController.h"
 #import "PIEFriendReplyViewController.h"
@@ -18,9 +18,18 @@
 #import "FXBlurView.h"
 #import "PIEActionSheet_UserAbuse.h"
 #import "AppDelegate.h"
+#import "PIEAvatarImageView.h"
+#import "PIEAvatarView.h"
+
 @interface PIEFriendViewController ()
-@property (weak, nonatomic) IBOutlet UIImageView *avatarView;
-@property (weak, nonatomic) IBOutlet UIImageView *followButton;
+
+@property (weak, nonatomic) IBOutlet PIEAvatarView *avatarView;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *psGodCertificateImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *psGodIcon_big;
+
+//@property (weak, nonatomic) IBOutlet UIImageView *followButton;
+@property (weak, nonatomic) UIButton *followButton;
 @property (weak, nonatomic) IBOutlet UILabel *followCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *fansCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *likedCountLabel;
@@ -51,7 +60,6 @@
 -(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-//        NSLog(@"PIEFriendViewController initWithNibName");
 
     }
     return self;
@@ -67,7 +75,7 @@
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeAll;
     self.navigationController.hidesBarsOnSwipe = NO;
-    // Do any additional setup after loading the view from its nib.
+    
     [self setupViews];
     [self getDataSource];
     [self setupPageMenu];
@@ -84,9 +92,9 @@
     self.navigationController.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
     
-    
-
-
+    NSDictionary *titleTextAttrs = @{NSForegroundColorAttributeName: [UIColor whiteColor],
+                                     NSFontAttributeName:[UIFont systemFontOfSize:14]};
+    self.navigationController.navigationBar.titleTextAttributes = titleTextAttrs;
     
 //    if (self.navigationController.viewControllers.count <= 1) {
         [self setupNavBar];
@@ -97,7 +105,7 @@
 - (void)setupNavBar {
     UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
     buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [buttonLeft setImage:[UIImage imageNamed:@"back_white"] forState:UIControlStateNormal];
+    [buttonLeft setImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
     
     if (self.navigationController.viewControllers.count <= 1) {
         [buttonLeft addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
@@ -109,10 +117,25 @@
     
     UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
     button2.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [button2 setImage:[UIImage imageNamed:@"pie_more"] forState:UIControlStateNormal];
+    [button2 setImage:[UIImage imageNamed:@"nav_more"] forState:UIControlStateNormal];
     [button2 addTarget:self action:@selector(abuseAction) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem2 = [[UIBarButtonItem alloc] initWithCustomView:button2];
-    self.navigationItem.rightBarButtonItem =  buttonItem2;
+//    self.navigationItem.rightBarButtonItem =  buttonItem2;
+    
+    UIButton *button3 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 18, 18)];
+    button3.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    
+    [button3 setImage:[UIImage imageNamed:@"navigationbar_addFollow"]
+             forState:UIControlStateNormal];
+    
+    [button3 addTarget:self action:@selector(follow)
+      forControlEvents:UIControlEventTouchUpInside];
+
+    UIBarButtonItem *buttonItem3 = [[UIBarButtonItem alloc] initWithCustomView:button3];
+    self.navigationItem.rightBarButtonItems = @[buttonItem2, buttonItem3];
+    self.followButton = button3;
+    
+    
 }
 - (void)dismiss {
     [self dismissViewControllerAnimated:NO completion:nil];
@@ -132,29 +155,30 @@
 }
 - (void)setupViews {
     self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    self.nameLabel.font = [UIFont mediumTupaiFontOfSize:17];
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = _view1.bounds;
     gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor whiteColor] CGColor], (id)[[UIColor blackColor] CGColor], nil];
     [_view1.layer insertSublayer:gradient atIndex:0];
-
-    _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
-    _avatarView.clipsToBounds = YES;
-    _avatarView.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.5];
+    
+    self.avatarView.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.avatarView.avatarImageView.layer.borderWidth = 1.5f;
+    
     _dotView1.layer.cornerRadius = _dotView1.frame.size.width/2;
     _dotView2.layer.cornerRadius = _dotView2.frame.size.width/2;
     _blurView.contentMode = UIViewContentModeScaleAspectFill;
     _blurView.clipsToBounds = YES;
+    
 
 }
 - (void)setupTapGesture {
-    _followButton.userInteractionEnabled = YES;
     _followCountLabel.userInteractionEnabled = YES;
     _followDescLabel.userInteractionEnabled = YES;
     _fansCountLabel.userInteractionEnabled = YES;
     _fansDescLabel.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tapG1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(follow)];
-    [_followButton addGestureRecognizer:tapG1];
+//    UITapGestureRecognizer *tapG1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(follow)];
+//    [_followButton addGestureRecognizer:tapG1];
     UITapGestureRecognizer *tapG2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToFollowingVC)];
     UITapGestureRecognizer *tapG22 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToFollowingVC)];
     
@@ -203,39 +227,59 @@
 
 
 - (void)follow {
-    _followButton.highlighted = !_followButton.highlighted;
+    
+    _user.isMyFollow = !_user.isMyFollow;
+
     NSMutableDictionary *param = [NSMutableDictionary new];
-    if (_pageVM) {
-        [param setObject:@(_pageVM.userID) forKey:@"uid"];
-    } else {
-        [param setObject:@(_uid) forKey:@"uid"];
-    }
+    [param setObject:@(_user.uid) forKey:@"uid"];
+    NSNumber *status = _user.isMyFollow ? @1:@0;
+    [param setObject:status forKey:@"status"];
+    
     [DDService follow:param withBlock:^(BOOL success) {
-        if (!success) {
-            _followButton.highlighted = !_followButton.highlighted;
+        if (success) {
+            _pageVM.followed = _user.isMyFollow;
         } else {
+            _user.isMyFollow = !_user.isMyFollow;
         }
     }];
 }
-- (void)updateUserInterface:(PIEEntityUser*)user {
-    self.title = user.nickname;
-    [DDService sd_downloadImage:user.avatar withBlock:^(UIImage *image) {
-        _avatarView.image = image;
-        _blurView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:[UIColor blackColor]];
+- (void)updateUserInterface:(PIEUserModel*)user {
+//    self.title = user.nickname;
+    
+    self.nameLabel.text = user.nickname;
+    
+    
+    //self.psGodIcon_big.hidden = YES;
+    //testing
+    //self.psGodIcon_big.hidden = (_pageVM.ID % 2 == 0);
+    
+
+    self.psGodIcon_big.hidden             = !user.isV;
+    self.psGodCertificateImageView.hidden = !user.isV;
+    
+    NSString* avatarUrlString = [user.avatar trimToImageWidth:_avatarView.frame.size.width*2];
+    [DDService sd_downloadImage:avatarUrlString withBlock:^(UIImage *image) {
+        _avatarView.avatarImageView.image = image;
+        
+    //testing...done
+        
+    _blurView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:[UIColor blackColor]];
     }];
     
     
     if (user.isMyFan) {
-        _followButton.highlightedImage = [UIImage imageNamed:@"pie_mutualfollow"];
-    } else {
-        _followButton.highlightedImage = [UIImage imageNamed:@"new_reply_followed"];
+        [self.followButton setImage:[UIImage imageNamed:@"navigationbar_mutualFollow"]
+                 forState:UIControlStateSelected];
+    }else{
+        [self.followButton setImage:[UIImage imageNamed:@"navigationbar_followed"]
+                 forState:UIControlStateSelected];
     }
-    _followButton.highlighted = user.isMyFollow;
+    self.followButton.selected = user.isMyFollow;
     
     _followCountLabel.text = [NSString stringWithFormat:@"%zd",user.attentionNumber];
     _fansCountLabel.text = [NSString stringWithFormat:@"%zd",user.fansNumber];
     _likedCountLabel.text = [NSString stringWithFormat:@"%zd",user.likedCount];
-    _followButton.highlighted = user.isMyFollow;
+    
     if (user.uid == [DDUserManager currentUser].uid) {
         _followButton.hidden = YES;
     } else {
@@ -275,7 +319,7 @@
                                  };
 //    (0, _view1.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - _view1.frame.size.height)
    _pageMenu = [[CAPSPageMenu alloc] initWithViewControllers:controllerArray frame:CGRectMake(0, 0, SCREEN_WIDTH, 100) options:parameters];
-    _pageMenu.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    _pageMenu.view.backgroundColor = [UIColor colorWithHex:0xF8F8F8];
     _pageMenu.view.layer.borderColor = [UIColor colorWithHex:0x000000 andAlpha:0.1].CGColor;
     _pageMenu.view.layer.borderWidth = 0.5;
     [self.view addSubview:_pageMenu.view];
@@ -285,24 +329,9 @@
         make.right.equalTo(self.view);
         make.bottom.equalTo(self.view);
     }];
-    
-//    UIPanGestureRecognizer* panGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panGesture:)];
-//    [_pageMenu.view addGestureRecognizer:panGesture];
+
 }
-//- (void)panGesture:(UIPanGestureRecognizer *)sender {
-//    if (sender.state == UIGestureRecognizerStateBegan) {
-//        _startPanLocationY = [sender locationInView:self.view].y;
-//    }
-//    if (_pageMenu.view.frame.origin.y >= 0 && _pageMenu.view.frame.origin.y <= 180) {
-//        
-//        CGFloat dif = [sender locationInView:self.view].y - _startPanLocationY;
-//        CGFloat y = _pageMenu.view.frame.origin.y +  dif ;
-//        y = MIN(y, 180);
-//        y = MAX(y, 0);
-//        _pageMenu.view.frame = CGRectMake(0, y, SCREEN_WIDTH, SCREEN_HEIGHT-NAV_HEIGHT-y);
-//        _startPanLocationY = [sender locationInView:self.view].y;
-//    }
-//}
+
 
 - (void)scrollUp {
 
@@ -340,15 +369,38 @@
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     
-    [DDOtherUserManager getUserInfo:param withBlock:^(PIEEntityUser *user) {
+    [DDOtherUserManager getUserInfo:param withBlock:^(PIEUserModel *user) {
         if (user) {
             [self updateUserInterface:user];
             _user = user;
+            [self addKVOTo:_user];
         }
     }];
 }
 
 
+-(void)dealloc {
+    [self removeKVOFrom:_user];
+}
+- (void)addKVOTo:(id)receive{
+    [receive addObserver:self forKeyPath:@"isMyFollow" options:NSKeyValueObservingOptionNew context:NULL];
+}
+- (void)removeKVOFrom:(id)receiver {
+    @try{
+        [receiver removeObserver:self forKeyPath:@"isMyFollow"];
+    }@catch(id anException){
+        //do nothing, obviously it wasn't attached because an exception was thrown
+    }
+}
 
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+
+    if ([keyPath isEqualToString:@"isMyFollow"]) {
+        BOOL newFollowed = [[change objectForKey:@"new"]boolValue];
+        self.followButton.selected = newFollowed;
+    }
+    
+}
 
 @end

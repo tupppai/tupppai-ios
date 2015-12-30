@@ -7,7 +7,7 @@
 //
 
 #import "PIECommentVM.h"
-#import "PIECommentEntity.h"
+#import "PIECommentModel.h"
 #import "PIEEntityCommentReply.h"
 #import "PIECommentManager.h"
 @implementation PIECommentVM
@@ -23,7 +23,8 @@
     return self;
 }
 
-- (void)setViewModelData:(PIECommentEntity *)comment {
+- (void)setViewModelData:(PIECommentModel *)comment {
+    _model = comment;
     _originText  = comment.content;
     _uid         = comment.uid;
     _username    = comment.nickname;

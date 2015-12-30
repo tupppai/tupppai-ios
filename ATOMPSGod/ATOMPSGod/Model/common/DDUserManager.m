@@ -11,33 +11,28 @@
 @implementation DDUserManager
 
 //static dispatch_once_t onceToken;
-static  PIEEntityUser* _currentUser;
+static  PIEUserModel* _currentUser;
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        _region = [NSMutableDictionary new];
-        _bindWechat = NO;
-        _bindWeibo = NO;
-        _mobile = @"-1";
-        _username = @"我";
-    }
-    return self;
-}
+//- (instancetype)init
+//{
+//    self = [super init];
+//    if (self) {
+//    }
+//    return self;
+//}
 
-+ (PIEEntityUser *)currentUser {
++ (PIEUserModel *)currentUser {
     if (!_currentUser) {
-        _currentUser = [PIEEntityUser new];
+        _currentUser = [PIEUserModel new];
     }
 //    dispatch_once(&onceToken, ^{
-//        _currentUser = [PIEEntityUser new];
+//        _currentUser = [PIEUserModel new];
 //    });
     return _currentUser;
 }
 
 
-+ (void)setCurrentUser:(PIEEntityUser *)user {
++ (void)setCurrentUser:(PIEUserModel *)user {
     self.currentUser.uid = user.uid;
     self.currentUser.mobile = user.mobile;
     self.currentUser.nickname = user.nickname;
@@ -62,7 +57,7 @@ static  PIEEntityUser* _currentUser;
 }
 
 
-+ (void)updateCurrentUserFromUser:(PIEEntityUser *)user {
++ (void)updateCurrentUserFromUser:(PIEUserModel *)user {
     if ([ATOMUserDAO isExistUser:user]) {
         [ATOMUserDAO updateUser:user];
         self.currentUser = user;
@@ -85,7 +80,7 @@ static  PIEEntityUser* _currentUser;
 
 
 +(void)fetchUserInDBToCurrentUser:(void (^)(BOOL))block {
-  [ATOMUserDAO fetchUser:^(PIEEntityUser *user) {
+  [ATOMUserDAO fetchUser:^(PIEUserModel *user) {
       if (user) {
           self.currentUser = user;
           if (block) {
@@ -103,7 +98,7 @@ static  PIEEntityUser* _currentUser;
     
     [DDBaseService GET:nil url:@"view/info" block:^(id responseObject) {
         NSDictionary* data = [responseObject objectForKey:@"data"];
-        PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:data error:NULL];
+        PIEUserModel* user = [MTLJSONAdapter modelOfClass:[PIEUserModel class] fromJSONDictionary:data error:NULL];
         user.token = [responseObject objectForKey:@"token"];
         if (user) {
             [self updateCurrentUserFromUser:user];
@@ -120,7 +115,7 @@ static  PIEEntityUser* _currentUser;
     [DDBaseService POST:param url:URL_ACRegister block:^(id responseObject) {
         NSDictionary *data = [ responseObject objectForKey:@"data"];
         if (data) {
-            PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:data error:NULL];
+            PIEUserModel* user = [MTLJSONAdapter modelOfClass:[PIEUserModel class] fromJSONDictionary:data error:NULL];
             user.token = [responseObject objectForKey:@"token"];
             [self updateCurrentUserFromUser:user];
 
@@ -140,7 +135,7 @@ static  PIEEntityUser* _currentUser;
         if (data) {
             {    //        data: { status: 1,正常  2，密码错误 3，未注册 }
                 if(status == 1) {
-                    PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:data error:nil];
+                    PIEUserModel* user = [MTLJSONAdapter modelOfClass:[PIEUserModel class] fromJSONDictionary:data error:nil];
                     //保存更新数据库的user,并更新currentUser
                     user.token = [responseObject objectForKey:@"token"];
                     [self updateCurrentUserFromUser:user];
@@ -171,7 +166,7 @@ static  PIEEntityUser* _currentUser;
             NSDictionary* userObject = [data objectForKey:@"user_obj"];
             if (isRegistered) {
                 //已经注册，抓取服务器存储的user对象，更新本地user.
-                PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:userObject error:NULL];
+                PIEUserModel* user = [MTLJSONAdapter modelOfClass:[PIEUserModel class] fromJSONDictionary:userObject error:NULL];
                 user.token = [responseObject objectForKey:@"token"];
                 [self updateCurrentUserFromUser:user];
 
@@ -185,4 +180,27 @@ static  PIEEntityUser* _currentUser;
     }];
 
 }
+
+
++ (void)getMyFans:(NSDictionary *)param withBlock:(void (^)(NSArray *))block {
+    [DDService ddGetFans:param withBlock:^(NSArray *data) {
+        NSArray *resultArray = [MTLJSONAdapter modelsOfClass:[PIEUserModel class] fromJSONArray:data error:NULL];
+        if (block) {
+            block(resultArray);
+        }
+    }];
+}
+
++ (void)getMyFollows:(NSDictionary *)param withBlock:(void (^)(NSArray *recommendArray, NSArray *myFollowArray))block {
+    [DDService ddGetFollow:param withBlock:^(NSArray *recommendArray, NSArray *myFollowArray) {
+        
+        NSArray* recommends = [MTLJSONAdapter modelsOfClass:[PIEUserModel class] fromJSONArray:recommendArray error:NULL];
+        NSArray* followers = [MTLJSONAdapter modelsOfClass:[PIEUserModel class] fromJSONArray:myFollowArray error:NULL];
+        
+        if (block) {
+            block(recommends, followers);
+        }
+    }];
+}
+
 @end

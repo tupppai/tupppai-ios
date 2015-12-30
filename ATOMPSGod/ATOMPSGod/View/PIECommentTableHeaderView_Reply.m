@@ -7,7 +7,7 @@
 //
 
 #import "PIECommentTableHeaderView_Reply.h"
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 #import "FXBlurView.h"
 
 #define MAXHEIGHT (SCREEN_WIDTH-kPadding15*2)*4/3
@@ -53,6 +53,7 @@
     [self mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@(SCREEN_WIDTH));
     }];
+    
     [self.avatarView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self).with.offset(10);
         make.right.equalTo(self).with.offset(-12);
@@ -127,8 +128,8 @@
   
     [self.likeButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.commentButton);
-        make.width.equalTo(@32).priorityHigh();
-        make.width.greaterThanOrEqualTo(@32);
+        make.width.equalTo(@35).priorityHigh();
+        make.width.greaterThanOrEqualTo(@35);
         make.height.equalTo(@32);
         make.right.equalTo(self).with.offset(-17);
     }];
@@ -150,7 +151,13 @@
 -(void)setVm:(PIEPageVM *)vm {
     if (vm) {
         _vm = vm;
-        [_avatarView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+        [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+        
+        _avatarView.isV = vm.isV;
+        
+        //testing
+//        _avatarView.isV = (vm.askID % 2 == 0);
+
         _usernameLabel.text = vm.username;
         _timeLabel.text = vm.publishTime;
         
@@ -174,8 +181,7 @@
 
         _commentButton.numberString = vm.commentCount;
         _shareButton.numberString = vm.shareCount;
-        _likeButton.numberString = vm.likeCount;
-        _likeButton.highlighted = vm.liked;
+        [_likeButton initStatus:vm.lovedCount numberString:vm.likeCount];
         
         NSString * htmlString = vm.content;
         NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
@@ -197,14 +203,11 @@
 
 
 
-- (UIImageView *)avatarView
+- (PIEAvatarView *)avatarView
 {
     if (!_avatarView) {
-        _avatarView = [UIImageView new];
+        _avatarView = [[PIEAvatarView alloc]initWithFrame:CGRectMake(0, 0, 32, 32)];
         _avatarView.userInteractionEnabled = YES;
-        _avatarView.contentMode = UIViewContentModeScaleToFill;
-        _avatarView.clipsToBounds = YES;
-        _avatarView.layer.cornerRadius = 16;
     }
     return _avatarView;
 }
@@ -280,9 +283,9 @@
     return _shareButton;
 }
 
--(PIEPageLikeButton *)likeButton {
+-(PIELoveButton *)likeButton {
     if (!_likeButton) {
-        _likeButton = [PIEPageLikeButton new];
+        _likeButton = [PIELoveButton new];
         _likeButton.imageSize = CGSizeMake(19,19);
     }
     return _likeButton;

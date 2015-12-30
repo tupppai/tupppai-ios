@@ -8,7 +8,7 @@
 
 #import "PIEChannelManager.h"
 #import "PIEChannelViewModel.h"
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 #import "PIEChannelViewModel.h"
 @implementation PIEChannelManager
 + (void)getSource_Channel:(NSDictionary *)params
@@ -20,7 +20,6 @@
                      
                      if (responseObject) {
                          NSMutableArray* retArray = [NSMutableArray new];
-//                         NSDictionary* data       = [responseObject objectForKey:@"data"];
                          NSArray* categories      = [responseObject objectForKey:@"data"];
                          
                          
@@ -50,7 +49,7 @@
                              NSArray* threads = [dic objectForKey:@"threads"];
                              for (NSDictionary*dic in threads) {
                                  //entity就是model
-                                 PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:dic error:NULL];
+                                 PIEPageModel *entity = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:dic error:NULL];
                                  PIEPageVM* vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                                  [threads_transformed addObject:vm];
                              }
@@ -83,22 +82,7 @@
                          // Dictionary -> Model -> ViewModel
                          for (NSDictionary *dict in dataArray) {
                              
-                             PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:dict error:NULL];
-                             
-                             /*
-                              TODO: TO-BE-REFACTORED
-                              NSMutableArray<NSDictionary *> -> NSMutableArray<PIEImageEntity *>,
-                              然后再让前者的指针指向后者（是否会出现类型冲突？或者是歧义？）
-                              */
-                             NSMutableArray *thumbArray = [NSMutableArray array];
-                             for (NSDictionary *imageEntityDict in entity.thumbEntityArray) {
-                                 PIEImageEntity *imageEntity =
-                                 [MTLJSONAdapter modelOfClass:[PIEImageEntity class]
-                                           fromJSONDictionary:imageEntityDict
-                                                        error:nil];
-                                 [thumbArray addObject:imageEntity];
-                             }
-                             entity.thumbEntityArray = thumbArray;
+                             PIEPageModel *entity = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:dict error:NULL];
                              
                              PIEPageVM *vm = [[PIEPageVM alloc] initWithPageEntity:entity];
                              

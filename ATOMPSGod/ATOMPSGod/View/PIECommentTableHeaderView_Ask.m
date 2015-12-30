@@ -9,7 +9,7 @@
 #import "PIECommentTableHeaderView_Ask.h"
 //#import "ATOMTipButton.h"
 //#import "DDTipLabelVM.h"
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 #import "FXBlurView.h"
 
 
@@ -137,9 +137,19 @@
 -(void)setVm:(PIEPageVM *)vm {
     _vm = vm;
     if (vm) {
-        [_avatarView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+        [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+        
+        
+        _avatarView.isV = vm.isV;
+        
+        //testing
+//        _avatarView.isV = (vm.askID % 2 == 0);
+        
         _usernameLabel.text = vm.username;
         _timeLabel.text = vm.publishTime;
+        
+        
+        
         if (vm.isMyFan) {
             [_followButton setImage:[UIImage imageNamed:@"pie_mutualfollow"] forState:UIControlStateSelected];
         } else {
@@ -153,7 +163,7 @@
             _followButton.hidden = NO;
         }
         
-        
+       
         
         [DDService sd_downloadImage:vm.imageURL withBlock:^(UIImage *image) {
             _imageViewBlur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
@@ -181,14 +191,11 @@
     }];
 }
 
-- (UIImageView *)avatarView
+- (PIEAvatarView *)avatarView
 {
     if (!_avatarView) {
-        _avatarView = [UIImageView new];
+        _avatarView = [[PIEAvatarView alloc]initWithFrame:CGRectMake(0, 0, 32, 32)];
         _avatarView.userInteractionEnabled = YES;
-        _avatarView.contentMode = UIViewContentModeScaleToFill;
-        _avatarView.clipsToBounds = YES;
-        _avatarView.layer.cornerRadius = 16;
     }
     return _avatarView;
 }

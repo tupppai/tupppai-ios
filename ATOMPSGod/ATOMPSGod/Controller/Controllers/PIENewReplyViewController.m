@@ -147,6 +147,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     
     // --- Autolayout constraints
     __weak typeof(self) weakSelf = self;
+    
     [_takePhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(weakSelf.view.mas_centerX);
         make.height.mas_equalTo(50);
@@ -190,31 +191,12 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 }
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    if (decelerate) {
-        [self.takePhotoButtonConstraint setOffset:-12];
-        [UIView animateWithDuration:0.6
-                              delay:0.7
-             usingSpringWithDamping:0.3
-              initialSpringVelocity:0
-                            options:0
-                         animations:^{
-                             [self.view layoutIfNeeded];
-                             
-                         } completion:^(BOOL finished) {
-                         }];
-        
-    }
-}
-
-// 处理滚动“戛然而止”的情况
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
     [self.takePhotoButtonConstraint setOffset:-12];
-    [UIView animateWithDuration:0.6
-                          delay:0.7
-         usingSpringWithDamping:0.3
+    [UIView animateWithDuration:0.2
+                          delay:1.0
+         usingSpringWithDamping:0
           initialSpringVelocity:0
-                        options:0
+                        options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
                          [self.view layoutIfNeeded];
                          
@@ -223,6 +205,8 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     
     
 }
+
+
 
 #pragma mark - <UITableViewDataSource>
 
@@ -302,42 +286,6 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
         }
         [ws.tableViewReply reloadData];
         [ws.tableViewReply.mj_footer endRefreshing];
-    }];
-}
-
-#pragma mark - ReplyCell中的“喜欢该P图”和“关注P图主”的点击事件
--(void)likeReply {
-    _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
-    [DDService toggleLike:_selectedReplyCell.likeView.selected ID:_selectedVM.ID type:_selectedVM.type  withBlock:^(BOOL success) {
-        if (success) {
-            _selectedVM.liked = _selectedReplyCell.likeView.selected;
-            if (_selectedReplyCell.likeView.selected) {
-                _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue + 1];
-            } else {
-                _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue - 1];
-            }
-        } else {
-            _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
-        }
-    }];
-}
-
--(void)followReplier {
-    _selectedReplyCell.followView.highlighted = !_selectedReplyCell.followView.highlighted;
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    [param setObject:@(_selectedVM.userID) forKey:@"uid"];
-    if (_selectedReplyCell.followView.highlighted) {
-        [param setObject:@1 forKey:@"status"];
-    }
-    else {
-        [param setObject:@0 forKey:@"status"];
-    }
-    [DDService follow:param withBlock:^(BOOL success) {
-        if (success) {
-            _selectedVM.followed = _selectedReplyCell.followView.highlighted;
-        } else {
-            _selectedReplyCell.followView.highlighted = !_selectedReplyCell.followView.highlighted;
-        }
     }];
 }
 
@@ -422,10 +370,12 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
             //                [self collect];
             //            }
             else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
-                [self likeReply];
+//                [self like:_selectedReplyCell.likeView revert:NO];
+                [_selectedVM love:NO];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.followView.frame, p)) {
-                [self followReplier];
+//                [self followReplier];
+                [_selectedVM follow];
             }
             else if (CGRectContainsPoint(_selectedReplyCell.shareView.frame, p)) {
 //                [self showShareView];
@@ -457,7 +407,10 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
         //点击大图
         if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
             [self showShareView:_selectedVM];
+        }          else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
+            [_selectedVM love:YES];
         }
+
     }
 
     

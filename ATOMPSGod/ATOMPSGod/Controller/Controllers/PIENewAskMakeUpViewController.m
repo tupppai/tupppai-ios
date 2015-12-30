@@ -75,6 +75,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"最新求P";
+    
     [self.view addSubview: self.collectionView_ask];
 //    self.collectionView_ask.backgroundColor = [UIColor whiteColor];
     
@@ -288,39 +289,21 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 }
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    if (decelerate) {
         [self.takePhotoButtonBottomConstraint setOffset:-12];
-        [UIView animateWithDuration:0.6
-                              delay:0.7
-             usingSpringWithDamping:0.3
+        [UIView animateWithDuration:0.2
+                              delay:1.0
+             usingSpringWithDamping:0
               initialSpringVelocity:0
-                            options:0
+                            options:UIViewAnimationOptionCurveEaseInOut
                          animations:^{
                              [self.view layoutIfNeeded];
 
                          } completion:^(BOOL finished) {
                          }];
         
-    }
 }
 
-// 处理滚动“戛然而止”的情况
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    [self.takePhotoButtonBottomConstraint setOffset:-12];
-    [UIView animateWithDuration:0.6
-                          delay:0.7
-         usingSpringWithDamping:0.3
-          initialSpringVelocity:0
-                        options:0
-                     animations:^{
-                         [self.view layoutIfNeeded];
-                         
-                     } completion:^(BOOL finished) {
-                     }];
-    
 
-}
 
 #pragma mark - <UICollectionViewDataSource>
 
@@ -352,7 +335,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     CGFloat width;
     CGFloat height;
     width         = (SCREEN_WIDTH - 20) / 2.0;
-    height        = vm.imageHeight/vm.imageWidth * width + 129 + (29+20);
+    height        = vm.model.imageRatio * width + 158;
     height        = MAX(200,height);
     height        = MIN(SCREEN_HEIGHT/1.5, height);
     return CGSizeMake(width, height);
@@ -380,7 +363,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         _selectedVM = _sourceAsk[indexPath.row];
         CGPoint p = [gesture locationInView:cell];
         //点击大图
-        if (CGRectContainsPoint(cell.leftImageView.frame, p) || CGRectContainsPoint(cell.rightImageView.frame, p)) {
+        if (CGRectContainsPoint(cell.leftImageView.frame, p)) {
             [self showShareView:_selectedVM];
         }
     }
@@ -397,22 +380,31 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         CGPoint p                      = [gesture locationInView:cell];
         
         //点击大图
-        if (CGRectContainsPoint(cell.leftImageView.frame, p) || CGRectContainsPoint(cell.rightImageView.frame, p)) {
-            if (![_selectedVM.replyCount isEqualToString:@"0"]) {
-                PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-                vc.pageVM                      = _selectedVM;
-                [self presentViewController:vc animated:NO completion:nil];
-            } else {
-                PIECommentViewController* vc = [PIECommentViewController new];
-                vc.vm                        = _selectedVM;
-                [self.navigationController pushViewController:vc animated:YES];
-            }
+        if (CGRectContainsPoint(cell.leftImageView.frame, p) ) {
             
+            /* 
+             （需求补充）点击随意求P后，不论用户的求P是一张还是两张，统一先进入PIECarousel_ItemView（多图详情页，横着滚的），
+             然后上拉进入PIECommentViewController（单图详情页，竖着滚的） 
+            */
+//            
+//            if (![_selectedVM.replyCount isEqualToString:@"0"]) {
+//                PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+//                vc.pageVM                      = _selectedVM;
+//                [self presentViewController:vc animated:NO completion:nil];
+//            } else {
+//                PIECommentViewController* vc = [PIECommentViewController new];
+//                vc.vm                        = _selectedVM;
+//                [self.navigationController pushViewController:vc animated:YES];
+//            }
+            
+            PIECarouselViewController2 *vc = [PIECarouselViewController2 new];
+            vc.pageVM = _selectedVM;
+            [self presentViewController:vc animated:NO completion:nil];
         }
         //点击头像
         else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
             PIEFriendViewController * friendVC = [PIEFriendViewController new];
-            friendVC.pageVM = _selectedVM;
+            friendVC.uid = _selectedVM.userID;
             [self.navigationController pushViewController:friendVC animated:YES];
         }
         
@@ -528,7 +520,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         _collectionView_ask.toRefreshTop                 = YES;
         _collectionView_ask.autoresizingMask             = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         _collectionView_ask.showsVerticalScrollIndicator = NO;
-        _collectionView_ask.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        _collectionView_ask.backgroundColor = [UIColor colorWithHex:0xF8F8F8];
         
     }
     return _collectionView_ask;

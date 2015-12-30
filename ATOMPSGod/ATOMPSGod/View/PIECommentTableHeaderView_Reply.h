@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "PIEPageButton.h"
-#import "PIEPageLikeButton.h"
+#import "PIELoveButton.h"
 #import "PIETextView_linkDetection.h"
+#import "PIEAvatarImageView.h"
+#import "PIEAvatarView.h"
+
 @interface PIECommentTableHeaderView_Reply : UIView
-@property (nonatomic, strong) UIImageView *avatarView;
+
+@property (nonatomic, strong) PIEAvatarView *avatarView;
 @property (nonatomic, strong) UILabel *usernameLabel;
 @property (nonatomic, strong) UILabel *timeLabel;
 @property (nonatomic, strong) UIButton *followButton;
@@ -22,6 +26,6 @@
 @property (nonatomic, strong) UIButton *moreWorkButton;
 @property (nonatomic, strong) PIEPageButton *commentButton;
 @property (nonatomic, strong) PIEPageButton *shareButton;
-@property (nonatomic, strong) PIEPageLikeButton *likeButton;
+@property (nonatomic, strong) PIELoveButton *likeButton;
 @property (nonatomic, strong) PIEPageVM *vm;
 @end

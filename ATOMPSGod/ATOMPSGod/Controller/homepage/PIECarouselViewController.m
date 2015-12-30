@@ -261,7 +261,7 @@
 }
 - (void)updateSegment:(NSInteger)index {
     //务必要_currentVM更新之后才调用此函数
-    //thumbEntityArray.count 即 有count张原图
+    //models_image.count 即 有count张原图
     NSMutableArray* segmentDescArray = [NSMutableArray new];
     //如果此时滚到ask
     if (_currentVM.type == PIEPageTypeAsk) {
@@ -436,7 +436,7 @@
 
     WS(ws);
     NSMutableArray* segmentDescArray = [NSMutableArray new];
-    if (_pageVM.thumbEntityArray.count == 1) {
+    if (_pageVM.models_image.count == 1) {
         NSString* desc = @"原图";
         [segmentDescArray addObject:desc];
     }
@@ -445,7 +445,7 @@
             [segmentDescArray addObject:desc];
     }
     
-    NSString* desc = [NSString stringWithFormat:@"作品(%zd)",_dataSource.count - _pageVM.thumbEntityArray.count];
+    NSString* desc = [NSString stringWithFormat:@"作品(%zd)",_dataSource.count - _pageVM.models_image.count];
     [segmentDescArray addObject:desc];
     
     self.segmentedControl.sectionTitles = segmentDescArray;
@@ -456,10 +456,10 @@
         }
         else {
           
-            if (_pageVM.thumbEntityArray.count >= 2 && _dataSource.count >= 3) {
+            if (_pageVM.models_image.count >= 2 && _dataSource.count >= 3) {
                 [ws.carousel scrollToItemAtIndex:2 animated:NO];
             }
-            else if (_pageVM.thumbEntityArray.count == 1 && _dataSource.count >= 2){
+            else if (_pageVM.models_image.count == 1 && _dataSource.count >= 2){
                 [ws.carousel scrollToItemAtIndex:1 animated:NO];
             }
         }

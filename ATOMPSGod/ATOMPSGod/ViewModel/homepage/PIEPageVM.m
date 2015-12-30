@@ -31,9 +31,11 @@
     return self;
 }
 
-- (instancetype)initWithPageEntity:(PIEPageEntity *)entity {
+- (instancetype)initWithPageEntity:(PIEPageModel *)entity {
     self = [self init];
     if (self) {
+        
+        _model = entity;
         _ID          = entity.ID;
         _askID       = entity.askID;
         _userID      = entity.uid;
@@ -46,14 +48,18 @@
         _imageHeight = entity.imageHeight;
         _followed    = entity.followed;
         _isMyFan        = entity.isMyFan;
-
-        NSDate *publishDate    = [NSDate dateWithTimeIntervalSince1970:entity.uploadTime];
-        _publishTime           = [Util formatPublishTime:publishDate];
+        _models_catogory = entity.models_category;
         _content               = entity.userDescription;
         _type                  = entity.type;
-        _thumbEntityArray      = entity.thumbEntityArray;
-        _hotCommentEntityArray = entity.hotCommentEntityArray;
+        _models_image      = entity.models_image;
+        _models_comment = entity.models_comment;
+        _isV = entity.isV;
+        _lovedCount = entity.lovedCount;
         
+        
+        NSDate *publishDate    = [NSDate dateWithTimeIntervalSince1970:entity.uploadTime];
+        _publishTime           = [Util formatPublishTime:publishDate];
+
         if (entity.totalPraiseNumber>999999) {
             _likeCount    = kfcMaxNumberString;
         } else {
@@ -84,6 +90,82 @@
     return self;
 }
 
+- (void)increaseLoveStatus {
+    if (_lovedCount && _lovedCount == 3) {
+        self.lovedCount = 0;
+        if (![self.likeCount isEqualToString:kfcMaxNumberString]) {
+            self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] - 3];
+        }
+    } else {
+        self.lovedCount++;
+        if (![self.likeCount isEqualToString:kfcMaxNumberString]) {
+            self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] + 1];
+        }
+    }
+}
+- (void)decreaseLoveStatus {
+    if (_lovedCount && _lovedCount == 0) {
+        self.lovedCount = 3;
+        if (![self.likeCount isEqualToString:kfcMaxNumberString]) {
+            self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] + 3];
+        }
+    } else {
+        self.lovedCount--;
+        if (![self.likeCount isEqualToString:kfcMaxNumberString]) {
+            self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] - 1];
+        }
+    }
+}
+
+- (void)revertStatus {
+    self.lovedCount = 0;
+    if (![self.likeCount isEqualToString:kfcMaxNumberString]) {
+        self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] - _lovedCount];
+    }
+}
+
+
+
+/** Cell点击 － 点赞 */
+-(void)love:(BOOL)revert {
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    if (revert) {
+        [param setObject:@"0" forKey:@"status"];
+    } else {
+        [param setObject:@(self.lovedCount) forKey:@"num"];
+    }
+    
+    if (revert) {
+        [self revertStatus];
+    } else {
+        //        [likeView increaseStatus];
+        [self increaseLoveStatus];
+    }
+    
+    [DDService loveReply:param ID:self.ID withBlock:^(BOOL succeed) {
+        if (!succeed) {
+            [self decreaseLoveStatus];
+        }
+    }];
+}
+-(void)follow {
+    
+    self.followed = !self.followed;
+
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    NSNumber *followStatus = self.followed ? @1:@0;
+    [param setObject:followStatus forKey:@"status"];
+    [param setObject:@(self.userID) forKey:@"uid"];
+
+    [DDService follow:param withBlock:^(BOOL success) {
+        if (!success) {
+            self.followed = !self.followed;
+        }
+    }];
+
+    
+    
+}
 
 
 @end

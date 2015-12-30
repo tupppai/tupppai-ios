@@ -27,6 +27,7 @@
 //#import "UITableView+FDTemplateLayoutCell.h"
 #import "DeviceUtil.h"
 #import "PIECommentViewController.h"
+#import "PIEUploadManager.h"
 #define MyAskCellWidth (SCREEN_WIDTH - 20) / 2.0
 
 /* Protocols */
@@ -90,7 +91,10 @@
 @property (nonatomic, assign) BOOL canRefreshToHelpFooter;
 //@property (nonatomic, assign) BOOL canRefreshDoneFooter;
 
-@property (nonatomic, strong) NSIndexPath* selectedIndexPath;
+
+@property (nonatomic, strong) NSIndexPath* selectedIndexPath_ask;
+@property (nonatomic, strong) NSIndexPath* selectedIndexPath_toHelp;
+
 @property (nonatomic, strong) PIEPageVM* selectedVM;
 
 @property (nonatomic, strong) QBImagePickerController* QBImagePickerController;
@@ -108,6 +112,9 @@ static NSString *PIEProceedingAskTableViewCell_NoGapIdentifier = @"PIEProceeding
 static NSString *PIEProceedingAskTableViewCellIdentifier =
 @"PIEProceedingAskTableViewCell";
 
+static NSString *PIEProceedingToHelpTableViewCellIdentifier =
+@"PIEProceedingToHelpTableViewCell";
+
 #pragma mark - UI life cycles
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -117,6 +124,12 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
     [self createNavBar];
     [self configSubviews];
     [self getSourceIfEmpty_ask];
+    
+    
+    /*
+        Ready to be refactored!
+     
+     */
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -130,7 +143,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
     [MobClick endLogPageView:@"离开进行中"];
 }
 
-#pragma mark - Refreshing methods
+#pragma mark - initial Refreshing methods
 - (void)getSourceIfEmpty_ask {
     if (_sourceAsk.count <= 0 || _isfirstLoadingAsk) {
         [self.sv.askTableView.mj_header beginRefreshing];
@@ -173,9 +186,13 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
 //    [self configDoneCollectionView];
     [self setupGestures];
 }
+
+// 函数命名错误：askTableView是一个tableView，不是collectionView
 - (void)configAskCollectionView {
     _sv.askTableView.dataSource           = self;
     _sv.askTableView.delegate             = self;
+    _sv.askTableView.estimatedRowHeight = 100;
+    _sv.askTableView.rowHeight = UITableViewAutomaticDimension;
     _sv.askTableView.psDelegate           = self;
     _sv.askTableView.emptyDataSetDelegate = self;
     _sv.askTableView.emptyDataSetSource   = self;
@@ -208,7 +225,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
     _sv.toHelpTableView.separatorColor       = [UIColor colorWithHex:0xd8d8d8 andAlpha:1.0];
 
     UINib* nib = [UINib nibWithNibName:@"PIEProceedingToHelpTableViewCell" bundle:nil];
-    [_sv.toHelpTableView registerNib:nib forCellReuseIdentifier:@"PIEProceedingToHelpTableViewCell"];
+    [_sv.toHelpTableView registerNib:nib forCellReuseIdentifier:PIEProceedingToHelpTableViewCellIdentifier];
 }
 
 #pragma mark - Gesture events
@@ -226,7 +243,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
 - (void)longPressOnAsk:(UILongPressGestureRecognizer *)gesture {
     CGPoint location = [gesture locationInView:_sv.askTableView];
     NSIndexPath *indexPath = [_sv.askTableView indexPathForRowAtPoint:location];
-    _selectedIndexPath = indexPath;
+    _selectedIndexPath_ask = indexPath;
     _selectedVM = [_sourceAsk objectAtIndex:indexPath.row];
     if (indexPath) {
         //点击图片
@@ -236,7 +253,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
 - (void)longPressOnToHelp:(UILongPressGestureRecognizer *)gesture {
     CGPoint location = [gesture locationInView:_sv.toHelpTableView];
     NSIndexPath *indexPath = [_sv.toHelpTableView indexPathForRowAtPoint:location];
-    _selectedIndexPath = indexPath;
+    _selectedIndexPath_toHelp = indexPath;
     _selectedVM = [_sourceToHelp objectAtIndex:indexPath.row];
     if (indexPath) {
         //点击图片
@@ -246,7 +263,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
 - (void)tapToHelpTableViewGesture:(UITapGestureRecognizer *)gesture {
     CGPoint location = [gesture locationInView:_sv.toHelpTableView];
     NSIndexPath *indexPath = [_sv.toHelpTableView indexPathForRowAtPoint:location];
-    _selectedIndexPath = indexPath;
+    _selectedIndexPath_toHelp = indexPath;
     PIEPageVM* vm = [_sourceToHelp objectAtIndex:indexPath.row];
     if (indexPath) {
         PIEProceedingToHelpTableViewCell *cell = (PIEProceedingToHelpTableViewCell *)[_sv.toHelpTableView cellForRowAtIndexPath:indexPath];
@@ -341,13 +358,13 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
         if (_canRefreshAskFooter) {
             [self getMoreRemoteSourceMyAsk];
         } else {
-            [_sv.askTableView.mj_footer endRefreshing];
+            [_sv.askTableView.mj_footer endRefreshingWithNoMoreData];
         }
     } else if (tableView == _sv.toHelpTableView) {
         if (_canRefreshToHelpFooter) {
             [self getMoreRemoteSourceToHelp];
         } else {
-            [_sv.toHelpTableView.mj_footer endRefreshing];
+            [_sv.toHelpTableView.mj_footer endRefreshingWithNoMoreData];
         }
     }
 
@@ -355,6 +372,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
 
 #pragma mark - <UIScrollViewDelegate>
 
+/** 控制segmentedControl上面的按钮变化 */
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (scrollView == _sv) {
         int currentPage = (scrollView.contentOffset.x + CGWidth(scrollView.frame) * 0.1) / CGWidth(scrollView.frame);
@@ -385,12 +403,13 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
     PIEUploadVC* vc = [PIEUploadVC new];
     vc.assetsArray = assets;
     vc.hideSecondView = YES;
-    vc.type = PIEUploadTypeReply;
-    PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath.row];
-    vc.askIDToReply = vm.askID;
+    PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath_toHelp.row];
     
-    [[NSUserDefaults standardUserDefaults] setObject:@(vm.askID) forKey:@"AskIDToReply"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [PIEUploadManager shareManager].model.ask_id = vm.askID;
+    [PIEUploadManager shareManager].model.type = PIEPageTypeReply;
+
+//    [[NSUserDefaults standardUserDefaults] setObject:@(vm.askID) forKey:@"AskIDToReply"];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
     
     [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
 }
@@ -403,7 +422,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
 
 #pragma mark - segue methods
 
-//跳到求p页面
+//跳到求p页面(PIEProceedingViewController2的工作)
 - (void)navToToHelp {
     [_sv toggleWithType:PIEProceedingTypeToHelp];
     [_segmentedControl setSelectedSegmentIndex:1 animated:YES];
@@ -505,7 +524,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
         }
     }
     else if (tableView == _sv.toHelpTableView) {
-        PIEProceedingToHelpTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIEProceedingToHelpTableViewCell"];
+        PIEProceedingToHelpTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:PIEProceedingToHelpTableViewCellIdentifier];
         [cell injectSource:[_sourceToHelp objectAtIndex:indexPath.row]];
         return cell;
     }
@@ -516,15 +535,15 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
 #pragma mark - <UITableViewDelegate>
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableView == _sv.askTableView) {
-        if (indexPath.row == 0) {
-            return 180-15;
-        } else {
-            return 175;
-        }
-    } else {
+//    if (tableView == _sv.askTableView) {
+//        if (indexPath.row == 0) {
+//            return 180-15;
+//        } else {
+//            return 175;
+//        }
+//    } else {
         return UITableViewAutomaticDimension;
-    }
+//    }
 //    else if (tableView == _sv.toHelpTableView) {
 ////        return [tableView fd_heightForCellWithIdentifier:@"PIEProceedingToHelpTableViewCell"  cacheByIndexPath:indexPath configuration:^(PIEProceedingToHelpTableViewCell *cell) {
 ////            [cell injectSource:[_sourceToHelp objectAtIndex:indexPath.row]];
@@ -657,7 +676,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
         } else {
             _canRefreshToHelpFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
-            for (PIEPageEntity *homeImage in resultArray) {
+            for (PIEPageModel *homeImage in resultArray) {
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:homeImage];
                 [sourceAgent addObject:vm];
             }
@@ -684,7 +703,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
         } else {
             _canRefreshToHelpFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
-            for (PIEPageEntity *homeImage in resultArray) {
+            for (PIEPageModel *homeImage in resultArray) {
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:homeImage];
                 [sourceAgent addObject:vm];
             }
@@ -713,7 +732,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
 //        } else {
 //            _canRefreshDoneFooter = YES;
 //            NSMutableArray* sourceAgent = [NSMutableArray new];
-//            for (PIEPageEntity *homeImage in resultArray) {
+//            for (PIEPageModel *homeImage in resultArray) {
 //                PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:homeImage];
 //                [sourceAgent addObject:vm];
 //            }
@@ -742,7 +761,7 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
 //        } else {
 //            _canRefreshDoneFooter = YES;
 //            NSMutableArray* sourceAgent = [NSMutableArray new];
-//            for (PIEPageEntity *homeImage in resultArray) {
+//            for (PIEPageModel *homeImage in resultArray) {
 //                PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:homeImage];
 //                [sourceAgent addObject:vm];
 //            }
@@ -785,8 +804,8 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
 -(void)tapShare7 {
     [self.shareView dismiss];
     if (_sv.type == PIEProceedingTypeToHelp) {
-        PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath.row];
-        [self deleteOneToHelp:_selectedIndexPath ID:vm.ID];
+        PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath_toHelp.row];
+        [self deleteOneToHelp:_selectedIndexPath_toHelp ID:vm.ID];
     }
 }
 

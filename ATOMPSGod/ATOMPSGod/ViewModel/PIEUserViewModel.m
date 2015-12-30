@@ -8,26 +8,19 @@
 
 #import "PIEUserViewModel.h"
 @implementation PIEUserViewModel
-- (instancetype)initWithEntity:(PIEEntityUser*)user
+- (instancetype)initWithEntity:(PIEUserModel*)user
 {
     self = [super init];
     if (self) {
-        _uid              = user.uid;
-        _mobile           = user.mobile;
+        _model = user;
         _username         = user.nickname;
-        _sex              = user.sex;
         _avatar           = user.avatar;
-        _locationID       = user.locationID;
-        _attentionNumber  = user.attentionNumber;
-        _fansNumber       = user.fansNumber;
-        _likedCount       = user.likedCount;
-        _uploadNumber     = user.uploadNumber;
-        _replyNumber      = user.replyNumber;
-        _proceedingNumber = user.proceedingNumber;
-        _bindWechat       = user.bindWechat;
-        _bindWeibo        = user.bindWeibo;
-        _followed         = user.isMyFollow;
-        _replies          = [NSMutableArray array];
+        _followCount  =  [NSString stringWithFormat:@"%zd",user.attentionNumber];
+        _fansCount       = [NSString stringWithFormat:@"%zd",user.fansNumber];
+        _likedCount       = [NSString stringWithFormat:@"%zd",user.likedCount];
+        _askCount     = [NSString stringWithFormat:@"%zd",user.uploadNumber];
+        _replyCount      = [NSString stringWithFormat:@"%zd",user.replyNumber];
+        _replyPages          = [NSMutableArray array];
     }
     return self;
 }

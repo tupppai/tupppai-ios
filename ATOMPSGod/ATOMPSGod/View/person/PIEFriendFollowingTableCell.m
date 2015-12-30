@@ -7,7 +7,6 @@
 //
 
 #import "PIEFriendFollowingTableCell.h"
-#import "PIEFollowViewModel.h"
 
 @interface PIEFriendFollowingTableCell ()
 
@@ -50,7 +49,7 @@
     }];
     [self.userNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.userHeaderButton).with.offset(-2);
-        make.left.equalTo(self.userHeaderButton.mas_right).with.offset(5);
+        make.left.equalTo(self.userHeaderButton.mas_right).with.offset(10);
     }];
     [self.fansNumberLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_userNameLabel);
@@ -87,22 +86,37 @@
 
 
 
-- (void)setViewModel:(PIEFollowViewModel *)viewModel {
+- (void)setViewModel:(PIEUserViewModel *)viewModel {
     _viewModel = viewModel;
-    [self.userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-    self.userNameLabel.text = viewModel.userName;
+//    [self.userHeaderButton setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+    
+    
+    NSString *avatar_url = [viewModel.avatar trimToImageWidth:self.userHeaderButton.frame.size.width * SCREEN_SCALE];
+    [DDService sd_downloadImage:avatar_url
+                      withBlock:^(UIImage *image) {
+                          [self.userHeaderButton setImage:image
+                                                 forState:UIControlStateNormal];
+                      }];
+    
+    // testing
+    //    self.userHeaderButton.isV = ([viewModel.fansCount integerValue] % 2 == 0);
+    
+    // TODO: model's property 'isV' to be added
+    self.userHeaderButton.isV = YES;
+    
+    self.userNameLabel.text = viewModel.username;
     self.fansNumberLabel.text = [NSString stringWithFormat:@"%@粉丝",viewModel.fansCount];
     self.uploadNumberLabel.text = [NSString stringWithFormat:@"%@求p", viewModel.askCount];
     self.workNumberLabel.text = [NSString stringWithFormat:@"%@作品", viewModel.replyCount];
     
-    if (viewModel.isMyFan) {
+    if (viewModel.model.isMyFan) {
         [self.attentionButton setImage:[UIImage imageNamed:@"pie_mutualfollow"] forState:UIControlStateSelected];
     } else {
         [self.attentionButton setImage:[UIImage imageNamed:@"new_reply_followed"] forState:UIControlStateSelected];
     }
-    self.attentionButton.selected = viewModel.isMyFollow;
+    self.attentionButton.selected = viewModel.model.isMyFollow;
 
-    if (viewModel.uid == [DDUserManager currentUser].uid) {
+    if (viewModel.model.uid == [DDUserManager currentUser].uid) {
         _attentionButton.hidden = YES;
     } else {
         _attentionButton.hidden = NO;
@@ -111,13 +125,10 @@
 }
 
 
--(UIButton*)userHeaderButton {
+-(PIEAvatarButton *)userHeaderButton {
     if (!_userHeaderButton) {
-        _userHeaderButton = [UIButton new];
-        _userHeaderButton.userInteractionEnabled = NO;
-        _userHeaderButton.layer.cornerRadius = kfcAvatarWidth / 2;
-        _userHeaderButton.layer.masksToBounds = YES;
-        [_userHeaderButton setBackgroundImage:[UIImage imageNamed:@"avatar_default"] forState:UIControlStateNormal];
+        _userHeaderButton = [PIEAvatarButton new];
+        _userHeaderButton.userInteractionEnabled = YES;
     }
     return _userHeaderButton;
 }

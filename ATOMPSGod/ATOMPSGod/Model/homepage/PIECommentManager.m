@@ -8,7 +8,7 @@
 
 #import "PIECommentManager.h"
 #import "DDSessionManager.h"
-#import "PIECommentEntity.h"
+#import "PIECommentModel.h"
 #import "PIEEntityCommentReply.h"
 #import "PIECommentVM.h"
 
@@ -35,7 +35,7 @@
             NSArray *hotCommentDataArray = [ responseObject objectForKey:@"data"][@"hot_comments"];
             NSArray *recentCommentDataArray = [ responseObject objectForKey:@"data"][@"new_comments"];
             for (int i = 0; i < hotCommentDataArray.count; i++) {
-                PIECommentEntity *comment = [MTLJSONAdapter modelOfClass:[PIECommentEntity class] fromJSONDictionary:hotCommentDataArray[i] error:NULL];
+                PIECommentModel *comment = [MTLJSONAdapter modelOfClass:[PIECommentModel class] fromJSONDictionary:hotCommentDataArray[i] error:NULL];
                 comment.commentType = [param[@"type"] integerValue];
                 comment.imageID = [param[@"target_id"] integerValue];
                 if (comment) {
@@ -45,7 +45,7 @@
                 }
             }
             for (int i = 0; i < recentCommentDataArray.count; i++) {
-                PIECommentEntity *comment = [MTLJSONAdapter modelOfClass:[PIECommentEntity class] fromJSONDictionary:recentCommentDataArray[i] error:NULL];
+                PIECommentModel *comment = [MTLJSONAdapter modelOfClass:[PIECommentModel class] fromJSONDictionary:recentCommentDataArray[i] error:NULL];
                 comment.commentType = [param[@"type"] integerValue];
                 comment.imageID = [param[@"target_id"] integerValue];
                 if (comment) {

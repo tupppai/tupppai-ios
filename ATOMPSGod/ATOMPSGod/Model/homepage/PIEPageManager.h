@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-
+@class PIELoveButton;
 @interface PIEPageManager : NSObject
 
 - (void)pullAskSource:(NSDictionary *)param block:(void (^)(NSMutableArray *))block;
 - (void)pullReplySource:(NSDictionary *)param block:(void (^)(NSMutableArray *))block;
 + (void)getPageSource:(NSDictionary *)param block:(void (^)(PIEPageVM *))block;
-//
+//+(void)love:(PIELoveButton*)likeView viewModel:(PIEPageVM*)vm revert:(BOOL)revert ;
 @end

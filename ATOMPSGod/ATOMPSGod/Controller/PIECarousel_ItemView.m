@@ -14,6 +14,7 @@
 #import "PIECommentViewController.h"
 #import "AppDelegate.h"
 #import "PIEActionSheet_PS.h"
+#import "PIEPageManager.h"
 //#import "PIEWebViewViewController.h"
 //#import "DDNavigationController.h"
 //#import "AppDelegate.h"
@@ -47,22 +48,15 @@
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         _imageView_type.contentMode = UIViewContentModeScaleAspectFit;
-        _button_avatar.imageView.contentMode = UIViewContentModeScaleAspectFill;
-        _button_avatar.layer.cornerRadius = _button_avatar.frame.size.width/2;
-        _button_avatar.clipsToBounds = YES;
-        _pageButton_comment.imageView.image = [UIImage imageNamed:@"hot_comment"];
-        _pageButton_share.imageView.image   = [UIImage imageNamed:@"hot_share"];
+
+        _pageButton_comment.imageView.image = [UIImage imageNamed:@"pieSquaredCommentIcon"];
+        _pageButton_share.imageView.image   = [UIImage imageNamed:@"pieSquaredShareIcon"];
         
         _button_name.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         _label_time.textAlignment = NSTextAlignmentRight;
 
-        [_button_avatar setTitleColor:[UIColor colorWithHex:0x000000 andAlpha:0.9] forState:UIControlStateNormal];
-        [_button_avatar.titleLabel setFont:[UIFont lightTupaiFontOfSize:13]];
         _label_time.textColor =[UIColor colorWithHex:0x000000 andAlpha:0.4];
         [_label_time setFont:[UIFont lightTupaiFontOfSize:10]];
-//        _textView_content.delegate = self;
-//        [_label_content setTintColor:[UIColor colorWithHex:0x000000 andAlpha:0.8]];
-//        [_label_content setFont:[UIFont lightTupaiFontOfSize:15]];
 
         [self setupTableView];
         [self addEvent];
@@ -76,6 +70,7 @@
     [[NSNotificationCenter defaultCenter]
      removeObserver:self
      name:PIESharedIconStatusChangedNotification object:nil];
+    [self removeKVO];
 }
 
 - (void)addEvent {
@@ -85,13 +80,14 @@
     UITapGestureRecognizer* tapShare = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapShare)];
     UITapGestureRecognizer* tapComment = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapComment)];
     UITapGestureRecognizer* tapLike = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapLike)];
-    
+    UILongPressGestureRecognizer* longpressLike = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longpressLike)];
     UITapGestureRecognizer* tapPS = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapPS)];
 
     [_bangView addGestureRecognizer:tapPS];
     [_pageButton_share addGestureRecognizer:tapShare];
     [_pageButton_comment addGestureRecognizer:tapComment];
     [_pageLikeButton addGestureRecognizer:tapLike];
+    [_pageLikeButton addGestureRecognizer:longpressLike];
 }
 
 - (void)setupNotificationObserver
@@ -105,8 +101,14 @@
 -(void) tapPS {
     [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
 }
+
+- (void)longpressLike {
+//    [PIEPageManager love:_pageLikeButton viewModel:_vm revert:YES];
+    [_vm love:YES];
+}
 - (void)tapLike {
-    [self like:_pageLikeButton];
+//    [PIEPageManager love:_pageLikeButton viewModel:_vm revert:NO];
+    [_vm love:NO];
 }
 - (void)tapShare {
 //    [self.shareView show];
@@ -199,23 +201,6 @@
 }
 
 
-#pragma mark - Gesture events
--(void)like:(PIEPageLikeButton*)likeView {
-    likeView.selected = !likeView.selected;
-    
-    [DDService toggleLike:likeView.selected ID:_vm.ID type:_vm.type  withBlock:^(BOOL success) {
-        if (success) {
-            if (likeView.selected) {
-                _vm.likeCount = [NSString stringWithFormat:@"%zd",_vm.likeCount.integerValue + 1];
-            } else {
-                _vm.likeCount = [NSString stringWithFormat:@"%zd",_vm.likeCount.integerValue - 1];
-            }
-            _vm.liked = likeView.selected;
-        } else {
-            likeView.selected = !likeView.selected;
-        }
-    }];
-}
 
 #pragma mark - Notification Methods
 - (void)updateShareStatus:(NSNotification *)notification {
@@ -226,6 +211,8 @@
     _pageButton_share.numberString = numberString;
     
 }
+
+
 
 #pragma mark - <PIEShareViewDelegate> and its related methods
 
@@ -247,7 +234,6 @@
 {
     [shareView dismiss];
 }
-
 #pragma mark - Lazy loadings
 
 - (PIEShareView *)shareView {
@@ -265,17 +251,32 @@
     return _psActionSheet;
 }
 
+
 #pragma mark - Setters
 -(void)setVm:(PIEPageVM *)vm {
-    if (_vm != vm) {
-        _vm = vm;
-    }
+    _vm = vm;
+    [self addKVO];
     _pageButton_comment.numberString = vm.commentCount;
     _pageButton_share.numberString = vm.shareCount;
     _label_time.text = vm.publishTime;
     //    _label_content.text = vm.content;
     [_button_name setTitle:vm.username forState:UIControlStateNormal];
-    [_button_avatar setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+    
+    NSString* urlString_avatar = [vm.avatarURL trimToImageWidth:_button_avatar.frame.size.height*SCREEN_SCALE];
+    
+    [DDService sd_downloadImage:urlString_avatar withBlock:^(UIImage *image) {
+        [_button_avatar setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+        [_button_avatar setImage:image forState:UIControlStateNormal];
+
+    }];
+    
+    
+    _button_avatar.isV = vm.isV;
+    
+    //testing
+//    _button_avatar.isV = (vm.askID % 2 == 0);
+    
+    
     if (vm.type == PIEPageTypeAsk) {
         _imageView_type.image = [UIImage imageNamed:@"carousel_type_ask"];
         _pageLikeButton.hidden = YES;
@@ -286,8 +287,7 @@
         _bangView.hidden = YES;
         _imageView_type.image = [UIImage imageNamed:@"carousel_type_reply"];
         _pageLikeButton.hidden = NO;
-        _pageLikeButton.highlighted = vm.liked;
-        _pageLikeButton.numberString = vm.likeCount;
+        [_pageLikeButton initStatus:vm.lovedCount numberString:vm.likeCount];
     }
     
     _view_pageImage.url = vm.imageURL;
@@ -297,16 +297,42 @@
             make.height.equalTo(@0).with.priorityMedium();
         }];
     }
-    //    else {
-    //        NSString * htmlString = vm.content;
-    //        NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSRTFTextDocumentType } documentAttributes:nil error:nil];
-    //        [attrStr addAttribute:NSFontAttributeName value:[UIFont lightTupaiFontOfSize:15] range:NSMakeRange(0, attrStr.length)];
-    //        [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0x000000 andAlpha:0.9] range:NSMakeRange(0, attrStr.length)];
-    //        _textView_content.attributedText = attrStr;
-    //    }
-    _textView_content.font = [UIFont lightTupaiFontOfSize:15];
-    _textView_content.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.9];
-    _textView_content.text = vm.content;
+        else {
+            NSString * htmlString = vm.content;
+            NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSRTFTextDocumentType } documentAttributes:nil error:nil];
+            [attrStr addAttribute:NSFontAttributeName value:[UIFont lightTupaiFontOfSize:15] range:NSMakeRange(0, attrStr.length)];
+            [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0x000000 andAlpha:0.9] range:NSMakeRange(0, attrStr.length)];
+            _textView_content.attributedText = attrStr;
+        }
     [self getDataSource];
 }
+
+
+- (void)addKVO {
+    [_vm addObserver:self forKeyPath:@"lovedCount" options:NSKeyValueObservingOptionNew context:NULL];
+    [_vm addObserver:self forKeyPath:@"likeCount" options:NSKeyValueObservingOptionNew context:NULL];
+}
+- (void)removeKVO {
+    [_vm removeObserver:self forKeyPath:@"lovedCount"];
+    [_vm removeObserver:self forKeyPath:@"likeCount"];
+
+//    @try{
+//        [_vm removeObserver:self forKeyPath:@"lovedCount"];
+//        [_vm removeObserver:self forKeyPath:@"likeCount"];
+//    }@catch(id anException){
+//        //do nothing, obviously it wasn't attached because an exception was thrown
+//    }
+}
+
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"lovedCount"]) {
+        NSInteger newLovedCount = [[change objectForKey:@"new"]integerValue];
+        self.pageLikeButton.status = newLovedCount;
+    } else     if ([keyPath isEqualToString:@"likeCount"]) {
+        NSInteger newLikeCount = [[change objectForKey:@"new"]integerValue];
+        self.pageLikeButton.number = newLikeCount;
+    }
+}
+
 @end

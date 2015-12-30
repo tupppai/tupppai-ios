@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-@class PIECommentEntity;
+@class PIECommentModel;
 
 @interface PIECommentVM : NSObject
+@property (nonatomic, strong) PIECommentModel* model;
 
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, copy  ) NSString  *username;
@@ -30,6 +31,6 @@
 @property (nonatomic, assign) BOOL liked;
 @property (nonatomic, strong) NSMutableArray* replyArray;
 
-- (void)setViewModelData:(PIECommentEntity *)comment;
+- (void)setViewModelData:(PIECommentModel *)comment;
 
 @end

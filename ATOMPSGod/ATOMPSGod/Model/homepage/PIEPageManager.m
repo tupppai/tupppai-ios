@@ -14,8 +14,8 @@
 #import "PIEPageDAO.h"
 #import "PIENewScrollView.h"
 //#import "PIEAskImageDao.h"
-#import "PIEImageEntity.h"
-
+#import "PIEModelImage.h"
+#import "PIELoveButton.h"
 
 @interface PIEPageManager ()
 
@@ -39,13 +39,7 @@
         if (data) {
             NSMutableArray *returnArray = [NSMutableArray array];
             for (int i = 0; i < data.count; i++) {
-                PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
-                NSMutableArray* thumbArray = [NSMutableArray new];
-                for (int i = 0; i<entity.thumbEntityArray.count; i++) {
-                    PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.thumbEntityArray[i] error:NULL];
-                    [thumbArray addObject:entity2];
-                }
-                entity.thumbEntityArray = thumbArray;
+                PIEPageModel *entity = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:data[i] error:NULL];
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [returnArray addObject:vm];
             }
@@ -64,13 +58,7 @@
         if (data) {
             NSMutableArray *returnArray = [NSMutableArray array];
             for (int i = 0; i < data.count; i++) {
-                PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
-                NSMutableArray* thumbArray = [NSMutableArray new];
-                for (int i = 0; i<entity.thumbEntityArray.count; i++) {
-                    PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.thumbEntityArray[i] error:NULL];
-                    [thumbArray addObject:entity2];
-                }
-                entity.thumbEntityArray = thumbArray;
+                PIEPageModel *entity = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:data[i] error:NULL];
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [returnArray addObject:vm];
             }
@@ -87,16 +75,8 @@
 
 + (void)getPageSource:(NSDictionary *)param block:(void (^)(PIEPageVM *))block {
     [DDBaseService GET:param url:@"thread/item" block:^(id responseObject) {
-        PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:                    [responseObject objectForKey:@"data"] error:NULL];
+        PIEPageModel *entity = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:                    [responseObject objectForKey:@"data"] error:NULL];
         if (entity) {
-            if (entity.type == PIEPageTypeAsk) {
-                NSMutableArray* thumbArray = [NSMutableArray new];
-                for (int i = 0; i<entity.thumbEntityArray.count; i++) {
-                    PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.thumbEntityArray[i] error:NULL];
-                    [thumbArray addObject:entity2];
-                }
-                entity.thumbEntityArray = thumbArray;
-            }
             PIEPageVM* vm = [[PIEPageVM alloc]initWithPageEntity:entity];
             if (block) {
                 block(vm);
@@ -109,14 +89,43 @@
     }];
 }
 //
+///** Cell点击 － 点赞 */
+//+(void)love:(PIELoveButton*)likeView viewModel:(PIEPageVM*)vm revert:(BOOL)revert {
+//    NSMutableDictionary *param = [NSMutableDictionary new];
+//    if (revert) {
+//        [param setObject:@"0" forKey:@"status"];
+//    } else {
+//        [param setObject:@(likeView.status) forKey:@"num"];
+//    }
+//    
+//    if (revert) {
+////        [likeView revert];
+//        [vm revertStatus];
+//    } else {
+////        [likeView increaseStatus];
+//        [vm increaseLoveStatus];
+//    }
+//    
+//    [DDService loveReply:param ID:vm.ID withBlock:^(BOOL succeed) {
+//        if (succeed) {
+////            vm.lovedCount = likeView.status;
+////            vm.likeCount = likeView.numberString;
+//        } else {
+////            [likeView decreaseStatus];
+//        }
+//    }];
+//    
+//}
+
+//
 //- (void)saveHomeImagesInDB:(NSMutableArray *)homeImages {
-//    for (PIEPageEntity *homeImage in homeImages) {
+//    for (PIEPageModel *homeImage in homeImages) {
 //        if ([self.homeImageDAO isExistHomeImage:homeImage]) {
 //            [self.homeImageDAO updateHomeImage:homeImage];
 //        } else {
 //            [self.homeImageDAO insertHomeImage:homeImage];
 //        }
-//        NSArray *imageEntities = homeImage.thumbEntityArray;
+//        NSArray *imageEntities = homeImage.models_image;
 //        for ( PIEImageEntity * entity in imageEntities) {
 //            if ([PIEAskImageDao isExist:entity]) {
 //                [PIEAskImageDao update:entity];
@@ -129,8 +138,8 @@
 //
 //- (NSArray *)getHomeImages {
 //    NSArray *array = [self.homeImageDAO selectHomeImages];
-//    for (PIEPageEntity *homeImage in array) {
-//        homeImage.thumbEntityArray = [PIEAskImageDao selectByID:homeImage.ID];
+//    for (PIEPageModel *homeImage in array) {
+//        homeImage.models_image = [PIEAskImageDao selectByID:homeImage.ID];
 //    }
 //    return array;
 //}
@@ -138,8 +147,8 @@
 //- (NSArray *)getHomeImagesWithHomeType:(NSInteger)homeType {
 //    
 ////    NSArray *array = [self.homeImageDAO selectHomeImagesWithHomeType:homeType];
-////    for (PIEPageEntity *homeImage in array) {
-////        homeImage.thumbEntityArray = [PIEAskImageDao selectByID:homeImage.ID];
+////    for (PIEPageModel *homeImage in array) {
+////        homeImage.models_image = [PIEAskImageDao selectByID:homeImage.ID];
 ////    }
 //    NSArray *array;
 //    return array;

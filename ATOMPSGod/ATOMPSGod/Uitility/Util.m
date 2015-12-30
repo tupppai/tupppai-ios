@@ -69,7 +69,7 @@
     return s;
 }
 
-+ (void) imageWithVm:(PIEPageVM*)vm block:(void(^)(UIImage*))block
++ (void) generateShareImageFromViewModel:(PIEPageVM*)vm block:(void(^)(UIImage*))block
 {
     
     PIEShareImageView* view = [PIEShareImageView new];
@@ -199,6 +199,7 @@ NSString* deviceName()
 @implementation Hud
 
 +(void)text:(NSString*)message {
+    [Hud dismiss];
     if ([UIApplication sharedApplication].keyWindow) {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
     // Configure for text only and offset down
@@ -211,6 +212,7 @@ NSString* deviceName()
     }
 }
 +(void)textWithLightBackground:(NSString*)message {
+    [Hud dismiss];
     if ([UIApplication sharedApplication].keyWindow) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
         hud.color = [UIColor colorWithHex:0xffffff andAlpha:0.5];
@@ -225,6 +227,7 @@ NSString* deviceName()
 }
 
 +(void)text:(NSString*)message inView:(UIView*)view {
+    [Hud dismiss:view];
     if (view) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
         // Configure for text only and offset down
@@ -237,6 +240,7 @@ NSString* deviceName()
     }
 }
 +(void)customText:(NSString*)message inView:(UIView*)view {
+    [Hud dismiss:view];
     if (view) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
         // Configure for text only and offset down
@@ -249,6 +253,7 @@ NSString* deviceName()
     }
 }
 +(void)activity:(NSString*)message {
+    [Hud dismiss];
     if ([UIApplication sharedApplication].keyWindow) {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
@@ -259,6 +264,7 @@ NSString* deviceName()
     }
 }
 +(void)activity:(NSString*)message inView:(UIView*)view {
+    [Hud dismiss:view];
     if (view) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
         hud.margin = 30;
@@ -280,6 +286,7 @@ NSString* deviceName()
     }
 }
 +(void)success:(NSString*)message inView:(UIView*)view {
+    [Hud dismiss:view];
     if (view) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
         hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hud_checkmark"]];
@@ -290,6 +297,7 @@ NSString* deviceName()
     }
 }
 +(void)success:(NSString*)message {
+    [Hud dismiss];
     if ([UIApplication sharedApplication].keyWindow) {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
     hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hud_checkmark"]];
@@ -301,6 +309,7 @@ NSString* deviceName()
 }
 
 +(void)error:(NSString*)message inView:(UIView*)view {
+    [Hud dismiss:view];
     if (view) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
         hud.mode = MBProgressHUDModeCustomView;
@@ -311,6 +320,7 @@ NSString* deviceName()
     }
 }
 +(void)error:(NSString*)message {
+    [Hud dismiss];
     if ([UIApplication sharedApplication].keyWindow) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
         hud.mode = MBProgressHUDModeCustomView;
