@@ -89,8 +89,10 @@
     _viewModel = viewModel;
 //    [_userHeaderButton setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatar] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
 //
-    
-   [DDService sd_downloadImage:viewModel.avatar
+  
+    NSString *avatar_url =
+    [viewModel.avatar trimToImageWidth:_userHeaderButton.frame.size.width * SCREEN_SCALE];
+   [DDService sd_downloadImage:avatar_url
                      withBlock:^(UIImage *image) {
                         [_userHeaderButton setImage:image
                                            forState:UIControlStateNormal];

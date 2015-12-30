@@ -90,13 +90,13 @@
     _viewModel = viewModel;
 //    [self.userHeaderButton setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:viewModel.avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
     
-    [DDService sd_downloadImage:viewModel.avatar
+    
+    NSString *avatar_url = [viewModel.avatar trimToImageWidth:self.userHeaderButton.frame.size.width * SCREEN_SCALE];
+    [DDService sd_downloadImage:avatar_url
                       withBlock:^(UIImage *image) {
                           [self.userHeaderButton setImage:image
                                                  forState:UIControlStateNormal];
                       }];
-    
-    
     
     // testing
     //    self.userHeaderButton.isV = ([viewModel.fansCount integerValue] % 2 == 0);
