@@ -11,7 +11,7 @@
 #import "PIEProceedingShareView.h"
 #import "PIERefreshTableView.h"
 #import "PIEProceedingAskTableViewCell_NoGap.h"
-#import "PIEProceedingAskTableViewCell.h"
+//#import "PIEProceedingAskTableViewCell.h"
 #import "DDPageManager.h"
 #import "MMPlaceHolder.h"
 
@@ -67,8 +67,8 @@ NSMutableArray <NSMutableArray<PIEPageVM *> *> *sourceAsk;
 static NSString *PIEProceedingAskTableViewCell_NoGapIdentifier =
 @"PIEProceedingAskTableViewCell_NoGap";
 
-static NSString *PIEProceedingAskTableViewCellIdentifier =
-@"PIEProceedingAskTableViewCell";
+//static NSString *PIEProceedingAskTableViewCellIdentifier =
+//@"PIEProceedingAskTableViewCell";
 
 #pragma mark - UI life cycles
 - (void)viewDidLoad {
@@ -113,8 +113,8 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
     _askTableView.rowHeight            = UITableViewAutomaticDimension;
     _askTableView.separatorStyle       = UITableViewCellSeparatorStyleNone;
     
-    UINib* nib = [UINib nibWithNibName:@"PIEProceedingAskTableViewCell" bundle:nil];
-    [_askTableView registerNib:nib forCellReuseIdentifier:PIEProceedingAskTableViewCellIdentifier];
+//    UINib* nib = [UINib nibWithNibName:@"PIEProceedingAskTableViewCell" bundle:nil];
+//    [_askTableView registerNib:nib forCellReuseIdentifier:PIEProceedingAskTableViewCellIdentifier];
     
     UINib* nib2 = [UINib nibWithNibName:@"PIEProceedingAskTableViewCell_NoGap" bundle:nil];
     [_askTableView registerNib:nib2 forCellReuseIdentifier:PIEProceedingAskTableViewCell_NoGapIdentifier];
@@ -179,15 +179,10 @@ static NSString *PIEProceedingAskTableViewCellIdentifier =
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 0) {
         PIEProceedingAskTableViewCell_NoGap *cell = [tableView dequeueReusableCellWithIdentifier:PIEProceedingAskTableViewCell_NoGapIdentifier];
         [cell injectSource:[_sourceAsk objectAtIndex:indexPath.row]];
         return cell;
-    } else {
-        PIEProceedingAskTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:PIEProceedingAskTableViewCellIdentifier];
-        [cell injectSource:[_sourceAsk objectAtIndex:indexPath.row]];
-        return cell;
-    }
+
 }
 
 

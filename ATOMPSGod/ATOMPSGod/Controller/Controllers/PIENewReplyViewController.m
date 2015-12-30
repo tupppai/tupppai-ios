@@ -191,18 +191,19 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 }
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-        [self.takePhotoButtonConstraint setOffset:-12];
-        [UIView animateWithDuration:0.6
-                              delay:1.0
-             usingSpringWithDamping:0.3
-              initialSpringVelocity:0
-                            options:0
-                         animations:^{
-                             [self.view layoutIfNeeded];
-                             
-                         } completion:^(BOOL finished) {
-                         }];
-        
+    [self.takePhotoButtonConstraint setOffset:-12];
+    [UIView animateWithDuration:0.2
+                          delay:1.0
+         usingSpringWithDamping:0
+          initialSpringVelocity:0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         [self.view layoutIfNeeded];
+                         
+                     } completion:^(BOOL finished) {
+                     }];
+    
+    
 }
 
 

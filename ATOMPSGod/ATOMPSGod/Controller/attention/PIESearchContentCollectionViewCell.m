@@ -29,9 +29,17 @@
 //    [_avatarButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
 //    
     
-    [_avatarButton setImageForState:UIControlStateNormal
-                            withURL:[NSURL URLWithString:vm.avatarURL]
-                   placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+//    [_avatarButton setImageForState:UIControlStateNormal
+//                            withURL:[NSURL URLWithString:vm.avatarURL]
+//                   placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+    
+    [DDService sd_downloadImage:vm.avatarURL
+                      withBlock:^(UIImage *image) {
+                          [_avatarButton setImage:image
+                                         forState:UIControlStateNormal];
+                          
+                      }];
+    
     
 //    _avatarButton.isV = vm.isV;
 //    _avatarButton.isV = YES;

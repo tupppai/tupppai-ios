@@ -192,7 +192,7 @@
     }];
     PIEUserModel* user = [DDUserManager currentUser];
     
-    
+//    user.isV = YES;
     self.psGodIcon_big.hidden    = !user.isV;
     self.psGodCertificate.hidden = !user.isV;
     
@@ -220,7 +220,7 @@
     _dotView2.layer.cornerRadius = _dotView2.frame.size.width/2;
     _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
     _avatarContainerView.layer.cornerRadius = _avatarContainerView.frame.size.width/2;
-    _avatarView.layer.borderWidth = 2.0f;
+    _avatarView.layer.borderWidth = 1.5f;
     _avatarView.layer.borderColor = [UIColor whiteColor].CGColor;
     _avatarView.clipsToBounds = YES;
     

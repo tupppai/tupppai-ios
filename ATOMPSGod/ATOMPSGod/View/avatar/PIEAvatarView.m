@@ -29,18 +29,16 @@
     return self;
 }
 
-
-
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     if (self = [super initWithCoder:aDecoder]) {
         self.backgroundColor = [UIColor clearColor];
         
         /* dirty code begins: */
-        UIView *backgroundView = [[UIView alloc] init];
-        backgroundView.backgroundColor = [UIColor whiteColor];
-        
-        [self addSubview:backgroundView];
+//        UIView *backgroundView = [[UIView alloc] init];
+//        backgroundView.backgroundColor = [UIColor whiteColor];
+//        
+//        [self addSubview:backgroundView];
 
 //        /*
 //            TO-BE-OVERWRITTEN! 非常损耗性能的一种添加白色border的方法！
@@ -72,14 +70,23 @@
 
 - (void) addPSGodView {
     [self addSubview:self.psGodView];
+
     [self.psGodView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.avatarImageView).with.offset(2);
-        make.centerX.equalTo(self.avatarImageView.mas_trailing);
-        make.width.equalTo(self.avatarImageView).with.multipliedBy(28.0/62.0).with.priorityMedium();
-        make.height.equalTo(self.avatarImageView).with.multipliedBy(28.0/62.0).with.priorityMedium();
+        make.bottom.equalTo(self.avatarImageView);
+        make.right.equalTo(self.avatarImageView.mas_right).with.offset(1);
+        
+        make.width.equalTo(self.avatarImageView).with.multipliedBy(22.0/62.0).with.priorityHigh();
+        make.height.equalTo(self.avatarImageView).with.multipliedBy(22.0/62.0).with.priorityHigh();
+        
         make.width.lessThanOrEqualTo(@18);
         make.height.lessThanOrEqualTo(@18);
     }];
+    self.psGodView.layer.borderWidth = 1;
+    self.psGodView.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.psGodView.layer.cornerRadius = (self.bounds.size.width * (22.0 / 62.0)) / 2;
+    self.psGodView.layer.masksToBounds = YES;
+    self.psGodView.layer.shouldRasterize = YES;
+    
 }
 
 #pragma mark - lazy loadings
@@ -90,6 +97,11 @@
         _avatarImageView = [[UIImageView alloc]initWithFrame:self.bounds];
         _avatarImageView.layer.cornerRadius = self.bounds.size.width / 2.0;
         [_avatarImageView setContentMode:UIViewContentModeScaleAspectFill];
+        
+        
+        // for speeding up
+        _avatarImageView.layer.shouldRasterize = YES;
+        
         _avatarImageView.image = [UIImage imageNamed:@"cellHolder"];
         _avatarImageView.clipsToBounds = YES;
     }

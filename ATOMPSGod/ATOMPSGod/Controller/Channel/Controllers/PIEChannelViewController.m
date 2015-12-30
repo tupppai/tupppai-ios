@@ -68,9 +68,10 @@
 #pragma mark - UI components & data setup
 - (void)setupTableView
 {
+    self.view.backgroundColor = [UIColor colorWithHex:0xF8F8F8];
     [self.view addSubview:self.tableView];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    UIEdgeInsets padding = UIEdgeInsetsMake(0, 0, 0, 0);
+    UIEdgeInsets padding = UIEdgeInsetsMake(0,10, 0, 10);
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view).with.insets(padding);
     }];
@@ -296,9 +297,11 @@
         _tableView.dataSource         = self;
         _tableView.psDelegate         = self;
         _tableView.estimatedRowHeight = 120;
-
+        _tableView.showsHorizontalScrollIndicator = NO;
+        _tableView.showsVerticalScrollIndicator = NO;
+        
         _tableView.rowHeight = UITableViewAutomaticDimension;
-        _tableView.backgroundColor = [UIColor colorWithHex:0xF8F8F8];
+        
         [_tableView registerNib:[UINib nibWithNibName:@"PIEChannelTableViewCell"
                                                bundle:nil]
          forCellReuseIdentifier:@"Channel_Cell"];

@@ -290,11 +290,11 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
         [self.takePhotoButtonBottomConstraint setOffset:-12];
-        [UIView animateWithDuration:0.6
+        [UIView animateWithDuration:0.2
                               delay:1.0
-             usingSpringWithDamping:0.3
+             usingSpringWithDamping:0
               initialSpringVelocity:0
-                            options:0
+                            options:UIViewAnimationOptionCurveEaseInOut
                          animations:^{
                              [self.view layoutIfNeeded];
 
