@@ -23,7 +23,8 @@
         self.imageView.contentMode = UIViewContentModeScaleAspectFill;
         self.imageView.layer.cornerRadius = self.imageView.frame.size.width/2;
         self.imageView.clipsToBounds = YES;
-
+        // for speeding-up
+        self.imageView.layer.shouldRasterize = YES;
     }
     return self;
 }
@@ -33,17 +34,35 @@
         self.imageView.contentMode = UIViewContentModeScaleAspectFill;
         self.imageView.layer.cornerRadius = self.imageView.frame.size.width/2;
         self.imageView.clipsToBounds = YES;
+        
+        // for speeding up
+        self.imageView.layer.shouldRasterize = YES;
     }
     return self;
 }
 - (void) addPSGodView {
     [self addSubview:self.psGodView];
     [self.psGodView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.imageView).with.offset(2);
-        make.centerX.equalTo(self.imageView.mas_trailing);
-        make.width.equalTo(self.imageView).with.multipliedBy(28.0/62.0);
-        make.height.equalTo(self.imageView).with.multipliedBy(28.0/62.0);
+//        make.bottom.equalTo(self.imageView).with.offset(2);
+//        make.centerX.equalTo(self.imageView.mas_trailing);
+        
+        make.bottom.equalTo(self.imageView);
+        make.right.equalTo(self.imageView.mas_right).with.offset(1);
+        
+        
+        make.width.equalTo(self.imageView).with.multipliedBy(22.0/62.0).with.priorityHigh();
+        make.height.equalTo(self.imageView).with.multipliedBy(22.0/62.0).with.priorityHigh();
+        
+        make.width.lessThanOrEqualTo(@18);
+        make.height.lessThanOrEqualTo(@18);
+        
     }];
+    self.psGodView.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.psGodView.layer.borderWidth = 1;
+    self.psGodView.layer.cornerRadius = (self.bounds.size.width * (22.0 / 62.0)) / 2;
+    self.psGodView.layer.masksToBounds = YES;
+    self.psGodView.layer.shouldRasterize = YES;
+    
 }
 
 #pragma mark - layout methods
