@@ -46,6 +46,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *blurView;
 
 
+
 @property (weak, nonatomic) UIButton *nav_back_button;
 @property (weak, nonatomic) UIButton *nav_more_button;
 @property (weak, nonatomic) UIButton *nav_follow_button;
@@ -131,10 +132,10 @@
     UIBarButtonItem *buttonItem3 = [[UIBarButtonItem alloc] initWithCustomView:button3];
     self.navigationItem.rightBarButtonItems = @[buttonItem2, buttonItem3];
     self.followButton = button3;
+    button3.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 6);
     
     
 }
-
 
 
 #pragma mark - target actions

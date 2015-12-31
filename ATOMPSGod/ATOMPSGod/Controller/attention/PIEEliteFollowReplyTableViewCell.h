@@ -32,7 +32,7 @@
 @property (weak, nonatomic) IBOutlet PIEPageButton *commentView;
 @property (weak, nonatomic) IBOutlet PIELoveButton *likeView;
 
-@property (weak, nonatomic) IBOutlet UIImageView *followView;
+//@property (weak, nonatomic) IBOutlet UIImageView *followView;
 @property (strong, nonatomic) PIEThumbAnimateView *thumbView;
 - (void)injectSauce:(PIEPageVM *)viewModel;
 - (void)animateToggleExpanded ;

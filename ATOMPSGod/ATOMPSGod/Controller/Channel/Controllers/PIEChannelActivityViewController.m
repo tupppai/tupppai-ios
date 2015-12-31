@@ -195,7 +195,7 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     [self.goPsButtonBottomConstraint setOffset:-12];
     [UIView animateWithDuration:0.2
                           delay:1.0
-         usingSpringWithDamping:0
+         usingSpringWithDamping:0.5
           initialSpringVelocity:0
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
@@ -580,20 +580,22 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
         
         SDWebImageManager* manager = [SDWebImageManager sharedManager];
         [manager downloadImageWithURL:bannerImageUrl options:SDWebImageAllowInvalidSSLCertificates progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-            [_headerBannerView setBackgroundImage:image forState:UIControlStateNormal];
+            [_headerBannerView setImage:image forState:UIControlStateNormal];
         }];
         
-        
+        _headerBannerView.backgroundColor = [UIColor colorWithHex:0xf8f8f8 andAlpha:1.0];
         // 取消点击变暗的效果
         _headerBannerView.adjustsImageWhenHighlighted = NO;
         
         // set frame
-        _headerBannerView.frame = CGRectMake(0, 0, SCREEN_WIDTH, (448.0 / 750.0)*SCREEN_WIDTH);
+        _headerBannerView.frame = CGRectMake(0, 0, SCREEN_WIDTH, (448.0 / 750.0)*SCREEN_WIDTH + 10);
         
         // Target-actions
         [_headerBannerView addTarget:self
                               action:@selector(headerBannerViewClicked:)
                     forControlEvents:UIControlEventTouchUpInside];
+    
+        _headerBannerView.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 10, 0);
     }
     return _headerBannerView;
 }
