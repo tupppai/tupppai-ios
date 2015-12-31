@@ -383,6 +383,8 @@
     [manager downloadImageWithURL:[NSURL URLWithString:url] options:SDWebImageAllowInvalidSSLCertificates progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
         if (block && !error) {
             block(image);
+        } else {
+            block(nil);
         }
     }];
 }

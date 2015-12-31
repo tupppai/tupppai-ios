@@ -85,7 +85,6 @@
 -(PIERefreshCollectionView *)collectionView {
     if (!_collectionView) {
         _collectionView = [[PIERefreshCollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:self.layout];
-   
 
         _collectionView.toRefreshTop = NO;
         _collectionView.toRefreshBottom = YES;

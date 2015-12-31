@@ -12,9 +12,8 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    
 //    self.selectionStyle = UITableViewCellSelectionStyleNone;
-    // testing...
+    self.swipeView.scrollEnabled = NO;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

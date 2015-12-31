@@ -21,19 +21,14 @@
     return self;
 }
 
-//- (id)copyWithZone:(NSZone *)zone
-//{
-//    id copy = [[[self class] alloc] init];
-//    
-//    if (copy)
-//    {
-//        // Copy NSObject subclasses
-//        [copy setAsk_id:[self.ask_id copyWithZone:zone]];
-//        
-//        // Set primitives
-//    }
-//    
-//    return copy;
-//}
-
+- (void)reset {
+    [_imageArray removeAllObjects];
+    [_uploadIdArray removeAllObjects];
+    [_ratioArray removeAllObjects];
+    _tagIDArray = nil;
+    _type = PIEPageTypeAsk;
+    _ID = 0;
+    _ask_id = 0;
+    _channel_id = 0;
+}
 @end

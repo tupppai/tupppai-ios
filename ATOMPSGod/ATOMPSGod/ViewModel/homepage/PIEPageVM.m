@@ -118,10 +118,10 @@
 }
 
 - (void)revertStatus {
-    self.lovedCount = 0;
     if (![self.likeCount isEqualToString:kfcMaxNumberString]) {
-        self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] - _lovedCount];
+        self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] - self.lovedCount];
     }
+    self.lovedCount = 0;
 }
 
 
@@ -129,16 +129,14 @@
 /** Cell点击 － 点赞 */
 -(void)love:(BOOL)revert {
     NSMutableDictionary *param = [NSMutableDictionary new];
-    if (revert) {
+    
+    if (revert || self.lovedCount == 3) {
         [param setObject:@"0" forKey:@"status"];
-    } else {
-        [param setObject:@(self.lovedCount) forKey:@"num"];
     }
     
     if (revert) {
         [self revertStatus];
     } else {
-        //        [likeView increaseStatus];
         [self increaseLoveStatus];
     }
     
@@ -162,8 +160,6 @@
             self.followed = !self.followed;
         }
     }];
-
-    
     
 }
 

@@ -16,23 +16,15 @@
     self.layer.cornerRadius              = 6;
     _imageView.contentMode               = UIViewContentModeScaleAspectFill;
     _imageView.clipsToBounds             = YES;
-//    _avatarButton.layer.cornerRadius     = _avatarButton.frame.size.width/2;
-//    _avatarButton.clipsToBounds          = YES;
 
-    _avatarButton.userInteractionEnabled = YES;
-    
+    _avatarButton.userInteractionEnabled = NO;
+    _avatarButton.imageView.userInteractionEnabled = YES;
+
     _nameLabel.font = [UIFont lightTupaiFontOfSize:11];
     _nameLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
 }
 
 - (void)injectSauce:(PIEPageVM*)vm {
-//    [_avatarButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
-//    
-    
-//    [_avatarButton setImageForState:UIControlStateNormal
-//                            withURL:[NSURL URLWithString:vm.avatarURL]
-//                   placeholderImage:[UIImage imageNamed:@"avatar_default"]];
-    
     
     NSString *avatar_url =
     [vm.avatarURL trimToImageWidth:_avatarButton.frame.size.width * SCREEN_SCALE];
@@ -44,11 +36,6 @@
                           
                       }];
     
-    
-//    _avatarButton.isV = vm.isV;
-//    _avatarButton.isV = YES;
-    // testing:
-//    _avatarButton.isV = (vm.askID % 2 == 0);
     _avatarButton.isV = vm.isV;
     
     _nameLabel.text = vm.username;

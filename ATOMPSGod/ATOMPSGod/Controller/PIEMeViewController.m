@@ -8,20 +8,21 @@
 
 #import "PIEMeViewController.h"
 #import "CAPSPageMenu.h"
-#import "PIEUploadVC.h"
-#import "PIERefreshTableView.h"
+//#import "PIEUploadVC.h"
+//#import "PIERefreshTableView.h"
 #import "PIEMyCollectionViewController.h"
 #import "PIEMyReplyViewController.h"
 #import "PIESettingsViewController.h"
 #import "FXBlurView.h"
 #import "PIEMyAskViewController.h"
-
 #import "BBBadgeBarButtonItem.h"
 #import "PIENotificationViewController.h"
 #import "PIEMyFollowViewController.h"
 #import "PIEMyFansViewController.h"
+
 #import "DDOtherUserManager.h"
 #import "UINavigationBar+Awesome.h"
+
 
 @interface PIEMeViewController ()<PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,CAPSPageMenuDelegate>
 @property (weak, nonatomic) IBOutlet UIView *dotView2;
@@ -207,11 +208,8 @@
          _topContainerView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:nil];
     }];
     PIEUserModel* user = [DDUserManager currentUser];
-    
-//    user.isV = YES;
     self.psGodIcon_big.hidden    = !user.isV;
     self.psGodCertificate.hidden = !user.isV;
-    
 }
 - (void)pushToSettingViewController {
     PIESettingsViewController* vc = [PIESettingsViewController new];

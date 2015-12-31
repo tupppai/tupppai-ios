@@ -61,34 +61,16 @@
 -(BOOL)hidesBottomBarWhenPushed {
     return YES;
 }
--(void)awakeFromNib {
 
-}
 
-#pragma mark - UI life cycles
--(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-
-    }
-    return self;
-}
--(instancetype)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-
-    }
-    return self;
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.edgesForExtendedLayout = UIRectEdgeAll;
-    self.navigationController.hidesBarsOnSwipe = NO;
     
     [self setupViews];
     [self getDataSource];
     [self setupPageMenu];
     [self setupTapGesture];
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -173,12 +155,11 @@
     [actionSheet showInView:[AppDelegate APP].window animated:YES];
 }
 - (void)setupViews {
-    self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     self.nameLabel.font = [UIFont mediumTupaiFontOfSize:17];
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = _view1.bounds;
-    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor whiteColor] CGColor], (id)[[UIColor blackColor] CGColor], nil];
+    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor whiteColor] CGColor], (id)[[UIColor lightGrayColor] CGColor], nil];
     [_view1.layer insertSublayer:gradient atIndex:0];
     
     self.avatarView.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -274,8 +255,6 @@
     NSString* avatarUrlString = [user.avatar trimToImageWidth:_avatarView.frame.size.width*2];
     [DDService sd_downloadImage:avatarUrlString withBlock:^(UIImage *image) {
         _avatarView.avatarImageView.image = image;
-        
-    //testing...done
         
     _blurView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:[UIColor blackColor]];
     }];

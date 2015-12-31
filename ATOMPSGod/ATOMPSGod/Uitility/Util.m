@@ -74,12 +74,16 @@
     
     PIEShareImageView* view = [PIEShareImageView new];
     [view injectSauce:vm withBlock:^(BOOL success) {
-        UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.opaque, 0.0f);
-        [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:YES];
-        UIImage * snapshotImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        if (block) {
-            block(snapshotImage);
+        if (success) {
+            UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.opaque, 0.0f);
+            [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:YES];
+            UIImage * snapshotImage = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            if (block) {
+                block(snapshotImage);
+            }
+        } else {
+            NSLog(@"无法生成图片");
         }
     }];
 }

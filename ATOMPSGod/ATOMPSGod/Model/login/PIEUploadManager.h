@@ -12,9 +12,8 @@
 @interface PIEUploadManager : NSObject
 @property (nonatomic, strong)  PIEUploadModel *model;
 
-- (void)resetModel;
-+ (PIEUploadManager *)shareManager;
-
+- (instancetype)initWithShareModel;
++ (PIEUploadModel *)shareModel;
 - (void)upload:(void (^)(CGFloat percentage,BOOL success))block ;
 - (NSURLSessionDataTask *)UploadImage:(NSData *)data WithBlock:(void (^)(PIEModelImageInfo *imageInformation, NSError *error))block;
 

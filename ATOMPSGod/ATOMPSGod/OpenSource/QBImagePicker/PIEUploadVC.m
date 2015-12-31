@@ -56,7 +56,7 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [self customNavigationBar];
     [self setupViews];
-    if ([PIEUploadManager shareManager].model.type == PIEPageTypeAsk) {
+    if ([PIEUploadManager shareModel].type == PIEPageTypeAsk) {
         [self getSource];
     } else {
         _label_chooseTag.hidden = YES;
@@ -105,7 +105,7 @@
     _inputTextView.font = [UIFont lightTupaiFontOfSize:16];
     _label_chooseTag.font = [UIFont lightTupaiFontOfSize:14];
     _shareBanner.hidden = YES;
-    if ([PIEUploadManager shareManager].model.type == PIEPageTypeReply) {
+    if ([PIEUploadManager shareModel].type == PIEPageTypeReply) {
         _inputTextView.placeholder = @"输入你想对观众说的吧";
     } else  {
         _inputTextView.placeholder = @"写下你的图片需求吧";
@@ -126,7 +126,7 @@
     _uploadInfo = [NSMutableDictionary new];
     
 //    if (_channelVM) {
-//        [PIEUploadManager shareManager].model.channel_id = _channelVM.ID;
+//        [PIEUploadManager shareModel].channel_id = _channelVM.ID;
 //        [_uploadInfo setObject:@(_channelVM.ID) forKey:@"channel_id"];
 //    }
 //    
@@ -139,7 +139,7 @@
         [_rightImageView addGestureRecognizer:tapGesure];
         [_uploadInfo setObject:(_leftImageView.image) forKey:@"image1"];
         [_uploadInfo setObject:@1 forKey:@"imageCount"];
-        [[PIEUploadManager shareManager].model.imageArray addObject:_leftImageView.image];
+        [[PIEUploadManager shareModel].imageArray addObject:_leftImageView.image];
 
         
     } else if (_assetsArray.count == 2) {
@@ -149,8 +149,8 @@
         [_uploadInfo setObject:(_rightImageView.image) forKey:@"image2"];
         [_uploadInfo setObject:@2 forKey:@"imageCount"];
         
-        [[PIEUploadManager shareManager].model.imageArray addObject:_leftImageView.image];
-        [[PIEUploadManager shareManager].model.imageArray addObject:_rightImageView.image];
+        [[PIEUploadManager shareModel].imageArray addObject:_leftImageView.image];
+        [[PIEUploadManager shareModel].imageArray addObject:_rightImageView.image];
     }
 
 }
@@ -163,24 +163,26 @@
     }
 
     //求p ； 如果tags没有下载下来 ，就不强求 ；必须选一个标签
-    else if ([PIEUploadManager shareManager].model.type == PIEPageTypeAsk&& _succeedToDownloadTags && _view_tag.array_selectedId.count<=0 ) {
+    else if ([PIEUploadManager shareModel].type == PIEPageTypeAsk&& _succeedToDownloadTags && _view_tag.array_selectedId.count<=0 ) {
         [self showWarnLabel2];
     } else {
-        if (([PIEUploadManager shareManager].model.type == PIEPageTypeAsk)) {
+        if (([PIEUploadManager shareModel].type == PIEPageTypeAsk)) {
             [_uploadInfo setObject:@"ask" forKey:@"type"];
-            [PIEUploadManager shareManager].model.type = PIEPageTypeAsk;
-        } else if ([PIEUploadManager shareManager].model.type == PIEPageTypeReply) {
+            [PIEUploadManager shareModel].type = PIEPageTypeAsk;
+        } else if ([PIEUploadManager shareModel].type == PIEPageTypeReply) {
             [_uploadInfo setObject:@"reply" forKey:@"type"];
             
-            [PIEUploadManager shareManager].model.type = PIEPageTypeReply;
+            [PIEUploadManager shareModel].type = PIEPageTypeReply;
         }
-        [PIEUploadManager shareManager].model.tagIDArray = _view_tag.array_selectedId;
-        [PIEUploadManager shareManager].model.content = _inputTextView.text;
+        [PIEUploadManager shareModel].tagIDArray = _view_tag.array_selectedId;
+        [PIEUploadManager shareModel].content = _inputTextView.text;
 
         [_uploadInfo setObject:_view_tag.array_selectedId forKey:@"tag_ids_array"];
         [_uploadInfo setObject:_inputTextView.text forKey:@"text_string"];
 
         [[NSNotificationCenter defaultCenter]postNotificationName:@"UploadCall" object:nil userInfo:_uploadInfo];
+        
+        [self.inputTextView resignFirstResponder];
         [self backToTabbarController];
     }
 }
@@ -203,9 +205,9 @@
     [lvc dismissViewControllerAnimated:NO completion:nil];
 }
 -(void)showWarnLabel {
-    if (([PIEUploadManager shareManager].model.type == PIEPageTypeAsk)) {
+    if (([PIEUploadManager shareModel].type == PIEPageTypeAsk)) {
         [Hud text:@"输入你需要的效果吧"];
-    } else if ([PIEUploadManager shareManager].model.type == PIEPageTypeReply) {
+    } else if ([PIEUploadManager shareModel].type == PIEPageTypeReply) {
         [Hud text:@"请输入你对这个作品的想法"];
     }
 }

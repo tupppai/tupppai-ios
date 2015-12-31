@@ -162,16 +162,16 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
         //点击图片
         if (CGRectContainsPoint(cell.uploadView.frame, p)) {
             
-            
             self.QBImagePickerController = nil;
             [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
         }
         else if (CGRectContainsPoint(cell.downloadView.frame, p)) {
-            UIImageWriteToSavedPhotosAlbum(cell.theImageView.image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+            [DDService sd_downloadImage:[vm.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION] withBlock:^(UIImage *image) {
+                if (image) {
+                    UIImageWriteToSavedPhotosAlbum(image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+                }
+            }];
         }
-        //        else if (CGRectContainsPoint(cell.deleteView.frame, p)) {
-        //            [self deleteOneToHelp:indexPath ID:vm.ID];
-        //        }
         else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
             PIEFriendViewController *opvc = [PIEFriendViewController new];
             opvc.pageVM =  vm;
@@ -254,12 +254,12 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     vc.assetsArray = assets;
     vc.hideSecondView = YES;
     PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath_toHelp.row];
-    [PIEUploadManager shareManager].model.ask_id = vm.askID;
-    [PIEUploadManager shareManager].model.type = PIEPageTypeReply;
+    [PIEUploadManager shareModel].ask_id = vm.askID;
+    [PIEUploadManager shareModel].type = PIEPageTypeReply;
     
     if (vm.models_catogory && vm.models_catogory.count > 0) {
         PIECategoryModel* model = [vm.models_catogory objectAtIndex:0];
-        [PIEUploadManager shareManager].model.channel_id = [model.ID integerValue];
+        [PIEUploadManager shareModel].channel_id = [model.ID integerValue];
     }
     [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
 }
