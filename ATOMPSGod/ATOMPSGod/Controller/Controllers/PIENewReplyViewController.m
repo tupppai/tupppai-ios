@@ -165,7 +165,6 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 - (void)takePhoto {
         PIEToHelpViewController* vc = [PIEToHelpViewController new];
         [self.navigationController pushViewController:vc animated:YES];
-
 }
 
 /**
