@@ -588,14 +588,25 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
         _headerBannerView.adjustsImageWhenHighlighted = NO;
         
         // set frame
-        _headerBannerView.frame = CGRectMake(0, 0, SCREEN_WIDTH, (448.0 / 750.0)*SCREEN_WIDTH + 10);
+//        _headerBannerView.frame = CGRectMake(0, 0, SCREEN_WIDTH, (448.0 / 750.0)*SCREEN_WIDTH);
+//        _headerBannerView.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 10, 0);
+        [_headerBannerView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH, (448.0 / 750) * SCREEN_WIDTH + 10));
+        }];
+        
+        [_headerBannerView.imageView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_headerBannerView.mas_top);
+            make.left.equalTo(_headerBannerView.mas_left);
+            make.right.equalTo(_headerBannerView.mas_right);
+            make.bottom.equalTo(_headerBannerView.mas_bottom).with.offset(-10);
+        }];
         
         // Target-actions
         [_headerBannerView addTarget:self
                               action:@selector(headerBannerViewClicked:)
                     forControlEvents:UIControlEventTouchUpInside];
     
-        _headerBannerView.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 10, 0);
+
     }
     return _headerBannerView;
 }
