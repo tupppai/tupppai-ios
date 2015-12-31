@@ -44,7 +44,6 @@
 @property (nonatomic,assign) CGFloat startPanLocationY;
 @property (weak, nonatomic) IBOutlet UIImageView *blurView;
 
-
 @property (nonatomic) CAPSPageMenu *pageMenu;
 
 @end

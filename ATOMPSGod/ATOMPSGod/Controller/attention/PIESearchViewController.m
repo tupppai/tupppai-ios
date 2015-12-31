@@ -59,7 +59,6 @@
     UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
     backButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [backButton setImage:[UIImage imageNamed:@"pie_search"] forState:UIControlStateNormal];
-    //    backButton.backgroundColor = [UIColor clearColor];
     [backButton addTarget:self action:@selector(tapSearch) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *barBackButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     self.navigationItem.leftBarButtonItem =  barBackButtonItem;
