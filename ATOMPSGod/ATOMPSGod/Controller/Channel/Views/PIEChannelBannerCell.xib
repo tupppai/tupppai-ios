@@ -16,8 +16,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="427" height="151.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gfq-Ks-2k2">
-                        <rect key="frame" x="0.0" y="4" width="210" height="127.5"/>
+                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gfq-Ks-2k2">
+                        <rect key="frame" x="0.0" y="4" width="210" height="139.5"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="Gfq-Ks-2k2" secondAttribute="height" multiplier="157:166" id="2cc-Co-iuX"/>
                             <constraint firstAttribute="width" secondItem="Gfq-Ks-2k2" secondAttribute="height" multiplier="350:200" priority="750" id="CE6-6Q-SCC"/>
@@ -35,23 +35,23 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HPV-mE-77p">
-                        <rect key="frame" x="217" y="3.5" width="210" height="127.5"/>
+                        <rect key="frame" x="217" y="4" width="210" height="139.5"/>
                         <state key="normal" image="pieChannelBannerCellButton1"/>
                         <connections>
                             <action selector="bannerCellDidClickRightButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="jco-eY-RR8"/>
                         </connections>
                     </button>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cell_separator" translatesAutoresizingMaskIntoConstraints="NO" id="ruI-Kc-5aS" userLabel="cell separator">
-                        <rect key="frame" x="0.0" y="141.5" width="427" height="10"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ruI-Kc-5aS" userLabel="cell separator">
+                        <rect key="frame" x="0.0" y="143" width="427" height="8"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="10" id="d4i-3g-BdN"/>
+                            <constraint firstAttribute="height" constant="8" id="d4i-3g-BdN"/>
                         </constraints>
                     </imageView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstItem="HPV-mE-77p" firstAttribute="centerY" secondItem="Gfq-Ks-2k2" secondAttribute="centerY" id="8Qx-7t-SKd"/>
-                    <constraint firstItem="ruI-Kc-5aS" firstAttribute="top" secondItem="Gfq-Ks-2k2" secondAttribute="bottom" constant="10" id="CCd-kQ-GZO"/>
+                    <constraint firstItem="ruI-Kc-5aS" firstAttribute="top" secondItem="Gfq-Ks-2k2" secondAttribute="bottom" id="CCd-kQ-GZO"/>
                     <constraint firstAttribute="bottomMargin" secondItem="HPV-mE-77p" secondAttribute="bottom" constant="2" id="D3d-TK-mdj"/>
                     <constraint firstItem="HPV-mE-77p" firstAttribute="leading" secondItem="Gfq-Ks-2k2" secondAttribute="trailing" constant="7" id="D4s-hb-Zpn"/>
                     <constraint firstItem="HPV-mE-77p" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="Dat-aS-dxn"/>
@@ -88,7 +88,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="cell_separator" width="3" height="20"/>
         <image name="pieChannelBannerCellButton1" width="181" height="106"/>
         <image name="pieChannelBannerCellButton2" width="181" height="106"/>
     </resources>
