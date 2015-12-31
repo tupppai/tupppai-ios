@@ -85,7 +85,6 @@
 -(PIERefreshCollectionView *)collectionView {
     if (!_collectionView) {
         _collectionView = [[PIERefreshCollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:self.layout];
-   
 
         _collectionView.toRefreshTop = NO;
         _collectionView.toRefreshBottom = YES;
@@ -117,7 +116,6 @@
             PIEUserViewModel* vm = [_source objectAtIndex:selectedIndexPath.row];
             PIESearchUserCollectionViewCell* cell = (PIESearchUserCollectionViewCell*)[self.collectionView cellForItemAtIndexPath:selectedIndexPath];
             CGPoint p = [gesture locationInView:cell];
-            NSLog(@"%@,%@",NSStringFromCGPoint(p),NSStringFromCGRect(cell.avatarButton.frame));
             if (CGRectContainsPoint(cell.avatarButton.frame, p) || CGRectContainsPoint(cell.nameButton.frame, p)) {
                 PIEFriendViewController* vc = [PIEFriendViewController new];
                 vc.uid = vm.model.uid;

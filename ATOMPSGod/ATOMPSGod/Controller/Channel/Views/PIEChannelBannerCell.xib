@@ -9,24 +9,21 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="205" id="KGk-i7-Jjw" customClass="PIEChannelBannerCell">
-            <rect key="frame" x="0.0" y="0.0" width="427" height="205"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="152" id="KGk-i7-Jjw" customClass="PIEChannelBannerCell">
+            <rect key="frame" x="0.0" y="0.0" width="427" height="152"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="427" height="204.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="427" height="151.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gfq-Ks-2k2">
-                        <rect key="frame" x="9" y="23" width="201" height="161"/>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
+                        <rect key="frame" x="0.0" y="4" width="210" height="127.5"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="Gfq-Ks-2k2" secondAttribute="height" multiplier="157:166" id="2cc-Co-iuX"/>
                             <constraint firstAttribute="width" secondItem="Gfq-Ks-2k2" secondAttribute="height" multiplier="350:200" priority="750" id="CE6-6Q-SCC"/>
                             <constraint firstAttribute="height" secondItem="Gfq-Ks-2k2" secondAttribute="width" multiplier="350:200" id="Fkb-zs-snM"/>
                         </constraints>
-                        <state key="normal" backgroundImage="pieChannelBannerCellButton2">
-                            <color key="titleShadowColor" red="0.49803921568627452" green="0.49803921568627452" blue="0.49803921568627452" alpha="1" colorSpace="calibratedRGB"/>
-                        </state>
+                        <state key="normal" image="pieChannelBannerCellButton2"/>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="2cc-Co-iuX"/>
@@ -38,17 +35,14 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HPV-mE-77p">
-                        <rect key="frame" x="217" y="23" width="201" height="161"/>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
-                        <state key="normal" backgroundImage="pieChannelBannerCellButton1">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
+                        <rect key="frame" x="217" y="3.5" width="210" height="127.5"/>
+                        <state key="normal" image="pieChannelBannerCellButton1"/>
                         <connections>
                             <action selector="bannerCellDidClickRightButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="jco-eY-RR8"/>
                         </connections>
                     </button>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cell_separator" translatesAutoresizingMaskIntoConstraints="NO" id="ruI-Kc-5aS" userLabel="cell separator">
-                        <rect key="frame" x="0.0" y="194" width="427" height="10"/>
+                        <rect key="frame" x="0.0" y="141.5" width="427" height="10"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="10" id="d4i-3g-BdN"/>
                         </constraints>
@@ -63,15 +57,15 @@
                     <constraint firstItem="HPV-mE-77p" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="Dat-aS-dxn"/>
                     <constraint firstAttribute="bottomMargin" secondItem="Gfq-Ks-2k2" secondAttribute="bottom" constant="2.5" id="JdH-qm-AVH"/>
                     <constraint firstAttribute="bottom" secondItem="ruI-Kc-5aS" secondAttribute="bottom" id="LNf-lk-0Ms"/>
-                    <constraint firstItem="Gfq-Ks-2k2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="15" id="QE6-FI-ZUL"/>
-                    <constraint firstItem="Gfq-Ks-2k2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="1" id="RCb-I6-gOS"/>
+                    <constraint firstItem="Gfq-Ks-2k2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="QE6-FI-ZUL"/>
+                    <constraint firstItem="Gfq-Ks-2k2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="RCb-I6-gOS"/>
                     <constraint firstItem="ruI-Kc-5aS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Srg-CS-jky"/>
                     <constraint firstItem="Gfq-Ks-2k2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="TKJ-fG-eja"/>
                     <constraint firstAttribute="bottomMargin" secondItem="Gfq-Ks-2k2" secondAttribute="bottom" constant="-8" id="TMb-qp-G0P"/>
                     <constraint firstItem="Gfq-Ks-2k2" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Tu8-N4-56g"/>
                     <constraint firstAttribute="trailing" secondItem="ruI-Kc-5aS" secondAttribute="trailing" id="UdO-QQ-VXy"/>
                     <constraint firstItem="HPV-mE-77p" firstAttribute="height" secondItem="Gfq-Ks-2k2" secondAttribute="height" id="awL-Sq-V7u"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="HPV-mE-77p" secondAttribute="trailing" constant="1" id="oYE-ON-xiS"/>
+                    <constraint firstAttribute="trailing" secondItem="HPV-mE-77p" secondAttribute="trailing" id="oYE-ON-xiS"/>
                     <constraint firstItem="HPV-mE-77p" firstAttribute="width" secondItem="Gfq-Ks-2k2" secondAttribute="width" id="y1e-Xl-l5n"/>
                 </constraints>
                 <variation key="default">
@@ -90,7 +84,7 @@
                 <outlet property="leftButton" destination="Gfq-Ks-2k2" id="I15-WK-02J"/>
                 <outlet property="rightbutton" destination="HPV-mE-77p" id="NKe-ER-qEy"/>
             </connections>
-            <point key="canvasLocation" x="412.5" y="-82.5"/>
+            <point key="canvasLocation" x="412.5" y="-109"/>
         </tableViewCell>
     </objects>
     <resources>
