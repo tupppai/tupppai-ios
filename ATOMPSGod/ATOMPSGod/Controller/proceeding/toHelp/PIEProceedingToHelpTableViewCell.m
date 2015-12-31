@@ -21,6 +21,25 @@
     }];
     
     self.separator.backgroundColor = [UIColor colorWithHex:0xE5E5E5];
+    
+    [self configureColorAndFont];
+}
+
+
+- (void)configureColorAndFont
+{
+    self.nameLabel.font              = [UIFont lightTupaiFontOfSize:13];
+    self.nameLabel.textColor         = [UIColor blackColor];
+
+    self.contentTextView.font        = [UIFont lightTupaiFontOfSize:14];
+    self.contentTextView.textColor   = [UIColor blackColor];
+
+    self.categoryNameLabel.font      = [UIFont lightTupaiFontOfSize:11];
+    self.categoryNameLabel.textColor = [UIColor blackColor];
+    self.updateTimeLabel.font        = [UIFont lightTupaiFontOfSize:10];
+    self.updateTimeLabel.textColor   = [UIColor colorWithHex:0x50484B];
+    
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -49,7 +68,9 @@
     _nameLabel.textColor = [UIColor colorWithHex:0x4a4a4a andAlpha:1.0];
 //    _timeLabel.textColor = [UIColor colorWithHex:0x4a4a4a andAlpha:1.0];
 
-    NSString * htmlString = vm.content;
+    
+//    NSString * htmlString = vm.content;
+    NSString *htmlString = @"alksdfjlkadsjfals;dkfj;alsdkjfadkls;fsdjdfadsl;kfjlkds;ajflk;adsjdl;kfjasdklfjlkasddslk;fj;ldasjfl;jadskl;fj;akldsfjlkadsjfl;jadsl;kfjals;dkjflk;sadjfkj";
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init] ;
     [paragraphStyle setAlignment:NSTextAlignmentLeft];
     

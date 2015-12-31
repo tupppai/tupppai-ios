@@ -113,11 +113,9 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     _toHelpTableView.emptyDataSetSource   = self;
     _toHelpTableView.estimatedRowHeight   = 145;
     _toHelpTableView.rowHeight            = UITableViewAutomaticDimension;
-//    _toHelpTableView.separatorStyle       = UITableViewCellSeparatorStyleSingleLine;
-//    _toHelpTableView.separatorInset       = UIEdgeInsetsMake(0, 132, 0, 0);
-//    _toHelpTableView.separatorColor       = [UIColor colorWithHex:0xd8d8d8 andAlpha:1.0];
+
     _toHelpTableView.separatorStyle       = UITableViewCellSeparatorStyleNone;
-    _toHelpTableView.backgroundColor = [UIColor colorWithHex:0xF8F8F8];
+    _toHelpTableView.backgroundColor      = [UIColor colorWithHex:0xF8F8F8];
     
     UINib* nib = [UINib nibWithNibName:@"PIEProceedingToHelpTableViewCell" bundle:nil];
     [_toHelpTableView registerNib:nib forCellReuseIdentifier:PIEProceedingToHelpTableViewCellIdentifier];
