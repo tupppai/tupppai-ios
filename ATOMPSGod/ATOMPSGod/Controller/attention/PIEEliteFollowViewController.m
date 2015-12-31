@@ -519,10 +519,10 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
                     self.psActionSheet.vm = _selectedVM;
                     [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
                 }
-                else if (CGRectContainsPoint(cell.followView.frame, p)) {
-//                    [self follow:cell.followView];
-                    [_selectedVM follow];
-                }
+//                else if (CGRectContainsPoint(cell.followView.frame, p)) {
+////                    [self follow:cell.followView];
+//                    [_selectedVM follow];
+//                }
                 else if (CGRectContainsPoint(cell.shareView.frame, p)) {
                     [self showShareView:_selectedVM];
                 }
@@ -583,9 +583,9 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
 //                    [PIEPageManager love:cell.likeView viewModel:_selectedVM revert:NO];
                     [_selectedVM love:NO];
                 }
-                else if (CGRectContainsPoint(cell.followView.frame, p)) {
-                    [_selectedVM follow];
-                }
+//                else if (CGRectContainsPoint(cell.followView.frame, p)) {
+//                    [_selectedVM follow];
+//                }
                 else if (CGRectContainsPoint(cell.shareView.frame, p)) {
                     [self showShareView:_selectedVM];
                 }

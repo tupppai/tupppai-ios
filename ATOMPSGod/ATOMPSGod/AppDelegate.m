@@ -46,8 +46,6 @@
     [self setupUmengPush:launchOptions];
     [self setupBarButtonItem];
     [[IQKeyboardManager sharedManager] disableInViewControllerClass:[PIECommentViewController class]];
-//    [[IQKeyboardManager sharedManager] disableInViewControllerClass:[PIECommentViewController2 class]];
-
     [[IQKeyboardManager sharedManager] disableInViewControllerClass:[PIENotificationViewController class]];
     [[IQKeyboardManager sharedManager]setEnableAutoToolbar:NO];
     
@@ -71,8 +69,6 @@
     [UMCheckUpdate checkUpdateWithAppkey:@"55b1ecdbe0f55a1de9001164" channel:nil];
     NSNumber *version =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     [UMCheckUpdate setVersion:[version integerValue]];
-//    [UMCheckUpdate checkUpdate:@"新版本更新！" cancelButtonTitle:@"继续用旧版" otherButtonTitles:@"更新" appkey:@"55b1ecdbe0f55a1de9001164" channel:nil];
-//    [UMCheckUpdate setLogEnabled:YES];
 }
 - (void)setupBarButtonItem {
     NSShadow *shadow = [[NSShadow alloc] init];

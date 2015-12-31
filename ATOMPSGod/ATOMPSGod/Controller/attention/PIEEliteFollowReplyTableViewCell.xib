@@ -66,13 +66,6 @@
                             <constraint firstAttribute="width" constant="60" id="QxC-i2-Vwd"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="new_reply_follow" highlightedImage="new_reply_followed" translatesAutoresizingMaskIntoConstraints="NO" id="skR-RA-TY6">
-                        <rect key="frame" x="316" y="7" width="54" height="32"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="32" id="Ucx-xb-bzw"/>
-                            <constraint firstAttribute="width" constant="54" id="dsQ-52-Prw"/>
-                        </constraints>
-                    </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1t2-Zu-9X4" customClass="PIEPageButton">
                         <rect key="frame" x="83" y="559" width="35" height="30"/>
                         <constraints>
@@ -126,7 +119,6 @@
                     <constraint firstItem="9Yx-3J-Moh" firstAttribute="leading" secondItem="Nxn-ml-bVR" secondAttribute="leadingMargin" id="Ehj-f3-hnB"/>
                     <constraint firstItem="v7C-yt-vHr" firstAttribute="top" secondItem="C5U-wi-lVq" secondAttribute="bottom" constant="5" id="FNX-Ao-2S7"/>
                     <constraint firstItem="1t2-Zu-9X4" firstAttribute="centerY" secondItem="u76-JP-qUq" secondAttribute="centerY" id="I67-rR-Fl3"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="skR-RA-TY6" secondAttribute="trailing" constant="8" id="IM0-Km-jM7"/>
                     <constraint firstItem="C5U-wi-lVq" firstAttribute="leading" secondItem="v7C-yt-vHr" secondAttribute="leading" constant="-1" id="TJx-Nk-lHJ"/>
                     <constraint firstItem="1t2-Zu-9X4" firstAttribute="leading" secondItem="u76-JP-qUq" secondAttribute="trailing" constant="15" id="UiL-fz-Kie"/>
                     <constraint firstItem="u76-JP-qUq" firstAttribute="leading" secondItem="Nxn-ml-bVR" secondAttribute="leadingMargin" id="V4r-BL-OWO"/>
@@ -138,7 +130,6 @@
                     <constraint firstAttribute="trailing" secondItem="Eii-iC-8N1" secondAttribute="trailing" id="fQj-ia-aaL"/>
                     <constraint firstItem="Eja-Cl-SLu" firstAttribute="top" secondItem="v7C-yt-vHr" secondAttribute="bottom" constant="10" id="fhB-Gm-gs3"/>
                     <constraint firstAttribute="trailingMargin" secondItem="wdw-j6-aQB" secondAttribute="trailing" id="gpF-5B-SuC"/>
-                    <constraint firstItem="9Yx-3J-Moh" firstAttribute="centerY" secondItem="skR-RA-TY6" secondAttribute="centerY" id="k16-TW-uEO"/>
                     <constraint firstItem="bZD-SV-wez" firstAttribute="leading" secondItem="1t2-Zu-9X4" secondAttribute="trailing" constant="15" id="mo7-lv-Ggz"/>
                     <constraint firstAttribute="bottomMargin" secondItem="1t2-Zu-9X4" secondAttribute="bottom" constant="6.5" id="nYY-su-Hzv"/>
                     <constraint firstItem="C5U-wi-lVq" firstAttribute="leading" secondItem="9Yx-3J-Moh" secondAttribute="trailing" constant="8" id="naX-2r-T22"/>
@@ -162,7 +153,6 @@
                 <outlet property="avatarView" destination="9Yx-3J-Moh" id="45p-y9-qsv"/>
                 <outlet property="commentView" destination="bZD-SV-wez" id="tbS-ED-6Ct"/>
                 <outlet property="contentLabel" destination="wdw-j6-aQB" id="NUc-DZ-Vdk"/>
-                <outlet property="followView" destination="skR-RA-TY6" id="CLA-tW-nj1"/>
                 <outlet property="likeView" destination="New-cK-IUH" id="aui-JV-dBl"/>
                 <outlet property="nameLabel" destination="C5U-wi-lVq" id="lLP-c9-kL7"/>
                 <outlet property="shareView" destination="1t2-Zu-9X4" id="dUV-hB-vSb"/>
@@ -174,7 +164,5 @@
     </objects>
     <resources>
         <image name="hot_allwork" width="68" height="15"/>
-        <image name="new_reply_follow" width="18" height="18"/>
-        <image name="new_reply_followed" width="19" height="13"/>
     </resources>
 </document>

@@ -20,6 +20,7 @@
         _likedCount       = [NSString stringWithFormat:@"%zd",user.likedCount];
         _askCount     = [NSString stringWithFormat:@"%zd",user.uploadNumber];
         _replyCount      = [NSString stringWithFormat:@"%zd",user.replyNumber];
+
         _replyPages          = [NSMutableArray array];
     }
     return self;

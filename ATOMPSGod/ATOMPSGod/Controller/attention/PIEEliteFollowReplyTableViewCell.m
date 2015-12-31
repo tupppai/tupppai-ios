@@ -28,9 +28,7 @@
     _theImageView.contentMode = UIViewContentModeScaleAspectFit;
     _theImageView.clipsToBounds = YES;
     _theImageView.backgroundColor = [UIColor clearColor];
-    
-    [_followView setContentMode:UIViewContentModeCenter];
-    
+        
     [_nameLabel setFont:[UIFont lightTupaiFontOfSize:13]];
     [_contentLabel setFont:[UIFont lightTupaiFontOfSize:15]];
     [_timeLabel setFont:[UIFont lightTupaiFontOfSize:10]];
@@ -72,7 +70,6 @@
 
 -(void)prepareForReuse {
     [super prepareForReuse];
-    _followView.hidden = NO;
     [self removeKVO];
 }
 
@@ -91,39 +88,18 @@
                                 ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
                             }];
     [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
-    // testing
-//    _avatarView.isV = YES;
-//    _avatarView.isV = (viewModel.askID % 2 == 0);
+
     _avatarView.isV = viewModel.isV;
     
-    {
-        if (viewModel.isMyFan) {
-            _followView.highlightedImage = [UIImage imageNamed:@"pie_mutualfollow"];
-        } else {
-            _followView.highlightedImage = [UIImage imageNamed:@"new_reply_followed"];
-        }
-        _followView.highlighted = viewModel.followed;
-        if (viewModel.userID == [DDUserManager currentUser].uid) {
-            _followView.hidden = YES;
-        } else {
-            _followView.hidden = NO;
-        }
-    }
-    
+
     _shareView.imageView.image = [UIImage imageNamed:@"hot_share"];
     _shareView.numberString = viewModel.shareCount;
     
     _commentView.imageView.image = [UIImage imageNamed:@"hot_comment"];
     _commentView.numberString = viewModel.commentCount;
-//    
-//    _collectView.imageView.image = [UIImage imageNamed:@"hot_star"];
-//    _collectView.imageView.highlightedImage = [UIImage imageNamed:@"hot_star_selected"];
-//    _collectView.highlighted = viewModel.collected;
-//    _collectView.numberString = viewModel.collectCount;
-    
+
     [_likeView initStatus:viewModel.lovedCount numberString:viewModel.likeCount];
-//    _likeView.highlighted = viewModel.liked;
-//    _likeView.numberString = viewModel.likeCount;
+
     _contentLabel.text = viewModel.content;
     
 
@@ -248,13 +224,11 @@
 - (void)addKVO {
     [_vm addObserver:self forKeyPath:@"lovedCount" options:NSKeyValueObservingOptionNew context:NULL];
     [_vm addObserver:self forKeyPath:@"likeCount" options:NSKeyValueObservingOptionNew context:NULL];
-    [_vm addObserver:self forKeyPath:@"followed" options:NSKeyValueObservingOptionNew context:NULL];
 }
 - (void)removeKVO {
     @try{
         [_vm removeObserver:self forKeyPath:@"lovedCount"];
         [_vm removeObserver:self forKeyPath:@"likeCount"];
-        [_vm removeObserver:self forKeyPath:@"followed"];
     }@catch(id anException){
         //do nothing, obviously it wasn't attached because an exception was thrown
     }
@@ -268,9 +242,6 @@
     } else     if ([keyPath isEqualToString:@"likeCount"]) {
         NSInteger newLikeCount = [[change objectForKey:@"new"]integerValue];
         self.likeView.number = newLikeCount;
-    } else     if ([keyPath isEqualToString:@"followed"]) {
-        BOOL newFollowed = [[change objectForKey:@"new"]boolValue];
-        self.followView.highlighted = newFollowed;
     }
 }
 

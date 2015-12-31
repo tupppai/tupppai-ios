@@ -35,8 +35,6 @@
     [_contentLabel setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.9]];
     [_timeLabel setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.3]];
     
-    [_followView setContentMode:UIViewContentModeCenter];
-    
     [self.contentView insertSubview:self.blurView belowSubview:_theImageView];
     [self.blurView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.theImageView);
@@ -56,17 +54,13 @@
 }
 
 -(void)dealloc {
-    [self removeKVO];
 }
 -(void)prepareForReuse {
     [super prepareForReuse];
-    _followView.hidden = NO;
-    [self removeKVO];
 }
 - (void)injectSauce:(PIEPageVM *)viewModel {
     WS(ws);
     _vm = viewModel;
-    [self addKVO];
     NSString *urlString_avatar = [viewModel.avatarURL trimToImageWidth:_avatarView.frame.size.width*SCREEN_SCALE];
     NSString *urlString_imageView = [viewModel.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
     [_theImageView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView]
@@ -74,29 +68,10 @@
                                 ws.theImageView.image = image;
                                 ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
                             }];
-//    [_avatarView.avatarImageView setImage:[UIImage imageNamed:@"avatar_default"]];
     [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
-    
-    // testing
-//    _avatarView.isV = YES;
-//    _avatarView.isV = (viewModel.askID % 2 == 0);
-//    _avatarView.isV = YES;
+
     _avatarView.isV = viewModel.isV;
 
-    {
-        if (viewModel.isMyFan) {
-            _followView.highlightedImage = [UIImage imageNamed:@"pie_mutualfollow"];
-        } else {
-            _followView.highlightedImage = [UIImage imageNamed:@"new_reply_followed"];
-        }
-        _followView.highlighted = viewModel.followed;
-        if (viewModel.userID == [DDUserManager currentUser].uid) {
-            _followView.hidden = YES;
-        } else {
-            _followView.hidden = NO;
-        }
-
-    }
     
     _shareView.imageView.image = [UIImage imageNamed:@"hot_share"];
     _commentView.imageView.image = [UIImage imageNamed:@"hot_comment"];
@@ -107,24 +82,7 @@
     _timeLabel.text = viewModel.publishTime;
 }
 
-- (void)addKVO {
-    [_vm addObserver:self forKeyPath:@"followed" options:NSKeyValueObservingOptionNew context:NULL];
-}
-- (void)removeKVO {
-    @try{
-        [_vm removeObserver:self forKeyPath:@"followed"];
-    }@catch(id anException){
-        //do nothing, obviously it wasn't attached because an exception was thrown
-    }
-}
 
-
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"followed"]) {
-        BOOL newFollowed = [[change objectForKey:@"new"]boolValue];
-        self.followView.highlighted = newFollowed;
-    }
-}
 
 
 

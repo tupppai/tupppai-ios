@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface PIEFriendViewController : DDBaseVC
-
 @property (nonatomic, assign)   NSInteger uid;
 @property (nonatomic, copy)     NSString* name;
 @property (nonatomic, strong)   PIEPageVM* pageVM;
