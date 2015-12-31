@@ -7,17 +7,6 @@
 //
 
 #import "PIESearchViewController.h"
-//#import "HMSegmentedControl.h"
-//#import "PIESearchManager.h"
-//#import "CHTCollectionViewWaterfallLayout.h"
-//#import "PIESearchUserCollectionViewCell.h"
-//#import "PIESearchUserSimpleCollectionCell.h"
-
-//#import "PIESearchContentCollectionViewCell.h"
-//#import "PIEFriendViewController.h"
-//#import "PIECarouselViewController2.h"
-//#import "PIEUserViewModel.h"
-
 #import "PIESearchPageViewController.h"
 #import "PIESearchUserViewController.h"
 #import "CAPSPageMenu.h"
@@ -29,11 +18,6 @@
 @property (nonatomic, strong) UITextField *textField2;
 
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
-
-//@property (weak, nonatomic) IBOutlet PIERefreshCollectionView *collectionView;
-//@property (nonatomic, strong) NSMutableArray* sourceUser;
-//@property (nonatomic, strong) NSMutableArray* sourceContent;
-//@property (nonatomic, strong) CHTCollectionViewWaterfallLayout *layout;
 
 @property (nonatomic, assign) NSInteger lastIndex;
 @property (nonatomic, strong) NSString *lastSearchKeyword;
@@ -176,6 +160,9 @@
                                  };
     
     _pageMenu = [[CAPSPageMenu alloc] initWithViewControllers:controllerArray frame:CGRectMake(0, 0, SCREEN_WIDTH, 100) options:parameters];
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH*0.5, 4, 1, _pageMenu.menuHeight-8)];
+    line.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
+    [_pageMenu.menuScrollView addSubview:line];
     _pageMenu.view.backgroundColor = [UIColor whiteColor];
     _pageMenu.view.layer.borderColor = [UIColor colorWithHex:0x000000 andAlpha:0.1].CGColor;
     _pageMenu.view.layer.borderWidth = 0.5;
@@ -191,43 +178,6 @@
     
 }
 
-
-
-//- (void)textFieldDidChange:(UITextField*)sender {
-//    
-//    if ([_lastSearchKeyword isEqualToString: sender.text ] ) {
-//    } else {
-//        _lastSearchKeyword = sender.text;
-//        long long currentTimeStamp = [[NSDate date]timeIntervalSince1970];
-//        BOOL shouldSearch = YES;
-//        if (_timeStamp) {
-//            if (_timeStamp) {
-//                NSInteger timeInteval = currentTimeStamp - _timeStamp;
-//                if (timeInteval>2) {
-//                    shouldSearch = YES;
-//                    _timeStamp = currentTimeStamp;
-//                } else {
-//                    shouldSearch = NO;
-//                }
-//            }
-//        } else {
-//            _timeStamp = currentTimeStamp;
-//            shouldSearch = YES;
-//        }
-//        
-//        if (shouldSearch) {
-//            if (_pageMenu.currentPageIndex == 0) {
-//                PIESearchUserViewController *vc = [_pageMenu.controllerArray objectAtIndex:0];;
-//                vc.textToSearch = sender.text;
-//            } else if (_pageMenu.currentPageIndex == 1) {
-//                PIESearchPageViewController *vc = [_pageMenu.controllerArray objectAtIndex:1];;
-//                vc.textToSearch = sender.text;
-//            }
-//        }
-//  
-//    }
-//    
-//}
 
 
 
