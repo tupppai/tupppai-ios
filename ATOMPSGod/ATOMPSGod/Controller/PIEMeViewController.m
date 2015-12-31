@@ -122,9 +122,9 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
                                                   forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [UIImage new];
-//    self.navigationController.navigationBar.translucent = YES;
     self.navigationController.view.backgroundColor = [UIColor clearColor];
-//    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+    
+    
     [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
     
     self.navigationItem.title = @"";
@@ -138,8 +138,10 @@
 }
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self.navigationController.navigationBar setBackgroundImage:nil
-                                                  forBarMetrics:UIBarMetricsDefault];
+    
+    // reset the navigationbar to its default status --- leaving no side-effect.
+    [self.navigationController.navigationBar lt_reset];
+    
     [MobClick endLogPageView:@"离开我的"];
 
 }
