@@ -31,8 +31,8 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zIg-s2-acb">
-                                <rect key="frame" x="8" y="132" width="43" height="20"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zIg-s2-acb">
+                                <rect key="frame" x="8" y="130" width="43" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="VPf-uG-jvJ"/>
                                     <constraint firstAttribute="width" constant="43" id="oVY-Xz-f2R"/>
@@ -57,41 +57,41 @@
                                     <constraint firstAttribute="height" constant="84" id="NaX-Ek-jJH"/>
                                 </constraints>
                             </view>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="1000" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="anF-uE-APk">
-                                <rect key="frame" x="8" y="132" width="361" height="20"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="anF-uE-APk">
+                                <rect key="frame" x="8" y="130" width="361" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hhD-JV-ltv">
-                                <rect key="frame" x="388" y="132" width="38" height="21.5"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hhD-JV-ltv">
+                                <rect key="frame" x="388" y="130" width="38" height="21.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="38" id="19t-7J-MX7"/>
                                     <constraint firstAttribute="height" constant="21.5" id="zBH-zs-iX3"/>
                                 </constraints>
                                 <state key="normal" image="pie_proceeding_ask_edit"/>
                             </button>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ifq-AW-v3W" userLabel="separator">
-                                <rect key="frame" x="8" y="157" width="418" height="1"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ifq-AW-v3W" userLabel="separator">
+                                <rect key="frame" x="8" y="155" width="418" height="1"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="Brx-9x-a9h"/>
                                 </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="pieProceedingChannelIndicator" translatesAutoresizingMaskIntoConstraints="NO" id="W9S-Uz-hWO">
-                                <rect key="frame" x="8" y="168" width="10" height="10"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pieProceedingChannelIndicator" translatesAutoresizingMaskIntoConstraints="NO" id="W9S-Uz-hWO">
+                                <rect key="frame" x="8" y="166" width="10" height="10"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="10" id="MMO-pn-RfN"/>
                                     <constraint firstAttribute="height" constant="10" id="QWs-9d-eOm"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="category_name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t32-5m-Gim">
-                                <rect key="frame" x="23" y="166" width="79.5" height="13.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="category_name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t32-5m-Gim">
+                                <rect key="frame" x="23" y="164" width="79.5" height="13.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="upload_time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B1p-Gj-qzE">
-                                <rect key="frame" x="112" y="166.5" width="58.5" height="12"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="upload_time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B1p-Gj-qzE">
+                                <rect key="frame" x="112" y="164.5" width="58.5" height="12"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <color key="textColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -118,7 +118,7 @@
                             <constraint firstItem="hhD-JV-ltv" firstAttribute="leading" secondItem="anF-uE-APk" secondAttribute="trailing" priority="250" constant="5" id="KGa-Ka-Hh1"/>
                             <constraint firstItem="hhD-JV-ltv" firstAttribute="leading" secondItem="anF-uE-APk" secondAttribute="trailing" constant="10" id="M8P-0u-79A"/>
                             <constraint firstItem="anF-uE-APk" firstAttribute="bottom" secondItem="zIg-s2-acb" secondAttribute="bottom" id="R10-Sq-9oE"/>
-                            <constraint firstItem="zIg-s2-acb" firstAttribute="top" relation="greaterThanOrEqual" secondItem="NZK-ha-AqP" secondAttribute="bottom" priority="750" constant="10" id="Rot-qh-rHN"/>
+                            <constraint firstItem="zIg-s2-acb" firstAttribute="top" secondItem="NZK-ha-AqP" secondAttribute="bottom" priority="750" constant="10" id="Rot-qh-rHN"/>
                             <constraint firstAttribute="trailing" secondItem="anF-uE-APk" secondAttribute="trailing" constant="40" id="Svr-cj-LaK"/>
                             <constraint firstItem="zIg-s2-acb" firstAttribute="leading" secondItem="NZK-ha-AqP" secondAttribute="leading" id="TWe-46-Lzo"/>
                             <constraint firstItem="hhD-JV-ltv" firstAttribute="centerY" secondItem="anF-uE-APk" secondAttribute="centerY" id="W78-wl-mih"/>
@@ -140,6 +140,8 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="mD4-AG-aHM"/>
+                                <exclude reference="R10-Sq-9oE"/>
+                                <exclude reference="Svr-cj-LaK"/>
                                 <exclude reference="2u5-zj-eeu"/>
                                 <exclude reference="3lB-IZ-eEB"/>
                                 <exclude reference="5PT-b4-Tfz"/>
@@ -147,8 +149,6 @@
                                 <exclude reference="XuC-NN-OEf"/>
                                 <exclude reference="rsR-f5-CQn"/>
                                 <exclude reference="sl9-8M-BLh"/>
-                                <exclude reference="R10-Sq-9oE"/>
-                                <exclude reference="Svr-cj-LaK"/>
                                 <exclude reference="KGa-Ka-Hh1"/>
                                 <exclude reference="M8P-0u-79A"/>
                             </mask>

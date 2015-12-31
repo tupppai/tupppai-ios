@@ -339,7 +339,13 @@
             
             // GOD DAMN USEFUL PIECE OF CODES!
             [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor whiteColor]];
-            self.navigationItem.title = _pageVM.username;
+            if (_pageVM.username) {
+                self.navigationItem.title = _pageVM.username;
+            }else if (_name) {
+                self.navigationItem.title = _name;
+            } else if (_user.nickname) {
+                self.navigationItem.title = _user.nickname;
+            }
             [self.nav_back_button setImage:[UIImage imageNamed:@"nav_back_black"]
                                   forState:UIControlStateNormal];
             [self.nav_more_button setImage:[UIImage imageNamed:@"nav_more_black"]

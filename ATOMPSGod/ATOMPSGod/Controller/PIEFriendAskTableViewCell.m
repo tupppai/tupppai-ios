@@ -33,8 +33,14 @@
 //    _swipeView.itemsPerPage = 5;
 //    _swipeView.truncateFinalPage = YES;
     
-    _originView1.thumbImageView.image = [UIImage imageNamed:@"pie_origin_tag"];
-    _originView2.thumbImageView.image = [UIImage imageNamed:@"pie_origin_tag"];
+    _originView1.thumbImageView.image = [UIImage imageNamed:@"pie_origin"];
+    _originView2.thumbImageView.image = [UIImage imageNamed:@"pie_origin"];
+    [_originView1.thumbImageView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.leading.equalTo(_originView1).with.offset(-5);
+    }];
+    [_originView2.thumbImageView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.leading.equalTo(_originView2).with.offset(-5);
+    }];
     
     UITapGestureRecognizer* tapOnAsk1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnAsk1)];
     UITapGestureRecognizer* tapOnAsk2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnAsk2)];
