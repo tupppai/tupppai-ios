@@ -13,4 +13,5 @@
 @property (nonatomic, copy)     NSString* name;
 @property (nonatomic, strong)   PIEPageVM* pageVM;
 @property (nonatomic, strong)   PIEUserModel* user;
+
 @end
