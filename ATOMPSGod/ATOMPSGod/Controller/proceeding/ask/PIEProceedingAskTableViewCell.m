@@ -44,14 +44,14 @@
     [self.originView1 addGestureRecognizer:tapOnAsk1];
     [self.originView2 addGestureRecognizer:tapOnAsk2];
     
-    _contentLabel.textColor = [UIColor colorWithHex:0x50484B andAlpha:1];
+    _contentLabel.textColor     = [UIColor colorWithHex:0x50484B andAlpha:1];
     _contentTextField.textColor = [UIColor colorWithHex:0x50484B andAlpha:1];
     _allWorkDescLabel.textColor = [UIColor colorWithHex:0xFEAA2B andAlpha:1];
-    _contentLabel.font = [UIFont lightTupaiFontOfSize:14];
-    _contentTextField.font = [UIFont lightTupaiFontOfSize:14];
-    _allWorkDescLabel.font = [UIFont lightTupaiFontOfSize:11];
+    _contentLabel.font          = [UIFont lightTupaiFontOfSize:14];
+    _contentTextField.font      = [UIFont lightTupaiFontOfSize:14];
+    _allWorkDescLabel.font      = [UIFont lightTupaiFontOfSize:11];
     
-    _contentTextField.enabled = NO;
+    _contentTextField.enabled   = NO;
     [_editButton setTitleColor:[UIColor colorWithHex:0xff6d3f] forState:UIControlStateSelected];
     [_editButton setImage:[UIImage new] forState:UIControlStateSelected];
     [_editButton setTitle:@"确定" forState:UIControlStateSelected];
@@ -61,12 +61,12 @@
 
 - (void)editAsk {
     if (_editButton.state == UIControlStateHighlighted) {
-        _editButton.selected = YES;
+        _editButton.selected      = YES;
         _contentTextField.enabled = YES;
         [_contentTextField becomeFirstResponder];
     } else  {
-        _editButton.selected = NO;
-        _contentTextField.enabled = NO;
+        _editButton.selected       = NO;
+        _contentTextField.enabled  = NO;
         NSMutableDictionary* param = [NSMutableDictionary new];
         [param setObject:_contentTextField.text forKey:@"desc"];
         [param setObject:@(_vmAsk1.askID) forKey:@"ask_id"];

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0E0DDC8D1C1A64BC009A66C4 /* PIEChannelActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0DDC8C1C1A64BC009A66C4 /* PIEChannelActivityViewController.m */; };
+		0E354D3E1C340D660035785A /* UINavigationBar+Awesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E354D3D1C340D660035785A /* UINavigationBar+Awesome.m */; };
 		0E3FB9E41C155E0C0012E290 /* PIENewAskMakeUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3FB9E31C155E0C0012E290 /* PIENewAskMakeUpViewController.m */; };
 		0E3FB9EB1C15603A0012E290 /* PIENewReplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3FB9EA1C15603A0012E290 /* PIENewReplyViewController.m */; };
 		0E54C7871C1E8F5E00F431AC /* PIEMyAskCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E54C76A1C1E8F5E00F431AC /* PIEMyAskCollectionCell.m */; };
@@ -558,6 +559,8 @@
 /* Begin PBXFileReference section */
 		0E0DDC8B1C1A64BC009A66C4 /* PIEChannelActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelActivityViewController.h; sourceTree = "<group>"; };
 		0E0DDC8C1C1A64BC009A66C4 /* PIEChannelActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelActivityViewController.m; sourceTree = "<group>"; };
+		0E354D3C1C340D660035785A /* UINavigationBar+Awesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+Awesome.h"; sourceTree = "<group>"; };
+		0E354D3D1C340D660035785A /* UINavigationBar+Awesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+Awesome.m"; sourceTree = "<group>"; };
 		0E3FB9E21C155E0C0012E290 /* PIENewAskMakeUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIENewAskMakeUpViewController.h; sourceTree = "<group>"; };
 		0E3FB9E31C155E0C0012E290 /* PIENewAskMakeUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENewAskMakeUpViewController.m; sourceTree = "<group>"; };
 		0E3FB9E91C15603A0012E290 /* PIENewReplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIENewReplyViewController.h; sourceTree = "<group>"; };
@@ -1937,6 +1940,7 @@
 		5C4F5BD91AA551BF00226F64 /* util */ = {
 			isa = PBXGroup;
 			children = (
+				5CDB05EC1AA400410089121E /* Vendor */,
 				5C67FB251AB2B41F004EFF05 /* ATOMHeaderImageCropperViewController.h */,
 				5C67FB261AB2B41F004EFF05 /* ATOMHeaderImageCropperViewController.m */,
 			);
@@ -2253,7 +2257,6 @@
 				5C9BD9E81AA8150000715698 /* ViewModel */,
 				5CDB05EE1AA400410089121E /* View */,
 				5CDB05EA1AA400410089121E /* Controller */,
-				5CDB05EC1AA400410089121E /* Vendor */,
 				5CDB05ED1AA400410089121E /* Uitility */,
 				5CDB05C81AA3FE520089121E /* AppDelegate.h */,
 				5CDB05C91AA3FE520089121E /* AppDelegate.m */,
@@ -2376,7 +2379,7 @@
 				5C83A84B1AC66F910071A024 /* pop */,
 			);
 			name = Vendor;
-			path = OpenSource;
+			path = ../../OpenSource;
 			sourceTree = "<group>";
 		};
 		5CDB05ED1AA400410089121E /* Uitility */ = {
@@ -3728,6 +3731,8 @@
 		F4C9BE491C1D4F7500A1AE82 /* categories */ = {
 			isa = PBXGroup;
 			children = (
+				0E354D3C1C340D660035785A /* UINavigationBar+Awesome.h */,
+				0E354D3D1C340D660035785A /* UINavigationBar+Awesome.m */,
 				F4C9BE4A1C1D4F8C00A1AE82 /* UIImage+Colors.h */,
 				F4C9BE4B1C1D4F8C00A1AE82 /* UIImage+Colors.m */,
 				E94B03281B7DE6EC00863C6F /* UIColor+PSGod.h */,
@@ -4494,6 +4499,7 @@
 				F41BA0C61C0EDCE800979D43 /* MJRefreshFooter.m in Sources */,
 				F4FAC94F1C17C808001EF455 /* PIEChannelManager.m in Sources */,
 				5CDB06741AA47EEC0089121E /* ATOMInputVerifyCodeView.m in Sources */,
+				0E354D3E1C340D660035785A /* UINavigationBar+Awesome.m in Sources */,
 				0E0DDC8D1C1A64BC009A66C4 /* PIEChannelActivityViewController.m in Sources */,
 				E90C7C5D1B20726400CF0E6A /* PWMascotAnimationImageView.m in Sources */,
 				5C4C70C51AB6BC5200358989 /* DDBaseService.m in Sources */,

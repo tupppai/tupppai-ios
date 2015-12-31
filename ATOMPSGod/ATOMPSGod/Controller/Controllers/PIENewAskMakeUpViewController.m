@@ -157,10 +157,14 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         self.takePhotoButtonBottomConstraint =
         make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-12);
     }];
-    
-    if (_channelVM) {
-        self.takePhotoButton.hidden = YES;
-    }
+   
+    /*
+        Question: 为什么外面有一个channelVM传进来的话，takePhotoButton就隐藏起来了呢？
+     
+     */
+//    if (_channelVM) {
+//        self.takePhotoButton.hidden = YES;
+//    }
 }
 
 
@@ -478,6 +482,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
 #pragma mark - Target-actions
 - (void)takePhoto {
+    
     [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
 }
 #pragma qb_imagePickerController delegate

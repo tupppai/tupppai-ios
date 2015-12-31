@@ -20,6 +20,10 @@
 #import "PIEMyFollowViewController.h"
 #import "PIEMyFansViewController.h"
 
+#import "DDOtherUserManager.h"
+#import "UINavigationBar+Awesome.h"
+
+
 @interface PIEMeViewController ()<PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,CAPSPageMenuDelegate>
 @property (weak, nonatomic) IBOutlet UIView *dotView2;
 @property (weak, nonatomic) IBOutlet UIView *dotView1;
@@ -49,6 +53,10 @@
 @property (nonatomic) CAPSPageMenu *pageMenu;
 
 @property (nonatomic, assign) long long timeStamp_updateCurrentUser;
+
+
+@property (nonatomic, weak) UIButton *settingButton;
+@property (nonatomic, weak) UIButton *messageButton;
 
 @end
 
@@ -88,7 +96,7 @@
     [backButton addTarget:self action:@selector(pushToMessageViewController) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *barBackButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     self.navigationItem.rightBarButtonItem =  barBackButtonItem;
-    
+    self.messageButton = backButton;
     
     UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
     buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -96,8 +104,10 @@
     [buttonLeft addTarget:self action:@selector(pushToSettingViewController) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonLeft];
     self.navigationItem.leftBarButtonItem =  buttonItem;
+    self.settingButton = buttonLeft;
     
-    [self hideNavitionBarTitleView];
+    
+//    [self hideNavitionBarTitleView];
 
 }
 - (void)hideNavitionBarTitleView {
@@ -113,17 +123,26 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
                                                   forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [UIImage new];
-    self.navigationController.navigationBar.translucent = YES;
     self.navigationController.view.backgroundColor = [UIColor clearColor];
-    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+    
+    
+    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
+    
+    self.navigationItem.title = @"";
+    
+    NSDictionary *titleTextAttrs = @{NSForegroundColorAttributeName: [UIColor blackColor],
+                                     NSFontAttributeName:[UIFont systemFontOfSize:14]};
+    self.navigationController.navigationBar.titleTextAttributes = titleTextAttrs;
     
     [self updateNoticationStatus];
     [MobClick beginLogPageView:@"进入我的"];
 }
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self.navigationController.navigationBar setBackgroundImage:nil
-                                                  forBarMetrics:UIBarMetricsDefault];
+    
+    // reset the navigationbar to its default status --- leaving no side-effect.
+    [self.navigationController.navigationBar lt_reset];
+    
     [MobClick endLogPageView:@"离开我的"];
 
 }
@@ -332,6 +351,12 @@
         }];
         [UIView animateWithDuration:0.5 animations:^{
             [self.pageMenu.view layoutIfNeeded];
+            [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor whiteColor]];
+            PIEUserModel* user = [DDUserManager currentUser];
+            self.navigationItem.title = user.nickname;
+            [self.settingButton setImage:[UIImage imageNamed:@"pie_setting_white"] forState:UIControlStateNormal];
+            [self.messageButton setImage:[UIImage imageNamed:@"pie_message_white"] forState:UIControlStateNormal];
+            [self.messageButton setImage:[UIImage imageNamed:@"pie_message_new_white"] forState:UIControlStateSelected];
         }];
     }
 
@@ -343,6 +368,11 @@
         }];
         [UIView animateWithDuration:0.5 animations:^{
             [self.pageMenu.view layoutIfNeeded];
+            [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
+            self.navigationItem.title = @"";
+            [self.settingButton setImage:[UIImage imageNamed:@"pie_setting"] forState:UIControlStateNormal];
+            [self.messageButton setImage:[UIImage imageNamed:@"pie_message"] forState:UIControlStateNormal];
+            [self.messageButton setImage:[UIImage imageNamed:@"pie_message_new"] forState:UIControlStateSelected];
         }];
     }
 }

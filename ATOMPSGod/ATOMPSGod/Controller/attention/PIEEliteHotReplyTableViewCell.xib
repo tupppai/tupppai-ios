@@ -44,14 +44,14 @@
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="new_reply_follow" highlightedImage="new_reply_followed" translatesAutoresizingMaskIntoConstraints="NO" id="4B8-5j-F6n">
-                        <rect key="frame" x="315" y="7" width="54" height="32"/>
+                        <rect key="frame" x="338" y="14" width="18" height="18"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="32" id="bbJ-9b-sch"/>
-                            <constraint firstAttribute="width" constant="54" id="mgN-wR-Y94"/>
+                            <constraint firstAttribute="height" constant="18" id="bbJ-9b-sch"/>
+                            <constraint firstAttribute="width" constant="18" id="mgN-wR-Y94"/>
                         </constraints>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hvb-nQ-yFa" customClass="PIEPageButton">
-                        <rect key="frame" x="87" y="479.5" width="35" height="30"/>
+                        <rect key="frame" x="87" y="479" width="35" height="30"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="30" id="3or-Wn-enX"/>
                             <constraint firstAttribute="width" priority="250" constant="35" id="O4j-E0-6r2"/>
@@ -76,7 +76,7 @@
                         </variation>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jc3-XI-5t8" customClass="PIELoveButton">
-                        <rect key="frame" x="340" y="480.5" width="35" height="28"/>
+                        <rect key="frame" x="340" y="480" width="35" height="28"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="27" id="Ag1-cc-BHa"/>
@@ -160,7 +160,7 @@
                     <constraint firstItem="kwf-rd-ff2" firstAttribute="leading" secondItem="bwm-3T-NMU" secondAttribute="trailing" constant="5" id="GD8-mJ-wB1"/>
                     <constraint firstItem="nKA-JB-Smk" firstAttribute="leading" secondItem="Nz0-bb-Mel" secondAttribute="leading" id="LPf-NG-SHW"/>
                     <constraint firstItem="I1R-dy-cUb" firstAttribute="centerY" secondItem="Nz0-bb-Mel" secondAttribute="centerY" id="QXd-xv-Hkd"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="4B8-5j-F6n" secondAttribute="trailing" constant="9" id="R8D-Hf-fIr"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="4B8-5j-F6n" secondAttribute="trailing" constant="22" id="R8D-Hf-fIr"/>
                     <constraint firstItem="O1g-xB-hP3" firstAttribute="top" secondItem="cg3-rv-3zG" secondAttribute="bottom" constant="15" id="TBE-mu-uKa"/>
                     <constraint firstItem="Sgj-ub-LZu" firstAttribute="leading" secondItem="hvb-nQ-yFa" secondAttribute="trailing" constant="15" id="YJK-Ww-T3e"/>
                     <constraint firstItem="jz8-n6-016" firstAttribute="leading" secondItem="r7k-a1-VTN" secondAttribute="leading" id="ZQW-pr-w71"/>

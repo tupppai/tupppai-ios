@@ -43,7 +43,7 @@
     if (vm.type == PIEPageTypeAsk) {
         _likeView.hidden = YES;
         _likeCountLabel.hidden = YES;
-        _originView.image = [UIImage imageNamed:@"pie_origin"];
+        _originView.image = [UIImage imageNamed:@"pie_origin_tag"];
     }
     else if (vm.type == PIEPageTypeReply) {
         
@@ -53,7 +53,7 @@
         _likeView.hidden       = YES;
         _likeCountLabel.hidden = YES;
         _likeCountLabel.text   = vm.likeCount;
-        _originView.image      = [UIImage imageNamed:@"pie_reply"];
+        _originView.image      = [UIImage imageNamed:@"pie_origin_tag"];
     }
     
     [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL]placeholderImage:[UIImage imageNamed:@"avatar_default"]];
