@@ -37,18 +37,20 @@
     
     _separator.backgroundColor = [UIColor colorWithHex:0xE5E5E5];
     
-    
-    
     UITapGestureRecognizer* tapOnAsk1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnAsk1)];
     UITapGestureRecognizer* tapOnAsk2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnAsk2)];
     [self.originView1 addGestureRecognizer:tapOnAsk1];
     [self.originView2 addGestureRecognizer:tapOnAsk2];
     
-    _contentLabel.textColor = [UIColor colorWithHex:0x50484B andAlpha:1];
-    _contentTextField.textColor = [UIColor colorWithHex:0x50484B andAlpha:1];
+    _contentTextField.textColor = [UIColor blackColor];
 
-    _contentLabel.font = [UIFont lightTupaiFontOfSize:14];
-    _contentTextField.font = [UIFont lightTupaiFontOfSize:14];
+    _contentTextField.font = [UIFont lightTupaiFontOfSize:15];
+    
+    _categoryNameLabel.textColor =  [UIColor colorWithHex:0x4A4A4A];
+    _categoryNameLabel.font = [UIFont lightTupaiFontOfSize:11];
+    
+    _uploadTimeLabel.textColor = [UIColor colorWithHex:0x50484B];
+    _uploadTimeLabel.font = [UIFont lightTupaiFontOfSize:10];
     
     _contentTextField.enabled = NO;
     [_editButton setTitleColor:[UIColor colorWithHex:0xff6d3f] forState:UIControlStateSelected];

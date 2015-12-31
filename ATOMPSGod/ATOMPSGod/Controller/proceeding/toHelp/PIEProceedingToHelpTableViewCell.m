@@ -12,8 +12,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
-//    _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
-//    _avatarView.clipsToBounds = YES;
+
     _theImageView.clipsToBounds = YES;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     [self.separator mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -51,26 +50,18 @@
 - (void)injectSource:(PIEPageVM*)vm {
     
     [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
-//    _avatarView.isV = vm.isV;
-//    _avatarView.isV = YES;
-   
-    // testing
-//    _avatarView.isV = (vm.askID % 2 == 0);
+
     _avatarView.isV = vm.isV;
     
     [_theImageView sd_setImageWithURL:[NSURL URLWithString:vm.imageURL]placeholderImage:[UIImage imageNamed:@"cellHolder"]];
     
     _nameLabel.text = vm.username;
-//    _timeLabel.text = vm.publishTime;
     
     _nameLabel.font = [UIFont lightTupaiFontOfSize:11];
-//    _timeLabel.font = [UIFont lightTupaiFontOfSize:10];
     _nameLabel.textColor = [UIColor colorWithHex:0x4a4a4a andAlpha:1.0];
-//    _timeLabel.textColor = [UIColor colorWithHex:0x4a4a4a andAlpha:1.0];
 
     
-//    NSString * htmlString = vm.content;
-    NSString *htmlString = @"alksdfjlkadsjfals;dkfj;alsdkjfadkls;fsdjdfadsl;kfjlkds;ajflk;adsjdl;kfjasdklfjlkasddslk;fj;ldasjfl;jadskl;fj;akldsfjlkadsjfl;jadsl;kfjals;dkjflk;sadjfkj";
+    NSString * htmlString = vm.content;
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init] ;
     [paragraphStyle setAlignment:NSTextAlignmentLeft];
     
