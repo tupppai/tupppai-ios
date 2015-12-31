@@ -20,6 +20,7 @@
 #import "AppDelegate.h"
 #import "PIEAvatarImageView.h"
 #import "PIEAvatarView.h"
+#import "UINavigationBar+Awesome.h"
 
 @interface PIEFriendViewController ()
 
@@ -43,6 +44,14 @@
 @property (weak, nonatomic) IBOutlet UIView *view2;
 @property (nonatomic,assign) CGFloat startPanLocationY;
 @property (weak, nonatomic) IBOutlet UIImageView *blurView;
+
+
+
+@property (weak, nonatomic) UIButton *nav_back_button;
+@property (weak, nonatomic) UIButton *nav_more_button;
+@property (weak, nonatomic) UIButton *nav_follow_button;
+
+
 
 @property (nonatomic) CAPSPageMenu *pageMenu;
 
@@ -68,20 +77,24 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
-                                                  forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.shadowImage = [UIImage new];
-    self.navigationController.navigationBar.translucent = YES;
-    self.navigationController.view.backgroundColor = [UIColor whiteColor];
-    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
-    
-    NSDictionary *titleTextAttrs = @{NSForegroundColorAttributeName: [UIColor whiteColor],
+
+    NSDictionary *titleTextAttrs = @{NSForegroundColorAttributeName: [UIColor blackColor],
                                      NSFontAttributeName:[UIFont systemFontOfSize:14]};
     self.navigationController.navigationBar.titleTextAttributes = titleTextAttrs;
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    
+    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
     
     [self setupNavBar];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    // set the navigationBar back to the default style --- thus leaving no side-effects
+    [self.navigationController.navigationBar lt_reset];
+}
 
 - (void)setupNavBar {
     UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
@@ -95,13 +108,17 @@
     }
     UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonLeft];
     self.navigationItem.leftBarButtonItem =  buttonItem;
+    self.nav_back_button = buttonLeft;
+    
+    
     
     UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
     button2.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [button2 setImage:[UIImage imageNamed:@"nav_more"] forState:UIControlStateNormal];
     [button2 addTarget:self action:@selector(abuseAction) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *buttonItem2 = [[UIBarButtonItem alloc] initWithCustomView:button2];
-//    self.navigationItem.rightBarButtonItem =  buttonItem2;
+    self.nav_more_button = button2;
+    
     
     UIButton *button3 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 18, 18)];
     button3.imageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -115,9 +132,13 @@
     UIBarButtonItem *buttonItem3 = [[UIBarButtonItem alloc] initWithCustomView:button3];
     self.navigationItem.rightBarButtonItems = @[buttonItem2, buttonItem3];
     self.followButton = button3;
+    button3.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 6);
     
     
 }
+
+
+#pragma mark - target actions
 - (void)dismiss {
     [self dismissViewControllerAnimated:NO completion:nil];
 }
@@ -154,11 +175,10 @@
 }
 - (void)setupTapGesture {
     _followCountLabel.userInteractionEnabled = YES;
-    _followDescLabel.userInteractionEnabled = YES;
-    _fansCountLabel.userInteractionEnabled = YES;
-    _fansDescLabel.userInteractionEnabled = YES;
-//    UITapGestureRecognizer *tapG1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(follow)];
-//    [_followButton addGestureRecognizer:tapG1];
+    _followDescLabel.userInteractionEnabled  = YES;
+    _fansCountLabel.userInteractionEnabled   = YES;
+    _fansDescLabel.userInteractionEnabled    = YES;
+
     UITapGestureRecognizer *tapG2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToFollowingVC)];
     UITapGestureRecognizer *tapG22 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToFollowingVC)];
     
@@ -229,10 +249,6 @@
     self.nameLabel.text = user.nickname;
     
     
-    //self.psGodIcon_big.hidden = YES;
-    //testing
-    //self.psGodIcon_big.hidden = (_pageVM.ID % 2 == 0);
-    
 
     self.psGodIcon_big.hidden             = !user.isV;
     self.psGodCertificateImageView.hidden = !user.isV;
@@ -252,12 +268,13 @@
         [self.followButton setImage:[UIImage imageNamed:@"navigationbar_followed"]
                  forState:UIControlStateSelected];
     }
+    
+    
     self.followButton.selected = user.isMyFollow;
-    
-    _followCountLabel.text = [NSString stringWithFormat:@"%zd",user.attentionNumber];
-    _fansCountLabel.text = [NSString stringWithFormat:@"%zd",user.fansNumber];
-    _likedCountLabel.text = [NSString stringWithFormat:@"%zd",user.likedCount];
-    
+    _followCountLabel.text     = [NSString stringWithFormat:@"%zd",user.attentionNumber];
+    _fansCountLabel.text       = [NSString stringWithFormat:@"%zd",user.fansNumber];
+    _likedCountLabel.text      = [NSString stringWithFormat:@"%zd",user.likedCount];
+
     if (user.uid == [DDUserManager currentUser].uid) {
         _followButton.hidden = YES;
     } else {
@@ -319,6 +336,24 @@
         }];
         [UIView animateWithDuration:0.5 animations:^{
             [self.pageMenu.view layoutIfNeeded];
+            
+            // GOD DAMN USEFUL PIECE OF CODES!
+            [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor whiteColor]];
+            self.navigationItem.title = _pageVM.username;
+            [self.nav_back_button setImage:[UIImage imageNamed:@"nav_back_black"]
+                                  forState:UIControlStateNormal];
+            [self.nav_more_button setImage:[UIImage imageNamed:@"nav_more_black"]
+                                  forState:UIControlStateNormal];
+            [self.followButton setImage:[UIImage imageNamed:@"navigationbar_addFollow_black"]
+                               forState:UIControlStateNormal];
+            if (_user.isMyFan) {
+                [self.followButton setImage:[UIImage imageNamed:@"navigationbar_mutualFollow_black"]
+                                   forState:UIControlStateSelected];
+            }else{
+                [self.followButton setImage:[UIImage imageNamed:@"navigationbar_followed_black"]
+                                   forState:UIControlStateSelected];
+            }
+            
         }];
     }
 }
@@ -329,6 +364,22 @@
         }];
         [UIView animateWithDuration:0.5 animations:^{
             [self.pageMenu.view layoutIfNeeded];
+            [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
+            self.navigationItem.title = @"";
+            [self.nav_back_button setImage:[UIImage imageNamed:@"nav_back"]
+                                  forState:UIControlStateNormal];
+            [self.nav_more_button setImage:[UIImage imageNamed:@"nav_more"]
+                                  forState:UIControlStateNormal];
+            
+            [self.followButton setImage:[UIImage imageNamed:@"navigationbar_addFollow"]
+                               forState:UIControlStateNormal];
+            if (_user.isMyFan) {
+                [self.followButton setImage:[UIImage imageNamed:@"navigationbar_mutualFollow"]
+                                   forState:UIControlStateSelected];
+            }else{
+                [self.followButton setImage:[UIImage imageNamed:@"navigationbar_followed"]                                   forState:UIControlStateSelected];
+            }
+            
         }];
     }
 }

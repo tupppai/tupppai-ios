@@ -61,11 +61,11 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kZC-OW-G6f">
                         <rect key="frame" x="136" y="462" width="50" height="45"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pie_ask_help" translatesAutoresizingMaskIntoConstraints="NO" id="4pT-By-Nmk">
-                                <rect key="frame" x="15" y="0.0" width="20" height="30"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pie_ask_help" translatesAutoresizingMaskIntoConstraints="NO" id="4pT-By-Nmk">
+                                <rect key="frame" x="10" y="0.0" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="6jW-dX-F5c"/>
-                                    <constraint firstAttribute="width" constant="20" id="DqI-XS-qgL"/>
+                                    <constraint firstAttribute="width" constant="30" id="DqI-XS-qgL"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BANG" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SKU-78-X4k">

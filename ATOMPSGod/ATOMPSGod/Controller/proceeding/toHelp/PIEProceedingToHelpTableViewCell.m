@@ -12,8 +12,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
-//    _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
-//    _avatarView.clipsToBounds = YES;
+
     _theImageView.clipsToBounds = YES;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     [self.separator mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -21,6 +20,25 @@
     }];
     
     self.separator.backgroundColor = [UIColor colorWithHex:0xE5E5E5];
+    
+    [self configureColorAndFont];
+}
+
+
+- (void)configureColorAndFont
+{
+    self.nameLabel.font              = [UIFont lightTupaiFontOfSize:13];
+    self.nameLabel.textColor         = [UIColor blackColor];
+
+    self.contentTextView.font        = [UIFont lightTupaiFontOfSize:14];
+    self.contentTextView.textColor   = [UIColor blackColor];
+
+    self.categoryNameLabel.font      = [UIFont lightTupaiFontOfSize:11];
+    self.categoryNameLabel.textColor = [UIColor blackColor];
+    self.updateTimeLabel.font        = [UIFont lightTupaiFontOfSize:10];
+    self.updateTimeLabel.textColor   = [UIColor colorWithHex:0x50484B];
+    
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -32,23 +50,17 @@
 - (void)injectSource:(PIEPageVM*)vm {
     
     [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
-//    _avatarView.isV = vm.isV;
-//    _avatarView.isV = YES;
-   
-    // testing
-//    _avatarView.isV = (vm.askID % 2 == 0);
+
     _avatarView.isV = vm.isV;
     
     [_theImageView sd_setImageWithURL:[NSURL URLWithString:vm.imageURL]placeholderImage:[UIImage imageNamed:@"cellHolder"]];
     
     _nameLabel.text = vm.username;
-//    _timeLabel.text = vm.publishTime;
     
     _nameLabel.font = [UIFont lightTupaiFontOfSize:11];
-//    _timeLabel.font = [UIFont lightTupaiFontOfSize:10];
     _nameLabel.textColor = [UIColor colorWithHex:0x4a4a4a andAlpha:1.0];
-//    _timeLabel.textColor = [UIColor colorWithHex:0x4a4a4a andAlpha:1.0];
 
+    
     NSString * htmlString = vm.content;
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init] ;
     [paragraphStyle setAlignment:NSTextAlignmentLeft];

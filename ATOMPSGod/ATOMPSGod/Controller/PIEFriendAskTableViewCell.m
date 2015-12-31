@@ -33,8 +33,8 @@
 //    _swipeView.itemsPerPage = 5;
 //    _swipeView.truncateFinalPage = YES;
     
-    _originView1.thumbImageView.image = [UIImage imageNamed:@"pie_origin"];
-    _originView2.thumbImageView.image = [UIImage imageNamed:@"pie_origin"];
+    _originView1.thumbImageView.image = [UIImage imageNamed:@"pie_origin_tag"];
+    _originView2.thumbImageView.image = [UIImage imageNamed:@"pie_origin_tag"];
     
     UITapGestureRecognizer* tapOnAsk1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnAsk1)];
     UITapGestureRecognizer* tapOnAsk2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnAsk2)];

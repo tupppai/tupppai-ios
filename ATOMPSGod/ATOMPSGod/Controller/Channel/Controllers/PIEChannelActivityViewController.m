@@ -114,6 +114,8 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     
     // load data for the first time.
     [self.tableView.mj_header beginRefreshing];
+    
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -134,8 +136,6 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 {
     // add to subView
     [self.view addSubview:self.tableView];
-    
-    
     
     // set constraints
     UIEdgeInsets padding = UIEdgeInsetsMake(0, 0, 0, 0);
@@ -203,11 +203,7 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
                          
                      } completion:^(BOOL finished) {
                      }];
-    
 }
-
-
-
 
 
 
@@ -225,6 +221,13 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     [tableView dequeueReusableCellWithIdentifier:PIEChannelActivityReplyCellIdentifier];
     [replyCell hideThumbnailImage];
     [replyCell injectSauce:_source_reply[indexPath.row]];
+   
+    /*去掉ChannelActivity中的cell的“其它作品”按钮*/
+    replyCell.allWorkView.hidden = YES;
+    [replyCell.shareView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(replyCell.allWorkView.mas_left);
+    }];
+    
     
     return replyCell;
 }
@@ -388,11 +391,15 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
             vc.shouldShowHeaderView = NO;
             [self.navigationController pushViewController:vc animated:YES];
         }
-        else if (CGRectContainsPoint(_selectedReplyCell.allWorkView.frame, p)) {
-            PIEReplyCollectionViewController* vc = [PIEReplyCollectionViewController new];
-            vc.pageVM = _selectedVM;
-            [self.navigationController pushViewController:vc animated:YES];
-        }
+        
+        
+        /*去掉ChannelActivity中的cell的“其它作品”按钮*/
+
+//        else if (CGRectContainsPoint(_selectedReplyCell.allWorkView.frame, p)) {
+//            PIEReplyCollectionViewController* vc = [PIEReplyCollectionViewController new];
+//            vc.pageVM = _selectedVM;
+//            [self.navigationController pushViewController:vc animated:YES];
+//        }
     }
     
 }
@@ -581,14 +588,25 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
         _headerBannerView.adjustsImageWhenHighlighted = NO;
         
         // set frame
-        _headerBannerView.frame = CGRectMake(0, 0, SCREEN_WIDTH, (448.0 / 750.0)*SCREEN_WIDTH + 10);
+//        _headerBannerView.frame = CGRectMake(0, 0, SCREEN_WIDTH, (448.0 / 750.0)*SCREEN_WIDTH);
+//        _headerBannerView.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 10, 0);
+        [_headerBannerView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH, (448.0 / 750) * SCREEN_WIDTH + 10));
+        }];
+        
+        [_headerBannerView.imageView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_headerBannerView.mas_top);
+            make.left.equalTo(_headerBannerView.mas_left);
+            make.right.equalTo(_headerBannerView.mas_right);
+            make.bottom.equalTo(_headerBannerView.mas_bottom).with.offset(-10);
+        }];
         
         // Target-actions
         [_headerBannerView addTarget:self
                               action:@selector(headerBannerViewClicked:)
                     forControlEvents:UIControlEventTouchUpInside];
     
-        _headerBannerView.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 10, 0);
+
     }
     return _headerBannerView;
 }

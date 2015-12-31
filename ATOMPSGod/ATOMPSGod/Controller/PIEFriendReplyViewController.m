@@ -15,6 +15,7 @@
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
 #import "DeviceUtil.h"
+
 @interface PIEFriendReplyViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,PWRefreshBaseCollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (nonatomic, strong) NSMutableArray *source;
 @property (nonatomic, assign) NSInteger currentIndex;
