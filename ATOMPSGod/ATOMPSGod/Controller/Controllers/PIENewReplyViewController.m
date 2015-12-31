@@ -104,14 +104,14 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 }
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.navigationController.hidesBarsOnSwipe = YES;
+//    self.navigationController.hidesBarsOnSwipe = YES;
     [self.navigationController.navigationBar setBackgroundImage:nil
                                                   forBarMetrics:UIBarMetricsDefault];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    self.navigationController.hidesBarsOnSwipe = NO;
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.hidesBarsOnSwipe = NO;
+//    self.navigationController.navigationBarHidden = NO;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

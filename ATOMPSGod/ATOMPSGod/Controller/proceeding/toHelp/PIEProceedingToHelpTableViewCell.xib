@@ -162,7 +162,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="cell_separator" width="3" height="21"/>
+        <image name="cell_separator" width="3" height="20"/>
         <image name="pieProceedingChannelIndicator" width="10" height="11"/>
         <image name="proceeding_download" width="57" height="23"/>
         <image name="proceeding_upload" width="57" height="23"/>

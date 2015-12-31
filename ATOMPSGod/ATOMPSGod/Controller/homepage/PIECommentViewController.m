@@ -150,22 +150,15 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    [self.navigationController.navigationBar setBackgroundImage:nil
-//                                                  forBarMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
-                                                  forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.shadowImage = [UIImage new];
-    self.navigationController.navigationBar.translucent = YES;
 
-//    self.navigationController.hidesBarsOnSwipe = YES;
         [MobClick beginLogPageView:@"进入浏览图片页"];
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
 
-    [self.navigationController.navigationBar setBackgroundImage:nil
-                                                  forBarMetrics:UIBarMetricsDefault];
+//    [self.navigationController.navigationBar setBackgroundImage:nil
+//                                                  forBarMetrics:UIBarMetricsDefault];
 //    self.navigationController.hidesBarsOnSwipe = NO;
     //    [MobClick endLogPageView:@"离开浏览图片页"];
 }

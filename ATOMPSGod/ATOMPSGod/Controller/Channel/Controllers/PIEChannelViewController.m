@@ -48,16 +48,10 @@
 #pragma mark - UI life cycles
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    //remove title
-    self.navigationItem.titleView = [UIView new];
-    self.automaticallyAdjustsScrollViewInsets = NO;
+    [self setupNavigationBar];
     [self setupTableView];
     [self setupData];
-    
-    // refresh mj_header and load data for the first time!
     [self.tableView.mj_header beginRefreshing];
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -65,13 +59,20 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)setupNavigationBar {
+    UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 20)];
+    label.text = @"图派";
+    label.textAlignment = NSTextAlignmentCenter;
+    label.font = [UIFont systemFontOfSize:18];
+    self.navigationItem.titleView = label;
+}
 #pragma mark - UI components & data setup
 - (void)setupTableView
 {
     self.view.backgroundColor = [UIColor colorWithHex:0xF8F8F8];
     [self.view addSubview:self.tableView];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    UIEdgeInsets padding = UIEdgeInsetsMake(0,10, 0, 10);
+    UIEdgeInsets padding = UIEdgeInsetsMake(0,9, 0, 9);
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view).with.insets(padding);
     }];
@@ -80,18 +81,18 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
-                                                  forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.shadowImage = [UIImage new];
-    self.navigationController.navigationBar.translucent = YES;
-    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+//    
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
+//                                                  forBarMetrics:UIBarMetricsDefault];
+//    self.navigationController.navigationBar.shadowImage = [UIImage new];
+//    self.navigationController.navigationBar.translucent = YES;
+//    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self.navigationController.navigationBar setBackgroundImage:nil
-                                                  forBarMetrics:UIBarMetricsDefault];
+//    [self.navigationController.navigationBar setBackgroundImage:nil
+//                                                  forBarMetrics:UIBarMetricsDefault];
 }
 - (void)setupData {
     _source = [NSMutableArray array];
@@ -259,9 +260,9 @@
 {
     if (view == nil)
     {
-        CGFloat width = swipeView.frame.size.height;
-        view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width+8, width)];
-        UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, width, width)];
+        CGFloat swipeView_item_width = (swipeView.frame.size.width-8)/5;
+        view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, swipeView_item_width, swipeView_item_width-8)];
+        UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(8, 0, swipeView_item_width-8, swipeView_item_width-8)];
         imageView.contentMode = UIViewContentModeScaleAspectFill;
         imageView.clipsToBounds = YES;
         [view addSubview:imageView];
@@ -281,9 +282,6 @@
 #pragma mark - <SwipeViewDelegate>
 - (void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index
 {
-    // no matter what is selected, just push to next view controller
-    
-    // 用swipeView的tag来确定具体是点击到了哪个indexPath的Cell上。然后取得对应的channelViewModel完成跳转
     PIEChannelViewModel *selectedChannelVM = _source[swipeView.tag];
     [self pushNextViewControllerWithViewModel:selectedChannelVM];
 }
@@ -296,11 +294,11 @@
         _tableView.delegate           = self;
         _tableView.dataSource         = self;
         _tableView.psDelegate         = self;
-        _tableView.estimatedRowHeight = 120;
         _tableView.showsHorizontalScrollIndicator = NO;
         _tableView.showsVerticalScrollIndicator = NO;
-        
+        _tableView.estimatedRowHeight = 120;
         _tableView.rowHeight = UITableViewAutomaticDimension;
+        _tableView.backgroundColor = [UIColor clearColor];
         
         [_tableView registerNib:[UINib nibWithNibName:@"PIEChannelTableViewCell"
                                                bundle:nil]
