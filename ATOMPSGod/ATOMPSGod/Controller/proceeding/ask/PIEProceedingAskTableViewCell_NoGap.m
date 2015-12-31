@@ -28,8 +28,8 @@
     _swipeView.delegate = self;
     _swipeView.bounces = YES;
     
-    _originView1.thumbImageView.image = [UIImage imageNamed:@"pie_origin"];
-    _originView2.thumbImageView.image = [UIImage imageNamed:@"pie_origin"];
+    _originView1.thumbImageView.image = [UIImage imageNamed:@"pie_origin_tag"];
+    _originView2.thumbImageView.image = [UIImage imageNamed:@"pie_origin_tag"];
     
     [_separator mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(0.5);
@@ -56,7 +56,7 @@
     [_editButton setTitleColor:[UIColor colorWithHex:0xff6d3f] forState:UIControlStateSelected];
     [_editButton setImage:[UIImage new] forState:UIControlStateSelected];
     [_editButton setTitle:@"确定" forState:UIControlStateSelected];
-    _editButton.titleLabel.font = [UIFont lightTupaiFontOfSize:14.0];
+    _editButton.titleLabel.font = [UIFont lightTupaiFontOfSize:14];
     [_editButton addTarget:self action:@selector(editAsk) forControlEvents:UIControlEventTouchUpInside];
 }
 
