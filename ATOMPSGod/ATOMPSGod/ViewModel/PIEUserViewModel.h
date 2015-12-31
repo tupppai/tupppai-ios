@@ -15,11 +15,11 @@
 @property (nonatomic, strong) NSMutableArray *replyPages;
 @property (nonatomic, copy  ) NSString  *username;
 @property (nonatomic, copy  ) NSString  *avatar;
-@property (nonatomic, assign) NSString *followCount;
-@property (nonatomic, assign) NSString *fansCount;
-@property (nonatomic, assign) NSString *likedCount;
-@property (nonatomic, assign) NSString *askCount;
-@property (nonatomic, assign) NSString *replyCount;
+@property (nonatomic, copy) NSString *followCount;
+@property (nonatomic, copy) NSString *fansCount;
+@property (nonatomic, copy) NSString *likedCount;
+@property (nonatomic, copy) NSString *askCount;
+@property (nonatomic, copy) NSString *replyCount;
 
 - (instancetype)initWithEntity:(PIEUserModel*)user;
 @end
