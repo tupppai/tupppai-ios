@@ -18,7 +18,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jeY-1J-VBC">
                         <rect key="frame" x="0.0" y="0.0" width="440" height="294.5"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vQZ-tg-eG2" customClass="SwipeView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vQZ-tg-eG2" customClass="SwipeView">
                                 <rect key="frame" x="94" y="36" width="338" height="84"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="VIL-yH-Tl6"/>
@@ -41,7 +41,7 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NZK-ha-AqP" customClass="PIEImageView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NZK-ha-AqP" customClass="PIEImageView">
                                 <rect key="frame" x="8" y="36" width="84" height="84"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -49,7 +49,7 @@
                                     <constraint firstAttribute="height" constant="84" id="xpf-in-4Bk"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dLB-ND-Est" customClass="PIEImageView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dLB-ND-Est" customClass="PIEImageView">
                                 <rect key="frame" x="92" y="36" width="0.0" height="84"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -58,15 +58,15 @@
                                 </constraints>
                             </view>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="1000" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="anF-uE-APk">
-                                <rect key="frame" x="51" y="132" width="339" height="20"/>
+                                <rect key="frame" x="8" y="132" width="361" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hhD-JV-ltv">
-                                <rect key="frame" x="411" y="131.5" width="15" height="22"/>
+                                <rect key="frame" x="388" y="132" width="38" height="21.5"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="13" id="19t-7J-MX7"/>
-                                    <constraint firstAttribute="height" constant="13" id="zBH-zs-iX3"/>
+                                    <constraint firstAttribute="width" constant="38" id="19t-7J-MX7"/>
+                                    <constraint firstAttribute="height" constant="21.5" id="zBH-zs-iX3"/>
                                 </constraints>
                                 <state key="normal" image="pie_proceeding_ask_edit"/>
                             </button>
@@ -81,7 +81,7 @@
                                 <rect key="frame" x="8" y="168" width="10" height="10"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="10" id="MMO-pn-RfN"/>
-                                    <constraint firstAttribute="height" constant="11" id="QWs-9d-eOm"/>
+                                    <constraint firstAttribute="height" constant="10" id="QWs-9d-eOm"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="category_name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t32-5m-Gim">
@@ -103,16 +103,16 @@
                             <constraint firstItem="W9S-Uz-hWO" firstAttribute="leading" secondItem="Ifq-AW-v3W" secondAttribute="leading" id="2Mw-Mn-rdu"/>
                             <constraint firstAttribute="trailing" secondItem="zIg-s2-acb" secondAttribute="trailing" constant="8" id="2u5-zj-eeu"/>
                             <constraint firstItem="zIg-s2-acb" firstAttribute="trailing" secondItem="vQZ-tg-eG2" secondAttribute="trailing" id="3lB-IZ-eEB"/>
-                            <constraint firstAttribute="trailing" secondItem="anF-uE-APk" secondAttribute="trailing" constant="50" id="3v2-Ex-MOv"/>
+                            <constraint firstAttribute="trailing" secondItem="anF-uE-APk" secondAttribute="trailing" constant="71" id="3v2-Ex-MOv"/>
                             <constraint firstItem="zIg-s2-acb" firstAttribute="leading" secondItem="jeY-1J-VBC" secondAttribute="leadingMargin" id="5PT-b4-Tfz"/>
                             <constraint firstItem="t32-5m-Gim" firstAttribute="centerY" secondItem="W9S-Uz-hWO" secondAttribute="centerY" id="5qQ-C3-ggF"/>
                             <constraint firstItem="Ifq-AW-v3W" firstAttribute="trailing" secondItem="hhD-JV-ltv" secondAttribute="trailing" id="6cY-M1-0rj"/>
-                            <constraint firstItem="NZK-ha-AqP" firstAttribute="top" secondItem="jeY-1J-VBC" secondAttribute="top" constant="13" id="8Rr-3H-e4b"/>
+                            <constraint firstItem="NZK-ha-AqP" firstAttribute="top" secondItem="jeY-1J-VBC" secondAttribute="top" constant="36" id="8Rr-3H-e4b"/>
                             <constraint firstItem="vQZ-tg-eG2" firstAttribute="top" secondItem="NZK-ha-AqP" secondAttribute="top" id="9iI-bR-3mb"/>
                             <constraint firstItem="Ifq-AW-v3W" firstAttribute="leading" secondItem="zIg-s2-acb" secondAttribute="leading" id="BLZ-HE-ppE"/>
                             <constraint firstItem="anF-uE-APk" firstAttribute="centerY" secondItem="zIg-s2-acb" secondAttribute="centerY" id="D0S-9v-Y9d"/>
                             <constraint firstItem="vQZ-tg-eG2" firstAttribute="height" secondItem="NZK-ha-AqP" secondAttribute="height" id="EKQ-0s-1w9"/>
-                            <constraint firstAttribute="trailing" secondItem="hhD-JV-ltv" secondAttribute="trailing" constant="12" id="Gqu-0U-aPh"/>
+                            <constraint firstAttribute="trailing" secondItem="hhD-JV-ltv" secondAttribute="trailing" constant="14" id="Gqu-0U-aPh"/>
                             <constraint firstItem="zIg-s2-acb" firstAttribute="top" secondItem="vQZ-tg-eG2" secondAttribute="bottom" constant="12" id="IL4-Oe-JhJ"/>
                             <constraint firstItem="NZK-ha-AqP" firstAttribute="leading" secondItem="jeY-1J-VBC" secondAttribute="leading" constant="8" id="Jdg-TA-yVT"/>
                             <constraint firstItem="hhD-JV-ltv" firstAttribute="leading" secondItem="anF-uE-APk" secondAttribute="trailing" priority="250" constant="5" id="KGa-Ka-Hh1"/>
@@ -154,7 +154,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="cell_separator" translatesAutoresizingMaskIntoConstraints="NO" id="FGR-WJ-GWI" userLabel="cell_separator">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cell_separator" translatesAutoresizingMaskIntoConstraints="NO" id="FGR-WJ-GWI" userLabel="cell_separator">
                         <rect key="frame" x="0.0" y="284" width="432" height="10"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="10" id="l6L-Pe-Fk1"/>
@@ -172,7 +172,7 @@
                     <constraint firstItem="FGR-WJ-GWI" firstAttribute="trailing" secondItem="Ifq-AW-v3W" secondAttribute="trailing" id="gGC-eY-Ubh"/>
                     <constraint firstItem="FGR-WJ-GWI" firstAttribute="leading" secondItem="Ifq-AW-v3W" secondAttribute="leading" id="hpR-J3-zOh"/>
                     <constraint firstItem="FGR-WJ-GWI" firstAttribute="leading" secondItem="H3w-AK-xxm" secondAttribute="leading" id="qWq-IZ-LKm"/>
-                    <constraint firstAttribute="trailing" secondItem="FGR-WJ-GWI" secondAttribute="trailing" id="x32-a8-QxG"/>
+                    <constraint firstAttribute="trailing" secondItem="FGR-WJ-GWI" secondAttribute="trailing" constant="8" id="x32-a8-QxG"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
