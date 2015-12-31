@@ -123,14 +123,17 @@
 - (void)injectSource:(NSArray*)array {
     _source = [array mutableCopy];
     _vmAsk1 = [_source objectAtIndex:0];
-    [_originView1.imageView sd_setImageWithURL:[NSURL URLWithString:_vmAsk1.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+    NSString *origin1_imageUrl = [_vmAsk1.imageURL trimToImageWidth:SCREEN_WIDTH*0.6];
+
+    [_originView1.imageView sd_setImageWithURL:[NSURL URLWithString:origin1_imageUrl] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
     [_source removeObjectAtIndex:0];
     
     if (_source.count >= 1) {
         _vmAsk2 = [_source objectAtIndex:0];
         if (_vmAsk2.type != PIEPageTypeReply) {
             [_source removeObjectAtIndex:0];
-            [_originView2.imageView sd_setImageWithURL:[NSURL URLWithString:_vmAsk2.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+            NSString *origin2_imageUrl = [_vmAsk2.imageURL trimToImageWidth:SCREEN_WIDTH*0.6];
+            [_originView2.imageView sd_setImageWithURL:[NSURL URLWithString:origin2_imageUrl] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
             [_originView2 mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.width.equalTo(@84);
                 make.leading.equalTo(_originView1.mas_trailing).with.offset(10);
@@ -202,7 +205,9 @@
 //                else
 //                {
                     PIEPageVM* vm = [_source objectAtIndex:index];
-                    [imageView sd_setImageWithURL:[NSURL URLWithString:vm.imageURL]];
+                    NSString *imageUrl = [vm.imageURL trimToImageWidth:SCREEN_WIDTH*0.6];
+
+                    [imageView sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
                     
 //                }
             }

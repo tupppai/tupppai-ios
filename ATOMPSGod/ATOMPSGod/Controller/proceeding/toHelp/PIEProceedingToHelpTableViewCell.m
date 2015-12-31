@@ -39,7 +39,8 @@
 //    _avatarView.isV = (vm.askID % 2 == 0);
     _avatarView.isV = vm.isV;
     
-    [_theImageView sd_setImageWithURL:[NSURL URLWithString:vm.imageURL]placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+    NSString* imageUrl = [vm.imageURL trimToImageWidth:SCREEN_WIDTH];
+    [_theImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl]placeholderImage:[UIImage imageNamed:@"cellHolder"]];
     
     _nameLabel.text = vm.username;
 //    _timeLabel.text = vm.publishTime;
