@@ -81,18 +81,10 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//    
-//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
-//                                                  forBarMetrics:UIBarMetricsDefault];
-//    self.navigationController.navigationBar.shadowImage = [UIImage new];
-//    self.navigationController.navigationBar.translucent = YES;
-//    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-//    [self.navigationController.navigationBar setBackgroundImage:nil
-//                                                  forBarMetrics:UIBarMetricsDefault];
 }
 - (void)setupData {
     _source = [NSMutableArray array];
@@ -181,10 +173,10 @@
             [_source removeAllObjects];
             [_source addObjectsFromArray:array];
             
-            [self.tableView reloadData];
         } else {
             _stopRefreshFooter = YES;
         }
+        [self.tableView reloadData];
         [self.tableView.mj_header endRefreshing];
     }];
 }

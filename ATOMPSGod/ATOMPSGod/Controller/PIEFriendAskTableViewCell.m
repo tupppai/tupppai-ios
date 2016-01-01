@@ -33,14 +33,8 @@
 //    _swipeView.itemsPerPage = 5;
 //    _swipeView.truncateFinalPage = YES;
     
-    _originView1.thumbImageView.image = [UIImage imageNamed:@"pie_origin"];
-    _originView2.thumbImageView.image = [UIImage imageNamed:@"pie_origin"];
-    [_originView1.thumbImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.leading.equalTo(_originView1).with.offset(-5);
-    }];
-    [_originView2.thumbImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.leading.equalTo(_originView2).with.offset(-5);
-    }];
+    _originView1.thumbImageView.image = [UIImage imageNamed:@"pie_origin_tag"];
+    _originView2.thumbImageView.image = [UIImage imageNamed:@"pie_origin_tag"];
     
     UITapGestureRecognizer* tapOnAsk1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnAsk1)];
     UITapGestureRecognizer* tapOnAsk2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnAsk2)];
@@ -56,6 +50,7 @@
         if ([_vmAsk1.replyCount integerValue]<=0) {
             PIECommentViewController *vc_comment = [PIECommentViewController new];
             vc_comment.vm = _vmAsk1;
+            vc_comment.shouldDownloadVMSource = YES;
             DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];
             [self.viewController.parentViewController.view.superview.viewController.navigationController presentViewController:nav2 animated:NO completion:nil];
 
@@ -74,6 +69,7 @@
         if ([_vmAsk2.replyCount integerValue]<=0) {
             PIECommentViewController *vc_comment = [PIECommentViewController new];
             vc_comment.vm = _vmAsk2;
+            vc_comment.shouldDownloadVMSource = YES;
             DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];
             [self.viewController.parentViewController.view.superview.viewController.navigationController presentViewController:nav2 animated:NO completion:nil];
             
@@ -161,7 +157,6 @@
         vc.pageVM = vm;
         //汗，看来还是要写在controller里面
         [nav  presentViewController:vc animated:YES completion:nil];
-//        [self.viewController.parentViewController.view.superview.viewController.navigationController pushViewController:vc animated:YES ];
 }
 
 

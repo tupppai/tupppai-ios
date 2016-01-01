@@ -42,7 +42,7 @@
         NSArray *param = @[uid_ns];
         FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         while ([rs next]) {
-            user = [MTLFMDBAdapter modelOfClass:[PIEUserModel class] fromFMResultSet:rs error:NULL];
+            user = [MTLJSONAdapter modelOfClass:[PIEUserModel class] fromJSONDictionary:[rs resultDictionary] error:NULL];
             break;
         }
         [rs close];
@@ -51,16 +51,15 @@
 }
 
 + (void)fetchUser:(void (^)(PIEUserModel*))block {
-    NSLog(@"fetchFirstUser");
     __block PIEUserModel *user;
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
         NSString *stmt = @"select * from PIEUserTable";
         FMResultSet *rs = [db executeQuery:stmt];
-        int n = 0;
+//        int n = 0;
         while ([rs next]) {
-            user = [MTLFMDBAdapter modelOfClass:[PIEUserModel class] fromFMResultSet:rs error:NULL];
-//            break;
-            n++;
+            user = [MTLJSONAdapter modelOfClass:[PIEUserModel class] fromJSONDictionary:[rs resultDictionary] error:NULL];
+            break;
+//            n++;
         }
         [rs close];
     }];
@@ -80,7 +79,7 @@
 //        FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         FMResultSet *rs = [db executeQuery:stmt,uid];
         while ([rs next]) {
-            PIEUserModel *user = [MTLFMDBAdapter modelOfClass:[PIEUserModel class] fromFMResultSet:rs error:NULL];
+            PIEUserModel *user = [MTLJSONAdapter modelOfClass:[PIEUserModel class] fromJSONDictionary:[rs resultDictionary] error:NULL];
             if (user) {
                 flag = YES;
                 break;

@@ -74,13 +74,7 @@
 <SwipeViewDelegate,SwipeViewDataSource>
 @end
 
-@interface PIEEliteHotViewController (DZNEmptyDataSet)
-<DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
-@end
 
-//@interface PIEEliteViewController (JGActionSheet)
-//<JGActionSheetDelegate>
-//@end
 
 @implementation PIEEliteHotViewController
 

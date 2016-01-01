@@ -60,9 +60,6 @@
 <PIEShareViewDelegate>
 @end
 
-@interface PIEEliteFollowViewController (DZNEmptyDataSet)
-<DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
-@end
 
 @interface PIEEliteFollowViewController (JGActionSheet)
 <JGActionSheetDelegate>

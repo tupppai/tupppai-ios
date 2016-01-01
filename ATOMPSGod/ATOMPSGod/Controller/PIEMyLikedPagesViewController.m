@@ -34,12 +34,10 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.hidesBarsOnSwipe = YES;
-    self.navigationController.navigationBar.backgroundColor = [UIColor colorWithHex:0xffffff andAlpha:0.5];
 }
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.hidesBarsOnSwipe = NO;
-//    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
 }
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -47,7 +45,6 @@
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     self.navigationController.navigationBarHidden = NO;
-    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
 }
 #pragma mark - Refresh
 -(void)didPullDownCollectionView:(UICollectionView *)collectionView {

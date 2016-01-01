@@ -53,9 +53,6 @@ NSMutableArray <NSMutableArray<PIEPageVM *> *> *sourceAsk;
 <PWRefreshBaseTableViewDelegate>
 @end
 
-@interface PIEProceedingAskViewController (DZNEmptyDataSet)
-<DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
-@end
 
 @interface PIEProceedingAskViewController (ProceedingShareView)
 <PIEProceedingShareViewDelegate>
@@ -225,6 +222,7 @@ static NSString *PIEProceedingAskTableViewCell_NoGapIdentifier =
     [param setObject:@(_timeStamp_myAsk) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getAskWithReplies:param withBlock:^(NSArray *returnArray) {
+        ws.isfirstLoadingAsk = NO;
         if (returnArray.count == 0) {
             _canRefreshAskFooter = NO;
         } else {

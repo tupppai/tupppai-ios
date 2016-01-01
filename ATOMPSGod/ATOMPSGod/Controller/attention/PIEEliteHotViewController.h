@@ -8,7 +8,8 @@
 
 #import "DDBaseVC.h"
 
-@interface PIEEliteHotViewController : DDBaseVC
+@interface PIEEliteHotViewController : DDBaseVC<DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
+
 
 - (void)getSourceIfEmpty_banner;
 - (void)getSourceIfEmpty_hot:(void (^)(BOOL finished))block;
