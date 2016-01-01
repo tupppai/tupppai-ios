@@ -137,7 +137,10 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [param setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
 
     [PIEPageManager getPageSource:param block:^(PIEPageVM *remoteVM) {
+        //reset kvo
+        [self removeKVO];
         _vm = remoteVM;
+        [self addKVO];
         if (_vm.type == PIEPageTypeAsk) {
             self.headerView.vm = _vm;
         } else {
@@ -156,11 +159,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-
-//    [self.navigationController.navigationBar setBackgroundImage:nil
-//                                                  forBarMetrics:UIBarMetricsDefault];
-//    self.navigationController.hidesBarsOnSwipe = NO;
-    //    [MobClick endLogPageView:@"离开浏览图片页"];
 }
 
 
@@ -174,11 +172,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 
 -(void)dealloc {
-    if (_shouldShowHeaderView) {
-        [self.source_newComment removeObserver:self forKeyPath:@"array"];
-        [self removeKVO];
-    }
-    
+    [self removeKVO];
+
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:PIESharedIconStatusChangedNotification
                                                   object:nil];
@@ -193,7 +188,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         _isFirstLoading = NO;
     }
     
-    [self addKVO];
 
 }
 - (void)scrollElegant {
@@ -516,7 +510,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     self.tableView.separatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
     
     
-    
+
     if (_shouldShowHeaderView) {
         self.title = @"浏览图片";
         if (_vm.type == PIEPageTypeAsk) {
@@ -525,8 +519,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
             self.tableView.tableHeaderView = self.headerView_reply;
         }
         [self resizeHeaderView];
-        
-        [self.source_newComment addObserver:self forKeyPath:@"array" options:NSKeyValueObservingOptionNew context:nil];
+        [self addKVO];
+
     } else {
         self.title = @"全部评论";
     }
@@ -935,14 +929,15 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     if (_shouldShowHeaderView) {
         [_vm addObserver:self forKeyPath:@"lovedCount" options:NSKeyValueObservingOptionNew context:NULL];
         [_vm addObserver:self forKeyPath:@"likeCount" options:NSKeyValueObservingOptionNew context:NULL];
+        [self.source_newComment addObserver:self forKeyPath:@"array" options:NSKeyValueObservingOptionNew context:nil];
     }
 }
 - (void)removeKVO {
-    @try{
-        [_vm removeObserver:self forKeyPath:@"lovedCount"];
+    if (_shouldShowHeaderView) {
         [_vm removeObserver:self forKeyPath:@"likeCount"];
-    }@catch(id anException){
-        //do nothing, obviously it wasn't attached because an exception was thrown
+        [_vm removeObserver:self forKeyPath:@"lovedCount"];
+        [self.source_newComment removeObserver:self forKeyPath:@"array"];
+
     }
 }
 

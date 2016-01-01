@@ -50,6 +50,7 @@
         if ([_vmAsk1.replyCount integerValue]<=0) {
             PIECommentViewController *vc_comment = [PIECommentViewController new];
             vc_comment.vm = _vmAsk1;
+            vc_comment.shouldDownloadVMSource = YES;
             DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];
             [self.viewController.parentViewController.view.superview.viewController.navigationController presentViewController:nav2 animated:NO completion:nil];
 
@@ -68,6 +69,7 @@
         if ([_vmAsk2.replyCount integerValue]<=0) {
             PIECommentViewController *vc_comment = [PIECommentViewController new];
             vc_comment.vm = _vmAsk2;
+            vc_comment.shouldDownloadVMSource = YES;
             DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];
             [self.viewController.parentViewController.view.superview.viewController.navigationController presentViewController:nav2 animated:NO completion:nil];
             
@@ -155,7 +157,6 @@
         vc.pageVM = vm;
         //汗，看来还是要写在controller里面
         [nav  presentViewController:vc animated:YES completion:nil];
-//        [self.viewController.parentViewController.view.superview.viewController.navigationController pushViewController:vc animated:YES ];
 }
 
 

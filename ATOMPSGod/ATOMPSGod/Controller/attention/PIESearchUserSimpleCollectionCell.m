@@ -31,7 +31,8 @@
 
 - (void)injectSauce:(PIEUserViewModel*)vm {
     _vm = vm;
-    NSString *avatar_url = [vm.avatar trimToImageWidth:_avatarButton.frame.size.width];
+    NSString *avatar_url = [vm.avatar trimToImageWidth:_avatarButton.frame.size.width*SCREEN_SCALE];
+
     [DDService sd_downloadImage:avatar_url
                       withBlock:^(UIImage *image) {
                           [_avatarButton setImage:image

@@ -8,7 +8,8 @@
 
 #import "DDBaseVC.h"
 
-@interface PIEProceedingToHelpViewController : DDBaseVC
+@interface PIEProceedingToHelpViewController : DDBaseVC<DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
+
 
 - (void)getSourceIfEmpty_toHelp;
 

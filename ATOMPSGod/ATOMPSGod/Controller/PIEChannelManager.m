@@ -60,6 +60,10 @@
                          if (block) {
                              block(retArray);
                          }
+                     } else {
+                         if (block) {
+                             block(nil);
+                         }
                      }
                  }];
 }

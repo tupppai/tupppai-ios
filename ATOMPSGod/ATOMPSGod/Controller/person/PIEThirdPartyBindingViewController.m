@@ -148,7 +148,9 @@
             } else {
                 label.text = @"已绑定";
                 
-                cell.phoneNumber = [DDUserManager currentUser].mobile;
+                if ([DDUserManager currentUser].mobile) {
+                    cell.phoneNumber = [DDUserManager currentUser].mobile;
+                }
                 phoneDesc = @"手机号";
             }
             cell.textLabel.textColor = [UIColor lightGrayColor];

@@ -29,7 +29,9 @@
 
 - (void)setPhoneNumber:(NSString *)phoneNumber {
     NSRange range = {3,4};
-    _phoneNumber = [phoneNumber stringByReplacingCharactersInRange:range withString:@"****"];
+    if (_phoneNumber.length >= 5) {
+        _phoneNumber = [phoneNumber stringByReplacingCharactersInRange:range withString:@"****"];
+    }
     NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
     paragraphStyle.lineSpacing = 7.5;
     NSDictionary *attributeDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15.0], NSFontAttributeName, [UIColor lightGrayColor], NSForegroundColorAttributeName, paragraphStyle, NSParagraphStyleAttributeName, nil];

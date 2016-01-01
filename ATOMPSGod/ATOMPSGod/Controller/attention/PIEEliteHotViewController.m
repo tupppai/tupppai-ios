@@ -74,13 +74,7 @@
 <SwipeViewDelegate,SwipeViewDataSource>
 @end
 
-@interface PIEEliteHotViewController (DZNEmptyDataSet)
-<DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
-@end
 
-//@interface PIEEliteViewController (JGActionSheet)
-//<JGActionSheetDelegate>
-//@end
 
 @implementation PIEEliteHotViewController
 
@@ -617,8 +611,8 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     
     [param setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
     
-    //    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [PIEEliteManager getBannerSource:param withBlock:^(NSMutableArray *array) {
+        [self.sourceBanner removeAllObjects];
         [self.sourceBanner addObjectsFromArray:array];
         
         _pageControl_swipeView.numberOfPages = self.sourceBanner.count;

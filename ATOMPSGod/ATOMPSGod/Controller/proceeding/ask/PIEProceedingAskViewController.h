@@ -8,7 +8,8 @@
 
 #import "DDBaseVC.h"
 
-@interface PIEProceedingAskViewController : DDBaseVC
+@interface PIEProceedingAskViewController : DDBaseVC<DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
+
 
 - (void)getSourceIfEmpty_ask;
 

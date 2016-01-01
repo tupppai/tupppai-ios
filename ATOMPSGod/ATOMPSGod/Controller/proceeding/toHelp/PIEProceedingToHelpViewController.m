@@ -47,7 +47,6 @@
 
 @end
 
-
 /* Protocols */
 @interface PIEProceedingToHelpViewController (TableView)
 <UITableViewDataSource, UITableViewDelegate>
@@ -56,10 +55,8 @@
 @interface PIEProceedingToHelpViewController (RefreshTableView)
 <PWRefreshBaseTableViewDelegate>
 @end
+//
 
-@interface PIEProceedingToHelpViewController (DZNEmptyDataSet)
-<DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
-@end
 
 @interface PIEProceedingToHelpViewController (QBImagePickerController)
 <QBImagePickerControllerDelegate>
@@ -143,7 +140,9 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     CGPoint location = [gesture locationInView:_toHelpTableView];
     NSIndexPath *indexPath = [_toHelpTableView indexPathForRowAtPoint:location];
     _selectedIndexPath_toHelp = indexPath;
-    _selectedVM = [_sourceToHelp objectAtIndex:indexPath.row];
+    if (_sourceToHelp.count > indexPath.row) {
+        _selectedVM = [_sourceToHelp objectAtIndex:indexPath.row];
+    }
     if (indexPath) {
         //点击图片
         [self showShareViewWithToHideDeleteButton:NO];
@@ -316,6 +315,7 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
             [ws.sourceToHelp removeAllObjects];
             [ws.sourceToHelp addObjectsFromArray:sourceAgent];
         }
+        NSLog(@"");
         [ws.toHelpTableView reloadData];
         [ws.toHelpTableView.mj_header endRefreshing];
     }];
