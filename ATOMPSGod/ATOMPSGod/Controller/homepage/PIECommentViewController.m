@@ -159,11 +159,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-
-//    [self.navigationController.navigationBar setBackgroundImage:nil
-//                                                  forBarMetrics:UIBarMetricsDefault];
-//    self.navigationController.hidesBarsOnSwipe = NO;
-    //    [MobClick endLogPageView:@"离开浏览图片页"];
 }
 
 
