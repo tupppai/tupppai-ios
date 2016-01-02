@@ -22,6 +22,11 @@
 #import "PIEAvatarView.h"
 #import "UINavigationBar+Awesome.h"
 
+typedef NS_ENUM(NSUInteger, PIEFriendViewControllerNavigationBarStyle) {
+    PIEFriendViewControllerNavigationBarStyleTranslucentStyle,
+    PIEFriendViewControllerNavigationBarStyleWhiteBackgroundStyle
+};
+
 @interface PIEFriendViewController ()
 
 @property (weak, nonatomic) IBOutlet PIEAvatarView *avatarView;
@@ -51,7 +56,7 @@
 @property (weak, nonatomic) UIButton *nav_more_button;
 @property (weak, nonatomic) UIButton *nav_follow_button;
 
-
+@property (nonatomic, assign) PIEFriendViewControllerNavigationBarStyle currentNavigationBarStyle;
 
 @property (nonatomic) CAPSPageMenu *pageMenu;
 
@@ -66,7 +71,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self setupNavBar];
     [self setupViews];
     [self getDataSource];
     [self setupPageMenu];
@@ -76,16 +81,16 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
 
-    NSDictionary *titleTextAttrs = @{NSForegroundColorAttributeName: [UIColor blackColor],
-                                     NSFontAttributeName:[UIFont systemFontOfSize:14]};
-    self.navigationController.navigationBar.titleTextAttributes = titleTextAttrs;
-    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    /*
+     使用currentNavigationBarStyle所记录的状态来调整navigationBar的样式。
+     有三个地方对这个状态量进行了设置：
+     - viewDidLoad: 初始状态，透明
+     - scrollUp: 状态 -> 白色
+     - scrollDown: 状态 -> 透明
+     */
+    [self toggleNavigationBarStyle:self.currentNavigationBarStyle];
     
-    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
-    
-    [self setupNavBar];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -97,6 +102,10 @@
 }
 
 - (void)setupNavBar {
+    
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+
+    
     UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
     buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [buttonLeft setImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
@@ -134,6 +143,9 @@
     self.followButton = button3;
     button3.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 6);
     
+    
+    // navigationBar的初始状态
+    self.currentNavigationBarStyle = PIEFriendViewControllerNavigationBarStyleTranslucentStyle;
     
 }
 
@@ -337,29 +349,8 @@
         [UIView animateWithDuration:0.5 animations:^{
             [self.pageMenu.view layoutIfNeeded];
             
-            // GOD DAMN USEFUL PIECE OF CODES!
-            [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor whiteColor]];
-            if (_pageVM.username) {
-                self.navigationItem.title = _pageVM.username;
-            }else if (_name) {
-                self.navigationItem.title = _name;
-            } else if (_user.nickname) {
-                self.navigationItem.title = _user.nickname;
-            }
-            [self.nav_back_button setImage:[UIImage imageNamed:@"nav_back_black"]
-                                  forState:UIControlStateNormal];
-            [self.nav_more_button setImage:[UIImage imageNamed:@"nav_more_black"]
-                                  forState:UIControlStateNormal];
-            [self.followButton setImage:[UIImage imageNamed:@"navigationbar_addFollow_black"]
-                               forState:UIControlStateNormal];
-            if (_user.isMyFan) {
-                [self.followButton setImage:[UIImage imageNamed:@"navigationbar_mutualFollow_black"]
-                                   forState:UIControlStateSelected];
-            }else{
-                [self.followButton setImage:[UIImage imageNamed:@"navigationbar_followed_black"]
-                                   forState:UIControlStateSelected];
-            }
-            
+            self.currentNavigationBarStyle = PIEFriendViewControllerNavigationBarStyleWhiteBackgroundStyle;
+            [self toggleNavigationBarStyle:self.currentNavigationBarStyle];
         }];
     }
 }
@@ -370,22 +361,9 @@
         }];
         [UIView animateWithDuration:0.5 animations:^{
             [self.pageMenu.view layoutIfNeeded];
-            [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
-            self.navigationItem.title = @"";
-            [self.nav_back_button setImage:[UIImage imageNamed:@"nav_back"]
-                                  forState:UIControlStateNormal];
-            [self.nav_more_button setImage:[UIImage imageNamed:@"nav_more"]
-                                  forState:UIControlStateNormal];
             
-            [self.followButton setImage:[UIImage imageNamed:@"navigationbar_addFollow"]
-                               forState:UIControlStateNormal];
-            if (_user.isMyFan) {
-                [self.followButton setImage:[UIImage imageNamed:@"navigationbar_mutualFollow"]
-                                   forState:UIControlStateSelected];
-            }else{
-                [self.followButton setImage:[UIImage imageNamed:@"navigationbar_followed"]                                   forState:UIControlStateSelected];
-            }
-            
+            self.currentNavigationBarStyle = PIEFriendViewControllerNavigationBarStyleTranslucentStyle;
+            [self toggleNavigationBarStyle:self.currentNavigationBarStyle];
         }];
     }
 }
@@ -436,6 +414,62 @@
         self.followButton.selected = newFollowed;
     }
     
+}
+
+#pragma mark - private helpers
+- (void)toggleNavigationBarStyle:(PIEFriendViewControllerNavigationBarStyle)navigationBarStyle
+{
+    switch (navigationBarStyle) {
+        case PIEFriendViewControllerNavigationBarStyleTranslucentStyle: {
+            
+            [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
+            self.navigationItem.title = @"";
+            [self.nav_back_button setImage:[UIImage imageNamed:@"nav_back"]
+                                  forState:UIControlStateNormal];
+            [self.nav_more_button setImage:[UIImage imageNamed:@"nav_more"]
+                                  forState:UIControlStateNormal];
+            
+            [self.followButton setImage:[UIImage imageNamed:@"navigationbar_addFollow"]
+                               forState:UIControlStateNormal];
+            if (_user.isMyFan) {
+                [self.followButton setImage:[UIImage imageNamed:@"navigationbar_mutualFollow"]
+                                   forState:UIControlStateSelected];
+            }else{
+                [self.followButton setImage:[UIImage imageNamed:@"navigationbar_followed"]                                   forState:UIControlStateSelected];
+            }
+            
+            break;
+        }
+        case PIEFriendViewControllerNavigationBarStyleWhiteBackgroundStyle: {
+            NSDictionary *titleTextAttrs = @{NSForegroundColorAttributeName: [UIColor blackColor],
+                                             NSFontAttributeName:[UIFont systemFontOfSize:14]};
+            self.navigationController.navigationBar.titleTextAttributes = titleTextAttrs;
+            [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor whiteColor]];
+            if (_pageVM.username) {
+                self.navigationItem.title = _pageVM.username;
+            }else if (_name) {
+                self.navigationItem.title = _name;
+            } else if (_user.nickname) {
+                self.navigationItem.title = _user.nickname;
+            }
+            [self.nav_back_button setImage:[UIImage imageNamed:@"nav_back_black"]
+                                  forState:UIControlStateNormal];
+            [self.nav_more_button setImage:[UIImage imageNamed:@"nav_more_black"]
+                                  forState:UIControlStateNormal];
+            [self.followButton setImage:[UIImage imageNamed:@"navigationbar_addFollow_black"]
+                               forState:UIControlStateNormal];
+            if (_user.isMyFan) {
+                [self.followButton setImage:[UIImage imageNamed:@"navigationbar_mutualFollow_black"]
+                                   forState:UIControlStateSelected];
+            }else{
+                [self.followButton setImage:[UIImage imageNamed:@"navigationbar_followed_black"]
+                                   forState:UIControlStateSelected];
+            }
+
+            
+            break;
+        }
+    }
 }
 
 @end
