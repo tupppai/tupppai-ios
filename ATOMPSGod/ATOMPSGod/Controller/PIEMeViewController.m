@@ -136,8 +136,6 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     
     self.edgesForExtendedLayout = UIRectEdgeAll;
 
-    
-    
     /*
         使用currentNavigationBarStyle所记录的状态来调整navigationBar的样式。
         有三个地方对这个状态量进行了设置：

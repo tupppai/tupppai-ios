@@ -142,9 +142,8 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     
     _isfirstLoadingHot      = YES;
     
-    _sourceHot              = [NSMutableArray new];
-    
-    
+    _sourceHot              = [NSMutableArray<PIEPageVM *> new];
+
     
 }
 
@@ -153,20 +152,13 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_Elite_Hot" object:nil];
     
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(collectedIconStatusDidChanged:)
-//                                                 name:PIECollectedIconStatusChangedNotification
-//                                               object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateShareStatus)
                                                  name:PIESharedIconStatusChangedNotification
                                                object:nil];
     
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(updateLikedStatus:)
-//                                                 name:PIELikedIconStatusChangedNotification
-//                                               object:nil];
+
 }
 
 #pragma mark - UI components setup

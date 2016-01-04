@@ -12,8 +12,13 @@
 #import "AppDelegate.h"
 #import "PIECommentViewController.h"
 #import "PIECategoryModel.h"
+#import "PIEReplyCollectionViewController.h"
+
+#define kPIEProceedingAskMaxCountForShowingMoreReply 1
+
 @interface PIEProceedingAskTableViewCell_NoGap()
-@property (strong, nonatomic) NSMutableArray *source;
+
+@property (strong, nonatomic) NSMutableArray<PIEPageVM *> *source;
 @property (strong, nonatomic) PIEPageVM *vmAsk1;
 @property (strong, nonatomic) PIEPageVM *vmAsk2;
 @end
@@ -116,13 +121,19 @@
 
 -(void)prepareForReuse {
     [super prepareForReuse];
+    
+    
+    /*
+         在cell重用之际，让_originView2消失，由下一次的ViewModel->View的injectSource方法中再次决定
+         _originView2是否有必要要出现。
+     */
     [_originView2 mas_updateConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@0);
         make.leading.equalTo(_originView1.mas_trailing).with.offset(0);
     }];
 }
 //put a needle injecting into cell's ass.
-- (void)injectSource:(NSArray*)array {
+- (void)injectSource:(NSArray<PIEPageVM *> *)array {
     _source = [array mutableCopy];
     _vmAsk1 = [_source objectAtIndex:0];
     NSString *origin1_imageUrl = [_vmAsk1.imageURL trimToImageWidth:SCREEN_WIDTH*0.6];
@@ -133,6 +144,12 @@
     if (_source.count >= 1) {
         _vmAsk2 = [_source objectAtIndex:0];
         if (_vmAsk2.type != PIEPageTypeReply) {
+            
+            /*
+                如果由第二个PIEPageVM, 然后类型不是“帮P”，那么说明这一次的请求中原图有两张。
+                － 显示第二张原图；
+             */
+            
             [_source removeObjectAtIndex:0];
             NSString *origin2_imageUrl = [_vmAsk2.imageURL trimToImageWidth:SCREEN_WIDTH*0.6];
             [_originView2.imageView sd_setImageWithURL:[NSURL URLWithString:origin2_imageUrl] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
@@ -142,8 +159,14 @@
             }];
         }
     }
+    
+    
+    
     //    _contentLabel.text = [NSString stringWithFormat:@"要求:%@",_vmAsk1.content];
     _contentTextField.text = _vmAsk1.content;
+    
+    
+    // 经过了injectSource的洗礼之后，_source 剩余的PiePageVM统统都是需要在swipeView中显示的，“他人的帮P”
     [self.swipeView reloadData];
     
     if (_vmAsk1.models_catogory.count>0) {
@@ -156,7 +179,7 @@
 
 }
 
-#pragma mark iCarousel methods
+#pragma mark - <SwipeViewDataSource>
 
 
 - (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
@@ -166,10 +189,15 @@
     //as shown in the basic iOS example
     //but for this example we haven't bothered
     
-    // ??? WTF???
+    /*
+        (需求)：当作品数量超过10个，那么就显示一个额外的“查看更多”的按钮
+     */
     
-    // Add one more item in the back, "查看更多"
-    return _source.count;
+    if (_source.count > kPIEProceedingAskMaxCountForShowingMoreReply) {
+        return _source.count + 1;
+    }else{
+        return _source.count;
+    }
 }
 
 - (UIView *)swipeView:(SwipeView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
@@ -188,50 +216,55 @@
     
     
 
-        for (UIView *subView in view.subviews){
+    for (UIView *subView in view.subviews){
             if([subView isKindOfClass:[UIImageView class]]){
                 UIImageView *imageView = (UIImageView *)subView;
-                
-//                if (index < _source.count) {
-//                    [imageView sd_setImageWithURL:[NSURL URLWithString:vm.imageURL]];
-//                }
-//                else
-//                {
-//                    // 最后一个Item是特殊的“查看更多”Item；这个方法比_source.count多调用了一次
-//                    imageView.image = [UIImage imageNamed:@"pie_proceeding_checkMore"];
-//                }
-//                if (index == _source.count) {
-//                    // 最后一个Item是特殊的“查看更多”Item；这个方法比_source.count多调用了一次
-//                    imageView.image = [UIImage imageNamed:@"pie_proceeding_checkMore"];
-//                }
-//                else
-//                {
+
+                if (index == _source.count) {
+                    // 最后一个Item是特殊的“查看更多”Item；这个方法比_source.count多调用了一次
+                    imageView.image = [UIImage imageNamed:@"pie_proceeding_checkMore"];
+                }
+                else
+                {
                     PIEPageVM* vm = [_source objectAtIndex:index];
                     NSString *imageUrl = [vm.imageURL trimToImageWidth:SCREEN_WIDTH*0.6];
 
                     [imageView sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
                     
-//                }
+                }
             }
         }
     return view;
 
 }
 
+
+#pragma mark - <SwipeViewDelegate>
 -(void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index {
     
-//    if (index < _source.count) {
+    if (index == _source.count) {
+        /*
+             点击了最后一个“查看更多”
+         */
+
+        /*
+            进入“其它作品”页面
+            self-managing pattern: 一个view自己解决打开新ViewController的问题。
+         */
+        
+        PIEReplyCollectionViewController *vc = [PIEReplyCollectionViewController new];
+        vc.pageVM = self.vmAsk1;
+        DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+        [nav pushViewController:vc animated:YES ];
+    }
+    else
+    {
         PIECarouselViewController2* vc = [PIECarouselViewController2 new];
         vc.pageVM = [_source objectAtIndex:index];
         DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
         [nav presentViewController:vc animated:YES completion:nil];
-//    }
-//    else
-//    {
-//        // 最后一张"查看更多"
-//        /* Do nothing yet. */
-//        NSLog(@"%s\nCheckMoreItem was clicked.", __func__);
-//    }
+
+    }
 }
 
 
