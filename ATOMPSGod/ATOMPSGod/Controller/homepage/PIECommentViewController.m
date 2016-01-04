@@ -74,7 +74,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)commonInit
 {
     _shouldShowHeaderView = YES;
-    _shouldDownloadVMSource = NO;
+//    _shouldDownloadVMSource = NO;
     
     // Register a SLKTextView subclass, if you need any special appearance and/or behavior customisation.
     [self registerClassForTextView:[PIECommentTextView class]];
@@ -95,9 +95,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [self configTextInput];
     [self addGestureToCommentTableView];
     [self getDataSource];
-    if (_shouldDownloadVMSource && _shouldShowHeaderView) {
-        [self getVMSource];
-    }
+//    if (_shouldDownloadVMSource && _shouldShowHeaderView) {
+//        [self getVMSource];
+//    }
 }
 
 - (void)setupNavBar {

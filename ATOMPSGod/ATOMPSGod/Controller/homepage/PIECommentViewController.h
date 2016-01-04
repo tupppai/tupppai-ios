@@ -17,7 +17,7 @@
 
 @property (nonatomic, strong) PIEPageVM *vm;
 
-@property (nonatomic, assign) BOOL shouldDownloadVMSource;
+//@property (nonatomic, assign) BOOL shouldDownloadVMSource;
 @property (nonatomic, assign) BOOL shouldShowHeaderView;
 
 //回传 是否点赞 到 parent VC

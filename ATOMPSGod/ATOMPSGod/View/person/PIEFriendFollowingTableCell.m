@@ -122,7 +122,7 @@
 -(PIEAvatarButton *)userHeaderButton {
     if (!_userHeaderButton) {
         _userHeaderButton = [PIEAvatarButton new];
-        _userHeaderButton.userInteractionEnabled = YES;
+        _userHeaderButton.userInteractionEnabled = NO;
     }
     return _userHeaderButton;
 }
@@ -133,8 +133,6 @@
         [_attentionButton setImage:[UIImage imageNamed:@"new_reply_follow"] forState:UIControlStateNormal];
         [_attentionButton setImage:[UIImage imageNamed:@"new_reply_followed"] forState:UIControlStateSelected];
         _attentionButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
-
-        
     }
     return _attentionButton;
 }

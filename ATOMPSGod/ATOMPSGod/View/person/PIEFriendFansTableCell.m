@@ -133,6 +133,7 @@
 -(PIEAvatarButton *)userHeaderButton {
     if (!_userHeaderButton) {
         _userHeaderButton = [PIEAvatarButton new];
+        _userHeaderButton.userInteractionEnabled = NO;
       
     }
     return _userHeaderButton;

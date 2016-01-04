@@ -268,7 +268,7 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
-    NSLog(@"userinfo:%@",userInfo);
+//    NSLog(@"userinfo:%@",userInfo);
     NSInteger notifyType = [[userInfo objectForKey:@"type"]integerValue];
 
     [self updateBadgeNumberForKey:@"NotificationAll" toAdd:1];

@@ -77,6 +77,8 @@ typedef NS_ENUM(NSUInteger, PIEFriendViewControllerNavigationBarStyle) {
     [self setupPageMenu];
     [self setupTapGesture];
     
+    
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -183,6 +185,9 @@ typedef NS_ENUM(NSUInteger, PIEFriendViewControllerNavigationBarStyle) {
     _blurView.contentMode = UIViewContentModeScaleAspectFill;
     _blurView.clipsToBounds = YES;
     
+    if (_pageVM) {
+        [self updateUserInterfaceWithPageViewModel:_pageVM];
+    }
 
 }
 - (void)setupTapGesture {
@@ -256,20 +261,20 @@ typedef NS_ENUM(NSUInteger, PIEFriendViewControllerNavigationBarStyle) {
     }];
 }
 - (void)updateUserInterface:(PIEUserModel*)user {
-//    self.title = user.nickname;
+    
     
     self.nameLabel.text = user.nickname;
-    
     
 
     self.psGodIcon_big.hidden             = !user.isV;
     self.psGodCertificateImageView.hidden = !user.isV;
     
-    NSString* avatarUrlString = [user.avatar trimToImageWidth:_avatarView.frame.size.width*2];
+    NSString* avatarUrlString = [user.avatar trimToImageWidth:_avatarView.frame.size.width*SCREEN_SCALE];
+
+    NSLog(@"avatarUrlString!!%@  _avatarView.frame.size.width %f",avatarUrlString,_avatarView.frame.size.width);
     [DDService sd_downloadImage:avatarUrlString withBlock:^(UIImage *image) {
         _avatarView.avatarImageView.image = image;
-        
-    _blurView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:[UIColor blackColor]];
+        _blurView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:[UIColor blackColor]];
     }];
     
     
@@ -293,6 +298,24 @@ typedef NS_ENUM(NSUInteger, PIEFriendViewControllerNavigationBarStyle) {
         _followButton.hidden = NO;
     }
 }
+
+- (void)updateUserInterfaceWithPageViewModel:(PIEPageVM*)pageVM {
+    
+    self.nameLabel.text = pageVM.username;
+    
+    [DDService sd_downloadImage:pageVM.avatarURL withBlock:^(UIImage *image) {
+        _avatarView.avatarImageView.image = image;
+        _blurView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:[UIColor blackColor]];
+    }];
+    
+    if (pageVM.userID == [DDUserManager currentUser].uid) {
+        _followButton.hidden = YES;
+    } else {
+        _followButton.hidden = NO;
+    }
+    
+}
+
 
 - (void)setupPageMenu {
     NSMutableArray *controllerArray = [NSMutableArray array];

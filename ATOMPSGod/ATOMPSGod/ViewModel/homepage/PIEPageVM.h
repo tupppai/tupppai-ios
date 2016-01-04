@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "PIEPageModel.h"
-
 @interface PIEPageVM : NSObject
 
 @property (nonatomic, strong) PIEPageModel *model;
