@@ -7,7 +7,7 @@
 //
 
 #import "PIELaunchViewController_Black.h"
-
+#import "ReactiveCocoa/ReactiveCocoa.h"
 /* Variables */
 @interface PIELaunchViewController_Black ()
 
@@ -27,6 +27,8 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
  
     [self setupUI];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -89,6 +91,11 @@
             make.top.equalTo(logoImageView.mas_bottom).with.offset(45);
         }];
         
+        
+        [textField.rac_textSignal subscribeNext:^(NSString *x) {
+            // say hello to reactiveCocoa!
+            NSLog(@"%@", x);
+        }];
         
         textField;
     
