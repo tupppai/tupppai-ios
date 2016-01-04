@@ -281,6 +281,15 @@
 		F402F0FE1BE8953F004988B4 /* PIESearchContentCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F402F0FC1BE8953F004988B4 /* PIESearchContentCollectionViewCell.xib */; };
 		F402F1011BE89CB4004988B4 /* PIESearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F402F1001BE89CB4004988B4 /* PIESearchManager.m */; };
 		F402F1041BE8A327004988B4 /* PIEUserViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F402F1031BE8A327004988B4 /* PIEUserViewModel.m */; };
+		F4092DD71C3A3D3B003A3AD7 /* SLKInputAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4092DC41C3A3D3B003A3AD7 /* SLKInputAccessoryView.m */; };
+		F4092DD81C3A3D3B003A3AD7 /* SLKTextInputbar.m in Sources */ = {isa = PBXBuildFile; fileRef = F4092DC61C3A3D3B003A3AD7 /* SLKTextInputbar.m */; };
+		F4092DD91C3A3D3B003A3AD7 /* SLKTextView+SLKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F4092DC81C3A3D3B003A3AD7 /* SLKTextView+SLKAdditions.m */; };
+		F4092DDA1C3A3D3B003A3AD7 /* SLKTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4092DCA1C3A3D3B003A3AD7 /* SLKTextView.m */; };
+		F4092DDB1C3A3D3B003A3AD7 /* SLKTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4092DCC1C3A3D3B003A3AD7 /* SLKTextViewController.m */; };
+		F4092DDC1C3A3D3B003A3AD7 /* SLKTypingIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4092DCF1C3A3D3B003A3AD7 /* SLKTypingIndicatorView.m */; };
+		F4092DDD1C3A3D3B003A3AD7 /* UIResponder+SLKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F4092DD21C3A3D3B003A3AD7 /* UIResponder+SLKAdditions.m */; };
+		F4092DDE1C3A3D3B003A3AD7 /* UIScrollView+SLKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F4092DD41C3A3D3B003A3AD7 /* UIScrollView+SLKAdditions.m */; };
+		F4092DDF1C3A3D3B003A3AD7 /* UIView+SLKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F4092DD61C3A3D3B003A3AD7 /* UIView+SLKAdditions.m */; };
 		F409AA871BAFE39000736B0D /* PIEModelImage.m in Sources */ = {isa = PBXBuildFile; fileRef = F409AA861BAFE39000736B0D /* PIEModelImage.m */; };
 		F41205B11C1986D500EE959F /* baozou.png in Resources */ = {isa = PBXBuildFile; fileRef = F41205B01C1986D500EE959F /* baozou.png */; };
 		F41366951BBE73D900EE0C4E /* PIEReplyCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F41366941BBE73D900EE0C4E /* PIEReplyCollectionCell.xib */; };
@@ -328,15 +337,6 @@
 		F42100F41BF5EC5600CFD82E /* intro4.xib in Resources */ = {isa = PBXBuildFile; fileRef = F42100F31BF5EC5600CFD82E /* intro4.xib */; };
 		F42131B91BF1E012004D48F8 /* PIECommentTableHeaderView_Reply.m in Sources */ = {isa = PBXBuildFile; fileRef = F42131B81BF1E012004D48F8 /* PIECommentTableHeaderView_Reply.m */; };
 		F421A2101BEB41560028C521 /* PIEShareImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F421A20F1BEB41560028C521 /* PIEShareImageView.m */; };
-		F4275A0F1BE0786400BBE7E4 /* SLKInputAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = F42759FC1BE0786400BBE7E4 /* SLKInputAccessoryView.m */; };
-		F4275A101BE0786400BBE7E4 /* SLKTextInputbar.m in Sources */ = {isa = PBXBuildFile; fileRef = F42759FE1BE0786400BBE7E4 /* SLKTextInputbar.m */; };
-		F4275A111BE0786400BBE7E4 /* SLKTextView+SLKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F4275A001BE0786400BBE7E4 /* SLKTextView+SLKAdditions.m */; };
-		F4275A121BE0786400BBE7E4 /* SLKTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4275A021BE0786400BBE7E4 /* SLKTextView.m */; };
-		F4275A131BE0786400BBE7E4 /* SLKTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4275A041BE0786400BBE7E4 /* SLKTextViewController.m */; };
-		F4275A141BE0786400BBE7E4 /* SLKTypingIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4275A071BE0786400BBE7E4 /* SLKTypingIndicatorView.m */; };
-		F4275A151BE0786400BBE7E4 /* UIResponder+SLKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F4275A0A1BE0786400BBE7E4 /* UIResponder+SLKAdditions.m */; };
-		F4275A161BE0786400BBE7E4 /* UIScrollView+SLKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F4275A0C1BE0786400BBE7E4 /* UIScrollView+SLKAdditions.m */; };
-		F4275A171BE0786400BBE7E4 /* UIView+SLKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F4275A0E1BE0786400BBE7E4 /* UIView+SLKAdditions.m */; };
 		F4275A1A1BE0B9E400BBE7E4 /* PIEMyFansViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4275A191BE0B9E400BBE7E4 /* PIEMyFansViewController.m */; };
 		F4275A1D1BE0B9ED00BBE7E4 /* PIEMyFollowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4275A1C1BE0B9ED00BBE7E4 /* PIEMyFollowViewController.m */; };
 		F428F01E1BD331EF00318AC2 /* PIELaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F428F01C1BD331EF00318AC2 /* PIELaunchViewController.m */; };
@@ -1089,6 +1089,26 @@
 		F402F1001BE89CB4004988B4 /* PIESearchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIESearchManager.m; sourceTree = "<group>"; };
 		F402F1021BE8A327004988B4 /* PIEUserViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEUserViewModel.h; sourceTree = "<group>"; };
 		F402F1031BE8A327004988B4 /* PIEUserViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEUserViewModel.m; sourceTree = "<group>"; };
+		F4092DC31C3A3D3B003A3AD7 /* SLKInputAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKInputAccessoryView.h; sourceTree = "<group>"; };
+		F4092DC41C3A3D3B003A3AD7 /* SLKInputAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLKInputAccessoryView.m; sourceTree = "<group>"; };
+		F4092DC51C3A3D3B003A3AD7 /* SLKTextInputbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKTextInputbar.h; sourceTree = "<group>"; };
+		F4092DC61C3A3D3B003A3AD7 /* SLKTextInputbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLKTextInputbar.m; sourceTree = "<group>"; };
+		F4092DC71C3A3D3B003A3AD7 /* SLKTextView+SLKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SLKTextView+SLKAdditions.h"; sourceTree = "<group>"; };
+		F4092DC81C3A3D3B003A3AD7 /* SLKTextView+SLKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SLKTextView+SLKAdditions.m"; sourceTree = "<group>"; };
+		F4092DC91C3A3D3B003A3AD7 /* SLKTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKTextView.h; sourceTree = "<group>"; };
+		F4092DCA1C3A3D3B003A3AD7 /* SLKTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLKTextView.m; sourceTree = "<group>"; };
+		F4092DCB1C3A3D3B003A3AD7 /* SLKTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKTextViewController.h; sourceTree = "<group>"; };
+		F4092DCC1C3A3D3B003A3AD7 /* SLKTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLKTextViewController.m; sourceTree = "<group>"; };
+		F4092DCD1C3A3D3B003A3AD7 /* SLKTypingIndicatorProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKTypingIndicatorProtocol.h; sourceTree = "<group>"; };
+		F4092DCE1C3A3D3B003A3AD7 /* SLKTypingIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKTypingIndicatorView.h; sourceTree = "<group>"; };
+		F4092DCF1C3A3D3B003A3AD7 /* SLKTypingIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLKTypingIndicatorView.m; sourceTree = "<group>"; };
+		F4092DD01C3A3D3B003A3AD7 /* SLKUIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKUIConstants.h; sourceTree = "<group>"; };
+		F4092DD11C3A3D3B003A3AD7 /* UIResponder+SLKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIResponder+SLKAdditions.h"; sourceTree = "<group>"; };
+		F4092DD21C3A3D3B003A3AD7 /* UIResponder+SLKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+SLKAdditions.m"; sourceTree = "<group>"; };
+		F4092DD31C3A3D3B003A3AD7 /* UIScrollView+SLKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SLKAdditions.h"; sourceTree = "<group>"; };
+		F4092DD41C3A3D3B003A3AD7 /* UIScrollView+SLKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SLKAdditions.m"; sourceTree = "<group>"; };
+		F4092DD51C3A3D3B003A3AD7 /* UIView+SLKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SLKAdditions.h"; sourceTree = "<group>"; };
+		F4092DD61C3A3D3B003A3AD7 /* UIView+SLKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SLKAdditions.m"; sourceTree = "<group>"; };
 		F409AA851BAFE39000736B0D /* PIEModelImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEModelImage.h; sourceTree = "<group>"; };
 		F409AA861BAFE39000736B0D /* PIEModelImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEModelImage.m; sourceTree = "<group>"; };
 		F41205B01C1986D500EE959F /* baozou.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = baozou.png; path = ../baozou.png; sourceTree = "<group>"; };
@@ -1174,26 +1194,6 @@
 		F42131B81BF1E012004D48F8 /* PIECommentTableHeaderView_Reply.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECommentTableHeaderView_Reply.m; sourceTree = "<group>"; };
 		F421A20E1BEB41560028C521 /* PIEShareImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEShareImageView.h; sourceTree = "<group>"; };
 		F421A20F1BEB41560028C521 /* PIEShareImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEShareImageView.m; sourceTree = "<group>"; };
-		F42759FB1BE0786400BBE7E4 /* SLKInputAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKInputAccessoryView.h; sourceTree = "<group>"; };
-		F42759FC1BE0786400BBE7E4 /* SLKInputAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLKInputAccessoryView.m; sourceTree = "<group>"; };
-		F42759FD1BE0786400BBE7E4 /* SLKTextInputbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKTextInputbar.h; sourceTree = "<group>"; };
-		F42759FE1BE0786400BBE7E4 /* SLKTextInputbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLKTextInputbar.m; sourceTree = "<group>"; };
-		F42759FF1BE0786400BBE7E4 /* SLKTextView+SLKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SLKTextView+SLKAdditions.h"; sourceTree = "<group>"; };
-		F4275A001BE0786400BBE7E4 /* SLKTextView+SLKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SLKTextView+SLKAdditions.m"; sourceTree = "<group>"; };
-		F4275A011BE0786400BBE7E4 /* SLKTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKTextView.h; sourceTree = "<group>"; };
-		F4275A021BE0786400BBE7E4 /* SLKTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLKTextView.m; sourceTree = "<group>"; };
-		F4275A031BE0786400BBE7E4 /* SLKTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKTextViewController.h; sourceTree = "<group>"; };
-		F4275A041BE0786400BBE7E4 /* SLKTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLKTextViewController.m; sourceTree = "<group>"; };
-		F4275A051BE0786400BBE7E4 /* SLKTypingIndicatorProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKTypingIndicatorProtocol.h; sourceTree = "<group>"; };
-		F4275A061BE0786400BBE7E4 /* SLKTypingIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKTypingIndicatorView.h; sourceTree = "<group>"; };
-		F4275A071BE0786400BBE7E4 /* SLKTypingIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLKTypingIndicatorView.m; sourceTree = "<group>"; };
-		F4275A081BE0786400BBE7E4 /* SLKUIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKUIConstants.h; sourceTree = "<group>"; };
-		F4275A091BE0786400BBE7E4 /* UIResponder+SLKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIResponder+SLKAdditions.h"; sourceTree = "<group>"; };
-		F4275A0A1BE0786400BBE7E4 /* UIResponder+SLKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+SLKAdditions.m"; sourceTree = "<group>"; };
-		F4275A0B1BE0786400BBE7E4 /* UIScrollView+SLKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SLKAdditions.h"; sourceTree = "<group>"; };
-		F4275A0C1BE0786400BBE7E4 /* UIScrollView+SLKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SLKAdditions.m"; sourceTree = "<group>"; };
-		F4275A0D1BE0786400BBE7E4 /* UIView+SLKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SLKAdditions.h"; sourceTree = "<group>"; };
-		F4275A0E1BE0786400BBE7E4 /* UIView+SLKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SLKAdditions.m"; sourceTree = "<group>"; };
 		F4275A181BE0B9E400BBE7E4 /* PIEMyFansViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEMyFansViewController.h; sourceTree = "<group>"; };
 		F4275A191BE0B9E400BBE7E4 /* PIEMyFansViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEMyFansViewController.m; sourceTree = "<group>"; };
 		F4275A1B1BE0B9ED00BBE7E4 /* PIEMyFollowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEMyFollowViewController.h; sourceTree = "<group>"; };
@@ -1940,7 +1940,6 @@
 		5C4F5BD91AA551BF00226F64 /* util */ = {
 			isa = PBXGroup;
 			children = (
-				5CDB05EC1AA400410089121E /* Vendor */,
 				5C67FB251AB2B41F004EFF05 /* ATOMHeaderImageCropperViewController.h */,
 				5C67FB261AB2B41F004EFF05 /* ATOMHeaderImageCropperViewController.m */,
 			);
@@ -2257,6 +2256,7 @@
 				5C9BD9E81AA8150000715698 /* ViewModel */,
 				5CDB05EE1AA400410089121E /* View */,
 				5CDB05EA1AA400410089121E /* Controller */,
+				5CDB05EC1AA400410089121E /* Vendor */,
 				5CDB05ED1AA400410089121E /* Uitility */,
 				5CDB05C81AA3FE520089121E /* AppDelegate.h */,
 				5CDB05C91AA3FE520089121E /* AppDelegate.m */,
@@ -2345,6 +2345,7 @@
 		5CDB05EC1AA400410089121E /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				F4092DC21C3A3D3B003A3AD7 /* slack */,
 				F4F28EFA1C23AE9B0067F2E4 /* SDWebImage */,
 				0ECE8FB01C16AB2B00E98CB5 /* Reveal */,
 				F41BA0961C0EDCE800979D43 /* MJRefresh */,
@@ -2353,7 +2354,6 @@
 				F4F9FFC61BFC849A00032FDE /* SMPageControl */,
 				F491608F1BEC4D0800BAFB65 /* UMAnalytics_Sdk_3.6.4 */,
 				F43930121BE4BD75006C9437 /* MRProgress */,
-				F42759FA1BE0786400BBE7E4 /* slackViewController */,
 				F4BDF4C81BDF345100DA3575 /* BBBadgeBarButtonItem */,
 				F41FF0D61BDDFCE800566A12 /* JTS */,
 				F4993CD71BE5B32C007F9BE4 /* UIKit+AFNetworking */,
@@ -2379,7 +2379,7 @@
 				5C83A84B1AC66F910071A024 /* pop */,
 			);
 			name = Vendor;
-			path = ../../OpenSource;
+			path = OpenSource;
 			sourceTree = "<group>";
 		};
 		5CDB05ED1AA400410089121E /* Uitility */ = {
@@ -2998,6 +2998,33 @@
 			path = attention;
 			sourceTree = "<group>";
 		};
+		F4092DC21C3A3D3B003A3AD7 /* slack */ = {
+			isa = PBXGroup;
+			children = (
+				F4092DC31C3A3D3B003A3AD7 /* SLKInputAccessoryView.h */,
+				F4092DC41C3A3D3B003A3AD7 /* SLKInputAccessoryView.m */,
+				F4092DC51C3A3D3B003A3AD7 /* SLKTextInputbar.h */,
+				F4092DC61C3A3D3B003A3AD7 /* SLKTextInputbar.m */,
+				F4092DC71C3A3D3B003A3AD7 /* SLKTextView+SLKAdditions.h */,
+				F4092DC81C3A3D3B003A3AD7 /* SLKTextView+SLKAdditions.m */,
+				F4092DC91C3A3D3B003A3AD7 /* SLKTextView.h */,
+				F4092DCA1C3A3D3B003A3AD7 /* SLKTextView.m */,
+				F4092DCB1C3A3D3B003A3AD7 /* SLKTextViewController.h */,
+				F4092DCC1C3A3D3B003A3AD7 /* SLKTextViewController.m */,
+				F4092DCD1C3A3D3B003A3AD7 /* SLKTypingIndicatorProtocol.h */,
+				F4092DCE1C3A3D3B003A3AD7 /* SLKTypingIndicatorView.h */,
+				F4092DCF1C3A3D3B003A3AD7 /* SLKTypingIndicatorView.m */,
+				F4092DD01C3A3D3B003A3AD7 /* SLKUIConstants.h */,
+				F4092DD11C3A3D3B003A3AD7 /* UIResponder+SLKAdditions.h */,
+				F4092DD21C3A3D3B003A3AD7 /* UIResponder+SLKAdditions.m */,
+				F4092DD31C3A3D3B003A3AD7 /* UIScrollView+SLKAdditions.h */,
+				F4092DD41C3A3D3B003A3AD7 /* UIScrollView+SLKAdditions.m */,
+				F4092DD51C3A3D3B003A3AD7 /* UIView+SLKAdditions.h */,
+				F4092DD61C3A3D3B003A3AD7 /* UIView+SLKAdditions.m */,
+			);
+			path = slack;
+			sourceTree = "<group>";
+		};
 		F41BA04C1C0E9A0F00979D43 /* tag */ = {
 			isa = PBXGroup;
 			children = (
@@ -3145,33 +3172,6 @@
 				F41FF0EA1BDE231200566A12 /* PIENotificationSystemViewController.m */,
 			);
 			name = system;
-			sourceTree = "<group>";
-		};
-		F42759FA1BE0786400BBE7E4 /* slackViewController */ = {
-			isa = PBXGroup;
-			children = (
-				F42759FB1BE0786400BBE7E4 /* SLKInputAccessoryView.h */,
-				F42759FC1BE0786400BBE7E4 /* SLKInputAccessoryView.m */,
-				F42759FD1BE0786400BBE7E4 /* SLKTextInputbar.h */,
-				F42759FE1BE0786400BBE7E4 /* SLKTextInputbar.m */,
-				F42759FF1BE0786400BBE7E4 /* SLKTextView+SLKAdditions.h */,
-				F4275A001BE0786400BBE7E4 /* SLKTextView+SLKAdditions.m */,
-				F4275A011BE0786400BBE7E4 /* SLKTextView.h */,
-				F4275A021BE0786400BBE7E4 /* SLKTextView.m */,
-				F4275A031BE0786400BBE7E4 /* SLKTextViewController.h */,
-				F4275A041BE0786400BBE7E4 /* SLKTextViewController.m */,
-				F4275A051BE0786400BBE7E4 /* SLKTypingIndicatorProtocol.h */,
-				F4275A061BE0786400BBE7E4 /* SLKTypingIndicatorView.h */,
-				F4275A071BE0786400BBE7E4 /* SLKTypingIndicatorView.m */,
-				F4275A081BE0786400BBE7E4 /* SLKUIConstants.h */,
-				F4275A091BE0786400BBE7E4 /* UIResponder+SLKAdditions.h */,
-				F4275A0A1BE0786400BBE7E4 /* UIResponder+SLKAdditions.m */,
-				F4275A0B1BE0786400BBE7E4 /* UIScrollView+SLKAdditions.h */,
-				F4275A0C1BE0786400BBE7E4 /* UIScrollView+SLKAdditions.m */,
-				F4275A0D1BE0786400BBE7E4 /* UIView+SLKAdditions.h */,
-				F4275A0E1BE0786400BBE7E4 /* UIView+SLKAdditions.m */,
-			);
-			path = slackViewController;
 			sourceTree = "<group>";
 		};
 		F428F01A1BD331DD00318AC2 /* launch */ = {
@@ -4220,7 +4220,6 @@
 				5C83A8961AC66F910071A024 /* POPVector.mm in Sources */,
 				903E09DE1C23DF9E006C87B8 /* PIEEliteViewController.m in Sources */,
 				F41BA0CF1C0EDCE800979D43 /* MJRefreshNormalHeader.m in Sources */,
-				F4275A121BE0786400BBE7E4 /* SLKTextView.m in Sources */,
 				5C83A8921AC66F910071A024 /* POPLayerExtras.mm in Sources */,
 				5CDB06351AA428BD0089121E /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				5C83A8891AC66F910071A024 /* POPAnimationExtras.mm in Sources */,
@@ -4251,6 +4250,7 @@
 				F43930441BE4BD75006C9437 /* MRProgressView+AFNetworking.m in Sources */,
 				F44A52821C0C336500707281 /* PIEActionSheet_PS.m in Sources */,
 				F41FF0E61BDDFCE800566A12 /* JTSSimpleImageDownloader.m in Sources */,
+				F4092DDC1C3A3D3B003A3AD7 /* SLKTypingIndicatorView.m in Sources */,
 				5C83A8861AC66F910071A024 /* POPAnimatableProperty.mm in Sources */,
 				F4B02E1B1BECAAE200406A55 /* DDHotDetailManager.m in Sources */,
 				F421A2101BEB41560028C521 /* PIEShareImageView.m in Sources */,
@@ -4272,6 +4272,7 @@
 				F4F28F251C23AE9B0067F2E4 /* UIButton+WebCache.m in Sources */,
 				F45057271C2BDA5B00F7A302 /* PIECategoryModel.m in Sources */,
 				3BE1AECC1B9FE9C900CE2303 /* QBCheckmarkView.m in Sources */,
+				F4092DD91C3A3D3B003A3AD7 /* SLKTextView+SLKAdditions.m in Sources */,
 				5C5DDBCB1AD3D0DC00F4B845 /* DDOtherUserManager.m in Sources */,
 				F4993CEB1BE5B32C007F9BE4 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				F499E45A1BD0F6A100E5F178 /* PIEEliteFollowAskTableViewCell.m in Sources */,
@@ -4283,6 +4284,7 @@
 				5C54DF2D1AB99F5300BDE34D /* DDTipLabelManager.m in Sources */,
 				9021B96C1C2D2591008C8F0B /* PIEAvatarButton.m in Sources */,
 				F4309E2D1BC8C05C0035033C /* PIEModifyProfileViewController.m in Sources */,
+				F4092DDA1C3A3D3B003A3AD7 /* SLKTextView.m in Sources */,
 				5CDB06031AA405A40089121E /* UIColor+Hex.m in Sources */,
 				F4AE609B1BC129ED007BCA2A /* PIEFriendReplyCollectionViewCell.m in Sources */,
 				F4E5F5CC1BD923E000AB8B31 /* PIEEliteHotAskTableViewCell.m in Sources */,
@@ -4292,9 +4294,7 @@
 				5C7861161AAF4C9400E87C77 /* PIEMyReplyViewController.m in Sources */,
 				5C54DF231AB9772000BDE34D /* PIEPageModel.m in Sources */,
 				E991EF0B1B735D0500025108 /* DDIntroVC.m in Sources */,
-				F4275A111BE0786400BBE7E4 /* SLKTextView+SLKAdditions.m in Sources */,
 				3BE1AECF1B9FE9C900CE2303 /* QBVideoIconView.m in Sources */,
-				F4275A161BE0786400BBE7E4 /* UIScrollView+SLKAdditions.m in Sources */,
 				5C83A8931AC66F910071A024 /* POPMath.mm in Sources */,
 				5C3101901AAEC8F900EF529B /* PIEMessagePushSettingViewController.m in Sources */,
 				5C54DF201AB9738E00BDE34D /* PIETabBarController.m in Sources */,
@@ -4321,7 +4321,6 @@
 				E99D2F5A1B1C7E8D000D7784 /* UIImage+Rotating.m in Sources */,
 				E95691AA1B22E88300DA84BB /* EXTRuntimeExtensions.m in Sources */,
 				E99D2F551B1C7E8D000D7784 /* UIImage+Enhancing.m in Sources */,
-				F4275A171BE0786400BBE7E4 /* UIView+SLKAdditions.m in Sources */,
 				F41BA0C41C0EDCE800979D43 /* MJRefreshBackFooter.m in Sources */,
 				5C8406321ABA762900068F35 /* PIEPageManager.m in Sources */,
 				F43159CD1BB5567000DCA292 /* PIEPageButton.m in Sources */,
@@ -4337,14 +4336,12 @@
 				5CDB06301AA428BD0089121E /* MASConstraintMaker.m in Sources */,
 				F4F28F211C23AE9B0067F2E4 /* SDWebImageDownloader.m in Sources */,
 				F402F1041BE8A327004988B4 /* PIEUserViewModel.m in Sources */,
-				F4275A141BE0786400BBE7E4 /* SLKTypingIndicatorView.m in Sources */,
 				F4EA4DB81BF49CB700486304 /* PIEAgreementsViewController.m in Sources */,
 				E9F890901B86C4AB0057ECBF /* FMDatabasePool.m in Sources */,
 				5C0D282D1ACA333200491452 /* PIECommentManager.m in Sources */,
 				0E5CE0BE1C22E1D4000A5B55 /* PIEEliteFollowViewController.m in Sources */,
 				F4D015BB1BA6AF7200A28329 /* PIEThumbAnimateView.m in Sources */,
 				5CE4082F1ACE94D600A56E4B /* UIViewController+ATOMTracking.m in Sources */,
-				F4275A101BE0786400BBE7E4 /* SLKTextInputbar.m in Sources */,
 				F4F28F241C23AE9B0067F2E4 /* SDWebImagePrefetcher.m in Sources */,
 				F4D368771BA9629800E6C91C /* CHTCollectionViewWaterfallLayout.m in Sources */,
 				F4F28F1F1C23AE9B0067F2E4 /* SDWebImageCompat.m in Sources */,
@@ -4363,6 +4360,7 @@
 				F428F01E1BD331EF00318AC2 /* PIELaunchViewController.m in Sources */,
 				E9FF8A411B71CE610010D2C4 /* ATOMInputVerifyCodeAndPasswordView.m in Sources */,
 				E991EF051B735C2E00025108 /* EARestrictedScrollView.m in Sources */,
+				F4092DD71C3A3D3B003A3AD7 /* SLKInputAccessoryView.m in Sources */,
 				F45ECF4A1BD1DC3F00417A75 /* PIEMyCommentedPageTableViewCell.m in Sources */,
 				F4DE44FA1C06F47B00BEEB96 /* PIECarouselViewController2.m in Sources */,
 				F4C0DFE61BE9D1B7000615CF /* PIEBannerModel.m in Sources */,
@@ -4390,7 +4388,6 @@
 				3BE1AEC81B9FE9C900CE2303 /* QBAlbumCell.m in Sources */,
 				F439303E1BE4BD75006C9437 /* MRNavigationBarProgressView.m in Sources */,
 				5C4C70DA1AB6FD5700358989 /* DDPageManager.m in Sources */,
-				F4275A151BE0786400BBE7E4 /* UIResponder+SLKAdditions.m in Sources */,
 				F4E7133D1BE35F230046C7A9 /* PIEModifyPasswordViewController.m in Sources */,
 				F43930391BE4BD75006C9437 /* MRBlurView.m in Sources */,
 				5C561A511AB7C8210052D4D5 /* PIEUserModel.m in Sources */,
@@ -4400,6 +4397,7 @@
 				F47EF0861C031FF500BFB442 /* VVBlurPresentationController.m in Sources */,
 				F46117E21BAD1101001A6F1A /* IQUIView+IQKeyboardToolbar.m in Sources */,
 				F4BBE7721BBE3F9D00003CDE /* PIEReplyCollectionViewController.m in Sources */,
+				F4092DD81C3A3D3B003A3AD7 /* SLKTextInputbar.m in Sources */,
 				F45ECF511BD1E39500417A75 /* PIEMyLikedPagesViewController.m in Sources */,
 				F42ED3B11BC4FC2D0052A0BF /* PIEMeViewController.m in Sources */,
 				5CDB062E1AA428BD0089121E /* MASCompositeConstraint.m in Sources */,
@@ -4415,6 +4413,7 @@
 				5C4F5BDC1AA555F900226F64 /* PIENewViewController.m in Sources */,
 				F4F72C081BCB994B002FF05A /* PIEMyAskViewController.m in Sources */,
 				E94B03211B7C74E500863C6F /* PIECommentTableCell.m in Sources */,
+				F4092DDF1C3A3D3B003A3AD7 /* UIView+SLKAdditions.m in Sources */,
 				F40207311BA7C17C0007CE02 /* PIECameraViewController.m in Sources */,
 				E9F8908F1B86C4AB0057ECBF /* FMDatabaseAdditions.m in Sources */,
 				F4AE73C31BBA90D800734BCB /* PIEFriendAskViewController.m in Sources */,
@@ -4454,7 +4453,6 @@
 				F4EC111C1BCE6B9A002D1DCF /* PIENotificationManager.m in Sources */,
 				F45FF9AF1BB65BE6009C4203 /* PIEPageLikeButton.m in Sources */,
 				E94289871B5B32A200ED26E4 /* TSMessage.m in Sources */,
-				F4275A131BE0786400BBE7E4 /* SLKTextViewController.m in Sources */,
 				5C8D4ACD1ADE484A00B158AE /* PIEFriendFollowingViewController.m in Sources */,
 				E99D2F581B1C7E8D000D7784 /* UIImage+Reflection.m in Sources */,
 				0E54C7911C1E8F5E00F431AC /* PIEProceedingToHelpTableViewCell.m in Sources */,
@@ -4500,6 +4498,7 @@
 				F4FAC94F1C17C808001EF455 /* PIEChannelManager.m in Sources */,
 				5CDB06741AA47EEC0089121E /* ATOMInputVerifyCodeView.m in Sources */,
 				0E354D3E1C340D660035785A /* UINavigationBar+Awesome.m in Sources */,
+				F4092DDD1C3A3D3B003A3AD7 /* UIResponder+SLKAdditions.m in Sources */,
 				0E0DDC8D1C1A64BC009A66C4 /* PIEChannelActivityViewController.m in Sources */,
 				E90C7C5D1B20726400CF0E6A /* PWMascotAnimationImageView.m in Sources */,
 				5C4C70C51AB6BC5200358989 /* DDBaseService.m in Sources */,
@@ -4536,6 +4535,7 @@
 				E90C7C601B20A0FC00CF0E6A /* KShareManager.m in Sources */,
 				F46117E11BAD1101001A6F1A /* IQToolbar.m in Sources */,
 				E99D2F561B1C7E8D000D7784 /* UIImage+Filtering.m in Sources */,
+				F4092DDE1C3A3D3B003A3AD7 /* UIScrollView+SLKAdditions.m in Sources */,
 				5C83A88C1AC66F910071A024 /* POPAnimator.mm in Sources */,
 				E9F890911B86C4AB0057ECBF /* FMDatabaseQueue.m in Sources */,
 				F46117DF1BAD1101001A6F1A /* IQBarButtonItem.m in Sources */,
@@ -4562,7 +4562,6 @@
 				3BE1AECA1B9FE9C900CE2303 /* QBAssetCell.m in Sources */,
 				F4EC11161BCE5B9E002D1DCF /* PIENotificationSystemTableViewCell.m in Sources */,
 				E9FF8A3B1B71CCB70010D2C4 /* DDInputPhoneFPVC.m in Sources */,
-				F4275A0F1BE0786400BBE7E4 /* SLKInputAccessoryView.m in Sources */,
 				F42ED3B81BC4FC9E0052A0BF /* PIEMyReplyCollectionViewCell.m in Sources */,
 				F4E5F5F81BD9D2E100AB8B31 /* AFNetworkReachabilityManager.m in Sources */,
 				F439303A1BE4BD75006C9437 /* UIImage+MRImageEffects.m in Sources */,
@@ -4609,6 +4608,7 @@
 				F409AA871BAFE39000736B0D /* PIEModelImage.m in Sources */,
 				5C0D28301ACA83C400491452 /* PIEEntityCommentReply.m in Sources */,
 				F45ECF441BD1DB5B00417A75 /* PIEEliteHotReplyTableViewCell.m in Sources */,
+				F4092DDB1C3A3D3B003A3AD7 /* SLKTextViewController.m in Sources */,
 				F4F72BFF1BCB6CD6002FF05A /* PIEMyCollectionTableViewCell.m in Sources */,
 				F44A52761C0BF83000707281 /* TFHppleElement.m in Sources */,
 				E99D2F591B1C7E8D000D7784 /* UIImage+Resizing.m in Sources */,
