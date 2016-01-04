@@ -99,6 +99,7 @@
     NSIndexPath* selectedIndexPath = [self.tableView indexPathForRowAtPoint:location];
     if (selectedIndexPath.section == 1) {
         PIENotificationVM* vm = [_source objectAtIndex:selectedIndexPath.row];
+        PIEPageVM* pageVM = [self transformNotificationVMToPageVM:vm];
         _selectedVM = vm;
         if (vm.type == 1) {
             PIENotificationCommentTableViewCell* cell = [self.tableView cellForRowAtIndexPath:selectedIndexPath];
@@ -108,26 +109,27 @@
 //                self.textView.placeholder = [NSString stringWithFormat:@"@%@:",vm.username];
 //                [self.textView becomeFirstResponder];
                 PIECommentViewController* vc = [PIECommentViewController new];
-                PIEPageVM* pageVM = [PIEPageVM new];
-                pageVM.ID = vm.targetID;
-                pageVM.type = vm.targetType;
+                
+//                pageVM.ID = vm.targetID;
+//                pageVM.type = vm.targetType;
                 vc.vm = pageVM;
-                vc.shouldDownloadVMSource = YES;
+//                vc.shouldDownloadVMSource = YES;
                 vc.shouldShowHeaderView = YES;
                 [self.navigationController pushViewController:vc animated:YES];
                 
             }     else       if (CGRectContainsPoint(cell.avatarView.frame,p) || (CGRectContainsPoint(cell.usernameLabel.frame,p))) {
                 PIEFriendViewController* vc = [PIEFriendViewController new];
-                vc.uid = vm.senderID;
-                vc.name = vm.username;
+                vc.pageVM = pageVM;
+//                vc.uid = vm.senderID;
+//                vc.name = vm.username;
                 [self.navigationController pushViewController:vc animated:YES];
             } else   {
                 PIECommentViewController* vc = [PIECommentViewController new];
-                PIEPageVM* pageVM = [PIEPageVM new];
-                pageVM.ID = vm.targetID;
-                pageVM.type = vm.targetType;
+//                PIEPageVM* pageVM = [PIEPageVM new];
+//                pageVM.ID = vm.targetID;
+//                pageVM.type = vm.targetType;
                 vc.vm = pageVM;
-                vc.shouldDownloadVMSource = YES;
+//                vc.shouldDownloadVMSource = YES;
                 vc.shouldShowHeaderView = YES;
                 [self.navigationController pushViewController:vc animated:YES];
             }
@@ -140,34 +142,35 @@
 //                [self.textView becomeFirstResponder];
                 PIECommentViewController* vc = [PIECommentViewController new];
                 PIEPageVM* pageVM = [PIEPageVM new];
-                pageVM.ID = vm.targetID;
-                pageVM.type = vm.targetType;
+//                pageVM.ID = vm.targetID;
+//                pageVM.type = vm.targetType;
                 vc.vm = pageVM;
-                vc.shouldDownloadVMSource = YES;
+//                vc.shouldDownloadVMSource = YES;
                 vc.shouldShowHeaderView = YES;
                 [self.navigationController pushViewController:vc animated:YES];
                 
             } else if (CGRectContainsPoint(cell.avatarView.frame,p) || (CGRectContainsPoint(cell.usernameLabel.frame,p))) {
                 PIEFriendViewController* vc = [PIEFriendViewController new];
-                vc.uid = vm.senderID;
-                vc.name = vm.username;
+                vc.pageVM = pageVM;
+//                vc.uid = vm.senderID;
+//                vc.name = vm.username;
                 [self.navigationController pushViewController:vc animated:YES];
             } else {
                 PIECommentViewController* vc = [PIECommentViewController new];
-                PIEPageVM* pageVM = [PIEPageVM new];
-                pageVM.ID = vm.targetID;
-                pageVM.type = vm.targetType;
+//                PIEPageVM* pageVM = [PIEPageVM new];
+//                pageVM.ID = vm.targetID;
+//                pageVM.type = vm.targetType;
                 vc.vm = pageVM;
-                vc.shouldDownloadVMSource = YES;
                 vc.shouldShowHeaderView = YES;
 
                 [self.navigationController pushViewController:vc animated:YES];
             }
         } else if (vm.type == 3) {
-                PIEFriendViewController* vc = [PIEFriendViewController new];
-                vc.uid = vm.senderID;
-                vc.name = vm.username;
-                [self.navigationController pushViewController:vc animated:YES];
+            PIEFriendViewController* vc = [PIEFriendViewController new];
+            vc.pageVM = pageVM;
+//                vc.uid = vm.senderID;
+//                vc.name = vm.username;
+            [self.navigationController pushViewController:vc animated:YES];
         }
     } else if (selectedIndexPath.section == 0) {
 
@@ -198,7 +201,18 @@
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"updateNoticationStatus" object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardDidHideNotification object:nil];
+}
 
+- (PIEPageVM*)transformNotificationVMToPageVM:(PIENotificationVM*)vm {
+    PIEPageVM* pageVM = [PIEPageVM new];
+    pageVM.imageURL = vm.imageUrl;
+    pageVM.ID = vm.targetID;
+    pageVM.askID = vm.askID;
+    pageVM.avatarURL = vm.avatarUrl;
+    pageVM.userID = vm.senderID;
+    pageVM.username = vm.username;
+    pageVM.publishTime = vm.time;
+    return pageVM;
 }
 - (void)configTableView {
     UINib* nib  = [UINib nibWithNibName:@"PIENotificationCommentTableViewCell" bundle:nil];

@@ -84,12 +84,6 @@
         make.height.equalTo(self.imageViewMain.mas_width);
     }];
     
-//    [self.imageViewRight mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.imageViewMain.mas_top);
-//        make.left.equalTo(self.imageViewMain.mas_right).with.offset(0);
-//        make.right.equalTo(self).with.offset(0);
-//        make.bottom.equalTo(self.imageViewMain.mas_bottom).with.offset(0);
-//    }];
     [self.imageViewBlur mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.imageViewMain);
         make.bottom.equalTo(self.imageViewMain);
@@ -155,9 +149,6 @@
         
         _avatarView.isV = vm.isV;
         
-        //testing
-//        _avatarView.isV = (vm.askID % 2 == 0);
-
         _usernameLabel.text = vm.username;
         _timeLabel.text = vm.publishTime;
         
@@ -177,7 +168,16 @@
         [DDService sd_downloadImage:vm.imageURL withBlock:^(UIImage *image) {
             _imageViewBlur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
             _imageViewMain.image = image;
+            
+            
+            NSString* imageUrl2 = [vm.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
+            [DDService sd_downloadImage:imageUrl2 withBlock:^(UIImage *image) {
+                _imageViewBlur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
+                _imageViewMain.image = image;
+            }];
+
         }];
+        
 
         _commentButton.numberString = vm.commentCount;
         _shareButton.numberString = vm.shareCount;

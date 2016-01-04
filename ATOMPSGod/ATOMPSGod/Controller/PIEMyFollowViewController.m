@@ -85,14 +85,16 @@
         PIEUserViewModel *viewModel = _dataSource[indexPath.row];
         PIEFriendFollowingTableCell *cell = (PIEFriendFollowingTableCell *)[_tableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
-        if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
+        if (CGRectContainsPoint(cell.userHeaderButton.frame, p) || CGRectContainsPoint(cell.userNameLabel.frame, p)) {
             PIEFriendViewController *opvc = [PIEFriendViewController new];
             PIEPageVM* vm = [PIEPageVM new];
             vm.userID = viewModel.model.uid;
             vm.username = viewModel.username;
+            vm.avatarURL = viewModel.avatar;
             opvc.pageVM = vm;
             [self.navigationController pushViewController:opvc animated:YES];
-        } else if (CGRectContainsPoint(cell.attentionButton.frame, p)) {
+        }
+        else if (CGRectContainsPoint(cell.attentionButton.frame, p)) {
             cell.attentionButton.selected = !cell.attentionButton.selected;
             NSMutableDictionary* param = [NSMutableDictionary new];
             [param setObject:@(cell.viewModel.model.uid) forKey:@"uid"];
