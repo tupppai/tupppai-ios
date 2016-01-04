@@ -24,6 +24,8 @@
 #import "PIEFeedbackViewController.h"
 #import "PIEAboutUsViewController.h"
 #import "UMCheckUpdate.h"
+#import "PIELaunchViewController_Black.h"
+
 
 @interface PIESettingsViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -246,7 +248,7 @@
                               [DDUserManager clearCurrentUser];
                               
                               self.navigationController.viewControllers = @[];
-                              PIELaunchViewController *lvc = [[PIELaunchViewController alloc] init];
+                              PIELaunchViewController_Black *lvc = [[PIELaunchViewController_Black alloc] init];
                               [AppDelegate APP].window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
                           }];
     alertView.transitionStyle = SIAlertViewTransitionStyleBounce;

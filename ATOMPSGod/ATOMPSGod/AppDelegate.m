@@ -7,7 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "PIELaunchViewController.h"
+//#import "PIELaunchViewController.h"
+#import "PIELaunchViewController_Black.h"
 #import "DDNavigationController.h"
 #import "DDLoginNavigationController.h"
 #import "DDIntroVC.h"
@@ -130,7 +131,7 @@
                 self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:vc];
                 self.window.rootViewController = self.baseNav;
             } else {
-                PIELaunchViewController *lvc = [[PIELaunchViewController alloc] init];
+                PIELaunchViewController_Black *lvc = [[PIELaunchViewController_Black alloc] init];
                 self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
                 self.window.rootViewController = self.baseNav;
             }

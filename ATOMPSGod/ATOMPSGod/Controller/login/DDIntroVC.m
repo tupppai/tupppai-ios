@@ -8,7 +8,9 @@
 
 #import "DDIntroVC.h"
 #import "EAIntroView.h"
-#import "PIELaunchViewController.h"
+//#import "PIELaunchViewController.h"
+#import "PIELaunchViewController_Black.h"
+
 @interface DDIntroVC ()<EAIntroDelegate>
 @property (nonatomic,strong)  EAIntroPage *page1;
 @property (nonatomic,strong)  EAIntroPage *page2;
@@ -78,7 +80,7 @@
 
 #pragma mark - EAIntroView delegate
 - (void)introDidFinish:(EAIntroView *)introView {
-    PIELaunchViewController* lvc = [PIELaunchViewController new];
+    PIELaunchViewController_Black* lvc = [PIELaunchViewController_Black new];
     self.navigationController.viewControllers = @[lvc];
 }
 

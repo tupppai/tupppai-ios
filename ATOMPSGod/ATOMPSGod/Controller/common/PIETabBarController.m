@@ -21,6 +21,7 @@
 
 #import "PIEProceedingViewController2.h"
 #import "PIEEliteViewController.h"
+#import "PIELaunchViewController_Black.h"
 
 @interface PIETabBarController ()<UITabBarControllerDelegate>
 @property (nonatomic, strong) DDNavigationController *navigation_new;
@@ -116,7 +117,7 @@
                               //清空当前用户
                               [DDUserManager clearCurrentUser];
                               self.navigationController.viewControllers = @[];
-                              PIELaunchViewController *lvc = [[PIELaunchViewController alloc] init];
+                              PIELaunchViewController_Black *lvc = [[PIELaunchViewController_Black alloc] init];
                               [AppDelegate APP].window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
                           }];
     alertView.transitionStyle = SIAlertViewTransitionStyleDropDown;
