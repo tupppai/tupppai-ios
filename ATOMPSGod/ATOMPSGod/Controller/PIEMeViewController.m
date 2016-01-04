@@ -24,6 +24,12 @@
 #import "UINavigationBar+Awesome.h"
 
 
+typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
+    PIEMeViewControllerNavigationBarStyleTranslucentStyle,
+    PIEMeViewControllerNavigationBarStyleWhiteBackgroundStyle,
+};
+
+
 @interface PIEMeViewController ()<PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,CAPSPageMenuDelegate>
 @property (weak, nonatomic) IBOutlet UIView *dotView2;
 @property (weak, nonatomic) IBOutlet UIView *dotView1;
@@ -58,6 +64,8 @@
 @property (nonatomic, weak) UIButton *settingButton;
 @property (nonatomic, weak) UIButton *messageButton;
 
+@property (nonatomic, assign)PIEMeViewControllerNavigationBarStyle currentNavigationBarStyle;
+
 @end
 
 
@@ -81,6 +89,8 @@
                                              selector:@selector(updateNoticationStatus)
                                                  name:@"updateNoticationStatus"
                                                object:nil];
+    
+    
 }
 
 - (void)dealloc {
@@ -106,8 +116,14 @@
     self.navigationItem.leftBarButtonItem =  buttonItem;
     self.settingButton = buttonLeft;
     
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
+                                                  forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
     
-//    [self hideNavitionBarTitleView];
+    /*
+        设置navigationBar的初始状态：
+     */
+    self.currentNavigationBarStyle = PIEMeViewControllerNavigationBarStyleTranslucentStyle;
 
 }
 - (void)hideNavitionBarTitleView {
@@ -120,19 +136,17 @@
     
     self.edgesForExtendedLayout = UIRectEdgeAll;
 
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
-                                                  forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.shadowImage = [UIImage new];
-    self.navigationController.view.backgroundColor = [UIColor clearColor];
     
     
-    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
+    /*
+        使用currentNavigationBarStyle所记录的状态来调整navigationBar的样式。
+        有三个地方对这个状态量进行了设置：
+        - viewDidLoad: 初始状态，透明
+        - scrollUp: 状态 -> 白色
+        - scrollDown: 状态 -> 透明
+     */
+    [self toggleNavigationBarStyle:self.currentNavigationBarStyle];
     
-    self.navigationItem.title = @"";
-    
-    NSDictionary *titleTextAttrs = @{NSForegroundColorAttributeName: [UIColor blackColor],
-                                     NSFontAttributeName:[UIFont systemFontOfSize:14]};
-    self.navigationController.navigationBar.titleTextAttributes = titleTextAttrs;
     
     [self updateNoticationStatus];
     [MobClick beginLogPageView:@"进入我的"];
@@ -351,12 +365,13 @@
         }];
         [UIView animateWithDuration:0.5 animations:^{
             [self.pageMenu.view layoutIfNeeded];
-            [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor whiteColor]];
-            PIEUserModel* user = [DDUserManager currentUser];
-            self.navigationItem.title = user.nickname;
-            [self.settingButton setImage:[UIImage imageNamed:@"pie_setting_white"] forState:UIControlStateNormal];
-            [self.messageButton setImage:[UIImage imageNamed:@"pie_message_white"] forState:UIControlStateNormal];
-            [self.messageButton setImage:[UIImage imageNamed:@"pie_message_new_white"] forState:UIControlStateSelected];
+            
+            /*
+                让副作用只发生在函数的外面，维护函数toggleNavigationBarStyle:的纯洁性(一个输入永远只有固定的输出)
+             */
+            self.currentNavigationBarStyle = PIEMeViewControllerNavigationBarStyleWhiteBackgroundStyle;
+            [self toggleNavigationBarStyle:self.currentNavigationBarStyle];
+            
         }];
     }
 
@@ -368,14 +383,42 @@
         }];
         [UIView animateWithDuration:0.5 animations:^{
             [self.pageMenu.view layoutIfNeeded];
-            [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
-            self.navigationItem.title = @"";
-            [self.settingButton setImage:[UIImage imageNamed:@"pie_setting"] forState:UIControlStateNormal];
-            [self.messageButton setImage:[UIImage imageNamed:@"pie_message"] forState:UIControlStateNormal];
-            [self.messageButton setImage:[UIImage imageNamed:@"pie_message_new"] forState:UIControlStateSelected];
+            
+            /*
+             让副作用只发生在函数的外面，维护函数toggleNavigationBarStyle:的纯洁性(一个输入永远只有固定的输出)
+             */
+            self.currentNavigationBarStyle = PIEMeViewControllerNavigationBarStyleTranslucentStyle;
+            [self toggleNavigationBarStyle:self.currentNavigationBarStyle];
+
         }];
     }
 }
 
+
+#pragma mark - private helpers
+- (void)toggleNavigationBarStyle:(PIEMeViewControllerNavigationBarStyle)style
+{
+    if (style == PIEMeViewControllerNavigationBarStyleTranslucentStyle)
+    {
+        [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
+        self.navigationItem.title = @"";
+        [self.settingButton setImage:[UIImage imageNamed:@"pie_setting"] forState:UIControlStateNormal];
+        [self.messageButton setImage:[UIImage imageNamed:@"pie_message"] forState:UIControlStateNormal];
+        [self.messageButton setImage:[UIImage imageNamed:@"pie_message_new"] forState:UIControlStateSelected];
+
+    }
+    else if(style == PIEMeViewControllerNavigationBarStyleWhiteBackgroundStyle)
+    {
+        [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor whiteColor]];
+        NSDictionary *titleTextAttrs = @{NSForegroundColorAttributeName: [UIColor blackColor],
+                                         NSFontAttributeName:[UIFont systemFontOfSize:14]};
+        self.navigationController.navigationBar.titleTextAttributes = titleTextAttrs;
+        PIEUserModel* user = [DDUserManager currentUser];
+        self.navigationItem.title = user.nickname;
+        [self.settingButton setImage:[UIImage imageNamed:@"pie_setting_white"] forState:UIControlStateNormal];
+        [self.messageButton setImage:[UIImage imageNamed:@"pie_message_white"] forState:UIControlStateNormal];
+        [self.messageButton setImage:[UIImage imageNamed:@"pie_message_new_white"] forState:UIControlStateSelected];
+    }
+}
 
 @end
