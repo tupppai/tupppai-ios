@@ -12,8 +12,7 @@
 @implementation NSString (Tupai)
 
 - (BOOL)isMobileNumber {
-//    return [self rangeOfString:@"^1[34578]{1}[0-9]{9}$" options:NSRegularExpressionSearch].location != NSNotFound;
-    return YES;
+    return [self rangeOfString:@"^1[34578]{1}[0-9]{9}$" options:NSRegularExpressionSearch].location != NSNotFound;
 }
 
 - (BOOL)isPassword {

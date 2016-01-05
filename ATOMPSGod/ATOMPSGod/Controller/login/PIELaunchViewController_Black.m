@@ -244,7 +244,8 @@
      map:^id(NSString *value) {
          
          // NSString -> BOOL
-         if (value.length == 11) {
+         // TODO : 更加完整的判断，字符串应该全部都是数字
+         if ([value isMobileNumber]) {
              return @(YES);
          }else{
              return @(NO);
