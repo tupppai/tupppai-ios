@@ -28,6 +28,7 @@
 @property (nonatomic, strong) MASConstraint *logoImageViewTopConstraint;
 @property (nonatomic, strong) MASConstraint *nextStepButtonTopConstraint;
 
+
 @end
 
 @implementation PIELaunchViewController_Black
@@ -317,23 +318,19 @@
      }];
     
     
+    
+    /*
+        忘了要weak-strong dance, 在后面爆出了内核的错误了……不会debug啊
+     */
+    @weakify(self);
     self.nextStepButton.rac_command =
     [[RACCommand alloc]
      initWithEnabled:validCellPhoneNumberInputSignal
      signalBlock:^RACSignal *(id input) {
+         @strongify(self);
+         
          RACSignal *networkResponseSignal =
          [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-//
-//             // network request, DDService or something.
-//             // if success:
-////             [subscriber sendNext:@"Yeah! We made it!"];
-////             [subscriber sendCompleted];
-//
-//             // if error:
-//             [subscriber sendError:[NSError errorWithDomain:@"Network error: Cannot login"
-//                                                       code:233
-//                                                   userInfo:@{@"你是傻X吗？":@"是啊"}]];
-             
              
              // network request
              NSMutableDictionary *params = [NSMutableDictionary dictionary];
@@ -349,20 +346,23 @@
                                   BOOL hasRegistered = [data[@"has_registered"] boolValue];
                                   
                                   if (hasRegistered) {
-                                      // send YES
+                                      // send Next & complete
                                       
-                                      [subscriber sendNext:@"Yeah! We made it!"];
+                                      [subscriber sendNext:@"Yeah! You made it!"];
                                       [subscriber sendCompleted];
                                       
                                   }else{
-                                      // send error
+                                      // send Error
                                       [subscriber sendError:
-                                       [NSError errorWithDomain:@"Network error: Cannot login"
+                                       [NSError errorWithDomain:
+                                        @"this cellphone is not currently registered"
                                                            code:233
                                                        userInfo:@{@"你是傻X吗？":@"是啊"}]];
                                   }
                               }
                           }];
+             
+
              
              
              return [RACDisposable disposableWithBlock:^{
@@ -374,17 +374,15 @@
          return networkResponseSignal;
      }];
 
-    /*
-     
-     Weak-Strong dance!
-     
-     */
-    @weakify(self);
+   
     [[self.nextStepButton.rac_command errors] subscribeNext:^(id x) {
         // 没办法用用户输入的手机号码登陆，所以Plan B:  弹出注册页面
         @strongify(self);
         NSLog(@"%@", x);
+        
+        /* 更新UI，并且按照需求让nextStepButton绑定新的RACCommand */
         [self updateUIForSignup];
+        [self setupRegisterRAC];
     }];
     
     [[[self.nextStepButton.rac_command executionSignals] switchToLatest] subscribeNext:^(id x) {
@@ -393,25 +391,102 @@
         @strongify(self);
         NSLog(@"%@", x);
         
+        /* 更新UI，并且按照需求让nextStepButton绑定新的RACCommand */
         [self updateUIForLogin];
+        [self setupLoginRAC];
     }];
     
 }
 
+
 - (void)setupLoginRAC
 {
+    /*
+        信号的合并：
+         － 手机号码输入正确
+         － 密码符合客户端的格式要求（不能太短，etc.)
+     
+     */
+    
+    RACSignal *validPasswordInputSignal =
+    [self.passwordTextField.rac_textSignal
+     map:^id(NSString  *value) {
+         if ([value isPassword]) {
+             return @(YES);
+         }else{
+             return @(NO);
+         }
+    }];
+    
+    RACSignal *validCellPhoneNumberInputSignal =
+    [self.cellPhoneNumberTextField.rac_textSignal
+     map:^id(NSString *value) {
+         if ([value isMobileNumber]) {
+             return @(YES);
+         }else{
+             return @(NO);
+         }
+    }];
+    
+    
+    RACSignal *loginButtonEnabledSignal =
+    [RACSignal combineLatest:@[validCellPhoneNumberInputSignal,
+                               validPasswordInputSignal]
+                      reduce:^NSNumber *(NSNumber *isValidCellPhoneNumber,
+                                         NSNumber *isValidPassword){
+                          // BOOL BOOL -> BOOL
+                          return
+                          @([isValidCellPhoneNumber boolValue] &&
+                            [isValidPassword boolValue]);
+                      }];
+    
+    
+    // 给nextStepButton换上新的RACCommand. 希望不要崩掉吧。
+    
+    
+    self.nextStepButton.rac_command =
+    [[RACCommand alloc]
+     initWithEnabled:loginButtonEnabledSignal
+     signalBlock:^RACSignal *(id input) {
+         return [RACSignal
+                 createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+                     
+                     // send network request
+                     
+                     // if success:
+                     [subscriber sendNext:@"Yeah I managed myself to login!"];
+                     [subscriber sendCompleted];
+                     
+                     // if failure:
+//                     [subscriber sendError:[NSError errorWithDomain:@"Cannot login!"
+//                                                               code:234
+//                                                           userInfo:nil]];
+                     
+                     
+                     return nil;
+         }];
+     }];
+    
+    
+    [[[self.nextStepButton.rac_command executionSignals]
+      switchToLatest]
+     subscribeNext:^(id x) {
+         [Hud text:[NSString stringWithFormat:@"%@", x]];
+    }];
+    
+    [[self.nextStepButton.rac_command errors] subscribeNext:^(id x) {
+        [Hud text:@"Failed to Login!"];
+    }];
+    
     
 }
 
 - (void)setupRegisterRAC
 {
-    
+    [Hud text:@"准备setupRegisterRAC咯！"];
 }
 
-- (void)cleanRacBinding
-{
-    
-}
+
 
 #pragma mark - update UI
 - (void)updateUIForLogin{
@@ -423,9 +498,12 @@
     
     [UIView animateWithDuration:0.3 animations:^{
         [self.view layoutIfNeeded];
+        self.logoImageView.hidden = YES;
         self.passwordTextField.hidden = NO;
         [self.nextStepButton setTitle:@"登陆" forState:UIControlStateNormal];
     }];
+    
+    
 }
 
 - (void)updateUIForSignup{
@@ -437,6 +515,7 @@
     
     [UIView animateWithDuration:0.3 animations:^{
         [self.view layoutIfNeeded];
+        self.logoImageView.hidden = YES;
         self.passwordTextField.hidden         = NO;
         self.verificationCodeTextField.hidden = NO;
         [self.nextStepButton setTitle:@"注册" forState:UIControlStateNormal];
