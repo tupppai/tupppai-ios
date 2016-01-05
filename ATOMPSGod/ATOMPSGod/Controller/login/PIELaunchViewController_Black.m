@@ -8,6 +8,11 @@
 
 #import "PIELaunchViewController_Black.h"
 #import "ReactiveCocoa/ReactiveCocoa.h"
+#import "DDBaseService.h"
+
+
+
+
 /* Variables */
 @interface PIELaunchViewController_Black ()
 
@@ -318,16 +323,48 @@
      signalBlock:^RACSignal *(id input) {
          RACSignal *networkResponseSignal =
          [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-
-             // network request, DDService or something.
-             // if success:
-//             [subscriber sendNext:@"Yeah! We made it!"];
-//             [subscriber sendCompleted];
-
-             // if error:
-             [subscriber sendError:[NSError errorWithDomain:@"Network error: Cannot login"
-                                                       code:233
-                                                   userInfo:@{@"你是傻X吗？":@"是啊"}]];
+//
+//             // network request, DDService or something.
+//             // if success:
+////             [subscriber sendNext:@"Yeah! We made it!"];
+////             [subscriber sendCompleted];
+//
+//             // if error:
+//             [subscriber sendError:[NSError errorWithDomain:@"Network error: Cannot login"
+//                                                       code:233
+//                                                   userInfo:@{@"你是傻X吗？":@"是啊"}]];
+             
+             
+             // network request
+             NSMutableDictionary *params = [NSMutableDictionary dictionary];
+             params[@"phone"] = self.cellPhoneNumberTextField.text;
+             [DDBaseService GET:params
+                            url:URL_ACHasRegistered
+                          block:^(id responseObject) {
+                              if (responseObject == nil) {
+                                  /* "ret" 字段为0:是不正常的意思？ */
+                              }
+                              else{
+                                  NSDictionary *data = responseObject[@"data"];
+                                  BOOL hasRegistered = [data[@"has_registered"] boolValue];
+                                  
+                                  if (hasRegistered) {
+                                      // send YES
+                                      
+                                      [subscriber sendNext:@"Yeah! We made it!"];
+                                      [subscriber sendCompleted];
+                                      
+                                  }else{
+                                      // send error
+                                      [subscriber sendError:
+                                       [NSError errorWithDomain:@"Network error: Cannot login"
+                                                           code:233
+                                                       userInfo:@{@"你是傻X吗？":@"是啊"}]];
+                                  }
+                              }
+                          }];
+             
+             
              return [RACDisposable disposableWithBlock:^{
                  // cancel network request upon unregistering subscriber
 
@@ -378,8 +415,8 @@
 
 #pragma mark - update UI
 - (void)updateUIForLogin{
-    NSLog(@"%s", __FUNCTION__);
     
+    [Hud text:@"该手机号已注册, 准备进入登陆页面"];
     CGFloat padding = 8;
     [self.logoImageViewTopConstraint setOffset:- (CGRectGetHeight(self.cellPhoneNumberTextField.frame) + padding)];
     [self.nextStepButtonTopConstraint setOffset: ( 2 * (padding + CGRectGetHeight(self.cellPhoneNumberTextField.frame)) + 37)];
