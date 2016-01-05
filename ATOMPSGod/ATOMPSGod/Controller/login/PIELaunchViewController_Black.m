@@ -13,10 +13,15 @@
 
 @property (nonatomic, weak) UIImageView *logoImageView;
 @property (nonatomic, weak) UITextField *cellPhoneNumberTextField;
+@property (nonatomic, weak) UITextField *passwordTextField;
+@property (nonatomic, weak) UITextField *verificationCodeTextField;
+
+
 @property (nonatomic, weak) UIButton    *nextStepButton;
 @property (nonatomic, weak) UIImageView *launchSeparator;
 
 @property (nonatomic, strong) MASConstraint *logoImageViewTopConstraint;
+@property (nonatomic, strong) MASConstraint *nextStepButtonTopConstraint;
 
 @end
 
@@ -30,7 +35,7 @@
 
     [self setupUI];
 
-    [self setupRAC];
+    [self setupBasicRAC];
 
 }
 
@@ -60,11 +65,14 @@
     // Logo
     UIImageView *logoImageView = ({
         UIImageView *imageView = [[UIImageView alloc] init];
-        imageView.image = [UIImage imageNamed:@"pie_logo"];
-        imageView.contentMode =UIViewContentModeScaleAspectFit;
+        imageView.image        = [UIImage imageNamed:@"pie_logo"];
+        imageView.contentMode  = UIViewContentModeScaleAspectFit;
         [self.view addSubview:imageView];
-
+        
+        @weakify(self);
+ 
         [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            @strongify(self);
             make.size.mas_equalTo(CGSizeMake(43, 30));
             self.logoImageViewTopConstraint =
             make.top.equalTo(self.view).with.offset(33);
@@ -86,7 +94,7 @@
 
 
         [self.view addSubview:textField];
-
+        
         @weakify(self);
         [textField mas_makeConstraints:^(MASConstraintMaker *make) {
             @strongify(self);
@@ -97,11 +105,62 @@
             make.top.equalTo(logoImageView.mas_bottom).with.offset(45);
         }];
 
-
         textField;
 
     });
     self.cellPhoneNumberTextField = cellPhoneNumberTextField;
+    
+    // password
+    UITextField *passwordTextField = ({
+        UITextField *textField = [[UITextField alloc] init];
+
+        textField.font         = [UIFont lightTupaiFontOfSize:13];
+        textField.textColor    = [UIColor blackColor];
+        textField.placeholder  = @"密码";
+        textField.borderStyle  = UITextBorderStyleLine;
+ 
+        [self.view addSubview:textField];
+        
+        @weakify(self);
+        [textField mas_makeConstraints:^(MASConstraintMaker *make) {
+            @strongify(self);
+            make.height.mas_equalTo(48);
+            make.left.equalTo(self.view.mas_left).with.offset(40);
+            make.right.equalTo(self.view.mas_right).with.offset(-40);
+            make.centerX.equalTo(self.view);
+            make.top.equalTo(cellPhoneNumberTextField.mas_bottom).with.offset(8);
+        }];
+        
+        textField;
+    });
+    passwordTextField.hidden = YES;
+    self.passwordTextField = passwordTextField;
+    
+    UITextField *verificationCodeTextField = ({
+        UITextField *textField = [[UITextField alloc] init];
+
+        textField.font         = [UIFont lightTupaiFontOfSize:13];
+        textField.textColor    = [UIColor blackColor];
+        textField.placeholder  = @"验证码";
+        textField.borderStyle  = UITextBorderStyleLine;
+        
+        [self.view addSubview:textField];
+        
+        @weakify(self);
+        [textField mas_makeConstraints:^(MASConstraintMaker *make) {
+            @strongify(self);
+            make.height.mas_equalTo(48);
+            make.left.equalTo(self.view.mas_left).with.offset(40);
+            make.right.equalTo(self.view.mas_right).with.offset(-40);
+            make.centerX.equalTo(self.view);
+            make.top.equalTo(passwordTextField.mas_bottom).with.offset(8);
+        }];
+        
+        textField;
+    });
+    verificationCodeTextField.hidden = YES;
+    self.verificationCodeTextField = verificationCodeTextField;
+    
 
     // nextStep button
     UIButton *nextStepButton = ({
@@ -117,11 +176,14 @@
                      forState:UIControlStateNormal];
         button.titleLabel.font = [UIFont lightTupaiFontOfSize:13];
         [self.view addSubview:button];
-
+        
+        @weakify(self);
         [button mas_makeConstraints:^(MASConstraintMaker *make) {
+            @strongify(self);
             make.left.equalTo(self.view.mas_left).with.offset(40);
             make.right.equalTo(self.view.mas_right).with.offset(-40);
             make.centerX.equalTo(self.view.mas_centerX);
+            self.nextStepButtonTopConstraint =
             make.top.equalTo(cellPhoneNumberTextField.mas_bottom).with.offset(19);
             make.height.mas_equalTo(48);
         }];
@@ -234,25 +296,20 @@
 
 #pragma mark - Reactivecocoa Signals binding
 
-- (void)setupRAC
+- (void)setupBasicRAC
 {
-    
-    
     RACSignal *validCellPhoneNumberInputSignal =
     [[self.cellPhoneNumberTextField.rac_textSignal
     distinctUntilChanged]
      map:^id(NSString *value) {
          
          // NSString -> BOOL
-         // TODO : 更加完整的判断，字符串应该全部都是数字
          if ([value isMobileNumber]) {
              return @(YES);
          }else{
              return @(NO);
          }
      }];
-    
-    
     
     
     self.nextStepButton.rac_command =
@@ -264,13 +321,13 @@
 
              // network request, DDService or something.
              // if success:
-             [subscriber sendNext:@"Yeah! We made it!"];
-             [subscriber sendCompleted];
+//             [subscriber sendNext:@"Yeah! We made it!"];
+//             [subscriber sendCompleted];
 
              // if error:
-//             [subscriber sendError:[NSError errorWithDomain:@"Network error: Cannot login"
-//                                                       code:233
-//                                                   userInfo:@{}]];
+             [subscriber sendError:[NSError errorWithDomain:@"Network error: Cannot login"
+                                                       code:233
+                                                   userInfo:@{@"你是傻X吗？":@"是啊"}]];
              return [RACDisposable disposableWithBlock:^{
                  // cancel network request upon unregistering subscriber
 
@@ -298,21 +355,56 @@
         // question: a signal of signal? 所以最后要switchToLatest 或者是　flatten?
         @strongify(self);
         NSLog(@"%@", x);
-
+        
         [self updateUIForLogin];
     }];
     
+}
+
+- (void)setupLoginRAC
+{
     
 }
 
+- (void)setupRegisterRAC
+{
+    
+}
+
+- (void)cleanRacBinding
+{
+    
+}
 
 #pragma mark - update UI
 - (void)updateUIForLogin{
     NSLog(@"%s", __FUNCTION__);
+    
+    CGFloat padding = 8;
+    [self.logoImageViewTopConstraint setOffset:- (CGRectGetHeight(self.cellPhoneNumberTextField.frame) + padding)];
+    [self.nextStepButtonTopConstraint setOffset: ( 2 * (padding + CGRectGetHeight(self.cellPhoneNumberTextField.frame)) + 37)];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.view layoutIfNeeded];
+        self.passwordTextField.hidden = NO;
+        [self.nextStepButton setTitle:@"登陆" forState:UIControlStateNormal];
+    }];
 }
 
 - (void)updateUIForSignup{
-    NSLog(@"%s", __FUNCTION__);
+    [Hud text:@"该手机号码尚未注册，进入注册流程。。。"];
+    
+    CGFloat padding = 8;
+    [self.logoImageViewTopConstraint setOffset:- (CGRectGetHeight(self.cellPhoneNumberTextField.frame) + padding)];
+    [self.nextStepButtonTopConstraint setOffset: ( 2 * (padding + CGRectGetHeight(self.cellPhoneNumberTextField.frame)) + 37)];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.view layoutIfNeeded];
+        self.passwordTextField.hidden         = NO;
+        self.verificationCodeTextField.hidden = NO;
+        [self.nextStepButton setTitle:@"注册" forState:UIControlStateNormal];
+    }];
+    
 }
 
 
