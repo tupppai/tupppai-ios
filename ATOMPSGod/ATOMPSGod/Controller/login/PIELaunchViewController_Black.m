@@ -346,8 +346,6 @@
          }
      }];
 
-
-
     /*
         忘了要weak-strong dance, 在后面爆出了内核的错误了……不会debug啊
      */
@@ -361,58 +359,68 @@
          RACSignal *networkResponseSignal =
          [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
 
-            //  // network request
-            //  NSMutableDictionary *params = [NSMutableDictionary dictionary];
-            //  params[@"phone"] = self.cellPhoneNumberTextField.text;
-            //  [DDBaseService GET:params
-            //                 url:URL_ACHasRegistered
-            //               block:^(id responseObject) {
-            //                   if (responseObject == nil) {
-            //                       /* "ret" 字段为0:是不正常的意思？ */
-            //                   }
-            //                   else{
-            //                       NSDictionary *data = responseObject[@"data"];
-            //                       BOOL hasRegistered = [data[@"has_registered"] boolValue];
-             //
-            //                       if (hasRegistered) {
-            //                           // send Next & complete
-             //
-            //                           [subscriber sendNext:@"Yeah! You made it!"];
-            //                           [subscriber sendCompleted];
-             //
-            //                       }else{
-            //                           // send Error
-            //                           [subscriber sendError:
-            //                            [NSError errorWithDomain:
-            //                             @"this cellphone is not currently registered"
-            //                                                code:233
-            //                                            userInfo:@{@"你是傻X吗？":@"是啊"}]];
-            //                       }
-            //                   }
-            //               }];
-            // 没向腾讯交保护费，改域名也没用啊！
+              // network request
+              NSMutableDictionary *params = [NSMutableDictionary dictionary];
+              params[@"phone"] = self.cellPhoneNumberTextField.text;
+              [DDBaseService GET:params
+                             url:URL_ACHasRegistered
+                           block:^(id responseObject) {
+                               if (responseObject == nil) {
+                                   /* "ret" 字段为0:是不正常的意思？ */
+                                   
+                                   /*
+                                        Potential bug found!
+                                    
+                                        我应该另起炉灶写一个分别由success 和 failure两个block的DDBaseService的
+                                        GET 和 POST方法。
+                                        SUCCESS: 1. ret == 1, send 'Next', send 'Completed'
+                                                 2. ret == 0, send 'Error', 诡异的数据或者服务器问题的ERROR，网络是好的
+                                        FAILURE: send 'Error': 网络异常的ERROR
+                                    
+                                        为了让整个登陆／注册页面工作正常，一个网络请求的结果必须同时覆盖这三种类型！
+                                    
+                                    */
+                                   
+                               }
+                               else{
+                                   NSDictionary *data = responseObject[@"data"];
+                                   BOOL hasRegistered = [data[@"has_registered"] boolValue];
+             
+                                   if (hasRegistered) {
+                                       // send Next & complete
+             
+                                       [subscriber sendNext:@"Yeah! You made it!"];
+                                       [subscriber sendCompleted];
+             
+                                   }else{
+                                       // send Error
+                                       
+                                       // 没向腾讯交保护费，天天改域名啊！
 
-            [subscriber sendError:
-                                      [NSError errorWithDomain:
-                                       @"this cellphone is not currently registered"
-                                                          code:233
-                                                      userInfo:@{@"疼讯的保护费你交了吗？":@"没😢"}]];
-
-
+                                       [subscriber sendError:
+                                        [NSError errorWithDomain:
+                                         @"this cellphone is not currently registered"
+                                                            code:233
+                                                        userInfo:@{@"疼讯的保护费你交了吗？":@"没😢"}]];
+                                   }
+                               }
+                           }];
 
              return [RACDisposable disposableWithBlock:^{
                  // cancel network request upon unregistering subscriber
-
+                 // 应该用一个对象方法，然后cancel request.
              }];
         }];
 
          return networkResponseSignal;
      }];
 
-
-
-
     [[self.nextStepButton.rac_command errors] subscribeNext:^(id x) {
+        
+        /*
+            POTENTIAL BUG: 应该判断error的类型：如果是网络异常的error的话，不要updateUI和RAC 绑定！
+         */
+        
         // 没办法用用户输入的手机号码登陆，所以Plan B:  弹出注册页面
         @strongify(self);
         NSLog(@"%@", x);
@@ -434,7 +442,6 @@
     }];
 
 }
-
 
 - (void)setupLoginRAC
 {
@@ -479,7 +486,6 @@
 
 
     // 给nextStepButton换上新的RACCommand. 希望不要崩掉吧。
-
 
     self.nextStepButton.rac_command =
     [[RACCommand alloc]
@@ -538,7 +544,7 @@
          @strongify(self);
 
          /*
-          WARNING: 第一个信号是@“Let's GO!”，接下来的5个信号才是NSDate
+          WARNING: 第一个信号是@“Let's GO!”，接下来的信号才是NSDate
           */
 
          /*
@@ -564,17 +570,33 @@
 
              self.countdownButton.enabled = NO;
          }}];
-
+    
+    /*
+        别忘了Weak-Strong dance!
+     */
+    
     self.countdownButton.rac_command = [[RACCommand alloc]
                                    initWithSignalBlock:^RACSignal *(id input) {
+                                       @strongify(self);
 
                                        // 这里实在是想不明白：理论上说RACCommand在这里返回的信号一般都是网络请求然后自己手写的信号，
                                        // 那为什么在这里返回的是一个时钟信号？然后就会触发时钟信号开始send next了？
                                        // 我返回一个自己创造的信号结果不会触发任何东西。
 
                                        // send network request here.
-                                       [Hud text:@"我要发请求获取验证码啦"];
-
+                                       
+                                       NSMutableDictionary *params =
+                                       [NSMutableDictionary dictionary];
+                                       params[@"phone"] =
+                                       @([self.cellPhoneNumberTextField.text integerValue]);
+                                       [DDBaseService GET:params
+                                                      url:@"account/requestAuthCode"
+                                                    block:^(id responseObject) {
+                                                        
+                                                        // do nothing, 或者以后还要判断短信是否发送成功?
+                                                        
+                                                        
+                                                    }];
                                        return countdownSignal;
                                    }];
 
@@ -601,7 +623,7 @@
              return @(NO);
          }
     }];
-    
+
     RACSignal *signupButtonEnabledSignal =
     [RACSignal combineLatest:@[validCellPhoneNumberInputSignal,
                                validPasswordInputSignal,
@@ -620,59 +642,60 @@
                                    [isValidPassword boolValue] &&
                                    [countdownButtonIsCounting boolValue]);
                       }];
-    
+
     // 更换nextStepButton的RACCommand，之前的那个肯定被auto release掉了
     self.nextStepButton.rac_command =
     [[RACCommand alloc] initWithEnabled:signupButtonEnabledSignal
                             signalBlock:^RACSignal *(id input) {
-                                
+
                                 return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-                                    
+
                                     // send signup request here:
-                                    
+
                                     // if success:
                                     [subscriber sendNext:@"Yeah! You have signed up!"];
                                     [subscriber sendCompleted];
-                                    
+
                                     // if failure
 //                                    [subscriber sendError:[NSError errorWithDomain:
 //                                                           @"You cannot sign up!"
 //                                                                              code:234
 //                                                                          userInfo:@{@"哎呀我注册不了啊":@"hehe😄"}]];
-                                    
+
                                     return [RACDisposable disposableWithBlock:^{
                                         // cancel network request here.
                                     }];
                                 }];
-                            
+
                             }];
-    
+
     [[[self.nextStepButton.rac_command executionSignals] switchToLatest] subscribeNext:^(id x) {
         // 注册成功
-        
+
         NSString *prompt = [NSString stringWithFormat:@"%@", x];
         [Hud text:prompt];
     }];
-    
+
     [[self.nextStepButton.rac_command errors] subscribeNext:^(id x) {
         // 注册失败
         [Hud text:@"注册失败！"];
     }];
-    
-    
+
+
     // 倒计时结束，提示用户重新获取验证码
-    [[countdownButtonIsCountingSignal
+    [[[countdownButtonIsCountingSignal
      map:^NSNumber *(NSNumber *value) {
          // BOOL -> BOOL
          // 逻辑取反
-         
          return @(![value boolValue]);
-    }] subscribeNext:^(NSNumber *value) {
+         
+    }] skip:1]
+     subscribeNext:^(NSNumber *value) {
         if ([value boolValue] == YES) {
             [Hud text:@"超时未输入验证码，请重新获取"];
         }
     }];
-    
+
 
 }
 
@@ -714,5 +737,15 @@
 }
 
 
+#pragma mark - touching methods
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
+
 
 @end
+
+
+
+// ========================================================
