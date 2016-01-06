@@ -9,6 +9,11 @@
 #import "PIELaunchViewController_Black.h"
 #import "ReactiveCocoa/ReactiveCocoa.h"
 #import "DDBaseService.h"
+#import "DDUserManager.h"
+#import "AppDelegate.h"
+#import "PIEUserModel.h"
+#import "MTLJSONAdapter.h"
+
 
 
 
@@ -421,7 +426,7 @@
             POTENTIAL BUG: 应该判断error的类型：如果是网络异常的error的话，不要updateUI和RAC 绑定！
          */
         
-        // 没办法用用户输入的手机号码登陆，所以Plan B:  弹出注册页面
+        // 没办法用 用户 输入的手机号码登陆，所以Plan B:  弹出注册页面
         @strongify(self);
         NSLog(@"%@", x);
 
@@ -486,6 +491,7 @@
 
 
     // 给nextStepButton换上新的RACCommand. 希望不要崩掉吧。
+    @weakify(self);
 
     self.nextStepButton.rac_command =
     [[RACCommand alloc]
@@ -493,32 +499,70 @@
      signalBlock:^RACSignal *(id input) {
          return [RACSignal
                  createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-
+                     @strongify(self);
                      // send network request: login
+                     
+                     NSMutableDictionary *params = [NSMutableDictionary dictionary];
+                     params[@"phone"]            = self.cellPhoneNumberTextField.text;
+                     params[@"password"]         = self.passwordTextField.text;
+                     [DDBaseService POST:params
+                                     url:URL_ACLogin
+                                   block:^(id responseObject) {
+                                       NSDictionary *dataDict = responseObject[@"data"];
+                                       NSInteger status = [dataDict[@"status"] integerValue];
+                                       // data: {status: 1, 正常 2， 密码错误 3，未注册}
+                                       if (dataDict != nil) {
+                                           switch (status) {
+                                               case 1:
+                                               {
+                                                   PIEUserModel *user =
+                                                   [MTLJSONAdapter modelOfClass:[PIEUserModel class]
+                                                             fromJSONDictionary:dataDict error:nil];
+                                                   
+                                                   user.token = responseObject[@"token"];
+                                                   
+                                                   [subscriber sendNext:user];
+                                                   [subscriber sendCompleted];
+                                                   
+                                                   break;
+                                               }
+                                               case 2:
+                                               {
+                                                   // 密码错误
+                                                   NSError *passwordIncorrectError =
+                                                   [NSError
+                                                    errorWithDomain:@"password not correct"
+                                                    code:256
+                                                    userInfo:@{@"ERROR":@"password not correct"}];
+                                                   
+                                                   [subscriber sendError:passwordIncorrectError];
+                                                   
+                                                   break;
+                                               }
+                                           }
+                                       }
+                                   }];
 
-                     // if success:
-//                     [subscriber sendNext:@"Yeah I managed myself to login!"];
-//                     [subscriber sendCompleted];
-
-                     // if failure:
-                     [subscriber sendError:[NSError errorWithDomain:@"Cannot login!"
-                                                               code:234
-                                                           userInfo:nil]];
-
-
-                     return nil;
+                     return [RACDisposable disposableWithBlock:^{
+                         // cancel network request
+                     }];
          }];
      }];
 
 
     [[[self.nextStepButton.rac_command executionSignals]
       switchToLatest]
-     subscribeNext:^(id x) {
-         [Hud text:[NSString stringWithFormat:@"%@", x]];
+     subscribeNext:^(PIEUserModel *user) {
+         // save user into the sandbox
+         [DDUserManager updateCurrentUserFromUser:user];
+         
+         
+         // switch to the main tableview
+         [self switchToMainTabbarController];
     }];
 
-    [[self.nextStepButton.rac_command errors] subscribeNext:^(id x) {
-        [Hud text:@"Failed to Login!"];
+    [[self.nextStepButton.rac_command errors] subscribeNext:^(NSError *error) {
+        [Hud error:error.userInfo[@"ERROR"]];
     }];
 
 
@@ -651,7 +695,9 @@
                                 return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
 
                                     // send signup request here:
-
+                                    
+                                    
+                                    
                                     // if success:
                                     [subscriber sendNext:@"Yeah! You have signed up!"];
                                     [subscriber sendCompleted];
@@ -743,6 +789,14 @@
     [self.view endEditing:YES];
 }
 
+#pragma mark - private helpers
+- (void)switchToMainTabbarController
+{
+    [self.navigationController setViewControllers:[NSArray array]];
+    [AppDelegate APP].mainTabBarController = nil;
+    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
+    ;
+}
 
 @end
 
