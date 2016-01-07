@@ -116,7 +116,6 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     
     self.title = self.currentChannelViewModel.title;
     
-    [self getSource_Ask];
     [self.tableView.mj_header beginRefreshing];
     
 }
@@ -215,7 +214,9 @@ static NSString * PIEDetailUsersPSCellIdentifier =
  */
 - (void)didPullRefreshUp:(UITableView *)tableView
 {
-    
+    if (_source_ask.count <= 0) {
+        [self getSource_Ask];
+    }
     [self getMoreSource_Reply];
 }
 
@@ -224,7 +225,9 @@ static NSString * PIEDetailUsersPSCellIdentifier =
  */
 - (void)didPullRefreshDown:(UITableView *)tableView
 {
-    
+    if (_source_ask.count <= 0) {
+        [self getSource_Ask];
+    }
     [self getSource_Reply];
 }
 
@@ -474,6 +477,11 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     params[@"page"]              = @(1);
     params[@"size"]              = @(10);
     params[@"type"]              = @"ask";
+    
+    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    params[@"last_updated"]              = @(timeStamp);
+    
+    
     [params setObject:@(SCREEN_WIDTH*0.5) forKey:@"width"];
     
     [PIEChannelManager getSource_channelPages:params resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
@@ -500,6 +508,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     [PIEChannelManager getSource_channelPages:params resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
         [_source_reply removeAllObjects];
         [_source_reply addObjectsFromArray:pageArray];
+
     } completion:^{
         [ws.tableView.mj_header endRefreshing];
         [ws.tableView reloadData];

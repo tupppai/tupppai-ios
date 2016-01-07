@@ -29,7 +29,7 @@
 
 - (void)setPhoneNumber:(NSString *)phoneNumber {
     NSRange range = {3,4};
-    if (_phoneNumber.length >= 5) {
+    if (phoneNumber.length >= 5) {
         _phoneNumber = [phoneNumber stringByReplacingCharactersInRange:range withString:@"****"];
     }
     NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];

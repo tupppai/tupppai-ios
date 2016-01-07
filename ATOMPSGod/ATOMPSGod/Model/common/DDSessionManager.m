@@ -112,8 +112,7 @@ static DDSessionManager *_shareHTTPSessionManager = nil;
         
         if (error) {
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkErrorCall" object:nil]];
-        }
-        if (responseObject) {
+        } else if (responseObject) {
             int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
             if (ret == 2) {
                 [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkSignOutCall" object:nil]];
