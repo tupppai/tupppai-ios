@@ -515,40 +515,32 @@
              
              [[AppDelegate APP].baseNav pushViewController:forgotPasswordVC
                                                   animated:YES];
-             
-             
              [Hud text:@"Oops! You forgot your password?"];
-             
-             
         }];
         [button sizeToFit];
         
         button;
     });
     
-    
     self.passwordTextField.rightViewMode = UITextFieldViewModeAlways;
     [UIView animateWithDuration:0.3 animations:^{
         [self.view layoutIfNeeded];
-        self.logoImageView.hidden     = YES;
-        self.passwordTextField.hidden = NO;
-        self.passwordTextField.rightView     = forgotPasswordButton;
+        self.logoImageView.hidden        = YES;
+        self.passwordTextField.hidden    = NO;
+        self.passwordTextField.rightView = forgotPasswordButton;
 
         [self.nextStepButton setTitle:@"登陆" forState:UIControlStateNormal];
     }];
-
 }
 
 - (void)updateUIForSignup{
-
-    
     CGFloat padding = 8;
     [self.logoImageViewTopConstraint setOffset:- (CGRectGetHeight(self.cellPhoneNumberTextField.frame) + padding)];
     [self.nextStepButtonTopConstraint setOffset: ( 2 * (padding + CGRectGetHeight(self.cellPhoneNumberTextField.frame)) + 37)];
 
     [UIView animateWithDuration:0.3 animations:^{
         [self.view layoutIfNeeded];
-        self.logoImageView.hidden = YES;
+        self.logoImageView.hidden             = YES;
         self.passwordTextField.hidden         = NO;
         self.verificationCodeTextField.hidden = NO;
         [self.nextStepButton setTitle:@"注册" forState:UIControlStateNormal];
@@ -618,15 +610,12 @@
                                                              
                                                              // do nothing, 或者以后还要判断短信是否发送成功?
                                                          }];
-                                            
                                             return countdownSignal;
                                         }];
     
     [[self.countdownButton.rac_command executing] subscribeNext:^(id x) {
         NSLog(@"%@", x);
     }];
-
-
 }
 
 

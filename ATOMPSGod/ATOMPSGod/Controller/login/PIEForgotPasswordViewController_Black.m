@@ -8,7 +8,11 @@
 
 #import "PIEForgotPasswordViewController_Black.h"
 #import "ReactiveCocoa/ReactiveCocoa.h"
-
+#import "AppDelegate.h"
+#import "DDUserManager.h"
+#import "DDBaseService.h"
+#import "PIEUserModel.h"
+#import "MTLJSONAdapter.h"
 
 /* Variables */
 @interface PIEForgotPasswordViewController_Black ()
@@ -21,7 +25,7 @@
 
 @property (nonatomic, strong) UITextField *resetPasswordTextField;
 
-@property (nonatomic, strong) UIButton    *loginButton;
+@property (nonatomic, strong) UIButton    *resetPasswordAndLoginButton;
 
 @end
 
@@ -36,8 +40,6 @@
     
     [self setupUI];
     
-    [self RACBinding];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -46,7 +48,6 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     [self.navigationController setNavigationBarHidden:YES];
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -82,6 +83,7 @@
         textField;
     });
     self.cellPhoneTextField = cellPhoneTextField;
+    
     
     // --- 倒计时的button
     UIButton *countdownButton = ({
@@ -149,13 +151,12 @@
             make.height.mas_equalTo(48);
         }];
         
-        
         textField;
     });
     self.resetPasswordTextField = resetPasswordTextField;
     
     // -- 确认并登陆
-    UIButton *loginButton = ({
+    UIButton *resetPasswordAndLoginButton = ({
         UIButton *button = [[UIButton alloc] init];
         
         [button setBackgroundImage:[UIImage imageNamed:@"launchViewControllerButtonBackground"]
@@ -168,7 +169,6 @@
                      forState:UIControlStateNormal];
         button.titleLabel.font = [UIFont lightTupaiFontOfSize:13];
         [self.view addSubview:button];
-        
         
         @weakify(self);
         [button mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -183,18 +183,17 @@
         
         button;
     });
-    self.loginButton = loginButton;
+    self.resetPasswordAndLoginButton = resetPasswordAndLoginButton;
     
-}
-
-- (BOOL)prefersStatusBarHidden{
-    return YES;
-}
-
-
-#pragma mark - RAC-binding
-- (void)RACBinding
-{
+    @weakify(self);
+    [[resetPasswordAndLoginButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
+        @strongify(self);
+        
+        [self sendResetPasswordRequest];
+        
+    }];
+    
+    
     // ## Step 1: 获取验证码->倒计时 + 发网络请求，一系列的信号处理
     
     // RAC-signal binding
@@ -204,7 +203,6 @@
     /*
      weak-strong dance!
      */
-    @weakify(self);
     RACSignal *countdownSignal =
     [[[[RACSignal interval:1.0f onScheduler:[RACScheduler mainThreadScheduler]]
        startWith:@"Let's GO!"]
@@ -239,100 +237,98 @@
              
              self.countdownButton.enabled = NO;
          }}];
-    
-    /*
-     别忘了Weak-Strong dance!
-     */
-    
-    self.countdownButton.rac_command = [[RACCommand alloc]
-                                        initWithSignalBlock:^RACSignal *(id input) {
-                                            @strongify(self);
-                                            
-                                            // 这里实在是想不明白：理论上说RACCommand在这里返回的信号一般都是网络请求然后自己手写的信号，
-                                            // 那为什么在这里返回的是一个时钟信号？然后就会触发时钟信号开始send next了？
-                                            // 我返回一个自己创造的信号结果不会触发任何东西。
-                                            
-                                            // send network request here.
-                                            
-                                            NSMutableDictionary *params =
-                                            [NSMutableDictionary dictionary];
-                                            params[@"phone"] =
-                                            @([self.cellPhoneTextField.text integerValue]);
-                                            [DDBaseService GET:params
-                                                           url:@"account/requestAuthCode"
-                                                         block:^(id responseObject) {
-                                                             
-                                                             // do nothing, 或者以后还要判断短信是否发送成功?
-                                                             
-                                                             
-                                                         }];
-                                            return countdownSignal;
-                                        }];
-    
-    
-//    RACSignal *validPasswordInputSignal =
-//    [self.resetPasswordTextField.rac_textSignal
-//     map:^id(NSString  *value) {
-//         if ([value isPassword]) {
-//             return @(YES);
-//         }else{
-//             return @(NO);
-//         }
-//     }];
-//    
-//    RACSignal *validCellPhoneNumberInputSignal =
-//    [self.cellPhoneTextField.rac_textSignal
-//     map:^id(NSString *value) {
-//         if ([value isMobileNumber]) {
-//             return @(YES);
-//         }else{
-//             return @(NO);
-//         }
-//     }];
-    RACSignal *loginButtonEnabledSignal =
-    [RACSignal combineLatest:@[self.cellPhoneTextField.rac_textSignal,
-                               self.resetPasswordTextField.rac_textSignal]
-                      reduce:^NSNumber *(NSString *cellPhoneNumber,
-                                         NSString *resetPassword){
-                          // NSString NSString -> BOOL
-                          // check whether these two number is valid
-                          
-                          
-                          return @([cellPhoneNumber isMobileNumber] &&
-                                   [resetPassword isPassword]);
-                      }];
-    
-    
-    self.loginButton.rac_command =
+    self.countdownButton.rac_command =
     [[RACCommand alloc]
-     initWithEnabled:loginButtonEnabledSignal
-     signalBlock:^RACSignal *(id input) {
-         RACSignal *networkRequestSignal =
-         [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-             @strongify(self);
-    
-             
-             // send ResetPassword requeste here:
-             NSMutableDictionary *params = [NSMutableDictionary dictionary];
-             params[@"phone"]            = self.cellPhoneTextField.text;
-             params[@"password"]         = self.resetPasswordTextField.text;
-             // code?
-             
-             // what's the response?
-             
-             
-
-             
-             return [RACDisposable disposableWithBlock:^{
-                 // cancel request here.
-                 
-                 
-             }];
-         }];
+     initWithSignalBlock:^RACSignal *(id input) {
+         @strongify(self);
          
-         return networkRequestSignal;
+         // send network request here.
+         
+         NSMutableDictionary *params =
+         [NSMutableDictionary dictionary];
+         params[@"phone"] =
+         @([self.cellPhoneTextField.text integerValue]);
+         [DDBaseService GET:params
+                        url:@"account/requestAuthCode"
+                      block:^(id responseObject) {
+                          // do nothing
+                      }];
+         return countdownSignal;
      }];
+
     
+}
+
+- (BOOL)prefersStatusBarHidden{
+    return YES;
+}
+
+
+#pragma mark - Network request
+- (void)sendResetPasswordRequest
+{
+    // reset password and jump to the main controller
+    
+    [Hud text:@"Gonna send request to reset password"];
+    
+    
+    if ([self.cellPhoneTextField.text isMobileNumber] == NO) {
+        [Hud error:@"手机号码格式不对"];
+    }else if ([self.resetPasswordTextField.text isPassword] == NO){
+        [Hud error:@"密码格式不对"];
+    }else{
+        NSMutableDictionary *params = [NSMutableDictionary dictionary];
+        params[@"phone"]            = self.cellPhoneTextField.text;
+        params[@"code"]             = self.verificationCodeTextField.text;
+        params[@"new_pwd"]          = self.resetPasswordTextField.text;
+        
+        [Hud activity:@"修改秘密并登陆中..."];
+        @weakify(self);
+        [DDBaseService POST:params
+                        url:URL_ACResetPassword
+                      block:^(id responseObject) {
+                          @strongify(self);
+                          
+                          [Hud dismiss];
+                          
+                          if (responseObject == nil) {
+                              [Hud error:@"修改秘密失败：网络问题或者是数据出错"];
+                          }else{
+                              // save user to sandbox
+                              
+                              PIEUserModel *user = [MTLJSONAdapter
+                                                    modelOfClass:[PIEUserModel class]
+                                                    fromJSONDictionary:responseObject[@"data"]
+                                                    error:nil];
+                              
+                              user.token = responseObject[@"token"];
+                              
+                              [DDUserManager updateCurrentUserFromUser:user];
+                              
+                              
+                              // switch to mainVC
+                              [self switchToMainTabbarController];
+                              
+                          }
+                          
+                          
+                          
+                      }];
+    }
+    
+    
+    
+}
+
+
+
+#pragma mark - private helpers
+- (void)switchToMainTabbarController
+{
+    [self.navigationController setViewControllers:[NSArray array]];
+    [AppDelegate APP].mainTabBarController = nil;
+    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
+    ;
 }
 
 @end
