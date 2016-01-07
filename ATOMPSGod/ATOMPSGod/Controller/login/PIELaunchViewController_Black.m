@@ -13,9 +13,7 @@
 #import "AppDelegate.h"
 #import "PIEUserModel.h"
 #import "MTLJSONAdapter.h"
-
-
-
+#import "PIEForgotPasswordViewController_Black.h"
 
 
 /* Variables */
@@ -35,6 +33,8 @@
 @property (nonatomic, strong) MASConstraint *logoImageViewTopConstraint;
 @property (nonatomic, strong) MASConstraint *nextStepButtonTopConstraint;
 
+@property (nonatomic, strong) RACDisposable *hasRegisteredRequestDisposable;
+
 
 @end
 
@@ -48,7 +48,7 @@
 
     [self setupUI];
 
-    [self setupBasicRAC];
+    [self sendHasRegisteredRequest];
 
 }
 
@@ -61,16 +61,14 @@
 {
     [super viewWillAppear:animated];
 
-
+//    [self.navigationController setNavigationBarHidden:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
 
-
 }
-
 
 #pragma mark - UI setting-up
 - (void)setupUI
@@ -127,6 +125,7 @@
     UITextField *passwordTextField = ({
         UITextField *textField = [[UITextField alloc] init];
 
+        
         textField.font         = [UIFont lightTupaiFontOfSize:13];
         textField.textColor    = [UIColor blackColor];
         textField.placeholder  = @"密码";
@@ -143,8 +142,8 @@
             make.centerX.equalTo(self.view);
             make.top.equalTo(cellPhoneNumberTextField.mas_bottom).with.offset(8);
         }];
-
         textField;
+        
     });
     passwordTextField.hidden = YES;
     self.passwordTextField = passwordTextField;
@@ -163,7 +162,7 @@
         button.titleLabel.textAlignment = NSTextAlignmentCenter;
         button.titleLabel.font = [UIFont systemFontOfSize:11];
 
-        // 自动设置size，并且textField的rightView会自动设置好frame，超方便！
+        // 自动设置size，并且textField的rightView会自动设置好frame
         [button sizeToFit];
 
         button;
@@ -261,7 +260,6 @@
 
         button.contentMode = UIViewContentModeScaleAspectFit;
 
-
         [self.view addSubview:button];
 
         [button mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -275,7 +273,7 @@
     });
     [[sinaButton rac_signalForControlEvents:UIControlEventTouchUpInside]
      subscribeNext:^(id x) {
-         NSLog(@"sinaButton clicked!");
+         [Hud text:@"还没做好新浪微博的登录接口！"];
     }];
 
     // QQ
@@ -302,7 +300,7 @@
 
     [[QQButton rac_signalForControlEvents:UIControlEventTouchUpInside]
      subscribeNext:^(id x) {
-         NSLog(@"QQButton clicked!");
+          [Hud text:@"还没做好QQ的登录接口！"];
     }];
 
     // wechat
@@ -328,421 +326,168 @@
     });
     [[wechatButton rac_signalForControlEvents:UIControlEventTouchUpInside]
      subscribeNext:^(id x) {
-         NSLog(@"wechatButton clicked!");
+         [Hud text:@"还没做好微信的登录接口！"];
+
      }];
 
 }
 
-
-#pragma mark - Reactivecocoa Signals binding
-
-- (void)setupBasicRAC
+- (BOOL)prefersStatusBarHidden
 {
-    RACSignal *validCellPhoneNumberInputSignal =
-    [[self.cellPhoneNumberTextField.rac_textSignal
-    distinctUntilChanged]
-     map:^id(NSString *value) {
+    return YES;
+}
 
-         // NSString -> BOOL
-         if ([value isMobileNumber]) {
-             return @(YES);
-         }else{
-             return @(NO);
-         }
-     }];
-
-    /*
-        忘了要weak-strong dance, 在后面爆出了内核的错误了……不会debug啊
-     */
+#pragma mark - Network Request
+- (void)sendHasRegisteredRequest
+{
     @weakify(self);
-    self.nextStepButton.rac_command =
-    [[RACCommand alloc]
-     initWithEnabled:validCellPhoneNumberInputSignal
-     signalBlock:^RACSignal *(id input) {
-         @strongify(self);
-
-         RACSignal *networkResponseSignal =
-         [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-
-              // network request
-              NSMutableDictionary *params = [NSMutableDictionary dictionary];
-              params[@"phone"] = self.cellPhoneNumberTextField.text;
-              [DDBaseService GET:params
-                             url:URL_ACHasRegistered
-                           block:^(id responseObject) {
-                               if (responseObject == nil) {
-                                   /* "ret" 字段为0:是不正常的意思？ */
-                                   
-                                   /*
-                                        Potential bug found!
-                                    
-                                        我应该另起炉灶写一个分别由success 和 failure两个block的DDBaseService的
-                                        GET 和 POST方法。
-                                        SUCCESS: 1. ret == 1, send 'Next', send 'Completed'
-                                                 2. ret == 0, send 'Error', 诡异的数据或者服务器问题的ERROR，网络是好的
-                                        FAILURE: send 'Error': 网络异常的ERROR
-                                    
-                                        为了让整个登陆／注册页面工作正常，一个网络请求的结果必须同时覆盖这三种类型！
-                                    
-                                    */
-                                   
-                               }
-                               else{
-                                   NSDictionary *data = responseObject[@"data"];
-                                   BOOL hasRegistered = [data[@"has_registered"] boolValue];
-             
-                                   if (hasRegistered) {
-                                       // send Next & complete
-             
-                                       [subscriber sendNext:@"Yeah! You made it!"];
-                                       [subscriber sendCompleted];
-             
-                                   }else{
-                                       // send Error
-                                       
-                                       // 没向腾讯交保护费，天天改域名啊！
-
-                                       [subscriber sendError:
-                                        [NSError errorWithDomain:
-                                         @"this cellphone is not currently registered"
-                                                            code:233
-                                                        userInfo:@{@"疼讯的保护费你交了吗？":@"没😢"}]];
-                                   }
-                               }
-                           }];
-
-             return [RACDisposable disposableWithBlock:^{
-                 // cancel network request upon unregistering subscriber
-                 // 应该用一个对象方法，然后cancel request.
-             }];
-        }];
-
-         return networkResponseSignal;
-     }];
-
-    [[self.nextStepButton.rac_command errors] subscribeNext:^(id x) {
-        
-        /*
-            POTENTIAL BUG: 应该判断error的类型：如果是网络异常的error的话，不要updateUI和RAC 绑定！
-         */
-        
-        // 没办法用 用户 输入的手机号码登陆，所以Plan B:  弹出注册页面
+    self.hasRegisteredRequestDisposable =
+    [[self.nextStepButton rac_signalForControlEvents:UIControlEventTouchUpInside]
+    subscribeNext:^(id x) {
         @strongify(self);
-        NSLog(@"%@", x);
-
-        /* 更新UI，并且按照需求让nextStepButton绑定新的RACCommand */
-        [self updateUIForSignup];
-        [self setupRegisterRAC];
-    }];
-
-    [[[self.nextStepButton.rac_command executionSignals] switchToLatest] subscribeNext:^(id x) {
-        // PlanA：用户输入的手机号码是已经注册过的了，所以弹出登陆页面
-        // question: a signal of signal? 所以最后要switchToLatest 或者是　flatten?
-        @strongify(self);
-        NSLog(@"%@", x);
-
-        /* 更新UI，并且按照需求让nextStepButton绑定新的RACCommand */
-        [self updateUIForLogin];
-        [self setupLoginRAC];
-    }];
-
-}
-
-- (void)setupLoginRAC
-{
-    /*
-        信号的合并：
-         － 手机号码输入正确
-         － 密码符合客户端的格式要求（不能太短，etc.)
-
-     */
-
-    RACSignal *validPasswordInputSignal =
-    [self.passwordTextField.rac_textSignal
-     map:^id(NSString  *value) {
-         if ([value isPassword]) {
-             return @(YES);
-         }else{
-             return @(NO);
-         }
-    }];
-
-    RACSignal *validCellPhoneNumberInputSignal =
-    [self.cellPhoneNumberTextField.rac_textSignal
-     map:^id(NSString *value) {
-         if ([value isMobileNumber]) {
-             return @(YES);
-         }else{
-             return @(NO);
-         }
-    }];
-
-
-    RACSignal *loginButtonEnabledSignal =
-    [RACSignal combineLatest:@[validCellPhoneNumberInputSignal,
-                               validPasswordInputSignal]
-                      reduce:^NSNumber *(NSNumber *isValidCellPhoneNumber,
-                                         NSNumber *isValidPassword){
-                          // BOOL BOOL -> BOOL
-                          return
-                          @([isValidCellPhoneNumber boolValue] &&
-                            [isValidPassword boolValue]);
-                      }];
-
-
-    // 给nextStepButton换上新的RACCommand. 希望不要崩掉吧。
-    @weakify(self);
-
-    self.nextStepButton.rac_command =
-    [[RACCommand alloc]
-     initWithEnabled:loginButtonEnabledSignal
-     signalBlock:^RACSignal *(id input) {
-         return [RACSignal
-                 createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-                     @strongify(self);
-                     // send network request: login
-                     
-                     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-                     params[@"phone"]            = self.cellPhoneNumberTextField.text;
-                     params[@"password"]         = self.passwordTextField.text;
-                     [DDBaseService POST:params
-                                     url:URL_ACLogin
-                                   block:^(id responseObject) {
-                                       NSDictionary *dataDict = responseObject[@"data"];
-                                       NSInteger status = [dataDict[@"status"] integerValue];
-                                       // data: {status: 1, 正常 2， 密码错误 3，未注册}
-                                       if (dataDict != nil) {
-                                           switch (status) {
-                                               case 1:
-                                               {
-                                                   PIEUserModel *user =
-                                                   [MTLJSONAdapter modelOfClass:[PIEUserModel class]
-                                                             fromJSONDictionary:dataDict error:nil];
-                                                   
-                                                   user.token = responseObject[@"token"];
-                                                   
-                                                   [subscriber sendNext:user];
-                                                   [subscriber sendCompleted];
-                                                   
-                                                   break;
-                                               }
-                                               case 2:
-                                               {
-                                                   // 密码错误
-                                                   NSError *passwordIncorrectError =
-                                                   [NSError
-                                                    errorWithDomain:@"password not correct"
-                                                    code:256
-                                                    userInfo:@{@"ERROR":@"password not correct"}];
-                                                   
-                                                   [subscriber sendError:passwordIncorrectError];
-                                                   
-                                                   break;
-                                               }
-                                           }
-                                       }
-                                   }];
-
-                     return [RACDisposable disposableWithBlock:^{
-                         // cancel network request
-                     }];
-         }];
-     }];
-
-
-    [[[self.nextStepButton.rac_command executionSignals]
-      switchToLatest]
-     subscribeNext:^(PIEUserModel *user) {
-         // save user into the sandbox
-         [DDUserManager updateCurrentUserFromUser:user];
-         
-         
-         // switch to the main tableview
-         [self switchToMainTabbarController];
-    }];
-
-    [[self.nextStepButton.rac_command errors] subscribeNext:^(NSError *error) {
-        [Hud error:error.userInfo[@"ERROR"]];
-    }];
-
-
-}
-
-- (void)setupRegisterRAC
-{
-    // ## Step 1: 获取验证码->倒计时 + 发网络请求，一系列的信号处理
-
-    // RAC-signal binding
-    const NSInteger numberLimit   = 10;
-    __block NSInteger numberCount = numberLimit;
-
-    /*
-        weak-strong dance!
-     */
-    @weakify(self);
-    RACSignal *countdownSignal =
-    [[[[RACSignal interval:1.0f onScheduler:[RACScheduler mainThreadScheduler]]
-       startWith:@"Let's GO!"]
-      take:numberLimit + 1]
-     doNext:^(id x) {
-         @strongify(self);
-
-         /*
-          WARNING: 第一个信号是@“Let's GO!”，接下来的信号才是NSDate
-          */
-
-         /*
-          Side-effects warning!
-          每次send 'Next'， 就果断地就地修改状态，即使不惜在信号中`掺杂`了副作用！
-          */
-         if (numberCount == 0) {
-             [self.countdownButton setTitle:@"重新发送" forState:UIControlStateNormal];
-             self.countdownButton.enabled = YES;
-             [self.countdownButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-
-             // set to default value
-             numberCount = numberLimit;
-         }else{
-
-             NSString *countdownString = [NSString stringWithFormat:@"%ld秒后重发", numberCount];
-
-             [self.countdownButton setTitle:countdownString
-                              forState:UIControlStateNormal];
-             [self.countdownButton setTitleColor:[UIColor lightGrayColor]
-                                   forState:UIControlStateNormal];
-             numberCount --;
-
-             self.countdownButton.enabled = NO;
-         }}];
-    
-    /*
-        别忘了Weak-Strong dance!
-     */
-    
-    self.countdownButton.rac_command = [[RACCommand alloc]
-                                   initWithSignalBlock:^RACSignal *(id input) {
-                                       @strongify(self);
-
-                                       // 这里实在是想不明白：理论上说RACCommand在这里返回的信号一般都是网络请求然后自己手写的信号，
-                                       // 那为什么在这里返回的是一个时钟信号？然后就会触发时钟信号开始send next了？
-                                       // 我返回一个自己创造的信号结果不会触发任何东西。
-
-                                       // send network request here.
-                                       
-                                       NSMutableDictionary *params =
-                                       [NSMutableDictionary dictionary];
-                                       params[@"phone"] =
-                                       @([self.cellPhoneNumberTextField.text integerValue]);
-                                       [DDBaseService GET:params
-                                                      url:@"account/requestAuthCode"
-                                                    block:^(id responseObject) {
-                                                        
-                                                        // do nothing, 或者以后还要判断短信是否发送成功?
-                                                        
-                                                        
-                                                    }];
-                                       return countdownSignal;
-                                   }];
-
-
-    // ## STEP 2: 三大信号的整合 -> 成为self.nextStepButton的RACCommand
-    RACSignal *countdownButtonIsCountingSignal = [self.countdownButton.rac_command executing];
-
-    RACSignal *validPasswordInputSignal =
-    [self.passwordTextField.rac_textSignal
-     map:^id(NSString  *value) {
-         if ([value isPassword]) {
-             return @(YES);
-         }else{
-             return @(NO);
-         }
-    }];
-
-    RACSignal *validCellPhoneNumberInputSignal =
-    [self.cellPhoneNumberTextField.rac_textSignal
-     map:^id(NSString *value) {
-         if ([value isMobileNumber]) {
-             return @(YES);
-         }else{
-             return @(NO);
-         }
-    }];
-
-    RACSignal *signupButtonEnabledSignal =
-    [RACSignal combineLatest:@[validCellPhoneNumberInputSignal,
-                               validPasswordInputSignal,
-                               countdownButtonIsCountingSignal]
-                      reduce:^NSNumber *(NSNumber *isValidCellPhoneNumber,
-                                         NSNumber *isValidPassword,
-                                         NSNumber *countdownButtonIsCounting){
-                          // BOOL BOOL BOOL -> BOOL
-                          /*
-                                nextButton是enabled的条件：必须同时满足以下三个条件：
-                                 - 用户输入了正常的手机号码;
-                                 - 用户输入了合适格式的密码（不能太短）
-                                 - "获取验证码"的倒计时还没有结束
-                           */
-                          return @([isValidCellPhoneNumber boolValue] &&
-                                   [isValidPassword boolValue] &&
-                                   [countdownButtonIsCounting boolValue]);
-                      }];
-
-    // 更换nextStepButton的RACCommand，之前的那个肯定被auto release掉了
-    self.nextStepButton.rac_command =
-    [[RACCommand alloc] initWithEnabled:signupButtonEnabledSignal
-                            signalBlock:^RACSignal *(id input) {
-
-                                return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-
-                                    // send signup request here:
-                                    
-                                    
-                                    
-                                    // if success:
-                                    [subscriber sendNext:@"Yeah! You have signed up!"];
-                                    [subscriber sendCompleted];
-
-                                    // if failure
-//                                    [subscriber sendError:[NSError errorWithDomain:
-//                                                           @"You cannot sign up!"
-//                                                                              code:234
-//                                                                          userInfo:@{@"哎呀我注册不了啊":@"hehe😄"}]];
-
-                                    return [RACDisposable disposableWithBlock:^{
-                                        // cancel network request here.
-                                    }];
-                                }];
-
-                            }];
-
-    [[[self.nextStepButton.rac_command executionSignals] switchToLatest] subscribeNext:^(id x) {
-        // 注册成功
-
-        NSString *prompt = [NSString stringWithFormat:@"%@", x];
-        [Hud text:prompt];
-    }];
-
-    [[self.nextStepButton.rac_command errors] subscribeNext:^(id x) {
-        // 注册失败
-        [Hud text:@"注册失败！"];
-    }];
-
-
-    // 倒计时结束，提示用户重新获取验证码
-    [[[countdownButtonIsCountingSignal
-     map:^NSNumber *(NSNumber *value) {
-         // BOOL -> BOOL
-         // 逻辑取反
-         return @(![value boolValue]);
-         
-    }] skip:1]
-     subscribeNext:^(NSNumber *value) {
-        if ([value boolValue] == YES) {
-            [Hud text:@"超时未输入验证码，请重新获取"];
+        
+        if ([self.cellPhoneNumberTextField.text isMobileNumber] == NO) {
+            [Hud error:@"手机格式不正确"];
+        }
+        else{
+            [Hud activity:@"验证手机中..."];
+            NSMutableDictionary *params = [NSMutableDictionary dictionary];
+            params[@"phone"] = @([self.cellPhoneNumberTextField.text integerValue]);
+            [DDBaseService GET:params url:URL_ACHasRegistered
+                         block:^(id responseObject) {
+                             [Hud dismiss];
+                             if (responseObject != nil) {
+                                 NSDictionary *dataDict = responseObject[@"data"];
+                                 BOOL hasRegistered = [dataDict[@"has_registered"] boolValue];
+                                 if (hasRegistered) {
+                                     [self updateUIForLogin];
+                                     [self.hasRegisteredRequestDisposable dispose];
+                                     
+                                     [[self.nextStepButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
+                                         [self sendLoginRequest];
+                                     }];
+                                 }else{
+                                     [self updateUIForSignup];
+                                     [self.hasRegisteredRequestDisposable dispose];
+                                     
+                                     [[self.nextStepButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
+                                         [self sendRegisterRequest];
+                                     }];
+                                 }
+                             }
+                         }];
         }
     }];
+}
 
+- (void)sendLoginRequest
+{
+    /*
+         － 手机号码输入正确
+         － 密码符合客户端的格式要求（不能太短，etc.)
+     */
+    if ([self.cellPhoneNumberTextField.text isMobileNumber] == NO) {
+        [Hud error:@"手机格式不正确"];
+    }
+    else if ([self.passwordTextField.text isPassword] == NO){
+        [Hud error:@"密码格式不正确"];
+    }
+    else{
+        NSMutableDictionary *params = [NSMutableDictionary dictionary];
+        params[@"phone"]            = self.cellPhoneNumberTextField.text;
+        params[@"password"]         = self.passwordTextField.text;
+        
+        [Hud activity:@"登录中..."];
+        @weakify(self);
+        [DDBaseService POST:params
+                        url:URL_ACLogin
+                      block:^(id responseObject) {
+                          @strongify(self);
+                          
+                          [Hud dismiss];
 
+                          if (responseObject != nil) {
+                              
+                              NSDictionary *dataDict = responseObject[@"data"];
+                              NSInteger status = [dataDict[@"status"] integerValue];
+                              // data: {status: 1, 正常 2， 密码错误 3，未注册}
+                              switch (status) {
+                                  case 1:
+                                  {
+                                      PIEUserModel *user =
+                                      [MTLJSONAdapter modelOfClass:[PIEUserModel class]
+                                                fromJSONDictionary:dataDict error:nil];
+                                      
+                                      // 用返回的数据为user模型设置token
+                                      user.token = responseObject[@"token"];
+                                      
+                                      // 将用户信息存入沙盒
+                                      [DDUserManager updateCurrentUserFromUser:user];
+                                      
+                                      // 跳转到主控制器
+                                      [self switchToMainTabbarController];
+                                      
+                                      break;
+                                  }
+                                  case 2:
+                                  {
+                                      // 密码错误
+                                      [Hud error:@"密码错误，请重新输入"];
+                                      break;
+                                  }
+                              }
+                          }
+                      }];
+    }
+}
+
+- (void)sendRegisterRequest
+{
+    
+    // ## STEP 2: 发送"注册"请求
+    if ([self.cellPhoneNumberTextField.text isMobileNumber] == NO) {
+        [Hud error:@"手机号码格式不正确"];
+    }else if ([self.passwordTextField.text isPassword] == NO){
+        [Hud error:@"密码格式不正确"];
+    }else{
+        NSMutableDictionary *params = [NSMutableDictionary dictionary];
+
+        params[@"type"]             = @"mobile";
+        params[@"mobile"]           = self.cellPhoneNumberTextField.text;
+        params[@"code"]             = self.verificationCodeTextField.text;
+        params[@"password"]         = self.passwordTextField.text;
+       
+        [Hud activity:@"注册中..."];
+        
+        [DDBaseService
+         POST:params
+         url:URL_ACRegister
+         block:^(id responseObject) {
+             [Hud dismiss];
+             if (responseObject == nil) {
+                 [Hud error:@"注册失败: 网络异常或者是验证码错误"];
+             }else{
+             
+                 NSDictionary *dataDict = responseObject[@"data"];
+                 
+                 PIEUserModel *user =
+                 [MTLJSONAdapter modelOfClass:[PIEUserModel class]
+                           fromJSONDictionary:dataDict error:nil];
+                 
+                 // 用返回的数据为user模型设置token
+                 user.token = responseObject[@"token"];
+                 
+                 // 将用户信息存入沙盒
+                 [DDUserManager updateCurrentUserFromUser:user];
+                 
+                 // 跳转到主控制器
+                 [self switchToMainTabbarController];
+                 
+             }
+         }];
+    }
+    
+   
 }
 
 
@@ -750,24 +495,53 @@
 #pragma mark - update UI
 - (void)updateUIForLogin{
 
-    [Hud text:@"该手机号已注册, 准备进入登陆页面"];
     CGFloat padding = 8;
     [self.logoImageViewTopConstraint setOffset:- (CGRectGetHeight(self.cellPhoneNumberTextField.frame) + padding)];
     [self.nextStepButtonTopConstraint setOffset: ( 2 * (padding + CGRectGetHeight(self.cellPhoneNumberTextField.frame)) + 37)];
+    
+    // “忘记密码”这个passwordTextField的button只会在登陆的页面才会出现
+    UIButton *forgotPasswordButton = ({
+        UIButton *button = [[UIButton alloc] init];
 
+        [button setBackgroundImage:[UIImage imageNamed:@"pie_launch_forgetPassword"]
+                          forState:UIControlStateNormal];
+        
+        [[button rac_signalForControlEvents:UIControlEventTouchUpInside]
+         subscribeNext:^(id x) {
+             
+             // push to another view controller: PIEForgotPasswordViewController_Black
+             PIEForgotPasswordViewController_Black *forgotPasswordVC =
+             [[PIEForgotPasswordViewController_Black alloc] init];
+             
+             [[AppDelegate APP].baseNav pushViewController:forgotPasswordVC
+                                                  animated:YES];
+             
+             
+             [Hud text:@"Oops! You forgot your password?"];
+             
+             
+        }];
+        [button sizeToFit];
+        
+        button;
+    });
+    
+    
+    self.passwordTextField.rightViewMode = UITextFieldViewModeAlways;
     [UIView animateWithDuration:0.3 animations:^{
         [self.view layoutIfNeeded];
-        self.logoImageView.hidden = YES;
+        self.logoImageView.hidden     = YES;
         self.passwordTextField.hidden = NO;
+        self.passwordTextField.rightView     = forgotPasswordButton;
+
         [self.nextStepButton setTitle:@"登陆" forState:UIControlStateNormal];
     }];
-
 
 }
 
 - (void)updateUIForSignup{
-    [Hud text:@"该手机号码尚未注册，进入注册流程。。。"];
 
+    
     CGFloat padding = 8;
     [self.logoImageViewTopConstraint setOffset:- (CGRectGetHeight(self.cellPhoneNumberTextField.frame) + padding)];
     [self.nextStepButtonTopConstraint setOffset: ( 2 * (padding + CGRectGetHeight(self.cellPhoneNumberTextField.frame)) + 37)];
@@ -779,6 +553,79 @@
         self.verificationCodeTextField.hidden = NO;
         [self.nextStepButton setTitle:@"注册" forState:UIControlStateNormal];
     }];
+    
+    // ## Step 1: 获取验证码->倒计时 + 发网络请求，一系列的信号处理
+    
+    // RAC-signal binding
+    const NSInteger numberLimit   = 10;
+    __block NSInteger numberCount = numberLimit;
+    
+    /*
+     weak-strong dance!
+     */
+    @weakify(self);
+    RACSignal *countdownSignal =
+    [[[[RACSignal interval:1.0f onScheduler:[RACScheduler mainThreadScheduler]]
+       startWith:@"Let's GO!"]
+      take:numberLimit + 1]
+     doNext:^(id x) {
+         @strongify(self);
+         
+         /*
+          WARNING: 第一个信号是@“Let's GO!”，接下来的信号才是NSDate
+          */
+         
+         /*
+          Side-effects warning!
+          每次send 'Next'， 就果断地就地修改状态，即使不惜在信号中`掺杂`了副作用！
+          */
+         if (numberCount == 0) {
+             [self.countdownButton setTitle:@"重新发送" forState:UIControlStateNormal];
+             self.countdownButton.enabled = YES;
+             [self.countdownButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+             
+             // set to default value
+             numberCount = numberLimit;
+         }else{
+             
+             NSString *countdownString = [NSString stringWithFormat:@"%ld秒后重发", numberCount];
+             
+             [self.countdownButton setTitle:countdownString
+                                   forState:UIControlStateNormal];
+             [self.countdownButton setTitleColor:[UIColor lightGrayColor]
+                                        forState:UIControlStateNormal];
+             numberCount --;
+             
+             self.countdownButton.enabled = NO;
+         }}];
+    
+    /*
+     别忘了Weak-Strong dance!
+     */
+    
+    self.countdownButton.rac_command = [[RACCommand alloc]
+                                        initWithSignalBlock:^RACSignal *(id input) {
+                                            @strongify(self);
+                                            // send network request here.
+                                            
+                                            NSMutableDictionary *params =
+                                            [NSMutableDictionary dictionary];
+                                            params[@"phone"] =
+                                            @([self.cellPhoneNumberTextField.text integerValue]);
+                                            [DDBaseService GET:params
+                                                           url:@"account/requestAuthCode"
+                                                         block:^(id responseObject) {
+                                                             
+                                                             // do nothing, 或者以后还要判断短信是否发送成功?
+                                                         }];
+                                            
+                                            return countdownSignal;
+                                        }];
+    
+    [[self.countdownButton.rac_command executing] subscribeNext:^(id x) {
+        NSLog(@"%@", x);
+    }];
+
 
 }
 
@@ -802,4 +649,3 @@
 
 
 
-// ========================================================

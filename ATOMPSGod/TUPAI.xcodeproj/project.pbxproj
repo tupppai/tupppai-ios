@@ -165,6 +165,7 @@
 		9085EB771C3B5DCC002EA462 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9085EB681C3B5D99002EA462 /* Result.framework */; };
 		9085EB781C3B5DCC002EA462 /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9085EB681C3B5D99002EA462 /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		90B3A07C1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B3A07B1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m */; };
+		90B8775C1C3E010F0087E9D7 /* PIEForgotPasswordViewController_Black.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B8775B1C3E010F0087E9D7 /* PIEForgotPasswordViewController_Black.m */; };
 		90C60B271C2FD9A300D7F51D /* PIEAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90C60B261C2FD9A300D7F51D /* PIEAvatarView.m */; };
 		90EC3D5C1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC3D5B1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m */; };
 		90EC3D5F1C2A78E20085A7BE /* PIEProceedingAskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC3D5E1C2A78E20085A7BE /* PIEProceedingAskViewController.m */; };
@@ -1011,6 +1012,8 @@
 		9085EB581C3B5D99002EA462 /* Result.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Result.xcodeproj; path = ../../ReactiveCocoa/Carthage/Checkouts/Result/Result.xcodeproj; sourceTree = "<group>"; };
 		90B3A07A1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECellIconStatusChangedNotificationKey.h; sourceTree = "<group>"; };
 		90B3A07B1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECellIconStatusChangedNotificationKey.m; sourceTree = "<group>"; };
+		90B8775A1C3E010F0087E9D7 /* PIEForgotPasswordViewController_Black.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEForgotPasswordViewController_Black.h; sourceTree = "<group>"; };
+		90B8775B1C3E010F0087E9D7 /* PIEForgotPasswordViewController_Black.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEForgotPasswordViewController_Black.m; sourceTree = "<group>"; };
 		90C60B251C2FD9A300D7F51D /* PIEAvatarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEAvatarView.h; sourceTree = "<group>"; };
 		90C60B261C2FD9A300D7F51D /* PIEAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEAvatarView.m; sourceTree = "<group>"; };
 		90EC3D5A1C2A78D10085A7BE /* PIEProceedingToHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEProceedingToHelpViewController.h; sourceTree = "<group>"; };
@@ -2947,6 +2950,8 @@
 				E9FF8A3A1B71CCB70010D2C4 /* DDInputPhoneFPVC.m */,
 				E900919B1B71E04E004623E4 /* DDInputAuthcodePwdFPVC.h */,
 				E900919C1B71E04E004623E4 /* DDInputAuthcodePwdFPVC.m */,
+				90B8775A1C3E010F0087E9D7 /* PIEForgotPasswordViewController_Black.h */,
+				90B8775B1C3E010F0087E9D7 /* PIEForgotPasswordViewController_Black.m */,
 			);
 			name = forgetPasswordBabe;
 			sourceTree = "<group>";
@@ -4799,6 +4804,7 @@
 				E94B03221B7C74E500863C6F /* PIECommentTextView.m in Sources */,
 				F4155D461BB3DA1300A0B045 /* PIEHighlightableLabel.m in Sources */,
 				F439303F1BE4BD75006C9437 /* MRProgressOverlayView.m in Sources */,
+				90B8775C1C3E010F0087E9D7 /* PIEForgotPasswordViewController_Black.m in Sources */,
 				F41BA0D51C0EDCE800979D43 /* UIView+MJExtension.m in Sources */,
 				E900919D1B71E04E004623E4 /* DDInputAuthcodePwdFPVC.m in Sources */,
 				5C6CEF2A1AF18BA800F06213 /* ATOMConstant.m in Sources */,
