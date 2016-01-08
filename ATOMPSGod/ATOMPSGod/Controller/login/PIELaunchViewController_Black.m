@@ -403,12 +403,10 @@
         params[@"password"]         = self.passwordTextField.text;
         
         [Hud activity:@"登录中..."];
-        @weakify(self);
+
         [DDBaseService POST:params
                         url:URL_ACLogin
                       block:^(id responseObject) {
-                          @strongify(self);
-                          
                           [Hud dismiss];
 
                           if (responseObject != nil) {
@@ -430,7 +428,7 @@
                                       [DDUserManager updateCurrentUserFromUser:user];
                                       
                                       // 跳转到主控制器
-                                      [self switchToMainTabbarController];
+                                      [[AppDelegate APP] switchToMainTabbarController];
                                       
                                       break;
                                   }
@@ -486,7 +484,7 @@
                  [DDUserManager updateCurrentUserFromUser:user];
                  
                  // 跳转到主控制器
-                 [self switchToMainTabbarController];
+                 [[AppDelegate APP] switchToMainTabbarController];
              }
          }];
     }
@@ -642,16 +640,7 @@
 }
 
 #pragma mark - private helpers
-- (void)switchToMainTabbarController
-{
-    [self.navigationController setViewControllers:[NSArray array]];
-    /*
-        使用懒加载，重新创建一次mainTabBarController
-     */
-    [AppDelegate APP].mainTabBarController = nil;
-    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
-    ;
-}
+
 
 - (void)thirdPartyLoginWithType:(SSDKPlatformType)platformType
 {
@@ -672,9 +661,8 @@
              }
              // 保存这个userModel到本地，并且直接跳入主页面, 不需要向后台发送openId
              [DDUserManager updateCurrentUserFromUser:userModel];
-             [self switchToMainTabbarController];
+             [[AppDelegate APP] switchToMainTabbarController];
          }
-         
      }];
 }
 

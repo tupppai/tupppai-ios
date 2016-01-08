@@ -78,4 +78,8 @@ extern NSInteger const kPIETouristUID;
 extern NSString * const PIETouristOpenIdKey;
 
 
+/** 游客没有登录态，被服务器截获的时候就会发出这个通知，通知游客用户输入手机号码转正 */
+extern NSString * const PIENetworkCallForFurtherRegistrationNotification;
+
+
 @end

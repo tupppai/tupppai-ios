@@ -39,7 +39,6 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     [self setupUI];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -271,7 +270,6 @@
     
     [Hud text:@"Gonna send request to reset password"];
     
-    
     if ([self.cellPhoneTextField.text isMobileNumber] == NO) {
         [Hud error:@"手机号码格式不对"];
     }else if ([self.resetPasswordTextField.text isPassword] == NO){
@@ -283,11 +281,9 @@
         params[@"new_pwd"]          = self.resetPasswordTextField.text;
         
         [Hud activity:@"修改秘密并登陆中..."];
-        @weakify(self);
         [DDBaseService POST:params
                         url:URL_ACResetPassword
                       block:^(id responseObject) {
-                          @strongify(self);
                           
                           [Hud dismiss];
                           
@@ -307,28 +303,13 @@
                               
                               
                               // switch to mainVC
-                              [self switchToMainTabbarController];
+                              [[AppDelegate APP] switchToMainTabbarController];
                               
                           }
-                          
-                          
                           
                       }];
     }
     
-    
-    
-}
-
-
-
-#pragma mark - private helpers
-- (void)switchToMainTabbarController
-{
-    [self.navigationController setViewControllers:[NSArray array]];
-    [AppDelegate APP].mainTabBarController = nil;
-    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
-    ;
 }
 
 @end

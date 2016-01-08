@@ -22,6 +22,8 @@
 #import "PIEProceedingViewController2.h"
 #import "PIEEliteViewController.h"
 #import "PIELaunchViewController_Black.h"
+#import "PIEBindCellphoneViewController.h"
+
 
 @interface PIETabBarController ()<UITabBarControllerDelegate>
 @property (nonatomic, strong) DDNavigationController *navigation_new;
@@ -55,6 +57,13 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NetworkSignOutRET) name:@"NetworkSignOutCall" object:nil];
     // for testing PIEEliteViewController2:
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DoUploadJob:) name:@"UploadCall" object:nil];
+    
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(touristWantsFurtherRegistration)
+     name:PIENetworkCallForFurtherRegistrationNotification
+     object:nil];
+
 }
 
 - (void)setupTitle {
@@ -71,6 +80,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkSignOutCall"object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkErrorCall" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkShowInfoCall" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:PIENetworkCallForFurtherRegistrationNotification
+                                                  object:nil];
 }
 -(void) errorOccuredRET {
     BOOL shouldShowError = NO;
@@ -107,6 +118,8 @@
         }
     }];
 }
+
+#pragma mark - Notification methods
 -(void) NetworkSignOutRET {
     SIAlertView *alertView = [KShareManager NetworkErrorOccurredAlertView];
     [alertView addButtonWithTitle:@"好的"
@@ -116,14 +129,26 @@
                               [ATOMUserDAO clearUsers];
                               //清空当前用户
                               [DDUserManager clearCurrentUser];
-                              self.navigationController.viewControllers = @[];
-                              PIELaunchViewController_Black *lvc = [[PIELaunchViewController_Black alloc] init];
-                              [AppDelegate APP].window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
+                              
+                              [[AppDelegate APP] switchToLoginViewController];
+                              
                           }];
     alertView.transitionStyle = SIAlertViewTransitionStyleDropDown;
     [alertView show];
+    
+    
 }
 
+- (void) touristWantsFurtherRegistration{
+    PIEBindCellphoneViewController *bindCellphoneVC =
+    [[PIEBindCellphoneViewController alloc] init];
+    
+    bindCellphoneVC.blurStyle = UIBlurEffectStyleDark;
+    
+    [self presentViewController:bindCellphoneVC
+                       animated:YES
+                     completion:nil];
+}
 
 - (void)configureTabBarController {
     

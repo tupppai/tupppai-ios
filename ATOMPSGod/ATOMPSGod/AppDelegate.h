@@ -17,5 +17,12 @@
 
 + (AppDelegate *)APP;
 
+
+- (void)switchToMainTabbarController;
+
+- (void)switchToLoginViewController;
+
+
+
 @end
 

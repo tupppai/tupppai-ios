@@ -127,10 +127,15 @@ static DDSessionManager *_shareHTTPSessionManager = nil;
                                         @"ret == 2，游客没有登陆态\n openid = %@", openID];
                     [Hud text:prompt];
                     
+                    // post notification
+                    [[NSNotificationCenter defaultCenter]
+                     postNotificationName:PIENetworkCallForFurtherRegistrationNotification
+                     object:nil
+                     userInfo:nil];
                 }
                 else{
                     // 正常用户 -> "没有登录态" == "重新登录"
-//                    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkSignOutCall" object:nil]];
+                    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkSignOutCall" object:nil]];
                     [Hud text:@"ret == 2, 正常用户没有登录态"];
                 }
             } else if (ret != 1) {
