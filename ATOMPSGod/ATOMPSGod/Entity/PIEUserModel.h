@@ -87,7 +87,6 @@ typedef enum {
 /**
  *  关注作品数
  */
-
 @property (nonatomic, assign) NSInteger attentionWorkNumber;
 
 @end

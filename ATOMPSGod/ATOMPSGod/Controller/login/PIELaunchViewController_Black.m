@@ -14,6 +14,7 @@
 #import "PIEUserModel.h"
 #import "MTLJSONAdapter.h"
 #import "PIEForgotPasswordViewController_Black.h"
+#import "DDShareManager.h"
 
 
 /* Variables */
@@ -49,6 +50,13 @@
     [self setupUI];
 
     [self sendHasRegisteredRequest];
+    
+    
+    // test, unbind current openID
+    
+//    [DDBaseService POST:nil url:@"auth/unbind" block:^(id responseObject) {
+//        
+//    }];
 
 }
 
@@ -271,10 +279,10 @@
 
         button;
     });
-    [[sinaButton rac_signalForControlEvents:UIControlEventTouchUpInside]
-     subscribeNext:^(id x) {
-         [Hud text:@"还没做好新浪微博的登录接口！"];
-    }];
+    [sinaButton addTarget:self
+                   action:@selector(sinaWeiboLogin)
+         forControlEvents:UIControlEventTouchUpInside];
+    
 
     // QQ
     UIButton *QQButton = ({
@@ -297,12 +305,11 @@
         button;
 
     });
+    [QQButton addTarget:self
+                 action:@selector(QQLogin)
+       forControlEvents:UIControlEventTouchUpInside];
 
-    [[QQButton rac_signalForControlEvents:UIControlEventTouchUpInside]
-     subscribeNext:^(id x) {
-          [Hud text:@"还没做好QQ的登录接口！"];
-    }];
-
+    
     // wechat
     UIButton *wechatButton = ({
         UIButton *button = [[UIButton alloc] init];
@@ -324,11 +331,9 @@
 
         button;
     });
-    [[wechatButton rac_signalForControlEvents:UIControlEventTouchUpInside]
-     subscribeNext:^(id x) {
-         [Hud text:@"还没做好微信的登录接口！"];
-
-     }];
+    [wechatButton addTarget:self
+                     action:@selector(wechatLogin)
+           forControlEvents:UIControlEventTouchUpInside];
 
 }
 
@@ -482,12 +487,9 @@
                  
                  // 跳转到主控制器
                  [self switchToMainTabbarController];
-                 
              }
          }];
     }
-    
-   
 }
 
 
@@ -546,7 +548,7 @@
         [self.nextStepButton setTitle:@"注册" forState:UIControlStateNormal];
     }];
     
-    // ## Step 1: 获取验证码->倒计时 + 发网络请求，一系列的信号处理
+    // ## Step 1:倒计时button的制作， 获取验证码->倒计时 + 发网络请求，一系列的信号处理
     
     // RAC-signal binding
     const NSInteger numberLimit   = 10;
@@ -625,14 +627,161 @@
     [self.view endEditing:YES];
 }
 
+
+#pragma mark - Third-party login
+- (void)QQLogin{
+    [self thirdPartyLoginWithType:SSDKPlatformTypeQQ];
+}
+
+- (void)wechatLogin{
+    [self thirdPartyLoginWithType:SSDKPlatformTypeWechat];
+}
+
+- (void)sinaWeiboLogin{
+    [self thirdPartyLoginWithType:SSDKPlatformTypeSinaWeibo];
+}
+
 #pragma mark - private helpers
 - (void)switchToMainTabbarController
 {
     [self.navigationController setViewControllers:[NSArray array]];
+    /*
+        使用懒加载，重新创建一次mainTabBarController
+     */
     [AppDelegate APP].mainTabBarController = nil;
     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
     ;
 }
+
+- (void)thirdPartyLoginWithType:(SSDKPlatformType)platformType
+{
+    @weakify(self);
+    [DDShareManager
+     authorize2:platformType
+     withBlock:^(SSDKUser *user) {
+         @strongify(self);
+         if (user != nil) {
+             
+             PIEUserModel *userModel = [self fetchUserFromOpenId:user.uid
+                                                    platformType:platformType];
+             if (userModel == nil) {
+                 /*
+                    openID之前没有走完完整的注册流程，用户处于游客状态，遂制作一个临时的本地UserModel
+                  */
+                 userModel = [self adHocUserFromShareSDK:user];
+             }
+             // 保存这个userModel到本地，并且直接跳入主页面, 不需要向后台发送openId
+             [DDUserManager updateCurrentUserFromUser:userModel];
+             [self switchToMainTabbarController];
+         }
+         
+     }];
+}
+
+- (PIEUserModel *)adHocUserFromShareSDK:(SSDKUser *)user
+{
+    PIEUserModel *userModel = [[PIEUserModel alloc] init];
+    /*
+        为临时用户的模型纪录存储从ShareSDK中传递过来的openID(-> NSUserDefaults)
+     */
+    userModel.uid      = kPIETouristUID;
+    userModel.nickname = user.nickname;
+    userModel.avatar   = user.icon;
+    userModel.mobile   = user.nickname;
+//    userModel.openid   = user.uid;
+    
+    [[NSUserDefaults standardUserDefaults] setObject:user.uid
+                                              forKey:PIETouristOpenIdKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    return userModel;
+}
+
+- (PIEUserModel *)fetchUserFromOpenId:(NSString *)openId
+                          platformType:(SSDKPlatformType)platformType
+{
+    // NSString SSDKPlatformType -> PIEUserModel, nil if openId is not registered yet
+    // 检测这个第三方登录得到的用户openID，是否在之前已经绑定手机号、完成了一整个的登录流程
+    // GET, auth/qq, auth/weixin, auth/weibo
+    // 参数： openid
+    
+    NSString *authURL;
+    switch (platformType) {
+        case SSDKPlatformTypeSinaWeibo: {
+            authURL = @"auth/weibo";
+            break;
+        }
+        case SSDKPlatformTypeWechat: {
+            authURL = @"auth/weixin";
+            break;
+        }
+        case SSDKPlatformTypeQQ: {
+            authURL = @"auth/qq";
+            break;
+        }
+    }
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"openid"] = openId;
+
+    __block PIEUserModel *userModel;
+    [DDBaseService
+     GET:params
+     url:authURL
+     block:^(id responseObject) {
+         /*
+          openId未注册：
+          {
+          "ret": 1,
+          "code": 0,
+          "info": "",
+          "data": {
+          "user_obj": false,
+          "is_register": 0
+          },
+          "token": "d0abe2ae188d1a2a7538ca23dcd57d0bb85c4df2",
+          "debug": 1
+          }
+          
+          */
+         
+         /*
+          openId已注册：
+          {
+          "ret": 1,
+          "code": 0,
+          "info": "",
+          "data": {
+          "user_obj": { ... }, (PIEUserModel *)
+          "is_register": 1
+          },
+          "token": "d0abe2ae188d1a2a7538ca23dcd57d0bb85c4df2",
+          "debug": 1
+          }
+          
+          */
+         
+         NSDictionary *dataDict  = responseObject[@"data"];
+         BOOL openIdIsRegistered = [dataDict[@"is_register"] boolValue];
+         
+         if (openIdIsRegistered == NO) {
+             /* 
+                全新的游客态，数据库没有这个用户的相应记录
+              */
+             userModel = nil;
+         }else{
+             userModel = [MTLJSONAdapter
+                          modelOfClass:[PIEUserModel class]
+                          fromJSONDictionary:dataDict[@"user_obj"]
+                          error:nil];
+             userModel.token = responseObject[@"token"];
+         }
+     }];
+    
+    return userModel;
+}
+
+
 
 @end
 

@@ -181,7 +181,7 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     }
     
     if (shouldUpdate) {
-        
+
         [DDUserManager DDGetUserInfoAndUpdateMe:^(BOOL success) {
             if (success) {
                 [self updateViewsWithData];
