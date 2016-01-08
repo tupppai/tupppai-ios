@@ -26,7 +26,7 @@
 #define CGOriginY(rect)                 rect.origin.y
 
 #define baseURLString @"http://api.qiupsdashen.com/"
-#define baseURLString_Test @"http://api.loiter.us/"
+#define baseURLString_Test @"http://tapi.tupppai.com/"
 
 #define _S(number) (number*[ATOMBaseView scaleInView])
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self

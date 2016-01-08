@@ -1,73 +1,31 @@
 //
-//  ATOMUploadImage.m
-//  ATOMPSGod
+//  LeesinUploadManager.m
+//  TUPAI
 //
-//  Created by atom on 15/3/16.
-//  Copyright (c) 2015年 ATOM. All rights reserved.
+//  Created by chenpeiwei on 1/8/16.
+//  Copyright © 2016 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIEUploadManager.h"
+#import "LeesinUploadManager.h"
+#import "LeesinUploadModel.h"
 #import "PIEModelImageInfo.h"
+#import <Photos/Photos.h>
 
-@interface PIEUploadManager()
+@interface LeesinUploadManager()
+@property (nonatomic,strong)    NSData* dataImage1;
+@property (nonatomic,strong)    NSData* dataImage2;
 @end
-
-static dispatch_once_t onceToken;
-static PIEUploadModel *shareModel;
-
-@implementation PIEUploadManager
+@implementation LeesinUploadManager
 
 
-- (instancetype)initWithShareModel {
-    self = [super init];
-    if (self) {
-        _model = [PIEUploadModel new];
-        _model.content = shareModel.content;
-//        _model.ID = shareModel.ID;
-        _model.ask_id = shareModel.ask_id;
-        _model.channel_id = shareModel.channel_id;
-        _model.type = shareModel.type;
-        _model.imageArray = [shareModel.imageArray copy];
-        _model.tagIDArray = shareModel.tagIDArray;
-        [self resetShareModel];
-    }
-    return self;
-}
 
-+(PIEUploadModel *)shareModel {
-    dispatch_once(&onceToken, ^{
-        shareModel = [PIEUploadModel new];
-    });
-    return shareModel;
-}
-
-- (void)resetShareModel {
-    [shareModel reset];
-}
-
-
-- (NSURLSessionDataTask *)UploadImage:(NSData *)data WithBlock:(void (^)(PIEModelImageInfo *, NSError *))block {
-    return [[DDSessionManager shareHTTPSessionManager] POST:@"image/upload" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-        [formData appendPartWithFileData:data name:@"images" fileName:@"iOSTupaiApp" mimeType:@"image/png"];
-    } success:^(NSURLSessionDataTask *task, id responseObject) {
-        PIEModelImageInfo *imageInfomation = [MTLJSONAdapter modelOfClass:[PIEModelImageInfo class] fromJSONDictionary:responseObject error:NULL];
-        if (block) {
-            block(imageInfomation, nil);
-        }
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        if (block) {
-            block(nil, error);
-        }
-    }];
-}
-
-- (void)uploadImage:(NSData*)imageData Type:(NSString*)type withBlock:(void (^)(CGFloat percentage,BOOL success))block {
+- (void)uploadImage:(NSData*)imageData Type:(PIEPageType)type withBlock:(void (^)(CGFloat percentage,BOOL success))block {
     if (imageData) {
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         NSString* url = [NSString stringWithFormat:@"%@%@",[DDSessionManager shareHTTPSessionManager].baseURL,@"image/upload"];
         AFHTTPRequestOperation *requestOperation = [manager POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
             NSString* attachmentName = @"ask_attachment";
-            if ([type isEqualToString: @"reply"]) {
+            if (type == PIEPageTypeReply) {
                 attachmentName = @"reply_attachment";
             }
             [formData appendPartWithFileData:imageData name:attachmentName fileName:@"AppTupaiImage_iOS" mimeType:@"image/png"];
@@ -85,7 +43,7 @@ static PIEUploadModel *shareModel;
     } else {
         [Hud error:@"图片数据为空"];
     }
-
+    
 }
 
 - (void)upload:(void (^)(CGFloat percentage,BOOL success))block {
@@ -96,34 +54,59 @@ static PIEUploadModel *shareModel;
         [Hud text:@"正在后台上传你的作品..."];
     }
     
-    NSData* dataImage1;
-    NSData* dataImage2;
-    
-    UIImage* image1;
-    UIImage* image2;
+    PHAsset* asset1;
+    PHAsset* asset2;
     NSInteger uploadCount = self.model.imageArray.count;
     
+    
+    
     if (uploadCount == 1) {
-        image1 = [self.model.imageArray objectAtIndex:0];
-        dataImage1 = UIImageJPEGRepresentation(image1, 1.0);
-        CGFloat ratio1 = image1.size.height/image1.size.width;
+        asset1 = [self.model.imageArray objectAtIndex:0];
+        CGFloat ratio1 = [self getAssetRatio:asset1];
         [self.model.ratioArray addObject:@(ratio1)];
-    } else if (uploadCount >= 2) {
-        image1 = [self.model.imageArray objectAtIndex:0];
-        image2 = [self.model.imageArray objectAtIndex:1];
-        CGFloat ratio1 = image1.size.height/image1.size.width;
-        CGFloat ratio2 = image2.size.height/image2.size.width;
         
-        dataImage1 = UIImageJPEGRepresentation(image1, 1.0);
-        dataImage2 = UIImageJPEGRepresentation(image2, 1.0);
-
+        [self getImageDataFromAsset:asset1 block:^(NSData *data) {
+            _dataImage1 = data;
+            [self uploadStep2:^(CGFloat percentage, BOOL success) {
+                if (block) {
+                    block(percentage,success);
+                }
+            }];
+        }];
+    } else if (uploadCount >= 2) {
+        asset1 = [self.model.imageArray objectAtIndex:0];
+        asset2 = [self.model.imageArray objectAtIndex:1];
+        
+        CGFloat ratio1 = [self getAssetRatio:asset1];
+        CGFloat ratio2 = [self getAssetRatio:asset2];
         [self.model.ratioArray addObject:@(ratio1)];
         [self.model.ratioArray addObject:@(ratio2)];
+
+        [self getImageDataFromAsset:asset1 block:^(NSData *data) {
+            _dataImage1 = data;
+            [self getImageDataFromAsset:asset2 block:^(NSData *data) {
+                _dataImage2 = data;
+                [self uploadStep2:^(CGFloat percentage, BOOL success) {
+                    if (block) {
+                        block(percentage,success);
+                    }
+                }];
+            }];
+        }];
+     
+        
     }
     
+}
+
+
+- (void) uploadStep2:(void (^)(CGFloat percentage,BOOL success))block {
+    
+    NSInteger uploadCount = self.model.imageArray.count;
+
     if (self.model.type == PIEPageTypeAsk) {
         if (uploadCount == 1) {
-            [self uploadImage:dataImage1 Type:@"ask" withBlock:^(CGFloat percentage,BOOL success) {
+            [self uploadImage:_dataImage1 Type:PIEPageTypeAsk withBlock:^(CGFloat percentage,BOOL success) {
                 block(percentage/1.1,NO);
                 if (success) {
                     [self uploadRestInfo:^(BOOL success) {
@@ -134,11 +117,11 @@ static PIEUploadModel *shareModel;
                 }
             }];
         } else  if (uploadCount >= 2) {
-            [self uploadImage:dataImage1 Type:@"ask" withBlock:^(CGFloat percentage,BOOL success) {
+            [self uploadImage:_dataImage1 Type:PIEPageTypeAsk withBlock:^(CGFloat percentage,BOOL success) {
                 if (!success) {
                     block(percentage/(100/45),NO);
                 } else {
-                    [self uploadImage:dataImage2 Type:@"ask" withBlock:^(CGFloat percentage,BOOL success) {
+                    [self uploadImage:_dataImage2 Type:PIEPageTypeAsk withBlock:^(CGFloat percentage,BOOL success) {
                         block(0.45+percentage/2,NO);
                         if (success) {
                             [self uploadRestInfo:^(BOOL success) {
@@ -154,7 +137,7 @@ static PIEUploadModel *shareModel;
         }
     } else if (self.model.type == PIEPageTypeReply) {
         if (uploadCount >= 1) {
-            [self uploadImage:dataImage1 Type:@"reply" withBlock:^(CGFloat percentage,BOOL success) {
+            [self uploadImage:_dataImage1 Type:PIEPageTypeReply withBlock:^(CGFloat percentage,BOOL success) {
                 block(percentage/1.1,NO);
                 if (success) {
                     [self uploadReplyRestInfo:^(BOOL success) {
@@ -166,19 +149,30 @@ static PIEUploadModel *shareModel;
             }];
         }
     }
-    
+
 }
 
-
+- (CGFloat)getAssetRatio:(PHAsset*)asset{
+    return asset.pixelHeight/asset.pixelWidth;
+}
+- (void)getImageDataFromAsset:(PHAsset*)asset block:(void (^)(NSData *data))block {
+    PHImageManager *imageManager = [PHImageManager defaultManager];
+    [imageManager requestImageDataForAsset:asset options:nil resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+//        NSLog(@"imageData %@,%@,%zd,%@",imageData,dataUTI,orientation,info);
+        if (block) {
+            block(imageData);
+        }
+    }];
+}
 - (void)uploadRestInfo:(void (^) (BOOL success))block {
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:self.model.uploadIdArray forKey:@"upload_ids"];
     [param setObject:self.model.ratioArray forKey:@"ratios"];
     [param setObject:self.model.content forKey:@"desc"];
-    [param setObject:self.model.tagIDArray forKey:@"tag_ids"];
+//    [param setObject:self.model.tagIDArray forKey:@"tag_ids"];
     [param setObject:@(self.model.channel_id) forKey:@"category_id"];
-
-
+    
+    
     [DDService ddSaveAsk:param withBlock:^(NSInteger newImageID) {
         if (newImageID!=-1) {
             [Hud success:@"求P成功"];
@@ -202,7 +196,7 @@ static PIEUploadModel *shareModel;
     [param setObject:@(self.model.channel_id) forKey:@"category_id"];
     [param setObject:@(self.model.ask_id) forKey:@"ask_id"];
     
-
+    
     [DDService ddSaveReply:param withBlock:^(BOOL success) {
         if (success) {
             [Hud success:@"上传作品成功"];
@@ -217,6 +211,7 @@ static PIEUploadModel *shareModel;
         }
     }];
 }
+
 
 
 @end

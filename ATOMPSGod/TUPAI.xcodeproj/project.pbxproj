@@ -291,6 +291,17 @@
 		F4092DDE1C3A3D3B003A3AD7 /* UIScrollView+SLKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F4092DD41C3A3D3B003A3AD7 /* UIScrollView+SLKAdditions.m */; };
 		F4092DDF1C3A3D3B003A3AD7 /* UIView+SLKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F4092DD61C3A3D3B003A3AD7 /* UIView+SLKAdditions.m */; };
 		F409AA871BAFE39000736B0D /* PIEModelImage.m in Sources */ = {isa = PBXBuildFile; fileRef = F409AA861BAFE39000736B0D /* PIEModelImage.m */; };
+		F4106CF71C3F8B66006A23B9 /* LeesinAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4106CBE1C3F8B66006A23B9 /* LeesinAssetCell.m */; };
+		F4106CF81C3F8B66006A23B9 /* LeesinBottomBar.m in Sources */ = {isa = PBXBuildFile; fileRef = F4106CC01C3F8B66006A23B9 /* LeesinBottomBar.m */; };
+		F4106CF91C3F8B66006A23B9 /* LeesinCheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4106CC21C3F8B66006A23B9 /* LeesinCheckmarkView.m */; };
+		F4106CFA1C3F8B66006A23B9 /* LeesinMissionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4106CC41C3F8B66006A23B9 /* LeesinMissionCell.m */; };
+		F4106CFB1C3F8B66006A23B9 /* LeesinMissionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4106CC51C3F8B66006A23B9 /* LeesinMissionCell.xib */; };
+		F4106CFC1C3F8B66006A23B9 /* LeesinPreviewBar.m in Sources */ = {isa = PBXBuildFile; fileRef = F4106CC71C3F8B66006A23B9 /* LeesinPreviewBar.m */; };
+		F4106CFD1C3F8B66006A23B9 /* LeesinTextInputBar.m in Sources */ = {isa = PBXBuildFile; fileRef = F4106CC91C3F8B66006A23B9 /* LeesinTextInputBar.m */; };
+		F4106CFE1C3F8B66006A23B9 /* LeesinTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4106CCB1C3F8B66006A23B9 /* LeesinTextView.m */; };
+		F4106CFF1C3F8B66006A23B9 /* LeesinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4106CCD1C3F8B66006A23B9 /* LeesinViewController.m */; };
+		F4106D0A1C3F8B66006A23B9 /* PHAsset+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = F4106CE81C3F8B66006A23B9 /* PHAsset+Addition.m */; };
+		F4106D101C3F96CC006A23B9 /* PIEPageVM+Selected.m in Sources */ = {isa = PBXBuildFile; fileRef = F4106D0F1C3F96CC006A23B9 /* PIEPageVM+Selected.m */; };
 		F41205B11C1986D500EE959F /* baozou.png in Resources */ = {isa = PBXBuildFile; fileRef = F41205B01C1986D500EE959F /* baozou.png */; };
 		F41366951BBE73D900EE0C4E /* PIEReplyCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F41366941BBE73D900EE0C4E /* PIEReplyCollectionCell.xib */; };
 		F413B0501C167AB500F9BA27 /* PIECarouselPageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F413B04E1C167AB500F9BA27 /* PIECarouselPageTableViewCell.m */; };
@@ -371,6 +382,8 @@
 		F44A52791C0BF91500707281 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F44A52781C0BF91500707281 /* libxml2.2.tbd */; };
 		F44A527F1C0C335000707281 /* PIEActionSheet_Report.m in Sources */ = {isa = PBXBuildFile; fileRef = F44A527E1C0C335000707281 /* PIEActionSheet_Report.m */; };
 		F44A52821C0C336500707281 /* PIEActionSheet_PS.m in Sources */ = {isa = PBXBuildFile; fileRef = F44A52811C0C336500707281 /* PIEActionSheet_PS.m */; };
+		F44FAA3E1C3FAF9300AC60B2 /* LeesinUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F44FAA3D1C3FAF9300AC60B2 /* LeesinUploadManager.m */; };
+		F44FAA411C3FB04C00AC60B2 /* LeesinUploadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F44FAA401C3FB04C00AC60B2 /* LeesinUploadModel.m */; };
 		F45057271C2BDA5B00F7A302 /* PIECategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F45057261C2BDA5B00F7A302 /* PIECategoryModel.m */; };
 		F45D8FA41BD87CFD005946E8 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F45D8F881BD87CFD005946E8 /* TencentOpenAPI.framework */; };
 		F45D8FA51BD87CFD005946E8 /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F45D8F891BD87CFD005946E8 /* TencentOpenApi_IOS_Bundle.bundle */; };
@@ -682,8 +695,8 @@
 		5C4C70C71AB6E20800358989 /* DDUserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDUserManager.m; path = common/DDUserManager.m; sourceTree = "<group>"; };
 		5C4C70D21AB6FD5700358989 /* DDPageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDPageManager.h; path = ../login/DDPageManager.h; sourceTree = "<group>"; };
 		5C4C70D31AB6FD5700358989 /* DDPageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDPageManager.m; path = ../login/DDPageManager.m; sourceTree = "<group>"; };
-		5C4C70D41AB6FD5700358989 /* PIEUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEUploadManager.h; sourceTree = "<group>"; };
-		5C4C70D51AB6FD5700358989 /* PIEUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEUploadManager.m; sourceTree = "<group>"; };
+		5C4C70D41AB6FD5700358989 /* PIEUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIEUploadManager.h; path = login/PIEUploadManager.h; sourceTree = "<group>"; };
+		5C4C70D51AB6FD5700358989 /* PIEUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIEUploadManager.m; path = login/PIEUploadManager.m; sourceTree = "<group>"; };
 		5C4F5BDA1AA555F900226F64 /* PIENewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIENewViewController.h; path = homepage/PIENewViewController.h; sourceTree = "<group>"; };
 		5C4F5BDB1AA555F900226F64 /* PIENewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIENewViewController.m; path = homepage/PIENewViewController.m; sourceTree = "<group>"; };
 		5C51B2551AB908D200F442A6 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -1111,6 +1124,27 @@
 		F4092DD61C3A3D3B003A3AD7 /* UIView+SLKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SLKAdditions.m"; sourceTree = "<group>"; };
 		F409AA851BAFE39000736B0D /* PIEModelImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEModelImage.h; sourceTree = "<group>"; };
 		F409AA861BAFE39000736B0D /* PIEModelImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEModelImage.m; sourceTree = "<group>"; };
+		F4106CBD1C3F8B66006A23B9 /* LeesinAssetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeesinAssetCell.h; sourceTree = "<group>"; };
+		F4106CBE1C3F8B66006A23B9 /* LeesinAssetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeesinAssetCell.m; sourceTree = "<group>"; };
+		F4106CBF1C3F8B66006A23B9 /* LeesinBottomBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeesinBottomBar.h; sourceTree = "<group>"; };
+		F4106CC01C3F8B66006A23B9 /* LeesinBottomBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeesinBottomBar.m; sourceTree = "<group>"; };
+		F4106CC11C3F8B66006A23B9 /* LeesinCheckmarkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeesinCheckmarkView.h; sourceTree = "<group>"; };
+		F4106CC21C3F8B66006A23B9 /* LeesinCheckmarkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeesinCheckmarkView.m; sourceTree = "<group>"; };
+		F4106CC31C3F8B66006A23B9 /* LeesinMissionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeesinMissionCell.h; sourceTree = "<group>"; };
+		F4106CC41C3F8B66006A23B9 /* LeesinMissionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeesinMissionCell.m; sourceTree = "<group>"; };
+		F4106CC51C3F8B66006A23B9 /* LeesinMissionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LeesinMissionCell.xib; sourceTree = "<group>"; };
+		F4106CC61C3F8B66006A23B9 /* LeesinPreviewBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeesinPreviewBar.h; sourceTree = "<group>"; };
+		F4106CC71C3F8B66006A23B9 /* LeesinPreviewBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeesinPreviewBar.m; sourceTree = "<group>"; };
+		F4106CC81C3F8B66006A23B9 /* LeesinTextInputBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeesinTextInputBar.h; sourceTree = "<group>"; };
+		F4106CC91C3F8B66006A23B9 /* LeesinTextInputBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeesinTextInputBar.m; sourceTree = "<group>"; };
+		F4106CCA1C3F8B66006A23B9 /* LeesinTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeesinTextView.h; sourceTree = "<group>"; };
+		F4106CCB1C3F8B66006A23B9 /* LeesinTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeesinTextView.m; sourceTree = "<group>"; };
+		F4106CCC1C3F8B66006A23B9 /* LeesinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeesinViewController.h; sourceTree = "<group>"; };
+		F4106CCD1C3F8B66006A23B9 /* LeesinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeesinViewController.m; sourceTree = "<group>"; };
+		F4106CE71C3F8B66006A23B9 /* PHAsset+Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PHAsset+Addition.h"; sourceTree = "<group>"; };
+		F4106CE81C3F8B66006A23B9 /* PHAsset+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PHAsset+Addition.m"; sourceTree = "<group>"; };
+		F4106D0E1C3F96CC006A23B9 /* PIEPageVM+Selected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PIEPageVM+Selected.h"; path = "../../ViewModel/PIEPageVM+Selected.h"; sourceTree = "<group>"; };
+		F4106D0F1C3F96CC006A23B9 /* PIEPageVM+Selected.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "PIEPageVM+Selected.m"; path = "../../ViewModel/PIEPageVM+Selected.m"; sourceTree = "<group>"; };
 		F41205B01C1986D500EE959F /* baozou.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = baozou.png; path = ../baozou.png; sourceTree = "<group>"; };
 		F41366941BBE73D900EE0C4E /* PIEReplyCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEReplyCollectionCell.xib; sourceTree = "<group>"; };
 		F413B04D1C167AB500F9BA27 /* PIECarouselPageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECarouselPageTableViewCell.h; sourceTree = "<group>"; };
@@ -1262,6 +1296,10 @@
 		F44A527E1C0C335000707281 /* PIEActionSheet_Report.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEActionSheet_Report.m; sourceTree = "<group>"; };
 		F44A52801C0C336500707281 /* PIEActionSheet_PS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEActionSheet_PS.h; sourceTree = "<group>"; };
 		F44A52811C0C336500707281 /* PIEActionSheet_PS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEActionSheet_PS.m; sourceTree = "<group>"; };
+		F44FAA3C1C3FAF9300AC60B2 /* LeesinUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeesinUploadManager.h; sourceTree = "<group>"; };
+		F44FAA3D1C3FAF9300AC60B2 /* LeesinUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeesinUploadManager.m; sourceTree = "<group>"; };
+		F44FAA3F1C3FB04C00AC60B2 /* LeesinUploadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeesinUploadModel.h; sourceTree = "<group>"; };
+		F44FAA401C3FB04C00AC60B2 /* LeesinUploadModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeesinUploadModel.m; sourceTree = "<group>"; };
 		F45057251C2BDA5B00F7A302 /* PIECategoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECategoryModel.h; sourceTree = "<group>"; };
 		F45057261C2BDA5B00F7A302 /* PIECategoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECategoryModel.m; sourceTree = "<group>"; };
 		F45D8F881BD87CFD005946E8 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
@@ -1909,15 +1947,6 @@
 			path = message;
 			sourceTree = "<group>";
 		};
-		5C4C70CF1AB6FD5700358989 /* login */ = {
-			isa = PBXGroup;
-			children = (
-				5C4C70D41AB6FD5700358989 /* PIEUploadManager.h */,
-				5C4C70D51AB6FD5700358989 /* PIEUploadManager.m */,
-			);
-			path = login;
-			sourceTree = "<group>";
-		};
 		5C4F5BD61AA551BF00226F64 /* Elite */ = {
 			isa = PBXGroup;
 			children = (
@@ -2087,6 +2116,8 @@
 				5C0D282F1ACA83C400491452 /* PIEEntityCommentReply.m */,
 				F49B9FD51C3112B100B65881 /* PIEUploadModel.h */,
 				F49B9FD61C3112B100B65881 /* PIEUploadModel.m */,
+				F44FAA3F1C3FB04C00AC60B2 /* LeesinUploadModel.h */,
+				F44FAA401C3FB04C00AC60B2 /* LeesinUploadModel.m */,
 			);
 			name = model;
 			path = Entity;
@@ -2302,6 +2333,7 @@
 		5CDB05EA1AA400410089121E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				F4106CB31C3F8B66006A23B9 /* leesin */,
 				F402F0EF1BE884CC004988B4 /* search */,
 				0EF2F5B71C15497A00F27D61 /* Channel */,
 				5C54DF171AB9738E00BDE34D /* common */,
@@ -2326,6 +2358,10 @@
 			children = (
 				F4B02E191BECAAE200406A55 /* DDHotDetailManager.h */,
 				F4B02E1A1BECAAE200406A55 /* DDHotDetailManager.m */,
+				5C4C70D41AB6FD5700358989 /* PIEUploadManager.h */,
+				5C4C70D51AB6FD5700358989 /* PIEUploadManager.m */,
+				F44FAA3C1C3FAF9300AC60B2 /* LeesinUploadManager.h */,
+				F44FAA3D1C3FAF9300AC60B2 /* LeesinUploadManager.m */,
 				F4EC11191BCE6B70002D1DCF /* 2.1 */,
 				5C4C70C61AB6E20800358989 /* DDUserManager.h */,
 				5C4C70C71AB6E20800358989 /* DDUserManager.m */,
@@ -2336,7 +2372,6 @@
 				5C0F04D61ADCB021002003AE /* message */,
 				5C5DDBC81AD3D0C200F4B845 /* person */,
 				5C54DF2A1AB99F0900BDE34D /* homepage */,
-				5C4C70CF1AB6FD5700358989 /* login */,
 			);
 			name = Manager;
 			path = Model;
@@ -3023,6 +3058,35 @@
 				F4092DD61C3A3D3B003A3AD7 /* UIView+SLKAdditions.m */,
 			);
 			path = slack;
+			sourceTree = "<group>";
+		};
+		F4106CB31C3F8B66006A23B9 /* leesin */ = {
+			isa = PBXGroup;
+			children = (
+				F4106CBD1C3F8B66006A23B9 /* LeesinAssetCell.h */,
+				F4106CBE1C3F8B66006A23B9 /* LeesinAssetCell.m */,
+				F4106CBF1C3F8B66006A23B9 /* LeesinBottomBar.h */,
+				F4106CC01C3F8B66006A23B9 /* LeesinBottomBar.m */,
+				F4106CC11C3F8B66006A23B9 /* LeesinCheckmarkView.h */,
+				F4106CC21C3F8B66006A23B9 /* LeesinCheckmarkView.m */,
+				F4106CC31C3F8B66006A23B9 /* LeesinMissionCell.h */,
+				F4106CC41C3F8B66006A23B9 /* LeesinMissionCell.m */,
+				F4106CC51C3F8B66006A23B9 /* LeesinMissionCell.xib */,
+				F4106CC61C3F8B66006A23B9 /* LeesinPreviewBar.h */,
+				F4106CC71C3F8B66006A23B9 /* LeesinPreviewBar.m */,
+				F4106CC81C3F8B66006A23B9 /* LeesinTextInputBar.h */,
+				F4106CC91C3F8B66006A23B9 /* LeesinTextInputBar.m */,
+				F4106CCA1C3F8B66006A23B9 /* LeesinTextView.h */,
+				F4106CCB1C3F8B66006A23B9 /* LeesinTextView.m */,
+				F4106CCC1C3F8B66006A23B9 /* LeesinViewController.h */,
+				F4106CCD1C3F8B66006A23B9 /* LeesinViewController.m */,
+				F4106CE71C3F8B66006A23B9 /* PHAsset+Addition.h */,
+				F4106CE81C3F8B66006A23B9 /* PHAsset+Addition.m */,
+				F4106D0E1C3F96CC006A23B9 /* PIEPageVM+Selected.h */,
+				F4106D0F1C3F96CC006A23B9 /* PIEPageVM+Selected.m */,
+			);
+			name = leesin;
+			path = newInput;
 			sourceTree = "<group>";
 		};
 		F41BA04C1C0E9A0F00979D43 /* tag */ = {
@@ -4110,6 +4174,7 @@
 				F4E72E791C070D6A0056791D /* PIECarousel_ItemView.xib in Resources */,
 				F4EC112B1BCF5604002D1DCF /* PIENotificationReplyTableViewCell.xib in Resources */,
 				F4E5F5CD1BD923E000AB8B31 /* PIEEliteHotAskTableViewCell.xib in Resources */,
+				F4106CFB1C3F8B66006A23B9 /* LeesinMissionCell.xib in Resources */,
 				F45D8FAF1BD87CFD005946E8 /* ShareSDKUI.bundle in Resources */,
 				3B11C0441BA27ADB00B87165 /* PIENewReplyTableCell.xib in Resources */,
 				F41BA0D11C0EDCE800979D43 /* MJRefresh.bundle in Resources */,
@@ -4244,6 +4309,7 @@
 				F4E5F5FB1BD9D2E100AB8B31 /* AFURLRequestSerialization.m in Sources */,
 				F4B02E181BECA7E200406A55 /* DDMsgPushSettingTableCell.m in Sources */,
 				E9ED35861B80F62F00B93BE5 /* UIScrollView+EmptyDataSet.m in Sources */,
+				F4106CF91C3F8B66006A23B9 /* LeesinCheckmarkView.m in Sources */,
 				F4D9F6CF1BBFDDE10023A53B /* PIEBangView.m in Sources */,
 				F41FF0E31BDDFCE800566A12 /* JTSAnimatedGIFUtility.m in Sources */,
 				5C67FB2D1AB2C509004EFF05 /* ATOMCustomCopperView.m in Sources */,
@@ -4268,6 +4334,7 @@
 				3BD87D081B9E8888003B2310 /* PIECarouselViewController.m in Sources */,
 				F465C6FC1C294EAE00D8A410 /* PIEChannelDetailLatestPSCell.m in Sources */,
 				0E54C7891C1E8F5E00F431AC /* PIEProceedingAskTableViewCell.m in Sources */,
+				F4106CF71C3F8B66006A23B9 /* LeesinAssetCell.m in Sources */,
 				F41BA0D41C0EDCE800979D43 /* UIScrollView+MJRefresh.m in Sources */,
 				F4F28F251C23AE9B0067F2E4 /* UIButton+WebCache.m in Sources */,
 				F45057271C2BDA5B00F7A302 /* PIECategoryModel.m in Sources */,
@@ -4291,6 +4358,7 @@
 				5CDB06361AA428BD0089121E /* View+MASAdditions.m in Sources */,
 				F4EC10FC1BCE591A002D1DCF /* PIENotificationCommentTableViewCell.m in Sources */,
 				5C83A88F1AC66F910071A024 /* POPCustomAnimation.mm in Sources */,
+				F4106CFE1C3F8B66006A23B9 /* LeesinTextView.m in Sources */,
 				5C7861161AAF4C9400E87C77 /* PIEMyReplyViewController.m in Sources */,
 				5C54DF231AB9772000BDE34D /* PIEPageModel.m in Sources */,
 				E991EF0B1B735D0500025108 /* DDIntroVC.m in Sources */,
@@ -4371,6 +4439,7 @@
 				F4F28F2A1C23AE9B0067F2E4 /* UIImageView+WebCache.m in Sources */,
 				F4EC11111BCE5A73002D1DCF /* PIENotificationReplyTableViewCell.m in Sources */,
 				0EF2F5C51C154A5700F27D61 /* PIEChannelBannerCell.m in Sources */,
+				F4106CFA1C3F8B66006A23B9 /* LeesinMissionCell.m in Sources */,
 				F4E72E731C070C6C0056791D /* PIECustomViewFromXib.m in Sources */,
 				5CDB06061AA405A40089121E /* UIColor+iOS7.m in Sources */,
 				F4275A1D1BE0B9ED00BBE7E4 /* PIEMyFollowViewController.m in Sources */,
@@ -4422,6 +4491,7 @@
 				F41BA0CE1C0EDCE800979D43 /* MJRefreshGifHeader.m in Sources */,
 				5CDB06041AA405A40089121E /* UIColor+HSB.m in Sources */,
 				F4EC11231BCF456E002D1DCF /* PIENotificationVM.m in Sources */,
+				F44FAA411C3FB04C00AC60B2 /* LeesinUploadModel.m in Sources */,
 				5C561A7F1AB7CAA90052D4D5 /* ATOMCreateTable.m in Sources */,
 				5C4AE3EF1AAED6520020E102 /* PIEFriendFansTableCell.m in Sources */,
 				F4AE73C61BBA988900734BCB /* PIEFriendReplyViewController.m in Sources */,
@@ -4477,6 +4547,7 @@
 				F4C705DF1C0995840057AA6A /* PIEImageView_BlurBG.m in Sources */,
 				F47EF0871C031FF500BFB442 /* VVBlurPresenter.m in Sources */,
 				E99D2F571B1C7E8D000D7784 /* UIImage+Masking.m in Sources */,
+				F4106D101C3F96CC006A23B9 /* PIEPageVM+Selected.m in Sources */,
 				F4F72C231BCD13D6002FF05A /* PIEShareView.m in Sources */,
 				F41BA0551C0E9E7300979D43 /* PIETagModel.m in Sources */,
 				F43930411BE4BD75006C9437 /* MRStopButton.m in Sources */,
@@ -4506,6 +4577,7 @@
 				5CDB06051AA405A40089121E /* UIColor+HSL.m in Sources */,
 				F41FF0E41BDDFCE800566A12 /* JTSImageInfo.m in Sources */,
 				F4E680631BDC73F500A4F199 /* PIEProceedingShareSheetView.m in Sources */,
+				F4106CFF1C3F8B66006A23B9 /* LeesinViewController.m in Sources */,
 				E9D739131B79F200008CE562 /* BadgeStyle.m in Sources */,
 				F439303B1BE4BD75006C9437 /* MRActivityIndicatorView.m in Sources */,
 				5C84062C1ABA67CC00068F35 /* JSONKit.m in Sources */,
@@ -4514,6 +4586,7 @@
 				F4155D461BB3DA1300A0B045 /* PIEHighlightableLabel.m in Sources */,
 				F439303F1BE4BD75006C9437 /* MRProgressOverlayView.m in Sources */,
 				F41BA0D51C0EDCE800979D43 /* UIView+MJExtension.m in Sources */,
+				F4106D0A1C3F8B66006A23B9 /* PHAsset+Addition.m in Sources */,
 				E900919D1B71E04E004623E4 /* DDInputAuthcodePwdFPVC.m in Sources */,
 				5C6CEF2A1AF18BA800F06213 /* ATOMConstant.m in Sources */,
 				5C436A811AB02E7300D14608 /* PIENotificationTypeTableViewCell.m in Sources */,
@@ -4531,11 +4604,13 @@
 				F4E5F5F51BD9D2E100AB8B31 /* AFHTTPRequestOperation.m in Sources */,
 				0EF2F5CC1C154A6200F27D61 /* PIEChannelViewController.m in Sources */,
 				F46CBC7D1C2CDE0D00A64474 /* PIELoveButton.m in Sources */,
+				F4106CFD1C3F8B66006A23B9 /* LeesinTextInputBar.m in Sources */,
 				90EC3D5F1C2A78E20085A7BE /* PIEProceedingAskViewController.m in Sources */,
 				E90C7C601B20A0FC00CF0E6A /* KShareManager.m in Sources */,
 				F46117E11BAD1101001A6F1A /* IQToolbar.m in Sources */,
 				E99D2F561B1C7E8D000D7784 /* UIImage+Filtering.m in Sources */,
 				F4092DDE1C3A3D3B003A3AD7 /* UIScrollView+SLKAdditions.m in Sources */,
+				F4106CFC1C3F8B66006A23B9 /* LeesinPreviewBar.m in Sources */,
 				5C83A88C1AC66F910071A024 /* POPAnimator.mm in Sources */,
 				E9F890911B86C4AB0057ECBF /* FMDatabaseQueue.m in Sources */,
 				F46117DF1BAD1101001A6F1A /* IQBarButtonItem.m in Sources */,
@@ -4579,6 +4654,7 @@
 				F4E5308F1BD4985400FAA65D /* PIESignUpSheetView.m in Sources */,
 				F4F28F2E1C23F70A0067F2E4 /* PIESearchUserViewController.m in Sources */,
 				F4F72BEE1BCB4EF7002FF05A /* FXBlurView.m in Sources */,
+				F44FAA3E1C3FAF9300AC60B2 /* LeesinUploadManager.m in Sources */,
 				E9CBFF4C1B5214FB00DC8ED4 /* SIAlertView.m in Sources */,
 				5C561A501AB7C8210052D4D5 /* PIEModelImageInfo.m in Sources */,
 				F4C705E21C0998750057AA6A /* PIEImageView_blur.m in Sources */,
@@ -4622,6 +4698,7 @@
 				E942898B1B5B374B00ED26E4 /* HexColors.m in Sources */,
 				5C31018A1AAE9B5700EF529B /* PIEAccountBindingView.m in Sources */,
 				F43930461BE4BD75006C9437 /* MRMethodCopier.m in Sources */,
+				F4106CF81C3F8B66006A23B9 /* LeesinBottomBar.m in Sources */,
 				F4F9FFC91BFC849A00032FDE /* SMPageControl.m in Sources */,
 				F4207AE01C044A20004B1978 /* PIESearchUserSimpleCollectionCell.m in Sources */,
 				5C84063B1ABADA8B00068F35 /* PIEPageDAO.m in Sources */,

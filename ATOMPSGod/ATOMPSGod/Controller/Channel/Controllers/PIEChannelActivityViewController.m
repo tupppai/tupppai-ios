@@ -134,10 +134,8 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 #pragma mark - UI components setup
 - (void)configureTableView
 {
-    // add to subView
     [self.view addSubview:self.tableView];
     
-    // set constraints
     UIEdgeInsets padding = UIEdgeInsetsMake(0, 0, 0, 0);
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view).with.insets(padding);
@@ -147,10 +145,8 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 
 - (void)configureGoPsButton
 {
-    // add to subView
     [self.view addSubview:self.goPsButton];
     
-    // set constraints
     [self.goPsButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(120);
         make.height.mas_equalTo(32);

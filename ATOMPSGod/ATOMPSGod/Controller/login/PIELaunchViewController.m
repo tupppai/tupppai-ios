@@ -168,8 +168,6 @@
                     [dic setObject:@(sdkUser.gender) forKey:@"gender"];
                     [dic setObject:sdkUser.nickname forKey:@"nickname"];
                     [[NSUserDefaults standardUserDefaults]setObject:dic forKey:@"SdkUser"];
-//                    [DDUserManager currentUser].signUpType = type;
-//                    [DDUserManager currentUser].sdkUser = sdkUser;
                     DDCreateProfileVC *cpvc = [DDCreateProfileVC new];
                     [self.navigationController pushViewController:cpvc animated:YES];
                 }
