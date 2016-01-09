@@ -34,7 +34,8 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     [self setupUI];
-    
+
+    [self setupHasRegisteredNetworkRequest];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -236,15 +237,7 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
     });
     self.nextStepButton = nextStepButton;
  
-    self.hasRegisteredNetworkRequestDisposable =
-    [[nextStepButton
-      rac_signalForControlEvents:UIControlEventTouchUpInside]
-     subscribeNext:^(id x) {
-         @strongify(self);
-//         [self updateUIForRebindingCellphoneNumber];
-         
-         [self updateUIForRegisteringNewUser];
-    }];
+    
     
     
     
@@ -310,16 +303,12 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
                       }];
          return countdownSignal;
      }];
-    
-
-    
-    
 }
 #pragma mark - UI transforming
 /** 第三方登录的用户之前已经注册了手机号，现在重新绑定 */
 - (void)updateUIForRebindingCellphoneNumber
 {
-    [Hud text:@"updateUIForBindingCellphoneNumber"];
+
     
     [self.furtherRegistrationView
      mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -345,8 +334,6 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
 /** 为第三方用户注册一个全新的账号 */
 - (void)updateUIForRegisteringNewUser
 {
-    [Hud text:@"updateUIForRegisteringNewUser"];
-    
     [self.furtherRegistrationView
      mas_updateConstraints:^(MASConstraintMaker *make) {
          make.height.mas_equalTo(381);
@@ -365,6 +352,163 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
                          self.verificationCodeTextField.hidden = NO;
                          self.passwordTextField.hidden = NO;
                      }];
+}
+
+#pragma mark - Network request setup
+- (void)setupHasRegisteredNetworkRequest
+{
+    @weakify(self);
+    self.hasRegisteredNetworkRequestDisposable =
+    [[self.nextStepButton
+      rac_signalForControlEvents:UIControlEventTouchUpInside]
+     subscribeNext:^(id x) {
+         @strongify(self);
+         if ([self.cellphoneNumberTextField.text isMobileNumber] == NO) {
+             [Hud error:@"手机格式不正确"];
+         }
+         else{
+             // send network request: account/hasRegistered
+
+             NSMutableDictionary *params = [NSMutableDictionary dictionary];
+             
+             params[@"phone"] = self.cellphoneNumberTextField.text;
+             [Hud activity:@"验证手机中..."];
+             
+             [DDBaseService GET:params
+                            url:URL_ACHasRegistered
+                          block:^(id responseObject) {
+                              [Hud dismiss];
+                              
+                              if (responseObject != nil) {
+                                  // we have the correct response
+                                  
+                                  NSDictionary *dataDict = responseObject[@"data"];
+                                  BOOL hasRegistered = [dataDict[@"has_registered"] boolValue];
+                                  
+                                  if (hasRegistered) {
+                                      [self.hasRegisteredNetworkRequestDisposable
+                                       dispose];
+                                      [self updateUIForRebindingCellphoneNumber];
+                                      
+                                      [[self.nextStepButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
+                                          
+                                          [self sendRebindingCellphoneRequest];
+                                          
+                                      }];
+                                      
+                                  }else{
+                                      [self.hasRegisteredNetworkRequestDisposable
+                                       dispose];
+                                      [self updateUIForRegisteringNewUser];
+                                      
+                                      [[self.nextStepButton
+                                       rac_signalForControlEvents:
+                                       UIControlEventTouchUpInside]
+                                       subscribeNext:^(id x) {
+                                           [self sendRegisterNewUserRequest];
+                                           
+                                      }];
+                                      
+                                  }
+                              }
+                              
+                          }];
+         }
+     }];
+}
+
+
+- (void)sendRebindingCellphoneRequest
+{
+    [Hud text:@"该手机号码已注册，准备重新绑定手机号"];
+    
+    
+    if ([self.cellphoneNumberTextField.text isMobileNumber] == NO) {
+        [Hud error:@"手机号码格式不对"];
+    }else {
+        /*
+         account/register, POST, (mobile, code, openid)
+         
+         */
+        
+        NSMutableDictionary<NSString *, NSString *>
+        *params = [NSMutableDictionary dictionary];
+        params[@"mobile"] = self.cellphoneNumberTextField.text;
+        params[@"code"]   = self.verificationCodeTextField.text;
+        NSString *openid  =
+        [[NSUserDefaults standardUserDefaults] objectForKey:PIETouristOpenIdKey];
+        params[@"openid"] = openid;
+        [DDBaseService POST:params url:URL_ACRegister
+                      block:^(id responseObject) {
+                          responseObject;
+                          
+                          // if succeed in registering: switch to mainVC and store user info into sandbox
+                          
+                          //    // Finally：完成临时用户转换成正式用户的转正过程，将删除掉本地的“临时身份证”，即openid
+                          //    [[NSUserDefaults standardUserDefaults]
+                          //     removeObjectForKey:PIETouristOpenIdKey];
+                          
+                          // if params error: prompt user with specific warning.
+                      }];
+    }
+}
+
+- (void)sendRegisterNewUserRequest
+{
+    [Hud text:@"该手机号码未注册，准备开始注册流程..."];
+    
+    /*
+        account/register, POST, (mobile, code, openid, password)
+    
+     */
+    
+    if ([self.cellphoneNumberTextField.text isMobileNumber] == NO) {
+        [Hud error:@"手机号码格式不对"];
+    }else if ([self.passwordTextField.text isPassword] == NO){
+        [Hud error:@"密码格式不对，可能是太短了"];
+    }else {
+        
+        /*
+         account/register, POST, (mobile, code, openid)
+         
+         */
+        NSMutableDictionary<NSString *, NSString *>
+        *params = [NSMutableDictionary dictionary];
+        params[@"mobile"] = self.cellphoneNumberTextField.text;
+        params[@"code"]   = self.verificationCodeTextField.text;
+        params[@"password"] = self.passwordTextField.text;
+        NSString *openid  =
+        [[NSUserDefaults standardUserDefaults] objectForKey:PIETouristOpenIdKey];
+        params[@"openid"] = openid;
+        [DDBaseService POST:params url:URL_ACRegister
+                      block:^(id responseObject) {
+                          responseObject;
+                          
+                          
+                          // if succeed in registering: switch to mainVC and store user info into sandbox
+                          
+                          //    // Finally：完成临时用户转换成正式用户的转正过程，将删除掉本地的“临时身份证”，即openid
+                          //    [[NSUserDefaults standardUserDefaults]
+                          //     removeObjectForKey:PIETouristOpenIdKey];
+                          
+                          // if params error: prompt user with specific warning.
+                      }];
+
+    }
+    
+}
+- (void)sendUnbindCellphoneRequest
+{
+    [DDBaseService POST:nil url:@"auth/unbind"
+                  block:^(id responseObject) {
+                      
+                      NSString *openid =
+                      [[NSUserDefaults standardUserDefaults] objectForKey:PIETouristOpenIdKey];
+                      
+                      NSString *prompt = [NSString stringWithFormat:@"目前的第三方登录用户的openId = %@ 已经解绑手机号",openid];
+                      
+                      [Hud text:prompt];
+                  }];
 }
 
 
