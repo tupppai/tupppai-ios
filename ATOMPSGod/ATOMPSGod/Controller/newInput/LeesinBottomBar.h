@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 typedef NS_ENUM(NSUInteger, LeeSinBottomBarType) {
-    LeeSinBottomBarTypeMission,
+    LeeSinBottomBarTypeReplyMission,
+    LeeSinBottomBarTypeReplyPHAsset,
     LeeSinBottomBarTypeAsk,
-    LeeSinBottomBarTypeReply,
+    LeeSinBottomBarTypeReplyNoMissionSelection,
 };
 
 typedef NS_ENUM(NSUInteger, LeesinBottomBarRightButtonType) {

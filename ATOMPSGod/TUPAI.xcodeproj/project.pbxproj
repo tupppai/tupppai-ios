@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		0E0DDC8D1C1A64BC009A66C4 /* PIEChannelActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0DDC8C1C1A64BC009A66C4 /* PIEChannelActivityViewController.m */; };
 		0E354D3E1C340D660035785A /* UINavigationBar+Awesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E354D3D1C340D660035785A /* UINavigationBar+Awesome.m */; };
-		0E3FB9E41C155E0C0012E290 /* PIENewAskMakeUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3FB9E31C155E0C0012E290 /* PIENewAskMakeUpViewController.m */; };
+		0E3FB9E41C155E0C0012E290 /* PIENewAskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3FB9E31C155E0C0012E290 /* PIENewAskViewController.m */; };
 		0E3FB9EB1C15603A0012E290 /* PIENewReplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3FB9EA1C15603A0012E290 /* PIENewReplyViewController.m */; };
 		0E54C7871C1E8F5E00F431AC /* PIEMyAskCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E54C76A1C1E8F5E00F431AC /* PIEMyAskCollectionCell.m */; };
 		0E54C7881C1E8F5E00F431AC /* PIEMyAskCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E54C76B1C1E8F5E00F431AC /* PIEMyAskCollectionCell.xib */; };
@@ -524,6 +524,7 @@
 		F4EC11291BCF55F7002D1DCF /* PIENotificationSystemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4EC11281BCF55F7002D1DCF /* PIENotificationSystemTableViewCell.xib */; };
 		F4EC112B1BCF5604002D1DCF /* PIENotificationReplyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4EC112A1BCF5604002D1DCF /* PIENotificationReplyTableViewCell.xib */; };
 		F4F006D81BFD8ED000FD7078 /* libUMCheckUpdate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4F006D61BFD8ECF00FD7078 /* libUMCheckUpdate.a */; };
+		F4F0A1941C409EE3000DDEBB /* LeesinSwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0A1931C409EE3000DDEBB /* LeesinSwipeView.m */; };
 		F4F28F1C1C23AE9B0067F2E4 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F28EFC1C23AE9B0067F2E4 /* MKAnnotationView+WebCache.m */; };
 		F4F28F1D1C23AE9B0067F2E4 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F28EFE1C23AE9B0067F2E4 /* NSData+ImageContentType.m */; };
 		F4F28F1E1C23AE9B0067F2E4 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F28F001C23AE9B0067F2E4 /* SDImageCache.m */; };
@@ -574,8 +575,8 @@
 		0E0DDC8C1C1A64BC009A66C4 /* PIEChannelActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelActivityViewController.m; sourceTree = "<group>"; };
 		0E354D3C1C340D660035785A /* UINavigationBar+Awesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+Awesome.h"; sourceTree = "<group>"; };
 		0E354D3D1C340D660035785A /* UINavigationBar+Awesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+Awesome.m"; sourceTree = "<group>"; };
-		0E3FB9E21C155E0C0012E290 /* PIENewAskMakeUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIENewAskMakeUpViewController.h; sourceTree = "<group>"; };
-		0E3FB9E31C155E0C0012E290 /* PIENewAskMakeUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENewAskMakeUpViewController.m; sourceTree = "<group>"; };
+		0E3FB9E21C155E0C0012E290 /* PIENewAskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIENewAskViewController.h; sourceTree = "<group>"; };
+		0E3FB9E31C155E0C0012E290 /* PIENewAskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENewAskViewController.m; sourceTree = "<group>"; };
 		0E3FB9E91C15603A0012E290 /* PIENewReplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIENewReplyViewController.h; sourceTree = "<group>"; };
 		0E3FB9EA1C15603A0012E290 /* PIENewReplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENewReplyViewController.m; sourceTree = "<group>"; };
 		0E54C7691C1E8F5E00F431AC /* PIEMyAskCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEMyAskCollectionCell.h; sourceTree = "<group>"; };
@@ -1559,6 +1560,8 @@
 		F4EC112A1BCF5604002D1DCF /* PIENotificationReplyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIENotificationReplyTableViewCell.xib; sourceTree = "<group>"; };
 		F4F006D61BFD8ECF00FD7078 /* libUMCheckUpdate.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMCheckUpdate.a; sourceTree = "<group>"; };
 		F4F006D71BFD8ECF00FD7078 /* UMCheckUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMCheckUpdate.h; sourceTree = "<group>"; };
+		F4F0A1921C409EE3000DDEBB /* LeesinSwipeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeesinSwipeView.h; sourceTree = "<group>"; };
+		F4F0A1931C409EE3000DDEBB /* LeesinSwipeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeesinSwipeView.m; sourceTree = "<group>"; };
 		F4F28EFB1C23AE9B0067F2E4 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		F4F28EFC1C23AE9B0067F2E4 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		F4F28EFD1C23AE9B0067F2E4 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
@@ -1669,8 +1672,8 @@
 		0E3FB9DE1C155C680012E290 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				0E3FB9E21C155E0C0012E290 /* PIENewAskMakeUpViewController.h */,
-				0E3FB9E31C155E0C0012E290 /* PIENewAskMakeUpViewController.m */,
+				0E3FB9E21C155E0C0012E290 /* PIENewAskViewController.h */,
+				0E3FB9E31C155E0C0012E290 /* PIENewAskViewController.m */,
 				0E3FB9E91C15603A0012E290 /* PIENewReplyViewController.h */,
 				0E3FB9EA1C15603A0012E290 /* PIENewReplyViewController.m */,
 			);
@@ -3084,6 +3087,8 @@
 				F4106CE81C3F8B66006A23B9 /* PHAsset+Addition.m */,
 				F4106D0E1C3F96CC006A23B9 /* PIEPageVM+Selected.h */,
 				F4106D0F1C3F96CC006A23B9 /* PIEPageVM+Selected.m */,
+				F4F0A1921C409EE3000DDEBB /* LeesinSwipeView.h */,
+				F4F0A1931C409EE3000DDEBB /* LeesinSwipeView.m */,
 			);
 			name = leesin;
 			path = newInput;
@@ -4665,6 +4670,7 @@
 				5C8A2A1B1AAF21820064EB1C /* PIEFriendFollowingTableCell.m in Sources */,
 				5CDB06681AA45C680089121E /* DDPhoneRegisterVC.m in Sources */,
 				5C67FB271AB2B41F004EFF05 /* ATOMHeaderImageCropperViewController.m in Sources */,
+				F4F0A1941C409EE3000DDEBB /* LeesinSwipeView.m in Sources */,
 				E9FBCD2C1B69F92D00BF7096 /* DDLoginBaseVC.m in Sources */,
 				F4E5F5FD1BD9D2E100AB8B31 /* AFURLSessionManager.m in Sources */,
 				E95691AD1B22E88300DA84BB /* MTLJSONAdapter.m in Sources */,
@@ -4678,7 +4684,7 @@
 				E99D2F5D1B1C7E8D000D7784 /* UIView+Screenshot.m in Sources */,
 				F4AFCD4B1BC79A3100027940 /* UIButton+Pop.m in Sources */,
 				F46CBC801C2CE03200A64474 /* PIELoveLabel.m in Sources */,
-				0E3FB9E41C155E0C0012E290 /* PIENewAskMakeUpViewController.m in Sources */,
+				0E3FB9E41C155E0C0012E290 /* PIENewAskViewController.m in Sources */,
 				F4993CEF1BE5B32C007F9BE4 /* UIProgressView+AFNetworking.m in Sources */,
 				E94B032A1B7DE6EC00863C6F /* UIColor+PSGod.m in Sources */,
 				F409AA871BAFE39000736B0D /* PIEModelImage.m in Sources */,

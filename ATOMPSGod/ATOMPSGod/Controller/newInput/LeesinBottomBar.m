@@ -169,18 +169,22 @@
 
 -(void)setType:(LeeSinBottomBarType)type {
     _type = type;
-    if (type == LeeSinBottomBarTypeReply) {
+    if (type == LeeSinBottomBarTypeReplyPHAsset) {
         [_button_album setTitle:@"相册" forState:UIControlStateNormal];
         _button_shoot.hidden = YES;
         _label_confirmedCount.hidden = YES;
-    } else if (type == LeeSinBottomBarTypeMission) {
+    } else if (type == LeeSinBottomBarTypeReplyMission) {
         [_button_album setTitle:@"历史任务" forState:UIControlStateNormal];
         _button_shoot.hidden = YES;
         _label_confirmedCount.hidden = YES;
     } else if (type == LeeSinBottomBarTypeAsk) {
         [_button_album setTitle:@"相册" forState:UIControlStateNormal];
     }
-
+    else if (type == LeeSinBottomBarTypeReplyNoMissionSelection) {
+        [_button_album setTitle:@"相册" forState:UIControlStateNormal];
+        _button_shoot.hidden = YES;
+        _label_confirmedCount.hidden = YES;
+    }
 }
 
 

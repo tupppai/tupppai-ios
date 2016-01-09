@@ -10,7 +10,7 @@
 #import "PIEChannelTableViewCell.h"
 #import "PIEChannelBannerCell.h"
 #import "PIENewReplyViewController.h"
-#import "PIENewAskMakeUpViewController.h"
+#import "PIENewAskViewController.h"
 #import "PIERefreshTableView.h"
 #import "PIEChannelViewModel.h"
 #import "PIEChannelManager.h"
@@ -224,7 +224,7 @@
 {
     
     [self.navigationController
-     pushViewController:[[PIENewAskMakeUpViewController alloc] init]
+     pushViewController:[[PIENewAskViewController alloc] init]
      animated:YES];
 
 }

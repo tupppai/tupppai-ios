@@ -1,12 +1,12 @@
 //
-//  PIENewAskMakeUpViewController.m
+//  PIENewAskViewController.m
 //  TUPAI
 //
 //  Created by huangwei on 15/12/7.
 //  Copyright © 2015年 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIENewAskMakeUpViewController.h"
+#import "PIENewAskViewController.h"
 #import "PIERefreshCollectionView.h"
 #import "PIEPageManager.h"
 #import "PIENewAskCollectionCell.h"
@@ -23,11 +23,13 @@
 #import "DDShareManager.h"
 #import "PIEUploadVC.h"
 #import "QBImagePickerController.h"
-#import "POP.h"
 #import "DeviceUtil.h"
 #import "PIECellIconStatusChangedNotificationKey.h"
+#import "LeesinViewController.h"
+#import "MRNavigationBarProgressView.h"
+
 /* Variables */
-@interface PIENewAskMakeUpViewController ()
+@interface PIENewAskViewController ()<LeesinViewControllerDelegate>
 
 @property (nonatomic, assign) BOOL                        isfirstLoadingAsk;
 @property (nonatomic, strong) NSMutableArray              *sourceAsk;
@@ -42,30 +44,30 @@
 @property (nonatomic, strong) UIButton                    *takePhotoButton;
 @property (nonatomic, strong) QBImagePickerController     *QBImagePickerController;
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
-@property (nonatomic, strong) MASConstraint               *takePhotoButtonBottomConstraint;
+@property (nonatomic, strong) MASConstraint               *takePhotoButtonBottomMarginConstraint;
 
 @end
 
 
 /* Protocols */
-@interface PIENewAskMakeUpViewController (CollectionView)
+@interface PIENewAskViewController (CollectionView)
 <UICollectionViewDataSource, UICollectionViewDelegate, CHTCollectionViewDelegateWaterfallLayout>
 @end
-@interface PIENewAskMakeUpViewController () <QBImagePickerControllerDelegate>
+@interface PIENewAskViewController () <QBImagePickerControllerDelegate>
 @end
-@interface PIENewAskMakeUpViewController (DZNEmptyDataSet)
+@interface PIENewAskViewController (DZNEmptyDataSet)
 <DZNEmptyDataSetDelegate, DZNEmptyDataSetSource>
 @end
 
-@interface PIENewAskMakeUpViewController (PWRefreshBaseCollectionView)
+@interface PIENewAskViewController (PWRefreshBaseCollectionView)
 <PWRefreshBaseCollectionViewDelegate>
 @end
 
-@interface PIENewAskMakeUpViewController (ShareView)
+@interface PIENewAskViewController (ShareView)
 <PIEShareViewDelegate>
 @end
 
-@implementation PIENewAskMakeUpViewController
+@implementation PIENewAskViewController
 
 static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
@@ -90,6 +92,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 }
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self setupProgressView];
     [self.navigationController.navigationBar setBackgroundImage:nil
                                                   forBarMetrics:UIBarMetricsDefault];
 //    self.navigationController.hidesBarsOnSwipe = YES;
@@ -136,6 +139,11 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
                                                object:nil];
 }
 
+- (void)setupProgressView {
+    _progressView = [MRNavigationBarProgressView progressViewForNavigationController:self.navigationController];
+    _progressView.progressTintColor = [UIColor colorWithHex:0x4a4a4a andAlpha:0.93];
+}
+
 #pragma mark - UI components setup
 
 - (void)setupCollectionView_ask {
@@ -151,20 +159,12 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     // --- Autolayout constraints
     __weak typeof(self) weakSelf = self;
     [_takePhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(weakSelf.view.mas_centerX);
-        make.height.mas_equalTo(50);
-        make.width.mas_equalTo(50);
-        self.takePhotoButtonBottomConstraint =
-        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-12);
+        make.height.mas_equalTo(44);
+        make.leading.and.trailing.equalTo(self.view);
+        self.takePhotoButtonBottomMarginConstraint =
+        make.bottom.equalTo(weakSelf.view);
     }];
    
-    /*
-        Question: 为什么外面有一个channelVM传进来的话，takePhotoButton就隐藏起来了呢？
-     
-     */
-//    if (_channelVM) {
-//        self.takePhotoButton.hidden = YES;
-//    }
 }
 
 
@@ -215,8 +215,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         
         [weakSelf.collectionView_ask reloadData];
         [weakSelf.collectionView_ask.mj_header endRefreshing];
-        
-        // ???
         if (block) {
             block(YES);
         }
@@ -284,30 +282,33 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 {
     [UIView animateWithDuration:0.1
                      animations:^{
-                         [self.takePhotoButtonBottomConstraint setOffset:50.0];
-                         [self.view layoutIfNeeded];
+                         [self.takePhotoButtonBottomMarginConstraint setOffset:50.0];
+                         [self.takePhotoButton layoutIfNeeded];
                      }];
-    
-    
-    
 }
+
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-        [self.takePhotoButtonBottomConstraint setOffset:-12];
+        [self.takePhotoButtonBottomMarginConstraint setOffset:0];
         [UIView animateWithDuration:0.2
                               delay:1.0
-             usingSpringWithDamping:0
-              initialSpringVelocity:0
+             usingSpringWithDamping:0.9
+              initialSpringVelocity:0.5
                             options:UIViewAnimationOptionCurveEaseInOut
                          animations:^{
-                             [self.view layoutIfNeeded];
+                             [self.takePhotoButton layoutIfNeeded];
 
                          } completion:^(BOOL finished) {
                          }];
         
 }
 
-
+-(void)leesinViewController:(LeesinViewController *)leesinViewController uploadPercentage:(CGFloat)percentage uploadSucceed:(BOOL)success {
+    [self.progressView setProgress:percentage animated:YES];
+    if  (success) {
+        [self getRemoteAskSource:nil];
+    }
+}
 
 #pragma mark - <UICollectionViewDataSource>
 
@@ -325,7 +326,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     (PIENewAskCollectionCell *)
     [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier2
                                               forIndexPath:indexPath];
-    
     
     [cell injectSource:[_sourceAsk objectAtIndex:indexPath.row]];
     
@@ -482,8 +482,10 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
 #pragma mark - Target-actions
 - (void)takePhoto {
-    
-    [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
+    LeesinViewController* vc = [LeesinViewController new];
+    vc.type = LeesinViewControllerTypeAsk;
+    vc.delegate = self;
+    [self presentViewController:vc animated:YES completion:nil];
 }
 #pragma qb_imagePickerController delegate
 -(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
@@ -541,14 +543,12 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 - (UIButton *)takePhotoButton
 {
     if (_takePhotoButton == nil) {
-        // instantiate only for once
+        
         _takePhotoButton = [[UIButton alloc] init];
-        
-        /* Configurations */
-        
-        // --- set background image
-        [_takePhotoButton setBackgroundImage:[UIImage imageNamed:@"pie_channelDetailTakePhotoButton"]
-                                    forState:UIControlStateNormal];
+        [_takePhotoButton setTitle:@"我要求P" forState:UIControlStateNormal];
+        [_takePhotoButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        _takePhotoButton.titleLabel.font = [UIFont lightTupaiFontOfSize:14];
+        _takePhotoButton.backgroundColor = [UIColor colorWithHex:0x4a4a4a andAlpha:0.93];
         
         // --- add drop shadows
         _takePhotoButton.layer.shadowColor  = (__bridge CGColorRef _Nullable)

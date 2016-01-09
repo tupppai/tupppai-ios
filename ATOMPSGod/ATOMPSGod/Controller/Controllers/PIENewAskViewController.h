@@ -1,5 +1,5 @@
 //
-//  PIENewAskMakeUpViewController.h
+//  PIENewAskViewController.h
 //  TUPAI
 //
 //  Created by huangwei on 15/12/7.
@@ -8,6 +8,6 @@
 
 #import "DDBaseVC.h"
 #import "PIEChannelViewModel.h"
-@interface PIENewAskMakeUpViewController : DDBaseVC
+@interface PIENewAskViewController : DDBaseVC
 @property (nonatomic,strong) PIEChannelViewModel* channelVM;
 @end

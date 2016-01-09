@@ -22,21 +22,21 @@
 #import "PIEReplyCollectionViewController.h"
 #import "DDCollectManager.h"
 #import "PIECameraViewController.h"
-#import "PIENewAskMakeUpViewController.h"
+#import "PIENewAskViewController.h"
 #import "DeviceUtil.h"
 #import "PIECellIconStatusChangedNotificationKey.h"
 #import "PIEPageManager.h"
 #import "LeesinViewController.h"
 #import "PIEProceedingManager.h"
-/* Variables */
-@interface PIEChannelDetailViewController ()
+#import "MRNavigationBarProgressView.h"
+
+@interface PIEChannelDetailViewController ()<LeesinViewControllerDelegate>
 @property (nonatomic, strong) PIERefreshTableView           *tableView;
 @property (nonatomic, strong) UIView                      *bottomContainerView;
 @property (nonatomic, strong) NSMutableArray<PIEPageVM *>   *source_ask;
 @property (nonatomic, strong) NSMutableArray<PIEPageVM *>   *source_reply;
 //@property (nonatomic, strong) NSMutableArray<PIEPageVM *>   *source_toHelp;
 
-/** timeStamp: 刷新数据的时候的时间（整数10位）*/
 @property (nonatomic, assign) long long                     timeStamp;
 @property (nonatomic, assign) NSInteger                     currentPage_Reply;
 
@@ -50,7 +50,8 @@
 
 @property (nonatomic, strong) PIENewReplyTableCell *selectedReplyCell;
 
-@property (nonatomic, strong) MASConstraint *bottomContainerViewConstraint;
+@property (nonatomic, strong) MASConstraint *bottomContainerViewBottomMC;
+@property (nonatomic, strong) MRNavigationBarProgressView *progressView;
 
 @end
 
@@ -83,75 +84,64 @@ static NSString *  PIEDetailNormalIdentifier =
 static NSString * PIEDetailUsersPSCellIdentifier =
 @"PIENewReplyTableCell";
 
-#pragma mark - UI life cycles
+#pragma mark - Life cycles
 
--(BOOL)hidesBottomBarWhenPushed {
-    return YES;
-}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     [self setupData];
-    
-    [self setupNotificationObserver];
-    
-    [self configureTableView];
-    [self configurebottomContainerView];
-    
+    [self setupViews];
     [self setupGestures];
-    
-    self.title = self.currentChannelViewModel.title;
-    
     [self.tableView.mj_header beginRefreshing];
     
 }
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:PIESharedIconStatusChangedNotification
-                                                  object:nil];
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self setupProgressView];
 }
 
-#pragma mark - NSNotification Observer Setup
-- (void)setupNotificationObserver
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateShareStatus)
-                                                 name:PIESharedIconStatusChangedNotification
-                                               object:nil];
+
+-(BOOL)hidesBottomBarWhenPushed {
+    return YES;
 }
 
-#pragma mark - <UITableViewDelegate>
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+- (void)setupData
 {
-    [UIView animateWithDuration:0.1
-                     animations:^{
-                         [self.bottomContainerViewConstraint setOffset:50.0];
-                         [self.bottomContainerView layoutIfNeeded];
-                     }];
+    self.title = self.currentChannelViewModel.title;
+    _source_reply   = [NSMutableArray array];
+    _source_ask     = [NSMutableArray array];
+    //    _source_toHelp  = [NSMutableArray array];
+}
+
+- (void)setupGestures {
+    UITapGestureRecognizer* tapGestureReply =
+    [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnReply:)];
+    UILongPressGestureRecognizer* longPressGestureReply =
+    [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnReply:)];
+    [self.tableView addGestureRecognizer:longPressGestureReply];
+    [self.tableView addGestureRecognizer:tapGestureReply];
     
-    
-    
 }
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    [self.bottomContainerViewConstraint setOffset:0];
-    [UIView animateWithDuration:0.2
-                          delay:1.0
-         usingSpringWithDamping:0
-          initialSpringVelocity:0
-                        options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^{
-                         [self.view layoutIfNeeded];
-                         
-                     } completion:^(BOOL finished) {
-                     }];
-
+- (void)setupViews {
+    [self.view addSubview:self.tableView];
+    [self.view addSubview:self.bottomContainerView];
+    [self setupViewsContraints];
 }
-
-
+- (void)setupViewsContraints {
+    [self.bottomContainerView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.equalTo(self.view);
+        make.trailing.equalTo(self.view);
+        make.height.equalTo(@50);
+        self.bottomContainerViewBottomMC =
+        make.bottom.equalTo(self.view);
+    }];
+}
+- (void)setupProgressView {
+    _progressView = [MRNavigationBarProgressView progressViewForNavigationController:self.navigationController];
+    _progressView.progressTintColor = [UIColor colorWithHex:0x4a4a4a andAlpha:0.93];
+}
 
 
 #pragma mark - <UITableViewDataSource>
@@ -159,7 +149,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    return self.source_reply.count;
+    return self.source_reply.count+1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -168,17 +158,11 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     
     if (indexPath.row == 0)
     {
-        /* first row */
         PIEChannelDetailLatestPSCell *detailLatestPSCell =
         [tableView dequeueReusableCellWithIdentifier:PIEDetailLatestPSCellIdentifier];
-        
-        // configure cell
-        
-        // --- set delegate & dataSource
         detailLatestPSCell.swipeView.delegate   = self;
         detailLatestPSCell.swipeView.dataSource = self;
         
-        // ??? 实在是想不到更好地方法了。。。 (BUG AWARE!)
         self.swipeView = detailLatestPSCell.swipeView;
         return detailLatestPSCell;
     }
@@ -187,7 +171,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         PIENewReplyTableCell *cell =
         [tableView dequeueReusableCellWithIdentifier:PIEDetailUsersPSCellIdentifier];
         
-        [cell injectSauce:_source_reply[indexPath.row]];
+        [cell injectSauce:_source_reply[indexPath.row - 1]];
         
         return cell;
     }
@@ -213,7 +197,10 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 - (void)didPullRefreshDown:(UITableView *)tableView
 {
     if (_source_ask.count <= 0) {
-        [self getSource_Ask];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            //getSource_Ask 经常拿不到数据，如果和getSource_Reply几乎同时调用的话。
+            [self getSource_Ask];
+        });
     }
     [self getSource_Reply];
 }
@@ -268,8 +255,6 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 }
 
 
-
-
 #pragma mark - <PIEShareViewDelegate> and related methods
 
 - (void)shareViewDidShare:(PIEShareView *)shareView
@@ -293,17 +278,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 
 
 
-#pragma mark - Gesture Event - 识别PIENewReplyCell中的不同元素(头像，关注按钮，etc.)的点击事件
 
-- (void)setupGestures {
-    UITapGestureRecognizer* tapGestureReply =
-    [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnReply:)];
-    UILongPressGestureRecognizer* longPressGestureReply =
-    [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnReply:)];
-    [self.tableView addGestureRecognizer:longPressGestureReply];
-    [self.tableView addGestureRecognizer:tapGestureReply];
-    
-}
 
 - (void)tapOnReply:(UITapGestureRecognizer *)gesture {
     
@@ -313,7 +288,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     _selectedIndexPath = [self.tableView indexPathForRowAtPoint:location];
     
     if (_selectedIndexPath.row == 0) {
-        PIENewAskMakeUpViewController* vc = [PIENewAskMakeUpViewController new];
+        PIENewAskViewController* vc = [PIENewAskViewController new];
         vc.channelVM = _currentChannelViewModel;
         [self.navigationController pushViewController:vc animated:YES];
     }
@@ -406,12 +381,6 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     
 }
 
-#pragma mark - reply cell 中的点击事件：喜欢该P图，关注P图主。
-
-
-/**
- *  关注这张P图的P图主
- */
 -(void)followReplier {
     
     
@@ -442,21 +411,6 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 }
 
 
-
-
-
-
-#pragma mark - data first setup
-- (void)setupData
-{
-    _source_reply   = [NSMutableArray array];
-    _source_ask     = [NSMutableArray array];
-//    _source_toHelp  = [NSMutableArray array];
-}
-
-
-
-
 - (void)getSource_Ask {
     NSMutableDictionary *params  = [NSMutableDictionary dictionary];
     params[@"category_id"]        = @(self.currentChannelViewModel.ID);
@@ -478,6 +432,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         
     }];
 }
+
 - (void)getSource_Reply {
     WS(ws);
     _currentPage_Reply = 1;
@@ -494,7 +449,6 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     [PIEChannelManager getSource_channelPages:params resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
         [_source_reply removeAllObjects];
         [_source_reply addObjectsFromArray:pageArray];
-
     } completion:^{
         [ws.tableView.mj_header endRefreshing];
         [ws.tableView reloadData];
@@ -543,41 +497,55 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 
 - (void)tapAsk {
     LeesinViewController* vc = [LeesinViewController new];
+    vc.delegate = self;
     vc.type = LeesinViewControllerTypeAsk;
     vc.channelViewModel = self.currentChannelViewModel;
     [self presentViewController:vc animated:YES completion:nil];
 }
 - (void)tapReply {
     LeesinViewController* vc = [LeesinViewController new];
+    vc.delegate = self;
     vc.type = LeesinViewControllerTypeReply;
     vc.channelViewModel = self.currentChannelViewModel;
     [self presentViewController:vc animated:YES completion:nil];
 }
 
-#pragma mark - UI components configuration
-- (void)configureTableView
-{
-    // added as subview
-    [self.view addSubview:self.tableView];
-    
-    //    // add constraints
-    //    __weak typeof(self) weakSelf = self;
-    //    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-    //        make.edges.equalTo(weakSelf.view);
-    //    }];
+
+#pragma mark - LeesinViewController delegate
+-(void)leesinViewController:(LeesinViewController *)leesinViewController uploadPercentage:(CGFloat)percentage uploadSucceed:(BOOL)success {
+    [self.progressView setProgress:percentage animated:YES];
+    if (success) {
+        if (leesinViewController.type == LeesinViewControllerTypeAsk) {
+            [self getSource_Ask];
+        } else {
+            [self.tableView.mj_header beginRefreshing];
+        }
+    }
 }
 
-- (void)configurebottomContainerView
+
+#pragma mark - <UITableViewDelegate>
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    [self.view addSubview:self.bottomContainerView];
-    __weak typeof(self) weakSelf = self;
-    [self.bottomContainerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.equalTo(self.view);
-        make.trailing.equalTo(self.view);
-        make.height.equalTo(@50);
-        self.bottomContainerViewConstraint =
-        make.bottom.equalTo(weakSelf.view);
-    }];
+    [UIView animateWithDuration:0.1
+                     animations:^{
+                         [self.bottomContainerViewBottomMC setOffset:50.0];
+                         [self.bottomContainerView layoutIfNeeded];
+                     }];
+}
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [self.bottomContainerViewBottomMC setOffset:0];
+    [UIView animateWithDuration:0.2
+                          delay:1.0
+         usingSpringWithDamping:0.9
+          initialSpringVelocity:0.5
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         [self.bottomContainerView layoutIfNeeded];
+                         
+                     } completion:^(BOOL finished) {
+                     }];
 }
 
 
@@ -587,26 +555,16 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 {
     if (_tableView == nil) {
         _tableView = [[PIERefreshTableView alloc] initWithFrame:self.view.bounds];
-   
         _tableView.delegate   = self;
-        
         _tableView.dataSource = self;
-        
         _tableView.psDelegate = self;
-        
         // iOS 8+, self-sizing cell
         _tableView.estimatedRowHeight = 400;
-        
         _tableView.rowHeight          = UITableViewAutomaticDimension;
         
-        // register cells
-        [_tableView
-         registerNib:[UINib nibWithNibName:@"PIEChannelDetailLatestPSCell" bundle:nil]
-         forCellReuseIdentifier:PIEDetailLatestPSCellIdentifier];
+        [_tableView registerNib:[UINib nibWithNibName:@"PIEChannelDetailLatestPSCell" bundle:nil]forCellReuseIdentifier:PIEDetailLatestPSCellIdentifier];
         
-        [_tableView registerNib:[UINib nibWithNibName:@"PIENewReplyTableCell"
-                                               bundle:nil]
-         forCellReuseIdentifier:PIEDetailUsersPSCellIdentifier];
+        [_tableView registerNib:[UINib nibWithNibName:@"PIENewReplyTableCell" bundle:nil] forCellReuseIdentifier:PIEDetailUsersPSCellIdentifier];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
     }
@@ -658,9 +616,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 - (PIEShareView *)shareView
 {
     if (_shareView == nil) {
-        // instantiate only for once
         _shareView = [[PIEShareView alloc] init];
-        
         _shareView.delegate = self;
     }
     return  _shareView;

@@ -153,12 +153,11 @@
 }
 
 - (CGFloat)getAssetRatio:(PHAsset*)asset{
-    return asset.pixelHeight/asset.pixelWidth;
+    return ((CGFloat)asset.pixelHeight/(CGFloat)asset.pixelWidth);
 }
 - (void)getImageDataFromAsset:(PHAsset*)asset block:(void (^)(NSData *data))block {
     PHImageManager *imageManager = [PHImageManager defaultManager];
     [imageManager requestImageDataForAsset:asset options:nil resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
-//        NSLog(@"imageData %@,%@,%zd,%@",imageData,dataUTI,orientation,info);
         if (block) {
             block(imageData);
         }
@@ -171,7 +170,6 @@
     [param setObject:self.model.content forKey:@"desc"];
 //    [param setObject:self.model.tagIDArray forKey:@"tag_ids"];
     [param setObject:@(self.model.channel_id) forKey:@"category_id"];
-    
     
     [DDService ddSaveAsk:param withBlock:^(NSInteger newImageID) {
         if (newImageID!=-1) {

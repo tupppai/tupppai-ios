@@ -11,7 +11,7 @@
 
 typedef NS_ENUM(NSUInteger, LeesinTextInputBarButtonType) {
     LeesinTextInputBarButtonTypeMission,
-    LeesinTextInputBarButtonTypePhoto
+    LeesinTextInputBarButtonTypePHAsset
 };
 typedef NS_ENUM(NSUInteger, LeesinTextInputBarType) {
     LeesinTextInputBarTypeAsk,

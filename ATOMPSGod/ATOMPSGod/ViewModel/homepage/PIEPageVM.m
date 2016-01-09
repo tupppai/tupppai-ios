@@ -18,9 +18,10 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _type         = 1;
+        _type         = PIEPageTypeAsk;
         _ID           = 0;
-        _publishTime  = @"-";
+        _askID        = 0;
+        _publishTime  = @"0";
         _likeCount    = @"0";
         _shareCount   = @"0";
         _commentCount = @"0";
