@@ -17,12 +17,14 @@ typedef NS_ENUM(NSUInteger, LeesinPreviewBarType) {
 
 @property (nonatomic, assign) LeesinPreviewBarType type;
 
-@property (nonatomic, copy) NSOrderedSet    *sourceAsk;
-@property (nonatomic, copy) NSString        *sourceMission_reply;
-@property (nonatomic, copy) PHAsset         *sourceAsset_reply;
+@property (nonatomic, copy) NSMutableOrderedSet    *source;
+
 - (void)clear;
 - (void)clearReplyImage ;
 - (void)clearReplyUrl ;
 - (BOOL)isSourceEmpty ;
+
+- (BOOL)hasSourcePHAsset;
+- (BOOL)hasSourceMission;
 @end
 

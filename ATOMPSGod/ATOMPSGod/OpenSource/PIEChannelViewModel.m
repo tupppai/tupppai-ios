@@ -7,7 +7,7 @@
 //
 
 #import "PIEChannelViewModel.h"
-
+#import "PIECategoryModel.h"
 @implementation PIEChannelViewModel
 - (NSString *)description
 {
@@ -15,4 +15,15 @@
             @"\n ID = %ld \n imageUrl = %@ \n iconUrl = %@ \n title = %@ \n content = %@ \n threads = %@ \n\n", (long)_ID, _imageUrl, _iconUrl, _title, _content, _threads];
 }
 
+
+-(instancetype)initWithModel:(PIECategoryModel*)model {
+    self = [super init];
+    if (self) {
+        _ID = [model.ID integerValue];
+        _askID = [model.askID integerValue];
+    }
+
+    return self;
+
+}
 @end

@@ -15,7 +15,8 @@ typedef NS_ENUM(NSUInteger, LeesinTextInputBarButtonType) {
 };
 typedef NS_ENUM(NSUInteger, LeesinTextInputBarType) {
     LeesinTextInputBarTypeAsk,
-    LeesinTextInputBarTypeReply
+    LeesinTextInputBarTypeReply,
+    LeesinTextInputBarTypeReplyNoMissionSelection,
 };
 
 @interface LeesinTextInputBar : UIView

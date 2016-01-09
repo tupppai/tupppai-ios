@@ -27,8 +27,11 @@ typedef NS_ENUM(NSUInteger, LeesinViewControllerType) {
 @property (nonatomic, weak) id<LeesinViewControllerDelegate> delegate;
 
 @property (nonatomic,assign)LeesinViewControllerType type;
-@property (nonatomic, strong)PIEChannelViewModel *channelViewModel;
-@property (nonatomic, strong)PIEPageVM *pageViewModel;
+@property (nonatomic,assign)NSInteger ask_id;
+@property (nonatomic,assign)NSInteger channel_id;
+
+//@property (nonatomic, strong)PIEChannelViewModel *channelViewModel;
+//@property (nonatomic, strong)PIEPageVM *pageViewModel;
 
 @property (nonatomic, weak) id<PWRefreshBaseTableViewDelegate> psDelegate;
 

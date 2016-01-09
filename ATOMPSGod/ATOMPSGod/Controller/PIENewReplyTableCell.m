@@ -98,12 +98,6 @@
                                 ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
                             }];
     [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
-//    _avatarView.isV = viewModel.isV;
-//    _avatarView.isV = YES;
-    
-    // testing
-//    _avatarView.isV = (viewModel.askID % 2 == 0);
-    
     _avatarView.isV = viewModel.isV;
 
     _ID = viewModel.ID;

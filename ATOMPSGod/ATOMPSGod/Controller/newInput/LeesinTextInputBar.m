@@ -291,6 +291,9 @@
         self.textView.placeholder = @"求p描述";
     } else if (type == LeesinTextInputBarTypeReply) {
         self.textView.placeholder = @"作品描述";
+    }   else if (type == LeesinTextInputBarTypeReplyNoMissionSelection) {
+        [self pie_hideLeftButton1];
+        self.textView.placeholder = @"作品描述";
     }
 }
 

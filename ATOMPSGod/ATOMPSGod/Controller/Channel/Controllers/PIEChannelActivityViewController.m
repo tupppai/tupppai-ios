@@ -23,11 +23,13 @@
 #import "PIEWebViewViewController.h"
 #import "DDSessionManager.h"
 #import "DDNavigationController.h"
-#import "DeviceUtil.h"
 #import "PIECellIconStatusChangedNotificationKey.h"
 #import "PIEPageManager.h"
+
+#import "LeesinViewController.h"
+#import "MRNavigationBarProgressView.h"
 /* Variables */
-@interface PIEChannelActivityViewController ()<QBImagePickerControllerDelegate>
+@interface PIEChannelActivityViewController ()<QBImagePickerControllerDelegate,LeesinViewControllerDelegate>
 
 /*Views*/
 @property (nonatomic, strong) PIERefreshTableView *tableView;
@@ -63,6 +65,9 @@
 @property (nonatomic, strong) MASConstraint *goPsButtonBottomConstraint;
 
 @property (nonatomic, assign) NSInteger                     currentPage_Reply;
+
+@property (nonatomic, strong) MRNavigationBarProgressView *progressView;
+
 
 @end
 
@@ -118,6 +123,12 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 
 }
 
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self setupProgressView];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -166,12 +177,27 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     
 }
 
+- (void)setupProgressView {
+    _progressView = [MRNavigationBarProgressView progressViewForNavigationController:self.navigationController];
+    _progressView.progressTintColor = [UIColor colorWithHex:0x4a4a4a andAlpha:0.93];
+}
+
 #pragma mark - Notification Observer setup
 - (void)setupNotificationObserver
 {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateShareStatus)
                                                  name:PIESharedIconStatusChangedNotification object:nil];
+}
+
+#pragma mark - LeesinViewController delegate
+-(void)leesinViewController:(LeesinViewController *)leesinViewController uploadPercentage:(CGFloat)percentage uploadSucceed:(BOOL)success {
+    [self.progressView setProgress:percentage animated:YES];
+    if (success) {
+        if (leesinViewController.type == LeesinViewControllerTypeReplyNoMissionSelection) {
+            [self getSource_Reply];
+        }
+    }
 }
 
 #pragma mark - <UITableViewDelegate>
@@ -218,9 +244,11 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     [replyCell hideThumbnailImage];
     [replyCell injectSauce:_source_reply[indexPath.row]];
    
+    
     /*去掉ChannelActivity中的cell的“其它作品”按钮*/
     replyCell.allWorkView.hidden = YES;
     [replyCell.shareView mas_updateConstraints:^(MASConstraintMaker *make) {
+        
         make.left.equalTo(replyCell.allWorkView.mas_left);
     }];
     
@@ -296,7 +324,11 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 #pragma mark - Target-actions
 - (void)goPSButtonClicked:(UIButton *)button
 {
-    [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
+    LeesinViewController* vc = [LeesinViewController new];
+    vc.delegate = self;
+    vc.type = LeesinViewControllerTypeReplyNoMissionSelection;
+    vc.channel_id = self.currentChannelVM.ID;
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 - (void)headerBannerViewClicked:(UIButton *)button

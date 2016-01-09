@@ -20,8 +20,10 @@
 #import "PIEProceedingManager.h"
 #import "PIEUploadManager.h"
 #import "PIECategoryModel.h"
+#import "LeesinViewController.h"
+#import "MRNavigationBarProgressView.h"
 /* Variables */
-@interface PIEProceedingToHelpViewController ()
+@interface PIEProceedingToHelpViewController ()<LeesinViewControllerDelegate>
 
 @property (nonatomic, strong) PIERefreshTableView *toHelpTableView;
 
@@ -44,6 +46,8 @@
 @property (nonatomic, strong) PIEProceedingShareView *shareView;
 
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureToHelp;
+
+@property (nonatomic, strong) MRNavigationBarProgressView *progressView;
 
 @end
 
@@ -88,6 +92,15 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     // Dispose of any resources that can be recreated.
 }
 
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self setupProgressView];
+}
+- (void)setupProgressView {
+    _progressView = [MRNavigationBarProgressView progressViewForNavigationController:self.navigationController];
+    _progressView.progressTintColor = [UIColor colorWithHex:0x4a4a4a andAlpha:0.93];
+}
 #pragma mark - init methods
 - (void)configData {
     _canRefreshToHelpFooter = YES;
@@ -154,15 +167,26 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     NSIndexPath *indexPath = [_toHelpTableView indexPathForRowAtPoint:location];
     _selectedIndexPath_toHelp = indexPath;
     PIEPageVM* vm = [_sourceToHelp objectAtIndex:indexPath.row];
+    _selectedVM = vm;
     if (indexPath) {
         PIEProceedingToHelpTableViewCell *cell = (PIEProceedingToHelpTableViewCell *)
         [_toHelpTableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
         //点击图片
         if (CGRectContainsPoint(cell.uploadView.frame, p)) {
+//            
+//            self.QBImagePickerController = nil;
+//            [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
+            LeesinViewController* vc = [LeesinViewController new];
+            vc.delegate = self;
+            vc.type = LeesinViewControllerTypeReplyNoMissionSelection;
+            vc.ask_id = vm.askID;
+            vc.channel_id = vm.model.channelID;
             
-            self.QBImagePickerController = nil;
-            [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
+//            vc.channel_id = _selectedVM 
+//            vc.channelViewModel = [[PIEChannelViewModel alloc]initWithModel:model];
+            [self presentViewController:vc animated:YES completion:nil];
+            
         }
         else if (CGRectContainsPoint(cell.downloadView.frame, p)) {
             [DDService sd_downloadImage:[vm.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION] withBlock:^(UIImage *image) {
@@ -207,6 +231,17 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
         [_toHelpTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }];
     
+}
+
+
+#pragma mark - LeesinViewController delegate
+-(void)leesinViewController:(LeesinViewController *)leesinViewController uploadPercentage:(CGFloat)percentage uploadSucceed:(BOOL)success {
+    [self.progressView setProgress:percentage animated:YES];
+    if (success) {
+        if (leesinViewController.type == LeesinViewControllerTypeReplyNoMissionSelection) {
+            [self getRemoteSourceToHelp];
+        }
+    }
 }
 
 #pragma mark - toHelp tableView之内的点击事件

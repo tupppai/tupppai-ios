@@ -14,6 +14,8 @@
 
 @property (nonatomic, strong) UIImageView *previewImageView1;
 @property (nonatomic, strong) UIImageView *previewImageView2;
+@property (nonatomic, strong) MASConstraint *previewImageView1MarginLC;
+//@property (nonatomic, strong) MASConstraint *previewImageView1WC;
 
 @end
 
@@ -36,6 +38,11 @@
 }
 
 
+-(void)layoutSubviews {
+    [super layoutSubviews];
+    [self addBottomLine];
+}
+
 - (void)pie_commonInit
 {
     self.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0];
@@ -43,8 +50,31 @@
     [self addSubview:self.previewImageView2];
     
     [self pie_setupViewConstraints];
+    [_previewImageView1 addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:nil];
+
 
 }
+
+-(void)dealloc {
+    [_previewImageView1 removeObserver:self forKeyPath:@"image"];
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString: @"image"]) {
+        UIImage* image = [change objectForKey:@"new"];
+        if (![image isKindOfClass:[UIImage class]]) {
+            [_previewImageView1MarginLC setOffset:-25];
+        } else {
+            [_previewImageView1MarginLC setOffset:9];
+
+        }
+        
+        [self layoutIfNeeded];
+
+    }
+}
+
+
 - (void) pie_setupViewConstraints {
     //    CGSize buttonSize1 = [self pie_appropriateButtonSize:self.button_album];
     //    CGSize buttonSize2 = [self pie_appropriateButtonSize:self.button_shoot];
@@ -53,14 +83,16 @@
     [self.previewImageView1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self).with.offset(6);
         make.bottom.equalTo(self).with.offset(-7);
-        make.leading.equalTo(self).with.offset(9);
-        make.width.equalTo(self.previewImageView1.mas_height);
+        _previewImageView1MarginLC = make.leading.equalTo(self).with.offset(9);
+        make.width.equalTo(self.previewImageView1.mas_height).with.priorityHigh();
     }];
+    
+    
     [self.previewImageView2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self).with.offset(6);
         make.bottom.equalTo(self).with.offset(-7);
         make.leading.equalTo(self.previewImageView1.mas_trailing).with.offset(6);
-        make.width.equalTo(self.previewImageView1.mas_height);
+        make.width.equalTo(_previewImageView1.mas_height);
     }];
 }
 -(UIImageView *)previewImageView1 {
@@ -84,70 +116,115 @@
 
 
 - (void)clear {
-    _sourceAsk = nil;
-    _sourceAsset_reply = nil;
-    _sourceMission_reply = nil;
+    _source = nil;
+//    _sourceAsset_reply = nil;
+//    _sourceMission_reply = nil;
     _previewImageView1.image = nil;
     _previewImageView2.image = nil;
 }
 
-- (void)clearReplyImage {
-    _sourceAsset_reply = nil;
+- (BOOL)hasSourceMission {
+    for (id object in _source) {
+        if ([object isKindOfClass:[PIEPageVM class]]) {
+            return YES;
+        }
+    }
+    return NO;
+}
 
+- (BOOL)hasSourcePHAsset {
+    for (id object in _source) {
+        if ([object isKindOfClass:[PHAsset class]]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (void)clearReplyImage {
+    int index = 0;
+    for (id object in _source) {
+        if ([object isKindOfClass:[PHAsset class]]) {
+            break;
+        }
+        index++;
+    }
+    [_source removeObjectAtIndex:index];
     _previewImageView2.image = nil;
 }
 
 - (void)clearReplyUrl {
-        _sourceMission_reply = nil;
-        _previewImageView1.image = nil;
+    int index = 0;
+    for (id object in _source) {
+        if ([object isKindOfClass:[PIEPageVM class]]) {
+            break;
+        }
+        index++;
+    }
+    [_source removeObjectAtIndex:index];
+    _previewImageView1.image = nil;
 }
 
 - (BOOL)isSourceEmpty {
-    return (!_sourceAsk  && !_sourceMission_reply && !_sourceAsset_reply);
+    return (!_source);
 }
-
--(void)setSourceMission_reply:(NSString *)sourceMission_reply {
-    _sourceMission_reply = sourceMission_reply;
-    [self.previewImageView1 sd_setImageWithURL:[NSURL URLWithString:sourceMission_reply]];
-}
--(void)setSourceAsset_reply:(PHAsset *)sourceAsset_reply {
-    _sourceAsset_reply = sourceAsset_reply;
+//
+//-(void)setSourceMission_reply:(NSString *)sourceMission_reply {
+//    _sourceMission_reply = sourceMission_reply;
+//    [self.previewImageView1 sd_setImageWithURL:[NSURL URLWithString:sourceMission_reply]];
+//}
+//-(void)setSourceAsset_reply:(PHAsset *)sourceAsset_reply {
+//    _sourceAsset_reply = sourceAsset_reply;
+//    PHImageManager *imageManager = [PHImageManager defaultManager];
+//    [imageManager requestImageForAsset:_sourceAsset_reply
+//                            targetSize:CGSizeMake(100,100)
+//                           contentMode:PHImageContentModeDefault
+//                               options:nil
+//                         resultHandler:^(UIImage *result, NSDictionary *info) {
+//                             _previewImageView2.image = result;
+//                         }];
+//
+//}
+-(void)setSource:(NSMutableOrderedSet *)source {
+    _source = source;
     PHImageManager *imageManager = [PHImageManager defaultManager];
-    [imageManager requestImageForAsset:_sourceAsset_reply
-                            targetSize:CGSizeMake(100,100)
-                           contentMode:PHImageContentModeDefault
-                               options:nil
-                         resultHandler:^(UIImage *result, NSDictionary *info) {
-                             _previewImageView2.image = result;
-                         }];
 
-}
--(void)setSourceAsk:(NSOrderedSet *)sourceAsk {
-    _sourceAsk = sourceAsk;
-    PHImageManager *imageManager = [PHImageManager defaultManager];
-    
-    if (sourceAsk.count>=1) {
-        PHAsset* asset1 = [sourceAsk objectAtIndex:0];
-        [imageManager requestImageForAsset:asset1
-                                targetSize:CGSizeMake(100,100)
-                               contentMode:PHImageContentModeDefault
-                                   options:nil
-                             resultHandler:^(UIImage *result, NSDictionary *info) {
-                                 _previewImageView1.image = result;
-                             }];
-    }
-    
-    if (sourceAsk.count>=2) {
-        PHAsset* asset2 = [sourceAsk objectAtIndex:1];
+
+        if (source.count >= 1) {
+            id object = [source objectAtIndex:0];
+            if ([object isKindOfClass:[PIEPageVM class]]) {
+                PIEPageVM* vm = object;
+                [self.previewImageView1 sd_setImageWithURL:[NSURL URLWithString:vm.imageURL]];
+            } else if ([object isKindOfClass:[PHAsset class]]) {
+                [imageManager requestImageForAsset:object
+                                        targetSize:CGSizeMake(100,100)
+                                       contentMode:PHImageContentModeDefault
+                                           options:nil
+                                     resultHandler:^(UIImage *result, NSDictionary *info) {
+                                         _previewImageView1.image = result;
+                                     }];
+            }
+        }
         
-        [imageManager requestImageForAsset:asset2
-                                targetSize:CGSizeMake(100,100)
-                               contentMode:PHImageContentModeDefault
-                                   options:nil
-                             resultHandler:^(UIImage *result, NSDictionary *info) {
-                                 _previewImageView2.image = result;
-                             }];
-    }
+        if (source.count>=2) {
+            
+            id object = [source objectAtIndex:1];
+            if ([object isKindOfClass:[PIEPageVM class]]) {
+                PIEPageVM* vm = object;
+                [self.previewImageView1 sd_setImageWithURL:[NSURL URLWithString:vm.imageURL]];
+            } else if ([object isKindOfClass:[PHAsset class]]) {
+                [imageManager requestImageForAsset:object
+                                        targetSize:CGSizeMake(100,100)
+                                       contentMode:PHImageContentModeDefault
+                                           options:nil
+                                     resultHandler:^(UIImage *result, NSDictionary *info) {
+                                         _previewImageView2.image = result;
+                                     }];
+            }
+        
+    
+        }
+
 }
 
 //
@@ -174,10 +251,7 @@
 //        }
 //    }
 //}
--(void)layoutSubviews {
-    [super layoutSubviews];
-    [self addBottomLine];
-}
+
 
 -(void)addBottomLine {
     CALayer *border = [CALayer layer];

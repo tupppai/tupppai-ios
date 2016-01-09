@@ -153,7 +153,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
         [param setObject:@(1) forKey:@"page"];
         [param setObject:@(timeStamp) forKey:@"last_updated"];
         [param setObject:@(20) forKey:@"size"];
-        [param setObject:@(self.channelViewModel.ID) forKey:@"category_id"];
+        [param setObject:@(self.channel_id) forKey:@"category_id"];
         [PIEProceedingManager getMyToHelp:param withBlock:^(NSMutableArray *resultArray) {
             if (resultArray.count == 0) {
             } else {
@@ -264,10 +264,10 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
         uploadModel.ask_id = vm.askID;
     } else if (self.type == LeesinViewControllerTypeReplyNoMissionSelection) {
         uploadModel.type = PIEPageTypeReply;
-        uploadModel.ask_id = _pageViewModel.askID;
+        uploadModel.ask_id = self.ask_id;
     }
 
-    uploadModel.channel_id = self.channelViewModel.ID;
+    uploadModel.channel_id = self.channel_id;
     uploadModel.content = self.bar.textView.text;
     uploadModel.imageArray = self.selectedAssets;
     
@@ -376,6 +376,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
         self.swipeView.type = LeesinSwipeViewTypePHAsset;
     } else if (type == LeesinViewControllerTypeReply) {
         self.bar.type = LeesinTextInputBarTypeReply;
+        self.bar.buttonType = LeesinTextInputBarButtonTypeMission;
         if (self.bar.buttonType == LeesinTextInputBarButtonTypeMission) {
             self.bottomBar.type = LeeSinBottomBarTypeReplyMission;
             self.swipeView = LeesinSwipeViewTypeMission;
@@ -383,6 +384,11 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
             self.bottomBar.type = LeeSinBottomBarTypeReplyPHAsset;
             self.swipeView.type = LeesinSwipeViewTypePHAsset;
         }
+    } else if (type == LeesinViewControllerTypeReplyNoMissionSelection) {
+        self.bar.buttonType = LeesinTextInputBarButtonTypePHAsset;
+        self.bar.type = LeesinTextInputBarTypeReplyNoMissionSelection;
+        self.bottomBar.type = LeeSinBottomBarTypeReplyNoMissionSelection;
+        self.swipeView.type = LeesinSwipeViewTypePHAsset;
     }
 }
 
@@ -464,21 +470,28 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 }
 
 - (BOOL)lsn_isMissionReady_reply {
-    return self.previewBar.sourceMission_reply;
+    return [self.previewBar hasSourceMission];
 }
 - (BOOL)lsn_isPhotosReady_ask {
-    return self.previewBar.sourceAsk;
+    return [self.previewBar hasSourcePHAsset];
 }
 - (BOOL)lsn_isPhotoReady_reply {
-    return self.previewBar.sourceAsset_reply;
+    return [self.previewBar hasSourcePHAsset];
 }
+- (BOOL)lsn_isPhotoReady_replyNoMissionSelection {
+    return [self.previewBar hasSourcePHAsset];
+}
+
+
 
 - (BOOL)lsn_isSelectionsReady {
     
     if (self.type == LeesinViewControllerTypeAsk) {
         return [self lsn_isPhotosReady_ask];
-    } else {
-        return (self.isPreviewShown && [self lsn_isMissionReady_reply] && [self lsn_isPhotoReady_reply]);
+    } else if (self.type == LeesinViewControllerTypeReply) {
+        return ([self lsn_isMissionReady_reply] && [self lsn_isPhotoReady_reply]);
+    }else if (self.type == LeesinViewControllerTypeReplyNoMissionSelection) {
+        return ([self lsn_isPhotoReady_reply]);
     }
     return NO;
 }
@@ -491,17 +504,23 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 }
 
 - (void)lsn_injectSourceForPreviewBar {
+
     if (self.type == LeesinViewControllerTypeAsk) {
-        self.previewBar.sourceAsk = self.selectedAssets;
+        self.previewBar.source = self.selectedAssets;
     } else {
+        NSMutableOrderedSet *source = [NSMutableOrderedSet orderedSet];
+
+
         if (self.selectedIndexOfMission != NSNotFound) {
             PIEPageVM   *vm = [_sourceMissions objectAtIndex:self.selectedIndexOfMission];
-            
-            self.previewBar.sourceMission_reply = vm.imageURL;
+            [source addObject:vm];
         }
         if (self.selectedAssets.count > 0) {
-            self.previewBar.sourceAsset_reply = [self.selectedAssets objectAtIndex:0];
+            [source addObject:[self.selectedAssets objectAtIndex:0]];
         }
+        
+        self.previewBar.source = source;
+
     }
     
 }
@@ -580,15 +599,21 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
    
     UIView* view = [swipeView itemViewAtIndex:index];
     
+
     if (self.bar.buttonType == LeesinTextInputBarButtonTypePHAsset) {
         
-        if (self.type == LeesinViewControllerTypeAsk && _isPreviewShown) {
+        if (self.type == LeesinViewControllerTypeAsk && [self lsn_isPhotosReady_ask]) {
             return;
         }
-        if (self.type == LeesinViewControllerTypeReply && self.previewBar.sourceAsset_reply) {
+        else if (self.type == LeesinViewControllerTypeReply && [self lsn_isPhotoReady_reply]) {
             return;
         }
+        
 
+        else if (self.type == LeesinViewControllerTypeReplyNoMissionSelection && [self lsn_isPhotoReady_replyNoMissionSelection]) {
+            return;
+        }
+        
         LeesinAssetCell *cell = [self lsn_getSubviewAsClass:[LeesinAssetCell class] fromView:view];;
         PHAsset *currentAsset = [_sourceAssets objectAtIndex:index];
         if (cell.selected) {
@@ -596,7 +621,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
             currentAsset.selected = NO;
             [self.selectedAssets removeObject:currentAsset];
         } else {
-            if ((self.type == LeesinViewControllerTypeReply && self.selectedAssets.count < 1 ) || (self.type == LeesinViewControllerTypeAsk && self.selectedAssets.count < 2 )) {
+            if ((self.type == LeesinViewControllerTypeReply && self.selectedAssets.count < 1 )|| (self.type == LeesinViewControllerTypeReplyNoMissionSelection && self.selectedAssets.count < 1 ) || (self.type == LeesinViewControllerTypeAsk && self.selectedAssets.count < 2 )) {
                 cell.selected = YES;
                 currentAsset.selected = YES;
                 [self.selectedAssets addObject:currentAsset];
@@ -604,7 +629,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
         }
     } else     if (self.bar.buttonType == LeesinTextInputBarButtonTypeMission) {
         
-        if (self.type == LeesinViewControllerTypeReply && self.previewBar.sourceMission_reply) {
+        if (self.type == LeesinViewControllerTypeReply && [self lsn_isMissionReady_reply]) {
             return;
         }
         
@@ -684,6 +709,19 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
             }
         }
     }
+    
+    
+    else if (self.type == LeesinViewControllerTypeReplyNoMissionSelection) {
+        
+        if (self.bar.buttonType == LeesinTextInputBarButtonTypePHAsset) {
+            if ([self lsn_isPhotoReady_replyNoMissionSelection]) {
+                self.bottomBar.rightButtonType = LeesinBottomBarRightButtonTypeCancelEnable;
+            } else {
+                self.bottomBar.rightButtonType = self.selectedAssets.count > 0 ? LeesinBottomBarRightButtonTypeConfirmEnable:LeesinBottomBarRightButtonTypeConfirmDisable;
+            }
+        }
+    }
+
 }
 
 

@@ -26,8 +26,9 @@
 #import "DeviceUtil.h"
 #import "PIECellIconStatusChangedNotificationKey.h"
 #import "PIEPageManager.h"
-#import "LeesinViewController.h"
 #import "PIEProceedingManager.h"
+
+#import "LeesinViewController.h"
 #import "MRNavigationBarProgressView.h"
 
 @interface PIEChannelDetailViewController ()<LeesinViewControllerDelegate>
@@ -499,14 +500,14 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     LeesinViewController* vc = [LeesinViewController new];
     vc.delegate = self;
     vc.type = LeesinViewControllerTypeAsk;
-    vc.channelViewModel = self.currentChannelViewModel;
+    vc.channel_id = self.currentChannelViewModel.ID;
     [self presentViewController:vc animated:YES completion:nil];
 }
 - (void)tapReply {
     LeesinViewController* vc = [LeesinViewController new];
     vc.delegate = self;
     vc.type = LeesinViewControllerTypeReply;
-    vc.channelViewModel = self.currentChannelViewModel;
+    vc.channel_id = self.currentChannelViewModel.ID;
     [self presentViewController:vc animated:YES completion:nil];
 }
 

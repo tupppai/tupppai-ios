@@ -26,6 +26,8 @@ typedef NS_ENUM(NSInteger, PIEPageType) {
  */
 @property (nonatomic, assign) NSInteger ID;
 @property (nonatomic, assign) NSInteger askID;
+@property (nonatomic, assign) NSInteger channelID;
+
 @property (nonatomic, assign) BOOL liked;
 @property (nonatomic, assign) BOOL collected;
 
