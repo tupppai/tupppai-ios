@@ -13,20 +13,24 @@
 #import "DDBaseService.h"
 #import "PIEUserModel.h"
 #import "MTLJSONAdapter.h"
+#import "PIELaunchTextField.h"
+#import "PIELaunchNextStepButton.h"
+#import "PIEVerificationCodeCountdownButton.h"
 
 /* Variables */
 @interface PIEForgotPasswordViewController_Black ()
 
-@property (nonatomic, strong) UITextField *cellPhoneTextField;
+@property (nonatomic, strong) PIELaunchTextField *cellPhoneTextField;
 
-@property (nonatomic, strong) UIButton    *countdownButton;
+@property (nonatomic, strong) PIELaunchTextField *verificationCodeTextField;
 
-@property (nonatomic, strong) UITextField *verificationCodeTextField;
+@property (nonatomic, strong) PIELaunchTextField *resetPasswordTextField;
 
-@property (nonatomic, strong) UITextField *resetPasswordTextField;
+@property (nonatomic, strong) PIEVerificationCodeCountdownButton
+                              *countdownButton;
 
-@property (nonatomic, strong) UIButton    *resetPasswordAndLoginButton;
-
+@property (nonatomic, strong) PIELaunchNextStepButton
+                                          *resetPasswordAndLoginButton;
 @end
 
 @implementation PIEForgotPasswordViewController_Black
@@ -60,13 +64,10 @@
     // basic UI setup
     
     // -- 手机号
-    UITextField *cellPhoneTextField = ({
-        UITextField *textField = [[UITextField alloc] init];
+    PIELaunchTextField *cellPhoneTextField = ({
+        PIELaunchTextField *textField = [[PIELaunchTextField alloc] init];
         
-        textField.font = [UIFont lightTupaiFontOfSize:13];
-        textField.textColor = [UIColor blackColor];
         textField.placeholder = @"手机号";
-        textField.borderStyle = UITextBorderStyleLine;
         
         [self.view addSubview:textField];
         
@@ -85,32 +86,34 @@
     
     
     // --- 倒计时的button
-    UIButton *countdownButton = ({
-        UIButton *button = [[UIButton alloc] init];
-        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
-        
-        [button setTitle:@" 获取验证码" forState:UIControlStateNormal];
-        button.titleLabel.textAlignment = NSTextAlignmentCenter;
-        button.titleLabel.font = [UIFont systemFontOfSize:11];
-        
-        // 自动设置size，并且textField的rightView会自动设置好frame，超方便！
-        [button sizeToFit];
-        
+    PIEVerificationCodeCountdownButton *countdownButton = ({
+        PIEVerificationCodeCountdownButton *button = [[PIEVerificationCodeCountdownButton alloc] init];
         button;
     });
     self.countdownButton = countdownButton;
+    @weakify(self);
+    countdownButton.fetchVerificationCodeBlock =
+    ^void(void){
+        @strongify(self);
+        NSMutableDictionary *params =
+        [NSMutableDictionary dictionary];
+        
+        params[@"phone"] =
+        @([self.cellPhoneTextField.text integerValue]);
+        [DDBaseService GET:params
+                       url:@"account/requestAuthCode"
+                     block:^(id responseObject) {
+                         
+                         // do nothing, 或者以后还要判断短信是否发送成功?
+                     }];
+    };
     
     // -- 验证码
-    UITextField *verificationCodeTextField = ({
-        UITextField *textField = [[UITextField alloc] init];
+    PIELaunchTextField *verificationCodeTextField = ({
+        PIELaunchTextField *textField = [[PIELaunchTextField alloc] init];
         
-        textField.font          = [UIFont lightTupaiFontOfSize:13];
-        textField.textColor     = [UIColor blackColor];
         textField.placeholder   = @"验证码";
-        textField.borderStyle   = UITextBorderStyleLine;
 
-        textField.rightViewMode = UITextFieldViewModeAlways;
         textField.rightView     = countdownButton;
         
         [self.view addSubview:textField];
@@ -130,13 +133,10 @@
     self.verificationCodeTextField = verificationCodeTextField;
     
     // -- 设置新密码
-    UITextField *resetPasswordTextField = ({
-        UITextField *textField = [[UITextField alloc] init];
+    PIELaunchTextField *resetPasswordTextField = ({
+        PIELaunchTextField *textField = [[PIELaunchTextField alloc] init];
         
-        textField.font = [UIFont lightTupaiFontOfSize:13];
-        textField.textColor = [UIColor blackColor];
         textField.placeholder = @"设置新密码";
-        textField.borderStyle = UITextBorderStyleLine;
         
         [self.view addSubview:textField];
         
@@ -155,20 +155,12 @@
     self.resetPasswordTextField = resetPasswordTextField;
     
     // -- 确认并登陆
-    UIButton *resetPasswordAndLoginButton = ({
-        UIButton *button = [[UIButton alloc] init];
-        
-        [button setBackgroundImage:[UIImage imageNamed:@"launchViewControllerButtonBackground"]
-                          forState:UIControlStateNormal];
-        [button setBackgroundImage:[UIImage imageNamed:@"launchViewControllerButtonBackground_highlighted"]
-                          forState:UIControlStateHighlighted];
-        
+    PIELaunchNextStepButton *resetPasswordAndLoginButton = ({
+        PIELaunchNextStepButton *button =
+        [[PIELaunchNextStepButton alloc] init];
         [button setTitle:@"确认并登陆" forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor whiteColor]
-                     forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont lightTupaiFontOfSize:13];
         [self.view addSubview:button];
-        
+
         @weakify(self);
         [button mas_makeConstraints:^(MASConstraintMaker *make) {
             @strongify(self);
@@ -184,77 +176,10 @@
     });
     self.resetPasswordAndLoginButton = resetPasswordAndLoginButton;
     
-    @weakify(self);
     [[resetPasswordAndLoginButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
         @strongify(self);
-        
         [self sendResetPasswordRequest];
-        
     }];
-    
-    
-    // ## Step 1: 获取验证码->倒计时 + 发网络请求，一系列的信号处理
-    
-    // RAC-signal binding
-    const NSInteger numberLimit   = 10;
-    __block NSInteger numberCount = numberLimit;
-    
-    /*
-     weak-strong dance!
-     */
-    RACSignal *countdownSignal =
-    [[[[RACSignal interval:1.0f onScheduler:[RACScheduler mainThreadScheduler]]
-       startWith:@"Let's GO!"]
-      take:numberLimit + 1]
-     doNext:^(id x) {
-         @strongify(self);
-         
-         /*
-          WARNING: 第一个信号是@“Let's GO!”，接下来的信号才是NSDate
-          */
-         
-         /*
-          Side-effects warning!
-          每次send 'Next'， 就果断地就地修改状态，即使不惜在信号中`掺杂`了副作用！
-          */
-         if (numberCount == 0) {
-             [self.countdownButton setTitle:@"重新发送" forState:UIControlStateNormal];
-             self.countdownButton.enabled = YES;
-             [self.countdownButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-             
-             // set to default value
-             numberCount = numberLimit;
-         }else{
-             
-             NSString *countdownString = [NSString stringWithFormat:@"%ld秒后重发", numberCount];
-             
-             [self.countdownButton setTitle:countdownString
-                                   forState:UIControlStateNormal];
-             [self.countdownButton setTitleColor:[UIColor lightGrayColor]
-                                        forState:UIControlStateNormal];
-             numberCount --;
-             
-             self.countdownButton.enabled = NO;
-         }}];
-    self.countdownButton.rac_command =
-    [[RACCommand alloc]
-     initWithSignalBlock:^RACSignal *(id input) {
-         @strongify(self);
-         
-         // send network request here.
-         
-         NSMutableDictionary *params =
-         [NSMutableDictionary dictionary];
-         params[@"phone"] =
-         @([self.cellPhoneTextField.text integerValue]);
-         [DDBaseService GET:params
-                        url:@"account/requestAuthCode"
-                      block:^(id responseObject) {
-                          // do nothing
-                      }];
-         return countdownSignal;
-     }];
-
     
 }
 
