@@ -58,6 +58,13 @@
     // for testing PIEEliteViewController2:
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DoUploadJob:) name:@"UploadCall" object:nil];
     
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showInfoRET:)
+                                                 name:@"NetworkShowInfoCall"
+                                               object:nil];
+    
+    
     [[NSNotificationCenter defaultCenter]
      addObserver:self
      selector:@selector(touristWantsFurtherRegistration)
@@ -106,8 +113,10 @@
 
 -(void) showInfoRET:(NSNotification *)notification {
     NSString* info = [[notification userInfo] valueForKey:@"info"];
-    [Hud text:info inView:self.view];
+    NSString *prompt = [NSString stringWithFormat:@"ret != 1, %@", info];
+    [Hud text:prompt inView:self.view];
 }
+
 - (void) DoUploadJob:(NSNotification *)notification
 {
     PIEEliteViewController* vc = (PIEEliteViewController*)((DDNavigationController*)[self.viewControllers objectAtIndex:0]).topViewController;

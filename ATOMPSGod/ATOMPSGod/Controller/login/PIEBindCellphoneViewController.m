@@ -410,18 +410,23 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
         NSString *openid  =
         [[NSUserDefaults standardUserDefaults] objectForKey:PIETouristOpenIdKey];
         params[@"openid"] = openid;
+//        [DDBaseService POST:params url:URL_ACRegister
+//         {
+//         
+//                          
+//                          // if succeed in registering: switch to mainVC and store user info into sandbox
+//                          
+//                          //    // Finally：完成临时用户转换成正式用户的转正过程，将删除掉本地的“临时身份证”，即openid
+//                          //    [[NSUserDefaults standardUserDefaults]
+//                          //     removeObjectForKey:PIETouristOpenIdKey];
+//                          
+//                          // if params error: prompt user with specific warning.
+//                      }];
+        
+        
         [DDBaseService POST:params url:URL_ACRegister
                       block:^(id responseObject) {
-                          responseObject;
                           
-                          
-                          // if succeed in registering: switch to mainVC and store user info into sandbox
-                          
-                          //    // Finally：完成临时用户转换成正式用户的转正过程，将删除掉本地的“临时身份证”，即openid
-                          //    [[NSUserDefaults standardUserDefaults]
-                          //     removeObjectForKey:PIETouristOpenIdKey];
-                          
-                          // if params error: prompt user with specific warning.
                       }];
 
     }
