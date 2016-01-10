@@ -35,10 +35,37 @@
 
 - (void)configureCustomView
 {
-    self.font               = [UIFont lightTupaiFontOfSize:13];
-    self.textColor          = [UIColor blackColor];
-    self.borderStyle        = UITextBorderStyleLine;
+    self.font          = [UIFont lightTupaiFontOfSize:13];
+    self.textColor     = [UIColor blackColor];
+    self.borderStyle   = UITextBorderStyleNone;
     self.rightViewMode = UITextFieldViewModeAlways;
+    self.background    = [UIImage imageNamed:@"pie_launch_textFieldBorder"];
+}
+
+#pragma mark - overridden methods
+- (CGRect)textRectForBounds:(CGRect)bounds
+{
+    CGRect textRect     = [super textRectForBounds:bounds];
+    textRect.origin.x   += 12;
+    textRect.size.width -= 12;
+    return textRect;
+}
+
+- (CGRect)editingRectForBounds:(CGRect)bounds
+{
+    CGRect editingTextRect     = [super editingRectForBounds:bounds];
+    editingTextRect.origin.x   += 12;
+    editingTextRect.size.width -= 12;
+    return editingTextRect;
+}
+
+- (CGRect)rightViewRectForBounds:(CGRect)bounds
+{
+    CGRect rightViewRect = [super rightViewRectForBounds:bounds];
+    
+    rightViewRect.origin.x -= 7;
+    
+    return rightViewRect;
 }
 
 @end

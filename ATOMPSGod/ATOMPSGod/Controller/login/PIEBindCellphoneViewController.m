@@ -12,6 +12,7 @@
 #import "PIELaunchNextStepButton.h"
 #import "PIELaunchTextField.h"
 #import "PIEVerificationCodeCountdownButton.h"
+#import "AppDelegate.h"
 
 
 /* Variables */
@@ -42,6 +43,7 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
     [self setupUI];
 
     [self setupHasRegisteredNetworkRequest];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -165,7 +167,7 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
         [DDBaseService GET:params
                        url:@"account/requestAuthCode"
                      block:^(id responseObject) {
-                         
+
                          // do nothing, 或者以后还要判断短信是否发送成功?
                      }];
     };
@@ -313,8 +315,8 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
                                   // we have the correct response
                                   
                                   NSDictionary *dataDict = responseObject[@"data"];
-                                  BOOL hasRegistered = [dataDict[@"has_registered"] boolValue];
-                                  
+                                  BOOL hasRegistered     = [dataDict[@"has_registered"] boolValue];
+
                                   if (hasRegistered) {
                                       [self.hasRegisteredNetworkRequestDisposable
                                        dispose];
@@ -356,11 +358,11 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
     if ([self.cellphoneNumberTextField.text isMobileNumber] == NO) {
         [Hud error:@"手机号码格式不对"];
     }else {
+        
         /*
          account/register, POST, (mobile, code, openid)
          
          */
-        
         NSMutableDictionary<NSString *, NSString *>
         *params = [NSMutableDictionary dictionary];
         params[@"mobile"] = self.cellphoneNumberTextField.text;
@@ -368,17 +370,37 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
         NSString *openid  =
         [[NSUserDefaults standardUserDefaults] objectForKey:PIETouristOpenIdKey];
         params[@"openid"] = openid;
+        
+        [Hud activity:@"绑定中..."];
         [DDBaseService POST:params url:URL_ACRegister
                       block:^(id responseObject) {
-                          responseObject;
                           
-                          // if succeed in registering: switch to mainVC and store user info into sandbox
+                          [Hud dismiss];
                           
-                          //    // Finally：完成临时用户转换成正式用户的转正过程，将删除掉本地的“临时身份证”，即openid
-                          //    [[NSUserDefaults standardUserDefaults]
-                          //     removeObjectForKey:PIETouristOpenIdKey];
-                          
-                          // if params error: prompt user with specific warning.
+                          if (responseObject == nil) {
+                              
+                              [Hud error:@"绑定失败: 网络异常或者是验证码错误"];
+                              
+                          }else{
+                              
+                              NSDictionary *dataDict = responseObject[@"data"];
+                              
+                              PIEUserModel *user =
+                              [MTLJSONAdapter modelOfClass:[PIEUserModel class]
+                                        fromJSONDictionary:dataDict error:nil];
+                              // 用返回的数据为user模型设置token
+                              user.token = responseObject[@"token"];
+                              
+                              // 将用户信息存入沙盒
+                              [DDUserManager updateCurrentUserFromUser:user];
+                              
+                              // 完成临时用户转换成正式用户的转正过程，将删除掉本地的“临时身份证”，即openid
+                              [[NSUserDefaults standardUserDefaults]
+                               removeObjectForKey:PIETouristOpenIdKey];
+                              
+                              // 跳转到主控制器
+                              [[AppDelegate APP] switchToMainTabbarController];
+                          }
                       }];
     }
 }
@@ -386,30 +408,27 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
 - (void)sendRegisterNewUserRequest
 {
     [Hud text:@"该手机号码未注册，准备开始注册流程..."];
-    
     /*
         account/register, POST, (mobile, code, openid, password)
     
      */
-    
     if ([self.cellphoneNumberTextField.text isMobileNumber] == NO) {
         [Hud error:@"手机号码格式不对"];
     }else if ([self.passwordTextField.text isPassword] == NO){
         [Hud error:@"密码格式不对，可能是太短了"];
     }else {
-        
         /*
-         account/register, POST, (mobile, code, openid)
+         account/register, POST, (mobile, code, password, openid)
          
          */
         NSMutableDictionary<NSString *, NSString *>
-        *params = [NSMutableDictionary dictionary];
-        params[@"mobile"] = self.cellphoneNumberTextField.text;
-        params[@"code"]   = self.verificationCodeTextField.text;
+        *params             = [NSMutableDictionary dictionary];
+        params[@"mobile"]   = self.cellphoneNumberTextField.text;
+        params[@"code"]     = self.verificationCodeTextField.text;
         params[@"password"] = self.passwordTextField.text;
         NSString *openid  =
         [[NSUserDefaults standardUserDefaults] objectForKey:PIETouristOpenIdKey];
-        params[@"openid"] = openid;
+        params[@"openid"]   = openid;
 //        [DDBaseService POST:params url:URL_ACRegister
 //         {
 //         
@@ -423,10 +442,32 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
 //                          // if params error: prompt user with specific warning.
 //                      }];
         
-        
+        [Hud activity:@"第三方用户转正注册新用户中..."];
         [DDBaseService POST:params url:URL_ACRegister
                       block:^(id responseObject) {
+                          [Hud dismiss];
                           
+                          if (responseObject == nil) {
+                              [Hud error:@"第三方用户转正失败: 网络异常或者是验证码错误"];
+                          }else{
+                              NSDictionary *dataDict = responseObject[@"data"];
+                              
+                              PIEUserModel *user =
+                              [MTLJSONAdapter modelOfClass:[PIEUserModel class]
+                                        fromJSONDictionary:dataDict error:nil];
+                              // 用返回的数据为user模型设置token
+                              user.token = responseObject[@"token"];
+                              
+                              // 将用户信息存入沙盒
+                              [DDUserManager updateCurrentUserFromUser:user];
+                              
+                              // 完成临时用户转换成正式用户的转正过程，将删除掉本地的“临时身份证”，即openid
+                              [[NSUserDefaults standardUserDefaults]
+                               removeObjectForKey:PIETouristOpenIdKey];
+                              
+                              // 跳转到主控制器
+                              [[AppDelegate APP] switchToMainTabbarController];
+                          }
                       }];
 
     }

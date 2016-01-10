@@ -55,13 +55,6 @@ PIEVerificationCodeCountdownButton *countdownButton;
 
     [self setupHasRegisteredRequest];
     
-    
-    // test, unbind current openID
-    
-//    [DDBaseService POST:nil url:@"auth/unbind" block:^(id responseObject) {
-//        
-//    }];
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -361,6 +354,7 @@ PIEVerificationCodeCountdownButton *countdownButton;
                              if (responseObject != nil) {
                                  NSDictionary *dataDict = responseObject[@"data"];
                                  BOOL hasRegistered = [dataDict[@"has_registered"] boolValue];
+                                
                                  if (hasRegistered) {
                                      [self updateUIForLogin];
                                      [self.hasRegisteredRequestDisposable dispose];
@@ -505,14 +499,13 @@ PIEVerificationCodeCountdownButton *countdownButton;
         
         [[button rac_signalForControlEvents:UIControlEventTouchUpInside]
          subscribeNext:^(id x) {
-             
-             // push to another view controller: PIEForgotPasswordViewController_Black
+
              PIEForgotPasswordViewController_Black *forgotPasswordVC =
              [[PIEForgotPasswordViewController_Black alloc] init];
              
              [[AppDelegate APP].baseNav pushViewController:forgotPasswordVC
                                                   animated:YES];
-             [Hud text:@"Oops! You forgot your password?"];
+
         }];
         [button sizeToFit];
         
