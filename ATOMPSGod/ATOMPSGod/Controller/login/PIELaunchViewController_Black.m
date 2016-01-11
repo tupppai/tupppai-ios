@@ -18,6 +18,7 @@
 #import "PIELaunchTextField.h"
 #import "PIELaunchNextStepButton.h"
 #import "PIEVerificationCodeCountdownButton.h"
+#import "UINavigationBar+Awesome.h"
 
 
 /* Variables */
@@ -50,7 +51,7 @@ PIEVerificationCodeCountdownButton *countdownButton;
     // Do any additional setup after loading the view.
 
     self.edgesForExtendedLayout = UIRectEdgeNone;
-
+    
     [self setupUI];
 
     [self setupHasRegisteredRequest];
@@ -67,11 +68,16 @@ PIEVerificationCodeCountdownButton *countdownButton;
     [super viewWillAppear:animated];
 
 //    [self.navigationController setNavigationBarHidden:YES];
+    [self.navigationController.navigationBar
+     lt_setBackgroundColor:[UIColor clearColor]];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar
+     lt_reset];
 
 }
 

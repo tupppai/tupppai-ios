@@ -140,7 +140,7 @@ static DDSessionManager *_shareHTTPSessionManager = nil;
                 }
             } else if (ret != 1) {
                 
-                // ret != 1, 表示网络不正常，或者是某种数据的异常，想用户显示info字段的消息
+                // ret != 1, 表示网络不正常，或者是某种数据的异常, 向用户显示info字段的消息
                 
                 NSString* info = [responseObject objectForKey:@"info"];
                 NSDictionary* userInfo = [NSDictionary dictionaryWithObject:info forKey:@"info"];
