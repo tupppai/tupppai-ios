@@ -23,15 +23,13 @@
 #import "LeesinUploadManager.h"
 #import "LeesinSwipeView.h"
 #import "QBImagePickerController.h"
-//#import "DBCameraViewController.h"
 
 typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     PIESwipeViewResueViewTypeMission,
     PIESwipeViewResueViewTypePhoto,
 };
-@interface LeesinViewController ()<QBImagePickerControllerDelegate>
+@interface LeesinViewController ()<QBImagePickerControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (nonatomic, strong) QBImagePickerController *qbImagePickerController;
-@property (nonatomic, strong) UIImagePickerController *imagePickerController;
 
 @end
 @interface LeesinViewController ()<LeesinBottomBarDelegate>
@@ -542,11 +540,17 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     
     
     if (isShootingButtonTapped) {
-        UIImagePickerController* imagePickerController= [UIImagePickerController new];
         
-//        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[DBCameraViewController initWithDelegate:self]];
-//        [nav setNavigationBarHidden:YES];
-//        [self presentViewController:nav animated:YES completion:nil];
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+            picker.delegate = self;
+            picker.allowsEditing = YES;
+            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            [self presentViewController:picker animated:YES completion:NULL];
+            
+        }else {
+            NSLog(@"相机不可用");
+        }
     }
     
 }

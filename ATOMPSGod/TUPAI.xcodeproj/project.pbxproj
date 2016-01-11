@@ -521,7 +521,6 @@
 		F4F0A1CA1C437F1C000DDEBB /* QBSlomoIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0A1BB1C437F1C000DDEBB /* QBSlomoIconView.m */; };
 		F4F0A1CB1C437F1C000DDEBB /* QBVideoIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0A1BD1C437F1C000DDEBB /* QBVideoIconView.m */; };
 		F4F0A1CC1C437F1C000DDEBB /* QBVideoIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0A1BF1C437F1C000DDEBB /* QBVideoIndicatorView.m */; };
-		F4F0A4591C43939E000DDEBB /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4F0A4581C43939E000DDEBB /* AVFoundation.framework */; };
 		F4F28F1C1C23AE9B0067F2E4 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F28EFC1C23AE9B0067F2E4 /* MKAnnotationView+WebCache.m */; };
 		F4F28F1D1C23AE9B0067F2E4 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F28EFE1C23AE9B0067F2E4 /* NSData+ImageContentType.m */; };
 		F4F28F1E1C23AE9B0067F2E4 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F28F001C23AE9B0067F2E4 /* SDImageCache.m */; };
@@ -1630,7 +1629,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4F0A4591C43939E000DDEBB /* AVFoundation.framework in Frameworks */,
 				F44A52791C0BF91500707281 /* libxml2.2.tbd in Frameworks */,
 				E99C51481B85ADF9004CA47B /* ImageIO.framework in Frameworks */,
 				E99C51461B85ADEF004CA47B /* JavaScriptCore.framework in Frameworks */,
@@ -4886,7 +4884,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tupppai.www;
 				PRODUCT_NAME = TUPAI;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "53c17c28-f8eb-4656-b3f7-a058e471c7bc";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
@@ -4931,7 +4929,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tupppai.www;
 				PRODUCT_NAME = TUPAI;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "d7a94fec-a9dd-4f42-9398-72bc32df65c4";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = NO;
@@ -5060,7 +5058,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tupppai.www;
 				PRODUCT_NAME = TUPAI;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "53c17c28-f8eb-4656-b3f7-a058e471c7bc";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = NO;
