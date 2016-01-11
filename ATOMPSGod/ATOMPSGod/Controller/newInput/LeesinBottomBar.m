@@ -41,11 +41,12 @@
 - (void) pie_setupViewConstraints {
 
     [self.button_album mas_makeConstraints:^(MASConstraintMaker *make) {
-
+        make.top.and.bottom.equalTo(self);
         make.leading.equalTo(@12).with.priorityHigh();
         make.centerY.equalTo(self);
     }];
     [self.button_shoot mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.and.bottom.equalTo(self);
         make.leading.equalTo(self.button_album.mas_trailing).with.offset(17).with.priorityHigh();
         make.centerY.equalTo(self);
     }];

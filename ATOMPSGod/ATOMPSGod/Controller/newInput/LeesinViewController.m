@@ -51,6 +51,9 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 @interface LeesinViewController ()<SwipeViewDataSource,SwipeViewDelegate>
 @property (nonatomic, strong) LeesinSwipeView *swipeView;
 @property (nonatomic, strong) NSMutableArray *sourceMissions;
+@property (nonatomic, strong) NSMutableArray *sourceMissions_done;
+@property (nonatomic, strong) NSMutableArray *sourceMissions_undone;
+
 @property (nonatomic, strong) NSMutableOrderedSet *sourceAssets;
 @property (nonatomic, strong) NSMutableOrderedSet *selectedAssets;
 @property (nonatomic, assign) NSInteger selectedIndexOfMission;
@@ -90,10 +93,14 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 - (void)setupData {
     _selectedAssets = [NSMutableOrderedSet orderedSet];
     _sourceAssets   = [NSMutableOrderedSet orderedSet];
-    _sourceMissions = [NSMutableArray array];
+    _sourceMissions_undone = [NSMutableArray array];
+    _sourceMissions_done = [NSMutableArray array];
+
     _selectedIndexOfMission = NSNotFound;
     [self setupPhotoSourceData];
-    [self setupMissionSource];
+    
+    self.sourceMissions = self.sourceMissions_undone;
+    [self setupMissionSource_undone];
 }
 
 - (void)setupViews {
@@ -148,7 +155,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 }
 
 
-- (void)setupMissionSource {
+- (void)setupMissionSource_undone {
     if (self.type == LeesinViewControllerTypeReply) {
         WS(ws);
         NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -162,10 +169,10 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
             } else {
                 for (PIEPageModel *model in resultArray) {
                     PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:model];
-                    [ws.sourceMissions addObject:vm];
+                    [ws.sourceMissions_undone addObject:vm];
                 }
             }
-            
+
             if (self.bar.buttonType == LeesinTextInputBarButtonTypeMission) {
                 [self.swipeView reloadData];
             }
@@ -173,6 +180,31 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
         }];
     }
 }
+
+- (void)setupMissionSource_done {
+    if (self.type == LeesinViewControllerTypeReply) {
+        WS(ws);
+        
+        NSMutableDictionary *param = [NSMutableDictionary dictionary];
+        long long timeStamp = [[NSDate date] timeIntervalSince1970];
+        [param setObject:@(1) forKey:@"page"];
+        [param setObject:@(timeStamp) forKey:@"last_updated"];
+        [param setObject:@(20) forKey:@"size"];
+        [param setObject:@(self.channel_id) forKey:@"category_id"];
+        [DDService GET:param url:@"profile/done" block:^(id responseObject) {
+            NSArray* dataArray = [responseObject objectForKey:@"data"];
+            NSArray* modelArray = [MTLJSONAdapter modelsOfClass:[PIEPageModel class] fromJSONArray:dataArray error:nil];
+            for (PIEPageModel* model in modelArray) {
+                PIEPageVM* vm = [[PIEPageVM alloc]initWithPageEntity:model];
+                [ws.sourceMissions_done addObject:vm];
+            }
+            if (self.bar.buttonType == LeesinTextInputBarButtonTypeMission) {
+                [self.swipeView reloadData];
+            }
+            }];
+    }
+}
+
 - (void)setupPhotoSourceData {
     
     [_sourceAssets removeAllObjects];
@@ -180,7 +212,6 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     // Fetch user albums and smart albums
     PHFetchResult *smartAlbum =    [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAny options:nil];
 
-//    
     NSArray* assetCollectionSubtypes = @[
                                      @(PHAssetCollectionSubtypeSmartAlbumRecentlyAdded),
                                      @(PHAssetCollectionSubtypeSmartAlbumUserLibrary),
@@ -261,9 +292,10 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     }
 }
 - (void)bar_tapLeftButton1:(id)sender {
-    if (self.bar.buttonType == LeesinTextInputBarButtonTypeMission) {
+    if (self.bar.buttonType == LeesinTextInputBarButtonTypeMission && [self.sourceMissions isEqualToArray: self.sourceMissions_undone] ) {
         return;
     }
+    self.sourceMissions = self.sourceMissions_undone;
     self.bar.buttonType = LeesinTextInputBarButtonTypeMission;
     self.bottomBar.type = LeeSinBottomBarTypeReplyMission;
     self.swipeView.type = LeesinSwipeViewTypeMission;
@@ -594,7 +626,12 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
         [self presentViewController:self.qbImagePickerController animated:YES completion:NULL];
     }
     if (isAllMissionButtonTapped) {
-        
+        self.sourceMissions = self.sourceMissions_done;
+        if (self.sourceMissions_done.count <= 0) {
+            [self setupMissionSource_done];
+        } else {
+            [self.swipeView reloadData];
+        }
     }
     
     
