@@ -28,7 +28,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     PIESwipeViewResueViewTypeMission,
     PIESwipeViewResueViewTypePhoto,
 };
-@interface LeesinViewController ()<QBImagePickerControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface LeesinViewController ()<QBImagePickerControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,PHPhotoLibraryChangeObserver>
 @property (nonatomic, strong) QBImagePickerController *qbImagePickerController;
 
 @end
@@ -174,15 +174,49 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     }
 }
 - (void)setupPhotoSourceData {
+    
+    [_sourceAssets removeAllObjects];
+    
     // Fetch user albums and smart albums
     PHFetchResult *smartAlbum =    [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAny options:nil];
 
+//    
+    NSArray* assetCollectionSubtypes = @[
+                                     @(PHAssetCollectionSubtypeSmartAlbumRecentlyAdded),
+                                     @(PHAssetCollectionSubtypeSmartAlbumUserLibrary),
+                                     @(PHAssetCollectionSubtypeSmartAlbumFavorites)                                     ];
+    NSMutableDictionary *smartAlbums = [NSMutableDictionary dictionaryWithCapacity:assetCollectionSubtypes.count];
+    
+        [smartAlbum enumerateObjectsUsingBlock:^(PHAssetCollection *assetCollection, NSUInteger index, BOOL *stop) {
+            PHAssetCollectionSubtype subtype = assetCollection.assetCollectionSubtype;
+            
+             if ([assetCollectionSubtypes containsObject:@(subtype)]) {
+                if (!smartAlbums[@(subtype)]) {
+                    smartAlbums[@(subtype)] = [NSMutableArray array];
+                }
+                [smartAlbums[@(subtype)] addObject:assetCollection];
+            }
+        }];
+    
+    
+    NSMutableArray *assetCollections = [NSMutableArray array];
+    
+    // Fetch smart albums
+    for (NSNumber *assetCollectionSubtype in assetCollectionSubtypes) {
+        NSArray *collections = smartAlbums[assetCollectionSubtype];
+        
+        if (collections) {
+            [assetCollections addObjectsFromArray:collections];
+        }
+    }
+
+    
     PHFetchOptions *fetchOptions = [PHFetchOptions new];
     fetchOptions.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeImage];
     
-    [smartAlbum enumerateObjectsUsingBlock:^(PHAssetCollection *assetCollection, NSUInteger index, BOOL *stop) {
+    [assetCollections enumerateObjectsUsingBlock:^(PHAssetCollection *assetCollection, NSUInteger index, BOOL *stop) {
         PHFetchResult *fetchResult = [PHAsset fetchAssetsInAssetCollection:assetCollection options:fetchOptions];
-        [fetchResult enumerateObjectsUsingBlock:^(PHAsset *asset, NSUInteger idx, BOOL * _Nonnull stop) {
+        [fetchResult enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(PHAsset *asset, NSUInteger idx, BOOL * _Nonnull stop) {
             [_sourceAssets addObject:asset];
         }];
         [self.swipeView reloadData];
@@ -199,6 +233,9 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(lsn_willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(lsn_didShowOrHideKeyboard:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(lsn_didShowOrHideKeyboard:) name:UIKeyboardDidHideNotification object:nil];
+    
+    [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
+
 }
 
 - (void)unRegisterObervers {
@@ -207,6 +244,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:NULL];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:NULL];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:NULL];
+    [[PHPhotoLibrary sharedPhotoLibrary] unregisterChangeObserver:self];
 }
 
 
@@ -260,7 +298,6 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 
     self.bar.rightButton.enabled = NO;
     
-    
     LeesinUploadManager *uploadManager = [LeesinUploadManager new];
     LeesinUploadModel   *uploadModel = [LeesinUploadModel new];
     
@@ -301,6 +338,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 
 #pragma mark - Notification Events
 
+
 - (void)lsn_didChangeTextViewText:(id)sender {
 
     if (![[sender object] isEqual: self.bar.textView]) {
@@ -321,6 +359,27 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 
 - (void) lsn_didShowOrHideKeyboard:(NSNotification*)notification {
     
+}
+
+#pragma mark - PHPhotoLibraryChangeObserver
+
+- (void)photoLibraryDidChange:(PHChange *)changeInstance
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self setupPhotoSourceData];
+        for (PHAsset* asset in self.selectedAssets) {
+            asset.selected = NO;
+        }
+        [self.selectedAssets removeAllObjects];
+        
+        PHAsset* asset = [_sourceAssets objectAtIndex:0];
+        asset.selected = YES;
+        [self.selectedAssets addObject:asset];
+        
+        [self.swipeView reloadData];
+        [self lsn_updatePublishButton];
+        [self lsn_updateSourceAndReloadPreviewBar];
+    });
 }
 
 
@@ -554,6 +613,13 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     }
     
 }
+
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    UIImage *imageToBeSaved = info[UIImagePickerControllerEditedImage];
+    UIImageWriteToSavedPhotosAlbum(imageToBeSaved, nil, nil, nil);
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
 - (void)reloadPreviewBar {
     
     if ([self.previewBar isSourceEmpty]) {
@@ -681,4 +747,6 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 
     }];
 }
+
+
 @end
