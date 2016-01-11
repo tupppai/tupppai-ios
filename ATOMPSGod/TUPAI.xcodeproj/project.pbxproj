@@ -521,6 +521,7 @@
 		F4F0A1CA1C437F1C000DDEBB /* QBSlomoIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0A1BB1C437F1C000DDEBB /* QBSlomoIconView.m */; };
 		F4F0A1CB1C437F1C000DDEBB /* QBVideoIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0A1BD1C437F1C000DDEBB /* QBVideoIconView.m */; };
 		F4F0A1CC1C437F1C000DDEBB /* QBVideoIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0A1BF1C437F1C000DDEBB /* QBVideoIndicatorView.m */; };
+		F4F0A4591C43939E000DDEBB /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4F0A4581C43939E000DDEBB /* AVFoundation.framework */; };
 		F4F28F1C1C23AE9B0067F2E4 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F28EFC1C23AE9B0067F2E4 /* MKAnnotationView+WebCache.m */; };
 		F4F28F1D1C23AE9B0067F2E4 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F28EFE1C23AE9B0067F2E4 /* NSData+ImageContentType.m */; };
 		F4F28F1E1C23AE9B0067F2E4 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F28F001C23AE9B0067F2E4 /* SDImageCache.m */; };
@@ -1557,6 +1558,7 @@
 		F4F0A1BE1C437F1C000DDEBB /* QBVideoIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBVideoIndicatorView.h; sourceTree = "<group>"; };
 		F4F0A1BF1C437F1C000DDEBB /* QBVideoIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBVideoIndicatorView.m; sourceTree = "<group>"; };
 		F4F0A1C01C437F1C000DDEBB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/QBImagePicker.strings"; sourceTree = "<group>"; };
+		F4F0A4581C43939E000DDEBB /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		F4F28EFB1C23AE9B0067F2E4 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		F4F28EFC1C23AE9B0067F2E4 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		F4F28EFD1C23AE9B0067F2E4 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
@@ -1628,6 +1630,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4F0A4591C43939E000DDEBB /* AVFoundation.framework in Frameworks */,
 				F44A52791C0BF91500707281 /* libxml2.2.tbd in Frameworks */,
 				E99C51481B85ADF9004CA47B /* ImageIO.framework in Frameworks */,
 				E99C51461B85ADEF004CA47B /* JavaScriptCore.framework in Frameworks */,
@@ -2546,6 +2549,7 @@
 		94794CACC85CA9D698472166 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F4F0A4581C43939E000DDEBB /* AVFoundation.framework */,
 				F44A527A1C0BF96000707281 /* libxml2.tbd */,
 				F44A52781C0BF91500707281 /* libxml2.2.tbd */,
 				F45D8FB11BD87F01005946E8 /* AdSupport.framework */,

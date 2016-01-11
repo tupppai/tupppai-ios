@@ -22,12 +22,19 @@
 #import "LeesinUploadModel.h"
 #import "LeesinUploadManager.h"
 #import "LeesinSwipeView.h"
+#import "QBImagePickerController.h"
+//#import "DBCameraViewController.h"
+
 typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     PIESwipeViewResueViewTypeMission,
     PIESwipeViewResueViewTypePhoto,
 };
+@interface LeesinViewController ()<QBImagePickerControllerDelegate>
+@property (nonatomic, strong) QBImagePickerController *qbImagePickerController;
+@property (nonatomic, strong) UIImagePickerController *imagePickerController;
 
-@interface LeesinViewController ()
+@end
+@interface LeesinViewController ()<LeesinBottomBarDelegate>
 
 @property (nonatomic, strong) LeesinBottomBar *bottomBar;
 @property (nonatomic, strong) LeesinPreviewBar *previewBar;
@@ -291,61 +298,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 
 
 
-#pragma mark - Get and Set
 
--(LeesinTextInputBar *)bar {
-    if (!_bar) {
-        _bar = [LeesinTextInputBar new];
-    }
-    return _bar;
-}
--(LeesinPreviewBar *)previewBar {
-    if (!_previewBar) {
-        _previewBar = [LeesinPreviewBar new];
-    }
-    return _previewBar;
-}
--(void)setType:(LeesinViewControllerType)type {
-    _type = type;
-    
-    if (type == LeesinViewControllerTypeAsk) {
-        self.bar.type = LeesinTextInputBarTypeAsk;
-        self.bottomBar.type = LeeSinBottomBarTypeAsk;
-        self.bar.buttonType = LeesinTextInputBarButtonTypePHAsset;
-        self.swipeView.type = LeesinSwipeViewTypePHAsset;
-    } else if (type == LeesinViewControllerTypeReply) {
-        self.bar.type = LeesinTextInputBarTypeReply;
-        self.bar.buttonType = LeesinTextInputBarButtonTypeMission;
-        if (self.bar.buttonType == LeesinTextInputBarButtonTypeMission) {
-            self.bottomBar.type = LeeSinBottomBarTypeReplyMission;
-            self.swipeView = LeesinSwipeViewTypeMission;
-        } else if (self.bar.buttonType == LeesinTextInputBarButtonTypePHAsset) {
-            self.bottomBar.type = LeeSinBottomBarTypeReplyPHAsset;
-            self.swipeView.type = LeesinSwipeViewTypePHAsset;
-        }
-    } else if (type == LeesinViewControllerTypeReplyNoMissionSelection) {
-        self.bar.buttonType = LeesinTextInputBarButtonTypePHAsset;
-        self.bar.type = LeesinTextInputBarTypeReplyNoMissionSelection;
-        self.bottomBar.type = LeeSinBottomBarTypeReplyNoMissionSelection;
-        self.swipeView.type = LeesinSwipeViewTypePHAsset;
-    }
-}
-
--(LeesinSwipeView *)swipeView {
-    if (!_swipeView) {
-        _swipeView = [LeesinSwipeView new];
-        _swipeView.dataSource = self;
-        _swipeView.delegate  = self;
-        _swipeView.backgroundColor = [UIColor grayColor];//EEEEEE
-    }
-    return _swipeView;
-}
--(LeesinBottomBar *)bottomBar {
-    if (!_bottomBar) {
-        _bottomBar = [LeesinBottomBar new];
-    }
-    return _bottomBar;
-}
 
 
 #pragma mark - Notification Events
@@ -355,7 +308,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     if (![[sender object] isEqual: self.bar.textView]) {
         return;
     }
-    [self lsn_togglePublishButtonStatus];
+    [self lsn_updatePublishButton];
     if (self.bar.frame.size.height != self.bar.appropriateHeight) {
         [self.inputBarHC setOffset:self.bar.appropriateHeight];
     }
@@ -437,11 +390,11 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 - (BOOL)lsn_isPublishReady {
     return  [self lsn_isTextReady] &&[self lsn_isSelectionsReady];
 }
-- (void)lsn_togglePublishButtonStatus {
+- (void)lsn_updatePublishButton {
     self.bar.rightButton.enabled = [self lsn_isPublishReady];
 }
 
-- (void)lsn_injectSourceForPreviewBar {
+- (void)lsn_updateSourceAndReloadPreviewBar {
 
     if (self.type == LeesinViewControllerTypeAsk) {
         self.previewBar.source = self.selectedAssets;
@@ -460,7 +413,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 
     }
     
-    [self togglePreviewBar];
+    [self reloadPreviewBar];
 }
 
 
@@ -572,12 +525,32 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     }
     
     if (shouldUpdate) {
-        [self lsn_injectSourceForPreviewBar];
-        [self lsn_togglePublishButtonStatus];
+        [self lsn_updateSourceAndReloadPreviewBar];
+        [self lsn_updatePublishButton];
     }
     
 }
-- (void)togglePreviewBar {
+
+-(void)leesinBottomBar:(LeesinBottomBar *)leesinBottomBar isPhotoLibraryButtonTapped:(BOOL)isPhotoLibraryButtonTapped isAllMissionButtonTapped:(BOOL)isAllMissionButtonTapped isShootingButtonTapped:(BOOL)isShootingButtonTapped {
+    
+    if (isPhotoLibraryButtonTapped) {
+        [self presentViewController:self.qbImagePickerController animated:YES completion:NULL];
+    }
+    if (isAllMissionButtonTapped) {
+        
+    }
+    
+    
+    if (isShootingButtonTapped) {
+        UIImagePickerController* imagePickerController= [UIImagePickerController new];
+        
+//        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[DBCameraViewController initWithDelegate:self]];
+//        [nav setNavigationBarHidden:YES];
+//        [self presentViewController:nav animated:YES completion:nil];
+    }
+    
+}
+- (void)reloadPreviewBar {
     
     if ([self.previewBar isSourceEmpty]) {
         if (self.isPreviewShown == NO) {
@@ -599,7 +572,109 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 }
 
 
+#pragma mark - Get and Set
 
+-(LeesinTextInputBar *)bar {
+    if (!_bar) {
+        _bar = [LeesinTextInputBar new];
+    }
+    return _bar;
+}
+-(LeesinPreviewBar *)previewBar {
+    if (!_previewBar) {
+        _previewBar = [LeesinPreviewBar new];
+    }
+    return _previewBar;
+}
+-(void)setType:(LeesinViewControllerType)type {
+    _type = type;
+    
+    if (type == LeesinViewControllerTypeAsk) {
+        self.bar.type = LeesinTextInputBarTypeAsk;
+        self.bottomBar.type = LeeSinBottomBarTypeAsk;
+        self.bar.buttonType = LeesinTextInputBarButtonTypePHAsset;
+        self.swipeView.type = LeesinSwipeViewTypePHAsset;
+    } else if (type == LeesinViewControllerTypeReply) {
+        self.bar.type = LeesinTextInputBarTypeReply;
+        self.bar.buttonType = LeesinTextInputBarButtonTypeMission;
+        if (self.bar.buttonType == LeesinTextInputBarButtonTypeMission) {
+            self.bottomBar.type = LeeSinBottomBarTypeReplyMission;
+            self.swipeView = LeesinSwipeViewTypeMission;
+        } else if (self.bar.buttonType == LeesinTextInputBarButtonTypePHAsset) {
+            self.bottomBar.type = LeeSinBottomBarTypeReplyPHAsset;
+            self.swipeView.type = LeesinSwipeViewTypePHAsset;
+        }
+    } else if (type == LeesinViewControllerTypeReplyNoMissionSelection) {
+        self.bar.buttonType = LeesinTextInputBarButtonTypePHAsset;
+        self.bar.type = LeesinTextInputBarTypeReplyNoMissionSelection;
+        self.bottomBar.type = LeeSinBottomBarTypeReplyNoMissionSelection;
+        self.swipeView.type = LeesinSwipeViewTypePHAsset;
+    }
+}
 
+-(LeesinSwipeView *)swipeView {
+    if (!_swipeView) {
+        _swipeView = [LeesinSwipeView new];
+        _swipeView.dataSource = self;
+        _swipeView.delegate  = self;
+        _swipeView.backgroundColor = [UIColor grayColor];//EEEEEE
+    }
+    return _swipeView;
+}
+-(LeesinBottomBar *)bottomBar {
+    if (!_bottomBar) {
+        _bottomBar = [LeesinBottomBar new];
+        _bottomBar.delegate = self;
+    }
+    return _bottomBar;
+}
 
+-(QBImagePickerController *)qbImagePickerController {
+    if (!_qbImagePickerController) {
+        _qbImagePickerController = [[QBImagePickerController alloc]init];
+        _qbImagePickerController.mediaType = QBImagePickerMediaTypeImage;
+        _qbImagePickerController.minimumNumberOfSelection = 1;
+        _qbImagePickerController.numberOfColumnsInPortrait = 3;
+        _qbImagePickerController.delegate = self;
+        if (self.type == LeesinViewControllerTypeAsk) {
+            _qbImagePickerController.allowsMultipleSelection = YES;
+            _qbImagePickerController.maximumNumberOfSelection = 2;
+        } else {
+            _qbImagePickerController.allowsMultipleSelection = YES;
+            _qbImagePickerController.maximumNumberOfSelection = 1;
+        }
+    }
+    return _qbImagePickerController;
+}
+
+-(void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController {
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.qbImagePickerController.selectedAssets removeAllObjects];
+    }];
+}
+-(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingAssets:(NSArray *)assets {
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+        
+        for (PHAsset *asset in self.selectedAssets) {
+            asset.selected = NO;
+        }
+        [self.selectedAssets removeAllObjects];
+        
+        for (PHAsset *asset in assets) {
+            asset.selected = YES;
+        }
+        
+        NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [assets count])];
+        [self.sourceAssets insertObjects:assets atIndexes:indexSet];
+        [self.selectedAssets addObjectsFromArray:assets];
+        
+        [self.swipeView reloadData];
+        [self lsn_updateSourceAndReloadPreviewBar];
+        [self lsn_updatePublishButton];
+        
+        [self.qbImagePickerController.selectedAssets removeAllObjects];
+
+    }];
+}
 @end

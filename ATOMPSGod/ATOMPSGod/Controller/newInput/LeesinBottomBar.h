@@ -14,16 +14,16 @@ typedef NS_ENUM(NSUInteger, LeeSinBottomBarType) {
     LeeSinBottomBarTypeAsk,
     LeeSinBottomBarTypeReplyNoMissionSelection,
 };
-
-typedef NS_ENUM(NSUInteger, LeesinBottomBarRightButtonType) {
-    LeesinBottomBarRightButtonTypeConfirmEnable,
-    LeesinBottomBarRightButtonTypeConfirmDisable,
-    LeesinBottomBarRightButtonTypeCancelEnable,
-};
+//
+//typedef NS_ENUM(NSUInteger, LeesinBottomBarRightButtonType) {
+//    LeesinBottomBarRightButtonTypeConfirmEnable,
+//    LeesinBottomBarRightButtonTypeConfirmDisable,
+//    LeesinBottomBarRightButtonTypeCancelEnable,
+//};
 
 @protocol LeesinBottomBarDelegate <NSObject>
 @optional
-- (void)leesinBottomBar:(LeesinBottomBar *)leesinBottomBar isPhotoLibraryButtonTapped:(BOOL)did isAllMissionButtonTapped:(BOOL)did isShootingButtonTapped:(BOOL)did;
+- (void)leesinBottomBar:(LeesinBottomBar *)leesinBottomBar isPhotoLibraryButtonTapped:(BOOL)isPhotoLibraryButtonTapped isAllMissionButtonTapped:(BOOL)isAllMissionButtonTapped isShootingButtonTapped:(BOOL)isShootingButtonTapped;
 @end
 
 @interface LeesinBottomBar : UIView
@@ -32,6 +32,8 @@ typedef NS_ENUM(NSUInteger, LeesinBottomBarRightButtonType) {
 //@property (nonatomic, strong) UIButton *button_confirm;
 //@property (nonatomic, strong) UILabel  *label_confirmedCount;
 @property (nonatomic, assign) LeeSinBottomBarType type;
-@property (nonatomic, assign) LeesinBottomBarRightButtonType rightButtonType;
+@property (nonatomic, weak) id<LeesinBottomBarDelegate> delegate;
+
+//@property (nonatomic, assign) LeesinBottomBarRightButtonType rightButtonType;
 
 @end
