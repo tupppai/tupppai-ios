@@ -34,12 +34,15 @@ PIEVerificationCodeCountdownButton *countdownButton;
 
 @property (nonatomic, weak  ) PIELaunchNextStepButton
                                                    *nextStepButton;
+@property (nonatomic, weak)   UIButton      *resetUiButton;
 @property (nonatomic, weak  ) UIImageView   *launchSeparator;
 
 @property (nonatomic, strong) MASConstraint *logoImageViewTopConstraint;
 @property (nonatomic, strong) MASConstraint *nextStepButtonTopConstraint;
 
 @property (nonatomic, strong) RACDisposable *hasRegisteredRequestDisposable;
+
+@property (nonatomic, strong) RACDisposable *loginOrSignupRequestDisposable;
 
 
 @end
@@ -67,7 +70,6 @@ PIEVerificationCodeCountdownButton *countdownButton;
 {
     [super viewWillAppear:animated];
 
-//    [self.navigationController setNavigationBarHidden:YES];
     [self.navigationController.navigationBar
      lt_setBackgroundColor:[UIColor clearColor]];
     self.navigationController.navigationBar.shadowImage = [UIImage new];
@@ -76,8 +78,8 @@ PIEVerificationCodeCountdownButton *countdownButton;
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self.navigationController.navigationBar
-     lt_reset];
+//    [self.navigationController.navigationBar
+//     lt_reset];
 
 }
 
@@ -254,6 +256,35 @@ PIEVerificationCodeCountdownButton *countdownButton;
         imageView;
     });
     self.launchSeparator = launchSeparator;
+    
+    // resetUI button
+    UIButton *resetUiButton = ({
+        UIButton *button = [[UIButton alloc] init];
+        
+        [button setBackgroundImage:[UIImage imageNamed:@"pie_launch_resetUI"]
+                          forState:UIControlStateNormal];
+        
+        [self.view addSubview:button];
+        
+        [button mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeMake(20, 20));
+            make.centerX.equalTo(self.view);
+            make.top.equalTo(nextStepButton.mas_bottom).with.offset(35);
+        }];
+        
+        button;
+    });
+    resetUiButton.hidden = YES;
+    
+    [[resetUiButton rac_signalForControlEvents:UIControlEventTouchUpInside]
+    subscribeNext:^(id x) {
+        @strongify(self);
+        [self resetOriginUI];
+    }];
+    
+    self.resetUiButton = resetUiButton;
+    
+    
 
     // Sina
     UIButton *sinaButton = ({
@@ -365,6 +396,7 @@ PIEVerificationCodeCountdownButton *countdownButton;
                                      [self updateUIForLogin];
                                      [self.hasRegisteredRequestDisposable dispose];
                                      
+                                     self.loginOrSignupRequestDisposable =
                                      [[self.nextStepButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
                                          [self sendLoginRequest];
                                      }];
@@ -372,6 +404,7 @@ PIEVerificationCodeCountdownButton *countdownButton;
                                      [self updateUIForSignup];
                                      [self.hasRegisteredRequestDisposable dispose];
                                      
+                                     self.loginOrSignupRequestDisposable =
                                      [[self.nextStepButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
                                          [self sendRegisterRequest];
                                      }];
@@ -521,6 +554,7 @@ PIEVerificationCodeCountdownButton *countdownButton;
     self.passwordTextField.rightViewMode = UITextFieldViewModeAlways;
     [UIView animateWithDuration:0.3 animations:^{
         [self.view layoutIfNeeded];
+        self.resetUiButton.hidden        = NO;
         self.logoImageView.hidden        = YES;
         self.passwordTextField.hidden    = NO;
         self.passwordTextField.rightView = forgotPasswordButton;
@@ -536,12 +570,35 @@ PIEVerificationCodeCountdownButton *countdownButton;
 
     [UIView animateWithDuration:0.3 animations:^{
         [self.view layoutIfNeeded];
+        self.resetUiButton.hidden             = NO;
         self.logoImageView.hidden             = YES;
         self.passwordTextField.hidden         = NO;
         self.verificationCodeTextField.hidden = NO;
         [self.nextStepButton setTitle:@"注册" forState:UIControlStateNormal];
     }];
     
+    
+}
+
+- (void)resetOriginUI
+{
+    [self.logoImageViewTopConstraint setOffset:33];
+    [self.nextStepButtonTopConstraint setOffset:19];
+    
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         [self.view layoutIfNeeded];
+                         self.resetUiButton.hidden             = YES;
+                         self.logoImageView.hidden             = NO;
+                         self.passwordTextField.hidden         = YES;
+                         self.verificationCodeTextField.hidden = YES;
+                         [self.nextStepButton setTitle:@"下一步"
+                                              forState:UIControlStateNormal];
+                     }];
+    
+    // reset 'nextStepButton' click event
+    [self.loginOrSignupRequestDisposable dispose];
+    [self setupHasRegisteredRequest];
     
 }
 

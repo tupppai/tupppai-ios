@@ -16,6 +16,7 @@
 #import "PIELaunchTextField.h"
 #import "PIELaunchNextStepButton.h"
 #import "PIEVerificationCodeCountdownButton.h"
+#import "UINavigationBar+Awesome.h"
 
 /* Variables */
 @interface PIEForgotPasswordViewController_Black ()
@@ -49,8 +50,21 @@
 {
     [super viewWillAppear:animated];
     
-    self.view.backgroundColor = [UIColor whiteColor];
-    [self.navigationController setNavigationBarHidden:YES];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+    
+    [self.navigationController.navigationBar
+     lt_setBackgroundColor:[UIColor clearColor]];
+    
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self.navigationController.navigationBar lt_reset];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -180,6 +194,35 @@
         @strongify(self);
         [self sendResetPasswordRequest];
     }];
+    
+    // goBack button, push back the current view controller
+    UIButton *goBackButton = ({
+        UIButton *button = [[UIButton alloc] init];
+        
+        [button setBackgroundImage:[UIImage imageNamed:@"pie_launch_goBack"]
+                          forState:UIControlStateNormal];
+        
+        [self.view addSubview:button];
+        
+        @weakify(self);
+        [button mas_makeConstraints:^(MASConstraintMaker *make) {
+            @strongify(self);
+            make.size.mas_equalTo(CGSizeMake(34, 34));
+            make.centerX.equalTo(self.view);
+            make.top.equalTo(resetPasswordAndLoginButton.mas_bottom).with.offset(63);
+        }];
+        
+        button;
+        
+    });
+    
+    
+    [[goBackButton rac_signalForControlEvents:UIControlEventTouchUpInside]
+    subscribeNext:^(id x) {
+        @strongify(self);
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+    
     
 }
 

@@ -16,7 +16,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorOccuredRET) name:@"NetworkErrorCall" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showInfoRET:) name:@"NetworkShowInfoCall" object:nil];
     
-    [self setupNav];
+
 }
 
 - (void)setupNav {
