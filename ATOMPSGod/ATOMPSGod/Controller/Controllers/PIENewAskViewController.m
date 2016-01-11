@@ -21,8 +21,8 @@
 #import "PIEUploadManager.h"
 #import "DDCollectManager.h"
 #import "DDShareManager.h"
-#import "PIEUploadVC.h"
-#import "QBImagePickerController.h"
+//#import "PIEUploadVC.h"
+//#import "QBImagePickerController.h"
 #import "DeviceUtil.h"
 #import "PIECellIconStatusChangedNotificationKey.h"
 #import "LeesinViewController.h"
@@ -42,7 +42,7 @@
 @property (nonatomic, strong) PIEActionSheet_PS           *psActionSheet;
 @property (nonatomic, strong) MRNavigationBarProgressView *progressView;
 @property (nonatomic, strong) UIButton                    *takePhotoButton;
-@property (nonatomic, strong) QBImagePickerController     *QBImagePickerController;
+//@property (nonatomic, strong) QBImagePickerController     *QBImagePickerController;
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 @property (nonatomic, strong) MASConstraint               *takePhotoButtonBottomMarginConstraint;
 
@@ -53,8 +53,7 @@
 @interface PIENewAskViewController (CollectionView)
 <UICollectionViewDataSource, UICollectionViewDelegate, CHTCollectionViewDelegateWaterfallLayout>
 @end
-@interface PIENewAskViewController () <QBImagePickerControllerDelegate>
-@end
+
 @interface PIENewAskViewController (DZNEmptyDataSet)
 <DZNEmptyDataSetDelegate, DZNEmptyDataSetSource>
 @end
@@ -462,18 +461,8 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 }
 
 #pragma mark - Notification Methods
-/**
- *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面ReplyCell的分享数
- */
+
 - (void)updateShareStatus {
-    /*
-     _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
-     
-     */
-    
-    //    _selectedVM.shareCount =
-    //    [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue] +1];
-    //    [self updateStatus];
     if (_selectedIndexPath) {
         [_collectionView_ask reloadItemsAtIndexPaths:@[_selectedIndexPath]];
     }
@@ -487,18 +476,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     vc.channel_id = _channelVM.ID;
     vc.delegate = self;
     [self presentViewController:vc animated:YES completion:nil];
-}
-#pragma qb_imagePickerController delegate
--(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
-    PIEUploadVC* vc = [PIEUploadVC new];
-    vc.assetsArray = assets;
-    [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
-}
-
-
--(void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController {
-    [self.QBImagePickerController.selectedAssetURLs removeAllObjects];
-    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 
@@ -566,20 +543,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     
 }
 
-
-- (QBImagePickerController* )QBImagePickerController {
-    if (!_QBImagePickerController) {
-        _QBImagePickerController = [QBImagePickerController new];
-        _QBImagePickerController.delegate = self;
-        _QBImagePickerController.filterType = QBImagePickerControllerFilterTypePhotos;
-        _QBImagePickerController.allowsMultipleSelection = YES;
-        _QBImagePickerController.showsNumberOfSelectedAssets = YES;
-        _QBImagePickerController.minimumNumberOfSelection = 1;
-        _QBImagePickerController.maximumNumberOfSelection = 2;
-        //        _QBImagePickerController.prompt = @"选择你要上传的图片";
-    }
-    return _QBImagePickerController;
-}
 
 
 -(PIEShareView *)shareView {

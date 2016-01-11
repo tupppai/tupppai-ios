@@ -8,7 +8,7 @@
 
 #import "PIEProceedingToHelpViewController.h"
 #import "PIERefreshTableView.h"
-#import "QBImagePickerController.h"
+//#import "QBImagePickerController.h"
 #import "PIEProceedingShareView.h"
 #import "PIEProceedingToHelpTableViewCell.h"
 #import "PIEFriendViewController.h"
@@ -16,7 +16,7 @@
 #import "DDNavigationController.h"
 #import "PIECarouselViewController2.h"
 #import "AppDelegate.h"
-#import "PIEUploadVC.h"
+//#import "PIEUploadVC.h"
 #import "PIEProceedingManager.h"
 #import "PIEUploadManager.h"
 #import "PIECategoryModel.h"
@@ -41,7 +41,7 @@
 
 @property (nonatomic, strong) PIEPageVM* selectedVM;
 
-@property (nonatomic, strong) QBImagePickerController* QBImagePickerController;
+//@property (nonatomic, strong) QBImagePickerController* QBImagePickerController;
 
 @property (nonatomic, strong) PIEProceedingShareView *shareView;
 
@@ -62,9 +62,9 @@
 //
 
 
-@interface PIEProceedingToHelpViewController (QBImagePickerController)
-<QBImagePickerControllerDelegate>
-@end
+//@interface PIEProceedingToHelpViewController (QBImagePickerController)
+//<QBImagePickerControllerDelegate>
+//@end
 
 @interface PIEProceedingToHelpViewController (ProceedingShareView)
 <PIEProceedingShareViewDelegate>
@@ -277,31 +277,31 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
 }
 
 
-
-#pragma mark - <QBImagePickerControllerDelegate>
--(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
-    NSMutableArray* array = [NSMutableArray new];
-    for (ALAsset* asset in assets) {
-        [array addObject:asset];
-    }
-    PIEUploadVC* vc = [PIEUploadVC new];
-    vc.assetsArray = assets;
-    vc.hideSecondView = YES;
-    PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath_toHelp.row];
-    [PIEUploadManager shareModel].ask_id = vm.askID;
-    [PIEUploadManager shareModel].type = PIEPageTypeReply;
-    
-    if (vm.models_catogory && vm.models_catogory.count > 0) {
-        PIECategoryModel* model = [vm.models_catogory objectAtIndex:0];
-        [PIEUploadManager shareModel].channel_id = [model.ID integerValue];
-    }
-    [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
-}
-
--(void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController {
-    [self dismissViewControllerAnimated:YES completion:NULL];
-    [self.QBImagePickerController.selectedAssetURLs removeAllObjects];
-}
+//
+//#pragma mark - <QBImagePickerControllerDelegate>
+//-(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
+//    NSMutableArray* array = [NSMutableArray new];
+//    for (ALAsset* asset in assets) {
+//        [array addObject:asset];
+//    }
+//    PIEUploadVC* vc = [PIEUploadVC new];
+//    vc.assetsArray = assets;
+//    vc.hideSecondView = YES;
+//    PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath_toHelp.row];
+//    [PIEUploadManager shareModel].ask_id = vm.askID;
+//    [PIEUploadManager shareModel].type = PIEPageTypeReply;
+//    
+//    if (vm.models_catogory && vm.models_catogory.count > 0) {
+//        PIECategoryModel* model = [vm.models_catogory objectAtIndex:0];
+//        [PIEUploadManager shareModel].channel_id = [model.ID integerValue];
+//    }
+//    [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
+//}
+//
+//-(void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController {
+//    [self dismissViewControllerAnimated:YES completion:NULL];
+//    [self.QBImagePickerController.selectedAssetURLs removeAllObjects];
+//}
 
 
 #pragma mark - <UITableViewDataSource>
@@ -460,18 +460,18 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
 
 
 #pragma mark - Lazy loadings
-- (QBImagePickerController* )QBImagePickerController {
-    if (!_QBImagePickerController) {
-        _QBImagePickerController = [QBImagePickerController new];
-        _QBImagePickerController.delegate = self;
-        _QBImagePickerController.filterType = QBImagePickerControllerFilterTypePhotos;
-        _QBImagePickerController.allowsMultipleSelection = YES;
-        _QBImagePickerController.showsNumberOfSelectedAssets = YES;
-        _QBImagePickerController.minimumNumberOfSelection = 1;
-        _QBImagePickerController.maximumNumberOfSelection = 1;
-    }
-    return _QBImagePickerController;
-}
+//- (QBImagePickerController* )QBImagePickerController {
+//    if (!_QBImagePickerController) {
+//        _QBImagePickerController = [QBImagePickerController new];
+//        _QBImagePickerController.delegate = self;
+//        _QBImagePickerController.filterType = QBImagePickerControllerFilterTypePhotos;
+//        _QBImagePickerController.allowsMultipleSelection = YES;
+//        _QBImagePickerController.showsNumberOfSelectedAssets = YES;
+//        _QBImagePickerController.minimumNumberOfSelection = 1;
+//        _QBImagePickerController.maximumNumberOfSelection = 1;
+//    }
+//    return _QBImagePickerController;
+//}
 
 - (void)showShareViewWithToHideDeleteButton:(BOOL)hide{
     self.shareView.hideDeleteButton = hide;

@@ -10,7 +10,6 @@
 #import "PIEChannelViewModel.h"
 @class  LeesinViewController;
 @protocol LeesinViewControllerDelegate <NSObject>
-
 @optional
 - (void)leesinViewController:(LeesinViewController *)leesinViewController uploadPercentage:(CGFloat)percentage uploadSucceed:(BOOL)success;
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "PIEProceedingAskViewController.h"
-#import "QBImagePickerController.h"
+//#import "QBImagePickerController.h"
 #import "PIEProceedingShareView.h"
 #import "PIERefreshTableView.h"
 #import "PIEProceedingAskTableViewCell_NoGap.h"
@@ -36,7 +36,7 @@ NSMutableArray <NSMutableArray<PIEPageVM *> *> *sourceAsk;
 
 @property (nonatomic, strong) PIEPageVM* selectedVM;
 
-@property (nonatomic, strong) QBImagePickerController* QBImagePickerController;
+//@property (nonatomic, strong) QBImagePickerController* QBImagePickerController;
 
 @property (nonatomic, strong) PIEProceedingShareView *shareView;
 

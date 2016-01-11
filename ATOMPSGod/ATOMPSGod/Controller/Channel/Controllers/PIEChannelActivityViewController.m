@@ -18,8 +18,8 @@
 #import "PIEReplyCollectionViewController.h"
 #import "PIEShareView.h"
 #import "DDCollectManager.h"
-#import "QBImagePickerController.h"
-#import "PIEUploadVC.h"
+//#import "QBImagePickerController.h"
+//#import "PIEUploadVC.h"
 #import "PIEWebViewViewController.h"
 #import "DDSessionManager.h"
 #import "DDNavigationController.h"
@@ -29,7 +29,7 @@
 #import "LeesinViewController.h"
 #import "MRNavigationBarProgressView.h"
 /* Variables */
-@interface PIEChannelActivityViewController ()<QBImagePickerControllerDelegate,LeesinViewControllerDelegate>
+@interface PIEChannelActivityViewController ()<LeesinViewControllerDelegate>
 
 /*Views*/
 @property (nonatomic, strong) PIERefreshTableView *tableView;
@@ -59,7 +59,7 @@
 @property (nonatomic, assign) NSUInteger currentPageIndex;
 
 
-@property (nonatomic, strong) QBImagePickerController* QBImagePickerController;
+//@property (nonatomic, strong) QBImagePickerController* QBImagePickerController;
 
 /* Autolayout animation */
 @property (nonatomic, strong) MASConstraint *goPsButtonBottomConstraint;
@@ -542,24 +542,24 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 
 
 
-#pragma mark - qb_imagePickerController delegate
--(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
-    
-    [PIEUploadManager shareModel].channel_id = _currentChannelVM.ID;
-
-    [PIEUploadManager shareModel].type = PIEPageTypeReply;
-    PIEUploadVC* vc = [PIEUploadVC new];
-//    vc.channelVM = _currentChannelVM;
-    vc.assetsArray = assets;
-    vc.hideSecondView = YES;
-    [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
-    
-}
-
--(void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController {
-    [self.QBImagePickerController.selectedAssetURLs removeAllObjects];
-    [self dismissViewControllerAnimated:YES completion:NULL];
-}
+//#pragma mark - qb_imagePickerController delegate
+//-(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
+//    
+//    [PIEUploadManager shareModel].channel_id = _currentChannelVM.ID;
+//
+//    [PIEUploadManager shareModel].type = PIEPageTypeReply;
+//    PIEUploadVC* vc = [PIEUploadVC new];
+////    vc.channelVM = _currentChannelVM;
+//    vc.assetsArray = assets;
+//    vc.hideSecondView = YES;
+//    [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
+//    
+//}
+//
+//-(void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController {
+//    [self.QBImagePickerController.selectedAssetURLs removeAllObjects];
+//    [self dismissViewControllerAnimated:YES completion:NULL];
+//}
 
 
 #pragma mark - Lazy loadings
@@ -665,20 +665,20 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     }
     return  _shareView;
 }
-
-- (QBImagePickerController* )QBImagePickerController {
-    if (!_QBImagePickerController) {
-        _QBImagePickerController = [QBImagePickerController new];
-        _QBImagePickerController.delegate = self;
-        _QBImagePickerController.filterType = QBImagePickerControllerFilterTypePhotos;
-        _QBImagePickerController.allowsMultipleSelection = YES;
-        _QBImagePickerController.showsNumberOfSelectedAssets = YES;
-        _QBImagePickerController.minimumNumberOfSelection = 1;
-        _QBImagePickerController.maximumNumberOfSelection = 1;
-    }
-    return _QBImagePickerController;
-}
-
+//
+//- (QBImagePickerController* )QBImagePickerController {
+//    if (!_QBImagePickerController) {
+//        _QBImagePickerController = [QBImagePickerController new];
+//        _QBImagePickerController.delegate = self;
+//        _QBImagePickerController.filterType = QBImagePickerControllerFilterTypePhotos;
+//        _QBImagePickerController.allowsMultipleSelection = YES;
+//        _QBImagePickerController.showsNumberOfSelectedAssets = YES;
+//        _QBImagePickerController.minimumNumberOfSelection = 1;
+//        _QBImagePickerController.maximumNumberOfSelection = 1;
+//    }
+//    return _QBImagePickerController;
+//}
+//
 
 
 

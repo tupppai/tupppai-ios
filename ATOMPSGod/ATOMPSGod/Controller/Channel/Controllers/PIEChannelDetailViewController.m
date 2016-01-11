@@ -147,17 +147,24 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 
 #pragma mark - <UITableViewDataSource>
 
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    
-    return self.source_reply.count+1;
+    if (section == 0) {
+        return 1;
+    } else if (section == 1) {
+        return self.source_reply.count;
+    }
+    else return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if (indexPath.row == 0)
+    if (indexPath.section == 0)
     {
         PIEChannelDetailLatestPSCell *detailLatestPSCell =
         [tableView dequeueReusableCellWithIdentifier:PIEDetailLatestPSCellIdentifier];
@@ -172,7 +179,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         PIENewReplyTableCell *cell =
         [tableView dequeueReusableCellWithIdentifier:PIEDetailUsersPSCellIdentifier];
         
-        [cell injectSauce:_source_reply[indexPath.row - 1]];
+        [cell injectSauce:_source_reply[indexPath.row]];
         
         return cell;
     }
@@ -202,7 +209,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         [self getSource_Ask];
     });
     
-    [self getSource_Reply];
+    [self getSource_Reply:nil];
 }
 
 #pragma mark - <SwipeViewDelegate>
@@ -282,12 +289,10 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 
 - (void)tapOnReply:(UITapGestureRecognizer *)gesture {
     
-    
-    
     CGPoint location = [gesture locationInView:self.tableView];
     _selectedIndexPath = [self.tableView indexPathForRowAtPoint:location];
     
-    if (_selectedIndexPath.row == 0) {
+    if (_selectedIndexPath.section == 0) {
         PIENewAskViewController* vc = [PIENewAskViewController new];
         vc.channelVM = _currentChannelViewModel;
         [self.navigationController pushViewController:vc animated:YES];
@@ -310,7 +315,6 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         }
         //点击大图
         else  if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
-            //进入热门详情
             PIECarouselViewController2* vc = [PIECarouselViewController2 new];
             _selectedVM.image = _selectedReplyCell.theImageView.image;
             vc.pageVM = _selectedVM;
@@ -329,17 +333,12 @@ static NSString * PIEDetailUsersPSCellIdentifier =
             friendVC.pageVM = _selectedVM;
             [self.navigationController pushViewController:friendVC animated:YES];
         }
-        //            else if (CGRectContainsPoint(_selectedReplyCell.collectView.frame, p)) {
-        //                //should write this logic in viewModel
-        ////                [self collect:_selectedReplyCell.collectView shouldShowHud:NO];
-        //                [self collect];
-        //            }
+
         else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
-//            [PIEPageManager love:_selectedReplyCell.likeView viewModel:_selectedVM revert:NO];
             [_selectedVM love:NO];
         }
         else if (CGRectContainsPoint(_selectedReplyCell.followView.frame, p)) {
-            [self followReplier];
+            [_selectedVM follow];
         }
         else if (CGRectContainsPoint(_selectedReplyCell.shareView.frame, p)) {
             [self showShareView:_selectedVM];
@@ -360,8 +359,6 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 }
 - (void)longPressOnReply:(UILongPressGestureRecognizer *)gesture {
     
-    
-    
     CGPoint location   = [gesture locationInView:self.tableView];
     _selectedIndexPath = [self.tableView indexPathForRowAtPoint:location];
     if (_selectedIndexPath) {
@@ -381,34 +378,6 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     
 }
 
--(void)followReplier {
-    
-    
-    _selectedReplyCell.followView.highlighted = !_selectedReplyCell.followView.highlighted;
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    [param setObject:@(_selectedVM.userID) forKey:@"uid"];
-    if (_selectedReplyCell.followView.highlighted) {
-        [param setObject:@1 forKey:@"status"];
-    }
-    else {
-        [param setObject:@0 forKey:@"status"];
-    }
-    [DDService follow:param withBlock:^(BOOL success) {
-        if (success) {
-            _selectedVM.followed = _selectedReplyCell.followView.highlighted;
-        } else {
-            _selectedReplyCell.followView.highlighted = !_selectedReplyCell.followView.highlighted;
-            
-            [Hud text:@"网络异常，请稍后重试"];
-        }
-        
-        if (_selectedReplyCell.followView.highlighted) {
-            [Hud text:@"关注成功"];
-        }else{
-            [Hud text:@"已取消关注"];
-        }
-    }];
-}
 
 
 - (void)getSource_Ask {
@@ -433,7 +402,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     }];
 }
 
-- (void)getSource_Reply {
+- (void)getSource_Reply:(void (^)(BOOL success))block {
     WS(ws);
     _currentPage_Reply = 1;
     NSMutableDictionary *params  = [NSMutableDictionary dictionary];
@@ -445,10 +414,15 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     params[@"last_updated"]      = @(_timeStamp);
     [params setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
     
-    
     [PIEChannelManager getSource_channelPages:params resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
         [_source_reply removeAllObjects];
         [_source_reply addObjectsFromArray:pageArray];
+        
+        if (block && pageArray.count > 0) {
+            block(YES);
+        }else if (block && pageArray.count == 0) {
+            block(NO);
+        }
     } completion:^{
         [ws.tableView.mj_header endRefreshing];
         [ws.tableView reloadData];
@@ -486,14 +460,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 
 
 #pragma mark - Target-actions
-- (void)takePhoto:(UIButton *)button
-{
-    PIECameraViewController *pvc = [PIECameraViewController new];
-    pvc.blurStyle = UIBlurEffectStyleDark;
-    pvc.channelVM = _currentChannelViewModel;
-    [self presentViewController:pvc animated:YES completion:nil];
-    
-}
+
 
 - (void)tapAsk {
     LeesinViewController* vc = [LeesinViewController new];
@@ -518,7 +485,13 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         if (leesinViewController.type == LeesinViewControllerTypeAsk) {
             [self getSource_Ask];
         } else {
-            [self.tableView.mj_header beginRefreshing];
+            [self getSource_Reply:^(BOOL success) {
+                if (success) {
+                    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+                    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+                }
+            }];
+
         }
     }
 }
@@ -597,11 +570,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
             make.leading.equalTo(askButton.mas_trailing);
         }];
         
-//        _bottomContainerView.layer.shadowColor  = (__bridge CGColorRef _Nullable)
-//        ([UIColor colorWithWhite:0.0 alpha:0.5]);
-//        _bottomContainerView.layer.shadowOffset = CGSizeMake(0, 4);
-//        _bottomContainerView.layer.shadowRadius = 8.0;
-        
+
         [askButton addTarget:self
                              action:@selector(tapAsk)
                    forControlEvents:UIControlEventTouchDown];
