@@ -484,6 +484,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 - (void)takePhoto {
     LeesinViewController* vc = [LeesinViewController new];
     vc.type = LeesinViewControllerTypeAsk;
+    vc.channel_id = _channelVM.ID;
     vc.delegate = self;
     [self presentViewController:vc animated:YES completion:nil];
 }

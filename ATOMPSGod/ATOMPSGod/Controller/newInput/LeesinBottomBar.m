@@ -152,6 +152,7 @@
         [_button_confirm setTitle:@"确定" forState:UIControlStateNormal];
         _button_confirm.enabled = NO;
         _button_confirm.alpha = 0.3;
+        _button_confirm.hidden = YES;
     }
     return _button_confirm;
 }
@@ -163,6 +164,7 @@
         _label_confirmedCount.backgroundColor = [UIColor orangeColor];
         _label_confirmedCount.text = @"0";
         _label_confirmedCount.textAlignment = NSTextAlignmentCenter;
+        _label_confirmedCount.hidden = YES;
     }
     return _label_confirmedCount;
 }

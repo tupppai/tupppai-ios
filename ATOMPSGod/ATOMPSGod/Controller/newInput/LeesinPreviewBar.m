@@ -166,7 +166,7 @@
 }
 
 - (BOOL)isSourceEmpty {
-    return (!_source);
+    return (!_source.count>0);
 }
 //
 //-(void)setSourceMission_reply:(NSString *)sourceMission_reply {
@@ -186,9 +186,10 @@
 //
 //}
 -(void)setSource:(NSMutableOrderedSet *)source {
+    _previewImageView1.image = nil;
+    _previewImageView2.image = nil;
     _source = source;
     PHImageManager *imageManager = [PHImageManager defaultManager];
-
 
         if (source.count >= 1) {
             id object = [source objectAtIndex:0];

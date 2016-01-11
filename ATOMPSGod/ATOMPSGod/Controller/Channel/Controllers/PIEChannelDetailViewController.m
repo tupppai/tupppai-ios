@@ -197,12 +197,11 @@ static NSString * PIEDetailUsersPSCellIdentifier =
  */
 - (void)didPullRefreshDown:(UITableView *)tableView
 {
-    if (_source_ask.count <= 0) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            //getSource_Ask 经常拿不到数据，如果和getSource_Reply几乎同时调用的话。
-            [self getSource_Ask];
-        });
-    }
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        //getSource_Ask 经常拿不到数据，如果和getSource_Reply几乎同时调用的话。
+        [self getSource_Ask];
+    });
+    
     [self getSource_Reply];
 }
 
