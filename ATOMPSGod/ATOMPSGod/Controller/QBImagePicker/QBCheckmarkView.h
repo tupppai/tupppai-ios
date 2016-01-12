@@ -11,11 +11,15 @@
 IB_DESIGNABLE
 @interface QBCheckmarkView : UIView
 
+@property (nonatomic, assign) BOOL selected;
 @property (nonatomic, assign) IBInspectable CGFloat borderWidth;
 @property (nonatomic, assign) IBInspectable CGFloat checkmarkLineWidth;
-
 @property (nonatomic, strong) IBInspectable UIColor *borderColor;
 @property (nonatomic, strong) IBInspectable UIColor *bodyColor;
 @property (nonatomic, strong) IBInspectable UIColor *checkmarkColor;
+
+@property (nonatomic, strong) IBInspectable UIColor *borderColorSelected;
+@property (nonatomic, strong) IBInspectable UIColor *bodyColorSelected;
+@property (nonatomic, strong) IBInspectable UIColor *checkmarkColorSelected;
 
 @end

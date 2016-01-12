@@ -877,13 +877,19 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
         }
         [self.selectedAssets removeAllObjects];
         
+        BOOL firstIndexHasBeenExchanged = NO;
         for (PHAsset *asset in assets) {
             
             NSInteger index = [self.sourceAssets indexOfObject:asset];
             if (index != NSNotFound) {
                 PHAsset *assetInSource = [self.sourceAssets objectAtIndex:index];
                 assetInSource.selected = YES;
-                [self.sourceAssets exchangeObjectAtIndex:index withObjectAtIndex:0];
+                if (!firstIndexHasBeenExchanged) {
+                    [self.sourceAssets exchangeObjectAtIndex:index withObjectAtIndex:0];
+                    firstIndexHasBeenExchanged = YES;
+                } else {
+                    [self.sourceAssets exchangeObjectAtIndex:index withObjectAtIndex:1];
+                }
                 [self.selectedAssets addObject:assetInSource];
             } else {
                 asset.selected = YES;

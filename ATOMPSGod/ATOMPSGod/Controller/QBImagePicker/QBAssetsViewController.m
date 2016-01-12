@@ -99,6 +99,13 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
         [self.navigationItem setRightBarButtonItem:nil animated:NO];
     }
     
+    UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
+    backButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [backButton setImage:[UIImage imageNamed:@"PIE_icon_back"] forState:UIControlStateNormal];
+    UIBarButtonItem *barBackButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    [backButton addTarget:self action:@selector(popCurrentController) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItems = @[ barBackButtonItem];
+
     [self updateDoneButtonState];
     [self updateSelectionInfo];
     [self.collectionView reloadData];
@@ -110,6 +117,9 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     }
 }
 
+- (void)popCurrentController {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];

@@ -16,6 +16,7 @@
     
     self.imageView1.layer.borderColor = [[UIColor whiteColor] CGColor];
     self.imageView1.layer.borderWidth = borderWidth;
+    self.imageView1.layer.cornerRadius = 5.0;
 //    
 //    self.imageView2.layer.borderColor = [[UIColor whiteColor] CGColor];
 //    self.imageView2.layer.borderWidth = borderWidth;
