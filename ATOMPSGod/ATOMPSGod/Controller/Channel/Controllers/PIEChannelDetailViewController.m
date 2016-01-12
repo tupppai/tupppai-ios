@@ -134,7 +134,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     [self.bottomContainerView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.equalTo(self.view);
         make.trailing.equalTo(self.view);
-        make.height.equalTo(@50);
+        make.height.equalTo(@44);
         self.bottomContainerViewBottomMC =
         make.bottom.equalTo(self.view);
     }];
@@ -548,16 +548,22 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 {
     if (_bottomContainerView == nil) {
         _bottomContainerView = [[UIView alloc] init];
-        _bottomContainerView.backgroundColor = [UIColor lightGrayColor];
+        _bottomContainerView.backgroundColor = [UIColor clearColor];
         UIButton* askButton = [UIButton new];
         UIButton* replyButton = [UIButton new];
-        [askButton setBackgroundColor:[UIColor colorWithHex:0x000000 andAlpha:0.7]];
-        [replyButton setBackgroundColor:[UIColor colorWithHex:0xa99799 andAlpha:0.8]];
+        [askButton setBackgroundColor:[UIColor colorWithHex:0x4a4a4a  andAlpha:0.93]];
+        [replyButton setBackgroundColor:[UIColor colorWithHex:0xffef00 andAlpha:0.93]];
         [askButton      setTitle:@"我要求P"  forState:  UIControlStateNormal];
         [replyButton    setTitle:@"发布作品" forState:  UIControlStateNormal];
         [askButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [replyButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        
+        askButton.titleLabel.font = [UIFont mediumTupaiFontOfSize:14];
+        replyButton.titleLabel.font = [UIFont mediumTupaiFontOfSize:14];
 
+        [askButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+        [replyButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+        
         [_bottomContainerView addSubview:askButton];
         [_bottomContainerView addSubview:replyButton];
         

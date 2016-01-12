@@ -13,7 +13,7 @@ typedef NS_ENUM(NSUInteger, LeesinSwipeViewType) {
     LeesinSwipeViewTypeMission,
     LeesinSwipeViewTypePHAsset
 };
-@interface LeesinSwipeView : SwipeView<DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
+@interface LeesinSwipeView : SwipeView
 @property (nonatomic,assign)LeesinSwipeViewType type;
 @property (nonatomic,assign)BOOL emptyDataSetShouldDisplay;
 @property (nonatomic,strong)UILabel *emptyDisplayLabel;

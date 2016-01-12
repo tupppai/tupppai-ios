@@ -30,7 +30,7 @@
 - (void)pie_commonInit
 {
 //    self.rightButtonType = LeesinBottomBarRightButtonTypeConfirmDisable;
-    self.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0];
+    self.backgroundColor = [UIColor whiteColor];
     [self addSubview:self.button_album];
     [self addSubview:self.button_shoot];
 //    [self addSubview:self.button_confirm];
@@ -101,8 +101,9 @@
 -(UIButton *)button_album {
     if (!_button_album) {
         _button_album = [UIButton buttonWithType:UIButtonTypeSystem];
-        _button_album.titleLabel.font = [UIFont systemFontOfSize:15.0];
-        [_button_album setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+        _button_album.titleLabel.font = [UIFont lightTupaiFontOfSize:14.0];
+        [_button_album setTitleColor:[UIColor colorWithHex:0x50484B andAlpha:1.0] forState:UIControlStateNormal];
+        [_button_album setTitleColor:[UIColor colorWithHex:0xeeeeee andAlpha:0.5] forState:UIControlStateHighlighted];
         [_button_album setTitle:@"相册" forState:UIControlStateNormal];
         [_button_album addTarget:self action:@selector(tapButtonAlbum) forControlEvents:UIControlEventTouchDown];
     }
@@ -112,8 +113,9 @@
 -(UIButton *)button_shoot {
     if (!_button_shoot) {
         _button_shoot = [UIButton buttonWithType:UIButtonTypeSystem];
-        _button_shoot.titleLabel.font = [UIFont systemFontOfSize:15.0];
-        [_button_shoot setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+        _button_shoot.titleLabel.font = [UIFont lightTupaiFontOfSize:14.0];
+        [_button_shoot setTitleColor:[UIColor colorWithHex:0x50484B andAlpha:1.0] forState:UIControlStateNormal];
+        [_button_shoot setTitleColor:[UIColor colorWithHex:0xeeeeee andAlpha:0.5] forState:UIControlStateHighlighted];
         [_button_shoot setTitle:@"拍照" forState:UIControlStateNormal];
         [_button_shoot addTarget:self action:@selector(tapButtonShoot) forControlEvents:UIControlEventTouchDown];
     }

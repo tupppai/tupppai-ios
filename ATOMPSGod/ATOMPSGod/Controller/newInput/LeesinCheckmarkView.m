@@ -29,16 +29,6 @@
         return;
     }
         _selected = selected;
-    
-        if (selected) {
-            self.bodyColor = [UIColor yellowColor];
-            self.borderColor = [UIColor yellowColor];
-            self.checkmarkColor = [UIColor blackColor];
-        } else {
-            self.bodyColor = [UIColor clearColor];
-            self.borderColor = [UIColor whiteColor];
-            self.checkmarkColor = [UIColor whiteColor];
-        }
         [self setNeedsDisplay];
 }
 
@@ -48,9 +38,6 @@
     self.borderWidth = 1.0;
     self.checkmarkLineWidth = 1.2;
     
-    self.borderColor = [UIColor whiteColor];
-    self.bodyColor = [UIColor clearColor];
-    self.checkmarkColor = [UIColor whiteColor];
     
     // Set shadow
     self.layer.shadowColor = [[UIColor lightGrayColor] CGColor];
@@ -61,27 +48,96 @@
 }
 - (void)drawRect:(CGRect)rect
 {
-    //border
-    [self.borderColor setStroke];
-    [[UIBezierPath bezierPathWithOvalInRect:CGRectInset(self.bounds, self.borderWidth, self.borderWidth)] stroke];
-    
+        if (self.selected) {
+            //border
+            [self.borderColorSelected setStroke];
+            [[UIBezierPath bezierPathWithOvalInRect:CGRectInset(self.bounds, self.borderWidth, self.borderWidth)] stroke];
+            
+            
+            // Body
+            [self.bodyColorSelected setFill];
+            [[UIBezierPath bezierPathWithOvalInRect:CGRectInset(self.bounds, self.borderWidth, self.borderWidth)] fill];
+            
+            // Checkmark
+            UIBezierPath *checkmarkPath = [UIBezierPath bezierPath];
+            checkmarkPath.lineWidth = self.checkmarkLineWidth;
+            
+            
+            [checkmarkPath moveToPoint:CGPointMake(CGRectGetWidth(self.bounds) * (6.0 / 24.0), CGRectGetHeight(self.bounds) * (12.0 / 24.0))];
+            [checkmarkPath addLineToPoint:CGPointMake(CGRectGetWidth(self.bounds) * (10.0 / 24.0), CGRectGetHeight(self.bounds) * (16.0 / 24.0))];
+            [checkmarkPath addLineToPoint:CGPointMake(CGRectGetWidth(self.bounds) * (18.0 / 24.0), CGRectGetHeight(self.bounds) * (8.0 / 24.0))];
+            
+            [self.checkmarkColorSelected setStroke];
+            [checkmarkPath stroke];
+        } else {
+            //border
+            [self.borderColor setStroke];
+            [[UIBezierPath bezierPathWithOvalInRect:CGRectInset(self.bounds, self.borderWidth, self.borderWidth)] stroke];
+            
+            
+            // Body
+            [self.bodyColor setFill];
+            [[UIBezierPath bezierPathWithOvalInRect:CGRectInset(self.bounds, self.borderWidth, self.borderWidth)] fill];
+            
+            // Checkmark
+            UIBezierPath *checkmarkPath = [UIBezierPath bezierPath];
+            checkmarkPath.lineWidth = self.checkmarkLineWidth;
+            
+            
+            [checkmarkPath moveToPoint:CGPointMake(CGRectGetWidth(self.bounds) * (6.0 / 24.0), CGRectGetHeight(self.bounds) * (12.0 / 24.0))];
+            [checkmarkPath addLineToPoint:CGPointMake(CGRectGetWidth(self.bounds) * (10.0 / 24.0), CGRectGetHeight(self.bounds) * (16.0 / 24.0))];
+            [checkmarkPath addLineToPoint:CGPointMake(CGRectGetWidth(self.bounds) * (18.0 / 24.0), CGRectGetHeight(self.bounds) * (8.0 / 24.0))];
+            
+            [self.checkmarkColor setStroke];
+            [checkmarkPath stroke];
+        }
 
-    
-    // Body
-    [self.bodyColor setFill];
-    [[UIBezierPath bezierPathWithOvalInRect:CGRectInset(self.bounds, self.borderWidth, self.borderWidth)] fill];
-    
-    // Checkmark
-    UIBezierPath *checkmarkPath = [UIBezierPath bezierPath];
-    checkmarkPath.lineWidth = self.checkmarkLineWidth;
-    
-    
-    [checkmarkPath moveToPoint:CGPointMake(CGRectGetWidth(self.bounds) * (6.0 / 24.0), CGRectGetHeight(self.bounds) * (12.0 / 24.0))];
-    [checkmarkPath addLineToPoint:CGPointMake(CGRectGetWidth(self.bounds) * (10.0 / 24.0), CGRectGetHeight(self.bounds) * (16.0 / 24.0))];
-    [checkmarkPath addLineToPoint:CGPointMake(CGRectGetWidth(self.bounds) * (18.0 / 24.0), CGRectGetHeight(self.bounds) * (8.0 / 24.0))];
-    
-    [self.checkmarkColor setStroke];
-    [checkmarkPath stroke];
+}
+
+//
+//self.borderColor = [UIColor whiteColor];
+//self.bodyColor = [UIColor clearColor];
+//self.checkmarkColor = [UIColor whiteColor];
+
+
+-(UIColor *)bodyColor {
+    if (!_bodyColor) {
+        _bodyColor = [UIColor clearColor];
+    }
+    return _bodyColor;
+}
+-(UIColor *)borderColor {
+    if (!_borderColor) {
+        _borderColor = [UIColor whiteColor];
+    }
+    return _borderColor;
+}
+
+-(UIColor *)checkmarkColor {
+    if (!_checkmarkColor) {
+        _checkmarkColor = [UIColor whiteColor];
+    }
+    return _checkmarkColor;
+}
+
+-(UIColor *)bodyColorSelected {
+    if (!_bodyColorSelected) {
+        _bodyColorSelected = [UIColor yellowColor];
+    }
+    return _bodyColorSelected;
+}
+-(UIColor *)borderColorSelected {
+    if (!_borderColorSelected) {
+        _borderColorSelected = [UIColor clearColor];
+    }
+    return _borderColorSelected;
+}
+
+-(UIColor *)checkmarkColorSelected {
+    if (!_checkmarkColorSelected) {
+        _checkmarkColorSelected = [UIColor blackColor];
+    }
+    return _checkmarkColorSelected;
 }
 
 @end

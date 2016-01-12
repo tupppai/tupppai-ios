@@ -63,9 +63,10 @@
 
 - (void)pie_commonInit
 {
-    self.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0];
+    self.backgroundColor = [UIColor colorWithHex:0xf2f2f2 andAlpha:1.0];
     self.contentInset = UIEdgeInsetsMake(8.0, 12.0, 8.0, 5.0);
-    self.buttonType = LeesinTextInputBarButtonTypeMission;
+    self.buttonType = LeesinTextInputBarButtonTypeNone;
+    _lastButtonType = LeesinTextInputBarButtonTypeNone;
     self.textView.placeholder = @"作品描述";
     [self addSubview:self.leftButton1];
     [self addSubview:self.leftButton2];
@@ -234,7 +235,12 @@
         _leftButton1.titleLabel.font = [UIFont systemFontOfSize:15.0];
 //        _leftButton1.backgroundColor = [UIColor lightGrayColor];
 //        _leftButton1.backgroundColor = [UIColor clearColor];
+        _leftButton1.tintColor = [UIColor clearColor];
+        
         [_leftButton1 setImage:[[UIImage imageNamed:@"leesin_inputbar_button1"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]  forState:UIControlStateNormal];
+        [_leftButton1 setImage:[[UIImage imageNamed:@"leesin_inputbar_button1_selected"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]  forState:UIControlStateHighlighted];
+        [_leftButton1 setImage:[[UIImage imageNamed:@"leesin_inputbar_button1_selected"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]  forState:UIControlStateSelected];
+
     }
     return _leftButton1;
 }
@@ -242,15 +248,21 @@
     if (!_leftButton2) {
         _leftButton2 = [UIButton buttonWithType:UIButtonTypeSystem];
         _leftButton2.titleLabel.font = [UIFont systemFontOfSize:15.0];
-//        _leftButton2.backgroundColor = [UIColor lightGrayColor];
+        _leftButton2.tintColor = [UIColor clearColor];
         [_leftButton2 setImage:[[UIImage imageNamed:@"leesin_inputbar_button2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
+        [_leftButton2 setImage:[[UIImage imageNamed:@"leesin_inputbar_button2_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateHighlighted];
+        [_leftButton2 setImage:[[UIImage imageNamed:@"leesin_inputbar_button2_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateSelected];
+
     }
     return _leftButton2;
 }
 -(UIButton *)rightButton {
     if (!_rightButton) {
         _rightButton = [UIButton buttonWithType:UIButtonTypeSystem];
-        _rightButton.titleLabel.font = [UIFont boldSystemFontOfSize:15.0];
+        _rightButton.titleLabel.font = [UIFont mediumTupaiFontOfSize:14.0];
+        [_rightButton setTitleColor:[UIColor colorWithHex:0x000000 andAlpha:1.0] forState:UIControlStateNormal];
+        [_rightButton setTitleColor:[UIColor colorWithHex:0x000000 andAlpha:0.5] forState:UIControlStateHighlighted];
+        [_rightButton setTitleColor:[UIColor colorWithHex:0x000000 andAlpha:0.3] forState:UIControlStateDisabled];
         _rightButton.enabled = NO;
         [_rightButton setTitle:@"发布" forState:UIControlStateNormal];
     }
@@ -263,7 +275,7 @@
         Class class = self.textViewClass ? : [LeesinTextView class];
         
         _textView = [[class alloc] init];
-        _textView.font = [UIFont systemFontOfSize:15.0];
+        _textView.font = [UIFont lightTupaiFontOfSize:14.0];
         _textView.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         _textView.keyboardType = UIKeyboardTypeDefault;
         _textView.returnKeyType = UIReturnKeyDefault;
@@ -276,6 +288,26 @@
     }
     return _textView;
 }
+
+-(void)setButtonType:(LeesinTextInputBarButtonType)buttonType {
+    if (_buttonType == buttonType) {
+        return;
+    }
+    _lastButtonType = _buttonType;
+    _buttonType = buttonType;
+    if (buttonType == LeesinTextInputBarButtonTypeMission) {
+        self.leftButton1.selected = YES;
+        self.leftButton2.selected = NO;
+    } else if (buttonType == LeesinTextInputBarButtonTypePHAsset) {
+        self.leftButton1.selected = NO;
+        self.leftButton2.selected = YES;
+    } else if (buttonType == LeesinTextInputBarButtonTypeNone) {
+        self.leftButton1.selected = NO;
+        self.leftButton2.selected = NO;
+    }
+    
+}
+
 -(void)setType:(LeesinTextInputBarType)type {
     _type = type;
     if (type == LeesinTextInputBarTypeAsk) {

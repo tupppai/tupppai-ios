@@ -45,7 +45,7 @@
 
 - (void)pie_commonInit
 {
-    self.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0];
+    self.backgroundColor = [UIColor colorWithHex:0xeeeeee andAlpha:0.98];
     [self addSubview:self.previewImageView1];
     [self addSubview:self.previewImageView2];
     

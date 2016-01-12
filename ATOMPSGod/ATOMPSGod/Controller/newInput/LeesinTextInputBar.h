@@ -11,7 +11,8 @@
 
 typedef NS_ENUM(NSUInteger, LeesinTextInputBarButtonType) {
     LeesinTextInputBarButtonTypeMission,
-    LeesinTextInputBarButtonTypePHAsset
+    LeesinTextInputBarButtonTypePHAsset,
+    LeesinTextInputBarButtonTypeNone,
 };
 typedef NS_ENUM(NSUInteger, LeesinTextInputBarType) {
     LeesinTextInputBarTypeAsk,
@@ -28,6 +29,9 @@ typedef NS_ENUM(NSUInteger, LeesinTextInputBarType) {
 @property (nonatomic, assign) LeesinTextInputBarType type;
 
 @property (nonatomic, assign) LeesinTextInputBarButtonType buttonType;
+
+@property (nonatomic, assign) LeesinTextInputBarButtonType lastButtonType;
+
 @property (nonatomic, assign) UIEdgeInsets contentInset;
 
 @property (nonatomic, readonly) CGFloat minimumInputbarHeight;

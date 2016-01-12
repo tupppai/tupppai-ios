@@ -26,6 +26,11 @@
     _avatar.clipsToBounds = YES;
     _imageView.contentMode = UIViewContentModeScaleAspectFill;
     _imageView.clipsToBounds = YES;
+    
+    _checkmark.borderColor = [UIColor clearColor];
+    _checkmark.bodyColor = [UIColor colorWithHex:0xdddddd andAlpha:1.0];
+    _checkmark.checkmarkColor = [UIColor colorWithHex:0xfefefe andAlpha:1.0];
+    
 }
 
 -(void)setSelected:(BOOL)selected {

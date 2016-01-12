@@ -525,7 +525,9 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         _takePhotoButton = [[UIButton alloc] init];
         [_takePhotoButton setTitle:@"我要求P" forState:UIControlStateNormal];
         [_takePhotoButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        _takePhotoButton.titleLabel.font = [UIFont lightTupaiFontOfSize:14];
+        [_takePhotoButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+
+        _takePhotoButton.titleLabel.font = [UIFont mediumTupaiFontOfSize:14];
         _takePhotoButton.backgroundColor = [UIColor colorWithHex:0x4a4a4a andAlpha:0.93];
         
         // --- add drop shadows

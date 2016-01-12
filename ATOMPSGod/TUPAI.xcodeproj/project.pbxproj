@@ -509,14 +509,14 @@
 		F4EC11291BCF55F7002D1DCF /* PIENotificationSystemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4EC11281BCF55F7002D1DCF /* PIENotificationSystemTableViewCell.xib */; };
 		F4EC112B1BCF5604002D1DCF /* PIENotificationReplyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4EC112A1BCF5604002D1DCF /* PIENotificationReplyTableViewCell.xib */; };
 		F4EF1AA61C44845A005B86AE /* NSNumber+leesinDone.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EF1AA51C44845A005B86AE /* NSNumber+leesinDone.m */; };
+		F4EF1AAC1C44E026005B86AE /* QBAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EF1AAB1C44E026005B86AE /* QBAlbumCell.m */; };
+		F4EF1AAF1C44E05D005B86AE /* QBCheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EF1AAE1C44E05D005B86AE /* QBCheckmarkView.m */; };
 		F4F006D81BFD8ED000FD7078 /* libUMCheckUpdate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4F006D61BFD8ECF00FD7078 /* libUMCheckUpdate.a */; };
 		F4F0A1941C409EE3000DDEBB /* LeesinSwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0A1931C409EE3000DDEBB /* LeesinSwipeView.m */; };
 		F4F0A1C11C437F1C000DDEBB /* QBImagePicker.strings in Resources */ = {isa = PBXBuildFile; fileRef = F4F0A1A51C437F1C000DDEBB /* QBImagePicker.strings */; };
-		F4F0A1C31C437F1C000DDEBB /* QBAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0A1AD1C437F1C000DDEBB /* QBAlbumCell.m */; };
 		F4F0A1C41C437F1C000DDEBB /* QBAlbumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0A1AF1C437F1C000DDEBB /* QBAlbumsViewController.m */; };
 		F4F0A1C51C437F1C000DDEBB /* QBAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0A1B11C437F1C000DDEBB /* QBAssetCell.m */; };
 		F4F0A1C61C437F1C000DDEBB /* QBAssetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0A1B31C437F1C000DDEBB /* QBAssetsViewController.m */; };
-		F4F0A1C71C437F1C000DDEBB /* QBCheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0A1B51C437F1C000DDEBB /* QBCheckmarkView.m */; };
 		F4F0A1C81C437F1C000DDEBB /* QBImagePicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4F0A1B71C437F1C000DDEBB /* QBImagePicker.storyboard */; };
 		F4F0A1C91C437F1C000DDEBB /* QBImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0A1B91C437F1C000DDEBB /* QBImagePickerController.m */; };
 		F4F0A1CA1C437F1C000DDEBB /* QBSlomoIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0A1BB1C437F1C000DDEBB /* QBSlomoIconView.m */; };
@@ -1530,6 +1530,10 @@
 		F4EC112A1BCF5604002D1DCF /* PIENotificationReplyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIENotificationReplyTableViewCell.xib; sourceTree = "<group>"; };
 		F4EF1AA41C44845A005B86AE /* NSNumber+leesinDone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+leesinDone.h"; sourceTree = "<group>"; };
 		F4EF1AA51C44845A005B86AE /* NSNumber+leesinDone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+leesinDone.m"; sourceTree = "<group>"; };
+		F4EF1AAA1C44E026005B86AE /* QBAlbumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAlbumCell.h; sourceTree = "<group>"; };
+		F4EF1AAB1C44E026005B86AE /* QBAlbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBAlbumCell.m; sourceTree = "<group>"; };
+		F4EF1AAD1C44E05D005B86AE /* QBCheckmarkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBCheckmarkView.h; sourceTree = "<group>"; };
+		F4EF1AAE1C44E05D005B86AE /* QBCheckmarkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBCheckmarkView.m; sourceTree = "<group>"; };
 		F4F006D61BFD8ECF00FD7078 /* libUMCheckUpdate.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMCheckUpdate.a; sourceTree = "<group>"; };
 		F4F006D71BFD8ECF00FD7078 /* UMCheckUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMCheckUpdate.h; sourceTree = "<group>"; };
 		F4F0A1921C409EE3000DDEBB /* LeesinSwipeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeesinSwipeView.h; sourceTree = "<group>"; };
@@ -1539,16 +1543,12 @@
 		F4F0A1A81C437F1C000DDEBB /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
 		F4F0A1AA1C437F1C000DDEBB /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
 		F4F0A1AB1C437F1C000DDEBB /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
-		F4F0A1AC1C437F1C000DDEBB /* QBAlbumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAlbumCell.h; sourceTree = "<group>"; };
-		F4F0A1AD1C437F1C000DDEBB /* QBAlbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBAlbumCell.m; sourceTree = "<group>"; };
 		F4F0A1AE1C437F1C000DDEBB /* QBAlbumsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAlbumsViewController.h; sourceTree = "<group>"; };
 		F4F0A1AF1C437F1C000DDEBB /* QBAlbumsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBAlbumsViewController.m; sourceTree = "<group>"; };
 		F4F0A1B01C437F1C000DDEBB /* QBAssetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAssetCell.h; sourceTree = "<group>"; };
 		F4F0A1B11C437F1C000DDEBB /* QBAssetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBAssetCell.m; sourceTree = "<group>"; };
 		F4F0A1B21C437F1C000DDEBB /* QBAssetsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAssetsViewController.h; sourceTree = "<group>"; };
 		F4F0A1B31C437F1C000DDEBB /* QBAssetsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBAssetsViewController.m; sourceTree = "<group>"; };
-		F4F0A1B41C437F1C000DDEBB /* QBCheckmarkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBCheckmarkView.h; sourceTree = "<group>"; };
-		F4F0A1B51C437F1C000DDEBB /* QBCheckmarkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBCheckmarkView.m; sourceTree = "<group>"; };
 		F4F0A1B61C437F1C000DDEBB /* QBImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePicker.h; sourceTree = "<group>"; };
 		F4F0A1B71C437F1C000DDEBB /* QBImagePicker.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = QBImagePicker.storyboard; sourceTree = "<group>"; };
 		F4F0A1B81C437F1C000DDEBB /* QBImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerController.h; sourceTree = "<group>"; };
@@ -3035,6 +3035,8 @@
 		F4106CB31C3F8B66006A23B9 /* leesin */ = {
 			isa = PBXGroup;
 			children = (
+				F4106CCC1C3F8B66006A23B9 /* LeesinViewController.h */,
+				F4106CCD1C3F8B66006A23B9 /* LeesinViewController.m */,
 				F4106CBD1C3F8B66006A23B9 /* LeesinAssetCell.h */,
 				F4106CBE1C3F8B66006A23B9 /* LeesinAssetCell.m */,
 				F4106CBF1C3F8B66006A23B9 /* LeesinBottomBar.h */,
@@ -3050,8 +3052,6 @@
 				F4106CC91C3F8B66006A23B9 /* LeesinTextInputBar.m */,
 				F4106CCA1C3F8B66006A23B9 /* LeesinTextView.h */,
 				F4106CCB1C3F8B66006A23B9 /* LeesinTextView.m */,
-				F4106CCC1C3F8B66006A23B9 /* LeesinViewController.h */,
-				F4106CCD1C3F8B66006A23B9 /* LeesinViewController.m */,
 				F4EF1AA41C44845A005B86AE /* NSNumber+leesinDone.h */,
 				F4EF1AA51C44845A005B86AE /* NSNumber+leesinDone.m */,
 				F4106CE71C3F8B66006A23B9 /* PHAsset+Addition.h */,
@@ -3951,17 +3951,17 @@
 			isa = PBXGroup;
 			children = (
 				F4F0A1A51C437F1C000DDEBB /* QBImagePicker.strings */,
-				F4F0A1AC1C437F1C000DDEBB /* QBAlbumCell.h */,
-				F4F0A1AD1C437F1C000DDEBB /* QBAlbumCell.m */,
+				F4EF1AAA1C44E026005B86AE /* QBAlbumCell.h */,
+				F4EF1AAB1C44E026005B86AE /* QBAlbumCell.m */,
 				F4F0A1AE1C437F1C000DDEBB /* QBAlbumsViewController.h */,
 				F4F0A1AF1C437F1C000DDEBB /* QBAlbumsViewController.m */,
 				F4F0A1B01C437F1C000DDEBB /* QBAssetCell.h */,
 				F4F0A1B11C437F1C000DDEBB /* QBAssetCell.m */,
 				F4F0A1B21C437F1C000DDEBB /* QBAssetsViewController.h */,
 				F4F0A1B31C437F1C000DDEBB /* QBAssetsViewController.m */,
-				F4F0A1B41C437F1C000DDEBB /* QBCheckmarkView.h */,
-				F4F0A1B51C437F1C000DDEBB /* QBCheckmarkView.m */,
 				F4F0A1B61C437F1C000DDEBB /* QBImagePicker.h */,
+				F4EF1AAD1C44E05D005B86AE /* QBCheckmarkView.h */,
+				F4EF1AAE1C44E05D005B86AE /* QBCheckmarkView.m */,
 				F4F0A1B71C437F1C000DDEBB /* QBImagePicker.storyboard */,
 				F4F0A1B81C437F1C000DDEBB /* QBImagePickerController.h */,
 				F4F0A1B91C437F1C000DDEBB /* QBImagePickerController.m */,
@@ -4469,7 +4469,6 @@
 				F4BBE7721BBE3F9D00003CDE /* PIEReplyCollectionViewController.m in Sources */,
 				F4092DD81C3A3D3B003A3AD7 /* SLKTextInputbar.m in Sources */,
 				F45ECF511BD1E39500417A75 /* PIEMyLikedPagesViewController.m in Sources */,
-				F4F0A1C71C437F1C000DDEBB /* QBCheckmarkView.m in Sources */,
 				F42ED3B11BC4FC2D0052A0BF /* PIEMeViewController.m in Sources */,
 				5CDB062E1AA428BD0089121E /* MASCompositeConstraint.m in Sources */,
 				E900AB5F1B4513B20019BAEA /* DDCollectManager.m in Sources */,
@@ -4553,7 +4552,6 @@
 				E99D2F571B1C7E8D000D7784 /* UIImage+Masking.m in Sources */,
 				F4106D101C3F96CC006A23B9 /* PIEPageVM+Selected.m in Sources */,
 				F4F72C231BCD13D6002FF05A /* PIEShareView.m in Sources */,
-				F4F0A1C31C437F1C000DDEBB /* QBAlbumCell.m in Sources */,
 				F41BA0551C0E9E7300979D43 /* PIETagModel.m in Sources */,
 				F43930411BE4BD75006C9437 /* MRStopButton.m in Sources */,
 				5C83A8871AC66F910071A024 /* POPAnimation.mm in Sources */,
@@ -4607,6 +4605,7 @@
 				F4D368721BA9552B00E6C91C /* PIENewAskCollectionCell.m in Sources */,
 				F4E5F5F51BD9D2E100AB8B31 /* AFHTTPRequestOperation.m in Sources */,
 				0EF2F5CC1C154A6200F27D61 /* PIEChannelViewController.m in Sources */,
+				F4EF1AAC1C44E026005B86AE /* QBAlbumCell.m in Sources */,
 				F46CBC7D1C2CDE0D00A64474 /* PIELoveButton.m in Sources */,
 				F4106CFD1C3F8B66006A23B9 /* LeesinTextInputBar.m in Sources */,
 				90EC3D5F1C2A78E20085A7BE /* PIEProceedingAskViewController.m in Sources */,
@@ -4631,6 +4630,7 @@
 				F4EA4DB51BF49B9F00486304 /* PIEAboutUsViewController.m in Sources */,
 				5C54DF1E1AB9738E00BDE34D /* DDBaseVC.m in Sources */,
 				F402F0F81BE89530004988B4 /* PIESearchUserCollectionViewCell.m in Sources */,
+				F4EF1AAF1C44E05D005B86AE /* QBCheckmarkView.m in Sources */,
 				3B2D90FE1BA03FB000D6A243 /* SZTextView.m in Sources */,
 				F4F28F281C23AE9B0067F2E4 /* UIImage+WebP.m in Sources */,
 				E95691B01B22E88300DA84BB /* MTLModel.m in Sources */,

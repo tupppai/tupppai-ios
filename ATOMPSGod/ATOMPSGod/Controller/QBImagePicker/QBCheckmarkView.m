@@ -2,13 +2,14 @@
 //  QBCheckmarkView.m
 //  QBImagePicker
 //
-//  Created by Katsuma Tanaka on 2015/04/03.
+//  Created by Katsuma Tanaka on 2015/04/06.
 //  Copyright (c) 2015 Katsuma Tanaka. All rights reserved.
 //
 
 #import "QBCheckmarkView.h"
 
 @implementation QBCheckmarkView
+
 
 - (void)awakeFromNib
 {
@@ -50,5 +51,6 @@
     [self.checkmarkColor setStroke];
     [checkmarkPath stroke];
 }
+
 
 @end

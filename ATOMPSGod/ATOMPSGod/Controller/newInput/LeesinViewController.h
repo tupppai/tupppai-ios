@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #import "PIEChannelViewModel.h"
 @class  LeesinViewController;
 @protocol LeesinViewControllerDelegate <NSObject>

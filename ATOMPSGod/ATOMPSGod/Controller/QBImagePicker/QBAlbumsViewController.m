@@ -299,37 +299,37 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     PHFetchResult *fetchResult = [PHAsset fetchAssetsInAssetCollection:assetCollection options:options];
     PHImageManager *imageManager = [PHImageManager defaultManager];
     
-    if (fetchResult.count >= 3) {
-        cell.imageView3.hidden = NO;
-        
-        [imageManager requestImageForAsset:fetchResult[fetchResult.count - 3]
-                                targetSize:CGSizeScale(cell.imageView3.frame.size, [[UIScreen mainScreen] scale])
-                               contentMode:PHImageContentModeAspectFill
-                                   options:nil
-                             resultHandler:^(UIImage *result, NSDictionary *info) {
-                                 if (cell.tag == indexPath.row) {
-                                     cell.imageView3.image = result;
-                                 }
-                             }];
-    } else {
-        cell.imageView3.hidden = YES;
-    }
-    
-    if (fetchResult.count >= 2) {
-        cell.imageView2.hidden = NO;
-        
-        [imageManager requestImageForAsset:fetchResult[fetchResult.count - 2]
-                                targetSize:CGSizeScale(cell.imageView2.frame.size, [[UIScreen mainScreen] scale])
-                               contentMode:PHImageContentModeAspectFill
-                                   options:nil
-                             resultHandler:^(UIImage *result, NSDictionary *info) {
-                                 if (cell.tag == indexPath.row) {
-                                     cell.imageView2.image = result;
-                                 }
-                             }];
-    } else {
-        cell.imageView2.hidden = YES;
-    }
+//    if (fetchResult.count >= 3) {
+//        cell.imageView3.hidden = NO;
+//        
+//        [imageManager requestImageForAsset:fetchResult[fetchResult.count - 3]
+//                                targetSize:CGSizeScale(cell.imageView3.frame.size, [[UIScreen mainScreen] scale])
+//                               contentMode:PHImageContentModeAspectFill
+//                                   options:nil
+//                             resultHandler:^(UIImage *result, NSDictionary *info) {
+//                                 if (cell.tag == indexPath.row) {
+//                                     cell.imageView3.image = result;
+//                                 }
+//                             }];
+//    } else {
+//        cell.imageView3.hidden = YES;
+//    }
+//    
+//    if (fetchResult.count >= 2) {
+//        cell.imageView2.hidden = NO;
+//        
+//        [imageManager requestImageForAsset:fetchResult[fetchResult.count - 2]
+//                                targetSize:CGSizeScale(cell.imageView2.frame.size, [[UIScreen mainScreen] scale])
+//                               contentMode:PHImageContentModeAspectFill
+//                                   options:nil
+//                             resultHandler:^(UIImage *result, NSDictionary *info) {
+//                                 if (cell.tag == indexPath.row) {
+//                                     cell.imageView2.image = result;
+//                                 }
+//                             }];
+//    } else {
+//        cell.imageView2.hidden = YES;
+//    }
     
     if (fetchResult.count >= 1) {
         [imageManager requestImageForAsset:fetchResult[fetchResult.count - 1]
@@ -344,14 +344,14 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     }
     
     if (fetchResult.count == 0) {
-        cell.imageView3.hidden = NO;
-        cell.imageView2.hidden = NO;
+//        cell.imageView3.hidden = NO;
+//        cell.imageView2.hidden = NO;
         
         // Set placeholder image
         UIImage *placeholderImage = [self placeholderImageWithSize:cell.imageView1.frame.size];
         cell.imageView1.image = placeholderImage;
-        cell.imageView2.image = placeholderImage;
-        cell.imageView3.image = placeholderImage;
+//        cell.imageView2.image = placeholderImage;
+//        cell.imageView3.image = placeholderImage;
     }
     
     // Album title

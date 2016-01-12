@@ -488,8 +488,9 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
         _takePhotoButton = [[UIButton alloc] init];
         [_takePhotoButton setTitle:@"上传作品" forState:UIControlStateNormal];
         [_takePhotoButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        _takePhotoButton.titleLabel.font = [UIFont lightTupaiFontOfSize:14];
-        _takePhotoButton.backgroundColor = [UIColor colorWithHex:0x4a4a4a andAlpha:0.93];
+        [_takePhotoButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+        _takePhotoButton.titleLabel.font = [UIFont mediumTupaiFontOfSize:14];
+        _takePhotoButton.backgroundColor = [UIColor colorWithHex:0xffef00 andAlpha:0.93];
         // --- add drop shadows
         _takePhotoButton.layer.shadowColor  = (__bridge CGColorRef _Nullable)
         ([UIColor colorWithWhite:0.0 alpha:0.5]);

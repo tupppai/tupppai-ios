@@ -7,7 +7,6 @@
 //
 
 #import "LeesinViewController.h"
-
 #import <Photos/Photos.h>
 #import "Masonry.h"
 #import "SwipeView.h"
@@ -47,6 +46,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 @end
 
 @interface LeesinViewController ()<SwipeViewDataSource,SwipeViewDelegate>
+@property (nonatomic, strong) UIView *swipeViewContainerView;
 @property (nonatomic, strong) LeesinSwipeView *swipeView;
 @property (nonatomic, strong) NSMutableArray *sourceMissions;
 @property (nonatomic, strong) NSMutableArray *sourceMissions_done;
@@ -112,10 +112,13 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 
 - (void)setupViews {
     [self.view addSubview:self.bar];
-    [self.view addSubview:self.swipeView];
+    [self.view addSubview:self.swipeViewContainerView];
     [self.view addSubview:self.bottomBar];
     [self.view addSubview:self.previewBar];
     [self.view sendSubviewToBack:self.previewBar];
+    
+    [self.swipeViewContainerView addSubview:self.swipeView];
+    
     [self setupViewContraints];
 }
 
@@ -139,13 +142,13 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 
     [self.bar mas_makeConstraints:^(MASConstraintMaker *make) {
         _inputBarHC  = make.height.equalTo(@(self.bar.appropriateHeight));
-        _inputbarBottomMarginHC = make.bottom.equalTo(self.view).with.offset(-230);
+        _inputbarBottomMarginHC = make.bottom.equalTo(self.view).with.offset(-260);
         make.leading.equalTo(self.view);
         make.trailing.equalTo(self.view);
         
     }];
     
-    [self.swipeView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.swipeViewContainerView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.bar.mas_bottom).with.priorityHigh();
         make.leading.equalTo(self.view);
         make.trailing.equalTo(self.view);
@@ -156,9 +159,14 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
         make.leading.equalTo(self.view).with.offset(0);
         make.trailing.equalTo(self.view);
         make.height.equalTo(@45);
-        make.top.equalTo(self.swipeView.mas_bottom);
         make.bottom.equalTo(self.view).with.priorityHigh();
     }];
+    
+    UIEdgeInsets inset = UIEdgeInsetsMake(4, 0, 4, 0);
+    [self.swipeView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.swipeViewContainerView).with.insets(inset);
+    }];
+
 }
 
 
@@ -275,8 +283,8 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(lsn_didChangeTextViewText:) name:UITextViewTextDidChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(lsn_willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(lsn_willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(lsn_didShowOrHideKeyboard:) name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(lsn_didShowOrHideKeyboard:) name:UIKeyboardDidHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(lsn_didShowKeyboard:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(lsn_didHideKeyboard:) name:UIKeyboardDidHideNotification object:nil];
     
     [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
 
@@ -311,6 +319,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     if (self.bar.buttonType == LeesinTextInputBarButtonTypeMission && ![self lsn_isCurrentMissionTypeDone] ) {
         return;
     }
+
     self.sourceMissions = self.sourceMissions_undone;
     self.bar.buttonType = LeesinTextInputBarButtonTypeMission;
     self.bottomBar.type = LeeSinBottomBarTypeReplyMission;
@@ -327,7 +336,6 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     if (self.bar.buttonType == LeesinTextInputBarButtonTypePHAsset) {
         return;
     }
-
     if (self.type == LeesinViewControllerTypeAsk) {
         self.bottomBar.type = LeeSinBottomBarTypeAsk;
     } else if (self.type == LeesinViewControllerTypeReply) {
@@ -399,15 +407,28 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 
 - (void) lsn_willShowKeyboard:(NSNotification*)notification {
     [_inputbarBottomMarginHC setOffset:-[self lsn_appropriateKeyboardHeightFromNotification:notification]];
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.view layoutIfNeeded];
+    }];
+    
+    self.bar.buttonType = LeesinTextInputBarButtonTypeNone;
 }
 - (void) lsn_willHideKeyboard:(NSNotification*)notification {
-    [_inputbarBottomMarginHC setOffset:-230];
+    [_inputbarBottomMarginHC setOffset:-260];
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.view layoutIfNeeded];
+    }];
+    
+    self.bar.buttonType = self.bar.lastButtonType;
+    [self.swipeView reloadData];
 }
 
-- (void) lsn_didShowOrHideKeyboard:(NSNotification*)notification {
+- (void) lsn_didShowKeyboard:(NSNotification*)notification {
+
+}
+- (void) lsn_didHideKeyboard:(NSNotification*)notification {
     
 }
-
 #pragma mark - PHPhotoLibraryChangeObserver
 
 - (void)photoLibraryDidChange:(PHChange *)changeInstance
@@ -470,7 +491,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 }
 
 - (BOOL)lsn_isTextReady {
-    return [self.bar.textView.text length] > 6;
+    return [self.bar.textView.text length] >= 3;
 }
 
 - (BOOL)lsn_isMissionReady_reply {
@@ -555,6 +576,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
         
         if (!view || view.tag != PIESwipeViewResueViewTypePhoto ) {
             view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, width+5, height)];
+            view.backgroundColor = [UIColor clearColor];
             view.tag = PIESwipeViewResueViewTypePhoto;
             LeesinAssetCell* cell = [[LeesinAssetCell alloc]initWithFrame:view.bounds];
             [view addSubview:cell];
@@ -581,8 +603,9 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
         
         if (!view || view.tag != PIESwipeViewResueViewTypeMission ) {
             view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, width+5, height)];
+            view.backgroundColor = [UIColor clearColor];
             view.tag = PIESwipeViewResueViewTypeMission;
-            LeesinMissionCell* cell = [[LeesinMissionCell alloc]initWithFrame:view.bounds];
+            LeesinMissionCell* cell = [[LeesinMissionCell alloc]initWithFrame:CGRectMake(0, 0, width, height)];
             [view addSubview:cell];
         }
         PIEPageVM* vm = [_sourceMissions objectAtIndex:index];
@@ -799,13 +822,18 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
         self.swipeView.type = LeesinSwipeViewTypePHAsset;
     }
 }
-
+-(UIView *)swipeViewContainerView {
+    if (!_swipeViewContainerView) {
+        _swipeViewContainerView = [UIView new];
+        _swipeViewContainerView.backgroundColor = [UIColor colorWithHex:0xeeeeee andAlpha:1.0];
+    }
+    return _swipeViewContainerView;
+}
 -(LeesinSwipeView *)swipeView {
     if (!_swipeView) {
         _swipeView = [LeesinSwipeView new];
         _swipeView.dataSource = self;
         _swipeView.delegate  = self;
-        _swipeView.backgroundColor = [UIColor grayColor];//EEEEEE
     }
     return _swipeView;
 }

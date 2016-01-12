@@ -35,7 +35,7 @@
 - (void)pie_commonInit
 {
     self.dataDetectorTypes = UIDataDetectorTypeNone;
-    self.maxNumberOfLines = 10;
+    self.maxNumberOfLines = 6;
     [self pie_registerNotifications];
 }
 

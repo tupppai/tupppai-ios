@@ -6,7 +6,7 @@
   Copyright (c) 2015 Katsuma Tanaka. All rights reserved.
 */
 
-"albums.title" = "照片";
+"albums.title" = "相册";
 
 "assets.footer.photo" = "共%ld张照片";
 "assets.footer.photos" = "共%ld张照片";

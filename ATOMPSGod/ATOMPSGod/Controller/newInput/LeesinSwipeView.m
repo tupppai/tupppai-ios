@@ -27,11 +27,10 @@
 }
 
 - (void)lsn_commonInit {
+    self.backgroundColor = [UIColor clearColor];
     self.scrollEnabled = YES;
     self.alignment = SwipeViewAlignmentEdge;
     self.pagingEnabled = NO;
-    self.scrollView.emptyDataSetDelegate = self;
-    self.scrollView.emptyDataSetSource = self;
     [self addSubview:self.emptyDisplayLabel];
 }
 
@@ -51,21 +50,18 @@
     if (_type == type) {
         return;
     }
-    if (type == LeesinSwipeViewTypeMission) {
-        _emptyDisplayLabel.text = @"没有任务数据，快去求p区寻找吧";
-
-    } else  if (type == LeesinSwipeViewTypePHAsset) {
-        _emptyDisplayLabel.text = @"一张照片都没有";
-
-    }
+    _type = type;
+//    if (type == LeesinSwipeViewTypeMission) {
+//        _emptyDisplayLabel.text = @"没有任务";
+//    }
 }
 
 -(UILabel *)emptyDisplayLabel {
     
     if (!_emptyDisplayLabel) {
         _emptyDisplayLabel = [UILabel new];
-        _emptyDisplayLabel.text = @"没有任务数据，快去求p区寻找吧";
-        _emptyDisplayLabel.font = [UIFont mediumTupaiFontOfSize:17];
+        _emptyDisplayLabel.text = @"没有任务~";
+        _emptyDisplayLabel.font = [UIFont lightTupaiFontOfSize:17];
         _emptyDisplayLabel.textAlignment  = NSTextAlignmentCenter;
         _emptyDisplayLabel.backgroundColor = [UIColor clearColor];
         _emptyDisplayLabel.hidden = YES;
