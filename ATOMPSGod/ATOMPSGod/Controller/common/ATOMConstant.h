@@ -77,6 +77,13 @@ extern NSInteger const kPIETouristUID;
  */
 extern NSString * const PIETouristOpenIdKey;
 
+/**
+ *  "临时身份证"的来源， 可能取值： @"qq", @"weibo", @"weixin"
+ 
+    赋值： PIELaunchViewController_Black的 －adHocUserFromShareSDK
+    撤销这个临时身份证：临时用户 -> 正式用户的那一瞬间
+ */
+extern NSString * const PIETouristLoginTypeStringKey;
 
 /** 游客没有登录态，被服务器截获的时候就会发出这个通知，通知游客用户输入手机号码转正 */
 extern NSString * const PIENetworkCallForFurtherRegistrationNotification;

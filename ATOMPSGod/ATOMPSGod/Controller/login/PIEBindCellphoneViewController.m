@@ -373,10 +373,13 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
     
     if ([self.cellphoneNumberTextField.text isMobileNumber] == NO) {
         [Hud error:@"手机号码格式不对"];
-    }else {
+    }else if (self.verificationCodeTextField.text.length == 0){
+        [Hud error:@"验证码不能为空"];
+    }
+    else {
         
         /*
-         account/register, POST, (mobile, code, openid)
+         account/register, POST, (mobile, code, openid, type)
          
          */
         NSMutableDictionary<NSString *, NSString *>
@@ -386,10 +389,16 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
         NSString *openid  =
         [[NSUserDefaults standardUserDefaults] objectForKey:PIETouristOpenIdKey];
         params[@"openid"] = openid;
+        NSString *type    =
+        [[NSUserDefaults standardUserDefaults] objectForKey:PIETouristLoginTypeStringKey];
+        params[@"type"]   = type;
         
         [Hud activity:@"绑定中..."];
+        
+        @weakify(self);
         [DDBaseService POST:params url:URL_ACRegister
                       block:^(id responseObject) {
+                          @strongify(self);
                           
                           [Hud dismiss];
                           
@@ -414,6 +423,17 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
                               [[NSUserDefaults standardUserDefaults]
                                removeObjectForKey:PIETouristOpenIdKey];
                               
+                              //完成临时用户转换成正式用户的转正过程，将删除本地记录的第三方登录的类型
+                              [[NSUserDefaults standardUserDefaults]
+                               removeObjectForKey:PIETouristLoginTypeStringKey];
+                              
+                              // update sandbox
+                              [[NSUserDefaults standardUserDefaults] synchronize];
+                              
+                              // dismiss current model view controller
+                              [self dismissViewControllerAnimated:YES
+                                                       completion:nil];
+                              
                               // 跳转到主控制器
                               [[AppDelegate APP] switchToMainTabbarController];
                           }
@@ -425,16 +445,19 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
 {
     [Hud text:@"该手机号码未注册，准备开始注册流程..."];
     /*
-        account/register, POST, (mobile, code, openid, password)
+        account/register, POST, (mobile, code, openid, password, type)
     
      */
     if ([self.cellphoneNumberTextField.text isMobileNumber] == NO) {
         [Hud error:@"手机号码格式不对"];
     }else if ([self.passwordTextField.text isPassword] == NO){
         [Hud error:@"密码格式不对，可能是太短了"];
-    }else {
+    }else if (self.verificationCodeTextField.text.length == 0){
+        [Hud error:@"验证码不能为空"];
+    }
+    else {
         /*
-         account/register, POST, (mobile, code, password, openid)
+         account/register, POST, (mobile, code, password, openid, type)
          
          */
         NSMutableDictionary<NSString *, NSString *>
@@ -445,6 +468,9 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
         NSString *openid    =
         [[NSUserDefaults standardUserDefaults] objectForKey:PIETouristOpenIdKey];
         params[@"openid"]   = openid;
+        NSString *type      =
+        [[NSUserDefaults standardUserDefaults] objectForKey:PIETouristLoginTypeStringKey];
+        params[@"type"]     = type;
         
         [Hud activity:@"第三方用户转正注册新用户中..."];
         [DDBaseService POST:params url:URL_ACRegister
@@ -468,6 +494,17 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
                               // 完成临时用户转换成正式用户的转正过程，将删除掉本地的“临时身份证”，即openid
                               [[NSUserDefaults standardUserDefaults]
                                removeObjectForKey:PIETouristOpenIdKey];
+                              
+                              //完成临时用户转换成正式用户的转正过程，将删除本地记录的第三方登录的类型
+                              [[NSUserDefaults standardUserDefaults]
+                               removeObjectForKey:PIETouristLoginTypeStringKey];
+                            
+                              // update sandbox
+                              [[NSUserDefaults standardUserDefaults] synchronize];
+                              
+                              // dismiss current model view controller
+                              [self dismissViewControllerAnimated:YES
+                                                       completion:nil];
                               
                               // 跳转到主控制器
                               [[AppDelegate APP] switchToMainTabbarController];

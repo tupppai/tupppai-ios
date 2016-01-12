@@ -75,5 +75,7 @@ NSInteger const kPIETouristUID = -233;
 
 NSString * const PIETouristOpenIdKey = @"PIETouristOpenIdKey";
 
+NSString * const PIETouristLoginTypeStringKey = @"PIETouristLoginTypeStringKey";
+
 NSString * const PIENetworkCallForFurtherRegistrationNotification =
 @"PIENetworkCallForFurtherRegistrationNotification";

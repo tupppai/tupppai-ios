@@ -242,7 +242,10 @@
         [Hud error:@"手机号码格式不对"];
     }else if ([self.resetPasswordTextField.text isPassword] == NO){
         [Hud error:@"密码格式不对"];
-    }else{
+    }else if (self.verificationCodeTextField.text.length == 0){
+        [Hud error:@"验证码不能为空"];
+    }
+    else{
         NSMutableDictionary *params = [NSMutableDictionary dictionary];
         params[@"phone"]            = self.cellPhoneTextField.text;
         params[@"code"]             = self.verificationCodeTextField.text;

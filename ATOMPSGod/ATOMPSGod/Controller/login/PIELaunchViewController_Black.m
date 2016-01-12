@@ -479,7 +479,10 @@ PIEVerificationCodeCountdownButton *countdownButton;
         [Hud error:@"手机号码格式不正确"];
     }else if ([self.passwordTextField.text isPassword] == NO){
         [Hud error:@"密码格式不正确"];
-    }else{
+    }else if (self.verificationCodeTextField.text.length == 0){
+        [Hud error:@"验证码不能为空"];
+    }
+    else{
         NSMutableDictionary *params = [NSMutableDictionary dictionary];
 
         params[@"type"]             = @"mobile";
@@ -631,23 +634,28 @@ PIEVerificationCodeCountdownButton *countdownButton;
      withBlock:^(SSDKUser *user) {
          @strongify(self);
          if (user != nil) {
-             
-             PIEUserModel *userModel = [self fetchUserFromOpenId:user.uid
-                                                    platformType:platformType];
-             if (userModel == nil) {
-                 /*
-                    openID之前没有走完完整的注册流程，用户处于游客状态，遂制作一个临时的本地UserModel
-                  */
-                 userModel = [self adHocUserFromShareSDK:user];
-             }
-             // 保存这个userModel到本地，并且直接跳入主页面, 不需要向后台发送openId
-             [DDUserManager updateCurrentUserFromUser:userModel];
-             [[AppDelegate APP] switchToMainTabbarController];
+             [self fetchUserFromOpenId:user.uid
+                          platformType:platformType
+                        userModelBlock:^(PIEUserModel *userModel) {
+                            if (userModel == nil) {
+                                userModel = [self adHocUserFromShareSDK:user
+                                                           platformType:platformType];
+                            }
+                            
+                            // 保存这个userModel到本地，并且直接跳入主页面, 不需要向后台发送openId
+                            [DDUserManager updateCurrentUserFromUser:userModel];
+                            
+                            // go back to main thread to update UI
+                            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                                [[AppDelegate APP] switchToMainTabbarController];
+                            }];
+                        }];
          }
      }];
 }
 
 - (PIEUserModel *)adHocUserFromShareSDK:(SSDKUser *)user
+                           platformType:(SSDKPlatformType)platformType
 {
     PIEUserModel *userModel = [[PIEUserModel alloc] init];
     /*
@@ -657,17 +665,39 @@ PIEVerificationCodeCountdownButton *countdownButton;
     userModel.nickname = user.nickname;
     userModel.avatar   = user.icon;
     userModel.mobile   = user.nickname;
-//    userModel.openid   = user.uid;
     
     [[NSUserDefaults standardUserDefaults] setObject:user.uid
                                               forKey:PIETouristOpenIdKey];
+    /*
+        为临时用户的模型记录openID的来源（微博？QQ？微信？）
+     */
+    NSString *pieTouristLoginTypeString;
+    switch (platformType) {
+        case SSDKPlatformTypeSinaWeibo: {
+            pieTouristLoginTypeString = @"weibo";
+            break;
+        }
+        case SSDKPlatformTypeWechat: {
+            pieTouristLoginTypeString = @"weixin";
+            break;
+        }
+        case SSDKPlatformTypeQQ: {
+            pieTouristLoginTypeString = @"qq";
+            break;
+        }
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:pieTouristLoginTypeString
+                                              forKey:PIETouristLoginTypeStringKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     return userModel;
 }
 
-- (PIEUserModel *)fetchUserFromOpenId:(NSString *)openId
-                          platformType:(SSDKPlatformType)platformType
+
+
+- (void)fetchUserFromOpenId:(NSString *)openId
+                         platformType:(SSDKPlatformType)platformType
+                       userModelBlock:(void (^)(PIEUserModel *userModel))userModelBlock
 {
     // NSString SSDKPlatformType -> PIEUserModel, nil if openId is not registered yet
     // 检测这个第三方登录得到的用户openID，是否在之前已经绑定手机号、完成了一整个的登录流程
@@ -693,7 +723,7 @@ PIEVerificationCodeCountdownButton *countdownButton;
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     params[@"openid"] = openId;
 
-    __block PIEUserModel *userModel;
+    
     [DDBaseService
      GET:params
      url:authURL
@@ -729,7 +759,7 @@ PIEVerificationCodeCountdownButton *countdownButton;
           }
           
           */
-         
+         PIEUserModel *userModel;
          NSDictionary *dataDict  = responseObject[@"data"];
          BOOL openIdIsRegistered = [dataDict[@"is_register"] boolValue];
          
@@ -745,9 +775,11 @@ PIEVerificationCodeCountdownButton *countdownButton;
                                 error:nil];
              userModel.token = responseObject[@"token"];
          }
+         
+         if (userModelBlock != nil) {
+             userModelBlock(userModel);
+         }
      }];
-    
-    return userModel;
 }
 
 
