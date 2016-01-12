@@ -73,14 +73,11 @@
     [self addSubview:self.textView];
     [self pie_setupViewConstraints];
     [self pie_updateConstraintConstants];
-    [self pie_setupActions];
 
 }
 
 
-- (void)pie_setupActions {
-    [self.leftButton2 addTarget:self action:@selector(tapLeftButton2:) forControlEvents:UIControlEventTouchUpInside];
-}
+
 - (void)pie_setupViewConstraints {
     
     [self.leftButton1 mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -229,11 +226,6 @@
 }
 
 
-- (void) tapLeftButton2:(id)sender {
-    if ([self.textView isFirstResponder]) {
-        [self.textView resignFirstResponder];
-    }
-}
 
 
 -(UIButton *)leftButton1 {

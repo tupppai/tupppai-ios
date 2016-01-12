@@ -30,13 +30,52 @@
     self.scrollEnabled = YES;
     self.alignment = SwipeViewAlignmentEdge;
     self.pagingEnabled = NO;
+    self.scrollView.emptyDataSetDelegate = self;
+    self.scrollView.emptyDataSetSource = self;
+    [self addSubview:self.emptyDisplayLabel];
 }
 
 -(void)reloadData {
     [super reloadData];
     if (self.type == LeesinSwipeViewTypeMission && self.numberOfItems == 0) {
-//        NSLog(@"should show empty set");
-        //declare delegate in this class to specify no empty if first loading
+        if (_emptyDataSetShouldDisplay) {
+            self.emptyDisplayLabel.hidden = NO;
+        }
+    }
+    else {
+        self.emptyDisplayLabel.hidden = YES;
     }
 }
+
+-(void)setType:(LeesinSwipeViewType)type {
+    if (_type == type) {
+        return;
+    }
+    if (type == LeesinSwipeViewTypeMission) {
+        _emptyDisplayLabel.text = @"没有任务数据，快去求p区寻找吧";
+
+    } else  if (type == LeesinSwipeViewTypePHAsset) {
+        _emptyDisplayLabel.text = @"一张照片都没有";
+
+    }
+}
+
+-(UILabel *)emptyDisplayLabel {
+    
+    if (!_emptyDisplayLabel) {
+        _emptyDisplayLabel = [UILabel new];
+        _emptyDisplayLabel.text = @"没有任务数据，快去求p区寻找吧";
+        _emptyDisplayLabel.font = [UIFont mediumTupaiFontOfSize:17];
+        _emptyDisplayLabel.textAlignment  = NSTextAlignmentCenter;
+        _emptyDisplayLabel.backgroundColor = [UIColor clearColor];
+        _emptyDisplayLabel.hidden = YES;
+    }
+    return _emptyDisplayLabel;
+}
+-(void)layoutSubviews {
+    [super layoutSubviews];
+    self.emptyDisplayLabel.frame = self.bounds;
+
+}
+
 @end

@@ -38,8 +38,6 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 @property (nonatomic, strong) LeesinPreviewBar *previewBar;
 @property (nonatomic, strong) MASConstraint *previewBarMarginBC;
 @property (nonatomic, assign) BOOL isPreviewShown;
-
-
 @end
 
 @interface LeesinViewController ()
@@ -59,6 +57,8 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 @property (nonatomic, strong) NSNumber *selectedIndexOfMission;
 @property (nonatomic, assign) NSInteger selectedIndexOfMission_done;
 @property (nonatomic, assign) NSInteger selectedIndexOfMission_undone;
+
+@property (nonatomic, assign) BOOL photoLibraryHasChangedOnceFromShooting;
 
 @end
 
@@ -171,6 +171,8 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
         [param setObject:@(timeStamp) forKey:@"last_updated"];
         [param setObject:@(20) forKey:@"size"];
         [param setObject:@(self.channel_id) forKey:@"category_id"];
+        
+        self.swipeView.emptyDataSetShouldDisplay = NO;
         [PIEProceedingManager getMyToHelp:param withBlock:^(NSMutableArray *resultArray) {
             if (resultArray.count == 0) {
             } else {
@@ -181,6 +183,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
             }
 
             if (self.bar.buttonType == LeesinTextInputBarButtonTypeMission) {
+                self.swipeView.emptyDataSetShouldDisplay = YES;
                 [self.swipeView reloadData];
             }
             
@@ -198,6 +201,8 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
         [param setObject:@(timeStamp) forKey:@"last_updated"];
         [param setObject:@(20) forKey:@"size"];
         [param setObject:@(self.channel_id) forKey:@"category_id"];
+        self.swipeView.emptyDataSetShouldDisplay = NO;
+
         [DDService GET:param url:@"profile/done" block:^(id responseObject) {
             NSArray* dataArray = [responseObject objectForKey:@"data"];
             NSArray* modelArray = [MTLJSONAdapter modelsOfClass:[PIEPageModel class] fromJSONArray:dataArray error:nil];
@@ -206,6 +211,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
                 [ws.sourceMissions_done addObject:vm];
             }
             if (self.bar.buttonType == LeesinTextInputBarButtonTypeMission) {
+                self.swipeView.emptyDataSetShouldDisplay = YES;
                 [self.swipeView reloadData];
             }
             }];
@@ -299,6 +305,9 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     }
 }
 - (void)bar_tapLeftButton1:(id)sender {
+    if ([self.bar.textView isFirstResponder]) {
+        [self.bar.textView resignFirstResponder];
+    }
     if (self.bar.buttonType == LeesinTextInputBarButtonTypeMission && ![self lsn_isCurrentMissionTypeDone] ) {
         return;
     }
@@ -311,6 +320,10 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 
 - (void)bar_tapLeftButton2:(id)sender {
     
+    if ([self.bar.textView isFirstResponder]) {
+        [self.bar.textView resignFirstResponder];
+    }
+
     if (self.bar.buttonType == LeesinTextInputBarButtonTypePHAsset) {
         return;
     }
@@ -370,11 +383,6 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 
 
 
-
-
-
-
-
 #pragma mark - Notification Events
 
 
@@ -404,7 +412,14 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 
 - (void)photoLibraryDidChange:(PHChange *)changeInstance
 {
+    if (_photoLibraryHasChangedOnceFromShooting) {
+        return;
+    }
+    
+    _photoLibraryHasChangedOnceFromShooting = YES;
+
     dispatch_async(dispatch_get_main_queue(), ^{
+
         [self setupPhotoSourceData];
         for (PHAsset* asset in self.selectedAssets) {
             asset.selected = NO;
@@ -648,7 +663,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     
     
     if (isShootingButtonTapped) {
-        
+        _photoLibraryHasChangedOnceFromShooting = NO;
         if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
             UIImagePickerController *picker = [[UIImagePickerController alloc] init];
             picker.delegate = self;
@@ -836,28 +851,19 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
         
         for (PHAsset *asset in assets) {
             
-
             NSInteger index = [self.sourceAssets indexOfObject:asset];
             if (index != NSNotFound) {
-                PHAsset *asset = [self.sourceAssets objectAtIndex:index];
-                asset.selected = YES;
+                PHAsset *assetInSource = [self.sourceAssets objectAtIndex:index];
+                assetInSource.selected = YES;
                 [self.sourceAssets exchangeObjectAtIndex:index withObjectAtIndex:0];
+                [self.selectedAssets addObject:assetInSource];
             } else {
                 asset.selected = YES;
                 [self.sourceAssets insertObject:asset atIndex:0];
+                [self.selectedAssets addObject:asset];
             }
-            
-            [self.selectedAssets addObject:asset];
         }
         
-//     
-//        NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [assets count])];
-//        [self.sourceAssets insertObjects:assets atIndexes:indexSet];
-//        [self.selectedAssets addObjectsFromArray:assets];
-        
-//        for (PHAsset* asset in self.selectedAssets) {
-//            asset.selected = YES;
-//        }
         [self.swipeView reloadData];
         [self.swipeView scrollToOffset:0 duration:0.45];
         [self lsn_updateSourceAndReloadPreviewBar];
