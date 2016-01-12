@@ -314,11 +314,10 @@ PIEVerificationCodeCountdownButton *countdownButton;
     UIButton *QQButton = ({
         UIButton *button = [[UIButton alloc] init];
         [button setBackgroundImage:
-         [UIImage imageNamed:@"pie_share_qqfriends"]
+               [UIImage imageNamed:@"pie_share_qqfriends"]
                           forState:UIControlStateNormal];
 
         button.contentMode = UIViewContentModeScaleAspectFit;
-
 
         [self.view addSubview:button];
 
@@ -344,8 +343,6 @@ PIEVerificationCodeCountdownButton *countdownButton;
                           forState:UIControlStateNormal];
 
         button.contentMode = UIViewContentModeScaleAspectFit;
-
-
 
         [self.view addSubview:button];
 
@@ -742,10 +739,10 @@ PIEVerificationCodeCountdownButton *countdownButton;
               */
              userModel = nil;
          }else{
-             userModel = [MTLJSONAdapter
-                          modelOfClass:[PIEUserModel class]
-                          fromJSONDictionary:dataDict[@"user_obj"]
-                          error:nil];
+             userModel       = [MTLJSONAdapter
+                                modelOfClass:[PIEUserModel class]
+                                fromJSONDictionary:dataDict[@"user_obj"]
+                                error:nil];
              userModel.token = responseObject[@"token"];
          }
      }];

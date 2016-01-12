@@ -44,11 +44,23 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
 
     [self setupHasRegisteredNetworkRequest];
     
+    [self setupNetworkRequestNotification];
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"NetworkErrorCall"
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"NetworkShowInfoCall"
+                                                  object:nil];
 }
 
 #pragma mark - UI setting-up
@@ -114,6 +126,15 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
         }];
         imageView;
     });
+    welcomeImageView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapOnWelcomeImageView =
+    [[UITapGestureRecognizer alloc] init];
+    [welcomeImageView addGestureRecognizer:tapOnWelcomeImageView];
+    
+    [[tapOnWelcomeImageView rac_gestureSignal] subscribeNext:^(id x) {
+        @strongify(self);
+        [self sendUnbindCellphoneRequest];
+    }];
     
     UILabel *promptLabel = ({
         UILabel *label = [[UILabel alloc] init];
@@ -233,15 +254,12 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
         button;
     });
     self.nextStepButton = nextStepButton;
-    
    
 }
 #pragma mark - UI transforming
 /** 第三方登录的用户之前已经注册了手机号，现在重新绑定 */
 - (void)updateUIForRebindingCellphoneNumber
 {
-
-    
     [self.furtherRegistrationView
      mas_updateConstraints:^(MASConstraintMaker *make) {
          make.height.mas_equalTo(321);
@@ -256,10 +274,8 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
     
     [UIView animateWithDuration:0.5
                      animations:^{
-                         
                          [self.furtherRegistrationView layoutIfNeeded];
                          self.verificationCodeTextField.hidden = NO;
-                         
                      }];
 }
 
@@ -379,7 +395,7 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
                           
                           if (responseObject == nil) {
                               
-                              [Hud error:@"绑定失败: 网络异常或者是验证码错误"];
+//                              [Hud error:@"绑定失败: 网络异常或者是验证码错误"];
                               
                           }else{
                               
@@ -426,21 +442,9 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
         params[@"mobile"]   = self.cellphoneNumberTextField.text;
         params[@"code"]     = self.verificationCodeTextField.text;
         params[@"password"] = self.passwordTextField.text;
-        NSString *openid  =
+        NSString *openid    =
         [[NSUserDefaults standardUserDefaults] objectForKey:PIETouristOpenIdKey];
         params[@"openid"]   = openid;
-//        [DDBaseService POST:params url:URL_ACRegister
-//         {
-//         
-//                          
-//                          // if succeed in registering: switch to mainVC and store user info into sandbox
-//                          
-//                          //    // Finally：完成临时用户转换成正式用户的转正过程，将删除掉本地的“临时身份证”，即openid
-//                          //    [[NSUserDefaults standardUserDefaults]
-//                          //     removeObjectForKey:PIETouristOpenIdKey];
-//                          
-//                          // if params error: prompt user with specific warning.
-//                      }];
         
         [Hud activity:@"第三方用户转正注册新用户中..."];
         [DDBaseService POST:params url:URL_ACRegister
@@ -448,7 +452,7 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
                           [Hud dismiss];
                           
                           if (responseObject == nil) {
-                              [Hud error:@"第三方用户转正失败: 网络异常或者是验证码错误"];
+//                              [Hud error:@"第三方用户转正失败: 网络异常或者是验证码错误"];
                           }else{
                               NSDictionary *dataDict = responseObject[@"data"];
                               
@@ -473,18 +477,51 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
     }
     
 }
+
 - (void)sendUnbindCellphoneRequest
 {
+    
+    /*
+        auth/unbind, POST, (type = weixin, weibo or qq)
+     */
+    [Hud activity:@"测试版本的隐藏功能：解绑当下第三方用户的openid和之前绑定的手机号码..."];
     [DDBaseService POST:nil url:@"auth/unbind"
                   block:^(id responseObject) {
+                      [Hud dismiss];
                       
                       NSString *openid =
                       [[NSUserDefaults standardUserDefaults] objectForKey:PIETouristOpenIdKey];
-                      
-                      NSString *prompt = [NSString stringWithFormat:@"目前的第三方登录用户的openId = %@ 已经解绑手机号",openid];
+                      NSString *prompt =
+                      [NSString
+                       stringWithFormat:@"openId = %@ 已经解绑手机号",openid];
                       
                       [Hud text:prompt];
                   }];
+}
+
+/*
+ 
+    P.S: 以下实践就是因为Objc不支持多继承的缘故，以前放在DDLoginBaseViewController中的监听方法得特地再复制粘贴一次在这里，因为本VC是继承与喵神的VVBlurViewController的（或者，需要面向接口编程？has-a）
+ */
+#pragma mark - Notification related
+- (void)setupNetworkRequestNotification
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(errorOccuredRET) name:@"NetworkErrorCall" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showInfoRET:) name:@"NetworkShowInfoCall" object:nil];
+}
+
+- (void)errorOccuredRET
+{
+    [Hud text:@"网路好像有点问题～" inView:self.view];
+}
+
+- (void)showInfoRET:(NSNotification *)notification
+{
+    NSString* info = [[notification userInfo] valueForKey:@"info"];
+    NSString *prompt = [NSString stringWithFormat:@"ret != 1, %@", info];
+    [Hud text:prompt inView:self.view];
 }
 
 

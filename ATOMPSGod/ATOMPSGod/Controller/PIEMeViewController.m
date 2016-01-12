@@ -161,21 +161,29 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self update];
+    [self updateUserUIAfterCertainTimeGap];
 }
 
-- (void)update {
+- (void)updateUserUIAfterCertainTimeGap {
+    
+    // 如果是第三方登录的临时用户，没有必要执行下面的UI更新操作
+    // 判断依据：不是用“临时身份证”，存放在NSUserDefaults中的openid, 而是直接判断用户model的uid是否是一个特定值
+    //        原因：第三方临时用户转正并且绑定手机之后，会向服务器重新请求一次用户model的数据，这时currentUser.uid
+    //            会被服务器所赋予的uid覆盖。
+    if ([DDUserManager currentUser].uid == kPIETouristUID) {
+        return;
+    }
+    
+    // 改写上面被注释的判断语句：
     BOOL shouldUpdate = NO;
-    long long currentTimeStamp = [[NSDate date]timeIntervalSince1970];
-    if (_timeStamp_updateCurrentUser) {
-        long long timeStamp_gap = currentTimeStamp - _timeStamp_updateCurrentUser;
-        if (timeStamp_gap>300) {
-            shouldUpdate = YES;
-            _timeStamp_updateCurrentUser = currentTimeStamp;
-        } else {
-            shouldUpdate = NO;
-        }
-    } else {
+    /*
+        假如是以下情况的任意一种，那么就更新用户数据：
+        － 之前没有更新过用户在个人主页中的UI数据，或者：
+        - 上次更新距离用户打开个人主页的当下时差有300
+     */
+    long long currentTimeStamp = [[NSDate date] timeIntervalSince1970];
+    if (_timeStamp_updateCurrentUser == 0 ||
+        (currentTimeStamp - _timeStamp_updateCurrentUser) > 300) {
         shouldUpdate = YES;
         _timeStamp_updateCurrentUser = currentTimeStamp;
     }
@@ -202,7 +210,6 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
         [self clearRedDot];
     }
 }
-
 
 - (void)clearRedDot {
     for (UIView* subview in self.tabBarController.tabBar.subviews) {

@@ -86,7 +86,8 @@
              numberCount = numberLimit;
          }else{
              
-             NSString *countdownString = [NSString stringWithFormat:@"%ld秒后重发", numberCount];
+             NSString *countdownString =
+             [NSString stringWithFormat:@"%ld秒后重发", (long)numberCount];
              
              [self setTitle:countdownString
                                    forState:UIControlStateNormal];

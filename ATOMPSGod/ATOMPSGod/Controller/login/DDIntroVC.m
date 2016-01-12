@@ -91,7 +91,7 @@
 - (void)intro:(EAIntroView *)introView pageAppeared:(EAIntroPage *)page withIndex:(NSUInteger)pageIndex
 {
     if (pageIndex == 3) {
-        [UIView animateWithDuration:0.8
+        [UIView animateWithDuration:1.4
                          animations:^{
                              introView.pageControl.hidden = YES;
                          }];
