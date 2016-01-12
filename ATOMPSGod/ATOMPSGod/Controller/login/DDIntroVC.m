@@ -8,7 +8,9 @@
 
 #import "DDIntroVC.h"
 #import "EAIntroView.h"
-#import "PIELaunchViewController.h"
+//#import "PIELaunchViewController.h"
+#import "PIELaunchViewController_Black.h"
+
 @interface DDIntroVC ()<EAIntroDelegate>
 @property (nonatomic,strong)  EAIntroPage *page1;
 @property (nonatomic,strong)  EAIntroPage *page2;
@@ -19,6 +21,7 @@
 
 @implementation DDIntroVC
 
+#pragma mark - UI life cycles
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createPages];
@@ -31,9 +34,9 @@
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
                                                   forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.shadowImage = [UIImage new];
-    self.navigationController.navigationBar.translucent = YES;
-    self.navigationController.view.backgroundColor = [UIColor clearColor];
+    self.navigationController.navigationBar.shadowImage     = [UIImage new];
+    self.navigationController.navigationBar.translucent     = YES;
+    self.navigationController.view.backgroundColor          = [UIColor clearColor];
     self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
 }
 -(void)viewWillDisappear:(BOOL)animated {
@@ -42,45 +45,62 @@
                                                   forBarMetrics:UIBarMetricsDefault];
 }
 
+#pragma mark - Initial UI setup
 -(void)createPages {
-        
-    EAIntroView *intro = [[EAIntroView alloc] initWithFrame:self.view.bounds andPages:@[self.page1,self.page2,self.page3,self.page4]];
-    intro.skipButton.hidden = YES;
-    intro.useMotionEffects = YES;
-    intro.pageControl.hidden = NO;
-    intro.pageControlY = SCREEN_HEIGHT - 20;
-    intro.pageControl.pageIndicatorTintColor = [UIColor colorWithHex:0xffffff andAlpha:0.5];
-    intro.pageControl.currentPageIndicatorTintColor = [UIColor colorWithHex:0xffffff andAlpha:0.9];
-    intro.tapToNext = YES;
-    UIButton* button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 150, 42)];
     
-    [button mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.width.equalTo(@150);
-        make.height.equalTo(@42);
+    // ## Step 1: 设置introPage
+    EAIntroView *intro = [[EAIntroView alloc]
+                          initWithFrame:self.view.bounds
+                          andPages:@[self.page1,self.page2,self.page3,self.page4]];
+    intro.skipButton.hidden                         = YES;
+    intro.useMotionEffects                          = YES;
+    intro.pageControl.hidden                        = NO;
+    intro.pageControlY                              = 43;
+    intro.pageControl.pageIndicatorTintColor        = [UIColor colorWithHex:0xffffff andAlpha:0.5];
+    intro.pageControl.currentPageIndicatorTintColor = [UIColor colorWithHex:0xffffff andAlpha:0.9];
+    intro.tapToNext                                 = YES;
+    
+    
+    UIButton* skipButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 29, 29)];
+    
+    [skipButton mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(@29);
+        make.height.equalTo(@29);
     }];
-    [button setTitle:@"进入图派" forState:UIControlStateNormal];
-    [button.titleLabel setFont:[UIFont boldSystemFontOfSize:20]];
-    [button setTitleColor:[UIColor colorWithHex:0x000000 andAlpha:0.7] forState:UIControlStateNormal];
-    button.layer.borderColor = [UIColor colorWithHex:0x000000 andAlpha:0.3].CGColor;
-    button.layer.borderWidth = 0.5 ;
-    button.layer.cornerRadius = 20.0;
-    button.clipsToBounds = YES;
-    intro.skipButton = button;
-    intro.skipButtonY = 120;
-    intro.skipButtonSideMargin = SCREEN_WIDTH/2-70;
+    [skipButton setBackgroundImage:[UIImage imageNamed:@"pie_intro_nextStepButton"]
+                          forState:UIControlStateNormal];
+
+    intro.skipButton                   = skipButton;
+    intro.skipButtonY                  = 55;
+    intro.skipButtonSideMargin
+    = (SCREEN_WIDTH - CGRectGetWidth(skipButton.frame)) / 2;
     intro.showSkipButtonOnlyOnLastPage = YES;
     [intro setDelegate:self];
     [intro showInView:self.view animateDuration:1.0];
-    
-    
+
 }
 
 
 #pragma mark - EAIntroView delegate
 - (void)introDidFinish:(EAIntroView *)introView {
-    PIELaunchViewController* lvc = [PIELaunchViewController new];
+    PIELaunchViewController_Black* lvc        = [PIELaunchViewController_Black new];
     self.navigationController.viewControllers = @[lvc];
 }
+
+
+- (void)intro:(EAIntroView *)introView pageAppeared:(EAIntroPage *)page withIndex:(NSUInteger)pageIndex
+{
+    if (pageIndex == 3) {
+        [UIView animateWithDuration:1.4
+                         animations:^{
+                             introView.pageControl.hidden = YES;
+                         }];
+    }else{
+        introView.pageControl.hidden = NO;
+    }
+}
+
+#pragma mark - Lazy loadings
 
 -(EAIntroPage *)page1 {
     if (!_page1) {

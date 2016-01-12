@@ -29,18 +29,18 @@ typedef void (^VoidBlock)();
 * The view can be a normal UIImageView or any other kind uf
 * UIView. This allows to attach animated views as well.
 */
-@property (nonatomic, strong) UIView * titleIconView;
+@property (nonatomic, strong) UIView   *titleIconView;
 
-@property (nonatomic, assign) CGFloat titleIconPositionY;
+@property (nonatomic, assign) CGFloat  titleIconPositionY;
 @property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) UIFont *titleFont;
-@property (nonatomic, strong) UIColor *titleColor;
-@property (nonatomic, assign) CGFloat titlePositionY;
+@property (nonatomic, strong) UIFont   *titleFont;
+@property (nonatomic, strong) UIColor  *titleColor;
+@property (nonatomic, assign) CGFloat  titlePositionY;
 
 @property (nonatomic, strong) NSString *desc;
-@property (nonatomic, strong) UIFont *descFont;
-@property (nonatomic, strong) UIColor *descColor;
-@property (nonatomic, assign) CGFloat descPositionY;
+@property (nonatomic, strong) UIFont   *descFont;
+@property (nonatomic, strong) UIColor  *descColor;
+@property (nonatomic, assign) CGFloat  descPositionY;
 
 @property (nonatomic, strong) NSArray *subviews;
 

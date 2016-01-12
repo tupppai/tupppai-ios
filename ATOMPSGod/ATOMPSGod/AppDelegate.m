@@ -7,7 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "PIELaunchViewController.h"
+//#import "PIELaunchViewController.h"
+#import "PIELaunchViewController_Black.h"
 #import "DDNavigationController.h"
 #import "DDLoginNavigationController.h"
 #import "DDIntroVC.h"
@@ -74,9 +75,9 @@
     [UMCheckUpdate setVersion:[version integerValue]];
 }
 - (void)setupBarButtonItem {
-    NSShadow *shadow = [[NSShadow alloc] init];
+    NSShadow *shadow    = [[NSShadow alloc] init];
     shadow.shadowOffset = CGSizeMake(0.0, 1.0);
-    shadow.shadowColor = [UIColor whiteColor];
+    shadow.shadowColor  = [UIColor whiteColor];
     
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil]
      setTitleTextAttributes:
@@ -115,12 +116,16 @@
 
 }
 -(void)initializeAfterDB {
-
+    
+    
+    // ## Step 1: 先尝试在本地沙盒加载用户的数据...
     [DDUserManager fetchUserInDBToCurrentUser:^(BOOL success) {
         if (success) {
 
             self.window.rootViewController = self.mainTabBarController;
         } else {
+            
+            // ## Step 2: 假如沙盒里没有用户数据，先判断在登录注册页面之前，是否有需要显示新版本展示页
             
             NSNumber *version =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
             NSString* launchKey = [NSString stringWithFormat:@"HasLaunchedOnce%@",version];
@@ -130,10 +135,10 @@
                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:launchKey];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 DDIntroVC* vc = [DDIntroVC new];
-                self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:vc];
+                self.baseNav  = [[DDLoginNavigationController alloc] initWithRootViewController:vc];
                 self.window.rootViewController = self.baseNav;
             } else {
-                PIELaunchViewController *lvc = [[PIELaunchViewController alloc] init];
+                PIELaunchViewController_Black *lvc = [[PIELaunchViewController_Black alloc] init];
                 self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
                 self.window.rootViewController = self.baseNav;
             }
@@ -306,7 +311,25 @@
 
 
 
+#pragma mark - private helpers
+- (void)switchToMainTabbarController
+{
+    
+    [[AppDelegate APP].baseNav setViewControllers:[NSArray array]];
+    /*
+     使用懒加载，重新创建一次mainTabBarController
+     */
+    [AppDelegate APP].mainTabBarController = nil;
+    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
+    ;
+}
 
+- (void)switchToLoginViewController
+{
+    [[AppDelegate APP].baseNav setViewControllers:[NSArray array]];
+    PIELaunchViewController_Black *lvc = [[PIELaunchViewController_Black alloc] init];
+    [AppDelegate APP].window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
+}
 
 
 

@@ -7,7 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PIELaunchViewController.h"
+//#import "PIELaunchViewController.h"
+#import "PIELaunchViewController_Black.h"
+
 #import <ShareSDK/SSDKUser.h>
 
 //@class PIEUserModel;
